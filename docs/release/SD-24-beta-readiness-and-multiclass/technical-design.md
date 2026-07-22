@@ -46,7 +46,7 @@ These are deterministic against canonical PF1 expected values from `archetype_te
 Per duracon 2026-07-18 18:20:41 + 2026-07-20 09:24:59:
 - `create_character` / `list_saved_characters` / `load_saved_character` only compose-and-save once.
 - `SavedCharacterStore::save` always writes from scratch with both current write paths (`create_character`, `seed_default_character_if_needed`) hardcoding `revision_id: "{id}.rev.1"`.
-- No command exists to mutate / re-save an existing character.
+- No command exists to mutate / re-save an existing character. — (corrected 2026-07-22 per SD-25 criterion 7.P: the gap was narrower than initially framed; SD-23 already landed `level_up_character`, `add_equipment_selection`, `add_spell_selection` per durations `e74f3fa`, `f203df8`; the real 7.1 gap was batch-append + corpus validation only)
 
 ### 3.2 The repair surface
 
@@ -59,8 +59,8 @@ appendToCharacter   { characterId, itemsToAppend: Vec<ItemRef> }
 recomputeCharacter  { characterId }
                     -> { success: bool, character: CharacterSnapshot, error?: string }
 
-reSaveCharacter     { characterId, character: CharacterSnapshot }
-                    -> { success: bool, revisionId: string, error?: string }
+reSaveCharacter     { characterId, expectedRevisionId, savedAt, ruleSystemId }
+                    -> { success: bool, revisionId: string, error?: string } — (corrected 2026-07-22 per SD-25 criterion 7.P: no `CharacterSnapshot` wire type exists; real request uses revision-conflict-guard shape with `expectedRevisionId` and `savedAt` per duracon 2026-07-18 18:20:41)
 ```
 
 The `compose_character_input` function (at `apps/desktop/src/characterHub/characterHubRuntime.ts:compose_character_input`) hardcodes the loadout to defaults. SD-24 Epic 7 fixes this: the function reads from the saved character's equipment list, not hardcoded defaults.

@@ -28,6 +28,9 @@ use crate::character_hub::{
     self, ActiveStateDto, CharacterSummaryDto, CorpusDerivedDto, CreateCharacterResponse,
     PilotSnapshotDto,
 };
+use crate::pf1_adapter::Pf1Adapter;
+use crate::rule_system_adapter::RuleSystemAdapter;
+use crate::stub_adapter::StubAdapter;
 
 /// One equipment item to append, as requested over the wire.
 #[derive(Debug, Clone, Deserialize)]
@@ -43,6 +46,12 @@ pub struct AppendToCharacterRequest {
     pub character_id: String,
     pub items_to_append: Vec<ItemToAppendDto>,
     pub saved_at: String,
+    /// SD-25 Criterion 3.4 (Epic 3 "Hub of Hubs" Tauri command-surface
+    /// routing): which rule system's `RuleSystemAdapter` to dispatch this
+    /// mutation through — `"pf1"` resolves to the real `Pf1Adapter`, any
+    /// other id resolves to `StubAdapter` (see `resolve_rule_system_adapter`
+    /// below).
+    pub rule_system_id: String,
 }
 
 /// The successful-append projection of the saved character — the same
@@ -139,6 +148,46 @@ pub fn append_to_character_at_root(
     })
 }
 
+/// Resolves `rule_system_id` to the `RuleSystemAdapter` implementation the
+/// Tauri command dispatches through (SD-25 Criterion 3.4, `cycles/3_4.md`
+/// GREEN) — `"pf1"` to the real `Pf1Adapter`; any other id (a rule system
+/// this codebase has not built a real adapter for yet) to `StubAdapter`,
+/// which honestly reports "not yet implemented" rather than the call
+/// silently falling through to PF1 logic. `StubAdapter::new` requires a
+/// `&'static str`; the caller-supplied `rule_system_id` is a runtime
+/// `String`, so an unknown id is leaked once per call to satisfy that bound
+/// — the same `Box::leak`-to-`'static` pattern this crate already uses at
+/// `corpus_fixtures.rs` / `codex::rules_core::equipment_resolver` for
+/// converting owned data into `'static` references. Unknown-`rule_system_id`
+/// calls are the rare/exceptional path (real traffic is `"pf1"`), so the
+/// leak is bounded by how many distinct not-yet-supported ids ever get
+/// dispatched, not by call volume.
+fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
+    match rule_system_id {
+        "pf1" => Box::new(Pf1Adapter),
+        other => {
+            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+            Box::new(StubAdapter::new(leaked))
+        }
+    }
+}
+
+/// Dispatches `append_to_character` through the `RuleSystemAdapter` trait
+/// instead of calling `append_to_character_at_root` by name directly (SD-25
+/// Criterion 3.4). For `"pf1"` this produces byte-for-byte the same real
+/// behavior as calling `append_to_character_at_root` directly —
+/// `Pf1Adapter::append_to_character` wraps that exact function — so every
+/// pre-existing test above that calls `append_to_character_at_root` directly
+/// keeps passing unchanged.
+pub fn append_to_character_via_rule_system(
+    rule_system_id: &str,
+    root: &Path,
+    items_to_append: &[ItemToAppendDto],
+    saved_at: &str,
+) -> Result<AppendToCharacterResponse, String> {
+    resolve_rule_system_adapter(rule_system_id).append_to_character(root, items_to_append, saved_at)
+}
+
 /// Loads the saved character, validates + appends every requested item,
 /// recomputes via the real engine, and re-saves — see
 /// `append_to_character_at_root` for the full semantics.
@@ -148,7 +197,12 @@ pub fn append_to_character(
     request: AppendToCharacterRequest,
 ) -> Result<AppendToCharacterResponse, String> {
     let root = character_hub::resolve_character_root(&app, &request.character_id)?;
-    append_to_character_at_root(&root, &request.items_to_append, &request.saved_at)
+    append_to_character_via_rule_system(
+        &request.rule_system_id,
+        &root,
+        &request.items_to_append,
+        &request.saved_at,
+    )
 }
 
 #[cfg(test)]
@@ -162,6 +216,75 @@ mod tests {
     use std::path::PathBuf;
 
     const TEST_SAVED_AT: &str = "2026-07-21T00:00:00Z";
+
+    /// SD-25 Criterion 3.4 RED (`cycles/3_4.md`): before
+    /// `append_to_character_via_rule_system` existed, this test failed
+    /// `cargo check --tests` with `error[E0425]: cannot find function
+    /// 'append_to_character_via_rule_system' in this scope` — the command
+    /// called `append_to_character_at_root` directly with no `rule_system_id`
+    /// dispatch seam at all. GREEN (this file, present tense): the dispatch
+    /// function resolves `"pf1"` to the real `Pf1Adapter` and routes the
+    /// call through `dyn RuleSystemAdapter::append_to_character`, producing
+    /// the exact same real, on-disk-persisted result
+    /// `append_to_character_at_root` itself would.
+    #[test]
+    fn append_to_character_via_rule_system_dispatches_pf1_through_the_trait() {
+        let root = tempdir("pf1-dispatch");
+        let envelope = seed_envelope();
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = append_to_character_via_rule_system(
+            "pf1",
+            &root,
+            &[ItemToAppendDto {
+                item_id: "Dagger (Base)".to_owned(),
+                active_state: ActiveStateDto::EquippedActive,
+            }],
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("pf1 dispatch should not error");
+
+        assert!(
+            response.success,
+            "pf1 dispatch must produce the same real success as the direct call: {:?}",
+            response.error
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len + 1,
+            "pf1 dispatch through the trait must really persist the appended item on disk"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An unrecognized `rule_system_id` routes to `StubAdapter`
+    /// (`cycles/3_4.md` GREEN) rather than silently falling through to PF1
+    /// logic or panicking.
+    #[test]
+    fn append_to_character_via_rule_system_routes_unknown_id_to_stub_adapter() {
+        let root = tempdir("unknown-system-dispatch");
+        let envelope = seed_envelope();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let err = append_to_character_via_rule_system(
+            "starfinder",
+            &root,
+            &[ItemToAppendDto {
+                item_id: "Dagger (Base)".to_owned(),
+                active_state: ActiveStateDto::EquippedActive,
+            }],
+            "2026-07-21T01:00:00Z",
+        )
+        .expect_err("an unimplemented rule system must honestly error, not fabricate success");
+
+        assert_eq!(err, "Would render for system starfinder; not yet implemented");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
 
     fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()

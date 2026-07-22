@@ -7,11 +7,15 @@ mod character_hub;
 mod characterHub;
 mod class_catalog;
 mod corpus_fixtures;
+mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod ge08_workbench;
+mod pf1_adapter;
 mod race_catalog;
-mod sd13_support_state_matrix;
+mod rule_system_adapter;
 mod spell_catalog;
+mod stub_adapter;
+mod support_state_matrix_bridge;
 mod update;
 
 use serde::Serialize;
@@ -30,10 +34,11 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use race_catalog::list_race_catalog;
-use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use spell_catalog::{list_spell_catalog, list_spells};
+use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
@@ -154,7 +159,8 @@ fn main() {
             list_equipment,
             list_spells,
             list_class_catalog,
-            list_race_catalog
+            list_race_catalog,
+            corpus_ingest_diagnostic
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");

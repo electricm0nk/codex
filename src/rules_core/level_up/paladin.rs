@@ -85,6 +85,26 @@
 //! `prerequisites_added` stays empty: no per-class file yet composes with
 //! Epic 3's `feat_prereqs` output (unchanged from every other landed Epic
 //! 7 class so far).
+//!
+//! **SD-25 Epic 7 correction (criterion 7.9 per-class residue audit):**
+//! `pilot_compute.rs`'s `explain_hybrid_level1_chassis` (called
+//! unconditionally, gated internally on a single-class Paladin/Ranger at
+//! exactly class level 1) grounds a THIRD explanation namespace this
+//! module's own filter never admitted:
+//! `class_chassis.hybrid_baseline.paladin`, a bounded +0 recognition
+//! record fired only on the very first Paladin level. That id was
+//! silently dropped from the `LevelUpPlan` on the 0 -> 1 (initial class
+//! entry) transition — the exact Wizard SD-24 / Bard SD-25-7.6 bug shape.
+//! This audit cycle adds `PALADIN_HYBRID_BASELINE_RECOGNITION_ID` to close
+//! that gap; see `tests/sd25_paladin_level_up_explanation_coverage.rs`.
+//! The two ids this bundle's own intake row (`progress.md` §`##
+//! DISCOVERED`, register A6) suspected instead
+//! (`class_spell.paladin.partial_caster.unsupported`,
+//! `class_spell.hybrid.paladin.unsupported`) are verified NEGATIVE:
+//! both are `ComputationDiagnostic`s on `pilot_compute.rs`'s structurally
+//! separate `diagnostics` `Vec`, never merged into `.explanations`, so
+//! neither was ever reachable by this module's filter regardless of
+//! prefix.
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};
@@ -108,6 +128,21 @@ const SMITE_EVIL_USES_PER_DAY_EXPLANATION_ID: &str =
     "class_chassis.paladin.smite_evil_uses_per_day";
 const LAY_ON_HANDS_USES_PER_DAY_EXPLANATION_ID: &str =
     "class_chassis.paladin.lay_on_hands_uses_per_day";
+/// SD-25 Epic 7 (criterion 7.9 per-class residue audit) finding: the exact
+/// Wizard SD-24 / Bard SD-25-7.6 bug shape reproduced here.
+/// `pilot_compute.rs`'s `explain_hybrid_level1_chassis` (called
+/// unconditionally from `compute_pilot_base_chassis`, internally gated on
+/// a single-class Paladin/Ranger at exactly class level 1) pushes this id
+/// as a bounded +0 recognition record onto `.explanations`, but its own
+/// second segment (`hybrid_baseline`) never matched either of this
+/// module's two admitted prefixes (`"class_chassis.paladin."` /
+/// `"class_feature.paladin."`), so it was silently dropped from the
+/// `LevelUpPlan` even on the very first Paladin level (0 -> 1, initial
+/// class entry). Added by this audit cycle, mirroring `wizard.rs`'s
+/// `WIZARD_RECOGNITION_ID` and `bard.rs`'s `BARD_RECOGNITION_ID`, both of
+/// which already carry the identical whitelist-entry shape for their own
+/// recognition records.
+const PALADIN_HYBRID_BASELINE_RECOGNITION_ID: &str = "class_chassis.hybrid_baseline.paladin";
 
 /// Explanation ids that `append_class_table_grants` already covers from
 /// `class_tables()` (the more authoritative, class-generic source per
@@ -246,7 +281,9 @@ fn append_class_feature_grants(
     let to_explanations = paladin_chassis_explanations(character, to_level);
 
     for to_explanation in &to_explanations {
-        let is_paladin_class_feature_id = to_explanation.id.starts_with("class_chassis.paladin.")
+        let is_paladin_class_feature_id = to_explanation.id
+            == PALADIN_HYBRID_BASELINE_RECOGNITION_ID
+            || to_explanation.id.starts_with("class_chassis.paladin.")
             || to_explanation.id.starts_with("class_feature.paladin.");
         let is_covered_elsewhere = to_explanation.id == SMITE_EVIL_USES_PER_DAY_EXPLANATION_ID
             || to_explanation.id == LAY_ON_HANDS_USES_PER_DAY_EXPLANATION_ID
@@ -354,5 +391,6 @@ fn append_resource_pool_change(
 fn friendly_name(id: &str) -> String {
     id.trim_start_matches("class_chassis.paladin.")
         .trim_start_matches("class_feature.paladin.")
+        .trim_start_matches("class_chassis.hybrid_baseline.")
         .replace(['_', '.'], " ")
 }

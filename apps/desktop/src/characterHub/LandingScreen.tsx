@@ -249,6 +249,7 @@ export function LandingScreen(props: {
   onBrowseSpells: () => void;
   onBrowseClasses: () => void;
   onBrowseRaces: () => void;
+  onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
   onDmToolkit: () => void;
@@ -335,6 +336,20 @@ export function LandingScreen(props: {
           }}
         >
           Browse Race Traits
+        </button>
+        <button
+          type="button"
+          onClick={props.onCorpusIngestDiagnostic}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Corpus Ingest Diagnostic
         </button>
       </div>
     </section>

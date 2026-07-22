@@ -84,11 +84,37 @@ Plus E1 + E2 (canonical governance + gating), E7 (deferred per-class residue), E
 - **Release notes shape.** Required sections per template: Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility.
 - **Operator identity in commits.** `Todd Hintzmann <todd@hintzmann.net>` per memory (operator preference for git identity).
 
+## 10. Dispatch is session-driven Workflow-tool orchestration, not a headless script (operator-confirmed 2026-07-21)
+
+**Decision:** `scripts/workflow-dispatch.sh`'s `claude code --profile … --task …` invocation does not exist in the live CLI (`claude --help` shows no `code` subcommand and no `--profile`/`--task` flags). As shipped, the script's dispatch step would fail silently and loop forever on its `sleep`/no-op branch — precisely the failure mode the `workflow-orchestrated-dispatch` skill's v1.1.0 warning anticipated. **SD-25 dispatches via the in-harness `Workflow` tool, driven from this session**, not via the shell script running unattended. The script remains in the repo as the deterministic per-epic concurrency/tiering spec (`EPIC_PARALLEL`, `EPIC_SUBAGENT`, `PARALLEL_OVERRIDE`, `SUBAGENT_OVERRIDE` maps) that the session's `Workflow` calls read from and honor — it is a reference implementation, not the live dispatcher.
+
+**Reasoning:** confirmed the concrete CLI gap rather than assume the skill's warning was stale; re-verifying `claude --help` at the point of first live dispatch (per skill v1.1.0 checklist item 1) surfaced the exact failure the skill predicted. Fixing the headless daemon form was assessed as higher-risk (opaque subprocess supervision, no live view — per memory `cloud-loop-orchestration-lessons`) than session-driven `Workflow` orchestration for a bundle of this size.
+
+**Consequence:** `~/.hermes/.../workflow-orchestrated-dispatch/templates/orchestrator.sh` + `references/prior-bundle-ship-defect.md` should be updated to match (operator's out-of-repo profile; non-gating for SD-25's own launch).
+
+## 11. Carry-forward A5 resolved: fold revision-advancing into `mutate_saved_character_at_root` (operator-confirmed 2026-07-21)
+
+**Decision:** per `sd24-carry-forward-register.md` item A5, every character-mutation command routed through `mutate_saved_character_at_root` (`level_up_character`, `add_equipment_selection`, `add_spell_selection`, `appendToCharacter`) will advance `revision_id`, not just the dedicated `reSaveCharacter` command. This lands as part of criterion 3.2's `Pf1Adapter` extraction — a behavior change, operator-approved rather than deferred.
+
+## 12. Carry-forward A1/Q5 deferred this bundle (operator-confirmed 2026-07-21)
+
+**Decision:** the GE-07 `load_pilot_shell_snapshot` real-implementation design question (open question Q5, `risks-and-open-questions.md §4`) stays unanswered for SD-25. Criterion 7.O dispatches the design-decision request only; the hardcoded-fixture no-stub violation remains documented, not remediated, this bundle.
+
+## 13. Process lesson: launching session executed a cycle directly instead of dispatching (2026-07-21)
+
+**What happened:** while driving criterion 1.1, the launching session ran the RED check, discovered the real scope was ~15x larger than `cycles/1_1.md` assumed (764 hits / 54 files, not the one known file), and — mid-investigation — executed the rename directly via its own `Edit`/`Write`/`Bash` calls instead of dispatching an `agent()`. The operator interrupted mid-turn to redirect back to subagent orchestration (Workflow tool, per `decisions.md §10`).
+
+**Root cause:** the dispatch mechanism was documented as policy (`loop-instruction.md §2`, the `workflow-orchestrated-dispatch` skill) but nothing stated it as a hard boundary on the *launching session's own* tool use, and the approved plan's Phase 1 phrasing ("serial, inline or single agents") gave implicit license to execute inline.
+
+**Fix (this session, same day):** added an explicit "Execution boundary" section to both `/governance/loop-instruction-template.md §2.1` and the `workflow-orchestrated-dispatch` skill (bumped to v1.2.0) — the launching session is always the orchestrator, discovering a cycle's real scope differs from the doc's assumption is a reason to pause and (re-)dispatch, never a license to keep executing. This is a durable template fix, not just an SD-25-local one; recorded here for this bundle's own audit trail per the register's C1–C3 process-lesson convention.
+
+**Recovery:** the partially-completed direct rename work for 1.1 (TS-side, ~90% done, uncommitted at the time of interrupt) was handed off mid-flight via a detailed Workflow-script prompt rather than discarded — see the `finish-1.1` agent's cycle receipt for what it verified/completed from that handoff.
+
 ## 9. Cross-references
 
 - `/governance/loop-instruction-template.md` (REPO-LOCAL CANONICAL).
 - `/governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
-- `/governance/identifier-discipline.md` + skill `identifier-discipline`.
+- `docs/doctrine-external/identifier-discipline.md` + skill `identifier-discipline` (path corrected 2026-07-21 — `/governance/identifier-discipline.md` does not exist).
 - `/governance/wired-integration-stubs-registry.md` — Epic 3 StubAdapter entries land here.
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/SKILL.md`.
 - `../docs/release/SD-24-beta-readiness-and-multiclass/decisions.md` — closed predecessor (Tier-1 gate).

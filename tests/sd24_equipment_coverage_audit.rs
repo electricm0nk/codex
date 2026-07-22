@@ -21,16 +21,22 @@
 //! under `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`)
 //! coverage-report APIs turned it GREEN.
 //!
-//! **Bestiary 1 is not covered by this test file.** No
-//! `rules_tables::beastiary1::equipment_tables` module exists at all (the
-//! `beastiary1` book module only carries monster stat blocks, per its own
-//! `mod.rs` doc comment) -- there is no live code to call. This is
-//! documented as a finding in the coverage-matrix artifact and this
-//! cycle's receipt, not asserted here, per the same "no file to touch"
-//! posture criterion 4.2's audit used for APG's missing `level_up`
-//! modules.
+//! **Bestiary 1 update (SD-25 criterion 7.N item 4):** the "not covered
+//! by this test file" gap noted above through SD-24 is now closed.
+//! `rules_tables::beastiary1::equipment_tables` exists as of this cycle
+//! (see that module's own doc comment for full sourcing methodology);
+//! `beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage`
+//! below is this book's own coverage assertion, mirroring the pattern the
+//! other three books already use. RED -> GREEN evidence for this
+//! addition: before `rules_tables::beastiary1::equipment_tables` existed,
+//! a test referencing it did not compile (`error[E0433]: failed to
+//! resolve: could not find `equipment_tables` in `beastiary1``); adding
+//! the module (4 real records, hand-transcribed from
+//! `b1_equip_general.lst` + `b1_equip_arms_armor.lst` +
+//! `b1_equip_magic_items.lst`, one field web-sourced per the cycle
+//! receipt) turned it GREEN.
 
-use codex::rules_core::rules_tables::{acg, apg, crb};
+use codex::rules_core::rules_tables::{acg, apg, beastiary1, crb};
 
 /// CRB's equipment corpus (`cr_equip_arms_armor.lst` + `cr_equip_general.lst`
 /// + `cr_equip_magic_items.lst` + `cr_equipmods.lst`) is **fully record-ingested**
@@ -91,10 +97,14 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
 /// audit's grep-based count double-counted as a record; see
 /// `rules_tables::apg::equipment_data`'s module doc comment). `weight` is
 /// real per-row (319/338 -- the corpus's own `WT:` token, `None` for the
-/// 19 records with no `WT:` token at all). `description` is `None` for
-/// every record -- the real APG equipment corpus has no `DESC:` token on
-/// any equipment row (confirmed by direct inspection), a genuine corpus
-/// limitation criterion 6.4 cannot close from this corpus alone.
+/// 19 records with no `WT:` token at all). `description` reached 331/338
+/// via SD-25 criterion 7.N's `apg-description` web second-source pass
+/// (register A16 / SD-24 Open Blocker #2 -- the real APG equipment
+/// corpus itself still has no `DESC:` token on any row, confirmed by
+/// direct inspection; every non-`None` value was identity-matched and
+/// sourced from `legacy.aonprd.com`/`aonprd.com`/`d20pfsrd.com`, per that
+/// cycle's receipt). The remaining 7 are honest, undispatched gaps (see
+/// `equipment_data`'s doc comment), not a corpus ceiling any longer.
 #[test]
 fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     let report = apg::equipment_tables::field_coverage_report();
@@ -109,10 +119,12 @@ fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     );
     assert_eq!(report.has_weight, 319, "319/338 real records carry a WT: token");
     assert_eq!(
-        report.has_description, 0,
-        "the real APG equipment corpus has no DESC: token on any equipment row -- if this \
-         now fails, a description source has been found and criterion 6.4 should already be \
-         underway"
+        report.has_description, 331,
+        "SD-25 criterion 7.N's web second-source pass (register A16 / SD-24 Open Blocker #2) \
+         identity-matched and sourced 331/338 descriptions from legacy.aonprd.com/aonprd.com/ \
+         d20pfsrd.com -- if this regresses, the sourced descriptions were lost; if it exceeds \
+         331 without a matching receipt update, verify the new value is genuinely sourced, not \
+         fabricated"
     );
 }
 
@@ -158,6 +170,39 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_acg() {
     );
 }
 
+/// Bestiary 1's equipment corpus (`b1_equip_general.lst` (1) +
+/// `b1_equip_arms_armor.lst` (2) + `b1_equip_magic_items.lst` (1) = 4
+/// total) is **fully record-ingested** as of SD-25 criterion 7.N item 4
+/// -- a plain scope gap (no module existed at all), not a corpus
+/// ceiling, so 4/4 is the honest ceiling for `total_records` itself.
+/// `cost_gp`/`weight_lbs` are 4/4 (every real record carries both `COST:`
+/// and `WT:` tokens, including literal `0` values). `description` is
+/// also 4/4: 3 records source from the corpus's own `SPROP:` token
+/// (register A10, same convention `acg::equipment_data` established),
+/// and the 4th (`Rag Armor (Dark Creeper)`, which has neither `DESC:`
+/// nor `SPROP:`) was closed via an identity-matched web second-source
+/// pass -- see this cycle's receipt for the cited URLs.
+#[test]
+fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage() {
+    let report = beastiary1::equipment_tables::field_coverage_report();
+    assert_eq!(
+        report.records_expected, 4,
+        "real Bestiary 1 equipment corpus count (1 general + 2 arms_armor + 1 magic_items)"
+    );
+    assert_eq!(
+        report.total_records, report.records_expected,
+        "Bestiary 1 equipment record coverage should be 100% (closed this cycle)"
+    );
+    assert_eq!(report.has_cost, 4, "every real record carries a COST: token");
+    assert_eq!(report.has_weight, 4, "every real record carries a WT: token");
+    assert_eq!(
+        report.has_description, 4,
+        "every real record has a description -- 3 from SPROP:, 1 (Rag Armor (Dark Creeper)) \
+         from a cited web second-source pass (see this cycle's receipt) -- if this regresses, \
+         a fabricated or dropped description slipped through"
+    );
+}
+
 /// CRB's spell list (`cr_spells.lst`) carries 652 of 652 real,
 /// level-and-school-bearing spell records -- criterion 6.1's original
 /// "675 real / 96.6%" figure was a measurement error (see
@@ -197,14 +242,21 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
 /// (corrected from the criterion 6.1 audit's originally-documented 298:
 /// the real corpus has one genuine duplicate `Resounding Blow` base
 /// record the audit's dedup methodology missed; see
-/// `rules_tables::apg::spell_list`'s module doc comment). 261 of 297
-/// records carry full SRD/PRD text sourced from a matching `<Name>.MOD`
-/// corpus record (`full_text_verified`), a real majority -- criterion
-/// 6.5 is not 100% closed for APG (41 records have no `SCHOOL:`/
-/// `CLASSES:` token at all -- mostly Summoner eidolon spells with no
-/// leveled spell-list entry in the real rules -- and not every present
-/// record has a matching `.MOD` full-text record either), but this is
-/// real, substantial, sourced progress, not a bootstrap sample.
+/// `rules_tables::apg::spell_list`'s module doc comment). 284 of 297
+/// records now carry full SRD/PRD text (`full_text_verified`), raised
+/// from criterion 6.5's original 261 by SD-25 criterion 7.N's
+/// "apg-spell-text" pass -- 13 recovered from an ingest miss on a
+/// same-line-concatenated `.MOD` pair the corpus itself already carried
+/// (`Fiery Body`/`Fester (Mass)`, `Transmute Potion to Poison`/
+/// `Transmogrify`, plus the `Summon Monster I`-`IX` family's own
+/// same-line double-`DESC:` full paragraph), 3 from a same-book
+/// `PRESPELL`-fallback extension (`Threefold Aspect`'s 3 sub-forms), and
+/// 7 from a `d20pfsrd.com`/`legacy.aonprd.com` web second-source pass
+/// (see `rules_tables::apg::spell_list`'s module doc comment for the
+/// full per-record sourcing and the rejected edition-cousin false match).
+/// The remaining 13/297 gap is the documented cross-book `.COPY=`
+/// variant scope boundary plus the corpus-typo `Wall of Thorms` -- not a
+/// "just look harder" gap.
 #[test]
 fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
     let apg_report = apg::spell_list::spell_coverage_report();
@@ -216,11 +268,17 @@ fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
         apg_report.total_records, apg_report.records_expected,
         "APG spell list record coverage should be 100% (fully ingested as of criterion 6.2)"
     );
-    assert_eq!(apg_report.has_description, 281, "281/297 records have a sourced description");
     assert_eq!(
-        apg_report.full_text_verified, 261,
-        "261/297 records carry full SRD/PRD text sourced from a matching .MOD record -- if \
-         this now fails, criterion 6.5's APG full-text ingest has regressed"
+        apg_report.has_description, 285,
+        "285/297 records have a sourced description (raised from 281 by SD-25 criterion \
+         7.N's apg-spell-text pass)"
+    );
+    assert_eq!(
+        apg_report.full_text_verified, 284,
+        "284/297 records carry full SRD/PRD text (raised from 261 by SD-25 criterion 7.N's \
+         apg-spell-text pass -- if this now regresses, that pass's ingest-bug fixes and web \
+         second-source sourcing were lost; if it exceeds 284 without a matching receipt \
+         update, verify the new value is genuinely sourced, not fabricated)"
     );
 }
 

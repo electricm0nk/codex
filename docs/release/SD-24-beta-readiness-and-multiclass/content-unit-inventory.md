@@ -79,9 +79,9 @@ For each class, the row tracks `class_features_wired` vs `class_features_expecte
 | `feature_table_path` | path to the canonical `.lst` source record |
 | `feature_table_sha` | git SHA of the canonical source at audit time |
 | `class_features_expected` | count of feature rows in the canonical source |
-| `class_features_wired` | count of feature rows wired in `src/rules_core/rules_tables/<book>/class_<name>.rs` |
+| `class_features_wired` | count of feature rows wired in `src/rules_core/rules_tables/<book>/class_<name>.rs` (or for CRB, split between `src/rules_core/rules_tables/crb/class_tables.rs` shared table + `src/rules_core/level_up/<class>.rs` class-specific) — (corrected 2026-07-22 per SD-25 criterion 7.P: CRB uses split structure with shared `class_tables.rs` + per-class `level_up/<class>.rs`, not single per-class files like APG/ACG) |
 | `gap_features` | list of feature names from `expected` not present in `wired` |
-| `gap_priority` | P0 / P1 / P2 / P3 (Epic 4 priority enumeration) |
+| `gap_priority` | P0 / P1 / P2 / P3 (Epic 4 priority enumeration) | — (corrected 2026-07-22 per SD-25 criterion 7.P: APG uses 6 separate per-class files `apg/class_alchemist.rs`...`apg/class_witch.rs` + shared `apg/mod.rs`, opposite from CRB's shared table pattern; ACG uses one file per class `acg/class_arcanist.rs`...`acg/class_warpriest.rs` + `acg/mod.rs`) |
 
 ## 4. Tauri commands (Epic 7)
 
@@ -89,9 +89,9 @@ For each class, the row tracks `class_features_wired` vs `class_features_expecte
 
 | Tauri command | Rust module path | Test fixture path | Cycle artifact path |
 |---|---|---|---|
-| `appendToCharacter` | `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs` | `tests/sd24_characterhub_append.rs` | `artifacts/epic_7/appendToCharacter_cycle_receipt.md` |
-| `recomputeCharacter` | `apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs` | `tests/sd24_characterhub_recompute.rs` | `artifacts/epic_7/recomputeCharacter_cycle_receipt.md` |
-| `reSaveCharacter` | `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs` | `tests/sd24_characterhub_resave.rs` | `artifacts/epic_7/reSaveCharacter_cycle_receipt.md` |
+| `appendToCharacter` | `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs` | inline test via `#[cfg(test)] mod tests` (no standalone file) — (corrected 2026-07-22 per SD-25 criterion 7.P: Tauri command tests are inline, not standalone `tests/` files) | `artifacts/epic_7/appendToCharacter_cycle_receipt.md` |
+| `recomputeCharacter` | `apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs` | inline test via `#[cfg(test)] mod tests` (no standalone file) | `artifacts/epic_7/recomputeCharacter_cycle_receipt.md` |
+| `reSaveCharacter` | `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs` | inline test via `#[cfg(test)] mod tests` (no standalone file) | `artifacts/epic_7/reSaveCharacter_cycle_receipt.md` |
 
 ### 4.2 Required fields per Tauri command
 

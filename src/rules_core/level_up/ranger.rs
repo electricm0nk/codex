@@ -92,6 +92,31 @@
 //! Bonus Feat candidate list, here scoped to Ranger's own multiple
 //! choice-list surfaces. This is a documented, bounded scope note, not a
 //! blocker on this cycle's `LevelUpPlan`: every other field lands for real.
+//!
+//! **SD-25 Epic 7 correction (criterion 7.10 per-class residue audit):**
+//! this module's explanation-id filter previously admitted only the
+//! `class_chassis.ranger.`/`class_feature.ranger.` prefixes. `pilot_compute.rs`'s
+//! shared `explain_hybrid_level1_chassis` seam (the same function that also
+//! grounds Paladin's `class_chassis.hybrid_baseline.paladin`) additionally
+//! pushes a bounded +0 `class_chassis.hybrid_baseline.ranger` recognition
+//! record onto `.explanations` for a single-class Human Ranger at level 1 —
+//! an id whose own second segment (`hybrid_baseline`) never matched either
+//! admitted prefix, so it was silently dropped from the `LevelUpPlan` even
+//! on the very first Ranger level (0 -> 1), the exact Wizard SD-24 bug
+//! shape SD-25's 7.6 cycle already found and fixed for Bard's analogous
+//! `class_chassis.spell_baseline.bard` recognition record. This audit cycle
+//! adds `RANGER_RECOGNITION_ID` to close that gap, mirroring `wizard.rs`'s/
+//! `sorcerer.rs`'s/`bard.rs`'s own `*_RECOGNITION_ID` whitelist entries; see
+//! `tests/sd25_ranger_level_up_explanation_coverage.rs`. Every other
+//! Ranger-specific id this module reads (including every
+//! `class_chassis.ranger.partial_caster.*` spellcasting-burden record) was
+//! independently confirmed to already carry the `class_chassis.ranger.`
+//! prefix this module already admitted — the `class_spell.hybrid.ranger.
+//! unsupported` / `class_feature.hybrid.ranger.unsupported` diagnostics the
+//! same shared seam also emits are pushed onto a structurally separate
+//! `Vec<ComputationDiagnostic>` this module never reads, mirroring Cleric's/
+//! Druid's/Sorcerer's/Barbarian's own verified diagnostic-vs-explanation
+//! findings — not a second live gap.
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
@@ -102,6 +127,25 @@ use crate::rules_core::rules_tables::RuleSetId;
 
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HUMAN_RACE_ID: &str = "race:human";
+/// SD-25 Epic 7 (criterion 7.10 per-class residue audit) finding: the exact
+/// Wizard SD-24 bug shape (see `wizard.rs`'s own `WIZARD_RECOGNITION_ID` doc
+/// comment), reproduced here in the shape SD-25's 7.6 cycle already found
+/// for Bard (`BARD_RECOGNITION_ID`). `pilot_compute.rs`'s
+/// `explain_hybrid_level1_chassis` pushes this id as a bounded +0
+/// recognition record onto `.explanations` for a single-class Human Ranger
+/// at level 1 (the shared Paladin/Ranger "hybrid baseline" chassis-identity
+/// seam — `explain_hybrid_level1_chassis` fires unconditionally alongside
+/// `explain_ranger_level1_chassis_and_class_feature_separation` for that
+/// exact input shape), but its own second segment (`hybrid_baseline`)
+/// never matched either of this module's two admitted prefixes
+/// (`"class_chassis.ranger."` / `"class_feature.ranger."` — the id reads
+/// `"class_chassis.hybrid_baseline.ranger"`, not `"class_chassis.ranger.*"`),
+/// so it was silently dropped from the `LevelUpPlan` even on the very
+/// first Ranger level (0 -> 1). Added by this audit cycle, mirroring
+/// `wizard.rs`'s `WIZARD_RECOGNITION_ID`, `sorcerer.rs`'s
+/// `SORCERER_RECOGNITION_ID`, and `bard.rs`'s `BARD_RECOGNITION_ID`, all of
+/// which already carry the identical whitelist entry for their own class.
+const RANGER_RECOGNITION_ID: &str = "class_chassis.hybrid_baseline.ranger";
 /// PF1 Core Rulebook Ranger capstone: Master Hunter, granted at 20th level
 /// (verified against `pilot_compute.rs`'s own `RANGER_MASTER_HUNTER_LEVEL`
 /// gate and its doc comment naming "Master Hunter" as the 20th-level Ranger
@@ -251,7 +295,8 @@ fn append_class_feature_grants(
     let to_explanations = ranger_chassis_explanations(character, to_level);
 
     for to_explanation in &to_explanations {
-        let is_ranger_class_feature_id = to_explanation.id.starts_with("class_chassis.ranger.")
+        let is_ranger_class_feature_id = to_explanation.id == RANGER_RECOGNITION_ID
+            || to_explanation.id.starts_with("class_chassis.ranger.")
             || to_explanation.id.starts_with("class_feature.ranger.");
         let is_covered_elsewhere =
             CLASS_TABLE_COVERED_EXPLANATION_IDS.contains(&to_explanation.id.as_str());
@@ -297,5 +342,6 @@ fn append_class_feature_grants(
 fn friendly_name(id: &str) -> String {
     id.trim_start_matches("class_chassis.ranger.")
         .trim_start_matches("class_feature.ranger.")
+        .trim_start_matches("class_chassis.hybrid_baseline.")
         .replace(['_', '.'], " ")
 }

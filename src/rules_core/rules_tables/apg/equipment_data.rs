@@ -21,16 +21,41 @@
 //! every one of the three files. The real count is 338 (93 + 75 + 170).
 //! See this cycle's `## DISCOVERED` entry (`epic-6-audit-correction`).
 //!
-//! **`description` is `None` for every one of these 338 records.** Direct
-//! inspection of all three corpus files (word-boundary-anchored,
-//! tab-preceded `DESC:` token search) finds zero equipment records with a
-//! description token anywhere in APG's equipment corpus — PCGen equipment
-//! records generally do not carry prose descriptions the way spell
-//! records do (equipment flavor text lives in the printed book's prose,
-//! not the LST data). This is a genuine corpus limitation, not a parsing
-//! gap; criterion 6.4 cannot reach 100% description coverage for
-//! equipment from this corpus alone. See `risks-and-open-questions.md`
-//! and this cycle's receipt.
+//! **`description` reaches 331/338 (97.9%) as of SD-25 criterion 7.N
+//! (`apg-description` item, register A16 / SD-24 Open Blocker #2).**
+//! Direct inspection of all three corpus files still finds zero `DESC:`
+//! tokens anywhere in APG's equipment corpus — PCGen equipment records
+//! generally do not carry prose descriptions the way spell records do
+//! (equipment flavor text lives in the printed book's prose, not the LST
+//! data) — so this field could not be populated from the corpus alone.
+//! Every non-`None` value here was instead identity-matched (name +
+//! category/cost, or name + cost-corroborating weight where the corpus's
+//! own `COST:` token diverges from the real market price — see below) and
+//! sourced from `legacy.aonprd.com`/`aonprd.com`/`d20pfsrd.com` per the
+//! web second-source rule; see this cycle's receipt for the full
+//! source-URL citation table. The remaining 7 are honest gaps, not
+//! fabricated: `Formula Book` and `Bomb` are corpus template rows with no
+//! `COST:`/`WT:` token at all (not sold items — see this file's own
+//! per-record doc note); `Arrow (Sizzling)`'s corpus cost (1,350 gp)
+//! disagrees with the real, independently-confirmed price (1,516 gp,
+//! matching this corpus's own `Arrow (Searing)` record) — treated as an
+//! unconfirmed identity rather than silently accepted; and 4 of the 5
+//! `Cauldron of Seeing` variants (`See Invisibility`/`Detect
+//! Thoughts`/`Telepathy`/`True Seeing`) have no distinct sourced text
+//! beyond the base item's, so their specific added mechanics were not
+//! fabricated.
+//!
+//! **Corpus quirk discovered this cycle (see receipt's `## DISCOVERED`
+//! entry):** for a subset of `ArmsArmor`-category "named specific magic
+//! weapon/armor" records (e.g. `Beaststrike Club`, `Mace (Boulderhead)`,
+//! `Giant Hide (*)`, `Mistmail`, `Boneless Leather`), this corpus's own
+//! `COST:` token is far below the real market price confirmed by the web
+//! second source, while `weight` matches exactly every time. Rings,
+//! staves, rods, and wondrous items show no such divergence (`COST:`
+//! matches the real price exactly). Identity for the divergent subset was
+//! confirmed via distinctive name + exact weight cross-check rather than
+//! cost, and is documented per-record in the receipt; `cost_gp` itself was
+//! left untouched (out of this cycle's field-touch scope).
 //!
 //! **`weight` is `None` for 19 of 338 records** (`WT:` token absent from
 //! the corpus line) — a real, small, honest gap, not a parsing defect.
@@ -46,7 +71,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Backpack, Masterwork",
         cost_gp: Some(50.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A masterwork backpack with numerous pockets, hooks, and padded straps; treats the wearer's Strength as 1 higher for carrying-capacity purposes only."),
     },
     EquipmentTableEntry {
         key: "Barbed Vest",
@@ -54,7 +79,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Barbed Vest",
         cost_gp: Some(10.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A black vest lined with hundreds of tiny fishhook-like needles; anyone striking the wearer with a natural or unarmed attack takes 1 point of damage unless they make a Reflex save. Worn only over light armor."),
     },
     EquipmentTableEntry {
         key: "Blanket",
@@ -62,7 +87,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Blanket",
         cost_gp: Some(0.2),
         weight: Some(1.0),
-        description: None,
+        description: Some("A warm, woven blanket with straps so it can be rolled up and tied for carrying."),
     },
     EquipmentTableEntry {
         key: "Buoy (Common)",
@@ -70,7 +95,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Buoy, Common",
         cost_gp: Some(0.5),
         weight: Some(16.0),
-        description: None,
+        description: Some("A float used to mark a specific spot in a lake or river; includes 200 feet of twine and a 15-pound anchor stone."),
     },
     EquipmentTableEntry {
         key: "Buoy (Superior)",
@@ -78,7 +103,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Buoy (Superior)",
         cost_gp: Some(10.0),
         weight: Some(30.0),
-        description: None,
+        description: Some("A spherical or ovoid hollow metal float, typically copper, connected to a length of chain and a metal anchor rather than twine and a stone."),
     },
     EquipmentTableEntry {
         key: "Butterfly Net",
@@ -86,7 +111,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Butterfly Net",
         cost_gp: Some(5.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A 6-foot pole supporting a wide metal hoop covered by a thin mesh net, used to sift small objects or capture Fine or Diminutive creatures."),
     },
     EquipmentTableEntry {
         key: "Chalkboard",
@@ -94,7 +119,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chalkboard",
         cost_gp: Some(1.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A wooden frame surrounding a thinly sliced piece of polished black stone; rubbing a damp cloth over the slate erases anything written on it."),
     },
     EquipmentTableEntry {
         key: "Chest (Small)",
@@ -102,7 +127,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chest, Small",
         cost_gp: Some(2.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A small lockable storage chest: 2 cubic feet capacity, 1 hit point, break DC 17."),
     },
     EquipmentTableEntry {
         key: "Chest (Medium)",
@@ -110,7 +135,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chest, Medium",
         cost_gp: Some(5.0),
         weight: Some(50.0),
-        description: None,
+        description: Some("A medium lockable storage chest: 4 cubic feet capacity, 15 hit points, break DC 23."),
     },
     EquipmentTableEntry {
         key: "Chest (Large)",
@@ -118,7 +143,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chest, Large",
         cost_gp: Some(10.0),
         weight: Some(100.0),
-        description: None,
+        description: Some("A large lockable storage chest: 6 cubic feet capacity, 30 hit points, break DC 29."),
     },
     EquipmentTableEntry {
         key: "Chest (Huge)",
@@ -126,7 +151,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chest, Huge",
         cost_gp: Some(25.0),
         weight: Some(250.0),
-        description: None,
+        description: Some("A huge lockable storage chest: 8 cubic feet capacity, 50 hit points, break DC 35."),
     },
     EquipmentTableEntry {
         key: "Earplugs",
@@ -134,7 +159,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Earplugs",
         cost_gp: Some(0.03),
         weight: Some(0.0),
-        description: None,
+        description: Some("Waxed cotton or cork earplugs granting a +2 circumstance bonus on saves against hearing-based effects, at the cost of a -5 penalty on hearing-based Perception checks."),
     },
     EquipmentTableEntry {
         key: "Hourglass (1 Hour)",
@@ -142,7 +167,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hourglass, 1 hour",
         cost_gp: Some(25.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("An hourglass that measures one hour of elapsed time."),
     },
     EquipmentTableEntry {
         key: "Hourglass (1 minute)",
@@ -150,7 +175,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hourglass, 1 minute",
         cost_gp: Some(20.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("An hourglass that measures one minute of elapsed time."),
     },
     EquipmentTableEntry {
         key: "Hourglass (6 seconds)",
@@ -158,7 +183,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hourglass, 6 seconds",
         cost_gp: Some(10.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("An hourglass that measures six seconds of elapsed time (one combat round)."),
     },
     EquipmentTableEntry {
         key: "Iron Spike",
@@ -166,7 +191,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Iron Spike",
         cost_gp: Some(0.05),
         weight: Some(1.0),
-        description: None,
+        description: Some("A foot-long iron spike used to keep doors open or closed and to secure ropes for climbing; a DC 5 Perception check detects the sound of one being driven in."),
     },
     EquipmentTableEntry {
         key: "Magnet",
@@ -174,7 +199,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Magnet",
         cost_gp: Some(0.5),
         weight: Some(0.5),
-        description: None,
+        description: Some("A hand-sized horseshoe magnet that can lift up to 3 pounds of iron; mainly used to detect or retrieve iron, mithral, or adamantine objects."),
     },
     EquipmentTableEntry {
         key: "Marbles",
@@ -182,7 +207,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Marbles",
         cost_gp: Some(0.1),
         weight: Some(2.0),
-        description: None,
+        description: Some("A 2-pound bag of marbles covering a 5-foot square; a creature entering the area must succeed at a DC 10 Reflex save or fall prone."),
     },
     EquipmentTableEntry {
         key: "Periscope",
@@ -190,7 +215,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Periscope",
         cost_gp: Some(20.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A 2-foot metal tube with mirrors at right angles at each end, letting the user safely peer over an obstacle at the cost of a -4 Perception penalty while in use."),
     },
     EquipmentTableEntry {
         key: "Ring (Poison Pill)",
@@ -198,7 +223,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring, Poison Pill",
         cost_gp: Some(20.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A ring with a tiny hidden compartment under the setting, typically used to conceal poison; opening or closing the compartment is a move action."),
     },
     EquipmentTableEntry {
         key: "Powder",
@@ -206,7 +231,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Powder",
         cost_gp: Some(0.01),
         weight: Some(0.5),
-        description: None,
+        description: Some("Powdered chalk, flour, or similar material that, thrown into a square, can momentarily reveal an invisible creature there, or be spread on a surface to reveal footprints."),
     },
     EquipmentTableEntry {
         key: "Rice Paper (Sheet)",
@@ -214,7 +239,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Rice Paper, Sheet",
         cost_gp: Some(0.05),
         weight: Some(0.0),
-        description: None,
+        description: Some("A sheet of paper made from rice or tree bark; hardness 0, 1 hit point, break DC 2."),
     },
     EquipmentTableEntry {
         key: "Rope (Spider Silk/50 ft.)",
@@ -222,7 +247,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Rope, Spider Silk (50 ft.)",
         cost_gp: Some(100.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("Fifty feet of rope woven from monstrous spider silk by goblin slaves; has 6 hit points and requires a DC 25 Strength check to burst."),
     },
     EquipmentTableEntry {
         key: "Signal Horn",
@@ -230,7 +255,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Signal Horn",
         cost_gp: Some(1.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A horn that, when sounded with a DC 10 Perform (wind instruments) check, can convey simple prearranged messages such as \"Attack!\" or \"Help!\" audible up to half a mile away."),
     },
     EquipmentTableEntry {
         key: "Smoked Goggles",
@@ -238,7 +263,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Smoked Goggles",
         cost_gp: Some(10.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("Spectacles with lenses of smoked glass that treat the wearer as always averting their gaze against gaze attacks, at the cost of a -4 Perception penalty and granting onlookers 20% concealment."),
     },
     EquipmentTableEntry {
         key: "String (50 ft.)",
@@ -246,7 +271,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "String (50 ft.)",
         cost_gp: Some(0.01),
         weight: Some(0.5),
-        description: None,
+        description: Some("Fifty feet of string, sold in a ball or spool; hardness 0, 1 hit point, break DC 14. Useful for traps and alarms."),
     },
     EquipmentTableEntry {
         key: "Swarmsuit",
@@ -254,7 +279,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Swarmsuit",
         cost_gp: Some(20.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("Heavy, overlapping layers of clothing and a veiled wide-brimmed hat that grant damage reduction against swarms of Fine or Diminutive creatures, at the cost of halved speed."),
     },
     EquipmentTableEntry {
         key: "Tent (Medium)",
@@ -262,7 +287,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Medium Tent",
         cost_gp: Some(15.0),
         weight: Some(30.0),
-        description: None,
+        description: Some("A tent holding two Medium creatures, taking 30 minutes to assemble."),
     },
     EquipmentTableEntry {
         key: "Tent (Large)",
@@ -270,7 +295,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Large Tent",
         cost_gp: Some(30.0),
         weight: Some(40.0),
-        description: None,
+        description: Some("A tent holding four Medium creatures, taking 45 minutes to assemble."),
     },
     EquipmentTableEntry {
         key: "Tent (Pavilion)",
@@ -278,7 +303,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Pavilion",
         cost_gp: Some(100.0),
         weight: Some(50.0),
-        description: None,
+        description: Some("A large pavilion tent holding ten Medium creatures and taking 90 minutes to assemble; roomy enough for a small fire inside."),
     },
     EquipmentTableEntry {
         key: "Twine (50 ft.)",
@@ -286,7 +311,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Twine (50 ft.)",
         cost_gp: Some(0.01),
         weight: Some(0.5),
-        description: None,
+        description: Some("Fifty feet of twine, sold in a ball or spool; hardness 0, 1 hit point, break DC 14. Useful for traps and alarms."),
     },
     EquipmentTableEntry {
         key: "Weapon Cord",
@@ -294,7 +319,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Weapon Cord",
         cost_gp: Some(0.1),
         weight: Some(0.0),
-        description: None,
+        description: Some("A leather strap attaching a weapon to the wielder's wrist; a dropped weapon can be recovered as a swift action, and cutting the cord is a move action (or an attack against it)."),
     },
     EquipmentTableEntry {
         key: "Whistle (Signal)",
@@ -302,7 +327,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Whistle, Signal",
         cost_gp: Some(0.8),
         weight: Some(0.0),
-        description: None,
+        description: Some("A whistle that, with a DC 5 Perform (wind instruments) check, can convey simple prearranged messages, audible up to a quarter mile away."),
     },
     EquipmentTableEntry {
         key: "Whistle (Silent)",
@@ -310,7 +335,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Whistle, Silent",
         cost_gp: Some(0.9),
         weight: Some(0.0),
-        description: None,
+        description: Some("A whistle pitched so only animals and creatures with keen hearing can perceive it."),
     },
     EquipmentTableEntry {
         key: "Alchemical Grease",
@@ -318,7 +343,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alchemical Grease",
         cost_gp: Some(5.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A slick black goo, one pot of which covers one Medium or two Small creatures, granting a +5 alchemical bonus on Escape Artist checks and grapple-related checks for 4 hours."),
     },
     EquipmentTableEntry {
         key: "Alchemical Solvent (Vial)",
@@ -326,7 +351,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alchemical Solvent (Vial)",
         cost_gp: Some(20.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("A bubbling purple gel that eats through adhesives over a 5-foot square, destroying normal adhesives in 1 round and powerful adhesives in 1d4+1 rounds; has no effect on magical adhesives."),
     },
     EquipmentTableEntry {
         key: "Alchemist's Kindness",
@@ -334,7 +359,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alchemist's Kindness",
         cost_gp: Some(1.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A crystalline powder resembling salt that, mixed with water, produces a fizzing drink that eliminates the effects of a hangover within 10 minutes."),
     },
     EquipmentTableEntry {
         key: "Alkali (Flask)",
@@ -342,7 +367,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alkali (Flask)",
         cost_gp: Some(15.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A flask of caustic liquid that reacts with an ooze's natural acids, dealing double splash-weapon damage against oozes and normal damage against other targets."),
     },
     EquipmentTableEntry {
         key: "Antiplague (Vial)",
@@ -350,7 +375,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Antiplague (Vial)",
         cost_gp: Some(50.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A foul-tasting, milky tonic granting a +5 alchemical bonus on Fortitude saves against disease for 1 hour; a creature already infected may reroll its save that day using the better result."),
     },
     EquipmentTableEntry {
         key: "Bladeguard",
@@ -358,7 +383,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bladeguard",
         cost_gp: Some(40.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A clear resin that, coated on a weapon or ammunition, renders it immune to attacks that damage weapons (such as those from oozes or rust monsters) for 24 hours."),
     },
     EquipmentTableEntry {
         key: "Bloodblock",
@@ -366,7 +391,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bloodblock",
         cost_gp: Some(25.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A gooey, pinkish substance that grants a +5 alchemical bonus on Heal checks to treat wounds and can end an ongoing bleed effect with a DC 15 Heal check."),
     },
     EquipmentTableEntry {
         key: "Casting Plaster",
@@ -374,7 +399,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Casting Plaster",
         cost_gp: Some(0.5),
         weight: Some(5.0),
-        description: None,
+        description: Some("A white, dry powder that, mixed with water, forms a paste that hardens in one hour; used to make casts of footprints, fill gaps, or create medical splints."),
     },
     EquipmentTableEntry {
         key: "Flash Powder",
@@ -382,7 +407,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Flash Powder",
         cost_gp: Some(50.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A coarse gray powder that, ignited as a standard action, blinds creatures within a 10-foot-radius burst for 1 round unless they succeed at a DC 13 Fortitude save."),
     },
     EquipmentTableEntry {
         key: "Light Detector",
@@ -390,7 +415,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Light Detector",
         cost_gp: Some(1.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A hand-sized metal plate covered in light-sensitive paste that darkens at different rates depending on ambient light level, used to detect recent illumination."),
     },
     EquipmentTableEntry {
         key: "Liquid Ice (Flask)",
@@ -398,7 +423,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Liquid Ice (Flask)",
         cost_gp: Some(40.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A sealed jar of crystalline blue fluid that evaporates once opened, freezing liquids or coating objects over 1d6 rounds; can also be thrown as a splash weapon dealing cold damage."),
     },
     EquipmentTableEntry {
         key: "Nushadir (Vial)",
@@ -406,7 +431,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Nushadir (Vial)",
         cost_gp: Some(10.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Small salty pellets that, mixed with water, safely neutralize a cubic foot of acid within a minute, though the vapors can cause nausea."),
     },
     EquipmentTableEntry {
         key: "Smelling Salts",
@@ -414,7 +439,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Smelling Salts",
         cost_gp: Some(25.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("Sharply scented gray crystals that let an unconscious creature attempt a new save against the effect that felled it, or grant momentary consciousness to a dying creature."),
     },
     EquipmentTableEntry {
         key: "Smoke Pellet",
@@ -422,7 +447,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Smoke Pellet",
         cost_gp: Some(25.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A small clay sphere containing two alchemical substances that, thrown as a ranged touch attack, breaks to fill a 5-foot square with yellow smoke for 1 round."),
     },
     EquipmentTableEntry {
         key: "Sneezing Powder (Pouch)",
@@ -430,7 +455,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sneezing Powder (Pouch)",
         cost_gp: Some(60.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A coarse yellowish-red powder splash weapon that causes uncontrollable sneezing for 1d4+1 rounds in creatures that fail a Fortitude save."),
     },
     EquipmentTableEntry {
         key: "Soothe Syrup",
@@ -438,7 +463,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Soothe Syrup",
         cost_gp: Some(25.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("A sweet, wholesome-tasting blue liquid granting a +5 alchemical bonus on saves against nausea and sickened effects for 1 hour after drinking."),
     },
     EquipmentTableEntry {
         key: "Weapon Blanch (Adamantine)",
@@ -446,7 +471,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Adamantine Weapon Blanch",
         cost_gp: Some(100.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass adamantine damage reduction on its first successful hit."),
     },
     EquipmentTableEntry {
         key: "Weapon Blanch (Cold Iron)",
@@ -454,7 +479,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cold Iron Weapon Blanch",
         cost_gp: Some(20.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass cold iron damage reduction on its first successful hit."),
     },
     EquipmentTableEntry {
         key: "Weapon Blanch (Silver)",
@@ -462,7 +487,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Silver Weapon Blanch",
         cost_gp: Some(5.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass silver damage reduction on its first successful hit."),
     },
     EquipmentTableEntry {
         key: "Abacus",
@@ -470,7 +495,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Abacus",
         cost_gp: Some(2.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A simple mechanical device that helps its user perform mathematical calculations."),
     },
     EquipmentTableEntry {
         key: "Alchemist's Kit",
@@ -478,7 +503,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alchemist's Kit",
         cost_gp: Some(25.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A kit assumed to include all the material components an alchemist needs for extracts, mutagens, and bombs, except components with a specific listed cost."),
     },
     EquipmentTableEntry {
         key: "Alchemist's Lab (Portable)",
@@ -486,7 +511,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Alchemist's Lab, Portable",
         cost_gp: Some(75.0),
         weight: Some(20.0),
-        description: None,
+        description: Some("A compact version of a full-size alchemist's lab, granting a +1 circumstance bonus on Craft (alchemy) checks."),
     },
     EquipmentTableEntry {
         key: "Anvil (Blacksmith)",
@@ -494,7 +519,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Anvil (Blacksmith)",
         cost_gp: Some(5.0),
         weight: Some(100.0),
-        description: None,
+        description: Some("A 100-pound blacksmith's anvil, needed for most metalworking Craft tasks."),
     },
     EquipmentTableEntry {
         key: "Anvil (Farrier)",
@@ -502,7 +527,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Anvil (Farrier)",
         cost_gp: Some(5.0),
         weight: Some(50.0),
-        description: None,
+        description: Some("A 50-pound farrier's anvil, sized for shoeing work rather than general blacksmithing."),
     },
     EquipmentTableEntry {
         key: "Anvil (Goldsmith/Silversmith)",
@@ -510,7 +535,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Anvil (Goldsmith/Silversmith)",
         cost_gp: Some(5.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A 10-pound goldsmith's or silversmith's anvil, sized for fine metalworking."),
     },
     EquipmentTableEntry {
         key: "Astrolabe",
@@ -518,7 +543,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Astrolabe",
         cost_gp: Some(100.0),
         weight: Some(6.0),
-        description: None,
+        description: Some("A flat disc with two smaller discs mounted on a central axis; lets its user determine the date and time at night in about a minute, and grants a +2 circumstance bonus on Knowledge (geography), Survival navigation, and Profession (sailor) checks."),
     },
     EquipmentTableEntry {
         key: "Balancing Pole",
@@ -526,7 +551,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Balancing Pole",
         cost_gp: Some(0.8),
         weight: Some(12.0),
-        description: None,
+        description: Some("A flexible 15-to-30-foot pole that grants a +1 circumstance bonus on Acrobatics checks made to balance on narrow surfaces."),
     },
     EquipmentTableEntry {
         key: "Bear Trap",
@@ -534,7 +559,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bear Trap",
         cost_gp: Some(2.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A hinged-jaw trap chained to a ground spike; a captured creature must succeed at a DC 20 Strength check to pry it open or pull the spike free."),
     },
     EquipmentTableEntry {
         key: "Bellows",
@@ -542,7 +567,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bellows",
         cost_gp: Some(1.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A tool useful for starting fires, granting a +1 circumstance bonus on Survival checks made to do so."),
     },
     EquipmentTableEntry {
         key: "Cauldron",
@@ -550,7 +575,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron",
         cost_gp: Some(1.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("An iron pot, sometimes fitted with a hook for hanging over a fire, holding about a gallon; used for cooking and for brewing potions."),
     },
     EquipmentTableEntry {
         key: "Compass",
@@ -558,7 +583,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Compass",
         cost_gp: Some(10.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("An ordinary compass pointing to magnetic north; grants a +2 circumstance bonus on Survival checks to avoid getting lost and on Knowledge (dungeoneering) checks for underground navigation."),
     },
     EquipmentTableEntry {
         key: "Drill",
@@ -566,7 +591,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Drill",
         cost_gp: Some(0.5),
         weight: Some(1.0),
-        description: None,
+        description: Some("A hand tool that can bore a 1-inch-diameter hole in stone, wood, or metal as a standard action; a DC 15 Perception check detects the sound of its use."),
     },
     EquipmentTableEntry {
         key: "Footprint Book",
@@ -574,7 +599,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Footprint Book",
         cost_gp: Some(50.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A 50-page tome of accurate drawings of common animal, humanoid, and monster tracks with notes on stride and tread, granting a +2 circumstance bonus to identify a creature from its tracks."),
     },
     EquipmentTableEntry {
         key: "Fortune-Teller's Deck (Common)",
@@ -582,7 +607,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Fortune-Teller's Deck (Common)",
         cost_gp: Some(1.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("A simple deck of illustrated fortune-telling cards drawn on parchment or wooden plaques."),
     },
     EquipmentTableEntry {
         key: "Fortune-Teller's Deck (Quality)",
@@ -590,7 +615,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Fortune-Teller's Deck (Quality)",
         cost_gp: Some(25.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A quality deck of fortune-telling cards on painted wooden plaques, suitable as an augury spell focus and granting a +1 circumstance bonus on related Profession checks."),
     },
     EquipmentTableEntry {
         key: "Fortune-Teller's Deck (Masterwork)",
@@ -598,7 +623,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Fortune-Teller's Deck (Masterwork)",
         cost_gp: Some(50.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A masterwork fortune-telling deck of wood, ivory, or metal with painted or carved images, suitable as an augury spell focus and granting a +2 circumstance bonus on related Profession checks."),
     },
     EquipmentTableEntry {
         key: "Leeching Kit",
@@ -606,7 +631,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Leeching Kit",
         cost_gp: Some(5.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A ceramic jar half-filled with water containing four 6-inch leeches, granting a +2 circumstance bonus on Heal checks to treat poison; a leech can survive six months between feedings."),
     },
     EquipmentTableEntry {
         key: "Map Maker's Kit",
@@ -614,7 +639,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Map Maker's Kit",
         cost_gp: Some(10.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A small kit with a gridded slate and colored chalk, granting a +2 circumstance bonus on Survival checks to avoid getting lost while mapping."),
     },
     EquipmentTableEntry {
         key: "Portrait Book",
@@ -622,7 +647,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Portrait Book",
         cost_gp: Some(10.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A 100-page book of face drawings for various humanoid races, used to help create a likeness for a portrait or wanted poster."),
     },
     EquipmentTableEntry {
         key: "Pulley",
@@ -630,7 +655,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Pulley",
         cost_gp: Some(2.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A simple block-and-tackle pulley that, once secured, grants a +5 circumstance bonus on Strength checks to lift heavy objects."),
     },
     EquipmentTableEntry {
         key: "Saw",
@@ -638,7 +663,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Saw",
         cost_gp: Some(0.04),
         weight: Some(2.0),
-        description: None,
+        description: Some("A hand saw; inserted between a door and its frame it can cut through wooden bolts or bars, dealing 5 hit points of damage plus the user's Strength modifier as a full-round action."),
     },
     EquipmentTableEntry {
         key: "Sextant",
@@ -646,7 +671,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sextant",
         cost_gp: Some(500.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A navigational instrument used to determine latitude, granting a +4 circumstance bonus on Survival checks to navigate above ground."),
     },
     EquipmentTableEntry {
         key: "Formula Book",
@@ -662,7 +687,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Symptom Kit",
         cost_gp: Some(25.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A small compartmented box of items for feigning illness (false pustules, mouth-foaming pills, fever-inducing herbs) plus a reference book on diseases, granting a +5 bonus on Disguise checks simulating sickness."),
     },
     EquipmentTableEntry {
         key: "Traveling Spellbook",
@@ -670,7 +695,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Traveling Spellbook",
         cost_gp: Some(10.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A lighter, less cumbersome 50-page blank spellbook than a full-size spellbook."),
     },
     EquipmentTableEntry {
         key: "Cleats",
@@ -678,7 +703,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cleats",
         cost_gp: Some(5.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("Shoes fitted with spikes or hooks that reduce the movement penalty on slick surfaces by half, at the cost of damaging finished flooring."),
     },
     EquipmentTableEntry {
         key: "Furs",
@@ -686,7 +711,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Furs",
         cost_gp: Some(12.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("The most basic cold-weather gear; animal furs grant a +2 bonus on Fortitude saves against cold weather (does not stack with the Survival skill's own bonus)."),
     },
     EquipmentTableEntry {
         key: "Outfit (Hot Weather)",
@@ -694,7 +719,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hot Weather Outfit",
         cost_gp: Some(8.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A loose linen robe with a turban or head covering and veil, granting a +2 bonus on Fortitude saves against hot weather (does not stack with the Survival skill's own bonus)."),
     },
     EquipmentTableEntry {
         key: "Snowshoes",
@@ -702,7 +727,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Snowshoes",
         cost_gp: Some(5.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("High-tension nets of rope or sinew in wooden frames, lashed to the feet to reduce the movement penalty in heavy snow by half."),
     },
     EquipmentTableEntry {
         key: "Animal Harness",
@@ -710,7 +735,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Animal Harness",
         cost_gp: Some(2.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A leather or hemp harness that lets its holder restrain and control a domesticated animal; ready-made for common animals, with custom harnesses available for others."),
     },
     EquipmentTableEntry {
         key: "Cage (Diminutive or Fine)",
@@ -718,7 +743,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cage (Diminutive or Fine)",
         cost_gp: Some(10.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A secure, portable enclosure for holding a Diminutive or Fine creature."),
     },
     EquipmentTableEntry {
         key: "Cage (Huge)",
@@ -726,7 +751,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cage (Huge)",
         cost_gp: Some(60.0),
         weight: Some(960.0),
-        description: None,
+        description: Some("A secure, portable enclosure for holding a Huge creature."),
     },
     EquipmentTableEntry {
         key: "Cage (Large)",
@@ -734,7 +759,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cage (Large)",
         cost_gp: Some(30.0),
         weight: Some(240.0),
-        description: None,
+        description: Some("A secure, portable enclosure for holding a Large creature."),
     },
     EquipmentTableEntry {
         key: "Cage (Small or Medium)",
@@ -742,7 +767,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cage (Small or Medium)",
         cost_gp: Some(15.0),
         weight: Some(60.0),
-        description: None,
+        description: Some("A secure, portable enclosure for holding a Small or Medium creature."),
     },
     EquipmentTableEntry {
         key: "Cage (Tiny)",
@@ -750,7 +775,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cage (Tiny)",
         cost_gp: Some(2.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A secure, portable enclosure for holding a Tiny creature."),
     },
     EquipmentTableEntry {
         key: "Dog Sled",
@@ -758,7 +783,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Dog Sled",
         cost_gp: Some(20.0),
         weight: Some(300.0),
-        description: None,
+        description: Some("A sled several feet long, designed to be pulled over snow and ice by a team of trained riding dogs; most have runners for a musher and carry cargo up to the dogs' combined capacity."),
     },
     EquipmentTableEntry {
         key: "Loaded Dice (Average)",
@@ -766,7 +791,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Loaded Dice, Average",
         cost_gp: Some(10.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("Dice weighted with a heavier substance opposite the desired number; a DC 15 Appraise or Perception check is needed to spot the tampering."),
     },
     EquipmentTableEntry {
         key: "Loaded Dice (Superior)",
@@ -774,7 +799,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Loaded Dice, Superior",
         cost_gp: Some(50.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("Higher-quality loaded dice carved around a naturally heavy inclusion, requiring a DC 20 to 30 check to detect."),
     },
     EquipmentTableEntry {
         key: "Marked Cards",
@@ -782,7 +807,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Marked Cards",
         cost_gp: Some(1.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A deck of cards bent, colored, or scratched so an informed user can tell front from back; a DC 25 Perception check is needed to notice the marking."),
     },
     EquipmentTableEntry {
         key: "Arrows (Blunt/20)",
@@ -790,7 +815,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Blunt (20)",
         cost_gp: Some(2.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A bundle of 20 blunted wooden-tipped arrows that deal bludgeoning damage instead of piercing damage."),
     },
     EquipmentTableEntry {
         key: "Arrows (Flight/20)",
@@ -798,7 +823,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Flight (20)",
         cost_gp: Some(2.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A bundle of 20 arrows with light shafts and special fletching, granting 20 extra feet of range on a longbow (10 feet on a shortbow) but dealing damage as though one size category smaller."),
     },
     EquipmentTableEntry {
         key: "Arrows (Smoke/20)",
@@ -806,7 +831,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Smoke (20)",
         cost_gp: Some(200.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A bundle of 20 specially shaped smokestick arrows that trail smoke in flight and create a 5-foot cube of smoke where they strike."),
     },
     EquipmentTableEntry {
         key: "Arrow (Blunt)",
@@ -814,7 +839,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Blunt",
         cost_gp: Some(0.1),
         weight: Some(0.15),
-        description: None,
+        description: Some("A single blunted wooden-tipped arrow that deals bludgeoning damage instead of piercing damage."),
     },
     EquipmentTableEntry {
         key: "Arrow (Flight)",
@@ -822,7 +847,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Flight",
         cost_gp: Some(0.1),
         weight: Some(0.15),
-        description: None,
+        description: Some("A single arrow with a light shaft and special fletching, granting extra range but dealing damage as though one size category smaller."),
     },
     EquipmentTableEntry {
         key: "Arrow (Smoke)",
@@ -830,7 +855,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Smoke",
         cost_gp: Some(10.0),
         weight: Some(0.15),
-        description: None,
+        description: Some("A single specially shaped smokestick arrow that trails smoke in flight and creates a 5-foot cube of smoke where it strikes."),
     },
     EquipmentTableEntry {
         key: "Arrow (Searing)",
@@ -838,7 +863,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Arrow, Searing",
         cost_gp: Some(1516.0),
         weight: Some(0.15),
-        description: None,
+        description: Some("A +1 flaming arrow that continues to burn its target for 1d6 points of fire damage each round for three rounds after a hit; removing it requires a DC 10 Heal check (DC 15 to remove from oneself)."),
     },
     EquipmentTableEntry {
         key: "Arrow (Sizzling)",
@@ -854,7 +879,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bolt, Tangle",
         cost_gp: Some(60.0),
         weight: Some(0.1),
-        description: None,
+        description: Some("A +1 seeking crossbow bolt etched with webs and vines that becomes a sticky mass on impact, entangling the target like a tanglefoot bag."),
     },
     EquipmentTableEntry {
         key: "Bullet (Dustburst)",
@@ -862,7 +887,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bullet, Dustburst",
         cost_gp: Some(0.01),
         weight: Some(0.5),
-        description: None,
+        description: Some("A +1 sling bullet that explodes into a 5-foot cube of choking dust following the target for 1d6 rounds; a creature ending its turn there must save or become sickened and blinded for 1 round."),
     },
     EquipmentTableEntry {
         key: "Quilted Cloth",
@@ -870,7 +895,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Quilted Cloth",
         cost_gp: Some(100.0),
         weight: Some(15.0),
-        description: None,
+        description: Some("An enhanced form of padded armor with internal layers designed to trap incoming projectiles, granting DR 3/- against small ranged piercing weapons only."),
     },
     EquipmentTableEntry {
         key: "Wooden",
@@ -878,7 +903,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Wooden",
         cost_gp: Some(20.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("Leather armor reinforced with plates of fire-treated wood over vital areas; slightly buoyant, reducing its swim armor check penalty to 0."),
     },
     EquipmentTableEntry {
         key: "Armored Coat",
@@ -886,7 +911,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Armored Coat",
         cost_gp: Some(50.0),
         weight: Some(20.0),
-        description: None,
+        description: Some("A sturdy leather coat reinforced with metal plates sewn into the lining; can be donned or removed as a move action, and layers over other armor for better AC at the cost of worse armor check penalties."),
     },
     EquipmentTableEntry {
         key: "Agile Breastplate",
@@ -894,7 +919,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Agile Breastplate",
         cost_gp: Some(400.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A breastplate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to only -1 instead of -4."),
     },
     EquipmentTableEntry {
         key: "Agile Half-Plate",
@@ -902,7 +927,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Agile Half-Plate",
         cost_gp: Some(850.0),
         weight: Some(55.0),
-        description: None,
+        description: Some("A half-plate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to -4, and letting the wearer run at quadruple speed as though wearing light armor."),
     },
     EquipmentTableEntry {
         key: "Armor of Insults",
@@ -910,7 +935,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Armor of Insults",
         cost_gp: Some(25.0),
         weight: Some(20.0),
-        description: None,
+        description: Some("A +1 studded leather that can force hostile creatures within 60 feet to attack its wearer for several rounds unless they succeed at a Will save."),
     },
     EquipmentTableEntry {
         key: "Boneless Leather",
@@ -918,7 +943,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boneless Leather",
         cost_gp: Some(11010.0),
         weight: Some(15.0),
-        description: None,
+        description: Some("A +1 leather armor granting a +5 bonus on Escape Artist and Acrobatics checks, a +5 bonus to CMD, and DR 5/piercing or slashing."),
     },
     EquipmentTableEntry {
         key: "Buccaneer's Breastplate",
@@ -926,7 +951,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Buccaneer's Breastplate",
         cost_gp: Some(200.0),
         weight: Some(30.0),
-        description: None,
+        description: Some("A +1 breastplate that grants the wearer a continuous water walk effect."),
     },
     EquipmentTableEntry {
         key: "Daystar Half-Plate",
@@ -934,7 +959,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Daystar Half-Plate",
         cost_gp: Some(600.0),
         weight: Some(50.0),
-        description: None,
+        description: Some("A +1 half-plate that provides an at-will daylight effect and, once per day, a sunburst effect."),
     },
     EquipmentTableEntry {
         key: "Folding Plate",
@@ -942,7 +967,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Folding Plate",
         cost_gp: Some(1500.0),
         weight: Some(50.0),
-        description: None,
+        description: Some("A +1 full plate armor that can transform between a wearable brooch and its full armor form on command."),
     },
     EquipmentTableEntry {
         key: "Forsaken Banded Mail",
@@ -950,7 +975,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Forsaken Banded Mail",
         cost_gp: Some(250.0),
         weight: Some(35.0),
-        description: None,
+        description: Some("A +1 banded mail that prevents its wearer from casting divine spells but grants spell resistance against divine abilities and treats its enhancement bonus as 2 higher against divine creatures."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Ogre)",
@@ -958,7 +983,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME]-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into the matching giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Hill)",
@@ -966,7 +991,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a hill giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Stone)",
@@ -974,7 +999,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a stone giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Fire)",
@@ -982,7 +1007,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a fire giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Frost)",
@@ -990,7 +1015,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a frost giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Troll)",
@@ -998,7 +1023,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME]-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a troll's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Cloud)",
@@ -1006,7 +1031,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a cloud giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Giant Hide (Storm)",
@@ -1014,7 +1039,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "[NAME] Giant-hide",
         cost_gp: Some(15.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +3 hide armor that lets the wearer transform, once per day, into a storm giant's form for up to 15 minutes."),
     },
     EquipmentTableEntry {
         key: "Mistmail",
@@ -1022,7 +1047,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Mistmail",
         cost_gp: Some(1100.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("A +1 chain shirt that can transform into a concealing fog once per day."),
     },
     EquipmentTableEntry {
         key: "Murderer's Blackcloth",
@@ -1030,7 +1055,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Murderer's Blackcloth",
         cost_gp: Some(5.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A +1 shadow padded armor that increases a wearing rogue's sneak attack bleed damage by 1."),
     },
     EquipmentTableEntry {
         key: "Soothsayer's Raiment (Battlecry)",
@@ -1038,7 +1063,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Soothsayer's Raiment (Battlecry)",
         cost_gp: Some(150.0),
         weight: Some(40.0),
-        description: None,
+        description: Some("A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlecry revelation, plus a +5 bonus on the wearer's divination spell success."),
     },
     EquipmentTableEntry {
         key: "Soothsayer's Raiment (Battlefield Clarity)",
@@ -1046,7 +1071,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Soothsayer's Raiment (Battlefield Clarity)",
         cost_gp: Some(150.0),
         weight: Some(40.0),
-        description: None,
+        description: Some("A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlefield Clarity revelation, plus a +5 bonus on the wearer's divination spell success."),
     },
     EquipmentTableEntry {
         key: "Battlement Shield",
@@ -1054,7 +1079,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Battlement Shield",
         cost_gp: Some(16180.0),
         weight: Some(45.0),
-        description: None,
+        description: Some("A +2 tower shield that can transform, once per day, into a 10-by-10-by-1-foot masonry wall with battlements."),
     },
     EquipmentTableEntry {
         key: "Fortress Shield",
@@ -1062,7 +1087,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Fortress Shield",
         cost_gp: Some(19180.0),
         weight: Some(45.0),
-        description: None,
+        description: Some("A +1 tower shield that can create a sealed iron cube providing total cover, requiring occupants to hold their breath after the third round."),
     },
     EquipmentTableEntry {
         key: "Quickdraw Shield (Light/Wooden)",
@@ -1070,7 +1095,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Quickdraw Shield, Light Wooden",
         cost_gp: Some(53.0),
         weight: Some(6.0),
-        description: None,
+        description: Some("A light wooden shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."),
     },
     EquipmentTableEntry {
         key: "Quickdraw Shield (Light/Steel)",
@@ -1078,7 +1103,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Quickdraw Shield, Light Steel",
         cost_gp: Some(59.0),
         weight: Some(7.0),
-        description: None,
+        description: Some("A light steel shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."),
     },
     EquipmentTableEntry {
         key: "Battle Aspergillum",
@@ -1086,7 +1111,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Battle Aspergillum",
         cost_gp: Some(5.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A light mace with a hollow head and a metal plug that sprinkles holy water on a successful hit, dealing 1 extra point of damage per hit up to five times."),
     },
     EquipmentTableEntry {
         key: "Cestus",
@@ -1094,7 +1119,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cestus",
         cost_gp: Some(5.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A leather or thick-cloth glove reinforced with metal plates, covering mid-finger to mid-forearm; deals bludgeoning or piercing damage, at a -2 penalty on tasks requiring precision with that hand."),
     },
     EquipmentTableEntry {
         key: "Stake (Wood)",
@@ -1102,7 +1127,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Wooden Stake",
         cost_gp: Some(0.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A sharpened piece of wood; an iron spike used as a weapon deals this same damage."),
     },
     EquipmentTableEntry {
         key: "Bayonet",
@@ -1110,7 +1135,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bayonet",
         cost_gp: Some(5.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A close-combat blade designed to fit into the grooves or muzzle of a crossbow or firearm; attaching or removing it is a move action."),
     },
     EquipmentTableEntry {
         key: "Spear (Boar)",
@@ -1118,7 +1143,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boar Spear",
         cost_gp: Some(5.0),
         weight: Some(8.0),
-        description: None,
+        description: Some("A spiral-bladed spear with a metal crossbar about halfway down its length; readying it against a charge grants a +2 shield bonus to AC."),
     },
     EquipmentTableEntry {
         key: "Sword Cane",
@@ -1126,7 +1151,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sword Cane",
         cost_gp: Some(45.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A slender light blade concealed within a wooden container serving as both scabbard and hiding place; drawing it is a swift action, and a DC 20 Perception check (DC 10 if handled) is needed to identify it as a weapon."),
     },
     EquipmentTableEntry {
         key: "Bardiche",
@@ -1134,7 +1159,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bardiche",
         cost_gp: Some(13.0),
         weight: Some(14.0),
-        description: None,
+        description: Some("A polearm with a long, heavy cutting blade mounted on a pole."),
     },
     EquipmentTableEntry {
         key: "Bec de Corbin",
@@ -1142,7 +1167,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bec de Corbin",
         cost_gp: Some(15.0),
         weight: Some(12.0),
-        description: None,
+        description: Some("A polearm similar to a lucerne hammer but with a blunt head, granting a +2 bonus on combat maneuver checks to sunder medium or heavy armor."),
     },
     EquipmentTableEntry {
         key: "Bill",
@@ -1150,7 +1175,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bill",
         cost_gp: Some(11.0),
         weight: Some(11.0),
-        description: None,
+        description: Some("A polearm with a curved or hooked cutting blade and a spiked rear projection; grants a +1 shield bonus to AC when fighting defensively, and imposes a Ride penalty on mounted opponents struck by it."),
     },
     EquipmentTableEntry {
         key: "Glaive-Guisarme",
@@ -1158,7 +1183,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Glaive-Guisarme",
         cost_gp: Some(12.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A polearm combining a glaive's blade with a hook, imposing an extra Ride penalty on mounted opponents struck by it."),
     },
     EquipmentTableEntry {
         key: "Lucerne Hammer",
@@ -1166,7 +1191,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lucerne Hammer",
         cost_gp: Some(15.0),
         weight: Some(12.0),
-        description: None,
+        description: Some("A polearm with a pronged hammer head for crushing blows and a spiked head for piercing, granting a +2 bonus on combat maneuver checks to sunder armor."),
     },
     EquipmentTableEntry {
         key: "Dagger (Swordbreaker)",
@@ -1174,7 +1199,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Swordbreaker Dagger",
         cost_gp: Some(10.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A dagger with notched grooves designed to catch and disarm or sunder a bladed weapon, granting a +4 bonus on disarm or sunder attempts against bladed weapons for a proficient wielder."),
     },
     EquipmentTableEntry {
         key: "Falcata",
@@ -1182,7 +1207,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Falcata",
         cost_gp: Some(18.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A heavy blade with a single sharp, concave edge and a hook-shaped hilt, balancing an axe's weight distribution with a sword's cutting edge."),
     },
     EquipmentTableEntry {
         key: "Khopesh",
@@ -1190,7 +1215,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Khopesh",
         cost_gp: Some(20.0),
         weight: Some(8.0),
-        description: None,
+        description: Some("A heavy blade with a convex curve near its tip, giving it an overall shape similar to a battleaxe."),
     },
     EquipmentTableEntry {
         key: "Sword (Temple)",
@@ -1198,7 +1223,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Temple Sword",
         cost_gp: Some(30.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A heavy blade favored by guardians of religious sites, with a crescent-shaped edge resembling a hybrid of a sickle and sword; monks are proficient with it."),
     },
     EquipmentTableEntry {
         key: "Spear (Chain)",
@@ -1206,7 +1231,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chain Spear",
         cost_gp: Some(15.0),
         weight: Some(13.0),
-        description: None,
+        description: Some("A short thrusting spear whose butt is fitted with a length of chain, often spiked and hooked, usable to make trip attacks."),
     },
     EquipmentTableEntry {
         key: "Mancatcher",
@@ -1214,7 +1239,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Mancatcher",
         cost_gp: Some(15.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A polearm with two curved metal bands, sized for a specific creature size category, that close around a target on a successful touch attack followed by a grapple check."),
     },
     EquipmentTableEntry {
         key: "Spirit Blade",
@@ -1222,7 +1247,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Spirit Blade",
         cost_gp: Some(2.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A +3 ghost touch dagger with a translucent blade decorated with faces and mist; can cast dispel magic once per day."),
     },
     EquipmentTableEntry {
         key: "Beaststrike Club",
@@ -1230,7 +1255,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Beaststrike Club",
         cost_gp: Some(0.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A +1 club that a wild shape user can expend a daily use to transform into a natural weapon form (bite, claw, gore, slam, sting, or talon), counting as both a natural and a manufactured weapon."),
     },
     EquipmentTableEntry {
         key: "Mace (Boulderhead)",
@@ -1238,7 +1263,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Mace, Boulderhead",
         cost_gp: Some(3500.0),
         weight: Some(8.0),
-        description: None,
+        description: Some("A +1 heavy mace that, once per day, releases a Large boulder rolling 60 feet and dealing 3d8+5 damage (Reflex DC 19 half), leaving difficult terrain that regrows over 24 hours."),
     },
     EquipmentTableEntry {
         key: "Guarding Blade",
@@ -1246,7 +1271,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Guarding Blade",
         cost_gp: Some(10.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A +1 dancing short sword that automatically defends an unconscious or sleeping wielder, attacking nearby enemies for several rounds before dropping back into the wielder's square."),
     },
     EquipmentTableEntry {
         key: "Hammer (Ricochet)",
@@ -1254,7 +1279,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hammer, Ricochet",
         cost_gp: Some(1.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A +1 returning light hammer that ricochets between multiple targets using the wielder's extra base-attack-bonus attacks, with cumulative range penalties on each bounce."),
     },
     EquipmentTableEntry {
         key: "Starknife (Sparkwake)",
@@ -1262,7 +1287,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Starknife, Sparkwake",
         cost_gp: Some(19024.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A +1 shock starknife that leaves trails of sparks in flight; once per day it can transform into an 8d6 lightning bolt (Reflex DC 14 half) before returning to its physical form."),
     },
     EquipmentTableEntry {
         key: "Axe (Undercutting)",
@@ -1270,7 +1295,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Undercutting Axe",
         cost_gp: Some(10.0),
         weight: Some(6.0),
-        description: None,
+        description: Some("A +1 giant-bane battleaxe that, after a successful hit, can invoke a maximized ray of enfeeblement once per day against the struck creature."),
     },
     EquipmentTableEntry {
         key: "Trident of Stability",
@@ -1278,7 +1303,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Trident of Stability",
         cost_gp: Some(15.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A +1 trident fitted with a footrest bar that functions as an immovable rod when stepped on, granting a large CMD bonus and halting falls."),
     },
     EquipmentTableEntry {
         key: "Blade of Binding",
@@ -1286,7 +1311,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Blade of Binding",
         cost_gp: Some(50.0),
         weight: Some(8.0),
-        description: None,
+        description: Some("A +1 greatsword that enables free grapple attempts on a successful hit; the blade transforms into a chain that wraps around the target (Escape Artist DC 20, break DC 28, hardness 10, 10 hit points)."),
     },
     EquipmentTableEntry {
         key: "Lance (Jousting)",
@@ -1294,7 +1319,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lance of Jousting",
         cost_gp: Some(10.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A +1 ornate lance that forces a mounted opponent struck by it to make a Ride check (DC 10 plus damage dealt) or be knocked from the saddle."),
     },
     EquipmentTableEntry {
         key: "Lance (Shieldsplitter)",
@@ -1302,7 +1327,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Shieldsplitter Lance",
         cost_gp: Some(10.0),
         weight: Some(10.0),
-        description: None,
+        description: Some("A +1 keen lance that can penetrate shields, dealing shield damage on a hit and bypassing hardness during sunder attempts against a shielded opponent."),
     },
     EquipmentTableEntry {
         key: "Buffoon's Sword",
@@ -1310,7 +1335,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Buffoon's Sword",
         cost_gp: Some(10.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A cursed blade that behaves like a sword of subtlety until used in combat, at which point it imposes a -10 penalty on Stealth checks and forces the wielder to blurt out the truth unless a DC 15 Will save succeeds."),
     },
     EquipmentTableEntry {
         key: "Chakram",
@@ -1318,7 +1343,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Chakram",
         cost_gp: Some(1.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A flat, open-centered metal discus with a sharpened edge; using it in melee imposes a -1 penalty and risks a DC 15 Reflex save to avoid cutting yourself."),
     },
     EquipmentTableEntry {
         key: "Pilum",
@@ -1326,7 +1351,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Pilum",
         cost_gp: Some(5.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A heavy javelin designed to break and embed itself in a shield on a hit, denying the shield's AC bonus until the wielder spends a standard action prying it free."),
     },
     EquipmentTableEntry {
         key: "Boomerang",
@@ -1334,7 +1359,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boomerang",
         cost_gp: Some(3.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A flat, curved wooden thrown weapon that does not return to the thrower."),
     },
     EquipmentTableEntry {
         key: "Crossbow (Double)",
@@ -1342,7 +1367,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Crossbow, [NAME]",
         cost_gp: Some(300.0),
         weight: Some(18.0),
-        description: None,
+        description: Some("A heavy crossbow that fires a pair of iron-tipped bolts with a single trigger pull; imposes a -4 penalty if proficient (-8 if not), and only the first bolt can score a critical hit or sneak attack."),
     },
     EquipmentTableEntry {
         key: "Bomb",
@@ -1358,7 +1383,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Brass Knuckles",
         cost_gp: Some(1.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A close-combat weapon fitted around the knuckles, dealing lethal unarmed damage; a monk using them deals monk unarmed damage."),
     },
     EquipmentTableEntry {
         key: "Improvised Weapon (Light)",
@@ -1366,7 +1391,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Improvised Weapon, Light",
         cost_gp: Some(5.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A light object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."),
     },
     EquipmentTableEntry {
         key: "Improvised Weapon (One-Handed)",
@@ -1374,7 +1399,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Improvised Weapon, One-Handed",
         cost_gp: Some(0.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A one-handed object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."),
     },
     EquipmentTableEntry {
         key: "Improvised Weapon (Two-Handed)",
@@ -1382,7 +1407,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Improvised Weapon, Two-Handed",
         cost_gp: Some(0.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A two-handed object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."),
     },
     EquipmentTableEntry {
         key: "Beacon of True Faith",
@@ -1390,7 +1415,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Beacon of True Faith",
         cost_gp: Some(0.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("An ornate electrum torch bearing an undying magical flame; it functions as an everburning torch for most creatures, but grants alignment-based powers to divine spellcasters and faithful creatures."),
     },
     EquipmentTableEntry {
         key: "Hammer of Thunderbolts",
@@ -1398,7 +1423,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hammer of Thunderbolts",
         cost_gp: Some(0.0),
         weight: Some(15.0),
-        description: None,
+        description: Some("A +3 Large returning warhammer; when wielded alongside a belt of giant strength by someone who knows its true nature, it becomes a +5 giant-bane thundering hammer with a thunderclap ability."),
     },
     EquipmentTableEntry {
         key: "Knucklebone of Fickle Fortune",
@@ -1406,7 +1431,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Knucklebone of Fickle Fortune",
         cost_gp: Some(0.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A piece of bone worn down to a near sphere, resembling a twenty-sided die, that produces random effects ranging from permanent negative levels to resurrection when rolled."),
     },
     EquipmentTableEntry {
         key: "Perfect Golden Lute",
@@ -1414,7 +1439,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Perfect Golden Lute",
         cost_gp: Some(0.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A flawless golden lute granting a +10 competence bonus on Perform checks and extending bardic performance abilities to those with appropriate ranks."),
     },
     EquipmentTableEntry {
         key: "Spindle of Perfect Knowledge",
@@ -1422,7 +1447,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Spindle of Perfect Knowledge",
         cost_gp: Some(0.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A flawless marquise-cut diamond ioun stone that functions as a +4 headband of mental superiority, granting five ranks in two random Knowledge skills and language comprehension."),
     },
     EquipmentTableEntry {
         key: "Talisman of Reluctant Wishes",
@@ -1430,7 +1455,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Talisman of Reluctant Wishes",
         cost_gp: Some(0.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A rugged rock resembling a stone of controlling earth elementals that grants wishes based on the holder's Charisma, but acts merely as a stone of weight on a failed attempt."),
     },
     EquipmentTableEntry {
         key: "Bottle of the Bound",
@@ -1438,7 +1463,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bottle of the Bound",
         cost_gp: Some(0.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("An ancient brass bottle that traps a fiendish army; a holder who knows the command words can use it like a summon monster IX spell at will, summoning only evil-subtype creatures."),
     },
     EquipmentTableEntry {
         key: "Cloud Castle of the Storm King",
@@ -1446,7 +1471,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cloud Castle of the Storm King",
         cost_gp: Some(0.0),
         weight: Some(0.0),
-        description: None,
+        description: Some("A grand floating fortress held aloft and propelled by storm clouds rumbling with thunder and crackling with lightning, able to house up to 300 Medium creatures and grant its master various weather-related spell-like abilities."),
     },
     EquipmentTableEntry {
         key: "Fork of the Forgotten One",
@@ -1454,7 +1479,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Fork of the Forgotten One",
         cost_gp: Some(0.0),
         weight: Some(12.0),
-        description: None,
+        description: Some("A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die."),
     },
     EquipmentTableEntry {
         key: "The Moaning Diamond",
@@ -1462,7 +1487,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "The Moaning Diamond",
         cost_gp: Some(0.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("An uncut diamond that produces a constant moaning sound; three times per day its bearer can reshape earth and stone as if by stone shape, affecting a large volume of material."),
     },
     EquipmentTableEntry {
         key: "The Shield of the Sun",
@@ -1470,7 +1495,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "The Shield of the Sun",
         cost_gp: Some(0.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A +5 shield that grants paladin spellcasting ability and spell resistance; a chaotic or evil character wielding it gains four negative levels for as long as they possess it."),
     },
     EquipmentTableEntry {
         key: "Staff of Bolstering",
@@ -1478,7 +1503,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Bolstering",
         cost_gp: Some(20800.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A rosewood staff bound with metal rings, granting bear's endurance, bull's strength, cat's grace, and greater magic weapon."),
     },
     EquipmentTableEntry {
         key: "Staff of Cackling Wrath",
@@ -1486,7 +1511,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Cackling Wrath",
         cost_gp: Some(23600.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A gnarled, thorn-covered staff granting blindness/deafness, charm person, hold person, and inflict moderate wounds, plus baleful polymorph, bestow curse, and vampiric touch."),
     },
     EquipmentTableEntry {
         key: "Staff of Hoarding",
@@ -1494,7 +1519,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Hoarding",
         cost_gp: Some(30016.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A teak staff studded with gold and silver coins, granting identify, locate object, magic aura, secret chest, and legend lore."),
     },
     EquipmentTableEntry {
         key: "Staff of Journeys",
@@ -1502,7 +1527,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Journeys",
         cost_gp: Some(13600.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A dark gray-barked walking stick forked at the top, granting detect snares and pits, endure elements, longstrider, pass without trace, and freedom of movement."),
     },
     EquipmentTableEntry {
         key: "Staff of Many Rays",
@@ -1510,7 +1535,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Many Rays",
         cost_gp: Some(52800.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A white wooden staff with swirls of shining metal, granting ray of enfeeblement, ray of exhaustion, scorching ray, enervation, and disintegrate."),
     },
     EquipmentTableEntry {
         key: "Staff of Obstacles",
@@ -1518,7 +1543,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Obstacles",
         cost_gp: Some(25800.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A worn stone-like staff that is surprisingly light, granting arcane lock, grease, wind wall, wall of fire, wall of ice, and wall of stone."),
     },
     EquipmentTableEntry {
         key: "Staff of Performance",
@@ -1526,7 +1551,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Performance",
         cost_gp: Some(26800.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A varnished cedar staff that grows ornamental keys and strings to resemble its owner's favorite instrument, granting calm emotions, glibness, hypnotic pattern, pyrotechnics, enthrall, major image, and sculpt sound."),
     },
     EquipmentTableEntry {
         key: "Staff of Revelations",
@@ -1534,7 +1559,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Revelations",
         cost_gp: Some(20400.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A forked walnut staff resembling a dowsing rod, granting augury, speak with dead, divination, and commune."),
     },
     EquipmentTableEntry {
         key: "Staff of Rigor",
@@ -1542,7 +1567,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Rigor",
         cost_gp: Some(13600.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("An iron-shod black staff granting bane, cause fear, command, magic weapon, and align weapon."),
     },
     EquipmentTableEntry {
         key: "Staff of Slumber",
@@ -1550,7 +1575,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Slumber",
         cost_gp: Some(34050.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A staff with a smoky, almost hypnotic spiral pattern, granting deep slumber, ray of exhaustion, dream, nightmare, waves of fatigue, and symbol of sleep."),
     },
     EquipmentTableEntry {
         key: "Staff of Shrieking",
@@ -1558,7 +1583,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Shrieking",
         cost_gp: Some(14400.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metal staff with holes that make it emit an eerie moan when swung, granting shatter, sound burst, and shout."),
     },
     EquipmentTableEntry {
         key: "Staff of Souls",
@@ -1566,7 +1591,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Souls",
         cost_gp: Some(16400.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("An ominous-looking staff granting deathwatch, detect undead, gentle repose, speak with dead, and death ward."),
     },
     EquipmentTableEntry {
         key: "Staff of Stealth",
@@ -1574,7 +1599,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Stealth",
         cost_gp: Some(18400.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A twisted, dark gray staff granting disguise self, invisibility, nondetection, and greater invisibility."),
     },
     EquipmentTableEntry {
         key: "Staff of Toxins",
@@ -1582,7 +1607,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Toxins",
         cost_gp: Some(12600.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A hemlock-shrouded oak staff giving off a faint whiff of rot, granting stinking cloud and cloudkill."),
     },
     EquipmentTableEntry {
         key: "Staff of Traps",
@@ -1590,7 +1615,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Traps",
         cost_gp: Some(21200.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A dark wooden staff tipped with chalk-like stone, granting alarm, magic mouth, phantom trap, explosive runes, fire trap, and sepia snake sigil."),
     },
     EquipmentTableEntry {
         key: "Staff of Vision",
@@ -1598,7 +1623,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Vision",
         cost_gp: Some(41250.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A brass staff topped with a clear crystal lens, granting arcane eye, arcane sight, see invisibility, prying eyes, scrying, and true seeing."),
     },
     EquipmentTableEntry {
         key: "Staff of Weather",
@@ -1606,7 +1631,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Staff of Weather",
         cost_gp: Some(44200.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A carved oaken staff depicting weather opposite the current conditions, granting fog cloud, gust of wind, wind wall, ice storm, sleet storm, and control weather."),
     },
     EquipmentTableEntry {
         key: "Rod (Bouncing/Lesser)",
@@ -1614,7 +1639,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Bouncing/Normal)",
@@ -1622,7 +1647,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Bouncing/Greater)",
@@ -1630,7 +1655,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Dazing/Lesser)",
@@ -1638,7 +1663,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(14000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Dazing/Normal)",
@@ -1646,7 +1671,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(54000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Dazing/Greater)",
@@ -1654,7 +1679,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(121500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Disruptive/Lesser)",
@@ -1662,7 +1687,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Disruptive/Normal)",
@@ -1670,7 +1695,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Disruptive/Greater)",
@@ -1678,7 +1703,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Ectoplasmic/Lesser)",
@@ -1686,7 +1711,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Ectoplasmic/Normal)",
@@ -1694,7 +1719,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Ectoplasmic/Greater)",
@@ -1702,7 +1727,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Acid/Lesser)",
@@ -1710,7 +1735,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Acid/Normal)",
@@ -1718,7 +1743,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Acid/Greater)",
@@ -1726,7 +1751,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Cold/Lesser)",
@@ -1734,7 +1759,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Cold/Normal)",
@@ -1742,7 +1767,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Cold/Greater)",
@@ -1750,7 +1775,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Electricity/Lesser)",
@@ -1758,7 +1783,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Electricity/Normal)",
@@ -1766,7 +1791,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Electricity/Greater)",
@@ -1774,7 +1799,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Fire/Lesser)",
@@ -1782,7 +1807,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Fire/Normal)",
@@ -1790,7 +1815,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Elemental Fire/Greater)",
@@ -1798,7 +1823,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Focused/Lesser)",
@@ -1806,7 +1831,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Focused/Normal)",
@@ -1814,7 +1839,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Focused/Greater)",
@@ -1822,7 +1847,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Intensified/Lesser)",
@@ -1830,7 +1855,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Intensified/Normal)",
@@ -1838,7 +1863,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Intensified/Greater)",
@@ -1846,7 +1871,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Lingering/Lesser)",
@@ -1854,7 +1879,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Lingering/Normal)",
@@ -1862,7 +1887,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Lingering/Greater)",
@@ -1870,7 +1895,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Merciful/Lesser)",
@@ -1878,7 +1903,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(1500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Merciful/Normal)",
@@ -1886,7 +1911,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(5500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Merciful/Greater)",
@@ -1894,7 +1919,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(12250.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Persistent/Lesser)",
@@ -1902,7 +1927,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(9000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Persistent/Normal)",
@@ -1910,7 +1935,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(32500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Persistent/Greater)",
@@ -1918,7 +1943,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(73000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Reach/Lesser)",
@@ -1926,7 +1951,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Reach/Normal)",
@@ -1934,7 +1959,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Reach/Greater)",
@@ -1942,7 +1967,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Selective/Lesser)",
@@ -1950,7 +1975,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Selective/Normal)",
@@ -1958,7 +1983,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(11000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Selective/Greater)",
@@ -1966,7 +1991,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(24500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Sickening/Lesser)",
@@ -1974,7 +1999,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(9000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Sickening/Normal)",
@@ -1982,7 +2007,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(32500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Sickening/Greater)",
@@ -1990,7 +2015,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(73000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Thundering/Lesser)",
@@ -1998,7 +2023,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(9000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Thundering/Normal)",
@@ -2006,7 +2031,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(32500.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod (Thundering/Greater)",
@@ -2014,7 +2039,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Metamagic Rod of [NAME]",
         cost_gp: Some(73000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."),
     },
     EquipmentTableEntry {
         key: "Rod of Arson",
@@ -2022,7 +2047,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Rod of Arson",
         cost_gp: Some(0.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A cursed rod, disguised as a rod of flame extinguishing, that instead channels flame into its wielder's body, compelling them to set flammable objects alight or take fire damage resisting the urge."),
     },
     EquipmentTableEntry {
         key: "Dungeon Ring (Jailers)",
@@ -2030,7 +2055,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Jailer's Ring",
         cost_gp: Some(16000.0),
         weight: None,
-        description: None,
+        description: Some("A ring that keeps its wearer constantly aware, status-like, of any linked prisoner's ring wearers, letting the jailer scry or teleport to them."),
     },
     EquipmentTableEntry {
         key: "Dungeon Ring (Prisoners)",
@@ -2038,7 +2063,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Prisoner's Ring",
         cost_gp: Some(250.0),
         weight: None,
-        description: None,
+        description: Some("A cursed ring that, once placed on a subject by a jailer's ring wearer, cannot be removed by the wearer without powerful magic."),
     },
     EquipmentTableEntry {
         key: "Ring of Arcane Signets",
@@ -2046,7 +2071,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Arcane Signets",
         cost_gp: Some(1000.0),
         weight: None,
-        description: None,
+        description: Some("A plain copper ring whose amorphous crystal setting forms into a specific rune or sigil the first time each wearer puts it on, letting them stamp that mark onto objects."),
     },
     EquipmentTableEntry {
         key: "Ring of Delayed Doom",
@@ -2054,7 +2079,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Delayed Doom",
         cost_gp: Some(45000.0),
         weight: None,
-        description: None,
+        description: Some("A ring set with garnets that lets its wearer delay a harmful saving-throw effect by destroying a garnet, for up to nine total one-minute delays."),
     },
     EquipmentTableEntry {
         key: "Ring of Forcefangs",
@@ -2062,7 +2087,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Forcefangs",
         cost_gp: Some(8000.0),
         weight: None,
-        description: None,
+        description: Some("A ring that negates force spells targeted at its wearer and stores their energy as charges the wearer can later expend to cast magic missile offensively."),
     },
     EquipmentTableEntry {
         key: "Ring of Maniacal Devices",
@@ -2070,7 +2095,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Maniacal Devices",
         cost_gp: Some(5000.0),
         weight: None,
-        description: None,
+        description: Some("A ring granting a +5 competence bonus on checks to build or disable traps and to use Disable Device, including untrained use."),
     },
     EquipmentTableEntry {
         key: "Ring of Retribution",
@@ -2078,7 +2103,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Retribution",
         cost_gp: Some(15000.0),
         weight: None,
-        description: None,
+        description: Some("A ring that, once per day, detonates in a 30-foot radius dealing 10d6 points of fire damage."),
     },
     EquipmentTableEntry {
         key: "Cannibal Ring",
@@ -2086,7 +2111,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cannibal Ring",
         cost_gp: Some(0.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A cursed ring that appears to be a ring of sustenance but, after 7 days, causes constant hunger and thirst so severe the wearer is eventually driven to cannibalism."),
     },
     EquipmentTableEntry {
         key: "Ring of Truth",
@@ -2094,7 +2119,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ring of Truth",
         cost_gp: Some(0.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A cursed ring that renders its wearer unable to tell a deliberate lie, in speech or writing, unless they succeed at a DC 20 Will save."),
     },
     EquipmentTableEntry {
         key: "All Tools Vest",
@@ -2102,7 +2127,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "All Tools Vest",
         cost_gp: Some(1800.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A light leather vest with many pockets that, once per day for 24 hours, summons the complete standard tools for any one Craft skill."),
     },
     EquipmentTableEntry {
         key: "Amulet of Magecraft",
@@ -2110,7 +2135,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Amulet of Magecraft",
         cost_gp: Some(20000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A heavy silver necklace that functions as a universalist wizard's bonded object, letting its bearer spontaneously convert spells of their chosen school."),
     },
     EquipmentTableEntry {
         key: "Amulet of Spell Cunning",
@@ -2118,7 +2143,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Amulet of Spell Cunning",
         cost_gp: Some(10000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A silver locket that functions as a wizard's bonded object, letting its bearer prepare three additional spell levels of spells each day."),
     },
     EquipmentTableEntry {
         key: "Annihilation Spectacles",
@@ -2126,7 +2151,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Annihilation Spectacles",
         cost_gp: Some(2500.0),
         weight: Some(0.25),
-        description: None,
+        description: Some("Darkly tinted glasses that let a transmuter spontaneously convert prepared spells into transmutation spells, or cast disintegrate once per day."),
     },
     EquipmentTableEntry {
         key: "Apple of Eternal Sleep",
@@ -2134,7 +2159,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Apple of Eternal Sleep",
         cost_gp: Some(2500.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A beautiful red apple that, if eaten, forces a DC 19 Will save or induces an eternal magical sleep requiring break enchantment to end."),
     },
     EquipmentTableEntry {
         key: "Assisting Gloves",
@@ -2142,7 +2167,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Assisting Gloves",
         cost_gp: Some(180.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A simple glove that, on a spoken command word, transforms into a glowing disembodied hand; as a swift action the wearer can have the glove assist them with a task as if using the aid another action."),
     },
     EquipmentTableEntry {
         key: "Bandages of Rapid Recovery",
@@ -2150,7 +2175,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bandages of Rapid Recovery",
         cost_gp: Some(200.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Linen bandages that let their user recover as if under complete bed rest regardless of activity, and grant a +4 bonus to effective character level when receiving long-term care."),
     },
     EquipmentTableEntry {
         key: "Book of the Loremaster",
@@ -2158,7 +2183,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Book of the Loremaster",
         cost_gp: Some(15000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A digest-sized book that grants a bard a +5 competence bonus, up to three times daily, when taking 10 or 20 on a Knowledge check."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Cold)",
@@ -2166,7 +2191,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Cold)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat cold terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Desert)",
@@ -2174,7 +2199,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Desert)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat desert terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Forest)",
@@ -2182,7 +2207,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Forest)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat forest terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Jungle)",
@@ -2190,7 +2215,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Jungle)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat jungle terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Mountain)",
@@ -2198,7 +2223,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Mountain)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat mountain terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Plains)",
@@ -2206,7 +2231,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Plains)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat plains terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Planes)",
@@ -2214,7 +2239,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Planes)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat planar terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Swamp)",
@@ -2222,7 +2247,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Swamp)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat swamp terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Underground)",
@@ -2230,7 +2255,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Underground)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat underground terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Urban)",
@@ -2238,7 +2263,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Urban)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat urban terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Boots of Friendly Terrain (Water)",
@@ -2246,7 +2271,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Boots of Friendly Terrain (Water)",
         cost_gp: Some(2400.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Supple leather boots letting a ranger treat water terrain as a favored terrain, granting a +2 bonus on the associated checks."),
     },
     EquipmentTableEntry {
         key: "Bottle of Messages",
@@ -2254,7 +2279,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bottle of Messages",
         cost_gp: Some(300.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A green glass bottle with a tiny winding key on its stem that, when turned, causes a shadowy cork to slowly become substantial over a round."),
     },
     EquipmentTableEntry {
         key: "Bracelet of Mercy",
@@ -2262,7 +2287,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Bracelet of Mercy",
         cost_gp: Some(15000.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("A metal bracelet with holy inscriptions that grants, or improves, the diseased mercy for a paladin wearer."),
     },
     EquipmentTableEntry {
         key: "Campfire Bead",
@@ -2270,7 +2295,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Campfire Bead",
         cost_gp: Some(720.0),
         weight: None,
-        description: None,
+        description: Some("A tiny glass bead that transforms, on command, into a 2-foot-tall pile of burning logs lasting 8 hours."),
     },
     EquipmentTableEntry {
         key: "Catching Cape",
@@ -2278,7 +2303,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Catching Cape",
         cost_gp: Some(200.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A silvery cape that transforms into a protective sphere, granting 20% concealment against ranged attacks for one minute or until it absorbs a hit."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Brewing",
@@ -2286,7 +2311,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of Brewing",
         cost_gp: Some(3000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A fine cooking pot that maintains liquids at a precise temperature and grants a +5 competence bonus on alchemy-related Craft checks."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Flying",
@@ -2294,7 +2319,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of Flying",
         cost_gp: Some(40000.0),
         weight: Some(100.0),
-        description: None,
+        description: Some("An iron pot large enough for two Medium creatures that grants overland flight with a substantial carrying capacity."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Plenty",
@@ -2302,7 +2327,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of Plenty",
         cost_gp: Some(15000.0),
         weight: Some(25.0),
-        description: None,
+        description: Some("An enchanted iron pot that can produce nourishing food for 36 people daily, or a heroes' feast for 12 people weekly."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Resurrection",
@@ -2310,7 +2335,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of Resurrection",
         cost_gp: Some(33000.0),
         weight: Some(35.0),
-        description: None,
+        description: Some("A heavy dark iron cauldron with a monstrous maw that can restore the dead when used alongside raise dead or resurrection spells."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Seeing",
@@ -2318,7 +2343,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of Seeing",
         cost_gp: Some(42000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A small cauldron filled with liquid that functions as a scrying device, letting its user scry at any distance like a crystal ball."),
     },
     EquipmentTableEntry {
         key: "Cauldron of Seeing (See Invisibility)",
@@ -2358,7 +2383,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cauldron of the Dead",
         cost_gp: Some(30000.0),
         weight: Some(35.0),
-        description: None,
+        description: Some("A dark iron cauldron capable of transforming corpses into zombies for a material cost per Hit Die of the resulting undead."),
     },
     EquipmentTableEntry {
         key: "Clamor Box",
@@ -2366,7 +2391,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Clamor Box",
         cost_gp: Some(2000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A tin music box that, after a configurable delay of 1 to 20 minutes, produces sounds as loud as a crowd of forty people (battle, fire, massacre, or riot)."),
     },
     EquipmentTableEntry {
         key: "Construct Channel Brick",
@@ -2374,7 +2399,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Construct Channel Brick",
         cost_gp: Some(10000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A red brick matching its bearer's holy symbol, letting the bearer channel positive or negative energy to repair constructs and damaged objects."),
     },
     EquipmentTableEntry {
         key: "Cowardly Crouching Cloak",
@@ -2382,7 +2407,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cowardly Crouching Cloak",
         cost_gp: Some(1800.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A gray hooded cloak that lets its wearer huddle into a crouch, granting a sanctuary effect (Will save negates) while rendering the wearer effectively blind."),
     },
     EquipmentTableEntry {
         key: "Crystal of Healing Hands",
@@ -2390,7 +2415,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Crystal of Healing Hands",
         cost_gp: Some(12000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A prism worn on a cord that stores a paladin's lay on hands energy for later release as a standard action."),
     },
     EquipmentTableEntry {
         key: "Defoliant Polish",
@@ -2398,7 +2423,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Defoliant Polish",
         cost_gp: Some(800.0),
         weight: None,
-        description: None,
+        description: Some("A gray paste coated on armor that produces fumes causing natural plants to wilt, letting the wearer move through vegetation without difficulty."),
     },
     EquipmentTableEntry {
         key: "Doomharp",
@@ -2406,7 +2431,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Doomharp",
         cost_gp: Some(10000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A bone-and-sinew masterwork harp that lets a non-bardic user perform the dirge of doom bardic performance."),
     },
     EquipmentTableEntry {
         key: "Dust of Emulation",
@@ -2414,7 +2439,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Dust of Emulation",
         cost_gp: Some(800.0),
         weight: None,
-        description: None,
+        description: Some("A glittering golden dust that grants an automatic result of 25 on a Use Magic Device check made to emulate a class feature for 1 hour."),
     },
     EquipmentTableEntry {
         key: "Flying Ointment",
@@ -2422,7 +2447,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Flying Ointment",
         cost_gp: Some(2250.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("An herbal preparation that, applied to the skin, grants overland flight for up to 9 hours."),
     },
     EquipmentTableEntry {
         key: "Gloves of Dueling",
@@ -2430,7 +2455,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Gloves of Dueling",
         cost_gp: Some(15000.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("Supple leather gloves granting a +4 bonus to CMD against disarm and sunder attacks, plus a weapon training bonus."),
     },
     EquipmentTableEntry {
         key: "Glowing Glove",
@@ -2438,7 +2463,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Glowing Glove",
         cost_gp: Some(2000.0),
         weight: None,
-        description: None,
+        description: Some("A white leather glove that creates luminous handprints, glowing in any chosen color and lasting a day, on surfaces it touches."),
     },
     EquipmentTableEntry {
         key: "Grappler's Mask",
@@ -2446,7 +2471,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Grappler's Mask",
         cost_gp: Some(5000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A dark leather mask covering the head and upper body, letting its wearer attempt bull rushes and grapples without provoking attacks of opportunity."),
     },
     EquipmentTableEntry {
         key: "Helm of Fearsome Mien",
@@ -2454,7 +2479,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Helm of Fearsome Mien",
         cost_gp: Some(5000.0),
         weight: Some(4.0),
-        description: None,
+        description: Some("A metal helm shaped like a fearsome predator, letting a barbarian use the intimidating glare rage power while raging."),
     },
     EquipmentTableEntry {
         key: "Horn of the Huntmaster",
@@ -2462,7 +2487,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Horn of the Huntmaster",
         cost_gp: Some(5000.0),
         weight: Some(5.0),
-        description: None,
+        description: Some("A curved horn that, once per day for a minute, lets a hunter grant their full favored enemy bonus to allies within 30 feet."),
     },
     EquipmentTableEntry {
         key: "Ioun Torch",
@@ -2470,7 +2495,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ioun Torch",
         cost_gp: Some(75.0),
         weight: None,
-        description: None,
+        description: Some("A burned-out, dull gray ioun stone bearing a continual flame spell; it still floats and orbits its bearer, letting them carry light while keeping both hands free."),
     },
     EquipmentTableEntry {
         key: "Key of Lock Jamming",
@@ -2478,7 +2503,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Key of Lock Jamming",
         cost_gp: Some(400.0),
         weight: Some(0.5),
-        description: None,
+        description: Some("A brass key that reshapes to fit standard keyholes, merging with a lock to make it unopenable while adding to its hardness and hit points."),
     },
     EquipmentTableEntry {
         key: "Ki Mat",
@@ -2486,7 +2511,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Ki Mat",
         cost_gp: Some(10000.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A woven river-reed mat that lets a monk regain ki points through meditation using a Wisdom check."),
     },
     EquipmentTableEntry {
         key: "Knight's Pennon (Battle)",
@@ -2494,7 +2519,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Knight's Pennon (Battle)",
         cost_gp: Some(4500.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A red cloth flag mounted on a weapon that, once per day, grants heroism to its bearer."),
     },
     EquipmentTableEntry {
         key: "Knight's Pennon (Honor)",
@@ -2502,7 +2527,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Knight's Pennon (Honor)",
         cost_gp: Some(2200.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A gold cloth flag mounted on a lance that, once per day, grants its bearer a protection from evil effect."),
     },
     EquipmentTableEntry {
         key: "Knight's Pennon (Parley)",
@@ -2510,7 +2535,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Knight's Pennon (Parley)",
         cost_gp: Some(4500.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A white cloth flag that, for one hour, grants a +4 enhancement bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks."),
     },
     EquipmentTableEntry {
         key: "Lord's Banner (Crusades)",
@@ -2518,7 +2543,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lord's Banner (Crusades)",
         cost_gp: Some(100000.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A noble cloth flag emitting a hallow effect in a 40-foot radius for true believers of the religion it depicts."),
     },
     EquipmentTableEntry {
         key: "Lord's Banner (Swiftness)",
@@ -2526,7 +2551,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lord's Banner (Swiftness)",
         cost_gp: Some(10000.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A cloth flag that lets a traveling force make forced marches without Constitution checks or nonlethal damage."),
     },
     EquipmentTableEntry {
         key: "Lord's Banner (Terror)",
@@ -2534,7 +2559,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lord's Banner (Terror)",
         cost_gp: Some(56000.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A cloth flag that panics enemies within 30 feet who can see it, unless they succeed at a Will save."),
     },
     EquipmentTableEntry {
         key: "Lord's Banner (Victory)",
@@ -2542,7 +2567,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Lord's Banner (Victory)",
         cost_gp: Some(75000.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A cloth banner that grants a +2 morale bonus on attack rolls, saving throws, and skill checks to visible allies."),
     },
     EquipmentTableEntry {
         key: "Manacles of Cooperation",
@@ -2550,7 +2575,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Manacles of Cooperation",
         cost_gp: Some(2000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("Iron cuffs that render a restrained humanoid docile and compliant through enchantment."),
     },
     EquipmentTableEntry {
         key: "Mask of Giants (Lesser)",
@@ -2558,7 +2583,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Mask of Giants (Lesser)",
         cost_gp: Some(30000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A wooden mask that lets a wild shape user assume a giant humanoid's form, granting some of that giant's abilities."),
     },
     EquipmentTableEntry {
         key: "Mask of Giants (Greater)",
@@ -2566,7 +2591,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Mask of Giants (Greater)",
         cost_gp: Some(90000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("An enhanced wooden mask that lets a wild shape user assume a giant humanoid's form with additional abilities, including rend, regeneration, and rock throwing."),
     },
     EquipmentTableEntry {
         key: "Moon Circlet",
@@ -2574,7 +2599,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Moon Circlet",
         cost_gp: Some(20000.0),
         weight: None,
-        description: None,
+        description: Some("A silver circlet that grants darkvision and adjusts an arcane caster's effective caster level based on the current lunar phase."),
     },
     EquipmentTableEntry {
         key: "Muleback Cords",
@@ -2582,7 +2607,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Muleback Cords",
         cost_gp: Some(1000.0),
         weight: Some(0.25),
-        description: None,
+        description: Some("Thick leather cords that treat the wearer's Strength score as 8 higher for determining carrying capacity only, never applying to combat or other Strength-related rolls."),
     },
     EquipmentTableEntry {
         key: "Necklace of Ki Serenity",
@@ -2590,7 +2615,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Necklace of Ki Serenity",
         cost_gp: Some(16000.0),
         weight: None,
-        description: None,
+        description: Some("A knotted leather cord granting a +4 bonus to effective character level for ki pool calculations."),
     },
     EquipmentTableEntry {
         key: "Necromancer's Athame",
@@ -2598,7 +2623,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Necromancer's Athame",
         cost_gp: Some(20000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A bone dagger that functions as a necromancer's bonded object, letting its bearer spontaneously convert prepared spells into necromancy spells."),
     },
     EquipmentTableEntry {
         key: "Philter of Love",
@@ -2606,7 +2631,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Philter of Love",
         cost_gp: Some(3000.0),
         weight: None,
-        description: None,
+        description: Some("A potent preparation that causes a creature drinking it to fall madly in love with the first creature it perceives afterward."),
     },
     EquipmentTableEntry {
         key: "Robe of Arcane Heritage",
@@ -2614,7 +2639,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Robe of Arcane Heritage",
         cost_gp: Some(16000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Dark purple and blue robes that treat a sorcerer's level as 4 higher for the purposes of bloodline powers."),
     },
     EquipmentTableEntry {
         key: "Sash of the War Champion",
@@ -2622,7 +2647,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sash of the War Champion",
         cost_gp: Some(4000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A red cloth sash bearing crowd imagery that treats the wearer's fighter level as 4 higher for armor training and bravery class features."),
     },
     EquipmentTableEntry {
         key: "Scabbard of Stanching",
@@ -2630,7 +2655,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Scabbard of Stanching",
         cost_gp: Some(5000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A red leather sheath with gold filigree that automatically stanches bleed effects below a set severity affecting the sheathed weapon's wielder."),
     },
     EquipmentTableEntry {
         key: "Scabbard of Vigor",
@@ -2638,7 +2663,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Scabbard of Vigor",
         cost_gp: Some(1800.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("A scabbard that, once per day as part of drawing the weapon it holds, can endow that weapon with a temporary enhancement bonus."),
     },
     EquipmentTableEntry {
         key: "Sheath of Bladestealth",
@@ -2646,7 +2671,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sheath of Bladestealth",
         cost_gp: Some(5000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A mundane-appearing sheath that renders a sheathed bladed weapon invisible until it is drawn."),
     },
     EquipmentTableEntry {
         key: "Silver Smite Bracelet",
@@ -2654,7 +2679,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Silver Smite Bracelet",
         cost_gp: Some(16000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A heavy silver bracelet etched with virtue icons that treats a paladin's level as 4 higher for smite evil."),
     },
     EquipmentTableEntry {
         key: "Sniper Goggles",
@@ -2662,7 +2687,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Sniper Goggles",
         cost_gp: Some(20000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("Bulbous lenses that let their wearer make ranged sneak attacks at any distance, gaining an extra +2 damage bonus within 30 feet."),
     },
     EquipmentTableEntry {
         key: "Soul Soap",
@@ -2670,7 +2695,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Soul Soap",
         cost_gp: Some(200.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A gray soap bar that, after a minute of washing with it, lets a creature attempt a new Will save against a hostile mind-affecting effect."),
     },
     EquipmentTableEntry {
         key: "Torc of Lionheart Fury",
@@ -2678,7 +2703,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Torc of Lionheart Fury",
         cost_gp: Some(8000.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A heavy copper neckpiece bearing lion imagery that grants a +2 morale bonus on saves against fear."),
     },
     EquipmentTableEntry {
         key: "Vest of the Cockroach",
@@ -2686,7 +2711,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Vest of the Cockroach",
         cost_gp: Some(16000.0),
         weight: Some(2.0),
-        description: None,
+        description: Some("A red-brown padded vest that grants or enhances a rogue's resiliency talent, improving damage reduction."),
     },
     EquipmentTableEntry {
         key: "War Paint of the Terrible Visage",
@@ -2694,7 +2719,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "War Paint of the Terrible Visage",
         cost_gp: Some(100.0),
         weight: Some(0.01),
-        description: None,
+        description: Some("Face paint that lets the wearer rearrange its pigments into a disturbing visage as a swift action, affecting one visible creature within 30 feet with fear."),
     },
     EquipmentTableEntry {
         key: "Cloak of Immolation",
@@ -2702,7 +2727,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Cloak of Immolation",
         cost_gp: Some(0.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A cursed cloak that bursts into continuous flame the moment it is worn, dealing fire damage to the wearer each round without harming the cloak itself."),
     },
     EquipmentTableEntry {
         key: "Crown of Blindness",
@@ -2710,7 +2735,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Crown of Blindness",
         cost_gp: Some(0.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A cursed silver circlet that forces a DC 14 Fortitude save or permanently blinds the wearer, requiring curse-removal magic to reverse."),
     },
     EquipmentTableEntry {
         key: "Hat of Hatreds",
@@ -2718,7 +2743,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Hat of Hatreds",
         cost_gp: Some(0.0),
         weight: None,
-        description: None,
+        description: Some("A cursed hat that resembles a hat of disguise but instead causes its wearer to take on the appearance of whatever person or creature a nearby hostile creature most wants to harm."),
     },
     EquipmentTableEntry {
         key: "Girdle of Opposite Gender",
@@ -2726,7 +2751,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Girdle of Opposite Gender",
         cost_gp: Some(0.0),
         weight: Some(1.0),
-        description: None,
+        description: Some("A cursed magical belt that, once put on, forces a DC 20 Fortitude save or transforms the wearer into a person of the opposite gender."),
     },
     EquipmentTableEntry {
         key: "Riot Pipes",
@@ -2734,7 +2759,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Riot Pipes",
         cost_gp: Some(0.0),
         weight: Some(3.0),
-        description: None,
+        description: Some("Cursed musical pipes that force everyone within hearing to succeed at a DC 15 Will save or fall into a murderous rage-like fury for 1d6 hours."),
     },
     EquipmentTableEntry {
         key: "Brooch (Folding Plate)",
@@ -2742,6 +2767,6 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
         name: "Brooch (Folding Plate)",
         cost_gp: Some(12650.0),
         weight: None,
-        description: None,
+        description: Some("The brooch form of folding plate armor, which transforms between a wearable brooch and a suit of +1 full plate armor on command."),
     },
 ];

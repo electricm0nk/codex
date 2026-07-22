@@ -32,12 +32,20 @@ use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessRec
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::saved_character::local_store::SavedCharacterStore;
 
+use crate::pf1_adapter::Pf1Adapter;
+use crate::rule_system_adapter::RuleSystemAdapter;
+use crate::stub_adapter::StubAdapter;
+
 const CHARACTERS_ROOT_DIR_NAME: &str = "characters";
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RecomputeCharacterRequest {
     pub character_id: String,
+    /// SD-25 Criterion 3.4 (Epic 3 "Hub of Hubs" Tauri command-surface
+    /// routing): which rule system's `RuleSystemAdapter` to dispatch this
+    /// recompute through — see `resolve_rule_system_adapter` below.
+    pub rule_system_id: String,
 }
 
 /// Manual re-projection of `codex::rules_core::pilot_compute::BaseSaves` —
@@ -157,6 +165,41 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
     }
 }
 
+/// Resolves `rule_system_id` to the `RuleSystemAdapter` implementation the
+/// Tauri command dispatches through (SD-25 Criterion 3.4, `cycles/3_4.md`
+/// GREEN) — `"pf1"` to the real `Pf1Adapter`; any other id to `StubAdapter`.
+/// `StubAdapter::new` requires a `&'static str`; the caller-supplied
+/// `rule_system_id` is a runtime `String`, so an unknown id is leaked once
+/// per call to satisfy that bound — the same `Box::leak`-to-`'static`
+/// pattern this crate already uses at `corpus_fixtures.rs` /
+/// `codex::rules_core::equipment_resolver`. Unknown-`rule_system_id` calls
+/// are the rare/exceptional path (real traffic is `"pf1"`), so the leak is
+/// bounded by how many distinct not-yet-supported ids ever get dispatched.
+fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
+    match rule_system_id {
+        "pf1" => Box::new(Pf1Adapter),
+        other => {
+            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+            Box::new(StubAdapter::new(leaked))
+        }
+    }
+}
+
+/// Dispatches `recompute_character` through the `RuleSystemAdapter` trait
+/// instead of calling `recompute_character_at_root` by name directly (SD-25
+/// Criterion 3.4). For `"pf1"` this produces byte-for-byte the same real
+/// behavior as calling `recompute_character_at_root` directly —
+/// `Pf1Adapter::recompute` wraps that exact function — so every pre-existing
+/// test above that calls `recompute_character_at_root` directly keeps
+/// passing unchanged.
+pub fn recompute_character_via_rule_system(
+    rule_system_id: &str,
+    root: &Path,
+    character_id: &str,
+) -> RecomputeCharacterResponse {
+    resolve_rule_system_adapter(rule_system_id).recompute(root, character_id)
+}
+
 /// Loads the saved character named by `request.character_id` and returns
 /// its freshly-recomputed derived stats — see
 /// `recompute_character_at_root` for the full semantics.
@@ -166,7 +209,11 @@ pub fn recompute_character(
     request: RecomputeCharacterRequest,
 ) -> Result<RecomputeCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    Ok(recompute_character_at_root(&root, &request.character_id))
+    Ok(recompute_character_via_rule_system(
+        &request.rule_system_id,
+        &root,
+        &request.character_id,
+    ))
 }
 
 #[cfg(test)]
@@ -308,6 +355,53 @@ mod tests {
             display_label: "Recompute Test Character".to_owned(),
             character_input: fighter_character_input(level),
         }
+    }
+
+    /// SD-25 Criterion 3.4 GREEN: `recompute_character_via_rule_system("pf1",
+    /// ...)` dispatches through `dyn RuleSystemAdapter` and produces
+    /// byte-for-byte the same real result `recompute_character_at_root`
+    /// itself returns (`Pf1Adapter::recompute` wraps that exact function).
+    #[test]
+    fn recompute_character_via_rule_system_dispatches_pf1_through_the_trait() {
+        let root = tempdir("pf1-dispatch");
+        let envelope = envelope_for("char-recompute-pf1-dispatch", 1, "2026-07-21T00:00:00Z");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let direct = recompute_character_at_root(&root, "char-recompute-pf1-dispatch");
+        let dispatched =
+            recompute_character_via_rule_system("pf1", &root, "char-recompute-pf1-dispatch");
+
+        assert_eq!(
+            dispatched, direct,
+            "pf1 dispatch through the trait must match the direct call exactly"
+        );
+        assert!(dispatched.success);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An unrecognized `rule_system_id` routes to `StubAdapter`
+    /// (`cycles/3_4.md` GREEN) rather than silently falling through to PF1
+    /// logic or panicking.
+    #[test]
+    fn recompute_character_via_rule_system_routes_unknown_id_to_stub_adapter() {
+        let root = tempdir("unknown-system-dispatch");
+        let envelope = envelope_for("char-recompute-unknown", 1, "2026-07-21T00:00:00Z");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            recompute_character_via_rule_system("starfinder", &root, "char-recompute-unknown");
+
+        assert!(
+            !response.success,
+            "an unimplemented rule system must never report success"
+        );
+        assert_eq!(
+            response.error.as_deref(),
+            Some("Would render for system starfinder; not yet implemented")
+        );
+
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]

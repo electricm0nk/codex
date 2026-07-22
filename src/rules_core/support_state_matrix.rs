@@ -271,7 +271,7 @@ impl SupportStateMatrix {
 
 /// SD-13 roster/matrix authority that names the roster member and its current
 /// posture. Cited by `Observed`-tier rows that have no runtime evidence yet.
-const SD13_ROSTER_MATRIX_DOC: &str =
+const ROSTER_MATRIX_DOC: &str =
     "docs/release/SD-13/artifacts/core-roster-and-support-state-matrix.md";
 
 /// The combined grounding reference for the Human race row, citing both the live
@@ -279,7 +279,7 @@ const SD13_ROSTER_MATRIX_DOC: &str =
 /// the SD13-E6-F3a trait-bundle recognition records) and the trait-bundle proof
 /// surface that pins the four classified dimensions. Both `.contains()` consumers
 /// read their respective substring from this combined literal (paladin-row idiom).
-const SD13_HUMAN_ROW_GROUNDING_REF: &str =
+const HUMAN_ROW_GROUNDING_REF: &str =
     "src/rules_core/pilot_compute.rs +      tests/sd13_human_full_trait_bundle.rs";
 
 /// GE-06 deterministic pilot input contract proof (race/class identity, Human
@@ -311,14 +311,14 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// ten proof
 /// files as one combined literal.
 // SD18 widening: extended to also cite the live SD18 level-11 sneak-attack
-// widening proof, mirroring how `SD13_FIGHTER_LEVEL9_LEVEL10_TEST` and the
+// widening proof, mirroring how `FIGHTER_LEVEL9_LEVEL10_TEST` and the
 // other sibling class constants were each extended to also cite their own
 // SD18 level-11 widening proof. Further extended to also cite the live SD18
 // level-12 widening proof, mirroring how the Barbarian/Bard/Cleric/Druid/
 // Fighter/Monk/Paladin rows were each extended to also cite their own SD18
 // level-12 widening proof. Further extended to also cite the live SD18
 // level-13 and level-14 widening proofs.
-const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
+const ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
     tests/sd13_rogue_level2_progression.rs + \
     tests/sd13_rogue_level3_progression.rs + \
     tests/sd13_rogue_level4_progression.rs + \
@@ -351,9 +351,9 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 /// already-landed sd13_fighter_level9_level10_progression.rs test asserts this
 /// exact grounding_ref string.)
 // SD18 widening: extended to also cite the live SD18 level-11 Armor Training 3
-// widening proof, mirroring how `SD13_BARBARIAN_LEVEL1_TEST`,
-// `SD13_BARD_LEVEL1_TEST`, `SD13_CLERIC_LEVEL1_TEST`, and
-// `SD13_DRUID_LEVEL1_TEST` were each extended to also cite their own SD18
+// widening proof, mirroring how `BARBARIAN_LEVEL1_TEST`,
+// `BARD_LEVEL1_TEST`, `CLERIC_LEVEL1_TEST`, and
+// `DRUID_LEVEL1_TEST` were each extended to also cite their own SD18
 // level-11 widening proof. Combined as one literal (paladin-row idiom) so
 // both substrings remain independently assertable. Further extended to also
 // cite the live SD18 level-12 bonus-feat widening proof, mirroring how the
@@ -364,7 +364,7 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 // widening proof. Further extended to also cite the live SD18 level-19 Armor
 // Mastery widening proof, mirroring how the Barbarian and Cleric rows were
 // each extended to also cite their own SD18 level-19 widening proof.
-const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
+const FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
     tests/sd18_fighter_level11_armor_training3.rs + \
     tests/sd18_fighter_level12_widening.rs + \
     tests/sd18_fighter_level13_widening.rs + \
@@ -386,7 +386,7 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
 /// hp or +1 skill rank, was selected, as a standalone flat-magnitude record)
 /// as one literal (paladin-row idiom). Each `.contains()` consumer reads its
 /// respective substring from this combined grounding reference.
-const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
+const FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
     "tests/sd13_fighter_level1_mandatory_milestone_classification.rs + \
      tests/sd13_fighter_level1_hit_point_baseline.rs + \
      tests/sd13_fighter_favored_class_bonus_choice.rs";
@@ -396,7 +396,7 @@ const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
 /// effective-caster-level gate test, and the SD13-E5 level-2 lay on hands /
 /// divine grace grounding test as one literal. Each `.contains()` consumer
 /// reads its respective substring from this combined grounding reference.
-const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + \
+const PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + \
     tests/sd13_paladin_partial_caster_effective_caster_level.rs + \
     tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs + \
     tests/sd13_paladin_base_attack_and_saves.rs + \
@@ -429,13 +429,13 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
 /// Favored-Enemy-flat-surface grounding test, and the SD13-E5 base-attack/
 /// base-save progression test as one literal, mirroring
-/// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Each `.contains()` consumer reads its
+/// [`PALADIN_ROW_GROUNDING_REF`]. Each `.contains()` consumer reads its
 /// respective substring from this combined grounding reference.
 // SD18 widening: extended to also cite the live SD18 level-11 Quarry
-// widening proof, mirroring how `SD13_ROGUE_LEVEL1_TEST` and the other
+// widening proof, mirroring how `ROGUE_LEVEL1_TEST` and the other
 // sibling class constants were each extended to also cite their own SD18
 // level-11 widening proof.
-const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
+const RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs + \
     tests/sd13_ranger_base_attack_and_saves.rs + \
     tests/sd13_ranger_level2_progression.rs + \
@@ -491,8 +491,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 /// column's "Bloodline power, bloodline spell" entries were checked against both
 /// primary sources and confirmed bloodline-specific, not flat, so both stay
 /// named-but-unproven per the level-3/5/7 precedent), citing the proof files as one
-/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_DRUID_LEVEL1_TEST`].
-const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs + \
+/// combined literal, mirroring [`CLERIC_LEVEL1_TEST`] / [`DRUID_LEVEL1_TEST`].
+const SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs + \
     tests/sd13_sorcerer_bloodline_class_skill_choice.rs + \
     tests/sd13_sorcerer_level2_progression.rs + \
     tests/sd13_sorcerer_level3_progression.rs + \
@@ -535,7 +535,7 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
 /// class feature), that stays explicitly blocked only on the remaining named
 /// rage-state execution burden, the Rage Power choice-list feature, and weapon
 /// familiarity.
-const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs + \
+const BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs + \
     tests/sd13_barbarian_level2_progression.rs + \
     tests/sd13_barbarian_level3_progression.rs + \
     tests/sd13_barbarian_level4_progression.rs + \
@@ -562,7 +562,7 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
 /// Gnome racial trait dimensions (ability modifiers, size, speed, senses, Keen
 /// Senses, Illusion Resistance, Defensive Training, Hatred) that stays
 /// explicitly honest about the remaining unproven Gnome family surface.
-const SD18_GNOME_HATRED_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs + \
+const GNOME_HATRED_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs + \
     tests/sd18_gnome_keen_senses.rs + tests/sd18_gnome_illusion_resistance.rs + \
     tests/sd18_gnome_defensive_training.rs + tests/sd18_gnome_hatred.rs";
 
@@ -571,7 +571,7 @@ const SD18_GNOME_HATRED_TEST: &str = "tests/sd13_gnome_race_semantics_recognitio
 /// Half-Elf racial trait dimensions (chosen ability-bonus target, size, speed,
 /// senses, Keen Senses) that stays explicitly honest about the remaining
 /// unproven Half-Elf family surface.
-const SD18_HALF_ELF_KEEN_SENSES_TEST: &str =
+const HALF_ELF_KEEN_SENSES_TEST: &str =
     "tests/sd13_half_elf_race_semantics_recognition.rs + tests/sd18_half_elf_keen_senses.rs + \
     tests/sd18_half_elf_elven_immunities.rs";
 
@@ -580,7 +580,7 @@ const SD18_HALF_ELF_KEEN_SENSES_TEST: &str =
 /// Half-Orc racial trait dimensions (chosen ability-bonus target, size, speed,
 /// senses, Intimidating) that stays explicitly honest about the remaining
 /// unproven Half-Orc family surface.
-const SD18_HALF_ORC_INTIMIDATING_TEST: &str =
+const HALF_ORC_INTIMIDATING_TEST: &str =
     "tests/sd13_half_orc_race_semantics_recognition.rs + tests/sd18_half_orc_intimidating.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Halfling race-semantics
@@ -588,7 +588,7 @@ const SD18_HALF_ORC_INTIMIDATING_TEST: &str =
 /// Halfling racial trait dimensions (ability modifiers, size, speed, senses,
 /// Keen Senses, Sure-Footed, Fearless, Halfling Luck) that stays explicitly
 /// honest about the remaining unproven Halfling family surface.
-const SD18_HALFLING_LUCK_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs \
+const HALFLING_LUCK_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs \
     + tests/sd18_halfling_keen_senses.rs + tests/sd18_halfling_sure_footed.rs \
     + tests/sd18_halfling_fearless.rs + tests/sd18_halfling_luck.rs";
 
@@ -652,8 +652,8 @@ const SD18_HALFLING_LUCK_TEST: &str = "tests/sd13_halfling_race_semantics_recogn
 /// 10th-level use-any-skill-untrained piece is grounded as a +0 identity
 /// record per the Woodland Stride idiom, and the repeat Versatile Performance
 /// grant stays named-but-unproven like the 2nd/6th grants), citing all ten
-/// proof files as one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
-const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
+/// proof files as one combined literal, mirroring [`CLERIC_LEVEL1_TEST`].
+const BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
     tests/sd13_bard_level2_progression.rs + tests/sd13_bard_level3_progression.rs + \
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
@@ -728,8 +728,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
 /// new pillar is added), that stays
 /// explicitly blocked on the school-powers / opposed-school-cost burden and
 /// the prepared spellbook / spell-slot posture burden, citing all nine proof
-/// files as one combined literal, mirroring [`SD13_SORCERER_LEVEL1_TEST`].
-const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
+/// files as one combined literal, mirroring [`SORCERER_LEVEL1_TEST`].
+const WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
     tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs + \
     tests/sd13_wizard_level4_progression.rs + tests/sd13_wizard_level5_progression.rs + \
     tests/sd13_wizard_level6_progression.rs + tests/sd13_wizard_level7_progression.rs + \
@@ -750,9 +750,9 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
 /// plus every named pillar formula extended to level 2 via the same formula), widened
 /// again to level 3 by a further SD13-E5 slice (Channel Energy's die count and the
 /// domain spell slot count both change for real at level 3), citing all three proof
-/// files as one combined literal, mirroring [`SD13_MONK_LEVEL1_TEST`] /
-/// [`SD13_ROGUE_LEVEL1_TEST`] / [`SD13_WIZARD_LEVEL1_TEST`].
-const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
+/// files as one combined literal, mirroring [`MONK_LEVEL1_TEST`] /
+/// [`ROGUE_LEVEL1_TEST`] / [`WIZARD_LEVEL1_TEST`].
+const CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
     tests/sd13_cleric_level2_progression.rs + tests/sd13_cleric_level3_progression.rs + \
     tests/sd13_cleric_level4_progression.rs + tests/sd13_cleric_level5_progression.rs + \
     tests/sd13_cleric_level6_progression.rs + tests/sd13_cleric_level7_progression.rs + \
@@ -799,8 +799,8 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 /// it is grounded as a +0 identity/recognition record mirroring Monk's
 /// Purity of Body precedent; Wild Shape's uses stay 3/day, its next rise
 /// landing at 10th), citing all nine proof files as one
-/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_BARD_LEVEL1_TEST`].
-const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
+/// combined literal, mirroring [`CLERIC_LEVEL1_TEST`] / [`BARD_LEVEL1_TEST`].
+const DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
     tests/sd13_druid_level2_progression.rs + tests/sd13_druid_level3_progression.rs + \
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
@@ -815,10 +815,10 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
 /// choice-recognition test, the SD13-E5 level-2 progression test (level-range
 /// gate widening plus Evasion), and the SD13-E5 level-3 progression test
 /// (level-range gate widening plus Still Mind) as one literal, mirroring
-/// [`SD13_PALADIN_ROW_GROUNDING_REF`] / [`SD13_RANGER_ROW_GROUNDING_REF`]. Both
+/// [`PALADIN_ROW_GROUNDING_REF`] / [`RANGER_ROW_GROUNDING_REF`]. Both
 /// `.contains()` consumers read their respective substring from this combined
 /// grounding reference.
-const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs + \
+const MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs + \
     tests/sd13_monk_bonus_feat_choice.rs + tests/sd13_monk_level2_progression.rs + \
     tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs + \
     tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs + \
@@ -832,7 +832,7 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
 /// Dwarf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Dwarf family surface.
-const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs + \
+const DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs + \
     tests/sd18_dwarf_stonecunning.rs + tests/sd18_dwarf_greed.rs + tests/sd18_dwarf_hardy.rs + \
     tests/sd18_dwarf_stability.rs + tests/sd18_dwarf_defensive_training.rs";
 
@@ -840,7 +840,7 @@ const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
 /// Elf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Elf family surface.
-const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs + \
+const ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs + \
     tests/sd18_elf_keen_senses.rs + tests/sd18_elf_elven_immunities.rs + \
     tests/sd18_elf_elven_magic.rs";
 
@@ -952,7 +952,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HUMAN_ROW_GROUNDING_REF,
+                grounding_ref: HUMAN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "the deterministic pilot grounds the named Human \
                     ability-bonus and bonus-feat pressure, and the SD13-E6-F3a trait bundle \
                     (size, speed, senses, extra skill ranks) is classified explicitly as \
@@ -985,7 +985,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_DWARF_LEVEL1_TEST,
+                grounding_ref: DWARF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning, \
                     dwarf-greed, dwarf-hardy, dwarf-stability, and dwarf-defensive-training \
                     cycles leave direct computed evidence that nine Dwarf race-semantic \
@@ -1029,7 +1029,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_ELF_LEVEL1_TEST,
+                grounding_ref: ELF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
                     that seven Elf race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: \
@@ -1069,7 +1069,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD18_GNOME_HATRED_TEST,
+                grounding_ref: GNOME_HATRED_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
                     that eight Gnome race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Constitution / -2 Strength; size: Small; speed: \
@@ -1107,7 +1107,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD18_HALF_ELF_KEEN_SENSES_TEST,
+                grounding_ref: HALF_ELF_KEEN_SENSES_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
                     six Half-Elf race-semantic families are recognized on the compute seam (a \
                     player-chosen +2 ability-bonus target, mirroring the Human ability-bonus \
@@ -1143,7 +1143,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD18_HALF_ORC_INTIMIDATING_TEST,
+                grounding_ref: HALF_ORC_INTIMIDATING_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
                     five Half-Orc race-semantic families are recognized on the compute seam (a \
                     player-chosen +2 ability-bonus target, mirroring the Half-Elf mechanic's \
@@ -1178,7 +1178,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD18_HALFLING_LUCK_TEST,
+                grounding_ref: HALFLING_LUCK_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
                     eight Halfling race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Dexterity / -2 Strength; size: Small; speed: 20 ft; \
@@ -1211,7 +1211,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF,
+                grounding_ref: FIGHTER_LEVEL1_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F5 widens the Fighter level-1 deterministic \
                     pilot surface into a bounded mandatory-milestone classification: the proven \
                     (computed) level-1 surface covers ability modifier, base attack bonus, base \
@@ -1266,7 +1266,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL9_LEVEL10_TEST,
+                grounding_ref: FIGHTER_LEVEL9_LEVEL10_TEST,
                 blocker_or_lossiness_note: "SD13-E3/SD13-E5 prove Fighter levels 2 through 10, \
                     and SD18 (cycle-2026-07-13T1941, mirroring the Barbarian/Bard/Cleric/ \
                     Druid level-11 widening pattern) widens to level 11: base attack / base save \
@@ -1532,7 +1532,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_ROGUE_LEVEL1_TEST,
+                grounding_ref: ROGUE_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
                     deterministic Human Rogue level-1 chassis identity is recognized on the \
                     compute seam, and all four named pillar burdens are now grounded: base \
@@ -1966,7 +1966,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
+                grounding_ref: BARBARIAN_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces the bounded \
                     martial chassis-recognition record and grounds base attack \
                     progression (full BAB, classlevel = +1 at level 1), base save progression (the \
@@ -2440,7 +2440,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_BARD_LEVEL1_TEST,
+                grounding_ref: BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is \
                     recognized on the compute seam, the SD13-E4 Bard decomposition slice grounds \
@@ -3109,7 +3109,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_CLERIC_LEVEL1_TEST,
+                grounding_ref: CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
                     recognized on the compute seam, the SD13-E4 Cleric Channel Energy slice grounds \
@@ -3487,7 +3487,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_DRUID_LEVEL1_TEST,
+                grounding_ref: DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Druid level-1 prepared divine spell-bearing identity is \
                     recognized on the compute seam, the SD13-E4 wild empathy grounding slice \
@@ -3805,7 +3805,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_MONK_LEVEL1_TEST,
+                grounding_ref: MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
                     deterministic Human Monk level-1/level-2/level-3/level-4/level-5/level-6 \
                     martial chassis identity is recognized on the compute seam, and now grounds ten \
@@ -4170,7 +4170,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
+                grounding_ref: PALADIN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
                     deterministic Human Paladin \
                     level-1/level-2/level-3/level-4/level-5/level-6/level-7 hybrid chassis is \
@@ -4877,7 +4877,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_RANGER_ROW_GROUNDING_REF,
+                grounding_ref: RANGER_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
                     deterministic Human Ranger level-1 hybrid chassis is recognized on the compute \
                     seam, the SD13-E3 Ranger decomposition slice grounds Track (the skill/tracking \
@@ -5575,7 +5575,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_SORCERER_LEVEL1_TEST,
+                grounding_ref: SORCERER_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is \
                     recognized on the compute seam, the SD13-E4 Sorcerer decomposition slice \
@@ -6336,7 +6336,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_WIZARD_LEVEL1_TEST,
+                grounding_ref: WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
                     deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
                     recognized on the compute seam, a later SD13-E4 Wizard decomposition slice \
@@ -6867,7 +6867,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
+                grounding_ref: ROSTER_MATRIX_DOC,
                 // SD13-E2-F15 first-slice verdict (reconciled post the SD13-E2 race
                 // sweep and the SD13-E3/E4 class-recognition slices): no named
                 // non-Human interaction row is required at this stage. The audit

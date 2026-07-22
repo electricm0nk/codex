@@ -1,4 +1,4 @@
-import type { Sd11TesterWorkbenchSurface } from '../sd11/loadSd11TesterWorkbenchSurface';
+import type { TesterWorkbenchSurface } from '../testerWorkbench/loadTesterWorkbenchSurface';
 
 /**
  * Canonical SD-11 tester workbench surface fixture for tests.
@@ -13,13 +13,13 @@ import type { Sd11TesterWorkbenchSurface } from '../sd11/loadSd11TesterWorkbench
  * nested object) if a test needs to vary nested fields.
  */
 export function makeSurface(
-  overrides: Partial<Sd11TesterWorkbenchSurface> = {}
-): Sd11TesterWorkbenchSurface {
+  overrides: Partial<TesterWorkbenchSurface> = {}
+): TesterWorkbenchSurface {
   return {
     surfaceLabel: 'Developer diagnostics',
     headline: 'Connected to the app backend',
     lead: 'lead',
-    buildLabel: 'Codex 0.5.97-test',
+    buildLabel: 'Codex 0.5.98-test',
     channelLabel: 'alpha',
     platformLabel: 'Linux',
     supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
@@ -46,7 +46,7 @@ export function makeSurface(
     provenanceRefs: [],
     notes: ['note'],
     status: {
-      build: { label: 'Codex 0.5.97-test', version: '0.5.97-test' },
+      build: { label: 'Codex 0.5.98-test', version: '0.5.98-test' },
       channel: {
         testerFacingLabel: 'alpha',
         operatorBranch: 'develop',
@@ -80,7 +80,7 @@ export function makeSurface(
           trustGateStatus: 'governed-manual-only',
           replacementReleaseId: 'alpha-v0.0.1-test-9876fedc',
           officialSurface:
-            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline',
+            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadUpdateAction.ts over the F3a fetch pipeline',
           localBuildAuthority: 'governed-release-unit',
         },
       },

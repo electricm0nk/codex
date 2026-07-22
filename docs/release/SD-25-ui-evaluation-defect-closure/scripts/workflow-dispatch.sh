@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
-# SD-25 Workflow orchestrator.
-# Author-once; runs continuously while the bundle dispatches cycles.
+# SD-25 Workflow orchestrator — REFERENCE SPEC, NOT A LIVE DISPATCHER.
+#
+# VERIFIED 2026-07-21 (decisions.md §10): the `claude code --profile … --task …`
+# invocation below (see the Tier 5 block) does not exist in the live CLI —
+# `claude --help` has no `code` subcommand and no `--profile`/`--task` flags.
+# As written, this script's dispatch step would fail every time and the
+# main_loop would spin on its `sleep ${BASE_CADENCE}` branch forever, exactly
+# the silent-no-op failure mode the workflow-orchestrated-dispatch skill's
+# v1.1.0 warning predicted. SD-25 is dispatched by the in-harness `Workflow`
+# tool, driven from a live session, NOT by running this file as a background
+# process. This script stays in the repo as the deterministic per-epic
+# concurrency + tiering SPEC — EPIC_PARALLEL / EPIC_SUBAGENT /
+# PARALLEL_OVERRIDE / SUBAGENT_OVERRIDE below are the source of truth each
+# Workflow call reads from and honors — plus `pick_next_criterion()` as a
+# reference implementation of the selection logic a Workflow script can port.
+#
 # Per /governance/loop-instruction-template.md §2 + skill workflow-orchestrated-dispatch.
 #
 # Fires every 60s (operator-pinned default; the operator can change BASE_CADENCE).
@@ -30,11 +44,19 @@ EPIC_PARALLEL[3]="yes"; EPIC_SUBAGENT[3]="sonnet"   # Hub-of-Hubs (criterion 3.4
 EPIC_PARALLEL[4]="yes"; EPIC_SUBAGENT[4]="sonnet"   # PCGen Runner (criterion 4.4 = no)
 EPIC_PARALLEL[5]="no" ; EPIC_SUBAGENT[5]="sonnet"   # Corpus Ingest Diagnostic
 EPIC_PARALLEL[6]="no" ; EPIC_SUBAGENT[6]="sonnet"   # UI-Eval Defects (dynamic)
-EPIC_PARALLEL[7]="no" ; EPIC_SUBAGENT[7]="sonnet"   # Deferred Per-Class Work
+EPIC_PARALLEL[7]="no" ; EPIC_SUBAGENT[7]="sonnet"   # Deferred Per-Class Work (7.N corpus intake = yes, see override)
 EPIC_PARALLEL[8]="no" ; EPIC_SUBAGENT[8]="haiku"    # Closure (most sub-steps haiku; final verify opus)
+
+# Per-criterion concurrency overrides (decisions.md §3 / loop-instruction.md §3):
+# epic-level yes with a serial exception, or epic-level no with a parallel exception.
+declare -A PARALLEL_OVERRIDE
+PARALLEL_OVERRIDE["3.4"]="no"    # multi-file Tauri command routing, serial
+PARALLEL_OVERRIDE["4.4"]="no"    # multi-artifact verification, serial
+PARALLEL_OVERRIDE["7.N"]="yes"   # SD-24 carry-forward corpus intake: 4 disjoint per-book cycles, worktree isolation
 
 # Tiering override for E8.3 (release-notes) + E8.4 (version-bump) + adversarial pass:
 declare -A SUBAGENT_OVERRIDE
+SUBAGENT_OVERRIDE["7.P"]="haiku"   # SD-24 documentation-staleness batch (register §B) — mechanical doc edits
 SUBAGENT_OVERRIDE["8.3"]="haiku"
 SUBAGENT_OVERRIDE["8.4"]="haiku"
 SUBAGENT_OVERRIDE["8.1.final"]="opus"
@@ -50,12 +72,16 @@ pick_next_criterion() {
     local epic_n criterion_id touched_parallel_subdoc touched_files
 
     # Walk ## TODO first (in epic-number, criterion-number order).
+    # Status-matrix rows look like "| 1.1 Source-code identifier audit | not-started | ... |":
+    # the criterion id is the first token of the first cell, the state is the second cell.
+    # Criterion ids can be alphabetic (7.N, 7.O); dynamic placeholder rows (6.2..6.N, 7.2..7.M)
+    # carry state "dynamic-pending" so this "not-started" filter skips them until spawned.
     for epic_n in 1 2 3 4 5 6 7 8; do
         local todo_rows
-        todo_rows=$(grep -E "^\| ${epic_n}\.[0-9]+ \|" "${PROGRESS_DOC}" 2>/dev/null \
-                    | grep -E '\| pending \|' | head -1 || true)
+        todo_rows=$(grep -E "^\| ${epic_n}\.[0-9A-Z]+ " "${PROGRESS_DOC}" 2>/dev/null \
+                    | grep -E '\| not-started \|' | head -1 || true)
         if [ -n "${todo_rows}" ]; then
-            criterion_id=$(echo "${todo_rows}" | awk -F'|' '{print $2}' | xargs)
+            criterion_id=$(echo "${todo_rows}" | awk -F'|' '{print $2}' | awk '{print $1}')
             echo "${epic_n} ${criterion_id}"
             return
         fi
@@ -119,13 +145,25 @@ main_loop() {
         if [ -n "${overridden}" ]; then
             subagent_model="${overridden}"
         fi
+        local parallel_overridden
+        parallel_overridden="${PARALLEL_OVERRIDE[${criterion_key}]:-}"
+        if [ -n "${parallel_overridden}" ]; then
+            parallel="${parallel_overridden}"
+        fi
 
         # Tier 5: invoke the cycle task document with the chosen subagent.
-        local cycle_doc="${CYCLE_DOCS_DIR}/${epic_n}_${criterion_id//\./_}.md"
+        # Doc name matches epic-breakdown.md's "./cycles/<epic>_<criterion>.md" (e.g. cycles/1_1.md
+        # for criterion 1.1) — criterion_id already carries the epic prefix.
+        local cycle_doc="${CYCLE_DOCS_DIR}/${criterion_id//\./_}.md"
         if [ ! -f "${cycle_doc}" ]; then
             log "WARN no cycle doc at ${cycle_doc}; treating criterion as TODO-only. Writing a default."
             cat > "${cycle_doc}" <<DEFAULT
 # Cycle ${cycle_id} — Epic ${epic_n} / Criterion ${criterion_id}
+
+## FILE-TOUCH GRANT
+
+(Read this criterion's OWN row in epic-breakdown.md §Epic ${epic_n} — per loop-instruction.md §6
+and carry-forward register item C1, the grant must never be copied from a prior cycle's block.)
 
 ## RED
 

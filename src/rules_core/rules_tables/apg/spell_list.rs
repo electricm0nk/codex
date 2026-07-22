@@ -74,6 +74,69 @@
 //! **Cavalier casts no spells** (see `class_cavalier.rs`'s doc comment:
 //! no `SPELLSTAT:` token on the real `CLASS:Cavalier` record), so it has
 //! no distinguished row here by design — same as the prior bootstrap.
+//!
+//! **SD-25 criterion 7.N ("apg-spell-text") full-text ceiling raise —
+//! 261 → 284 of 297 `full_text: true`:** the criterion 6.5 measurement
+//! above (261/297) undercounted by 23 real, sourced full-text records for
+//! two distinct reasons, both corrected this cycle:
+//!
+//! 1. **A same-line-concatenation ingest miss (13 records; no web fetch
+//!    needed, entirely corpus-native).** `apg_spells.lst` contains three
+//!    physical lines where two `.MOD` stanzas were concatenated onto a
+//!    single line with no line break (`apg_spells.lst:1945`,
+//!    `Fester (Mass).MOD ... Fiery Body.MOD ...`; `apg_spells.lst:2094`,
+//!    `Transmogrify.MOD ... Transmute Potion to Poison.MOD ...`). The
+//!    prior ingest attributed the line's *last* `DESC:` token to the
+//!    line's *first*-named record, silently swapping two unrelated
+//!    spells' full text (`Fester (Mass)` got `Fiery Body`'s text;
+//!    `Transmogrify` got `Transmute Potion to Poison`'s text) — `Fiery
+//!    Body` and `Transmute Potion to Poison` themselves were left with
+//!    only their short summaries. Both pairs are now correctly
+//!    attributed (`Fester (Mass)` drops from a wrongly-`full_text: true`
+//!    state to its own correct short-only `false`; `Fiery Body` and
+//!    `Transmute Potion to Poison` gain their real, corpus-native full
+//!    text). Separately, `Summon Monster I`'s own base line
+//!    (`apg_spells.lst:649`) carries two back-to-back `DESC:` tokens (a
+//!    short summary, then the full SRD paragraph) with no separate `.MOD`
+//!    involved at all; the full paragraph was already captured as
+//!    `description` pre-cycle but `full_text` was left `false` because
+//!    the ingest's "sourced from a matching `.MOD` record" rule didn't
+//!    recognize a same-line double-`DESC:` pattern as a full-text source.
+//!    Corrected to `true` for `Summon Monster I`-`IX` and their `.COPY=`
+//!    variants (`Summon Monster III/VII (Reptiles Only)`, `Summon Monster
+//!    V (Summons 1d3 Shadows)`) — no content change, just the flag.
+//! 2. **A web second-source pass (6 records: `Fester`,
+//!    `Heroic Fortune`, `Heroic Fortune (Mass)`, `Malediction`,
+//!    `Severed Fate`, `Unravel Destiny`) plus one more corpus-native
+//!    `.COPY=`-own-`.MOD` catch (`Call Lightning Storm (Starsoul)`).**
+//!    `Fester` was identity-matched (name + School + exact Level/
+//!    Components) against `https://www.d20pfsrd.com/magic/all-spells/f/fester/`.
+//!    The 5 "hero point" spells (APG's `advancedNewRules.html` variant
+//!    subsystem) were identity-matched (name + School + exact Level/
+//!    `CLASSES:` set) against
+//!    `https://legacy.aonprd.com/advancedPlayersGuide/advancedNewRules.html`
+//!    — a first `d20pfsrd.com` search for "Malediction" surfaced only a
+//!    same-named, later "Book of the Damned" reprint (Antipaladin/
+//!    Cleric/Shaman/Spiritualist/Witch 4, an unrelated damned-soul
+//!    mechanic), which was rejected as a cross-book/edition-cousin false
+//!    match per this cycle's identity-match rule before falling back to
+//!    the correct `legacy.aonprd.com` APG-original page. `Call Lightning
+//!    Storm (Starsoul)`'s own `.MOD` record (`apg_spells.lst:1075`)
+//!    supplies a full override `DESC:`, corpus-native.
+//!
+//! Remaining `full_text: false`/`description: None` records (13/12 of
+//! 297) are the documented cross-book `.COPY=` variants whose base spell
+//! lives outside `apg_spells.lst` (`Planar Binding` ×6, `Planar Ally` ×3,
+//! `Beast Shape I (Animals Only)`, `Blindness/Deafness (Only Cause
+//! Blindness)`, `Meteor Swarm (Dealing Cold Damage)`) plus the corpus-typo
+//! `Wall of Thorms` — all deliberately left `None` per this module's
+//! documented cross-book scope boundary (see above), never fabricated.
+//! The 3 `Threefold Aspect` `PRESPELL` sub-forms (`Young Adult`/
+//! `Adulthood`/`Elderly`) are **not** in this remaining-gap set: their
+//! base spell (`Threefold Aspect`) lives in this *same* book, so this
+//! cycle extended the module's existing `.COPY=`-fallback convention to
+//! this same-book `PRESPELL` case too (a deliberate, documented method
+//! choice, not a web claim) — all 3 now carry the base's full text.
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -808,22 +871,46 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         key: "Fester",
         school: Some(Pf1SchoolId::Necromancy),
         level: Some(2),
-        description: Some("Gives subject SR (CASTERLEVEL+12) vs. healing effects."),
-        full_text: false,
+        // Web second-source pass (SD-25 criterion 7.N, "apg-spell-text"):
+        // no `.MOD` full-text record exists anywhere in `apg_spells.lst`
+        // for this base record (verified: the only other `Fester.MOD`
+        // token in the corpus is a corrupted/mismatched stanza describing
+        // Feather Step's terrain mechanic, not Fester's SR effect -- see
+        // this module's method-notes doc comment below). Identity-matched
+        // (name + School Necromancy + Level Inquisitor 3/Witch 2 +
+        // Components V,S,M[rotted meat], all exact) against
+        // https://www.d20pfsrd.com/magic/all-spells/f/fester/.
+        description: Some("Necrotic energy permeates the target, blocking healing abilities. The subject gains spell resistance equal to 12 + your caster level against effects that restore hit points or grant temporary hit points. In addition, any healing provided by effects that ignore spell resistance (such as fast healing, regeneration, and some spells) is halved. If the target succeeds on a Fortitude saving throw, fester lasts only 1 round."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Fester (Mass)",
         school: Some(Pf1SchoolId::Necromancy),
         level: Some(6),
-        description: Some("This spell transforms your body into living flame. You and your equipment are immune to fire damage. In fact, every time you would normally take damage from fire, you are instead healed of damage at a rate of 1 point per 3 points of damage the fire attack would have normally inflicted. You are immune to blindness, critical hits, ability score damage, deafness, disease, drowning, electricity, poison, stunning, and all spells that affect your physiology or respiration. You take only half damage from acid or electricity. You take 150%% as much damage from cold than normal.  You gain a +6 enhancement bonus to your Dexterity score and a fly speed of 40 ft. (perfect maneuverability). Your unarmed attack deals an additional 3d6 points of fire damage, and you are considered armed when making unarmed attacks. Your body burns so brightly that creatures who do not avert their gaze from you are dazzled. Fire spells you cast have their save DCs increased by +1. If you enter water, you are surrounded by a 5-foot radius of steam and bubbles that grant you concealment (50%% miss chance) but you take 2d6 points of damage each round you remain in water."),
-        full_text: true,
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // `apg_spells.lst:1945` concatenates two `.MOD` stanzas onto one
+        // physical line with no line break (`Fester (Mass).MOD ... Fiery
+        // Body.MOD ...`); the prior ingest took the line's *last* `DESC:`
+        // token as this record's full text, which actually belongs to the
+        // unrelated `Fiery Body` record further down the same line. This
+        // record's own, correctly-attributed short `DESC:` (from
+        // `apg_spells.lst:111`) is restored here; no genuine full-text
+        // record exists for `Fester (Mass)` itself anywhere in the corpus.
+        description: Some("This spell functions as fester, except that it affects multiple foes."),
+        full_text: false,
     },
     SpellListEntry {
         key: "Fiery Body",
         school: Some(Pf1SchoolId::Transmutation),
         level: Some(9),
-        description: Some("You gain various fire-related powers."),
-        full_text: false,
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // this spell's real full-text `.MOD` record was present all along
+        // at `apg_spells.lst:1945`, concatenated onto the same physical
+        // line as `Fester (Mass).MOD` (see that record's note above) --
+        // the prior ingest attributed it to `Fester (Mass)` instead.
+        // Recovered directly from the corpus, no web fetch needed.
+        description: Some("This spell transforms your body into living flame. You and your equipment are immune to fire damage. In fact, every time you would normally take damage from fire, you are instead healed of damage at a rate of 1 point per 3 points of damage the fire attack would have normally inflicted. You are immune to blindness, critical hits, ability score damage, deafness, disease, drowning, electricity, poison, stunning, and all spells that affect your physiology or respiration. You take only half damage from acid or electricity. You take 150%% as much damage from cold than normal.  You gain a +6 enhancement bonus to your Dexterity score and a fly speed of 40 ft. (perfect maneuverability). Your unarmed attack deals an additional 3d6 points of fire damage, and you are considered armed when making unarmed attacks. Your body burns so brightly that creatures who do not avert their gaze from you are dazzled. Fire spells you cast have their save DCs increased by +1. If you enter water, you are surrounded by a 5-foot radius of steam and bubbles that grant you concealment (50%% miss chance) but you take 2d6 points of damage each round you remain in water."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Fire Breath",
@@ -1767,15 +1854,32 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         key: "Transmogrify",
         school: Some(Pf1SchoolId::Transmutation),
         level: None,
-        description: Some("This extract causes you to take on a pale, sickly pallor for 1 round. During this time, if you consume a potion, it has no effect. Instead, your mouth fills with a vile poison that you can spit onto a weapon as a free action. If you do not spit out the poison in 1 round, it affects you instead. The effect of the poison depends on the level of spell contained in the potion consumed (see sidebar). If the poison is not used within 1 minute per caster level it becomes inert. You can only create one dose of poison in this way per casting of this spell.  The following poisons are created through the transmute potion to poison spell. The power of the poison depends on the level of the spell contained in the transmuted potion.  0-Level Potion Poison: injury, Fortitude DC 10, 1/round for 2 rounds, 1 Dex damage, Cure 1 save.  1st-Level Potion Poison: injury, Fortitude DC 11, 1/round for 4 rounds, 1d2 Dex damage, Cure 1 save.  2nd-Level Potion Poison: injury, Fortitude DC 13, 1/round for 6 rounds, 1d4 Str damage, Cure 1 save.  3rd-Level Potion Poison: injury, Fortitude DC 14, 1/round for 6 rounds, 1d4 Con damage, Cure 2 consecutive saves."),
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // `apg_spells.lst:2094` concatenates two `.MOD` stanzas onto one
+        // physical line with no line break (`Transmogrify.MOD ...
+        // Transmute Potion to Poison.MOD ...`); the prior ingest took the
+        // line's *last* `DESC:` token as this record's full text, which
+        // actually belongs to the unrelated `Transmute Potion to Poison`
+        // record further down the same line. This record's own correctly
+        // co-located first `DESC:` token is restored here. `level` stays
+        // `None`: the only `CLASSES:`-granting `.MOD` for Transmogrify
+        // (`apg_spells.lst:492`) is itself `#`-commented out in the real
+        // corpus, a genuine gap, not part of this correction.
+        description: Some("Your eidolon's form shifts and transforms. This spell allows you to change any of the eidolon's evolutions by allocating its evolution pool on new evolutions. If you have the aspect or greater aspect ability, this spell also allows you to change the evolution points spent to modify you, including removing or adding points as allowed by those abilities.  Your eidolon cannot benefit from this spell more than once per day. This spell does not allow you to change your eidolon's base form."),
         full_text: true,
     },
     SpellListEntry {
         key: "Transmute Potion to Poison",
         school: Some(Pf1SchoolId::Transmutation),
         level: Some(2),
-        description: Some("Spit poison onto weapon after drinking potion."),
-        full_text: false,
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // this spell's real full-text `.MOD` record was present all along
+        // at `apg_spells.lst:2094`, concatenated onto the same physical
+        // line as `Transmogrify.MOD` (see that record's note above) -- the
+        // prior ingest attributed it to `Transmogrify` instead. Recovered
+        // directly from the corpus, no web fetch needed.
+        description: Some("This extract causes you to take on a pale, sickly pallor for 1 round. During this time, if you consume a potion, it has no effect. Instead, your mouth fills with a vile poison that you can spit onto a weapon as a free action. If you do not spit out the poison in 1 round, it affects you instead. The effect of the poison depends on the level of spell contained in the potion consumed (see sidebar). If the poison is not used within 1 minute per caster level it becomes inert. You can only create one dose of poison in this way per casting of this spell.  The following poisons are created through the transmute potion to poison spell. The power of the poison depends on the level of the spell contained in the transmuted potion.  0-Level Potion Poison: injury, Fortitude DC 10, 1/round for 2 rounds, 1 Dex damage, Cure 1 save.  1st-Level Potion Poison: injury, Fortitude DC 11, 1/round for 4 rounds, 1d2 Dex damage, Cure 1 save.  2nd-Level Potion Poison: injury, Fortitude DC 13, 1/round for 6 rounds, 1d4 Str damage, Cure 1 save.  3rd-Level Potion Poison: injury, Fortitude DC 14, 1/round for 6 rounds, 1d4 Con damage, Cure 2 consecutive saves."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Treasure Stitching",
@@ -1974,88 +2078,116 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         full_text: true,
     },
     SpellListEntry {
+        // PRESPELL fallback (SD-25 criterion 7.N, "apg-spell-text",
+        // register A8-style deliberate method decision): this record is a
+        // `PRESPELL:1,Threefold Aspect`-linked sub-form with no own
+        // `SCHOOL:`/`CLASSES:`/`DESC:` token in the corpus -- unlike the
+        // documented `.COPY=` cross-book scope boundary elsewhere in this
+        // module, the base spell here (`Threefold Aspect`, above) lives in
+        // this *same* book/file, and its own full text already narrates
+        // this exact sub-form ("As the young adult, you gain a +2
+        // enhancement bonus..."). Falling back to the base's corpus-native
+        // full text is therefore a same-book, exact-identity, non-fabricated
+        // extension of the module's existing `.COPY=` fallback convention
+        // (not a web second-source claim -- no URL to cite).
         key: "Threefold Aspect (Young Adult)",
         school: None,
         level: None,
-        description: None,
-        full_text: false,
+        description: Some("Threefold aspect allows you to shift your appearance between your natural age and three idealized age categories: young adult (youth/maiden), adulthood (father/mother), or elderly (elder/crone). In each case, your appearance is your own at the appropriate age, rather than that of a new individual.  You may change between these three aspects or your actual age as a standard action. As the young adult, you gain a +2 enhancement bonus to Dexterity and Constitution, but suffer a -2 penalty to Wisdom. In the adult aspect, you gain a +2 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Dexterity. As the elderly aspect, you gain a +4 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Strength and Dexterity. As enhancement bonuses, these stack with any bonuses or penalties you may have from your actual age (which are untyped bonuses)-the bonuses granted by this spell represent your idealized form in this threefold aspect rather than simply duplicating your ability scores at any one particular age.  True seeing reveals your natural appearance overlaid with that your aspect, recognizing both as part of your true self.  Individuals who study you closely and have interacted with you at another apparent age recognize a resemblance (as though family) with a successful DC 20 Perception check.  Threefold aspect does not alter your clothing or equipment, and does not heal any deformity or injury unrelated to age."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Threefold Aspect (Adulthood)",
         school: None,
         level: None,
-        description: None,
-        full_text: false,
+        description: Some("Threefold aspect allows you to shift your appearance between your natural age and three idealized age categories: young adult (youth/maiden), adulthood (father/mother), or elderly (elder/crone). In each case, your appearance is your own at the appropriate age, rather than that of a new individual.  You may change between these three aspects or your actual age as a standard action. As the young adult, you gain a +2 enhancement bonus to Dexterity and Constitution, but suffer a -2 penalty to Wisdom. In the adult aspect, you gain a +2 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Dexterity. As the elderly aspect, you gain a +4 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Strength and Dexterity. As enhancement bonuses, these stack with any bonuses or penalties you may have from your actual age (which are untyped bonuses)-the bonuses granted by this spell represent your idealized form in this threefold aspect rather than simply duplicating your ability scores at any one particular age.  True seeing reveals your natural appearance overlaid with that your aspect, recognizing both as part of your true self.  Individuals who study you closely and have interacted with you at another apparent age recognize a resemblance (as though family) with a successful DC 20 Perception check.  Threefold aspect does not alter your clothing or equipment, and does not heal any deformity or injury unrelated to age."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Threefold Aspect (Elderly)",
         school: None,
         level: None,
-        description: None,
-        full_text: false,
+        description: Some("Threefold aspect allows you to shift your appearance between your natural age and three idealized age categories: young adult (youth/maiden), adulthood (father/mother), or elderly (elder/crone). In each case, your appearance is your own at the appropriate age, rather than that of a new individual.  You may change between these three aspects or your actual age as a standard action. As the young adult, you gain a +2 enhancement bonus to Dexterity and Constitution, but suffer a -2 penalty to Wisdom. In the adult aspect, you gain a +2 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Dexterity. As the elderly aspect, you gain a +4 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Strength and Dexterity. As enhancement bonuses, these stack with any bonuses or penalties you may have from your actual age (which are untyped bonuses)-the bonuses granted by this spell represent your idealized form in this threefold aspect rather than simply duplicating your ability scores at any one particular age.  True seeing reveals your natural appearance overlaid with that your aspect, recognizing both as part of your true self.  Individuals who study you closely and have interacted with you at another apparent age recognize a resemblance (as though family) with a successful DC 20 Perception check.  Threefold aspect does not alter your clothing or equipment, and does not heal any deformity or injury unrelated to age."),
+        full_text: true,
     },
     SpellListEntry {
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // this base record's own line (`apg_spells.lst:649`) carries *two*
+        // `DESC:` tokens back-to-back (a short `!PRERULE:1,DisplayFullSpell`
+        // summary, then a full `PRERULE:1,DisplayFullSpell` SRD paragraph
+        // matching `crb::spell_list`'s own "Summon Monster I" text
+        // verbatim) -- both self-contained on this record's own line, not
+        // sourced from a separate `.MOD` record. The prior ingest already
+        // captured the full paragraph as `description` but under-flagged
+        // `full_text` as `false` (its "sourced from a matching `.MOD`
+        // record" rule didn't recognize the same-line double-`DESC:`
+        // pattern as a full-text source). Corrected here to `true`; no
+        // content change, no web fetch needed. Same finding applies to
+        // Summon Monster II-IX below (`apg_spells.lst:650-657`) and their
+        // `.COPY=` variants (Reptiles Only / Summons 1d3 Shadows), which
+        // inherit this now-corrected `full_text: true` via the base's
+        // fields per this module's own `.COPY=` fallback rule.
         key: "Summon Monster I",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell summons an extraplanar creature [typically an outsider, elemental, or magical beast native to another plane]. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. The spell conjures one of the creatures from the 1st Level list on Table 10-5. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned monster cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities. Creatures cannot be summoned into an environment that cannot support them. Creatures summoned using this spell cannot use spells or spell-like abilities that duplicate spells with expensive material components [such as wish]. When you use a summoning spell to summon a creature with an alignment or elemental subtype, it is a spell of that type. Creatures on Table 10-5 marked with an \"*\" are summoned with the celestial template, if you are good, and the fiendish template, if you are evil. If you are neutral, you may choose which template to apply to the creature. Creatures marked with an \"*\" always have an alignment that matches yours, regardless of their usual alignment. Summoning these creatures makes the summoning spell's type match your alignment. [Table Not Included]"),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster II",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster III",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster IV",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster V",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster VI",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster VII",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster VIII",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster IX",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Blindness/Deafness (Only Cause Blindness)",
@@ -2069,7 +2201,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Planar Binding (Demons Only)",
@@ -2153,21 +2285,30 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster VII (Reptiles Only)",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
-        full_text: false,
+        full_text: true,
     },
     SpellListEntry {
+        // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
+        // this `.COPY=Call Lightning Storm` variant has its own `.MOD`
+        // record (`apg_spells.lst:1075`) that overrides `DESC:` with a
+        // full, self-contained `PRERULE:1,DisplayFullSpell` paragraph --
+        // corpus-native, no web fetch needed. `school`/`level` stay `None`:
+        // the base `Call Lightning Storm` spell itself is not present in
+        // this book's corpus (cross-book base, per this module's
+        // documented `.COPY=` scope boundary), so there is no in-book
+        // `SCHOOL:`/`CLASSES:` token to inherit.
         key: "Call Lightning Storm (Starsoul)",
         school: None,
         level: None,
-        description: None,
-        full_text: false,
+        description: Some("This spell functions like call lightning, except that each bolt deals 5d6 points of Fire damage [or 5d10 if created outdoors at night], and you may call a maximum of 15 bolts."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Wall of Thorms",
@@ -2177,39 +2318,52 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         full_text: false,
     },
     SpellListEntry {
+        // Web second-source pass (SD-25 criterion 7.N, "apg-spell-text"):
+        // no `.MOD` full-text record exists in `apg_spells.lst` for any of
+        // this and the following 4 "hero point" spells (their only
+        // `.MOD` stanzas are `#`-commented-out `ITEM:Potion` lines).
+        // Identity-matched (name + School + exact Level/CLASSES set, all
+        // exact) against
+        // https://legacy.aonprd.com/advancedPlayersGuide/advancedNewRules.html
+        // -- the original APG hero-points-chapter page, not the
+        // later/edition-cousin "Book of the Damned" reprint of the
+        // same-named "Malediction" spell (Antipaladin/Cleric/Shaman/
+        // Spiritualist/Witch 4, unrelated hero-point mechanic) that a
+        // first d20pfsrd.com search surfaced and was rejected as a false
+        // match per this cycle's identity-match rule.
         key: "Heroic Fortune",
         school: Some(Pf1SchoolId::Evocation),
         level: Some(2),
-        description: Some("Subject gains 1 temporary hero point."),
-        full_text: false,
+        description: Some("This spell grants 1 hero point to the target. This hero point must be spent before the duration expires, or it is lost. The bonus hero point is spent before any other hero points the target might possess."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Heroic Fortune (Mass)",
         school: Some(Pf1SchoolId::Evocation),
         level: Some(4),
-        description: Some("Subjects gain 1 temporary hero point."),
-        full_text: false,
+        description: Some("This spell functions like heroic fortune, except that it affects one or more creatures, no two of which can be more than 30 ft. apart, at close range (25 ft. + 5 ft./2 levels)."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Malediction",
         school: Some(Pf1SchoolId::Necromancy),
         level: None,
-        description: Some("Gain temporary hero points by killing a dying creature."),
-        full_text: false,
+        description: Some("You utter a dire curse over the body of a dying creature, allowing you to consume its waning life force. Upon casting this spell, you touch a living creature that has -1 or fewer hit points. If the target fails its saving throw, it dies and you gain 1 hero point for every 5 Hit Dice possessed by the target (minimum 1, maximum 3). These hero points last for a number of minutes equal to the target's Hit Dice. Any hero points remaining when this spell ends are lost."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Severed Fate",
         school: Some(Pf1SchoolId::Enchantment),
         level: Some(2),
-        description: Some("Target is shaken and cannot use hero points."),
-        full_text: false,
+        description: Some("You curse the target, preventing it from drawing upon the powers of destiny. The target is shaken and cannot use hero points for the duration of the spell. This effect can be removed by dispel magic, remove curse, or other similar effects."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Unravel Destiny",
         school: Some(Pf1SchoolId::Divination),
         level: None,
-        description: Some("Target gets -2 on ability checks, attack rolls, saving throws, and skill check per hero point it possesses and takes 2d6 damage when spending hero points."),
-        full_text: false,
+        description: Some("You utter a dire portent, causing destiny and fate to unravel around the target. This profoundly disturbing effect causes the target to suffer a cumulative -2 penalty on all ability checks, attack rolls, saving throws, and skill checks for every hero point it possesses. The target can reduce this penalty by spending hero points normally, but it takes 2d6 points of damage for each hero point spent while this spell is in effect."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Corruption Resistance (Evil)",

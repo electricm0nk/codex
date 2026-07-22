@@ -89,7 +89,17 @@
 //! Cube, Hell Hound. This brings Epic 5 to 8 of a default 8-12 subsets
 //! (41 monsters total) — see `docs/release/SD-22/progress.md`'s cycle
 //! log for this cycle's closure-readiness assessment.
+//!
+//! **Equipment tables (SD-25 criterion 7.N item 4, added this cycle):**
+//! `equipment_tables`/`equipment_data` close the "no `beastiary1`
+//! equipment module exists" scope gap
+//! `tests/sd24_equipment_coverage_audit.rs` documented. See
+//! `equipment_tables.rs`'s module doc comment for the full sourcing
+//! methodology, the register A8 codegen-path decision, and the register
+//! A13 finding that no spell-list concept exists for this book.
 
+pub mod equipment_data;
+pub mod equipment_tables;
 pub mod monster_subset_01;
 pub mod monster_subset_02;
 pub mod monster_subset_03;

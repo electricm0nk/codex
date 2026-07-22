@@ -1,7 +1,7 @@
 # Architecture overview
 
 > Scope: what Codex is, its three top-level planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -81,7 +81,7 @@ flowchart TD
 
     subgraph tauri["apps/desktop/src-tauri/ — Tauri commands"]
         CH["character_hub.rs: create_character, load_saved_character, ..."]
-        SD13B["sd13_support_state_matrix.rs: read-only support-truth bridge"]
+        SD13B["support_state_matrix_bridge.rs: read-only support-truth bridge"]
     end
 
     subgraph boundary["apps/desktop/src/boundary/*.ts"]
@@ -136,7 +136,7 @@ compresses. `homebrew_authoring/`, `oracle_validation/`, and
 them sits on the character-compute hot path above them, and
 `support_state_matrix.rs` in particular computes no mechanics at all — it is
 a documentary truth ledger the desktop bridge
-(`apps/desktop/src-tauri/src/sd13_support_state_matrix.rs`) reads read-only
+(`apps/desktop/src-tauri/src/support_state_matrix_bridge.rs`) reads read-only
 (see [support-state-matrix.md](./support-state-matrix.md)).
 
 ## Key invariants across all three planes
@@ -188,7 +188,7 @@ shaped the way it is:
 | `src/saved_character/`, `src/campaign/` | Local on-disk persistence for one character / one campaign | [persistence.md](./persistence.md) |
 | `src/homebrew_authoring/`, `src/oracle_validation/` | Bounded homebrew package-authoring and oracle-parity proof slices | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `apps/desktop/` (frontend + `src-tauri/`) | React/Tauri desktop shell, Tauri command inventory, boundary layer | [desktop-app.md](./desktop-app.md) |
-| `apps/desktop/src/sd16/`, `apps/desktop/src-tauri/src/update/` | Self-update chain; `apps/desktop/src/sd11/feedback/`, `sd16/feedback/` | [update-and-feedback.md](./update-and-feedback.md) |
+| `apps/desktop/src/sd16/`, `apps/desktop/src-tauri/src/update/` | Self-update chain; `apps/desktop/src/testerWorkbench/feedback/`, `sd16/feedback/` | [update-and-feedback.md](./update-and-feedback.md) |
 | `.github/workflows/`, `scripts/release/`, `tools/release/`, `schemas/update/` | Publish pipeline, branch-promotion gates, manifest schemas | [release-pipeline.md](./release-pipeline.md) |
 | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/**/*.test.ts` | Full verification command set and fixture conventions | [testing.md](./testing.md) |
 | (cross-cutting) | Idiom catalog: fail-honest, DI seams, store shape, boundary rule, etc. | [conventions.md](./conventions.md) |

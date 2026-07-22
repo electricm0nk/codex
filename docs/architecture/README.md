@@ -1,7 +1,7 @@
 # Architecture docs
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see §Maintenance contract below
 
 ## Purpose
@@ -15,8 +15,8 @@ the new reality; it is never appended to with a changelog entry.
 ## Provenance note (the one place history is acknowledged)
 
 Modules, tests, and directories across this repo carry `sdNN`/`geNN`
-prefixes (e.g. `sd13_support_state_matrix.rs`, `ge08_workbench.rs`,
-`tests/sd22_apg_class_witch_resolves.rs`). These prefixes name the
+prefixes (e.g. `ge08_workbench.rs`, the `apps/desktop/src/sd16/` frontend
+directory, `tests/sd25_sorcerer_level_up_explanation_coverage.rs`). These prefixes name the
 originating spec-domain or grand-epic bundle that created the file — they
 are **proper nouns**, not documentation of what the code currently does.
 This doc set describes function, not the bundle that produced it; treat a
@@ -39,11 +39,11 @@ doc's coverage shifts.
 | [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR | `src/pcgen_import/` |
 | [rules-engine.md](./rules-engine.md) | The headless PF1 compute spine and per-domain engines | `src/rules_core/` (excluding `rules_tables/`, `support_state_matrix.rs`) |
 | [rules-data-tables.md](./rules-data-tables.md) | Hand-transcribed per-book Paizo rule-data tables | `src/rules_core/rules_tables/` |
-| [support-state-matrix.md](./support-state-matrix.md) | Typed support/evidence-tier control-plane ledger | `src/rules_core/support_state_matrix.rs`, `apps/desktop/src-tauri/src/sd13_support_state_matrix.rs` |
+| [support-state-matrix.md](./support-state-matrix.md) | Typed support/evidence-tier control-plane ledger | `src/rules_core/support_state_matrix.rs`, `apps/desktop/src-tauri/src/support_state_matrix_bridge.rs` |
 | [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `src/oracle_validation/` |
-| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map | `apps/desktop/` |
-| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/sd16/`, `apps/desktop/src/sd11/feedback/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
+| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam | `apps/desktop/` |
+| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/sd16/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
 | README.md (this file) | Doc-set index, provenance note, maintenance contract | `docs/architecture/` |

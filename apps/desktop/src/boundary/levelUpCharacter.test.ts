@@ -4,7 +4,7 @@ import { assertEqual } from '../testSupport/asserts';
 /**
  * No Tauri runtime is available under `tsx`, so this exercises the same
  * no-runtime failure path every other boundary loader's test exercises
- * (see `loadSd13SupportStateMatrix.test.ts`). It also pins the descriptive,
+ * (see `loadSupportStateMatrix.test.ts`). It also pins the descriptive,
  * non-tagged error message.
  */
 async function testNoRuntimeThrowsDescriptiveError() {

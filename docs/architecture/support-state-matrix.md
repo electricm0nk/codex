@@ -1,7 +1,7 @@
 # Support-state matrix
 
 > Scope: The typed control-plane carrier that records what the rules engine currently, honestly supports — documentary truth, not computed mechanics.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What the matrix is
@@ -126,11 +126,11 @@ the carrier itself exposes — a narrow `find` by `row_id`.
 
 The desktop app's read-only bridge lives in two files, not one:
 
-- `apps/desktop/src-tauri/src/sd13_support_state_matrix.rs` — `build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot`. This is a presentation adapter: it calls `seeded_sd13_e1_f1_current_truth()`, and for every row projects a `SupportStateRowPresentation` that mirrors the upstream fields verbatim plus two SD-13-owned derived-wording fields (`tester_facing_state_label`, `refresh_audit_label`) computed purely from `support_state`/`evidence_freshness` — the module's own doc comment is explicit that this bridge "deliberately does **not** compute rules, persist, mutate, promote/demote, recompute, filter, aggregate" anything.
+- `apps/desktop/src-tauri/src/support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1's identifier cleanup) — `build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot`. This is a presentation adapter: it calls `seeded_sd13_e1_f1_current_truth()`, and for every row projects a `SupportStateRowPresentation` that mirrors the upstream fields verbatim plus two SD-13-owned derived-wording fields (`tester_facing_state_label`, `refresh_audit_label`) computed purely from `support_state`/`evidence_freshness` — the module's own doc comment is explicit that this bridge "deliberately does **not** compute rules, persist, mutate, promote/demote, recompute, filter, aggregate" anything.
 - `apps/desktop/src-tauri/src/main.rs` — the actual `#[tauri::command] fn load_support_state_matrix() -> SupportStateMatrixSnapshot` lives here, and its body is a one-line call to `build_support_state_matrix_snapshot()`. This is the command the frontend invokes; it is registered in `apps/desktop/src-tauri/src/main.rs`'s `tauri::generate_handler!` list alongside the app's other commands.
 
 The round trip is: `support_state_matrix::seeded_sd13_e1_f1_current_truth()` (upstream typed truth)
-→ `sd13_support_state_matrix::build_support_state_matrix_snapshot()` (serializable presentation
+→ `support_state_matrix_bridge::build_support_state_matrix_snapshot()` (serializable presentation
 projection) → `main.rs::load_support_state_matrix` (the Tauri IPC command) → the desktop frontend.
 No layer in that chain recomputes or reorders rows; the doc comment on the presentation struct
 states every field "mirrors upstream truth; nothing here is recomputed or promoted."

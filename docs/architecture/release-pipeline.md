@@ -1,7 +1,7 @@
 # Release pipeline
 
 > Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, and how branches get promoted between channels.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Overview
@@ -40,16 +40,16 @@ stamped sources). Every downstream job fans in from both.
 
 `VERSION="0.5.${GITHUB_RUN_NUMBER}"` (`publish-tester-release.yml:71`) is the sole place the build number is minted; every other consumer reads `needs.stamp.outputs.version`. The three files that must carry a matching `<major>.<tranche-base>.<build>` triple are `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` — as of this verification all three are committed at `0.5.97` (confirmed via `grep -n '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json` and `grep -n '^version' apps/desktop/src-tauri/Cargo.toml`). Note the workflow's own in-line comment (`publish-tester-release.yml:43-45`) still describes "the repo keeps `0.0.0` as the committed placeholder" — that description is stale relative to current tranche/5 practice, where the three files are kept at the real in-flight version and the workflow's stamp step still overwrites `package.json` / `tauri.conf.json` unconditionally at publish time (it does not touch `Cargo.toml`).
 
-Versioning semantics (`docs/release/SD-22/decisions.md:52`, and `apps/desktop/src/sd22/buildVersionTriple.test.ts:41-48`):
+Versioning semantics (`docs/release/SD-22/decisions.md:52`, and `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts:41-48`):
 - **major**: stays `0` until the first publish to `main`.
 - **tranche-base** (the `5` in `0.5.x`): bumped only when a new `tranche/N` branch is cut for the next bundle — explicitly *not* at a bundle's own closure while still on the same tranche branch. `buildVersionTriple.test.ts:44-47` documents that an Epic 7 cycle bumped this to `0.6` in error and it was reverted (also called out in the workflow comment at `publish-tester-release.yml:58-65`).
 - **build**: the monotonic `GITHUB_RUN_NUMBER`.
 
-The build label surfaced in the desktop UI is `Codex <version>` — `formatSd11WorkbenchBuildLabel` in `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.ts:72-73` (`BUILD_PREFIX = 'Codex'` at line 61).
+The build label surfaced in the desktop UI is `Codex <version>` — `formatWorkbenchBuildLabel` in `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.ts:72-73` (`BUILD_PREFIX = 'Codex'` at line 61; both the function and the file were renamed from `formatSd11WorkbenchBuildLabel` / `sd11/status/createSd11WorkbenchStatus.ts` by SD-25 criterion 1.1).
 
 Guard tests that keep the three files and the fixtures honest:
-- `apps/desktop/src/sd22/buildVersionTriple.test.ts` — asserts `package.json`, `tauri.conf.json`, and `Cargo.toml` versions are identical and match `^\d+\.\d+\.\d+$`, and that the triple starts with `0.5.` on tranche/5. (`apps/desktop/src/sd21/buildVersionTriple.test.ts` is the SD-21-era predecessor, anchored to tranche 4; both currently exist side by side.)
-- `apps/desktop/src/sd22/buildLabelFixtureFreshness.test.ts` — asserts three named fixture files (`apps/desktop/src/sd11/loadSd11TesterWorkbenchSurface.test.ts`, `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts`) carry the *current* `Codex <version>-test` label literal and not the specific prior-bump literal `Codex 0.5.95-test` (line 32).
+- `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts` (renamed from `sd22/` by SD-25 criterion 1.1) — asserts `package.json`, `tauri.conf.json`, and `Cargo.toml` versions are identical and match `^\d+\.\d+\.\d+$`, and that the triple starts with `0.5.` on tranche/5. (`apps/desktop/src/sd21/buildVersionTriple.test.ts` is the SD-21-era predecessor, anchored to tranche 4; both currently exist side by side.)
+- `apps/desktop/src/releaseChecks/buildLabelFixtureFreshness.test.ts` — asserts three named fixture files (`apps/desktop/src/testerWorkbench/loadTesterWorkbenchSurface.test.ts`, `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts`) carry the *current* `Codex <version>-test` label literal and not the specific prior-bump literal `Codex 0.5.95-test` (line 32).
 
 ### Manifest generation + dual validation
 
@@ -113,7 +113,7 @@ Enforcement is layered:
    - Runs `python3 scripts/release/check_promotion_evidence.py --lane <beta|stable> ...` (lines 158-214) and captures `gate_report.txt`.
    - Posts/updates a single PR comment (marker `<!-- promotion-gate-evidence -->`, lines 241-281) and sets a commit status with context `sd16-e5-f3a/promotion-gate` (lines 283-303) — this is what branch protection is expected to require.
    - Fails the job (`exit 1`) when the gate is blocked (lines 305-310).
-5. **`.github/workflows/check-release-manifest.yml`** — a PR-time gate, scoped by `paths:` filters (`tools/release/**`, `apps/desktop/src/sd11/update/**`, `apps/desktop/src/sd15/**`, `apps/desktop/src/sd16/**`, `apps/desktop/src/sd17/**`, `release-manifest.json`, `docs/release/**/release-notes.md`, and the two workflow files themselves — lines 24-32). If a `release-manifest.json`-shaped file changed, it runs `tools/release/check_release_manifest.py` against every changed manifest and posts a failure-summary comment on failure (lines 94-116).
+5. **`.github/workflows/check-release-manifest.yml`** — a PR-time gate, scoped by `paths:` filters (`tools/release/**`, `apps/desktop/src/sd11/update/**`, `apps/desktop/src/sd15/**`, `apps/desktop/src/sd16/**`, `apps/desktop/src/sd17/**`, `release-manifest.json`, `docs/release/**/release-notes.md`, and the two workflow files themselves — lines 24-32). If a `release-manifest.json`-shaped file changed, it runs `tools/release/check_release_manifest.py` against every changed manifest and posts a failure-summary comment on failure (lines 94-116). **Latent gap:** SD-25 criterion 1.1 renamed the `sd11/` frontend directory to `testerWorkbench/` and `sd15/` to `operatorTriage/` but did **not** update this workflow's `paths:` filter, so its `sd11/update/**` and `sd15/**` globs now match nothing — a change under those renamed directories no longer triggers this gate. The `sd16/`/`sd17/` globs still resolve.
 6. **`.github/workflows/tranche-3-ci.yml`** — **tranche/3-specific**, not a generic template. Guards that slice PRs target `tranche/3` (never `develop`, per the header comment's "devops/tranche-branch-governance refusal", lines 3-19), runs the same test+typecheck+test lane as the publish workflow's `test` job on every push/PR to `tranche/3` (lines 54-99), and validates any touched `docs/release/**/manifest.yaml` or `release-notes.md` via `check_release_manifest.py` (lines 101-151). `.github/branch-protection-rulesets/README.md`'s "To add a new tranche" procedure and the `_note` fields inside `tranche-2-7.json`'s status-check rules (lines 51, 56 — "The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet") both establish that later tranches are expected to get their own parallel `<tranche>-ci.yml`; none has been authored for `tranche/5` either.
 
 ### `scripts/release/promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh`
