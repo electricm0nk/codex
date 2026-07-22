@@ -7,7 +7,7 @@
 //! `develop` — that narrower diff-scoped grep is `loop-instruction.md §2.3`
 //! step 4's per-cycle gate, already run and clean by every prior SD-24
 //! cycle). This test is the codebase-wide sweep: it runs all four checks
-//! from `governance/no-stub-mvp-doctrine.md` §"Per-cycle audit" /
+//! from `docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit" /
 //! `wired-integration-discipline` against the three shipping source trees
 //! (`apps/desktop/`, `apps/desktop/src-tauri/`, `src/`) and fails on any
 //! *new* violation, the same durable-tripwire shape as
@@ -59,7 +59,7 @@
 //!
 //! ## Exclusion added 2026-07-22 (registry entry 0002, SD-25 criteria 3.3/3.4)
 //!
-//! `governance/wired-integration-stubs-registry.md` entry 0002 is an
+//! `docs/governance/wired-integration-stubs-registry.md` entry 0002 is an
 //! operator-approved permanent exception for `StubAdapter`'s literal
 //! `"Would render for system {system_id}; not yet implemented"` message
 //! (SD-25 criterion 3.3), widened by criterion 3.4 to the three Tauri
@@ -135,7 +135,7 @@ fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
     );
     let is_plant_growth_full_spell_text =
         |line: &str| line.contains("creatures must hack or force a way through");
-    // Registry entry 0002 (`governance/wired-integration-stubs-registry.md`):
+    // Registry entry 0002 (`docs/governance/wired-integration-stubs-registry.md`):
     // `StubAdapter`'s operator-approved "Would render for system ...; not
     // yet implemented" placeholder message, widened (criterion 3.4) to the
     // three Tauri command files that dispatch to it and assert its exact
@@ -301,7 +301,7 @@ fn no_mock_leaks_in_shipping_source() {
 #[test]
 fn no_would_strings_in_shipping_source() {
     let hits = git_grep_shipping_trees(r#""Would [^"]*""#);
-    // Registry entry 0002 (`governance/wired-integration-stubs-registry.md`):
+    // Registry entry 0002 (`docs/governance/wired-integration-stubs-registry.md`):
     // same operator-approved `StubAdapter` exception as the zero-tolerance
     // check above, scoped identically by path -- whole `stub_adapter.rs`,
     // plus only the three named command files' literal `"Would render for

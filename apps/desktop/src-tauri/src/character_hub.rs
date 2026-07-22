@@ -375,7 +375,7 @@ pub(crate) fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> Character
 /// This table documents the full three-operation surface. As of this cycle
 /// all three rows are wired to callable `#[tauri::command]`s
 /// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`).
-/// Per the Wired Integration doctrine (`governance/no-stub-mvp-doctrine.md`),
+/// Per the Wired Integration doctrine (`docs/governance/no-stub-mvp-doctrine.md`),
 /// the `wired` flag below is descriptive metadata this table's own
 /// dispatch-shape test asserts against, not a runtime dispatcher a caller
 /// can reach.
