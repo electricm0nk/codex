@@ -51,6 +51,9 @@ use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 use crate::character_hub;
+use crate::pf1_adapter::Pf1Adapter;
+use crate::rule_system_adapter::RuleSystemAdapter;
+use crate::stub_adapter::StubAdapter;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -62,6 +65,10 @@ pub struct ReSaveCharacterRequest {
     /// refused if this does not match the canonical on-disk `revision_id`.
     pub expected_revision_id: String,
     pub saved_at: String,
+    /// SD-25 Criterion 3.4 (Epic 3 "Hub of Hubs" Tauri command-surface
+    /// routing): which rule system's `RuleSystemAdapter` to dispatch this
+    /// re-save through — see `resolve_rule_system_adapter` below.
+    pub rule_system_id: String,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -130,6 +137,42 @@ pub fn re_save_character_at_root(
     })
 }
 
+/// Resolves `rule_system_id` to the `RuleSystemAdapter` implementation the
+/// Tauri command dispatches through (SD-25 Criterion 3.4, `cycles/3_4.md`
+/// GREEN) — `"pf1"` to the real `Pf1Adapter`; any other id to `StubAdapter`.
+/// `StubAdapter::new` requires a `&'static str`; the caller-supplied
+/// `rule_system_id` is a runtime `String`, so an unknown id is leaked once
+/// per call to satisfy that bound — the same `Box::leak`-to-`'static`
+/// pattern this crate already uses at `corpus_fixtures.rs` /
+/// `codex::rules_core::equipment_resolver`. Unknown-`rule_system_id` calls
+/// are the rare/exceptional path (real traffic is `"pf1"`), so the leak is
+/// bounded by how many distinct not-yet-supported ids ever get dispatched.
+fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
+    match rule_system_id {
+        "pf1" => Box::new(Pf1Adapter),
+        other => {
+            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+            Box::new(StubAdapter::new(leaked))
+        }
+    }
+}
+
+/// Dispatches `re_save_character` through the `RuleSystemAdapter` trait
+/// instead of calling `re_save_character_at_root` by name directly (SD-25
+/// Criterion 3.4). For `"pf1"` this produces byte-for-byte the same real
+/// behavior as calling `re_save_character_at_root` directly —
+/// `Pf1Adapter::save_character` wraps that exact function — so every
+/// pre-existing test above that calls `re_save_character_at_root` directly
+/// keeps passing unchanged.
+pub fn re_save_character_via_rule_system(
+    rule_system_id: &str,
+    root: &Path,
+    expected_revision_id: &str,
+    saved_at: &str,
+) -> Result<ReSaveCharacterResponse, String> {
+    resolve_rule_system_adapter(rule_system_id).save_character(root, expected_revision_id, saved_at)
+}
+
 /// Loads the saved character, refuses on a revision conflict, and
 /// otherwise re-saves it under an incremented `{id}.rev.N` revision — see
 /// `re_save_character_at_root` for the full semantics.
@@ -139,7 +182,12 @@ pub fn re_save_character(
     request: ReSaveCharacterRequest,
 ) -> Result<ReSaveCharacterResponse, String> {
     let root = character_hub::resolve_character_root(&app, &request.character_id)?;
-    re_save_character_at_root(&root, &request.expected_revision_id, &request.saved_at)
+    re_save_character_via_rule_system(
+        &request.rule_system_id,
+        &root,
+        &request.expected_revision_id,
+        &request.saved_at,
+    )
 }
 
 #[cfg(test)]
@@ -198,6 +246,64 @@ mod tests {
             display_label: "Resave Test Character".to_owned(),
             character_input,
         }
+    }
+
+    /// SD-25 Criterion 3.4 GREEN: `re_save_character_via_rule_system("pf1",
+    /// ...)` dispatches through `dyn RuleSystemAdapter` and produces
+    /// byte-for-byte the same real result `re_save_character_at_root` itself
+    /// returns (`Pf1Adapter::save_character` wraps that exact function).
+    #[test]
+    fn re_save_character_via_rule_system_dispatches_pf1_through_the_trait() {
+        let root = tempdir("pf1-dispatch");
+        let envelope = seed_envelope();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let dispatched = re_save_character_via_rule_system(
+            "pf1",
+            &root,
+            "char-resave-test.rev.1",
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("pf1 dispatch should not error");
+
+        assert!(dispatched.success, "pf1 dispatch must succeed: {:?}", dispatched.error);
+        assert_eq!(dispatched.revision_id.as_deref(), Some("char-resave-test.rev.2"));
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.revision_id, "char-resave-test.rev.2",
+            "pf1 dispatch through the trait must really persist the re-save on disk"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An unrecognized `rule_system_id` routes to `StubAdapter`
+    /// (`cycles/3_4.md` GREEN) rather than silently falling through to PF1
+    /// logic or panicking.
+    #[test]
+    fn re_save_character_via_rule_system_routes_unknown_id_to_stub_adapter() {
+        let root = tempdir("unknown-system-dispatch");
+        let envelope = seed_envelope();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let err = re_save_character_via_rule_system(
+            "starfinder",
+            &root,
+            "char-resave-test.rev.1",
+            "2026-07-21T01:00:00Z",
+        )
+        .expect_err("an unimplemented rule system must honestly error, not fabricate success");
+
+        assert_eq!(err, "Would render for system starfinder; not yet implemented");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.revision_id, "char-resave-test.rev.1",
+            "an unimplemented rule system must never persist a re-save"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
     }
 
     /// Criterion 7.3's GREEN: re-saving with the correct `expected_revision_id`
