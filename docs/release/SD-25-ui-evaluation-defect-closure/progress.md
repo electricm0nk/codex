@@ -23,7 +23,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 4.2 pcgen-normalize-output.py | not-started | — | — | parallel: yes |
 | 4.3 pcgen_runner_smoke.rs | not-started | — | — | parallel: yes |
 | 4.4 verification cycle | not-started | — | — | parallel: no |
-| 5.1 corpus_ingest_diagnostic | not-started | — | — | serial |
+| 5.1 corpus_ingest_diagnostic | complete | corpus-ingest-diagnostic | `f2c4a3e258ab7f94ebdede4e54131200bab416a0` | real per-book counts from rules_tables' own APIs (crb/apg/acg/beastiary1) + git-derived last_ingested_at; see artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md |
 | 6.1 UI-eval defect cycle shape | not-started | — | — | — |
 | 6.2..6.N per-defect | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
 | 7.1 residue intake | not-started | — | — | — |
@@ -39,7 +39,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 4.1–4.4, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
@@ -54,12 +54,16 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 3.3 StubAdapter — commit `c41aedc` — receipt `artifacts/epic_3/stub-adapter-cycle_receipt.md`
 - 3.4 Tauri command routing — commit `49097b4` — receipt `artifacts/epic_3/command-routing-cycle_receipt.md`
 - 3.5 UI panel adapter-aware — commit `83e8197` — receipt `artifacts/epic_3/ui-adapter-aware-cycle_receipt.md`
+- 5.1 corpus_ingest_diagnostic — commit `f2c4a3e258ab7f94ebdede4e54131200bab416a0` — receipt `artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md`
 
 ## DISCOVERED
 
 - Criterion 3.4 wired real (non-test) call sites to `Pf1Adapter` via each command file's own `resolve_rule_system_adapter` (`Box::new(Pf1Adapter)` for `"pf1"`), confirmed by `cargo build -p codex-desktop` dropping from 7 dead-code warnings to 5 pre-cycle vs. post-cycle. The two `#[allow(dead_code)]` annotations on `Pf1Adapter`'s struct/inherent-impl in `pf1_adapter.rs` are now cosmetically stale (the struct is genuinely used; the attribute is merely inert, not causing a warning either way) but were **not** removed — `pf1_adapter.rs` is outside criterion 3.4's file-touch grant (`cycles/3_4.md` names only the three command files + conditionally `main.rs`). Small, bounded, cosmetic-only; a future cycle that already has `pf1_adapter.rs` in its own grant (or an explicit housekeeping cycle) can drop the two annotations. Not blocking.
 - 3.4's own carry-forward note (register A3, from `cycles/3_4.md`) is reconfirmed still true post-cycle: `grep -rn` across `apps/desktop/src/` for any of the three command names still returns nothing — zero frontend callers exist yet. Criterion 3.5 owns closing that gap. **Resolved by 3.5** (see below).
 - Criterion 3.5: `revisionId` never crosses the wire to the frontend (`CharacterSummaryDto` / `LoadSavedCharacterResponse` in `character_hub.rs` never expose it, even though every mutate-op advances it server-side). This blocks any honest UI caller of `re_save_character` (which needs `expectedRevisionId` for its write-conflict guard) — register A3 was closed via `recompute_character` instead, which needs no such value. A follow-on cycle touching `character_hub.rs`'s response DTOs should add `revisionId` so `re_save_character` can eventually get a real frontend caller too. See `artifacts/epic_3/ui-adapter-aware-cycle_receipt.md`'s own `## DISCOVERED` section for the full note.
+- Criterion 5.1: `beastiary1::mod.rs`'s `MonsterId` enum has no public `ALL`/count constant (unlike `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL` on the other three books) — `corpus_ingest_diagnostic.rs` carries its own compiler-checked-exhaustive 41-entry list out of file-touch-grant necessity. A future cycle with `beastiary1::mod.rs` in its grant should add a real `MonsterId::ALL` constant mirroring the other books, so this and future consumers don't need a duplicate list.
+- Criterion 5.1: `last_ingested_at` is computed via `git log -1` against each book's `rules_tables` directory at runtime (mirrors `build.rs`'s existing `git_short_sha()` graceful-degradation idiom) — a packaged production build (no `.git` checkout shipped) will report `null` for every book. SD-26's planned JSON ingest cache should replace this with a persisted ingest-time timestamp that survives packaging.
+- Criterion 5.1: pre-existing, unrelated failing test `apps/desktop/src/sd21/buildVersionTriple.test.ts` (`Cargo.toml` 0.5.97 vs `package.json` 0.5.98 version drift) — confirmed failing both with and without this cycle's diff via `git stash`; not caused by this cycle; belongs to whichever cycle/epic owns the version-increment-cycle (likely 8.4).
 
 ## Cycle log
 
