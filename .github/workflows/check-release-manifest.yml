@@ -22,8 +22,8 @@ on:
       - main
     paths:
       - 'tools/release/**'
-      - 'apps/desktop/src/sd11/update/**'
-      - 'apps/desktop/src/sd15/**'
+      - 'apps/desktop/src/testerWorkbench/update/**'
+      - 'apps/desktop/src/operatorTriage/**'
       - 'apps/desktop/src/sd16/**'
       - 'apps/desktop/src/sd17/**'
       - 'release-manifest.json'
