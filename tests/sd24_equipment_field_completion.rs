@@ -18,6 +18,43 @@
 //! documented here and in `equipment-coverage-matrix.md`, with the
 //! residual gap recorded as an `## Open blockers` entry for operator
 //! threshold relaxation, per `loop-instruction.md §4.2`.
+//!
+//! SD-25 criterion 7.N (CRB description field; SD-24 Open Blocker #1,
+//! register A15) raised the `description` ceiling from 1821/2977 (61.2%)
+//! to 2021/2977 (67.9%) via three real, non-fabricated sources -- full
+//! accounting in the cycle receipt
+//! (`docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/corpus-intake-crb-description_cycle_receipt.md`):
+//!
+//! 1. **Ingestion bug fix** (no web source; 67 records): 67
+//!    `cr_equip_arms_armor.lst` rows carry the corpus's
+//!    `DESC:.CLEAR`-then-`DESC:<real text>` convention (a `.COPY=` variant
+//!    clearing and replacing an inherited description). The original SD-24
+//!    ad-hoc codegen script captured only the first `DESC:` token per row,
+//!    storing the literal string `.CLEAR` instead of the real text that
+//!    followed. Re-deriving directly from the corpus fixed all 67.
+//! 2. **`.COPY=`-inheritance** (register A11; no web source; 117 records:
+//!    98 in `arms_armor.rs`, 19 in `general.rs`): these rows carry no
+//!    `DESC:` token of their own, but their corpus row is a `.COPY=`-derived
+//!    variant (a purchase-quantity SKU, a material variant, a barding
+//!    variant) of another record already ingested with a real description
+//!    in the *same* table. Inheriting that already-corpus-sourced text is
+//!    applying the LST's own declared data-inheritance convention, not
+//!    fabrication.
+//! 3. **Bounded d20pfsrd.com web-second-source pass** (83 `cr_equipmods.lst`
+//!    records): confidently identity-matched real PF1 special materials
+//!    (Adamantine, Mithral, Darkwood, Cold Iron, Alchemical Silver,
+//!    Dragonhide) and weapon/armor special abilities (Flaming, Ghost
+//!    Touch, Keen, Vorpal, and others) that the corpus's `EQUIPMOD` rows
+//!    carry no `DESC:` token for at all -- real named rules concepts with
+//!    prose in the printed rulebook that the machine-readable corpus never
+//!    captured. See the cycle receipt for the per-entry source URL.
+//!
+//! The remaining `None`s are a corpus-and-book-content ceiling, not a
+//! partial pass: generic body-slot markers (`Belt`, `Girdle`, `Robe`, ...),
+//! unnamed cost/charge bookkeeping categories (`Ability Score / Charisma
+//! 11`, `Save Bonus (Luck)`, ...), and `(Base)` template rows whose own
+//! corpus record genuinely has no `DESC:` token (so there is nothing to
+//! inherit) all correctly stay `None`.
 
 use codex::rules_core::rules_tables::crb::{equipment_tables, spell_list};
 
@@ -33,10 +70,11 @@ fn crb_equipment_record_coverage_is_unchanged_and_full() {
 }
 
 /// `EquipmentTableEntry` now carries real, corpus-derived `weight_lbs`
-/// and `description` fields (SD-24 criteria 6.3/6.4). The honest ceiling
-/// (computed independently from the live corpus in this test, not copied
-/// from the production code) is asserted exactly -- if this now fails,
-/// either the corpus changed or a value was silently dropped.
+/// and `description` fields (SD-24 criteria 6.3/6.4; SD-25 criterion 7.N
+/// raised `description` further). The honest ceiling (computed
+/// independently from the live corpus/receipt accounting in this test, not
+/// copied from the production code) is asserted exactly -- if this now
+/// fails, either the corpus changed or a value was silently dropped.
 #[test]
 fn equipment_weight_and_description_are_populated_to_the_corpus_honest_ceiling() {
     let report = equipment_tables::field_coverage_report();
@@ -44,19 +82,27 @@ fn equipment_weight_and_description_are_populated_to_the_corpus_honest_ceiling()
     // Real corpus WT: token counts (post-merge-dedup), independently
     // verified against `~/workspace/repos/pcgen/.../core_rulebook/` this
     // cycle: general 379 + arms_armor 137 + magic_items 1495 + equipmods 0.
+    // Unchanged by SD-25 criterion 7.N (weight_lbs was not touched).
     assert_eq!(
         report.has_weight,
         379 + 137 + 1495 + 0,
         "weight_lbs should be populated for exactly the records whose corpus row carries a WT: token"
     );
-    // Real corpus DESC: token counts (post-merge-dedup): general 116 +
-    // arms_armor 147 + magic_items 1556 + equipmods 2 (most equipmod DESC
-    // tokens land on records whose COST/other tokens already won the
-    // first-wins merge from an earlier duplicate row).
+    // SD-24 baseline (corpus DESC: token, first-token-only): general 116 +
+    // arms_armor 147 + magic_items 1556 + equipmods 2 = 1821.
+    // SD-25 criterion 7.N per-category new totals (each new value traceable
+    // to a real corpus DESC: token this cycle's ingestion fix recovered, a
+    // same-table `.COPY=` inheritance from an already-sourced record, or a
+    // cited d20pfsrd.com URL -- see the module doc comment above and the
+    // cycle receipt): general 135 (116 unchanged + 19 inherited),
+    // arms_armor 245 (147 unchanged in count -- 67 of those 147 had their
+    // `.CLEAR`-bug-corrupted text corrected in place -- + 98 inherited),
+    // magic_items 1556 (unchanged, already 100%), equipmods 85 (2 unchanged
+    // + 83 web-sourced). Total: 2021/2977 (67.9%).
     assert_eq!(
         report.has_description,
-        116 + 147 + 1556 + 2,
-        "description should be populated for exactly the records whose corpus row carries a DESC: token"
+        135 + 245 + 1556 + 85,
+        "description should be at the SD-25 criterion 7.N honest ceiling: 2021/2977 (67.9%)"
     );
     // has_weight/has_description are real, not fabricated: neither can
     // exceed total_records, and equipmods contributes ~0 weight (modifiers
@@ -79,18 +125,66 @@ fn amulet_of_natural_armor_has_real_weight_and_description() {
     assert!(description.contains("enhancement bonus to his natural armor"));
 }
 
-/// A `(Base)` template arms/armor record has no independent COST/WT in
-/// the real corpus -- `None` here is a genuine corpus absence, not a
-/// dropped value.
+/// A `.COPY=`-derived arms/armor record has no independent COST/WT in the
+/// real corpus -- `None` here is a genuine corpus absence, not a dropped
+/// value. `Dart (Blowgun)`'s own base record (`Blowgun Dart (Base)`) itself
+/// carries no `DESC:` token in the corpus either, so SD-25 criterion 7.N's
+/// `.COPY=`-inheritance fix (register A11) correctly finds nothing to
+/// inherit and leaves this `None` too -- demonstrating the inheritance
+/// logic does not fabricate a description when the base has none either.
 #[test]
 fn base_template_record_correctly_has_no_independent_cost_or_weight() {
     let entry = equipment_tables::equipment_tables()
         .iter()
-        .find(|entry| entry.key == "Arrow")
-        .expect("Arrow (Base) should be in the CRB arms/armor table");
+        .find(|entry| entry.key == "Dart (Blowgun)")
+        .expect("Dart (Blowgun) should be in the CRB arms/armor table");
     assert_eq!(entry.cost_gp, None);
     assert_eq!(entry.weight_lbs, None);
     assert_eq!(entry.description, None);
+}
+
+/// SD-25 criterion 7.N: `Arrow` (a `.COPY=`-derived purchase-quantity SKU
+/// of `Arrow (Base)`, per the corpus's own `Arrow (Base).COPY=Arrow`
+/// convention) has no `DESC:` token of its own, but correctly inherits
+/// `Arrow (Base)`'s real, already-corpus-sourced description -- the same
+/// text a character sheet would show for the base item, since the real
+/// PF1 rules and the LST corpus's own inheritance convention agree there
+/// is no independent "Arrow" flavor text distinct from "Arrow (Base)"'s.
+/// `cost_gp`/`weight_lbs` remain `None` here (unaffected by this fix) --
+/// this is a description-only, corpus-traceable enrichment.
+#[test]
+fn arrow_purchase_sku_inherits_base_items_real_description() {
+    let entry = equipment_tables::equipment_tables()
+        .iter()
+        .find(|entry| entry.key == "Arrow")
+        .expect("Arrow should be in the CRB arms/armor table");
+    assert_eq!(entry.cost_gp, None);
+    assert_eq!(entry.weight_lbs, None);
+    let description = entry
+        .description
+        .expect("Arrow should inherit Arrow (Base)'s real corpus description");
+    assert!(description.contains("light improvised weapon"));
+}
+
+/// SD-25 criterion 7.N: `cr_equip_arms_armor.lst` records using the
+/// corpus's `DESC:.CLEAR`-then-`DESC:<real text>` convention (a `.COPY=`
+/// variant explicitly clearing an inherited description and replacing it
+/// with its own) had only the `.CLEAR` sentinel captured by the original
+/// SD-24 ad-hoc codegen script, not the real text that followed it on the
+/// same corpus row. `Arrow (Sleep)` is one of the 67 affected records --
+/// its real description is a distinct magic-arrow effect, not the base
+/// `Arrow`'s mundane melee-improvised-weapon text.
+#[test]
+fn arrow_sleep_carries_its_own_real_desc_not_the_clear_sentinel() {
+    let entry = equipment_tables::equipment_tables()
+        .iter()
+        .find(|entry| entry.key == "Arrow (Sleep)")
+        .expect("Arrow (Sleep) should be in the CRB arms/armor table");
+    let description = entry
+        .description
+        .expect("Arrow (Sleep) should carry its own real corpus description, not None");
+    assert_ne!(description, ".CLEAR", "the .CLEAR sentinel must never leak into a shipped description");
+    assert!(description.contains("fall asleep"));
 }
 
 /// SD-24 criterion 6.5: every present CRB spell now carries the fullest

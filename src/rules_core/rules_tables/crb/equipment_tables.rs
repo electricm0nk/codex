@@ -67,16 +67,36 @@ pub struct EquipmentTableEntry {
     /// smaller number of `(Base)`-template rows in the other three
     /// categories. Never a fabricated value.
     pub weight_lbs: Option<f64>,
-    /// Full description from the corpus `DESC:` token (SD-24 criterion
-    /// 6.4), PCGen entity-decoded (`&nl;` -> newline, `&lbracket;`/
-    /// `&rbracket;` -> `[`/`]`, `&pipe;` -> `|`). `None` when the corpus
-    /// record itself has no `DESC:` token at all -- this is common for
-    /// `cr_equip_general.lst`/`cr_equip_arms_armor.lst` template rows and
-    /// near-universal for `cr_equipmods.lst` (equipment modifiers are
-    /// PCGen bookkeeping records, not player-facing items with their own
-    /// prose). No description is ever fabricated to fill this gap; the
-    /// residual `None` rate is the honest ceiling documented in
-    /// `EquipmentFieldCoverage` and `equipment-coverage-matrix.md`.
+    /// Full description (SD-24 criterion 6.4; ceiling raised by SD-25
+    /// criterion 7.N), PCGen entity-decoded (`&nl;` -> newline,
+    /// `&lbracket;`/`&rbracket;` -> `[`/`]`, `&pipe;` -> `|`), sourced from
+    /// one of three places, each traceable and none fabricated:
+    /// 1. The record's own corpus `DESC:` token (the original SD-24
+    ///    source; includes 67 `cr_equip_arms_armor.lst` records using the
+    ///    corpus's `DESC:.CLEAR`-then-`DESC:<real text>` convention -- SD-25
+    ///    criterion 7.N fixed an SD-24 codegen bug that had captured only
+    ///    the `.CLEAR` sentinel and dropped the real text after it).
+    /// 2. A same-table `.COPY=` inheritance (SD-25 criterion 7.N, register
+    ///    A11): a record with no `DESC:` token of its own whose corpus row
+    ///    is a `.COPY=`-derived variant of another already-ingested record
+    ///    inherits that record's description, matching the LST's own
+    ///    declared data-inheritance convention (117 records: 98 in
+    ///    `arms_armor.rs`, 19 in `general.rs`).
+    /// 3. A cited d20pfsrd.com second source (SD-25 criterion 7.N; 83
+    ///    `cr_equipmods.lst` records for confidently identity-matched named
+    ///    special materials/special abilities the corpus's `EQUIPMOD` rows
+    ///    never carried a `DESC:` token for at all) -- see the cycle
+    ///    receipt for the per-entry source URL.
+    ///
+    /// `None` when none of the above apply -- this is common for
+    /// `cr_equip_general.lst`/`cr_equip_arms_armor.lst` template rows whose
+    /// own base record also has no description to inherit, and for
+    /// `cr_equipmods.lst`'s generic bookkeeping categories (body-slot
+    /// markers, per-value cost-formula rows) that name no real rules
+    /// concept a second source could describe. No description is ever
+    /// fabricated to fill this gap; the residual `None` rate is the honest
+    /// ceiling documented in `EquipmentFieldCoverage` and
+    /// `equipment-coverage-matrix.md`.
     pub description: Option<&'static str>,
 }
 
