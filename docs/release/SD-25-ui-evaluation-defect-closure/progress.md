@@ -56,7 +56,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 3.5 UI panel adapter-aware — commit `83e8197` — receipt `artifacts/epic_3/ui-adapter-aware-cycle_receipt.md`
 - 5.1 corpus_ingest_diagnostic — commit `f2c4a3e258ab7f94ebdede4e54131200bab416a0` — receipt `artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md`
 - 4.1 pcgen-run-character.sh — commit `4c5d8d8` (receipt commit `83063f8`) — card `t_dbbbdb9f` — receipt `artifacts/epic_4/pcgen-run-script-cycle_receipt.md`
-- 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
+- 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — card `t_fdf81197` — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
 
 ## DISCOVERED
 
