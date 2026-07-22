@@ -21,16 +21,22 @@
 //! under `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`)
 //! coverage-report APIs turned it GREEN.
 //!
-//! **Bestiary 1 is not covered by this test file.** No
-//! `rules_tables::beastiary1::equipment_tables` module exists at all (the
-//! `beastiary1` book module only carries monster stat blocks, per its own
-//! `mod.rs` doc comment) -- there is no live code to call. This is
-//! documented as a finding in the coverage-matrix artifact and this
-//! cycle's receipt, not asserted here, per the same "no file to touch"
-//! posture criterion 4.2's audit used for APG's missing `level_up`
-//! modules.
+//! **Bestiary 1 update (SD-25 criterion 7.N item 4):** the "not covered
+//! by this test file" gap noted above through SD-24 is now closed.
+//! `rules_tables::beastiary1::equipment_tables` exists as of this cycle
+//! (see that module's own doc comment for full sourcing methodology);
+//! `beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage`
+//! below is this book's own coverage assertion, mirroring the pattern the
+//! other three books already use. RED -> GREEN evidence for this
+//! addition: before `rules_tables::beastiary1::equipment_tables` existed,
+//! a test referencing it did not compile (`error[E0433]: failed to
+//! resolve: could not find `equipment_tables` in `beastiary1``); adding
+//! the module (4 real records, hand-transcribed from
+//! `b1_equip_general.lst` + `b1_equip_arms_armor.lst` +
+//! `b1_equip_magic_items.lst`, one field web-sourced per the cycle
+//! receipt) turned it GREEN.
 
-use codex::rules_core::rules_tables::{acg, apg, crb};
+use codex::rules_core::rules_tables::{acg, apg, beastiary1, crb};
 
 /// CRB's equipment corpus (`cr_equip_arms_armor.lst` + `cr_equip_general.lst`
 /// + `cr_equip_magic_items.lst` + `cr_equipmods.lst`) is **fully record-ingested**
@@ -161,6 +167,39 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_acg() {
     assert!(
         report.has_description > 0 && report.has_description < report.total_records,
         "ACG description coverage should be real and partial (not fabricated to 100%, not still 0)"
+    );
+}
+
+/// Bestiary 1's equipment corpus (`b1_equip_general.lst` (1) +
+/// `b1_equip_arms_armor.lst` (2) + `b1_equip_magic_items.lst` (1) = 4
+/// total) is **fully record-ingested** as of SD-25 criterion 7.N item 4
+/// -- a plain scope gap (no module existed at all), not a corpus
+/// ceiling, so 4/4 is the honest ceiling for `total_records` itself.
+/// `cost_gp`/`weight_lbs` are 4/4 (every real record carries both `COST:`
+/// and `WT:` tokens, including literal `0` values). `description` is
+/// also 4/4: 3 records source from the corpus's own `SPROP:` token
+/// (register A10, same convention `acg::equipment_data` established),
+/// and the 4th (`Rag Armor (Dark Creeper)`, which has neither `DESC:`
+/// nor `SPROP:`) was closed via an identity-matched web second-source
+/// pass -- see this cycle's receipt for the cited URLs.
+#[test]
+fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage() {
+    let report = beastiary1::equipment_tables::field_coverage_report();
+    assert_eq!(
+        report.records_expected, 4,
+        "real Bestiary 1 equipment corpus count (1 general + 2 arms_armor + 1 magic_items)"
+    );
+    assert_eq!(
+        report.total_records, report.records_expected,
+        "Bestiary 1 equipment record coverage should be 100% (closed this cycle)"
+    );
+    assert_eq!(report.has_cost, 4, "every real record carries a COST: token");
+    assert_eq!(report.has_weight, 4, "every real record carries a WT: token");
+    assert_eq!(
+        report.has_description, 4,
+        "every real record has a description -- 3 from SPROP:, 1 (Rag Armor (Dark Creeper)) \
+         from a cited web second-source pass (see this cycle's receipt) -- if this regresses, \
+         a fabricated or dropped description slipped through"
     );
 }
 
