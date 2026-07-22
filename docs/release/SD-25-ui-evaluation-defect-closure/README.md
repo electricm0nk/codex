@@ -79,6 +79,7 @@ On non-fast-forward rejection: repeat up to 5 times. If still failing after 5 at
 | `risks-and-open-questions.md` | Self-healable vs. non-self-healable split + override flags. |
 | `acceptance-and-verification.md` | Closure gates + per-criterion artifact map. |
 | `content-unit-inventory.md` | Per-content-unit N-tuple (UI-eval defect / per-class residue / Tauri command / hub module / PCGen output). |
+| `sd24-carry-forward-register.md` | Full custody of SD-24's 41 `## DISCOVERED` entries + 4 `## TODO` remainders (added 2026-07-21). |
 | `technical-design.md` | Architectural surface — hub-of-hubs interface, PCGen runner wiring, JSON cache shape, visibility surface. |
 | `technical-requirements.md` | Pre-loop prerequisites + normative requirements + out-of-scope deferrals. |
 | `progress.md` | Cycle log + `## TODO` + `## DONE` + `## DISCOVERED` + `## Status matrix` + `## Open blockers`. |

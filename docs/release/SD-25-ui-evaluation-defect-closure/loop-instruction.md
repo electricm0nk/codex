@@ -75,11 +75,14 @@ On non-fast-forward rejection: repeat up to 5 times. After 5 failures, write `CL
    BASE_BRANCH=$(git merge-base HEAD origin/develop)
 
    # Identifier audit — bundle-tag leaks in diff
+   # NOTE: trailing \b deliberately omitted (found live in SD-24, 2026-07-21: \b never
+   # matches between `_` and a following word char, so a trailing \b silently misses real
+   # identifiers like `sd19_class_catalog` and only catches a bare standalone token).
    git diff --unified=0 "${BASE_BRANCH}...HEAD" -- \
      'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' \
      'scripts/**/*.sh' 'scripts/**/*.py' \
      ':!**/__tests__/**' ':!**/*.test.*' \
-     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})\b' \
+     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' \
      || echo 'OK_NO_BUNDLE_TAGS'
 
    # Wired-integration four-check audit — forbidden patterns in shipping code

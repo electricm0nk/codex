@@ -12,7 +12,7 @@ E1 Identifier Cleanup is the governance base; it fires FIRST. E2 Operator Pre-La
 
 - **Cycle artifact:** `./artifacts/epic_1/identifier-audit-cycle_receipt.md`
 - **Cycle doc:** `./cycles/1_1.md`
-- **RED:** `git grep -nE '\b(sd(16|19|22|23|24)_|SD(16|19|22|23|24)_|Sd(16|19|22|23|24)|t_[0-9a-f]{8,})\b' apps/desktop/ apps/desktop/src-tauri/ src/ scripts/` returns ≥1 hit.
+- **RED:** `git grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' apps/desktop/ apps/desktop/src-tauri/ src/ scripts/` returns ≥1 hit. (Trailing `\b` deliberately dropped and pattern generalized to `sd[0-9]+` — the literal `sd(16|19|22|23|24)_...\b` form SD-24 shipped was live-proven broken: `\b` never matches between `_` and a following word char, so it silently missed real hits. See `sd24-carry-forward-register.md` item A7.)
 - **GREEN:** the renames land; the same `git grep` returns 0 hits.
 - **Concurrency:** single cycle; serial.
 
@@ -39,6 +39,8 @@ E1 Identifier Cleanup is the governance base; it fires FIRST. E2 Operator Pre-La
 - **RED:** existing tests pass before the move.
 - **GREEN:** after the move, existing tests still pass; the trait's Pf1 implementation lives at `pf1_adapter.rs`.
 - **Concurrency:** `parallel: yes`.
+- **SD-24 carry-forward (`sd24-carry-forward-register.md` A2):** the `level_up` method must not silently inherit `level_up::compute_level_up_grants`'s top-level-dispatcher gap — it currently returns an honestly-empty `LevelUpPlan::default()` for any multiclass mix (including Fighter+Wizard) because it never routes to the per-class functions for a mix. Widen the signature to accept explicit per-class from/to sub-levels, or add a dedicated multiclass entry point, as part of this extraction.
+- **SD-24 carry-forward (register A5):** `mutate_saved_character_at_root` and everything routed through it preserve whatever `revision_id` was already on disk instead of advancing it — only the new `reSaveCharacter` command advances the counter. Confirm with the operator whether to fold revision-advancing into `mutate_saved_character_at_root` itself as part of this extraction (a behavior change, not a pure move) or leave it for a later cycle.
 
 ### Criterion 3.3 — StubAdapter future-system stub
 
@@ -50,11 +52,14 @@ E1 Identifier Cleanup is the governance base; it fires FIRST. E2 Operator Pre-La
 
 - **Files:** `apps/desktop/src-tauri/src/append_to_character.rs`, `recompute_character.rs`, `re_save_character.rs` (all accept `rule_system_id: String` argument; dispatch through trait).
 - **Concurrency:** `parallel: no` (multi-file, depends on 3.1–3.3).
+- **SD-24 carry-forward (register A3):** these three commands (SD-24 Epic 7) are registered and tested but have **zero frontend callers** today — no `boundary/*.ts` wrapper, no `invoke()` call site anywhere in `apps/desktop/src`. Routing them through the trait is necessary but not sufficient — criterion 3.5 must give at least one a real UI call site.
 
 ### Criterion 3.5 — UI panel adapter-aware
 
 - **Files:** `apps/desktop/src/characterHub/CharacterHubPage.tsx`, `apps/desktop/src/characterHub/LoadCharacterScreen.tsx`, `apps/desktop/src/characterHub/characterHubRuntime.ts` (read active rule-system adapter; route interactions through it).
 - **Concurrency:** `parallel: yes` (each file disjoint).
+- **SD-24 carry-forward (register A3):** close the zero-frontend-caller gap flagged in 3.4 — wire at least one real UI affordance to `append_to_character`/`recompute_character`/`re_save_character`, matching SD-24 criterion 7.4's own Add-Weapon/Add-Armor/Add-Spell precedent.
+- **SD-24 carry-forward (register A4):** `CharacterSheet.tsx`'s top-menu "Open"/"Save"/"Clone" items are genuine no-op handlers (`onSelect: () => {}}`) — real accidental stub debt that the dual-audit gate's forbidden-token grep doesn't catch (bare `() => {}` isn't a matched pattern). Wire them to real behavior or remove them if genuinely out of scope for this release, while this file is already open for adapter-aware routing.
 
 ## Epic 4 — PCGen Runner Scaffolding
 
@@ -100,9 +105,17 @@ Criteria spawn dynamically as the operator's UI-eval session surfaces defects. E
 
 Reads SD-24 Epic 4's `per-class-coverage-matrix.md`. Emits per-feature `## DISCOVERED` entries.
 
+**SD-24 carry-forward (`sd24-carry-forward-register.md` A6):** explicitly include the 9 CRB classes (Cleric, Rogue, Sorcerer, Barbarian, Bard, Druid, Monk, Paladin, Ranger) SD-24 never audited for the `class_spell.*`-vs-`class_feature.*`-prefix bug found and fixed for Wizard — each already has a landed `level_up/<class>.rs` module; the same bug class (a later `pilot_compute.rs` grounding landing after the module and never added to its explanation-id filter) could recur in any of them. LOW priority, one file at a time per the file-touch partition.
+
 ### Criterion 7.2..7.M — Per-feature cycles (dynamic)
 
 One class-feature → one cycle → one receipt at `./artifacts/epic_7/<feature-id>_cycle_receipt.md`.
+
+### Criterion 7.O — GE-07 pilot-shell-snapshot real implementation (SD-24 carry-forward, added 2026-07-21)
+
+**Origin (`sd24-carry-forward-register.md` A1):** `load_pilot_shell_snapshot` Tauri command + `apps/desktop/src/boundary/loadPilotShellSnapshot.ts` unconditionally return hardcoded GE-07-era fixture data (`case_id: "ge07-e1-scaffold-placeholder"`) regardless of real character state — fixture-only data in a production command path, a genuine no-stub-doctrine violation. Legacy scaffolding predating the bundle-tag convention, consumed only by the SD-11 internal tester workbench, which already labels it honestly. SD-24 deferred this to `risks-and-open-questions.md §5` rather than remediating in-cycle, since real remediation needs a design decision this criterion resolves first.
+
+**This criterion is blocked on an operator design decision** (see `risks-and-open-questions.md §4`, new open question): what a headless-core-backed pilot shell snapshot actually computes, and from what input contract. Do not dispatch the implementation cycle until that's answered — dispatch only the design-decision request itself first.
 
 ### Criterion 7.N — Equipment/spell corpus intake (SD-24 carry-forward, added 2026-07-21)
 
@@ -121,7 +134,14 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 - If a record can't be confidently identity-matched on either site, leave the field `None` and keep the corpus ceiling rather than guess — this is the same no-fabrication rule SD-24's cycles already applied to the LST-only approach.
 - This does not relax criterion 6.4/6.5's wording — it's an additional legitimate source, alongside the three operator options SD-24's Open Blockers already named (accept ceiling / license a second source / reword the criterion). A successful web-sourced pass can retroactively close SD-24's two Open Blockers.
 
+**Additional carry-forward items folded in (register A8, A10, A11):**
+- **A8 — shared codegen path.** SD-24's Epic 6 cycles each wrote their own one-off ad-hoc ingestion script instead of reusing the existing, tested `src/pcgen_import/lst_parser/equipment.rs`/`spell.rs` tokenizer (SD-17 Slice B-5). Before writing a 5th ad-hoc script for these cycles, consider a shared `pcgen_import`-backed codegen path (parse → semantic-map → emit Rust literals). Not a hard requirement — flagged so the choice is deliberate, not accidental.
+- **A10 — Bestiary-1 description sourcing.** Check for a `DESC:`- or `SPROP:`-equivalent convention in Bestiary-1's own 7-record equipment corpus first (ACG reached a 98.1% ceiling via `SPROP:` with zero `DESC:` tokens) before falling back to the d20pfsrd/aonprd web pass.
+- **A11 — `SOURCELONG:`-header miscount.** CRB, APG, and ACG each independently hit the same measurement error (a `SOURCELONG:` header line double-counted as a record). Apply the exclusion from the start for Bestiary-1's counts rather than as a later correction.
+
 **Concurrency:** CRB-description, APG-description, APG-spell-text, and Bestiary-1 ingestion are 4 disjoint file-touch cycles — `parallel: yes`, same `isolation: 'worktree'` pattern as SD-24's own Epic 6.
+
+**Full carry-forward register:** `./sd24-carry-forward-register.md` — all 41 of SD-24's `## DISCOVERED` entries plus its 4 `## TODO` remainders, each with a disposition (real follow-on / documentation-only / already-fixed / process lesson) and, where applicable, an SD-25 epic/criterion assignment. This section and Epic 3's 3.2/3.4/3.5 carry only the items with real dispatchable work; the register has full custody of everything else, including 14 documentation-staleness corrections (batchable in one cycle) and 3 process/tooling lessons for `scripts/workflow-dispatch.sh`'s own authoring.
 
 ## Epic 8 — Closure Epilogue (fires LAST; subagent tiering per-criterion)
 
@@ -152,7 +172,7 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 
 ---
 
-## Quick reference — 8 epics / ~24 criteria
+## Quick reference — 8 epics / ~25 criteria
 
 | Epic | Declarative criteria | Dynamic criteria | Concurrency |
 |---|---|---|---|
@@ -162,8 +182,8 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 | E4 PCGen Runner | 4 | 0 | 3 parallel + 1 serial |
 | E5 Corpus Ingest Diagnostic | 1 | 0 | serial |
 | E6 UI-Eval Defects | 1 cycle-shape + dynamic | ~5–10 defects | serial |
-| E7 Per-class residue + equipment/spell corpus intake | 2 intake + dynamic | ~3–5 per-class features | 4 of the corpus-intake cycles parallel; rest serial |
+| E7 Per-class residue + equipment/spell corpus intake + GE-07 snapshot | 3 intake + dynamic | ~3–5 per-class features | 4 of the corpus-intake cycles parallel; rest serial |
 | E8 Closure Epilogue | 5 | 0 | serial; sub-step tiering (Haiku/Sonnet/Opus) |
-| **Total** | **24** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
+| **Total** | **25** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
 
-Dynamic criteria grow as the operator's UI-eval session + per-class residue intake produce findings. The orchestrator script handles dynamic entries via `## DISCOVERED` priority-bump mechanism; the closure gate covers both declarative and dynamic criteria.
+Dynamic criteria grow as the operator's UI-eval session + per-class residue intake produce findings. The orchestrator script handles dynamic entries via `## DISCOVERED` priority-bump mechanism; the closure gate covers both declarative and dynamic criteria. Full carry-forward custody from SD-24's 41 `## DISCOVERED` entries + 4 `## TODO` remainders: `./sd24-carry-forward-register.md`.

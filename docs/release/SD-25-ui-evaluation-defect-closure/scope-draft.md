@@ -63,6 +63,8 @@ This is the structural refactor that unlocks SD-26's parallel-per-class pattern.
 
 **Concurrency:** 3.1, 3.2, 3.3, 3.5 = `parallel: yes` (different file each); 3.4 = `parallel: no`.
 
+**Added 2026-07-21 (SD-24 closure findings, `sd24-carry-forward-register.md` items A2-A5):** SD-24 left 4 real gaps in exactly the files Epic 3 touches — the multiclass top-level dispatcher silently returns empty for any 2+-class mix (3.2), `revision_id` never advances outside the new `reSaveCharacter` command (3.2), the 3 new Epic-7 Tauri commands have zero frontend callers (3.4/3.5), and `CharacterSheet.tsx`'s Open/Save/Clone menu items are genuine no-op stubs the audit gate doesn't catch (3.5). See `epic-breakdown.md`'s per-criterion notes for the full detail — Epic 3's extraction/refactor work is the natural place to close these, not a separate epic.
+
 ### 1.4 Epic 4 — PCGen Runner Scaffolding
 
 The PCGen runner proves the script + gradle + normalize pipeline works for one case. SD-26 builds the library on top of it. Four criteria + three parallel:
@@ -87,6 +89,8 @@ The bulk of SD-25's actual work. The cycle picker reads `## DISCOVERED` for UI-e
 Criterion 7.1 = "Per-class residue intake" (reads SD-24's `per-class-coverage-matrix.md`). Criteria 7.2..7.M = per-feature cycles, dynamically spawned as `## DISCOVERED` entries from the intake.
 
 **Added 2026-07-21 (SD-24 closure findings):** Epic 7 also intakes SD-24's `progress.md ## Open blockers` directly — two real, corpus-data-limited equipment/spell coverage gaps (CRB equipment description 61.2%, APG equipment description 0%, APG spell full text 87.9%) — plus a plain scope gap SD-24's own orchestrator left out entirely (Bestiary 1 equipment + spells were never dispatched, despite being in SD-24's own declared book scope). Recommended resolution for the three real ceilings: a second-source web content pass against **d20pfsrd.com** / **aonprd.com** (Archives of Nethys) before accepting the ceiling or fabricating text, with identity-match verification and source-URL citation per record. See `epic-breakdown.md`'s Epic 7 "Equipment/spell corpus intake" criterion for the full recommendation and per-item numbers.
+
+Epic 7 also gained a new criterion 7.O (GE-07 pilot-shell-snapshot real implementation), blocked on an operator design decision (`risks-and-open-questions.md` Q5) before it can dispatch. **Every** SD-24 `## DISCOVERED` entry and `## TODO` remainder — not just these — has a disposition recorded in `./sd24-carry-forward-register.md`, including 14 documentation-staleness corrections and 3 process/tooling lessons that don't need their own dispatch cycle but shouldn't be silently dropped either.
 
 ### 1.8 Epic 8 — Closure Epilogue (final scan + architecture-truth-up + graphify-update + release-notes + version increment; fires LAST)
 
@@ -121,6 +125,7 @@ Standard part-of-handoff doctrine: scans every prior criterion, runs the archite
 | `risks-and-open-questions.md` | Self-healable vs. non-self-healable split + override flags |
 | `acceptance-and-verification.md` | Closure gates + per-criterion artifact map |
 | `content-unit-inventory.md` | Per-content-unit N-tuple |
+| `sd24-carry-forward-register.md` | Full custody of SD-24's 41 `## DISCOVERED` entries + 4 `## TODO` remainders (added 2026-07-21) |
 | `technical-design.md` | Architectural surface — hub-of-hubs interface, PCGen runner, JSON cache shape, visibility surface |
 | `technical-requirements.md` | Pre-loop prerequisites + normative requirements + out-of-scope deferrals |
 | `progress.md` | Live: cycle log + `## TODO` + `## DONE` + `## DISCOVERED` + `## Status matrix` + `## Open blockers` |

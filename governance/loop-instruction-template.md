@@ -100,8 +100,13 @@ On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 a
    BASE_BRANCH=$(git merge-base HEAD origin/develop)
 
    # Identifier audit — bundle-tag leaks in diff
+   # NOTE: trailing \b is deliberately omitted -- \b never matches between `_` and a
+   # following word character, so a trailing \b silently fails to catch real identifiers
+   # like `sd19_class_catalog` and only matches a bare standalone token. Found live during
+   # SD-24 (2026-07-21): the buggy pattern returned 0 hits against a repo that actually had
+   # 6 bundle-tagged modules. Do not add the trailing \b back.
    git diff --unified=0 "${BASE_BRANCH}...HEAD" -- <scoped paths> ':!**/__tests__/**' ':!**/*.test.*' \
-     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})\b' || echo 'OK_NO_BUNDLE_TAGS'
+     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
 
    # Wired-integration four-check audit — forbidden patterns in shipping code
    git diff --unified=0 "${BASE_BRANCH}...HEAD" -- <scoped paths> ':!**/__tests__/**' ':!**/*.test.*' \
