@@ -1,0 +1,26 @@
+# Cycle 8.3 — Epic 8 Closure Epilogue / Criterion 8.3
+
+- **Card ID:** (pending hermes kanban creation)
+- **Commit SHA:** (pending push)
+- **Files touched:**
+  - `./release-notes.md` — populated with all 7 required sections (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility).
+  - `./progress.md` — updated criterion 8.3 row to `complete`.
+  - `./artifacts/epic_8/release-notes-cycle_receipt.md` (this file).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (docs-only; no shipping code touched).
+- **Wired-integration audit result:** `OK_NO_TOKENS` (docs-only).
+- **Acceptance criterion:** Criterion 8.3 — Release notes (Epic 8). GREEN = all seven sections filled from receipt evidence; version cited as `0.5.98` (the actual value 8.4 will stamp, assuming 8.4 runs; if 8.4 runs first, this receipt's version claim is pre-verified deterministic).
+- **Status:** complete
+- **Notes:**
+  - Version is cited as "0.5.98 (pending 8.4)" because criterion 8.4 (build version increment) is `not-started` as of the time this cycle runs. The version number is deterministically 0.5.98 per the loop-instruction §0 (first concrete build), but the receipt is written before 8.4 lands. If 8.4 has already run and verified the version is indeed 0.5.98, this note is purely historical; if 8.4 has not run, the version can be corrected by 8.4's cycle receipt if needed (though the deterministic value makes correction unnecessary).
+  - All 7 sections populated from:
+    - **Summary:** bundle mission (SD-25 epic-breakdown.md §0) + scope (26 criteria across 8 epics) + verification summary (cargo test clean, all 26 criteria accounted for, 10 live DISCOVERED, 1 open blocker).
+    - **User-Visible Changes:** sourced from E3 (RuleSystemAdapter hub, Recompute/Open/Clone UI actions) via E3.5 receipt; E4 (PCGen runner) via E4.4 receipt; E5 (corpus diagnostic) via E5.1 receipt; E7 (corpus coverage + bug fixes) via E7.N (4 items), E7.2, E7.6, E7.9, E7.10 receipts.
+    - **Defects Fixed:** sourced from E7.6 (Bard), E7.9 (Paladin), E7.10 (Ranger) receipts; all others (Cleric, Rogue, Sorcerer, Barbarian, Druid, Monk) verified negative, so no entries in this section.
+    - **Operational Notes:** sourced from E1 receipt (identifier cleanup), E8.2 receipt (architecture refresh, graphify update), progress.md's DONE section (SD-24 carry-forward register dispositions), and E8.1's own closure-readiness-report.
+    - **Verification Evidence:** sourced from E8.1 closure-readiness-report (three-way cross-check), dual-audit results across all cycles (identifier + wired-integration), E8.1's own `cargo test` verification (455+ binaries, 0 failed), and E3.5/E7.2–7.10 receipts' RED → GREEN evidence.
+    - **Known Issues:** sourced from progress.md's `## DISCOVERED` section (10 live entries) and `## Open blockers` (7.O). Each entry quotes the entry's own discovery note + disposition, with forward-tracking for future dispatch.
+    - **Update Eligibility:** operational readiness assessment; backward-compatibility claims verified against hub-of-hubs transparency (E3 refactoring is internal, PF1 behavior identical to pre-release), no data migration (E7's corpus work is additive/corrective, not schema-changing), and no feature-flag/gradual-rollout need (monolithic release).
+- **Discovery forwards:** none (this is a docs-only criterion).
+- **Next-cycle plan:**
+  - Criterion 8.4 (version bump) follows, updating `Cargo.toml`, `package.json`, `tauri.conf.json` to `0.5.98` and resolving the pre-existing `buildVersionTriple.test.ts` failure (currently tracked in DISCOVERED as a 5.1-adjacent version-drift item).
+  - Criterion 8.5 (PR + merge to develop) follows 8.4, completing the release gates.
