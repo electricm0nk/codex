@@ -1,7 +1,7 @@
 # Cycle 7.2 — Epic 7 (Per-class residue) / Criterion 7.2
 
-- **Card ID:** (to be backfilled — see Notes; kanban card minted after this receipt is written, per `loop-instruction.md §6` step ordering)
-- **Commit SHA:** (to be backfilled after commit+push — see Notes)
+- **Card ID:** t_a7aa9573
+- **Commit SHA:** `009abfc`
 - **Files touched:**
   - NEW `tests/sd25_cleric_level_up_explanation_coverage.rs` (RED → GREEN regression proof + verified-negative-finding documentation)
   - NEW `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/cleric-class-spell-prefix-audit_cycle_receipt.md` (this file)
