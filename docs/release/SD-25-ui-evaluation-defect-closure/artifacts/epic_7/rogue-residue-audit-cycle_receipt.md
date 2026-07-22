@@ -1,7 +1,7 @@
 # Cycle rogue-residue-audit — Epic 7 (Deferred Per-Class Work & Coverage Backlog) / Criterion 7.3
 
 - **Card ID:** t_8b99ec21
-- **Commit SHA:** (recorded post-commit; see progress.md update in the same push)
+- **Commit SHA:** `da5381c3e8ced9d846f5e62aefc164ddadd28cf3`
 - **Files touched:**
   - `src/rules_core/level_up/rogue.rs` (doc-comment-only addition documenting the verified negative finding; no functional filter change — see Notes)
   - `tests/sd25_rogue_level_up_explanation_filter_audit.rs` (new; the audit test)
