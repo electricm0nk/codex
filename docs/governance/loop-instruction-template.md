@@ -159,3 +159,4 @@ Every match must be resolved to a real value, or explicitly justified as intenti
 
 - `./no-stub-mvp-doctrine.md`, `docs/doctrine-external/identifier-discipline.md` — the two doctrine docs §6's dual-audit gate enforces inline.
 - `./wired-integration-stubs-registry.md` — operator-granted stub exceptions.
+- `docs/release/template/template.md` — the sibling template every bundle's own `README.md` (folder index) is authored from. Distinct scope: that template covers the release-folder's file index and bundle-snapshot table; this template covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.
