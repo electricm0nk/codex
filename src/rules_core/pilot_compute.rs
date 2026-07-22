@@ -118,7 +118,7 @@ use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
     SkillAllocation,
 };
-use super::rules_tables::crb::class_tables::{ClassId, class_tables};
+use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::spell_list::Pf1SchoolId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
@@ -6641,19 +6641,21 @@ fn fractional_save_value(level: u8, good: bool) -> f64 {
 }
 
 /// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
-/// Will respectively (SD-21 E7.29), mirroring `class_tables.rs`'s `GoodSaves`
-/// rows for Fighter (`:77`, good Fortitude only) and Wizard (`:83`, good Will
-/// only) -- the only two classes a multiclass mix can combine until a future
-/// epic grounds more per-class chassis functions. Returns `None` for any other
-/// class id.
+/// Will respectively (SD-21 E7.29) -- the only two classes a multiclass mix
+/// can combine until a future epic grounds more per-class chassis functions.
+/// Reads `class_tables.rs`'s own ingested `good_saves_for` classification
+/// directly (SD-24 Epic 5 criterion 5.3) rather than re-declaring a second,
+/// independently-maintained copy that could silently drift from it. Returns
+/// `None` for any other class id.
 fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
-    if class_id == FIGHTER_CLASS_ID {
-        Some((true, false, false))
+    let table_class_id = if class_id == FIGHTER_CLASS_ID {
+        ClassId::Fighter
     } else if class_id == WIZARD_CLASS_ID {
-        Some((false, false, true))
+        ClassId::Wizard
     } else {
-        None
-    }
+        return None;
+    };
+    good_saves_for(table_class_id)
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
@@ -6784,6 +6786,38 @@ fn fighter_level_in_mix(input: &CharacterInput) -> Option<u8> {
         .class_levels
         .iter()
         .find(|class_level| class_level.class_id == FIGHTER_CLASS_ID)
+        .map(|class_level| class_level.level)
+}
+
+/// Wizard's own level within `input.chosen.class_levels`, whether single-class
+/// or part of a supported Fighter+Wizard multiclass mix (SD-24 Epic 5,
+/// criterion 5.1). Mirrors `fighter_level_in_mix` exactly (SD-21 E7.30's own
+/// precedent), reconciling Wizard's own per-class explanations (the level-1
+/// prepared arcane spell-bearing recognition, Scribe Scroll, the school
+/// specialization choice recognition, the specialist bonus slot ladder, the
+/// two Evocation school powers, and the SD-21 E6b.2 prepared-spellbook
+/// posture) to keep firing using Wizard's own sub-level once a supported
+/// second class (Fighter) joins the mix, instead of silently dropping every
+/// one of those real facts the moment the build stops being single-class --
+/// the same gap `fighter_level_in_mix` already closed for Fighter's own
+/// features. Returns `None` for a multiclass mix that is not itself a
+/// supported combination (mirroring `is_supported_multiclass_mix`), so
+/// Wizard's own explanations never surface ahead of that mix's own base
+/// chassis becoming genuinely supported -- and returns `None` when Wizard is
+/// absent from the mix entirely, so introducing another class never makes
+/// Wizard's features appear for a build that isn't actually part-Wizard.
+fn wizard_level_in_mix(input: &CharacterInput) -> Option<u8> {
+    if let Some(level) = supported_wizard_level(input) {
+        return Some(level);
+    }
+    if !is_supported_multiclass_mix(input) {
+        return None;
+    }
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == WIZARD_CLASS_ID)
         .map(|class_level| class_level.level)
 }
 
@@ -14563,7 +14597,15 @@ fn explain_wizard_level1_prepared_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    let Some(level) = supported_wizard_level(input) else {
+    // SD-24 Epic 5 (criterion 5.1): widened from `supported_wizard_level`
+    // (single-class-only) to `wizard_level_in_mix`, so every Wizard-specific
+    // explanation this function grounds keeps firing, using Wizard's own
+    // sub-level, once a supported second class (Fighter) joins the mix --
+    // mirroring `explain_fighter_class_features`'s identical SD-21 E7.30
+    // reconciliation for Fighter's own features. Single-class Wizard inputs
+    // are unaffected: `wizard_level_in_mix` returns the identical
+    // `supported_wizard_level` value for them.
+    let Some(level) = wizard_level_in_mix(input) else {
         return;
     };
     if input.chosen.race_id != HUMAN_RACE_ID {

@@ -75,13 +75,59 @@ const addItemButtonStyle: CSSProperties = {
 
 /**
  * `EquipmentCategory` has no separate weapon-vs-armor variant (see
- * `sd19_equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
+ * `equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
  * one combined category covering both. Judgment call: both the Add Weapon
  * and Add Armor pickers narrow to this same category server-side and let
  * the user disambiguate by name in the search box, rather than blocking on
  * a category taxonomy the corpus doesn't expose yet.
  */
 const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
+
+export interface ItemPickerConfig {
+  title: string;
+  searchPlaceholder: string;
+  loadEntries: () => Promise<ItemPickerEntry[]>;
+  onSelect: (entry: ItemPickerEntry) => void;
+}
+
+/**
+ * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell
+ * onClick affordances (criterion 7.4): which title to show, which real
+ * corpus query to run (`listEquipment` narrowed to `ArmsArmor`, or the
+ * unfiltered `listSpells`), and which real mutation handler
+ * (`addEquipmentSelection`-backed or `addSpellSelection`-backed) the
+ * user's pick gets routed to. Extracted from the render body so it is
+ * unit-testable without a DOM — this repo has no jsdom/testing-library —
+ * per the same split already used for `itemPickerFilter.ts` and
+ * `characterSheetRefresh.ts`.
+ */
+export function buildItemPickerConfig(
+  kind: 'weapon' | 'armor' | 'spell' | null,
+  deps: {
+    loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
+    loadSpells: () => Promise<ItemPickerEntry[]>;
+    onSelectEquipment: (entry: ItemPickerEntry) => void;
+    onSelectSpell: (entry: ItemPickerEntry) => void;
+  }
+): ItemPickerConfig | null {
+  if (kind === 'weapon' || kind === 'armor') {
+    return {
+      title: kind === 'weapon' ? 'Add Weapon' : 'Add Armor',
+      searchPlaceholder: 'Search arms & armor…',
+      loadEntries: () => deps.loadEquipment(WEAPONS_AND_ARMOR_CATEGORY),
+      onSelect: deps.onSelectEquipment,
+    };
+  }
+  if (kind === 'spell') {
+    return {
+      title: 'Add Spell',
+      searchPlaceholder: 'Search spells…',
+      loadEntries: deps.loadSpells,
+      onSelect: deps.onSelectSpell,
+    };
+  }
+  return null;
+}
 
 function NavCard(props: { label: string; value: string }) {
   return (
@@ -534,7 +580,7 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
 /**
  * Spell-school reachability, sourced from `compute_pilot_with_corpus` via
  * the real IPC boundary — not mock data. Resolved against a small bundled
- * corpus-fixture set (see `src-tauri/src/sd19_corpus.rs`), not the full
+ * corpus-fixture set (see `src-tauri/src/corpus_fixtures.rs`), not the full
  * PCGen corpus, so only schools with a selected, resolvable spell appear
  * here; this is a reachability proof, not a spellbook or slot tracker
  * (spell slots, DCs, and prepared/known posture remain out of scope).
@@ -771,30 +817,16 @@ export function CharacterSheet(props: {
     { label: 'Print', onSelect: () => window.print() },
   ];
 
-  // One generic `ItemPickerModal` backs all three "Add …" affordances — the
-  // Add Weapon / Add Armor pickers both narrow the equipment catalog to the
-  // combined "ArmsArmor" category (see `WEAPONS_AND_ARMOR_CATEGORY`'s doc
-  // comment) and the Add Spell picker narrows the spell catalog by nothing
-  // server-side, relying on the modal's own search box.
-  const itemPickerConfig =
-    itemPickerOpen === 'weapon' || itemPickerOpen === 'armor'
-      ? {
-          title: itemPickerOpen === 'weapon' ? 'Add Weapon' : 'Add Armor',
-          searchPlaceholder: 'Search arms & armor…',
-          loadEntries: () =>
-            listEquipment({ nameContains: null, category: WEAPONS_AND_ARMOR_CATEGORY }).then((response) =>
-              mapEquipmentCatalogEntries(response.entries)
-            ),
-          onSelect: handleAddEquipment,
-        }
-      : itemPickerOpen === 'spell'
-        ? {
-            title: 'Add Spell',
-            searchPlaceholder: 'Search spells…',
-            loadEntries: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
-            onSelect: handleAddSpell,
-          }
-        : null;
+  // One generic `ItemPickerModal` backs all three "Add …" affordances — see
+  // `buildItemPickerConfig`'s doc comment for the dispatch shape (title /
+  // corpus query / mutate-handler per `itemPickerOpen` kind).
+  const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
+    loadEquipment: (category) =>
+      listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
+    loadSpells: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
+    onSelectEquipment: handleAddEquipment,
+    onSelectSpell: handleAddSpell,
+  });
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>

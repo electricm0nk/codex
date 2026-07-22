@@ -38,6 +38,7 @@ pub mod class_skald;
 pub mod class_slayer;
 pub mod class_swashbuckler;
 pub mod class_warpriest;
+pub mod equipment_data;
 pub mod equipment_tables;
 pub mod spell_list;
 
@@ -76,6 +77,45 @@ pub enum AcgClassId {
     Slayer,
     Swashbuckler,
     Warpriest,
+}
+
+impl AcgClassId {
+    /// The full, corrected 10-class ACG roster (see this module's doc
+    /// comment for why "Alchemist" is excluded and "Slayer" is included),
+    /// in ingest order. SD-24 Epic 4 criterion 4.3's per-class audit
+    /// iterates this list rather than a hand-typed one.
+    pub const ALL: [AcgClassId; 10] = [
+        AcgClassId::Arcanist,
+        AcgClassId::Bloodrager,
+        AcgClassId::Brawler,
+        AcgClassId::Hunter,
+        AcgClassId::Investigator,
+        AcgClassId::Shaman,
+        AcgClassId::Skald,
+        AcgClassId::Slayer,
+        AcgClassId::Swashbuckler,
+        AcgClassId::Warpriest,
+    ];
+
+    /// Lowercase class name, matching the `class_id` string convention
+    /// `pilot_compute.rs`'s `FIGHTER_CLASS_ID`/`WIZARD_CLASS_ID` constants
+    /// use (`"class:<name>"`), for building synthetic audit inputs and for
+    /// naming this class in coverage-report output. Mirrors
+    /// `rules_tables::apg::ApgClassId::name`.
+    pub const fn name(self) -> &'static str {
+        match self {
+            AcgClassId::Arcanist => "arcanist",
+            AcgClassId::Bloodrager => "bloodrager",
+            AcgClassId::Brawler => "brawler",
+            AcgClassId::Hunter => "hunter",
+            AcgClassId::Investigator => "investigator",
+            AcgClassId::Shaman => "shaman",
+            AcgClassId::Skald => "skald",
+            AcgClassId::Slayer => "slayer",
+            AcgClassId::Swashbuckler => "swashbuckler",
+            AcgClassId::Warpriest => "warpriest",
+        }
+    }
 }
 
 /// Resolves an ACG class's chassis-table row for `level`, scoped to
@@ -124,4 +164,117 @@ pub fn class_chassis_resolve(
             .into_iter()
             .find(|row| row.level == level),
     }
+}
+
+/// SD-24 Epic 4 criterion 4.3 (per-class audit: ACG classes) — per-class
+/// wiring coverage row. Mirrors `rules_tables::apg::ApgClassCoverage`
+/// exactly (same fields, same "every value is computed from real,
+/// already-landed source, never hand-guessed or invented" discipline).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct AcgClassCoverage {
+    pub class_id: AcgClassId,
+    /// Levels 1 through `chassis_rows_expected` this class's `class_table()`
+    /// actually returns a base-attack-bonus/save row for. Real ACG classes
+    /// all cap at `MAXLEVEL:20` (see each per-class module's own doc
+    /// comment, cross-checked against `acg_classes.lst`), so this equals
+    /// `chassis_rows_expected` for every class today.
+    pub chassis_rows_wired: u8,
+    /// The class's real `MAXLEVEL` ceiling (`acg_classes.lst`).
+    pub chassis_rows_expected: u8,
+    /// Count of distinct named/narrative class-feature records (Arcane
+    /// Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied
+    /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
+    /// Blessings, ...) this repo has independent wired computation logic
+    /// for. Zero for every ACG class today: SD-22 Epic 4 deliberately
+    /// scoped its ingest to the BAB/save chassis only (see e.g.
+    /// `class_arcanist.rs`'s own doc comment), and no follow-on cycle has
+    /// since ingested `acg_abilities_class.lst`'s per-level feature blocks
+    /// for any ACG class.
+    pub named_features_wired: u32,
+    /// Count of distinct named class-feature records tagged
+    /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
+    /// `advanced_class_guide/acg_abilities_class.lst` (SD-24 Epic 4 audit
+    /// count, PCGen corpus commit
+    /// `7f818006e371188e5717fd18d74d18a420747fc6`, 2026-06-17; reproduce
+    /// with `grep -oE "KEY:<Class> ~ [^\t]+" acg_abilities_class.lst |
+    /// sort -u | wc -l`). Mirrors `ApgClassCoverage::named_features_expected`'s
+    /// own "floor, not ceiling" caveat — sub-selectable-list layers (e.g.
+    /// individual Discoveries an Investigator can pick) may live under a
+    /// separate chooser-list file, not counted here.
+    pub named_features_expected: u32,
+    /// Whether `pilot_compute.rs`'s live `compute_class_chassis` dispatch
+    /// (the function the character-hub pilot flow actually calls)
+    /// recognizes this class at all. `false` for every ACG class today —
+    /// confirmed both by inspection (`compute_class_chassis` only matches
+    /// `FIGHTER_CLASS_ID`/`WIZARD_CLASS_ID`) and empirically by
+    /// `tests/sd24_acg_class_coverage_audit.rs`'s
+    /// `acg_classes_trip_the_honest_class_chassis_unsupported_diagnostic`
+    /// test.
+    pub pilot_compute_integrated: bool,
+    /// Whether a `level_up::<class>` module (the SD-20 Epic 7 per-level
+    /// automatic-feature-grant model CRB's 11 classes all have) exists for
+    /// this class. `false` for every ACG class today — `src/rules_core/level_up/`
+    /// contains only CRB per-class modules.
+    pub level_up_wired: bool,
+}
+
+const fn named_features_expected(class_id: AcgClassId) -> u32 {
+    // Corpus counts per this struct's own doc comment — see there for the
+    // reproduction command and the exact PCGen corpus commit audited.
+    match class_id {
+        AcgClassId::Arcanist => 9,
+        AcgClassId::Bloodrager => 19,
+        AcgClassId::Brawler => 14,
+        AcgClassId::Hunter => 21,
+        AcgClassId::Investigator => 95,
+        AcgClassId::Shaman => 10,
+        AcgClassId::Skald => 20,
+        AcgClassId::Slayer => 15,
+        AcgClassId::Swashbuckler => 29,
+        AcgClassId::Warpriest => 18,
+    }
+}
+
+/// Computes `class_id`'s SD-24 Epic 4 coverage row.
+pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
+    let chassis_rows_wired = match class_id {
+        AcgClassId::Arcanist => class_arcanist::class_table().len(),
+        AcgClassId::Bloodrager => class_bloodrager::class_table().len(),
+        AcgClassId::Brawler => class_brawler::class_table().len(),
+        AcgClassId::Hunter => class_hunter::class_table().len(),
+        AcgClassId::Investigator => class_investigator::class_table().len(),
+        AcgClassId::Shaman => class_shaman::class_table().len(),
+        AcgClassId::Skald => class_skald::class_table().len(),
+        AcgClassId::Slayer => class_slayer::class_table().len(),
+        AcgClassId::Swashbuckler => class_swashbuckler::class_table().len(),
+        AcgClassId::Warpriest => class_warpriest::class_table().len(),
+    } as u8;
+    let chassis_rows_expected = match class_id {
+        AcgClassId::Arcanist => class_arcanist::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Bloodrager => class_bloodrager::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Brawler => class_brawler::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Hunter => class_hunter::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Investigator => class_investigator::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Shaman => class_shaman::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Skald => class_skald::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Slayer => class_slayer::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Swashbuckler => class_swashbuckler::MAX_SUPPORTED_LEVEL,
+        AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
+    };
+
+    AcgClassCoverage {
+        class_id,
+        chassis_rows_wired,
+        chassis_rows_expected,
+        named_features_wired: 0,
+        named_features_expected: named_features_expected(class_id),
+        pilot_compute_integrated: false,
+        level_up_wired: false,
+    }
+}
+
+/// The full ACG per-class coverage report (SD-24 Epic 4, criterion 4.3),
+/// one row per `AcgClassId::ALL` entry in ingest order.
+pub fn coverage_report() -> Vec<AcgClassCoverage> {
+    AcgClassId::ALL.iter().map(|&class_id| class_coverage(class_id)).collect()
 }

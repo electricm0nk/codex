@@ -1,7 +1,7 @@
 # Architecture docs
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see §Maintenance contract below
 
 ## Purpose
@@ -43,7 +43,7 @@ doc's coverage shifts.
 | [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `src/oracle_validation/` |
 | [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map | `apps/desktop/` |
-| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/sd16/`, `apps/desktop/src/sd11/feedback/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/sd16_browser_handoff.rs`, `schemas/update/` |
+| [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/sd16/`, `apps/desktop/src/sd11/feedback/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
 | README.md (this file) | Doc-set index, provenance note, maintenance contract | `docs/architecture/` |

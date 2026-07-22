@@ -313,11 +313,20 @@ fn fighter_does_not_gain_wizard_level14_recognition() {
 
 // ----- Negative control: multiclass Wizard is not promoted -----
 
+// SD-24 Epic 5 (criterion 5.1) correction: this control used to pair Wizard
+// with Fighter as its "definitely still unsupported" second class. Fighter+
+// Wizard is now a genuinely supported multiclass mix (SD-24 widened both
+// pilot_compute.rs's explain_wizard_level1_prepared_spell_baseline and
+// level_up::wizard's own entry gate), so this control now pairs Wizard
+// with Rogue instead -- mirroring the Fighter-side negative controls
+// (e.g. sd18_fighter_level20_widening.rs), which already used Rogue for
+// the identical reason.
+
 #[test]
 fn multiclass_wizard_level14_is_not_promoted_by_this_slice() {
     let multiclass = WIZARD_LEVEL14_FIXTURE.replace(
         "class_level=class:wizard:14",
-        "class_level=class:wizard:14\nclass_level=class:fighter:1",
+        "class_level=class:wizard:14\nclass_level=class:rogue:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);

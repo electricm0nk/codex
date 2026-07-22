@@ -1,15 +1,17 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod browser_handoff;
 mod campaign_drive;
 mod character_hub;
+#[allow(non_snake_case)]
+mod characterHub;
+mod class_catalog;
+mod corpus_fixtures;
+mod equipment_catalog;
 mod ge08_workbench;
+mod race_catalog;
 mod sd13_support_state_matrix;
-mod sd16_browser_handoff;
-mod sd19_class_catalog;
-mod sd19_corpus;
-mod sd19_equipment_catalog;
-mod sd19_race_catalog;
-mod sd19_spell_catalog;
+mod spell_catalog;
 mod update;
 
 use serde::Serialize;
@@ -24,11 +26,14 @@ use character_hub::{
     import_character, level_up_character, list_saved_characters, load_character_portrait,
     load_saved_character, save_character_portrait,
 };
+use characterHub::appendToCharacter::append_to_character;
+use characterHub::recomputeCharacter::recompute_character;
+use characterHub::reSaveCharacter::re_save_character;
+use class_catalog::list_class_catalog;
+use equipment_catalog::{list_equipment, list_equipment_catalog};
+use race_catalog::list_race_catalog;
 use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
-use sd19_class_catalog::list_class_catalog;
-use sd19_equipment_catalog::{list_equipment, list_equipment_catalog};
-use sd19_race_catalog::list_race_catalog;
-use sd19_spell_catalog::{list_spell_catalog, list_spells};
+use spell_catalog::{list_spell_catalog, list_spells};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
@@ -117,7 +122,7 @@ fn main() {
             load_ge08_authoring_workbench_snapshot,
             load_support_state_matrix,
             load_backend_health,
-            sd16_browser_handoff::handoff_defect_report_to_browser,
+            browser_handoff::handoff_defect_report_to_browser,
             is_install_eligible,
             perform_install,
             perform_restore_previous,
@@ -125,8 +130,11 @@ fn main() {
             create_character,
             clone_character,
             level_up_character,
+            recompute_character,
             add_equipment_selection,
             add_spell_selection,
+            append_to_character,
+            re_save_character,
             list_saved_characters,
             load_saved_character,
             save_character_portrait,

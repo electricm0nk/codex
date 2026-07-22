@@ -1,0 +1,37 @@
+# SD-24 Epic 5 (criterion 5.1) deterministic Human Wizard 9 / Fighter 1
+# multiclass level-10 fixture (Wizard-dominant split).
+#
+# Represents a character that advanced levels 1-9 as a solo Wizard, then
+# took its first Fighter level at total character level 10 (Wizard 9 /
+# Fighter 1) -- the Wizard-side half of criterion 5.1's "advancement from
+# level 1 -> 10 succeeds" acceptance text. It names selections only; it does
+# not contain derived, computed, or parity values.
+#
+# Built by combining the already-accepted deterministic Wizard
+# school-specialization posture
+# (`pf1_human_wizard_level9_sd13_deterministic_input.txt`'s own canonical
+# Evocation-specialist / Necromancy-and-Transmutation-opposed selections)
+# with the minimum Fighter level-1 posture (no bonus-feat choice fires yet at
+# Fighter's own sub-level 1 -- the level-2 bonus feat and level-3 armor
+# training seams both gate strictly above it, per
+# `pilot_compute.rs`'s own `explain_fighter_class_features`), under a single
+# consistent ability-score array (the Wizard fixture's own scores, since
+# Wizard is the majority class here) rather than re-deriving either posture.
+case_id=pf1-crb-human-wizard9-fighter1-sd24-multiclass-lv10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:9
+class_level=class:fighter:1
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=docs/release/SD-24-beta-readiness-and-multiclass/epic-breakdown.md#criterion-5.1

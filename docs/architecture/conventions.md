@@ -1,7 +1,7 @@
 # Conventions
 
 > Scope: the repo-wide idiom catalog — the structural patterns every plane converges on independently, and what to do when adding new code.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This is the doc to point an agent (or a new contributor) at for "how do we

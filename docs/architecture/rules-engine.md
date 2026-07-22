@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -96,6 +96,23 @@ function's proven range, and the `explain_*`/`compute_*` function either produce
 records or pushes a named claim-blocking diagnostic and stops. This gate-then-explain pairing recurs
 at every level band; the file's per-function doc comments record which named sub-features are
 grounded versus still claim-blocked as of the current level ceiling for that class.
+
+**Multiclass base-chassis dispatch (SD-24 Epic 5).** `compute_multiclass_base_chassis` fires whenever
+`input.chosen.class_levels.len() >= 2`; `is_supported_multiclass_mix` gates it to combinations where
+every class level is individually supported — today that means Fighter + Wizard only, at any split of
+total level 1-10 (deterministically proven level-by-level, both solo-to-multiclass transition
+directions, in `tests/sd24_multiclass_deterministic.rs`/`tests/sd24_multiclass_integration.rs`). Base
+attack bonus and saves stack per PF1's canonical additive multiclass rule: each class's own
+fractional BAB/save progression is summed *before* flooring once for the total, reading the
+fractional classification from `class_tables.rs`'s own `good_saves_for(ClassId) -> Option<(bool, bool,
+bool)>` (`multiclass_good_saves`) rather than a second, independently-maintained copy. `fighter_level_in_mix`/
+`wizard_level_in_mix` (`pilot_compute.rs`) resolve each class's own sub-level from the mix so that
+class's per-level named-feature/spell-baseline explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`)
+keep firing once a second class joins, instead of silently going quiet the moment the build stops
+being single-class. This grounds the base-chassis/explanation layer only — it does not by itself get
+a Fighter+Wizard multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and
+other per-domain diagnostics can still block); see [status.md](./status.md) for the current
+`Computed`-reachability ceiling.
 
 **Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, and `ComputationDiagnostic`
 are defined near the top of the file; `HeadlessReceiptStatus` and `PilotHeadlessReceipt` are defined

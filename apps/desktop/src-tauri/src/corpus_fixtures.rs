@@ -4,7 +4,7 @@
 //! corpus, so this loads a small, bounded set of real corpus records —
 //! copied verbatim, the same fixture-authoring convention as
 //! `tests/fixtures/rules_core/sd19_seam_crb_*.txt` — bundled as a Tauri
-//! resource (`resources/sd19_corpus_fixtures/`, see `tauri.conf.json`).
+//! resource (`resources/corpus_fixtures/`, see `tauri.conf.json`).
 //! This is enough to prove `compute_pilot_with_corpus` resolves real
 //! corpus data end-to-end in the live UI; it is not a general corpus
 //! provider. Exhaustive corpus coverage is out of scope here (see
@@ -27,7 +27,7 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 use crate::ge08_workbench::resolve_package_path;
 
-const FIXTURE_RESOURCE_ROOT: &str = "resources/sd19_corpus_fixtures";
+const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
 const SPELL_FIXTURES: &[&str] = &["spell_abjuration.txt", "spell_illusion.txt"];
 const EQUIPMENT_FIXTURES: &[&str] = &["equip_longsword.txt", "equip_chain_shirt.txt"];
 
@@ -49,19 +49,19 @@ fn read_fixture(dir: &std::path::Path, name: &str) -> Result<String, String> {
 }
 
 fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
-    let dir = fixture_dir().expect("sd19_corpus_fixtures resource directory must resolve");
+    let dir = fixture_dir().expect("corpus_fixtures resource directory must resolve");
 
     let source_ref = SourceRef {
-        lst_file: "sd19_corpus_fixtures".to_string(),
+        lst_file: "corpus_fixtures".to_string(),
         line: 1,
     };
-    let mut corpus = SourcePackageContent::empty("sd19_desktop_ui_fixtures", source_ref);
+    let mut corpus = SourcePackageContent::empty("desktop_ui_fixtures", source_ref);
 
     for name in SPELL_FIXTURES {
         let text = read_fixture(&dir, name).expect("bundled spell fixture must be readable");
         let line = record_line(&text)
             .unwrap_or_else(|| panic!("spell fixture '{name}' has no record line"));
-        let parsed = parse_lst_spell_row("sd19_corpus_fixtures", 1, line);
+        let parsed = parse_lst_spell_row("corpus_fixtures", 1, line);
         let record = parsed
             .record
             .unwrap_or_else(|| panic!("spell fixture '{name}' failed to parse: {line}"));
@@ -74,7 +74,7 @@ fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
         let text = read_fixture(&dir, name).expect("bundled equipment fixture must be readable");
         let line = record_line(&text)
             .unwrap_or_else(|| panic!("equipment fixture '{name}' has no record line"));
-        let result = parse_equipment_entries("sd19_corpus_fixtures", line);
+        let result = parse_equipment_entries("corpus_fixtures", line);
         for entry in result.entries {
             let entry: &'static codex::pcgen_import::lst_parser::equipment::EquipmentRecord =
                 Box::leak(Box::new(entry));

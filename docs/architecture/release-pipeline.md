@@ -1,7 +1,7 @@
 # Release pipeline
 
 > Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, and how branches get promoted between channels.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Overview
@@ -38,7 +38,7 @@ stamped sources). Every downstream job fans in from both.
 
 ### Version stamp
 
-`VERSION="0.5.${GITHUB_RUN_NUMBER}"` (`publish-tester-release.yml:71`) is the sole place the build number is minted; every other consumer reads `needs.stamp.outputs.version`. The three files that must carry a matching `<major>.<tranche-base>.<build>` triple are `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` — as of this verification all three are committed at `0.5.96` (confirmed via `grep -n '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json` and `grep -n '^version' apps/desktop/src-tauri/Cargo.toml`). Note the workflow's own in-line comment (`publish-tester-release.yml:43-45`) still describes "the repo keeps `0.0.0` as the committed placeholder" — that description is stale relative to current tranche/5 practice, where the three files are kept at the real in-flight version and the workflow's stamp step still overwrites `package.json` / `tauri.conf.json` unconditionally at publish time (it does not touch `Cargo.toml`).
+`VERSION="0.5.${GITHUB_RUN_NUMBER}"` (`publish-tester-release.yml:71`) is the sole place the build number is minted; every other consumer reads `needs.stamp.outputs.version`. The three files that must carry a matching `<major>.<tranche-base>.<build>` triple are `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` — as of this verification all three are committed at `0.5.97` (confirmed via `grep -n '"version"' apps/desktop/package.json apps/desktop/src-tauri/tauri.conf.json` and `grep -n '^version' apps/desktop/src-tauri/Cargo.toml`). Note the workflow's own in-line comment (`publish-tester-release.yml:43-45`) still describes "the repo keeps `0.0.0` as the committed placeholder" — that description is stale relative to current tranche/5 practice, where the three files are kept at the real in-flight version and the workflow's stamp step still overwrites `package.json` / `tauri.conf.json` unconditionally at publish time (it does not touch `Cargo.toml`).
 
 Versioning semantics (`docs/release/SD-22/decisions.md:52`, and `apps/desktop/src/sd22/buildVersionTriple.test.ts:41-48`):
 - **major**: stays `0` until the first publish to `main`.

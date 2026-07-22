@@ -7,7 +7,7 @@
 //! what one character has selected. Built to satisfy the operator's full
 //! "UI-surfacing" bar for the SD-19 remaining-school matrix rows —
 //! literal display of every spell in every school, not just a
-//! per-character sample. Mirrors `sd19_equipment_catalog.rs` exactly.
+//! per-character sample. Mirrors `equipment_catalog.rs` exactly.
 
 use serde::{Deserialize, Serialize};
 
@@ -41,7 +41,7 @@ fn map_catalog_entry(
 }
 
 /// Build the full catalog response. A thin, testable wrapper behind the
-/// Tauri command below (mirroring `sd19_equipment_catalog`'s own
+/// Tauri command below (mirroring `equipment_catalog`'s own
 /// command/pure-fn split).
 pub fn build_spell_catalog() -> SpellCatalogResponse {
     SpellCatalogResponse {
