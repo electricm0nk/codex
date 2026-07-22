@@ -1,7 +1,7 @@
 # Cycle 7.7 — Epic 7 (Per-class residue) / Criterion 7.7
 
-- **Card ID:** `t_TBD` (see Notes — minted after commit; backfilled if the receipt lands before the kanban call completes)
-- **Commit SHA:** `TBD` (filled in at commit time below)
+- **Card ID:** `t_42e830d8`
+- **Commit SHA:** `8113401b1e36becdd1c23b1b45d67462f7fe9e02`
 - **Files touched:**
   - NEW `tests/sd25_druid_level_up_explanation_filter_audit.rs` (RED → GREEN regression proof + verified-negative-finding documentation)
   - NEW `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/druid-residue-audit-cycle_receipt.md` (this file)
