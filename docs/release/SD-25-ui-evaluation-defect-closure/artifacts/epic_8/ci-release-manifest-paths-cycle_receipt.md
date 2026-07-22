@@ -1,6 +1,6 @@
 # Cycle ci-release-manifest-paths — Epic 8 Closure Epilogue / CI regression fix
 - **Card ID:** n/a (operator-dispatched direct fix, not a hermes kanban cycle)
-- **Commit SHA:** (recorded post-commit below)
+- **Commit SHA:** a2a1072 (pushed to `tranche/5-3`)
 - **Files touched:** `.github/workflows/check-release-manifest.yml`
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS — verified no residual `sd11`/`sd15` references remain in the file after the edit (`grep -n "sd11\|sd15"` returns no matches); the two replacement path entries (`apps/desktop/src/testerWorkbench/update/**`, `apps/desktop/src/operatorTriage/**`) match real on-disk directories confirmed present via `ls`.
 - **Wired-integration audit result:** OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS — CI path-filter string change only, no handlers/tokens/mocks in scope.
