@@ -1,7 +1,7 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -25,7 +25,7 @@ None of the standalone scripts below are wired into `npm test` or `cargo test` �
 ```
 cargo test --locked
 ```
-Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **441** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `sd24_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace. The `sd24_*` files are SD-24's own standing regression suite: identifier-discipline and wired-integration four-check audits scoped to specific production files, the Fighter+Wizard multiclass dispatch/deterministic/integration proofs, and the equipment/spell-coverage audits (see [status.md](./status.md) and [rules-engine.md](./rules-engine.md)).
+Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **453** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `sd24_*`, `sd25_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace. The `sd24_*` files are SD-24's own standing regression suite: identifier-discipline and wired-integration four-check audits scoped to specific production files, the Fighter+Wizard multiclass dispatch/deterministic/integration proofs, and the equipment/spell-coverage audits (see [status.md](./status.md) and [rules-engine.md](./rules-engine.md)). The `sd25_*` files are SD-25's additions: nine per-class level-up explanation coverage/filter audits (`sd25_<class>_level_up_explanation_*`), and `tests/pcgen_runner_smoke.rs` — the smoke test proving `scripts/pcgen-run-character.sh` + `scripts/pcgen-normalize-output.py` compose into a real, invocable PCGen runner pipeline (its live-engine tier runs only against a real PCGen checkout; see [status.md](./status.md)'s oracle-parity row).
 
 ```
 cargo clippy --locked --tests -- -D warnings
@@ -37,7 +37,7 @@ Lints the crate including its test targets, failing the build on any warning. Ve
 ```
 cd apps/desktop/src-tauri && cargo test --locked
 ```
-`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — 15 source files currently carry one: `sd13_support_state_matrix.rs`, `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
+`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
 
 ### Desktop frontend (TypeScript)
 
@@ -61,7 +61,7 @@ Runs `node scripts/run-tests.mjs` (`apps/desktop/package.json` `scripts.test`) �
 // summary. Each test file exits non-zero on its first failed assertion.
 ```
 
-Each test file is a self-executing script (no test-framework `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion. There are currently **48** matching files (`find apps/desktop/src -iname "*.test.ts" | wc -l`). The runner prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line, exiting non-zero if any failed.
+Each test file is a self-executing script (no test-framework `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion. There are currently **62** matching files (`find apps/desktop/src -iname "*.test.ts" | wc -l`). The runner prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line, exiting non-zero if any failed.
 
 ### Standalone scripts
 
@@ -208,7 +208,7 @@ A third variant (`tests/sd17_b_races_and_abilities.rs`) wraps the same env-or-de
 Three shared modules under `apps/desktop/src/testSupport/` back the `*.test.ts` suite:
 
 - **`apps/desktop/src/testSupport/asserts.ts`** — the two primitives every self-executing test file uses: `assertEqual<T>(actual, expected, message)` and `assert(condition, message)`, both throwing `Error` on failure (which is what makes a `tsx`-run file exit non-zero). Extracted because, per its own doc comment, "every test file previously carried its own identical copy of these" (`asserts.ts:1-6`).
-- **`apps/desktop/src/testSupport/makeSurface.ts`** — `makeSurface(overrides = {})` returns one canonical, fully-populated `Sd11TesterWorkbenchSurface` fixture, then shallow-spreads `overrides` on top. Its doc comment explains why this exists: "Several test files previously carried their own copies; the copies drifted when the SD-12 release-truth bridge added new required auto-captured evidence fields, which silently broke the submit-flow tests" (`makeSurface.ts:3-10`). Tests that need to vary a nested field (e.g. `status.build`) pass a whole replacement nested object, since the spread is shallow.
+- **`apps/desktop/src/testSupport/makeSurface.ts`** — `makeSurface(overrides = {})` returns one canonical, fully-populated `TesterWorkbenchSurface` fixture, then shallow-spreads `overrides` on top. Its doc comment explains why this exists: "Several test files previously carried their own copies; the copies drifted when the SD-12 release-truth bridge added new required auto-captured evidence fields, which silently broke the submit-flow tests" (`makeSurface.ts:3-10`). Tests that need to vary a nested field (e.g. `status.build`) pass a whole replacement nested object, since the spread is shallow.
 - **`apps/desktop/src/testSupport/makeCharacterSummary.ts`** — same single-canonical-fixture pattern for `CharacterSummaryDto`, explicitly "mirroring `makeSurface.ts`'s pattern" (`makeCharacterSummary.ts:6-7`).
 
 ## Wire fixtures (`tests/fixtures/wire/`)

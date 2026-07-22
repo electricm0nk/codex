@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -267,7 +267,7 @@ already-grounded sources rather than re-deriving them:
 `rules_tables::crb::class_tables::class_tables()` for class-generic BAB/save progression, and
 `pilot_compute::compute_pilot_base_chassis`'s own per-class `explanations` for class-specific
 pillars (e.g. Barbarian Rage, Uncanny Dodge). This is a read-only composition, not a second copy of
-chassis logic.
+chassis logic. Note a live dispatch limitation surfaced by SD-25's adapter work: `compute_level_up_grants` reads a single implied class off `character.chosen.class_levels` and returns an honestly-empty `LevelUpPlan::default()` for any multiclass mix (it has no per-class-delta parameter). The desktop hub-of-hubs `RuleSystemAdapter::level_up` (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam") deliberately takes an explicit `&[ClassLevelDelta]` slice so a multiclass level-up is *expressible* at that seam; widening the free function itself to honor that shape is still open.
 
 **`src/rules_core/encounters.rs`** (SD-22 DM-toolkit) — `Encounter::new(party: &[CharacterSnapshot], monsters:
 &[MonsterRef]) -> EncounterResult`, an associated function on the unit struct `Encounter` (named

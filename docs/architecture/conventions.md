@@ -1,7 +1,7 @@
 # Conventions
 
 > Scope: the repo-wide idiom catalog — the structural patterns every plane converges on independently, and what to do when adding new code.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This is the doc to point an agent (or a new contributor) at for "how do we
@@ -188,13 +188,19 @@ gated tests."
 ## Provenance naming (`sdNN`/`geNN` prefixes)
 
 Module and test file names carry the originating spec-domain/grand-epic
-bundle as a prefix (`sd13_support_state_matrix.rs`, `ge08_workbench.rs`,
-`tests/sd22_apg_class_witch_resolves.rs`) — one behavior per file. These
+bundle as a prefix (`ge08_workbench.rs`,
+`tests/sd25_sorcerer_level_up_explanation_coverage.rs`) — one behavior per file. These
 prefixes are proper nouns naming provenance, not documentation of current
 function (see [README.md](./README.md)'s provenance note). **When adding a
 new test or module born from a specific bundle**: prefix it the same way so
 `grep`-by-origin keeps working, and write the file to prove exactly one
-behavior.
+behavior. Note the prefix convention is applied to *newly born* files, not
+retroactively frozen: SD-25 criterion 1.1 renamed several
+already-shipped frontend surfaces whose `sdNN` prefix had become
+misleading as living identifiers (`sd11/` → `testerWorkbench/`, `sd15/`
+→ `operatorTriage/`, `sd22/` → `releaseChecks/`,
+`sd13_support_state_matrix.rs` → `support_state_matrix_bridge.rs`) — the
+originating bundle is recorded in each file's own doc comment instead.
 
 ## TDD / red-green mandate
 

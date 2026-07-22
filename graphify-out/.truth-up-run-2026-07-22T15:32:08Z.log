@@ -1,0 +1,18 @@
+# graphify run 2026-07-22T15:32:08Z
+# Phase A: graphify update (AST extract, --no-cluster)
+# Phase A exit: 0
+--- Phase A tail ---
+  AST extraction: 1199/1199 files (100%) [4 workers]
+[graphify watch] Rebuilt (no clustering): 16461 nodes, 35730 edges
+[graphify watch] graph.json updated in /home/ubuntu/workspace/repos/codex/graphify-out
+Code graph updated. For doc/paper/image changes run /graphify --update in your AI assistant.
+Tip: set GEMINI_API_KEY or GOOGLE_API_KEY to use Gemini for semantic extraction.
+
+# Phase B: graphify cluster-only (--no-label --no-viz, GRAPHIFY_FORCE=1)
+# Phase B exit: 0
+--- Phase B tail ---
+[graphify] WARNING: new graph has 16460 nodes but existing graph.json has 16461. Refusing to overwrite — you may be missing chunk files from a previous session. Pass force=True to override.
+Loading existing graph...
+Graph: 16460 nodes, 32374 edges
+Re-clustering...
+Done - 1131 communities. GRAPH_REPORT.md and graph.json updated (--no-viz; graph.html removed).
