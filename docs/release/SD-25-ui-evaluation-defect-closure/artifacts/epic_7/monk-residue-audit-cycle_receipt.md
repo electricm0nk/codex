@@ -1,7 +1,7 @@
 # Cycle monk-residue-audit — Epic 7 (Deferred Per-Class Work & Coverage Backlog) / Criterion 7.8
 
-- **Card ID:** `t_TBD` (see Notes — minted after commit; backfilled if the receipt lands before the kanban call completes)
-- **Commit SHA:** `TBD` (filled in at commit time below)
+- **Card ID:** `t_4473c8b2`
+- **Commit SHA:** `b1a89bba66d8cbe069743d1c8e757929766a0bb9` (test + this receipt); `b4ff3b1` (progress.md status-matrix + register A6 update)
 - **Files touched:**
   - NEW `tests/sd25_monk_level_up_explanation_filter_audit.rs` (RED → GREEN regression proof + verified-negative-finding documentation)
   - NEW `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/monk-residue-audit-cycle_receipt.md` (this file)
