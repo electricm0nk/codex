@@ -166,6 +166,16 @@ export function CharacterHubPage() {
           // close-and-reopen or a full list re-fetch.
           setSheet((current) => (current ? { row: toRowSurface(detail.summary), detail } : current))
         }
+        ruleSet={ruleSet}
+        onOpen={() => {
+          // "Open" always returns to the Load Character screen so the
+          // operator can pick a different saved character, regardless of
+          // whether this sheet was opened from Load Character or from a
+          // campaign party member's sheet.
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+        onCloned={reload}
       />
     );
   }

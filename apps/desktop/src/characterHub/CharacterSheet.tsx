@@ -7,6 +7,10 @@ import { addEquipmentSelection } from '../boundary/addEquipmentSelection';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
+import { cloneCharacter } from '../boundary/cloneCharacter';
+import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
+import { buildRecomputeCharacterRequest } from './characterHubRuntime';
+import type { RuleSetId } from './LandingScreen';
 import { toCharacterMutationRefresh } from './characterSheetRefresh';
 import { mapEquipmentCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
@@ -675,6 +679,19 @@ export function CharacterSheet(props: {
    * the refreshed `detail.summary` too).
    */
   onDetailRefreshed: (detail: LoadSavedCharacterResponse) => void;
+  /**
+   * The panel's active rule-system adapter (SD-25 Criterion 3.5) — the
+   * landing screen's rule-set picker (`LandingScreen.tsx`), threaded down
+   * through `CharacterHubPage.tsx`. Every mutation call site this sheet
+   * routes through the 3.4 adapter-dispatch seam resolves this via
+   * `characterHubRuntime.ts`'s `resolveRuleSystemId` rather than hardcoding
+   * `"pf1"` — see the "Recompute" menu action below.
+   */
+  ruleSet: RuleSetId;
+  /** Top-menu "Open": returns to the Load Character screen so the operator can pick a different saved character without losing this one's on-disk state. */
+  onOpen: () => void;
+  /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
+  onCloned: () => void;
 }) {
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -688,6 +705,14 @@ export function CharacterSheet(props: {
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
+  // Freshly recomputed derived stats from the "Recompute" menu action —
+  // null until the operator explicitly triggers a recompute, so display
+  // stays byte-for-byte the pre-existing `snapshot`-derived values until
+  // then (PF1 behavior unchanged, per `cycles/3_5.md`'s GREEN text).
+  const [recomputed, setRecomputed] = useState<RecomputedCharacterSnapshotDto | null>(null);
+  const [recomputing, setRecomputing] = useState(false);
+  const [cloning, setCloning] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   async function handleLevelUpAccept(classId: string) {
     setMutationError(null);
@@ -765,14 +790,78 @@ export function CharacterSheet(props: {
     }
   }
 
+  /**
+   * SD-25 Criterion 3.5 register A3: the real UI affordance wired to one of
+   * `append_to_character` / `recompute_character` / `re_save_character`
+   * (matching SD-24 Criterion 7.4's Add-Weapon/Add-Armor/Add-Spell
+   * precedent — a menu action that calls a real boundary wrapper's
+   * `invoke()`, not refactored-but-unused plumbing). Routes through the
+   * panel's active adapter via `buildRecomputeCharacterRequest`/
+   * `resolveRuleSystemId` rather than hardcoding `"pf1"` — the seam
+   * criterion 3.5's own RED/GREEN targets. `recompute_character` never
+   * mutates the on-disk character, so this is safe to call as often as the
+   * operator likes; it simply pulls fresh derived stats straight from the
+   * real compute engine instead of whatever `snapshot` was loaded with.
+   */
+  async function handleRecompute() {
+    setMutationError(null);
+    setStatusMessage(null);
+    setRecomputing(true);
+    try {
+      const request = buildRecomputeCharacterRequest(props.row.characterId, props.ruleSet);
+      const response = await recomputeCharacter(request);
+      if (!response.success || !response.character) {
+        setMutationError(response.error ?? 'Recompute did not return a usable result.');
+        return;
+      }
+      setRecomputed(response.character);
+      setStatusMessage('Recomputed derived stats from the current on-disk build.');
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    } finally {
+      setRecomputing(false);
+    }
+  }
+
+  /** Top-menu "Clone": duplicates the currently open character under a new id, mirroring `LoadCharacterScreen.tsx`'s own `handleClone`. */
+  async function handleClone() {
+    setMutationError(null);
+    setStatusMessage(null);
+    setCloning(true);
+    try {
+      const outcome = await cloneCharacter({
+        characterId: props.row.characterId,
+        newCharacterId: crypto.randomUUID(),
+        newDisplayLabel: `${props.row.displayLabel} (Copy)`,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Saved') {
+        setStatusMessage(`Cloned as "${outcome.summary.displayLabel}".`);
+        props.onCloned();
+      } else {
+        setMutationError('Clone failed: the copy no longer computes cleanly, so nothing was saved.');
+      }
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : 'Could not clone the character.');
+    } finally {
+      setCloning(false);
+    }
+  }
+
   function updateBio(patch: Partial<BioFields>) {
     setBio((prev) => ({ ...prev, ...patch }));
   }
 
   const snapshot = props.detail?.snapshot ?? null;
   const abilities = snapshot?.abilityModifiers ?? ZERO_ABILITIES;
-  const ac = snapshot?.baselineArmorClass ?? 10;
-  const saves = snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
+  // `recomputed` (set by the "Recompute" menu action) takes precedence over
+  // the originally loaded `snapshot` when present — it is always at least
+  // as fresh, since it comes from the same real compute engine reading
+  // whatever is currently on disk. Ability modifiers/skills aren't part of
+  // `recompute_character`'s response surface, so those keep reading from
+  // `snapshot` regardless.
+  const ac = recomputed?.baselineArmorClass ?? snapshot?.baselineArmorClass ?? 10;
+  const saves = recomputed?.totalSaves ?? snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
   const dexMod = abilities.dexterity;
   const touch = 10 + dexMod;
   const flatFooted = ac - Math.max(0, dexMod);
@@ -792,7 +881,7 @@ export function CharacterSheet(props: {
   const race = RACE_OPTIONS.find((entry) => entry.id === props.detail?.summary.raceId);
   const size = race?.size ?? 'Medium';
   const vision = race?.vision ?? 'Normal';
-  const baseAttackBonus = snapshot?.baseAttackBonus ?? 0;
+  const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
   const hp = maxHitPoints(heldClasses, abilities.constitution);
   const cmb = baseAttackBonus + abilities.strength;
   const cmd = 10 + baseAttackBonus + abilities.strength + dexMod;
@@ -810,10 +899,23 @@ export function CharacterSheet(props: {
     { simple: false, martial: false, exotic: false }
   );
 
+  // SD-25 Criterion 3.5 register A4: `Open`/`Save`/`Clone` were bare
+  // `() => {}` no-op handlers — a no-stub-doctrine violation on a
+  // user-facing affordance. `Open` and `Clone` are wired to real behavior
+  // below. `Save` is replaced with `Recompute`: every mutation this sheet
+  // can trigger (level-up, add-equipment, add-spell, clone) already
+  // persists immediately on selection — there is no session-local "unsaved
+  // edit" state for an explicit Save to commit (the Bio fields are the one
+  // exception, and they have no persisted schema slot to save into yet; see
+  // `DetailsPanel`'s own doc comment). Labeling a real action "Save" when it
+  // does not persist anything would itself be dishonest UI, so this cycle
+  // wires the menu to the real capability that IS available from the panel
+  // today — `recompute_character` (register A3) — rather than fabricating a
+  // Save that has nothing new to write.
   const menuItems: ReadonlyArray<{ label: string; onSelect: () => void; dividerBefore?: boolean }> = [
-    { label: 'Open', onSelect: () => {} },
-    { label: 'Save', onSelect: () => {} },
-    { label: 'Clone', onSelect: () => {} },
+    { label: 'Open', onSelect: props.onOpen },
+    { label: recomputing ? 'Recomputing…' : 'Recompute', onSelect: () => void handleRecompute() },
+    { label: cloning ? 'Cloning…' : 'Clone', onSelect: () => void handleClone() },
     { label: 'Print', onSelect: () => window.print() },
   ];
 
@@ -992,6 +1094,23 @@ export function CharacterSheet(props: {
                   }}
                 >
                   {mutationError}
+                </p>
+              ) : null}
+
+              {statusMessage ? (
+                <p
+                  role="status"
+                  style={{
+                    backgroundColor: 'var(--color-surface-2)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 6,
+                    color: 'var(--color-text-secondary)',
+                    fontSize: '0.75rem',
+                    margin: '0 0 0.5rem',
+                    padding: '0.4rem 0.55rem',
+                  }}
+                >
+                  {statusMessage}
                 </p>
               ) : null}
 
