@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """Validate a Codex update-manifest.json against schemas/update/update-manifest.schema.json.
 
-SD16-E4-F3b — owned by `t_b7833349`. The publish-tester-release.yml workflow
-calls this script as a guard step; an invalid manifest fails closed (exit
-non-zero) so the publish step never uploads a malformed artifact to the
-GitHub Release.
+The publish-tester-release.yml workflow calls this script as a guard step;
+an invalid manifest fails closed (exit non-zero) so the publish step never
+uploads a malformed artifact to the GitHub Release.
 
-Doctrine reminders (per F2 handoff §AV rows owned):
+Doctrine reminders (per the update-manifest contract's §AV rows):
   - AV-PUB-6  manifest validates against schema. Validator runs the schema
               check AND the workflow guard step runs the same check.
   - AV-SCH-5  manifest-validator cross-check on the merged branch.

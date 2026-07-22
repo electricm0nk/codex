@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """Emit a Codex update-manifest.json that satisfies schemas/update/update-manifest.schema.json.
 
-SD16-E4-F3b — owned by `t_b7833349`. The publish-tester-release.yml workflow
-calls this script from the `Generate update manifest` step; the next step
-calls `validate_manifest.py` against the same file. Any failure in either
-script fails the workflow closed.
+The publish-tester-release.yml workflow calls this script from the
+`Generate update manifest` step; the next step calls `validate_manifest.py`
+against the same file. Any failure in either script fails the workflow
+closed.
 
 The writer is intentionally explicit about every field the schema requires;
-no field is hardcoded silently. Every argument the writer takes is a
-deliberate shape decision the F3b slice owns. Future contract bumps must
-extend both this script and the schema together.
+no field is hardcoded silently. Future contract bumps must extend both this
+script and the schema together.
 
-Doctrine reminders (per F2 handoff §AV rows owned):
+Doctrine reminders (per the update-manifest contract's §AV rows):
   - AV-PUB-2  release tag is channel-scoped. Writer enforces
               `${channel}/${version}-${shortsha}` so the manifest's `tag`
               field matches the schema's `^(alpha|beta|stable)/.+$`

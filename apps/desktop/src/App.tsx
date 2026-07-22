@@ -1,28 +1,28 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import desktopPackage from '../package.json';
 import {
-  loadSd11TesterWorkbenchSurfaceRuntime,
-} from './sd11/loadSd11TesterWorkbenchSurfaceRuntime';
-import type { Sd11TesterWorkbenchSurface } from './sd11/loadSd11TesterWorkbenchSurface';
+  loadTesterWorkbenchSurfaceRuntime,
+} from './testerWorkbench/loadTesterWorkbenchSurfaceRuntime';
+import type { TesterWorkbenchSurface } from './testerWorkbench/loadTesterWorkbenchSurface';
 import { createReferenceListKey } from './referenceListKey';
 import {
   assembleFeedbackEvidence,
   captureAutoEvidence,
   sharedAutoCapturedFields,
   REDACTION_POLICY_NOTICE,
-} from './sd11/feedback/evidence';
+} from './testerWorkbench/feedback/evidence';
 import {
   composeBugReport,
   renderCopyableBugPayload,
   submitBugReport,
   type BugReportSubmissionOutcome,
-} from './sd11/feedback/bug';
+} from './testerWorkbench/feedback/bug';
 import {
   composeEnhancementRequest,
   renderCopyableEnhancementPayload,
   submitEnhancementRequest,
   type EnhancementRequestSubmissionOutcome,
-} from './sd11/feedback/enhancement';
+} from './testerWorkbench/feedback/enhancement';
 import {
   runBrowserHandoff,
   type BrowserHandoffOutcome,
@@ -118,7 +118,7 @@ function EvidenceList(props: {
   );
 }
 
-function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
+function FeedbackEvidencePanel(props: { surface: TesterWorkbenchSurface }) {
   const auto = captureAutoEvidence(props.surface);
   const autoValueByKey: Record<string, string> = {
     buildLabel: auto.buildLabel,
@@ -311,7 +311,7 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
   );
 }
 
-function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
+function BugReportComposer(props: { surface: TesterWorkbenchSurface }) {
   const [title, setTitle] = useState('');
   const [observedBehavior, setObservedBehavior] = useState('');
   const [expectedBehavior, setExpectedBehavior] = useState('');
@@ -518,7 +518,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
   );
 }
 
-function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
+function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) {
   const [title, setTitle] = useState('');
   const [testerGoal, setTesterGoal] = useState('');
   const [currentFriction, setCurrentFriction] = useState('');
@@ -857,7 +857,7 @@ const NOT_STARTED_SOURCEBOOKS = [
   'Ultimate Equipment',
 ];
 
-function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
+function SupportDebtPanel(props: { surface: TesterWorkbenchSurface }) {
   const debt = props.surface.supportDebt;
 
   if (!debt) {
@@ -971,7 +971,7 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
   );
 }
 
-function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
+function BreadthClaimAuditPanel(props: { surface: TesterWorkbenchSurface }) {
   const audit = props.surface.breadthClaimAudit;
 
   if (!audit) {
@@ -1066,7 +1066,7 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
   const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
-  const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
+  const [surface, setSurface] = useState<TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -1089,7 +1089,7 @@ export default function App() {
 
 
   useEffect(() => {
-    loadSd11TesterWorkbenchSurfaceRuntime({
+    loadTesterWorkbenchSurfaceRuntime({
       buildVersion: desktopPackage.version,
       platformLabel: derivePlatformLabel(),
     })

@@ -10,8 +10,8 @@ mod corpus_fixtures;
 mod equipment_catalog;
 mod ge08_workbench;
 mod race_catalog;
-mod sd13_support_state_matrix;
 mod spell_catalog;
+mod support_state_matrix_bridge;
 mod update;
 
 use serde::Serialize;
@@ -32,8 +32,8 @@ use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use race_catalog::list_race_catalog;
-use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use spell_catalog::{list_spell_catalog, list_spells};
+use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
