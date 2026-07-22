@@ -1,7 +1,7 @@
 # Cycle discovered-queue-triage — Epic 8 (precursor) / Non-numbered (queue-cap remediation)
 
 - **Card ID:** t_c04c67e3
-- **Commit SHA:** TBD (backfilled in a follow-up commit after push, per this bundle's own backfill convention)
+- **Commit SHA:** `12fdbd1`
 - **Files touched:** `docs/release/SD-25-ui-evaluation-defect-closure/progress.md` (only)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (docs-only diff; no `apps/desktop/**`, `src/**`, or `scripts/**` touched)
 - **Wired-integration audit result:** OK_NO_TOKENS (docs-only diff; no shipping source touched)
