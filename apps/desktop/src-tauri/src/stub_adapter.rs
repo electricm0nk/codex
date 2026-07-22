@@ -15,7 +15,7 @@
 //!
 //! Wired-integration doctrine forbids "Would ..." strings in shipping code.
 //! This stub is the doctrine's own named exception: it ships together with
-//! `governance/wired-integration-stubs-registry.md` entry 0002 in the same
+//! `docs/governance/wired-integration-stubs-registry.md` entry 0002 in the same
 //! commit, carrying the operator-granted justification. Without that
 //! registry entry landing in the same commit, the §6 dual-audit failure for
 //! this file is not self-healable (`cycles/3_3.md` GREEN).
