@@ -30,7 +30,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 7.2..7.M per-feature | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
 | 7.N equipment/spell corpus intake | not-started | — | — | SD-24 carry-forward (register A8, A10–A17); 4 cycles (CRB-desc, APG-desc, APG-spell-text, Bestiary-1); parallel: yes, isolation: worktree |
 | 7.O GE-07 pilot-shell-snapshot real implementation | blocked (awaiting operator design decision) | 7.O | `b6550bf` | SD-24 carry-forward (register A1); design-decision request surfaced to operator per `decisions.md §12` (deferred this bundle); open question Q5 (`risks-and-open-questions.md §4`) reviewed and confirmed accurate/unanswered; implementation cycle cannot dispatch until operator answers Q5; card `t_0fcfcb3a`; see artifacts/epic_7/ge07-snapshot-cycle_receipt.md |
-| 7.P SD-24 documentation-staleness batch | not-started | — | — | SD-24 carry-forward (register §B: B1–B4, B6–B7, B9–B11, B14); docs-only, one batched cycle; Haiku |
+| 7.P SD-24 documentation-staleness batch | complete | 7.P | `4d4d18e` | SD-24 carry-forward (register §B: B1–B4, B6–B7, B9–B11, B14); 10 items corrected in place with dated notes; B6-B7 findings documented (no planning-doc citations to correct); B5/B8/B12 already corrected in-cycle; see artifacts/epic_7/sd24-doc-batch-cycle_receipt.md |
 | 8.1 Final criterion scan | not-started | — | — | fires LAST; Sonnet |
 | 8.2 Architecture closure pipeline | not-started | — | — | fires LAST; Opus |
 | 8.3 Release notes | not-started | — | — | fires LAST; Haiku |
@@ -62,6 +62,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.4 verification cycle — commit `80ce33d` — card `t_1817068a` — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
 - 6.1 UI-eval defect cycle shape — commit `bec34ec97b51ed3fdc2b4374eda429514d92575a` — card `t_6c03eb36` — receipt `artifacts/epic_6/defect-cycle-shape_receipt.md`
 - 7.1 residue intake — commit `78f776d` (progress.md content carried forward by concurrent commit `49a5437`) — card `t_2504ae02` — receipt `artifacts/epic_7/residue-intake-cycle_receipt.md`
+- 7.P SD-24 documentation-staleness batch — commit `4d4d18e` — [pending hermes kanban mint] — receipt `artifacts/epic_7/sd24-doc-batch-cycle_receipt.md`
 
 ## DISCOVERED
 
