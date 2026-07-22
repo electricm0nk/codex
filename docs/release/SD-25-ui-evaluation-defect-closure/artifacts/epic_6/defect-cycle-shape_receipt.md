@@ -1,7 +1,7 @@
 # Cycle 6.1 — Epic 6 (UI-Evaluation Discovered Backend Defects) / Criterion 6.1
 
-- **Card ID:** t_<pending-kanban-create>
-- **Commit SHA:** `<pending-this-commit>` (docs-only; `progress.md` + this receipt land in the same commit)
+- **Card ID:** t_6c03eb36
+- **Commit SHA:** `bec34ec97b51ed3fdc2b4374eda429514d92575a` (docs-only)
 - **Files touched:**
   - `docs/release/SD-25-ui-evaluation-defect-closure/progress.md` (status matrix row 6.1; `## DONE` entry; `## TODO` seed correction; new `## DISCOVERED` header-comment block defining the Epic 6 per-defect cycle shape)
   - NEW `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_6/defect-cycle-shape_receipt.md` (this file)
