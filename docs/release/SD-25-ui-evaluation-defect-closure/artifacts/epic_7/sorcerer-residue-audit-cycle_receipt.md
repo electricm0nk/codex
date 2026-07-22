@@ -1,7 +1,7 @@
 # Cycle 7.4 — Epic 7 (Per-class residue) / Criterion 7.4
 
-- **Card ID:** (to be backfilled after kanban mint — see Notes)
-- **Commit SHA:** (to be backfilled after commit+push — see Notes)
+- **Card ID:** `t_3d3e107a`
+- **Commit SHA:** `276cbe2b14823e977edcb7dfdbbd5e29ce1dccce`
 - **Files touched:**
   - NEW `tests/sd25_sorcerer_level_up_explanation_coverage.rs` (RED → GREEN regression proof + verified-negative-finding documentation)
   - NEW `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/sorcerer-residue-audit-cycle_receipt.md` (this file)
