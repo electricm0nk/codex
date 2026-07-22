@@ -21,7 +21,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 3.5 UI panel adapter-aware | complete | 3.5 | `83e8197` | recompute_character wired end-to-end via new boundary/recomputeCharacter.ts + characterHubRuntime.ts's resolveRuleSystemId/buildRecomputeCharacterRequest (register A3); CharacterSheet.tsx's Open/Save/Clone no-op handlers closed (register A4: Open→Load screen nav, Clone→existing cloneCharacter boundary, Save→Recompute); Epic 3 fully closed; see artifacts/epic_3/ui-adapter-aware-cycle_receipt.md |
 | 4.1 pcgen-run-character.sh | complete | 4.1 | `4c5d8d8` | drives real `./gradlew run --args=...` batch-export against a genuine `.pcg` (no mock); see artifacts/epic_4/pcgen-run-script-cycle_receipt.md |
 | 4.2 pcgen-normalize-output.py | not-started | — | — | parallel: yes |
-| 4.3 pcgen_runner_smoke.rs | not-started | — | — | parallel: yes |
+| 4.3 pcgen_runner_smoke.rs | complete | 4.3 | `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` | flat `tests/pcgen_runner_smoke.rs` (drift from grant's nested `tests/oracle_validation/` path — crate has no nested-integration-test convention); unignored test verifies 4.1's real script; `#[ignore]`-gated pipeline test manually verified passing end-to-end against 4.2's script (both the in-flight copy and, after 4.2 landed concurrently, the real committed script); see artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md |
 | 4.4 verification cycle | not-started | — | — | parallel: no |
 | 5.1 corpus_ingest_diagnostic | complete | corpus-ingest-diagnostic | `f2c4a3e258ab7f94ebdede4e54131200bab416a0` | real per-book counts from rules_tables' own APIs (crb/apg/acg/beastiary1) + git-derived last_ingested_at; see artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md |
 | 6.1 UI-eval defect cycle shape | not-started | — | — | — |
@@ -39,7 +39,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 4.2–4.4, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 4.2, 4.4, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
@@ -56,6 +56,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 3.5 UI panel adapter-aware — commit `83e8197` — receipt `artifacts/epic_3/ui-adapter-aware-cycle_receipt.md`
 - 5.1 corpus_ingest_diagnostic — commit `f2c4a3e258ab7f94ebdede4e54131200bab416a0` — receipt `artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md`
 - 4.1 pcgen-run-character.sh — commit `4c5d8d8` (receipt commit `83063f8`) — card `t_dbbbdb9f` — receipt `artifacts/epic_4/pcgen-run-script-cycle_receipt.md`
+- 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
 
 ## DISCOVERED
 
@@ -66,6 +67,8 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - Criterion 5.1: `last_ingested_at` is computed via `git log -1` against each book's `rules_tables` directory at runtime (mirrors `build.rs`'s existing `git_short_sha()` graceful-degradation idiom) — a packaged production build (no `.git` checkout shipped) will report `null` for every book. SD-26's planned JSON ingest cache should replace this with a persisted ingest-time timestamp that survives packaging.
 - Criterion 5.1: pre-existing, unrelated failing test `apps/desktop/src/sd21/buildVersionTriple.test.ts` (`Cargo.toml` 0.5.97 vs `package.json` 0.5.98 version drift) — confirmed failing both with and without this cycle's diff via `git stash`; not caused by this cycle; belongs to whichever cycle/epic owns the version-increment-cycle (likely 8.4).
 - Criterion 4.1: no real PCGen-native `.pcg` character file exists anywhere in either repo corresponding to the SD-25 pilot case (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt` / `tests/fixtures/oracle_validation/pf1_human_fighter_level1_golden_fixture.txt`). Codex's `tests/fixtures/rules_core/pf1_*.txt` fixtures are its own `key=value` deterministic-input-contract format, not PCGen's `.pcg` format — PCGen's real CLI only accepts `.pcg` via `-c`, and no converter between the two formats exists in either repo. `pcgen-run-character.sh` was built format-agnostic and verified end-to-end against a real bundled PCGen fixture instead (`code/testsuite/PCGfiles/pf_Paladin.pcg`). Criterion 4.4 (verification cycle, gated on 4.1–4.3) needs a real pilot-case `.pcg` to exist before it can close the loop against the golden fixture per its own doc's "Inputs" section — flagging forward, not attempted here (outside 4.1's file-touch grant). See `artifacts/epic_4/pcgen-run-script-cycle_receipt.md` for full detail.
+- Criterion 4.3: `cycles/4_3.md`'s file-touch grant path (`tests/oracle_validation/pcgen_runner_smoke.rs`) is unusable as literally written — this crate's Cargo integration-test discovery only auto-compiles `.rs` files directly under `tests/`, never files in an un-marked subdirectory; a file at that exact path would never run under `cargo test`. Corrected to the crate's real flat `tests/<name>.rs` convention (`tests/pcgen_runner_smoke.rs`). Future cycles authoring new Rust integration tests in this bundle should use the flat convention directly rather than copying a nested path from grant text. See `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`.
+- Criterion 4.3: while this cycle was mid-push-retry, criterion 4.2 (`scripts/pcgen-normalize-output.py`) landed on `tranche/5-3` concurrently. Re-running the `#[ignore]`-gated pipeline test against the now-real, committed 4.2 script confirms it passes end-to-end for real (not just against the temporary pre-landing copy used for this cycle's own verification). 4.4 can remove the `#[ignore]` immediately — its only remaining real blocker is the pilot-`.pcg` gap noted above (4.1's discovery).
 
 ## Cycle log
 
