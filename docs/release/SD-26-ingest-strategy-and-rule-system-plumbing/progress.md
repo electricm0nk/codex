@@ -6,7 +6,7 @@
 
 | Criterion | State | Cycle ID | Commit SHA | Notes |
 |---|---|---|---|---|
-| 1.1 Source-code identifier audit | not-started | — | — | Epic 1 fires FIRST |
+| 1.1 Source-code identifier audit | complete | epic1-1.1-identifier-audit | 74d9402 | Tree already clean (RED returned 0 hits, per SD-24's prior remediation); extended standing regression guard to scripts/+data/ (see receipt) |
 | 2.1 comparator | not-started | — | — | — |
 | 2.2 normalization | not-started | — | — | — |
 | 2.3 parity_report | not-started | — | — | — |
@@ -26,16 +26,19 @@
 | 6.5 PR + merge | not-started | — | — | Sonnet |
 
 ## TODO (deterministic seed)
-1.1, 2.1–2.5, 3.1–3.4, 4.1, 5.1, 6.1–6.5
+2.1–2.5, 3.1–3.4, 4.1, 5.1, 6.1–6.5
 
 ## DONE
-(empty)
+1.1 (commit 74d9402)
 
 ## DISCOVERED
 (empty — populated by per-class residue + structural discoveries)
 
 ## Cycle log
-(empty)
+
+| Cycle ID | Criterion | Commit SHA | Result |
+|---|---|---|---|
+| epic1-1.1-identifier-audit | 1.1 Source-code identifier audit | 74d9402 | complete — audited tree already clean (SD-24 prior remediation); added `tests/sd26_identifier_discipline_audit.rs` extending the standing regression guard to `scripts/` + `data/` (previously uncovered, ahead of Epic 3/4 populating `data/corpus/`+`data/stubs/`). RED/GREEN proven via temporary synthetic-leak injection since no real leak existed to remediate. Dual-audit gate: `OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`. |
 
 ## Open blockers
 (empty)

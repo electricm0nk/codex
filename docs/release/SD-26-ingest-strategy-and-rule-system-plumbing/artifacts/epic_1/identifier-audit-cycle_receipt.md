@@ -1,7 +1,7 @@
 # Cycle 1.1 — Epic 1 Code-Side Identifier Cleanup / Criterion 1.1
 
 - **Card ID:** t_df422fb500cc5d1c (receipt only, minted post-hoc as a done-receipt — not a live claim)
-- **Commit SHA:** <filled in after push — see commit log>
+- **Commit SHA:** 74d9402
 - **Files touched:**
   - `tests/sd26_identifier_discipline_audit.rs` (new)
   - `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_1/identifier-audit-cycle_receipt.md` (this file)
