@@ -1,7 +1,7 @@
 # Cycle final-scan — Epic 8 Closure Epilogue / Criterion 8.1
 
-- **Card ID:** (minted below; see kanban section)
-- **Commit SHA:** (this cycle's commit — see progress.md/git log after push)
+- **Card ID:** `t_fd7ad3a1`
+- **Commit SHA:** `3192075` (receipt/card-ID backfill: see follow-up commit)
 - **Files touched:**
   - `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_8/closure-readiness-report.md` (new — primary deliverable)
   - `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_8/final-scan-cycle_receipt.md` (this file)
