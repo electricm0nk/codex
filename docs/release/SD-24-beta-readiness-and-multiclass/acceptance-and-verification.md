@@ -32,7 +32,7 @@ The closure evaluation runs every criterion through four tests:
 | 5.5 APG/ACG multiclass deferred | `./artifacts/epic_5/apg-acg-multiclass-deferred.md` | n/a (deferral artifact) |
 | 6.1 Equipment coverage audit | `./artifacts/epic_6/equipment-coverage-matrix.md` | Audit output |
 | 6.2–6.5 content completion | per-cycle artifact in `./artifacts/epic_6/content-completion-log.md` | Audit re-run; coverage = 100% |
-| 7.1 `appendToCharacter` | per-cycle artifact | `cargo test --locked --test sd24_characterhub_append` |
+| 7.1 `appendToCharacter` | per-cycle artifact | inline test via `#[cfg(test)] mod tests` in `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs` (no standalone `tests/sd24_characterhub_append.rs` file) — (corrected 2026-07-22 per SD-25 criterion 7.P: all Tauri command tests are inline, not standalone test files) |
 | 7.2 `recomputeCharacter` | per-cycle artifact | `cargo test --locked --test sd24_characterhub_recompute` |
 | 7.3 `reSaveCharacter` | per-cycle artifact | `cargo test --locked --test sd24_characterhub_resave` |
 | 7.4 Add Weapon/Armor/Spell onClick | per-cycle artifact | `cargo test --locked --test sd24_picker_wired` |

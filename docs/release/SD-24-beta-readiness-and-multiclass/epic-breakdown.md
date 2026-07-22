@@ -80,9 +80,9 @@ Epic 8 fires after Epic 9's evaluation; this SD adopts SD-23's "Epic 9 = Closure
 - **Cycle artifact:** extension of `./artifacts/epic_4/per-class-coverage-matrix.md`
 - **Files touched:** per-class `class_*.rs` files in `src/rules_core/rules_tables/apg/`.
 
-### Criterion 4.3 — Per-class audit: ACG classes (Alchemist-side, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Swashbuckler, Warpriest)
+### Criterion 4.3 — Per-class audit: ACG classes (Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest)
 - **Cycle artifact:** extension of `./artifacts/epic_4/per-class-coverage-matrix.md`.
-- **Files touched:** per-class `class_*.rs` files in `src/rules_core/rules_tables/acg/`.
+- **Files touched:** per-class `class_*.rs` files in `src/rules_core/rules_tables/acg/`. — (corrected 2026-07-22 per SD-25 criterion 7.P: roster was "Alchemist-side" (APG-only class, not ACG) → removed; "Slayer" was missing → added; real 10-class ACG roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest per `rules_tables::acg::mod.rs`) |
 
 ### Criterion 4.4 — Remediation plan enumeration
 - **Cycle artifact:** `./artifacts/epic_4/remediation-plan.md`
@@ -160,7 +160,7 @@ Epic 8 fires after Epic 9's evaluation; this SD adopts SD-23's "Epic 9 = Closure
 - **GREEN:** the picker modal opens, queries real corpus data, and the chosen item appends to the character's loadout via the new Tauri command surface.
 
 ### Criterion 7.5 — `character_hub.rs::compose_character_input` loadout hardcoding removed
-- **Files touched:** `apps/desktop/src-tauri/src/characterHub/characterHubRuntime.ts`.
+- **Files touched:** `apps/desktop/src/characterHub/characterHubRuntime.ts` (frontend TS, not src-tauri). `compose_character_input` is a Rust fn at `character_hub.rs:211`, not in that TS file. — (corrected 2026-07-22 per SD-25 criterion 7.P: path was `src-tauri/.../characterHubRuntime.ts` (doesn't exist); real path is `src/.../characterHubRuntime.ts` frontend file; `compose_character_input` Rust function lives in `character_hub.rs` not in TS)
 - **RED:** loadout is a hardcoded array of `null`/`[empty]` defaults (per duracon 2026-07-18 18:20:41).
 - **GREEN:** loadout reads from the saved character's equipment list (the new Tauri command surface).
 
