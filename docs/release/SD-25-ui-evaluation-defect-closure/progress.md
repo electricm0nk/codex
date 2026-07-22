@@ -29,7 +29,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 7.1 residue intake | not-started | — | — | — |
 | 7.2..7.M per-feature | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
 | 7.N equipment/spell corpus intake | not-started | — | — | SD-24 carry-forward (register A8, A10–A17); 4 cycles (CRB-desc, APG-desc, APG-spell-text, Bestiary-1); parallel: yes, isolation: worktree |
-| 7.O GE-07 pilot-shell-snapshot real implementation | not-started | — | — | SD-24 carry-forward (register A1); BLOCKED on open question Q5 (`risks-and-open-questions.md §4`) — dispatch the design-decision request only until answered |
+| 7.O GE-07 pilot-shell-snapshot real implementation | blocked (awaiting operator design decision) | 7.O | docs-only, no code commit | SD-24 carry-forward (register A1); design-decision request surfaced to operator per `decisions.md §12` (deferred this bundle); open question Q5 (`risks-and-open-questions.md §4`) reviewed and confirmed accurate/unanswered; implementation cycle cannot dispatch until operator answers Q5; see artifacts/epic_7/ge07-snapshot-cycle_receipt.md |
 | 7.P SD-24 documentation-staleness batch | not-started | — | — | SD-24 carry-forward (register §B: B1–B4, B6–B7, B9–B11, B14); docs-only, one batched cycle; Haiku |
 | 8.1 Final criterion scan | not-started | — | — | fires LAST; Sonnet |
 | 8.2 Architecture closure pipeline | not-started | — | — | fires LAST; Opus |
