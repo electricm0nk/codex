@@ -1,7 +1,7 @@
 # Cycle 8-1-adversarial-verification — Epic 8 Closure Epilogue / Criterion 8.1 (adversarial re-check)
 
-- **Card ID:** `t_9c3ce4c6`
-- **Commit SHA:** `<this receipt's commit; backfilled below>`
+- **Card ID:** `t_0fd83dab` (done, board `codex-tranche-5`)
+- **Commit SHA:** `27ff6c1` (receipt + progress.md); card-ID backfill in follow-up commit
 - **Files touched:**
   - `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_8/8-1-adversarial-verification_cycle_receipt.md` (new — this file)
   - `docs/release/SD-25-ui-evaluation-defect-closure/progress.md` (status-matrix 8.1 row annotation only — adversarial-verification cross-reference)
