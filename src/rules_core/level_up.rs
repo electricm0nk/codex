@@ -221,3 +221,154 @@ pub fn compute_level_up_grants(
         _ => LevelUpPlan::default(),
     }
 }
+
+/// Dedicated multiclass entry point (SD-25 Epic 3 Criterion 3.2; carry-forward
+/// register A2). `compute_level_up_grants` above dispatches on the *whole*
+/// `class_levels` roster shape (`[class_level]`) — a single-element-slice
+/// pattern that can never match a 2+-class mix, so a Fighter+Wizard
+/// character fell through to the honestly-empty `_ => LevelUpPlan::default()`
+/// arm even though `fighter::compute_fighter_level_up_grants` and
+/// `wizard::compute_wizard_level_up_grants` already support that exact mix
+/// internally (`is_fighter_or_supported_fighter_wizard_mix` /
+/// `is_wizard_or_supported_fighter_wizard_mix`, SD-24 Epic 5 criterion 5.1)
+/// once actually invoked. The gap was purely in this top-level dispatcher's
+/// own match shape, not in the per-class functions themselves.
+///
+/// This entry point dispatches on the caller's explicit `leveling_class_id`
+/// — the specific class actually gaining a level — rather than requiring the
+/// whole roster to be single-class, so it routes correctly whether
+/// `character` carries one class or a supported multiclass mix. The
+/// existing 3-argument `compute_level_up_grants` above is left unchanged
+/// (its ~50 existing call sites across `tests/*.rs` and `contract.rs` are
+/// outside this criterion's file-touch grant) — this is the "add a
+/// dedicated multiclass entry point" option register A2 itself offers as an
+/// alternative to widening the existing signature.
+pub fn compute_level_up_grants_for_class(
+    character: &CharacterInput,
+    leveling_class_id: &str,
+    from_level: u8,
+    to_level: u8,
+) -> LevelUpPlan {
+    match leveling_class_id {
+        BARBARIAN_CLASS_ID => barbarian::compute_barbarian_level_up_grants(character, from_level, to_level),
+        BARD_CLASS_ID => bard::compute_bard_level_up_grants(character, from_level, to_level),
+        CLERIC_CLASS_ID => cleric::compute_cleric_level_up_grants(character, from_level, to_level),
+        DRUID_CLASS_ID => druid::compute_druid_level_up_grants(character, from_level, to_level),
+        FIGHTER_CLASS_ID => fighter::compute_fighter_level_up_grants(character, from_level, to_level),
+        MONK_CLASS_ID => monk::compute_monk_level_up_grants(character, from_level, to_level),
+        PALADIN_CLASS_ID => paladin::compute_paladin_level_up_grants(character, from_level, to_level),
+        RANGER_CLASS_ID => ranger::compute_ranger_level_up_grants(character, from_level, to_level),
+        ROGUE_CLASS_ID => rogue::compute_rogue_level_up_grants(character, from_level, to_level),
+        SORCERER_CLASS_ID => sorcerer::compute_sorcerer_level_up_grants(character, from_level, to_level),
+        WIZARD_CLASS_ID => wizard::compute_wizard_level_up_grants(character, from_level, to_level),
+        // A genuine, permanent boundary (mirrors `compute_level_up_grants`'s
+        // own `_` arm) -- an unrecognized class id, not a multiclass-mix
+        // artifact.
+        _ => LevelUpPlan::default(),
+    }
+}
+
+#[cfg(test)]
+mod multiclass_dispatch_tests {
+    use super::*;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, ChosenCharacterState,
+    };
+
+    const HUMAN_RACE_ID: &str = "race:human";
+
+    fn human_fighter_wizard_mix(fighter_level: u8, wizard_level: u8) -> CharacterInput {
+        CharacterInput {
+            case_id: Some("fighter_wizard_mix_level_up".to_owned()),
+            source_package_id: "fighter_wizard_mix_level_up".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: HUMAN_RACE_ID.to_owned(),
+                class_levels: vec![
+                    CharacterClassLevel {
+                        class_id: FIGHTER_CLASS_ID.to_owned(),
+                        level: fighter_level,
+                    },
+                    CharacterClassLevel {
+                        class_id: WIZARD_CLASS_ID.to_owned(),
+                        level: wizard_level,
+                    },
+                ],
+                ability_scores: AbilityScores {
+                    strength: 16,
+                    dexterity: 14,
+                    constitution: 14,
+                    intelligence: 14,
+                    wisdom: 12,
+                    charisma: 8,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                spells_selected: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    /// RED -> GREEN proof for carry-forward register A2: leveling the
+    /// Fighter side of a Fighter+Wizard mix through the dedicated
+    /// multiclass entry point must produce real grants, not the top-level
+    /// dispatcher's multiclass-gap empty default. Before this cycle, no
+    /// entry point could express this call at all (RED: the top-level
+    /// `compute_level_up_grants(&character, 1, 2)` for this same fixture
+    /// returns `LevelUpPlan::default()` because the 2-element
+    /// `class_levels` slice never matches any `[class_level]` arm).
+    #[test]
+    fn compute_level_up_grants_for_class_does_not_return_an_empty_plan_for_fighter_side_of_a_fighter_wizard_mix() {
+        let character = human_fighter_wizard_mix(1, 1);
+
+        // The pre-existing top-level dispatcher still cannot express this
+        // (documents the RED this criterion's carry-forward note names).
+        let via_old_dispatcher = compute_level_up_grants(&character, 1, 2);
+        assert_eq!(
+            via_old_dispatcher,
+            LevelUpPlan::default(),
+            "documents the multiclass-gap this criterion's dedicated entry point fixes"
+        );
+
+        let plan = compute_level_up_grants_for_class(&character, FIGHTER_CLASS_ID, 1, 2);
+
+        assert!(
+            !plan.automatic_features.is_empty(),
+            "leveling Fighter within a Fighter+Wizard mix must produce real \
+             grants via the dedicated multiclass entry point: {plan:?}"
+        );
+    }
+
+    /// The Wizard side of the identical mix must dispatch correctly too.
+    #[test]
+    fn compute_level_up_grants_for_class_does_not_return_an_empty_plan_for_wizard_side_of_a_fighter_wizard_mix() {
+        let character = human_fighter_wizard_mix(1, 1);
+
+        let plan = compute_level_up_grants_for_class(&character, WIZARD_CLASS_ID, 1, 2);
+
+        assert!(
+            !plan.automatic_features.is_empty(),
+            "leveling Wizard within the same Fighter+Wizard mix must also \
+             produce real grants: {plan:?}"
+        );
+    }
+
+    /// A genuinely unrecognized class id (not a multiclass-mix artifact)
+    /// still returns the honest empty default -- the fix narrows the gap to
+    /// exactly the multiclass-shape problem, it does not fabricate grants
+    /// for classes this crate has no per-class file for.
+    #[test]
+    fn compute_level_up_grants_for_class_still_returns_an_honest_empty_plan_for_an_unrecognized_class() {
+        let mut character = human_fighter_wizard_mix(1, 1);
+        character.chosen.class_levels = vec![CharacterClassLevel {
+            class_id: "class:oracle".to_owned(),
+            level: 1,
+        }];
+
+        let plan = compute_level_up_grants_for_class(&character, "class:oracle", 1, 2);
+
+        assert_eq!(plan, LevelUpPlan::default());
+    }
+}

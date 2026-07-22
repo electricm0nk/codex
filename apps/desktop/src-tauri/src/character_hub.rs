@@ -34,8 +34,12 @@ use codex::saved_character::{
     CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
 };
 
-const HUMAN_RACE_ID: &str = "race:human";
-const SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
+// `pub(crate)` (rather than private) so `pf1_adapter.rs`'s
+// `compose_character_input` (moved there SD-25 Criterion 3.2) can read the
+// same two constants this module's own `create_character`/`clone_character`/
+// `seed_default_character_if_needed`/`import_character_from_json` still use.
+pub(crate) const HUMAN_RACE_ID: &str = "race:human";
+pub(crate) const SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
 const GAME_SYSTEM_ID: &str = "pf1";
 const CHARACTERS_ROOT_DIR_NAME: &str = "characters";
 
@@ -199,122 +203,30 @@ pub enum CreateCharacterResponse {
 }
 
 // ----- Pure functions (unit-testable, no AppHandle / filesystem) -----
-
-/// Build a `CharacterInput` for the requested race/class/level. Race, class,
-/// and ability scores are the caller's real choices; the feat/skill/
-/// equipment loadout is fixed — `unmet_combat_posture_conditions`
-/// (`pilot_compute.rs`) requires this exact equipment/feat posture verbatim
-/// to reach `Computed`, so widening it would not change which combinations
-/// reach `Computed`. Human additionally receives its own canonical
-/// choice-slot values — the ability-bonus target is the caller's real
-/// choice (`request.ability_bonus_target`); every other race omits the
-/// Human-only slots. Unlike feats/skills/equipment, `spells_selected` is
-/// *not* fixed to any hardcoded placeholder (SD-24 Criterion 7.5): no
-/// `Computed`-status gate reads it, `CreateCharacterRequest` collects no
-/// spell choices from the caller, and a freshly composed character starts
-/// with an empty spellbook that only grows through the real wired
-/// `add_spell_selection` / `appendToCharacter` command surface.
-pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInput {
-    let mut selected_choices = vec![
-        SelectedChoice {
-            choice_set_id: "choice:level_1_character_feat".to_owned(),
-            selection_id: "feat:power_attack".to_owned(),
-        },
-        SelectedChoice {
-            choice_set_id: "choice:fighter_bonus_feat".to_owned(),
-            selection_id: "feat:weapon_focus:weapon:longsword".to_owned(),
-        },
-    ];
-
-    if request.race_id == HUMAN_RACE_ID {
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:human_bonus_feat".to_owned(),
-            selection_id: "feat:dodge".to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:human_ability_bonus".to_owned(),
-            selection_id: format!("ability:{}", request.ability_bonus_target),
-        });
-    }
-
-    CharacterInput {
-        case_id: Some(request.character_id.clone()),
-        source_package_id: SOURCE_PACKAGE_ID.to_owned(),
-        chosen: ChosenCharacterState {
-            race_id: request.race_id.clone(),
-            class_levels: vec![CharacterClassLevel {
-                class_id: request.class_id.clone(),
-                level: request.level,
-            }],
-            ability_scores: AbilityScores {
-                strength: request.ability_scores.strength,
-                dexterity: request.ability_scores.dexterity,
-                constitution: request.ability_scores.constitution,
-                intelligence: request.ability_scores.intelligence,
-                wisdom: request.ability_scores.wisdom,
-                charisma: request.ability_scores.charisma,
-            },
-            selected_feats: vec![
-                "feat:power_attack".to_owned(),
-                "feat:dodge".to_owned(),
-                "feat:weapon_focus".to_owned(),
-            ],
-            skill_allocations: vec![
-                SkillAllocation {
-                    skill_id: "skill:climb".to_owned(),
-                    ranks: 1,
-                },
-                SkillAllocation {
-                    skill_id: "skill:intimidate".to_owned(),
-                    ranks: 1,
-                },
-                SkillAllocation {
-                    skill_id: "skill:swim".to_owned(),
-                    ranks: 1,
-                },
-            ],
-            equipment_selections: vec![
-                EquipmentSelection {
-                    item_id: "item:longsword".to_owned(),
-                    equipped_or_active: true,
-                    active_state: ActiveState::EquippedActive,
-                },
-                EquipmentSelection {
-                    item_id: "item:chain_shirt".to_owned(),
-                    equipped_or_active: true,
-                    active_state: ActiveState::EquippedActive,
-                },
-                EquipmentSelection {
-                    item_id: "item:shield".to_owned(),
-                    equipped_or_active: false,
-                    active_state: ActiveState::Absent,
-                },
-                EquipmentSelection {
-                    item_id: "power_attack".to_owned(),
-                    equipped_or_active: false,
-                    active_state: ActiveState::SelectedInactive,
-                },
-            ],
-            selected_choices,
-            // SD-24 Criterion 7.5: previously hardcoded to a fixed two-spell
-            // "demo" loadout (`demo_spells_selected()`, `class:demo`
-            // `Alarm`/`Blur`) regardless of the requested race/class/level —
-            // `CreateCharacterRequest` carries no spell selections at all, so
-            // that loadout could only ever be a fabricated default, never a
-            // real caller choice. `unmet_combat_posture_conditions` (the
-            // Fighter/Wizard chassis gate `compose_character_input`'s
-            // `Computed`-status reachability depends on) never reads
-            // `spells_selected`, so a freshly composed character reaching
-            // `Computed` never required those two spells to exist. A real
-            // character's spells now come exclusively from the wired
-            // `add_spell_selection` / `appendToCharacter` command surface
-            // (SD-23 / SD-24 Epic 7) after creation, not from a baked-in
-            // placeholder at creation time.
-            spells_selected: Vec::new(),
-        },
-        selection_provenance: Vec::new(),
-    }
-}
+//
+// `compose_character_input` / `apply_level_up` / `mutate_saved_character_at_root`
+// / `level_up_character_at_root` / `apply_add_equipment_selection` /
+// `add_equipment_selection_at_root` / `apply_add_spell_selection` /
+// `add_spell_selection_at_root` moved to `pf1_adapter.rs` (SD-25 Epic 3
+// "Hub of Hubs" refactor, Criterion 3.2 — the `Pf1Adapter` extraction).
+// Re-exported below (where an external file's existing import path needs
+// it) and brought into this module's own scope via `use` (for this
+// module's `#[tauri::command]` wrappers and its own `mod tests`, which
+// still call them unqualified via `use super::*`).
+pub(crate) use crate::pf1_adapter::{
+    add_equipment_selection_at_root, add_spell_selection_at_root, compose_character_input,
+    level_up_character_at_root, mutate_saved_character_at_root,
+};
+// `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
+// are only referenced directly by this module's own `#[cfg(test)] mod tests`
+// (the non-test `#[tauri::command]` wrappers only ever call the `_at_root`
+// variants re-exported above) — `#[cfg(test)]` on the import itself avoids an
+// `unused_imports` warning on non-test builds while keeping `use super::*`
+// resolving them inside `mod tests` unchanged.
+#[cfg(test)]
+pub(crate) use crate::pf1_adapter::{
+    apply_add_equipment_selection, apply_add_spell_selection, apply_level_up,
+};
 
 /// Join the OS app-data directory with the characters-root subdirectory.
 /// Split out as a pure function so it's unit-testable without a real
@@ -354,7 +266,11 @@ fn map_selected_skill_modifiers_dto(
     }
 }
 
-fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
+// `pub(crate)` (rather than private): `pf1_adapter.rs`'s
+// `mutate_saved_character_at_root` (moved there SD-25 Criterion 3.2) builds
+// the same `Saved` response shape this module's own commands do, and reuses
+// this mapping rather than re-deriving it.
+pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
     PilotSnapshotDto {
         ability_modifiers: map_ability_modifiers_dto(snapshot.ability_modifiers),
         base_attack_bonus: snapshot.base_attack_bonus,
@@ -368,7 +284,8 @@ fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
     }
 }
 
-fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
+// `pub(crate)` — same reason as `map_snapshot_dto` above.
+pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
     CorpusDerivedDto {
         school_coverage: section
             .school_coverage
@@ -392,7 +309,8 @@ fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
     }
 }
 
-fn map_diagnostics_dto(
+// `pub(crate)` — same reason as `map_snapshot_dto` above.
+pub(crate) fn map_diagnostics_dto(
     diagnostics: &[codex::rules_core::pilot_compute::ComputationDiagnostic],
 ) -> Vec<DiagnosticDto> {
     diagnostics
@@ -417,7 +335,8 @@ fn map_summary_dto(summary: &SavedCharacterSummary) -> CharacterSummaryDto {
     }
 }
 
-fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto {
+// `pub(crate)` — same reason as `map_snapshot_dto` above.
+pub(crate) fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto {
     let class_summary = envelope
         .character_input
         .chosen
@@ -743,97 +662,6 @@ pub struct LevelUpCharacterRequest {
     pub saved_at: String,
 }
 
-/// Increments `class_id`'s level by 1 on the given `CharacterInput`, or
-/// adds a new level-1 entry for `class_id` if the character has none yet
-/// (the multiclass "dip" case). Every other field is untouched.
-pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
-    if let Some(class_level) = character_input
-        .chosen
-        .class_levels
-        .iter_mut()
-        .find(|class_level| class_level.class_id == class_id)
-    {
-        class_level.level = class_level.level.saturating_add(1);
-    } else {
-        character_input.chosen.class_levels.push(CharacterClassLevel {
-            class_id: class_id.to_owned(),
-            level: 1,
-        });
-    }
-}
-
-/// Shared load -> recompute -> re-save -> return-envelope tail for every
-/// `mutate_saved_character` operation: applies `mutate` to the loaded
-/// envelope's `CharacterInput`, recomputes via the real engine, and either
-/// re-saves and returns `Saved` or leaves the on-disk envelope untouched and
-/// returns `Blocked`. Never persists an unproven build — mirrors
-/// `create_character`/`clone_character`'s own invariant. `mutate` receives
-/// only the `CharacterInput`, so it cannot smuggle in a different `saved_at`
-/// or bypass the recompute gate.
-/// `pub(crate)` (rather than private) so the `characterHub` submodule's
-/// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
-/// reuse this module's own load -> mutate -> recompute -> re-save ->
-/// return-envelope invariant instead of re-deriving it a second time.
-pub(crate) fn mutate_saved_character_at_root(
-    root: &Path,
-    saved_at: &str,
-    mutate: impl FnOnce(&mut CharacterInput),
-) -> Result<CreateCharacterResponse, String> {
-    let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-
-    mutate(&mut envelope.character_input);
-
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt =
-        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
-
-    envelope.saved_at = saved_at.to_owned();
-
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
-
-    Ok(CreateCharacterResponse::Saved {
-        summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
-    })
-}
-
-/// `level_up_character`'s real implementation
-/// (`SavedCharacterMutationOp::LevelUpCharacter` in the operation table
-/// above): load -> mutate -> recompute -> re-save -> return envelope.
-/// Split out from the `#[tauri::command]` wrapper below so it is
-/// unit-testable against a real `SavedCharacterStore` fixture without an
-/// `AppHandle` — the same "pure function under a thin command wrapper"
-/// split this module already uses for `compose_character_input`.
-///
-/// Mirrors `create_character`/`clone_character`'s "never persist an
-/// unproven build" invariant: if the leveled-up build does not reach
-/// `Computed` (e.g. leveling past the range the compute engine currently
-/// supports), the saved character on disk is left exactly as it was and
-/// `Blocked` is returned with the real diagnostics — the mutation is never
-/// silently applied on disk when the recompute fails.
-fn level_up_character_at_root(
-    root: &Path,
-    class_id: &str,
-    saved_at: &str,
-) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_level_up(character_input, class_id);
-    })
-}
-
 /// Loads the saved character, increments/adds the requested class's
 /// level, recomputes via the real engine, and re-saves — see
 /// `level_up_character_at_root` for the full semantics.
@@ -887,38 +715,6 @@ pub struct AddEquipmentSelectionRequest {
     pub item_id: String,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
-}
-
-/// Appends one entry to `chosen.equipment_selections`. `equipped_or_active`
-/// is derived from `active_state` (matching `EquipmentSelection`'s own doc
-/// comment: the flag is a backward-compatible projection of the state, not
-/// an independent choice) — true only for `ActiveState::EquippedActive`.
-/// Every other field is untouched.
-pub fn apply_add_equipment_selection(
-    character_input: &mut CharacterInput,
-    item_id: &str,
-    active_state: ActiveState,
-) {
-    character_input.chosen.equipment_selections.push(EquipmentSelection {
-        item_id: item_id.to_owned(),
-        equipped_or_active: active_state == ActiveState::EquippedActive,
-        active_state,
-    });
-}
-
-/// `add_equipment_selection`'s real implementation
-/// (`SavedCharacterMutationOp::AddEquipmentSelection` in the operation table
-/// above) — see `mutate_saved_character_at_root` for the shared
-/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
-fn add_equipment_selection_at_root(
-    root: &Path,
-    item_id: &str,
-    active_state: ActiveState,
-    saved_at: &str,
-) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_equipment_selection(character_input, item_id, active_state);
-    })
 }
 
 /// Loads the saved character, appends the requested equipment selection,
@@ -979,37 +775,6 @@ pub struct AddSpellSelectionRequest {
     pub source_class_id: String,
     pub acquisition_mode: AcquisitionModeDto,
     pub saved_at: String,
-}
-
-/// Appends one entry to `chosen.spells_selected`. Every other field is
-/// untouched.
-pub fn apply_add_spell_selection(
-    character_input: &mut CharacterInput,
-    spell_id: &str,
-    source_class_id: &str,
-    acquisition_mode: AcquisitionMode,
-) {
-    character_input.chosen.spells_selected.push(SpellSelection {
-        spell_id: spell_id.to_owned(),
-        source_class_id: source_class_id.to_owned(),
-        acquisition_mode,
-    });
-}
-
-/// `add_spell_selection`'s real implementation
-/// (`SavedCharacterMutationOp::AddSpellSelection` in the operation table
-/// above) — see `mutate_saved_character_at_root` for the shared
-/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
-fn add_spell_selection_at_root(
-    root: &Path,
-    spell_id: &str,
-    source_class_id: &str,
-    acquisition_mode: AcquisitionMode,
-    saved_at: &str,
-) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_spell_selection(character_input, spell_id, source_class_id, acquisition_mode);
-    })
 }
 
 /// Loads the saved character, appends the requested spell selection,

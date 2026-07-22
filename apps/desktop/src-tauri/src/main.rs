@@ -9,6 +9,7 @@ mod class_catalog;
 mod corpus_fixtures;
 mod equipment_catalog;
 mod ge08_workbench;
+mod pf1_adapter;
 mod race_catalog;
 mod rule_system_adapter;
 mod spell_catalog;
