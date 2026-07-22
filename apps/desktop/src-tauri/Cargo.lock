@@ -475,7 +475,7 @@ dependencies = [
 
 [[package]]
 name = "codex-desktop"
-version = "0.5.97"
+version = "0.5.98"
 dependencies = [
  "base64 0.22.1",
  "codex",
