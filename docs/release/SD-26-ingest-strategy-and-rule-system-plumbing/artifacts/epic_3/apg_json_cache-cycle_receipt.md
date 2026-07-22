@@ -1,7 +1,7 @@
 # Cycle apg_json_cache — Epic 3 (JSON Cache Build) / Criterion 3.2
 
-- **Card ID:** minted at end of cycle (see report; hermes kanban if available)
-- **Commit SHA:** see `progress.md` (stamped at push time)
+- **Card ID:** `t_e62ccc08` (board `codex-tranche-5`, assignee `operator`, completed)
+- **Commit SHA:** `b705e91` (source), `924ce99` (progress.md update)
 - **Files touched:**
   - `src/rules_core/mod.rs` (single-line addition: `pub mod cache_gen;`)
   - `src/rules_core/cache_gen/mod.rs` (new — module root for per-book generators)
