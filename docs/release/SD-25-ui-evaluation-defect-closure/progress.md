@@ -9,11 +9,11 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | Criterion | State | Cycle ID | Commit SHA | Notes |
 |---|---|---|---|---|
 | 1.1 Source-code identifier audit | complete | 1.1 | `62c4785d098c3c288093f5076130ec44efdce23f` | 404 residual hits, all documented exclusion (real tests/-file citations); see artifacts/epic_1/identifier-audit-cycle_receipt.md |
-| 2.1 board reachable | not-started | — | — | — |
-| 2.2 branch pushed | not-started | — | — | — |
-| 2.3 SD-24 closure PR merged | not-started | — | — | Tier-1 launch gate |
-| 2.4 working tree clean | not-started | — | — | — |
-| 2.5 doctrines loaded | not-started | — | — | — |
+| 2.1 board reachable | complete | 2.1 | verification-only, no code commit | `hermes kanban boards` confirms `codex-tranche-5` reachable; see artifacts/epic_2/board-reachable-cycle_receipt.md |
+| 2.2 branch pushed | complete | 2.2 | verification-only, no code commit | local HEAD matches `origin/tranche/5-3` tip; see artifacts/epic_2/branch-pushed-cycle_receipt.md |
+| 2.3 SD-24 closure PR merged | complete | 2.3 | verification-only, no code commit | Tier-1 launch gate; PR #331 `state: MERGED`; see artifacts/epic_2/sd24-pr-merged-cycle_receipt.md |
+| 2.4 working tree clean | complete | 2.4 | verification-only, no code commit | remediated (leftover 1.1-adjacent doc edits + Epic 2 receipts batch-committed); see artifacts/epic_2/tree-clean-cycle_receipt.md |
+| 2.5 doctrines loaded | complete | 2.5 | verification-only, no code commit | all required doctrine/skill surfaces present and readable; see artifacts/epic_2/doctrines-loaded-cycle_receipt.md |
 | 3.1 RuleSystemAdapter trait | not-started | — | — | parallel: yes |
 | 3.2 Pf1Adapter extraction | not-started | — | — | parallel: yes |
 | 3.3 StubAdapter | not-started | — | — | parallel: yes; requires Stubs Registry entry |
@@ -39,11 +39,16 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 2.1–2.5, 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
 - 1.1 Source-code identifier audit — commit `62c4785d098c3c288093f5076130ec44efdce23f` — receipt `artifacts/epic_1/identifier-audit-cycle_receipt.md`
+- 2.1 Board reachable (`codex-tranche-5`) — verification-only, no code commit — receipt `artifacts/epic_2/board-reachable-cycle_receipt.md`
+- 2.2 Branch pushed (`tranche/5-3` matches origin) — verification-only, no code commit — receipt `artifacts/epic_2/branch-pushed-cycle_receipt.md`
+- 2.3 SD-24 closure PR merged (Tier-1 gate; PR #331 `MERGED`) — verification-only, no code commit — receipt `artifacts/epic_2/sd24-pr-merged-cycle_receipt.md`
+- 2.4 Working tree clean — verification-only, no code commit — receipt `artifacts/epic_2/tree-clean-cycle_receipt.md`
+- 2.5 Doctrines loaded — verification-only, no code commit — receipt `artifacts/epic_2/doctrines-loaded-cycle_receipt.md`
 
 ## DISCOVERED
 

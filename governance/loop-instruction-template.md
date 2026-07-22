@@ -6,7 +6,7 @@ owner: Todd Hintzmann
 scope: universal
 status: active
 review_state: accepted
-last_reviewed_at: 2026-07-21
+last_reviewed_at: 2026-07-21 (§2.1 added same-day: SD-25 criterion 1.1 execution-boundary incident)
 canonical_source: ~/workspace/repos/codex/governance/loop-instruction-template.md (this file)
 supersedes: (none — first issuance; retrofits the pattern used by SD-16 through SD-24's launch docs)
 upstream_targets:
@@ -62,6 +62,14 @@ Standing policy (pulled from the operator's global model-selection tiering — s
   - Everything else (real implementation, TDD cycles, audits, remediation) → Sonnet.
 - **Concurrency shape:** decided explicitly per epic in §3 below, at authoring time — not derived live by whichever model launches the bundle.
 
+### 2.1 Execution boundary — the launching session is always the orchestrator, never the executor
+
+**Rule:** the session that plans, scopes, or launches a bundle is the orchestrator. §6's per-cycle procedure — steps 1 through 9, especially step 3 ("implement the criterion TDD-style") — describes what happens **inside a dispatched `agent()`/`Workflow` call**, never what the orchestrating session does with its own `Edit`/`Write`/`Bash` tool calls. This holds with no exceptions: not for a "quick" one-file fix, not mid-investigation when the context is already loaded, not because Plan Mode approval already authorized the underlying change (approval authorizes the *work*, not a shortcut around the *mechanism*).
+
+**The specific failure this codifies (SD-25 criterion 1.1, 2026-07-21):** the orchestrating session ran a cycle's RED check (an identifier-audit grep), found the real scope was ~15x larger than the cycle doc assumed (764 hits across 54 files, not one known file), and — because it was already mid-investigation with full context loaded — kept going and executed the rename directly via `sed`/`git mv`/`Edit` instead of stopping to re-dispatch. The operator had to interrupt mid-turn to redirect back to subagent orchestration. Discovering that a cycle's real scope differs from what the cycle doc assumed is common and expected (see §4) — it is a reason to **pause, record the corrected scope, and dispatch (or re-dispatch) an `agent()` call with that scope**, never a license to keep executing inline because the investigation already surfaced the fix.
+
+**Self-check before any `Edit`/`Write`/`Bash`-that-mutates-a-file call while driving a bundle:** is the target path under the bundle's implementation trees (e.g. `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`, `scripts/`) or otherwise part of a criterion's RED→GREEN work? If yes, stop — that call belongs inside a dispatched `agent()`, not here. The orchestrating session's own direct tool calls are reserved for: read-only investigation/scoping, authoring or correcting this bundle's own planning docs (`loop-instruction.md`, `epic-breakdown.md`, `decisions.md`, `cycles/*.md`), and git plumbing on those planning-doc commits — never on the shipped-code diff itself.
+
 ## 3. Per-epic parallel/sequential map
 
 Fill in one row per epic, only after completing §4's path verification. A `parallel: yes` row is only valid if the epic's criteria touch genuinely disjoint files (verified, not assumed).
@@ -93,6 +101,8 @@ git fetch origin <branch> && git rebase origin/<branch> && git push origin HEAD:
 On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 attempts, stop and report a `CLAIM-EXISTS` blocker — do not force-push. This applies to both the code commit and any shared-state file every cycle touches (e.g. `progress.md`): re-fetch and re-read the file's current content immediately before editing it, so a concurrent cycle's append isn't clobbered.
 
 ## 6. Per-cycle procedure
+
+**This procedure runs inside a dispatched `agent()`/`Workflow` call — see §2.1.** The orchestrating session never performs steps 1–9 itself with its own tool calls.
 
 1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase).
 2. `BASE_BRANCH=$(git merge-base HEAD origin/develop)` — **define this before either grep block**, not between them (SD-24 shipped a version where the wired-integration grep referenced `${BASE_BRANCH}` before the identifier-discipline grep that defined it).

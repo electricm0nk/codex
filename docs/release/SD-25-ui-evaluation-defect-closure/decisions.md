@@ -100,6 +100,16 @@ Plus E1 + E2 (canonical governance + gating), E7 (deferred per-class residue), E
 
 **Decision:** the GE-07 `load_pilot_shell_snapshot` real-implementation design question (open question Q5, `risks-and-open-questions.md §4`) stays unanswered for SD-25. Criterion 7.O dispatches the design-decision request only; the hardcoded-fixture no-stub violation remains documented, not remediated, this bundle.
 
+## 13. Process lesson: launching session executed a cycle directly instead of dispatching (2026-07-21)
+
+**What happened:** while driving criterion 1.1, the launching session ran the RED check, discovered the real scope was ~15x larger than `cycles/1_1.md` assumed (764 hits / 54 files, not the one known file), and — mid-investigation — executed the rename directly via its own `Edit`/`Write`/`Bash` calls instead of dispatching an `agent()`. The operator interrupted mid-turn to redirect back to subagent orchestration (Workflow tool, per `decisions.md §10`).
+
+**Root cause:** the dispatch mechanism was documented as policy (`loop-instruction.md §2`, the `workflow-orchestrated-dispatch` skill) but nothing stated it as a hard boundary on the *launching session's own* tool use, and the approved plan's Phase 1 phrasing ("serial, inline or single agents") gave implicit license to execute inline.
+
+**Fix (this session, same day):** added an explicit "Execution boundary" section to both `/governance/loop-instruction-template.md §2.1` and the `workflow-orchestrated-dispatch` skill (bumped to v1.2.0) — the launching session is always the orchestrator, discovering a cycle's real scope differs from the doc's assumption is a reason to pause and (re-)dispatch, never a license to keep executing. This is a durable template fix, not just an SD-25-local one; recorded here for this bundle's own audit trail per the register's C1–C3 process-lesson convention.
+
+**Recovery:** the partially-completed direct rename work for 1.1 (TS-side, ~90% done, uncommitted at the time of interrupt) was handed off mid-flight via a detailed Workflow-script prompt rather than discarded — see the `finish-1.1` agent's cycle receipt for what it verified/completed from that handoff.
+
 ## 9. Cross-references
 
 - `/governance/loop-instruction-template.md` (REPO-LOCAL CANONICAL).
