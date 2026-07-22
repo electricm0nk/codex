@@ -61,7 +61,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — card `t_fdf81197` — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
 - 4.4 verification cycle — commit `80ce33d` — card `t_1817068a` — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
 - 6.1 UI-eval defect cycle shape — commit `bec34ec97b51ed3fdc2b4374eda429514d92575a` — card `t_6c03eb36` — receipt `artifacts/epic_6/defect-cycle-shape_receipt.md`
-- 7.1 residue intake — commit `<pending-this-commit>` — receipt `artifacts/epic_7/residue-intake-cycle_receipt.md`
+- 7.1 residue intake — commit `78f776d` (progress.md content carried forward by concurrent commit `49a5437`) — card `t_2504ae02` — receipt `artifacts/epic_7/residue-intake-cycle_receipt.md`
 
 ## DISCOVERED
 
