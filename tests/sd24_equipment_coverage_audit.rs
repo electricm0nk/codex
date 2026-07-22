@@ -91,10 +91,14 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
 /// audit's grep-based count double-counted as a record; see
 /// `rules_tables::apg::equipment_data`'s module doc comment). `weight` is
 /// real per-row (319/338 -- the corpus's own `WT:` token, `None` for the
-/// 19 records with no `WT:` token at all). `description` is `None` for
-/// every record -- the real APG equipment corpus has no `DESC:` token on
-/// any equipment row (confirmed by direct inspection), a genuine corpus
-/// limitation criterion 6.4 cannot close from this corpus alone.
+/// 19 records with no `WT:` token at all). `description` reached 331/338
+/// via SD-25 criterion 7.N's `apg-description` web second-source pass
+/// (register A16 / SD-24 Open Blocker #2 -- the real APG equipment
+/// corpus itself still has no `DESC:` token on any row, confirmed by
+/// direct inspection; every non-`None` value was identity-matched and
+/// sourced from `legacy.aonprd.com`/`aonprd.com`/`d20pfsrd.com`, per that
+/// cycle's receipt). The remaining 7 are honest, undispatched gaps (see
+/// `equipment_data`'s doc comment), not a corpus ceiling any longer.
 #[test]
 fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     let report = apg::equipment_tables::field_coverage_report();
@@ -109,10 +113,12 @@ fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     );
     assert_eq!(report.has_weight, 319, "319/338 real records carry a WT: token");
     assert_eq!(
-        report.has_description, 0,
-        "the real APG equipment corpus has no DESC: token on any equipment row -- if this \
-         now fails, a description source has been found and criterion 6.4 should already be \
-         underway"
+        report.has_description, 331,
+        "SD-25 criterion 7.N's web second-source pass (register A16 / SD-24 Open Blocker #2) \
+         identity-matched and sourced 331/338 descriptions from legacy.aonprd.com/aonprd.com/ \
+         d20pfsrd.com -- if this regresses, the sourced descriptions were lost; if it exceeds \
+         331 without a matching receipt update, verify the new value is genuinely sourced, not \
+         fabricated"
     );
 }
 

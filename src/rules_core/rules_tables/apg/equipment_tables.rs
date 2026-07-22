@@ -68,11 +68,13 @@ pub struct EquipmentTableEntry {
     /// real, honest gap — see `equipment_data`'s doc comment) — never a
     /// fabricated `Some(0.0)`.
     pub weight: Option<f64>,
-    /// Prose description. `None` for every one of the 338 records today:
-    /// direct inspection of all three APG equipment corpus files finds
-    /// zero `DESC:` tokens on any equipment row (a genuine corpus
-    /// limitation, not a parsing gap — see `equipment_data`'s doc
-    /// comment and this cycle's receipt).
+    /// Prose description. `None` for 7 of the 338 records today (real,
+    /// honest gaps — see `equipment_data`'s doc comment): the LST corpus
+    /// itself still carries zero `DESC:` tokens on any equipment row, but
+    /// SD-25 criterion 7.N's web second-source pass (register A16 / SD-24
+    /// Open Blocker #2) identity-matched and sourced 331/338 from
+    /// `legacy.aonprd.com`/`aonprd.com`/`d20pfsrd.com` (see this cycle's
+    /// receipt for the full citation table).
     pub description: Option<&'static str>,
 }
 
@@ -99,9 +101,11 @@ pub struct EquipmentFieldCoverage {
     /// Records with `weight.is_some()` -- a real per-row count (319/338;
     /// the remaining 19 have no `WT:` token in the corpus).
     pub has_weight: u32,
-    /// Records with `description.is_some()` -- always 0 today: the real
-    /// APG equipment corpus carries no `DESC:` token on any row (see
-    /// `equipment_data`'s doc comment).
+    /// Records with `description.is_some()` -- 331/338 as of SD-25
+    /// criterion 7.N's web second-source pass (the real APG equipment
+    /// corpus still carries no `DESC:` token on any row; see
+    /// `equipment_data`'s doc comment for sourcing and the 7 honest
+    /// remaining gaps).
     pub has_description: u32,
 }
 
