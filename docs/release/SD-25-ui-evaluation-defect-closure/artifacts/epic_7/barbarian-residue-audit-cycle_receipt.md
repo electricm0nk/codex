@@ -1,7 +1,7 @@
 # Cycle barbarian-residue-audit — Epic 7 (Deferred Per-Class Work & Coverage Backlog) / Criterion 7.5
 
-- **Card ID:** t_PENDING (minted after commit; backfilled in a follow-up doc commit per this bundle's established two-step pattern if the kanban call lands after this file is written)
-- **Commit SHA:** PENDING (filled in after commit — see progress.md's row for the landed SHA)
+- **Card ID:** t_e979d996
+- **Commit SHA:** `60a0b98` (code + test + this receipt); `d77b2f7` (progress.md status-matrix + register A6 update, follow-up commit per `§5`'s protocol)
 - **Files touched:**
   - `src/rules_core/level_up/barbarian.rs` (doc-comment-only addition documenting the verified negative finding; no functional filter change — see Notes)
   - NEW `tests/sd25_barbarian_level_up_explanation_filter_audit.rs` (the audit test)
