@@ -56,6 +56,26 @@
 //! `"Future slices should replace this placeholder"`) are the *only*
 //! forbidden-pattern hits this test tolerates; anything else must be a new,
 //! real issue and fails the build.
+//!
+//! ## Exclusion added 2026-07-22 (registry entry 0002, SD-25 criteria 3.3/3.4)
+//!
+//! `governance/wired-integration-stubs-registry.md` entry 0002 is an
+//! operator-approved permanent exception for `StubAdapter`'s literal
+//! `"Would render for system {system_id}; not yet implemented"` message
+//! (SD-25 criterion 3.3), widened by criterion 3.4 to the three Tauri
+//! command files that dispatch unknown rule-system ids to it and assert its
+//! exact message in their own tests. `no_zero_tolerance_forbidden_tokens_in_shipping_source`
+//! and `no_would_strings_in_shipping_source` had not been updated when 3.3/
+//! 3.4 landed, so this standing whole-repo tripwire failed on the very hits
+//! the per-cycle scoped dual-audit had already accepted. Both tests now
+//! carry a named exclusion, `is_registry_0002_stub_adapter_exception`,
+//! scoped to exactly the file set registry entry 0002 documents:
+//! `apps/desktop/src-tauri/src/stub_adapter.rs` (whole file, matched by
+//! path) and the specific doc-comment/test-assertion lines in
+//! `apps/desktop/src-tauri/src/characterHub/{appendToCharacter,recomputeCharacter,reSaveCharacter}.rs`
+//! (matched by path *and* the literal `"Would render for system ...; not
+//! yet implemented"` content, or the doc comment's distinctive phrase) —
+//! any other file or any different forbidden-pattern hit still fails.
 
 use std::process::Command;
 
@@ -115,9 +135,35 @@ fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
     );
     let is_plant_growth_full_spell_text =
         |line: &str| line.contains("creatures must hack or force a way through");
+    // Registry entry 0002 (`governance/wired-integration-stubs-registry.md`):
+    // `StubAdapter`'s operator-approved "Would render for system ...; not
+    // yet implemented" placeholder message, widened (criterion 3.4) to the
+    // three Tauri command files that dispatch to it and assert its exact
+    // message in their own tests. Scoped to that named file set only, by
+    // path *and* by the distinctive matched content -- a `not yet
+    // implemented`/`STUB`/`MOCK`/etc. hit anywhere else still fails.
+    let is_registry_0002_stub_adapter_exception = |line: &str| {
+        line.starts_with("apps/desktop/src-tauri/src/stub_adapter.rs:")
+            || (line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs:",
+            ) && line.contains(
+                "which honestly reports \"not yet implemented\" rather than the call",
+            ))
+            || ((line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs:",
+            ) || line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs:",
+            ) || line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs:",
+            )) && line.contains("Would render for system")
+                && line.contains("not yet implemented"))
+    };
     let hits: Vec<String> = hits
         .into_iter()
-        .filter(|line| !is_plant_growth_full_spell_text(line))
+        .filter(|line| {
+            !is_plant_growth_full_spell_text(line)
+                && !is_registry_0002_stub_adapter_exception(line)
+        })
         .collect();
     assert!(
         hits.is_empty(),
@@ -255,6 +301,27 @@ fn no_mock_leaks_in_shipping_source() {
 #[test]
 fn no_would_strings_in_shipping_source() {
     let hits = git_grep_shipping_trees(r#""Would [^"]*""#);
+    // Registry entry 0002 (`governance/wired-integration-stubs-registry.md`):
+    // same operator-approved `StubAdapter` exception as the zero-tolerance
+    // check above, scoped identically by path -- whole `stub_adapter.rs`,
+    // plus only the three named command files' literal `"Would render for
+    // system ...; not yet implemented"` test-assertion lines. A `"Would
+    // ..."` hit in any other file still fails.
+    let is_registry_0002_stub_adapter_exception = |line: &str| {
+        line.starts_with("apps/desktop/src-tauri/src/stub_adapter.rs:")
+            || ((line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs:",
+            ) || line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs:",
+            ) || line.starts_with(
+                "apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs:",
+            )) && line.contains("Would render for system")
+                && line.contains("not yet implemented"))
+    };
+    let hits: Vec<String> = hits
+        .into_iter()
+        .filter(|line| !is_registry_0002_stub_adapter_exception(line))
+        .collect();
     assert!(
         hits.is_empty(),
         "wired-integration audit found \"Would ...\" stub-return strings in shipping source:\n{}",
