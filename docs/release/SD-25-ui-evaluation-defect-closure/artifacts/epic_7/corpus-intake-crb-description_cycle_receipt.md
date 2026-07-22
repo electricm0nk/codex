@@ -1,7 +1,7 @@
 # Cycle 7.N (crb-description) — Epic 7 (Equipment/spell corpus intake) / Criterion 7.N item 1
 
-- **Card ID:** (filled after kanban card creation — see Notes)
-- **Commit SHA:** (filled after commit — see Notes)
+- **Card ID:** `t_81c82cea`
+- **Commit SHA:** `1a5b61e` (equipment_data + tests); `d5d025e` (progress.md update); this receipt's own card-ID/SHA backfill lands in a small follow-up commit per the established self-reference-backfill pattern (see criteria 6.1/7.O/7.1's own receipts for precedent)
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/equipment_data/arms_armor.rs`
   - `src/rules_core/rules_tables/crb/equipment_data/general.rs`
