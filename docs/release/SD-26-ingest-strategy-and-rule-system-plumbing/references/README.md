@@ -2,11 +2,11 @@
 
 ## 1. Repo-local doctrine (REPO-LOCAL CANONICAL)
 
-- `/governance/loop-instruction-template.md` — canonical loop-instruction template (operator-pinned 2026-07-21).
-- `/governance/no-stub-mvp-doctrine.md` — wired-integration parent doctrine.
-- `/governance/identifier-discipline.md` — identifier-discipline sibling doctrine.
-- `/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions; **gains a new `book_stub` kind in E4.1**.
-- `/governance/spec-domain-lifecycle.md` — spec-domain lifecycle routing.
+- `docs/governance/loop-instruction-template.md` — canonical loop-instruction template (operator-pinned 2026-07-21).
+- `docs/governance/no-stub-mvp-doctrine.md` — wired-integration parent doctrine.
+- `docs/doctrine-external/identifier-discipline.md` — identifier-discipline sibling doctrine.
+- `docs/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions; **gains a new `book_stub` kind in E4.1**.
+- `docs/doctrine-external/spec-domain-lifecycle.md` — spec-domain lifecycle routing.
 
 ## 2. Skills (Hermes-profile-scoped)
 
@@ -23,7 +23,7 @@
 
 ## 4. Cross-cutting operator directives (Honcho duracons, 2026-07-21)
 
-- **2026-07-21 18:27:40** — `/governance/loop-instruction-template.md` is the canonical source for every new bundle's loop-instruction.
+- **2026-07-21 18:27:40** — `docs/governance/loop-instruction-template.md` is the canonical source for every new bundle's loop-instruction.
 - **2026-07-21 17:48:31** — operator's "process all 26 books" override (operator pin: SD-26 ships per-book for every PF1 directory).
 - **2026-07-21 17:39:26** — operator pin: scope cross for SD-26; JSON cache is repo-resident.
 - **2026-07-21 17:25:25** — operator pin: character hub as hub of hubs (routing layer for future rule systems).

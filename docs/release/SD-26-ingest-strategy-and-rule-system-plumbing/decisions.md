@@ -1,7 +1,7 @@
 ---
 canonical: true
 owner: god-emporer
-status: planning-ready (operator directives 2026-07-21; bundle authored from /governance/loop-instruction-template.md + skill workflow-orchestrated-dispatch)
+status: planning-ready (operator directives 2026-07-21; bundle authored from docs/governance/loop-instruction-template.md + skill workflow-orchestrated-dispatch)
 date: 2026-07-21
 canonical_branch: tranche/5-4 (operator directive 2026-07-21)
 kanban_board: codex-tranche-5 (reused after SD-25 closure PR lands)
@@ -24,7 +24,7 @@ Plus E1 + E6 (governance + closure). **Scope-cross posture** per operator direct
 
 ## 2. SD-26 inherits the Workflow-orchestrated dispatch (operator directive 2026-07-21)
 
-**Decision:** SD-26's dispatch shape is the `Workflow` orchestrator per `/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch`. Same shape as SD-25's orchestrator with different per-epic concurrency + tiering.
+**Decision:** SD-26's dispatch shape is the `Workflow` orchestrator per `docs/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch`. Same shape as SD-25's orchestrator with different per-epic concurrency + tiering.
 
 ## 3. Per-epic concurrency + tiering map
 
@@ -39,7 +39,7 @@ Plus E1 + E6 (governance + closure). **Scope-cross posture** per operator direct
 
 ## 4. Build counter inheritance
 
-**Decision (per `/governance/loop-instruction-template.md §1 item 7`):** SD-26's first concrete value lands at **`0.5.99`** (develop at `0.5.97` post-SD-24; SD-25 closure bumps to `0.5.98`; SD-26's per-criterion tiering gets Housekeeping-Haiku on the version-bump step).
+**Decision (per `docs/governance/loop-instruction-template.md §1 item 7`):** SD-26's first concrete value lands at **`0.5.99`** (develop at `0.5.97` post-SD-24; SD-25 closure bumps to `0.5.98`; SD-26's per-criterion tiering gets Housekeeping-Haiku on the version-bump step).
 
 ## 5. Publish mode is move-not-copy (operator directive 2026-07-21)
 
@@ -72,7 +72,7 @@ data/corpus/{book}/{content_kind}/{content_id}.json
 
 ## 8. Book stub manifest: 21 entries in Stubs Registry
 
-Per operator directive 2026-07-21 15:41:03 ("stubs visibility for future-state books only, not in-scope books"). SD-26's Epic 4 introduces the `book_stub` kind to `governance/wired-integration-stubs-registry.md`:
+Per operator directive 2026-07-21 15:41:03 ("stubs visibility for future-state books only, not in-scope books"). SD-26's Epic 4 introduces the `book_stub` kind to `docs/governance/wired-integration-stubs-registry.md`:
 
 ```
 book_id: <book-slug>
@@ -96,7 +96,7 @@ operator_granted: true
 
 ## 10. Operator-deferred shape decisions
 
-- **Concurrent-write protocol scope.** Extended from SD-25 to cover `data/**/*.json` + `governance/wired-integration-stubs-registry.md` per template §5.
+- **Concurrent-write protocol scope.** Extended from SD-25 to cover `data/**/*.json` + `docs/governance/wired-integration-stubs-registry.md` per template §5.
 - **Per-book ordering for E3.** Operator-pinned at cycle launch. Default: alphabetical by book name.
 - **Oracle-harness comparator parity policy.** Per `tests/fixtures/oracle_validation/pf1_human_fighter_level1_golden_fixture.txt:current_claim_status=not_yet_grounded`, SD-26 E2 cycles upgrade the pilot case's status to `oracle_checked` only after the comparator asserts match.
 - **Stubs Registry entries per book.** Each entry carries `planned_resolution_bundle: "SD-27"` (operator-pinned default; operator may override).
@@ -194,9 +194,17 @@ SD-25's register A8 (shared codegen path decision) was deliberately deferred in 
 
 ## 12. Cross-references
 
-- `/governance/loop-instruction-template.md` (REPO-LOCAL CANONICAL).
-- `governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
-- `governance/identifier-discipline.md` + skill `identifier-discipline`.
-- `governance/wired-integration-stubs-registry.md`.
+- `docs/governance/loop-instruction-template.md` (REPO-LOCAL CANONICAL).
+- `docs/governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
+- `docs/doctrine-external/identifier-discipline.md` + skill `identifier-discipline`.
+- `docs/governance/wired-integration-stubs-registry.md`.
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/SKILL.md`.
 - `../docs/release/SD-25-ui-evaluation-defect-closure/decisions.md` — Tier-1 launch-gate dependency (consumes Hub-of-Hubs + PCGen runner).
+
+## 13. Dispatch is session-driven Workflow-tool orchestration, not a headless script (carries forward SD-25's `decisions.md §10` precedent, added at pre-launch review 2026-07-22)
+
+**Decision:** `scripts/workflow-dispatch.sh`'s `claude code --profile … --task …` invocation does not exist in the live CLI (`claude --help` shows no `code` subcommand and no `--profile`/`--task` flags) — the identical gap SD-25 already found and recorded in its own `decisions.md §10`. As shipped, the script's dispatch step would fail silently and `main_loop` would spin on its `sleep`/no-op branch forever. **SD-26 dispatches via the in-harness `Workflow` tool, driven from this session**, not via the shell script running unattended. The script remains in the repo as the deterministic per-epic concurrency/tiering spec (`EPIC_PARALLEL`, `EPIC_SUBAGENT`, `SUBAGENT_OVERRIDE` maps) that the session's `Workflow` calls read from and honor — it is a reference implementation, not the live dispatcher.
+
+**Reasoning:** SD-26 was authored from the same `docs/governance/loop-instruction-template.md` + `workflow-orchestrated-dispatch` skill lineage as SD-25 (§2 above), but SD-26's own `loop-instruction.md` and `scripts/workflow-dispatch.sh` were drafted before SD-25's dispatch-mechanism correction was carried forward into this bundle — a pre-launch review caught the gap (SD-26 §1 "requires a human per invocation" framing on the OPERATING-METHOD callout still described the script itself, not the `Workflow` tool, as the dispatcher). Rather than re-derive the reasoning, this ADR adopts SD-25's already-verified finding directly: the CLI gap is a live-tooling fact independent of which bundle is running, so no new verification was required beyond re-confirming SD-25's citation is still accurate.
+
+**Consequence:** `loop-instruction.md`'s OPERATING-METHOD callout and §2 "Orchestration mode" now state the `Workflow` tool as dispatcher and the script as spec-only, matching SD-25's `loop-instruction.md §§0, 2` framing. `scripts/workflow-dispatch.sh`'s header comment is corrected to the same "REFERENCE SPEC, NOT A LIVE DISPATCHER" framing SD-25's script carries, and its `pick_next_criterion()` function's token/column format is aligned with this bundle's own `progress.md` Status-matrix seed (`not-started` state token, ID-plus-prose column-1 cells) — SD-26's script had drifted to a `| pending |` / bare-ID assumption that matched neither its own seed nor SD-25's already-correct convention; the fix makes the reference implementation actually reproduce SD-25's working pick logic rather than inventing a new format.

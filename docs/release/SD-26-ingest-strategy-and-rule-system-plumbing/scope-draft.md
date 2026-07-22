@@ -2,7 +2,7 @@
 
 > **⚠️ OPERATING METHOD — REQUIRED FOR THIS BUNDLE ⚠️**
 >
-> `Workflow` orchestrator at `scripts/workflow-dispatch.sh`. **NOT** `/loop /batch`. Per `/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch`.
+> `Workflow` orchestrator at `scripts/workflow-dispatch.sh`. **NOT** `/loop /batch`. Per `docs/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch`.
 
 ## 0. Preamble
 
@@ -10,7 +10,7 @@ SD-26 ships the doctrine + tooling that makes every future ingest bundle tractab
 
 1. **Oracle-harness comparator** (Epic 2) — the missing piece of `src/oracle_validation/`; consumes SD-25's PCGen runner scaffolding + the SD-26 JSON cache to produce parity-checked output.
 2. **JSON cache build, 4 in-scope books** (Epic 3) — durable artifacts for core_rulebook + advanced_players_guide + advanced_class_guide + bestiary 1 at `data/corpus/`.
-3. **Book stub manifest, 21 future-state books** (Epic 4) — operator-granted stubs for the remaining 21 PF1 books; entries in `governance/wired-integration-stubs-registry.md` (new `book_stub` kind).
+3. **Book stub manifest, 21 future-state books** (Epic 4) — operator-granted stubs for the remaining 21 PF1 books; entries in `docs/governance/wired-integration-stubs-registry.md` (new `book_stub` kind).
 4. **Doctrine-cost reduction** (Epic 5) — audit + cut over-spent per-class gates (per Diagnosis A from earlier conversation: RED-then-GREEN-then-re-audit per class is doctrine-cost, not work-cost). Per the operator's "20-min per class" pushback.
 
 Plus E1 + E6 (canonical governance + closure).
@@ -46,8 +46,8 @@ For each book the per-class / per-spell / per-equipment JSON files follow the **
 
 Two criteria + research epic + parallel fan-out:
 
-- **Criterion 4.1** — Research epic: defines the `book_stub` kind in `governance/wired-integration-stubs-registry.md` (operator-pinned metadata fields: `{book_id, book_name, status: "stubbed", planned_resolution_bundle, registered_by, registered_at}`). Adds a new entry-shape template; validates against an existing stub.
-- **Criterion 4.2..4.22** — 21 cycles, one per future-state book: each cycle (a) writes `data/stubs/<book>.json` with `{book_id, book_name, planned_resolution_bundle, content_kind_counts: null};` (b) registers a `book_stub` entry in `governance/wired-integration-stubs-registry.md`. Books: advanced_race_guide, adventurers_guide, beginner_box, bestiary_2..6, bonus_bestiary, core_essentials, horror_adventures, monster_codex, mythic_adventures, occult_adventures, pathfinder_unchained, ultimate_campaign, ultimate_combat, ultimate_equipment, ultimate_intrigue, ultimate_magic, ultimate_wilderness. Concurrency: `parallel: yes` after E4.1; each cycle touches a different file.
+- **Criterion 4.1** — Research epic: defines the `book_stub` kind in `docs/governance/wired-integration-stubs-registry.md` (operator-pinned metadata fields: `{book_id, book_name, status: "stubbed", planned_resolution_bundle, registered_by, registered_at}`). Adds a new entry-shape template; validates against an existing stub.
+- **Criterion 4.2..4.22** — 21 cycles, one per future-state book: each cycle (a) writes `data/stubs/<book>.json` with `{book_id, book_name, planned_resolution_bundle, content_kind_counts: null};` (b) registers a `book_stub` entry in `docs/governance/wired-integration-stubs-registry.md`. Books: advanced_race_guide, adventurers_guide, beginner_box, bestiary_2..6, bonus_bestiary, core_essentials, horror_adventures, monster_codex, mythic_adventures, occult_adventures, pathfinder_unchained, ultimate_campaign, ultimate_combat, ultimate_equipment, ultimate_intrigue, ultimate_magic, ultimate_wilderness. Concurrency: `parallel: yes` after E4.1; each cycle touches a different file.
 
 ### 1.5 Epic 5 — Doctrine-Cost Reduction
 
@@ -82,10 +82,10 @@ Five criteria + per-criterion tiering:
 
 ## 3. Cross-references
 
-- `/governance/loop-instruction-template.md` — canonical template.
-- `governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
-- `governance/identifier-discipline.md` + skill `identifier-discipline`.
-- `governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions (E4's 21 entries land here).
+- `docs/governance/loop-instruction-template.md` — canonical template.
+- `docs/governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
+- `docs/doctrine-external/identifier-discipline.md` + skill `identifier-discipline`.
+- `docs/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions (E4's 21 entries land here).
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` — orchestrator procedure.
 - `../docs/release/SD-25-ui-evaluation-defect-closure/` — Tier-1 launch-gate dependency (closure PR → develop).
 - `../docs/release/SD-24-beta-readiness-and-multiclass/` — closed predecessor.

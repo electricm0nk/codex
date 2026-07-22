@@ -16,7 +16,7 @@ Per the standard 4-test pattern.
 | 3.2 advanced_players_guide cache | `./artifacts/epic_3/apg_json_cache-cycle_receipt.md` | Similar |
 | 3.3 advanced_class_guide cache | `./artifacts/epic_3/acg_json_cache-cycle_receipt.md` | Similar |
 | 3.4 beastiary cache | `./artifacts/epic_3/beastiary_json_cache-cycle_receipt.md` | Similar |
-| 4.1 research epic | `./artifacts/epic_4/research_book_stub_kind-cycle_receipt.md` | Dual-audit; template at `governance/wired-integration-stubs-registry.md` |
+| 4.1 research epic | `./artifacts/epic_4/research_book_stub_kind-cycle_receipt.md` | Dual-audit; template at `docs/governance/wired-integration-stubs-registry.md` |
 | 4.2..4.22 per-book | per-book `<book>_stub_manifest-cycle_receipt.md` | Dual-audit; Stubs Registry entry exists |
 | 5.1 doctrine-cost audit | `./artifacts/epic_5/per-class-cycle-floor-measurement.md` | Pre-cut vs post-cut cycle floor measured |
 | 6.1 final criterion scan | `./artifacts/epic_6/final-criterion-scan-cycle_receipt.md` | Sonnet |
@@ -33,7 +33,7 @@ Per the standard 4-test pattern.
 | CG-02 | Tier-1 launch-gate (SD-25 closure PR) honored | E2.5 verification |
 | CG-03 | Pilot case upgraded to `oracle_checked` | E2.5 |
 | CG-04 | All 4 in-scope books have JSON cache coverage | `find data/corpus -type f -name '*.json' \| wc -l` > 0 per book |
-| CG-05 | All 21 future-state books have Stubs Registry entries | `grep -c '^book_id:' governance/wired-integration-stubs-registry.md` ≥ 21 |
+| CG-05 | All 21 future-state books have Stubs Registry entries | `grep -c '^book_id:' docs/governance/wired-integration-stubs-registry.md` ≥ 21 |
 | CG-06 | Dual-audit gate clean on closure PR diff | Run both audits on `git diff` |
 | CG-07 | Architecture-truth-up sub-step ran (Opus) | `./receipts.md` |
 | CG-08 | Graphify-update sub-step ran | `./receipts.md` |

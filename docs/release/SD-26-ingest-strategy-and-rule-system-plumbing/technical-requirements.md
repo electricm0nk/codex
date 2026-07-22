@@ -4,7 +4,7 @@
 
 ## 1. Pre-loop prerequisites
 
-Per `/governance/loop-instruction-template.md §1`:
+Per `docs/governance/loop-instruction-template.md §1`:
 
 ### 1.1 Environment
 - `codex-tranche-5` kanban board reachable.
@@ -19,7 +19,7 @@ Per `/governance/loop-instruction-template.md §1`:
 - Classic PAT present at `~/.config/gh/.claude_gh_token`.
 
 ### 1.4 Doctrine files
-- `governance/identifier-discipline.md` + `governance/no-stub-mvp-doctrine.md` + `governance/wired-integration-stubs-registry.md` (the last gains a `book_stub` kind in E4.1).
+- `docs/doctrine-external/identifier-discipline.md` + `docs/governance/no-stub-mvp-doctrine.md` + `docs/governance/wired-integration-stubs-registry.md` (the last gains a `book_stub` kind in E4.1).
 
 ### 1.5 Build counter
 - Develop at `0.5.97` post-SD-24; SD-25 closure at `0.5.98`; SD-26 first concrete `0.5.99`. Read from `apps/desktop/package.json` + `apps/desktop/src-tauri/tauri.conf.json`.
@@ -36,7 +36,7 @@ RED → GREEN → re-audit. Per repo `AGENTS.md §1`.
 Per `loop-instruction.md §6` + template §6. Both `OK_*` required.
 
 ### 2.3 Identifier discipline
-No bundle-tag leaks; PascalCase / camelCase per `identifier-discipline SKILL.md v1.5.0`. SD-26 scopes the identifier-audit grep to `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`, `scripts/`, `data/`, plus the new `governance/wired-integration-stubs-registry.md` file.
+No bundle-tag leaks; PascalCase / camelCase per `identifier-discipline SKILL.md v1.5.0`. SD-26 scopes the identifier-audit grep to `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`, `scripts/`, `data/`, plus the new `docs/governance/wired-integration-stubs-registry.md` file.
 
 ### 2.4 Wired-integration discipline
 Per `wired-integration-discipline SKILL.md v1.1.0`. Real calls, real results, real UI updates, real state re-fetch.
@@ -51,12 +51,12 @@ Per `loop-instruction.md §6 step 8`.
 `Todd Hintzmann <todd@hintzmann.net>`.
 
 ### 2.8 Concurrent-write protocol
-Per `loop-instruction.md §5`: `git fetch && git rebase origin/<branch> && git push origin HEAD:<branch>`. Retry up to 5 times; then `CLAIM-EXISTS`. Applies to code commits, `progress.md`, `receipts.md`, `data/corpus/**/*.json`, `data/stubs/**/*.json`, and `governance/wired-integration-stubs-registry.md`.
+Per `loop-instruction.md §5`: `git fetch && git rebase origin/<branch> && git push origin HEAD:<branch>`. Retry up to 5 times; then `CLAIM-EXISTS`. Applies to code commits, `progress.md`, `receipts.md`, `data/corpus/**/*.json`, `data/stubs/**/*.json`, and `docs/governance/wired-integration-stubs-registry.md`.
 
 ## 3. Hard requirements (bundle-level)
 
 ### 3.1 Workflow orchestrator, not /loop /batch
-Per `/governance/loop-instruction-template.md §2` + `AGENTS.md §7`.
+Per `docs/governance/loop-instruction-template.md §2` + `AGENTS.md §7`.
 
 ### 3.2 JSON cache is repo-resident
 Per operator directive 2026-07-21 17:39:26. `data/corpus/` + `data/stubs/` are committed to the codex repo.
@@ -89,5 +89,5 @@ Per `decisions.md §8`. 21 entries (one per future-state book). Each carries `bo
 - `./loop-instruction.md` — cycle mechanics
 - `./acceptance-and-verification.md` — closure gates
 - `./risks-and-open-questions.md` — risks + override flags
-- `/governance/loop-instruction-template.md` — canonical template
+- `docs/governance/loop-instruction-template.md` — canonical template
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` — orchestrator skill

@@ -2,7 +2,7 @@
 
 > **⚠️ OPERATING METHOD — REQUIRED FOR THIS BUNDLE ⚠️**
 >
-> Per-cycle procedure manual. **Dispatcher is `scripts/workflow-dispatch.sh`**, not `/loop 60m /batch /goal ./loop-instruction.md` (the latter requires a human per invocation; not unattended-runnable). Per `/governance/loop-instruction-template.md` + skill `workflow-orchestrated-dispatch`.
+> This file is the per-cycle procedure manual. **The dispatcher is the in-harness `Workflow` tool, driven from a live session** — not `/loop 60m /batch /goal ./loop-instruction.md` (does not run unattended) and not a headless `scripts/workflow-dispatch.sh` process (its `claude code --profile … --task …` invocation does not exist in the live CLI; `claude --help` has no `code` subcommand, no `--profile`/`--task` flags — see `decisions.md §13`, carrying forward SD-25's proven `decisions.md §10` precedent). `scripts/workflow-dispatch.sh` remains as the deterministic per-epic concurrency/tiering **spec** (its `EPIC_PARALLEL`/`EPIC_SUBAGENT`/`SUBAGENT_OVERRIDE` maps) that each `Workflow` call reads from and honors — it is not itself run as a process. Per `docs/governance/loop-instruction-template.md` + skill `workflow-orchestrated-dispatch`.
 
 ## 0. Bundle at a glance
 
@@ -14,11 +14,11 @@
 
 ## 1. Pre-launch checklist
 
-Per `/governance/loop-instruction-template.md §1`. The 8 items are captured in `README.md §1` with verbatim command output. Bundle author runs these for real during drafting.
+Per `docs/governance/loop-instruction-template.md §1`. The 8 items are captured in `README.md §1` with verbatim command output. Bundle author runs these for real during drafting.
 
-## 2. Orchestration mode (per template §2)
+## 2. Orchestration mode (per `docs/governance/loop-instruction-template.md §2`)
 
-- **Dispatch mechanism:** `Workflow` orchestrator at `scripts/workflow-dispatch.sh`. Per-criterion tier + concurrency encoded in the orchestrator's per-epic lookup tables.
+- **Dispatch mechanism:** the in-harness `Workflow` tool, driven session-by-session; `scripts/workflow-dispatch.sh` is the concurrency/tiering spec it reads, not a standalone process (`decisions.md §13` — the script's own subprocess-invocation form does not exist in the live CLI, carrying forward SD-25's `decisions.md §10` precedent).
 - **Default subagent model:** Sonnet.
 - **Tiering overrides** (per `decisions.md §3`):
   - **Haiku:** E6.3 release-notes + E6.4 version-bump (housekeeping).
@@ -33,7 +33,7 @@ Per `/governance/loop-instruction-template.md §1`. The 8 items are captured in 
 | E1 Identifier Cleanup | 1.1 | no | one cycle | none |
 | E2 Oracle-Harness Comparator | 2.1–2.5 | no | one comparator + normalize + comparison logic across `src/oracle_validation/` | E6.2 dispatch (or E6 closure pre-step) |
 | E3 JSON Cache Build (4 in-scope books) | 3.1–3.4 | yes (3.1, 3.2, 3.3, 3.4) | 3.1 = `data/corpus/core_rulebook/`; 3.2 = `data/corpus/advanced_players_guide/`; 3.3 = `data/corpus/advanced_class_guide/`; 3.4 = `data/corpus/beastiary/`. Disjoint per-book | E2 (the comparator reads from cache + library together) |
-| E4 Book Stub Manifest (21 future-state books) | 4.1 (research epic output) | yes after E4.1 | post-E4.1, one cycle per book — each cycle writes an entry to `governance/wired-integration-stubs-registry.md` and a stub manifest at `data/stubs/<book>.json` | E3 (E4's per-book entries can run in parallel with E3.2-E3.4 after their respective schemas land) |
+| E4 Book Stub Manifest (21 future-state books) | 4.1 (research epic output) | yes after E4.1 | post-E4.1, one cycle per book — each cycle writes an entry to `docs/governance/wired-integration-stubs-registry.md` and a stub manifest at `data/stubs/<book>.json` | E3 (E4's per-book entries can run in parallel with E3.2-E3.4 after their respective schemas land) |
 | E5 Doctrine-Cost Reduction | 5.1 | no | one audit cycle that walks the per-class cycle floor | E3 + E4 |
 | E6 Closure Epilogue | 6.1–6.5 | no | final scan + architecture closure-pipeline + release-notes (Haiku) + version-bump (Haiku, `0.5.99`) + PR + merge | E5 |
 
@@ -51,7 +51,7 @@ Verified during drafting by `ls`/`find` against the live repo on 2026-07-21:
 - `tests/fixtures/rules_core/pf1_*_level*_*.txt` — verified ~30 deterministic inputs.
 - `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/` — verified 26 book directories.
 - `~/workspace/repos/pcgen/gradlew` + `code/testsuite/base-xml.ftl` — verified per SD-25/SD-26 PCGen runner.
-- `governance/wired-integration-stubs-registry.md` — verified, format includes operator-pinned metadata fields for `book_stub` entries (the new kind SD-26 E4 introduces).
+- `docs/governance/wired-integration-stubs-registry.md` — verified, format includes operator-pinned metadata fields for `book_stub` entries (the new kind SD-26 E4 introduces).
 
 ## 5. Concurrent-write protocol (canonical; template §5)
 
@@ -73,7 +73,7 @@ On non-fast-forward rejection: retry up to 5 times. Then `CLAIM-EXISTS` blocker 
    git diff --unified=0 "${BASE_BRANCH}...HEAD" -- \
      'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' \
      'scripts/**/*.sh' 'scripts/**/*.py' \
-     'data/**/*.json' 'governance/wired-integration-stubs-registry.md' \
+     'data/**/*.json' 'docs/governance/wired-integration-stubs-registry.md' \
      ':!**/__tests__/**' ':!**/*.test.*' \
      | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})\b' \
      || echo 'OK_NO_BUNDLE_TAGS'
@@ -121,10 +121,10 @@ Before cycle 1 of any epic, verify the epic's prerequisites in `epic-breakdown.m
 
 ## 10. Cross-references
 
-- `/governance/loop-instruction-template.md` — canonical template.
-- `governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
-- `governance/identifier-discipline.md` + skill `identifier-discipline`.
-- `governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions (E4 entries land here).
+- `docs/governance/loop-instruction-template.md` — canonical template.
+- `docs/governance/no-stub-mvp-doctrine.md` + skill `wired-integration-discipline`.
+- `docs/doctrine-external/identifier-discipline.md` + skill `identifier-discipline`.
+- `docs/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions (E4 entries land here).
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` — orchestrator procedure.
 - `~/.hermes/profiles/god-emporer/skills/devops/kanban-claude-code-execution-receipt/` — receipt schema.
 - `decisions.md` — bundle-specific ADRs.

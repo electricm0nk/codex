@@ -36,7 +36,7 @@
 | Output | Path | Format |
 |---|---|---|
 | Per-book stub manifest | `data/stubs/<book_id>.json` | `{book_id, book_name, planned_resolution_bundle, content_kind_counts: null, registered_at: <ISO-8601>}` |
-| Stubs Registry entry | `governance/wired-integration-stubs-registry.md` | `book_stub` kind (added in E4.1) |
+| Stubs Registry entry | `docs/governance/wired-integration-stubs-registry.md` | `book_stub` kind (added in E4.1) |
 
 ### 2.2 Books in scope
 

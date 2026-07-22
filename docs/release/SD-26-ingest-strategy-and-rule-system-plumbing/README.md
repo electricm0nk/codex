@@ -6,7 +6,7 @@ canonical_branch: tranche/5-4 (dash from tranche/5-3; SD-25 closes on tranche/5-
 kanban_board: codex-tranche-5 (reused after SD-25 closure PR lands)
 companion_to: ./decisions.md
 mirror_of: ./decisions.md
-loop_launch_form: scripts/workflow-dispatch.sh (Workflow orchestrator, per /governance/loop-instruction-template.md §2)
+loop_launch_form: scripts/workflow-dispatch.sh (Workflow orchestrator, per docs/governance/loop-instruction-template.md §2)
 cycle_dispatch_model: deterministic-seeded-then-dynamic (per SD-24 / SD-25 inheritance)
 publish_mode: move-not-copy
 first_concrete_build_value: 0.5.99 (develop at 0.5.97 after SD-24 closure; SD-25 closure bumps to 0.5.98; SD-26 first concrete lands at 0.5.99)
@@ -16,7 +16,7 @@ first_concrete_build_value: 0.5.99 (develop at 0.5.97 after SD-24 closure; SD-25
 
 > ## ⚠️ OPERATING METHOD — REQUIRED FOR THIS BUNDLE ⚠️
 >
-> Dispatches via `Workflow` orchestrator at `scripts/workflow-dispatch.sh` (NOT `/loop /batch`). Per `/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch` + `AGENTS.md §7`.
+> Dispatches via `Workflow` orchestrator at `scripts/workflow-dispatch.sh` (NOT `/loop /batch`). Per `docs/governance/loop-instruction-template.md §2` + skill `workflow-orchestrated-dispatch` + `AGENTS.md §7`.
 >
 > Per operator directive 2026-07-21: **scope cross** — bundles PF1 + future-state rule systems, not deferred. **Pinned hypothesis:** if SD-26 splits the work along Anthropic-architecture vs. mechanical-fanout axes, the Anthropic bundle drives architecture + rules while a budget model like Qwen (if available) handles mechanical fan-out.
 >
@@ -41,7 +41,7 @@ Verified during drafting on 2026-07-21:
 3. **SD-25 closure PR merged to develop.** Tier-1 launch-gate dependency. SD-25 ships the Hub-of-Hubs interface + PCGen runner scaffolding; SD-26 consumes those.
 4. **PAT present** at `~/.config/gh/.claude_gh_token`.
 5. **Working tree clean** on `tranche/5-4`.
-6. **Doctrines loaded.** Skills loaded at `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` + doctrine docs at `governance/identifier-discipline.md` + `governance/no-stub-mvp-doctrine.md`.
+6. **Doctrines loaded.** Skills loaded at `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` + doctrine docs at `docs/doctrine-external/identifier-discipline.md` + `docs/governance/no-stub-mvp-doctrine.md`.
 7. **Build counter.** Develop at `0.5.97` (post-SD-24); SD-25 closure lands at `0.5.98`; SD-26's first concrete value is `0.5.99`. Read from `apps/desktop/package.json` + `apps/desktop/src-tauri/tauri.conf.json`.
 8. **Artifact directories** `artifacts/{epic_1,epic_2,epic_3,epic_4,epic_5,epic_6}/` exist and are empty.
 
@@ -75,9 +75,9 @@ Per operator 2026-07-21 17:39:26: **JSON cache is repo-resident** (commit to the
 
 ## 4. Cross-references
 
-- `/governance/loop-instruction-template.md` — canonical template.
+- `docs/governance/loop-instruction-template.md` — canonical template.
 - `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/` — orchestrator skill.
-- `governance/no-stub-mvp-doctrine.md` + `governance/wired-integration-stubs-registry.md`.
+- `docs/governance/no-stub-mvp-doctrine.md` + `docs/governance/wired-integration-stubs-registry.md`.
 - `../docs/release/SD-25-ui-evaluation-defect-closure/` — Tier-1 launch-gate dependency (closure PR → develop).
 - `../docs/release/SD-24-beta-readiness-and-multiclass/` — closed predecessor.
 - `src/oracle_validation/{golden_fixture,selected_parity_dimensions}.rs` — Oracle-harness schema (E2 reads + writes).

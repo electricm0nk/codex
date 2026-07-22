@@ -126,7 +126,7 @@ Each of 21 cycles:
 
 1. Verifies the PCGen corpus directory exists at `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/<book>/` (the 21 future-state books).
 2. Writes `data/stubs/<book>.json` with `{book_id: <book>, book_name: <display>, planned_resolution_bundle: "SD-27", content_kind_counts: null, registered_at: <ISO-8601>}`.
-3. Adds an entry to `governance/wired-integration-stubs-registry.md` in the `book_stub` kind shape.
+3. Adds an entry to `docs/governance/wired-integration-stubs-registry.md` in the `book_stub` kind shape.
 
 ### 4.2 Stubs Registry format change (Criterion 4.1)
 

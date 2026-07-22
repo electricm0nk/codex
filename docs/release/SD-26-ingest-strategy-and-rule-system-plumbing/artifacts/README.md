@@ -30,6 +30,6 @@ At Epic 6's Criterion 6.1 (Final criterion scan), the cycle produces `./artifact
 
 - `data/corpus/<book>/<content_kind>/<content_id>.json` — 4 in-scope books' JSON cache.
 - `data/stubs/<book_id>.json` — 21 future-state book stub manifests.
-- `governance/wired-integration-stubs-registry.md` — `book_stub` kind entries (21 added by E4).
+- `docs/governance/wired-integration-stubs-registry.md` — `book_stub` kind entries (21 added by E4).
 
 These are repo-resident (committable) per operator directive 2026-07-21 17:39:26 and durable SD-to-SD per 2026-07-21 15:36:12.

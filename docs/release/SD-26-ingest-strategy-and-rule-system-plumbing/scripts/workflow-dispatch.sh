@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
-# SD-26 Workflow orchestrator.
-# Author-once; runs continuously while the bundle dispatches cycles.
-# Per /governance/loop-instruction-template.md §2 + skill workflow-orchestrated-dispatch.
+# SD-26 Workflow orchestrator — REFERENCE SPEC, NOT A LIVE DISPATCHER.
 #
-# Mechanically identical to SD-25's orchestrator at the dispatch-mechanism level;
-# concurrency map and tiering overrides are different (see decisions.md §3).
+# VERIFIED (decisions.md §13, carrying forward SD-25's decisions.md §10 precedent):
+# the `claude code --profile … --task …` invocation below (see the Tier 5 block)
+# does not exist in the live CLI — `claude --help` has no `code` subcommand and no
+# `--profile`/`--task` flags. As written, this script's dispatch step would fail
+# every time and main_loop would spin on its `sleep ${BASE_CADENCE}` branch forever.
+# SD-26 is dispatched by the in-harness `Workflow` tool, driven from a live session,
+# NOT by running this file as a background process. This script stays in the repo
+# as the deterministic per-epic concurrency + tiering SPEC — EPIC_PARALLEL /
+# EPIC_SUBAGENT / SUBAGENT_OVERRIDE below are the source of truth each Workflow
+# call reads from and honors — plus `pick_next_criterion()` as a reference
+# implementation of the selection logic a Workflow script can port.
+#
+# Per docs/governance/loop-instruction-template.md §2 + skill workflow-orchestrated-dispatch.
+#
+# Concurrency map and tiering overrides are bundle-specific (see decisions.md §3).
+# Picks the next unclaimed criterion from progress.md's Status matrix (state
+# `not-started`), then ## DISCOVERED (priority-bumped `HIGH` rows).
 
 set -euo pipefail
 
@@ -38,12 +51,20 @@ log() { printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" ; }
 
 pick_next_criterion() {
     local epic_n criterion_id
+
+    # Walk the Status matrix first (in epic-number, criterion-number order).
+    # Status-matrix rows look like "| 1.1 Source-code identifier audit | not-started | ... |":
+    # the criterion id is the first token of the first cell, the state is the second cell.
+    # (Reproduces SD-25's already-working pick_next_criterion() convention — SD-26's
+    # progress.md seed uses the same `not-started` token + ID-plus-prose column-1 shape;
+    # an earlier draft of this script assumed `| pending |` + a bare-ID column, which
+    # matched neither this bundle's own seed nor SD-25's precedent. See decisions.md §13.)
     for epic_n in 1 2 3 4 5 6; do
         local todo_rows
-        todo_rows=$(grep -E "^\| ${epic_n}\.[0-9]+ \|" "${PROGRESS_DOC}" 2>/dev/null \
-                    | grep -E '\| pending \|' | head -1 || true)
+        todo_rows=$(grep -E "^\| ${epic_n}\.[0-9]+ " "${PROGRESS_DOC}" 2>/dev/null \
+                    | grep -E '\| not-started \|' | head -1 || true)
         if [ -n "${todo_rows}" ]; then
-            criterion_id=$(echo "${todo_rows}" | awk -F'|' '{print $2}' | xargs)
+            criterion_id=$(echo "${todo_rows}" | awk -F'|' '{print $2}' | awk '{print $1}')
             echo "${epic_n} ${criterion_id}"
             return
         fi
