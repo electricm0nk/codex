@@ -1,8 +1,9 @@
 # Cycle 7.O — E7 GE-07 pilot-shell-snapshot real implementation / Criterion 7.O
 
-- **Card ID:** see kanban card ID reported alongside this receipt (this cycle mints a
-  design-decision-request card, not an implementation-complete card).
-- **Commit SHA:** see this cycle's commit (docs-only; no production code changed).
+- **Card ID:** `t_0fcfcb3a` (design-decision-request card, completed as a done-receipt for
+  this cycle's own deliverable — surfacing the request — not as a claim that criterion 7.O
+  itself is complete).
+- **Commit SHA:** `b6550bf` (docs-only; no production code changed).
 - **Files touched:**
   - `docs/release/SD-25-ui-evaluation-defect-closure/risks-and-open-questions.md` (reviewed
     Q5 for accuracy/clarity — no wording change needed; confirmed unanswered)
