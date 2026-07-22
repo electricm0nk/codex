@@ -8,7 +8,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 | Criterion | State | Cycle ID | Commit SHA | Notes |
 |---|---|---|---|---|
-| 1.1 Source-code identifier audit | not-started | — | — | Epic 1 fires FIRST |
+| 1.1 Source-code identifier audit | complete | 1.1 | `62c4785d098c3c288093f5076130ec44efdce23f` | 404 residual hits, all documented exclusion (real tests/-file citations); see artifacts/epic_1/identifier-audit-cycle_receipt.md |
 | 2.1 board reachable | not-started | — | — | — |
 | 2.2 branch pushed | not-started | — | — | — |
 | 2.3 SD-24 closure PR merged | not-started | — | — | Tier-1 launch gate |
@@ -39,11 +39,11 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 1.1, 2.1–2.5, 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 2.1–2.5, 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
-(empty)
+- 1.1 Source-code identifier audit — commit `62c4785d098c3c288093f5076130ec44efdce23f` — receipt `artifacts/epic_1/identifier-audit-cycle_receipt.md`
 
 ## DISCOVERED
 
