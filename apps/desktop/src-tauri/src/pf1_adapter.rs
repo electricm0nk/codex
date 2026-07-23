@@ -72,6 +72,12 @@ use crate::characterHub::reSaveCharacter::{re_save_character_at_root, ReSaveChar
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
 
+/// v0.6 alpha swarm: needed by `compose_character_input`'s Wizard-only
+/// canonical school-choice seeding. Not re-exported from `character_hub.rs`
+/// (unlike `HUMAN_RACE_ID`/`SOURCE_PACKAGE_ID`) since nothing outside this
+/// file needs it yet.
+const WIZARD_CLASS_ID: &str = "class:wizard";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -231,6 +237,33 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:human_ability_bonus".to_owned(),
             selection_id: format!("ability:{}", request.ability_bonus_target),
+        });
+    }
+
+    // v0.6 alpha swarm: without this, `unmet_wizard_spellbook_conditions`
+    // (pilot_compute.rs) unconditionally blocks a Wizard from ever reaching
+    // Computed, no matter what spells a tester later selects -- it requires
+    // the canonical Evocation specialization (opposed Necromancy/
+    // Transmutation) before it even looks at spellbook content, and nothing
+    // anywhere seeded that choice for a freshly created character. Mirrors
+    // this function's own existing precedent (Fighter's fixed Power Attack/
+    // Dodge/Weapon Focus loadout, Human's fixed bonus-feat/ability-bonus
+    // choices): a fixed, canonical default for the one class/level range
+    // this engine's chassis dispatch actually supports (Wizard 1-3's
+    // spellbook grounding), not a real in-game "pick your school" choice --
+    // that UI is separate, larger, out-of-scope future work.
+    if request.class_id == WIZARD_CLASS_ID {
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_owned(),
+            selection_id: "school:evocation".to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:necromancy".to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:transmutation".to_owned(),
         });
     }
 
@@ -586,6 +619,7 @@ mod tests {
     const TEST_SAVED_AT: &str = "2026-07-21T00:00:00Z";
     const GAME_SYSTEM_ID: &str = "pf1";
     const FIGHTER_CLASS_ID: &str = "class:fighter";
+    const WIZARD_CLASS_ID: &str = "class:wizard";
 
     fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()
@@ -618,6 +652,10 @@ mod tests {
             ability_bonus_target: "strength".to_owned(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
+    }
+
+    fn wizard_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest { class_id: WIZARD_CLASS_ID.to_owned(), ..request_for(character_id, level) }
     }
 
     fn seed_envelope(character_id: &str, level: u8) -> SavedCharacterEnvelope {
@@ -884,6 +922,101 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Wizard spellbook posture fix (v0.6 alpha swarm) -----
+    //
+    // Before this fix, `compose_character_input` never seeded the
+    // `choice:wizard_school_specialization` / `choice:wizard_opposed_schools`
+    // selections `unmet_wizard_spellbook_conditions` requires, for ANY class
+    // -- so a freshly created Wizard character could never reach Computed no
+    // matter what spells a tester later selected, since the specialization
+    // check fails before the spellbook-content checks are even reached.
+    // Frontend verified this live (fresh creation and multiclassing onto an
+    // existing character, both correctly Blocked, never persisted) and it
+    // directly blocks alpha bar item 3's "select spells at each
+    // spell-gaining level" for Wizard specifically.
+
+    #[test]
+    fn compose_character_input_seeds_the_canonical_wizard_school_choices_only_for_wizard() {
+        let wizard_input = compose_character_input(&wizard_request_for("wizard-school-seed", 1));
+        assert!(
+            wizard_input.chosen.selected_choices.iter().any(|c| c.choice_set_id
+                == "choice:wizard_school_specialization"
+                && c.selection_id == "school:evocation"),
+            "a composed Wizard must have the canonical Evocation specialization seeded: {:?}",
+            wizard_input.chosen.selected_choices
+        );
+        let opposed: Vec<&str> = wizard_input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:wizard_opposed_schools")
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        assert_eq!(
+            opposed.len(),
+            2,
+            "a composed Wizard must have exactly two opposed schools seeded: {opposed:?}"
+        );
+        assert!(opposed.contains(&"school:necromancy"));
+        assert!(opposed.contains(&"school:transmutation"));
+
+        // A non-Wizard class must not receive Wizard-only choice seeds --
+        // mirrors the existing Human-only / Fighter-only conditional seeding
+        // already in this same function.
+        let fighter_input = compose_character_input(&request_for("fighter-no-wizard-seed", 1));
+        assert!(
+            !fighter_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id.starts_with("choice:wizard_")),
+            "a composed Fighter must not receive Wizard-only school choices: {:?}",
+            fighter_input.chosen.selected_choices
+        );
+    }
+
+    /// The single most important regression guard for this fix: a real
+    /// Wizard level 1 character, with one real spell both recorded
+    /// (`AcquisitionMode::Known`) and prepared (`AcquisitionMode::Prepared`)
+    /// within budget (a 0-level Evocation cantrip -- the specialist school,
+    /// costing 1 of the level-0 budget's 3 slots, no opposed-school
+    /// penalty), must reach `Computed`. Before this fix this was
+    /// structurally unreachable regardless of which spell was picked, since
+    /// the specialization check blocked before spellbook content was even
+    /// examined. Exercises `build_pilot_headless_receipt` directly (the
+    /// same compute path `add_spell_selection_at_root`'s "never persist an
+    /// unproven build" gate calls) rather than two sequential
+    /// `add_spell_selection_at_root` calls -- the first of those would
+    /// itself return `Blocked` (only `Known`, nothing `Prepared` yet, a
+    /// real and correct intermediate state) and therefore never persist,
+    /// so a second call couldn't build on it; a real UI would send both
+    /// selections as part of one accepted "prepare spells for the day"
+    /// action, not this test's own concern.
+    #[test]
+    fn wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared() {
+        let mut character_input = compose_character_input(&wizard_request_for("wizard-spellbook", 1));
+        character_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "evocation.0.light".to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        character_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "evocation.0.light".to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Wizard level 1 with the canonical school seeded and one real spell \
+             recorded+prepared within budget must reach Computed, got diagnostics: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 
     #[test]
