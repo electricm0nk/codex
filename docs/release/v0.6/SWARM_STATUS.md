@@ -8,14 +8,12 @@ orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
                                 backend, RESUMED (see below)
-backend               Sonnet   RESUMED -- delivery bug confirmed+fixed (see
-                                Happened); finishing BAB/save test-catalogue
-                                sequencing with qa, then bio schema+command,
-                                feat exposure, money schema+command in order
-qa                    Sonnet   40-test catalogue fix for backend's multiclass
-                                widening DONE and verified (0 failures, 467
-                                result lines); holding commit for sequencing
-                                with backend's pilot_compute.rs, now cleared
+backend               Sonnet   BAB/save stacking DONE+pushed (d20a5b9, 170/170
+                                lib tests, 3961/0 full suite w/ qa's catalogue);
+                                now on bio schema+command (reprioritized queue,
+                                for real this time -- channel confirmed working)
+qa                    Sonnet   committing 34-file/40-test catalogue update now
+                                (sequenced right after backend's d20a5b9)
 
 (b) Happened
 ------------
