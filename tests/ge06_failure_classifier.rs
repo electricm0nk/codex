@@ -52,12 +52,15 @@ fn computed_receipt_with_no_comparison_evidence_classifies_as_oracle_gap() {
 #[test]
 fn blocked_receipt_with_claim_blocking_diagnostics_classifies_as_engine_flaw() {
     // Mutate the supported prerequisite in memory: replace Fighter level-1 with
-    // Rogue level-1. This makes the receipt blocked with claim-blocking diagnostics
+    // Cleric level-1. This makes the receipt blocked with claim-blocking diagnostics
     // rather than computed. The classifier should distinguish this as EngineFlaw.
+    // (Was Rogue level-1 until the v0.6 alpha swarm's multiclass BAB/save-stacking
+    // generalization gave Rogue its own real class_chassis.* computation, so Rogue
+    // is no longer an unsupported negative control -- Cleric still is.)
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:cleric:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

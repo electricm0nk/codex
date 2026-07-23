@@ -140,10 +140,12 @@ fn computed_view_model_exposes_explicit_human_race_seam() {
 
 #[test]
 fn blocked_receipt_projects_blocked_view_model_without_faux_success_snapshot() {
+    // Cleric level-1 as the unsupported negative control (was Rogue level-1 --
+    // see ge06_failure_classifier.rs for why that stopped being unsupported).
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:cleric:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

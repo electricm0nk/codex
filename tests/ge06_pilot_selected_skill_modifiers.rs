@@ -250,13 +250,15 @@ fn absent_chain_shirt_blocks_skill_modifiers() {
 
 #[test]
 fn unsupported_chassis_blocks_skill_modifiers() {
-    // Replace the Fighter level-1 chassis with a Rogue level-1 chassis. The
+    // Replace the Fighter level-1 chassis with a Cleric level-1 chassis. The
     // selected-skill surface is grounded only on the Fighter class posture and
-    // must refuse rather than fabricate Fighter class-skill bonuses.
+    // must refuse rather than fabricate Fighter class-skill bonuses. (Was Rogue
+    // level-1 -- see ge06_failure_classifier.rs for why that stopped being an
+    // unsupported negative control.)
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:cleric:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);
