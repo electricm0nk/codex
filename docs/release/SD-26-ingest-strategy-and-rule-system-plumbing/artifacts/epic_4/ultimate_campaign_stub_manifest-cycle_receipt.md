@@ -1,8 +1,8 @@
 # Cycle ultimate_campaign_stub_manifest — Epic 4 / Criterion 4.17
 
 - **Card ID:** (see kanban step, below)
-- **Commit SHA:** 91aac44 (pre-rebase; see `progress.md` for the final landed SHA on `tranche/5-4`
-  after push-time rebase, if it differs)
+- **Commit SHA:** a7df999 (manifest + registry entry), 8b39041 (this receipt) — both landed on
+  `origin/tranche/5-4` after the push-time rebase
 - **Files touched:**
   - `data/stubs/ultimate_campaign.json` (new — per-book stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0018; updated the
