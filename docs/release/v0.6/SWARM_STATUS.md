@@ -7,10 +7,12 @@ Source of truth: docs/release/v0.6/release-swarm.md
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   idle -- wave 1 (1-3) done, 4-5 waiting on
                                 backend's skill/level-up commands
-backend               Sonnet   task 2 DONE (e0a0bda, set_skill_allocations,
-                                5 tests); now on task 3, level-up persistence;
-                                flagged posture-narrowness (see Happened) as
-                                a wave-2/3 priority question, pending my reply
+backend               Sonnet   task 3 DONE (7694b22, level_up_character
+                                extended, 151/151 tests); corrected back onto
+                                queue (tried to jump to BAB/save stacking,
+                                redirected to bio schema+command, task 3 of
+                                the reprioritized 5); posture-narrowness Q
+                                still pending backend's scoped reply
 qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
                                 task 5 ongoing); delivered PCGen-sourced
                                 formula spec for backend's wave 2 (abec13b)
@@ -109,6 +111,16 @@ qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
   finish the frontend-unblocking queue first, then bring a scoped proposal
   before starting wave-2 calc-accuracy work on the assumption that
   persistence alone unlocks real play.
+- Backend closed task 3: level_up_character extended (not a new command --
+  correct call, one atomic mutation beats sequential partial-apply calls)
+  to accept additionalChoices + optional skillAllocations, backward
+  compatible via serde defaults. Surfaced a real pre-existing wire-format
+  constraint (choiceSetId/selectionId colon-count rules enforced by
+  SavedCharacterStore) without expanding scope to relax it. 151/151 tests
+  green. CAUGHT: backend then said "moving to task 4, multiclass BAB/save
+  stacking" -- that's the ORIGINAL wave-1 numbering, not the reprioritized
+  queue. Corrected: next is bio schema+command (reprioritized task 3 of 5),
+  frontend is still fully blocked on bio/feat/money, nothing changed that.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
