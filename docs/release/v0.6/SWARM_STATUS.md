@@ -5,16 +5,18 @@ Source of truth: docs/release/v0.6/release-swarm.md
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
-frontend              Sonnet   committing TABS cleanup fix; auditing 4 remaining
-                                stub tabs (Defense/Pets/Actions/Overrides) for
-                                already-wireable-without-backend work; otherwise
-                                idle on backend's 5 command deliverables
-backend               Sonnet   REPRIORITIZED: version bump, then skill-persist,
-                                level-up-persist, bio command, feat exposure,
-                                money command (in that order) -- all 5 unblock
-                                frontend; BAB/save stacking + equipment AC
-                                pushed to back of wave 1
-qa                    Sonnet   wave 1: PCGen smoke baseline, coverage gap list
+frontend              Sonnet   auditing 4 remaining stub tabs (Defense/Pets/
+                                Actions/Overrides) for already-wireable-
+                                without-backend work; otherwise idle on
+                                backend's 5 command deliverables
+backend               Sonnet   version bump DONE (0c614d9); now on skill-point
+                                persistence (task 2 of 6), then level-up,
+                                bio, feat, money commands; BAB/save stacking +
+                                equipment AC/carry-capacity/encumbrance/
+                                money-conversion pushed to wave 2
+qa                    Sonnet   wave 1 tasks 1/2/4 done, task 5 ongoing;
+                                spec'ing carry-capacity/encumbrance/money-
+                                conversion PF1 formulas for backend's wave 2
 
 (b) Happened
 ------------
@@ -51,21 +53,43 @@ qa                    Sonnet   wave 1: PCGen smoke baseline, coverage gap list
   blocking commands before calc-accuracy work (BAB/save, equipment AC),
   and assigned frontend a non-blocking audit of the 4 remaining stub tabs
   (Defense/Pets/Actions/Overrides) for anything already wireable today.
+- QA closed wave-1 tasks 1/2/4: PCGen baseline clean (pcgen_runner_smoke
+  2/2, sd26_pcgen_runner 6/6); gap-list survey found carry capacity,
+  encumbrance, and money conversion have ZERO production implementation
+  in src/rules_core (not test gaps -- missing calculations), corroborating
+  frontend's money-schema finding; SWARM_REPORT.md skeleton drafted with
+  full per-calculation coverage table (commit 9ffe32f).
+- Lead ruling: "durability" (bar item 4) = character survivability display
+  (max/current/temp HP, nonlethal, dying/death thresholds), distinct from
+  "level-up hit points" (the level-up increment calc). No item-hardness
+  system in scope. Recorded in risks-and-open-questions.md item 4.
+- QA follow-up: the money/carry-capacity/encumbrance gap is TWO layers --
+  rules_core has no calc, AND the PCGen comparator (pcgen_runner.rs,
+  pcgen-normalize-output.py) doesn't extract those fields from PCGen's
+  export either. QA correctly stopped short of speculative design work;
+  folded into backend's wave-2 scope as its own subtask.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
 backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
-  1. Version bump 0.5.99 -> 0.6.0 (package.json, tauri.conf.json, Cargo.toml,
-     buildVersionTriple.test.ts:44-47 anchor). No dependency, do first.
-  2. Skill-point allocation persistence: Tauri command + rules_core hookup.
+  1. DONE (0c614d9, pushed). Version bump 0.5.99 -> 0.6.0 (package.json,
+     tauri.conf.json, Cargo.toml, Cargo.lock, buildVersionTriple.test.ts
+     anchor + its sd21 sibling, caught proactively). Triggered a pre-existing
+     fixture-freshness test expecting literal "Codex 0.6.0-test" in 3 files
+     frontend owns -- frontend already has them in flight, confirming.
+  2. IN PROGRESS. Skill-point allocation persistence: Tauri command +
+     rules_core hookup.
   3. Level-up HP + choices persistence: Tauri command.
   4. Bio schema field + persistence command (frontend ask).
   5. Feat exposure: list_feats + add_feat_selection against existing
      185-record CRB catalog, rules_tables/crb/feats.rs (frontend ask).
   6. Money/currency schema field + command -- no existing schema slot,
      biggest lift (frontend ask).
-  -- pushed to wave 2: multiclass BAB/save stacking (TDD), equipment AC /
-     carry capacity audit vs PCGen corpus (neither blocks another teammate).
+  -- pushed to wave 2: multiclass BAB/save stacking (TDD); equipment AC
+     audit; carry-capacity/encumbrance/money-conversion (needs QA's formula
+     spec first, AND a comparator field-extraction fix in pcgen_runner.rs /
+     pcgen-normalize-output.py -- two-layer gap, not just rules_core).
+     None of wave 2 blocks another teammate.
 
 frontend (revised after investigation, see Happened log):
   1. Remove dead Details/Bio tab-switch entries (real coming-soon fix); wire
