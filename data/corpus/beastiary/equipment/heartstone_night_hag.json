@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:18:10Z",
+  "data": {
+    "key": "Heartstone (Night Hag)",
+    "category": "MagicItems",
+    "name": "Heartstone",
+    "cost_gp": 0.0,
+    "weight": 0.0,
+    "description": "Gemstone worth 1800gp"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_magic_items.lst",
+    "sha256": "eef68e29e208b71d103363bc70228d3c83391d9ad211816e012f2d0672d9cac6",
+    "line": 6,
+    "record_key": "Heartstone (Night Hag)"
+  }
+}

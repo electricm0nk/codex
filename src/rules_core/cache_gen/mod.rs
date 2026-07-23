@@ -10,3 +10,4 @@
 
 pub mod acg;
 pub mod apg;
+pub mod beastiary1;

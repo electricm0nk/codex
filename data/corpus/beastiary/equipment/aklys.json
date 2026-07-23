@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:18:10Z",
+  "data": {
+    "key": "Aklys",
+    "category": "ArmsArmor",
+    "name": "Aklys",
+    "cost_gp": 0.0,
+    "weight": 3.0,
+    "description": "A 20-footlong cord limits the Aklys's range, but allows it to be retrieved as a move equivalent action after it has been thrown."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_arms_armor.lst",
+    "sha256": "18cb10e25d8e0773efe7717fdf90945a94470dce3f0ee9641bb78a23a1c348fe",
+    "line": 12,
+    "record_key": "Aklys"
+  }
+}
