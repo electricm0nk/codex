@@ -207,13 +207,13 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
      None of wave 2 blocks another teammate.
 
 frontend:
-  1. Details/Bio dead tabs removed (743c358); bio wiring IN PROGRESS
-     (CharacterSheet.tsx + new boundary/characterBio.ts in flight).
-  2. Feat picker: UNBLOCKED -- backend's list_feats/add_feat_selection
-     landed (89c3710), not yet started.
-  3. Money panel: not started, waits on backend's money schema+command
-     (correctly refused to build a throwaway shell against nothing real) --
-     last remaining blocker.
+  1. DONE (94a3865). Bio editor wired to update_character_bio/
+     load_character_bio, live-verified: real disk round-trip confirmed by
+     closing and reopening the character after editing.
+  2. IN PROGRESS. Feat picker: backend's list_feats/add_feat_selection
+     landed (89c3710), frontend reading the commit before wiring.
+  3. Money panel: not started, backend's money command landed (67490ac),
+     ready to pick up after the feat picker.
   4. DONE (75200fc). Wire SkillAllocationDialog.
   5. DONE (e8e4597). Wire LevelUpDialog.onAccept.
   BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
