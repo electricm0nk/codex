@@ -58,10 +58,18 @@ production surface. Multiclass BAB/save stacking breadth (8 of 11 classes
 still outside the allowlist) is the other open item. The narrow
 deterministic-`Computed`-posture gate (risks-and-open-questions.md item 1)
 is a separate, larger issue: backend's fuller scoping found 4 independent
-exactness gates, with AC-gate widening (splicing already-correct
-`equipment_effects.rs` math into the gate for Fighter/Wizard/Rogue)
-greenlit for wave 2; attack-bonus and general-skill posture widening are
-explicitly deferred, not assumed solved.
+exactness gates. **AC-gate widening was dropped, not landed** — backend
+found the headless compute layer (`compute_pilot_base_chassis`) structurally
+has no corpus parameter, so real per-item AC math can't be spliced into the
+gate cheaply; bridging that would mean either threading a corpus parameter
+through ~347 call sites or moving the `Computed`/`Blocked` decision to the
+corpus-aware layer entirely — a real architecture decision, flagged to the
+operator as a possible future epic rather than a wave-2 item, not something
+to assume is coming. Attack-bonus and general-skill posture widening remain
+explicitly deferred too, and may share the same headless/corpus-aware split
+once scoped. Backend has moved on to durability, money-conversion PCGen
+verification, and comparator field-extraction instead, none of which share
+this architectural constraint.
 
 ## (b) PCGen-delta defects found and fix/ticket status
 
@@ -160,6 +168,18 @@ This is the exact table PCGen itself uses, so a parity test built from these
 numbers should match PCGen output by construction (still worth a spot-check
 run). Engine logic (extrapolation beyond the table) lives in
 `pcgen/core/system/LoadInfo.java` in that same checkout.
+
+**Trap for anyone hand-writing fixture corpus text** (found while writing
+`tests/v06_encumbrance.rs`): this crate's real corpus `KEY:` tokens only
+carry a `(Base)` suffix for items with real magical/enhancement variants
+(armor, shields, weapons — e.g. `Chain Shirt (Base)`, `Longsword (Base)`).
+Plain General-category items do not (e.g. `Backpack`, not
+`Backpack (Base)`). A fixture item whose `KEY:` guesses wrong on this
+silently resolves to `unresolved_item_ids` rather than erroring — the
+equipment resolver is strict/exact-match, not fuzzy, so a wrong suffix
+looks like "this item weighs 0" rather than a loud failure. Check the real
+entry in `src/rules_core/rules_tables/crb/equipment_data/*.rs` before
+hand-transcribing a `KEY:` token into fixture text.
 
 - **Base table** (`LOAD:<Strength>|<max load in lbs, at 1x "Heavy" multiplier>`),
   Strength 0-29:
