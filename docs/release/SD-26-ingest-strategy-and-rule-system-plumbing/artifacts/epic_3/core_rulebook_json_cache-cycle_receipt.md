@@ -1,7 +1,7 @@
 # Cycle epic3-3.1-core_rulebook_cache — Epic 3 (JSON Cache Build) / Criterion 3.1
 
-- **Card ID:** PENDING (minted post-test in step 8; backfilled if a follow-up commit is needed)
-- **Commit SHA:** PENDING (filled after commit)
+- **Card ID:** `t_cce2e62e` (board `codex-tranche-5`, assignee `operator`, completed)
+- **Commit SHA:** `ecc00b8` (pushed to `tranche/5-4`); this receipt's own card-ID backfill lands in a small follow-up commit per the established self-reference-backfill pattern (see other SD-26 receipts' precedent)
 - **Files touched:**
   - NEW `src/rules_core/rules_tables/crb/json_cache.rs` (Shape B discriminated-union record types, local to the CRB module per `loop-instruction.md §6`'s worktree-isolation intent — kept disjoint from the 3 sibling APG/ACG/Bestiary-1 cycles' equivalent work)
   - `src/rules_core/rules_tables/crb/mod.rs` (+`pub mod json_cache;`)
