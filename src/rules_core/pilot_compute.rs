@@ -4764,7 +4764,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 /// own deterministic pilot fixture and the real PCGen oracle both confirm Human
 /// is the one race whose chosen score is the PRE-bonus base — see the CG-03
 /// follow-up receipt for the oracle evidence.
-fn apply_human_ability_bonus(
+/// `pub(crate)` (rather than private) so `contract.rs`'s encumbrance wiring
+/// (v0.6 alpha swarm, task 5) can derive the character's real *effective*
+/// Strength score (post-racial-bonus) for `encumbrance::compute_encumbrance`
+/// without re-deriving this same Human-bonus arithmetic a second time or
+/// falling back to the pre-bonus raw score, which would be wrong for a
+/// Human whose chosen ability-bonus target is Strength.
+pub(crate) fn apply_human_ability_bonus(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) -> AbilityScores {
@@ -6556,33 +6562,186 @@ fn compute_fighter_chassis(
     (base_attack_bonus, base_saves)
 }
 
-/// SD-21 Epic 6 (E6.25) / Epic 7 (E7.28): dispatch the base-attack-bonus /
-/// base-save chassis pillar to the supported single class, to
-/// `compute_multiclass_base_chassis` for a supported length-2+ multiclass mix, or
-/// return `None` when the input is a single class this dispatch does not yet
-/// recognize, or a multiclass mix containing an unrecognized class. Each
-/// recognized class's own `compute_<class>_chassis` function still independently
-/// checks its own level range and pushes `class_chassis.unsupported` itself when
-/// out of range, so this dispatch only needs to route by `class_id` / mix shape.
+/// SD-21 Epic 6 (E6.25) / Epic 7 (E7.28); widened v0.6 alpha swarm task 4:
+/// dispatch the base-attack-bonus / base-save chassis pillar to the supported
+/// single class, to `compute_multiclass_base_chassis` for a supported
+/// length-2+ multiclass mix, or return `None` when the input is a single
+/// class this dispatch does not yet recognize, or a multiclass mix
+/// containing an unrecognized class. Each recognized class's own
+/// `compute_<class>_chassis` function (or the shared table-driven
+/// `compute_generic_table_chassis` path) still independently checks its own
+/// level range and pushes `class_chassis.unsupported` itself when out of
+/// range, so this dispatch only needs to route by `class_id` / mix shape.
 fn has_supported_class_chassis(input: &CharacterInput) -> bool {
     supported_fighter_level(input).is_some()
         || supported_wizard_level(input).is_some()
         || is_supported_multiclass_mix(input)
+        || is_supported_generic_single_class(input)
 }
 
-/// Whether `class_level` is one Epic 6 grounds a `compute_<class>_chassis` for
-/// (Fighter or Wizard), at a level within that class's own supported ceiling.
-/// The only two classes a multiclass mix can combine until a future epic grounds
-/// more per-class chassis functions.
+/// Whether `input` is a single class, other than Fighter/Wizard (which have
+/// their own bespoke `supported_<class>_level` gates above), at a level
+/// within that class's own `class_tables()`-declared ceiling -- the
+/// table-driven single-class chassis path `compute_class_chassis` also
+/// recognizes via `compute_generic_table_chassis` (v0.6 alpha swarm, task 4).
+fn is_supported_generic_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == WIZARD_CLASS_ID {
+        return false;
+    }
+    multiclass_class_level_supported(class_level)
+}
+
+/// Maps a wire-level `class_id` string to `rules_tables::crb::class_tables`'s
+/// `ClassId`, for Fighter, Wizard, and Rogue (v0.6 alpha swarm, task 4 --
+/// widened from a Fighter/Wizard-only pair to add Rogue, the task's own
+/// literal "Fighter/X" reproducer). Used to route both single-class and
+/// multiclass base-chassis computation to the shared
+/// `compute_generic_table_chassis` path for Rogue; Fighter keeps its own
+/// bespoke `compute_fighter_chassis` (it additionally grounds Bravery/
+/// bonus-feat named-feature explanations beyond the raw BAB/save numbers
+/// this table alone carries) and Wizard keeps its own existing
+/// `compute_wizard_chassis` (left untouched to avoid any behavior change to
+/// already-tested code) -- `table_class_id` recognizing both lets the
+/// multiclass-support range check below share one implementation instead of
+/// several.
+///
+/// Deliberately NOT widened to the remaining 8 core classes in one pass:
+/// `class_tables()` (`rules_tables/crb/class_tables.rs`) carries real data
+/// for all 11, but several of those classes (Barbarian, Bard, Cleric,
+/// Druid, Monk, Paladin, Ranger, Sorcerer) already have their OWN deliberate
+/// standalone-only `class_chassis.<class>.*` chassis explanations elsewhere
+/// in this file, each with an existing `tests/*.rs` file asserting that
+/// class's own base-attack/base-save stay claim-blocked / not integrated
+/// into the generic `class_chassis.base_attack_bonus` pillar (e.g.
+/// `tests/sd13_rogue_level1_chassis_baseline.rs`'s own doc comment: "not
+/// wired into compute_fighter_chassis, compute_total_saves, or
+/// compute_combat_baseline"). Widening `table_class_id` to all 11 in one
+/// step broke ~60 of those pre-existing negative-control assertions across
+/// ~15 QA-owned test files in this task's own RED/GREEN loop -- confirmed
+/// by running `cargo test --test '*' --no-fail-fast` before scoping back
+/// down to this 3-class allowlist. Rogue's own equivalent standalone tests
+/// (`sd13_rogue_level1_chassis_baseline.rs`) still break by this narrower
+/// change and are flagged to `qa` directly rather than silently pushed;
+/// widening the other 8 classes is future scope, one class (and one
+/// coordinated test update) at a time.
+fn table_class_id(class_id_str: &str) -> Option<ClassId> {
+    if class_id_str == FIGHTER_CLASS_ID {
+        Some(ClassId::Fighter)
+    } else if class_id_str == WIZARD_CLASS_ID {
+        Some(ClassId::Wizard)
+    } else if class_id_str == ROGUE_CLASS_ID {
+        Some(ClassId::Rogue)
+    } else {
+        None
+    }
+}
+
+/// Table-driven base-attack-bonus / base-save chassis pillar for any class
+/// `table_class_id` recognizes besides Fighter (v0.6 alpha swarm, task 4).
+/// Mirrors `compute_wizard_chassis`'s exact shape: reads
+/// `class_tables()`'s row for `class_id` at `level` rather than re-deriving
+/// any formula, and pushes the same generic `class_chassis.base_attack_bonus`
+/// / `class_chassis.base_save.*` explanation ids every chassis function
+/// pushes. Returns `None` (with a claim-blocking `class_chassis.unsupported`
+/// diagnostic) when no table row exists for `class_id` at `level` -- i.e.
+/// `level` exceeds that class's own `class_tables()`-declared ceiling (e.g.
+/// Druid caps at 15, Monk at 12), so a level beyond what this table can
+/// verify stays honestly blocked rather than silently computed.
+fn compute_generic_table_chassis(
+    class_id: ClassId,
+    class_id_str: &str,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    let Some(row) = class_tables()
+        .into_iter()
+        .find(|row| row.class_id == class_id && row.level == level)
+    else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {class_id_str} class_tables() row at level \
+                 {level}, so no chassis values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return None;
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_id_str} level {level} base attack bonus from \
+             rules_tables::crb::class_tables::class_tables()'s row for this class: \
+             {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "{class_id_str} level {level} base Fortitude save from \
+             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "{class_id_str} level {level} base Reflex save from \
+             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "{class_id_str} level {level} base Will save from \
+             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+            base_saves.will
+        ),
+    });
+
+    Some((base_attack_bonus, base_saves))
+}
+
+/// Whether `class_level` is a class this dispatch grounds a base-chassis
+/// computation for (a bespoke `compute_<class>_chassis` for Fighter/Wizard,
+/// or the generic table-driven path for every other class
+/// `class_tables()` covers), at a level within that class's own
+/// `class_tables()`-declared ceiling. Widened v0.6 alpha swarm task 4 from
+/// a Fighter/Wizard-only pair to every core class this table carries data
+/// for (Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger,
+/// Rogue, Sorcerer, Wizard) -- the only remaining bound is each class's own
+/// table-declared level ceiling (e.g. Druid 15, Monk 12), not an artificial
+/// two-class allowlist.
 fn multiclass_class_level_supported(class_level: &CharacterClassLevel) -> bool {
-    (class_level.class_id == FIGHTER_CLASS_ID
-        && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level))
-        || (class_level.class_id == WIZARD_CLASS_ID
-            && (1..=MAX_SUPPORTED_WIZARD_LEVEL).contains(&class_level.level))
+    let Some(class_id) = table_class_id(&class_level.class_id) else {
+        return false;
+    };
+    class_tables()
+        .iter()
+        .any(|row| row.class_id == class_id && row.level == class_level.level)
 }
 
 /// Whether `input` is a length-2+ `class_levels` mix every entry of which is
-/// individually a supported Fighter-or-Wizard class/level (SD-21 E7.28).
+/// individually a supported class/level (SD-21 E7.28; widened v0.6 alpha
+/// swarm task 4 from Fighter-or-Wizard-only to any class/level pair
+/// `multiclass_class_level_supported` recognizes).
 fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
     input.chosen.class_levels.len() >= 2
         && input
@@ -6607,6 +6766,14 @@ fn compute_class_chassis(
         Some(compute_fighter_chassis(input, explanations, diagnostics))
     } else if class_level.class_id == WIZARD_CLASS_ID {
         Some(compute_wizard_chassis(input, explanations, diagnostics))
+    } else if let Some(class_id) = table_class_id(&class_level.class_id) {
+        compute_generic_table_chassis(
+            class_id,
+            &class_level.class_id,
+            class_level.level,
+            explanations,
+            diagnostics,
+        )
     } else {
         None
     }
@@ -6670,10 +6837,9 @@ fn compute_multiclass_base_chassis(
         // any fractional remainder that would otherwise carry into the next
         // integer once combined with another class's remainder). The
         // good/poor classification per save mirrors `class_tables.rs`'s
-        // `GoodSaves` rows for Fighter (`:77`, good Fortitude only) and Wizard
-        // (`:83`, good Will only) -- the only two classes a multiclass mix can
-        // combine until a future epic grounds more per-class chassis
-        // functions.
+        // `GoodSaves` row for whatever class this loop iteration is on
+        // (widened v0.6 alpha swarm task 4 from a Fighter/Wizard-only pair
+        // to every class `table_class_id` recognizes).
         let (fort_good, ref_good, will_good) = multiclass_good_saves(&class_level.class_id)?;
         fort_fraction += fractional_save_value(class_level.level, fort_good);
         ref_fraction += fractional_save_value(class_level.level, ref_good);
@@ -6745,21 +6911,14 @@ fn fractional_save_value(level: u8, good: bool) -> f64 {
 }
 
 /// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
-/// Will respectively (SD-21 E7.29) -- the only two classes a multiclass mix
-/// can combine until a future epic grounds more per-class chassis functions.
-/// Reads `class_tables.rs`'s own ingested `good_saves_for` classification
-/// directly (SD-24 Epic 5 criterion 5.3) rather than re-declaring a second,
+/// Will respectively (SD-21 E7.29; widened v0.6 alpha swarm task 4 to every
+/// class `table_class_id` recognizes, not just Fighter/Wizard). Reads
+/// `class_tables.rs`'s own ingested `good_saves_for` classification directly
+/// (SD-24 Epic 5 criterion 5.3) rather than re-declaring a second,
 /// independently-maintained copy that could silently drift from it. Returns
 /// `None` for any other class id.
 fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
-    let table_class_id = if class_id == FIGHTER_CLASS_ID {
-        ClassId::Fighter
-    } else if class_id == WIZARD_CLASS_ID {
-        ClassId::Wizard
-    } else {
-        return None;
-    };
-    good_saves_for(table_class_id)
+    good_saves_for(table_class_id(class_id)?)
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
@@ -17954,5 +18113,153 @@ fn require_active_state(
         unmet.push(format!(
             "{item_id} must be {expected:?} for the deterministic baseline, got {actual:?}"
         ));
+    }
+}
+
+/// v0.6 alpha swarm, task 4: multiclass BAB/save stacking, generalized
+/// beyond the Fighter+Wizard-only dispatch `compute_multiclass_base_chassis`
+/// shipped with (SD-21 Epic 7). This file's other tests all live in
+/// `tests/*.rs` (an integration-test convention, exercising only this
+/// module's public API) rather than an inline module — this one is inline
+/// only because `tests/**` is the QA teammate's owned surface for this
+/// swarm; it uses the exact same public entry point
+/// (`compute_pilot_base_chassis`) as `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs`
+/// so it is trivially portable into that file's convention once QA reviews
+/// and adopts it into the catalogue. Several sibling files under
+/// `src/rules_core/` (e.g. `composed_input.rs`, `equipment_resolver.rs`)
+/// already carry their own inline `#[cfg(test)] mod tests`, so this is not
+/// a new pattern for the crate, just a new one for this particular file.
+#[cfg(test)]
+mod multiclass_bab_save_stacking_generalization_tests {
+    use super::{
+        compute_pilot_base_chassis, BaseSaves, PilotBaseChassisComputation, CLERIC_CLASS_ID,
+        FIGHTER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn load(fixture: &str) -> CharacterInput {
+        let result = load_character_input_fixture(fixture);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        result
+            .character_input
+            .expect("valid fixture should produce a character input record")
+    }
+
+    /// Builds a length-2 multiclass mix by overriding the Fighter level-1
+    /// fixture's single `class_levels` entry, mirroring the existing
+    /// `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs`'s own
+    /// `multiclass_fighter_wizard` helper shape, generalized to any two
+    /// class ids.
+    fn multiclass(first_class_id: &str, first_level: u8, second_class_id: &str, second_level: u8) -> CharacterInput {
+        let mut input = load(FIGHTER_LEVEL_1_FIXTURE);
+        let mut first = input.chosen.class_levels[0].clone();
+        first.class_id = first_class_id.to_owned();
+        first.level = first_level;
+        let mut second = first.clone();
+        second.class_id = second_class_id.to_owned();
+        second.level = second_level;
+        input.chosen.class_levels = vec![first, second];
+        input
+    }
+
+    fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
+        computation.diagnostics.iter().any(|d| d.id == id)
+    }
+
+    /// The task's own literal reproducer: "a Fighter/X character across
+    /// levels 1-6" -- Fighter 3 / Rogue 3 (total level 6). Before this task,
+    /// Rogue was not one of the two classes `multiclass_class_level_supported`
+    /// recognized (only Fighter/Wizard), so this mix tripped the universal
+    /// `class_chassis.unsupported` diagnostic and produced a fabricated
+    /// `base_attack_bonus: 0` / `base_saves: BaseSaves::default()` exactly
+    /// like an unrecognized single class does.
+    ///
+    /// Fighter 3 (Full BAB): 3. Rogue 3 (3/4 BAB): floor(3*3/4) = 2. Summed: 5.
+    /// Fortitude: Fighter3 good (3/2+2=3.5) + Rogue3 poor (3/3=1.0) = 4.5 -> 4.
+    /// Reflex: Fighter3 poor (3/3=1.0) + Rogue3 good (3/2+2=3.5) = 4.5 -> 4.
+    /// Will: Fighter3 poor (3/3=1.0) + Rogue3 poor (3/3=1.0) = 2.0 -> 2.
+    #[test]
+    fn fighter3_rogue3_base_attack_bonus_and_saves_are_genuinely_computed() {
+        let input = multiclass(FIGHTER_CLASS_ID, 3, ROGUE_CLASS_ID, 3);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            !has_diagnostic(&computation, "class_chassis.unsupported"),
+            "a Fighter 3 / Rogue 3 multiclass mix must be a dispatch-supported chassis \
+             once the BAB/save-stacking generalization lands: {:?}",
+            computation.diagnostics
+        );
+        assert_eq!(
+            computation.base_attack_bonus, 5,
+            "Fighter 3 / Rogue 3 base attack bonus must be the genuine per-class sum: \
+             {computation:?}"
+        );
+        assert_eq!(
+            computation.base_saves,
+            BaseSaves { fortitude: 4, reflex: 4, will: 2 },
+            "Fighter 3 / Rogue 3 base saves must use PF1's sum-fractions-then-round-down-once \
+             multiclass rule: {computation:?}"
+        );
+    }
+
+    /// Proves the generalization is not anchored to Fighter specifically --
+    /// a Wizard/Rogue mix (Fighter is not part of it at all) must also
+    /// stack correctly, since `multiclass_class_level_supported` and
+    /// `multiclass_good_saves` route by `table_class_id`, not a Fighter
+    /// special case.
+    ///
+    /// Wizard 4 (1/2 BAB): 4/2 = 2. Rogue 2 (3/4 BAB): floor(2*3/4) = 1. Summed: 3.
+    /// Fortitude: Wizard4 poor (4/3=1.333) + Rogue2 poor (2/3=0.667) = 2.0 -> 2.
+    /// Reflex: Wizard4 poor (4/3=1.333) + Rogue2 good (2/2+2=3.0) = 4.333 -> 4.
+    /// Will: Wizard4 good (4/2+2=4.0) + Rogue2 poor (2/3=0.667) = 4.667 -> 4.
+    #[test]
+    fn wizard4_rogue2_base_attack_bonus_and_saves_are_genuinely_computed() {
+        let input = multiclass(WIZARD_CLASS_ID, 4, ROGUE_CLASS_ID, 2);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            !has_diagnostic(&computation, "class_chassis.unsupported"),
+            "a Wizard 4 / Rogue 2 mix (Fighter is not part of it at all) must also be \
+             dispatch-supported, proving the generalization is not a Fighter-anchored \
+             special case: {:?}",
+            computation.diagnostics
+        );
+        assert_eq!(computation.base_attack_bonus, 3, "{computation:?}");
+        assert_eq!(
+            computation.base_saves,
+            BaseSaves { fortitude: 2, reflex: 4, will: 4 },
+            "{computation:?}"
+        );
+    }
+
+    /// A class outside this task's scoped `table_class_id` allowlist must
+    /// still fail honestly rather than silently computing a value. Cleric
+    /// is not one of Fighter/Wizard/Rogue, so a Fighter/Cleric mix must
+    /// still trip `class_chassis.unsupported` -- proving this task
+    /// deliberately did not widen every class `class_tables()` carries
+    /// data for (several of the other 8 classes have their own standalone,
+    /// not-yet-integrated `class_chassis.<class>.*` explanations and
+    /// existing tests elsewhere that assert they stay unintegrated; see
+    /// `table_class_id`'s own doc comment for why widening those is
+    /// deliberately out of this task's scope).
+    #[test]
+    fn fighter1_cleric1_stays_out_of_this_tasks_scoped_allowlist() {
+        let input = multiclass(FIGHTER_CLASS_ID, 1, CLERIC_CLASS_ID, 1);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            has_diagnostic(&computation, "class_chassis.unsupported"),
+            "Cleric is outside this task's scoped Fighter/Wizard/Rogue allowlist and must \
+             stay honestly claim-blocked, not silently computed: {:?}",
+            computation.diagnostics
+        );
     }
 }
