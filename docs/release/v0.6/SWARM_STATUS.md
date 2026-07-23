@@ -12,12 +12,13 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
-frontend              Sonnet   6-level multiclass walkthrough DONE -- alpha
-                                bar item 3 live-proven end-to-end; now on
-                                spell-slot selection walkthrough
+frontend              Sonnet   6-level multiclass walkthrough DONE; spell-
+                                slot walkthrough found Wizard is structurally
+                                UNREACHABLE via any UI path (see Happened),
+                                checking sibling casters, else standing by
 backend               Sonnet   money-conversion verification DONE (6cbee9c,
-                                see commit-hygiene note below); now on item 4
-                                (comparator field-extraction)
+                                see commit-hygiene note below); item 4 PAUSED,
+                                priority-interrupted to fix the Wizard gate
 qa                    Sonnet   money/encumbrance catalogue adoption DONE
                                 (ae723ae); idle, watching for wave-2 output
 
@@ -326,6 +327,24 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   fixed via force-push (too disruptive with three live writers on this
   branch for a purely cosmetic issue). Lead now checks `git diff --cached
   --stat` immediately before every commit, not just before `git add`.
+- MAJOR FINDING: frontend's spell-slot walkthrough hit the Wizard
+  spellbook gate before ever reaching the spell picker. Unlike the other
+  posture gates (narrow but reachable via one exact combo), this one is
+  STRUCTURALLY UNREACHABLE -- compose_character_input never seeds the
+  required school-specialization choices for any class, and
+  CreateCharacterForm has no arcane-school field at all, so no UI action
+  can ever satisfy the gate. Verified live two ways (fresh creation,
+  multiclass level-up) -- both correctly Blocked, neither persisted.
+  Directly blocks bar item 3's "select spells" for the class most
+  associated with spellcasting. Read code first, verified before
+  reporting, correctly did not improvise a fix (real cross-team scope
+  decision: new UI field + new backend param, vs. a hardcoded default).
+  Lead decision: hardcode the default specialization server-side,
+  mirroring Fighter's existing hardcoded-loadout precedent -- sufficient
+  for the bar (item 3 requires spell selection, not school choice), small
+  and bounded. A real arcane-school selector goes to backlog. Backend
+  paused item 4 to take this first since it unblocks a literal bar
+  requirement. Full writeup in risks-and-open-questions.md item 1.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
