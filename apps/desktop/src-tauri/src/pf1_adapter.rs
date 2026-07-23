@@ -98,9 +98,11 @@ impl Pf1Adapter {
         &self,
         root: &Path,
         class_id: &str,
+        additional_choices: Vec<SelectedChoice>,
+        skill_allocations: Option<Vec<SkillAllocation>>,
         saved_at: &str,
     ) -> Result<CreateCharacterResponse, String> {
-        level_up_character_at_root(root, class_id, saved_at)
+        level_up_character_at_root(root, class_id, additional_choices, skill_allocations, saved_at)
     }
 }
 
@@ -401,6 +403,49 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
     }
 }
 
+/// Applies one level-up's full choice set on top of `apply_level_up`:
+/// appends any additional chosen options (e.g. a hit-die roll record or a
+/// feat pick at a feat-gaining level) and, when the caller supplies a full
+/// skill-allocation set, replaces `chosen.skill_allocations` wholesale.
+///
+/// Hit-die-roll and feat-pick choices are modeled as generic
+/// `SelectedChoice { choice_set_id, selection_id }` entries — this crate's
+/// existing extensible convention for player choices (see
+/// `compose_character_input`'s own `choice:level_1_character_feat` /
+/// `choice:human_ability_bonus` entries and `pilot_compute.rs`'s
+/// `choice_selection` reader) — rather than new dedicated fields on
+/// `ChosenCharacterState`. That struct is constructed as a literal at
+/// dozens of call sites across this crate's own test suite; adding a
+/// required field there would break every one of them for a v0.6 task
+/// scoped to persistence, not a rules_core schema change.
+///
+/// `skill_allocations: None` leaves the character's existing allocations
+/// untouched (distinct from `apply_set_skill_allocations`'s own always-
+/// replace contract, since a level-up's skill-points step is optional here
+/// — the caller may choose to persist skill allocations via the dedicated
+/// `set_skill_allocations` command instead).
+///
+/// Every `SelectedChoice.choice_set_id` must have exactly one colon (two
+/// colon-segments, e.g. `"choice:level_2_hit_points"`) and every
+/// `selection_id` at least one colon (e.g. `"hp:average"`,
+/// `"feat:cleave"`) — `SavedCharacterStore::save`'s own
+/// `validate_character_input` enforces this grammar so every choice
+/// round-trips through the on-disk fixture format; a caller (or its Tauri
+/// wrapper) that violates it fails honestly at save time rather than
+/// producing a silently-truncated record.
+pub fn apply_level_up_choices(
+    character_input: &mut CharacterInput,
+    class_id: &str,
+    additional_choices: Vec<SelectedChoice>,
+    skill_allocations: Option<Vec<SkillAllocation>>,
+) {
+    apply_level_up(character_input, class_id);
+    character_input.chosen.selected_choices.extend(additional_choices);
+    if let Some(allocations) = skill_allocations {
+        apply_set_skill_allocations(character_input, allocations);
+    }
+}
+
 /// `level_up_character`'s real implementation: load -> mutate -> recompute
 /// -> re-save -> return envelope. Split out from the `#[tauri::command]`
 /// wrapper in `character_hub.rs` so it is unit-testable against a real
@@ -415,10 +460,12 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
 pub(crate) fn level_up_character_at_root(
     root: &Path,
     class_id: &str,
+    additional_choices: Vec<SelectedChoice>,
+    skill_allocations: Option<Vec<SkillAllocation>>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
     mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_level_up(character_input, class_id);
+        apply_level_up_choices(character_input, class_id, additional_choices, skill_allocations);
     })
 }
 
@@ -588,8 +635,14 @@ mod tests {
         let envelope = seed_envelope(character_id, 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T01:00:00Z")
-            .expect("level up call should not error");
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("level up call should not error");
 
         match response {
             CreateCharacterResponse::Saved { .. } => {}
@@ -607,6 +660,87 @@ mod tests {
         assert_eq!(
             reloaded.latest_authoritative_revision_ref,
             format!("{character_id}.rev.2")
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm, task 3: level-up HP + choices persistence.
+    /// `LevelUpDialog.onAccept` needs to persist a hit-die roll record, any
+    /// feat picks at feat-gaining levels, and a skill-allocation update, all
+    /// in the same mutation as the level increment. Hit-die/feat choices are
+    /// modeled as generic `SelectedChoice` entries (this crate's existing
+    /// extensible convention — see `compose_character_input`'s own
+    /// `choice:level_1_character_feat` / `choice:human_ability_bonus`
+    /// entries) rather than new dedicated fields, so no schema change is
+    /// needed on `ChosenCharacterState`.
+    #[test]
+    fn level_up_character_at_root_persists_additional_choices_and_skill_allocations() {
+        let character_id = "pf1-adapter-level-up-choices";
+        let root = tempdir("level-up-choices");
+        let envelope = seed_envelope(character_id, 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            vec![
+                SelectedChoice {
+                    choice_set_id: "choice:level_2_hit_points".to_owned(),
+                    selection_id: "hp:average".to_owned(),
+                },
+                SelectedChoice {
+                    choice_set_id: "choice:level_2_bonus_feat".to_owned(),
+                    selection_id: "feat:cleave".to_owned(),
+                },
+            ],
+            Some(vec![
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:swim".to_owned(), ranks: 1 },
+            ]),
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("level up with choices call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 -> 2 with an additional recorded choice must \
+                     still reach Computed (nothing reads these choice_set_ids as a gate), \
+                     got: {diagnostics:?}"
+                )
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.class_levels[0].level, 2);
+        assert!(
+            reloaded.character_input.chosen.selected_choices.iter().any(|choice| {
+                choice.choice_set_id == "choice:level_2_hit_points"
+                    && choice.selection_id == "hp:average"
+            }),
+            "the hit-point roll choice must be persisted as a real selected_choices entry"
+        );
+        assert!(
+            reloaded.character_input.chosen.selected_choices.iter().any(|choice| {
+                choice.choice_set_id == "choice:level_2_bonus_feat"
+                    && choice.selection_id == "feat:cleave"
+            }),
+            "the feat pick at this feat-gaining level must be persisted as a real \
+             selected_choices entry"
+        );
+        assert_eq!(
+            reloaded
+                .character_input
+                .chosen
+                .skill_allocations
+                .iter()
+                .map(|allocation| (allocation.skill_id.as_str(), allocation.ranks))
+                .collect::<Vec<_>>(),
+            vec![("skill:climb", 1), ("skill:intimidate", 1), ("skill:swim", 1)],
+            "a supplied skill-allocation set must replace chosen.skill_allocations wholesale"
         );
 
         std::fs::remove_dir_all(&root).ok();
@@ -738,8 +872,14 @@ mod tests {
         let envelope = seed_envelope(character_id, 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T01:00:00Z")
-            .expect("first level up should not error");
+        level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("first level up should not error");
         let after_first = SavedCharacterStore::load(&root).expect("reload should succeed");
         assert_eq!(after_first.revision_id, format!("{character_id}.rev.2"));
 
@@ -768,7 +908,7 @@ mod tests {
 
         let adapter = Pf1Adapter;
         let response = adapter
-            .level_up(&root, FIGHTER_CLASS_ID, "2026-07-21T01:00:00Z")
+            .level_up(&root, FIGHTER_CLASS_ID, Vec::new(), None, "2026-07-21T01:00:00Z")
             .expect("level up call should not error");
 
         match response {

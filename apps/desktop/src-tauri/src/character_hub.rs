@@ -674,19 +674,56 @@ pub fn load_saved_character(
 pub struct LevelUpCharacterRequest {
     pub character_id: String,
     pub class_id: String,
+    /// Additional player choices this level-up records (a hit-die roll or
+    /// "take average" record, feat picks at feat-gaining levels, ...),
+    /// appended to `chosen.selected_choices` verbatim. Empty by default —
+    /// callers that only want the bare level increment (the pre-v0.6
+    /// behavior) omit this field entirely.
+    #[serde(default)]
+    pub additional_choices: Vec<SelectedChoiceDto>,
+    /// When present, replaces `chosen.skill_allocations` wholesale with
+    /// this level-up's skill-point spend (same semantics as
+    /// `set_skill_allocations`). `None`/omitted leaves the character's
+    /// existing skill allocations untouched.
+    #[serde(default)]
+    pub skill_allocations: Option<Vec<SkillAllocationDto>>,
     pub saved_at: String,
 }
 
-/// Loads the saved character, increments/adds the requested class's
-/// level, recomputes via the real engine, and re-saves — see
-/// `level_up_character_at_root` for the full semantics.
+/// Loads the saved character, increments/adds the requested class's level,
+/// records any additional level-up choices (hit-die roll, feat picks) and
+/// an optional skill-allocation update, recomputes via the real engine, and
+/// re-saves — see `level_up_character_at_root` for the full semantics.
 #[tauri::command]
 pub fn level_up_character(
     app: tauri::AppHandle,
     request: LevelUpCharacterRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    level_up_character_at_root(&root, &request.class_id, &request.saved_at)
+    let additional_choices = request
+        .additional_choices
+        .into_iter()
+        .map(|choice| SelectedChoice {
+            choice_set_id: choice.choice_set_id,
+            selection_id: choice.selection_id,
+        })
+        .collect();
+    let skill_allocations = request.skill_allocations.map(|allocations| {
+        allocations
+            .into_iter()
+            .map(|skill| SkillAllocation {
+                skill_id: skill.skill_id,
+                ranks: skill.ranks,
+            })
+            .collect()
+    });
+    level_up_character_at_root(
+        &root,
+        &request.class_id,
+        additional_choices,
+        skill_allocations,
+        &request.saved_at,
+    )
 }
 
 /// The wire-level projection of `ActiveState` for the `add_equipment_selection`
@@ -2152,8 +2189,14 @@ mod tests {
         let envelope = level_up_test_envelope("race:human", 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
-            .expect("level up call should not error");
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("level up call should not error");
 
         match response {
             CreateCharacterResponse::Saved { summary, .. } => {
@@ -2190,8 +2233,14 @@ mod tests {
         let envelope = level_up_test_envelope("race:human", 20);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
-            .expect("level up call should not error even when the build is Blocked");
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("level up call should not error even when the build is Blocked");
 
         match response {
             CreateCharacterResponse::Blocked { diagnostics } => {
@@ -2228,7 +2277,13 @@ mod tests {
     fn level_up_character_at_root_fails_honestly_when_nothing_is_saved_yet() {
         let root = tempdir("missing-character");
 
-        let result = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z");
+        let result = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        );
 
         assert!(result.is_err(), "leveling up a nonexistent saved character must fail");
 
