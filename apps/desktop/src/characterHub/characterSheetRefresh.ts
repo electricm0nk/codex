@@ -19,7 +19,19 @@ export type CharacterMutationRefresh =
 
 const FALLBACK_BLOCKED_MESSAGE = 'The requested change could not be applied — the recomputed build was not ready.';
 
-export function toCharacterMutationRefresh(outcome: CreateCharacterOutcome): CharacterMutationRefresh {
+/**
+ * `selectedFeats` isn't part of `CreateCharacterOutcome` (only
+ * `load_saved_character` returns it, not the mutation commands), so callers
+ * pass the value the refreshed `detail` should carry explicitly — the
+ * previous known list carried forward unchanged for any mutation that
+ * doesn't touch feats, or that list plus the newly added feat id for a feat
+ * mutation. Never fabricated: either real prior data or a real just-applied
+ * append, matching exactly what the backend mutation itself did.
+ */
+export function toCharacterMutationRefresh(
+  outcome: CreateCharacterOutcome,
+  selectedFeats: string[]
+): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     const messages = outcome.diagnostics.filter((diagnostic) => diagnostic.claimBlocking).map((diagnostic) => diagnostic.message);
     return { kind: 'blocked', message: messages.length > 0 ? messages.join(' ') : FALLBACK_BLOCKED_MESSAGE };
@@ -32,6 +44,7 @@ export function toCharacterMutationRefresh(outcome: CreateCharacterOutcome): Cha
       snapshot: outcome.snapshot,
       diagnostics: [],
       corpusDerived: outcome.corpusDerived,
+      selectedFeats,
     },
   };
 }

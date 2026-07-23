@@ -21,6 +21,8 @@ export interface LoadSavedCharacterResponse {
   snapshot: PilotSnapshotDto | null;
   diagnostics: DiagnosticDto[];
   corpusDerived: CorpusDerivedDto;
+  /** The character's full persisted `chosen.selected_feats`, verbatim — not just feats added this session. */
+  selectedFeats: string[];
 }
 
 export async function loadSavedCharacterDetail(

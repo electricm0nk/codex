@@ -811,34 +811,27 @@ function ActionsTab(props: { levelEntries: LevelEntry[] }) {
 }
 
 /**
- * Add Feat picker + a running list of what's been added this session.
- * Honest gap: `load_saved_character`'s response has no field exposing the
- * character's already-selected feats (`chosen.selected_feats` isn't
- * projected onto `PilotSnapshotDto`/`LoadSavedCharacterResponse` anywhere —
- * confirmed by grep), so this cannot show the character's *complete* feat
- * list the way `GearTab`/`SpellsTab` show corpus-derived equipment/spells.
- * Rather than fabricate one, this only lists feats added via this picker
- * in the current session, labeled as such — real, not a stand-in for the
- * full list.
+ * Add Feat picker + the character's full persisted feat list, sourced from
+ * `load_saved_character`'s `selectedFeats` field (backend commit `1509124`)
+ * — real, complete, not just feats added this session.
  */
-function FeatsTab(props: { sessionAddedFeats: string[]; onAddFeat: () => void }) {
+function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Add feats from the real CRB feat catalog. The character's full feat list isn't yet
-        surfaced by the character-load response, so only feats added this session are listed below.
+        Add feats from the real CRB feat catalog.
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
           Add Feat
         </button>
       </div>
-      {props.sessionAddedFeats.length === 0 ? (
+      {props.selectedFeats.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-          No feats added this session yet.
+          No feats selected yet.
         </p>
       ) : (
-        props.sessionAddedFeats.map((featId, index) => (
+        props.selectedFeats.map((featId, index) => (
           <div key={`${featId}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <span style={{ fontWeight: 700 }}>{featId}</span>
           </div>
@@ -887,7 +880,6 @@ export function CharacterSheet(props: {
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | null>(null);
-  const [sessionAddedFeats, setSessionAddedFeats] = useState<string[]>([]);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
@@ -972,7 +964,7 @@ export function CharacterSheet(props: {
         ],
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome);
+      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -996,7 +988,7 @@ export function CharacterSheet(props: {
         activeState: 'EquippedActive',
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome);
+      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1052,7 +1044,7 @@ export function CharacterSheet(props: {
               acquisitionMode: 'Known',
               savedAt: new Date().toISOString(),
             });
-      const refresh = toCharacterMutationRefresh(outcome);
+      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1071,12 +1063,14 @@ export function CharacterSheet(props: {
         featId: entry.key,
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome);
+      // The feat was just appended to chosen.selected_feats by this exact
+      // mutation, so appending it here mirrors the real backend change —
+      // not fabricated, the same append `add_feat_selection` itself made.
+      const refresh = toCharacterMutationRefresh(outcome, [...(props.detail?.selectedFeats ?? []), entry.key]);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
       }
-      setSessionAddedFeats((prev) => [...prev, entry.key]);
       props.onDetailRefreshed(refresh.detail);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -1203,7 +1197,7 @@ export function CharacterSheet(props: {
           .map(([skillName, ranks]) => ({ skillId: skillIdFor(skillName), ranks })),
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome);
+      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1586,7 +1580,7 @@ export function CharacterSheet(props: {
                   onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
                 />
               ) : tab === 'Feats' ? (
-                <FeatsTab sessionAddedFeats={sessionAddedFeats} onAddFeat={() => setItemPickerOpen('feat')} />
+                <FeatsTab selectedFeats={props.detail?.selectedFeats ?? []} onAddFeat={() => setItemPickerOpen('feat')} />
               ) : tab === 'Actions' ? (
                 <ActionsTab levelEntries={currentBenefits} />
               ) : (

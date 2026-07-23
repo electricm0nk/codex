@@ -26,28 +26,36 @@ async function main() {
  */
 function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
   const summary = makeCharacterSummary({ classSummary: 'class:fighter:2' });
-  const result = toCharacterMutationRefresh({
-    kind: 'Saved',
-    summary,
-    snapshot: SNAPSHOT,
-    corpusDerived: { schoolCoverage: [], equippedItems: [] },
-  });
+  const result = toCharacterMutationRefresh(
+    {
+      kind: 'Saved',
+      summary,
+      snapshot: SNAPSHOT,
+      corpusDerived: { schoolCoverage: [], equippedItems: [] },
+    },
+    ['feat:power_attack']
+  );
 
   assertEqual(result.kind, 'refreshed', 'kind');
   if (result.kind !== 'refreshed') return;
   assertEqual(result.detail.summary.classSummary, 'class:fighter:2', 'refreshed detail carries the incremented classSummary');
   assertEqual(result.detail.snapshot?.baselineArmorClass, 17, 'refreshed detail carries the fresh snapshot');
   assertEqual(result.detail.diagnostics.length, 0, 'a Saved outcome carries no diagnostics');
+  assertEqual(result.detail.selectedFeats.length, 1, 'refreshed detail carries the caller-supplied selectedFeats verbatim');
+  assertEqual(result.detail.selectedFeats[0], 'feat:power_attack', 'refreshed detail carries the caller-supplied selectedFeats verbatim');
 }
 
 function verifiesBlockedOutcomeSurfacesRealDiagnosticVerbatim() {
-  const result = toCharacterMutationRefresh({
-    kind: 'Blocked',
-    diagnostics: [
-      { id: 'class_feature.paladin.smite_evil.unsupported', message: 'Smite evil is not yet implemented.', claimBlocking: true },
-      { id: 'race.human.bounded_semantics', message: 'Human race semantics are bounded.', claimBlocking: false },
-    ],
-  });
+  const result = toCharacterMutationRefresh(
+    {
+      kind: 'Blocked',
+      diagnostics: [
+        { id: 'class_feature.paladin.smite_evil.unsupported', message: 'Smite evil is not yet implemented.', claimBlocking: true },
+        { id: 'race.human.bounded_semantics', message: 'Human race semantics are bounded.', claimBlocking: false },
+      ],
+    },
+    []
+  );
 
   assertEqual(result.kind, 'blocked', 'kind');
   if (result.kind !== 'blocked') return;
@@ -56,7 +64,7 @@ function verifiesBlockedOutcomeSurfacesRealDiagnosticVerbatim() {
 }
 
 function verifiesBlockedOutcomeWithNoBlockingDiagnosticsFallsBackToHonestMessage() {
-  const result = toCharacterMutationRefresh({ kind: 'Blocked', diagnostics: [] });
+  const result = toCharacterMutationRefresh({ kind: 'Blocked', diagnostics: [] }, []);
 
   assertEqual(result.kind, 'blocked', 'kind');
   if (result.kind !== 'blocked') return;
