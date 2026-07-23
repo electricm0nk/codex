@@ -12,15 +12,13 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   live-testing the starter-spell bootstrap fix
-                                (b2a5eb6) -- NOT confirmed resolved yet,
-                                3rd "resolved" claim in this chain, waiting
-                                for their report before believing it
-backend               Sonnet   starter-spell fix DONE+pushed (b2a5eb6),
-                                spell-save-DC DONE+pushed (3b39731);
-                                standing by for frontend's verdict
-qa                    Sonnet   spell-save-DC test fix DONE+pushed; idle,
-                                watching for further findings
+frontend              Sonnet   WIZARD CONFIRMED WORKING END-TO-END, live-
+                                verified with hand-checked PF1 math (see
+                                Happened); also landed feats-tab wiring;
+                                idle, standing by
+backend               Sonnet   idle, standing by; one new minor finding
+                                queued (post-mutation render staleness)
+qa                    Sonnet   idle, watching for further findings
 
 (b) Happened
 ------------
@@ -521,6 +519,31 @@ qa                    Sonnet   spell-save-DC test fix DONE+pushed; idle,
   Backend correctly did NOT declare this resolved itself this time --
   explicitly asked for frontend's live verification given the pattern.
   NOT marked resolved in risks doc either, pending that report.
+- MILESTONE, GENUINELY CONFIRMED THIS TIME: frontend live-tested the
+  starter-spell fix end-to-end. Created a fresh Human Wizard -- creation
+  form reported "computed and saved" for the first time in this
+  investigation. Real sheet loaded (HP 8/8, real Progression rail).
+  Used the real Add Spell picker twice (Magic Missile, then Alarm),
+  both genuinely persisted (rev.1->rev.2->rev.3). Hand-verified the
+  slot math against real PF1 rules: 1 base + 1 specialist + 0 Int-mod =
+  2 slots, both adds summed to exactly 2/2, honestly enforced by the
+  engine. This closes the entire three-layer Wizard investigation:
+  class acquisition, then first-spell bootstrap, now confirmed with
+  real UI-driven persistence, not just compute-layer proof. Wizard is
+  the second genuinely playable class alongside Fighter. Marked
+  RESOLVED in risks doc item 10, for real this time.
+  One new minor finding along the way: post-mutation corpus_derived
+  render staleness (Spells tab briefly shows empty after a successful
+  add, corrects on reload). Backend investigated and ruled their side
+  out with confidence (mutation path is fully synchronous, no caching,
+  response provably fresh) -- narrowed to a frontend render/state-
+  timing issue, passed back to frontend. Not urgent, data always
+  correct on reload.
+- Frontend also landed the feats-tab full-list wiring (aa611ce) against
+  backend's selectedFeats field (1509124) -- live-verified, Aldric's
+  Feats tab correctly showed all 5 feats (3 fixed-loadout + Cleave +
+  newly-added Toughness), revision bumped on the new add. Risks item 8
+  marked RESOLVED.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
