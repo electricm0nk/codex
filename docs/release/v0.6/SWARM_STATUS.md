@@ -12,12 +12,14 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
-frontend              Sonnet   ALL 5 wave-1 tasks DONE, live-verified; holding
-                                at checkpoint per lead instruction
-backend               Sonnet   ALL 6 reprioritized tasks + a cosmetic fix
-                                DONE, pushed; holding at checkpoint per lead
-                                instruction
-qa                    Sonnet   idle, watching for PCGen-divergent findings
+frontend              Sonnet   multiclass audit DONE (d03bc89) -- found+fixed
+                                a real silent display-corruption bug; now on
+                                a full 6-level multiclass walkthrough
+backend               Sonnet   AC slice dropped (architecture blocker, see
+                                Happened); on items 2-4 (durability, money-
+                                verification, comparator field-extraction)
+qa                    Sonnet   money/encumbrance catalogue adoption DONE
+                                (ae723ae); idle, watching for wave-2 output
 
 (b) Happened
 ------------
@@ -219,6 +221,53 @@ qa                    Sonnet   idle, watching for PCGen-divergent findings
   All 5 of frontend's original wave-1 tasks are now done: bio (94a3865),
   feat picker (febf4d8), money panel (59d5bc0), skill persistence
   (75200fc), level-up persistence (e8e4597).
+- Backend proposed the posture-narrowness widening (4 exactness gates
+  found, not 3 -- including a previously undocumented Human-Wizard
+  spellbook gate). AC slice greenlit initially, then DROPPED
+  mid-implementation when backend found baseline_armor_class lives in the
+  corpus-free headless compute layer and can't cheaply reach the already-
+  correct per-item AC math, which needs corpus access -- a ~347-call-site
+  architecture question, not a wiring job. Backend caught this before
+  writing the change and stopped to ask. Flagged for the operator: the
+  same headless/corpus-aware split likely blocks attack-bonus and
+  skill-posture widening too -- possibly one architecture fix unlocks all
+  three pillars rather than three separate slices. Full writeup in
+  risks-and-open-questions.md item 1. Backend redirected to items 2-4
+  (durability, money-conversion PCGen verification, comparator
+  field-extraction), none of which share this problem.
+- QA adopted money-conversion + encumbrance into the test catalogue (12
+  independently-authored tests, cross-checked the PCGen carrying-capacity
+  table a second time from a different angle than the original spec pass,
+  caught a real fixture-authoring trap in their own draft -- corpus KEY
+  tokens don't take a "(Base)" suffix for general items -- and documented
+  it for future fixture writers). Refreshed gap-list survey: money/carry-
+  capacity/encumbrance no longer gaps; durability is now the sole
+  zero-production-surface calculation; BAB/save breadth still 3 of 11
+  classes. Caught and fixed a stale "AC greenlit" line in its own
+  SWARM_REPORT.md attestation after seeing the drop -- good self-check on
+  the document that matters most for closure.
+- MAJOR FINDING: frontend's multiclass audit (asked to verify alpha bar
+  item 3 is reachable through the UI, not just the engine) found character
+  creation is single-class-only by design (multiclassing is a level-up-
+  time action, matches backend's docs) -- structurally correct. But
+  LIVE-testing (not just reading code) surfaced a real, silent,
+  launch-blocking bug: the backend persisted a Fighter-2-into-Rogue-1
+  multiclass level-up perfectly (verified on disk: two real class_level
+  entries, correct recomputed BAB/saves/HP), but the frontend rendered it
+  as a garbled single pseudo-class with HP wrong by 17 points. Root cause:
+  characterProgression.ts's parseHeldClasses() split the wire-format
+  classSummary on '/' ; character_hub.rs actually joins on ',' -- verified
+  directly against the Rust source. The wrong assumption silently
+  corrupted HP, skill-point totals, caster level, the Progression rail,
+  and weapon proficiency for ANY multiclass character while single-class
+  characters (no separator needed) looked completely fine -- exactly why
+  it went unnoticed until someone actually drove a real multiclass
+  level-up end-to-end rather than trusting that the code paths existed.
+  Fixed and live-verified (d03bc89): same flow now shows "Fighter 2 /
+  Rogue 1", correct HP 27/27, correct Progression-rail entry. Confirms
+  alpha bar item 3 is genuinely reachable -- this was a real bug, not a
+  missing affordance. Frontend now attempting a full 6-level multiclass
+  walkthrough to proactively surface anything else like this.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
