@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Polymorph Familiar",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "This spell functions as beast shape I, except it grants your familiar the form of any Small animal. Your familiar retains all of its special abilities and continues to grant you the special ability associated with its normal shape (such as a bat familiar's bonus on Fly checks). At caster level 7th, this spell functions as beast shape II. At caster level 9th, it functions as beast shape III. At caster level 11th, it functions as beast shape IV.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 97,
+    "record_key": "Polymorph Familiar"
+  }
+}

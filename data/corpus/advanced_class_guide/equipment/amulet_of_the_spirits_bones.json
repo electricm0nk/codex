@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Amulet of the Spirits (Bones)",
+    "category": "MagicItems",
+    "name": "Amulet of the Spirits (Bones)",
+    "cost_gp": 12000.0,
+    "weight": 1.0,
+    "description": "increase effective level of mystery or spirit powers by 2; 1/day gain +2 deflection bonus to AC for 8 rounds; 1/day cause creature within 30 ft. to be frightened for 1 round (Will DC 13)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 330,
+    "record_key": "Amulet of the Spirits (Bones)"
+  }
+}

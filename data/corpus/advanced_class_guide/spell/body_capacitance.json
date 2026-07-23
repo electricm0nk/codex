@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Body Capacitance",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "If you take electricity damage while this spell is active, some of the energy is stored on your skin, as with holding the charge on a touch spell. You can release this stored electricity by making a melee touch attack. You gain a +3 bonus on the attack roll if your opponent is wearing metal armor, is carrying a metal weapon, or is made of metal. The target of your touch attack is dealt electricity damage equal to half the amount of electricity damage you took after you cast this spell (for example, if you saved for half damage against a lightning bolt and took only 15 points of electricity damage, your next touch attack deals 7 points of electricity damage). This spell is discharged once you hit with a melee touch attack to deliver its damage. If you take electricity damage multiple times while this spell is active, use the largest amount of electricity damage you took to determine your touch attack damage.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 34,
+    "record_key": "Body Capacitance"
+  }
+}

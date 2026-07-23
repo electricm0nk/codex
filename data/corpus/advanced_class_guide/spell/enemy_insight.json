@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Enemy Insight",
+    "school": "Divination",
+    "level": 2,
+    "description": "You forge a mental bond between yourself and the other targets, each of which must have an Intelligence score of 3 or higher. Choose one of your favored enemy types (such as goblinoids or magical beasts). You grant the targets half your favored enemy bonus against that type of creature. If any target moves out of range, the spell ends for it.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 50,
+    "record_key": "Enemy Insight"
+  }
+}

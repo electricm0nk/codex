@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Aggressive Thundercloud (Greater)",
+    "school": "Evocation",
+    "level": 4,
+    "description": "This spell functions as aggressive thundercloud, except it deals 6d6 points of electricity damage to any creature it strikes. The first creature damaged by the cloud is also stunned for 1 round (Fortitude negates); this is a sonic effect.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 13,
+    "record_key": "Aggressive Thundercloud (Greater)"
+  }
+}

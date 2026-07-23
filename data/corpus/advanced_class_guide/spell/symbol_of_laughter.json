@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Symbol of Laughter",
+    "school": "Enchantment",
+    "level": 4,
+    "description": "This spell functions as symbol of death, except that all creatures within 60 feet are affected with uncontrollable laughter (as hideous laughter) for 1 round per caster level. Unlike symbol of death, symbol of laughter has no hit point limit; once it is triggered, a symbol of laughter remains active for 1 minute per caster level. Symbol of laughter can be made permanent with a permanency spell by a caster of 10th level or higher at a cost of 5,000 gp.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 123,
+    "record_key": "Symbol of Laughter"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Hex Glyph (Greater)",
+    "school": "Abjuration",
+    "level": 5,
+    "description": "This spell functions as hex glyph, except you can store a hex or a major hex (but not a grand hex). You trace the glyph with incense, which must first be sprinkled with powdered diamond (as noted in the material line). Read magic allows its caster to identify a greater hex glyph with a DC 16 Spellcraft check.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 68,
+    "record_key": "Hex Glyph (Greater)"
+  }
+}

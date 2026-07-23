@@ -8,4 +8,5 @@
 //! value that is already known (from the compiled Rust module) to be
 //! correct -- never to compute the value itself.
 
+pub mod acg;
 pub mod apg;

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Longstrider (Greater)",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "This functions as longstrider, except it gives you a +20-foot enhancement bonus to your base speed and a +10-foot enhancement bonus to your other modes of movement (burrow, climb, fly, swim, and so on). It does not affect movement modes you do not actually have-for example, if you do not have a swim speed, this spell does not grant you a swim speed.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 76,
+    "record_key": "Longstrider (Greater)"
+  }
+}

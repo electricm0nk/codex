@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Preyfinder",
+    "category": "MagicItems",
+    "name": "Preyfinder",
+    "cost_gp": 85000.0,
+    "weight": null,
+    "description": "can see and track creature that blood was taken from; +1 insight bonus on all attack and damage rolls against quarry, or 1/day use own blood to gain a +2 morale bonus on all attack rolls, saves, and skill checks for 1 minute"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 397,
+    "record_key": "Preyfinder"
+  }
+}

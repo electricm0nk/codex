@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Adhesive Spittle",
+    "school": "Conjuration",
+    "level": 1,
+    "description": "Once during this spell's duration, you can spit a viscous liquid as a standard action. This liquid functions as a tanglefoot bag, except you do not have to make a successful attack roll to hit your target. The DCs to counteract this adhesive (to avoid being stuck to the floor, to fly, to break the adhesive, or to cast a spell) use the spell's DC rather than a tanglefoot bag's normal DCs. The adhesive persists for 2d4 rounds after you spit it.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 9,
+    "record_key": "Adhesive Spittle"
+  }
+}

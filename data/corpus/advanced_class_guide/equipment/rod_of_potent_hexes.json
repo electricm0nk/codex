@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Rod of Potent Hexes",
+    "category": "MagicItems",
+    "name": "Rod of Potent Hexes",
+    "cost_gp": 54000.0,
+    "weight": 5.0,
+    "description": "3/day double damage dealt or healed by hex (not advanced or grand)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 299,
+    "record_key": "Rod of Potent Hexes"
+  }
+}

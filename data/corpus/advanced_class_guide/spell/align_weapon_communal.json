@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Align Weapon (Communal)",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "This spell functions as align weapon, except you divide the duration in 1-minute increments between any number of touched weapons. Every group of up to 50 projectiles (which must be together at the time of casting) counts as one weapon for the purpose of dividing the spell's duration.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 16,
+    "record_key": "Align Weapon (Communal)"
+  }
+}

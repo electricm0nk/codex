@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Gentle Breeze",
+    "school": "Evocation",
+    "level": 1,
+    "description": "You create a light wind that blows only against the target, from a direction of your choice. The breeze grants the target a +2 circumstance bonus on saves against very hot conditions, severe heat, and saves against clouds, vapors, and gases (such as cloudkill, stinking cloud, and inhaled poisons). There must be air present to use this spell.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 61,
+    "record_key": "Gentle Breeze"
+  }
+}

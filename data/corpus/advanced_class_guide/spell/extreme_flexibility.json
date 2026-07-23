@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Extreme Flexibility",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You gain a +1 dodge bonus to AC, a +4 circumstance bonus on Escape Artist checks and combat maneuver checks to escape a grapple, and +4 circumstance bonus to your CMD against grapple attempts.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 52,
+    "record_key": "Extreme Flexibility"
+  }
+}

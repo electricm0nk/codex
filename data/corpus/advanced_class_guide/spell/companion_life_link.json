@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Companion Life Link",
+    "school": "Necromancy",
+    "level": 2,
+    "description": "You create a life link between yourself and the target. You sense whenever the target is wounded and are made immediately aware if the target is slain. If you are wounded or slain, the target is made aware. As a free action, you can call out to the target, causing it to return to you (if able and willing); this ends the spell.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 39,
+    "record_key": "Companion Life Link"
+  }
+}

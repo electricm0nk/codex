@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Repair Undead (Mass)",
+    "school": "Necromancy",
+    "level": 5,
+    "description": "This spell functions as repair undead, except as noted above, and it cures 1d8 points of damage + 1 point per caster level (maximum +20) on each selected creature.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 100,
+    "record_key": "Repair Undead (Mass)"
+  }
+}

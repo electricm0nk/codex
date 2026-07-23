@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Duelist's Comate",
+    "category": "ArmsArmor",
+    "name": "Duelist's Comate",
+    "cost_gp": 20.0,
+    "weight": 2.0,
+    "description": "3/day surprise attack with pommel (1d6+2 bludgeoning, 20/x2 crit)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 261,
+    "record_key": "Duelist's Comate"
+  }
+}

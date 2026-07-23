@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Shield of Fortification (Greater)",
+    "school": "Abjuration",
+    "level": 3,
+    "description": "This spell functions as shield of fortification, except there is a 50% chance that the critical hit or sneak attack is negated and damage is instead be rolled normally, rather than 25%.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 105,
+    "record_key": "Shield of Fortification (Greater)"
+  }
+}

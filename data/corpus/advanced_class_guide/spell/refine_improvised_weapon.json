@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Refine Improvised Weapon",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "You transform an improvised weapon into an equivalent simple or martial weapon of masterwork quality. This effect does not alter the weapon's shape or appearance in any way. For example, if this spell is cast on a chair leg, a butter knife, or a pitchfork, the items function as a masterwork club, a masterwork dagger, or a masterwork trident, respectively, but the items look no different than they did before the spell was cast.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 98,
+    "record_key": "Refine Improvised Weapon"
+  }
+}

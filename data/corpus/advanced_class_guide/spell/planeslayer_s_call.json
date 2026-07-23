@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Planeslayer's Call",
+    "school": "Enchantment",
+    "level": 4,
+    "description": "The magic of your allies in the area becomes more potent against certain outsiders. Chose one alignment subtype (chaotic, evil, good, or lawful). Against outsiders with that alignment component or subtype, your allies in the area gain a +2 bonus on caster level checks to overcome spell resistance, and their spells ignore the first 10 points of energy resistance (but not energy immunity). This spell gains the alignment descriptor that is opposite the outsider alignment chosen. For example, if you choose for the spell to affect evil outsiders, then this spell has the good descriptor.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 96,
+    "record_key": "Planeslayer's Call"
+  }
+}

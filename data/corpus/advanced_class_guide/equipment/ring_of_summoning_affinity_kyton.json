@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Ring of Summoning Affinity (Kyton)",
+    "category": "MagicItems",
+    "name": "Ring of Summoning Affinity (Kyton)",
+    "cost_gp": 7300.0,
+    "weight": null,
+    "description": "add to summon monster list: augur (3rd), sacristan (7th), interlocutor (9th); 1/day summon augur"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 287,
+    "record_key": "Ring of Summoning Affinity (Kyton)"
+  }
+}

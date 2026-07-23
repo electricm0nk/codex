@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Boots of Vaulting",
+    "category": "MagicItems",
+    "name": "Boots of Vaulting",
+    "cost_gp": 3500.0,
+    "weight": 1.0,
+    "description": "Ignore additional 10 feet of falling distance with Acrobatics; 1/round gain +10 competence bonus to Acrobatics to jump, treated as running start; +10 to Acrobatics to afoid attacks of opportunity while jumping or to balance after landing; if used more than 1/minute, may reduce speed by half"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 354,
+    "record_key": "Boots of Vaulting"
+  }
+}

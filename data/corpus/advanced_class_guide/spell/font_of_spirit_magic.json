@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Font of Spirit Magic",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "You amplify the effect of magic associated with your spirit and wandering spirit (any spells on the spirit magic spell lists for these spirits). When allies within the area cast these spells, they gain a +2 bonus on caster level checks and concentration checks, as well as to spell DCs. This bonus is a sacred bonus if you are good-aligned or a profane bonus if you are evil-aligned; if you are neither good nor evil, you can choose what type of bonus the spell grants when you cast it.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 60,
+    "record_key": "Font of Spirit Magic"
+  }
+}

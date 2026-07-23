@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Guardian of Faith",
+    "school": "Abjuration",
+    "level": 4,
+    "description": "The target gains the benefit of shield of faith and your choice of protection from chaos, evil, good, or law. As a move action, the target can transfer this spell to a touched ally, who becomes the new target of the spell. The alignment descriptor of this spell matches the alignment descriptor of the protection spell you chose when casting it. For example, granting the target protection from evil gives this spell the good descriptor.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 63,
+    "record_key": "Guardian of Faith"
+  }
+}

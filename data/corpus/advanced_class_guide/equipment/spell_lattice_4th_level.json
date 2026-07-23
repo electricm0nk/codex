@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Spell Lattice (4th Level)",
+    "category": "MagicItems",
+    "name": "Spell Lattice (4th Level)",
+    "cost_gp": 16000.0,
+    "weight": 1.0,
+    "description": "spontaneous caster can cast contained spell as if a spell known (if on caster's spell list); can cast spell as if it were prepared (if on caster's spell list)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 425,
+    "record_key": "Spell Lattice (4th Level)"
+  }
+}

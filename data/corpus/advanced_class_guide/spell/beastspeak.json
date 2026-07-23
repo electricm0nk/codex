@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Beastspeak",
+    "school": "Divination",
+    "level": 2,
+    "description": "When you're in the form of an animal (such as when you are using wild shape or are affected by a polymorph effect), you can speak normally, including when you cast spells with verbal components, and you sound like your normal self when you speak. You can cast this spell while in animal form, using animal-appropriate somatic components.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 25,
+    "record_key": "Beastspeak"
+  }
+}

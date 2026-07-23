@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Tireless Tracking Hide",
+    "category": "ArmsArmor",
+    "name": "Tireless Tracking Hide",
+    "cost_gp": 15.0,
+    "weight": 25.0,
+    "description": "can hustle for 8 hours without growing fatigued, replenished after a full night's rest"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 256,
+    "record_key": "Tireless Tracking Hide"
+  }
+}

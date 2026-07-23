@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Nauseating Dart",
+    "school": "Conjuration",
+    "level": 1,
+    "description": "You spit a poisonous stinger around the size of a quill at a creature within range, as though you had fired a dart from a blowgun. You must succeed at a ranged attack to hit your target. The stinger deals 1d2 points of piercing damage and poisons the target, causing it to become nauseated for 1 round unless it succeeds at a Fortitude save.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 89,
+    "record_key": "Nauseating Dart"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Eyes of the Void",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You gain darkvision, the ability to see 60 feet even in total darkness, including that created by deeper darkness. Darkvision is black-and-white only, but otherwise like normal sight. While affected, your eyes turn completely black (but appear white to anyone viewing you with darkvision).",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 53,
+    "record_key": "Eyes of the Void"
+  }
+}

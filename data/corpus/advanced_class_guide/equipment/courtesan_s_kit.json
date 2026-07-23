@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Courtesan's Kit",
+    "category": "General",
+    "name": "Courtesan's Kit",
+    "cost_gp": 10.0,
+    "weight": 5.0,
+    "description": "Includes razor, scented oils and salves, frangrances, warming pot, variety of outfits, books of poetry, literature, plays"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 172,
+    "record_key": "Courtesan's Kit"
+  }
+}

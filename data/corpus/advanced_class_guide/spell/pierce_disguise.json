@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Pierce Disguise",
+    "school": "Divination",
+    "level": 3,
+    "description": "You see through magical disguises (whether illusions or polymorph effects) of the same spell level or lower. This allows you to see the true forms of creatures magically disguised by such methods. The true form appears as a ghostly overlay on the creature's disguised appearance.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 95,
+    "record_key": "Pierce Disguise"
+  }
+}

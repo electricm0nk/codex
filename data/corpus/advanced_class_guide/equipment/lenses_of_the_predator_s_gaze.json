@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Lenses of the Predator's Gaze",
+    "category": "MagicItems",
+    "name": "Lenses of the Predator's Gaze",
+    "cost_gp": 8000.0,
+    "weight": null,
+    "description": "target creature as standard action, if target not already target of wearer's studied target class feature, get +1 on Bluff, Knowledge, Perception, Sense Motive, Survival, weapon attack rolls and damage rolls against that creature; as free action, increase effective slayer level by 5 for studied target class feature"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 387,
+    "record_key": "Lenses of the Predator's Gaze"
+  }
+}

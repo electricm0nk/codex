@@ -1,0 +1,158 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "class_id": "warpriest",
+    "maxlevel": 20,
+    "chassis": [
+      {
+        "level": 1,
+        "base_attack_bonus": 0,
+        "fort_save": 2,
+        "ref_save": 0,
+        "will_save": 2
+      },
+      {
+        "level": 2,
+        "base_attack_bonus": 1,
+        "fort_save": 3,
+        "ref_save": 0,
+        "will_save": 3
+      },
+      {
+        "level": 3,
+        "base_attack_bonus": 2,
+        "fort_save": 3,
+        "ref_save": 1,
+        "will_save": 3
+      },
+      {
+        "level": 4,
+        "base_attack_bonus": 3,
+        "fort_save": 4,
+        "ref_save": 1,
+        "will_save": 4
+      },
+      {
+        "level": 5,
+        "base_attack_bonus": 3,
+        "fort_save": 4,
+        "ref_save": 1,
+        "will_save": 4
+      },
+      {
+        "level": 6,
+        "base_attack_bonus": 4,
+        "fort_save": 5,
+        "ref_save": 2,
+        "will_save": 5
+      },
+      {
+        "level": 7,
+        "base_attack_bonus": 5,
+        "fort_save": 5,
+        "ref_save": 2,
+        "will_save": 5
+      },
+      {
+        "level": 8,
+        "base_attack_bonus": 6,
+        "fort_save": 6,
+        "ref_save": 2,
+        "will_save": 6
+      },
+      {
+        "level": 9,
+        "base_attack_bonus": 6,
+        "fort_save": 6,
+        "ref_save": 3,
+        "will_save": 6
+      },
+      {
+        "level": 10,
+        "base_attack_bonus": 7,
+        "fort_save": 7,
+        "ref_save": 3,
+        "will_save": 7
+      },
+      {
+        "level": 11,
+        "base_attack_bonus": 8,
+        "fort_save": 7,
+        "ref_save": 3,
+        "will_save": 7
+      },
+      {
+        "level": 12,
+        "base_attack_bonus": 9,
+        "fort_save": 8,
+        "ref_save": 4,
+        "will_save": 8
+      },
+      {
+        "level": 13,
+        "base_attack_bonus": 9,
+        "fort_save": 8,
+        "ref_save": 4,
+        "will_save": 8
+      },
+      {
+        "level": 14,
+        "base_attack_bonus": 10,
+        "fort_save": 9,
+        "ref_save": 4,
+        "will_save": 9
+      },
+      {
+        "level": 15,
+        "base_attack_bonus": 11,
+        "fort_save": 9,
+        "ref_save": 5,
+        "will_save": 9
+      },
+      {
+        "level": 16,
+        "base_attack_bonus": 12,
+        "fort_save": 10,
+        "ref_save": 5,
+        "will_save": 10
+      },
+      {
+        "level": 17,
+        "base_attack_bonus": 12,
+        "fort_save": 10,
+        "ref_save": 5,
+        "will_save": 10
+      },
+      {
+        "level": 18,
+        "base_attack_bonus": 13,
+        "fort_save": 11,
+        "ref_save": 6,
+        "will_save": 11
+      },
+      {
+        "level": 19,
+        "base_attack_bonus": 14,
+        "fort_save": 11,
+        "ref_save": 6,
+        "will_save": 11
+      },
+      {
+        "level": 20,
+        "base_attack_bonus": 15,
+        "fort_save": 12,
+        "ref_save": 6,
+        "will_save": 12
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    "sha256": "4814442741c9c834656b5bcd00932185ea1394cc099164b5e9e98e2d38da0dd2",
+    "line": 364,
+    "record_key": "CLASS:Warpriest"
+  }
+}

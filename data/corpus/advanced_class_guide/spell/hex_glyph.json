@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Hex Glyph",
+    "school": "Abjuration",
+    "level": 3,
+    "description": "This spell functions like the spell glyph version of glyph of warding, except you can store a hex you know (but not a major hex or a grand hex) instead of a spell. If the hex has a target, it targets the intruder. If the hex has an area or an amorphous effect, the area or effect is centered on the intruder. The triggered hex uses this spell's caster level and DC. Read magic allows its caster to identify a hex glyph with a successful DC 13 Knowledge (arcana) check. Identifying the glyph does not discharge it and indicates that it stores a hex, but does not indicate the effect of that hex.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 67,
+    "record_key": "Hex Glyph"
+  }
+}

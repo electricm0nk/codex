@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Wave Shield",
+    "school": "Abjuration",
+    "level": 1,
+    "description": "You create a rushing torrent of water in the rough outline of a shield. The water protects you from one physical or fire attack, granting you DR/- and fire resistance equal to half your caster level (minimum 1) on that attack. Once the spell has reduced the damage of one attack against you, it is discharged.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 137,
+    "record_key": "Wave Shield"
+  }
+}

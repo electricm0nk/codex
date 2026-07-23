@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Summon Monster V (fire elementals only)",
+    "school": "Conjuration",
+    "level": 5,
+    "description": "This spell functions like summon monster I, except that you can only summon Fire Elementals.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 800,
+    "record_key": "Summon Monster V (fire elementals only)"
+  }
+}

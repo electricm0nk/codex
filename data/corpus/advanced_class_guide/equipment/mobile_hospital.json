@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Mobile Hospital",
+    "category": "General",
+    "name": "Mobile Hospital",
+    "cost_gp": 1000.0,
+    "weight": 500.0,
+    "description": "Includes 2 large tents, 10 cots with bedrolls, sturdy table, chirurgeon's kit, 5 healer's kits; gain +2 on Heal for first aid, treat deadly wounds with one use of healer's kit, doubles long-term care recovery rate"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 180,
+    "record_key": "Mobile Hospital"
+  }
+}

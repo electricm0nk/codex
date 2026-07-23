@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Unholy Ice Weapon",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "This spell functions as holy ice weapon, except the weapon is made of frozen unholy water, and instead deals additional damage to creatures that are susceptible to unholy water.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 132,
+    "record_key": "Unholy Ice Weapon"
+  }
+}

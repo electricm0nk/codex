@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Slayer's Robe",
+    "category": "MagicItems",
+    "name": "Slayer's Robe",
+    "cost_gp": 15000.0,
+    "weight": 5.0,
+    "description": "5 min/day gaseous form; +5 bonus to Stealth (+10 in gaseous form) and +5 to Sleight of Hand to conceal a weapon, +1 resistance bonus to saves; bonus to saves increases to studied target bonus when facing a studied target"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 417,
+    "record_key": "Slayer's Robe"
+  }
+}
