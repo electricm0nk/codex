@@ -12,14 +12,15 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   testing the real spell-picker flow against
-                                the new record_and_prepare_spell_selection
-                                command
-backend               Sonnet   feats-tab exposure DONE+pushed (1509124);
-                                standing by, no urgent queue
-qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
-                                (900beee, 13/14 dims genuinely PCGen-matched);
-                                idle, watching for the Wizard bootstrap work
+frontend              Sonnet   live-testing the starter-spell bootstrap fix
+                                (b2a5eb6) -- NOT confirmed resolved yet,
+                                3rd "resolved" claim in this chain, waiting
+                                for their report before believing it
+backend               Sonnet   starter-spell fix DONE+pushed (b2a5eb6),
+                                spell-save-DC DONE+pushed (3b39731);
+                                standing by for frontend's verdict
+qa                    Sonnet   spell-save-DC test fix DONE+pushed; idle,
+                                watching for further findings
 
 (b) Happened
 ------------
@@ -484,6 +485,42 @@ qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
   regardless -- a sound, documented-pattern-consistent workaround, not
   blocking. Backend correctly flagged it rather than acting on it
   unprompted; logged as risks item 9a, not prioritized.
+- Backend closed the real Wizard spell-save-DC gap QA found (3b39731):
+  10 + spell_level + Intelligence modifier, mirroring the identical
+  pattern already used for Paladin/Ranger/Sorcerer/Bard. 3 new tests,
+  195/195 lib green. Coordinated cleanly with QA on the single test
+  break it caused (a stale negative-control allowlist) -- held the
+  commit until QA's fix landed, same sequencing discipline as before.
+- THIRD CORRECTION to a premature "resolved" claim (frontend, live-
+  tested again): record_and_prepare_spell_selection is real and correct
+  for what it does, but insufficient alone -- it requires an already-
+  saved Wizard-holding character, and nothing in the command surface
+  could produce that state (class-acquisition is itself gated on spell
+  state; spell-acquisition needs an already-saved Wizard). A distinct,
+  one-level-deeper chicken-and-egg from the one already fixed. Struck
+  the earlier "MILESTONE"/"second class reaches Computed" framing again,
+  logged the real gap in risks item 10, sent backend a scoping question
+  with a plausible (not mandated) direction: seed one canonical starter
+  spell atomically at class-acquisition, mirroring the school-choice
+  pattern. Frontend's routing commit (d55a919) still correct and
+  necessary regardless of what's found next.
+- Backend's investigation confirmed the deadlock precisely (traced to
+  SD-24 Criterion 7.5's now-false "starts empty" assumption, invalidated
+  by SD-21 E6b's later spellbook gate) and proposed the exact seeding
+  fix, verified against real budget math (1 of 3 cantrips consumed,
+  comfortably under budget at every supported level) and confirmed not
+  to touch the separate level 1-3 ceiling. Correctly declined to fold in
+  the unrelated source_class_id validation gap (pre-existing across the
+  whole spell-selection family, fixing it inconsistently on one function
+  would be worse than leaving both alone). Greenlit without reservation.
+- Starter-spell bootstrap fix landed and pushed (b2a5eb6): both seed
+  points (compose_character_input, apply_level_up's new-class-entry
+  branch) now seed one canonical starter spell. Existing deadlock-
+  reproduction tests rewritten (not deleted) into standing regression
+  guards; 3 new tests prove the actual fix. 187/187 desktop suite.
+  Backend correctly did NOT declare this resolved itself this time --
+  explicitly asked for frontend's live verification given the pattern.
+  NOT marked resolved in risks doc either, pending that report.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
