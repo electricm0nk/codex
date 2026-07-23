@@ -94,21 +94,23 @@ fn paladin_level3_has_no_dc_records() {
 
 #[test]
 fn paladin_spell_save_dcs_track_the_access_ladder() {
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2, so
+    // every DC in the ladder is one higher than before.
     assert_eq!(
         dc_values(PALADIN_LEVEL4_FIXTURE),
-        vec![(id(1), 13)],
+        vec![(id(1), 14)],
         "level 4: spell level 1 accessible (a \"0\" per-day entry is still real access), \
-         DC 13"
+         DC 14"
     );
     assert_eq!(
         dc_values(PALADIN_LEVEL7_FIXTURE),
-        vec![(id(1), 13), (id(2), 14)],
-        "level 7: spell levels 1-2 accessible, DCs 13/14"
+        vec![(id(1), 14), (id(2), 15)],
+        "level 7: spell levels 1-2 accessible, DCs 14/15"
     );
     assert_eq!(
         dc_values(PALADIN_LEVEL10_FIXTURE),
-        vec![(id(1), 13), (id(2), 14), (id(3), 15)],
-        "level 10: spell levels 1-3 accessible, DCs 13-15"
+        vec![(id(1), 14), (id(2), 15), (id(3), 16)],
+        "level 10: spell levels 1-3 accessible, DCs 14-16"
     );
 }
 
@@ -149,10 +151,13 @@ fn paladin_spell_save_dcs_track_the_charisma_modifier() {
         .iter()
         .find(|e| e.id == id(3))
         .expect("the 3rd-level DC record must exist at level 10");
+    // CG-03 fix: the lowered raw Charisma of 10 still receives the +2 Human racial
+    // ability-bonus choice before the modifier is derived (10 + 2 = 12, modifier +1).
     assert_eq!(
-        dc.value, 13,
-        "DC = 10 + spell level 3 + Charisma modifier 0 (lowered Charisma 10) = 13 — the \
-         formula is live arithmetic over the chosen ability score, not a hardcoded table"
+        dc.value, 14,
+        "DC = 10 + spell level 3 + Charisma modifier 1 (lowered Charisma 10 + 2 Human racial) \
+         = 14 — the formula is live arithmetic over the chosen ability score, not a hardcoded \
+         table"
     );
 }
 

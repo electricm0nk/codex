@@ -225,7 +225,7 @@ fn round_trip_compose_reaches_pilot_compute_with_corpus_side_fighter() {
     // human-readable chassis invariants here without enumerating
     // every per-class explanation.
     assert_eq!(computation.base_attack_bonus, 5, "Fighter L5 BAB must be +5");
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    assert_eq!(computation.ability_modifiers.strength, 4);
     assert_eq!(computation.ability_modifiers.dexterity, 2);
 
     // The chassis must surface at least one explanation whose id

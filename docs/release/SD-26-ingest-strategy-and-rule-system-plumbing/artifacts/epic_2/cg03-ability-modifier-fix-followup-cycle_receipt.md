@@ -1,0 +1,70 @@
+# Cycle cg03-ability-modifier-fix-followup — CG-03 Human ability-modifier bug fix (post-closure follow-up)
+
+- **Card ID:** receipt-only (this is real product-code work authorized directly by the operator on 2026-07-23, after SD-26's own closure (PR #338), not one of SD-26's original 38 criteria; no new hermes kanban card minted)
+- **Commit SHA:** (see this cycle's push to `tranche/5-4`)
+- **Files touched:**
+  - `src/rules_core/pilot_compute.rs` (the real fix — see "What was fixed" below)
+  - ~130 test files across `tests/` (regression-sweep corrections — full list in "Regression sweep" below)
+  - `artifacts/oracle_validation/parity_report_pf1-crb-human-fighter-level1.md` (regenerated — real new pipeline output)
+  - `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_2/cg03-ability-modifier-fix-followup-cycle_receipt.md` (this file)
+  - `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/progress.md`
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (working-tree diff against `merge-base(HEAD, origin/develop)`, scoped to `src/**/*.rs` + the other governed paths)
+- **Wired-integration audit result:** `OK_NO_TOKENS` (same diff scope)
+- **Scope authorization:** operator explicitly authorized fixing the underlying CG-03 bug directly, out of SD-26's original criterion scope, in the same session that reviewed SD-26's closure. Scope was bounded strictly to the Human race path per the operator's own diagnosis (see brief).
+- **Status:** complete — real bug fixed, RED→GREEN proven, full regression sweep completed (0 unexplained failures), CG-03 partially but not fully resolved (see "CG-03 resolution status" below — a second, different, real, pre-existing bug was unmasked and is explicitly NOT fixed here, out of scope).
+
+## The bug (confirmed, not re-diagnosed from scratch)
+
+`src/rules_core/pilot_compute.rs`'s `compute_ability_modifiers` (previously at line ~4743, now shifted by this cycle's added code) derived ability modifiers directly from `input.chosen.ability_scores` — the raw chosen score — with no racial adjustment applied, called from `compute_pilot_base_chassis` at the line reading `compute_ability_modifiers(&input.chosen.ability_scores, &mut explanations)`.
+
+`explain_human_pilot_race_seam`'s `race.human.ability_bonus_target` explanation record only *narrated* which ability the Human ability-bonus choice targeted and surfaced its (unadjusted) modifier — it never added the chosen ability's +2 racial bonus numerically anywhere. Every other core race (Dwarf, Elf, Gnome, Half-Elf, Half-Orc, Halfling) documents the opposite convention on its own seam — "the chosen score is understood to already reflect the racial adjustment" — so those races' fixtures pre-bake their bonus into the raw score and need no arithmetic. Human's own deterministic pilot fixture (`ability=strength:16` + `choice=choice:human_ability_bonus:ability:strength`) and the real PCGen oracle (`.pcg` `STAT:STR|SCORE:16` → PCGen output STR 18, modifier +4) both confirm Human's convention is the opposite: the chosen score is the PRE-bonus base, and the engine itself must apply the +2 at compute time. This was never done, so every Human-race fixture using the `choice:human_ability_bonus` selection silently under-computed the bonused ability's modifier by exactly 1 point.
+
+## The fix
+
+`src/rules_core/pilot_compute.rs`:
+
+1. Added `HUMAN_ABILITY_BONUS_MAGNITUDE: i16 = 2` (the PF1 Core Rulebook Standard Human racial ability-bonus magnitude), documented against the Dwarf/Half-Elf "already baked in" convention it deliberately does NOT follow.
+2. Added `apply_human_ability_bonus(input, explanations) -> AbilityScores`: gated strictly on `input.chosen.race_id == HUMAN_RACE_ID` plus a resolved `choice:human_ability_bonus` selection. Every other race's chosen scores pass through completely unchanged (verified: the fix touches zero non-Human code paths). Reads the targeted ability's base score via a new `ability_score_for` helper, applies `+2`, writes the adjusted score via a new `with_ability_score` helper, and pushes a new `race.human.ability_bonus_applied` `ComputationExplanation` recording the real arithmetic (base score, +2 racial, adjusted score) — a genuine audit trail per this codebase's own `ComputationExplanation` discipline, not a silent mutation.
+3. Changed the call site in `compute_pilot_base_chassis`: `let ability_scores_for_modifiers = apply_human_ability_bonus(input, &mut explanations); let ability_modifiers = compute_ability_modifiers(&ability_scores_for_modifiers, &mut explanations);` — the adjusted scores now feed the modifier derivation instead of the raw chosen scores.
+4. Updated `explain_human_pilot_race_seam`'s `race.human.ability_bonus_target` narration so it explicitly describes the modifier as "racial-bonus-adjusted" (already-applied), rather than implying it comes straight from the unadjusted chosen score — it narrates the real adjustment that already happened; it does not re-apply the bonus.
+
+## RED → GREEN
+
+`tests/ge06_pilot_base_computation.rs::computes_ge06_pilot_ability_modifiers_with_explanations` is the pilot fixture's own direct ability-modifier proof. Updated its Strength assertions from the old (buggy) `+3` to the correct `+4`, added assertions for the new `race.human.ability_bonus_applied` explanation, and added an explicit comment naming this as the CG-03 fix.
+
+- **RED** (confirmed via `git stash` of the product-code change only, test change applied): `cargo test --locked --test ge06_pilot_base_computation computes_ge06_pilot_ability_modifiers_with_explanations` → `assertion left == right failed / left: 3 / right: 4` — failed for exactly the diagnosed reason (unadjusted modifier), not a compile error or unrelated failure.
+- **GREEN** (product-code change restored): same command → `test result: ok. 1 passed`.
+
+## Regression sweep
+
+`cargo test --workspace --locked --no-fail-fast` was run repeatedly through this cycle. The fix's blast radius was large and expected: every Human-race fixture with `choice:human_ability_bonus` (228 fixture files, spanning every core class's level 1-20 progression/widening test files) has its targeted ability's modifier increase by exactly `+1` — a mathematical certainty (`floor((n+2)/2) == floor(n/2) + 1` for any integer `n`), not something requiring case-by-case re-derivation of *whether* it should change, only *what specific downstream test literals* needed updating.
+
+**Initial full-workspace sweep (before any test fixes): 137 failing test binaries**, ~215 individual assertion failures, all traced to this one root cause. Every single scalar (integer) diff observed across all 137 binaries was exactly `+1` (verified programmatically), confirming no unrelated regression was hiding in the set.
+
+**Every failure was inspected, not blindly mass-edited** (per this cycle's explicit instruction). Categories found:
+
+- **~206 simple scalar literals** (e.g. `assert_eq!(computation.selected_skill_modifiers.climb, 5)` → `6`, `assert_eq!(computation.baseline_melee_attack_bonus, 5)` → `6`, ability-modifier assertions, ki-pool/domain-power/smite-evil/lay-on-hands/force-missile flat-formula assertions across every affected class's every affected level) — each was the direct, provably-correct `+1` consequence of the fix, corrected to the real new value with an inline comment naming CG-03.
+- **~9 vector/table-shaped assertions** (Bard/Paladin/Sorcerer bonus-spells-per-day and spell-save-DC ladders) — these needed more than a flat `+1` at the total: raising the casting-stat modifier by 1 sometimes crosses a genuine PF1 bonus-spell-slot threshold (e.g. Sorcerer's spell-level-4 bonus flips from 0 to 1 once the modifier reaches 4), so each was individually re-derived against the real `(modifier - spell_level)/4 + 1` bonus-spell formula and the actual new computed values (read directly from the panic output's `left` side, which is the real, already-correct engine output) before updating.
+- **A small number of "hidden" second-order assertions**: several test functions asserted more than one now-affected value in sequence; Rust's `assert_eq!` aborts the function on the first failure, so a handful of files needed 2-3 sequential fix→re-run cycles to surface every affected assertion in that function (e.g. `sd13_cleric_domain_powers.rs`'s `ability_modifiers.wisdom` check sat after an already-failing `uses.value` check; `sd13_fighter_level2_level3_progression.rs`'s `swim`/`intimidate` assertions sat after an already-fixed `climb` check). Each file was re-run to a clean `0 failed` before moving to the next, not just fixed for the first reported panic.
+- **Two test-intent preservation adjustments** (not blind value bumps): `sd13_paladin_bonus_spells.rs::paladin_bonus_spells_track_the_charisma_modifier` and `sd13_sorcerer_bonus_spells.rs::sorcerer_bonus_spells_track_the_charisma_modifier` each demonstrate "no bonus spell without a positive modifier" by lowering the fixture's raw Charisma to a value that used to floor the modifier at 0. Post-fix, the same raw value (with the now-correctly-applied +2 racial bonus stacked on top) no longer floors to 0. Rather than silently accepting a nonzero result that would stop proving the intended point, both tests' lowered raw scores were adjusted downward by 2 (e.g. 10 → 8) so the demonstration still genuinely proves a zero modifier, with a comment explaining why.
+- **One narrative-text-only correction pass**: several test module doc-comments and inline comments cited the old (buggy) `+2`/`+3` modifier values and old formula arithmetic in prose; these were corrected alongside their assertions so the comments stay truthful, not just the assertions.
+
+**Zero test expectations were changed for reasons unrelated to this fix.** One pre-existing, unrelated failure was found and explicitly left untouched: `tests/sd24_version_increment.rs::desktop_version_is_correctly_incremented` fails both before and after this cycle's changes (confirmed via `git stash`) — a stale hardcoded expected version (`0.5.98`) that predates this work and has nothing to do with CG-03; out of this cycle's scope.
+
+**Final state:** `cargo test --workspace --locked --no-fail-fast` → 467 of 468 test binaries pass; the sole failure is the pre-existing, unrelated `sd24_version_increment`. 4123 individual tests pass, 1 fails (same pre-existing test), 0 regressions introduced by this cycle.
+
+## CG-03 resolution status: partially resolved, real gap remains — NOT force-upgraded
+
+Re-ran `tests/sd26_pilot_case_verification.rs`'s full real pipeline (Codex `pilot_compute` → `SelectedParityDimensions` vs. real PCGen engine run against the completed pilot `.pcg`, through `comparator::compare`). Result, compared to the prior cycle's 7/9:
+
+- **`skill.selected_modifier.climb`** and **`skill.selected_modifier.swim`** — the two dimensions this fix directly targets — **now genuinely match** (PCGen 6, Codex 6 for both), directly confirming the fix is correct. This is real oracle evidence, not a self-consistency check: the real PCGen `list_mods` for this character (independently recorded in the prior cycle's own receipt) already read `Climb +6, Intimidate +3, Swim +6`.
+- **`combat.baseline_melee_attack_bonus`** — previously coincidentally matching PCGen (Codex: BAB+1 + STR+3 (buggy) + Weapon Focus+1 = 5; PCGen: BAB+1 + STR+4 (correct) + 0 = 5 — two different, non-equivalent formulas landing on the same total by chance, exactly as the prior cycle's own receipt flagged as a risk) — **now genuinely diverges** (PCGen 5, Codex 6), because fixing Strength removed the compensating error. This is a **second, real, previously-masked, structurally distinct bug**: Codex's own `compute_combat_baseline` legitimately documents this dimension as "the Longsword" specific attack bonus, which correctly includes the equipped Weapon Focus (Longsword) feat; whether PCGen's compared export field is a genuinely different (weapon-agnostic) base-melee-attack-bonus quantity, or the oracle-harness normalization is mapping the wrong PCGen field to this dimension, is **undiagnosed** and explicitly **out of scope** for this cycle's narrowly-authorized Human-ability-modifier fix.
+- Net: **8 of 9 selected parity dimensions now genuinely agree** (up from 7/9), and the specific two dimensions this bug caused are both fixed. One different, real mismatch remains.
+
+Per the operator's own instruction and the no-stub-mvp doctrine's "real failure over fake success, in either direction": **`current_claim_status` is NOT upgraded to `oracle_checked`.** The golden fixture (`tests/fixtures/oracle_validation/pf1_human_fighter_level1_golden_fixture.txt`) is left untouched at `not_yet_grounded` — confirmed still reads that value on disk. `tests/sd26_pilot_case_verification.rs` was updated to assert the new, real 8/9-match / 1-mismatch outcome (renamed its own verification test from `..._finds_two_genuine_skill_mismatches` to `..._finds_one_genuine_attack_bonus_mismatch`, and rewrote its module doc comment to document both the fix's confirmation and the newly-exposed second bug) rather than either force-upgrading the claim tier or leaving a stale test that no longer reflects reality.
+
+`tests/sd26_comparator.rs`'s synthetic `agreeing_pcgen_output()` fixture (used to prove the comparator's own matching mechanics against the real Codex receipt's values, independent of PF1-rules correctness) was updated to mirror the receipt's new correct values (climb/swim/attack-bonus all +1) so its 4 tests continue to exercise real Codex output.
+
+## Follow-up item forwarded (not fixed here)
+
+A new, real, structural discrepancy in `combat.baseline_melee_attack_bonus` — Codex includes the equipped Weapon Focus (Longsword) feat's +1 in this dimension; the real PCGen export's compared value appears not to. Needs its own diagnosis cycle (is Codex's definition wrong, or is the oracle-harness normalization mapping the wrong PCGen field?) before any fix is attempted. See `progress.md`'s `## DISCOVERED` for the tracking entry.

@@ -117,7 +117,7 @@ fn paladin_level2_grounds_lay_on_hands_uses_per_day_and_heal_amount() {
     // = 2/2 + 2 = 3.
     let uses_per_day = explanation(&computation, PALADIN_LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 3,
+        uses_per_day.value, 4,
         "lay on hands uses per day must be 1/2 paladin level + Charisma modifier: {uses_per_day:?}"
     );
     assert!(
@@ -155,7 +155,7 @@ fn paladin_level2_grounds_divine_grace_save_bonus_applied_only_if_positive() {
     // Fixture Charisma modifier is +2, so the save bonus is +2.
     let save_bonus = explanation(&computation, PALADIN_DIVINE_GRACE_SAVE_BONUS_ID);
     assert_eq!(
-        save_bonus.value, 2,
+        save_bonus.value, 3,
         "divine grace save bonus must equal the positive Charisma modifier: {save_bonus:?}"
     );
     assert!(
@@ -223,10 +223,12 @@ fn paladin_level2_smite_evil_scales_correctly() {
         "smite evil uses per day stays 1/day below level 4: {uses_per_day:?}"
     );
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let attack_bonus = explanation(&computation, PALADIN_SMITE_EVIL_ATTACK_BONUS_ID);
     assert_eq!(
-        attack_bonus.value, 2,
-        "smite evil attack bonus must equal the Charisma modifier (+2 for CHA 14): {attack_bonus:?}"
+        attack_bonus.value, 3,
+        "smite evil attack bonus must equal the Charisma modifier (+3 for CHA 14 + 2 Human \
+         racial): {attack_bonus:?}"
     );
 
     let damage_bonus = explanation(&computation, PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID);

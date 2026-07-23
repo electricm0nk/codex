@@ -249,7 +249,7 @@ fn fighter_level19_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // only, since Weapon Training's first-group bonus stays unchanged at
     // level 19: from 26 at level 18 to 27 at level 19.
-    assert_eq!(computation.baseline_melee_attack_bonus, 27);
+    assert_eq!(computation.baseline_melee_attack_bonus, 28);
 
     // Baseline armor class is unchanged: Armor Training stays rank 4 (no
     // fifth rank exists) and Armor Mastery is a damage-reduction record, not
@@ -257,9 +257,9 @@ fn fighter_level19_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // total or armor-class value on this fixture.
     assert_eq!(computation.baseline_armor_class, 17);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 // ----- Negative control: the level-18 fixture is unaffected by this widening -----
@@ -284,7 +284,7 @@ fn fighter_level18_truth_is_unchanged_by_this_slice() {
         computation.explanations
     );
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 26);
+    assert_eq!(computation.baseline_melee_attack_bonus, 27);
 }
 
 // ----- Negative control: multiclass Fighter is not promoted -----

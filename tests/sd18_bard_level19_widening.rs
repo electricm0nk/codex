@@ -190,17 +190,18 @@ fn bard_level19_knowledge_stays_rounds_genuinely_rises() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 42,
-        "Bard level 19 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (19 - 1)) must \
-         genuinely rise to 42, up from 40 at level 18: {}",
+        rounds.value, 43,
+        "Bard level 19 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (19 - 1)) must \
+         genuinely rise to 43, up from 41 at level 18: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 21,
-        "the Fascinate DC (10 + 19/2 + Charisma modifier 2) must stay 21, an integer-division \
+        dc.value, 22,
+        "the Fascinate DC (10 + 19/2 + Charisma modifier 3) must stay 22, an integer-division \
          coincidence with level 18: {}",
         dc.detail
     );
@@ -222,8 +223,8 @@ fn bard_level19_frightening_tune_dc_stays_put() {
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
-        dc.value, 21,
-        "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must stay 21 \
+        dc.value, 22,
+        "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must stay 22 \
          at level 19, the same formula shape as the Fascinate DC: {}",
         dc.detail
     );
@@ -344,7 +345,7 @@ fn bard_level18_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 40, "Bard level 18 Bardic Performance rounds must stay 40");
+    assert_eq!(rounds.value, 41, "Bard level 18 Bardic Performance rounds must stay 41");
 }
 
 // ----- Negative control: the bard path must not leak onto other classes -----

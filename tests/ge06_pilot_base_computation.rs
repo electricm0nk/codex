@@ -45,18 +45,29 @@ fn computes_ge06_pilot_ability_modifiers_with_explanations() {
 
     let computation = compute_pilot_base_chassis(&input);
 
-    // floor(score / 2) - 5 against the GE-06 deterministic ability scores.
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    // floor(score / 2) - 5 against the GE-06 deterministic ability scores. Strength
+    // is CG-03's fixed bug: the fixture's chosen strength score (16) is the PRE-bonus
+    // base, and the pilot's `choice:human_ability_bonus` selection targets strength,
+    // so the PF1 Core Rulebook Standard Human +2 racial bonus must be applied BEFORE
+    // the modifier is derived (16 + 2 = 18 -> floor(18/2)-5 = +4), matching the real
+    // PCGen oracle output (`STAT:STR|SCORE:16` input, +4 STR modifier output). Every
+    // other ability here is unaffected by the racial-bonus choice and keeps its
+    // unadjusted floor(score/2)-5 value.
+    assert_eq!(computation.ability_modifiers.strength, 4);
     assert_eq!(computation.ability_modifiers.dexterity, 2);
     assert_eq!(computation.ability_modifiers.constitution, 2);
     assert_eq!(computation.ability_modifiers.intelligence, 0);
     assert_eq!(computation.ability_modifiers.wisdom, 1);
     assert_eq!(computation.ability_modifiers.charisma, -1);
 
-    // Each ability modifier has a machine-checkable explanation tied to its value
-    // and referencing the source score.
+    // Each ability modifier has a machine-checkable explanation tied to its value.
+    // Strength's explanation now references the racial-bonus-adjusted score (18,
+    // the result of applying the Human +2 to the base chosen score of 16) rather
+    // than the raw chosen score, since the modifier is derived from the adjusted
+    // score. Every other ability's explanation still references its raw chosen
+    // score directly, since no racial adjustment touches them.
     let expected = [
-        ("ability_modifier.strength", 3, 16),
+        ("ability_modifier.strength", 4, 18),
         ("ability_modifier.dexterity", 2, 14),
         ("ability_modifier.constitution", 2, 14),
         ("ability_modifier.intelligence", 0, 10),
@@ -72,6 +83,16 @@ fn computes_ge06_pilot_ability_modifiers_with_explanations() {
             explanation.detail
         );
     }
+
+    // The real arithmetic behind strength's adjustment (base 16 + 2 racial = 18)
+    // is recorded as its own explicit, machine-checkable explanation -- this is
+    // the audit trail the no-stub-mvp doctrine requires for any computed value
+    // that isn't a bare pass-through of chosen input.
+    let bonus_applied = explanation_value(&computation, "race.human.ability_bonus_applied");
+    assert_eq!(bonus_applied.value, 18);
+    assert!(bonus_applied.detail.contains("16"));
+    assert!(bonus_applied.detail.contains('2'));
+    assert!(bonus_applied.detail.contains("18"));
 }
 
 #[test]

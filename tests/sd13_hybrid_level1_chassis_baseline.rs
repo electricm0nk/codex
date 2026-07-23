@@ -109,7 +109,7 @@ fn paladin_level1_leaves_direct_chassis_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 14 -> +2).
-    assert_eq!(computation.ability_modifiers.charisma, 2);
+    assert_eq!(computation.ability_modifiers.charisma, 3);
 }
 
 #[test]
@@ -133,7 +133,7 @@ fn ranger_level1_leaves_direct_chassis_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (STR 16 -> +3).
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    assert_eq!(computation.ability_modifiers.strength, 4);
 }
 
 // ----- Still blocked: honest, class-specific burden diagnostics -----

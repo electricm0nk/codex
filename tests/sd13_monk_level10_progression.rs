@@ -170,11 +170,12 @@ fn monk_level10_ki_pool_and_slow_fall_both_rise() {
     let input = load(MONK_LEVEL10_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 8,
-        "Monk level 10 ki pool (10/2 + Wisdom modifier 3) must equal 8, genuinely risen from \
-         7 at level 9: {}",
+        ki_pool.value, 9,
+        "Monk level 10 ki pool (10/2 + Wisdom modifier 4) must equal 9, genuinely risen from \
+         8 at level 9: {}",
         ki_pool.detail
     );
 
@@ -262,7 +263,7 @@ fn monk_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_attack.value, 6, "Monk level 9 base attack bonus must stay 6");
 
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
-    assert_eq!(ki_pool.value, 7, "Monk level 9 ki pool must stay 7");
+    assert_eq!(ki_pool.value, 8, "Monk level 9 ki pool must stay 8");
 
     let slow_fall = explanation(&computation, MONK_SLOW_FALL_ID);
     assert!(

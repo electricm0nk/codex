@@ -261,7 +261,7 @@ fn sorcerer_level17_bonus_spells_and_save_dcs_extend_to_eighth_level() {
     // Fixture Charisma 17 -> Charisma modifier +3 (unchanged deterministic posture).
     // 10 + 8 + 3 = 21.
     assert_eq!(
-        dc8.value, 21,
+        dc8.value, 22,
         "Sorcerer level 17 8th-level spell save DC must be 10 + 8 + Charisma modifier: {}",
         dc8.detail
     );

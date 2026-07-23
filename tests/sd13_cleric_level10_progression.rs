@@ -182,8 +182,8 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
         "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
     );
     assert_eq!(
-        tog_uses.value, 6,
-        "Touch of Good's uses per day (3 + Wisdom modifier 3) must stay 6, level-independent"
+        tog_uses.value, 7,
+        "Touch of Good's uses per day (3 + Wisdom modifier 4) must stay 7, level-independent"
     );
 
     let rd_uses = explanation(
@@ -191,8 +191,8 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day",
     );
     assert_eq!(
-        rd_uses.value, 6,
-        "Rebuke Death's uses per day (3 + Wisdom modifier 3) must stay 6, level-independent"
+        rd_uses.value, 7,
+        "Rebuke Death's uses per day (3 + Wisdom modifier 4) must stay 7, level-independent"
     );
 
     let choice = explanation(&computation, "class_chassis.cleric.domain_choice");

@@ -180,7 +180,7 @@ fn wizard_level1_leaves_direct_prepared_spell_baseline_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (INT 17 -> +3).
-    assert_eq!(computation.ability_modifiers.intelligence, 3);
+    assert_eq!(computation.ability_modifiers.intelligence, 4);
 }
 
 #[test]

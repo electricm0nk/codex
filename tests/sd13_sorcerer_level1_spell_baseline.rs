@@ -150,7 +150,7 @@ fn sorcerer_level1_leaves_direct_spell_baseline_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 17 -> +3).
-    assert_eq!(computation.ability_modifiers.charisma, 3);
+    assert_eq!(computation.ability_modifiers.charisma, 4);
 }
 
 #[test]

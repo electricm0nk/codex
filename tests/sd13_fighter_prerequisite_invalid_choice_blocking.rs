@@ -89,20 +89,21 @@ fn canonical_level_1_2_3_paths_stay_computed_and_unblocked() {
 
 #[test]
 fn canonical_path_preserves_selected_skill_and_derived_outputs() {
-    // Level 1: Chain Shirt armor-check penalty -2, so Climb/Swim = 5, Intimidate = 3.
+    // Level 1: Chain Shirt armor-check penalty -2, so Climb/Swim = 6, Intimidate = 3.
+    // CG-03 fix: STR modifier is now +4 (base 16 + 2 Human racial), not +3.
     let level_1 = compute_pilot_base_chassis(&load(LEVEL_1_FIXTURE));
-    assert_eq!(level_1.selected_skill_modifiers.climb, 5);
+    assert_eq!(level_1.selected_skill_modifiers.climb, 6);
     assert_eq!(level_1.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(level_1.selected_skill_modifiers.swim, 5);
-    assert_eq!(level_1.baseline_melee_attack_bonus, 5);
+    assert_eq!(level_1.selected_skill_modifiers.swim, 6);
+    assert_eq!(level_1.baseline_melee_attack_bonus, 6);
     assert_eq!(level_1.baseline_armor_class, 17);
 
-    // Level 3: armor training reduces the penalty to -1, so Climb/Swim rise to 6.
+    // Level 3: armor training reduces the penalty to -1, so Climb/Swim rise to 7.
     let level_3 = compute_pilot_base_chassis(&load(LEVEL_3_FIXTURE));
-    assert_eq!(level_3.selected_skill_modifiers.climb, 6);
-    assert_eq!(level_3.selected_skill_modifiers.swim, 6);
+    assert_eq!(level_3.selected_skill_modifiers.climb, 7);
+    assert_eq!(level_3.selected_skill_modifiers.swim, 7);
     assert_eq!(level_3.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(level_3.baseline_melee_attack_bonus, 7);
+    assert_eq!(level_3.baseline_melee_attack_bonus, 8);
 }
 
 // ----- Invalid-choice blocking: level-1 character feat -----
@@ -267,9 +268,11 @@ fn canonical_human_ability_bonus_target_remains_computed_truth() {
         .iter()
         .find(|e| e.id == "race.human.ability_bonus_target")
         .expect("canonical path must surface the Human ability-bonus target explanation");
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before the modifier is derived, raising it from +3 to +4.
     assert_eq!(
-        ability.value, 3,
-        "canonical Strength ability-bonus target must keep its computed +3 modifier"
+        ability.value, 4,
+        "canonical Strength ability-bonus target must keep its computed +4 modifier"
     );
     assert!(
         !has_claim_block(&computation),

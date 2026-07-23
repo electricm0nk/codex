@@ -107,15 +107,18 @@ fn bard_level1_total_is_base_plus_bonus_with_no_cantrip_total() {
 
 #[test]
 fn bard_totals_are_the_sum_of_the_grounded_base_and_bonus_ladders() {
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), unlocking the
+    // 3rd-level bonus spell slot (0 -> 1) that the sibling bonus-spells test file
+    // documents in full.
     assert_eq!(
         total_values(BARD_LEVEL7_FIXTURE),
-        vec![(id(1), 5), (id(2), 4), (id(3), 1)],
-        "level 7, Charisma +2: totals 5/4/1 (base 4/3/1 + bonus 1/1/0)"
+        vec![(id(1), 5), (id(2), 4), (id(3), 2)],
+        "level 7, Charisma +3: totals 5/4/2 (base 4/3/1 + bonus 1/1/1)"
     );
     assert_eq!(
         total_values(BARD_LEVEL10_FIXTURE),
-        vec![(id(1), 6), (id(2), 5), (id(3), 3), (id(4), 1)],
-        "level 10, Charisma +2: totals 6/5/3/1 (base 5/4/3/1 + bonus 1/1/0/0)"
+        vec![(id(1), 6), (id(2), 5), (id(3), 4), (id(4), 1)],
+        "level 10, Charisma +3: totals 6/5/4/1 (base 5/4/3/1 + bonus 1/1/1/0)"
     );
 }
 

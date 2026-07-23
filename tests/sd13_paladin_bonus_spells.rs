@@ -133,11 +133,13 @@ fn paladin_bonus_spells_track_the_table_and_the_access_ladder() {
         vec![(id(1), 1)],
         "level 4, Charisma +2: one accessible spell level, bonus 1"
     );
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 14 -> 16, modifier +2 -> +3), so the
+    // +3 row (1/1/1) now applies instead of the +2 row (1/1/0).
     assert_eq!(
         bonus_values(PALADIN_LEVEL10_FIXTURE),
-        vec![(id(1), 1), (id(2), 1), (id(3), 0)],
-        "level 10, Charisma +2: bonus 1/1/0 — the +2 row grants nothing at 3rd, an honest \
-         computed 0"
+        vec![(id(1), 1), (id(2), 1), (id(3), 1)],
+        "level 10, Charisma +3: bonus 1/1/1"
     );
 }
 
@@ -145,7 +147,13 @@ fn paladin_bonus_spells_track_the_table_and_the_access_ladder() {
 
 #[test]
 fn paladin_bonus_spells_track_the_charisma_modifier() {
-    let lowered = PALADIN_LEVEL10_FIXTURE.replace("ability=charisma:14", "ability=charisma:10");
+    // CG-03 fix: this fixture's chosen Charisma score now receives the +2 Human racial
+    // ability-bonus choice before the modifier is derived, so a lowered raw score of 10
+    // (used before this fix) would now yield 10 + 2 = 12, modifier +1 -- no longer the
+    // zero modifier this test means to demonstrate. Lower to 8 instead (8 + 2 = 10,
+    // modifier +0) to keep proving the same real thing: no bonus without a positive
+    // effective modifier.
+    let lowered = PALADIN_LEVEL10_FIXTURE.replace("ability=charisma:14", "ability=charisma:8");
     let input = load(&lowered);
     let computation = compute_pilot_base_chassis(&input);
     let first = computation
@@ -155,8 +163,8 @@ fn paladin_bonus_spells_track_the_charisma_modifier() {
         .expect("the 1st-level bonus record must exist");
     assert_eq!(
         first.value, 0,
-        "lowering Charisma to 10 (+0) zeroes every bonus — live arithmetic over the chosen \
-         ability score"
+        "lowering Charisma to 8 (+2 Human racial = 10, modifier +0) zeroes every bonus — live \
+         arithmetic over the chosen ability score"
     );
 }
 

@@ -200,7 +200,7 @@ fn wizard_level3_force_missile_uses_per_day_is_unchanged() {
     );
     // Intelligence 17 -> modifier +3, so 3 + 3 = 6, same as at levels 1-2.
     assert_eq!(
-        uses.value, 6,
+        uses.value, 7,
         "Force Missile uses/day must stay 3 + Int modifier at level 3: {}",
         uses.detail
     );

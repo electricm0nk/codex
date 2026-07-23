@@ -222,8 +222,8 @@ fn cleric_level6_touch_of_good_bonus_rises_to_three() {
         "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
     );
     assert_eq!(
-        uses.value, 6,
-        "Cleric level 6 Touch of Good uses per day (3 + Wisdom modifier 3) must equal 6: {}",
+        uses.value, 7,
+        "Cleric level 6 Touch of Good uses per day (3 + Wisdom modifier 4) must equal 7: {}",
         uses.detail
     );
 }
@@ -238,8 +238,8 @@ fn cleric_level6_grounds_rebuke_death_uses_per_day() {
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day",
     );
     assert_eq!(
-        uses.value, 6,
-        "Cleric level 6 Rebuke Death uses per day (3 + Wisdom modifier 3) must equal 6: {}",
+        uses.value, 7,
+        "Cleric level 6 Rebuke Death uses per day (3 + Wisdom modifier 4) must equal 7: {}",
         uses.detail
     );
 }

@@ -122,7 +122,7 @@ fn monk_level1_leaves_direct_chassis_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (WIS 17 -> +3).
-    assert_eq!(computation.ability_modifiers.wisdom, 3);
+    assert_eq!(computation.ability_modifiers.wisdom, 4);
 }
 
 // ----- Grounded: base-attack, base-save, and AC Bonus pillar burdens -----
@@ -187,11 +187,11 @@ fn monk_level1_grounds_ac_bonus() {
     let input = load(MONK_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // WIS 17 -> +3 modifier, so AC Bonus = max(3, 0) = 3.
+    // WIS 17 + 2 Human racial (CG-03 fix) -> +4 modifier, so AC Bonus = max(4, 0) = 4.
     let ac_bonus = explanation(&computation, "class_chassis.monk.ac_bonus");
     assert_eq!(
-        ac_bonus.value, 3,
-        "monk AC Bonus is the positive Wisdom modifier added to AC: max(3, 0) = 3"
+        ac_bonus.value, 4,
+        "monk AC Bonus is the positive Wisdom modifier added to AC: max(4, 0) = 4"
     );
     assert!(
         ac_bonus.detail.contains("Wisdom"),

@@ -126,7 +126,7 @@ fn rogue_level1_leaves_direct_chassis_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (DEX 17 -> +3).
-    assert_eq!(computation.ability_modifiers.dexterity, 3);
+    assert_eq!(computation.ability_modifiers.dexterity, 4);
 }
 
 // ----- Now grounded: base-attack, base-save, and sneak-attack pillars -----

@@ -134,7 +134,7 @@ fn barbarian_level1_leaves_direct_chassis_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (STR 16 -> +3).
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    assert_eq!(computation.ability_modifiers.strength, 4);
 }
 
 // ----- Grounded: base-attack, base-save, and fast-movement pillar burdens -----
@@ -316,7 +316,7 @@ fn barbarian_level1_grounds_flat_rage_constants_as_values_only() {
     // integrated total — ability modifiers stay the un-raged fixture truth
     // (Str 16 -> +3, Con 16 -> +3), and no Fighter-style chassis is fabricated.
     assert_eq!(
-        computation.ability_modifiers.strength, 3,
+        computation.ability_modifiers.strength, 4,
         "the +4 morale Strength rage constant must not be applied to the integrated Strength modifier"
     );
     assert_eq!(

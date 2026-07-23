@@ -190,18 +190,19 @@ fn bard_level20_knowledge_and_rounds_genuinely_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 44,
-        "Bard level 20 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (20 - 1)) must \
-         genuinely rise to 44, up from 42 at level 19: {}",
+        rounds.value, 45,
+        "Bard level 20 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (20 - 1)) must \
+         genuinely rise to 45, up from 43 at level 19: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 22,
-        "the Fascinate DC (10 + 20/2 + Charisma modifier 2) must genuinely rise to 22, up from \
-         21 at level 19: {}",
+        dc.value, 23,
+        "the Fascinate DC (10 + 20/2 + Charisma modifier 3) must genuinely rise to 23, up from \
+         22 at level 19: {}",
         dc.detail
     );
 
@@ -222,9 +223,9 @@ fn bard_level20_frightening_tune_dc_genuinely_rises() {
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
-        dc.value, 22,
+        dc.value, 23,
         "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must \
-         genuinely rise to 22 at level 20, the same formula shape as the Fascinate DC: {}",
+         genuinely rise to 23 at level 20, the same formula shape as the Fascinate DC: {}",
         dc.detail
     );
 }
@@ -238,9 +239,9 @@ fn bard_level20_deadly_performance_dc_is_grounded() {
 
     let dc = explanation(&computation, DEADLY_PERFORMANCE_DC_ID);
     assert_eq!(
-        dc.value, 22,
+        dc.value, 23,
         "Deadly Performance's Will save DC (10 + 1/2 bard level + Charisma modifier) must be \
-         grounded at 22 at level 20, the same formula shape as the Fascinate DC and Frightening \
+         grounded at 23 at level 20, the same formula shape as the Fascinate DC and Frightening \
          Tune DC: {}",
         dc.detail
     );
@@ -356,7 +357,7 @@ fn bard_level19_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 42, "Bard level 19 Bardic Performance rounds must stay 42");
+    assert_eq!(rounds.value, 43, "Bard level 19 Bardic Performance rounds must stay 43");
 
     assert!(
         !computation

@@ -180,16 +180,16 @@ fn bard_level8_bardic_performance_rounds_per_day_keeps_scaling() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 8: 4 + 2 + 2 * (8 - 1) = 20.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 8: 4 + 3 + 2 * (8 - 1) = 21.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 20,
+        rounds.value, 21,
         "Bard level 8 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 14 = 20: {}",
+         = 4 + 3 + 14 = 21: {}",
         rounds.detail
     );
 }
@@ -217,12 +217,12 @@ fn bard_level8_fascinate_dc_rises_and_affected_creatures_stays_unchanged() {
     let input = load(BARD_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 8/2 + 2 = 16, a genuine rise from
-    // level 7's 15.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 8/2 + 3 = 17, a
+    // genuine rise from level 7's 16.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 16,
-        "Bard level 8 Fascinate DC must genuinely rise to 10 + (8/2) + 2 = 16, up from 15 at \
+        dc.value, 17,
+        "Bard level 8 Fascinate DC must genuinely rise to 10 + (8/2) + 3 = 17, up from 16 at \
          level 7: {}",
         dc.detail
     );

@@ -157,7 +157,7 @@ fn fighter_level1_favored_class_bonus_choice_changes_no_derived_output_total() {
     // pilot surface keeps its exact value, and the level-1 hit-point record's own
     // value is unaffected by the new choice-recognition record.
     assert_eq!(computation.base_attack_bonus, 1);
-    assert_eq!(computation.baseline_melee_attack_bonus, 5);
+    assert_eq!(computation.baseline_melee_attack_bonus, 6);
     assert_eq!(computation.baseline_armor_class, 17);
     let hit_points = explanation(&computation, "class_chassis.fighter.level_1_hit_points");
     assert_eq!(hit_points.value, 12);

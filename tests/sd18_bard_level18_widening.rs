@@ -217,18 +217,19 @@ fn bard_level18_knowledge_and_rounds_genuinely_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 40,
-        "Bard level 18 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (18 - 1)) must \
-         genuinely rise to 40, up from 38 at level 17: {}",
+        rounds.value, 41,
+        "Bard level 18 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (18 - 1)) must \
+         genuinely rise to 41, up from 39 at level 17: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 21,
-        "the Fascinate DC (10 + 18/2 + Charisma modifier 2) must genuinely rise to 21, up from \
-         20 at level 17: {}",
+        dc.value, 22,
+        "the Fascinate DC (10 + 18/2 + Charisma modifier 3) must genuinely rise to 22, up from \
+         21 at level 17: {}",
         dc.detail
     );
 
@@ -249,9 +250,9 @@ fn bard_level18_frightening_tune_dc_genuinely_rises() {
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
-        dc.value, 21,
+        dc.value, 22,
         "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must \
-         genuinely rise to 21 at level 18, the same formula shape as the Fascinate DC: {}",
+         genuinely rise to 22 at level 18, the same formula shape as the Fascinate DC: {}",
         dc.detail
     );
 }
@@ -417,7 +418,7 @@ fn bard_level17_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 38, "Bard level 17 Bardic Performance rounds must stay 38");
+    assert_eq!(rounds.value, 39, "Bard level 17 Bardic Performance rounds must stay 39");
 }
 
 // ----- Negative control: level 21 stays unrecognized by this slice -----

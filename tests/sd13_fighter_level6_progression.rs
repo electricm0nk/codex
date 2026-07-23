@@ -94,14 +94,15 @@ fn level_6_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 3);
 
     // Baseline combat: +6 BAB + STR +3 + Weapon Focus +1 + Weapon Training +1 = 11.
-    assert_eq!(computation.baseline_melee_attack_bonus, 11);
+    assert_eq!(computation.baseline_melee_attack_bonus, 12);
     // Armor class is unchanged since level 3 (Armor Training 2 begins at level 7).
     assert_eq!(computation.baseline_armor_class, 17);
 
-    // Selected skills are unchanged since level 3 (same armor-training rank).
-    assert_eq!(computation.selected_skill_modifiers.climb, 6);
+    // Selected skills are unchanged since level 3 (same armor-training rank). CG-03 fix:
+    // STR modifier is now +4 (base 16 + 2 Human racial), not +3.
+    assert_eq!(computation.selected_skill_modifiers.climb, 7);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 6);
+    assert_eq!(computation.selected_skill_modifiers.swim, 7);
 }
 
 #[test]
@@ -289,6 +290,6 @@ fn level_5_fixture_still_loads_and_computes_unaffected_by_the_level_6_widening()
     let input = load(LEVEL_5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
     assert_eq!(computation.base_attack_bonus, 5);
-    assert_eq!(computation.baseline_melee_attack_bonus, 10);
+    assert_eq!(computation.baseline_melee_attack_bonus, 11);
     assert!(!computation.diagnostics.iter().any(|d| d.claim_blocking));
 }

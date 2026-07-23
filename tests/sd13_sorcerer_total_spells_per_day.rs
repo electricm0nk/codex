@@ -112,10 +112,12 @@ fn sorcerer_totals_are_the_sum_of_the_grounded_base_and_bonus_ladders() {
         vec![(id(1), 7), (id(2), 6), (id(3), 4)],
         "level 6, Charisma +3: totals 7/6/4 (base 6/5/3 + bonus 1/1/1)"
     );
+    // CG-03 fix: Charisma modifier is now +4 (base 17 + 2 Human racial), not +3, which
+    // unlocks the 4th-level bonus spell slot (0 -> 1).
     assert_eq!(
         total_values(SORCERER_LEVEL10_FIXTURE),
-        vec![(id(1), 7), (id(2), 7), (id(3), 7), (id(4), 5), (id(5), 3)],
-        "level 10, Charisma +3: totals 7/7/7/5/3 (base 6/6/6/5/3 + bonus 1/1/1/0/0)"
+        vec![(id(1), 7), (id(2), 7), (id(3), 7), (id(4), 6), (id(5), 3)],
+        "level 10, Charisma +4: totals 7/7/7/6/3 (base 6/6/6/5/3 + bonus 1/1/1/1/0)"
     );
 }
 

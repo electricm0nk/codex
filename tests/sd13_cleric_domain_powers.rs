@@ -122,11 +122,11 @@ fn cleric_level1_grounds_touch_of_good_bonus_and_uses_per_day() {
     );
 
     // PF1 Core Rulebook Good Domain: usable 3 + Wisdom modifier times per day.
-    // Fixture Wisdom is 17 -> modifier +3 -> 3 + 3 = 6.
+    // Fixture Wisdom is 17 + 2 Human racial (CG-03 fix) -> modifier +4 -> 3 + 4 = 7.
     let uses = explanation(&computation, TOUCH_OF_GOOD_USES_PER_DAY_ID);
     assert_eq!(
-        uses.value, 6,
-        "cleric level 1 with WIS 17 (+3) must ground 3 + 3 = 6 Touch of Good uses per day"
+        uses.value, 7,
+        "cleric level 1 with WIS 17 (+4) must ground 3 + 4 = 7 Touch of Good uses per day"
     );
     assert!(
         uses.detail.contains("Wisdom") && uses.detail.contains("Touch of Good"),
@@ -134,7 +134,7 @@ fn cleric_level1_grounds_touch_of_good_bonus_and_uses_per_day() {
         uses.detail
     );
 
-    assert_eq!(computation.ability_modifiers.wisdom, 3);
+    assert_eq!(computation.ability_modifiers.wisdom, 4);
 }
 
 // ----- Grounded for real (uses/day only): Rebuke Death (Healing domain) -----
@@ -145,10 +145,11 @@ fn cleric_level1_grounds_rebuke_death_uses_per_day_but_not_heal_amount() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Healing Domain: usable 3 + Wisdom modifier times per day.
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let uses = explanation(&computation, REBUKE_DEATH_USES_PER_DAY_ID);
     assert_eq!(
-        uses.value, 6,
-        "cleric level 1 with WIS 17 (+3) must ground 3 + 3 = 6 Rebuke Death uses per day"
+        uses.value, 7,
+        "cleric level 1 with WIS 17 (+4) must ground 3 + 4 = 7 Rebuke Death uses per day"
     );
     assert!(
         uses.detail.contains("Wisdom") && uses.detail.contains("Rebuke Death"),

@@ -154,9 +154,9 @@ fn fighter_level11_armor_check_penalty_and_derived_ac_stay_unchanged() {
     // The armor-check-penalty reduction is already capped at 0 by Armor
     // Training 2, so Armor Training 3's further reduction changes no
     // derived value: Climb/Swim stay exactly as they were at level 10.
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 
     // Baseline armor class is unchanged: the deterministic +2 Dexterity
     // contribution is already well below both the old (+6) and new (+7)
@@ -165,7 +165,7 @@ fn fighter_level11_armor_check_penalty_and_derived_ac_stay_unchanged() {
 
     // Baseline melee attack bonus rises by exactly the base-attack-bonus
     // delta (+1), since Weapon Training's own rank does not change at 11.
-    assert_eq!(computation.baseline_melee_attack_bonus, 17);
+    assert_eq!(computation.baseline_melee_attack_bonus, 18);
 }
 
 // ----- Bravery and Weapon Training carry over unchanged -----
@@ -225,7 +225,7 @@ fn fighter_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(seam.value, 2, "Fighter level 10 Armor Training rank must stay 2");
 
     assert_eq!(computation.baseline_armor_class, 17);
-    assert_eq!(computation.baseline_melee_attack_bonus, 16);
+    assert_eq!(computation.baseline_melee_attack_bonus, 17);
 }
 
 // ----- Negative control: level 21 stays claim-blocked (PF1 has no 21st character level) -----

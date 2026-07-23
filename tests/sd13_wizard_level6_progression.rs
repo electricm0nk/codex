@@ -199,9 +199,10 @@ fn wizard_level6_force_missile_uses_per_day_is_unchanged() {
         &computation,
         "class_chassis.wizard.force_missile_uses_per_day",
     );
-    // Intelligence 17 -> modifier +3, so 3 + 3 = 6, same as at levels 1-5.
+    // Intelligence 17 + 2 Human racial (CG-03 fix) -> modifier +4, so 3 + 4 = 7, same as
+    // at levels 1-5.
     assert_eq!(
-        uses.value, 6,
+        uses.value, 7,
         "Force Missile uses/day must stay 3 + Int modifier at level 6: {}",
         uses.detail
     );

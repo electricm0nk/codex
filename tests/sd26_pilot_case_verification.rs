@@ -34,37 +34,57 @@
 //! rather than an arbitrary display name. Full details:
 //! `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_2/pilot_case_oracle_checked-followup-cycle_receipt.md`.
 //!
-//! Running the real pipeline against this completed, genuinely same-character
-//! `.pcg` produces a real, informative result: 7 of 9 selected parity
-//! dimensions agree (`character.identity`,
-//! `combat.baseline_melee_attack_bonus`, `defense.baseline_armor_class`, all
-//! three `defense.total_save.*` dimensions, and
-//! `skill.selected_modifier.intimidate`), but
-//! `skill.selected_modifier.climb` and `skill.selected_modifier.swim`
-//! genuinely disagree (PCGen: 6, Codex: 5). This is a real, structural
-//! finding, not a normalization artifact: Codex's
-//! `pilot_compute::compute_ability_modifiers` derives `AbilityModifiers`
-//! directly from the chosen ability *scores* and never actually folds in the
+//! ## CG-03 ability-modifier fix cycle (this file's current state)
+//! A prior cycle found the result above and diagnosed it: Codex's
+//! `pilot_compute::compute_ability_modifiers` derived `AbilityModifiers`
+//! directly from the chosen ability *scores* and never actually folded in the
 //! chosen Human `+2 Strength` racial ability bonus (`choice:human_ability_bonus`)
 //! before computing the Strength modifier, even though
-//! `explain_human_pilot_race_seam` emits an explanation record that narrates
-//! the bonus. So `ability_modifiers.strength` is `+3` (from the raw score 16)
-//! rather than the correct `+4` (from the effective, bonus-applied score 18).
-//! `combat.baseline_melee_attack_bonus` still coincidentally matches PCGen
-//! (Codex: BAB +1 + STR +3 + Weapon Focus +1 = 5; PCGen: BAB +1 + STR +4 + 0
-//! generic-melee Weapon Focus contribution = 5) — the two systems reach the
-//! same total via different, non-equivalent arithmetic, which is a real
-//! observation worth flagging even though it does not itself fail this
-//! dimension's exact-value comparison. `skill.selected_modifier.climb`/`swim`
-//! have no such compensating term, so the missing `+1` from the unapplied
-//! racial Strength bonus surfaces directly as a real value mismatch.
+//! `explain_human_pilot_race_seam` emitted an explanation record that narrated
+//! the bonus without ever applying it. So `ability_modifiers.strength` was
+//! `+3` (from the raw score 16) instead of the correct `+4` (from the
+//! effective, bonus-applied score 18), which produced two genuine
+//! `skill.selected_modifier.{climb,swim}` mismatches (PCGen: 6, Codex: 5).
 //!
-//! Because two real dimension mismatches remain, `current_claim_status`
-//! correctly stays `not_yet_grounded` — this cycle does NOT force the
-//! upgrade. The blocker is forwarded as a real, structural, self-healable
-//! (in a future rules_core cycle, not in-scope here) Codex bug: apply chosen
-//! racial ability-score bonuses before deriving `AbilityModifiers`, not just
-//! after, in a narrative-only explanation record.
+//! This cycle fixed that bug: `pilot_compute::apply_human_ability_bonus` now
+//! applies the Human ability-bonus choice's +2 to the targeted ability's score
+//! BEFORE ability modifiers are derived (gated strictly on `race:human` plus a
+//! resolved `choice:human_ability_bonus` selection), with a
+//! `race.human.ability_bonus_applied` explanation recording the real
+//! arithmetic. Re-running the real pipeline against the fix confirms it is
+//! correct: `skill.selected_modifier.climb` and `skill.selected_modifier.swim`
+//! now genuinely agree with PCGen (both now 6, matching), directly confirming
+//! `ability_modifiers.strength` is now the correct `+4`.
+//!
+//! Fixing the Strength modifier unmasked a SECOND, previously-hidden, genuinely
+//! different bug in `combat.baseline_melee_attack_bonus`: before this fix,
+//! Codex's total (BAB +1 + STR +3 + Weapon Focus +1 = 5) coincidentally matched
+//! PCGen's total (BAB +1 + STR +4 + 0 generic-melee Weapon Focus contribution =
+//! 5) via a compensating error the prior cycle's doc comment explicitly
+//! flagged as "non-equivalent arithmetic" reaching the same total by luck. Now
+//! that Strength is correctly +4, Codex's total is BAB +1 + STR +4 + Weapon
+//! Focus +1 = 6, which genuinely diverges from PCGen's 5. This is a real,
+//! newly-exposed mismatch, not something this cycle's fix broke: Codex's
+//! `combat.baseline_melee_attack_bonus` is explicitly documented (see
+//! `compute_combat_baseline` in `pilot_compute.rs`) as "the Longsword" specific
+//! attack bonus, which legitimately includes Weapon Focus (Longsword); whether
+//! PCGen's compared export field is a genuinely different (weapon-agnostic)
+//! quantity, or the oracle-harness normalization maps the wrong PCGen field to
+//! this dimension, is undiagnosed and OUT OF SCOPE for the narrowly-authorized
+//! Human ability-modifier fix this cycle performed. Per the no-stub-mvp
+//! doctrine's "real failure over fake success" principle, this cycle does NOT
+//! attempt to paper over that second, not-yet-understood discrepancy — it is
+//! forwarded as a new, separate open item (see this repo's SD-26 progress doc,
+//! `## Open blockers`, for the follow-up tracking entry).
+//!
+//! Net result: 8 of 9 selected parity dimensions now genuinely agree
+//! (`character.identity`, `defense.baseline_armor_class`, all three
+//! `defense.total_save.*` dimensions, and all three
+//! `skill.selected_modifier.*` dimensions including the two this cycle fixed),
+//! and exactly one genuine mismatch remains
+//! (`combat.baseline_melee_attack_bonus`, PCGen: 5, Codex: 6). Because a real
+//! mismatch remains, `current_claim_status` correctly stays `not_yet_grounded`
+//! — this cycle does NOT force the upgrade to `oracle_checked`.
 
 use codex::oracle_validation::comparator::{compare, MismatchReason};
 use codex::oracle_validation::golden_fixture::{load_golden_case_fixture, ClaimTier};
@@ -131,16 +151,18 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
 /// The full pipeline proof this criterion names: pcgen_runner (2.4) ->
 /// comparator (2.1) -> parity_report (2.3), run for real against the pilot
 /// case's real Codex-computed dimensions and a real PCGen engine invocation
-/// against the completed, genuinely same-character pilot `.pcg`. Confirms
-/// the pipeline is genuinely wired, confirms 7 of 9 dimensions now agree
-/// (proving this is a real same-character comparison, unlike the prior
-/// cycle's substitute-fixture run), and confirms the two real remaining
-/// mismatches (Climb/Swim) are a genuine Codex computation gap rather than a
-/// fixture or pipeline defect — so the golden fixture's
+/// against the completed, genuinely same-character pilot `.pcg`. Confirms the
+/// pipeline is genuinely wired and, after the CG-03 Human ability-modifier
+/// fix, confirms 8 of 9 dimensions now agree (the two prior Climb/Swim
+/// mismatches are now fixed for real, directly confirming the ability-modifier
+/// fix is correct) while one real, DIFFERENT mismatch
+/// (`combat.baseline_melee_attack_bonus`) is newly exposed — a previously
+/// masked, structurally distinct discrepancy this cycle does not attempt to
+/// fix (see this file's module doc comment) — so the golden fixture's
 /// `current_claim_status` correctly stays at `not_yet_grounded` rather than
 /// being force-upgraded.
 #[test]
-fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
+fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
     // --- Codex side: real, computed selected parity dimensions. ---
     let input_load = load_character_input_fixture(DETERMINISTIC_FIXTURE);
     assert!(
@@ -200,9 +222,11 @@ fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
         "parity report should name the pilot case id"
     );
 
-    // --- The real, genuine finding: identity now agrees (proving this is a real
-    // same-character run, not the prior cycle's substitute-fixture run), and 7 of 9
-    // dimensions match, but two real mismatches remain. ---
+    // --- The real, genuine finding after the CG-03 fix: identity still agrees (this
+    // remains a real same-character run), and Climb/Swim now GENUINELY match too (proving
+    // the Human ability-modifier fix is correct) -- 8 of 9 dimensions match. Only
+    // combat.baseline_melee_attack_bonus, previously masked by a compensating error, now
+    // genuinely diverges. ---
     let matched_ids: Vec<&str> = comparison
         .matches
         .iter()
@@ -210,12 +234,13 @@ fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
         .collect();
     for expected_match in [
         "character.identity",
-        "combat.baseline_melee_attack_bonus",
         "defense.baseline_armor_class",
         "defense.total_save.fortitude",
         "defense.total_save.reflex",
         "defense.total_save.will",
+        "skill.selected_modifier.climb",
         "skill.selected_modifier.intimidate",
+        "skill.selected_modifier.swim",
     ] {
         assert!(
             matched_ids.contains(&expected_match),
@@ -226,19 +251,19 @@ fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
     }
     assert_eq!(
         comparison.matches.len(),
-        7,
-        "expected exactly 7 genuinely matching dimensions: {:?}",
+        8,
+        "expected exactly 8 genuinely matching dimensions (Climb/Swim now fixed for real): {:?}",
         comparison
     );
 
-    // The two genuine mismatches: Climb and Swim, both off by exactly the missing Human
-    // +2 Strength racial ability bonus that `pilot_compute::compute_ability_modifiers`
-    // never actually folds into `AbilityModifiers.strength` (see this file's module doc
-    // comment for the full root-cause analysis).
-    for (dimension_id, pcgen_value, codex_value) in [
-        ("skill.selected_modifier.climb", 6i16, 5i16),
-        ("skill.selected_modifier.swim", 6i16, 5i16),
-    ] {
+    // The one remaining genuine mismatch: combat.baseline_melee_attack_bonus. This is NOT
+    // the Strength-modifier bug this cycle fixed (Climb/Swim now confirm that fix is
+    // correct) -- it is a second, previously-masked, structurally distinct discrepancy
+    // (see this file's module doc comment) that this cycle deliberately does not attempt
+    // to fix, since it is undiagnosed and out of the narrowly-authorized CG-03 scope.
+    for (dimension_id, pcgen_value, codex_value) in
+        [("combat.baseline_melee_attack_bonus", 5i16, 6i16)]
+    {
         let mismatch = comparison
             .mismatches
             .iter()
@@ -252,19 +277,19 @@ fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
     }
     assert_eq!(
         comparison.mismatches.len(),
-        2,
-        "expected exactly the two genuine Climb/Swim mismatches and no others: {:?}",
+        1,
+        "expected exactly the one genuine baseline-attack-bonus mismatch and no others: {:?}",
         comparison
     );
     assert!(!comparison.all_matched());
 
-    // --- Because real mismatches remain, do not force the upgrade. ---
+    // --- Because a real mismatch remains, do not force the upgrade. ---
     let fixture_after = load_golden_fixture_or_panic();
     assert_eq!(
         fixture_after.current_claim_status,
         ClaimTier::NotYetGrounded,
-        "pilot fixture must not be force-upgraded to oracle_checked while real Climb/Swim \
-         mismatches remain"
+        "pilot fixture must not be force-upgraded to oracle_checked while a real \
+         combat.baseline_melee_attack_bonus mismatch remains"
     );
 
     // And the fixture file on disk (not just the in-memory constant) must still say so --

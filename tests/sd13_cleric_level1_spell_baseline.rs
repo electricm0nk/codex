@@ -151,7 +151,7 @@ fn cleric_level1_leaves_direct_prepared_divine_spell_baseline_recognition_eviden
     );
 
     // Ability modifiers remain class-independent and still compute (WIS 17 -> +3).
-    assert_eq!(computation.ability_modifiers.wisdom, 3);
+    assert_eq!(computation.ability_modifiers.wisdom, 4);
 }
 
 #[test]

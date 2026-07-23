@@ -155,7 +155,7 @@ fn bard_level1_leaves_direct_spell_baseline_recognition_evidence() {
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 15 -> +2).
-    assert_eq!(computation.ability_modifiers.charisma, 2);
+    assert_eq!(computation.ability_modifiers.charisma, 3);
 }
 
 #[test]
@@ -285,11 +285,12 @@ fn bard_level1_grounds_bardic_performance_rounds_per_day() {
 
     // PF1 Core Rulebook Bardic Performance: a level-1 bard can use bardic performance
     // for a number of rounds per day equal to 4 + his Charisma modifier. The fixture's
-    // Charisma 15 yields a +2 modifier, so the daily budget is 4 + 2 = 6 rounds.
+    // Charisma 15 + 2 Human racial (CG-03 fix) yields a +3 modifier, so the daily
+    // budget is 4 + 3 = 7 rounds.
     let rounds = explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID);
     assert_eq!(
-        rounds.value, 6,
-        "bardic performance rounds per day must equal 4 + CHA modifier (4 + 2 = 6): {rounds:?}"
+        rounds.value, 7,
+        "bardic performance rounds per day must equal 4 + CHA modifier (4 + 3 = 7): {rounds:?}"
     );
     assert!(
         rounds.detail.contains("4 + ") && rounds.detail.contains("Charisma"),

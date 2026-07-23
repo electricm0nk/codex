@@ -159,7 +159,10 @@ fn wizard_level3_school_powers_and_opposed_school_cost_diagnostic_clears_too() {
         &computation,
         "class_chassis.wizard.force_missile_uses_per_day",
     );
-    assert_eq!(force_missile.value, 6);
+    // CG-03 fix: this fixture's Human ability-bonus choice targets Intelligence, so
+    // the +2 racial bonus now applies before the modifier is derived (base 17 -> 19,
+    // modifier +3 -> +4), raising Force Missile uses/day (3 + Int modifier) from 6 to 7.
+    assert_eq!(force_missile.value, 7);
 }
 
 #[test]

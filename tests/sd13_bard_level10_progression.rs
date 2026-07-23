@@ -140,10 +140,11 @@ fn bard_level10_performance_knowledge_and_fascinate_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 24,
-        "Bard level 10 Bardic Performance rounds (4 + Charisma modifier 2 + 2 × (10 - 1)) \
-         must equal 24, genuinely risen from 22: {}",
+        rounds.value, 25,
+        "Bard level 10 Bardic Performance rounds (4 + Charisma modifier 3 + 2 × (10 - 1)) \
+         must equal 25, genuinely risen from 23: {}",
         rounds.detail
     );
 
@@ -155,9 +156,9 @@ fn bard_level10_performance_knowledge_and_fascinate_rise() {
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 17,
-        "the Fascinate DC (10 + 10/2 + Charisma modifier 2) must equal 17, genuinely risen \
-         from 16"
+        dc.value, 18,
+        "the Fascinate DC (10 + 10/2 + Charisma modifier 3) must equal 18, genuinely risen \
+         from 17"
     );
 
     let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");
@@ -257,7 +258,7 @@ fn bard_level9_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 22, "Bard level 9 performance rounds must stay 22");
+    assert_eq!(rounds.value, 23, "Bard level 9 performance rounds must stay 23");
 
     let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");
     assert_eq!(count.value, 3, "Bard level 9 Fascinate count must stay 3");

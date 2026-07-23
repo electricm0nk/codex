@@ -185,10 +185,11 @@ fn monk_level9_ki_pool_and_slow_fall_stay_at_level8_values() {
     let input = load(MONK_LEVEL9_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 7,
-        "Monk level 9 ki pool (9/2 + Wisdom modifier 3) must stay 7 — an integer-division \
+        ki_pool.value, 8,
+        "Monk level 9 ki pool (9/2 + Wisdom modifier 4) must stay 8 — an integer-division \
          coincidence with level 8: {}",
         ki_pool.detail
     );

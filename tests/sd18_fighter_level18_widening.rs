@@ -209,7 +209,7 @@ fn fighter_level18_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // only, since Weapon Training's first-group bonus stays unchanged at
     // level 18: from 25 at level 17 to 26 at level 18.
-    assert_eq!(computation.baseline_melee_attack_bonus, 26);
+    assert_eq!(computation.baseline_melee_attack_bonus, 27);
 
     // Baseline armor class is unchanged: Armor Training stays rank 4 (no
     // fifth rank exists), so the armor-check-penalty reduction and maximum
@@ -217,9 +217,9 @@ fn fighter_level18_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // derived Climb/Swim total or armor-class value on this fixture.
     assert_eq!(computation.baseline_armor_class, 17);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 // ----- Negative control: the level-17 fixture is unaffected by this widening -----
@@ -244,7 +244,7 @@ fn fighter_level17_truth_is_unchanged_by_this_slice() {
         computation.explanations
     );
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 25);
+    assert_eq!(computation.baseline_melee_attack_bonus, 26);
 }
 
 // ----- Negative control: level 21 stays claim-blocked (PF1 has no 21st character level) -----
