@@ -6,7 +6,7 @@ owner: Todd Hintzmann
 scope: universal
 status: active
 review_state: accepted
-last_reviewed_at: 2026-07-20
+last_reviewed_at: 2026-07-22
 canonical_source: ~/workspace/repos/codex/docs/governance/wired-integration-stubs-registry.md (this file)
 workspace_citation: ~/workspace/governance/docs/wired-integration-stubs-registry.md
 supersedes: (none — first issuance)
@@ -34,6 +34,32 @@ When a stub is proposed (by an operator directive, a planned cycle, or a defensi
 
 The operator's verbatim directive is required for every entry — exceptions are operator-granted, not self-asserted.
 
+### The `book_stub` kind
+
+Entries #0001 and #0002 are **code-pattern** stubs — a source-code location that returns a
+placeholder/`Would ...` value instead of computing a real one. `book_stub` is a different shape:
+a **data-completeness gap**, not a code stub. There is no source file "returning" a fake value;
+there is a book of PF1 rules content that genuinely has not been ingested into the corpus yet,
+and the registry's job is to record that gap honestly (per `book_id`) rather than let it be
+silently missing or, worse, backfilled with fabricated data.
+
+`book_stub` entries adapt the same seven-field shape #0001/#0002 use, with the two file-specific
+fields swapped for data-specific equivalents:
+
+| #0001/#0002 field | `book_stub` field | Meaning for `book_stub` |
+|---|---|---|
+| File / line | **Book / manifest path** | `<book_id>` plus its manifest at `data/stubs/<book_id>.json` |
+| Stub pattern | **What's missing** | The book has no `data/corpus/<book_id>/` content at all — zero class/spell/equipment/monster records ingested. The manifest's `content_kind_counts: null` is the honest signal (not `0`, which would falsely claim the counting was done and came up empty) |
+| Justification (operator verbatim) | *(same field, same requirement)* | Cites the operator directive that scopes future-state books out of this bundle |
+| Audit-grep impact | *(same field)* | For `book_stub`, ordinarily "None" — the manifest JSON and registry prose don't contain the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or bundle-tag pattern, so no exclusion is needed. If a book_id or book_name ever collides with a forbidden token, note the exclusion explicitly here |
+| Bundle-of-record | *(same field)* | SD-26, Epic 4, plus the criterion number that registered the book |
+| Remediation cycle | *(same field)* | Repeats the manifest's own `planned_resolution_bundle` value, so the two stay in sync |
+| Status | *(same field)* | `Registered stub <date>` (not `Accepted`, to distinguish a data gap from a granted code-stub exception — both are operator-granted, but `book_stub` entries have no code to "accept") |
+
+Each `book_stub` entry's manifest (`data/stubs/<book_id>.json`) uses the shape specified in
+`docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/content-unit-inventory.md §2.1`:
+`{book_id, book_name, planned_resolution_bundle, content_kind_counts: null, registered_at: <ISO-8601>}`.
+
 ## Registry entries
 
 ### 0001 — Browser-preview fallback in character hub runtime
@@ -56,4 +82,14 @@ The operator's verbatim directive is required for every entry — exceptions are
 - **Remediation cycle:** None per rule system that never gets a real adapter; superseded per-system the moment that system's real `RuleSystemAdapter` implementation lands (mirrors `Pf1Adapter`'s criterion 3.2 precedent) and criterion 3.4's `resolve_rule_system_adapter` in each command file routes that `rule_system_id` to the real implementation instead.
 - **Status:** Accepted 2026-07-21.
 
-(Entries 0003-000n reserved for operator-directed exceptions. Any accidental stub found by the per-cycle audit goes into `risks-and-open-questions.md` as a Wired Integration Cleanup candidate, not here — the registry is operator-granted only.)
+### 0003 — `book_stub`: `advanced_race_guide` not yet ingested
+
+- **Book / manifest path:** `advanced_race_guide` — `data/stubs/advanced_race_guide.json`
+- **What's missing:** No `data/corpus/advanced_race_guide/` content exists. This PF1 sourcebook (Advanced Race Guide) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `advanced_race_guide` is the pilot instance, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `advanced_race_guide.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.1 (kind definition, this pilot entry) — the remaining 20 future-state books land under criteria 4.2-4.22, each opening its own numbered entry following this same shape.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-22.
+
+(Entries 0004-000n reserved for the remaining 20 `book_stub` future-state books (criteria 4.2-4.22) plus any other operator-directed exceptions. Any accidental stub found by the per-cycle audit goes into `risks-and-open-questions.md` as a Wired Integration Cleanup candidate, not here — the registry is operator-granted only.)
