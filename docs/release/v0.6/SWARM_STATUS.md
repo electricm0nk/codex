@@ -8,9 +8,9 @@ orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
                                 backend, RESUMED (see below)
-backend               Sonnet   bio schema+command DONE+pushed (0ab784d,
-                                sidecar bio.json, 4 new tests, 155/155); now
-                                on feat exposure (list_feats+add_feat_selection)
+backend               Sonnet   feat exposure DONE+pushed (89c3710, 162/162);
+                                now reading qa's PCGen spec before starting
+                                money/currency (last frontend-blocking item)
 qa                    Sonnet   idle, watching for PCGen-divergent findings
 
 (b) Happened
@@ -185,10 +185,10 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
   3. DONE (7694b22). Level-up HP + choices persistence.
   4. DONE (0ab784d). Bio schema field + persistence command (sidecar
      bio.json, avoids ChosenCharacterState blast radius).
-  5. IN PROGRESS. Feat exposure: list_feats + add_feat_selection against
-     existing 185-record CRB catalog, rules_tables/crb/feats.rs.
-  6. Money/currency schema field + command -- no existing schema slot,
-     biggest lift (frontend ask).
+  5. DONE (89c3710). Feat exposure: list_feat_catalog/list_feats
+     (mirrors equipment_catalog.rs) + add_feat_selection.
+  6. IN PROGRESS (last frontend-blocking item). Money/currency schema
+     field + command -- no existing schema slot, biggest lift.
   -- wave 2, DONE early (delivered before reprioritization reached backend,
      see Happened log for the full delivery-bug story): multiclass BAB/save
      stacking widened to Fighter/Wizard/Rogue (d20a5b9+8d814e8, 3961/0);
@@ -202,11 +202,13 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
      None of wave 2 blocks another teammate.
 
 frontend:
-  1. Details/Bio dead tabs removed (743c358); NOW UNBLOCKED -- backend's
-     update_character_bio/load_character_bio landed (0ab784d), wiring open.
-  2. Feat picker: NOW UNBLOCKING -- backend on list_feats/add_feat now.
+  1. Details/Bio dead tabs removed (743c358); bio wiring IN PROGRESS
+     (CharacterSheet.tsx + new boundary/characterBio.ts in flight).
+  2. Feat picker: UNBLOCKED -- backend's list_feats/add_feat_selection
+     landed (89c3710), not yet started.
   3. Money panel: not started, waits on backend's money schema+command
-     (correctly refused to build a throwaway shell against nothing real).
+     (correctly refused to build a throwaway shell against nothing real) --
+     last remaining blocker.
   4. DONE (75200fc). Wire SkillAllocationDialog.
   5. DONE (e8e4597). Wire LevelUpDialog.onAccept.
   BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
