@@ -1,18 +1,22 @@
 v0.6 Alpha Release Swarm — Status
 Branch: tranche/6 (from origin/develop @ 5b1bad5)
 Source of truth: docs/release/v0.6/release-swarm.md
+Update model: (a)-(c) below are hand-written by the lead after every real
+event (task completion, blocker, correction) -- this is the narrative
+record. The "Auto Heartbeat" block at the very end of this file is a
+separate, mechanical, cron-driven refresh (every 5 min, via
+~/workspace/swarm-status-heartbeat.py) that proves liveness and flags
+staleness even if the lead goes quiet; it never touches anything above it,
+and the lead never hand-edits it.
 
 (a) Happening now
 ------------------
-orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
-frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
-                                tasks 1-3 (bio/feat/money) still wait on
-                                backend, RESUMED (see below)
-backend               Sonnet   money conversion DONE+pushed (67490ac,
-                                176/176 lib, 170/170 desktop); ALL 3 frontend
-                                -blocking commands landed. HOLDING at
-                                checkpoint per lead instruction, not self-
-                                selecting wave-2 work.
+orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
+frontend              Sonnet   ALL 5 wave-1 tasks DONE, live-verified; holding
+                                at checkpoint per lead instruction
+backend               Sonnet   ALL 6 reprioritized tasks + a cosmetic fix
+                                DONE, pushed; holding at checkpoint per lead
+                                instruction
 qa                    Sonnet   idle, watching for PCGen-divergent findings
 
 (b) Happened
@@ -178,6 +182,43 @@ qa                    Sonnet   idle, watching for PCGen-divergent findings
   output, one real cosmetic defect found and correctly left for backend
   rather than fixed out-of-lane) and held the commit pending resolution.
   Cleared to proceed now that backend's status is resolved.
+- Backend closed the last reprioritized task, money conversion (67490ac):
+  real conversion math (money.rs, standard 1pp=10gp=100sp=1000cp, flagged
+  not-PCGen-verified same as QA's spec note), money.json sidecar (mirrors
+  bio pattern), track-and-spend only -- correctly left starting-wealth
+  auto-roll open since QA flagged that PCGen formula unresolved rather
+  than invent one. 176/176 lib tests, 170/170 desktop suite. This closed
+  ALL 3 of frontend's blocking commands -- checkpoint reached, both
+  teammates told to hold rather than self-select wave-2 scope. Lead
+  reported a full checkpoint to the operator (tasks landed, remaining
+  alpha-bar gap, the still-open posture-narrowness and Pets questions).
+- Operator asked about SWARM_STATUS.md update automation; lead built a
+  mechanical cron heartbeat (~/workspace/swarm-status-heartbeat.py, every
+  5 min, see file header) as a liveness/staleness guarantee independent of
+  the lead's own diligence, then resumed the swarm. During the pause,
+  both teammates finished real work:
+  * Backend: fixed the cosmetic "Fighter"-hardcoded-in-explanation-text
+    defect QA found, via a proper class_summary_label(input) helper
+    (dynamic, not a blind strip -- an existing test asserted the literal
+    "Fighter" string for real Fighter input, which a strip would have
+    broken). Committed d1905ed, full suite clean (176/176, 3961/3961,
+    170/170).
+  * Frontend: closed all 3 remaining wave-1 tasks. Bio editor (94a3865,
+    live-verified with a real close-and-reopen disk round-trip). Feat
+    picker (febf4d8, reused ItemPickerModal pattern, live-verified against
+    the real 185-entry catalog, "Showing 185 of 185", added Cleave and
+    confirmed on-disk persistence) -- honestly flagged that the tab can't
+    show a character's *existing* full feat list since selected_feats
+    isn't exposed via load_saved_character (new backend backlog item,
+    same shape as the Defense/DR gap). Money panel (59d5bc0, live-verified
+    both the success path -- added 150gp, confirmed PP15 display and
+    on-disk totalCopper -- and the honest-failure path -- tried to
+    overspend, got the real backend error, balance unchanged) -- correctly
+    left equipment-purchase auto-deduct unbuilt rather than risk a
+    non-atomic partial-apply bug, flagged as a real bounded follow-on.
+  All 5 of frontend's original wave-1 tasks are now done: bio (94a3865),
+  feat picker (febf4d8), money panel (59d5bc0), skill persistence
+  (75200fc), level-up persistence (e8e4597).
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
@@ -206,16 +247,17 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
      expose DR through PilotSnapshotDto/LoadSavedCharacterResponse.
      None of wave 2 blocks another teammate.
 
-frontend:
-  1. DONE (94a3865). Bio editor wired to update_character_bio/
-     load_character_bio, live-verified: real disk round-trip confirmed by
-     closing and reopening the character after editing.
-  2. IN PROGRESS. Feat picker: backend's list_feats/add_feat_selection
-     landed (89c3710), frontend reading the commit before wiring.
-  3. Money panel: not started, backend's money command landed (67490ac),
-     ready to pick up after the feat picker.
-  4. DONE (75200fc). Wire SkillAllocationDialog.
-  5. DONE (e8e4597). Wire LevelUpDialog.onAccept.
+frontend: ALL 5 TASKS COMPLETE, all live-verified against real dev builds.
+  1. DONE (94a3865). Bio editor -- real disk round-trip confirmed.
+  2. DONE (febf4d8). Feat picker -- real 185-entry catalog, on-disk
+     persistence confirmed. Named gap: can't show a character's *existing*
+     feat list (selected_feats not exposed via load_saved_character).
+  3. DONE (59d5bc0). Money panel -- both success and honest-failure paths
+     live-verified. Named gap: not coupled to equipment purchases (no
+     atomic buy-item command exists yet).
+  4. DONE (75200fc). SkillAllocationDialog wired.
+  5. DONE (e8e4597). LevelUpDialog.onAccept wired.
+  Holding at checkpoint, not self-selecting further scope.
   BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
   Defense/Pets/Overrides (see Happened log).
 
