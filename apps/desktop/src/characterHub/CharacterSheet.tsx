@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
@@ -35,6 +35,7 @@ import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
 import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
 import { setSkillAllocations } from '../boundary/setSkillAllocations';
+import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -466,12 +467,19 @@ function CalculatedBioField(props: { label: string; value: string }) {
  * Character bio / physical details panel across the top of the right column.
  * Alignment/Deity/Sex/Age/Height/Weight/Hair/Eyes are the character's own
  * choices, so they're editable here; Vision and Size are derived from race
- * and rendered read-only. Edits are session-local — there is no persisted
- * schema slot for these fields yet (see BLANK_BIO_FIELDS' call site), so
- * they are lost on close/reopen until a future cycle wires storage.
+ * and rendered read-only. Edits persist to the real `bio.json` sidecar via
+ * `onBioBlur` (fired on field blur, not per keystroke, to avoid a Tauri
+ * round trip on every character typed) — see `handleBioBlur` in
+ * `CharacterSheet`.
  */
-function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onBioChange: (patch: Partial<BioFields>) => void }) {
-  const { bio, onBioChange } = props;
+function DetailsPanel(props: {
+  vision: string;
+  size: string;
+  bio: BioFields;
+  onBioChange: (patch: Partial<BioFields>) => void;
+  onBioBlur: () => void;
+}) {
+  const { bio, onBioChange, onBioBlur } = props;
   return (
     <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
@@ -479,7 +487,7 @@ function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onB
       </p>
       <div style={{ display: 'grid', gap: '0.75rem 1.25rem', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))' }}>
         <BioField label="Alignment">
-          <select style={bioFieldInputStyle} value={bio.alignment} onChange={(event) => onBioChange({ alignment: event.target.value })}>
+          <select style={bioFieldInputStyle} value={bio.alignment} onChange={(event) => onBioChange({ alignment: event.target.value })} onBlur={onBioBlur}>
             <option value="">—</option>
             {ALIGNMENT_OPTIONS.map((option) => (
               <option key={option} value={option}>
@@ -489,17 +497,17 @@ function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onB
           </select>
         </BioField>
         <BioField label="Deity">
-          <input style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} />
+          <input style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Sex">
-          <select style={bioFieldInputStyle} value={bio.sex} onChange={(event) => onBioChange({ sex: event.target.value })}>
+          <select style={bioFieldInputStyle} value={bio.sex} onChange={(event) => onBioChange({ sex: event.target.value })} onBlur={onBioBlur}>
             <option value="">—</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </BioField>
         <BioField label="Age">
-          <select style={bioFieldInputStyle} value={bio.age} onChange={(event) => onBioChange({ age: event.target.value })}>
+          <select style={bioFieldInputStyle} value={bio.age} onChange={(event) => onBioChange({ age: event.target.value })} onBlur={onBioBlur}>
             <option value="">—</option>
             {AGE_OPTIONS.map((option) => (
               <option key={option} value={option}>
@@ -509,23 +517,23 @@ function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onB
           </select>
         </BioField>
         <BioField label="Height">
-          <input style={bioFieldInputStyle} value={bio.height} onChange={(event) => onBioChange({ height: event.target.value })} />
+          <input style={bioFieldInputStyle} value={bio.height} onChange={(event) => onBioChange({ height: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Weight">
-          <input style={bioFieldInputStyle} value={bio.weight} onChange={(event) => onBioChange({ weight: event.target.value })} />
+          <input style={bioFieldInputStyle} value={bio.weight} onChange={(event) => onBioChange({ weight: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Hair">
-          <input style={bioFieldInputStyle} value={bio.hair} onChange={(event) => onBioChange({ hair: event.target.value })} />
+          <input style={bioFieldInputStyle} value={bio.hair} onChange={(event) => onBioChange({ hair: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Eyes">
-          <input style={bioFieldInputStyle} value={bio.eyes} onChange={(event) => onBioChange({ eyes: event.target.value })} />
+          <input style={bioFieldInputStyle} value={bio.eyes} onChange={(event) => onBioChange({ eyes: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <CalculatedBioField label="Vision" value={props.vision} />
         <CalculatedBioField label="Size" value={props.size} />
       </div>
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
-        Vision and Size are calculated from race and aren't editable. The other fields aren't saved to the
-        character file yet — edits here only last for this session.
+        Vision and Size are calculated from race and aren't editable. The other fields save automatically
+        when you leave the field.
       </p>
     </div>
   );
@@ -747,6 +755,27 @@ export function CharacterSheet(props: {
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
+  // Loads the real persisted bio (or the all-empty default for a character
+  // that has never saved one) whenever the sheet opens on a different
+  // character. A load failure just leaves the blank default up rather than
+  // breaking the sheet — bio is pure flavor text, not load-bearing.
+  useEffect(() => {
+    let cancelled = false;
+    loadCharacterBio(props.row.characterId)
+      .then((loaded) => {
+        if (!cancelled) {
+          setBio(loaded);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBio({ ...BLANK_BIO_FIELDS });
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.characterId]);
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
   // Freshly recomputed derived stats from the "Recompute" menu action —
@@ -914,6 +943,22 @@ export function CharacterSheet(props: {
 
   function updateBio(patch: Partial<BioFields>) {
     setBio((prev) => ({ ...prev, ...patch }));
+  }
+
+  /**
+   * Persists the current bio field set via `update_character_bio` on field
+   * blur (not per keystroke — bio has 8 free-text/select fields and firing
+   * a Tauri round trip on every character typed would be wasteful). Pure
+   * passthrough persistence with no rules-engine involvement, so a failure
+   * here is a real I/O problem, not a Blocked/diagnostics outcome — surfaced
+   * through the same `mutationError` banner as every other mutation.
+   */
+  async function handleBioBlur() {
+    try {
+      await updateCharacterBio(props.row.characterId, bio);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : 'Could not save the bio fields.');
+    }
   }
 
   /**
@@ -1320,7 +1365,7 @@ export function CharacterSheet(props: {
 
         {/* RIGHT: character details, then skills beneath */}
         <div style={{ flex: '0 0 300px', minWidth: 0 }}>
-          <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} />
+          <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
           <SkillsPanel
             abilities={abilities}
             heldClasses={heldClasses}
