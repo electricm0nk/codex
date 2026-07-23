@@ -16,9 +16,9 @@ frontend              Sonnet   6-level multiclass walkthrough DONE; spell-
                                 slot walkthrough found Wizard is structurally
                                 UNREACHABLE via any UI path (see Happened),
                                 checking sibling casters, else standing by
-backend               Sonnet   money-conversion verification DONE (6cbee9c,
-                                see commit-hygiene note below); item 4 PAUSED,
-                                priority-interrupted to fix the Wizard gate
+backend               Sonnet   wave-2 items 2-4 ALL DONE+pushed (0aeed25,
+                                6cbee9c, b726a36); now on the Wizard
+                                spellbook-gate fix, confirmed priority
 qa                    Sonnet   money/encumbrance catalogue adoption DONE
                                 (ae723ae); idle, watching for wave-2 output
 
@@ -345,6 +345,23 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   and bounded. A real arcane-school selector goes to backlog. Backend
   paused item 4 to take this first since it unblocks a literal bar
   requirement. Full writeup in risks-and-open-questions.md item 1.
+- Backend closed item 4, comparator field-extraction (b726a36): 5 new
+  PCGen dimensions parsed from base-xml.ftl (encumbrance thresholds/total,
+  durability.max_hp, best-effort money.total_copper from free-text
+  MISC.FUNDS). No Rust struct changes needed -- pure serde deserialization,
+  confirmed the safe case rather than another blast-radius trap. Genuine,
+  confirmed (not overlooked) gap: PCGen's own export template hardcodes
+  current HP as an empty tag, structurally absent, can't be extracted
+  without a PCGen template change (out of repo scope). Verified two ways:
+  synthetic fixture AND the real end-to-end PCGen pipeline (8/8,
+  including the genuine non-mocked Gradle run). This closes wave-2 items
+  2-4 in full (durability 0aeed25, money-verification 6cbee9c, comparator
+  b726a36), none of which hit the AC slice's architecture problem.
+- Backend confirmed and started the Wizard fix (crossed-message timing
+  only, no discipline issue -- correctly held rather than self-select
+  when uncertain, exactly the right instinct). Frontend's caster survey
+  (Cleric/Druid/Bard/Sorcerer all need whole subsystems, not a seeded
+  choice) relayed to backend to avoid duplicate investigation.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
