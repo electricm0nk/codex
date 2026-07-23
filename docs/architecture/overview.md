@@ -1,7 +1,7 @@
 # Architecture overview
 
 > Scope: what Codex is, its three top-level planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -10,10 +10,12 @@ Codex is a desktop Pathfinder 1st Edition (PF1) character-management tool. It
 pairs a headless Rust rules-computation crate with a React/Tauri desktop
 shell, and it grounds its rule data in the real PCGen open-source corpus (a
 separate, unvendored checkout of `.pcc`/`.lst` files) rather than
-hand-invented tables. PCGen itself is treated as the eventual parity oracle —
-a future comparator is meant to check Codex's computed output against PCGen's
-own runtime behavior — but that comparator does not exist yet (see
-[status.md](./status.md)). Every number the app shows a user is either
+hand-invented tables. PCGen itself is treated as the parity oracle: an in-crate
+comparator (`src/oracle_validation/`) checks Codex's computed output against
+PCGen's own runtime behavior, dimension by dimension, and renders a `PASS`/`FAIL`
+parity report — but no character yet reaches a *passing* parity verdict (the
+pilot run currently reports a real mismatch; see [status.md](./status.md)).
+Every number the app shows a user is either
 computed for real, with a machine-checkable explanation record, or explicitly
 withheld as "blocked"; the codebase never fabricates a value it cannot prove.
 This fail-honest discipline, described in full in
@@ -116,7 +118,7 @@ flowchart TD
     subgraph side["other side surfaces, not on the hot compute path"]
         COMP["composed_input.rs: compose() -> ComposedCharacterInput\n(no production caller; exercised by its own tests\nand tests/sd18_preloop_consumer_compose.rs)"]
         HB["homebrew_authoring/: PackageStore, PreviewBridge"]
-        OV["oracle_validation/: GoldenCaseFixture, SelectedParityDimensions"]
+        OV["oracle_validation/: GoldenCaseFixture, SelectedParityDimensions,\ncomparator/normalization/parity_report/pcgen_runner"]
         SSM["support_state_matrix.rs: seeded_sd13_e1_f1_current_truth"]
     end
     SD13B -.reads support truth.-> SSM
@@ -186,7 +188,8 @@ shaped the way it is:
 | `src/rules_core/rules_tables/` | Hand-transcribed per-book Paizo tables (`crb/`, `apg/`, `acg/`, `beastiary1/`) | [rules-data-tables.md](./rules-data-tables.md) |
 | `src/rules_core/support_state_matrix.rs` | Typed support/evidence-tier control-plane ledger | [support-state-matrix.md](./support-state-matrix.md) |
 | `src/saved_character/`, `src/campaign/` | Local on-disk persistence for one character / one campaign | [persistence.md](./persistence.md) |
-| `src/homebrew_authoring/`, `src/oracle_validation/` | Bounded homebrew package-authoring and oracle-parity proof slices | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
+| `src/homebrew_authoring/`, `src/oracle_validation/` | Bounded homebrew package-authoring slice; the oracle-parity harness (comparator, normalization, parity-report writer, PCGen-runner wrapper) | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
+| `data/corpus/`, `data/stubs/` | Repo-resident JSON corpus cache for the four in-scope books; `book_stub` future-state placeholders for 21 out-of-scope books | [rules-data-tables.md](./rules-data-tables.md), [status.md](./status.md) |
 | `apps/desktop/` (frontend + `src-tauri/`) | React/Tauri desktop shell, Tauri command inventory, boundary layer | [desktop-app.md](./desktop-app.md) |
 | `apps/desktop/src/sd16/`, `apps/desktop/src-tauri/src/update/` | Self-update chain; `apps/desktop/src/testerWorkbench/feedback/`, `sd16/feedback/` | [update-and-feedback.md](./update-and-feedback.md) |
 | `.github/workflows/`, `scripts/release/`, `tools/release/`, `schemas/update/` | Publish pipeline, branch-promotion gates, manifest schemas | [release-pipeline.md](./release-pipeline.md) |
