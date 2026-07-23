@@ -7,11 +7,10 @@ Source of truth: docs/release/v0.6/release-swarm.md
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   idle -- wave 1 (1-3) done, 4-5 waiting on
                                 backend's skill/level-up commands
-backend               Sonnet   version bump DONE (0c614d9); on skill-point
-                                persistence (task 2 of 6), then level-up,
-                                bio, feat, money commands; wave 2 now 4 calc
-                                gaps (durability/carry-capacity/encumbrance/
-                                money-conversion) + comparator extraction fix
+backend               Sonnet   task 2 DONE (e0a0bda, set_skill_allocations,
+                                5 tests); now on task 3, level-up persistence;
+                                flagged posture-narrowness (see Happened) as
+                                a wave-2/3 priority question, pending my reply
 qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
                                 task 5 ongoing); delivered PCGen-sourced
                                 formula spec for backend's wave 2 (abec13b)
@@ -98,6 +97,18 @@ qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
   bar item 2 ("any class... from the four primary books") for Druid/
   Ranger/Hunter/Cavalier? Not a literal blocker per the bar's text, but
   flagged for explicit operator sign-off rather than silently dropped.
+- Backend closed wave-1 task 2: set_skill_allocations command (e0a0bda),
+  real TDD (5 new tests incl. a golden-path proof it's a true replace not
+  a no-op), verification output posted. IMPORTANT FINDING, folded into
+  risks item 1: the compute engine's Computed path only accepts ONE exact
+  hardcoded posture (Climb/Intimidate/Swim rank 1, chain shirt equipped,
+  nothing else) -- any other tester choice returns Blocked with
+  diagnostics. Pre-existing, not introduced by the swarm, but sharper than
+  the known "Fighter 1-3 only" framing and likely more central to hitting
+  the alpha bar than individual picker/persistence work. Told backend to
+  finish the frontend-unblocking queue first, then bring a scoped proposal
+  before starting wave-2 calc-accuracy work on the assumption that
+  persistence alone unlocks real play.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
