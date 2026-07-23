@@ -1,7 +1,7 @@
 # Cycle bonus_bestiary_stub_manifest — Epic 4 / Criterion 4.9
 
 - **Card ID:** (see kanban step, below)
-- **Commit SHA:** ec791ab (pre-rebase local; see Notes for the final pushed SHA if it changes on rebase)
+- **Commit SHA:** bdaf39b (manifest + registry entry), 6a0eeab (receipt SHA-stamp, this commit)
 - **Files touched:**
   - `data/stubs/bonus_bestiary.json` (new — book_stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0011; updated the
