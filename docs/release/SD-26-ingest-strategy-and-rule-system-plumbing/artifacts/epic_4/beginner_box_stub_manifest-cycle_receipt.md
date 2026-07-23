@@ -1,7 +1,7 @@
 # Cycle beginner_box_stub_manifest — Epic 4 / Criterion 4.2
 
 - **Card ID:** (see kanban step, below)
-- **Commit SHA:** (filled in after push — see `progress.md` for the landed SHA)
+- **Commit SHA:** `180a6b09bcfe8660b2be402252d4da684e231ccb`
 - **Files touched:**
   - `docs/governance/wired-integration-stubs-registry.md` (added registry entry #0005, `book_stub`: `beginner_box`)
   - `data/stubs/beginner_box.json` (new — criterion 4.2 per-book stub manifest)
