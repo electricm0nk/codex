@@ -5,6 +5,7 @@ import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateC
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { addEquipmentSelection } from '../boundary/addEquipmentSelection';
 import { addSpellSelection } from '../boundary/addSpellSelection';
+import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
 import { addFeatSelection } from '../boundary/addFeatSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
@@ -92,6 +93,9 @@ const addItemButtonStyle: CSSProperties = {
  * a category taxonomy the corpus doesn't expose yet.
  */
 const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
+
+/** Matches `characterHubModel.ts`'s `CLASS_OPTIONS` id for Wizard. */
+const WIZARD_CLASS_ID = 'class:wizard';
 
 export interface ItemPickerConfig {
   title: string;
@@ -1005,26 +1009,49 @@ export function CharacterSheet(props: {
 
   async function handleAddSpell(entry: ItemPickerEntry) {
     setMutationError(null);
-    // `add_spell_selection` requires a `sourceClassId`; the picker's scope
-    // is "search, filter, pick a spell" (no class chooser), so this defaults
-    // to the character's first held class — see `heldClasses` below, parsed
-    // from the same `classSummary` the Level box already reads.
-    const primaryClassId = heldClasses[0]?.classId;
+    // `add_spell_selection`/`record_and_prepare_spell_selection` require a
+    // `sourceClassId`; the picker's scope is "search, filter, pick a spell"
+    // (no class chooser). Prefers a held Wizard class when the character has
+    // one (rather than always defaulting to heldClasses[0], which could
+    // misattribute the pick to a non-caster class on a Fighter/Wizard
+    // multiclass build) and otherwise falls back to the first held class —
+    // see `heldClasses` below, parsed from the same `classSummary` the Level
+    // box already reads.
+    const heldWizardClass = heldClasses.find((held) => held.classId === WIZARD_CLASS_ID);
+    const primaryClassId = heldWizardClass?.classId ?? heldClasses[0]?.classId;
     if (!primaryClassId) {
       setMutationError('This character has no class to learn the spell from yet.');
       return;
     }
     try {
-      const outcome = await addSpellSelection({
-        characterId: props.row.characterId,
-        spellId: entry.key,
-        sourceClassId: primaryClassId,
-        // "Known" is the closest default to "the character now has access
-        // to this spell" without picking a prepared-caster's daily list —
-        // out of scope for a search-and-select picker.
-        acquisitionMode: 'Known',
-        savedAt: new Date().toISOString(),
-      });
+      // Wizard's `unmet_wizard_spellbook_conditions` requires a non-empty
+      // Known set AND a non-empty Prepared set simultaneously — no sequence
+      // of single-mode `add_spell_selection` calls can ever satisfy that
+      // (each call is independently gated on reaching `Computed` before
+      // persisting), so every Wizard pick goes through the atomic
+      // record-and-prepare command instead. The existing SpellsTab already
+      // doesn't model Known-vs-Prepared posture for any class, so treating
+      // every picked Wizard spell as both is consistent with that, not a
+      // new simplification. Every other class keeps the plain Known-only
+      // path unchanged.
+      const outcome =
+        primaryClassId === WIZARD_CLASS_ID
+          ? await recordAndPrepareSpellSelection({
+              characterId: props.row.characterId,
+              spellId: entry.key,
+              sourceClassId: primaryClassId,
+              savedAt: new Date().toISOString(),
+            })
+          : await addSpellSelection({
+              characterId: props.row.characterId,
+              spellId: entry.key,
+              sourceClassId: primaryClassId,
+              // "Known" is the closest default to "the character now has
+              // access to this spell" without picking a prepared-caster's
+              // daily list — out of scope for a search-and-select picker.
+              acquisitionMode: 'Known',
+              savedAt: new Date().toISOString(),
+            });
       const refresh = toCharacterMutationRefresh(outcome);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
