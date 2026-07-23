@@ -483,6 +483,31 @@ pub(crate) fn add_spell_selection_at_root(
     })
 }
 
+/// Replaces `chosen.skill_allocations` wholesale with the caller's full
+/// allocation set. Unlike equipment/spell selections (which append one
+/// entry at a time), the skill-allocation dialog always sends its complete
+/// draft on accept (v0.6 alpha swarm, task 2), so persistence must replace
+/// the whole set rather than append to it.
+pub fn apply_set_skill_allocations(
+    character_input: &mut CharacterInput,
+    skill_allocations: Vec<SkillAllocation>,
+) {
+    character_input.chosen.skill_allocations = skill_allocations;
+}
+
+/// `set_skill_allocations`'s real implementation — see
+/// `mutate_saved_character_at_root` for the shared
+/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
+pub(crate) fn set_skill_allocations_at_root(
+    root: &Path,
+    skill_allocations: Vec<SkillAllocation>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_set_skill_allocations(character_input, skill_allocations);
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -614,6 +639,57 @@ mod tests {
             reloaded.revision_id,
             format!("{character_id}.rev.2"),
             "add_equipment_selection must advance revision_id, not just saved_at"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm, task 2: skill-point allocation persistence.
+    /// `SkillAllocationDialog.onAccept` always sends its complete draft
+    /// allocation, so `set_skill_allocations_at_root` must replace
+    /// `chosen.skill_allocations` wholesale (not append) while still
+    /// advancing the revision counter like every other mutation op.
+    #[test]
+    fn set_skill_allocations_at_root_advances_revision_id() {
+        let character_id = "pf1-adapter-revision-skill-allocations";
+        let root = tempdir("revision-skill-allocations");
+        let envelope = seed_envelope(character_id, 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:swim".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("set-skill-allocations call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("re-ordering the supported skill triple must still reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.revision_id,
+            format!("{character_id}.rev.2"),
+            "set_skill_allocations must advance revision_id, not just saved_at"
+        );
+        assert_eq!(
+            reloaded
+                .character_input
+                .chosen
+                .skill_allocations
+                .iter()
+                .map(|allocation| allocation.skill_id.as_str())
+                .collect::<Vec<_>>(),
+            vec!["skill:swim", "skill:intimidate", "skill:climb"],
+            "the on-disk allocation must match the caller's new set/order exactly, proving a full replace rather than an append"
         );
 
         std::fs::remove_dir_all(&root).ok();

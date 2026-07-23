@@ -215,17 +215,19 @@ pub enum CreateCharacterResponse {
 // still call them unqualified via `use super::*`).
 pub(crate) use crate::pf1_adapter::{
     add_equipment_selection_at_root, add_spell_selection_at_root, compose_character_input,
-    level_up_character_at_root, mutate_saved_character_at_root,
+    level_up_character_at_root, mutate_saved_character_at_root, set_skill_allocations_at_root,
 };
 // `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
-// are only referenced directly by this module's own `#[cfg(test)] mod tests`
-// (the non-test `#[tauri::command]` wrappers only ever call the `_at_root`
-// variants re-exported above) — `#[cfg(test)]` on the import itself avoids an
-// `unused_imports` warning on non-test builds while keeping `use super::*`
-// resolving them inside `mod tests` unchanged.
+// / `apply_set_skill_allocations` are only referenced directly by this
+// module's own `#[cfg(test)] mod tests` (the non-test `#[tauri::command]`
+// wrappers only ever call the `_at_root` variants re-exported above) —
+// `#[cfg(test)]` on the import itself avoids an `unused_imports` warning on
+// non-test builds while keeping `use super::*` resolving them inside
+// `mod tests` unchanged.
 #[cfg(test)]
 pub(crate) use crate::pf1_adapter::{
     apply_add_equipment_selection, apply_add_spell_selection, apply_level_up,
+    apply_set_skill_allocations,
 };
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -372,9 +374,10 @@ pub(crate) fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> Character
 /// `CreateCharacterResponse::Saved`/`Blocked`, matching every other
 /// character-hub command's response shape).
 ///
-/// This table documents the full three-operation surface. As of this cycle
-/// all three rows are wired to callable `#[tauri::command]`s
-/// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`).
+/// This table documents the full four-operation surface. As of this cycle
+/// all four rows are wired to callable `#[tauri::command]`s
+/// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`,
+/// `set_skill_allocations`).
 /// Per the Wired Integration doctrine (`docs/governance/no-stub-mvp-doctrine.md`),
 /// the `wired` flag below is descriptive metadata this table's own
 /// dispatch-shape test asserts against, not a runtime dispatcher a caller
@@ -384,6 +387,7 @@ pub enum SavedCharacterMutationOp {
     LevelUpCharacter,
     AddEquipmentSelection,
     AddSpellSelection,
+    SetSkillAllocations,
 }
 
 /// One row of the `mutate_saved_character` operation table.
@@ -404,7 +408,7 @@ pub struct SavedCharacterMutationOpDescriptor {
     pub wired: bool,
 }
 
-pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 3] = [
+pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 4] = [
     SavedCharacterMutationOpDescriptor {
         op: SavedCharacterMutationOp::LevelUpCharacter,
         name: "level_up_character",
@@ -425,6 +429,13 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         name: "add_spell_selection",
         description: "Appends an entry to chosen.spells_selected, then \
             recomputes and re-saves.",
+        wired: true,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::SetSkillAllocations,
+        name: "set_skill_allocations",
+        description: "Replaces chosen.skill_allocations wholesale with the \
+            caller's full allocation set, then recomputes and re-saves.",
         wired: true,
     },
 ];
@@ -797,6 +808,40 @@ pub fn add_spell_selection(
         request.acquisition_mode.into(),
         &request.saved_at,
     )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetSkillAllocationsRequest {
+    pub character_id: String,
+    /// The caller's complete skill-allocation set (not a delta) — reuses
+    /// the `SkillAllocationDto` shape already established for
+    /// import/export so the wire contract stays consistent across this
+    /// module's DTOs.
+    pub skill_allocations: Vec<SkillAllocationDto>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, replaces its skill allocations wholesale,
+/// recomputes via the real engine, and re-saves — see
+/// `set_skill_allocations_at_root` for the full semantics. Replaces rather
+/// than appends because `SkillAllocationDialog.onAccept` always sends its
+/// complete draft allocation, not an incremental change.
+#[tauri::command]
+pub fn set_skill_allocations(
+    app: tauri::AppHandle,
+    request: SetSkillAllocationsRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let skill_allocations = request
+        .skill_allocations
+        .into_iter()
+        .map(|skill| SkillAllocation {
+            skill_id: skill.skill_id,
+            ranks: skill.ranks,
+        })
+        .collect();
+    set_skill_allocations_at_root(&root, skill_allocations, &request.saved_at)
 }
 
 fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -1678,7 +1723,7 @@ mod tests {
     // ----- `mutate_saved_character` operation table (Criterion 16) -----
 
     #[test]
-    fn saved_character_mutation_operations_table_documents_three_ops_all_wired() {
+    fn saved_character_mutation_operations_table_documents_four_ops_all_wired() {
         let names: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
             .iter()
             .map(|descriptor| descriptor.name)
@@ -1689,8 +1734,9 @@ mod tests {
                 "level_up_character",
                 "add_equipment_selection",
                 "add_spell_selection",
+                "set_skill_allocations",
             ],
-            "the table must enumerate exactly these three ops, in this order"
+            "the table must enumerate exactly these four ops, in this order"
         );
 
         let wired: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
@@ -1704,8 +1750,9 @@ mod tests {
                 "level_up_character",
                 "add_equipment_selection",
                 "add_spell_selection",
+                "set_skill_allocations",
             ],
-            "all three ops are callable through real Tauri commands as of this cycle"
+            "all four ops are callable through real Tauri commands as of this cycle"
         );
 
         for descriptor in SAVED_CHARACTER_MUTATION_OPERATIONS.iter() {
@@ -1901,6 +1948,135 @@ mod tests {
         assert!(
             result.is_err(),
             "adding a spell selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `set_skill_allocations` (v0.6 alpha swarm, task 2) -----
+
+    #[test]
+    fn apply_set_skill_allocations_replaces_skill_allocations_wholesale() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        assert_eq!(
+            input.chosen.skill_allocations.len(),
+            3,
+            "the fixed demo loadout starts with three skill allocations"
+        );
+
+        apply_set_skill_allocations(
+            &mut input,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+        );
+
+        assert_eq!(
+            input.chosen.skill_allocations,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+            "the whole set must be replaced, not appended to"
+        );
+    }
+
+    /// The single most important regression guard for task 2: proves the
+    /// real load -> mutate -> recompute -> re-save -> return round trip
+    /// against a real `SavedCharacterStore` fixture on disk, mirroring
+    /// `add_equipment_selection_at_root`'s own golden path test. Re-orders
+    /// the supported Climb/Intimidate/Swim triple (rather than sending it
+    /// back unchanged) so the assertion actually proves replacement, not a
+    /// no-op.
+    #[test]
+    fn set_skill_allocations_at_root_replaces_and_persists_when_computed() {
+        let root = tempdir("set-skill-allocations-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:swim".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with a re-ordered but still-supported skill \
+                     triple must still reach Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded
+                .character_input
+                .chosen
+                .skill_allocations
+                .iter()
+                .map(|allocation| allocation.skill_id.as_str())
+                .collect::<Vec<_>>(),
+            vec!["skill:swim", "skill:intimidate", "skill:climb"],
+            "the on-disk envelope must reflect the caller's full replacement set/order"
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Mirrors `level_up_character_at_root`'s own "never persist an unproven
+    /// build" proof: an out-of-posture skill allocation must leave the
+    /// on-disk envelope exactly as it was, not silently apply.
+    #[test]
+    fn set_skill_allocations_at_root_does_not_persist_when_resulting_build_is_blocked() {
+        let root = tempdir("set-skill-allocations-blocked");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error even when blocked");
+
+        match response {
+            CreateCharacterResponse::Blocked { .. } => {}
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("rank 2 Climb alone is outside the supported posture and must not reach Computed")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.skill_allocations,
+            envelope.character_input.chosen.skill_allocations,
+            "a blocked mutation must leave the on-disk skill allocations untouched"
+        );
+        assert_eq!(
+            reloaded.saved_at, LEVEL_UP_TEST_SAVED_AT,
+            "a blocked mutation must not advance saved_at either"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn set_skill_allocations_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("set-skill-allocations-missing-character");
+
+        let result = set_skill_allocations_at_root(
+            &root,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 }],
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(
+            result.is_err(),
+            "setting skill allocations on a nonexistent saved character must fail"
         );
 
         std::fs::remove_dir_all(&root).ok();
