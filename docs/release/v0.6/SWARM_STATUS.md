@@ -8,12 +8,10 @@ orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
                                 backend, RESUMED (see below)
-backend               Sonnet   BAB/save stacking DONE+pushed (d20a5b9, 170/170
-                                lib tests, 3961/0 full suite w/ qa's catalogue);
-                                now on bio schema+command (reprioritized queue,
-                                for real this time -- channel confirmed working)
-qa                    Sonnet   committing 34-file/40-test catalogue update now
-                                (sequenced right after backend's d20a5b9)
+backend               Sonnet   bio schema+command DONE+pushed (0ab784d,
+                                sidecar bio.json, 4 new tests, 155/155); now
+                                on feat exposure (list_feats+add_feat_selection)
+qa                    Sonnet   idle, watching for PCGen-divergent findings
 
 (b) Happened
 ------------
@@ -182,36 +180,35 @@ qa                    Sonnet   committing 34-file/40-test catalogue update now
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
 backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
-  1. DONE (0c614d9, pushed). Version bump 0.5.99 -> 0.6.0 (package.json,
-     tauri.conf.json, Cargo.toml, Cargo.lock, buildVersionTriple.test.ts
-     anchor + its sd21 sibling, caught proactively). Triggered a pre-existing
-     fixture-freshness test expecting literal "Codex 0.6.0-test" in 3 files
-     frontend owns -- frontend already has them in flight, confirming.
-  2. IN PROGRESS. Skill-point allocation persistence: Tauri command +
-     rules_core hookup.
-  3. Level-up HP + choices persistence: Tauri command.
-  4. Bio schema field + persistence command (frontend ask).
-  5. Feat exposure: list_feats + add_feat_selection against existing
-     185-record CRB catalog, rules_tables/crb/feats.rs (frontend ask).
+  1. DONE (0c614d9). Version bump 0.5.99 -> 0.6.0.
+  2. DONE (e0a0bda). Skill-point allocation persistence.
+  3. DONE (7694b22). Level-up HP + choices persistence.
+  4. DONE (0ab784d). Bio schema field + persistence command (sidecar
+     bio.json, avoids ChosenCharacterState blast radius).
+  5. IN PROGRESS. Feat exposure: list_feats + add_feat_selection against
+     existing 185-record CRB catalog, rules_tables/crb/feats.rs.
   6. Money/currency schema field + command -- no existing schema slot,
      biggest lift (frontend ask).
-  -- wave 2 (spec ready in SWARM_REPORT.md appendix, abec13b): multiclass
-     BAB/save stacking (TDD); equipment AC audit; durability, carry-
-     capacity, encumbrance, money-conversion calcs (4 gaps, PCGen-sourced
-     spec ready except money conversion unverified + wealth-by-class
-     unresolved); comparator field-extraction fix in pcgen_runner.rs /
-     pcgen-normalize-output.py. Backlog (non-blocking, low priority):
+  -- wave 2, DONE early (delivered before reprioritization reached backend,
+     see Happened log for the full delivery-bug story): multiclass BAB/save
+     stacking widened to Fighter/Wizard/Rogue (d20a5b9+8d814e8, 3961/0);
+     equipment AC audit + new carry-capacity/encumbrance calc (d475097).
+  -- wave 2 remaining: durability calc (near-zero production surface per
+     QA survey); money-conversion calc; comparator field-extraction fix in
+     pcgen_runner.rs/pcgen-normalize-output.py (PCGen-sourced spec ready in
+     SWARM_REPORT.md appendix, abec13b, except money-conversion unverified
+     + wealth-by-class unresolved). Backlog (non-blocking, low priority):
      expose DR through PilotSnapshotDto/LoadSavedCharacterResponse.
      None of wave 2 blocks another teammate.
 
 frontend:
-  1. DONE (743c358) -- Details/Bio dead tabs removed, bio wiring still
-     waits on backend's bio command.
-  2. Feat picker: not started, waits on backend's list_feats/add_feat.
+  1. Details/Bio dead tabs removed (743c358); NOW UNBLOCKED -- backend's
+     update_character_bio/load_character_bio landed (0ab784d), wiring open.
+  2. Feat picker: NOW UNBLOCKING -- backend on list_feats/add_feat now.
   3. Money panel: not started, waits on backend's money schema+command
      (correctly refused to build a throwaway shell against nothing real).
-  4. Wire SkillAllocationDialog -- blocked on backend task 2.
-  5. Wire LevelUpDialog.onAccept -- blocked on backend task 3.
+  4. DONE (75200fc). Wire SkillAllocationDialog.
+  5. DONE (e8e4597). Wire LevelUpDialog.onAccept.
   BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
   Defense/Pets/Overrides (see Happened log).
 
