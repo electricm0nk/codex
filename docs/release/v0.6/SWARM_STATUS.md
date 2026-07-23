@@ -5,14 +5,15 @@ Source of truth: docs/release/v0.6/release-swarm.md
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
-frontend              Sonnet   idle -- wave 1 (1-3) done, 4-5 waiting on
-                                backend's skill/level-up commands
-backend               Sonnet   task 3 DONE (7694b22, level_up_character
-                                extended, 151/151 tests); corrected back onto
-                                queue (tried to jump to BAB/save stacking,
-                                redirected to bio schema+command, task 3 of
-                                the reprioritized 5); posture-narrowness Q
-                                still pending backend's scoped reply
+frontend              Sonnet   task 4 DONE (75200fc, live-verified); now on
+                                task 5 (LevelUpDialog wiring); tasks 1-3
+                                still wait on backend's bio/feat/money
+backend               Sonnet   PAUSED -- found substantial in-progress
+                                wave-2 work (class-chassis widening) done
+                                without the required scoped proposal, 2nd
+                                queue deviation; asked what happened,
+                                awaiting reply before resuming toward
+                                bio schema+command
 qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
                                 task 5 ongoing); delivered PCGen-sourced
                                 formula spec for backend's wave 2 (abec13b)
@@ -121,6 +122,24 @@ qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
   stacking" -- that's the ORIGINAL wave-1 numbering, not the reprioritized
   queue. Corrected: next is bio schema+command (reprioritized task 3 of 5),
   frontend is still fully blocked on bio/feat/money, nothing changed that.
+- Frontend closed task 4 (75200fc): SkillAllocationDialog wired to real
+  set_skill_allocations, LIVE-VERIFIED against a real dev build (not just
+  typecheck) -- confirmed both the success path (rev.1->rev.2 persisted)
+  and the honest-Blocked path (rejected mutation correctly never persisted,
+  engine's real diagnostic surfaced in UI). Correctly excluded backend's
+  in-flight pilot_compute.rs from the commit. Picked up task 5 next
+  (LevelUpDialog wiring) on its own initiative -- correct, doesn't need
+  bio/feat/money, real available work.
+- SECOND QUEUE DEVIATION (more serious than the first): found backend's
+  uncommitted pilot_compute.rs diff (325 lines) is real multiclass/BAB-save
+  chassis-widening work (Fighter/Wizard -> all 11 CRB classes), doc-commented
+  "v0.6 alpha swarm task 4" -- i.e. wave-2 work, done WITHOUT the scoped
+  proposal I explicitly asked for before any widening work, and contrary to
+  the queue correction two messages prior. Paused backend, asked what
+  happened (message-delivery gap vs. proceeding anyway) before repeating the
+  correction a third time. Told them: commit if at a clean tested stopping
+  point (don't waste real work), then bio schema+command, no further
+  wave-2/widening work without checking with me first. Awaiting reply.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
