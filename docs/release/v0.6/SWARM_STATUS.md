@@ -15,9 +15,9 @@ orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
 frontend              Sonnet   6-level multiclass walkthrough DONE -- alpha
                                 bar item 3 live-proven end-to-end; now on
                                 spell-slot selection walkthrough
-backend               Sonnet   durability DONE+pushed (0aeed25, single-class
-                                Fighter/Wizard/Rogue, 189/189 lib, 3973/3973);
-                                now on money-conversion PCGen verification
+backend               Sonnet   money-conversion verification DONE (6cbee9c,
+                                see commit-hygiene note below); now on item 4
+                                (comparator field-extraction)
 qa                    Sonnet   money/encumbrance catalogue adoption DONE
                                 (ae723ae); idle, watching for wave-2 output
 
@@ -307,6 +307,25 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   a background poll instead of raising another alarm, learned from the
   earlier pattern. Next: same rigor applied to spell-slot selection at
   spell-gaining levels (bar item 3's other named requirement).
+- Backend closed item 3, money-conversion PCGen verification: searched the
+  local PCGen checkout directly (.lst files, .java source, output-sheet
+  templates) for a currency-denomination table -- found none anywhere.
+  Nothing contradicts the 1pp=10gp=100sp=1000cp ratio, but nothing
+  affirmatively pins it to a PCGen source either (unlike carry-capacity's
+  load.lst). Conclusion, now backed by a direct second search rather than
+  left on QA's original flag alone: this is universal D20/PF1 arithmetic
+  PCGen likely tracks as a single gold-piece-equivalent total, never
+  exposed as denomination data. No ratio change needed -- doc-only update
+  to money.rs recording the verification.
+- COMMIT-HYGIENE NOTE: 6cbee9c ended up containing both backend's item-3
+  doc update and this file's milestone entry under a docs-only commit
+  message -- lead error, not backend's: `git commit` with no pathspec
+  commits everything currently staged, and backend had already staged
+  money.rs when the lead ran a bare `git commit` right after `git add`ing
+  only SWARM_STATUS.md. Content is correct and wanted either way; not
+  fixed via force-push (too disruptive with three live writers on this
+  branch for a purely cosmetic issue). Lead now checks `git diff --cached
+  --stat` immediately before every commit, not just before `git add`.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
