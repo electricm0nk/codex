@@ -4,6 +4,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 
 const WEAPON_ENTRY: ItemPickerEntry = { key: 'equipment:longsword', name: 'Longsword', detail: 'Arms & Armor' };
 const SPELL_ENTRY: ItemPickerEntry = { key: 'spell:fireball', name: 'spell:fireball', detail: 'Evocation · Level 3' };
+const FEAT_ENTRY: ItemPickerEntry = { key: 'feat:dodge', name: 'Dodge', detail: 'Combat · +1 dodge bonus to AC' };
 
 /**
  * Locks in the Add Weapon / Add Armor / Add Spell onClick wiring
@@ -23,6 +24,7 @@ async function main() {
   verifiesWeaponKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler();
   verifiesArmorKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler();
   verifiesSpellKindLoadsSpellCatalogAndWiresSpellHandler();
+  verifiesFeatKindLoadsFeatCatalogAndWiresFeatHandler();
   verifiesNullKindProducesNoPickerConfig();
   verifiesWeaponAndArmorHaveDistinctTitles();
 }
@@ -30,8 +32,10 @@ async function main() {
 function makeDeps() {
   const loadEquipmentCalls: string[] = [];
   const loadSpellsCalls: number[] = [];
+  const loadFeatsCalls: number[] = [];
   const equipmentSelections: ItemPickerEntry[] = [];
   const spellSelections: ItemPickerEntry[] = [];
+  const featSelections: ItemPickerEntry[] = [];
 
   const deps = {
     loadEquipment: (category: string) => {
@@ -42,11 +46,16 @@ function makeDeps() {
       loadSpellsCalls.push(1);
       return Promise.resolve([SPELL_ENTRY]);
     },
+    loadFeats: () => {
+      loadFeatsCalls.push(1);
+      return Promise.resolve([FEAT_ENTRY]);
+    },
     onSelectEquipment: (entry: ItemPickerEntry) => equipmentSelections.push(entry),
     onSelectSpell: (entry: ItemPickerEntry) => spellSelections.push(entry),
+    onSelectFeat: (entry: ItemPickerEntry) => featSelections.push(entry),
   };
 
-  return { deps, loadEquipmentCalls, loadSpellsCalls, equipmentSelections, spellSelections };
+  return { deps, loadEquipmentCalls, loadSpellsCalls, loadFeatsCalls, equipmentSelections, spellSelections, featSelections };
 }
 
 function verifiesWeaponKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler() {
@@ -86,6 +95,20 @@ function verifiesSpellKindLoadsSpellCatalogAndWiresSpellHandler() {
   return config.loadEntries().then((entries) => {
     assertEqual(loadSpellsCalls.length, 1, 'the spell picker queries the real spell catalog');
     assertEqual(entries[0].key, SPELL_ENTRY.key, 'loadEntries resolves the spell catalog loader output');
+  });
+}
+
+function verifiesFeatKindLoadsFeatCatalogAndWiresFeatHandler() {
+  const { deps, loadFeatsCalls, featSelections } = makeDeps();
+  const config = buildItemPickerConfig('feat', deps);
+  assert(config !== null, 'feat kind produces a picker config');
+  if (!config) return;
+  assertEqual(config.title, 'Add Feat', 'feat picker title');
+  config.onSelect(FEAT_ENTRY);
+  assertEqual(featSelections.length, 1, 'feat selection is routed to the feat handler, not dropped');
+  return config.loadEntries().then((entries) => {
+    assertEqual(loadFeatsCalls.length, 1, 'the feat picker queries the real feat catalog');
+    assertEqual(entries[0].key, FEAT_ENTRY.key, 'loadEntries resolves the feat catalog loader output');
   });
 }
 

@@ -5,14 +5,16 @@ import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateC
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { addEquipmentSelection } from '../boundary/addEquipmentSelection';
 import { addSpellSelection } from '../boundary/addSpellSelection';
+import { addFeatSelection } from '../boundary/addFeatSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
+import { listFeats } from '../boundary/listFeats';
 import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
 import { toCharacterMutationRefresh } from './characterSheetRefresh';
-import { mapEquipmentCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
   buildLevelEntries,
@@ -98,23 +100,25 @@ export interface ItemPickerConfig {
 }
 
 /**
- * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell
- * onClick affordances (criterion 7.4): which title to show, which real
- * corpus query to run (`listEquipment` narrowed to `ArmsArmor`, or the
- * unfiltered `listSpells`), and which real mutation handler
- * (`addEquipmentSelection`-backed or `addSpellSelection`-backed) the
- * user's pick gets routed to. Extracted from the render body so it is
- * unit-testable without a DOM — this repo has no jsdom/testing-library —
- * per the same split already used for `itemPickerFilter.ts` and
- * `characterSheetRefresh.ts`.
+ * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell /
+ * Add Feat onClick affordances (criterion 7.4): which title to show, which
+ * real corpus query to run (`listEquipment` narrowed to `ArmsArmor`, the
+ * unfiltered `listSpells`, or the unfiltered `listFeats`), and which real
+ * mutation handler (`addEquipmentSelection`-backed, `addSpellSelection`-
+ * backed, or `addFeatSelection`-backed) the user's pick gets routed to.
+ * Extracted from the render body so it is unit-testable without a DOM —
+ * this repo has no jsdom/testing-library — per the same split already used
+ * for `itemPickerFilter.ts` and `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'spell' | null,
+  kind: 'weapon' | 'armor' | 'spell' | 'feat' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
+    loadFeats: () => Promise<ItemPickerEntry[]>;
     onSelectEquipment: (entry: ItemPickerEntry) => void;
     onSelectSpell: (entry: ItemPickerEntry) => void;
+    onSelectFeat: (entry: ItemPickerEntry) => void;
   }
 ): ItemPickerConfig | null {
   if (kind === 'weapon' || kind === 'armor') {
@@ -131,6 +135,14 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search spells…',
       loadEntries: deps.loadSpells,
       onSelect: deps.onSelectSpell,
+    };
+  }
+  if (kind === 'feat') {
+    return {
+      title: 'Add Feat',
+      searchPlaceholder: 'Search feats…',
+      loadEntries: deps.loadFeats,
+      onSelect: deps.onSelectFeat,
     };
   }
   return null;
@@ -715,6 +727,44 @@ function ActionsTab(props: { levelEntries: LevelEntry[] }) {
   );
 }
 
+/**
+ * Add Feat picker + a running list of what's been added this session.
+ * Honest gap: `load_saved_character`'s response has no field exposing the
+ * character's already-selected feats (`chosen.selected_feats` isn't
+ * projected onto `PilotSnapshotDto`/`LoadSavedCharacterResponse` anywhere —
+ * confirmed by grep), so this cannot show the character's *complete* feat
+ * list the way `GearTab`/`SpellsTab` show corpus-derived equipment/spells.
+ * Rather than fabricate one, this only lists feats added via this picker
+ * in the current session, labeled as such — real, not a stand-in for the
+ * full list.
+ */
+function FeatsTab(props: { sessionAddedFeats: string[]; onAddFeat: () => void }) {
+  return (
+    <div>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+        Add feats from the real CRB feat catalog. The character's full feat list isn't yet
+        surfaced by the character-load response, so only feats added this session are listed below.
+      </p>
+      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
+          Add Feat
+        </button>
+      </div>
+      {props.sessionAddedFeats.length === 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+          No feats added this session yet.
+        </p>
+      ) : (
+        props.sessionAddedFeats.map((featId, index) => (
+          <div key={`${featId}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <span style={{ fontWeight: 700 }}>{featId}</span>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
 // ---------- root ----------
 
 export function CharacterSheet(props: {
@@ -753,7 +803,8 @@ export function CharacterSheet(props: {
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
-  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | null>(null);
+  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | null>(null);
+  const [sessionAddedFeats, setSessionAddedFeats] = useState<string[]>([]);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
@@ -877,6 +928,26 @@ export function CharacterSheet(props: {
         setMutationError(refresh.message);
         return;
       }
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  async function handleAddFeat(entry: ItemPickerEntry) {
+    setMutationError(null);
+    try {
+      const outcome = await addFeatSelection({
+        characterId: props.row.characterId,
+        featId: entry.key,
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      setSessionAddedFeats((prev) => [...prev, entry.key]);
       props.onDetailRefreshed(refresh.detail);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -1060,15 +1131,17 @@ export function CharacterSheet(props: {
     { label: 'Print', onSelect: () => window.print() },
   ];
 
-  // One generic `ItemPickerModal` backs all three "Add …" affordances — see
+  // One generic `ItemPickerModal` backs all four "Add …" affordances — see
   // `buildItemPickerConfig`'s doc comment for the dispatch shape (title /
   // corpus query / mutate-handler per `itemPickerOpen` kind).
   const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
     loadEquipment: (category) =>
       listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
     loadSpells: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
+    loadFeats: () => listFeats({ nameContains: null, category: null }).then((response) => mapFeatCatalogEntries(response.entries)),
     onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
+    onSelectFeat: handleAddFeat,
   });
 
   return (
@@ -1354,6 +1427,8 @@ export function CharacterSheet(props: {
                 <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
                 <GearTab corpusDerived={props.detail?.corpusDerived} onAddArmor={() => setItemPickerOpen('armor')} />
+              ) : tab === 'Feats' ? (
+                <FeatsTab sessionAddedFeats={sessionAddedFeats} onAddFeat={() => setItemPickerOpen('feat')} />
               ) : tab === 'Actions' ? (
                 <ActionsTab levelEntries={currentBenefits} />
               ) : (
