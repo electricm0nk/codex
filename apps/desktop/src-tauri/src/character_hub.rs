@@ -1006,6 +1006,123 @@ pub fn delete_character_portrait(
     Ok(())
 }
 
+// ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
+//
+// Bio fields (alignment/deity/sex/age/height/weight/hair/eyes) are pure
+// display flavor text -- no rules-engine calculation reads any of them.
+// Rather than adding a field to `ChosenCharacterState` (constructed as a
+// struct literal at ~70 call sites across this crate's own test suite,
+// mostly qa-owned `tests/**` -- a schema change there would break all of
+// them for data the compute engine never touches), bio is persisted as its
+// own sidecar file (`bio.json`) alongside the character's existing
+// envelope/input files, mirroring `save_character_portrait`/
+// `load_character_portrait`/`delete_character_portrait`'s own established
+// sidecar-file precedent (`portrait.png`) exactly -- same directory, same
+// "requires the character to already be saved" invariant, same shape.
+
+const BIO_FILE_NAME: &str = "bio.json";
+
+/// One character's bio/flavor fields. Every field defaults to an empty
+/// string (`#[serde(default)]`) so a bio file written before a future field
+/// is added, or a character with no bio file at all, still deserializes
+/// (via `Default`) rather than failing to load.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterBioDto {
+    #[serde(default)]
+    pub alignment: String,
+    #[serde(default)]
+    pub deity: String,
+    #[serde(default)]
+    pub sex: String,
+    #[serde(default)]
+    pub age: String,
+    #[serde(default)]
+    pub height: String,
+    #[serde(default)]
+    pub weight: String,
+    #[serde(default)]
+    pub hair: String,
+    #[serde(default)]
+    pub eyes: String,
+}
+
+/// Writes `bio` as `bio.json` in the character's root directory. Requires
+/// the character to already be saved -- mirrors
+/// `save_character_portrait`'s own "a portrait is never the first write to
+/// a character directory" invariant. Checks via
+/// `SavedCharacterStore::load` (not merely `root.exists()` -- the
+/// characters-root directory itself may already exist without a saved
+/// envelope in it, e.g. under this function's own test fixtures, whose
+/// `tempdir` helper always creates the directory) so a bio is never the
+/// first write to a character directory either. Split from the
+/// `#[tauri::command]` wrapper below so it is unit-testable without an
+/// `AppHandle`.
+fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let path = root.join(BIO_FILE_NAME);
+    let json = serde_json::to_string_pretty(bio)
+        .map_err(|err| format!("failed to serialize character bio: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// Reads `bio.json` from the character's root directory, or an all-empty
+/// `CharacterBioDto::default()` when no bio has ever been saved for this
+/// character -- never an error for the common "no bio yet" case, matching
+/// `load_character_portrait`'s own `Ok(None)`-for-absent shape (bio's
+/// equivalent "absent" value is the default-empty DTO, since every field is
+/// already optional-shaped as an empty string rather than an `Option`).
+fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
+    let path = root.join(BIO_FILE_NAME);
+    if !path.exists() {
+        return Ok(CharacterBioDto::default());
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    serde_json::from_str(&contents).map_err(|err| format!("{}: invalid bio JSON: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UpdateCharacterBioRequest {
+    pub character_id: String,
+    pub bio: CharacterBioDto,
+}
+
+/// Persists the caller's full bio field set as `bio.json` alongside the
+/// character's existing saved files. Requires the character to already be
+/// saved. Always the character's *complete* bio (not a delta) -- the
+/// frontend's bio editor already holds every field's current value, so it
+/// always sends the full set on save.
+#[tauri::command]
+pub fn update_character_bio(
+    app: tauri::AppHandle,
+    request: UpdateCharacterBioRequest,
+) -> Result<(), String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    save_character_bio_at_root(&root, &request.bio)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterBioRequest {
+    pub character_id: String,
+}
+
+/// Reads the character's persisted bio, or an all-empty `CharacterBioDto`
+/// when none has been saved yet (including when the character itself does
+/// not exist -- resolving a nonexistent root still yields a real path, and
+/// reading a bio file that isn't there is the same "nothing saved yet"
+/// case either way, so this command does not separately error on a missing
+/// character the way the mutation commands do).
+#[tauri::command]
+pub fn load_character_bio(
+    app: tauri::AppHandle,
+    request: LoadCharacterBioRequest,
+) -> Result<CharacterBioDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_bio_at_root(&root)
+}
+
 // ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1703,12 +1820,21 @@ mod tests {
         );
 
         // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue
-        // pillar burden, so the named Rogue set is now empty: only the 4
-        // generic chassis diagnostics remain (like the non-Human classes).
+        // pillar burden, so the named Rogue set was already empty. v0.6 alpha
+        // swarm task 4 then widened compute_class_chassis's per-class
+        // dispatch (previously Fighter/Wizard only) to also recognize Rogue,
+        // the same way Epic 6 did for Wizard above -- so the 4 generic
+        // chassis-wide diagnostics (class_chassis.unsupported,
+        // combat.baseline_unsupported, defense.total_save.unsupported,
+        // skill.selected_modifier.unsupported) no longer trip for Rogue
+        // either. Human Rogue L1 now reaches a fully Computed receipt with
+        // zero claim-blocking diagnostics, the same golden-path shape as
+        // Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:rogue", 1),
-            generic_ids(),
-            "Human Rogue L1 must carry only the 4 generic diagnostics after trapfinding grounding"
+            BTreeSet::new(),
+            "Human Rogue L1 now reaches Computed with zero claim-blocking diagnostics, matching \
+             Fighter's golden path, since task 4 widened the generic chassis dispatch to Rogue"
         );
 
         assert_eq!(
@@ -2115,6 +2241,77 @@ mod tests {
             result.is_err(),
             "setting skill allocations on a nonexistent saved character must fail"
         );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
+
+    fn sample_bio() -> CharacterBioDto {
+        CharacterBioDto {
+            alignment: "Lawful Good".to_owned(),
+            deity: "Iomedae".to_owned(),
+            sex: "Female".to_owned(),
+            age: "27".to_owned(),
+            height: "5'8\"".to_owned(),
+            weight: "150 lbs".to_owned(),
+            hair: "Auburn".to_owned(),
+            eyes: "Green".to_owned(),
+        }
+    }
+
+    #[test]
+    fn load_character_bio_at_root_returns_all_empty_default_when_no_bio_file_exists_yet() {
+        let root = tempdir("bio-default");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let bio = load_character_bio_at_root(&root).expect("loading an absent bio should not error");
+
+        assert_eq!(bio, CharacterBioDto::default());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn update_character_bio_at_root_persists_and_round_trips_through_load() {
+        let root = tempdir("bio-round-trip");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        save_character_bio_at_root(&root, &sample_bio()).expect("saving a bio should not error");
+        let reloaded = load_character_bio_at_root(&root).expect("reloading the saved bio should not error");
+
+        assert_eq!(reloaded, sample_bio());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A second save fully replaces the first -- proves this is a real
+    /// overwrite, not an append or a write-once no-op.
+    #[test]
+    fn update_character_bio_at_root_overwrites_a_previously_saved_bio() {
+        let root = tempdir("bio-overwrite");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        save_character_bio_at_root(&root, &sample_bio()).expect("first save should not error");
+        let updated = CharacterBioDto { alignment: "Chaotic Neutral".to_owned(), ..sample_bio() };
+        save_character_bio_at_root(&root, &updated).expect("second save should not error");
+
+        let reloaded = load_character_bio_at_root(&root).expect("reload should not error");
+        assert_eq!(reloaded, updated);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn update_character_bio_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("bio-missing-character");
+
+        let result = save_character_bio_at_root(&root, &sample_bio());
+
+        assert!(result.is_err(), "saving a bio for a nonexistent saved character must fail");
 
         std::fs::remove_dir_all(&root).ok();
     }

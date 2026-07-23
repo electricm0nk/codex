@@ -27,8 +27,9 @@ use campaign_drive::{
 use character_hub::{
     add_equipment_selection, add_spell_selection, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
-    import_character, level_up_character, list_saved_characters, load_character_portrait,
-    load_saved_character, save_character_portrait, set_skill_allocations,
+    import_character, level_up_character, list_saved_characters, load_character_bio,
+    load_character_portrait, load_saved_character, save_character_portrait,
+    set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
@@ -146,6 +147,8 @@ fn main() {
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,
+            update_character_bio,
+            load_character_bio,
             delete_character,
             export_character_json,
             export_character,
