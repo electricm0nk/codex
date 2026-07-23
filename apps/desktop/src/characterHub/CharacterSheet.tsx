@@ -32,7 +32,8 @@ import { AGE_OPTIONS, ALIGNMENT_OPTIONS, RACE_OPTIONS } from './characterHubMode
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
-import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
+import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
+import { setSkillAllocations } from '../boundary/setSkillAllocations';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -894,6 +895,38 @@ export function CharacterSheet(props: {
     setBio((prev) => ({ ...prev, ...patch }));
   }
 
+  /**
+   * Persists the dialog's full draft allocation via `set_skill_allocations`
+   * (a wholesale replace, not a delta — see `setSkillAllocations`'s doc
+   * comment). On `Blocked` the on-disk character (and this panel's
+   * `skillAllocation` state) is left exactly as it was — the compute
+   * engine's `Computed` path only accepts one exact hardcoded posture
+   * today (Climb/Intimidate/Swim at rank 1, chain shirt equipped; see
+   * `pilot_compute.rs`), so most allocations legitimately come back
+   * blocked with real diagnostics rather than silently applying.
+   */
+  async function handleSkillAllocationAccept(draft: Record<string, number>) {
+    setMutationError(null);
+    try {
+      const outcome = await setSkillAllocations({
+        characterId: props.row.characterId,
+        skillAllocations: Object.entries(draft)
+          .filter(([, ranks]) => ranks > 0)
+          .map(([skillName, ranks]) => ({ skillId: skillIdFor(skillName), ranks })),
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      setSkillAllocation(draft);
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
   const snapshot = props.detail?.snapshot ?? null;
   const abilities = snapshot?.abilityModifiers ?? ZERO_ABILITIES;
   // `recomputed` (set by the "Recompute" menu action) takes precedence over
@@ -1286,7 +1319,7 @@ export function CharacterSheet(props: {
         abilities={abilities}
         totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
         allocation={skillAllocation}
-        onAccept={setSkillAllocation}
+        onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 
       <ItemPickerModal

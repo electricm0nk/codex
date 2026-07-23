@@ -16,10 +16,14 @@ import {
  * character's earned point pool, respecting PF1's class-skill (1 point/rank)
  * vs. cross-class (2 points/rank, half the max ranks) costs.
  *
- * Accepting only updates in-memory state (`onAccept`) — there is no backend
- * command yet to persist arbitrary skill allocations (the saved character
- * always carries the fixed Climb/Intimidate/Swim demo loadout regardless of
- * what's chosen here). That wiring is a separate follow-on.
+ * `onAccept` only hands the draft allocation back to the caller — this
+ * component has no I/O of its own (matching `LevelUpDialog`'s split). The
+ * caller (`CharacterSheet`'s `handleSkillAllocationAccept`) persists it via
+ * the real `set_skill_allocations` Tauri command. Note the compute engine's
+ * `Computed` path only accepts one exact hardcoded posture today
+ * (Climb/Intimidate/Swim at rank 1, chain shirt equipped — see
+ * `pilot_compute.rs`), so most allocations will legitimately come back
+ * `Blocked` with real diagnostics rather than silently applying.
  */
 
 export function SkillAllocationDialog(props: {
