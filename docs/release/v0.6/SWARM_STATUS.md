@@ -5,18 +5,16 @@ Source of truth: docs/release/v0.6/release-swarm.md
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
-frontend              Sonnet   auditing 4 remaining stub tabs (Defense/Pets/
-                                Actions/Overrides) for already-wireable-
-                                without-backend work; otherwise idle on
-                                backend's 5 command deliverables
-backend               Sonnet   version bump DONE (0c614d9); now on skill-point
+frontend              Sonnet   idle -- wave 1 (1-3) done, 4-5 waiting on
+                                backend's skill/level-up commands
+backend               Sonnet   version bump DONE (0c614d9); on skill-point
                                 persistence (task 2 of 6), then level-up,
-                                bio, feat, money commands; BAB/save stacking +
-                                equipment AC/carry-capacity/encumbrance/
-                                money-conversion pushed to wave 2
-qa                    Sonnet   wave 1 tasks 1/2/4 done, task 5 ongoing;
-                                spec'ing carry-capacity/encumbrance/money-
-                                conversion PF1 formulas for backend's wave 2
+                                bio, feat, money commands; wave 2 now 4 calc
+                                gaps (durability/carry-capacity/encumbrance/
+                                money-conversion) + comparator extraction fix
+qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
+                                task 5 ongoing); delivered PCGen-sourced
+                                formula spec for backend's wave 2 (abec13b)
 
 (b) Happened
 ------------
@@ -68,6 +66,38 @@ qa                    Sonnet   wave 1 tasks 1/2/4 done, task 5 ongoing;
   pcgen-normalize-output.py) doesn't extract those fields from PCGen's
   export either. QA correctly stopped short of speculative design work;
   folded into backend's wave-2 scope as its own subtask.
+- Backend landed skill-point Tauri command work in progress; version bump
+  commit (0c614d9) triggered buildLabelFixtureFreshness.test.ts (stale
+  "Codex 0.5.98-test" literal). Frontend fixed it plus 4 more dependent
+  tests backend's flagged list missed (shared makeSurface.ts fixture) --
+  full suite 62/62 green, typecheck clean. Pushed as 743c358, which also
+  wired the Actions tab for real (characterProgression.ts's existing
+  class-features data, zero backend dependency).
+- Frontend's stub-tab audit (Defense/Pets/Actions/Overrides) closed:
+  Actions now real. Defense's DR data exists server-side (pilot_compute.rs
+  explanations) but isn't exposed through any DTO -- added to backend
+  backlog, non-blocking, not part of the alpha-bar calc list. Overrides
+  has zero hits anywhere in the character-build engine -- parked, unclear
+  purpose, not inventing scope for it. Pets (animal companions) confirmed
+  a genuine pre-existing non-goal ("named-but-unproven" in pilot_compute.rs,
+  no stat-block engine) -- see new open question below on alpha-bar fit.
+- QA's follow-up survey: durability (per lead's ruling) has almost no
+  production surface either -- only an isolated level-1 fighter HP value,
+  no aggregate max_hp/current_hp/temp_hp/dying-death fields anywhere. Same
+  shape of gap as carry-capacity/money -- wave 2 is now 4 calc gaps, not 3.
+  QA also located a real local PCGen checkout at
+  /home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst
+  and pulled carry-capacity/encumbrance tables directly from it (not
+  reconstructed from memory); durability thresholds from SRD; money-
+  conversion ratios standard but not PCGen-source-verified (flagged).
+  Starting-wealth-by-class formula not found in the class LST file QA
+  checked -- correctly flagged unresolved rather than guessed. Spec
+  appendix landed in SWARM_REPORT.md (abec13b).
+- NEW OPEN QUESTION filed (risks-and-open-questions.md item 5): does the
+  missing Pets/animal-companion mechanic create a real gap against alpha
+  bar item 2 ("any class... from the four primary books") for Druid/
+  Ranger/Hunter/Cavalier? Not a literal blocker per the bar's text, but
+  flagged for explicit operator sign-off rather than silently dropped.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
@@ -85,33 +115,35 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
      185-record CRB catalog, rules_tables/crb/feats.rs (frontend ask).
   6. Money/currency schema field + command -- no existing schema slot,
      biggest lift (frontend ask).
-  -- pushed to wave 2: multiclass BAB/save stacking (TDD); equipment AC
-     audit; carry-capacity/encumbrance/money-conversion (needs QA's formula
-     spec first, AND a comparator field-extraction fix in pcgen_runner.rs /
-     pcgen-normalize-output.py -- two-layer gap, not just rules_core).
+  -- wave 2 (spec ready in SWARM_REPORT.md appendix, abec13b): multiclass
+     BAB/save stacking (TDD); equipment AC audit; durability, carry-
+     capacity, encumbrance, money-conversion calcs (4 gaps, PCGen-sourced
+     spec ready except money conversion unverified + wealth-by-class
+     unresolved); comparator field-extraction fix in pcgen_runner.rs /
+     pcgen-normalize-output.py. Backlog (non-blocking, low priority):
+     expose DR through PilotSnapshotDto/LoadSavedCharacterResponse.
      None of wave 2 blocks another teammate.
 
-frontend (revised after investigation, see Happened log):
-  1. Remove dead Details/Bio tab-switch entries (real coming-soon fix); wire
-     bio fields to backend persistence once backend's bio command lands.
-  2. Feat picker: expose+consume existing 185-record CRB catalog via
-     ItemPickerModal pattern, wire once backend's list_feats/add_feat lands.
-  3. Money panel: build shell now; wire once backend's money schema+command
-     lands (biggest lift of the three, don't block other work on it).
-  4. Wire SkillAllocationDialog to backend's persistence command -- blocked on
-     backend task 2's command name, coordinate via SendMessage.
-  5. Wire LevelUpDialog.onAccept to backend's persistence command -- blocked
-     on backend task 3's command name, coordinate via SendMessage.
+frontend:
+  1. DONE (743c358) -- Details/Bio dead tabs removed, bio wiring still
+     waits on backend's bio command.
+  2. Feat picker: not started, waits on backend's list_feats/add_feat.
+  3. Money panel: not started, waits on backend's money schema+command
+     (correctly refused to build a throwaway shell against nothing real).
+  4. Wire SkillAllocationDialog -- blocked on backend task 2.
+  5. Wire LevelUpDialog.onAccept -- blocked on backend task 3.
+  BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
+  Defense/Pets/Overrides (see Happened log).
 
 qa:
-  1. Run existing PCGen smoke test (tests/pcgen_runner_smoke.rs) end-to-end,
-     record baseline pass/fail.
-  2. Build gap list: alpha-bar calc surfaces (Sec 1.4) vs current tests/
-     catalogue coverage.
-  3. Write failing multiclass BAB/save stacking test ahead of backend task 4
-     (or adopt backend's once delivered) -- coordinate via SendMessage.
-  4. Draft SWARM_REPORT.md skeleton with four-check audit section stubbed.
-  5. Ongoing: file PCGen-divergence defects as frontend/backend land work.
+  1. DONE -- PCGen baseline clean (pcgen_runner_smoke 2/2, sd26_pcgen_runner
+     6/6).
+  2. DONE -- gap-list survey, full table in SWARM_REPORT.md.
+  3. PARKED at wave-2 priority -- coordinating with backend once they reach
+     multiclass BAB/save stacking, not blocking.
+  4. DONE -- SWARM_REPORT.md skeleton + PCGen-sourced formula spec appendix
+     (9ffe32f, abec13b).
+  5. Ongoing -- watching for PCGen-divergence as backend/frontend land work.
 
 blocked-by notes:
   frontend#4 <- backend#2 (command name)
