@@ -12,17 +12,16 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   standing by -- Wizard still not UI-reachable
-                                (bootstrap deadlock), waiting on backend's
-                                level-up fix + bootstrap-deadlock proposal
-backend               Sonnet   from_pilot_receipt DONE+pushed (2298780,
-                                encumbrance/durability parity now real, NOT
-                                blocked after all); redirected to the two
-                                outstanding Wizard gaps (level-up fix, then
-                                a scoped proposal for the bootstrap deadlock)
-qa                    Sonnet   idle, has the exact from_pilot_receipt
-                                signature, deciding how to resolve the
-                                sd26_pilot_case_verification.rs staleness
+frontend              Sonnet   standing by -- waiting on backend's
+                                record_and_prepare_spell_selection command
+                                before the spell-picker flow is testable
+backend               Sonnet   level-up gap fix DONE+pushed (1aabdf8);
+                                bootstrap-deadlock root cause confirmed +
+                                fix greenlit; building
+                                record_and_prepare_spell_selection now
+qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
+                                (900beee, 13/14 dims genuinely PCGen-matched);
+                                idle, watching for the Wizard bootstrap work
 
 (b) Happened
 ------------
@@ -429,6 +428,34 @@ qa                    Sonnet   idle, has the exact from_pilot_receipt
   to the from_receipt wiring first -- normal reprioritization, not a
   repeat of the earlier discipline pattern; backend was holding for
   direction, not self-selecting past an explicit stop.
+- Backend closed the level-up-path gap (1aabdf8): apply_level_up now
+  seeds the canonical choices in the new-class-entry branch only,
+  verified with a dedicated test that it fires exactly once per
+  character and doesn't re-seed on a later Wizard level-up. Both
+  fixable Wizard gaps now closed; the bootstrap deadlock remains.
+- QA independently switched sd26_pilot_case_verification.rs to
+  from_pilot_receipt (900beee) rather than accept the 5 new dimensions
+  as permanent gaps -- built a real corpus fixture (reusing the GE-06
+  posture), ran the actual corpus-aware compute path, and got 13 of 14
+  dimensions genuinely matching PCGen's real export values (max_hp=12,
+  light/medium/heavy=100/200/300, total carried=29 -- exact matches, not
+  presence checks). Independently confirmed backend's "zero blast
+  radius" claim on from_receipt rather than trusting it. The one
+  pre-existing combat.baseline_melee_attack_bonus mismatch (CG-03,
+  already known) is untouched.
+- Backend's bootstrap-deadlock proposal: independently re-derived the
+  root cause before reading the lead's framing (verification, not
+  agreement), confirmed it's purely a first-spell bootstrap problem --
+  add_spell_selection itself needs no redesign, works fine for every
+  spell after the first. Proposed a new atomic command,
+  record_and_prepare_spell_selection, pushing both Known and Prepared
+  entries in one mutate_saved_character_at_root call -- same additive-
+  command pattern as the rest of the codebase. Greenlit over the
+  alternative (widening add_spell_selection) since it matches this
+  swarm's established add-don't-modify pattern. Wizard-scoped, general
+  shape not built speculatively. Backend building it now; frontend to be
+  looped in on the signature once it lands -- the UI needs a decision on
+  how "the first spell" is presented before the picker flow is testable.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
