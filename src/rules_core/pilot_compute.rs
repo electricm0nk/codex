@@ -14929,9 +14929,11 @@ fn explain_wizard_level1_prepared_spell_baseline(
              prepared arcane spell-bearing class on the rules-core seam rather than an \
              undocumented packet placeholder. This is a bounded recognition record only; it \
              grounds no spellbook content, no spells prepared per day, no spell slots per day, \
-             no spell save DCs, no bonus spell slots from a high Intelligence, no school \
-             specialization mechanics, no opposed-school bookkeeping, and no specialty school \
-             bonus, so it carries no fabricated mechanical value (+0)"
+             no bonus spell slots from a high Intelligence, no school specialization \
+             mechanics, no opposed-school bookkeeping, and no specialty school bonus, so it \
+             carries no fabricated mechanical value (+0). (v0.6 alpha swarm: the base spell \
+             save DC formula is now grounded separately, in its own \
+             class_chassis.wizard.spell_save_dc.spell_level_* records below.)"
         ),
     });
 
@@ -14998,6 +15000,67 @@ fn explain_wizard_level1_prepared_spell_baseline(
              record; it is not wired into compute_total_saves"
         ),
     });
+
+    // v0.6 alpha swarm (QA-found gap): the base spell-save-DC arithmetic, one
+    // record per ACCESSIBLE spell level, completing the DC family alongside
+    // Paladin/Ranger/Sorcerer/Bard (each already grounded via this exact
+    // pattern). Verified against PCGen's cr_classes.lst (SPELLSTAT:INT) and
+    // both PF1 primary sources, which state the rule identically: "The
+    // Difficulty Class for a saving throw against a wizard's spell is 10 +
+    // the spell level + the wizard's Intelligence modifier" — Intelligence,
+    // unlike the Paladin/Sorcerer/Bard's Charisma or the Ranger's Wisdom.
+    // This is unconditional on school specialization: every wizard, not just
+    // a specialist, has the same spell-level access ladder and the same DC
+    // formula, so this sits outside the
+    // `wizard_has_canonical_specialization_selections` gate above, mirroring
+    // how the other four classes' DC records are never gated on a class
+    // feature choice either. The access ladder reuses the same
+    // `WIZARD_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` thresholds already
+    // verified and grounded above for the specialist bonus slot ladder — the
+    // underlying spells-per-day table row is the same for every wizard,
+    // specialist or universalist, so no new verification was needed. This
+    // grounds only the base DC formula over values already on the seam: no
+    // saving-throw resolution, no target, no spell selection, and no feat DC
+    // modifiers are computed.
+    let wizard_spell_level_access: i16 =
+        if level >= WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            9
+        } else if level >= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            8
+        } else if level >= WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            7
+        } else if level >= WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            6
+        } else if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            5
+        } else if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else {
+            1
+        };
+    for spell_level in 1..=wizard_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.intelligence;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.wizard.spell_save_dc.spell_level_{spell_level}"),
+            value: spell_save_dc,
+            detail: format!(
+                "Wizard spell save DC at wizard level {level}, spell level {spell_level}: 10 + \
+                 {spell_level} + Intelligence modifier {} = {spell_save_dc} (PF1 Core Rulebook, \
+                 verified identically on both primary sources and PCGen's cr_classes.lst \
+                 SPELLSTAT:INT token: \"The Difficulty Class for a saving throw against a \
+                 wizard's spell is 10 + the spell level + the wizard's Intelligence \
+                 modifier\" — Intelligence, not the Paladin/Sorcerer/Bard's Charisma or the \
+                 Ranger's Wisdom). This grounds the base DC formula only: no saving-throw \
+                 resolution, no target, no spell selection, and no feat DC modifiers are \
+                 computed",
+                ability_modifiers.intelligence
+            ),
+        });
+    }
 
     // Grounded for real: Scribe Scroll is a universal, specialization-independent
     // Wizard class feature (every 1st-level Wizard is granted it regardless of
@@ -18303,6 +18366,137 @@ mod multiclass_bab_save_stacking_generalization_tests {
             "Cleric is outside this task's scoped Fighter/Wizard/Rogue allowlist and must \
              stay honestly claim-blocked, not silently computed: {:?}",
             computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm: QA found no `wizard_spell_save_dc` computation anywhere
+/// in this file, unlike Paladin/Ranger/Sorcerer/Bard which all have the
+/// standard `10 + spell_level + ability_modifier` formula grounded with
+/// their own `tests/sd13_*_spell_save_dcs.rs` catalogue files. Inline here
+/// (rather than a new `tests/sd13_wizard_spell_save_dcs.rs`) for the same
+/// reason as `multiclass_bab_save_stacking_generalization_tests` above:
+/// `tests/**` is the QA teammate's owned surface for this swarm; this uses
+/// the exact same public entry point (`compute_pilot_base_chassis`) so it is
+/// trivially portable into that file's convention once QA reviews and
+/// adopts it into the catalogue.
+#[cfg(test)]
+mod wizard_spell_save_dc_tests {
+    use super::{compute_pilot_base_chassis, WIZARD_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// Reuses the Human Fighter level-1 fixture's ability scores (Intelligence
+    /// 10, no human ability bonus applied to it -- the fixture's own
+    /// `choice:human_ability_bonus` targets Strength) but swaps the single
+    /// class entry to Wizard at the requested level, mirroring
+    /// `multiclass_bab_save_stacking_generalization_tests::multiclass`'s
+    /// override-in-place shape for the single-class case.
+    fn wizard_at_level(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = WIZARD_CLASS_ID.to_owned();
+        input.chosen.class_levels[0].level = level;
+        input
+    }
+
+    /// Intelligence 10 (fixture default, human bonus goes to Strength) means
+    /// modifier 0, so the level-1 DC is the bare `10 + spell_level` formula
+    /// with nothing added -- a wizard at level 1 only has spell-level-access
+    /// 1, so exactly one record should exist.
+    #[test]
+    fn wizard_level1_spell_save_dc_is_ten_plus_spell_level_plus_zero_intelligence_modifier() {
+        let input = wizard_at_level(1);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let record = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1")
+            .expect("level-1 wizard should ground a spell_level_1 save DC record");
+        assert_eq!(record.value, 11, "10 + 1 + 0 = 11: {computation:?}");
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_2"),
+            "a level-1 wizard has no 2nd-level spell access, so no spell_level_2 DC record \
+             should exist: {computation:?}"
+        );
+    }
+
+    /// At wizard level 3 (`WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`),
+    /// 2nd-level spell access opens up, so both spell_level_1 and
+    /// spell_level_2 DC records should exist, still with a +0 Intelligence
+    /// modifier from the shared fixture.
+    #[test]
+    fn wizard_level3_grounds_both_spell_level_1_and_2_save_dcs() {
+        let input = wizard_at_level(3);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let level_1 = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1")
+            .expect("level-3 wizard should still ground a spell_level_1 save DC record");
+        assert_eq!(level_1.value, 11, "10 + 1 + 0 = 11: {computation:?}");
+
+        let level_2 = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_2")
+            .expect("level-3 wizard should ground a spell_level_2 save DC record");
+        assert_eq!(level_2.value, 12, "10 + 2 + 0 = 12: {computation:?}");
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_3"),
+            "a level-3 wizard has no 3rd-level spell access yet \
+             (WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL is 5), so no spell_level_3 DC \
+             record should exist: {computation:?}"
+        );
+    }
+
+    /// The DC formula is unconditional on school specialization: this
+    /// fixture never sets the canonical `choice:wizard_school_specialization`
+    /// selections, so `wizard_has_canonical_specialization_selections` is
+    /// false for it -- yet the save DC record must still be grounded,
+    /// proving it sits outside that gate (unlike the specialist bonus slot,
+    /// Intense Spells, and Force Missile records, which are correctly absent
+    /// here).
+    #[test]
+    fn wizard_spell_save_dc_is_grounded_even_without_the_canonical_specialization_choice() {
+        let input = wizard_at_level(1);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.specialist_bonus_slot"),
+            "this fixture never sets the canonical specialization choice, so the \
+             specialization-gated specialist bonus slot record must be absent: {computation:?}"
+        );
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1"),
+            "the spell save DC record must be grounded regardless of school specialization: \
+             {computation:?}"
         );
     }
 }
