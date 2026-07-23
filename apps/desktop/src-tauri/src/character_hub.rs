@@ -23,6 +23,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
+use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
 use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, CorpusDerivedSection};
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
@@ -1152,6 +1153,131 @@ pub fn load_character_bio(
     load_character_bio_at_root(&root)
 }
 
+// ----- `load_character_money` / `adjust_character_money` (v0.6 alpha swarm) -----
+//
+// Persisted the same sidecar-file way as bio (a `money.json` file, not a
+// `ChosenCharacterState` field) -- the alpha bar's "money conversion" calc
+// is the denomination-conversion math itself (`codex::rules_core::money`),
+// which needs a canonical balance to convert, not a rules-engine-visible
+// character-build field the way skill/feat/equipment selections are. Only
+// the canonical `total_copper` is ever persisted; the pp/gp/sp/cp
+// breakdown in `CharacterMoneyDto` is always derived fresh from it via
+// `money::copper_to_denominations`, never stored redundantly (matching
+// `money.rs`'s own "never two numbers that could drift apart" doc
+// comment).
+
+const MONEY_FILE_NAME: &str = "money.json";
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct StoredMoney {
+    #[serde(default)]
+    total_copper: u64,
+}
+
+/// The wire response for both money commands: the canonical
+/// `total_copper` balance plus its derived platinum/gold/silver/copper
+/// breakdown, so the frontend never re-implements the conversion math.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterMoneyDto {
+    pub total_copper: u64,
+    pub platinum: u64,
+    pub gold: u64,
+    pub silver: u64,
+    pub copper: u64,
+}
+
+fn money_dto_from_total(total_copper: u64) -> CharacterMoneyDto {
+    let denominations = money::copper_to_denominations(total_copper);
+    CharacterMoneyDto {
+        total_copper,
+        platinum: denominations.platinum,
+        gold: denominations.gold,
+        silver: denominations.silver,
+        copper: denominations.copper,
+    }
+}
+
+/// Reads the character's persisted money balance, or a zero balance when
+/// no `money.json` has ever been saved for this character -- mirrors
+/// `load_character_bio_at_root`'s own "no error for the common absent
+/// case" shape.
+fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
+    let path = root.join(MONEY_FILE_NAME);
+    if !path.exists() {
+        return Ok(money_dto_from_total(0));
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    let stored: StoredMoney = serde_json::from_str(&contents)
+        .map_err(|err| format!("{}: invalid money JSON: {err}", path.display()))?;
+    Ok(money_dto_from_total(stored.total_copper))
+}
+
+/// Applies `delta_copper` (positive to add funds, negative to spend) to
+/// the character's persisted balance and returns the new total's
+/// denomination breakdown. Requires the character to already be saved
+/// (checked via `SavedCharacterStore::load`, same as `save_character_bio_at_root`).
+/// Fails honestly with an insufficient-funds error rather than silently
+/// allowing a negative balance -- PF1 characters cannot carry negative
+/// money.
+fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    let current_total_copper = load_character_money_at_root(root)?.total_copper;
+    let new_total = i64::try_from(current_total_copper)
+        .map_err(|_| "current balance overflows a signed 64-bit total".to_owned())?
+        + delta_copper;
+    if new_total < 0 {
+        return Err(format!(
+            "insufficient funds: balance is {current_total_copper} cp, requested change is \
+             {delta_copper} cp"
+        ));
+    }
+    let new_total_copper = new_total as u64;
+
+    let path = root.join(MONEY_FILE_NAME);
+    let json = serde_json::to_string_pretty(&StoredMoney { total_copper: new_total_copper })
+        .map_err(|err| format!("failed to serialize character money: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+
+    Ok(money_dto_from_total(new_total_copper))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterMoneyRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn load_character_money(
+    app: tauri::AppHandle,
+    request: LoadCharacterMoneyRequest,
+) -> Result<CharacterMoneyDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_money_at_root(&root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdjustCharacterMoneyRequest {
+    pub character_id: String,
+    /// Positive to add funds (e.g. selling an item, starting gold),
+    /// negative to spend (e.g. buying equipment at its `cost_gp`, converted
+    /// via `money::gp_to_copper`).
+    pub delta_copper: i64,
+}
+
+#[tauri::command]
+pub fn adjust_character_money(
+    app: tauri::AppHandle,
+    request: AdjustCharacterMoneyRequest,
+) -> Result<CharacterMoneyDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    adjust_character_money_at_root(&root, request.delta_copper)
+}
+
 // ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
 
 #[derive(Debug, Clone, Deserialize)]
@@ -2049,6 +2175,69 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- `add_feat_selection` (v0.6 alpha swarm) -----
+
+    #[test]
+    fn apply_add_feat_selection_appends_to_selected_feats() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.selected_feats.len();
+
+        apply_add_feat_selection(&mut input, "feat:toughness");
+
+        assert_eq!(input.chosen.selected_feats.len(), starting_len + 1);
+        assert_eq!(
+            input.chosen.selected_feats.last(),
+            Some(&"feat:toughness".to_owned())
+        );
+    }
+
+    /// Mirrors `add_spell_selection_at_root_appends_and_persists_when_computed`'s
+    /// golden-path shape below.
+    #[test]
+    fn add_feat_selection_at_root_appends_and_persists_when_computed() {
+        let root = tempdir("add-feat-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.selected_feats.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T00:00:00Z")
+            .expect("add feat selection call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with an added feat selection must still reach \
+                     Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.selected_feats.len(), starting_len + 1);
+        assert_eq!(
+            reloaded.character_input.chosen.selected_feats.last(),
+            Some(&"feat:toughness".to_owned())
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_feat_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("add-feat-missing-character");
+
+        let result = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T00:00:00Z");
+
+        assert!(
+            result.is_err(),
+            "adding a feat selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- `add_spell_selection` (Criterion 18) -----
 
     #[test]
@@ -2343,6 +2532,90 @@ mod tests {
         let result = save_character_bio_at_root(&root, &sample_bio());
 
         assert!(result.is_err(), "saving a bio for a nonexistent saved character must fail");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `load_character_money` / `adjust_character_money` (v0.6 alpha swarm) -----
+
+    #[test]
+    fn load_character_money_at_root_returns_a_zero_balance_when_no_money_file_exists_yet() {
+        let root = tempdir("money-default");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let money = load_character_money_at_root(&root).expect("loading absent money should not error");
+
+        assert_eq!(
+            money,
+            CharacterMoneyDto { total_copper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 }
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_adds_funds_and_persists_the_new_total() {
+        let root = tempdir("money-add");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let money = adjust_character_money_at_root(&root, 1234).expect("adding funds should not error");
+
+        assert_eq!(
+            money,
+            CharacterMoneyDto { total_copper: 1234, platinum: 1, gold: 2, silver: 3, copper: 4 }
+        );
+        let reloaded = load_character_money_at_root(&root).expect("reload should not error");
+        assert_eq!(reloaded, money, "the balance must be persisted, not just returned in-memory");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Two consecutive adjustments accumulate against the persisted total,
+    /// not each other's in-memory return value -- proves the balance is
+    /// genuinely read-modify-write, not overwritten from a stale snapshot.
+    #[test]
+    fn adjust_character_money_at_root_accumulates_across_repeated_calls() {
+        let root = tempdir("money-accumulate");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        adjust_character_money_at_root(&root, 1000).expect("first adjustment should not error");
+        let after_second =
+            adjust_character_money_at_root(&root, -300).expect("second adjustment should not error");
+
+        assert_eq!(after_second.total_copper, 700);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_rejects_spending_more_than_the_current_balance() {
+        let root = tempdir("money-insufficient-funds");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 100).expect("seed funds should not error");
+
+        let result = adjust_character_money_at_root(&root, -200);
+
+        assert!(result.is_err(), "spending more than the current balance must fail honestly");
+        let reloaded = load_character_money_at_root(&root).expect("reload should not error");
+        assert_eq!(
+            reloaded.total_copper, 100,
+            "a rejected spend must not partially apply or corrupt the persisted balance"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("money-missing-character");
+
+        let result = adjust_character_money_at_root(&root, 100);
+
+        assert!(result.is_err(), "adjusting money for a nonexistent saved character must fail");
 
         std::fs::remove_dir_all(&root).ok();
     }

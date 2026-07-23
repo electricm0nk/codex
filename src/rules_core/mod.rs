@@ -11,6 +11,7 @@ pub mod equipment_effects;
 pub mod equipment_resolver;
 pub mod feat_prereqs;
 pub mod level_up;
+pub mod money;
 pub mod party_cr;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
