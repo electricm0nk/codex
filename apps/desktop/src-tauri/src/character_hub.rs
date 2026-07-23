@@ -184,6 +184,11 @@ pub struct LoadSavedCharacterResponse {
     pub snapshot: Option<PilotSnapshotDto>,
     pub diagnostics: Vec<DiagnosticDto>,
     pub corpus_derived: CorpusDerivedDto,
+    /// The character's full persisted `chosen.selected_feats`, verbatim —
+    /// not just feats added in the current session. Backlog item 8
+    /// (`risks-and-open-questions.md`): the Feat picker previously had no
+    /// way to render a loaded character's existing feat list.
+    pub selected_feats: Vec<String>,
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
@@ -691,6 +696,7 @@ pub fn load_saved_character(
         snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        selected_feats: envelope.character_input.chosen.selected_feats.clone(),
     })
 }
 

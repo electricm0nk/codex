@@ -191,6 +191,7 @@ impl RuleSystemAdapter for Pf1Adapter {
             snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
             diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
             corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+            selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         })
     }
 }
@@ -1366,6 +1367,20 @@ mod tests {
             .expect("load_saved_character should succeed");
         assert_eq!(loaded.summary.character_id, character_id);
         assert!(loaded.snapshot.is_some());
+        // Backlog item 8 (risks-and-open-questions.md): the Feat picker
+        // needs a character's full persisted feat list, not just feats
+        // added in the current session. Fighter's fixed loadout seeds
+        // three feats at composition time, so a freshly-seeded, never-
+        // mutated character is proof the load path surfaces persisted
+        // feats verbatim, not merely session-appended ones.
+        assert_eq!(
+            loaded.selected_feats,
+            vec![
+                "feat:power_attack".to_owned(),
+                "feat:dodge".to_owned(),
+                "feat:weapon_focus".to_owned(),
+            ]
+        );
 
         // append_to_character: real corpus-validated batch append.
         let append_result = adapter

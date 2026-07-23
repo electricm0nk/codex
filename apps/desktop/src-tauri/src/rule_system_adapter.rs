@@ -333,6 +333,7 @@ mod tests {
                 snapshot,
                 diagnostics,
                 corpus_derived,
+                selected_feats: envelope.character_input.chosen.selected_feats.clone(),
             })
         }
     }
