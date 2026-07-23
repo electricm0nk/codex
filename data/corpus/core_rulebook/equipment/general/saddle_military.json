@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Saddle (Military)",
+    "category": "general",
+    "name": "Saddle, Military",
+    "cost_gp": 20.0,
+    "weight_lbs": 30.0,
+    "description": "This saddle braces the rider, providing a +2 circumstance bonus on Ride checks related to staying in the saddle. If you're knocked unconscious while in a military saddle, you have a 75%% chance to stay in the saddle."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 297,
+    "record_key": "Saddle (Military)"
+  }
+}

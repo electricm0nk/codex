@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Pipes of Haunting",
+    "category": "magic_items",
+    "name": "Pipes of Haunting",
+    "cost_gp": 6000.0,
+    "weight_lbs": 3.0,
+    "description": "This magic item appears to be a small set of pan pipes. When played by a person who succeeds on a DC 15 Perform (wind instruments) check, the pipes create an eerie, spellbinding tune. Those within 30 feet who hear the tune must succeed on a DC 13 Will save or become frightened for 4 rounds. Creatures with 6 or more Hit Dice are unaffected. Pipes of haunting can be sounded twice a day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 300,
+    "record_key": "Pipes of Haunting"
+  }
+}

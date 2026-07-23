@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Feather Falling",
+    "category": "magic_items",
+    "name": "Ring of Feather Falling",
+    "cost_gp": 2200.0,
+    "weight_lbs": null,
+    "description": "This ring is crafted with a feather pattern all around its edge. It acts exactly like a feather fall spell, activated immediately if the wearer falls more than 5 feet."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 388,
+    "record_key": "Ring of Feather Falling"
+  }
+}

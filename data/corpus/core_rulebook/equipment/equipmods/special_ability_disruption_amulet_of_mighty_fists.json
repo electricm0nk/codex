@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Disruption ~ Amulet of Mighty Fists",
+    "category": "equipmods",
+    "name": "Disruption",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A disruption weapon is the bane of all undead. Any undead creature struck in combat must succeed on a DC 14 Will save or be destroyed. A disruption weapon must be a bludgeoning melee weapon."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/disruption/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

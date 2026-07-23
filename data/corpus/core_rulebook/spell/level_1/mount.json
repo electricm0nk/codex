@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Mount",
+    "school": "Conjuration",
+    "level": 1,
+    "description": "You summon a light horse or a pony [your choice] to serve you as a mount. The steed serves willingly and well. The mount comes with a bit and bridle and a riding saddle."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1161,
+    "record_key": "Mount.MOD"
+  }
+}

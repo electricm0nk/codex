@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Sympathetic Vibration",
+    "school": "Evocation",
+    "level": 6,
+    "description": "By attuning yourself to a freestanding structure, you can create a damaging vibration within it. Once it begins, the vibration deals 2d10 points of damage per round to the target structure, bypassing hardness. You can choose at the time of casting to limit the duration of the spell; otherwise it lasts for 1 round per level. If the spell is cast upon a target that is not freestanding, the surrounding stone dissipates the effect and no damage occurs. Sympathetic vibration cannot affect creatures [including constructs]. Since a structure is an unattended object, it gets no saving throw to resist the effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1364,
+    "record_key": "Sympathetic Vibration.MOD"
+  }
+}

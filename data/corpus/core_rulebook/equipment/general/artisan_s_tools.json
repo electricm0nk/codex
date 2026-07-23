@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Artisan's Tools",
+    "category": "general",
+    "name": "Artisan's Tools",
+    "cost_gp": 5.0,
+    "weight_lbs": 5.0,
+    "description": "These special tools include the items needed to pursue any craft. Without them, you have to use improvised tools (-2 penalty on Craft checks), if you can do the job at all.\nMasterwork artisan's tools are the perfect tools for the job, so you get a +2 circumstance bonus on Craft checks made with them."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 203,
+    "record_key": "Artisan's Tools"
+  }
+}

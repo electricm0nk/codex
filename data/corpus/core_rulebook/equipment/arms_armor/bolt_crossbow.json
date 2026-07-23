@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Bolt (Crossbow)",
+    "category": "arms_armor",
+    "name": "Bolt (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A crossbow bolt used as a melee weapon is treated as a light improvised weapon (-4 penalty on attack rolls) and deals damage as a dagger of its size (crit x2). Bolts come in a case or quiver that holds 10 bolts (or 5, for a repeating crossbow)."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 18,
+    "record_key": "Bolt (Crossbow)",
+    "inherited_from_record_key": "Bolt (Base)"
+  }
+}

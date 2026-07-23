@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Periapt of Proof Against Poison",
+    "category": "magic_items",
+    "name": "Periapt of Proof Against Poison",
+    "cost_gp": 27000.0,
+    "weight_lbs": 0.0,
+    "description": "This item is a brilliant-cut black gem on a delicate silver chain meant to be worn about the neck. The wearer is immune to poison, although poisons active when the periapt is first donned still run their course."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 295,
+    "record_key": "Periapt of Proof Against Poison"
+  }
+}

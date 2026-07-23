@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Bane ~ Weapon",
+    "category": "equipmods",
+    "name": "Bane",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A bane weapon excels against certain foes. Against a designated foe, the weapon's enhancement bonus is +2 better than its actual bonus. It also deals an extra 2d6 points of damage against such foes. The weapon's designated foe is determined randomly from a table that includes creature types such as aberrations, animals, constructs, dragons, fey, humanoids, magical beasts, monstrous humanoids, oozes, outsiders, plants, undead, and vermin."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/bane/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

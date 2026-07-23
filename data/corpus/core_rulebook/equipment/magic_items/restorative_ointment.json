@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Restorative Ointment",
+    "category": "magic_items",
+    "name": "Restorative Ointment",
+    "cost_gp": 4000.0,
+    "weight_lbs": 0.5,
+    "description": "A jar of this unguent is 3 inches in diameter and 1 inch deep, and contains five applications. Placed upon a poisoned wound or swallowed, the ointment detoxifies any poison (as neutralize poison with a +5 bonus on the check). Applied to a diseased area, it removes disease (as remove disease with a +5 bonus on the check). Rubbed on a wound, the ointment cures 1d8+5 points of damage (as cure light wounds)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 304,
+    "record_key": "Restorative Ointment"
+  }
+}

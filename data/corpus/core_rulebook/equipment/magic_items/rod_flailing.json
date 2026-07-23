@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rod (Flailing)",
+    "category": "magic_items",
+    "name": "Rod",
+    "cost_gp": 50000.0,
+    "weight_lbs": 5.0,
+    "description": "Upon the command of its possessor, the rod activates, changing from a normal-seeming rod to a +3/+3 dire flail. The dire flail is a double weapon, which means that each of the weapon's heads can be used to attack. The wielder can gain an extra attack (with the second head) at the cost of making all attacks at a -2 penalty (as if she had the Two-Weapon Fighting feat).\nOnce per day, the wielder can use a free action to cause the rod to grant her a +4 deflection bonus to Armor Class and a +4 resistance bonus on saving throws for 10 minutes. The rod need not be in weapon form to grant this benefit.\nTransforming it into a weapon or back into a rod is a move action."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 453,
+    "record_key": "Rod (Flailing)"
+  }
+}

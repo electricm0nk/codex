@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Longsword (Cold Iron/Masterwork)",
+    "category": "arms_armor",
+    "name": "Longsword (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This nonmagical longsword is crafted out of cold iron. As a masterwork weapon, it has a +1 enhancement bonus on attack rolls."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 265,
+    "record_key": "Longsword (Cold Iron/Masterwork)",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

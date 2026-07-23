@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Arrow",
+    "category": "arms_armor",
+    "name": "Arrow (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "An arrow used as a melee weapon is treated as a light improvised weapon (-4 penalty on attack rolls) and deals damage as a dagger of its size (critical multiplier x2). Arrows come in a leather quiver that holds 20 arrows."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 17,
+    "record_key": "Arrow",
+    "inherited_from_record_key": "Arrow (Base)"
+  }
+}

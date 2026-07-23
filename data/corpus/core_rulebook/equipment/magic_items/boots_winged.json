@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Boots (Winged)",
+    "category": "magic_items",
+    "name": "Winged Boots",
+    "cost_gp": 16000.0,
+    "weight_lbs": 1.0,
+    "description": "These boots appear to be ordinary footgear. On command, they sprout wings at the heel and let the wearer fly, without having to maintain concentration, as if affected by a fly spell (including a +4 bonus on Fly skill checks). He can fly three per times day for up to 5 minutes per flight."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 67,
+    "record_key": "Boots (Winged)"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Mace of Terror",
+    "category": "arms_armor",
+    "name": "Heavy Mace (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This weapon usually appears to be a particularly frightening-looking iron or steel mace. On command, this +2 heavy mace causes the wielder's clothes and appearance to transform into an illusion of darkest horror such that living creatures in a 30-foot cone become panicked as if by a fear spell (Will DC 16 partial). Those who fail take a -2 morale penalty on saving throws, and they flee from the wielder. The wielder may use this ability up to three times per day."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 271,
+    "record_key": "Mace of Terror",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

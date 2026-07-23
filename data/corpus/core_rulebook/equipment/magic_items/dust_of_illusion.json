@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Dust of Illusion",
+    "category": "magic_items",
+    "name": "Dust of Illusion",
+    "cost_gp": 1200.0,
+    "weight_lbs": 0.0,
+    "description": "This unremarkable powder resembles chalk dust or powdered graphite. Stare at it, however, and the dust changes color and form. Put dust of illusion on a creature, and that creature is affected as if by a disguise self glamer, with the individual who sprinkles the dust envisioning the illusion desired. An unwilling target is allowed a DC 11 Reflex save to avoid the dust. The glamer lasts for 2 hours."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 135,
+    "record_key": "Dust of Illusion"
+  }
+}

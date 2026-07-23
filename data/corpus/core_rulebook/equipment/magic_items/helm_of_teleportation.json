@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Helm of Teleportation",
+    "category": "magic_items",
+    "name": "Helm of Teleportation",
+    "cost_gp": 73500.0,
+    "weight_lbs": 3.0,
+    "description": "A character wearing this device may teleport three times per day, exactly as if he had cast the spell of the same name."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 211,
+    "record_key": "Helm of Teleportation"
+  }
+}

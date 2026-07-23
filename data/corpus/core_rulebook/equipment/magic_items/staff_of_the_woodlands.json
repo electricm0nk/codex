@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of the Woodlands",
+    "category": "magic_items",
+    "name": "Staff",
+    "cost_gp": 100400.0,
+    "weight_lbs": 5.0,
+    "description": "Appearing to have grown naturally into its shape, this oak, ash, or yew staff allows use of the following spells:\n* Charm animal (1 charge)\n* Speak with animals (1 charge)\n* Barkskin (2 charges)\n* Summon nature's ally VI (3 charges)\n* Wall of thorns (3 charges)\n* Animate plants (4 charges)\nThe staff may be used as a weapon, functioning as a +2 quarterstaff. The staff of the woodlands also allows its wielder to cast pass without trace at will, with no charge cost. These two attributes continue to function after all the charges are expended."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 443,
+    "record_key": "Staff of the Woodlands"
+  }
+}

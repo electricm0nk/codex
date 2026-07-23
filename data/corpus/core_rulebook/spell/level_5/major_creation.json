@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Major Creation",
+    "school": "Conjuration",
+    "level": 5,
+    "description": "This spell functions like minor creation, except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table. \nHardness and Rarity | Examples Duration \nVegetable matter | 2 hr./level \nStone, crystal, base metals | 1 hr./level \nPrecious metals | 20 min./level \nGems | 10 min./level \nRare metal* | 1 round/level \n* Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1140,
+    "record_key": "Major Creation.MOD"
+  }
+}

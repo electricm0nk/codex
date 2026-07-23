@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Amulet of Proof Against Detection and Location",
+    "category": "magic_items",
+    "name": "Amulet of Proof Against Detection and Location",
+    "cost_gp": 35000.0,
+    "weight_lbs": 0.0,
+    "description": "This silver amulet protects the wearer from scrying and magical location just as a nondetection spell does. If a divination spell is attempted against the wearer, the caster of the divination must succeed on a caster level check (1d20 + caster level) against a DC of 23 (as if the wearer had cast nondetection on herself )."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 26,
+    "record_key": "Amulet of Proof Against Detection and Location"
+  }
+}

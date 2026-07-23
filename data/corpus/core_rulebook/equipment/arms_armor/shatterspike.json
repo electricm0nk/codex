@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Shatterspike",
+    "category": "arms_armor",
+    "name": "Longsword (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This intimidating weapon appears to be a longsword with multiple hooks, barbs, and serrations along the blade, excellent for catching and sundering a foe's weapon. Wielders without the Improved Sunder feat use a shatterspike as a +1 longsword only. Wielders with the Improved Sunder feat instead use shatterspike as a +4 longsword when attempting to sunder an opponent's weapon. Shatterspike can damage weapons with an enhancement bonus of +4 or lower."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 274,
+    "record_key": "Shatterspike",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

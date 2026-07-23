@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Shapechange",
+    "school": "Transmutation",
+    "level": 9,
+    "description": "This spell allows you to take the form of a wide variety of creatures. This spell can function as alter self, beast form IV, elemental body IV, form of the dragon III, giant form II, and plant shape III depending on what form you take. You can change form once each round as a free action. The change takes place either immediately before your regular action or immediately after it, but not during the action."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1286,
+    "record_key": "Shapechange.MOD"
+  }
+}

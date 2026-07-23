@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_plus_extract",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Demon Armor Claw Attack",
+    "category": "arms_armor",
+    "name": "Demon Armor Claw Attack",
+    "cost_gp": -2300.0,
+    "weight_lbs": 0.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 136,
+    "record_key": "Demon Armor Claw Attack"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Chain Shirt",
+    "category": "arms_armor",
+    "name": "Chain Shirt (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Covering the torso, this shirt is made up of thousands of interlocking metal rings."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 53,
+    "record_key": "Chain Shirt",
+    "inherited_from_record_key": "Chain Shirt (Base)"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Slow",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "slowed rate. Creatures affected by this spell are staggered and can take only a single move action or standard action each turn, but not both [nor may it take full-round actions]. Additionally, it takes a -1 penalty on attack rolls, AC, and Reflex saves. A slowed creature moves at half its normal speed [round down to the next 5-foot increment], which affects the creature's jumping distance as normal for decreased speed. Multiple slow effects don't stack. Slow counters and dispels haste."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1303,
+    "record_key": "Slow.MOD"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Silversheen",
+    "category": "magic_items",
+    "name": "Silversheen",
+    "cost_gp": 250.0,
+    "weight_lbs": 0.0,
+    "description": "This shimmering paste-like substance can be applied to a weapon as a standard action. It gives the weapon the properties of alchemical silver for 1 hour, replacing the properties of any other special material it might have. One vial coats a single melee weapon or 20 units of ammunition."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 324,
+    "record_key": "Silversheen"
+  }
+}

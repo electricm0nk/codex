@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Shield (Light/Steel)",
+    "category": "arms_armor",
+    "name": "Light Steel Shield (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "You strap a shield to your forearm and grip it with your hand. A light shield's weight lets you carry other items in that hand, although you cannot use weapons with it.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to some spells and effects.\nShield Bash Attacks: You can bash an opponent with a light shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 118,
+    "record_key": "Shield (Light/Steel)",
+    "inherited_from_record_key": "Light Steel Shield (Base)"
+  }
+}

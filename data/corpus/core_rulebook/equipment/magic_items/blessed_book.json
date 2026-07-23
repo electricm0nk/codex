@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Blessed Book",
+    "category": "magic_items",
+    "name": "Blessed Book",
+    "cost_gp": 12500.0,
+    "weight_lbs": 1.0,
+    "description": "This well-made tome is always of small size, typically no more than 12 inches tall, 8 inches wide, and 1 inch thick. All such books are durable, waterproof, bound with iron overlaid with silver, and locked.\nA wizard can fill the 1,000 pages of a blessed book with spells without paying the material cost. This book is never found as randomly generated treasure with spells already inscribed in it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 59,
+    "record_key": "Blessed Book"
+  }
+}

@@ -5,5 +5,6 @@ pub mod equipment_data;
 pub mod equipment_tables;
 pub mod feat_data;
 pub mod feats;
+pub mod json_cache;
 pub mod race_tables;
 pub mod spell_list;

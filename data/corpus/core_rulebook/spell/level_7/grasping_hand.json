@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Grasping Hand",
+    "school": "Evocation",
+    "level": 7,
+    "description": "This spell functions as interposing hand, except that it can also grapple one opponent you select. The grasping hand gets one grapple attack per round. This attack does not provoke an attack of opportunity. Its CMB and CMD for grapple checks use your caster level in place of its base attack bonus, with a +10 bonus for its Strength [31] score and a +1 bonus for being Large [its Dexterity is 10, granting no bonus on the Combat Maneuver Defense]. The hand holds but does not harm creatures that it grapples. Directing the spell to a new target is a move action. The grasping hand can instead be directed to bull rush a target, using the same bonuses outlined above, or it can be directed to interpose itself, as interposing hand does."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1034,
+    "record_key": "Grasping Hand.MOD"
+  }
+}

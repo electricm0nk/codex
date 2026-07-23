@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rod (Quicken/Greater)",
+    "category": "magic_items",
+    "name": "Rod",
+    "cost_gp": 170000.0,
+    "weight_lbs": 5.0,
+    "description": "The wielder can cast up to three spells per day that are quickened as though using the Quicken Spell feat."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 483,
+    "record_key": "Rod (Quicken/Greater)"
+  }
+}

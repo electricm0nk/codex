@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Shortspear (Base)",
+    "category": "arms_armor",
+    "name": "Shortspear",
+    "cost_gp": 1.0,
+    "weight_lbs": 3.0,
+    "description": "A shortspear is about 3 feet in length, making it a suitable thrown weapon."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 150,
+    "record_key": "Shortspear (Base)"
+  }
+}

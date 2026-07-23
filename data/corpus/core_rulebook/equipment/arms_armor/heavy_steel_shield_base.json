@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Heavy Steel Shield (Base)",
+    "category": "arms_armor",
+    "name": "Heavy Steel Shield",
+    "cost_gp": 20.0,
+    "weight_lbs": 15.0,
+    "description": "You strap a shield to your forearm and grip it with your hand. A heavy shield is so heavy that you can't use your shield hand for anything else.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to spells and effects.\nShield Bash Attacks: You can bash an opponent with a heavy shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 113,
+    "record_key": "Heavy Steel Shield (Base)"
+  }
+}

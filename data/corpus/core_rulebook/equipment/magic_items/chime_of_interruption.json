@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Chime of Interruption",
+    "category": "magic_items",
+    "name": "Chime of Interruption",
+    "cost_gp": 16800.0,
+    "weight_lbs": 1.0,
+    "description": "This instrument can be struck once every 10 minutes, and its resonant tone lasts for 3 full minutes. While the chime is resonating, no spell requiring a verbal component can be cast within a 30-foot radius of it unless the caster can make a concentration check (DC 15 + the spell's level)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 99,
+    "record_key": "Chime of Interruption"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Flail (Heavy)",
+    "category": "arms_armor",
+    "name": "Heavy Flail (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Similar to a flail, a heavy flail has a larger metal ball and a longer handle."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 233,
+    "record_key": "Flail (Heavy)",
+    "inherited_from_record_key": "Heavy Flail (Base)"
+  }
+}

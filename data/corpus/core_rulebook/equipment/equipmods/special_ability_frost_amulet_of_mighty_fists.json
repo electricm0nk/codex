@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Frost ~ Amulet of Mighty Fists",
+    "category": "equipmods",
+    "name": "Frost",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Upon command, a frost weapon is sheathed in a terrible, icy cold that deals an extra 1d6 points of cold damage on a successful hit. The cold does not harm the wielder. The effect remains until another command is given."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/frost/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

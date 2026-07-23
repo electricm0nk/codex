@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Salve of Slipperiness",
+    "category": "magic_items",
+    "name": "Salve of Slipperiness",
+    "cost_gp": 1000.0,
+    "weight_lbs": 0.0,
+    "description": "This substance provides a +20 competence bonus on all Escape Artist checks and combat maneuver checks made to escape from a grapple. The salve also grants a +10 competence bonus to the wearer's Combat Maneuver Defense for the purpose of avoiding grapple attempts. In addition, such obstructions as webs (magical or otherwise) do not affect an anointed individual. Magic ropes and the like do not avail against this salve. If it is smeared on a floor or on steps, the area should be treated as a long-lasting grease spell. The salve requires 8 hours to wear off normally, or it can be wiped off with an alcohol solution (even wine).\nSalve of slipperiness is needed to coat the inside of a container meant to hold sovereign glue."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 320,
+    "record_key": "Salve of Slipperiness"
+  }
+}

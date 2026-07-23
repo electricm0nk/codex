@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Remove Blindness/Deafness",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "Remove blindness/deafness cures blindness or deafness [your choice], whether the effect is normal or magical in nature. The spell does not restore ears or eyes that have been lost, but it repairs them if they are damaged. Remove blindness/deafness counters and dispels blindness/deafness."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1240,
+    "record_key": "Remove Blindness/Deafness.MOD"
+  }
+}

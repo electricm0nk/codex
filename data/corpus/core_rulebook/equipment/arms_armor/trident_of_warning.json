@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Trident of Warning",
+    "category": "arms_armor",
+    "name": "Trident (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A weapon of this type enables its wielder to determine the location, depth, kind, and number of aquatic predators within 680 feet. A trident of warning must be grasped and pointed in order for the character using it to gain such information, and it requires 1 round to scan a hemisphere with a radius of 680 feet. The weapon is otherwise a +2 trident."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 284,
+    "record_key": "Trident of Warning",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Eyes of Doom",
+    "category": "magic_items",
+    "name": "Eyes of Doom",
+    "cost_gp": 25000.0,
+    "weight_lbs": 0.0,
+    "description": "These crystal lenses fit over the user's eyes, enabling him to cast doom upon those around him (one target per round) as a gaze attack, except that the wearer must take a standard action, and those merely looking at the wearer are not affected. Those failing a DC 11 Will save are affected as by the doom spell. The wearer also gains the additional power of a continual deathwatch effect and can use fear (Will DC 16 partial) as a normal gaze attack once per week. Both lenses must be worn for the magic item to take effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 152,
+    "record_key": "Eyes of Doom"
+  }
+}

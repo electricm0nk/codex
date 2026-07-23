@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Dimensional Shackles",
+    "category": "magic_items",
+    "name": "Dimensional Shackles",
+    "cost_gp": 28000.0,
+    "weight_lbs": 5.0,
+    "description": "These shackles have golden runes traced across their cold iron links. Any creature bound within them is affected as if a dimensional anchor spell were cast upon it (no save). They fit any Small to Large creature. The DC to break or slip out of the shackles is 30."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 130,
+    "record_key": "Dimensional Shackles"
+  }
+}

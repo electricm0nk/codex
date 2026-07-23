@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Well of Many Worlds",
+    "category": "magic_items",
+    "name": "Well of Many Worlds",
+    "cost_gp": 82000.0,
+    "weight_lbs": 0.0,
+    "description": "This strange, interdimensional device looks just like a portable hole. Anything placed within it is immediately cast to another world--a parallel world, another planet, or a different plane (chosen randomly). If the well is moved, it opens to a new plane (also randomly determined). It can be picked up, folded, or rolled, just as a portable hole can be. Objects from the world the well touches can come through the opening just as easily--it is a twoway portal."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 354,
+    "record_key": "Well of Many Worlds"
+  }
+}

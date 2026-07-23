@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Glibness",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "Your speech becomes fluent and more believable, causing those who hear you to believe every word you say. You gain a +20 bonus on Bluff checks made to convince another of the truth of your words. This bonus doesn't apply to other uses of the Bluff skill, such as feinting in combat, creating a diversion to hide, or communicating a hidden message via innuendo. If a magical effect is used against you that would detect your lies or force you to speak the truth, the user of the effect must succeed on a caster level check [1d20 + caster level] against a DC of 15 + your caster level to succeed. Failure means the effect does not detect your lies or force you to speak only the truth."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1026,
+    "record_key": "Glibness.MOD"
+  }
+}

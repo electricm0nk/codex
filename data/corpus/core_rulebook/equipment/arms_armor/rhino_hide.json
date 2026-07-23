@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rhino Hide",
+    "category": "arms_armor",
+    "name": "Hide Armor (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This +2 hide armor is made from rhinoceros hide. In addition to granting a +2 enhancement bonus to AC, it has a -1 armor check penalty and deals an additional 2d6 points of damage on any successful charge attack made by the wearer, including a mounted charge."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 75,
+    "record_key": "Rhino Hide",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

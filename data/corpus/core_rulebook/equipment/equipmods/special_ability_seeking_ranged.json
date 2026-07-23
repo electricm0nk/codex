@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Seeking ~ Ranged",
+    "category": "equipmods",
+    "name": "Seeking",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A seeking weapon veers toward its target, negating any miss chances that would otherwise apply, such as from concealment. The wielder still has to aim the weapon at the right square; arrows mistakenly shot into an empty space, for example, do not veer and hit invisible enemies, even if they are nearby."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/seeking/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

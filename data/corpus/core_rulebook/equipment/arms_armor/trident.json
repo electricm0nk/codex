@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Trident",
+    "category": "arms_armor",
+    "name": "Trident (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A trident has three metal prongs at end of a 4-foot-long shaft. This weapon can be thrown."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 227,
+    "record_key": "Trident",
+    "inherited_from_record_key": "Trident (Base)"
+  }
+}

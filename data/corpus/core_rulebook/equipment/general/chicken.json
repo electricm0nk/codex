@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_plus_extract",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Chicken",
+    "category": "general",
+    "name": "Chicken",
+    "cost_gp": 0.02,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 84,
+    "record_key": "Chicken"
+  }
+}

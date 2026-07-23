@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Horn of Blasting (Greater)",
+    "category": "magic_items",
+    "name": "Greater Horn of Blasting",
+    "cost_gp": 70000.0,
+    "weight_lbs": 1.0,
+    "description": "This horn functions as a horn of blasting, except that it deals 10d6 points of sonic damage, stuns creatures for 1 round, and deafens them for 4d6 rounds (a DC 19 Fortitude reduces the damage by half and negates the stunning and deafening). Crystalline objects take 16d6 points of sonic damage as described for the horn of blasting. A greater horn of blasting also has a 20%% cumulative chance of exploding for each usage beyond the first each day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 214,
+    "record_key": "Horn of Blasting (Greater)"
+  }
+}

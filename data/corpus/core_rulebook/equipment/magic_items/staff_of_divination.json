@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of Divination",
+    "category": "magic_items",
+    "name": "Staff",
+    "cost_gp": 82000.0,
+    "weight_lbs": 5.0,
+    "description": "Made from a supple length of willow, often with a forked tip, this staff allows use of the following spells:\n* Detect secret doors (1 charge)\n* Locate object (1 charge)\n* Tongues (1 charge)\n* Locate creature (2 charges)\n* Prying eyes (2 charges)\n* True seeing (3 charges)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 427,
+    "record_key": "Staff of Divination"
+  }
+}

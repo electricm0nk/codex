@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Arcane Sight (Greater)",
+    "school": "Divination",
+    "level": 7,
+    "description": "This spell functions like arcane sight, except that you automatically know which spells or magical effects are active upon any individual or object you see. Unlike arcane sight, this spell cannot be made permanent with a permanency spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 800,
+    "record_key": "Arcane Sight (Greater).MOD"
+  }
+}

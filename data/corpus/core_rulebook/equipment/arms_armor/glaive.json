@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Glaive",
+    "category": "arms_armor",
+    "name": "Glaive (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A glaive is a simple blade, mounted to the end of a pole about 7 feet in length."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 230,
+    "record_key": "Glaive",
+    "inherited_from_record_key": "Glaive (Base)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rod (Metal and Mineral Detection)",
+    "category": "magic_items",
+    "name": "Rod",
+    "cost_gp": 10500.0,
+    "weight_lbs": 5.0,
+    "description": "This rod is valued by treasure hunters and miners alike, for it pulses and hums in the wielder's hand in the proximity of metal. As the wearer aims the rod, the pulsations grow more noticeable as it points to the largest mass of metal within 30 feet. However, the wielder can concentrate on a specific metal or mineral. If the specific mineral is within 30 feet, the rod points to any places it is located, and the rod wielder knows the approximate quantity as well. If more than one deposit of the specified metal or mineral is within range, the rod points to the largest cache first. Each operation requires a full-round action."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 456,
+    "record_key": "Rod (Metal and Mineral Detection)"
+  }
+}

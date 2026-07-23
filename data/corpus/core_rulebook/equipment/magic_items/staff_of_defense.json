@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of Defense",
+    "category": "magic_items",
+    "name": "Staff",
+    "cost_gp": 62000.0,
+    "weight_lbs": 5.0,
+    "description": "The staff of defense is a simple-looking polished wooden staff that throbs with power when held defensively. It allows use of the following spells:\n* Shield (1 charge)\n* Shield of Faith (1 charge)\n* Shield other (1 charge)\n* Shield of law (3 charges)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 426,
+    "record_key": "Staff of Defense"
+  }
+}

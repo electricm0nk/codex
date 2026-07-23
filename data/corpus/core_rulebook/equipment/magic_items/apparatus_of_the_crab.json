@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Apparatus of the Crab",
+    "category": "magic_items",
+    "name": "Apparatus of the Crab",
+    "cost_gp": 90000.0,
+    "weight_lbs": 500.0,
+    "description": "At first glance, an inactive apparatus of the crab appears to be a large, sealed iron barrel big enough to hold two Medium creatures. Close examination, and a DC 20 Perception check, reveals a secret catch that opens a hatch at one end. Anyone who crawls inside finds 10 (unlabeled) levers and seating for two Medium or Small occupants. These levers allow those inside to activate and control the apparatus's movements and actions.\nLever (1d10) Lever Function\n1 Extend/retract legs and tail\n2 Uncover/cover forward porthole\n3 Uncover/cover side portholes\n4 Extend/retract pincers and feelers\n5 Snap pincers\n6 Move forward/backward\n7 Turn left/right\n8 Open/close \"eyes\" with continual flame inside\n9 Rise/sink in water\n10 Open/close hatch\nOperating a lever is a full-round action, and no lever may be operated more than once per round. However, since two characters can fit inside, the apparatus can move and attack in the same round. The device can function in water up to 900 feet deep. It holds enough air for a crew of two to survive 1d4+1 hours (twice as long for a single occupant). When activated, the apparatus looks something like a giant lobster.\nWhen active, an apparatus of the crab has the following characteristics: hp 200; hardness 15; Spd 20 ft., swim 20 ft.; AC 20 (-1 size, +11 natural); Attack 2 pincers +12 melee (2d8); CMB +14; CMD 24."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 27,
+    "record_key": "Apparatus of the Crab"
+  }
+}

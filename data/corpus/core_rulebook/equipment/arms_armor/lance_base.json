@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Lance (Base)",
+    "category": "arms_armor",
+    "name": "Lance",
+    "cost_gp": 10.0,
+    "weight_lbs": 10.0,
+    "description": "A lance deals double damage when used from the back of a charging mount. While mounted, you can wield a lance with one hand."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 179,
+    "record_key": "Lance (Base)"
+  }
+}

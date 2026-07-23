@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Longsword (Base)",
+    "category": "arms_armor",
+    "name": "Longsword",
+    "cost_gp": 15.0,
+    "weight_lbs": 4.0,
+    "description": "This sword is about 3-1/2 feet in length."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 165,
+    "record_key": "Longsword (Base)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Boots of the Winterlands",
+    "category": "magic_items",
+    "name": "Boots of the Winterlands",
+    "cost_gp": 2500.0,
+    "weight_lbs": 1.0,
+    "description": "This footgear bestows many powers upon the wearer. First, he is able to travel across snow at his normal speed, leaving no tracks. Second, the boots also enable him to travel at normal speed across the most slippery ice (horizontal surfaces only, not vertical or sharply slanted ones) without falling or slipping. Finally, boots of the winterlands warm the wearer, as if he were affected by an endure elements spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 66,
+    "record_key": "Boots of the Winterlands"
+  }
+}

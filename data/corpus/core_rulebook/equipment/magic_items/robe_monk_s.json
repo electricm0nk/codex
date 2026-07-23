@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Robe (Monk's)",
+    "category": "magic_items",
+    "name": "Monk's Robe",
+    "cost_gp": 13000.0,
+    "weight_lbs": 1.0,
+    "description": "This simple brown robe, when worn, confers great ability in unarmed combat. If the wearer has levels in monk, her AC and unarmed damage is treated as a monk of five levels higher. If donned by a character with the Stunning Fist feat, the robe lets her make one additional stunning attack per day. If the character is not a monk, she gains the AC and unarmed damage of a 5th-level monk (although she does not add her Wisdom bonus to her AC). This AC bonus functions just like the monk's AC bonus."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 314,
+    "record_key": "Robe (Monk's)"
+  }
+}

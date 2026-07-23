@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Bag of Tricks (Gray)",
+    "category": "magic_items",
+    "name": "Bag of Tricks (Gray)",
+    "cost_gp": 3400.0,
+    "weight_lbs": null,
+    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Bat\n31-60 Rat\n61-75 Cat\n76-90 Weasel\n91-100 Riding Dog"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 32,
+    "record_key": "Bag of Tricks (Gray)"
+  }
+}

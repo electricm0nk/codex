@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Robe of Stars",
+    "category": "magic_items",
+    "name": "Robe of Stars",
+    "cost_gp": 58000.0,
+    "weight_lbs": 1.0,
+    "description": "This garment is typically black or dark blue and embroidered with small white or silver stars. The robe has three magical powers.\n* It enables its wearer to travel physically to the Astral Plane, along with all that she is wearing or carrying.\n* It gives its wearer a +1 luck bonus on all saving throws.\n* Its wearer can use up to six of the embroidered stars on the chest portion of the robe as +5 shuriken. The robe grants its wearer proficiency with such weapons. Each shuriken disappears after it is used. The stars are replenished once per month."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 316,
+    "record_key": "Robe of Stars"
+  }
+}

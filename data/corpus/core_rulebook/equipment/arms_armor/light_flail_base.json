@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Light Flail (Base)",
+    "category": "arms_armor",
+    "name": "Light Flail",
+    "cost_gp": 8.0,
+    "weight_lbs": 5.0,
+    "description": "A flail consists of a spiked metal ball, connected to a handle by a sturdy chain."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 164,
+    "record_key": "Light Flail (Base)"
+  }
+}

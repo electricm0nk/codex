@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Jug (Clay)",
+    "category": "general",
+    "name": "Jug, Clay",
+    "cost_gp": 0.03,
+    "weight_lbs": 9.0,
+    "description": "This basic jug is fitted with a stopper and holds 1 gallon of liquid."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 136,
+    "record_key": "Jug (Clay)"
+  }
+}

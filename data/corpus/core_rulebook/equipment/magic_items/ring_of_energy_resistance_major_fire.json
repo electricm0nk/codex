@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Energy Resistance (Major/Fire)",
+    "category": "magic_items",
+    "name": "Ring of Major Energy Resistance (Fire)",
+    "cost_gp": 28000.0,
+    "weight_lbs": null,
+    "description": "This ring continually protects the wearer from damage from one type of energy--acid, cold, electricity, fire, or sonic (chosen by the creator of the item; determine randomly if found as part of a treasure hoard). Each time the wearer would normally take such damage, subtract the ring's resistance value from the damage dealt.\nA major ring of energy resistance grants 20 points of resistance."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 382,
+    "record_key": "Ring of Energy Resistance (Major/Fire)"
+  }
+}

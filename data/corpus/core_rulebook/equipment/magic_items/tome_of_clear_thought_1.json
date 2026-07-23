@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Tome of Clear Thought (+1)",
+    "category": "magic_items",
+    "name": "Tome of Clear Thought +1",
+    "cost_gp": 27500.0,
+    "weight_lbs": 5.0,
+    "description": "This heavy book contains instruction on improving memory and logic, but entwined within the words is a powerful magical effect. If anyone reads this book, which takes a total of 48 hours over a minimum of 6 days, she gains an inherent bonus from +1 to +5 (depending on the type of tome) to her Intelligence score. Once the book is read, the magic disappears from the pages and it becomes a normal book."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 335,
+    "record_key": "Tome of Clear Thought (+1)"
+  }
+}

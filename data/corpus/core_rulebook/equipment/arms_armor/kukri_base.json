@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Kukri (Base)",
+    "category": "arms_armor",
+    "name": "Kukri",
+    "cost_gp": 8.0,
+    "weight_lbs": 2.0,
+    "description": "A kukri is a curved blade, about 1 foot in length."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 157,
+    "record_key": "Kukri (Base)"
+  }
+}

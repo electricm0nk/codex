@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Flame Strike",
+    "school": "Evocation",
+    "level": 4,
+    "description": "A flame strike evokes a vertical column of divine fire. The spell deals 1d6 points of damage per caster level [maximum 15d6]. Half the damage is fire damage, but the other half results directly from divine power and is therefore not subject to being reduced by resistance to fire-based attacks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 995,
+    "record_key": "Flame Strike.MOD"
+  }
+}

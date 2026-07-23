@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Inflict Serious Wounds (Mass)",
+    "school": "Necromancy",
+    "level": 7,
+    "description": "This spell functions like mass inflict light wounds, except that it deals 3d8 points of damage + 1 point per caster level [maximum +35]."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1087,
+    "record_key": "Inflict Serious Wounds (Mass).MOD"
+  }
+}

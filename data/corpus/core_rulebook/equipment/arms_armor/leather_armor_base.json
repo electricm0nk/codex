@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Leather Armor (Base)",
+    "category": "arms_armor",
+    "name": "Leather Armor",
+    "cost_gp": 10.0,
+    "weight_lbs": 15.0,
+    "description": "Leather armor is made up of pieces of hard boiled leather carefully sewn together."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 38,
+    "record_key": "Leather Armor (Base)"
+  }
+}

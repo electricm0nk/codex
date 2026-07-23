@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Musical Instrument (Pan Pipes)",
+    "category": "general",
+    "name": "Pan Pipes (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 224,
+    "record_key": "Musical Instrument (Pan Pipes)",
+    "inherited_from_record_key": "Pan Pipes (Base)"
+  }
+}

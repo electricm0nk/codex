@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Dire Flail (Base)",
+    "category": "arms_armor",
+    "name": "Dire Flail",
+    "cost_gp": 90.0,
+    "weight_lbs": 10.0,
+    "description": "A dire flail consists of two spheres of spiked iron dangling from chains at opposite ends of a long haft."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 192,
+    "record_key": "Dire Flail (Base)"
+  }
+}

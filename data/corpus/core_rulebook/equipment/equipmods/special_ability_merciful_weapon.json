@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Merciful ~ Weapon",
+    "category": "equipmods",
+    "name": "Merciful",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A merciful weapon deals an extra 1d6 points of damage, but all damage it deals is nonlethal damage. On command, the weapon suppresses this ability until told to resume it, allowing it to deal lethal damage, but without any bonus damage from this ability."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/merciful/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

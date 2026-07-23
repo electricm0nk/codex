@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Feather Token (Whip)",
+    "category": "magic_items",
+    "name": "Feather Token (Whip)",
+    "cost_gp": 500.0,
+    "weight_lbs": 0.0,
+    "description": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.\nWhip: A token that forms into a huge leather whip and wields itself against any opponent desired just like a dancing weapon. The weapon has a +10 base attack bonus, does 1d6+1 points of nonlethal damage, has a +1 enhancement bonus on attack and damage rolls, and a makes a free grapple attack (with a +15 bonus on its combat maneuver checks) if it hits. The whip lasts no longer than 1 hour."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 159,
+    "record_key": "Feather Token (Whip)"
+  }
+}

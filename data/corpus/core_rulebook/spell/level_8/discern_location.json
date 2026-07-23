@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Discern Location",
+    "school": "Divination",
+    "level": 8,
+    "description": "A discern location spell is among the most powerful means of locating creatures or objects. Nothing short of a mind blank spell or the direct intervention of a deity keeps you from learning the exact location of a single individual or object. Discern location circumvents normal means of protection from scrying or location. The spell reveals the name of the creature or object's location [place, name, business name, building name, or the like], community, county [or similar political division], country, continent, and the plane of existence where the target lies. To find a creature with the spell, you must have seen the creature or have some item that once belonged to it. To find an object, you must have touched it at least once."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 931,
+    "record_key": "Discern Location.MOD"
+  }
+}

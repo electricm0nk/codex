@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Stone Salve (Ounce)",
+    "category": "magic_items",
+    "name": "Stone Salve",
+    "cost_gp": 4000.0,
+    "weight_lbs": 0.0,
+    "description": "This ointment has two uses. If an ounce of it is applied to the flesh of a petrified creature, it returns the creature to flesh as the stone to flesh spell. If an ounce of it is applied to the flesh of a nonpetrified creature, it protects the creature as a stoneskin spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 330,
+    "record_key": "Stone Salve (Ounce)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Eyes of Charming",
+    "category": "magic_items",
+    "name": "Eyes of Charming",
+    "cost_gp": 56000.0,
+    "weight_lbs": 0.0,
+    "description": "These two crystal lenses fit over the user's eyes. The wearer is able to use charm person (one target per round) merely by meeting a target's gaze. Those failing a DC 16 Will save are charmed as per the spell. Both lenses must be worn for the magic item to take effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 151,
+    "record_key": "Eyes of Charming"
+  }
+}

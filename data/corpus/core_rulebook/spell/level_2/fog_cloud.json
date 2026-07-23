@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Fog Cloud",
+    "school": "Conjuration",
+    "level": 2,
+    "description": "A bank of fog billows out from the point you designate. The fog obscures all sight, including darkvision, beyond 5 feet. A creature within 5 feet has concealment [attacks have a 20%% miss chance]. Creatures farther away have total concealment [50%% miss chance, and the attacker can't use sight to locate the target]. A moderate wind [11+ mph] disperses the fog in 4 rounds; a strong wind [21+ mph] disperses the fog in 1 round. The spell does not function underwater."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1001,
+    "record_key": "Fog Cloud.MOD"
+  }
+}

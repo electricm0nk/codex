@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Maul of the Titans",
+    "category": "arms_armor",
+    "name": "Maul of the Titans",
+    "cost_gp": 25305.0,
+    "weight_lbs": 160.0,
+    "description": "This mallet is 8 feet long. If used as a weapon, it is the equivalent of a +3 greatclub and deals triple damage against inanimate objects. The wielder must have a Strength of at least 18 to wield it properly. Otherwise, she takes a -4 penalty on attack rolls."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 287,
+    "record_key": "Maul of the Titans"
+  }
+}

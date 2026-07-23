@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Scroll of Cure Critical Wounds",
+    "category": "magic_items",
+    "name": "Scroll",
+    "cost_gp": null,
+    "weight_lbs": 0.01,
+    "description": "Cures 4d8 damage + 1/level (max +20)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 1470,
+    "record_key": "Scroll of Cure Critical Wounds"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Blight",
+    "school": "Necromancy",
+    "level": 4,
+    "description": "This spell withers a single plant of any size. An affected plant creature takes 1d6 points of damage per level [maximum 15d6] and may attempt a Fortitude saving throw for half damage. A plant that isn't a creature doesn't receive a save and immediately withers and dies. This spell has no effect on the soil or surrounding plant life."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 825,
+    "record_key": "Blight.MOD"
+  }
+}

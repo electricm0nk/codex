@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of Healing",
+    "category": "magic_items",
+    "name": "Staff",
+    "cost_gp": 29600.0,
+    "weight_lbs": 5.0,
+    "description": "This white ash staff is decorated with inlaid silver runes. It allows use of the following spells:\n* Cure serious wounds (1 charge)\n* Lesser restoration (1 charge)\n* Remove blindness/deafness (2 charges)\n* Remove disease (3 charges)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 433,
+    "record_key": "Staff of Healing"
+  }
+}

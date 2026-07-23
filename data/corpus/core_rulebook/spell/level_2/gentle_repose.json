@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Gentle Repose",
+    "school": "Necromancy",
+    "level": 2,
+    "description": "You preserve the remains of a dead creature so that they do not decay. Doing so effectively extends the time limit on raising that creature from the dead [see raise dead]. Days spent under the influence of this spell don't count against the time limit. Additionally, this spell makes transporting a slain [and thus decaying] comrade less unpleasant. The spell also works on severed body parts and the like."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1020,
+    "record_key": "Gentle Repose.MOD"
+  }
+}

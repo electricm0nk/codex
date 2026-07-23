@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Scabbard of Keen Edges",
+    "category": "magic_items",
+    "name": "Scabbard of Keen Edges",
+    "cost_gp": 16000.0,
+    "weight_lbs": 1.0,
+    "description": "This scabbard can shrink or enlarge to accommodate any knife, dagger, sword, or similar weapon up to and including a greatsword. Up to three times per day on command, the scabbard casts keen edge on any blade placed within it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 321,
+    "record_key": "Scabbard of Keen Edges"
+  }
+}

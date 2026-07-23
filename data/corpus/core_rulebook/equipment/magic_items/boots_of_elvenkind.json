@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Boots of Elvenkind",
+    "category": "magic_items",
+    "name": "Boots of Elvenkind",
+    "cost_gp": 2500.0,
+    "weight_lbs": 1.0,
+    "description": "These soft boots enable the wearer to move nimbly about in virtually any surroundings, granting a +5 competence bonus on Acrobatics checks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 61,
+    "record_key": "Boots of Elvenkind"
+  }
+}

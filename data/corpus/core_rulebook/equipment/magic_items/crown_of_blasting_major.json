@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Crown of Blasting (Major)",
+    "category": "magic_items",
+    "name": "Major Crown of Blasting",
+    "cost_gp": 23760.0,
+    "weight_lbs": 1.0,
+    "description": "On command, this elaborate golden crown projects a blast of searing light (5d8 maximized for 40 points of damage) once per day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 117,
+    "record_key": "Crown of Blasting (Major)"
+  }
+}

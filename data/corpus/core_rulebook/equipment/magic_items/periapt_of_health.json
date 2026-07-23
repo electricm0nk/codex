@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Periapt of Health",
+    "category": "magic_items",
+    "name": "Periapt of Health",
+    "cost_gp": 7500.0,
+    "weight_lbs": 0.0,
+    "description": "The wearer of this blue gem on a silver chain (worn on the neck) is immune to disease, including supernatural diseases."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 294,
+    "record_key": "Periapt of Health"
+  }
+}

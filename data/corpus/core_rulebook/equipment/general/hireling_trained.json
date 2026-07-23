@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Hireling (Trained)",
+    "category": "general",
+    "name": "Trained Hireling, Per Day",
+    "cost_gp": 0.3,
+    "weight_lbs": null,
+    "description": "The amount given is the typical daily wage for mercenary warriors, masons, craftsmen, cooks, scribes, teamsters, and other trained hirelings. This value represents a minimum wage; many such hirelings require significantly higher pay."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 323,
+    "record_key": "Hireling (Trained)"
+  }
+}

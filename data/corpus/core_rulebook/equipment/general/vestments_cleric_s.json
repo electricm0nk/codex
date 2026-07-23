@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Vestments (Cleric's)",
+    "category": "general",
+    "name": "Cleric's Vestments",
+    "cost_gp": 5.0,
+    "weight_lbs": 6.0,
+    "description": "These clothes are for performing priestly functions, not for adventuring. Cleric's vestments typically include a cassock, stole, and surplice."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 253,
+    "record_key": "Vestments (Cleric's)"
+  }
+}

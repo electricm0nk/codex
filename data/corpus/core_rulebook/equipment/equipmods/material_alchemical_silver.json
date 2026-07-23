@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Material ~ Alchemical Silver",
+    "category": "equipmods",
+    "name": "Alchemical Silver",
+    "cost_gp": 0.0,
+    "weight_lbs": null,
+    "description": "A complex process involving metallurgy and alchemy can bond silver to a weapon made of steel so that it bypasses the damage reduction of creatures such as lycanthropes. Unlike other special materials, alchemical silver weapons work normally rather than being especially fragile, but a silver weapon takes a -1 penalty on damage rolls (minimum 1 point of damage) since silver is a soft metal not suited to hard blows -- this penalty does not apply to unarmed strikes or natural weapons."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

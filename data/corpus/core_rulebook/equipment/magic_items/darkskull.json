@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Darkskull",
+    "category": "magic_items",
+    "name": "Darkskull",
+    "cost_gp": 60000.0,
+    "weight_lbs": 5.0,
+    "description": "This skull, carved from ebony, is wholly evil. Wherever the skull goes, the area around it is treated as though an unhallow spell had been cast with the skull as the touched point of origin. Each darkskull has a single spell effect tied to it. This spell is from the standard list given in the unhallow spell description, and it cannot be changed."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 126,
+    "record_key": "Darkskull"
+  }
+}

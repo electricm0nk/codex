@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Blade Barrier",
+    "school": "Evocation",
+    "level": 6,
+    "description": "An immobile, vertical curtain of whirling blades shaped of pure force springs into existence. Any creature passing through the wall takes 1d6 points of damage per caster level [maximum 15d6], with a Reflex save for half damage. If you evoke the barrier so that it appears where creatures are, each creature takes damage as if passing through the wall. Each such creature can avoid the wall [ending up on the side of its choice] and thus take no damage by making a successful Reflex save. A blade barrier provides cover [+4 bonus to AC, +2 bonus on Reflex saves] against attacks made through it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 819,
+    "record_key": "Blade Barrier.MOD"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Slippers of Spider Climbing",
+    "category": "magic_items",
+    "name": "Slippers of Spider Climbing",
+    "cost_gp": 4800.0,
+    "weight_lbs": 0.5,
+    "description": "When worn, a pair of these slippers enables movement on vertical surfaces or even upside down along ceilings, leaving the wearer's hands free. Her climb speed is 20 feet. Severely slippery surfaces--icy, oiled, or greased surfaces--make these slippers useless. The slippers can be used for 10 minutes per day, split up as the wearer chooses (minimum 1 minute per use)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 325,
+    "record_key": "Slippers of Spider Climbing"
+  }
+}

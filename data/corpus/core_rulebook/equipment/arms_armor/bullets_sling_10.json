@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Bullets (Sling/10)",
+    "category": "arms_armor",
+    "name": "Sling Bullet (Base)",
+    "cost_gp": 0.1,
+    "weight_lbs": 5.0,
+    "description": "Bullets are shaped metal balls, designed to be used by a sling or halfling sling staff. Bullets come in a leather pouch that holds 10 bullets."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 26,
+    "record_key": "Bullets (Sling/10)",
+    "inherited_from_record_key": "Sling Bullet (Base)"
+  }
+}
