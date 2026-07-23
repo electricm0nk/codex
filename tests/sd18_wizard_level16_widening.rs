@@ -200,8 +200,8 @@ fn wizard_level16_grants_carry_over_unchanged() {
         "class_chassis.wizard.force_missile_uses_per_day",
     );
     assert_eq!(
-        force_missile.value, 6,
-        "Force Missile's uses per day (3 + Intelligence modifier 3) must stay 6 at level 16"
+        force_missile.value, 7,
+        "Force Missile's uses per day (3 + Intelligence modifier 4) must stay 7 at level 16"
     );
 
     let scribe_scroll = explanation(&computation, "class_chassis.wizard.scribe_scroll");

@@ -279,10 +279,11 @@ fn monk_level4_grounds_ki_pool_flat_size() {
     let input = load(MONK_LEVEL4_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 5,
-        "Monk level 4 ki pool (1/2 monk level + Wisdom modifier = 4/2 + 3) must equal 5: {}",
+        ki_pool.value, 6,
+        "Monk level 4 ki pool (1/2 monk level + Wisdom modifier = 4/2 + 4) must equal 6: {}",
         ki_pool.detail
     );
     assert!(

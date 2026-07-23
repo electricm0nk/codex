@@ -13,11 +13,11 @@
 //!
 //! One record per ACCESSIBLE spell level:
 //! `class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_<N>`.
-//! On the deterministic fixtures (Charisma 15, modifier +2): bonus
-//! 1/1/0/0 across spell levels 1-4 at level 10 — the +2 row grants
-//! nothing at spell levels 3-4, honest computed zeros. Live arithmetic:
-//! raising the fixture Charisma to 16 (+3) turns the 3rd-level bonus to
-//! 1. Cantrips never gain bonus spells (no 0th-level column).
+//! On the deterministic fixtures (Charisma base 15, +2 Human racial ability-bonus
+//! choice applied before the modifier is derived per the CG-03 fix -> effective 17,
+//! modifier +3): bonus 1/1/1/0 across spell levels 1-4 at level 10 — the +3 row
+//! grants nothing only at spell level 4, an honest computed zero. Cantrips never
+//! gain bonus spells (no 0th-level column).
 //!
 //! Bonus COUNTS only: never added to the base per-day counts (the
 //! base+bonus TOTAL integration stays deferred), no spell selection, no
@@ -110,16 +110,18 @@ fn bard_level1_gains_one_bonus_first_level_spell() {
 
 #[test]
 fn bard_bonus_spells_track_the_table_and_the_access_ladder() {
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 15 -> 17, modifier +2 -> +3), so the
+    // +3 row (1/1/1) now applies instead of the +2 row (1/1/0).
     assert_eq!(
         bonus_values(BARD_LEVEL7_FIXTURE),
-        vec![(id(1), 1), (id(2), 1), (id(3), 0)],
-        "level 7, Charisma +2: spell levels 1-3 accessible, +2 row grants 1/1 and an \
-         honest computed 0 at 3rd"
+        vec![(id(1), 1), (id(2), 1), (id(3), 1)],
+        "level 7, Charisma +3: spell levels 1-3 accessible, the +3 row grants 1/1/1"
     );
     assert_eq!(
         bonus_values(BARD_LEVEL10_FIXTURE),
-        vec![(id(1), 1), (id(2), 1), (id(3), 0), (id(4), 0)],
-        "level 10, Charisma +2: bonus 1/1/0/0 across the four accessible spell levels"
+        vec![(id(1), 1), (id(2), 1), (id(3), 1), (id(4), 0)],
+        "level 10, Charisma +3: bonus 1/1/1/0 across the four accessible spell levels"
     );
 }
 

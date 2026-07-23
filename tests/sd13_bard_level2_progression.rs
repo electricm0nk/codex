@@ -155,16 +155,16 @@ fn bard_level2_bardic_performance_rounds_per_day_scales_with_level() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 2: 4 + 2 + 2 * (2 - 1) = 8.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 2: 4 + 3 + 2 * (2 - 1) = 9.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 8,
+        rounds.value, 9,
         "Bard level 2 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 2 = 8: {}",
+         = 4 + 3 + 2 = 9: {}",
         rounds.detail
     );
     assert!(
@@ -198,11 +198,11 @@ fn bard_level2_fascinate_dc_and_affected_creatures_extend_by_the_same_formulas()
     let input = load(BARD_LEVEL2_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 2/2 + 2 = 13.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 2/2 + 3 = 14.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 13,
-        "Bard level 2 Fascinate DC must equal 10 + (2/2) + 2 = 13: {}",
+        dc.value, 14,
+        "Bard level 2 Fascinate DC must equal 10 + (2/2) + 3 = 14: {}",
         dc.detail
     );
 
@@ -311,7 +311,8 @@ fn bard_level1_truth_is_unchanged_by_this_widening() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 6, "Bard level 1 bardic performance rounds per day must stay 6");
+    // CG-03 fix: level 1's rounds are now 7 (4 + 3 CHA modifier), not 6.
+    assert_eq!(rounds.value, 7, "Bard level 1 bardic performance rounds per day must stay 7");
 }
 
 // ----- Bard level 3 was later widened into the supported tranche -----

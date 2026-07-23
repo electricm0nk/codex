@@ -210,13 +210,13 @@ fn cleric_level16_touch_of_good_genuinely_rises_and_other_facets_carry_over() {
         &computation,
         "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
     );
-    assert_eq!(tog_uses.value, 6, "Touch of Good's uses per day must stay 6 at level 16");
+    assert_eq!(tog_uses.value, 7, "Touch of Good's uses per day must stay 7 at level 16");
 
     let rebuke_uses = explanation(
         &computation,
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day",
     );
-    assert_eq!(rebuke_uses.value, 6, "Rebuke Death's uses per day must stay 6 at level 16");
+    assert_eq!(rebuke_uses.value, 7, "Rebuke Death's uses per day must stay 7 at level 16");
 
     let domain_choice = explanation(&computation, "class_chassis.cleric.domain_choice");
     assert_eq!(domain_choice.value, 0, "the domain choice seam must still carry no mechanical value");

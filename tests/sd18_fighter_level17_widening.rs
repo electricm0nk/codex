@@ -224,15 +224,15 @@ fn fighter_level17_baseline_melee_attack_bonus_rises() {
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // plus the first-group Weapon Training delta (+1), from 23 at level 16
     // to 25 at level 17.
-    assert_eq!(computation.baseline_melee_attack_bonus, 25);
+    assert_eq!(computation.baseline_melee_attack_bonus, 26);
 
     // Baseline armor class is unchanged: Armor Training's rank does not rise
     // again at level 17 (it caps at rank 4, level 15).
     assert_eq!(computation.baseline_armor_class, 17);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 // ----- Negative control: the level-16 fixture is unaffected by this widening -----
@@ -256,7 +256,7 @@ fn fighter_level16_truth_is_unchanged_by_this_slice() {
         "level-16 Fighter must not gain the level-17 fourth weapon-training-group seam"
     );
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 23);
+    assert_eq!(computation.baseline_melee_attack_bonus, 24);
 }
 
 // ----- Negative control: level 21 stays claim-blocked (PF1 has no 21st character level) -----

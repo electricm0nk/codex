@@ -148,16 +148,16 @@ fn bard_level4_bardic_performance_rounds_per_day_keeps_scaling() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 4: 4 + 2 + 2 * (4 - 1) = 12.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 4: 4 + 3 + 2 * (4 - 1) = 13.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 12,
+        rounds.value, 13,
         "Bard level 4 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 6 = 12: {}",
+         = 4 + 3 + 6 = 13: {}",
         rounds.detail
     );
 }
@@ -185,11 +185,11 @@ fn bard_level4_fascinate_dc_and_affected_creatures_extend_by_the_same_formulas()
     let input = load(BARD_LEVEL4_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 4/2 + 2 = 14.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 4/2 + 3 = 15.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 14,
-        "Bard level 4 Fascinate DC must equal 10 + (4/2) + 2 = 14: {}",
+        dc.value, 15,
+        "Bard level 4 Fascinate DC must equal 10 + (4/2) + 3 = 15: {}",
         dc.detail
     );
 
@@ -350,7 +350,7 @@ fn bard_level3_truth_is_unchanged_by_this_widening() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 10, "Bard level 3 bardic performance rounds per day must stay 10");
+    assert_eq!(rounds.value, 11, "Bard level 3 bardic performance rounds per day must stay 11");
 
     let knowledge = explanation(&computation, "class_chassis.bard.bardic_knowledge");
     assert_eq!(knowledge.value, 1, "Bard level 3 Bardic Knowledge must stay 1");

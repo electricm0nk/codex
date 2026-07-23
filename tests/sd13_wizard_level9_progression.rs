@@ -186,10 +186,11 @@ fn wizard_level9_force_missile_and_scribe_scroll_carry_over() {
     let input = load(WIZARD_LEVEL9_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Intelligence modifier is now +4 (base 17 + 2 Human racial), not +3.
     let uses = explanation(&computation, "class_chassis.wizard.force_missile_uses_per_day");
     assert_eq!(
-        uses.value, 6,
-        "Wizard level 9 Force Missile pool (3 + Intelligence modifier +3) must stay 6"
+        uses.value, 7,
+        "Wizard level 9 Force Missile pool (3 + Intelligence modifier +4) must stay 7"
     );
 
     let scribe_scroll = explanation(&computation, "class_chassis.wizard.scribe_scroll");

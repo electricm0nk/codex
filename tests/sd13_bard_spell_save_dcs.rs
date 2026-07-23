@@ -13,9 +13,11 @@
 //! One record per ACCESSIBLE spell level (per the grounded access
 //! ladder): `class_chassis.bard.spontaneous.spell_save_dc.spell_level_<N>`
 //! with value `10 + N + Charisma modifier`. On the deterministic fixtures
-//! (Charisma 15, modifier +2) that is DC 13/14/15/16 for spell levels 1-4
-//! as they become accessible. The arithmetic is live, not hardcoded: a
-//! lowered fixture Charisma lowers the DCs (asserted below). This is a
+//! (Charisma base 15, +2 Human racial ability-bonus choice applied before the
+//! modifier is derived per the CG-03 fix -> effective 17, modifier +3) that is
+//! DC 14/15/16/17 for spell levels 1-4 as they become accessible. The
+//! arithmetic is live, not hardcoded: a lowered fixture Charisma lowers the
+//! DCs (asserted below). This is a
 //! DIFFERENT formula family from the already-grounded Fascinate DC
 //! (10 + 1/2 bard level + Charisma modifier — a performance DC keyed to
 //! bard level, not spell level); both coexist as separate records.
@@ -98,9 +100,12 @@ fn bard_level1_first_level_dc_is_thirteen() {
         .iter()
         .find(|e| e.id == id(1))
         .expect("level-1 bard must carry the 1st-level spell-save-DC record");
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 15 -> 17, modifier +2 -> +3).
     assert_eq!(
-        dc.value, 13,
-        "DC = 10 + spell level 1 + Charisma modifier 2 (fixture Charisma 15) = 13: {}",
+        dc.value, 14,
+        "DC = 10 + spell level 1 + Charisma modifier 3 (fixture Charisma 15 + 2 Human racial) \
+         = 14: {}",
         dc.detail
     );
     assert!(
@@ -119,20 +124,22 @@ fn bard_level1_first_level_dc_is_thirteen() {
 
 #[test]
 fn bard_spell_save_dcs_track_the_access_ladder() {
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2, so
+    // every DC in the ladder is one higher than before.
     assert_eq!(
         dc_values(BARD_LEVEL4_FIXTURE),
-        vec![(id(1), 13), (id(2), 14)],
-        "level 4: spell levels 1-2 accessible, DCs 13/14"
+        vec![(id(1), 14), (id(2), 15)],
+        "level 4: spell levels 1-2 accessible, DCs 14/15"
     );
     assert_eq!(
         dc_values(BARD_LEVEL7_FIXTURE),
-        vec![(id(1), 13), (id(2), 14), (id(3), 15)],
-        "level 7: spell levels 1-3 accessible, DCs 13/14/15"
+        vec![(id(1), 14), (id(2), 15), (id(3), 16)],
+        "level 7: spell levels 1-3 accessible, DCs 14/15/16"
     );
     assert_eq!(
         dc_values(BARD_LEVEL10_FIXTURE),
-        vec![(id(1), 13), (id(2), 14), (id(3), 15), (id(4), 16)],
-        "level 10: spell levels 1-4 accessible, DCs 13-16"
+        vec![(id(1), 14), (id(2), 15), (id(3), 16), (id(4), 17)],
+        "level 10: spell levels 1-4 accessible, DCs 14-17"
     );
 }
 
@@ -149,10 +156,14 @@ fn bard_spell_save_dcs_track_the_charisma_modifier() {
         .iter()
         .find(|e| e.id == id(4))
         .expect("the 4th-level DC record must exist at level 10");
+    // CG-03 fix: the lowered raw Charisma of 10 still receives the +2 Human racial
+    // ability-bonus choice before the modifier is derived (10 + 2 = 12, modifier +1),
+    // so the DC is 10 + 4 + 1 = 15, not 14.
     assert_eq!(
-        dc.value, 14,
-        "DC = 10 + spell level 4 + Charisma modifier 0 (lowered Charisma 10) = 14 — the \
-         formula is live arithmetic over the chosen ability score, not a hardcoded table"
+        dc.value, 15,
+        "DC = 10 + spell level 4 + Charisma modifier 1 (lowered Charisma 10 + 2 Human racial) \
+         = 15 — the formula is live arithmetic over the chosen ability score, not a hardcoded \
+         table"
     );
 }
 

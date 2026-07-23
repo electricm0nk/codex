@@ -98,7 +98,7 @@ fn level_7_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 3);
 
     // Baseline combat: +7 BAB + STR +3 + Weapon Focus +1 + Weapon Training +1 = 12.
-    assert_eq!(computation.baseline_melee_attack_bonus, 12);
+    assert_eq!(computation.baseline_melee_attack_bonus, 13);
     // Armor class is unchanged: the deterministic +2 Dexterity contribution is
     // already below both the Armor Training 1 and Armor Training 2 max-Dex caps.
     assert_eq!(computation.baseline_armor_class, 17);
@@ -107,9 +107,11 @@ fn level_7_human_fighter_produces_non_blocked_bounded_evidence() {
     // -1 (Armor Training 1) to 0, so Climb and Swim (which apply the armor-check
     // penalty) each gain +1 over the level-3-6 tranche. Intimidate is
     // Charisma-based and carries no armor-check penalty, so it is unchanged.
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    // CG-03 fix: STR modifier is now +4 (base 16 + 2 Human racial), not +3, adding
+    // a further +1 on top of the Armor Training 2 rise.
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 #[test]
@@ -291,6 +293,6 @@ fn level_6_fixture_still_loads_and_computes_unaffected_by_the_level_7_widening()
     let input = load(LEVEL_6_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
     assert_eq!(computation.base_attack_bonus, 6);
-    assert_eq!(computation.baseline_melee_attack_bonus, 11);
+    assert_eq!(computation.baseline_melee_attack_bonus, 12);
     assert!(!computation.diagnostics.iter().any(|d| d.claim_blocking));
 }

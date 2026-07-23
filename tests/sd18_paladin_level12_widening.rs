@@ -202,9 +202,9 @@ fn paladin_level12_lay_on_hands_genuinely_rises() {
 
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 8,
-        "Paladin level 12 Lay on Hands uses per day (12/2 + Charisma modifier 2) must \
-         genuinely rise to 8, up from 7 at level 11: {}",
+        uses_per_day.value, 9,
+        "Paladin level 12 Lay on Hands uses per day (12/2 + Charisma modifier 3) must \
+         genuinely rise to 9, up from 8 at level 11: {}",
         uses_per_day.detail
     );
 

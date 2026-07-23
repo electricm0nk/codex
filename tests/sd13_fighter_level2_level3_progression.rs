@@ -95,14 +95,16 @@ fn level_2_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 1);
 
     // Baseline combat advances with BAB: +2 BAB + STR +3 + Weapon Focus +1 = 6.
-    assert_eq!(computation.baseline_melee_attack_bonus, 6);
+    assert_eq!(computation.baseline_melee_attack_bonus, 7);
     // Armor class is unchanged at level 2 (no armor training yet): 10 + 4 + DEX 2 + Dodge 1.
     assert_eq!(computation.baseline_armor_class, 17);
 
     // Selected skills are unchanged at level 2 (Chain Shirt armor-check penalty -2).
-    assert_eq!(computation.selected_skill_modifiers.climb, 5);
+    // CG-03 fix: STR modifier is now +4 (base 16 + 2 Human racial), not +3, raising
+    // both STR-keyed skills by 1.
+    assert_eq!(computation.selected_skill_modifiers.climb, 6);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 5);
+    assert_eq!(computation.selected_skill_modifiers.swim, 6);
 }
 
 #[test]
@@ -163,7 +165,7 @@ fn level_3_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 2);
 
     // Baseline melee advances with BAB: +3 BAB + STR +3 + Weapon Focus +1 = 7.
-    assert_eq!(computation.baseline_melee_attack_bonus, 7);
+    assert_eq!(computation.baseline_melee_attack_bonus, 8);
     // Armor class is unchanged (DEX +2 stays under the raised MAXDEX): 10 + 4 + 2 + 1.
     assert_eq!(computation.baseline_armor_class, 17);
 }
@@ -189,8 +191,8 @@ fn level_3_armor_training_seam_is_explicit_and_moves_armor_check_pressure() {
 
     // Armor training reduces the Chain Shirt armor-check penalty from -2 to -1, so the
     // armor-check skills (Climb, Swim) each rise by 1 to 6, while Intimidate is unchanged.
-    assert_eq!(computation.selected_skill_modifiers.climb, 6);
-    assert_eq!(computation.selected_skill_modifiers.swim, 6);
+    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 7);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
 
     // The Climb explanation itself must say the penalty was reduced by armor training.

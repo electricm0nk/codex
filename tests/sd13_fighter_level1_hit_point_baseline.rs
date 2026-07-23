@@ -107,7 +107,7 @@ fn fighter_level1_hit_point_record_changes_no_derived_output_total() {
     // The hit-point record is standalone: every previously proven derived
     // output on the deterministic L1 pilot surface keeps its exact value.
     assert_eq!(computation.base_attack_bonus, 1);
-    assert_eq!(computation.baseline_melee_attack_bonus, 5);
+    assert_eq!(computation.baseline_melee_attack_bonus, 6);
     assert_eq!(computation.baseline_armor_class, 17);
 }
 

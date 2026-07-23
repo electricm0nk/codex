@@ -168,10 +168,11 @@ fn monk_level12_unarmed_die_steps_up_and_ki_pool_rises() {
         unarmed_count.detail
     );
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 9,
-        "Monk level 12 ki pool (12/2 + Wisdom modifier 3) must genuinely rise to 9, up from 8 \
+        ki_pool.value, 10,
+        "Monk level 12 ki pool (12/2 + Wisdom modifier 4) must genuinely rise to 10, up from 9 \
          at level 11: {}",
         ki_pool.detail
     );
@@ -304,7 +305,7 @@ fn monk_level11_truth_is_unchanged_by_this_slice() {
     );
 
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
-    assert_eq!(ki_pool.value, 8, "Monk level 11 ki pool must stay 8");
+    assert_eq!(ki_pool.value, 9, "Monk level 11 ki pool must stay 9");
 }
 
 // ----- Negative control: level 13 stays unrecognized by this slice -----

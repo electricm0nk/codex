@@ -195,15 +195,15 @@ fn fighter_level14_baseline_melee_attack_bonus_rises() {
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // only, since Weapon Training's first-group bonus stays unchanged at
     // level 14: from 20 at level 13 to 21 at level 14.
-    assert_eq!(computation.baseline_melee_attack_bonus, 21);
+    assert_eq!(computation.baseline_melee_attack_bonus, 22);
 
     // Baseline armor class is unchanged: Armor Training's rank (and thus
     // maximum Dexterity bonus) does not rise again at level 14.
     assert_eq!(computation.baseline_armor_class, 17);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 // ----- Negative control: the level-13 fixture is unaffected by this widening -----
@@ -227,7 +227,7 @@ fn fighter_level13_truth_is_unchanged_by_this_slice() {
         "level-13 Fighter must not gain the level-14 bonus-feat seam"
     );
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 20);
+    assert_eq!(computation.baseline_melee_attack_bonus, 21);
 }
 
 // ----- Negative control: level 21 stays claim-blocked (PF1 has no 21st character level) -----

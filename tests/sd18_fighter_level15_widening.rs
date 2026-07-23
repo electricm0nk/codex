@@ -199,7 +199,7 @@ fn fighter_level15_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // only, since Weapon Training's first-group bonus stays unchanged at
     // level 15: from 21 at level 14 to 22 at level 15.
-    assert_eq!(computation.baseline_melee_attack_bonus, 22);
+    assert_eq!(computation.baseline_melee_attack_bonus, 23);
 
     // Baseline armor class is unchanged: the armor-check-penalty reduction
     // was already capped at 0 by Armor Training 2, and the deterministic +2
@@ -208,9 +208,9 @@ fn fighter_level15_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
     // armor-class value on this fixture.
     assert_eq!(computation.baseline_armor_class, 17);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 // ----- Negative control: the level-14 fixture is unaffected by this widening -----
@@ -226,7 +226,7 @@ fn fighter_level14_truth_is_unchanged_by_this_slice() {
     let armor_training = explanation(&computation, "class_feature.fighter.armor_training");
     assert_eq!(armor_training.value, 3, "Fighter level 14 Armor Training must stay rank 3");
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 21);
+    assert_eq!(computation.baseline_melee_attack_bonus, 22);
 }
 
 // ----- Negative control: level 16 is now supported (SD18, tests/sd18_fighter_level16_widening.rs) -----

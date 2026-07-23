@@ -301,9 +301,10 @@ fn fighter_chassis_dispatch_is_unaffected() {
         computation.diagnostics
     );
     let melee_attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
-    // Fighter 1 BAB (+1) + STR modifier (STR 16, +3) + Weapon Focus (+1), no
-    // Weapon Training below level 5 = 5.
-    assert_eq!(melee_attack.value, 5, "{computation:?}");
+    // Fighter 1 BAB (+1) + STR modifier (base 16 + the Human ability-bonus choice's
+    // +2 racial adjustment, CG-03 fix = 18, modifier +4) + Weapon Focus (+1), no
+    // Weapon Training below level 5 = 6.
+    assert_eq!(melee_attack.value, 6, "{computation:?}");
 }
 
 #[test]

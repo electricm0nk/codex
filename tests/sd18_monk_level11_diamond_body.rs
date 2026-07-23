@@ -168,10 +168,11 @@ fn monk_level11_unarmed_die_and_ki_pool_stay_flurry_bonus_rises() {
         "Monk level 11 Flurry attack count must stay 3 (the next count change lands at 15th)"
     );
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 8,
-        "Monk level 11 ki pool (11/2 + Wisdom modifier 3) must stay 8, an integer-division \
+        ki_pool.value, 9,
+        "Monk level 11 ki pool (11/2 + Wisdom modifier 4) must stay 9, an integer-division \
          coincidence with level 10: {}",
         ki_pool.detail
     );
@@ -262,7 +263,7 @@ fn monk_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_attack.value, 7, "Monk level 10 base attack bonus must stay 7");
 
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
-    assert_eq!(ki_pool.value, 8, "Monk level 10 ki pool must stay 8");
+    assert_eq!(ki_pool.value, 9, "Monk level 10 ki pool must stay 9");
 }
 
 // ----- Negative control: level 12 IS now promoted (SD18 cycle-2026-07-15T0600) -----

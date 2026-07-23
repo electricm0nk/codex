@@ -152,16 +152,16 @@ fn bard_level3_bardic_performance_rounds_per_day_keeps_scaling() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 3: 4 + 2 + 2 * (3 - 1) = 10.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 3: 4 + 3 + 2 * (3 - 1) = 11.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 10,
+        rounds.value, 11,
         "Bard level 3 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 4 = 10: {}",
+         = 4 + 3 + 4 = 11: {}",
         rounds.detail
     );
 }
@@ -189,11 +189,11 @@ fn bard_level3_fascinate_dc_and_affected_creatures_extend_by_the_same_formulas()
     let input = load(BARD_LEVEL3_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 3/2 + 2 = 13.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 3/2 + 3 = 14.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 13,
-        "Bard level 3 Fascinate DC must equal 10 + (3/2) + 2 = 13: {}",
+        dc.value, 14,
+        "Bard level 3 Fascinate DC must equal 10 + (3/2) + 3 = 14: {}",
         dc.detail
     );
 
@@ -322,7 +322,7 @@ fn bard_level2_truth_is_unchanged_by_this_widening() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 8, "Bard level 2 bardic performance rounds per day must stay 8");
+    assert_eq!(rounds.value, 9, "Bard level 2 bardic performance rounds per day must stay 9");
 }
 
 // ----- Bard level 4 was later widened into the supported tranche -----

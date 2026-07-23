@@ -74,8 +74,11 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     assert_eq!(char_identity.source_package_id, "pf1.core_rulebook");
 
     // The remaining selected dimensions preserve the already-grounded new-system values.
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before ability modifiers are derived, raising Strength from +3 to the
+    // correct +4, which raises this Strength-derived total from 5 to 6.
     let melee_bonus = find_dimension("combat.baseline_melee_attack_bonus");
-    assert_eq!(melee_bonus.value_i16, Some(5));
+    assert_eq!(melee_bonus.value_i16, Some(6));
 
     let armor_class = find_dimension("defense.baseline_armor_class");
     assert_eq!(armor_class.value_i16, Some(17));
@@ -89,14 +92,15 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     let will_save = find_dimension("defense.total_save.will");
     assert_eq!(will_save.value_i16, Some(1));
 
+    // Climb and Swim are Strength-keyed skills; CG-03's fix raises both from 5 to 6.
     let climb_mod = find_dimension("skill.selected_modifier.climb");
-    assert_eq!(climb_mod.value_i16, Some(5));
+    assert_eq!(climb_mod.value_i16, Some(6));
 
     let intimidate_mod = find_dimension("skill.selected_modifier.intimidate");
     assert_eq!(intimidate_mod.value_i16, Some(3));
 
     let swim_mod = find_dimension("skill.selected_modifier.swim");
-    assert_eq!(swim_mod.value_i16, Some(5));
+    assert_eq!(swim_mod.value_i16, Some(6));
 
     // The carrier keeps its claim-tier floor at `Computed` and does not imply
     // oracle-checked parity.

@@ -95,17 +95,18 @@ fn level_8_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 3);
 
     // Baseline combat: +8 BAB + STR +3 + Weapon Focus +1 + Weapon Training +1 = 13.
-    assert_eq!(computation.baseline_melee_attack_bonus, 13);
+    assert_eq!(computation.baseline_melee_attack_bonus, 14);
     // Armor class is unchanged from level 7: no new armor-training milestone lands
     // at level 8, and the deterministic +2 Dexterity contribution is already below
     // both the Armor Training 1 and Armor Training 2 max-Dex caps.
     assert_eq!(computation.baseline_armor_class, 17);
 
     // No new armor-training milestone lands at level 8, so the Climb/Intimidate/Swim
-    // selected-skill totals stay exactly as they were at level 7.
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    // selected-skill totals stay exactly as they were at level 7 (CG-03 fix: 8, not 7,
+    // since STR modifier is now +4).
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 #[test]
@@ -331,6 +332,6 @@ fn level_7_fixture_still_loads_and_computes_unaffected_by_the_level_8_widening()
     let input = load(LEVEL_7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
     assert_eq!(computation.base_attack_bonus, 7);
-    assert_eq!(computation.baseline_melee_attack_bonus, 12);
+    assert_eq!(computation.baseline_melee_attack_bonus, 13);
     assert!(!computation.diagnostics.iter().any(|d| d.claim_blocking));
 }

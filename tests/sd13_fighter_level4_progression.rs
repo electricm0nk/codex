@@ -97,14 +97,15 @@ fn level_4_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 2);
 
     // Baseline combat advances with BAB: +4 BAB + STR +3 + Weapon Focus +1 = 8.
-    assert_eq!(computation.baseline_melee_attack_bonus, 8);
+    assert_eq!(computation.baseline_melee_attack_bonus, 9);
     // Armor class is unchanged since level 3 (armor training stays rank 1 until level 7).
     assert_eq!(computation.baseline_armor_class, 17);
 
-    // Selected skills are unchanged since level 3 (same armor-training rank).
-    assert_eq!(computation.selected_skill_modifiers.climb, 6);
+    // Selected skills are unchanged since level 3 (same armor-training rank). CG-03 fix:
+    // STR modifier is now +4 (base 16 + 2 Human racial), not +3.
+    assert_eq!(computation.selected_skill_modifiers.climb, 7);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 6);
+    assert_eq!(computation.selected_skill_modifiers.swim, 7);
 }
 
 #[test]

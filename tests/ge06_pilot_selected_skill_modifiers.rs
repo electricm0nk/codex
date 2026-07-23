@@ -50,15 +50,18 @@ fn computes_selected_skill_modifiers_with_contributors() {
 
     let computation = compute_pilot_base_chassis(&input);
 
-    // Climb: rank 1 + STR +3 + class-skill +3 + Chain Shirt armor-check -2 = 5.
-    assert_eq!(computation.selected_skill_modifiers.climb, 5);
-    // Intimidate: rank 1 + CHA -1 + class-skill +3 = 3 (no armor-check; CHA-based).
+    // Climb: rank 1 + STR +4 (CG-03 fix: the Human +2 racial bonus is now applied to
+    // the base 16 before the modifier is derived) + class-skill +3 + Chain Shirt
+    // armor-check -2 = 6.
+    assert_eq!(computation.selected_skill_modifiers.climb, 6);
+    // Intimidate: rank 1 + CHA -1 + class-skill +3 = 3 (no armor-check; CHA-based;
+    // unaffected by the Strength fix).
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    // Swim: rank 1 + STR +3 + class-skill +3 + Chain Shirt armor-check -2 = 5.
-    assert_eq!(computation.selected_skill_modifiers.swim, 5);
+    // Swim: rank 1 + STR +4 + class-skill +3 + Chain Shirt armor-check -2 = 6.
+    assert_eq!(computation.selected_skill_modifiers.swim, 6);
 
     let climb = explanation(&computation, "skill.selected_modifier.climb");
-    assert_eq!(climb.value, 5);
+    assert_eq!(climb.value, 6);
     assert!(
         climb.detail.contains("rank"),
         "climb detail must cite the rank allocation: {}",
@@ -80,7 +83,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
         climb.detail
     );
     assert!(
-        climb.detail.contains('5'),
+        climb.detail.contains('6'),
         "climb detail must cite the total: {}",
         climb.detail
     );
@@ -115,7 +118,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
     );
 
     let swim = explanation(&computation, "skill.selected_modifier.swim");
-    assert_eq!(swim.value, 5);
+    assert_eq!(swim.value, 6);
     assert!(
         swim.detail.contains("rank"),
         "swim detail must cite the rank allocation: {}",
@@ -137,7 +140,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
         swim.detail
     );
     assert!(
-        swim.detail.contains('5'),
+        swim.detail.contains('6'),
         "swim detail must cite the total: {}",
         swim.detail
     );

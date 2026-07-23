@@ -180,16 +180,16 @@ fn bard_level7_bardic_performance_rounds_per_day_keeps_scaling() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 7: 4 + 2 + 2 * (7 - 1) = 18.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 7: 4 + 3 + 2 * (7 - 1) = 19.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 18,
+        rounds.value, 19,
         "Bard level 7 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 12 = 18: {}",
+         = 4 + 3 + 12 = 19: {}",
         rounds.detail
     );
 }
@@ -217,12 +217,12 @@ fn bard_level7_fascinate_dc_stays_unchanged_and_affected_creatures_rises() {
     let input = load(BARD_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 7/2 + 2 = 15, an integer-division
-    // coincidence with level 6's DC.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 7/2 + 3 = 16, an
+    // integer-division coincidence with level 6's DC.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 15,
-        "Bard level 7 Fascinate DC must stay 10 + (7/2) + 2 = 15, unchanged from level 6, an \
+        dc.value, 16,
+        "Bard level 7 Fascinate DC must stay 10 + (7/2) + 3 = 16, unchanged from level 6, an \
          integer-division coincidence: {}",
         dc.detail
     );

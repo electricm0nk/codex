@@ -166,16 +166,16 @@ fn bard_level6_bardic_performance_rounds_per_day_keeps_scaling() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
-    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
-    // modifier. At level 6: 4 + 2 + 2 * (6 - 1) = 16.
+    // additional rounds per day at each level after 1st. Fixture CHA 15 + 2 Human
+    // racial (CG-03 fix) -> +3 modifier. At level 6: 4 + 3 + 2 * (6 - 1) = 17.
     let rounds = explanation(
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
     assert_eq!(
-        rounds.value, 16,
+        rounds.value, 17,
         "Bard level 6 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
-         = 4 + 2 + 10 = 16: {}",
+         = 4 + 3 + 10 = 17: {}",
         rounds.detail
     );
 }
@@ -203,11 +203,11 @@ fn bard_level6_fascinate_dc_rises_and_affected_creatures_stays_the_same() {
     let input = load(BARD_LEVEL6_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture CHA 15 -> +2 modifier. DC = 10 + 6/2 + 2 = 15.
+    // Fixture CHA 15 + 2 Human racial (CG-03 fix) -> +3 modifier. DC = 10 + 6/2 + 3 = 16.
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 15,
-        "Bard level 6 Fascinate DC must genuinely rise to 10 + (6/2) + 2 = 15, up from 14 at \
+        dc.value, 16,
+        "Bard level 6 Fascinate DC must genuinely rise to 10 + (6/2) + 3 = 16, up from 15 at \
          level 5: {}",
         dc.detail
     );
@@ -401,7 +401,7 @@ fn bard_level5_truth_is_unchanged_by_this_widening() {
     assert_eq!(knowledge.value, 2, "Bard level 5 Bardic Knowledge must stay 2");
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
-    assert_eq!(dc.value, 14, "Bard level 5 Fascinate DC must stay 14, unaffected by the level-6 widening");
+    assert_eq!(dc.value, 15, "Bard level 5 Fascinate DC must stay 15, unaffected by the level-6 widening");
 }
 
 // ----- Negative control retired: level 7 was later widened into the supported tranche -----

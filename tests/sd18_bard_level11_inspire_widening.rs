@@ -136,10 +136,11 @@ fn bard_level11_performance_rounds_rise_knowledge_and_fascinate_carry_over() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 26,
-        "Bard level 11 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (11 - 1)) must \
-         equal 26, genuinely risen from 24: {}",
+        rounds.value, 27,
+        "Bard level 11 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (11 - 1)) must \
+         equal 27, genuinely risen from 25: {}",
         rounds.detail
     );
 
@@ -152,8 +153,8 @@ fn bard_level11_performance_rounds_rise_knowledge_and_fascinate_carry_over() {
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 17,
-        "the Fascinate DC (10 + 11/2 + Charisma modifier 2) must stay 17, an integer-division \
+        dc.value, 18,
+        "the Fascinate DC (10 + 11/2 + Charisma modifier 3) must stay 18, an integer-division \
          coincidence with level 10"
     );
 
@@ -260,7 +261,7 @@ fn bard_level10_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 24, "Bard level 10 performance rounds must stay 24");
+    assert_eq!(rounds.value, 25, "Bard level 10 performance rounds must stay 25");
 }
 
 // ----- Negative control: level 21 stays unrecognized by this slice -----

@@ -272,11 +272,12 @@ fn monk_level8_ki_pool_rises_to_seven() {
     let input = load(MONK_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Wisdom modifier is now +4 (base 17 + 2 Human racial), not +3.
     let ki_pool = explanation(&computation, MONK_KI_POOL_ID);
     assert_eq!(
-        ki_pool.value, 7,
-        "Monk level 8 ki pool (1/2 monk level + Wisdom modifier = 8/2 + 3) must equal 7, \
-         genuinely rising from 6 at level 7: {}",
+        ki_pool.value, 8,
+        "Monk level 8 ki pool (1/2 monk level + Wisdom modifier = 8/2 + 4) must equal 8, \
+         genuinely rising from 7 at level 7: {}",
         ki_pool.detail
     );
     assert!(

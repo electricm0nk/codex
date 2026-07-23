@@ -296,10 +296,13 @@ fn paladin_smite_evil_uses_per_day_attack_and_damage_bonus_are_grounded() {
         "smite evil uses per day must be 1 at paladin level 1: {uses_per_day:?}"
     );
 
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 14 -> 16, modifier +2 -> +3).
     let attack_bonus = explanation(&computation, PALADIN_SMITE_EVIL_ATTACK_BONUS_ID);
     assert_eq!(
-        attack_bonus.value, 2,
-        "smite evil attack bonus must equal the Charisma modifier (+2 for CHA 14): {attack_bonus:?}"
+        attack_bonus.value, 3,
+        "smite evil attack bonus must equal the Charisma modifier (+3 for CHA 14 + 2 Human \
+         racial): {attack_bonus:?}"
     );
 
     let damage_bonus = explanation(&computation, PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID);

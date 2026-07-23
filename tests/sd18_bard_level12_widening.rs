@@ -147,18 +147,19 @@ fn bard_level12_knowledge_rounds_and_fascinate_dc_genuinely_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 28,
-        "Bard level 12 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (12 - 1)) must \
-         equal 28, genuinely risen from 26: {}",
+        rounds.value, 29,
+        "Bard level 12 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (12 - 1)) must \
+         equal 29, genuinely risen from 27: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 18,
-        "the Fascinate DC (10 + 12/2 + Charisma modifier 2) must genuinely rise to 18, up from \
-         17 at level 11"
+        dc.value, 19,
+        "the Fascinate DC (10 + 12/2 + Charisma modifier 3) must genuinely rise to 19, up from \
+         18 at level 11"
     );
 
     let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");

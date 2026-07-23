@@ -49,11 +49,14 @@ fn computes_baseline_melee_attack_bonus_with_contributors() {
 
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fighter BAB (+1) + STR (+3) + Weapon Focus Longsword (+1); Power Attack inactive (+0).
-    assert_eq!(computation.baseline_melee_attack_bonus, 5);
+    // Fighter BAB (+1) + STR (+4, CG-03 fix: the Human ability-bonus choice's +2
+    // racial adjustment is now applied to the base 16 before the modifier is
+    // derived, matching the real PCGen oracle output) + Weapon Focus Longsword
+    // (+1); Power Attack inactive (+0).
+    assert_eq!(computation.baseline_melee_attack_bonus, 6);
 
     let attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
-    assert_eq!(attack.value, 5);
+    assert_eq!(attack.value, 6);
     let detail = attack.detail.as_str();
     assert!(
         detail.contains("Fighter"),
@@ -156,9 +159,11 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
         computation.explanations
     );
 
-    // The prior F2a outputs remain available even when combat is blocked.
+    // The prior F2a outputs remain available even when combat is blocked. Strength
+    // is +4 (CG-03 fix: the Human ability-bonus choice's +2 racial adjustment is
+    // applied before the modifier is derived, independent of combat posture).
     assert_eq!(computation.base_attack_bonus, 1);
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    assert_eq!(computation.ability_modifiers.strength, 4);
 }
 
 #[test]

@@ -115,12 +115,15 @@ fn sorcerer_bonus_spells_track_the_table_and_the_access_ladder() {
         vec![(id(1), 1), (id(2), 1), (id(3), 1)],
         "level 6, Charisma +3: spell levels 1-3 accessible, bonus 1 each (+3 row: 1/1/1)"
     );
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 17 -> 19, modifier +3 -> +4), so the
+    // +4 row (1/1/1/1) now applies at spell level 4; level 5 still gets an honest zero.
     assert_eq!(
         bonus_values(SORCERER_LEVEL10_FIXTURE),
-        vec![(id(1), 1), (id(2), 1), (id(3), 1), (id(4), 0), (id(5), 0)],
-        "level 10, Charisma +3: spell levels 4-5 are accessible but the +3 modifier grants \
-         no bonus below itself — an honest computed 0, distinct from the base table's \
-         literal \"0\" entries"
+        vec![(id(1), 1), (id(2), 1), (id(3), 1), (id(4), 1), (id(5), 0)],
+        "level 10, Charisma +4: spell level 5 is accessible but the +4 modifier grants no \
+         bonus below itself — an honest computed 0, distinct from the base table's literal \
+         \"0\" entries"
     );
 }
 
@@ -128,6 +131,10 @@ fn sorcerer_bonus_spells_track_the_table_and_the_access_ladder() {
 
 #[test]
 fn sorcerer_bonus_spells_track_the_charisma_modifier() {
+    // CG-03 fix: this raised fixture's chosen Charisma score also receives the +2 Human
+    // racial ability-bonus choice before the modifier is derived (18 + 2 = 20, modifier
+    // +5, not the pre-fix +4), but the 4th-level bonus is still 1 either way (the +4 and
+    // +5 rows both grant 1 at spell level 4).
     let raised = SORCERER_LEVEL10_FIXTURE.replace("ability=charisma:17", "ability=charisma:18");
     let input = load(&raised);
     let computation = compute_pilot_base_chassis(&input);
@@ -138,10 +145,15 @@ fn sorcerer_bonus_spells_track_the_charisma_modifier() {
         .expect("the 4th-level bonus record must exist");
     assert_eq!(
         fourth.value, 1,
-        "raising Charisma to 18 (+4) turns the 4th-level bonus to 1 (+4 row: 1/1/1/1)"
+        "raising Charisma to 18 (+2 Human racial = 20, modifier +5) still turns the \
+         4th-level bonus to 1 (both the +4 and +5 rows grant 1/1/1/1 at spell level 4)"
     );
 
-    let lowered = SORCERER_LEVEL10_FIXTURE.replace("ability=charisma:17", "ability=charisma:10");
+    // A raw score of 10 would now yield 10 + 2 Human racial = 12, modifier +1 -- no longer
+    // the zero modifier this test means to demonstrate. Lower to 8 instead (8 + 2 = 10,
+    // modifier +1) to keep proving the same real thing: no bonus without a positive
+    // effective modifier.
+    let lowered = SORCERER_LEVEL10_FIXTURE.replace("ability=charisma:17", "ability=charisma:8");
     let input = load(&lowered);
     let computation = compute_pilot_base_chassis(&input);
     let first = computation
@@ -151,8 +163,8 @@ fn sorcerer_bonus_spells_track_the_charisma_modifier() {
         .expect("the 1st-level bonus record must exist");
     assert_eq!(
         first.value, 0,
-        "lowering Charisma to 10 (+0) zeroes every bonus — no bonus spells without a \
-         positive modifier"
+        "lowering Charisma to 8 (+2 Human racial = 10, modifier +0) zeroes every bonus — no \
+         bonus spells without a positive modifier"
     );
 }
 

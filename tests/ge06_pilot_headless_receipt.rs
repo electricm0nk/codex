@@ -56,7 +56,9 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     // their values (F2a ability mods, F2a chassis, F2b combat, F2c total saves,
     // F2d selected skills).
     let computation = &receipt.computation;
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before ability modifiers are derived, raising Strength from +3 to +4.
+    assert_eq!(computation.ability_modifiers.strength, 4);
     assert_eq!(computation.ability_modifiers.dexterity, 2);
     assert_eq!(computation.ability_modifiers.constitution, 2);
     assert_eq!(computation.ability_modifiers.intelligence, 0);
@@ -68,16 +70,16 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     assert_eq!(computation.base_saves.reflex, 0);
     assert_eq!(computation.base_saves.will, 0);
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 5);
+    assert_eq!(computation.baseline_melee_attack_bonus, 6);
     assert_eq!(computation.baseline_armor_class, 17);
 
     assert_eq!(computation.total_saves.fortitude, 4);
     assert_eq!(computation.total_saves.reflex, 2);
     assert_eq!(computation.total_saves.will, 1);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 5);
+    assert_eq!(computation.selected_skill_modifiers.climb, 6);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 5);
+    assert_eq!(computation.selected_skill_modifiers.swim, 6);
 
     // The integrated receipt preserves access to representative explanation ids
     // grounded by prior slices.
@@ -134,8 +136,9 @@ fn computed_receipt_exposes_explicit_human_race_seam() {
         .find(|e| e.id == "race.human.ability_bonus_target")
         .expect("ability-bonus race explanation present");
     // Derived strictly from the chosen human_ability_bonus -> ability:strength selection
-    // and the already-computed Strength modifier (+3).
-    assert_eq!(ability.value, 3);
+    // and the already-computed, now-correctly-racial-bonus-adjusted Strength modifier
+    // (+4, CG-03 fix).
+    assert_eq!(ability.value, 4);
     assert!(
         ability.detail.contains("human_ability_bonus") && ability.detail.contains("strength"),
         "ability-bonus detail must name the chosen Human ability-bonus seam: {}",

@@ -163,18 +163,19 @@ fn bard_level14_knowledge_rounds_and_fascinate_dc_genuinely_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 32,
-        "Bard level 14 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (14 - 1)) \
-         must genuinely rise to 32, up from 30 at level 13: {}",
+        rounds.value, 33,
+        "Bard level 14 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (14 - 1)) \
+         must genuinely rise to 33, up from 31 at level 13: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 19,
-        "the Fascinate DC (10 + 14/2 + Charisma modifier 2) must genuinely rise to 19, up \
-         from 18 at level 13"
+        dc.value, 20,
+        "the Fascinate DC (10 + 14/2 + Charisma modifier 3) must genuinely rise to 20, up \
+         from 19 at level 13"
     );
 
     let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");
@@ -194,9 +195,9 @@ fn bard_level14_frightening_tune_dc_is_newly_grounded() {
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
-        dc.value, 19,
+        dc.value, 20,
         "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must equal \
-         19 at level 14, the same formula shape as the Fascinate DC: {}",
+         20 at level 14, the same formula shape as the Fascinate DC: {}",
         dc.detail
     );
 }
@@ -303,10 +304,10 @@ fn bard_level13_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 30, "Bard level 13 Bardic Performance rounds must stay 30");
+    assert_eq!(rounds.value, 31, "Bard level 13 Bardic Performance rounds must stay 31");
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
-    assert_eq!(dc.value, 18, "Bard level 13 Fascinate DC must stay 18");
+    assert_eq!(dc.value, 19, "Bard level 13 Fascinate DC must stay 19");
 }
 
 // ----- Negative control: level 21 stays unrecognized by this slice -----

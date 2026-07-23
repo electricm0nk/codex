@@ -171,18 +171,19 @@ fn bard_level16_knowledge_and_rounds_genuinely_rise() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 36,
-        "Bard level 16 Bardic Performance rounds (4 + Charisma modifier 2 + 2 x (16 - 1)) must \
-         genuinely rise to 36, up from 34 at level 15: {}",
+        rounds.value, 37,
+        "Bard level 16 Bardic Performance rounds (4 + Charisma modifier 3 + 2 x (16 - 1)) must \
+         genuinely rise to 37, up from 35 at level 15: {}",
         rounds.detail
     );
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 20,
-        "the Fascinate DC (10 + 16/2 + Charisma modifier 2) must genuinely rise to 20, up from \
-         19 at level 15"
+        dc.value, 21,
+        "the Fascinate DC (10 + 16/2 + Charisma modifier 3) must genuinely rise to 21, up from \
+         20 at level 15"
     );
 
     let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");
@@ -202,9 +203,9 @@ fn bard_level16_frightening_tune_dc_genuinely_rises() {
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
-        dc.value, 20,
+        dc.value, 21,
         "Frightening Tune's Will save DC (10 + 1/2 bard level + Charisma modifier) must \
-         genuinely rise to 20 at level 16, the same integer-division rise as the Fascinate DC: \
+         genuinely rise to 21 at level 16, the same integer-division rise as the Fascinate DC: \
          {}",
         dc.detail
     );
@@ -328,10 +329,10 @@ fn bard_level15_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 34, "Bard level 15 Bardic Performance rounds must stay 34");
+    assert_eq!(rounds.value, 35, "Bard level 15 Bardic Performance rounds must stay 35");
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
-    assert_eq!(dc.value, 19, "Bard level 15 Fascinate DC must stay 19");
+    assert_eq!(dc.value, 20, "Bard level 15 Fascinate DC must stay 20");
 }
 
 // ----- Negative control: the bard path must not leak onto other classes -----

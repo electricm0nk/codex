@@ -34,17 +34,27 @@ fn codex_selected_dimensions() -> SelectedParityDimensions {
 
 /// A `NormalizedOutput` whose values agree, dimension-for-dimension, with the
 /// real pilot receipt's selected dimensions (per `ge06_selected_parity_dimensions.rs`).
+///
+/// These values mirror whatever the real Codex receipt currently computes (this
+/// test proves the comparator's matching mechanics, not PF1 rules correctness).
+/// CG-03 fixed a bug where the Human ability-bonus choice's +2 racial Strength
+/// adjustment was never applied before deriving `AbilityModifiers`, so
+/// Strength went from +3 to the correct +4 -- which raises both
+/// `skill.selected_modifier.{climb,swim}` (Climb/Swim are STR-keyed skills,
+/// per `pilot_compute.rs`'s selected-skill-modifier computation) and
+/// `combat.baseline_melee_attack_bonus` (which folds in the Strength modifier
+/// directly) from 5 to 6.
 fn agreeing_pcgen_output() -> NormalizedOutput {
     NormalizedOutput {
         dim_values: vec![
-            numeric("combat.baseline_melee_attack_bonus", 5),
+            numeric("combat.baseline_melee_attack_bonus", 6),
             numeric("defense.baseline_armor_class", 17),
             numeric("defense.total_save.fortitude", 4),
             numeric("defense.total_save.reflex", 2),
             numeric("defense.total_save.will", 1),
-            numeric("skill.selected_modifier.climb", 5),
+            numeric("skill.selected_modifier.climb", 6),
             numeric("skill.selected_modifier.intimidate", 3),
-            numeric("skill.selected_modifier.swim", 5),
+            numeric("skill.selected_modifier.swim", 6),
             text(
                 "character.identity",
                 "pf1-crb-human-fighter-level1",
@@ -155,6 +165,8 @@ fn a_codex_only_dimension_is_reported_as_missing_from_pcgen() {
     let mismatch = &result.mismatches[0];
     assert_eq!(mismatch.dimension_id, "skill.selected_modifier.swim");
     assert_eq!(mismatch.pcgen_value_i16, None);
-    assert_eq!(mismatch.codex_value_i16, Some(5));
+    // CG-03 fix: Swim is STR-keyed, so the real Codex receipt's value is now the
+    // correct 6 (was the buggy 5 before the Human ability-bonus fix).
+    assert_eq!(mismatch.codex_value_i16, Some(6));
     assert_eq!(mismatch.reason, MismatchReason::MissingFromPcgen);
 }

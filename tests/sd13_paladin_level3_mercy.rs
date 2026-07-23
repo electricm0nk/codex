@@ -155,10 +155,12 @@ fn paladin_level3_smite_evil_scales_correctly() {
         "smite evil uses per day stays 1/day below level 4: {uses_per_day:?}"
     );
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let attack_bonus = explanation(&computation, SMITE_EVIL_ATTACK_BONUS_ID);
     assert_eq!(
-        attack_bonus.value, 2,
-        "smite evil attack bonus must equal the Charisma modifier (+2 for CHA 14): {attack_bonus:?}"
+        attack_bonus.value, 3,
+        "smite evil attack bonus must equal the Charisma modifier (+3 for CHA 14 + 2 Human \
+         racial): {attack_bonus:?}"
     );
 
     let damage_bonus = explanation(&computation, SMITE_EVIL_DAMAGE_BONUS_ID);
@@ -175,11 +177,12 @@ fn paladin_level3_lay_on_hands_and_divine_grace_scale_correctly() {
     let input = load(PALADIN_LEVEL3_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 3,
-        "lay on hands uses per day at level 3 (1/2 paladin level + Charisma modifier = 1 + 2) \
-         must equal 3: {uses_per_day:?}"
+        uses_per_day.value, 4,
+        "lay on hands uses per day at level 3 (1/2 paladin level + Charisma modifier = 1 + 3) \
+         must equal 4: {uses_per_day:?}"
     );
 
     let heal_amount = explanation(&computation, LAY_ON_HANDS_HEAL_AMOUNT_ID);
@@ -188,9 +191,10 @@ fn paladin_level3_lay_on_hands_and_divine_grace_scale_correctly() {
         "lay on hands heal amount at level 3 (paladin level / 2 = 1) must equal 1: {heal_amount:?}"
     );
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let save_bonus = explanation(&computation, DIVINE_GRACE_SAVE_BONUS_ID);
     assert_eq!(
-        save_bonus.value, 2,
+        save_bonus.value, 3,
         "divine grace save bonus at level 3 must still equal the positive Charisma modifier: \
          {save_bonus:?}"
     );

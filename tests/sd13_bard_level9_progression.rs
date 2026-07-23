@@ -136,10 +136,11 @@ fn bard_level9_performance_rounds_rise_to_twenty_two() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
+    // CG-03 fix: Charisma modifier is now +3 (base 15 + 2 Human racial), not +2.
     assert_eq!(
-        rounds.value, 22,
-        "Bard level 9 Bardic Performance rounds per day (4 + Charisma modifier 2 + 2 × (9 - \
-         1)) must equal 22, genuinely risen from 20 at level 8: {}",
+        rounds.value, 23,
+        "Bard level 9 Bardic Performance rounds per day (4 + Charisma modifier 3 + 2 × (9 - \
+         1)) must equal 23, genuinely risen from 21 at level 8: {}",
         rounds.detail
     );
 }
@@ -160,8 +161,8 @@ fn bard_level9_knowledge_fascinate_and_inspire_tiers_carry_over() {
 
     let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
     assert_eq!(
-        dc.value, 16,
-        "the Fascinate DC (10 + 9/2 + Charisma modifier 2) must stay 16 — a coincidence with \
+        dc.value, 17,
+        "the Fascinate DC (10 + 9/2 + Charisma modifier 3) must stay 17 — a coincidence with \
          level 8"
     );
 
@@ -232,7 +233,7 @@ fn bard_level8_truth_is_unchanged_by_this_slice() {
         &computation,
         "class_chassis.bard.bardic_performance_rounds_per_day",
     );
-    assert_eq!(rounds.value, 20, "Bard level 8 performance rounds must stay 20");
+    assert_eq!(rounds.value, 21, "Bard level 8 performance rounds must stay 21");
 
     let fortitude = explanation(&computation, "class_chassis.bard.base_save.fortitude");
     assert_eq!(fortitude.value, 2, "Bard level 8 poor Fortitude must stay 2");

@@ -85,12 +85,13 @@ fn bard_level1_grounds_fascinate_dc_flat_formula() {
     let input = load(BARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Fixture Charisma 15 -> +2 modifier. PF1 Core Rulebook Fascinate DC:
-    // 10 + 1/2 bard level + Charisma modifier. At bard level 1: 10 + 0 + 2 = 12.
+    // Fixture Charisma 15 + 2 Human racial (CG-03 fix) -> +3 modifier. PF1 Core
+    // Rulebook Fascinate DC: 10 + 1/2 bard level + Charisma modifier. At bard level 1:
+    // 10 + 0 + 3 = 13.
     let dc = explanation(&computation, FASCINATE_DC_ID);
     assert_eq!(
-        dc.value, 12,
-        "Fascinate DC at bard level 1 with CHA modifier +2 must be 10 + 0 + 2 = 12: {dc:?}"
+        dc.value, 13,
+        "Fascinate DC at bard level 1 with CHA modifier +3 must be 10 + 0 + 3 = 13: {dc:?}"
     );
     assert!(
         dc.detail.contains("10") && dc.detail.to_lowercase().contains("charisma"),

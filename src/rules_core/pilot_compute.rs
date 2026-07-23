@@ -4168,6 +4168,15 @@ const HUMAN_RACE_ID: &str = "race:human";
 const HUMAN_ABILITY_BONUS_CHOICE_ID: &str = "choice:human_ability_bonus";
 const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 const ABILITY_SELECTION_PREFIX: &str = "ability:";
+/// PF1 Core Rulebook Standard Human flat racial ability-bonus magnitude (the
+/// player-chosen "+2 to one ability score of your choice" trait). Unlike
+/// Dwarf/Half-Elf/etc., whose fixtures encode the convention "the chosen score
+/// already reflects the fixed racial adjustment," Human's deterministic pilot
+/// fixture and the real PCGen oracle both confirm the opposite convention for
+/// Human: the chosen score is the PRE-bonus base, and the +2 must be applied
+/// at compute time, before ability modifiers are derived. See
+/// `apply_human_ability_bonus`.
+const HUMAN_ABILITY_BONUS_MAGNITUDE: i16 = 2;
 
 // SD13-E6-F3a Human racial trait bundle (size, speed, senses, extra skill ranks).
 // These name the remaining Human racial trait burden explicitly, classified
@@ -4574,8 +4583,9 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     let mut explanations = Vec::new();
     let mut diagnostics = Vec::new();
 
+    let ability_scores_for_modifiers = apply_human_ability_bonus(input, &mut explanations);
     let ability_modifiers =
-        compute_ability_modifiers(&input.chosen.ability_scores, &mut explanations);
+        compute_ability_modifiers(&ability_scores_for_modifiers, &mut explanations);
 
     let (base_attack_bonus, base_saves) =
         compute_class_chassis(input, &mut explanations, &mut diagnostics).unwrap_or_else(|| {
@@ -4740,6 +4750,95 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     }
 }
 
+/// Apply the Human ability-bonus choice's PF1 Core Rulebook +2 racial adjustment
+/// to the targeted ability BEFORE ability modifiers are derived, and record the
+/// real arithmetic (base score, racial bonus, adjusted score) as an audit trail.
+///
+/// Gated strictly on `race:human` plus a resolved `choice:human_ability_bonus`
+/// selection. Every other race's chosen ability scores pass through completely
+/// unchanged here: Dwarf, Elf, Gnome, Half-Elf, Half-Orc, and Halfling fixtures
+/// all rely on the opposite, already-documented convention (see
+/// `explain_dwarf_race_seam` and `explain_half_elf_race_seam`) that the chosen
+/// score already bakes in their fixed/chosen racial adjustment, so applying any
+/// further arithmetic to their scores here would double-count the bonus. Human's
+/// own deterministic pilot fixture and the real PCGen oracle both confirm Human
+/// is the one race whose chosen score is the PRE-bonus base — see the CG-03
+/// follow-up receipt for the oracle evidence.
+fn apply_human_ability_bonus(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> AbilityScores {
+    let scores = input.chosen.ability_scores.clone();
+
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return scores;
+    }
+
+    let Some(selection) = choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) else {
+        return scores;
+    };
+
+    let ability = selection
+        .strip_prefix(ABILITY_SELECTION_PREFIX)
+        .unwrap_or(selection)
+        .to_owned();
+
+    let Some(base_score) = ability_score_for(&scores, &ability) else {
+        // An unrecognized ability target names nothing to adjust; leave scores
+        // untouched rather than fabricating an adjustment.
+        return scores;
+    };
+
+    let adjusted_score = base_score + HUMAN_ABILITY_BONUS_MAGNITUDE;
+    let scores = with_ability_score(scores, &ability, adjusted_score);
+
+    explanations.push(ComputationExplanation {
+        id: "race.human.ability_bonus_applied".to_owned(),
+        value: adjusted_score,
+        detail: format!(
+            "Human ability-bonus selection ({HUMAN_ABILITY_BONUS_CHOICE_ID} -> {selection}) applies \
+             the PF1 Core Rulebook Standard Human +2 racial bonus to {ability} BEFORE ability \
+             modifiers are derived: base chosen score {base_score} + \
+             {HUMAN_ABILITY_BONUS_MAGNITUDE} racial = {adjusted_score}. This differs from \
+             Dwarf/Half-Elf/etc., whose fixtures pre-bake their own racial adjustment into the \
+             chosen score itself (no arithmetic performed on those seams); Human's chosen score \
+             is confirmed PRE-bonus by both the deterministic pilot fixture and the real PCGen \
+             oracle output."
+        ),
+    });
+
+    scores
+}
+
+/// Look up the chosen score for a named ability. Unknown ability names yield
+/// `None` rather than fabricating a value.
+fn ability_score_for(scores: &AbilityScores, ability: &str) -> Option<i16> {
+    match ability {
+        "strength" => Some(scores.strength),
+        "dexterity" => Some(scores.dexterity),
+        "constitution" => Some(scores.constitution),
+        "intelligence" => Some(scores.intelligence),
+        "wisdom" => Some(scores.wisdom),
+        "charisma" => Some(scores.charisma),
+        _ => None,
+    }
+}
+
+/// Return a copy of `scores` with the named ability's score replaced. Unknown
+/// ability names return `scores` unchanged rather than fabricating a field.
+fn with_ability_score(mut scores: AbilityScores, ability: &str, new_score: i16) -> AbilityScores {
+    match ability {
+        "strength" => scores.strength = new_score,
+        "dexterity" => scores.dexterity = new_score,
+        "constitution" => scores.constitution = new_score,
+        "intelligence" => scores.intelligence = new_score,
+        "wisdom" => scores.wisdom = new_score,
+        "charisma" => scores.charisma = new_score,
+        _ => {}
+    }
+    scores
+}
+
 fn compute_ability_modifiers(
     scores: &AbilityScores,
     explanations: &mut Vec<ComputationExplanation>,
@@ -4837,8 +4936,12 @@ fn explain_human_pilot_race_seam(
         return;
     }
 
-    // Human ability-bonus interaction: the named choice targets one ability. Surface its
-    // pressure through the already-computed modifier for exactly that ability.
+    // Human ability-bonus interaction: the named choice targets one ability. The
+    // +2 racial adjustment was already applied to that ability's score BEFORE
+    // ability modifiers were derived (see `apply_human_ability_bonus` and its
+    // `race.human.ability_bonus_applied` explanation for the base-score
+    // arithmetic). This record narrates the already-adjusted result only; it
+    // performs no further arithmetic and does not re-apply the bonus.
     if let Some(selection) = choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
         let ability = selection
             .strip_prefix(ABILITY_SELECTION_PREFIX)
@@ -4849,7 +4952,8 @@ fn explain_human_pilot_race_seam(
             value: modifier,
             detail: format!(
                 "Human ability-bonus selection ({HUMAN_ABILITY_BONUS_CHOICE_ID} -> {selection}) targets \
-                 {ability}; the chosen {ability} score yields modifier {modifier:+}"
+                 {ability}; the racial-bonus-adjusted {ability} score (base chosen score + the +2 Human \
+                 racial bonus, applied before ability modifiers were derived) yields modifier {modifier:+}"
             ),
         });
     }

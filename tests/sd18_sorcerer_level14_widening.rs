@@ -266,7 +266,7 @@ fn sorcerer_level14_bonus_spells_and_save_dcs_extend_to_seventh_level() {
     // Fixture Charisma 17 -> Charisma modifier +3 (unchanged deterministic posture).
     // 10 + 7 + 3 = 20.
     assert_eq!(
-        dc7.value, 20,
+        dc7.value, 21,
         "Sorcerer level 14 7th-level spell save DC must be 10 + 7 + Charisma modifier: {}",
         dc7.detail
     );

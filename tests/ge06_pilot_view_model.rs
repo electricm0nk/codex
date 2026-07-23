@@ -55,7 +55,9 @@ fn supported_deterministic_pilot_projects_computed_view_model() {
         .as_ref()
         .expect("computed receipt must yield a snapshot");
 
-    assert_eq!(snapshot.ability_modifiers.strength, 3);
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before ability modifiers are derived, raising Strength from +3 to +4.
+    assert_eq!(snapshot.ability_modifiers.strength, 4);
     assert_eq!(snapshot.ability_modifiers.dexterity, 2);
     assert_eq!(snapshot.ability_modifiers.constitution, 2);
     assert_eq!(snapshot.ability_modifiers.intelligence, 0);
@@ -67,15 +69,15 @@ fn supported_deterministic_pilot_projects_computed_view_model() {
     assert_eq!(snapshot.base_saves.reflex, 0);
     assert_eq!(snapshot.base_saves.will, 0);
 
-    assert_eq!(snapshot.combat.baseline_melee_attack_bonus, 5);
+    assert_eq!(snapshot.combat.baseline_melee_attack_bonus, 6);
     assert_eq!(snapshot.defense.baseline_armor_class, 17);
     assert_eq!(snapshot.defense.total_save.fortitude, 4);
     assert_eq!(snapshot.defense.total_save.reflex, 2);
     assert_eq!(snapshot.defense.total_save.will, 1);
 
-    assert_eq!(snapshot.skill.selected_modifier.climb, 5);
+    assert_eq!(snapshot.skill.selected_modifier.climb, 6);
     assert_eq!(snapshot.skill.selected_modifier.intimidate, 3);
-    assert_eq!(snapshot.skill.selected_modifier.swim, 5);
+    assert_eq!(snapshot.skill.selected_modifier.swim, 6);
 
     for id in [
         "ability_modifier.strength",

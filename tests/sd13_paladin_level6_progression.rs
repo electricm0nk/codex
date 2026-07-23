@@ -200,10 +200,12 @@ fn paladin_level6_smite_evil_stays_2_per_day() {
          does not land until level 7: {uses_per_day:?}"
     );
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let attack_bonus = explanation(&computation, SMITE_EVIL_ATTACK_BONUS_ID);
     assert_eq!(
-        attack_bonus.value, 2,
-        "smite evil attack bonus must equal the Charisma modifier (+2 for CHA 14): {attack_bonus:?}"
+        attack_bonus.value, 3,
+        "smite evil attack bonus must equal the Charisma modifier (+3 for CHA 14 + 2 Human \
+         racial): {attack_bonus:?}"
     );
 
     let damage_bonus = explanation(&computation, SMITE_EVIL_DAMAGE_BONUS_ID);
@@ -222,9 +224,9 @@ fn paladin_level6_lay_on_hands_increases_and_divine_grace_stays_unchanged() {
 
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 5,
-        "lay on hands uses per day at level 6 (1/2 paladin level + Charisma modifier = 3 + 2) \
-         must genuinely increase to 5, up from 4 at level 5: {uses_per_day:?}"
+        uses_per_day.value, 6,
+        "lay on hands uses per day at level 6 (1/2 paladin level + Charisma modifier = 3 + 3) \
+         must genuinely increase to 6, up from 5 at level 5: {uses_per_day:?}"
     );
 
     let heal_amount = explanation(&computation, LAY_ON_HANDS_HEAL_AMOUNT_ID);
@@ -236,7 +238,7 @@ fn paladin_level6_lay_on_hands_increases_and_divine_grace_stays_unchanged() {
 
     let save_bonus = explanation(&computation, DIVINE_GRACE_SAVE_BONUS_ID);
     assert_eq!(
-        save_bonus.value, 2,
+        save_bonus.value, 3,
         "divine grace save bonus at level 6 must still equal the positive Charisma modifier, \
          unchanged: {save_bonus:?}"
     );

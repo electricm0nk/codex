@@ -119,7 +119,7 @@ fn paladin_level4_total_is_one_from_the_bonus_alone() {
     );
 }
 
-// ----- The total ladder, including the tranche's first honest zero total -----
+// ----- The total ladder -----
 
 #[test]
 fn paladin_totals_are_the_sum_of_the_grounded_base_and_bonus_ladders() {
@@ -128,12 +128,14 @@ fn paladin_totals_are_the_sum_of_the_grounded_base_and_bonus_ladders() {
         vec![(id(1), 2), (id(2), 1)],
         "level 7, Charisma +2: totals 2/1 (base 1/0 + bonus 1/1)"
     );
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 14 -> 16, modifier +2 -> +3), which
+    // unlocks the 3rd-level bonus spell slot (0 -> 1). The 3rd-level total is therefore
+    // 1 (base "0" entry + bonus 1), not the honest zero the pre-fix arithmetic produced.
     assert_eq!(
         total_values(PALADIN_LEVEL10_FIXTURE),
-        vec![(id(1), 3), (id(2), 2), (id(3), 0)],
-        "level 10, Charisma +2: totals 3/2/0 — the 3rd-level total is the tranche's first \
-         honest ZERO total (base \"0\" entry + modifier-below-spell-level 0 bonus): 3rd-level \
-         spells are accessible but none are castable per day at Charisma 14"
+        vec![(id(1), 3), (id(2), 2), (id(3), 1)],
+        "level 10, Charisma +3: totals 3/2/1 (base 2/1/0 + bonus 1/1/1)"
     );
 }
 

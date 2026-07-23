@@ -199,9 +199,10 @@ fn wizard_level8_force_missile_pool_is_unchanged() {
     let computation = compute_pilot_base_chassis(&input);
 
     let uses = explanation(&computation, "class_chassis.wizard.force_missile_uses_per_day");
+    // CG-03 fix: Intelligence modifier is now +4 (base 17 + 2 Human racial), not +3.
     assert_eq!(
-        uses.value, 6,
-        "Wizard level 8 Force Missile pool (3 + Intelligence modifier +3) must stay 6: {}",
+        uses.value, 7,
+        "Wizard level 8 Force Missile pool (3 + Intelligence modifier +4) must stay 7: {}",
         uses.detail
     );
 }

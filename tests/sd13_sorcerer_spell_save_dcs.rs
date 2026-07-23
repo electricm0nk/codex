@@ -92,9 +92,12 @@ fn sorcerer_level1_first_level_dc_is_fourteen() {
         .iter()
         .find(|e| e.id == id(1))
         .expect("level-1 sorcerer must carry the 1st-level spell-save-DC record");
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Charisma adjustment is now
+    // applied before the modifier is derived (base 17 -> 19, modifier +3 -> +4).
     assert_eq!(
-        dc.value, 14,
-        "DC = 10 + spell level 1 + Charisma modifier 3 (fixture Charisma 17) = 14: {}",
+        dc.value, 15,
+        "DC = 10 + spell level 1 + Charisma modifier 4 (fixture Charisma 17 + 2 Human racial) \
+         = 15: {}",
         dc.detail
     );
     assert!(
@@ -113,31 +116,33 @@ fn sorcerer_level1_first_level_dc_is_fourteen() {
 
 #[test]
 fn sorcerer_spell_save_dcs_track_the_access_ladder() {
+    // CG-03 fix: Charisma modifier is now +4 (base 17 + 2 Human racial), not +3, so
+    // every DC in the ladder is one higher than before.
     assert_eq!(
         dc_values(SORCERER_LEVEL4_FIXTURE),
-        vec![(id(1), 14), (id(2), 15)],
-        "level 4: spell levels 1-2 accessible, DCs 14/15"
+        vec![(id(1), 15), (id(2), 16)],
+        "level 4: spell levels 1-2 accessible, DCs 15/16"
     );
     assert_eq!(
         dc_values(SORCERER_LEVEL6_FIXTURE),
-        vec![(id(1), 14), (id(2), 15), (id(3), 16)],
-        "level 6: spell levels 1-3 accessible, DCs 14/15/16"
+        vec![(id(1), 15), (id(2), 16), (id(3), 17)],
+        "level 6: spell levels 1-3 accessible, DCs 15/16/17"
     );
     assert_eq!(
         dc_values(SORCERER_LEVEL8_FIXTURE),
-        vec![(id(1), 14), (id(2), 15), (id(3), 16), (id(4), 17)],
-        "level 8: spell levels 1-4 accessible, DCs 14-17"
+        vec![(id(1), 15), (id(2), 16), (id(3), 17), (id(4), 18)],
+        "level 8: spell levels 1-4 accessible, DCs 15-18"
     );
     assert_eq!(
         dc_values(SORCERER_LEVEL10_FIXTURE),
         vec![
-            (id(1), 14),
-            (id(2), 15),
-            (id(3), 16),
-            (id(4), 17),
-            (id(5), 18)
+            (id(1), 15),
+            (id(2), 16),
+            (id(3), 17),
+            (id(4), 18),
+            (id(5), 19)
         ],
-        "level 10: spell levels 1-5 accessible, DCs 14-18"
+        "level 10: spell levels 1-5 accessible, DCs 15-19"
     );
 }
 
@@ -154,9 +159,12 @@ fn sorcerer_spell_save_dcs_track_the_charisma_modifier() {
         .iter()
         .find(|e| e.id == id(5))
         .expect("the 5th-level DC record must exist at level 10");
+    // CG-03 fix: the lowered raw Charisma of 12 still receives the +2 Human racial
+    // ability-bonus choice before the modifier is derived (12 + 2 = 14, modifier +2).
     assert_eq!(
-        dc.value, 16,
-        "DC = 10 + spell level 5 + Charisma modifier 1 (lowered Charisma 12) = 16 — the \
+        dc.value, 17,
+        "DC = 10 + spell level 5 + Charisma modifier 2 (lowered Charisma 12 + 2 Human racial) \
+         = 17 — the \
          formula is live arithmetic over the chosen ability score, not a hardcoded table"
     );
 }

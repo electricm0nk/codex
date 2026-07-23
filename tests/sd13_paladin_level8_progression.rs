@@ -182,10 +182,11 @@ fn paladin_level8_smite_evil_uses_stay_three_and_damage_rises_to_eight() {
         uses_per_day.detail
     );
 
+    // CG-03 fix: Charisma modifier is now +3 (base 14 + 2 Human racial), not +2.
     let attack_bonus = explanation(&computation, SMITE_EVIL_ATTACK_BONUS_ID);
     assert_eq!(
-        attack_bonus.value, 2,
-        "Paladin level 8 Smite Evil attack bonus must stay the flat Charisma modifier (+2)"
+        attack_bonus.value, 3,
+        "Paladin level 8 Smite Evil attack bonus must stay the flat Charisma modifier (+3)"
     );
 
     let damage_bonus = explanation(&computation, SMITE_EVIL_DAMAGE_BONUS_ID);
@@ -206,9 +207,9 @@ fn paladin_level8_lay_on_hands_rises_on_both_axes() {
 
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 6,
-        "Paladin level 8 Lay on Hands uses per day (8/2 + Charisma modifier 2) must equal 6, \
-         genuinely risen from 5: {}",
+        uses_per_day.value, 7,
+        "Paladin level 8 Lay on Hands uses per day (8/2 + Charisma modifier 3) must equal 7, \
+         genuinely risen from 6: {}",
         uses_per_day.detail
     );
 
@@ -230,8 +231,8 @@ fn paladin_level8_divine_grace_stays_the_charisma_modifier() {
 
     let save_bonus = explanation(&computation, DIVINE_GRACE_SAVE_BONUS_ID);
     assert_eq!(
-        save_bonus.value, 2,
-        "Paladin Divine Grace must stay the flat Charisma-modifier save bonus (+2) at level 8"
+        save_bonus.value, 3,
+        "Paladin Divine Grace must stay the flat Charisma-modifier save bonus (+3) at level 8"
     );
 }
 

@@ -139,11 +139,11 @@ fn wizard_level1_grounds_force_missile_uses_per_day() {
     let computation = compute_pilot_base_chassis(&input);
 
     // PF1 Core Rulebook Evocation School: 3 + Intelligence modifier.
-    // Fixture Intelligence is 17 -> modifier +3 -> 3 + 3 = 6.
+    // Fixture Intelligence is 17 + 2 Human racial (CG-03 fix) -> modifier +4 -> 3 + 4 = 7.
     let uses = explanation(&computation, FORCE_MISSILE_USES_PER_DAY_ID);
     assert_eq!(
-        uses.value, 6,
-        "wizard level 1 with INT 17 (+3) must ground 3 + 3 = 6 Force Missile uses per day"
+        uses.value, 7,
+        "wizard level 1 with INT 17 (+4) must ground 3 + 4 = 7 Force Missile uses per day"
     );
     assert!(
         uses.detail.contains("Force Missile") && uses.detail.contains("Intelligence"),
@@ -159,7 +159,7 @@ fn wizard_level1_grounds_force_missile_uses_per_day() {
         uses.detail
     );
 
-    assert_eq!(computation.ability_modifiers.intelligence, 3);
+    assert_eq!(computation.ability_modifiers.intelligence, 4);
 }
 
 // ----- Grounding the school-power magnitudes must not fabricate execution or the opposed-school cost -----

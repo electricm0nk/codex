@@ -101,17 +101,18 @@ fn level_9_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 4);
 
     // Baseline combat: +9 BAB + STR +3 + Weapon Focus +1 + Weapon Training 2 (+2) = 15.
-    assert_eq!(computation.baseline_melee_attack_bonus, 15);
+    assert_eq!(computation.baseline_melee_attack_bonus, 16);
     // Armor class is unchanged from level 8: no new armor-training milestone lands
     // at level 9, and the deterministic +2 Dexterity contribution is already below
     // both the Armor Training 1 and Armor Training 2 max-Dex caps.
     assert_eq!(computation.baseline_armor_class, 17);
 
     // No new armor-training milestone lands at level 9, so the Climb/Intimidate/Swim
-    // selected-skill totals stay exactly as they were at level 8.
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    // selected-skill totals stay exactly as they were at level 8 (CG-03 fix: 8, not 7,
+    // since STR modifier is now +4).
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 #[test]
@@ -155,7 +156,7 @@ fn level_9_second_weapon_training_group_is_an_explanation_only_seam() {
 
     // The +1 for the bows group must NOT leak into the Longsword baseline: the
     // baseline melee attack bonus uses only the heavy-blades rank (+2).
-    assert_eq!(computation.baseline_melee_attack_bonus, 15);
+    assert_eq!(computation.baseline_melee_attack_bonus, 16);
 }
 
 #[test]
@@ -210,14 +211,14 @@ fn level_10_human_fighter_produces_non_blocked_bounded_evidence() {
     assert_eq!(computation.total_saves.will, 4);
 
     // Baseline combat: +10 BAB + STR +3 + Weapon Focus +1 + Weapon Training 2 (+2) = 16.
-    assert_eq!(computation.baseline_melee_attack_bonus, 16);
+    assert_eq!(computation.baseline_melee_attack_bonus, 17);
     assert_eq!(computation.baseline_armor_class, 17);
 
     // No new armor-training milestone lands at level 10, so the selected-skill
-    // totals stay exactly as they were at level 9.
-    assert_eq!(computation.selected_skill_modifiers.climb, 7);
+    // totals stay exactly as they were at level 9 (CG-03 fix: 8, not 7).
+    assert_eq!(computation.selected_skill_modifiers.climb, 8);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 7);
+    assert_eq!(computation.selected_skill_modifiers.swim, 8);
 }
 
 #[test]
@@ -498,6 +499,6 @@ fn level_8_fixture_still_loads_and_computes_unaffected_by_the_level_9_10_widenin
     let input = load(LEVEL_8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
     assert_eq!(computation.base_attack_bonus, 8);
-    assert_eq!(computation.baseline_melee_attack_bonus, 13);
+    assert_eq!(computation.baseline_melee_attack_bonus, 14);
     assert!(!computation.diagnostics.iter().any(|d| d.claim_blocking));
 }

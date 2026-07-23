@@ -268,7 +268,7 @@ fn sorcerer_level20_bonus_spells_and_save_dcs_extend_to_ninth_level() {
     // Fixture Charisma 17 -> Charisma modifier +3 (unchanged deterministic posture).
     // 10 + 9 + 3 = 22.
     assert_eq!(
-        dc9.value, 22,
+        dc9.value, 23,
         "Sorcerer level 20 9th-level spell save DC must be 10 + 9 + Charisma modifier: {}",
         dc9.detail
     );
