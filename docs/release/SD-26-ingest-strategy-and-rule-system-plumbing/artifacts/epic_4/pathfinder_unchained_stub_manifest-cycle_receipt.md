@@ -1,7 +1,7 @@
 # Cycle pathfinder_unchained_stub_manifest — Epic 4 / Criterion 4.16
 
-- **Card ID:** (see kanban step, below)
-- **Commit SHA:** (filled in after push — see `progress.md` for the landed SHA)
+- **Card ID:** `t_6b750489` (board `codex-tranche-5`, assignee `operator`; a duplicate `t_a65d91f3` created by a CLI-output parsing mistake was archived, not completed)
+- **Commit SHA:** `a61305f` (manifest + registry entry #0017), `224fdaa` (progress.md)
 - **Files touched:**
   - `data/stubs/pathfinder_unchained.json` (new — per-book stub manifest for `pathfinder_unchained`)
   - `docs/governance/wired-integration-stubs-registry.md` (added registry entry #0017 for `pathfinder_unchained`; updated the reserved-entries footer note to reflect 6 remaining books/#0018-000n)
