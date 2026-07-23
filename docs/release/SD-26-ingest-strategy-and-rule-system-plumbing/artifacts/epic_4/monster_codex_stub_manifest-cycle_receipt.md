@@ -1,7 +1,7 @@
 # Cycle monster_codex_stub_manifest — Epic 4 / Criterion 4.13
 
-- **Card ID:** (see kanban step, below)
-- **Commit SHA:** (filled in after push — see `progress.md` for the landed SHA)
+- **Card ID:** `t_72a8a655` (hermes kanban, board `codex-tranche-5`, assignee `operator`, completed)
+- **Commit SHA:** `621cdad12b33371b3b3420b5ce9134e8dc68d494` (manifest + registry entry #0014); `7031165` (progress.md update)
 - **Files touched:**
   - `data/stubs/monster_codex.json` (new — per-book stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0014; updated the reserved-entries footer note)
