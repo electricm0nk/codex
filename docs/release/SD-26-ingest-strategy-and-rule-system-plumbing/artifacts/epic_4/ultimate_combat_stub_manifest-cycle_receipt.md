@@ -1,7 +1,7 @@
 # Cycle ultimate_combat_stub_manifest — Epic 4 / Criterion 4.18
 
 - **Card ID:** (see kanban step, below)
-- **Commit SHA:** `a371fc3` (manifest + registry entry #0019) — see `progress.md` for the final landed SHA after rebase/push.
+- **Commit SHA:** `d1fa4b7` (manifest + registry entry #0019), `3608bb0` (cycle receipt) — both landed on `tranche/5-4` after rebase/push.
 - **Files touched:**
   - `data/stubs/ultimate_combat.json` (new — per-book stub manifest for `ultimate_combat`)
   - `docs/governance/wired-integration-stubs-registry.md` (added registry entry #0019 for `ultimate_combat`; updated the reserved-entries footer note to reflect 4 remaining books/#0020-000n)
