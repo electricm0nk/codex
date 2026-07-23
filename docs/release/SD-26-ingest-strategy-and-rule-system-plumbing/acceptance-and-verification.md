@@ -33,7 +33,7 @@ Per the standard 4-test pattern.
 | CG-02 | Tier-1 launch-gate (SD-25 closure PR) honored | E2.5 verification |
 | CG-03 | Pilot case upgraded to `oracle_checked` | E2.5 |
 | CG-04 | All 4 in-scope books have JSON cache coverage | `find data/corpus -type f -name '*.json' \| wc -l` > 0 per book |
-| CG-05 | All 21 future-state books have Stubs Registry entries | `grep -c '^book_id:' docs/governance/wired-integration-stubs-registry.md` ≥ 21 |
+| CG-05 | All 21 future-state books have Stubs Registry entries | `grep -cE '^### [0-9]+ — \`book_stub\`:' docs/governance/wired-integration-stubs-registry.md` ≥ 21 (corrected 2026-07-23 to match E4.1's actual landed entry heading format; the original `^book_id:` pattern never matched the registry's real prose-field structure) |
 | CG-06 | Dual-audit gate clean on closure PR diff | Run both audits on `git diff` |
 | CG-07 | Architecture-truth-up sub-step ran (Opus) | `./receipts.md` |
 | CG-08 | Graphify-update sub-step ran | `./receipts.md` |
