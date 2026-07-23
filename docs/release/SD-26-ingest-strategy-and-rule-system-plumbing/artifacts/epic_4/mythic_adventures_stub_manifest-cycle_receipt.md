@@ -1,7 +1,7 @@
 # Cycle mythic_adventures_stub_manifest — Epic 4 / Criterion 4.14
 
-- **Card ID:** (see kanban step, below)
-- **Commit SHA:** (filled in after push — see `progress.md` for the landed SHA)
+- **Card ID:** t_76778792 (board `codex-tranche-5`, assignee `operator`)
+- **Commit SHA:** 7575aa8 (manifest + registry entry), e353ea1 (progress.md)
 - **Files touched:**
   - `data/stubs/mythic_adventures.json` (new — per-book stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0015 for `mythic_adventures`)
