@@ -16,9 +16,9 @@ frontend              Sonnet   6-level multiclass walkthrough DONE; spell-
                                 slot walkthrough found Wizard is structurally
                                 UNREACHABLE via any UI path (see Happened),
                                 checking sibling casters, else standing by
-backend               Sonnet   wave-2 items 2-4 ALL DONE+pushed (0aeed25,
-                                6cbee9c, b726a36); now on the Wizard
-                                spellbook-gate fix, confirmed priority
+backend               Sonnet   Wizard spellbook fix DONE+pushed (3484b5d) --
+                                2nd class now genuinely reaches Computed;
+                                now wiring SelectedParityDimensions::from_receipt
 qa                    Sonnet   money/encumbrance catalogue adoption DONE
                                 (ae723ae); idle, watching for wave-2 output
 
@@ -362,6 +362,28 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   when uncertain, exactly the right instinct). Frontend's caster survey
   (Cleric/Druid/Bard/Sorcerer all need whole subsystems, not a seeded
   choice) relayed to backend to avoid duplicate investigation.
+- MILESTONE: Wizard spellbook gate fix landed (3484b5d). compose_character_input
+  seeds Evocation/opposed-Necromancy/opposed-Transmutation choices,
+  gated Wizard-only (mirrors the existing Fighter/Human conditional-seed
+  pattern), 2 new tests (Wizard-only confirmed via a Fighter negative
+  control; a real recorded+prepared spell now reaches Computed).
+  Confirmed independently: no other class has an equivalent bespoke gate
+  to generalize from -- none of Cleric/Druid/Bard/Sorcerer/etc are even
+  chassis-supported yet (only Fighter/Wizard/Rogue), so none can hit a
+  gate like this regardless. Wizard is now the SECOND class (alongside
+  Fighter) a tester can genuinely reach Computed with.
+  Also surfaced (not part of this commit, correctly left for qa): item
+  4's landed comparator fix exposed a stale assertion in
+  tests/sd26_pilot_case_verification.rs (expected 1 mismatch, now sees 6
+  -- the known CG-03 mismatch plus 5 real MissingFromCodex entries, since
+  Codex's own SelectedParityDimensions::from_receipt was never wired to
+  populate the new encumbrance/durability dimensions). Real upside in the
+  failure output: PCGen's actual golden-fixture values match backend's
+  encumbrance.rs/durability.rs formulas exactly -- genuine external
+  validation, not just internal self-consistency. Backend greenlit to do
+  the from_receipt wiring as a small, bounded follow-on directly
+  completing item 4's comparator work; QA to update the test expectation
+  once it lands, same sequencing as the earlier BAB/save catalogue work.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
