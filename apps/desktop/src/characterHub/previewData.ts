@@ -12,7 +12,7 @@ export const PREVIEW_CHARACTER_ID = 'preview:aldric-ironhand';
 
 // Aldric is a Fighter 3 / Wizard 1 multiclass so the sheet exercises both the
 // per-class level rail and the multiclass "Next" options.
-const PREVIEW_CLASS_SUMMARY = 'class:fighter:3/class:wizard:1';
+const PREVIEW_CLASS_SUMMARY = 'class:fighter:3,class:wizard:1';
 
 export function buildPreviewListSurface(): CharacterHubListSurface {
   return {

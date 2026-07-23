@@ -206,12 +206,17 @@ function parseOneClass(segment: string): HeldClass {
 
 /**
  * Parse the classes and levels a character holds from its `classSummary`.
- * Single class: `class:fighter:1`. Multiclass: `/`-separated segments, e.g.
- * `class:fighter:3/class:wizard:1`.
+ * Single class: `class:fighter:1`. Multiclass: comma-separated segments,
+ * e.g. `class:fighter:3,class:wizard:1` — matches `summarize_envelope`'s
+ * own `.join(",")` in `character_hub.rs` exactly (verified against a real
+ * multiclass save; the previous `/`-separator assumption here never
+ * matched the actual wire format, so every multiclass character's HP,
+ * skill points, caster level, and Progression rail silently computed
+ * against a single garbled pseudo-class instead of the real two).
  */
 export function parseHeldClasses(classSummary: string): HeldClass[] {
   return classSummary
-    .split('/')
+    .split(',')
     .map((segment) => parseOneClass(segment.trim()))
     .filter((held) => held.classId);
 }
