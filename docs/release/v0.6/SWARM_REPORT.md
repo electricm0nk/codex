@@ -28,11 +28,34 @@ Per-calculation status against `tests/` as of 2026-07-23 (QA baseline survey,
 | Level-up hit points | Covered | `tests/sd13_fighter_level1_hit_point_baseline.rs`, `tests/sd20_levelup_*.rs` per class |
 | Multiclass stacking (general) | Partial | Base chassis (BAB/save) stacking covered for Fighter/Wizard (see above). Skill points / feats / spell-slot stacking under multiclass not independently verified in this survey — needs a follow-up pass once BAB/save gap is closed. |
 
-**Bottom line:** 3 of the 12 alpha-bar calculations (carry capacity, encumbrance,
-money conversion) have **zero production implementation**, not just zero tests —
-these are backend build items, not QA test-authoring items. Multiclass BAB/save
-stacking has real tests but only for one class pair; widening that is a QA task
-(no backend blocker) once backend's wave-1 unblocking queue clears.
+**Bottom line (as of the original 2026-07-23 wave-1 survey, before wave-1 landed):**
+3 of the 12 alpha-bar calculations (carry capacity, encumbrance, money
+conversion) had **zero production implementation**, not just zero tests —
+these were backend build items, not QA test-authoring items. Multiclass
+BAB/save stacking had real tests but only for one class pair.
+
+### Refresh (2026-07-23, after backend's wave-1 close)
+
+Requested by the lead after skill/level-up/bio/feat/money persistence,
+BAB/save widening to Fighter/Wizard/Rogue, and the carry-capacity/encumbrance
+calc all landed. Updated rows only; unlisted rows are unchanged from above.
+
+| Calculation | Status | Evidence |
+| :--- | :--- | :--- |
+| BAB/save progression (multiclass stacking) | **Covered, still partial breadth** | Backend's `d20a5b9` widened `compute_multiclass_base_chassis` to Fighter/Wizard/Rogue via the table-driven `compute_generic_table_chassis` path; QA's `8d814e8` adopted 40 downstream tests into the catalogue (verified against real computation output, not transcribed) across 12 files. Still only 3 of 11 core classes are in the multiclass allowlist (Barbarian/Bard/Cleric/Druid/Monk/Paladin/Ranger/Sorcerer remain out, per backend's own doc comment in `pilot_compute.rs` — each has its own pre-existing standalone-only chassis and would need the same coordinated catalogue-adoption pass this one got). |
+| AC (equipment bonus) | Covered, caveat resolved for this angle | Backend audited equipment AC bonus wiring during the encumbrance task (`d475097`'s commit message: "equipment AC bonus itself... was already real and wired via equipment_effects.rs prior to this change — audited first, nothing to fix there"). The `claim_blocking`-gating-breadth caveat from the original survey (which classes/postures can reach a `Computed` AC at all) is unchanged and is really the same issue as risks-and-open-questions.md item 1 (the single hardcoded deterministic posture), not an AC-specific gap. |
+| Carry capacity | **Grounded, pending catalogue adoption** | `src/rules_core/encumbrance.rs` (commit `d475097`) implements `carrying_capacity_thresholds`, transcribed and cited from Archives of Nethys (`aonprd.com/Rules.aspx?ID=118`, fetched 2026-07-23) with the source's own >29 extrapolation rule. QA cross-checked the table against the real PCGen `load.lst` data pulled during the original spec pass — light/medium/heavy values and the extrapolation shape both match. 2 inline `#[cfg(test)]` tests in the module itself (backend can't write to `tests/**`, mirrors the earlier BAB/save-stacking inline-test pattern) — not yet adopted into the official catalogue. |
+| Encumbrance | **Grounded, pending catalogue adoption** | Same file/commit as carry capacity. `compute_encumbrance` sums real per-item corpus weight (`WT:` token) across every `EquippedActive`/`SelectedInactive` selection, flags unresolvable items rather than fabricating a zero, and is wired unconditionally into `PilotReceipt.encumbrance` in `contract.rs` (not gated behind the narrow deterministic-posture check that blocks combat/skill totals). 3 inline tests in the module — pending catalogue adoption, same as carry capacity. |
+| Money conversion | **Grounded (conversion only), pending catalogue adoption** | `src/rules_core/money.rs` (commit `67490ac`) implements `copper_to_denominations`/`denominations_to_copper`/`gp_to_copper` using QA's own formula-spec ratios, explicitly flagged (matching QA's own appendix) as not independently PCGen-source-verified. Deliberately scoped to conversion/spend-tracking only — starting-wealth-by-class (PCGen's `GOLD:` token) stays unresolved, per QA's original finding, not guessed. 6 inline tests in the module — pending catalogue adoption. |
+| Durability | **Still a total gap** | Re-confirmed via fresh grep across `src/rules_core/` and `tests/`: zero hits for `max_hit_points`/`current_hp`/`temp_hp`/`dying`/`unconscious` beyond the same single isolated level-1 fighter value found in the original survey. Not touched by wave-1. Still the correct wave-2 target per the lead's ruling (risks-and-open-questions.md item 4) and QA's sourced spec appendix below. |
+
+**Refreshed bottom line:** carry capacity, encumbrance, and money conversion
+are no longer production gaps — they're now real, cited, tested calculations,
+just not yet in the official `tests/**` catalogue (6 backend-authored inline
+tests total, review/adoption is QA's next real work, same shape as the
+BAB/save-stacking sequencing). Durability remains the one calculation with
+zero production surface. Multiclass BAB/save stacking breadth (8 of 11
+classes still outside the allowlist) is the other open item.
 
 ## (b) PCGen-delta defects found and fix/ticket status
 
