@@ -86,7 +86,16 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 /// wizard level `unmet_wizard_spellbook_conditions` currently supports (1-3).
 /// The same literal already proven safe by
 /// `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`.
-const WIZARD_STARTER_SPELL_ID: &str = "evocation.0.light";
+///
+/// `"Light"` — a real `SPELL_LIST` key (`rules_tables::crb::spell_list.rs`),
+/// not a synthetic placeholder: v0.6 alpha swarm's slot-budget-enforcement
+/// fix taught `parse_wizard_spellbook_spell_id` (`pilot_compute.rs`) to
+/// resolve real spell catalog keys directly, so production code now seeds a
+/// real spell rather than the old `"evocation.0.light"` convention-only
+/// value (which still resolves too, via that function's fallback, but
+/// there's no reason to keep seeding a placeholder now that the real path
+/// exists).
+const WIZARD_STARTER_SPELL_ID: &str = "Light";
 
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
@@ -229,9 +238,9 @@ impl RuleSystemAdapter for Pf1Adapter {
 /// requires before persisting, so an empty spellbook meant a freshly
 /// created Wizard could never be saved at all — no command exists that can
 /// grow a spellbook that was never written to disk in the first place. This
-/// seeds one canonical starter spell (`"evocation.0.light"`, a 0-level
-/// Evocation cantrip — the same literal already proven safe against the
-/// budget math by `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`)
+/// seeds one canonical starter spell (`WIZARD_STARTER_SPELL_ID`, a real
+/// 0-level Evocation cantrip — the same identity already proven safe
+/// against the budget math by `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`)
 /// as both `AcquisitionMode::Known` and `AcquisitionMode::Prepared`, the
 /// same "fixed canonical default now, real player choice is separate future
 /// UI work" pattern already used for the Fighter feat loadout and the
@@ -1129,12 +1138,12 @@ mod tests {
     fn wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared() {
         let mut character_input = compose_character_input(&wizard_request_for("wizard-spellbook", 1));
         character_input.chosen.spells_selected.push(SpellSelection {
-            spell_id: "evocation.0.light".to_owned(),
+            spell_id: "Light".to_owned(),
             source_class_id: WIZARD_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Known,
         });
         character_input.chosen.spells_selected.push(SpellSelection {
-            spell_id: "evocation.0.light".to_owned(),
+            spell_id: "Light".to_owned(),
             source_class_id: WIZARD_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Prepared,
         });
@@ -1258,6 +1267,105 @@ mod tests {
         );
     }
 
+    // ----- Real spell slot-budget enforcement (v0.6 alpha swarm) -----
+    //
+    // Frontend found this live while chasing an unrelated cosmetic issue:
+    // parse_wizard_spellbook_spell_id (pilot_compute.rs) only ever
+    // recognized the synthetic `<school>.<level>.<name>` convention, so
+    // real catalog spell_ids (e.g. "Magic Missile", the literal key
+    // spell_catalog.rs hands the frontend picker) silently failed to parse
+    // and were dropped from unmet_wizard_spellbook_conditions's slot-budget
+    // consumption count -- a Wizard could add unlimited real spells with
+    // zero slot enforcement. Fixed by teaching that function to resolve
+    // real SPELL_LIST keys directly (no corpus needed -- it's a compiled-in
+    // static table, not the same headless/corpus-aware wall that blocked
+    // AC widening).
+    //
+    // This test reproduces frontend's exact live-verified numbers through
+    // the real command surface (not a parser-only unit test, per explicit
+    // instruction): a level-1 Wizard's 1st-level budget is 2 slots (base 1
+    // + specialist bonus 1, Int 10 = +0 bonus). Magic Missile (Evocation,
+    // cost 1) + Alarm (Abjuration, cost 1) = 2 consumed, exactly at
+    // capacity -- both accepted. Grease (Conjuration, cost 1) as a third
+    // prepared 1st-level spell pushes consumption to 3, over budget --
+    // must be honestly Blocked and never persisted.
+    #[test]
+    fn wizard_spell_slot_budget_rejects_a_third_spell_that_exceeds_capacity() {
+        let character_id = "pf1-adapter-wizard-slot-budget";
+        let root = tempdir("wizard-slot-budget");
+        let mut character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        character_input.chosen.spells_selected.clear();
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Wizard Slot Budget Test".to_owned(),
+            character_input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let first = record_and_prepare_spell_selection_at_root(
+            &root,
+            "Magic Missile",
+            WIZARD_CLASS_ID,
+            "2026-07-23T01:00:00Z",
+        )
+        .expect("first spell call should not error");
+        assert!(
+            matches!(first, CreateCharacterResponse::Saved { .. }),
+            "Magic Missile alone (1 of 2 slots) must be accepted: {first:?}"
+        );
+
+        let second = record_and_prepare_spell_selection_at_root(
+            &root,
+            "Alarm",
+            WIZARD_CLASS_ID,
+            "2026-07-23T02:00:00Z",
+        )
+        .expect("second spell call should not error");
+        assert!(
+            matches!(second, CreateCharacterResponse::Saved { .. }),
+            "Magic Missile + Alarm (2 of 2 slots, exactly at capacity) must be accepted: \
+             {second:?}"
+        );
+
+        let third = record_and_prepare_spell_selection_at_root(
+            &root,
+            "Grease",
+            WIZARD_CLASS_ID,
+            "2026-07-23T03:00:00Z",
+        )
+        .expect("third spell call should not error");
+        assert!(
+            matches!(third, CreateCharacterResponse::Blocked { .. }),
+            "a third prepared 1st-level spell (3 of 2 slots) must be honestly Blocked, proving \
+             real catalog spells now count against the slot budget: {third:?}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let prepared: Vec<&str> = reloaded
+            .character_input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| s.acquisition_mode == AcquisitionMode::Prepared)
+            .map(|s| s.spell_id.as_str())
+            .collect();
+        assert_eq!(
+            prepared,
+            vec!["Magic Missile", "Alarm"],
+            "the Blocked third call must not have persisted Grease: {prepared:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// The single most important regression guard for item 3: proves the
     /// bootstrap deadlock is real through the actual persistence command
     /// (add_spell_selection_at_root, called twice, single-mode each time,
@@ -1296,7 +1404,7 @@ mod tests {
 
         let known_only = add_spell_selection_at_root(
             &root,
-            "evocation.0.light",
+            "Light",
             WIZARD_CLASS_ID,
             AcquisitionMode::Known,
             "2026-07-21T01:00:00Z",
@@ -1310,7 +1418,7 @@ mod tests {
 
         let prepared_only = add_spell_selection_at_root(
             &root,
-            "evocation.0.light",
+            "Light",
             WIZARD_CLASS_ID,
             AcquisitionMode::Prepared,
             "2026-07-21T02:00:00Z",
@@ -1360,7 +1468,7 @@ mod tests {
 
         let response = record_and_prepare_spell_selection_at_root(
             &root,
-            "evocation.0.light",
+            "Light",
             WIZARD_CLASS_ID,
             "2026-07-21T01:00:00Z",
         )
@@ -1388,7 +1496,7 @@ mod tests {
         // deadlock.
         let second = add_spell_selection_at_root(
             &root,
-            "evocation.0.light",
+            "Light",
             WIZARD_CLASS_ID,
             AcquisitionMode::Known,
             "2026-07-21T02:00:00Z",

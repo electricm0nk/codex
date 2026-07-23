@@ -119,7 +119,7 @@ use super::character_input::{
     SkillAllocation,
 };
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
-use super::rules_tables::crb::spell_list::Pf1SchoolId;
+use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -15340,20 +15340,39 @@ fn ability_bonus_spells(ability_modifier: i16, spell_level: i16) -> i16 {
     }
 }
 
-/// Parses this bounded slice's own corpus-free Wizard-spellbook spell-identity
-/// convention: `<school>.<level>.<name>` (e.g. `evocation.1.magic_missile`).
-/// This compute surface has no `SourcePackageContent` corpus access (unlike
-/// Epic 2's `spellbook::compute_spellbook_coverage`, which resolves a spell's
-/// real school/level from the imported PCGen corpus), so this grounding
-/// cannot look up an arbitrary spell's school/level the way that engine does;
-/// it instead reuses the real strict-school enum (`Pf1SchoolId`, SD-19's
-/// foundation slice) rather than inventing a parallel school taxonomy, with
-/// the school/level named directly in the chosen `spell_id` -- the same
-/// "compound fact encoded in one colon/dot-segmented identifier" convention
-/// already used throughout this file (e.g. `feat:weapon_focus:weapon:longsword`).
-/// Returns `None` for any string that doesn't match the convention or names
-/// an unrecognized school.
+/// Resolves a wizard spellbook entry's `(school, level)` identity.
+///
+/// v0.6 alpha swarm (real correctness bug, frontend-found): a real spell_id
+/// from the actual spell catalog (e.g. `"Magic Missile"`, the literal
+/// `SPELL_LIST` key `spell_catalog.rs` hands the frontend picker) has no
+/// dots at all, so this used to always return `None` for every real spell
+/// -- silently excluding it from `unmet_wizard_spellbook_conditions`'s slot-
+/// budget consumption count. A Wizard could add unlimited real spells with
+/// zero slot enforcement. Fixed by trying a real `SPELL_LIST` lookup FIRST:
+/// unlike equipment (which needs a corpus-resolved `EquipmentRecord` via
+/// `SourcePackageContent`), `SPELL_LIST` (`rules_tables::crb::spell_list`)
+/// is a `pub const` compiled directly into the binary -- generated from the
+/// corpus at build time, not loaded from external fixture files at runtime
+/// -- so it is already fully accessible from this headless compute surface
+/// with zero corpus threading, exactly like every `spellbook::*` resolver
+/// already imports it. This is NOT the same headless-vs-corpus-aware
+/// architecture wall that blocked the AC-widening and initially looked like
+/// it might block encumbrance (see `risks-and-open-questions.md`) -- it
+/// only looks similar on the surface; `SPELL_LIST` was reachable the whole
+/// time.
+///
+/// Falls back to this bounded slice's original corpus-free synthetic
+/// convention, `<school>.<level>.<name>` (e.g. `evocation.1.magic_missile`),
+/// for any spell_id that isn't a real `SPELL_LIST` key -- zero blast radius
+/// on existing fixtures/tests already built against that convention (the
+/// same "compound fact encoded in one colon/dot-segmented identifier" idiom
+/// used throughout this file, e.g. `feat:weapon_focus:weapon:longsword`).
+/// Returns `None` only when neither resolution succeeds.
 fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> {
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == spell_id) {
+        return Some((entry.school, entry.level));
+    }
+
     let mut parts = spell_id.splitn(3, '.');
     let school_token = parts.next()?;
     let level_token = parts.next()?;
@@ -18498,5 +18517,54 @@ mod wizard_spell_save_dc_tests {
             "the spell save DC record must be grounded regardless of school specialization: \
              {computation:?}"
         );
+    }
+}
+
+/// v0.6 alpha swarm: QA/frontend found `parse_wizard_spellbook_spell_id`
+/// only ever recognized the synthetic `<school>.<level>.<name>` convention,
+/// so every REAL spell_id from the actual catalog (e.g. `"Magic Missile"`,
+/// no dots) silently failed to resolve and was dropped from
+/// `unmet_wizard_spellbook_conditions`'s slot-budget consumption count -- a
+/// Wizard could add unlimited real spells with zero slot enforcement. This
+/// covers the resolver fix in isolation (real SPELL_LIST keys resolve, the
+/// synthetic fallback still works); the live-verified reproduction of the
+/// actual bug through the real command surface lives in
+/// `pf1_adapter.rs`'s inline tests instead, per the same
+/// `tests/**`-is-QA's-owned-surface convention as this file's other inline
+/// modules.
+#[cfg(test)]
+mod wizard_spellbook_spell_id_resolution_tests {
+    use super::{parse_wizard_spellbook_spell_id, Pf1SchoolId};
+
+    #[test]
+    fn resolves_real_spell_list_keys_directly() {
+        assert_eq!(
+            parse_wizard_spellbook_spell_id("Magic Missile"),
+            Some((Pf1SchoolId::Evocation, 1))
+        );
+        assert_eq!(
+            parse_wizard_spellbook_spell_id("Alarm"),
+            Some((Pf1SchoolId::Abjuration, 1))
+        );
+        assert_eq!(
+            parse_wizard_spellbook_spell_id("Grease"),
+            Some((Pf1SchoolId::Conjuration, 1))
+        );
+        assert_eq!(
+            parse_wizard_spellbook_spell_id("Light"),
+            Some((Pf1SchoolId::Evocation, 0))
+        );
+    }
+
+    #[test]
+    fn falls_back_to_the_synthetic_dotted_convention_for_non_catalog_ids() {
+        assert_eq!(
+            parse_wizard_spellbook_spell_id("evocation.1.magic_missile"),
+            Some((Pf1SchoolId::Evocation, 1)),
+            "existing fixtures built against the pre-fix synthetic convention must keep \
+             resolving unchanged"
+        );
+        assert_eq!(parse_wizard_spellbook_spell_id("not.a.real.spell.id.at.all"), None);
+        assert_eq!(parse_wizard_spellbook_spell_id("no dots and not a catalog key"), None);
     }
 }
