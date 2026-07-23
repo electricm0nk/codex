@@ -13,42 +13,60 @@
 //! Per `epic-breakdown.md` Criterion 2.5, the golden fixture's
 //! `current_claim_status` upgrades from `not_yet_grounded` to
 //! `oracle_checked` ONLY if this real end-to-end run confirms genuine parity.
-//! It does not: this repo (and the checked-out PCGen repo) hold no real
-//! PCGen-native `.pcg` character file for this exact pilot build anywhere —
-//! see SD-25's `pcgen_runner_smoke.rs` and this epic's own
-//! `sd26_pcgen_runner.rs` `## DISCOVERED` history, which already established
-//! that the only real, non-synthetic `.pcg` fixture available to exercise
-//! the real PCGen Gradle engine is the bundled substitute
-//! `code/testsuite/PCGfiles/pf_Paladin.pcg` — a materially different
-//! character build (different race, class, and level) than the pilot's own
-//! Human Fighter level 1. Running the real PCGen engine against that
-//! substitute and comparing its real output against the pilot's real
-//! computed Codex values is not a genuine same-character parity check; a
-//! "match" would be coincidental and a "mismatch" would be expected but
-//! uninformative about the pilot case's actual parity.
 //!
-//! This cycle therefore proves the full pipeline is genuinely wired
-//! end-to-end (real PCGen engine invocation, real normalization/carry, real
-//! comparator, real parity-report render + write to
-//! `artifacts/oracle_validation/parity_report_pf1-crb-human-fighter-level1.md`)
-//! without fabricating a parity verdict, and asserts — concretely, via the
-//! `character.identity` dimension disagreeing — that this run cannot ground
-//! genuine oracle-checked parity for the pilot case. The golden fixture's
-//! `current_claim_status` therefore correctly remains `not_yet_grounded`,
-//! both in the loaded, typed representation and in the fixture file on disk.
+//! ## Follow-up cycle (this file's current state)
+//! The first 2.5 cycle found no real PCGen-native `.pcg` character file
+//! anywhere for the exact pilot build, and ran the pipeline against the
+//! bundled substitute `code/testsuite/PCGfiles/pf_Paladin.pcg` instead —
+//! proving the pipeline was wired end to end without fabricating parity (see
+//! this file's git history and
+//! `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_2/pilot_case_oracle_checked-cycle_receipt.md`).
 //!
-//! ## DISCOVERED
-//! No real PCGen-native `.pcg` character file exists anywhere in either repo
-//! for the exact pilot build (PF1 Core Rulebook Human Fighter level 1). This
-//! blocks a genuine oracle-checked upgrade for `pf1-crb-human-fighter-level1`
-//! until either (a) a real `.pcg` matching the pilot's exact deterministic
-//! input is hand-authored in the PCGen checkout (production data-authoring
-//! work in a different repo, outside this cycle's `src/oracle_validation/`
-//! file-touch grant), or (b) another legitimate, same-character oracle
-//! source is identified. Forwarded as a real, structural blocker — not
-//! self-healable inline.
+//! A real, near-complete precursor `.pcg` was subsequently located at
+//! `programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg`
+//! (outside this repo) — proven to load in the real PCGen engine by GE-05's
+//! own runtime-output receipt. This follow-up cycle completed that file (added
+//! the Dodge and Weapon Focus (Longsword) feats, Climb/Intimidate/Swim rank-1
+//! skill allocations, and the Chain Shirt + Longsword equipped/active
+//! loadout with no shield — the exact GE-06 deterministic input contract) and
+//! renamed its `CHARACTERNAME` to the pilot's own `case_id` so the
+//! `character.identity` dimension carries a genuine same-character signal
+//! rather than an arbitrary display name. Full details:
+//! `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_2/pilot_case_oracle_checked-followup-cycle_receipt.md`.
+//!
+//! Running the real pipeline against this completed, genuinely same-character
+//! `.pcg` produces a real, informative result: 7 of 9 selected parity
+//! dimensions agree (`character.identity`,
+//! `combat.baseline_melee_attack_bonus`, `defense.baseline_armor_class`, all
+//! three `defense.total_save.*` dimensions, and
+//! `skill.selected_modifier.intimidate`), but
+//! `skill.selected_modifier.climb` and `skill.selected_modifier.swim`
+//! genuinely disagree (PCGen: 6, Codex: 5). This is a real, structural
+//! finding, not a normalization artifact: Codex's
+//! `pilot_compute::compute_ability_modifiers` derives `AbilityModifiers`
+//! directly from the chosen ability *scores* and never actually folds in the
+//! chosen Human `+2 Strength` racial ability bonus (`choice:human_ability_bonus`)
+//! before computing the Strength modifier, even though
+//! `explain_human_pilot_race_seam` emits an explanation record that narrates
+//! the bonus. So `ability_modifiers.strength` is `+3` (from the raw score 16)
+//! rather than the correct `+4` (from the effective, bonus-applied score 18).
+//! `combat.baseline_melee_attack_bonus` still coincidentally matches PCGen
+//! (Codex: BAB +1 + STR +3 + Weapon Focus +1 = 5; PCGen: BAB +1 + STR +4 + 0
+//! generic-melee Weapon Focus contribution = 5) — the two systems reach the
+//! same total via different, non-equivalent arithmetic, which is a real
+//! observation worth flagging even though it does not itself fail this
+//! dimension's exact-value comparison. `skill.selected_modifier.climb`/`swim`
+//! have no such compensating term, so the missing `+1` from the unapplied
+//! racial Strength bonus surfaces directly as a real value mismatch.
+//!
+//! Because two real dimension mismatches remain, `current_claim_status`
+//! correctly stays `not_yet_grounded` — this cycle does NOT force the
+//! upgrade. The blocker is forwarded as a real, structural, self-healable
+//! (in a future rules_core cycle, not in-scope here) Codex bug: apply chosen
+//! racial ability-score bonuses before deriving `AbilityModifiers`, not just
+//! after, in a narrative-only explanation record.
 
-use codex::oracle_validation::comparator::compare;
+use codex::oracle_validation::comparator::{compare, MismatchReason};
 use codex::oracle_validation::golden_fixture::{load_golden_case_fixture, ClaimTier};
 use codex::oracle_validation::normalization::default_normalization_rules;
 use codex::oracle_validation::parity_report::{
@@ -73,22 +91,22 @@ const PILOT_SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
 const PILOT_LEGACY_ROUTE: &str =
     "headless Gradle run batch export via code/testsuite/base-xml.ftl";
 
+/// Absolute path to the completed, genuinely same-character pilot `.pcg`
+/// fixture. Lives outside this repo (in the `programs/codex/requirements/`
+/// GE-05 artifact tree, alongside its own runtime-evidence receipt), the
+/// same way `PcgenRunOptions::pcgen_repo_dir` already points at an
+/// out-of-repo PCGen checkout — `pcgen_runner.rs::run_pcgen_character` takes
+/// any real absolute `.pcg` path, so no in-repo copy or move is required.
+const PILOT_PCG_FIXTURE_PATH: &str = "/home/ubuntu/workspace/programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg";
+
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
-fn pcgen_repo_dir() -> PathBuf {
-    std::env::var("PCGEN_REPO_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| PathBuf::from("/home/ubuntu/workspace/repos/pcgen"))
-}
-
-/// Real, non-synthetic PCGen `.pcg` fixture bundled with PCGen's own test
-/// suite. Same substitute `sd26_pcgen_runner.rs`'s real end-to-end test
-/// already uses, since no real `.pcg` exists anywhere for the pilot case's
-/// own Human Fighter level 1 build.
-fn substitute_pcg_fixture() -> PathBuf {
-    pcgen_repo_dir().join("code/testsuite/PCGfiles/pf_Paladin.pcg")
+/// The real, completed, genuinely same-character PCGen `.pcg` fixture for
+/// this pilot case (see this module's doc comment for provenance).
+fn pilot_case_pcg_fixture() -> PathBuf {
+    PathBuf::from(PILOT_PCG_FIXTURE_PATH)
 }
 
 fn load_golden_fixture_or_panic() -> codex::oracle_validation::golden_fixture::GoldenCaseFixture {
@@ -112,13 +130,17 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
 
 /// The full pipeline proof this criterion names: pcgen_runner (2.4) ->
 /// comparator (2.1) -> parity_report (2.3), run for real against the pilot
-/// case's real Codex-computed dimensions and a real PCGen engine invocation.
-/// Confirms the pipeline is genuinely wired, then confirms — rather than
-/// assumes — that this particular run cannot ground genuine parity for the
-/// pilot case, so the golden fixture's `current_claim_status` correctly
-/// stays at `not_yet_grounded` rather than being force-upgraded.
+/// case's real Codex-computed dimensions and a real PCGen engine invocation
+/// against the completed, genuinely same-character pilot `.pcg`. Confirms
+/// the pipeline is genuinely wired, confirms 7 of 9 dimensions now agree
+/// (proving this is a real same-character comparison, unlike the prior
+/// cycle's substitute-fixture run), and confirms the two real remaining
+/// mismatches (Climb/Swim) are a genuine Codex computation gap rather than a
+/// fixture or pipeline defect — so the golden fixture's
+/// `current_claim_status` correctly stays at `not_yet_grounded` rather than
+/// being force-upgraded.
 #[test]
-fn full_pipeline_runs_end_to_end_and_the_pilot_case_stays_not_yet_grounded() {
+fn full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches() {
     // --- Codex side: real, computed selected parity dimensions. ---
     let input_load = load_character_input_fixture(DETERMINISTIC_FIXTURE);
     assert!(
@@ -136,11 +158,12 @@ fn full_pipeline_runs_end_to_end_and_the_pilot_case_stays_not_yet_grounded() {
         "expected real computed Codex selected parity dimensions for the pilot case"
     );
 
-    // --- PCGen side: a real end-to-end PCGen engine run via Criterion 2.4's wrapper. ---
-    let pcg = substitute_pcg_fixture();
+    // --- PCGen side: a real end-to-end PCGen engine run via Criterion 2.4's wrapper,
+    // against the completed, genuinely same-character pilot `.pcg`. ---
+    let pcg = pilot_case_pcg_fixture();
     assert!(
         pcg.is_file(),
-        "expected a real bundled PCGen .pcg fixture at {} (checked-out PCGen repo required)",
+        "expected the real completed pilot PCGen .pcg fixture at {}",
         pcg.display()
     );
 
@@ -177,30 +200,71 @@ fn full_pipeline_runs_end_to_end_and_the_pilot_case_stays_not_yet_grounded() {
         "parity report should name the pilot case id"
     );
 
-    // --- The honest finding: this run is not a genuine same-character parity check. ---
-    // The substitute PCGen run's own character identity necessarily disagrees with the
-    // pilot Codex case's identity, since they are different character builds entirely.
-    // This is concrete, structural evidence -- not an assumption -- that this run cannot
-    // ground genuine oracle-checked parity for the pilot case.
-    let identity_mismatch = comparison
-        .mismatches
+    // --- The real, genuine finding: identity now agrees (proving this is a real
+    // same-character run, not the prior cycle's substitute-fixture run), and 7 of 9
+    // dimensions match, but two real mismatches remain. ---
+    let matched_ids: Vec<&str> = comparison
+        .matches
         .iter()
-        .find(|m| m.dimension_id == "character.identity");
-    assert!(
-        identity_mismatch.is_some(),
-        "expected the substitute PCGen run's character.identity to disagree with the pilot \
-         Codex case's own identity (different character builds), proving this run cannot \
-         substitute for a genuine same-character parity check: {:?}",
+        .map(|m| m.dimension_id.as_str())
+        .collect();
+    for expected_match in [
+        "character.identity",
+        "combat.baseline_melee_attack_bonus",
+        "defense.baseline_armor_class",
+        "defense.total_save.fortitude",
+        "defense.total_save.reflex",
+        "defense.total_save.will",
+        "skill.selected_modifier.intimidate",
+    ] {
+        assert!(
+            matched_ids.contains(&expected_match),
+            "expected dimension '{expected_match}' to genuinely match between the real PCGen \
+             run and the real Codex computation: {:?}",
+            comparison
+        );
+    }
+    assert_eq!(
+        comparison.matches.len(),
+        7,
+        "expected exactly 7 genuinely matching dimensions: {:?}",
         comparison
     );
 
-    // --- Because no genuine same-character oracle run exists, do not force the upgrade. ---
+    // The two genuine mismatches: Climb and Swim, both off by exactly the missing Human
+    // +2 Strength racial ability bonus that `pilot_compute::compute_ability_modifiers`
+    // never actually folds into `AbilityModifiers.strength` (see this file's module doc
+    // comment for the full root-cause analysis).
+    for (dimension_id, pcgen_value, codex_value) in [
+        ("skill.selected_modifier.climb", 6i16, 5i16),
+        ("skill.selected_modifier.swim", 6i16, 5i16),
+    ] {
+        let mismatch = comparison
+            .mismatches
+            .iter()
+            .find(|m| m.dimension_id == dimension_id)
+            .unwrap_or_else(|| {
+                panic!("expected a real mismatch for dimension '{dimension_id}': {comparison:?}")
+            });
+        assert_eq!(mismatch.reason, MismatchReason::ValueMismatch);
+        assert_eq!(mismatch.pcgen_value_i16, Some(pcgen_value));
+        assert_eq!(mismatch.codex_value_i16, Some(codex_value));
+    }
+    assert_eq!(
+        comparison.mismatches.len(),
+        2,
+        "expected exactly the two genuine Climb/Swim mismatches and no others: {:?}",
+        comparison
+    );
+    assert!(!comparison.all_matched());
+
+    // --- Because real mismatches remain, do not force the upgrade. ---
     let fixture_after = load_golden_fixture_or_panic();
     assert_eq!(
         fixture_after.current_claim_status,
         ClaimTier::NotYetGrounded,
-        "pilot fixture must not be force-upgraded to oracle_checked without a genuine \
-         same-character parity run"
+        "pilot fixture must not be force-upgraded to oracle_checked while real Climb/Swim \
+         mismatches remain"
     );
 
     // And the fixture file on disk (not just the in-memory constant) must still say so --
