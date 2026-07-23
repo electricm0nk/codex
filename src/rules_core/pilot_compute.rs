@@ -6594,6 +6594,36 @@ fn is_supported_generic_single_class(input: &CharacterInput) -> bool {
     multiclass_class_level_supported(class_level)
 }
 
+/// A human-readable class label for explanation text (e.g. "Fighter",
+/// "Fighter+Rogue" for a multiclass mix), derived from
+/// `input.chosen.class_levels` rather than a hardcoded class name. Before
+/// this fix, `compute_combat_baseline`/`compute_total_saves`'s explanation
+/// text unconditionally said "Fighter", which was accurate while those
+/// functions only ever ran for a supported Fighter chassis -- now that the
+/// chassis dispatch also serves Wizard, Rogue, and multiclass mixes (task
+/// 4), a hardcoded "Fighter" became misleading for any other class even
+/// though the underlying numeric values were always correct (v0.6 alpha
+/// swarm fix, flagged by QA).
+fn class_summary_label(input: &CharacterInput) -> String {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|class_level| {
+            let name = class_level
+                .class_id
+                .strip_prefix("class:")
+                .unwrap_or(&class_level.class_id);
+            let mut chars = name.chars();
+            match chars.next() {
+                Some(first) => first.to_uppercase().chain(chars).collect(),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<String>>()
+        .join("+")
+}
+
 /// Maps a wire-level `class_id` string to `rules_tables::crb::class_tables`'s
 /// `ClassId`, for Fighter, Wizard, and Rogue (v0.6 alpha swarm, task 4 --
 /// widened from a Fighter/Wizard-only pair to add Rogue, the task's own
@@ -17762,11 +17792,12 @@ fn compute_total_saves(
         will: base_saves.will + ability_modifiers.wisdom,
     };
 
+    let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
         id: "defense.total_save.fortitude".to_owned(),
         value: total_saves.fortitude,
         detail: format!(
-            "Total Fortitude save: Fighter base Fortitude save (+{}) + Constitution modifier (+{}) = {}",
+            "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier (+{}) = {}",
             base_saves.fortitude, ability_modifiers.constitution, total_saves.fortitude
         ),
     });
@@ -17774,7 +17805,7 @@ fn compute_total_saves(
         id: "defense.total_save.reflex".to_owned(),
         value: total_saves.reflex,
         detail: format!(
-            "Total Reflex save: Fighter base Reflex save (+{}) + Dexterity modifier (+{}) = {}",
+            "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) = {}",
             base_saves.reflex, ability_modifiers.dexterity, total_saves.reflex
         ),
     });
@@ -17782,7 +17813,7 @@ fn compute_total_saves(
         id: "defense.total_save.will".to_owned(),
         value: total_saves.will,
         detail: format!(
-            "Total Will save: Fighter base Will save (+{}) + Wisdom modifier (+{}) = {}",
+            "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) = {}",
             base_saves.will, ability_modifiers.wisdom, total_saves.will
         ),
     });
@@ -17994,11 +18025,12 @@ fn compute_combat_baseline(
         String::new()
     };
 
+    let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
         id: "combat.baseline_melee_attack_bonus".to_owned(),
         value: melee_attack_bonus,
         detail: format!(
-            "Baseline melee attack bonus for the Longsword: Fighter base attack bonus (+{base_attack_bonus}) \
+            "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
              + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
