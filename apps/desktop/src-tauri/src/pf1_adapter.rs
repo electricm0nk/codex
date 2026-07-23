@@ -610,6 +610,52 @@ pub(crate) fn add_spell_selection_at_root(
     })
 }
 
+/// Appends BOTH a `Known` and a `Prepared` entry for the same spell, in one
+/// mutation (v0.6 alpha swarm, item 3 / the Wizard spellbook bootstrap fix).
+///
+/// `unmet_wizard_spellbook_conditions` requires a non-empty recorded
+/// (`Known`) set AND a non-empty prepared (`Prepared`) set simultaneously
+/// to reach `Computed`. `add_spell_selection` only ever appends one
+/// `SpellSelection` (one spell, one mode) per call, and
+/// `mutate_saved_character_at_root` discards any mutation that doesn't
+/// independently reach `Computed` -- so a `Known`-only call is Blocked
+/// (nothing `Prepared` yet) and discarded, and a `Prepared`-only call is
+/// *also* Blocked (the prepared spell isn't in the still-empty recorded
+/// set, since the first call never persisted) and discarded. Every UI path
+/// -- creation or level-up -- was structurally stuck at zero spells
+/// regardless of call order. This function breaks that bootstrap deadlock
+/// by satisfying both conditions in the same atomic mutation.
+///
+/// Once a character has at least one spell recorded and prepared this way,
+/// the plain `apply_add_spell_selection`/`add_spell_selection_at_root`
+/// (either mode) work exactly as before for every subsequent spell --
+/// learning more known spells or re-preparing an already-known spell
+/// doesn't violate any exactness check on its own. This function exists
+/// only to cross that first-spell threshold; it is not a replacement for
+/// `add_spell_selection`.
+pub fn apply_record_and_prepare_spell_selection(
+    character_input: &mut CharacterInput,
+    spell_id: &str,
+    source_class_id: &str,
+) {
+    apply_add_spell_selection(character_input, spell_id, source_class_id, AcquisitionMode::Known);
+    apply_add_spell_selection(character_input, spell_id, source_class_id, AcquisitionMode::Prepared);
+}
+
+/// `record_and_prepare_spell_selection`'s real implementation — see
+/// `apply_record_and_prepare_spell_selection`'s own doc comment for why
+/// this exists alongside (not instead of) `add_spell_selection_at_root`.
+pub(crate) fn record_and_prepare_spell_selection_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_record_and_prepare_spell_selection(character_input, spell_id, source_class_id);
+    })
+}
+
 /// Replaces `chosen.skill_allocations` wholesale with the caller's full
 /// allocation set. Unlike equipment/spell selections (which append one
 /// entry at a time), the skill-allocation dialog always sends its complete
@@ -1045,6 +1091,135 @@ mod tests {
              recorded+prepared within budget must reach Computed, got diagnostics: {:?}",
             receipt.computation.diagnostics
         );
+    }
+
+    /// The single most important regression guard for item 3: proves the
+    /// bootstrap deadlock is real through the actual persistence command
+    /// (add_spell_selection_at_root, called twice, single-mode each time,
+    /// exactly how a real UI would call the existing command) and that
+    /// record_and_prepare_spell_selection_at_root breaks it.
+    #[test]
+    fn add_spell_selection_at_root_cannot_bootstrap_a_wizard_spellbook_from_zero() {
+        let character_id = "pf1-adapter-wizard-bootstrap-deadlock";
+        let root = tempdir("wizard-bootstrap-deadlock");
+        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Wizard Bootstrap Test".to_owned(),
+            character_input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let known_only = add_spell_selection_at_root(
+            &root,
+            "evocation.0.light",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("known-only call should not error");
+        assert!(
+            matches!(known_only, CreateCharacterResponse::Blocked { .. }),
+            "recording alone (nothing prepared yet) must stay honestly Blocked, proving the \
+             deadlock is real: {known_only:?}"
+        );
+
+        let prepared_only = add_spell_selection_at_root(
+            &root,
+            "evocation.0.light",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Prepared,
+            "2026-07-21T02:00:00Z",
+        )
+        .expect("prepared-only call should not error");
+        assert!(
+            matches!(prepared_only, CreateCharacterResponse::Blocked { .. }),
+            "the first call never persisted, so this loads the original empty spellbook again \
+             and is also Blocked (prepared spell isn't in the still-empty recorded set): \
+             {prepared_only:?}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            reloaded.character_input.chosen.spells_selected.is_empty(),
+            "neither Blocked call should have persisted anything: {:?}",
+            reloaded.character_input.chosen.spells_selected
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The fix: one atomic call breaks the deadlock the previous test proves.
+    #[test]
+    fn record_and_prepare_spell_selection_at_root_breaks_the_bootstrap_deadlock() {
+        let character_id = "pf1-adapter-wizard-bootstrap-fix";
+        let root = tempdir("wizard-bootstrap-fix");
+        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Wizard Bootstrap Fix Test".to_owned(),
+            character_input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = record_and_prepare_spell_selection_at_root(
+            &root,
+            "evocation.0.light",
+            WIZARD_CLASS_ID,
+            "2026-07-21T01:00:00Z",
+        )
+        .expect("record-and-prepare call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "one atomic record+prepare call must reach Computed on the first spell, \
+                     breaking the bootstrap deadlock, got: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let spells = &reloaded.character_input.chosen.spells_selected;
+        assert_eq!(spells.len(), 2, "must persist both the Known and Prepared entries: {spells:?}");
+        assert!(spells.iter().any(|s| s.acquisition_mode == AcquisitionMode::Known));
+        assert!(spells.iter().any(|s| s.acquisition_mode == AcquisitionMode::Prepared));
+
+        // Once bootstrapped, the plain single-mode command works normally
+        // for a second spell -- proves this fix doesn't change
+        // add_spell_selection's own behavior, just breaks the first-spell
+        // deadlock.
+        let second = add_spell_selection_at_root(
+            &root,
+            "evocation.0.light",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-21T02:00:00Z",
+        )
+        .expect("a second known-only call should not error");
+        assert!(
+            matches!(second, CreateCharacterResponse::Saved { .. }),
+            "once bootstrapped, plain add_spell_selection must work normally: {second:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]

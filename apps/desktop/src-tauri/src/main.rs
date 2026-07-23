@@ -30,8 +30,9 @@ use character_hub::{
     adjust_character_money, clone_character, create_character, delete_character,
     delete_character_portrait, export_character, export_character_json, import_character,
     level_up_character, list_saved_characters, load_character_bio, load_character_durability,
-    load_character_money, load_character_portrait, load_saved_character, save_character_portrait,
-    set_skill_allocations, update_character_bio,
+    load_character_money, load_character_portrait, load_saved_character,
+    record_and_prepare_spell_selection, save_character_portrait, set_skill_allocations,
+    update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
@@ -142,6 +143,7 @@ fn main() {
             recompute_character,
             add_equipment_selection,
             add_spell_selection,
+            record_and_prepare_spell_selection,
             add_feat_selection,
             set_skill_allocations,
             append_to_character,

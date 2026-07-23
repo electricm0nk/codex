@@ -220,7 +220,7 @@ pub enum CreateCharacterResponse {
 pub(crate) use crate::pf1_adapter::{
     add_equipment_selection_at_root, add_feat_selection_at_root, add_spell_selection_at_root,
     compose_character_input, level_up_character_at_root, mutate_saved_character_at_root,
-    set_skill_allocations_at_root,
+    record_and_prepare_spell_selection_at_root, set_skill_allocations_at_root,
 };
 // `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
 // / `apply_add_feat_selection` / `apply_set_skill_allocations` are only
@@ -232,7 +232,7 @@ pub(crate) use crate::pf1_adapter::{
 #[cfg(test)]
 pub(crate) use crate::pf1_adapter::{
     apply_add_equipment_selection, apply_add_feat_selection, apply_add_spell_selection,
-    apply_level_up, apply_set_skill_allocations,
+    apply_level_up, apply_record_and_prepare_spell_selection, apply_set_skill_allocations,
 };
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -379,10 +379,11 @@ pub(crate) fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> Character
 /// `CreateCharacterResponse::Saved`/`Blocked`, matching every other
 /// character-hub command's response shape).
 ///
-/// This table documents the full five-operation surface. As of this cycle
-/// all five rows are wired to callable `#[tauri::command]`s
+/// This table documents the full six-operation surface. As of this cycle
+/// all six rows are wired to callable `#[tauri::command]`s
 /// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`,
-/// `set_skill_allocations`, `add_feat_selection`).
+/// `set_skill_allocations`, `add_feat_selection`,
+/// `record_and_prepare_spell_selection`).
 /// Per the Wired Integration doctrine (`docs/governance/no-stub-mvp-doctrine.md`),
 /// the `wired` flag below is descriptive metadata this table's own
 /// dispatch-shape test asserts against, not a runtime dispatcher a caller
@@ -394,6 +395,7 @@ pub enum SavedCharacterMutationOp {
     AddSpellSelection,
     SetSkillAllocations,
     AddFeatSelection,
+    RecordAndPrepareSpellSelection,
 }
 
 /// One row of the `mutate_saved_character` operation table.
@@ -414,7 +416,7 @@ pub struct SavedCharacterMutationOpDescriptor {
     pub wired: bool,
 }
 
-pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 5] = [
+pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 6] = [
     SavedCharacterMutationOpDescriptor {
         op: SavedCharacterMutationOp::LevelUpCharacter,
         name: "level_up_character",
@@ -449,6 +451,16 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         name: "add_feat_selection",
         description: "Appends an entry to chosen.selected_feats, then \
             recomputes and re-saves.",
+        wired: true,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::RecordAndPrepareSpellSelection,
+        name: "record_and_prepare_spell_selection",
+        description: "Appends BOTH a Known and a Prepared entry for the \
+            same spell to chosen.spells_selected in one atomic mutation, \
+            then recomputes and re-saves -- breaks the Wizard spellbook \
+            bootstrap deadlock a single-mode add_spell_selection call \
+            cannot cross alone.",
         wired: true,
     },
 ];
@@ -856,6 +868,45 @@ pub fn add_spell_selection(
         &request.spell_id,
         &request.source_class_id,
         request.acquisition_mode.into(),
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RecordAndPrepareSpellSelectionRequest {
+    pub character_id: String,
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub saved_at: String,
+}
+
+/// Appends BOTH a `Known` and a `Prepared` entry for the same spell in one
+/// atomic mutation — breaks the Wizard spellbook bootstrap deadlock
+/// `add_spell_selection` alone cannot: `unmet_wizard_spellbook_conditions`
+/// requires a non-empty recorded set AND a non-empty prepared set
+/// simultaneously, but `add_spell_selection` only ever appends one spell in
+/// one mode per call, and `mutate_saved_character_at_root` discards any
+/// call that doesn't independently reach `Computed` — so a `Known`-only
+/// call is Blocked (nothing prepared yet) and never persists, and a
+/// `Prepared`-only call is *also* Blocked (the prepared spell isn't in the
+/// still-empty recorded set) and never persists either. See
+/// `apply_record_and_prepare_spell_selection`'s own doc comment for the
+/// full analysis.
+///
+/// Use this once, for the character's first spell. After that, the plain
+/// `add_spell_selection` (either mode) works normally for every subsequent
+/// spell — this command is not a general replacement for it.
+#[tauri::command]
+pub fn record_and_prepare_spell_selection(
+    app: tauri::AppHandle,
+    request: RecordAndPrepareSpellSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    record_and_prepare_spell_selection_at_root(
+        &root,
+        &request.spell_id,
+        &request.source_class_id,
         &request.saved_at,
     )
 }
@@ -2198,7 +2249,7 @@ mod tests {
     // ----- `mutate_saved_character` operation table (Criterion 16) -----
 
     #[test]
-    fn saved_character_mutation_operations_table_documents_five_ops_all_wired() {
+    fn saved_character_mutation_operations_table_documents_six_ops_all_wired() {
         let names: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
             .iter()
             .map(|descriptor| descriptor.name)
@@ -2211,8 +2262,9 @@ mod tests {
                 "add_spell_selection",
                 "set_skill_allocations",
                 "add_feat_selection",
+                "record_and_prepare_spell_selection",
             ],
-            "the table must enumerate exactly these five ops, in this order"
+            "the table must enumerate exactly these six ops, in this order"
         );
 
         let wired: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
@@ -2228,8 +2280,9 @@ mod tests {
                 "add_spell_selection",
                 "set_skill_allocations",
                 "add_feat_selection",
+                "record_and_prepare_spell_selection",
             ],
-            "all five ops are callable through real Tauri commands as of this cycle"
+            "all six ops are callable through real Tauri commands as of this cycle"
         );
 
         for descriptor in SAVED_CHARACTER_MUTATION_OPERATIONS.iter() {
@@ -2418,6 +2471,26 @@ mod tests {
         assert_eq!(added.spell_id, "Mage Armor");
         assert_eq!(added.source_class_id, "class:wizard");
         assert_eq!(added.acquisition_mode, AcquisitionMode::Known);
+    }
+
+    /// v0.6 alpha swarm item 3: the pure half of the Wizard spellbook
+    /// bootstrap fix -- see `apply_record_and_prepare_spell_selection`'s
+    /// own doc comment for the full deadlock analysis. The `_at_root`
+    /// golden-path proof lives in `pf1_adapter.rs`'s own test module
+    /// (that's where the deadlock reproduction against the real
+    /// persistence layer lives too).
+    #[test]
+    fn apply_record_and_prepare_spell_selection_appends_both_known_and_prepared_entries() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.spells_selected.len();
+
+        apply_record_and_prepare_spell_selection(&mut input, "evocation.0.light", "class:wizard");
+
+        assert_eq!(input.chosen.spells_selected.len(), starting_len + 2);
+        let added = &input.chosen.spells_selected[starting_len..];
+        assert!(added.iter().all(|s| s.spell_id == "evocation.0.light" && s.source_class_id == "class:wizard"));
+        assert!(added.iter().any(|s| s.acquisition_mode == AcquisitionMode::Known));
+        assert!(added.iter().any(|s| s.acquisition_mode == AcquisitionMode::Prepared));
     }
 
     /// The single most important regression guard for Criterion 18's spell
