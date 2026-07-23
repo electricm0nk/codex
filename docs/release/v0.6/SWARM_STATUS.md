@@ -12,11 +12,11 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   command signature received; can now test the
-                                actual spell-picker flow for the first time
-backend               Sonnet   record_and_prepare_spell_selection DONE+
-                                pushed (6e12437) -- both Wizard gaps now
-                                closed; standing by
+frontend              Sonnet   testing the real spell-picker flow against
+                                the new record_and_prepare_spell_selection
+                                command
+backend               Sonnet   feats-tab exposure DONE+pushed (1509124);
+                                standing by, no urgent queue
 qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
                                 (900beee, 13/14 dims genuinely PCGen-matched);
                                 idle, watching for the Wizard bootstrap work
@@ -463,6 +463,29 @@ qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
   reachable through the shipped UI. Frontend testing the real
   spell-picker flow next -- the original ask from before this whole
   investigation chain started.
+- Backend closed item 8, feats-tab full-list exposure (1509124):
+  chosen.selected_feats now exposed through LoadSavedCharacterResponse,
+  found and fixed all 3 build sites for the shared struct literal.
+  Small, bounded, no surprises as expected. Proactively messaged
+  frontend with the field shape.
+- QA scoped a Wizard PCGen fixture task and correctly stopped before
+  sinking effort into it: no real PCGen-loadable Wizard .pcg fixture
+  exists anywhere accessible (the one that exists is wrong-ruleset,
+  GAMEMODE:3e). The Fighter case took multiple GE-05/SD-26 cycles to
+  get a genuinely correct one -- hand-authoring a new Wizard fixture
+  carries real risk of producing something that doesn't load in PCGen,
+  multi-cycle-shaped work. Deferred to backlog (risks item 11). Going
+  with the lighter substitute instead: cross-checking Wizard's spell-
+  slot/spells-known/save-DC formulas against PCGen's source LST data
+  directly, same technique as the carrying-capacity/encumbrance work --
+  real external validation without the fixture-authoring risk.
+- Frontend found one more small gap while wiring the spell picker:
+  load_saved_character doesn't expose spells_selected either (same
+  shape as items 6/8), so it can't detect "is this the first spell" and
+  routes all Wizard spell adds through record_and_prepare_spell_selection
+  regardless -- a sound, documented-pattern-consistent workaround, not
+  blocking. Backend correctly flagged it rather than acting on it
+  unprompted; logged as risks item 9a, not prioritized.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
