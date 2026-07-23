@@ -471,11 +471,12 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+ "sha2",
 ]
 
 [[package]]
 name = "codex-desktop"
-version = "0.5.99"
+version = "0.6.0"
 dependencies = [
  "base64 0.22.1",
  "codex",

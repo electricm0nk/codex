@@ -50,16 +50,17 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: this branch was promoted from tranche/4-1 to tranche/5 (SD-22
-  // E8.27) and stays at tranche-base 5 while tranche/5 remains the active
-  // branch — the tranche digit only advances when a new tranche/N branch is
-  // cut for the next bundle, not automatically at a bundle's own closure
-  // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
-  // rule; SD-22's Epic 7 closure-epilogue cycle initially bumped this to
-  // tranche=6 in error and it was reverted). Each anchor here only holds
-  // until the next tranche promotion lands — update alongside the version
-  // bump, not as a follow-on fix.
-  assert(pkg.startsWith('0.5.'), `version "${pkg}" must keep major=0, tranche=5 on tranche/5`);
+  // Anchor: this branch was promoted from tranche/5 to tranche/6 (v0.6 alpha
+  // release swarm, cut fresh from develop) and stays at tranche-base 6 while
+  // tranche/6 remains the active branch — the tranche digit only advances
+  // when a new tranche/N branch is cut for the next bundle, not automatically
+  // at a bundle's own closure (../SD-22/decisions.md §2 + ../SD-21/decisions.md
+  // §18's tranche-promotion rule; SD-22's Epic 7 closure-epilogue cycle once
+  // bumped this to tranche=6 in error and it was reverted — this time the
+  // bump to tranche=6 is intentional, driven by a real tranche/6 cut). Each
+  // anchor here only holds until the next tranche promotion lands — update
+  // alongside the version bump, not as a follow-on fix.
+  assert(pkg.startsWith('0.6.'), `version "${pkg}" must keep major=0, tranche=6 on tranche/6`);
 }
 
 function verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme() {
