@@ -96,7 +96,7 @@ per-case pipeline cost regardless of which of the three classes is loaded.
 | RED setup + GREEN setup + dual-audit gate | ~30 min (reconstructed: dominant share of SD-22's 40 min — real class-chassis derivation + test authoring + `cargo test`/`clippy` runs, per the Alchemist receipt's RED/GREEN evidence sections) | ~5 min (unchanged, load-bearing target per `technical-design.md §5.1`) | Partially — dual-audit grep itself live-measured at **0.72s + 0.02s = 0.74s** (both `OK_*`, see §4); real PCGen-engine round-trip live-measured at **34.50s** and **21.65s** (two independent runs) as the dominant real sub-component inside this budget |
 | Per-class doc-comment with source citation | ~5 min (reconstructed — SD-22 receipt's "Why this criterion" + inline LST-token citation narrative, e.g. `apg_classes.lst:11`'s `BONUS:COMBAT`/`BONUS:SAVE` tokens, hand-written prose) | **0 min (cut)** — durable citation now lives in the JSON cache's SHA-256 frontmatter (`src/bin/sd26_gen_core_rulebook_cache.rs`'s `source` discriminated union, confirmed real and populated for all 3,326 CRB records per `artifacts/epic_3/core_rulebook_json_cache-cycle_receipt.md`) | Reconstructed (pre-cut); cut is structural (post-cut has nothing to time) |
 | Cycle-artifact write | ~3 min (reconstructed, but the artifact itself is **real and measured**: `docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md` is confirmed **135 lines** via `wc -l` — the literal citation behind this criterion's "135-line cycle-artifact write" target) | **~8s** — live-measured writing the minimal shape (`artifacts/epic_5/example-minimal-receipt-postcut.md`, 9 lines: RED/GREEN summary + dual-audit result + `duration_seconds` field only), bounded by `date -u +%s.%N` before/after: `1784777845.03 − 1784777837.24 = 7.79s` | **Yes, live** |
-| Commit + push | ~1 min (unchanged — load-bearing) | ~1 min (unchanged — load-bearing; concurrent-write protocol per `loop-instruction.md §5`) | Live-measured at this cycle's own landing, §6 below |
+| Commit + push | ~1 min (unchanged — load-bearing) | ~1 min budget (unchanged — load-bearing; concurrent-write protocol per `loop-instruction.md §5`). **Real measured this cycle: 1.17s** (0.05s commit + 1.11s push, single fetch/rebase/push, no retry needed — commit `251e4e2`) — the ~60s budget is a doctrine allowance for the general case (interactive message drafting + possible non-fast-forward retries up to 5x), not a claim that push itself is slow; kept unchanged per §7, not re-cut, since retries are a real possibility under concurrent E1-E6 dispatch this bundle uses elsewhere | **Yes, live** |
 | `progress.md` update | ~1 min (reconstructed — historical 4-section fan-out: Status-matrix row + `## TODO` dequeue + `## DONE` append + `## Cycle log` table row, each hand-written prose, e.g. the 3.1 row alone runs ~700 words) | **~7s** — live-measured, one status-matrix row edit only (`progress.md`'s 5.1 row), bounded the same way: `1784777856.50 − 1784777849.28 = 7.23s` | **Yes, live** |
 | **Total** | **~40 min** (real, cited verbatim from SD-22's own receipt) | **~6.3 min** (5 min load-bearing RED/GREEN/audit + 8s artifact + 7s progress.md + ~60s commit/push ≈ 378s) | Mixed — see breakdown above |
 
@@ -160,9 +160,17 @@ budget is not itself inflated.
 ## 6. Bottom line
 
 - **Pre-cut baseline: ~40 minutes** (real, `docs/release/SD-22/.../class_alchemist_cycle_receipt.md`'s own `duration: ~40 minutes`).
-- **Post-cut floor: ~6.3 minutes** (5 min load-bearing RED/GREEN/dual-audit
-  [unchanged by design] + 7.79s live-measured artifact write + 7.23s
-  live-measured progress.md update + ~60s load-bearing commit+push).
+- **Post-cut floor: ~6.3 minutes on the ~60s commit+push budget** (5 min
+  load-bearing RED/GREEN/dual-audit [unchanged by design] + 7.79s
+  live-measured artifact write + 7.23s live-measured progress.md update +
+  ~60s load-bearing commit+push budget). **Using this cycle's own real
+  measured commit+push (1.17s, single-shot, no retry) instead of the
+  budget, the real floor lands at ~5.2 minutes** — the ~60s figure is kept
+  as the reported bottom-line commit+push budget per §7 (not re-cut; a real
+  concurrent-dispatch cycle can need up to 5 rebase/push retries per
+  `loop-instruction.md §5`), so **~6.3 minutes is reported as the honest
+  bottom line**, with ~5.2 minutes noted as the best-case real number
+  observed this cycle.
 - **Target from `technical-design.md §5.1`: ~6 minutes.** The measured
   post-cut floor (~6.3 min) is **within ~5% of the stated target** —
   effectively met. The residual ~18 seconds beyond nominal 6:00 comes
