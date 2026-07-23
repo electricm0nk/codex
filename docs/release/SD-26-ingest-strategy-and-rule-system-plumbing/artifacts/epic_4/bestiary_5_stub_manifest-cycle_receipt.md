@@ -1,7 +1,7 @@
 # Cycle bestiary_5_stub_manifest — Epic 4 Book Stub Manifest / Criterion 4.7
 
 - **Card ID:** (pending — see step 8 in report)
-- **Commit SHA:** (filled in after commit; see step 6 of this cycle)
+- **Commit SHA:** 69a3f86bc87c5d78e6bda49a19571b3a54a8913d
 - **Files touched:** `data/stubs/bestiary_5.json` (new), `docs/governance/wired-integration-stubs-registry.md` (entry #0009 added)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
