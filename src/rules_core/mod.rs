@@ -6,6 +6,7 @@ pub mod composed_input;
 pub mod contract;
 pub mod damage_total;
 pub mod encounters;
+pub mod encumbrance;
 pub mod equipment_effects;
 pub mod equipment_resolver;
 pub mod feat_prereqs;

@@ -27,13 +27,16 @@
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
+use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
     PrerequisiteEvaluation,
 };
 use crate::rules_core::level_up::{compute_level_up_grants, LevelUpPlan};
-use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
+use crate::rules_core::pilot_compute::{
+    apply_human_ability_bonus, ComputationDiagnostic, PilotBaseChassisComputation,
+};
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
 use crate::rules_core::rules_tables::crb::feats::feat_tables;
 use crate::rules_core::skill_allocation::{allocate_skill_ranks, SkillTotals};
@@ -219,6 +222,16 @@ pub struct PilotReceipt {
     /// already set. A future, separate cycle owns turning this structured
     /// data into a summed display number, if that is ever wanted.
     pub weapon_damage: Vec<WeaponDamageBreakdown>,
+    /// v0.6 alpha swarm task 5's real carrying-capacity/encumbrance
+    /// computation (`encumbrance::compute_encumbrance`). Computed over
+    /// every `EquippedActive` or `SelectedInactive` equipment selection
+    /// (both represent items the character possesses; `Absent` does not
+    /// contribute weight -- see `EncumbranceComputation`'s own doc
+    /// comment), against the character's real *effective* Strength score
+    /// (`apply_human_ability_bonus`, the same Human-racial-bonus-aware
+    /// value the chassis computation itself derives -- not the raw
+    /// pre-bonus `input.chosen.ability_scores.strength`).
+    pub encumbrance: EncumbranceComputation,
 }
 
 /// One selected feat, resolved against the CRB feat catalog and evaluated
@@ -347,6 +360,26 @@ pub fn to_pilot_receipt(
         receipt.base.ability_modifiers.strength,
     );
 
+    // v0.6 alpha swarm task 5: unlike `equipment_effects`/`weapon_damage`,
+    // carrying capacity is not scoped to `EquippedActive` only -- a
+    // `SelectedInactive` item (owned, in the character's pack, just not
+    // worn/wielded) still weighs something, so `compute_encumbrance` reads
+    // `input.chosen.equipment_selections` directly (unfiltered) rather than
+    // the `equipped` local above. Needs the real *effective* Strength
+    // score, not the STR modifier `weapon_damage` reuses above -- derived
+    // via the same `apply_human_ability_bonus` the chassis computation
+    // itself already applied; the explanation it would push is discarded
+    // here (already pushed once, for real, by the chassis computation that
+    // produced `receipt.base` -- pushing it again into a throwaway `Vec`
+    // avoids a duplicate id in `PilotReceipt.diagnostics`/`chassis`).
+    let mut discarded_explanations = Vec::new();
+    let effective_ability_scores = apply_human_ability_bonus(input, &mut discarded_explanations);
+    let encumbrance = compute_encumbrance(
+        &input.chosen.equipment_selections,
+        corpus,
+        effective_ability_scores.strength,
+    );
+
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
@@ -356,6 +389,7 @@ pub fn to_pilot_receipt(
         feats,
         equipment_effects,
         weapon_damage,
+        encumbrance,
     }
 }
 
