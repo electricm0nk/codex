@@ -4764,13 +4764,15 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 /// own deterministic pilot fixture and the real PCGen oracle both confirm Human
 /// is the one race whose chosen score is the PRE-bonus base — see the CG-03
 /// follow-up receipt for the oracle evidence.
-/// `pub(crate)` (rather than private) so `contract.rs`'s encumbrance wiring
-/// (v0.6 alpha swarm, task 5) can derive the character's real *effective*
-/// Strength score (post-racial-bonus) for `encumbrance::compute_encumbrance`
-/// without re-deriving this same Human-bonus arithmetic a second time or
-/// falling back to the pre-bonus raw score, which would be wrong for a
-/// Human whose chosen ability-bonus target is Strength.
-pub(crate) fn apply_human_ability_bonus(
+/// `pub` (rather than private) so this crate's own `contract.rs` (task 5's
+/// encumbrance wiring) and the downstream `apps/desktop/src-tauri` crate's
+/// `character_hub.rs` (item 2's durability wiring -- a separate crate,
+/// where `pub(crate)` would not reach) can both derive the character's
+/// real *effective* ability scores (post-racial-bonus) without re-deriving
+/// this same Human-bonus arithmetic a second time, or falling back to the
+/// pre-bonus raw scores, which would be wrong for a Human whose chosen
+/// ability-bonus target is the relevant ability.
+pub fn apply_human_ability_bonus(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) -> AbilityScores {
@@ -4876,7 +4878,12 @@ fn compute_ability_modifiers(
 
 /// Pathfinder ability modifier: `floor(score / 2) - 5`. `div_euclid` gives true
 /// floor division so negative scores would round down rather than toward zero.
-fn ability_modifier(score: i16) -> i16 {
+/// `pub` (rather than private) so `apps/desktop/src-tauri`'s
+/// `character_hub.rs` durability commands (v0.6 alpha swarm, item 2, a
+/// separate downstream crate -- `pub(crate)` would not reach it) can derive
+/// the real Constitution modifier from an effective ability score without
+/// re-deriving this same formula a second time.
+pub fn ability_modifier(score: i16) -> i16 {
     score.div_euclid(2) - 5
 }
 
@@ -6657,7 +6664,11 @@ fn class_summary_label(input: &CharacterInput) -> String {
 /// change and are flagged to `qa` directly rather than silently pushed;
 /// widening the other 8 classes is future scope, one class (and one
 /// coordinated test update) at a time.
-fn table_class_id(class_id_str: &str) -> Option<ClassId> {
+/// `pub(crate)` (rather than private) so `durability.rs`'s max-HP
+/// computation (v0.6 alpha swarm, item 2) can reuse the same class-id
+/// recognition this module's chassis dispatch already established, rather
+/// than re-declaring a second, independently-maintained copy.
+pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
     if class_id_str == FIGHTER_CLASS_ID {
         Some(ClassId::Fighter)
     } else if class_id_str == WIZARD_CLASS_ID {

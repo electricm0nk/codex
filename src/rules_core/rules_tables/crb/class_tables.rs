@@ -65,23 +65,36 @@ struct ClassMeta {
     max_supported_level: u8,
     bab: BabProgression,
     good_saves: GoodSaves,
+    /// Hit die size (SD-13/v0.6 alpha swarm durability calc), from the same
+    /// `cr_classes.lst` `HD:` token every other field in this table already
+    /// cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this
+    /// table's own save-formula doc comments already cite for Fighter).
+    hit_die: u8,
 }
 
 /// Mirrors `MAX_SUPPORTED_<CLASS>_LEVEL` in `pilot_compute.rs` as of the
 /// SD-18 level-20 capstone-widening sweep (2026-07-16).
 const CLASS_META: &[ClassMeta] = &[
-    ClassMeta { class_id: ClassId::Barbarian, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false } },
-    ClassMeta { class_id: ClassId::Bard, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: true } },
-    ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true } },
-    ClassMeta { class_id: ClassId::Druid, max_supported_level: 15, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true } },
-    ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false } },
-    ClassMeta { class_id: ClassId::Monk, max_supported_level: 12, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true } },
-    ClassMeta { class_id: ClassId::Paladin, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: true } },
-    ClassMeta { class_id: ClassId::Ranger, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: true, will: false } },
-    ClassMeta { class_id: ClassId::Rogue, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: false } },
-    ClassMeta { class_id: ClassId::Sorcerer, max_supported_level: 20, bab: BabProgression::Half, good_saves: GoodSaves { fortitude: false, reflex: false, will: true } },
-    ClassMeta { class_id: ClassId::Wizard, max_supported_level: 20, bab: BabProgression::Half, good_saves: GoodSaves { fortitude: false, reflex: false, will: true } },
+    ClassMeta { class_id: ClassId::Barbarian, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 12 },
+    ClassMeta { class_id: ClassId::Bard, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: true }, hit_die: 8 },
+    ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
+    ClassMeta { class_id: ClassId::Druid, max_supported_level: 15, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
+    ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 10 },
+    ClassMeta { class_id: ClassId::Monk, max_supported_level: 12, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 10 },
+    ClassMeta { class_id: ClassId::Paladin, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 10 },
+    ClassMeta { class_id: ClassId::Ranger, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: true, will: false }, hit_die: 10 },
+    ClassMeta { class_id: ClassId::Rogue, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: false }, hit_die: 8 },
+    ClassMeta { class_id: ClassId::Sorcerer, max_supported_level: 20, bab: BabProgression::Half, good_saves: GoodSaves { fortitude: false, reflex: false, will: true }, hit_die: 6 },
+    ClassMeta { class_id: ClassId::Wizard, max_supported_level: 20, bab: BabProgression::Half, good_saves: GoodSaves { fortitude: false, reflex: false, will: true }, hit_die: 6 },
 ];
+
+/// `class_id`'s hit die size (e.g. `10` for Fighter's d10), from this
+/// table's own ingested `CLASS_META`. Returns `None` for a `class_id` this
+/// table does not carry a row for -- mirrors `good_saves_for`'s own
+/// `None`-when-absent contract.
+pub fn hit_die_for(class_id: ClassId) -> Option<u8> {
+    CLASS_META.iter().find(|meta| meta.class_id == class_id).map(|meta| meta.hit_die)
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ClassTableRow {

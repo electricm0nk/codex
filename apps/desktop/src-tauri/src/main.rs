@@ -26,11 +26,12 @@ use campaign_drive::{
     write_campaign_drive_artifacts,
 };
 use character_hub::{
-    add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_money,
-    clone_character, create_character, delete_character, delete_character_portrait,
-    export_character, export_character_json, import_character, level_up_character,
-    list_saved_characters, load_character_bio, load_character_money, load_character_portrait,
-    load_saved_character, save_character_portrait, set_skill_allocations, update_character_bio,
+    add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
+    adjust_character_money, clone_character, create_character, delete_character,
+    delete_character_portrait, export_character, export_character_json, import_character,
+    level_up_character, list_saved_characters, load_character_bio, load_character_durability,
+    load_character_money, load_character_portrait, load_saved_character, save_character_portrait,
+    set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
@@ -154,6 +155,8 @@ fn main() {
             load_character_bio,
             load_character_money,
             adjust_character_money,
+            load_character_durability,
+            adjust_character_hp,
             delete_character,
             export_character_json,
             export_character,
