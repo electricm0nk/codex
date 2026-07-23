@@ -78,6 +78,16 @@ use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
 /// file needs it yet.
 const WIZARD_CLASS_ID: &str = "class:wizard";
 
+/// v0.6 alpha swarm (bootstrap-deadlock fix): the canonical starter spell
+/// seeded for every Wizard at class-acquisition time (`compose_character_input`
+/// and `apply_level_up`'s new-class-entry branch) — a 0-level Evocation
+/// cantrip, the specialist school, so it never trips the opposed-school
+/// double slot cost, and well within the level-0 budget (3 slots) at every
+/// wizard level `unmet_wizard_spellbook_conditions` currently supports (1-3).
+/// The same literal already proven safe by
+/// `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`.
+const WIZARD_STARTER_SPELL_ID: &str = "evocation.0.light";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -206,12 +216,26 @@ impl RuleSystemAdapter for Pf1Adapter {
 /// reach `Computed`. Human additionally receives its own canonical
 /// choice-slot values — the ability-bonus target is the caller's real
 /// choice (`request.ability_bonus_target`); every other race omits the
-/// Human-only slots. Unlike feats/skills/equipment, `spells_selected` is
+/// Human-only slots. For every class except Wizard, `spells_selected` is
 /// *not* fixed to any hardcoded placeholder (SD-24 Criterion 7.5): no
-/// `Computed`-status gate reads it, `CreateCharacterRequest` collects no
-/// spell choices from the caller, and a freshly composed character starts
-/// with an empty spellbook that only grows through the real wired
-/// `add_spell_selection` / `appendToCharacter` command surface.
+/// `Computed`-status gate reads it for those classes, `CreateCharacterRequest`
+/// collects no spell choices from the caller, and a freshly composed
+/// character starts with an empty spellbook that only grows through the
+/// real wired `add_spell_selection` / `appendToCharacter` command surface.
+///
+/// Wizard is the one exception (v0.6 alpha swarm, bootstrap-deadlock fix):
+/// `unmet_wizard_spellbook_conditions` (`pilot_compute.rs`) reads
+/// `spells_selected` as part of the same `Computed` gate `create_character`
+/// requires before persisting, so an empty spellbook meant a freshly
+/// created Wizard could never be saved at all — no command exists that can
+/// grow a spellbook that was never written to disk in the first place. This
+/// seeds one canonical starter spell (`"evocation.0.light"`, a 0-level
+/// Evocation cantrip — the same literal already proven safe against the
+/// budget math by `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`)
+/// as both `AcquisitionMode::Known` and `AcquisitionMode::Prepared`, the
+/// same "fixed canonical default now, real player choice is separate future
+/// UI work" pattern already used for the Fighter feat loadout and the
+/// Wizard school-specialization choices seeded below.
 ///
 /// Moved here verbatim from `character_hub.rs` (SD-25 Criterion 3.2
 /// extraction) — re-exported at `crate::character_hub::compose_character_input`
@@ -253,6 +277,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
     // this engine's chassis dispatch actually supports (Wizard 1-3's
     // spellbook grounding), not a real in-game "pick your school" choice --
     // that UI is separate, larger, out-of-scope future work.
+    let mut spells_selected = Vec::new();
     if request.class_id == WIZARD_CLASS_ID {
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:wizard_school_specialization".to_owned(),
@@ -265,6 +290,20 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:wizard_opposed_schools".to_owned(),
             selection_id: "school:transmutation".to_owned(),
+        });
+
+        // v0.6 alpha swarm (bootstrap-deadlock fix): see this function's own
+        // doc comment above for why a Wizard specifically needs a non-empty
+        // spellbook to ever be saved at all.
+        spells_selected.push(SpellSelection {
+            spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
         });
     }
 
@@ -327,7 +366,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
-            spells_selected: Vec::new(),
+            spells_selected,
         },
         selection_provenance: Vec::new(),
     }
@@ -460,6 +499,23 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
             character_input.chosen.selected_choices.push(SelectedChoice {
                 choice_set_id: "choice:wizard_opposed_schools".to_owned(),
                 selection_id: "school:transmutation".to_owned(),
+            });
+
+            // v0.6 alpha swarm (bootstrap-deadlock fix): the same starter-spell
+            // seed `compose_character_input` gets for fresh Wizard creation,
+            // applied to the multiclass-dip path for the identical reason --
+            // see `compose_character_input`'s own doc comment. Same
+            // once-only guarantee as the choice seeding immediately above
+            // (this whole block only runs the first time Wizard is added).
+            character_input.chosen.spells_selected.push(SpellSelection {
+                spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
+                source_class_id: WIZARD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+            character_input.chosen.spells_selected.push(SpellSelection {
+                spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
+                source_class_id: WIZARD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
             });
         }
     }
@@ -1094,16 +1150,135 @@ mod tests {
         );
     }
 
+    // ----- Wizard bootstrap-deadlock fix (v0.6 alpha swarm, item 10) -----
+    //
+    // Even after the school-choice seeding above, a freshly composed Wizard
+    // still could never be SAVED: `create_character` only ever persists a
+    // build that independently reaches `Computed`, and a Wizard with zero
+    // spells never does (`unmet_wizard_spellbook_conditions` requires a
+    // non-empty spellbook). No command could grow a spellbook that was
+    // never written to disk in the first place -- `add_spell_selection`
+    // only sets one `AcquisitionMode` per call and the "never persist an
+    // unproven build" invariant discards any call that doesn't
+    // independently reach `Computed`, so a Known-only call is discarded, a
+    // Prepared-only call is discarded, and neither builds toward the other
+    // (proved directly by `add_spell_selection_at_root_cannot_bootstrap_a_wizard_spellbook_from_zero`
+    // above). Fix: seed one canonical starter spell, Known+Prepared, in the
+    // SAME mutation as the class-level add -- both at `compose_character_input`
+    // (fresh creation) and `apply_level_up`'s new-class-entry branch
+    // (multiclass dip) -- so a Wizard never exists in a zero-spell state
+    // that would need bootstrapping in the first place.
+
+    #[test]
+    fn compose_character_input_seeds_the_canonical_wizard_starter_spell_only_for_wizard() {
+        let wizard_input = compose_character_input(&wizard_request_for("wizard-starter-spell", 1));
+        let known: Vec<&str> = wizard_input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| {
+                s.source_class_id == WIZARD_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+            })
+            .map(|s| s.spell_id.as_str())
+            .collect();
+        let prepared: Vec<&str> = wizard_input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| {
+                s.source_class_id == WIZARD_CLASS_ID
+                    && s.acquisition_mode == AcquisitionMode::Prepared
+            })
+            .map(|s| s.spell_id.as_str())
+            .collect();
+        assert_eq!(
+            known,
+            vec![WIZARD_STARTER_SPELL_ID],
+            "a composed Wizard must have the canonical starter spell recorded as Known: {:?}",
+            wizard_input.chosen.spells_selected
+        );
+        assert_eq!(
+            prepared,
+            vec![WIZARD_STARTER_SPELL_ID],
+            "a composed Wizard must have the canonical starter spell prepared today: {:?}",
+            wizard_input.chosen.spells_selected
+        );
+
+        // A non-Wizard class must not receive the Wizard-only starter spell
+        // -- mirrors the existing Human-only / Fighter-only / Wizard-choice
+        // conditional seeding already in this same function.
+        let fighter_input = compose_character_input(&request_for("fighter-no-starter-spell", 1));
+        assert!(
+            fighter_input.chosen.spells_selected.is_empty(),
+            "a composed Fighter must not receive the Wizard-only starter spell: {:?}",
+            fighter_input.chosen.spells_selected
+        );
+    }
+
+    /// The direct proof of the fix: a freshly composed Wizard, with NO
+    /// manual spell selection added by the caller (unlike the test above,
+    /// which manually seeds a spell to prove the school-choice fix in
+    /// isolation), must reach `Computed` purely from what
+    /// `compose_character_input` itself seeds. This is the exact starting
+    /// state `create_character` builds and tries to save.
+    #[test]
+    fn wizard_level1_reaches_computed_from_compose_character_input_alone() {
+        let character_input = compose_character_input(&wizard_request_for("wizard-starter-computed", 1));
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a freshly composed Wizard level 1 must reach Computed with no caller-added spells, \
+             proving the starter-spell seed alone breaks the bootstrap deadlock: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The multiclass-dip mirror of the test above: leveling a Wizard class
+    /// entry onto an existing character (not fresh creation) must also
+    /// reach `Computed` with no manual spell selection, proving
+    /// `apply_level_up`'s new-class-entry branch seeds the same starter
+    /// spell `compose_character_input` does.
+    #[test]
+    fn wizard_multiclass_dip_reaches_computed_from_apply_level_up_alone() {
+        let mut character_input = compose_character_input(&request_for("fighter-then-wizard-dip", 1));
+        apply_level_up(&mut character_input, WIZARD_CLASS_ID);
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "multiclassing Wizard onto an existing Fighter must reach Computed with no \
+             caller-added spells, proving apply_level_up's new-class-entry branch seeds the \
+             same starter spell compose_character_input does: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     /// The single most important regression guard for item 3: proves the
     /// bootstrap deadlock is real through the actual persistence command
     /// (add_spell_selection_at_root, called twice, single-mode each time,
     /// exactly how a real UI would call the existing command) and that
     /// record_and_prepare_spell_selection_at_root breaks it.
+    ///
+    /// A real `compose_character_input`-created Wizard no longer starts
+    /// with an empty spellbook (a later fix seeds one canonical starter
+    /// spell precisely to route around this deadlock at class-acquisition
+    /// time, since nothing could otherwise grow a spellbook that could
+    /// never be saved in the first place) -- so this test explicitly clears
+    /// `spells_selected` back to empty first, to keep proving the
+    /// underlying single-mode-mutation mechanism this deadlock came from,
+    /// as a standing regression guard for why the starter-spell seed
+    /// exists.
     #[test]
     fn add_spell_selection_at_root_cannot_bootstrap_a_wizard_spellbook_from_zero() {
         let character_id = "pf1-adapter-wizard-bootstrap-deadlock";
         let root = tempdir("wizard-bootstrap-deadlock");
-        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let mut character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        character_input.chosen.spells_selected.clear();
         let envelope = SavedCharacterEnvelope {
             character_id: character_id.to_owned(),
             revision_id: format!("{character_id}.rev.1"),
@@ -1158,12 +1333,16 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// The fix: one atomic call breaks the deadlock the previous test proves.
+    /// The fix: one atomic call breaks the deadlock the previous test
+    /// proves. Same explicit-empty-spellbook setup as that test, for the
+    /// same reason (a real `compose_character_input`-created Wizard no
+    /// longer starts empty since the starter-spell seed landed).
     #[test]
     fn record_and_prepare_spell_selection_at_root_breaks_the_bootstrap_deadlock() {
         let character_id = "pf1-adapter-wizard-bootstrap-fix";
         let root = tempdir("wizard-bootstrap-fix");
-        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let mut character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        character_input.chosen.spells_selected.clear();
         let envelope = SavedCharacterEnvelope {
             character_id: character_id.to_owned(),
             revision_id: format!("{character_id}.rev.1"),
