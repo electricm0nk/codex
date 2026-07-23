@@ -12,13 +12,11 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   standing by -- waiting on backend's
-                                record_and_prepare_spell_selection command
-                                before the spell-picker flow is testable
-backend               Sonnet   level-up gap fix DONE+pushed (1aabdf8);
-                                bootstrap-deadlock root cause confirmed +
-                                fix greenlit; building
-                                record_and_prepare_spell_selection now
+frontend              Sonnet   command signature received; can now test the
+                                actual spell-picker flow for the first time
+backend               Sonnet   record_and_prepare_spell_selection DONE+
+                                pushed (6e12437) -- both Wizard gaps now
+                                closed; standing by
 qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
                                 (900beee, 13/14 dims genuinely PCGen-matched);
                                 idle, watching for the Wizard bootstrap work
@@ -456,6 +454,15 @@ qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
   shape not built speculatively. Backend building it now; frontend to be
   looped in on the signature once it lands -- the UI needs a decision on
   how "the first spell" is presented before the picker flow is testable.
+- MILESTONE: record_and_prepare_spell_selection landed and pushed
+  (6e12437). BOTH Wizard gaps (level-up parity + bootstrap deadlock) are
+  now closed -- backend proactively looped in frontend (command
+  signature) and QA (Wizard spellbook test surface impact) directly
+  without waiting to be told. This is the first point in the swarm where
+  a live Wizard character with real spell selections is actually
+  reachable through the shipped UI. Frontend testing the real
+  spell-picker flow next -- the original ask from before this whole
+  investigation chain started.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
