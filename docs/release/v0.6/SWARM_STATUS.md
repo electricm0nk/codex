@@ -11,16 +11,18 @@ and the lead never hand-edits it.
 
 (a) Happening now
 ------------------
-orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
-frontend              Sonnet   6-level multiclass walkthrough DONE; spell-
-                                slot walkthrough found Wizard is structurally
-                                UNREACHABLE via any UI path (see Happened),
-                                checking sibling casters, else standing by
-backend               Sonnet   Wizard spellbook fix DONE+pushed (3484b5d) --
-                                2nd class now genuinely reaches Computed;
-                                now wiring SelectedParityDimensions::from_receipt
-qa                    Sonnet   money/encumbrance catalogue adoption DONE
-                                (ae723ae); idle, watching for wave-2 output
+orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
+frontend              Sonnet   standing by -- Wizard still not UI-reachable
+                                (bootstrap deadlock), waiting on backend's
+                                level-up fix + bootstrap-deadlock proposal
+backend               Sonnet   from_pilot_receipt DONE+pushed (2298780,
+                                encumbrance/durability parity now real, NOT
+                                blocked after all); redirected to the two
+                                outstanding Wizard gaps (level-up fix, then
+                                a scoped proposal for the bootstrap deadlock)
+qa                    Sonnet   idle, has the exact from_pilot_receipt
+                                signature, deciding how to resolve the
+                                sd26_pilot_case_verification.rs staleness
 
 (b) Happened
 ------------
@@ -405,6 +407,28 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   the from_receipt wiring as a small, bounded follow-on directly
   completing item 4's comparator work; QA to update the test expectation
   once it lands, same sequencing as the earlier BAB/save catalogue work.
+- Backend split the from_receipt wiring into 3 problems before writing
+  code: durability (small, landed alongside), encumbrance (initially
+  looked blocked by the same headless/corpus-aware wall as the AC slice
+  -- independent 2nd confirmation the boundary is real), money (confirmed
+  structural exclusion, not deferred -- money.json's balance is never
+  derived from CharacterInput/PilotReceipt, nothing for any
+  receipt-projection function to expose). RESOLVED for encumbrance:
+  backend found contract::PilotReceipt is already corpus-aware and
+  already carries a resolved EncumbranceComputation, so an additive
+  SelectedParityDimensions::from_pilot_receipt (2298780) sidesteps the
+  wall entirely for parity-testing purposes, without touching the harder
+  Computed/Blocked gating problem (still a future epic for AC/attack-
+  bonus/skills). from_receipt itself provably untouched, zero blast
+  radius on QA's 3 existing callers. Corrected in risks doc.
+  Money's exclusion is a real backlog item now (needs its own
+  money.json-reading comparison path if ever wanted), not folded into
+  the encumbrance/AC architecture deferral.
+- Redirected backend back to the two still-open Wizard gaps (level-up
+  path fix, then the bootstrap-deadlock scoped proposal) after it went
+  to the from_receipt wiring first -- normal reprioritization, not a
+  repeat of the earlier discipline pattern; backend was holding for
+  direction, not self-selecting past an explicit stop.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
