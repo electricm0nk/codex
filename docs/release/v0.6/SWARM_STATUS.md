@@ -12,12 +12,13 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   WIZARD CONFIRMED WORKING END-TO-END, live-
-                                verified with hand-checked PF1 math (see
-                                Happened); also landed feats-tab wiring;
-                                idle, standing by
-backend               Sonnet   idle, standing by; one new minor finding
-                                queued (post-mutation render staleness)
+frontend              Sonnet   found+verified a REAL correctness bug while
+                                chasing the cosmetic staleness issue --
+                                Wizard spell slot enforcement never applies
+                                to real spells; idle, standing by
+backend               Sonnet   investigating the spell-slot enforcement bug
+                                (real, not cosmetic -- see Happened);
+                                separately still owes the render-staleness fix
 qa                    Sonnet   idle, watching for further findings
 
 (b) Happened
@@ -524,10 +525,11 @@ qa                    Sonnet   idle, watching for further findings
   form reported "computed and saved" for the first time in this
   investigation. Real sheet loaded (HP 8/8, real Progression rail).
   Used the real Add Spell picker twice (Magic Missile, then Alarm),
-  both genuinely persisted (rev.1->rev.2->rev.3). Hand-verified the
-  slot math against real PF1 rules: 1 base + 1 specialist + 0 Int-mod =
-  2 slots, both adds summed to exactly 2/2, honestly enforced by the
-  engine. This closes the entire three-layer Wizard investigation:
+  both genuinely persisted (rev.1->rev.2->rev.3), looked correct at
+  "2/2" against the 1st-level budget (1 base + 1 specialist + 0
+  Int-mod). CORRECTED BELOW: that "2/2" was never actually server-
+  enforced -- see the real bug entry further down. This closes the
+  bootstrap/class-acquisition layers of the Wizard investigation:
   class acquisition, then first-spell bootstrap, now confirmed with
   real UI-driven persistence, not just compute-layer proof. Wizard is
   the second genuinely playable class alongside Fighter. Marked
@@ -544,6 +546,22 @@ qa                    Sonnet   idle, watching for further findings
   Feats tab correctly showed all 5 feats (3 fixed-loadout + Cleave +
   newly-added Toughness), revision bumped on the new add. Risks item 8
   marked RESOLVED.
+- REAL BUG FOUND (frontend, while chasing the cosmetic render-
+  staleness issue): Wizard spell-slot budget enforcement never applies
+  to any real spell. parse_wizard_spellbook_spell_id expects the
+  bespoke seed-spell format ("evocation.0.light") but real corpus
+  spell keys ("Magic Missile", "Alarm") have no dots, so the parser
+  returns None for every real spell and the consumption sum silently
+  drops them all -- the over-budget check can mathematically never
+  fire against real spells. Verified live: added a 3rd 1st-level spell
+  past the 2-slot budget, expected Blocked, got silent acceptance and
+  persistence instead (rev.3->rev.4 on disk). This RETROACTIVELY
+  CORRECTS the earlier "2/2, honestly enforced" milestone claim above
+  -- it was UI-side arithmetic, never server-verified. Directly
+  relevant to alpha bar item 4. Frontend correctly did not propose a
+  fix (real ambiguity in repair shape, not their file). Backend
+  investigating now; fix must include a live-verified over-budget test
+  case, not just a parser unit test, per lead instruction.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
