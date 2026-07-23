@@ -515,6 +515,25 @@ pub fn apply_add_spell_selection(
     });
 }
 
+/// Appends one entry to `chosen.selected_feats`. Every other field is
+/// untouched.
+pub fn apply_add_feat_selection(character_input: &mut CharacterInput, feat_id: &str) {
+    character_input.chosen.selected_feats.push(feat_id.to_owned());
+}
+
+/// `add_feat_selection`'s real implementation — see
+/// `mutate_saved_character_at_root` for the shared
+/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
+pub(crate) fn add_feat_selection_at_root(
+    root: &Path,
+    feat_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_add_feat_selection(character_input, feat_id);
+    })
+}
+
 /// `add_spell_selection`'s real implementation — see
 /// `mutate_saved_character_at_root` for the shared
 /// load -> mutate -> recompute -> re-save -> return-envelope semantics.
@@ -824,6 +843,44 @@ mod tests {
                 .collect::<Vec<_>>(),
             vec!["skill:swim", "skill:intimidate", "skill:climb"],
             "the on-disk allocation must match the caller's new set/order exactly, proving a full replace rather than an append"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm: feat exposure. Appending a feat beyond the fixed
+    /// Power Attack/Dodge/Weapon Focus posture must still reach Computed --
+    /// `unmet_combat_posture_conditions` only requires `selected_feats` to
+    /// *contain* Dodge/Weapon Focus (a `.any(...)` check), not match an
+    /// exact set the way `skill_allocations` does, so an appended feat is
+    /// additive and safe.
+    #[test]
+    fn add_feat_selection_at_root_appends_and_persists_when_computed() {
+        let character_id = "pf1-adapter-revision-feat";
+        let root = tempdir("revision-feat");
+        let envelope = seed_envelope(character_id, 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T01:00:00Z")
+            .expect("add-feat call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("adding a feat must reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            reloaded.character_input.chosen.selected_feats.contains(&"feat:toughness".to_owned()),
+            "the on-disk envelope must reflect the appended feat: {:?}",
+            reloaded.character_input.chosen.selected_feats
+        );
+        assert_eq!(
+            reloaded.revision_id,
+            format!("{character_id}.rev.2"),
+            "add_feat_selection must advance revision_id, not just saved_at"
         );
 
         std::fs::remove_dir_all(&root).ok();
