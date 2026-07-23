@@ -38,6 +38,7 @@ import { SkillAllocationDialog } from './SkillAllocationDialog';
 import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
 import { setSkillAllocations } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
+import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -651,15 +652,93 @@ function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddSp
 }
 
 /**
+ * View-and-spend money panel, wired to the real `load_character_money` /
+ * `adjust_character_money` commands. The gp input converts to the wire's
+ * canonical copper delta via `gpToCopper` (positive to add funds, negative
+ * to spend) — the backend rejects a spend that would go negative rather
+ * than silently allowing it, surfaced here as a real error message.
+ */
+function MoneyPanel(props: {
+  money: CharacterMoneyDto;
+  busy: boolean;
+  error: string | null;
+  onAdjust: (gpAmount: number) => void;
+}) {
+  const [gpInput, setGpInput] = useState('');
+  const parsedGp = Number(gpInput);
+  const validAmount = gpInput.trim() !== '' && Number.isFinite(parsedGp) && parsedGp > 0;
+
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        Money
+      </p>
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
+        <StatTile label="PP" value={props.money.platinum} />
+        <StatTile label="GP" value={props.money.gold} />
+        <StatTile label="SP" value={props.money.silver} />
+        <StatTile label="CP" value={props.money.copper} />
+      </div>
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="gp amount"
+          value={gpInput}
+          onChange={(event) => setGpInput(event.target.value)}
+          style={{ ...bioFieldInputStyle, width: 110 }}
+        />
+        <button
+          type="button"
+          disabled={!validAmount || props.busy}
+          onClick={() => {
+            props.onAdjust(parsedGp);
+            setGpInput('');
+          }}
+          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
+        >
+          Add
+        </button>
+        <button
+          type="button"
+          disabled={!validAmount || props.busy}
+          onClick={() => {
+            props.onAdjust(-parsedGp);
+            setGpInput('');
+          }}
+          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
+        >
+          Spend
+        </button>
+      </div>
+      {props.error ? (
+        <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.72rem', margin: '0.5rem 0 0' }}>
+          {props.error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/**
  * Equipped-item reachability, sourced from `compute_pilot_with_corpus` via
  * the real IPC boundary — not mock data. Same bundled-fixture scope note
  * as `SpellsTab`: derived stats (armor bonus, attack bonus, etc.) are a
  * documented capability-slice non-goal and are not yet populated.
  */
-function GearTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddArmor: () => void }) {
+function GearTab(props: {
+  corpusDerived: CorpusDerivedDto | undefined;
+  onAddArmor: () => void;
+  money: CharacterMoneyDto;
+  moneyBusy: boolean;
+  moneyError: string | null;
+  onAdjustMoney: (gpAmount: number) => void;
+}) {
   const items = props.corpusDerived?.equippedItems ?? [];
   return (
     <div>
+      <MoneyPanel money={props.money} busy={props.moneyBusy} error={props.moneyError} onAdjust={props.onAdjustMoney} />
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
         Corpus-derived equipment reachability — proves each item resolves against the real PF1
         corpus; derived combat stats are not yet computed.
@@ -821,6 +900,29 @@ export function CharacterSheet(props: {
       .catch(() => {
         if (!cancelled) {
           setBio({ ...BLANK_BIO_FIELDS });
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.characterId]);
+
+  const [money, setMoney] = useState<CharacterMoneyDto>({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
+  const [moneyBusy, setMoneyBusy] = useState(false);
+  const [moneyError, setMoneyError] = useState<string | null>(null);
+  // Loads the real persisted balance (or zero for a character that has
+  // never saved one) whenever the sheet opens on a different character.
+  useEffect(() => {
+    let cancelled = false;
+    loadCharacterMoney(props.row.characterId)
+      .then((loaded) => {
+        if (!cancelled) {
+          setMoney(loaded);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setMoney({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
         }
       });
     return () => {
@@ -1029,6 +1131,28 @@ export function CharacterSheet(props: {
       await updateCharacterBio(props.row.characterId, bio);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : 'Could not save the bio fields.');
+    }
+  }
+
+  /**
+   * Applies a gp-denominated add/spend to the persisted money balance via
+   * `adjust_character_money`. `gpAmount` is positive to add funds, negative
+   * to spend — converted to the wire's canonical copper delta via
+   * `gpToCopper`. A spend that would drive the balance negative comes back
+   * as a real error from the backend, surfaced here rather than assumed to
+   * always succeed (there is no Blocked/diagnostics concept for this pure
+   * passthrough command — just success or a real error, same as bio).
+   */
+  async function handleAdjustMoney(gpAmount: number) {
+    setMoneyError(null);
+    setMoneyBusy(true);
+    try {
+      const updated = await adjustCharacterMoney(props.row.characterId, gpToCopper(gpAmount));
+      setMoney(updated);
+    } catch (cause: unknown) {
+      setMoneyError(cause instanceof Error ? cause.message : 'Could not update the money balance.');
+    } finally {
+      setMoneyBusy(false);
     }
   }
 
@@ -1426,7 +1550,14 @@ export function CharacterSheet(props: {
               ) : tab === 'Spells' ? (
                 <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
-                <GearTab corpusDerived={props.detail?.corpusDerived} onAddArmor={() => setItemPickerOpen('armor')} />
+                <GearTab
+                  corpusDerived={props.detail?.corpusDerived}
+                  onAddArmor={() => setItemPickerOpen('armor')}
+                  money={money}
+                  moneyBusy={moneyBusy}
+                  moneyError={moneyError}
+                  onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
+                />
               ) : tab === 'Feats' ? (
                 <FeatsTab sessionAddedFeats={sessionAddedFeats} onAddFeat={() => setItemPickerOpen('feat')} />
               ) : tab === 'Actions' ? (
