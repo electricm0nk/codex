@@ -1,7 +1,7 @@
 # Cycle bestiary_6_stub_manifest — Epic 4 / Criterion 4.8
 
 - **Card ID:** (see kanban step, below)
-- **Commit SHA:** (stamped below after commit)
+- **Commit SHA:** b7ab111e5cb14a69b8069ddd6a33808a2712d5a0
 - **Files touched:**
   - `data/stubs/bestiary_6.json` (new — book_stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0010; updated the
