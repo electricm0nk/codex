@@ -12,13 +12,12 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   found+verified a REAL correctness bug while
-                                chasing the cosmetic staleness issue --
-                                Wizard spell slot enforcement never applies
-                                to real spells; idle, standing by
-backend               Sonnet   investigating the spell-slot enforcement bug
-                                (real, not cosmetic -- see Happened);
-                                separately still owes the render-staleness fix
+frontend              Sonnet   WIZARD INVESTIGATION FULLY CLOSED -- slot-
+                                budget fix live-verified both sides against
+                                disk; idle, standing by
+backend               Sonnet   idle, standing by; still owes the (minor,
+                                non-blocking) render-staleness fix whenever
+                                free
 qa                    Sonnet   idle, watching for further findings
 
 (b) Happened
@@ -562,6 +561,26 @@ qa                    Sonnet   idle, watching for further findings
   fix (real ambiguity in repair shape, not their file). Backend
   investigating now; fix must include a live-verified over-budget test
   case, not just a parser unit test, per lead instruction.
+- MILESTONE, GENUINELY FINAL THIS TIME: spell-slot budget fix landed
+  (365b3a1a) and confirmed NOT the same architecture wall as AC/
+  encumbrance -- SPELL_LIST (652 real CRB records) is compiled directly
+  into the binary, already headless-accessible, unlike equipment.
+  parse_wizard_spellbook_spell_id resolves real keys first, falls back
+  to the synthetic convention for zero blast radius on QA's fixtures;
+  WIZARD_STARTER_SPELL_ID upgraded from placeholder to a real spell
+  ("Light") now that real resolution exists. Genuine RED->GREEN: backend
+  disabled the fix, watched the test fail with the exact reported
+  symptom, restored it, confirmed green. Frontend live-re-verified with
+  a fresh character (avoiding the prior save's stale pre-fix artifact):
+  Magic Missile + Alarm accepted at 2/2 (disk-confirmed), Grease as a
+  third spell honestly Blocked with a real diagnostic, revision
+  unchanged, nothing persisted -- verified against disk specifically
+  because the still-open render-staleness bug makes accepted-vs-blocked
+  look identical on screen. This closes the ENTIRE Wizard investigation:
+  class acquisition, first-spell bootstrap, and now slot-budget
+  enforcement, all live-verified end-to-end. Only the cosmetic render-
+  staleness bug remains open in this whole area (backend's to pick up,
+  not urgent).
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
