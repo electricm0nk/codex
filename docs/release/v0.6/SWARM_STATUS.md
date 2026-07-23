@@ -12,9 +12,9 @@ and the lead never hand-edits it.
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
-frontend              Sonnet   multiclass audit DONE (d03bc89) -- found+fixed
-                                a real silent display-corruption bug; now on
-                                a full 6-level multiclass walkthrough
+frontend              Sonnet   6-level multiclass walkthrough DONE -- alpha
+                                bar item 3 live-proven end-to-end; now on
+                                spell-slot selection walkthrough
 backend               Sonnet   durability DONE+pushed (0aeed25, single-class
                                 Fighter/Wizard/Rogue, 189/189 lib, 3973/3973);
                                 now on money-conversion PCGen verification
@@ -291,6 +291,22 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   behavior of observer.py (reads SWARM_STATUS.md + mailbox/task JSON only).
   Flagged to the operator, not trusted, not edited, not deleted. Backend
   initially assumed it was the lead's -- corrected.
+- MILESTONE: frontend completed a full 6-level multiclass live walkthrough
+  (no code changes needed -- pure verification of the d03bc89 fix), taking
+  a character from Fighter2/Rogue1 (level 3) through 4 more real level-ups
+  to character level 6 (ending Fighter4/Rogue2). Every step: real backend
+  mutation (revision_id incremented each time, rev.8 by the end), real
+  server-side recompute, hand-checked PF1 math matching exactly (e.g.
+  BAB+5 at the end = Fighter4's full +4 plus Rogue2's 3/4-progression
+  floor(2*0.75)=+1), zero errors, zero display glitches, Feats tab still
+  correct with two classes held. This is the first genuinely end-to-end
+  live proof that alpha bar item 3 (advance 6 levels, multiclass required)
+  actually works today, not just that the underlying pieces are wired.
+  One transient hiccup (caught backend's durability.rs mid-edit, same
+  class of false start as earlier) -- frontend handled it by waiting via
+  a background poll instead of raising another alarm, learned from the
+  earlier pattern. Next: same rigor applied to spell-slot selection at
+  spell-gaining levels (bar item 3's other named requirement).
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------

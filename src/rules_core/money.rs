@@ -10,10 +10,21 @@
 //! Ratios (per QA's `docs/release/v0.6/SWARM_REPORT.md` formula-spec
 //! appendix): 1 platinum piece (pp) = 10 gold pieces (gp) = 100 silver
 //! pieces (sp) = 1000 copper pieces (cp) -- standard open-content d20/PF1
-//! currency, not independently confirmed against a PCGen data file (no
-//! conversion-table file exists in the PCGen checkout QA searched,
-//! consistent with this being simple linear arithmetic rather than
-//! tabulated data). Flagged as such, same as QA's own appendix.
+//! currency. v0.6 alpha swarm item 3 re-verified this against the local
+//! PCGen checkout (`/home/ubuntu/workspace/repos/pcgen`) directly: no
+//! `.lst` data file defines a currency-denomination table (only
+//! `system/gameModes/Pathfinder/miscinfo.lst`'s `CURRENCYUNITABBREV:gp`,
+//! naming the display unit, not a ratio), no `.java` source file under the
+//! checkout references "platinum" at all, and no fantasy output-sheet
+//! template performs pp/gp/sp/cp conversion arithmetic either. The ratio is
+//! not contradicted anywhere, but also not affirmatively pinned to a
+//! specific PCGen source the way carry-capacity's `load.lst` table is --
+//! it is universal D20/PF1 open-content arithmetic PCGen likely tracks
+//! internally as a single "gold-piece-equivalent" total with the
+//! denomination split applied only in display logic that never surfaced as
+//! greppable data. Flagged as such; this is the same conclusion QA's own
+//! appendix already reached, now backed by a direct second search rather
+//! than left as an open item.
 //!
 //! Deliberately scoped to conversion only. Starting-wealth-by-class (the
 //! PCGen `GOLD:` token) was not found in the class LST file QA checked --
