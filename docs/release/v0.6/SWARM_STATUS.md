@@ -15,9 +15,9 @@ orchestrator (lead)  Sonnet   wave 1 fully closed, deciding wave-2 direction
 frontend              Sonnet   multiclass audit DONE (d03bc89) -- found+fixed
                                 a real silent display-corruption bug; now on
                                 a full 6-level multiclass walkthrough
-backend               Sonnet   AC slice dropped (architecture blocker, see
-                                Happened); on items 2-4 (durability, money-
-                                verification, comparator field-extraction)
+backend               Sonnet   durability DONE+pushed (0aeed25, single-class
+                                Fighter/Wizard/Rogue, 189/189 lib, 3973/3973);
+                                now on money-conversion PCGen verification
 qa                    Sonnet   money/encumbrance catalogue adoption DONE
                                 (ae723ae); idle, watching for wave-2 output
 
@@ -268,6 +268,29 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   alpha bar item 3 is genuinely reachable -- this was a real bug, not a
   missing affordance. Frontend now attempting a full 6-level multiclass
   walkthrough to proactively surface anything else like this.
+- Backend closed item 2, durability (0aeed25): compute_max_hp +
+  classify_durability, hit-die size verified against the primary
+  cr_classes.lst corpus source directly rather than trusting
+  class_tables.rs's existing citation. load_character_durability/
+  adjust_character_hp commands, hp.json sidecar. Scoped to single-class
+  Fighter/Wizard/Rogue -- multiclass HP honestly deferred: CharacterClassLevel
+  stores cumulative totals per class, not the order individual levels were
+  taken in, so which level gets the maximized first-level die is genuinely
+  ambiguous from that data shape, not guessed at. Temp HP and the
+  favored-class-bonus HP choice also deferred per QA's spec flag. Not
+  frontend-blocking (wasn't on frontend's original ask), so no UI wiring
+  yet -- command shapes documented for whenever a Health tab gets built.
+  189/189 lib, 3973/3973 full suite. Moving to item 3 (money-conversion
+  PCGen-source verification).
+- UNATTRIBUTED FILE: docs/release/v0.6/SWARM_TASKS.md appeared untracked
+  in the shared checkout, not created by the lead or any known teammate.
+  Content (Epic 1/2/3/6/7 labels, tasks like "campaign manager + Drive
+  persistence," "Wizard single-class completion") doesn't match anything
+  in this swarm's actual work, and its claim that the observer's cron
+  reads it as an "operator-pinned schema" contradicts the verified
+  behavior of observer.py (reads SWARM_STATUS.md + mailbox/task JSON only).
+  Flagged to the operator, not trusted, not edited, not deleted. Backend
+  initially assumed it was the lead's -- corrected.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
