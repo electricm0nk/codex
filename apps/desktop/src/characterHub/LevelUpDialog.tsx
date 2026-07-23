@@ -9,9 +9,11 @@ import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterPro
  * before committing. Patterned after ThemeBrowserModal's portal-based overlay
  * shell so it matches the rest of the app's modal conventions.
  *
- * Accepting calls `onAccept(classId)` and closes; the caller (see
- * `CharacterSheet`) is responsible for persisting the level-up via the
- * `level_up_character` Tauri command and refreshing the sheet on success.
+ * Accepting calls `onAccept(classId)` and closes; the caller
+ * (`CharacterSheet`'s `handleLevelUpAccept`) persists the level-up via the
+ * real `level_up_character` Tauri command — including a recorded hit-die
+ * choice — and refreshes the sheet on success, or surfaces the engine's
+ * real diagnostics if the resulting build doesn't reach `Computed`.
  */
 
 export function LevelUpDialog(props: {

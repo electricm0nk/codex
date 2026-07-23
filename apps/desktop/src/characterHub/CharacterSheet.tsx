@@ -22,6 +22,7 @@ import {
   formatHeldClasses,
   maxHitPoints,
   parseHeldClasses,
+  previewLevelUp,
   totalCharacterLevel,
   totalSkillPoints,
   type HeldClass,
@@ -757,12 +758,32 @@ export function CharacterSheet(props: {
   const [cloning, setCloning] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
+  /**
+   * Persists the level-up via `level_up_character`'s extended v0.6 request
+   * shape (class-level increment plus `additionalChoices`). Records the new
+   * class level's hit-die roll as `hp:average` — deterministic and
+   * consistent with `maxHitPoints`'s own average-based math above, rather
+   * than fabricating a dice-roll UI for a choice the compute engine doesn't
+   * yet consume differently either way (backend's own test: "nothing reads
+   * these choice_set_ids as a gate"). Feat picks at feat-gaining levels are
+   * deliberately NOT collected here yet — there is still no real feat
+   * catalog exposed to the frontend (blocked on the same `list_feats` gap
+   * as the Feats-tab picker task), and fabricating feat options would
+   * violate the no-stub doctrine. Skill points stay on the existing,
+   * already-wired "Manage skill allocation" dialog rather than duplicating
+   * that UI here — `skillAllocations` is deliberately omitted so a level-up
+   * never overwrites an allocation the player set separately.
+   */
   async function handleLevelUpAccept(classId: string) {
     setMutationError(null);
     try {
+      const newClassLevel = previewLevelUp(heldClasses, classId).classLevel;
       const outcome = await levelUpCharacter({
         characterId: props.row.characterId,
         classId,
+        additionalChoices: [
+          { choiceSetId: `choice:level_${newClassLevel}_hit_points`, selectionId: 'hp:average' },
+        ],
         savedAt: new Date().toISOString(),
       });
       const refresh = toCharacterMutationRefresh(outcome);
