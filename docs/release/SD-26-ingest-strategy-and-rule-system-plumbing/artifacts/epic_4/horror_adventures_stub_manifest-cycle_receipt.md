@@ -1,7 +1,7 @@
 # Cycle horror_adventures_stub_manifest — Epic 4 / Criterion 4.11
 
-- **Card ID:** (see kanban step, below)
-- **Commit SHA:** (filled in after push — see `progress.md` for the landed SHA)
+- **Card ID:** t_693579da (board `codex-tranche-5`, assignee `operator`)
+- **Commit SHA:** 9cda689 (manifest + registry entry), 617eb61 (registry reserved-entries footer fix), bd8921c (progress.md)
 - **Files touched:**
   - `data/stubs/horror_adventures.json` (new — per-book stub manifest)
   - `docs/governance/wired-integration-stubs-registry.md` (added entry #0013 for `horror_adventures`)
