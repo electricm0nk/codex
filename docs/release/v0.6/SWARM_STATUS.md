@@ -5,9 +5,9 @@ Source of truth: docs/release/v0.6/release-swarm.md
 (a) Happening now
 ------------------
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
-frontend              Sonnet   task 4 DONE (75200fc, live-verified); now on
-                                task 5 (LevelUpDialog wiring); tasks 1-3
-                                still wait on backend's bio/feat/money
+frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
+                                tasks 1-3 (bio/feat/money) still wait on
+                                backend, currently paused (see below)
 backend               Sonnet   PAUSED -- found substantial in-progress
                                 wave-2 work (class-chassis widening) done
                                 without the required scoped proposal, 2nd
@@ -130,6 +130,17 @@ qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
   in-flight pilot_compute.rs from the commit. Picked up task 5 next
   (LevelUpDialog wiring) on its own initiative -- correct, doesn't need
   bio/feat/money, real available work.
+- Frontend closed task 5 (e8e4597): LevelUpDialog wired through the real
+  extended level_up_character request. Live-verified: Fighter 1->2, HP
+  12->20, BAB/saves recomputed live, on-disk revision bumped rev.2->rev.3,
+  choice:level_2_hit_points:hp:average persisted verbatim. Two honest scope
+  calls, both named rather than silently dropped: no feat-pick-at-level-up
+  UI (no list_feats yet, would be a fake dropdown = stub doctrine
+  violation), and skillAllocations left omitted from the level-up call
+  since the separate SkillAllocationDialog (task 4) already covers it --
+  avoids double-implementing the same concern in two places. Frontend has
+  now closed tasks 4 and 5 of wave-1; 1-3 (bio/feat/money) remain blocked
+  on backend, who is currently paused (see below).
 - SECOND QUEUE DEVIATION (more serious than the first): found backend's
   uncommitted pilot_compute.rs diff (325 lines) is real multiclass/BAB-save
   chassis-widening work (Fighter/Wizard -> all 11 CRB classes), doc-commented
