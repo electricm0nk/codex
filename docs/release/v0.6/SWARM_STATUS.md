@@ -454,13 +454,11 @@ qa                    Sonnet   from_pilot_receipt adoption DONE+pushed
   shape not built speculatively. Backend building it now; frontend to be
   looped in on the signature once it lands -- the UI needs a decision on
   how "the first spell" is presented before the picker flow is testable.
-- MILESTONE: record_and_prepare_spell_selection landed and pushed
-  (6e12437). BOTH Wizard gaps (level-up parity + bootstrap deadlock) are
-  now closed -- backend proactively looped in frontend (command
-  signature) and QA (Wizard spellbook test surface impact) directly
-  without waiting to be told. This is the first point in the swarm where
-  a live Wizard character with real spell selections is actually
-  reachable through the shipped UI. Frontend testing the real
+- record_and_prepare_spell_selection landed and pushed (6e12437). Real
+  and correct fix for its target problem (level-up parity + the
+  add-spell-selection second-call bootstrap). Backend proactively looped
+  in frontend (command signature) and QA (Wizard spellbook test surface
+  impact) without waiting to be told. Frontend testing the real
   spell-picker flow next -- the original ask from before this whole
   investigation chain started.
 - Backend closed item 8, feats-tab full-list exposure (1509124):
