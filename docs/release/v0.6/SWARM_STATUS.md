@@ -7,17 +7,15 @@ Source of truth: docs/release/v0.6/release-swarm.md
 orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
-                                backend, currently paused (see below)
-backend               Sonnet   STOPPED, ESCALATED TO OPERATOR -- committed
-                                task 5 (d475097, uncommitted->local, NOT
-                                pushed) after an explicit "do not start
-                                this, reply before doing anything else"
-                                instruction; did not reply, did not stop.
-                                All further backend work paused pending
-                                operator decision.
-qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
-                                task 5 ongoing); delivered PCGen-sourced
-                                formula spec for backend's wave 2 (abec13b)
+                                backend, RESUMED (see below)
+backend               Sonnet   RESUMED -- delivery bug confirmed+fixed (see
+                                Happened); finishing BAB/save test-catalogue
+                                sequencing with qa, then bio schema+command,
+                                feat exposure, money schema+command in order
+qa                    Sonnet   40-test catalogue fix for backend's multiclass
+                                widening DONE and verified (0 failures, 467
+                                result lines); holding commit for sequencing
+                                with backend's pilot_compute.rs, now cleared
 
 (b) Happened
 ------------
@@ -152,6 +150,36 @@ qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
   correction a third time. Told them: commit if at a clean tested stopping
   point (don't waste real work), then bio schema+command, no further
   wave-2/widening work without checking with me first. Awaiting reply.
+- Backend committed task 5 (d475097, equipment AC audit + real new
+  encumbrance.rs carry-capacity/encumbrance calc, cited to Archives of
+  Nethys) WITHOUT replying to the hard stop above and without waiting for
+  the commit-serialization ack. Lead treated this as a third deviation,
+  issued a full stop, and escalated to the operator rather than repeat a
+  correction -- per the threshold already logged in risks item 6.
+- RESOLUTION -- ROOT CAUSE WAS A DELIVERY BUG, NOT BACKEND: backend reported
+  zero inbound SendMessage content had reached it all session; every one of
+  its reports was execution of its ORIGINAL wave-1 spawn brief (task 4 =
+  BAB/save stacking, task 5 = equipment AC/carry-capacity, in that exact
+  order) with no visibility into the reprioritization, the pause, or the
+  hard stop. All of the lead's messages arrived simultaneously in a single
+  batch, well after task 5 was already committed. Backend correctly held at
+  the LAST instruction visible to it ("wait for a message from me before
+  doing anything at all") rather than self-authorizing off older content in
+  the same batch that could have read as permission -- exemplary handling,
+  not a discipline failure. Verified fixed with an explicit ack-the-literal-
+  sentence test; confirmed received. Backend RESUMED with a clean current
+  instruction set. The d475097 commit stands -- legitimate work under a
+  legitimate brief. Frontend and QA showed no equivalent gap in the same
+  window, so this looks scoped to backend's inbox/session specifically.
+  Full narrative + assessment in risks-and-open-questions.md item 6
+  (rewritten from "not stopping on instruction" to "delivery bug").
+- QA independently reached the same "don't commit against undecided
+  production code" conclusion on its own, before being told -- finished the
+  40-test catalogue fix for backend's multiclass widening (0 failures, 467
+  result lines, every value independently verified against real computation
+  output, one real cosmetic defect found and correctly left for backend
+  rather than fixed out-of-lane) and held the commit pending resolution.
+  Cleared to proceed now that backend's status is resolved.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
