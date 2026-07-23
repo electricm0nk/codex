@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Ioun Torch",
+    "category": "MagicItems",
+    "name": "Ioun Torch",
+    "cost_gp": 75.0,
+    "weight": null,
+    "description": "A burned-out, dull gray ioun stone bearing a continual flame spell; it still floats and orbits its bearer, letting them carry light while keeping both hands free."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

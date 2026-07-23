@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rod (Python)",
+    "category": "magic_items",
+    "name": "Rod",
+    "cost_gp": 13000.0,
+    "weight_lbs": 10.0,
+    "description": "Unlike most rods, one end of this rod curls and twists back on itself in a crook--the tip of this crook sometimes looks like the head of a snake. The rod itself is about 4 feet long and weighs 10 pounds. It strikes as a +1/+1 quarterstaff. If the user throws the rod to the ground (a standard action), it grows to become a constrictor snake by the end of the round. The python obeys all commands of the owner. (In animal form, it retains the +1 enhancement bonus on attacks and damage possessed by the rod form.) The serpent returns to rod form (a full-round action) whenever the wielder desires, or whenever it moves farther than 100 feet from the owner. If the snake form is slain, it returns to rod form and cannot be activated again for three days. A rod of the python only functions if the possessor is good."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 458,
+    "record_key": "Rod (Python)"
+  }
+}

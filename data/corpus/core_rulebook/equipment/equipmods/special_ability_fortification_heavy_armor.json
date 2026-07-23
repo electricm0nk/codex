@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Fortification / Heavy ~ Armor",
+    "category": "equipmods",
+    "name": "Heavy Fortification",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This suit of armor or shield produces a magical force that protects vital areas of the wearer more effectively. Whenever a critical hit or sneak attack is scored on the wearer, there is a 75% chance that the critical hit or sneak attack is negated and damage is instead rolled normally."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/fortification/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

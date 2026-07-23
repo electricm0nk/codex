@@ -52,59 +52,16 @@ pub struct BookIngestStatus {
 }
 
 /// Every Bestiary 1 monster the real `MonsterId` enum declares today.
-/// `beastiary1::mod.rs` has no public `ALL`/count constant (unlike
-/// `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL`), and this
-/// criterion's file-touch grant does not extend to that module, so this
-/// list is kept here instead. It is exhaustive against the real enum:
-/// adding, removing, or renaming a `MonsterId` variant without updating
-/// this list fails to compile, which is the safety property that matters
-/// (a silent undercount can't ship) even though it does mean this list
-/// must be kept in sync by hand until a future cycle adds a real `ALL`
-/// constant to `beastiary1::mod.rs` itself (see this cycle's receipt,
-/// `## Discovery forwards`).
-const ALL_BESTIARY1_MONSTERS: &[MonsterId] = &[
-    MonsterId::Ghoul,
-    MonsterId::Gnoll,
-    MonsterId::GoblinDog,
-    MonsterId::Lizardfolk,
-    MonsterId::Wolf,
-    MonsterId::Darkmantle,
-    MonsterId::Horse,
-    MonsterId::Hyena,
-    MonsterId::Octopus,
-    MonsterId::SpiderSwarm,
-    MonsterId::BatSwarm,
-    MonsterId::Boar,
-    MonsterId::Boggard,
-    MonsterId::Bugbear,
-    MonsterId::CaveFisher,
-    MonsterId::Choker,
-    MonsterId::Crocodile,
-    MonsterId::DarkCreeper,
-    MonsterId::IronCobra,
-    MonsterId::Morlock,
-    MonsterId::RatSwarm,
-    MonsterId::Sahuagin,
-    MonsterId::Shark,
-    MonsterId::ShockerLizard,
-    MonsterId::Skum,
-    MonsterId::Squid,
-    MonsterId::Troglodyte,
-    MonsterId::Vargouille,
-    MonsterId::Wolverine,
-    MonsterId::Worg,
-    MonsterId::YellowMuskCreeper,
-    MonsterId::Ankheg,
-    MonsterId::AssassinVine,
-    MonsterId::Centaur,
-    MonsterId::Cockatrice,
-    MonsterId::Derro,
-    MonsterId::Doppelganger,
-    MonsterId::Dryad,
-    MonsterId::Ettercap,
-    MonsterId::GelatinousCube,
-    MonsterId::HellHound,
-];
+///
+/// This used to be a hand-maintained duplicate list (`beastiary1::mod.rs`
+/// had no public `ALL`/count constant, unlike
+/// `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL`). SD-26 Epic 3
+/// Criterion 3.4 (`decisions.md §11.6`) added the real
+/// `MonsterId::ALL` constant so this diagnostic and the JSON-cache
+/// generator (`codex::rules_core::cache_gen::beastiary1`) both read the
+/// same single source of truth instead of each maintaining their own
+/// copy of this list a second/third time.
+const ALL_BESTIARY1_MONSTERS: &[MonsterId] = MonsterId::ALL;
 
 fn crb_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();

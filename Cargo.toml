@@ -10,3 +10,8 @@ edition = "2024"
 # grammar. Versions match apps/desktop/src-tauri/Cargo.toml.
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+# Added for SD-26 Epic 3 (JSON corpus cache): the cache generator computes a
+# real per-corpus-file SHA-256 for each `source.path`'s citation (decisions.md
+# §11.2's discriminated-union `source` shape) -- never a fabricated/placeholder
+# hash.
+sha2 = "0.10"

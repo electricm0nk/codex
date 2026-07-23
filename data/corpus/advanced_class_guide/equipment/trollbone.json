@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Trollbone",
+    "category": "MagicItems",
+    "name": "Trollbone",
+    "cost_gp": 2400.0,
+    "weight": 1.0,
+    "description": "toss up to 20 feet away to grow into troll under your control for 2d4 rounds or until end of bardic performance"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 448,
+    "record_key": "Trollbone"
+  }
+}

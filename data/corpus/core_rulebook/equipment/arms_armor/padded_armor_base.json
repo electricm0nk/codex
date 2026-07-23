@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Padded Armor (Base)",
+    "category": "arms_armor",
+    "name": "Padded Armor",
+    "cost_gp": 5.0,
+    "weight_lbs": 10.0,
+    "description": "Little more than heavy, quilted cloth, this armor provides only the most basic protection."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 37,
+    "record_key": "Padded Armor (Base)"
+  }
+}

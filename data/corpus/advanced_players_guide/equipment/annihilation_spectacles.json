@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Annihilation Spectacles",
+    "category": "MagicItems",
+    "name": "Annihilation Spectacles",
+    "cost_gp": 2500.0,
+    "weight": 0.25,
+    "description": "Darkly tinted glasses that let a transmuter spontaneously convert prepared spells into transmutation spells, or cast disintegrate once per day."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

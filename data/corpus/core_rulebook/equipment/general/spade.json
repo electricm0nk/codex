@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Spade",
+    "category": "general",
+    "name": "Shovel",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "If a shovel is used in combat, treat it as a onehanded improvised weapon that deals bludgeoning damage equal to that of a club of its size."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 173,
+    "record_key": "Spade",
+    "inherited_from_record_key": "Shovel"
+  }
+}

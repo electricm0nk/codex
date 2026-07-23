@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Amulet of the Spirits (Heavens)",
+    "category": "MagicItems",
+    "name": "Amulet of the Spirits (Heavens)",
+    "cost_gp": 8000.0,
+    "weight": 1.0,
+    "description": "increase effective level of mystery or spirit powers by 2; can determine precise location when open sky can be seen at night; add Wisdom modifier to Charisma modifer on all Charisma checks and Charisma-based skill checks; cause enemy within 30 ft. to treat light level as two steps lower for 8 rounds"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 332,
+    "record_key": "Amulet of the Spirits (Heavens)"
+  }
+}

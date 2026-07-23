@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Twilight Haze",
+    "school": "Illusion",
+    "level": 2,
+    "description": "You create a gray haze that obscures sight (as fog cloud) and causes the illumination level within it to drop one step (as darkness). Since this spell produces an illusion rather than a true physical fog, it is unaffected by wind and can be cast underwater.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 130,
+    "record_key": "Twilight Haze"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Horn of Valhalla (Brass)",
+    "category": "magic_items",
+    "name": "Horn of Valhalla (Brass)",
+    "cost_gp": 50000.0,
+    "weight_lbs": 2.0,
+    "description": "This magic instrument comes in four varieties. Each appears to be normal until someone speaks its command word and blows the horn. Then the horn summons a number of human barbarians to fight for the character who summoned them. Each horn can be blown just once every 7 days. The horn's type determines what barbarians are summoned and what prerequisite is needed to use the horn. Any character who uses a horn of Valhalla but doesn't have the prerequisite is attacked by the barbarians she herself summoned.\nSummoned barbarians are constructs, not actual people (though they seem to be); they arrive with the starting equipment for barbarians. They attack anyone the possessor of the horn commands them to fight until they or their opponents are slain or until 1 hour has elapsed, whichever comes first."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 218,
+    "record_key": "Horn of Valhalla (Brass)"
+  }
+}

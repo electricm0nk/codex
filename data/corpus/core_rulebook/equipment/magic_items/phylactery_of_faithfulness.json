@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Phylactery of Faithfulness",
+    "category": "magic_items",
+    "name": "Phylactery of Faithfulness",
+    "cost_gp": 1000.0,
+    "weight_lbs": 0.0,
+    "description": "This item is a tiny box containing religious scripture. The box is affixed to a leather cord and tied around the forehead, worn so that the box sits upon the wearer's brow. There is no mundane way to determine what function this religious item performs until it is worn. The wearer of a phylactery of faithfulness is aware of any action or item that could adversely affect his alignment and his standing with his deity, including magical effects. He acquires this information prior to performing such an action or becoming associated with such an item if he takes a moment to contemplate the act."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 297,
+    "record_key": "Phylactery of Faithfulness"
+  }
+}

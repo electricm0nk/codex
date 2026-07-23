@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Signal Horn",
+    "category": "General",
+    "name": "Signal Horn",
+    "cost_gp": 1.0,
+    "weight": 2.0,
+    "description": "A horn that, when sounded with a DC 10 Perform (wind instruments) check, can convey simple prearranged messages such as \"Attack!\" or \"Help!\" audible up to half a mile away."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

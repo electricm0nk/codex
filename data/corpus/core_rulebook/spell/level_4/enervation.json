@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Enervation",
+    "school": "Necromancy",
+    "level": 4,
+    "description": "You point your finger and fire a black ray of negative energy that suppresses the life force of any living creature it strikes. You must make a ranged touch attack to hit. If you hit, the subject gains 1d4 temporary negative levels [see Special Abilities]. Negative levels stack. Assuming the subject survives, it regains lost levels after a number of hours equal to your caster level [maximum 15 hours]. Usually, negative levels have a chance of becoming permanent, but the negative levels from enervation don't last long enough to do so. An undead creature struck by the ray gains 1d4 ? 5 temporary hit points for 1 hour."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 964,
+    "record_key": "Enervation.MOD"
+  }
+}

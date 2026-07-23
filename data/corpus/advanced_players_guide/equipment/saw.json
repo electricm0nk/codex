@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Saw",
+    "category": "General",
+    "name": "Saw",
+    "cost_gp": 0.04,
+    "weight": 2.0,
+    "description": "A hand saw; inserted between a door and its frame it can cut through wooden bolts or bars, dealing 5 hit points of damage plus the user's Strength modifier as a full-round action."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

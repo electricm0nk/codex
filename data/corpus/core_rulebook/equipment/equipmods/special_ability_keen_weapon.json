@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Ability ~ Keen ~ Weapon",
+    "category": "equipmods",
+    "name": "Keen",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This ability doubles the threat range of a weapon. Only piercing or slashing melee weapons can be keen. This benefit doesn't stack with any other effects that expand the threat range of a weapon (such as the keen edge spell or the Improved Critical feat)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/keen/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  }
+}

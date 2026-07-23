@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Special Ability ~ Sneaky ~ Melee",
+    "category": "Equipmods",
+    "name": "Sneaky",
+    "cost_gp": 5000.0,
+    "weight": null,
+    "description": "1/day designate foe as prey: get sneak attack damage on next attack; use 2/day if user is rogue or slayer with hunter's surprise talent"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
+    "line": 47,
+    "record_key": "Special Ability ~ Sneaky ~ Melee"
+  }
+}

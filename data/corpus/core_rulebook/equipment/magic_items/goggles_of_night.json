@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Goggles of Night",
+    "category": "magic_items",
+    "name": "Goggles of Night",
+    "cost_gp": 12000.0,
+    "weight_lbs": 0.0,
+    "description": "The lenses of this item are made of dark crystal. Even though the lenses are opaque, when placed over the eyes of the wearer, they enable him to see normally and also grant him 60-foot darkvision. Both lenses must be worn for the magic to be effective."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 176,
+    "record_key": "Goggles of Night"
+  }
+}

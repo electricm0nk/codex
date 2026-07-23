@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Spiked Armor (Base)",
+    "category": "arms_armor",
+    "name": "Spiked Armor",
+    "cost_gp": 0.0,
+    "weight_lbs": 0.0,
+    "description": "You can outfit your armor with spikes, which can deal damage in a grapple or as a separate attack."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 160,
+    "record_key": "Spiked Armor (Base)"
+  }
+}

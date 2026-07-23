@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rope (Hemp/50 ft)",
+    "category": "general",
+    "name": "Rope (50 ft.)",
+    "cost_gp": 1.0,
+    "weight_lbs": 10.0,
+    "description": "This rope has 2 hit points and can be burst with a DC 23 Strength check."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 167,
+    "record_key": "Rope (Hemp/50 ft)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Folding Plate",
+    "category": "ArmsArmor",
+    "name": "Folding Plate",
+    "cost_gp": 1500.0,
+    "weight": 50.0,
+    "description": "A +1 full plate armor that can transform between a wearable brooch and its full armor form on command."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

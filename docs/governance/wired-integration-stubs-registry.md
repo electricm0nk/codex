@@ -6,7 +6,7 @@ owner: Todd Hintzmann
 scope: universal
 status: active
 review_state: accepted
-last_reviewed_at: 2026-07-20
+last_reviewed_at: 2026-07-22
 canonical_source: ~/workspace/repos/codex/docs/governance/wired-integration-stubs-registry.md (this file)
 workspace_citation: ~/workspace/governance/docs/wired-integration-stubs-registry.md
 supersedes: (none — first issuance)
@@ -34,6 +34,32 @@ When a stub is proposed (by an operator directive, a planned cycle, or a defensi
 
 The operator's verbatim directive is required for every entry — exceptions are operator-granted, not self-asserted.
 
+### The `book_stub` kind
+
+Entries #0001 and #0002 are **code-pattern** stubs — a source-code location that returns a
+placeholder/`Would ...` value instead of computing a real one. `book_stub` is a different shape:
+a **data-completeness gap**, not a code stub. There is no source file "returning" a fake value;
+there is a book of PF1 rules content that genuinely has not been ingested into the corpus yet,
+and the registry's job is to record that gap honestly (per `book_id`) rather than let it be
+silently missing or, worse, backfilled with fabricated data.
+
+`book_stub` entries adapt the same seven-field shape #0001/#0002 use, with the two file-specific
+fields swapped for data-specific equivalents:
+
+| #0001/#0002 field | `book_stub` field | Meaning for `book_stub` |
+|---|---|---|
+| File / line | **Book / manifest path** | `<book_id>` plus its manifest at `data/stubs/<book_id>.json` |
+| Stub pattern | **What's missing** | The book has no `data/corpus/<book_id>/` content at all — zero class/spell/equipment/monster records ingested. The manifest's `content_kind_counts: null` is the honest signal (not `0`, which would falsely claim the counting was done and came up empty) |
+| Justification (operator verbatim) | *(same field, same requirement)* | Cites the operator directive that scopes future-state books out of this bundle |
+| Audit-grep impact | *(same field)* | For `book_stub`, ordinarily "None" — the manifest JSON and registry prose don't contain the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or bundle-tag pattern, so no exclusion is needed. If a book_id or book_name ever collides with a forbidden token, note the exclusion explicitly here |
+| Bundle-of-record | *(same field)* | SD-26, Epic 4, plus the criterion number that registered the book |
+| Remediation cycle | *(same field)* | Repeats the manifest's own `planned_resolution_bundle` value, so the two stay in sync |
+| Status | *(same field)* | `Registered stub <date>` (not `Accepted`, to distinguish a data gap from a granted code-stub exception — both are operator-granted, but `book_stub` entries have no code to "accept") |
+
+Each `book_stub` entry's manifest (`data/stubs/<book_id>.json`) uses the shape specified in
+`docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/content-unit-inventory.md §2.1`:
+`{book_id, book_name, planned_resolution_bundle, content_kind_counts: null, registered_at: <ISO-8601>}`.
+
 ## Registry entries
 
 ### 0001 — Browser-preview fallback in character hub runtime
@@ -56,4 +82,214 @@ The operator's verbatim directive is required for every entry — exceptions are
 - **Remediation cycle:** None per rule system that never gets a real adapter; superseded per-system the moment that system's real `RuleSystemAdapter` implementation lands (mirrors `Pf1Adapter`'s criterion 3.2 precedent) and criterion 3.4's `resolve_rule_system_adapter` in each command file routes that `rule_system_id` to the real implementation instead.
 - **Status:** Accepted 2026-07-21.
 
-(Entries 0003-000n reserved for operator-directed exceptions. Any accidental stub found by the per-cycle audit goes into `risks-and-open-questions.md` as a Wired Integration Cleanup candidate, not here — the registry is operator-granted only.)
+### 0003 — `book_stub`: `advanced_race_guide` not yet ingested
+
+- **Book / manifest path:** `advanced_race_guide` — `data/stubs/advanced_race_guide.json`
+- **What's missing:** No `data/corpus/advanced_race_guide/` content exists. This PF1 sourcebook (Advanced Race Guide) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `advanced_race_guide` is the pilot instance, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `advanced_race_guide.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.1 (kind definition, this pilot entry) — the remaining 20 future-state books land under criteria 4.2-4.22, each opening its own numbered entry following this same shape.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-22.
+
+### 0004 — `book_stub`: `adventurers_guide` not yet ingested
+
+- **Book / manifest path:** `adventurers_guide` — `data/stubs/adventurers_guide.json`
+- **What's missing:** No `data/corpus/adventurers_guide/` content exists. This PF1 sourcebook (Adventurer's Guide, Paizo, 2017) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `adventurers_guide` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `adventurers_guide.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.3.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0005 — `book_stub`: `beginner_box` not yet ingested
+
+- **Book / manifest path:** `beginner_box` — `data/stubs/beginner_box.json`
+- **What's missing:** No `data/corpus/beginner_box/` content exists. This PF1 sourcebook (Beginner Box, Paizo, 2011) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `beginner_box` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `beginner_box.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.2.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0006 — `book_stub`: `bestiary_2` not yet ingested
+
+- **Book / manifest path:** `bestiary_2` — `data/stubs/bestiary_2.json`
+- **What's missing:** No `data/corpus/bestiary_2/` content exists. This PF1 sourcebook (Bestiary 2, Paizo, December 2010) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bestiary_2` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bestiary_2.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.5.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0007 — `book_stub`: `bestiary_3` not yet ingested
+
+- **Book / manifest path:** `bestiary_3` — `data/stubs/bestiary_3.json`
+- **What's missing:** No `data/corpus/bestiary_3/` content exists. This PF1 sourcebook (Bestiary 3, Paizo, January 2012) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bestiary_3` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bestiary_3.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.4.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0008 — `book_stub`: `bestiary_4` not yet ingested
+
+- **Book / manifest path:** `bestiary_4` — `data/stubs/bestiary_4.json`
+- **What's missing:** No `data/corpus/bestiary_4/` content exists. This PF1 sourcebook (Bestiary 4, Paizo, October 2013) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bestiary_4` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bestiary_4.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.6.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0009 — `book_stub`: `bestiary_5` not yet ingested
+
+- **Book / manifest path:** `bestiary_5` — `data/stubs/bestiary_5.json`
+- **What's missing:** No `data/corpus/bestiary_5/` content exists. This PF1 sourcebook (Bestiary 5, Paizo, December 2015) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bestiary_5` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bestiary_5.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.7.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0010 — `book_stub`: `bestiary_6` not yet ingested
+
+- **Book / manifest path:** `bestiary_6` — `data/stubs/bestiary_6.json`
+- **What's missing:** No `data/corpus/bestiary_6/` content exists. This PF1 sourcebook (Bestiary 6, Paizo, May 2017) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bestiary_6` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bestiary_6.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.8.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0011 — `book_stub`: `bonus_bestiary` not yet ingested
+
+- **Book / manifest path:** `bonus_bestiary` — `data/stubs/bonus_bestiary.json`
+- **What's missing:** No `data/corpus/bonus_bestiary/` content exists. This PF1 sourcebook (Bonus Bestiary, Paizo, June 2009) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `bonus_bestiary` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `bonus_bestiary.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.9.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0012 — `book_stub`: `core_essentials` not yet ingested
+
+- **Book / manifest path:** `core_essentials` — `data/stubs/core_essentials.json`
+- **What's missing:** No `data/corpus/core_essentials/` content exists. This PF1 sourcebook (Core Essentials, Paizo, August 2009) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `core_essentials` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `core_essentials.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.10.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0013 — `book_stub`: `horror_adventures` not yet ingested
+
+- **Book / manifest path:** `horror_adventures` — `data/stubs/horror_adventures.json`
+- **What's missing:** No `data/corpus/horror_adventures/` content exists. This PF1 sourcebook (Horror Adventures, Paizo, August 2016) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `horror_adventures` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `horror_adventures.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.11.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0014 — `book_stub`: `monster_codex` not yet ingested
+
+- **Book / manifest path:** `monster_codex` — `data/stubs/monster_codex.json`
+- **What's missing:** No `data/corpus/monster_codex/` content exists. This PF1 sourcebook (Pathfinder Player Companion: Monster Codex, Paizo, November 2014) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `monster_codex` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `monster_codex.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.13.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0015 — `book_stub`: `mythic_adventures` not yet ingested
+
+- **Book / manifest path:** `mythic_adventures` — `data/stubs/mythic_adventures.json`
+- **What's missing:** No `data/corpus/mythic_adventures/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Mythic Adventures, Paizo, August 2013) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `mythic_adventures` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `mythic_adventures.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.14.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0016 — `book_stub`: `occult_adventures` not yet ingested
+
+- **Book / manifest path:** `occult_adventures` — `data/stubs/occult_adventures.json`
+- **What's missing:** No `data/corpus/occult_adventures/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Occult Adventures, Paizo, July 2015) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `occult_adventures` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `occult_adventures.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.15.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0017 — `book_stub`: `pathfinder_unchained` not yet ingested
+
+- **Book / manifest path:** `pathfinder_unchained` — `data/stubs/pathfinder_unchained.json`
+- **What's missing:** No `data/corpus/pathfinder_unchained/` content exists. This PF1 sourcebook (Pathfinder Unchained, Paizo, April 2015) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `pathfinder_unchained` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `pathfinder_unchained.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.16.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0018 — `book_stub`: `ultimate_campaign` not yet ingested
+
+- **Book / manifest path:** `ultimate_campaign` — `data/stubs/ultimate_campaign.json`
+- **What's missing:** No `data/corpus/ultimate_campaign/` content exists. This PF1 sourcebook (Ultimate Campaign, Paizo, May 2013) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_campaign` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_campaign.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.17.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0019 — `book_stub`: `ultimate_combat` not yet ingested
+
+- **Book / manifest path:** `ultimate_combat` — `data/stubs/ultimate_combat.json`
+- **What's missing:** No `data/corpus/ultimate_combat/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Ultimate Combat, Paizo, January 2011) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_combat` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_combat.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.18.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0020 — `book_stub`: `ultimate_equipment` not yet ingested
+
+- **Book / manifest path:** `ultimate_equipment` — `data/stubs/ultimate_equipment.json`
+- **What's missing:** No `data/corpus/ultimate_equipment/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Ultimate Equipment, Paizo, August 2012) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_equipment` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_equipment.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.19.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0021 — `book_stub`: `ultimate_intrigue` not yet ingested
+
+- **Book / manifest path:** `ultimate_intrigue` — `data/stubs/ultimate_intrigue.json`
+- **What's missing:** No `data/corpus/ultimate_intrigue/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Ultimate Intrigue, Paizo, April 2016) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_intrigue` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_intrigue.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.20.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0022 — `book_stub`: `ultimate_magic` not yet ingested
+
+- **Book / manifest path:** `ultimate_magic` — `data/stubs/ultimate_magic.json`
+- **What's missing:** No `data/corpus/ultimate_magic/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Ultimate Magic, Paizo, May 2011 — SOURCESHORT `UM`, a 256-page hardcover guide to the art of magic covering new spellcasting-class options, arcane discoveries, ki tricks, alchemist mutagens, oracle mysteries, and channel-energy options) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_magic` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_magic.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.21.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+### 0023 — `book_stub`: `ultimate_wilderness` not yet ingested
+
+- **Book / manifest path:** `ultimate_wilderness` — `data/stubs/ultimate_wilderness.json`
+- **What's missing:** No `data/corpus/ultimate_wilderness/` content exists. This PF1 sourcebook (Pathfinder Roleplaying Game: Ultimate Wilderness, Paizo, Nov 2017 — SOURCESHORT `UW`, covering the shifter base class, druidic sects and rituals, new archetypes, ranger/hunter companion options, and wilderness-survival character options) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.
+- **Justification (operator verbatim, 2026-07-21 17:39:26):** Per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/README.md §3`, the operator directive establishes that the JSON cache split "honors the operator's 'in-scope books no stubs, future-state books knowingly stub' doctrine" — the 4 in-scope PF1 books (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1) get real JSON cache builds with no stubs (Epic 3), while the 21 future-state PF1 books, of which `ultimate_wilderness` is one, are registered as known, honest gaps rather than silently missing or fabricated (Epic 4). Same operator directive, same timestamp, establishes the scope-cross posture generally (`README.md §5`, "Why scope-cross").
+- **Audit-grep impact:** None. `ultimate_wilderness.json`'s field names and values, and this entry's prose, contain none of the dual-audit's forbidden code tokens (`STUB`/`MOCK`/`placeholder`/`not yet implemented`/`todo`/`fixme`/`hack`) or the bundle-tag pattern. No exclusion needed.
+- **Bundle-of-record:** SD-26, Epic 4 "Book Stub Manifest," criterion 4.22.
+- **Remediation cycle:** `SD-27+ (unscheduled)` — matches the manifest's own `planned_resolution_bundle` field. Per `risks-and-open-questions.md §5` ("Deferrals"): concrete rule-system implementations and further corpus ingest land in SD-27+; no specific bundle number is committed yet, so neither the manifest nor this entry fabricates one.
+- **Status:** Registered stub 2026-07-23.
+
+(All 21 future-state `book_stub` entries (#0003-#0023) are now registered — the 21-book list from `content-unit-inventory.md §2.2` is fully covered (`advanced_race_guide` done by 4.1, `adventurers_guide` done by 4.3, `beginner_box` done by 4.2, `bestiary_2` done by 4.5, `bestiary_3` done by 4.4, `bestiary_4` done by 4.6, `bestiary_5` done by 4.7, `bestiary_6` done by 4.8, `bonus_bestiary` done by 4.9, `core_essentials` done by 4.10, `horror_adventures` done by 4.11, `monster_codex` done by 4.13, `mythic_adventures` done by 4.14, `occult_adventures` done by 4.15, `pathfinder_unchained` done by 4.16, `ultimate_campaign` done by 4.17, `ultimate_combat` done by 4.18, `ultimate_equipment` done by 4.19, `ultimate_intrigue` done by 4.20, `ultimate_magic` done by 4.21, `ultimate_wilderness` done by 4.22). Criterion 4.12 is confirmed orphaned per `content-unit-inventory.md`'s "Pre-existing count discrepancy" note (the bundle's original 22-book miscount) and closes as a no-op — no 22nd book exists to register against it. Entries 0024-000n reserved for any other operator-directed exceptions. Any accidental stub found by the per-cycle audit goes into `risks-and-open-questions.md` as a Wired Integration Cleanup candidate, not here — the registry is operator-granted only.)

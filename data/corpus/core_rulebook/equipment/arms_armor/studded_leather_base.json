@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Studded Leather (Base)",
+    "category": "arms_armor",
+    "name": "Studded Leather Armor",
+    "cost_gp": 25.0,
+    "weight_lbs": 20.0,
+    "description": "Similar to leather armor, this suit is reinforced with small metal studs."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 39,
+    "record_key": "Studded Leather (Base)"
+  }
+}

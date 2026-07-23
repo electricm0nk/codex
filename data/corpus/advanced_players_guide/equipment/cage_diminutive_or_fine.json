@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Cage (Diminutive or Fine)",
+    "category": "General",
+    "name": "Cage (Diminutive or Fine)",
+    "cost_gp": 10.0,
+    "weight": 2.0,
+    "description": "A secure, portable enclosure for holding a Diminutive or Fine creature."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

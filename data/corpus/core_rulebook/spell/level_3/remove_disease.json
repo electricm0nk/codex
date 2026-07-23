@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Remove Disease",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "Remove disease can cure all diseases from which the subject is suffering. You must make a caster level check [1d20 + caster level] against the DC of each disease affecting the target. Success means that the disease is cured. The spell also kills some hazards and parasites, including green slime and others. Since the spell's duration is instantaneous, it does not prevent reinfection after a new exposure to the same disease at a later date."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1242,
+    "record_key": "Remove Disease.MOD"
+  }
+}

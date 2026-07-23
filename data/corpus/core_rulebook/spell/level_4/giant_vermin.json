@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Giant Vermin",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You turn a number of normal-sized centipedes, scorpions, or spiders into their giant counterparts. Only one type of vermin can be transmuted [so a single casting cannot affect both a centipede and a spider]. The number of vermin which can be affected by this spell depends on your caster level, as noted on the table below. Giant vermin created by this spell do not attempt to harm you, but your control of such creatures is limited to simple commands [\"Attack,\" \"Defend,\" \"Stop,\" and so forth]. Orders to attack a certain creature when it appears or guard against a particular occurrence are too complex for the vermin to understand. Unless commanded to do otherwise, the giant vermin attack whomever or whatever is near them. \nCaster Level Centipedes Scorpions Spiders \n9th or lower | 3 | 1 | 2 \n10th-13th | 4 | 2 | 3 \n14th-17th | 6 | 3 | 4 \n18th-19th | 8 | 4 | 5 \n20th or higher | 12 | 6 | 8"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1025,
+    "record_key": "Giant Vermin.MOD"
+  }
+}

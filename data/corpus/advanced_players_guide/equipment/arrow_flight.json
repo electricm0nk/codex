@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Arrow (Flight)",
+    "category": "ArmsArmor",
+    "name": "Arrow, Flight",
+    "cost_gp": 0.1,
+    "weight": 0.15,
+    "description": "A single arrow with a light shaft and special fletching, granting extra range but dealing damage as though one size category smaller."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

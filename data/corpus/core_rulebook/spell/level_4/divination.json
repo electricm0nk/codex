@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Divination",
+    "school": "Divination",
+    "level": 4,
+    "description": "Similar to augury but more powerful, a divination spell can provide you with a useful piece of advice in reply to a question concerning a specific goal, event, or activity that is to occur within 1 week. The advice granted by the spell can be as simple as a short phrase, or it might take the form of a cryptic rhyme or omen. If your party doesn't act on the information, the conditions may change so that the information is no longer useful. The base chance for a correct divination is 70%% + 1%% per caster level, to a maximum of 90%%. If the die roll fails, you know the spell failed, unless specific magic yielding false information is at work. As with augury, multiple divinations about the same topic by the same caster use the same dice result as the first divination spell and yield the same answer each time."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 944,
+    "record_key": "Divination.MOD"
+  }
+}

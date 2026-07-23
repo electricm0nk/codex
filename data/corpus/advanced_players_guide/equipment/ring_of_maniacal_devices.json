@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Ring of Maniacal Devices",
+    "category": "MagicItems",
+    "name": "Ring of Maniacal Devices",
+    "cost_gp": 5000.0,
+    "weight": null,
+    "description": "A ring granting a +5 competence bonus on checks to build or disable traps and to use Disable Device, including untrained use."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

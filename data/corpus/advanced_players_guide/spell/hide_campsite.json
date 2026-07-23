@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Hide Campsite",
+    "school": "Illusion",
+    "level": 2,
+    "description": "You make the area around a campsite appear to be a thicket of untouched and forbidding foliage, or some other unwelcoming feature matching the surrounding terrain. Creatures outside the area cannot sense any activity going on inside the area- they cannot smell campfires or cooking food, they cannot hear conversation, loud noises, or spells being cast, and they cannot even feel heat or a rush of wind coming from the area. Those inside the area can see out normally. Once a creature steps into the area of the spell, it can see everything in and around the area normally.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1977,
+    "record_key": "Hide Campsite"
+  }
+}

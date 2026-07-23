@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Vomit Swarm",
+    "school": "Conjuration",
+    "level": 2,
+    "description": "You vomit forth a swarm of spiders (Bestiary, page 258) that attacks all other creatures within its area. The swarm begins adjacent to you, but if no living creatures are within its area, it moves in one direction of your choosing at its normal speed.  You can move the swarm or change the swarm's direction by spending a standard action to concentrate on the swarm, otherwise it continues moving in its current direction. If your caster level is at least 7th, you can vomit forth a swarm of wasps instead (Bestiary 275). Finally, if your caster level is at least 13th, you can vomit forth a swarm of army ants (Bestiary 16).",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2110,
+    "record_key": "Vomit Swarm"
+  }
+}

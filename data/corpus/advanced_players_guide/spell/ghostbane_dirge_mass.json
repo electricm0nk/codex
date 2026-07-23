@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Ghostbane Dirge (Mass)",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "This spell functions as ghostbane dirge, except that it affects multiple targets.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1968,
+    "record_key": "Ghostbane Dirge (Mass)"
+  }
+}

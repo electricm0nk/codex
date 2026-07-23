@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Harm",
+    "school": "Necromancy",
+    "level": 6,
+    "description": "Harm charges a subject with negative energy that deals 10 points of damage per caster level [to a maximum of 150 points at 15th level]. If the creature successfully saves, harm deals half this amount. Harm cannot reduce the target's hit points to less than 1. If used on an undead creature, harm acts like heal."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1044,
+    "record_key": "Harm.MOD"
+  }
+}

@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -35,8 +35,10 @@ pub mod crb;
   Epic 5's multiclass dispatch reads directly, see [rules-engine.md](./rules-engine.md)),
   `race_tables.rs` (per-race trait dimensions, `RaceId` enum),
   `feats.rs` + `feat_data/{general,combat,item_creation,metamagic}.rs`
-  (185-feat catalog split by `FeatCategory`), `spell_list.rs`, and
-  `equipment_tables.rs` + `equipment_data/{arms_armor,general,magic_items,equipmods}.rs`.
+  (185-feat catalog split by `FeatCategory`), `spell_list.rs`,
+  `equipment_tables.rs` + `equipment_data/{arms_armor,general,magic_items,equipmods}.rs`,
+  and `json_cache.rs` (the Shape-B JSON corpus-cache record types — see
+  "JSON corpus cache" below).
 - **`apg/`** (Advanced Player's Guide) — `mod.rs` plus one file per
   class (`class_alchemist.rs`, `class_cavalier.rs`, `class_inquisitor.rs`,
   `class_oracle.rs`, `class_summoner.rs`, `class_witch.rs` — all six
@@ -190,6 +192,30 @@ Record-count coverage (the count of rows ingested at all, independent of
 which fields are populated) is 100% for equipment and spells across CRB,
 APG, ACG, and — as of SD-25 Epic 7 — Bestiary 1's own small equipment
 corpus. See [status.md](./status.md) for the full stub/gap ledger.
+
+## JSON corpus cache (`data/corpus/`)
+
+The four in-scope books are also emitted as a repo-resident JSON cache under
+`data/corpus/<book>/**/*.json` (SD-26 Epic 3): `core_rulebook/` (3326 records —
+2663 equipment, 652 spell, 11 class), `advanced_players_guide/` (641),
+`advanced_class_guide/` (423), and `beastiary/` (45). This is a **dump of the
+already-landed `rules_tables` module state, not a second data source.** Each
+per-book generator under `src/rules_core/cache_gen/` (`acg.rs`, `apg.rs`,
+`beastiary1.rs`), driven by the generator binaries
+`src/bin/sd26_gen_core_rulebook_cache.rs`, `src/bin/gen_cache_apg.rs`,
+`src/bin/gen_cache_acg.rs`, and `src/bin/gen_cache_beastiary.rs`, walks the
+compiled Rust table module and writes each record out in the Shape-B on-disk
+form defined by `src/rules_core/rules_tables/crb/json_cache.rs`
+(`Population`/`Completeness`/`source` discriminated unions, per the bundle's
+`decisions.md §7`/`§11`). The generators never re-parse raw PCGen `.lst` to
+*compute* a value — the value is already known to be correct from the compiled
+module; the only reason any generator touches the LST corpus at all is to
+recover a real, checkable line-number citation for a value it already has.
+Every book's cache is round-trip-tested by
+`tests/sd26_cache_core_rulebook.rs`, `tests/sd26_cache_apg.rs`,
+`tests/sd26_cache_acg.rs`, and `tests/sd26_cache_beastiary.rs`. Out-of-scope books
+carry no corpus cache; they are registered instead as `book_stub` future-state
+placeholders under `data/stubs/` (see [status.md](./status.md)).
 
 ## Adding a new book
 

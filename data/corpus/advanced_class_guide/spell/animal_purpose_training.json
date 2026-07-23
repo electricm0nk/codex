@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Animal Purpose Training",
+    "school": "Enchantment",
+    "level": 1,
+    "description": "You instill the target animal with a general purpose (see the Handle Animal skill), which can be any purpose except combat training-fighting, guarding, heavy labor, hunting, performance, or riding. This purpose supersedes the animal's previous trained purpose and any tricks it knows. When the spell ends, the animal reverts to its previous trained purpose and known tricks.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 19,
+    "record_key": "Animal Purpose Training"
+  }
+}

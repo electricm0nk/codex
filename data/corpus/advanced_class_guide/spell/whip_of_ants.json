@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Whip of Ants",
+    "school": "Conjuration",
+    "level": 6,
+    "description": "This spell functions as whip of spiders, except it summons army ants, and any creature you strike with the whip takes swarm damage as if it were attacked by an army ant swarm (3d6 points of damage plus poison and distraction, Pathfinder RPG Bestiary 16). If you transform the whip into an army ant swarm, it has 16 hit points.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 138,
+    "record_key": "Whip of Ants"
+  }
+}

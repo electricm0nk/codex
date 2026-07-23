@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Agile Breastplate",
+    "category": "ArmsArmor",
+    "name": "Agile Breastplate",
+    "cost_gp": 400.0,
+    "weight": 25.0,
+    "description": "A breastplate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to only -1 instead of -4."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

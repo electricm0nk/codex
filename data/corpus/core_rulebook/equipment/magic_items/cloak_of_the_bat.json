@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Cloak of the Bat",
+    "category": "magic_items",
+    "name": "Cloak of the Bat",
+    "cost_gp": 26000.0,
+    "weight_lbs": 1.0,
+    "description": "Fashioned of dark brown or black cloth, this cloak bestows a +5 competence bonus on Stealth checks. The wearer is also able to hang upside down from the ceiling like a bat.\nBy holding the edges of the garment, the wearer is able to fly as per the spell (including a +7 bonus on Fly skill checks). If he desires, the wearer can actually polymorph himself into an ordinary bat and fly accordingly (as beast shape III). All possessions worn or carried are part of the transformation. Flying, either with the cloak or in bat form, can be accomplished only in darkness (either under the night sky or in a lightless or near-lightless environment underground). Either of the flying powers is usable for up to 7 minutes at a time, but after a flight of any duration the cloak cannot bestow any flying power for a like period of time."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 104,
+    "record_key": "Cloak of the Bat"
+  }
+}

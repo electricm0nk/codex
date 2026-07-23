@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Unliving Rage",
+    "school": "Necromancy",
+    "level": 2,
+    "description": "This spell functions as rage, except it affects only undead creatures and bolsters them with necromantic energy rather than emotion. Each affected creature gains a +2 profane bonus to Strength and Charisma, a +1 profane bonus on Will saves, and a -2 penalty to AC. The effect is otherwise identical to a barbarian's rage.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 133,
+    "record_key": "Unliving Rage"
+  }
+}

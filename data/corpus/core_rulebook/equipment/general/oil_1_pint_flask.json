@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Oil (1 Pint Flask)",
+    "category": "general",
+    "name": "Oil, 1 Pint Flask",
+    "cost_gp": 0.1,
+    "weight_lbs": 1.0,
+    "description": "A pint of oil burns for 6 hours in a lantern or lamp. You can also use a flask of oil as a splash weapon. Use the rules for alchemist's fire (see Special Substances and Items on Table 6-9), except that it takes a full-round action to prepare a flask with a fuse. Once it is thrown, there is a 50%% chance of the flask igniting successfully.\nYou can pour a pint of oil on the ground to cover an area 5 feet square, provided that the surface is smooth. If lit, the oil burns for 2 rounds and deals 1d3 points of fire damage to each creature in the area."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 156,
+    "record_key": "Oil (1 Pint Flask)"
+  }
+}

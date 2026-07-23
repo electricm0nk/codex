@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Eversmoking Bottle",
+    "category": "magic_items",
+    "name": "Eversmoking Bottle",
+    "cost_gp": 5400.0,
+    "weight_lbs": 1.0,
+    "description": "This metal urn is identical in appearance to an efreeti bottle, except that it does nothing but smoke. The amount of smoke is great if the stopper is pulled out, pouring from the bottle and totally obscuring vision across a 50-foot spread in 1 round. If the bottle is left unstoppered, the smoke billows out another 10 feet per round until it has covered a 100-foot radius. This area remains smoke-filled until the eversmoking bottle is stoppered.\nThe bottle must be resealed by a command word, after which the smoke dissipates normally. A moderate wind (11+ mph) disperses the smoke in 4 rounds; a strong wind (21+ mph) disperses the smoke in 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 150,
+    "record_key": "Eversmoking Bottle"
+  }
+}

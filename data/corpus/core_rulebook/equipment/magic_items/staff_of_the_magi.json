@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of the Magi",
+    "category": "magic_items",
+    "name": "Staff of the Magi",
+    "cost_gp": 0.0,
+    "weight_lbs": 5.0,
+    "description": "A long wooden staff, shod in iron and inscribed with sigils and runes of all types, this potent artifact contains many spell powers and other functions. Unlike a normal staff, a staff of the magi holds 50 charges and cannot be recharged normally. Some of its powers use charges, while others don't. A staff of the magi does not lose its powers if it runs out of charges. The following powers do not use charges:\n* Detect magic\n* Enlarge person (Fortitude DC 15 negates)\n* Hold portal\n* Light\n* Mage armor\n* Mage hand\nThe following powers drain 1 charge per usage:\n* Dispel magic\n* Fireball (10d6 damage, Reflex DC 17 half )\n* Ice storm\n* Invisibility\n* Knock\n* Lightning bolt (10d6 damage, Reflex DC 17 half )\n* Passwall\n* Pyrotechnics (Will or Fortitude DC 16 negates)\n* Wall of fire\n* Web\nThese powers drain 2 charges per usage:\n* Monster summoning IX\n* Plane shift (Will DC 21 negates)\n* Telekinesis (400 lbs. maximum weight; Will DC 19 negates)\nA staff of the magi gives the wielder spell resistance 23. If this is willingly lowered, however, the staff can also be used to absorb arcane spell energy directed at its wielder, as a rod of absorption does. Unlike the rod, this staff converts spell levels into charges rather than retaining them as spell energy usable by a spellcaster. If the staff absorbs enough spell levels to exceed its limit of 50 charges, it explodes as if a retributive strike had been performed (see below). The wielder has no idea how many spell levels are cast at her, for the staff does not communicate this knowledge as a rod of absorption does. (Thus, absorbing spells can be risky.)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 1602,
+    "record_key": "Staff of the Magi"
+  }
+}

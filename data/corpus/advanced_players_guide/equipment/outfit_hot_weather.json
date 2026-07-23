@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Outfit (Hot Weather)",
+    "category": "General",
+    "name": "Hot Weather Outfit",
+    "cost_gp": 8.0,
+    "weight": 4.0,
+    "description": "A loose linen robe with a turban or head covering and veil, granting a +2 bonus on Fortitude saves against hot weather (does not stack with the Survival skill's own bonus)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

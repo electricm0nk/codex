@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Bullet (Dustburst)",
+    "category": "ArmsArmor",
+    "name": "Bullet, Dustburst",
+    "cost_gp": 0.01,
+    "weight": 0.5,
+    "description": "A +1 sling bullet that explodes into a 5-foot cube of choking dust following the target for 1d6 rounds; a creature ending its turn there must save or become sickened and blinded for 1 round."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

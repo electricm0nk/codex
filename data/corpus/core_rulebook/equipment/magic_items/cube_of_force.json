@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Cube of Force",
+    "category": "magic_items",
+    "name": "Cube of Force",
+    "cost_gp": 62000.0,
+    "weight_lbs": 0.5,
+    "description": "This device is just under an inch across and can be made of ivory, bone, or any hard mineral. Typically, each of the cube's faces are polished smooth, but sometimes they are etched with runes. The device enables its possessor to put up a special cube made up of 6 individual wall of force spells, 10 feet on a side around her person. This cubic screen moves with the character and is impervious to the attack forms mentioned on the table below. The cube has 36 charges when fully charged--charges used are automatically renewed each day. The possessor presses one face of the cube to activate a particular type of screen or to deactivate the device. Each effect costs a certain number of charges to maintain for every minute (or portion of a minute) it is in operation. Also, when an effect is active, the possessor's speed is limited to the maximum value given on the table.\nWhen the cube of force is active, attacks dealing more than 30 points of damage drain 1 charge for every 10 points of damage beyond 30 that they deal. The charge cost to maintain each of the cube's six walls is summarized below.\nCube Face / Charge Cost per Minute / Max. Speed / Effect\n1 / 1 / 30 ft. / Keeps out gases, wind, etc.\n2 / 2 / 20 ft. / Keeps out nonliving matter\n3 / 3 / 15 ft. / Keeps out living matter\n4 / 4 / 10 ft. / Keeps out magic\n5 / 6 / 10 ft. / Keeps out all things\n6 / 0 / As normal / Deactivates\nSpells that affect the integrity of the screen also drain extra charges. These spells cannot be cast into or out of the cube.\nAttack Form / Extra Charges\nDisintegrate / 6\nHorn of blasting / 6\nPasswall / 3\nPhase door / 5\nPrismatic spray / 7\nWall of fire / 2"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 123,
+    "record_key": "Cube of Force"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Time Shudder",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You cause a ripple in time that affects all creatures in the area. At the start of each creature's turn, there is a 50% chance the creature is hasted (as haste); otherwise it is slowed (as slow).",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 128,
+    "record_key": "Time Shudder"
+  }
+}

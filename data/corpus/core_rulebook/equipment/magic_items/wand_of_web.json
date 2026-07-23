@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Wand of Web",
+    "category": "magic_items",
+    "name": "Wand",
+    "cost_gp": null,
+    "weight_lbs": 0.0625,
+    "description": "Web creates a many-layered mass of strong, sticky strands. These strands trap those caught in them."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 787,
+    "record_key": "Wand of Web"
+  }
+}

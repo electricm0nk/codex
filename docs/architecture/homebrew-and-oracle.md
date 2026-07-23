@@ -1,7 +1,7 @@
 # Homebrew authoring and oracle validation
 
 > Scope: the headless GE-08 package-authoring surface and the GE-05 oracle-parity surface, as they exist today.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 Both modules covered here are deliberately narrow, bounded proof slices, not
@@ -118,11 +118,16 @@ effect computation, provenance checks) lives in the desktop crate.
 
 ## `oracle_validation/`: the oracle-parity surface, today
 
-`src/oracle_validation/mod.rs`'s entire module doc comment: "This module
-currently exposes only the GE05-E2-F1 golden-case fixture schema. Comparator,
-normalization, parity-report, and PCGen-runner behavior are intentionally out
-of scope for this slice and live in later GE-05 slices." Two submodules exist:
-`golden_fixture` and `selected_parity_dimensions`.
+`src/oracle_validation/mod.rs`'s module doc comment: "Oracle-validation and
+parity-harness surface (GE-05 / SD-26 Epic 2). Exposes the GE05-E2-F1
+golden-case fixture schema, the GE06-E3-F1 selected parity-dimension adapter,
+the Oracle-Harness comparator, the normalization-rule engine, the parity
+report writer, and the Rust-side PCGen runner wrapper." Six submodules exist:
+`golden_fixture`, `selected_parity_dimensions`, `comparator`, `normalization`,
+`parity_report`, and `pcgen_runner`. The first two carry the fixture/dimension
+schema; the last four are the in-crate parity harness — a normalized PCGen
+output can now be compared, dimension by dimension, against Codex's computed
+output and rendered into a real `PASS`/`FAIL` parity report.
 
 ### `golden_fixture.rs`: typed golden-case fixture
 
@@ -163,15 +168,82 @@ ClaimTierFloor::Computed` — the module doc comment states this "maintains a
 only one `ClaimTierFloor` variant today (`Computed`); nothing in this module
 can produce an `OracleChecked` claim.
 
-### Deferred (verified via each module's own doc comments)
+### `comparator.rs`: the Oracle-Harness comparator
 
-Per `mod.rs`'s doc comment: the comparator, the normalization rule engine,
-the parity-report writer, and the PCGen runner are all out of scope for this
-slice and live in later GE-05 slices. `golden_fixture.rs` repeats the same
-list of deliberate non-goals. Nothing under `oracle_validation/` today can
-compare a Codex output against legacy evidence or emit a pass/fail parity
-verdict — see [status.md](./status.md) for where this sits relative to the
-rest of the release surface.
+`compare(canon_pcg: &NormalizedOutput, codex: &SelectedParityDimensions) ->
+ComparisonResult` aligns a normalized old-system (PCGen) output against Codex's
+selected parity dimensions **by dimension ID** and reports, per dimension,
+whether the two agree. `NormalizedDimensionValue` and `SelectedDimension` share
+the same `(value_string, value_i16)` shape, so alignment needs no
+schema-translation step. Each dimension lands in either `matches:
+Vec<DimensionMatch>` or `mismatches: Vec<DimensionMismatch>`; a `DimensionMismatch`
+carries a typed `MismatchReason` (`ValueMismatch`, `MissingFromCodex`,
+`MissingFromPcgen`) so a one-sided dimension set is a real, reported outcome
+rather than a silent drop. `ComparisonResult::all_matched()` is true only when
+`mismatches` is empty. This slice applies **exact value equality only**
+(`value_i16 == value_i16 && value_string == value_string`) — refining what
+"matches" means is `normalization.rs`'s job, a pre-comparison step on the PCGen
+side that does not change `compare`'s signature.
+
+### `normalization.rs`: the normalization-rule engine
+
+`normalize(raw: &RawPcgenOutput, rules: &[NormalizationRule]) ->
+NormalizedOutput` reduces a raw PCGen text capture (`RawDimensionValue`, a
+stable dimension `id` plus an unmodified `raw_value: String`) into the
+`NormalizedOutput` shape `comparator::compare` consumes. `default_normalization_rules()`
+returns the two-rule set, applied in order per `technical-design.md §2.2`:
+`trailing-whitespace-strip` (`NormalizationRuleKind::TrimWhitespace`) then
+`integer-coercion` (`NormalizationRuleKind::IntegerCoercion`, which parses the
+already-trimmed string as `i16` and, on success, promotes the value to numeric
+and clears the string). Rules thread a working `(value_string, value_i16)` pair,
+so later rules see earlier rules' output. This engine remains available for
+raw, not-yet-typed text captures; the `pcgen_runner.rs` script pair below
+produces already-typed values that skip it.
+
+### `parity_report.rs`: the parity-report writer
+
+`render_parity_report(case_id, comparison: &ComparisonResult,
+normalization_rules_used: &[NormalizationRule]) -> String` is a **pure renderer**
+over a `ComparisonResult` — it runs neither the comparator nor the
+normalization engine. It emits the Summary / Per-Dimension Comparison /
+Normalization Rules Used / Discovered Deltas Markdown shape from
+`technical-design.md §2.3`, with a top-line `Result: PASS`/`FAIL` derived from
+`comparison.all_matched()`. `write_parity_report(output_dir, case_id, ...)`
+writes it to the real per-case path `artifacts/oracle_validation/parity_report_<case-id>.md`
+(`default_parity_report_dir()` resolves the codex repo root via
+`CODEX_REPO_ROOT` env override or the compile-time `CARGO_MANIFEST_DIR`).
+
+### `pcgen_runner.rs`: Rust-side PCGen runner wrapper
+
+`run_pcgen_character(character_pcg: &Path, options: &PcgenRunOptions) ->
+Result<PcgenRunOutput, PcgenRunnerError>` wraps the two real scripts SD-25's
+PCGen-runner scaffolding ships (`scripts/pcgen-run-character.sh`, which drives
+the real PCGen Gradle wrapper in headless batch-export against a real `.pcg`
+file, then `scripts/pcgen-normalize-output.py`, which normalizes the raw XML
+into typed dimension JSON) into one Rust call. It shells out to both real
+scripts in sequence and parses their composed output — **no PCGen output is
+mocked, stubbed, or fabricated**; every real failure (missing script or
+character file, non-zero exit, spawn failure, unreadable/unparseable output)
+surfaces as a typed `PcgenRunnerError` variant carrying the underlying exit
+status and stderr. Because the normalizer already emits the typed
+`(value_string` XOR `value_i16)` shape, `PcgenRunOutput::to_normalized_output()`
+is a direct field-for-field carry into `comparator::compare`'s input, not a
+second normalization pass. `parse_normalized_output(json_text)` is factored out
+as pure and process-free so the parse/error-mapping contract is unit-testable
+without a live PCGen invocation.
+
+### The pilot-case verification (Criterion 2.5)
+
+`tests/sd26_pilot_case_verification.rs` drives the whole harness end to end
+against a real `.pcg` build:
+`full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches` runs the
+PCGen runner, normalizes, and compares — and the two skill mismatches it finds
+are **real, not a test defect**: `pilot_compute::compute_ability_modifiers`
+does not yet apply the chosen Human `+2 Strength` racial bonus before deriving
+`AbilityModifiers`, so the `skill.selected_modifier.{climb,swim}` dimensions
+genuinely disagree (the open CG-03 blocker, tracked in the SD-26 bundle's
+`## Open blockers`). The harness reporting a true mismatch rather than papering
+over it is the fail-honest discipline working as designed.
 
 ## Relationship to the fail-honest pattern and test locations
 
@@ -185,7 +257,13 @@ are both direct applications of it).
 Tests live under the repo-root `tests/` directory, not inline in these
 modules: `tests/golden_case_fixture_schema.rs` covers `golden_fixture.rs`;
 `tests/ge06_selected_parity_dimensions.rs` covers
-`selected_parity_dimensions.rs`; `tests/ge08_preview_bridge.rs`,
+`selected_parity_dimensions.rs`; `tests/sd26_comparator.rs` covers
+`comparator.rs`; `tests/sd26_normalization.rs` covers `normalization.rs`;
+`tests/sd26_parity_report.rs` covers `parity_report.rs`;
+`tests/sd26_pcgen_runner.rs` covers `pcgen_runner.rs` (including a real
+end-to-end PCGen-engine invocation); `tests/sd26_pilot_case_verification.rs`
+drives the full comparator harness against a real `.pcg` build;
+`tests/ge08_preview_bridge.rs`,
 `tests/ge08_package_file_lifecycle.rs`, and
 `tests/ge08_validation_and_diagnostics.rs` cover `homebrew_authoring/`, with
 fixture data under `tests/fixtures/ge08/`. See

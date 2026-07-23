@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Rod (Viper)",
+    "category": "magic_items",
+    "name": "Rod",
+    "cost_gp": 19000.0,
+    "weight_lbs": 5.0,
+    "description": "This rod strikes as a +2 heavy mace. Once per day, upon command, the head of the rod becomes that of an actual serpent for 10 minutes. During this period, any successful strike with the rod deals its usual damage and also poisons the creature hit. This poison deals 1d3 Constitution damage per round for 6 rounds. Poisoned creatures can make a DC 16 Fortitude save each round to negate the damage and end the affliction. Multiple hits extend the duration by 3 rounds and increase the DC by +2 for each hit. The rod only functions if its possessor is evil."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 463,
+    "record_key": "Rod (Viper)"
+  }
+}

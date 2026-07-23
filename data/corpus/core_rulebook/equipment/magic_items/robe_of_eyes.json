@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Robe of Eyes",
+    "category": "magic_items",
+    "name": "Robe of Eyes",
+    "cost_gp": 120000.0,
+    "weight_lbs": 1.0,
+    "description": "This valuable garment appears to be a normal robe until it is put on. Its wearer is able to see in all directions at the same moment due to scores of visible, magical eye-like patterns that adorn the robe. She also gains 120-foot darkvision.\nThe robe of eyes sees all forms of invisible or ethereal creatures or objects within 120 feet.\nThe wearer of a robe of eyes gains a +10 competence bonus on Perception checks. She retains her Dexterity bonus to AC even when flat-footed, and can't be flanked. She is not able to avert or close her eyes when confronted by a creature with a gaze attack. A light or continual flame spell cast directly on a robe of eyes causes it to be blinded for 1d3 minutes. A daylight spell blinds it for 2d4 minutes."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 313,
+    "record_key": "Robe of Eyes"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Cloak of the Manta Ray",
+    "category": "magic_items",
+    "name": "Cloak of the Manta Ray",
+    "cost_gp": 7200.0,
+    "weight_lbs": 1.0,
+    "description": "This cloak appears to be made of leather until the wearer enters salt water. At that time, the cloak of the manta ray adheres to the individual, and he appears nearly identical to a manta ray (as the beast shape II spell, except that it allows only manta ray form). He gains a +3 natural armor bonus, the ability to breathe underwater, and a swim speed of 60 feet, like a real manta ray. The cloak does allow the wearer to attack with a manta ray's tail spine, dealing 1d6 points of damage. This attack can be used in addition to any other attack the character has, using his highest melee attack bonus. The wearer can release his arms from the cloak without sacrificing underwater movement if so desired."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 109,
+    "record_key": "Cloak of the Manta Ray"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Bill",
+    "category": "ArmsArmor",
+    "name": "Bill",
+    "cost_gp": 11.0,
+    "weight": 11.0,
+    "description": "A polearm with a curved or hooked cutting blade and a spiked rear projection; grants a +1 shield bonus to AC when fighting defensively, and imposes a Ride penalty on mounted opponents struck by it."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

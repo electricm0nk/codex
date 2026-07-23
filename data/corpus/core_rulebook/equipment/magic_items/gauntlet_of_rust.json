@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Gauntlet of Rust",
+    "category": "magic_items",
+    "name": "Gauntlet of Rust",
+    "cost_gp": 11500.0,
+    "weight_lbs": 2.0,
+    "description": "This single metal gauntlet looks rusted and pitted but is actually quite powerful. Once per day, it can affect an object as with the rusting grasp spell. It also completely protects the wearer and her gear from rust (magical or otherwise), including the attack of a rust monster."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 169,
+    "record_key": "Gauntlet of Rust"
+  }
+}

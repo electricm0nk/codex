@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Robe of Scintillating Colors",
+    "category": "magic_items",
+    "name": "Robe of Scintillating Colors",
+    "cost_gp": 27000.0,
+    "weight_lbs": 1.0,
+    "description": "The wearer of this robe can cause the garment to display a shifting pattern of incredible hues, color after color cascading from the upper part of the robe to the hem in sparkling rainbows of dazzling light. The colors daze those near the wearer, conceal the wearer, and illuminate the surroundings. It takes 1 full round after the wearer speaks the command word for the colors to start flowing on the robe. The colors create the equivalent of a gaze attack with a 30-foot range. Those who look at the wearer are dazed for 1d4+1 rounds (Will DC 16 negates). This is a mindaffecting pattern effect.\nEvery round of continuous scintillation of the robe gives the wearer better concealment. The miss chance on attacks against the wearer starts at 10%% and increases by 10%% each round until it reaches 50%% (total concealment).\nThe robe illuminates a 30-foot radius continuously.\nThe effect can be used no more than a total of 10 rounds per day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 315,
+    "record_key": "Robe of Scintillating Colors"
+  }
+}

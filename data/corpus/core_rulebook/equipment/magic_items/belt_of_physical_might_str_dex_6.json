@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Belt of Physical Might (STR/DEX) +6",
+    "category": "magic_items",
+    "name": "Belt of Physical Might +6 (Str, Dex)",
+    "cost_gp": 90000.0,
+    "weight_lbs": 1.0,
+    "description": "This belt has a large steel buckle, usually depicting the image of a giant. The belt grants the wearer an enhancement bonus to two physical ability scores (Strength, Dexterity, or Constitution) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn. These bonuses are chosen when the belt is created and cannot be changed."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 49,
+    "record_key": "Belt of Physical Might (STR/DEX) +6"
+  }
+}

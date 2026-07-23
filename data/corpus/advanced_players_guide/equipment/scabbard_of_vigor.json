@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Scabbard of Vigor",
+    "category": "MagicItems",
+    "name": "Scabbard of Vigor",
+    "cost_gp": 1800.0,
+    "weight": 3.0,
+    "description": "A scabbard that, once per day as part of drawing the weapon it holds, can endow that weapon with a temporary enhancement bonus."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

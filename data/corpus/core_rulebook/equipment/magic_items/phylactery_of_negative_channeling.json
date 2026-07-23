@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Phylactery of Negative Channeling",
+    "category": "magic_items",
+    "name": "Phylactery of Negative Channeling",
+    "cost_gp": 11000.0,
+    "weight_lbs": 0.0,
+    "description": "This item is a boon to any character able to channel negative energy, increasing the amount of damage dealt to living creatures by +2d6. This also increases the amount of damage healed by undead creatures."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 298,
+    "record_key": "Phylactery of Negative Channeling"
+  }
+}

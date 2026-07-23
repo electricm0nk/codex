@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Wizardry I",
+    "category": "magic_items",
+    "name": "Ring of Wizardry I",
+    "cost_gp": 20000.0,
+    "weight_lbs": null,
+    "description": "This special ring comes in four kinds (ring of wizardry I, ring of wizardry II, ring of wizardry III, and ring of wizardry IV), all of them useful only to arcane spellcasters. The wearer's arcane spells per day are doubled for one specific spell level. A ring of wizardry I doubles 1st-level spells, a ring of wizardry II doubles 2nd-level spells, a ring of wizardry III doubles 3rd-level spells, and a ring of wizardry IV doubles 4th-level spells. Bonus spells from high ability scores or school specialization are not doubled."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 414,
+    "record_key": "Ring of Wizardry I"
+  }
+}

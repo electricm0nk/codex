@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Curse of Burning Sleep",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "You place a curse upon the target that triggers 1 hour after the next time it falls asleep. When the curse is triggered, the creature bursts into flame, taking 1d6 points of fire damage per 2 caster levels (maximum 8d6). Furthermore, it catches on fire, taking 2d6 points of fire damage per round at the end of its turn each round until the creature dies or is quenched as normal.  (Pathfinder RPG Core Rulebook 444). If the target is still asleep, the fire damage from this spell wakes it. Only one of these spells can be in place on a creature at any time. This has no effect on creatures that don't sleep.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 44,
+    "record_key": "Curse of Burning Sleep"
+  }
+}

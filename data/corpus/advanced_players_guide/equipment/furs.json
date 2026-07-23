@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Furs",
+    "category": "General",
+    "name": "Furs",
+    "cost_gp": 12.0,
+    "weight": 5.0,
+    "description": "The most basic cold-weather gear; animal furs grant a +2 bonus on Fortitude saves against cold weather (does not stack with the Survival skill's own bonus)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

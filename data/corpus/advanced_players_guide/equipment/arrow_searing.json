@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Arrow (Searing)",
+    "category": "ArmsArmor",
+    "name": "Arrow, Searing",
+    "cost_gp": 1516.0,
+    "weight": 0.15,
+    "description": "A +1 flaming arrow that continues to burn its target for 1d6 points of fire damage each round for three rounds after a hit; removing it requires a DC 10 Heal check (DC 15 to remove from oneself)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

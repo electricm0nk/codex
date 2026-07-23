@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Robe of Arcane Heritage",
+    "category": "MagicItems",
+    "name": "Robe of Arcane Heritage",
+    "cost_gp": 16000.0,
+    "weight": 1.0,
+    "description": "Dark purple and blue robes that treat a sorcerer's level as 4 higher for the purposes of bloodline powers."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

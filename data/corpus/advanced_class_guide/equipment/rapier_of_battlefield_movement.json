@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Rapier of Battlefield Movement",
+    "category": "ArmsArmor",
+    "name": "Rapier of Battlefield Movement",
+    "cost_gp": 20.0,
+    "weight": 2.0,
+    "description": "+5 to Acrobatics checks made to move through an enemy's threatened area or through its space; after hitting with a melee attack with this weapon, spend 1 panache point to move 10 feet without provoking attacks of opportunity"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 263,
+    "record_key": "Rapier of Battlefield Movement"
+  }
+}

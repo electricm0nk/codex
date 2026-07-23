@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Chain (10 ft)",
+    "category": "general",
+    "name": "Chain (10 ft.)",
+    "cost_gp": 30.0,
+    "weight_lbs": 2.0,
+    "description": "Chain has hardness 10 and 5 hit points. It can be burst with a DC 26 Strength check."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 121,
+    "record_key": "Chain (10 ft)"
+  }
+}

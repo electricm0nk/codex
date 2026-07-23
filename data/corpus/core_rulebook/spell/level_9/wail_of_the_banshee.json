@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Wail of the Banshee",
+    "school": "Necromancy",
+    "level": 9,
+    "description": "When you cast this spell, you emit a terrible, soul-chilling scream that possibly kills creatures that hear it [except for yourself]. The spell affects up to one creature per caster level, inflicting 10 points of damage per caster level. Creatures closest to the point of origin are affected first."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1405,
+    "record_key": "Wail of the Banshee.MOD"
+  }
+}

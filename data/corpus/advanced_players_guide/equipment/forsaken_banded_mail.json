@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Forsaken Banded Mail",
+    "category": "ArmsArmor",
+    "name": "Forsaken Banded Mail",
+    "cost_gp": 250.0,
+    "weight": 35.0,
+    "description": "A +1 banded mail that prevents its wearer from casting divine spells but grants spell resistance against divine abilities and treats its enhancement bonus as 2 higher against divine creatures."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

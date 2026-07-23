@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Torc of the Primal Song",
+    "category": "MagicItems",
+    "name": "Torc of the Primal Song",
+    "cost_gp": 6000.0,
+    "weight": 4.0,
+    "description": "when performing or benefiting from raging song, gain Diehard feat and benefit from helpful raging song or bardic performance for 1 round after end"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 447,
+    "record_key": "Torc of the Primal Song"
+  }
+}

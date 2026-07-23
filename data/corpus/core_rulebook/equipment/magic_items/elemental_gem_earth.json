@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Elemental Gem (Earth)",
+    "category": "magic_items",
+    "name": "Elemental Gem (Earth)",
+    "cost_gp": 2250.0,
+    "weight_lbs": 0.0,
+    "description": "An elemental gem comes in one of four different varieties. Each contains a conjuration spell attuned to a specific elemental plane (Air, Earth, Fire, or Water).\nWhen the gem is crushed, smashed, or broken (a standard action), a Large elemental appears as if summoned by a summon nature's ally spell. The elemental is under the control of the creature that broke the gem.\nThe coloration of the gem varies with the type of elemental it summons. Air elemental gems are transparent, earth elemental gems are light brown, fire elemental gems are reddish orange, and water elemental gems are blue-green."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 140,
+    "record_key": "Elemental Gem (Earth)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Orb of Dragonkind (Gold)",
+    "category": "magic_items",
+    "name": "Gold Dragon Orb",
+    "cost_gp": 0.0,
+    "weight_lbs": 5.0,
+    "description": "Each of these fabled Orbs contains the essence and personality of an ancient dragon of a different variety (one for each of the major ten different chromatic and metallic dragons). The bearer of an Orb can, as a standard action, dominate dragons of its particular variety within 500 feet (as dominate monster), the dragon being forced to make a DC 25 Will save to resist. Spell resistance is not useful against this effect. Each Orb of Dragonkind bestows upon the wielder the AC and saving throw bonuses of the dragon within. These values replace whatever values the character would otherwise have, whether they are better or worse. These values cannot be modified by any means short of ridding the character of the Orb. A character possessing an Orb of Dragonkind is immune to the breath weapon--but only the breath weapon--of the dragon variety keyed to the Orb. Finally, a character possessing an Orb can herself use the breath weapon of the dragon in the Orb three times per day.\nAll Orbs of Dragonkind can be used to communicate verbally and visually with the possessors of the other Orbs. The owner of an Orb knows if there are dragons within 10 miles at all times. For dragons of the Orb's particular variety, the range is 100 miles. If within 1 mile of a dragon of the Orb's variety, the wielder can determine the dragon's exact location and age. The bearer of one of these Orbs earns the enmity of dragonkind forever for profiting by draconic enslavement, even if she later loses the item. Each Orb also has an individual power that can be invoked once per round at caster level 10th.\n* Gold Dragon Orb: The owner of the gold Orb can call upon any power possessed by one of the other Orbs--including the dominate and breath weapon abilities but not AC, save bonuses, or breath weapon immunity--but can only use an individual power once per day. She can dominate any other possessor of an Orb within 1 mile (Will DC 23 negates)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 1614,
+    "record_key": "Orb of Dragonkind (Gold)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_plus_extract",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Special Quality ~ Locked Gauntlet",
+    "category": "equipmods",
+    "name": "Locked Gauntlets",
+    "cost_gp": 8.0,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
+    "line": 53,
+    "record_key": "Special Quality ~ Locked Gauntlet"
+  }
+}

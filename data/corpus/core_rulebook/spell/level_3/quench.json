@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Quench",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "Quench is often used to put out forest fires and other conflagrations. It extinguishes all nonmagical fires in its area. The spell also dispels any fire spells in its area, though you must succeed on a dispel check [1d20 +1 per caster level, maximum +15] against each spell to dispel it. The DC to dispel such spells is 11 + the caster level of the fire spell. Each creature with the fire subtype within the area of a quench spell takes 1d6 points of damage per caster level [maximum 10d6, no save allowed]. Alternatively, you can target the spell on a single magic item that creates or controls flame. The item loses all its fire-based magical abilities for 1d4 hours unless it succeeds on a Will save. Artifacts are immune to this effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1224,
+    "record_key": "Quench.MOD"
+  }
+}

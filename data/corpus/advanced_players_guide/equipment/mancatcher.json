@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Mancatcher",
+    "category": "ArmsArmor",
+    "name": "Mancatcher",
+    "cost_gp": 15.0,
+    "weight": 10.0,
+    "description": "A polearm with two curved metal bands, sized for a specific creature size category, that close around a target on a successful touch attack followed by a grapple check."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

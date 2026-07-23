@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Elixir of Hiding",
+    "category": "magic_items",
+    "name": "Elixir of Hiding",
+    "cost_gp": 250.0,
+    "weight_lbs": 0.0,
+    "description": "A character drinking this liquid gains an intuitive ability to sneak and hide (+10 competence bonus on Stealth checks for 1 hour)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 144,
+    "record_key": "Elixir of Hiding"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Starknife (Base)",
+    "category": "arms_armor",
+    "name": "Starknife",
+    "cost_gp": 24.0,
+    "weight_lbs": 3.0,
+    "description": "From a central metal ring, four tapering metal blades extend like points on a compass rose. A wielder can stab with the starknife or throw it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 161,
+    "record_key": "Starknife (Base)"
+  }
+}

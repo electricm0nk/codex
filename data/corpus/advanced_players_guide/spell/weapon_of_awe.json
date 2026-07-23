@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Weapon of Awe",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "You transform a single weapon into an awe-inspiring instrument. The weapon gains a +2 sacred bonus on damage rolls, and if the weapon scores a critical hit, the target of that critical hit becomes shaken for 1 round with no saving throw.  This is a mind-affecting fear effect. A ranged weapon affected by this spell applies these effects to its ammunition.  You can't cast this spell on a natural weapon, but you can cast it on an unarmed strike.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 287,
+    "record_key": "Weapon of Awe"
+  }
+}

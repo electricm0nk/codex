@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Chameleon Power",
+    "category": "magic_items",
+    "name": "Ring of Chameleon Power",
+    "cost_gp": 12700.0,
+    "weight_lbs": null,
+    "description": "As a free action, the wearer of this ring can gain the ability to magically blend in with the surroundings. This provides a +10 competence bonus on her Stealth checks. As a standard action, she can also use the spell disguise self as often as she wants."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 363,
+    "record_key": "Ring of Chameleon Power"
+  }
+}

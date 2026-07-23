@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Charm Monster",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "This spell functions like charm person, except that the effect is not restricted by creature type or size."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 847,
+    "record_key": "Charm Monster.MOD"
+  }
+}

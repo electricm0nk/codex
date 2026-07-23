@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Freedom of Movement",
+    "category": "magic_items",
+    "name": "Ring of Freedom of Movement",
+    "cost_gp": 40000.0,
+    "weight_lbs": null,
+    "description": "This gold ring allows the wearer to act as if continually under the effect of a freedom of movement spell."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 390,
+    "record_key": "Ring of Freedom of Movement"
+  }
+}

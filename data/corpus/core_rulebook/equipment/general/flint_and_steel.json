@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Flint and Steel",
+    "category": "general",
+    "name": "Flint and Steel",
+    "cost_gp": 1.0,
+    "weight_lbs": null,
+    "description": "Lighting a torch with flint and steel is a full-round action, and lighting any other fire with them takes at least that long."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
+    "line": 129,
+    "record_key": "Flint and Steel"
+  }
+}

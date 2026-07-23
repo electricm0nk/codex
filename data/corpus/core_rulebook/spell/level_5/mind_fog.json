@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Mind Fog",
+    "school": "Enchantment",
+    "level": 5,
+    "description": "Mind fog produces a bank of thin mist that weakens the mental resistance of those caught in it. Creatures in the mind fog take a -10 penalty on Wisdom checks and Will saves. [A creature that successfully saves against the fog is not affected and need not make further saves even if it remains in the fog.] Affected creatures take the penalty as long as they remain in the fog and for 2d6 rounds thereafter. The fog is stationary and lasts for 30 minutes [or until dispersed by wind]. A moderate wind [11+ mph] disperses the fog in 4 rounds; a strong wind [21+ mph] disperses the fog in 1 round. The fog is thin and does not significantly hamper vision."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1150,
+    "record_key": "Mind Fog.MOD"
+  }
+}

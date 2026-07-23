@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Sword (Two-Bladed)",
+    "category": "arms_armor",
+    "name": "Two-Bladed Sword (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A two-bladed sword is a double weapon--twin blades extend from either side of a central, short haft, allowing the wielder to attack with graceful but deadly flourishes."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 253,
+    "record_key": "Sword (Two-Bladed)",
+    "inherited_from_record_key": "Two-Bladed Sword (Base)"
+  }
+}

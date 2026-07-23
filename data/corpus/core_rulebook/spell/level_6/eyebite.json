@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Eyebite",
+    "school": "Necromancy",
+    "level": 6,
+    "description": "Each round, you can target a single living creature, striking it with waves of power. Depending on the target's HD, this attack has as many as three effects. \nHD | Effect \n10 or more | Sickened \n5-9 | Panicked, sickened \n4 or less | Comatose, panicked, sickened \nThe effects are cumulative and concurrent. Sickened: Sudden pain and fever sweeps over the subject's body. A creature affected by this spell remains sickened for 10 minutes per caster level. The effects cannot be negated by a remove disease or heal spell, but a remove curse is effective. Panicked: The subject becomes panicked for 1d4 rounds. Even after the panic ends, the creature remains shaken for 10 minutes per caster level, and it automatically becomes panicked again if it comes within sight of you during that time. This is a fear effect. Comatose: The subject falls into a catatonic coma for 10 minutes per caster level. During this time, it cannot be awakened by any means short of dispelling the effect. This is not a sleep effect, and thus elves are not immune to it. You must spend a swift action each round after the first to target a foe."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 975,
+    "record_key": "Eyebite.MOD"
+  }
+}

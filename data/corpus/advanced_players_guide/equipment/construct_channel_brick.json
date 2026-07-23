@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Construct Channel Brick",
+    "category": "MagicItems",
+    "name": "Construct Channel Brick",
+    "cost_gp": 10000.0,
+    "weight": 1.0,
+    "description": "A red brick matching its bearer's holy symbol, letting the bearer channel positive or negative energy to repair constructs and damaged objects."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Ring of Regeneration",
+    "category": "magic_items",
+    "name": "Ring of Regeneration",
+    "cost_gp": 90000.0,
+    "weight_lbs": null,
+    "description": "This white gold ring is generally set with a large green sapphire. When worn, the ring continually allows a living wearer to heal 1 point of damage per round and an equal amount of nonlethal damage. In addition, he is immune to bleed damage while wearing a ring of regeneration. If the wearer loses a limb, an organ, or any other body part while wearing this ring, the ring regenerates it as the spell. In either case, only damage taken while wearing the ring is regenerated."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 402,
+    "record_key": "Ring of Regeneration"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Mirror Polish",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "You polish a metal item until it is reflective enough to be used as a mirror. This does not prevent the item from later damage or corrosion that would ruin the mirrored surface. The spell can be cast only on a metal item with a fairly smooth and contiguous surface, such as a breastplate, a helm, a shield, or a sword, but not a mace, chainmail, or scale mail.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 84,
+    "record_key": "Mirror Polish"
+  }
+}

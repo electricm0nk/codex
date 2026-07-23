@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "data": {
+    "key": "Hunter's Tree Fort",
+    "category": "MagicItems",
+    "name": "Hunter's Tree Fort",
+    "cost_gp": 10000.0,
+    "weight": 1.0,
+    "description": "box becomes stable platform hidden in tree: either tree house or blind; can be used for 12 hours in any 24-hour period"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
+    "line": 379,
+    "record_key": "Hunter's Tree Fort"
+  }
+}

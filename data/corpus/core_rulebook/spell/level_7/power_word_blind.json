@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Power Word Blind",
+    "school": "Enchantment",
+    "level": 7,
+    "description": "You utter a single word of power that causes a creature to become blinded, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total. Any creature that currently has 201 or more hit points is unaffected. \nHit Points | Duration \n50 or less | Permanent \n51-100 | 1d4+1 minutes \n101-200 | 1d4+1 rounds"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1202,
+    "record_key": "Power Word Blind.MOD"
+  }
+}

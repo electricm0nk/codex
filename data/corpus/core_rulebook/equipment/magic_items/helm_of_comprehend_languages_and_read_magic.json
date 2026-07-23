@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Helm of Comprehend Languages and Read Magic",
+    "category": "magic_items",
+    "name": "Helm of Comprehend Languages and Read Magic",
+    "cost_gp": 5200.0,
+    "weight_lbs": 3.0,
+    "description": "Appearing as a normal helmet, a helm of comprehend languages and read magic grants its wearer the ability to understand the spoken words of any creature and to read text in any language and any magical writing. The wearer gains a +5 competence bonus on Linguistics checks to understand messages written in incomplete, archaic, or exotic forms. Note that understanding a magical text does not necessarily imply spell use."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 209,
+    "record_key": "Helm of Comprehend Languages and Read Magic"
+  }
+}

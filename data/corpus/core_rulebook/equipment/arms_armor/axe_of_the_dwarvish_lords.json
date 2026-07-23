@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Axe of the Dwarvish Lords",
+    "category": "arms_armor",
+    "name": "Dwarven Waraxe (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This is a +6 keen throwing goblinoid bane dwarven waraxe. Any dwarf who holds it doubles the range of his or her darkvision. Any nondwarf who grasps the Axe takes 4 points of temporary Charisma damage; these points cannot be healed or restored in any way while the Axe is held. The current owner of the Axe gains a +10 bonus on Craft (armor, jewelry, stonemasonry, traps, and weapons) checks. The wielder of the Axe can summon an elder earth elemental (as summon monster IX; duration 20 rounds) once per week."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 288,
+    "record_key": "Axe of the Dwarvish Lords",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

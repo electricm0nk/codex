@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Chest (Huge)",
+    "category": "General",
+    "name": "Chest, Huge",
+    "cost_gp": 25.0,
+    "weight": 250.0,
+    "description": "A huge lockable storage chest: 8 cubic feet capacity, 50 hit points, break DC 35."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

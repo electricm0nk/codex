@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_plus_extract",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Intelligent Item ~ Ability Score / Intelligence 12",
+    "category": "equipmods",
+    "name": "Int Item / Stat Intelligence 12",
+    "cost_gp": 500.0,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
+    "line": 362,
+    "record_key": "Intelligent Item ~ Ability Score / Intelligence 12"
+  }
+}

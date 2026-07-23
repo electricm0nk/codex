@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Splint Mail (Base)",
+    "category": "arms_armor",
+    "name": "Splint Mail",
+    "cost_gp": 200.0,
+    "weight_lbs": 45.0,
+    "description": "Splint mail is made up of metal strips, like banded mail. The suit includes gauntlets."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 45,
+    "record_key": "Splint Mail (Base)"
+  }
+}

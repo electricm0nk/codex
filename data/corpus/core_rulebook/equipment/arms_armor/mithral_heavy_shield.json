@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Mithral Heavy Shield",
+    "category": "arms_armor",
+    "name": "Heavy Wooden Shield (Base)",
+    "cost_gp": 20.0,
+    "weight_lbs": null,
+    "description": "This heavy shield is made of mithral and thus is much lighter than a standard steel shield. It has a 5%% arcane spell failure chance and no armor check penalty."
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 128,
+    "record_key": "Mithral Heavy Shield",
+    "original_ingest_defect": "same-line 'DESC:.CLEAR' sentinel followed by a real DESC: token on the same corpus row; an earlier codegen pass captured only the .CLEAR sentinel (SD-25 criterion 7.N fix)"
+  }
+}

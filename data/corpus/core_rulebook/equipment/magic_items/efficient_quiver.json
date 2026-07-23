@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Efficient Quiver",
+    "category": "magic_items",
+    "name": "Efficient Quiver",
+    "cost_gp": 1800.0,
+    "weight_lbs": 2.0,
+    "description": "This appears to be a typical arrow container capable of holding about 20 arrows. It has three distinct portions, each with a nondimensional space allowing it to store far more than would normally be possible. The first and smallest one can contain up to 60 objects of the same general size and shape as an arrow. The second slightly longer compartment holds up to 18 objects of the same general size and shape as a javelin. The third and longest portion of the case contains as many as six objects of the same general size and shape as a bow (spears, staves, or the like). Once the owner has filled it, the quiver can quickly produce any item she wishes that is within the quiver, as if from a regular quiver or scabbard. The efficient quiver weighs the same no matter what's placed inside it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 137,
+    "record_key": "Efficient Quiver"
+  }
+}

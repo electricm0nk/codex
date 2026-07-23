@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Staff of Life",
+    "category": "magic_items",
+    "name": "Staff",
+    "cost_gp": 109400.0,
+    "weight_lbs": 5.0,
+    "description": "A staff of life is made of thick polished oak shod in gold and decorated with sinuous runes. This staff allows use of the following spells:\n* Heal (1 charge)\n* Raise dead (5 charges)"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 436,
+    "record_key": "Staff of Life"
+  }
+}

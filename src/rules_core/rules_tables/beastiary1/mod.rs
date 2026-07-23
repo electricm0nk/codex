@@ -185,6 +185,64 @@ pub enum MonsterId {
     HellHound,
 }
 
+impl MonsterId {
+    /// Every real Bestiary 1 `MonsterId` variant, in declaration order
+    /// (subsets 01-08, per this module's doc comment). Mirrors
+    /// `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL` on the other
+    /// three books (`decisions.md §11.6`) — this book had none before,
+    /// forcing `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`
+    /// to hand-maintain its own duplicate 41-entry workaround list
+    /// (`ALL_BESTIARY1_MONSTERS`, now replaced with this constant) and
+    /// `SD-26`'s `cache_gen::beastiary1` JSON-cache generator to need one
+    /// too. A future roster addition/removal that forgets to update this
+    /// list fails to compile at every call site that pattern-matches
+    /// exhaustively on `MonsterId` (e.g. `monster_resolve`'s own `match`),
+    /// so this list can't silently drift from the real enum.
+    pub const ALL: &'static [MonsterId] = &[
+        MonsterId::Ghoul,
+        MonsterId::Gnoll,
+        MonsterId::GoblinDog,
+        MonsterId::Lizardfolk,
+        MonsterId::Wolf,
+        MonsterId::Darkmantle,
+        MonsterId::Horse,
+        MonsterId::Hyena,
+        MonsterId::Octopus,
+        MonsterId::SpiderSwarm,
+        MonsterId::BatSwarm,
+        MonsterId::Boar,
+        MonsterId::Boggard,
+        MonsterId::Bugbear,
+        MonsterId::CaveFisher,
+        MonsterId::Choker,
+        MonsterId::Crocodile,
+        MonsterId::DarkCreeper,
+        MonsterId::IronCobra,
+        MonsterId::Morlock,
+        MonsterId::RatSwarm,
+        MonsterId::Sahuagin,
+        MonsterId::Shark,
+        MonsterId::ShockerLizard,
+        MonsterId::Skum,
+        MonsterId::Squid,
+        MonsterId::Troglodyte,
+        MonsterId::Vargouille,
+        MonsterId::Wolverine,
+        MonsterId::Worg,
+        MonsterId::YellowMuskCreeper,
+        MonsterId::Ankheg,
+        MonsterId::AssassinVine,
+        MonsterId::Centaur,
+        MonsterId::Cockatrice,
+        MonsterId::Derro,
+        MonsterId::Doppelganger,
+        MonsterId::Dryad,
+        MonsterId::Ettercap,
+        MonsterId::GelatinousCube,
+        MonsterId::HellHound,
+    ];
+}
+
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
 /// `RuleSetId::Bestiary1`. Returns `None` for any other rule set — a
 /// Bestiary 1 monster is never a valid answer for an APG/ACG/CRB query
@@ -286,4 +344,24 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::HashSet;
+
+    #[test]
+    fn all_has_exactly_the_41_real_monsters_with_no_duplicates() {
+        assert_eq!(MonsterId::ALL.len(), 41, "real, corrected roster across subsets 01-08 (this module's doc comment)");
+        let unique: HashSet<MonsterId> = MonsterId::ALL.iter().copied().collect();
+        assert_eq!(unique.len(), 41, "MonsterId::ALL must not repeat any variant");
+    }
+
+    #[test]
+    fn every_all_entry_resolves_a_real_stat_block_for_bestiary1() {
+        for &id in MonsterId::ALL {
+            assert!(monster_resolve(id, RuleSetId::Bestiary1).is_some(), "{id:?} must resolve for RuleSetId::Bestiary1");
+        }
+    }
 }

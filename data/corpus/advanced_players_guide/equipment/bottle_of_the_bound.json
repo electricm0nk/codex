@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Bottle of the Bound",
+    "category": "MagicItems",
+    "name": "Bottle of the Bound",
+    "cost_gp": 0.0,
+    "weight": 4.0,
+    "description": "An ancient brass bottle that traps a fiendish army; a holder who knows the command words can use it like a summon monster IX spell at will, summoning only evil-subtype creatures."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

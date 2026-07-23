@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Pipes of Sounding",
+    "category": "magic_items",
+    "name": "Pipes of Sounding",
+    "cost_gp": 1800.0,
+    "weight_lbs": 3.0,
+    "description": "When played by a character who has the Perform (wind instruments) skill, these shiny metallic pan pipes create a variety of sounds. The figment sounds are the equivalent of ghost sound."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 302,
+    "record_key": "Pipes of Sounding"
+  }
+}

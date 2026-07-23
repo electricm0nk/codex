@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Dart",
+    "category": "arms_armor",
+    "name": "Dart (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 322,
+    "record_key": "Dart"
+  }
+}

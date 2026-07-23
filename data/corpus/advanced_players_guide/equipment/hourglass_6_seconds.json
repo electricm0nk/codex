@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Hourglass (6 seconds)",
+    "category": "General",
+    "name": "Hourglass, 6 seconds",
+    "cost_gp": 10.0,
+    "weight": 0.0,
+    "description": "An hourglass that measures six seconds of elapsed time (one combat round)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

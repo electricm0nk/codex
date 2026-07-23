@@ -1,0 +1,18 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Etherealness",
+    "school": "Transmutation",
+    "level": 9,
+    "description": "This spell functions like ethereal jaunt, except that you and other willing creatures joined by linked hands [along with their equipment] become ethereal. Besides yourself, you can bring one creature per three caster levels to the Ethereal Plane. Once ethereal, the subjects need not stay together. When the spell expires, all affected creatures on the Ethereal Plane return to material existence."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 972,
+    "record_key": "Etherealness.MOD"
+  }
+}

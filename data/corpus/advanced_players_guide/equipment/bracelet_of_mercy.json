@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Bracelet of Mercy",
+    "category": "MagicItems",
+    "name": "Bracelet of Mercy",
+    "cost_gp": 15000.0,
+    "weight": 0.01,
+    "description": "A metal bracelet with holy inscriptions that grants, or improves, the diseased mercy for a paladin wearer."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

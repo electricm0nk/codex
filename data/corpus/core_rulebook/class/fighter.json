@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "class_id": "Fighter",
+    "maxlevel": 20,
+    "bab": "level",
+    "save_fort": "level/2+2",
+    "save_ref": "level/3",
+    "save_will": "level/3"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
+    "line": 139,
+    "record_key": "CLASS:Fighter"
+  }
+}

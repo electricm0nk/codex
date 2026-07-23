@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Orb of Storms",
+    "category": "magic_items",
+    "name": "Orb of Storms",
+    "cost_gp": 48000.0,
+    "weight_lbs": 6.0,
+    "description": "This glass sphere is 8 inches in diameter. The possessor can call forth all manner of weather, even supernaturally destructive storms. Once per day, she can call upon the orb to use a control weather spell. Once per month, she can conjure a storm of vengeance. The possessor of the orb is continually protected by an endure elements effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 280,
+    "record_key": "Orb of Storms"
+  }
+}

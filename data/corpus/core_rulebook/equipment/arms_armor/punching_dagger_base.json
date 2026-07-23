@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Punching Dagger (Base)",
+    "category": "arms_armor",
+    "name": "Punching Dagger",
+    "cost_gp": 2.0,
+    "weight_lbs": 1.0,
+    "description": "A punching dagger's blade is attached to a horizontal handle that projects out from the fist when held."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 143,
+    "record_key": "Punching Dagger (Base)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "data": {
+    "key": "Helm of Underwater Action",
+    "category": "magic_items",
+    "name": "Helm of Underwater Action",
+    "cost_gp": 24000.0,
+    "weight_lbs": 3.0,
+    "description": "The wearer of this helmet can see underwater. Drawing the small lenses in compartments on either side into position before the wearer's eyes activates the visual properties of the helm, allowing her to see five times farther than water and light conditions would allow for normal human vision. (Weeds, obstructions, and the like block vision in the usual manner.) If the command word is spoken, the helm of underwater action gives the wearer a 30-foot swim speed and creates a globe of air around the wearer's head and maintains it until the command word is spoken again, enabling her to breathe freely."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+    "line": 212,
+    "record_key": "Helm of Underwater Action"
+  }
+}
