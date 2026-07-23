@@ -8,9 +8,11 @@ orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
                                 backend, RESUMED (see below)
-backend               Sonnet   feat exposure DONE+pushed (89c3710, 162/162);
-                                now reading qa's PCGen spec before starting
-                                money/currency (last frontend-blocking item)
+backend               Sonnet   money conversion DONE+pushed (67490ac,
+                                176/176 lib, 170/170 desktop); ALL 3 frontend
+                                -blocking commands landed. HOLDING at
+                                checkpoint per lead instruction, not self-
+                                selecting wave-2 work.
 qa                    Sonnet   idle, watching for PCGen-divergent findings
 
 (b) Happened
@@ -187,8 +189,11 @@ backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
      bio.json, avoids ChosenCharacterState blast radius).
   5. DONE (89c3710). Feat exposure: list_feat_catalog/list_feats
      (mirrors equipment_catalog.rs) + add_feat_selection.
-  6. IN PROGRESS (last frontend-blocking item). Money/currency schema
-     field + command -- no existing schema slot, biggest lift.
+  6. DONE (67490ac). Money/currency: real conversion math (money.rs),
+     money.json sidecar, track-and-spend only -- starting-wealth auto-roll
+     correctly left open (QA's unresolved PCGen wealth-by-class formula).
+  ALL 6 REPRIORITIZED TASKS COMPLETE. Checkpoint reached -- holding for
+  operator review before any wave-2 work resumes.
   -- wave 2, DONE early (delivered before reprioritization reached backend,
      see Happened log for the full delivery-bug story): multiclass BAB/save
      stacking widened to Fighter/Wizard/Rogue (d20a5b9+8d814e8, 3961/0);
