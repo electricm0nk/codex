@@ -433,6 +433,34 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
             class_id: class_id.to_owned(),
             level: 1,
         });
+
+        // v0.6 alpha swarm: the same fix `compose_character_input` got for
+        // fresh Wizard creation, applied to the multiclass-dip path. This
+        // `else` branch only runs the first time `class_id` is added to
+        // `class_levels` -- if it were already Wizard, the `if` branch
+        // above (increment existing level) would have fired instead -- so
+        // it can never fire twice for the same character and cannot
+        // duplicate the seeded choices (which would break
+        // `wizard_has_canonical_specialization_selections`'s exact-2
+        // opposed-schools count). Without this, multiclassing Wizard onto
+        // an existing character hits the same unconditional
+        // "requires the canonical Evocation specialization" block
+        // `compose_character_input`'s fix already solved for creation --
+        // frontend verified this live before this fix landed.
+        if class_id == WIZARD_CLASS_ID {
+            character_input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:wizard_school_specialization".to_owned(),
+                selection_id: "school:evocation".to_owned(),
+            });
+            character_input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+                selection_id: "school:necromancy".to_owned(),
+            });
+            character_input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+                selection_id: "school:transmutation".to_owned(),
+            });
+        }
     }
 }
 

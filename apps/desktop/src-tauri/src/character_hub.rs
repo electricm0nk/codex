@@ -2967,6 +2967,59 @@ mod tests {
         assert_eq!(input.chosen.class_levels[1].level, 1);
     }
 
+    /// v0.6 alpha swarm: `compose_character_input`'s Wizard school-choice
+    /// seeding fix only covered fresh creation -- multiclassing Wizard onto
+    /// an existing character via `apply_level_up`'s new-class-entry branch
+    /// hit the same unconditional spellbook-posture block, unchanged.
+    /// Frontend verified this live before this fix landed.
+    #[test]
+    fn apply_level_up_seeds_the_canonical_wizard_school_choices_when_dipping_into_wizard() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+
+        apply_level_up(&mut input, "class:wizard");
+
+        assert!(
+            input.chosen.selected_choices.iter().any(|c| c.choice_set_id
+                == "choice:wizard_school_specialization"
+                && c.selection_id == "school:evocation"),
+            "multiclassing into Wizard must seed the canonical Evocation specialization: {:?}",
+            input.chosen.selected_choices
+        );
+        let opposed: Vec<&str> = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:wizard_opposed_schools")
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        assert_eq!(opposed.len(), 2, "must seed exactly two opposed schools: {opposed:?}");
+        assert!(opposed.contains(&"school:necromancy"));
+        assert!(opposed.contains(&"school:transmutation"));
+    }
+
+    /// A second consecutive level-up within Wizard (not a fresh dip) must
+    /// not re-seed the choices -- `wizard_has_canonical_specialization_selections`
+    /// requires *exactly* two opposed-school entries, so a duplicate pair
+    /// would silently break it.
+    #[test]
+    fn apply_level_up_does_not_reseed_wizard_choices_on_a_second_level_up_within_wizard() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        apply_level_up(&mut input, "class:wizard");
+        apply_level_up(&mut input, "class:wizard");
+
+        assert_eq!(input.chosen.class_levels[1].level, 2, "the second call must increment, not re-dip");
+        let opposed_count = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:wizard_opposed_schools")
+            .count();
+        assert_eq!(
+            opposed_count, 2,
+            "a second level-up within Wizard must not duplicate the seeded opposed schools"
+        );
+    }
+
     /// The single most important regression guard for Criterion 17: proves
     /// the real load -> mutate -> recompute -> re-save -> return round trip
     /// against a real `SavedCharacterStore` fixture on disk, not a mock.
