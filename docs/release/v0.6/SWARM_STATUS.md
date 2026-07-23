@@ -233,3 +233,10 @@ blocked-by notes:
   frontend#4 <- backend#2 (command name)
   frontend#5 <- backend#3 (command name)
   qa#3 coordinates with backend#4 (shared test, not a hard block)
+
+<!-- AUTO-HEARTBEAT-START -->
+## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
+Last mechanical check: 2026-07-23T17:20:36
+Latest commit on tranche/6: 59d5bc0 frontend: build the Money panel against real balance persistence commands (84 minutes ago) (2026-07-23T15:57:03-04:00) -- STALE: no commit on tranche/6 in 83m, worth checking the swarm is still alive
+Last inbox activity (mtime proxy): backend=2026-07-23T15:33:12 frontend=2026-07-23T15:57:28 qa=2026-07-23T15:18:07 lead=2026-07-23T15:57:57
+<!-- AUTO-HEARTBEAT-END -->
