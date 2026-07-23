@@ -362,16 +362,37 @@ qa                    Sonnet   money/encumbrance catalogue adoption DONE
   when uncertain, exactly the right instinct). Frontend's caster survey
   (Cleric/Druid/Bard/Sorcerer all need whole subsystems, not a seeded
   choice) relayed to backend to avoid duplicate investigation.
-- MILESTONE: Wizard spellbook gate fix landed (3484b5d). compose_character_input
+- Wizard spellbook GATE fix landed (3484b5d) -- compose_character_input
   seeds Evocation/opposed-Necromancy/opposed-Transmutation choices,
   gated Wizard-only (mirrors the existing Fighter/Human conditional-seed
   pattern), 2 new tests (Wizard-only confirmed via a Fighter negative
-  control; a real recorded+prepared spell now reaches Computed).
+  control; a real recorded+prepared spell now reaches Computed via
+  direct Rust construction of CharacterInput).
   Confirmed independently: no other class has an equivalent bespoke gate
   to generalize from -- none of Cleric/Druid/Bard/Sorcerer/etc are even
   chassis-supported yet (only Fighter/Wizard/Rogue), so none can hit a
-  gate like this regardless. Wizard is now the SECOND class (alongside
-  Fighter) a tester can genuinely reach Computed with.
+  gate like this regardless.
+  CORRECTION (frontend, same day): the "Wizard is now the second class
+  that reaches Computed" claim below was PREMATURE -- struck. Frontend's
+  live testing found the compute-layer fix is necessary but not
+  sufficient: (1) create_character only ever persists a proven-Computed
+  build, so a fresh Wizard (empty spellbook) can never be saved in the
+  first place -- bootstrap deadlock; (2) the Add Spell picker can't
+  bootstrap it either, since unmet_wizard_spellbook_conditions needs one
+  spell recorded as BOTH Known AND Prepared, but add_spell_selection only
+  sets one mode per call and each call is independently reject-if-not-
+  Computed -- neither a Known-only nor Prepared-only call can ever build
+  toward the other; backend's own passing test only reaches Computed by
+  constructing CharacterInput directly in Rust, bypassing the command
+  layer entirely, which proves the compute logic but not UI-reachability;
+  (3) SEPARATELY, apply_level_up (the multiclass-dip path) never got the
+  fix at all -- only compose_character_input (creation) was touched, so
+  multiclassing Wizard onto an existing character still hits the OLD
+  diagnostic. Net: there is currently no UI path, creation or level-up,
+  that produces a live saved Wizard character. Backend fixing the
+  level-up-path gap (small, clear parity fix) now; the bootstrap
+  deadlock -- the real bottleneck -- needs a scoped proposal before code,
+  same diligence as the posture-narrowness work.
   Also surfaced (not part of this commit, correctly left for qa): item
   4's landed comparator fix exposed a stale assertion in
   tests/sd26_pilot_case_verification.rs (expected 1 mismatch, now sees 6
