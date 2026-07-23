@@ -391,7 +391,12 @@ function SkillsPanel(props: {
 
 // ---------- right column ----------
 
-const TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Details', 'Feats', 'Actions', 'Bio', 'Overrides'] as const;
+// 'Details' and 'Bio' are deliberately absent: that content already renders
+// unconditionally in the right-column `DetailsPanel` below, regardless of
+// which tab is active, so a duplicate tab selector for it would only ever
+// show the generic "coming soon" placeholder next to content that's already
+// on screen.
+const TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Overrides'] as const;
 type Tab = (typeof TABS)[number];
 
 export interface BioFields {
@@ -659,6 +664,43 @@ function GearTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddArmo
           </div>
         ))
       )}
+    </div>
+  );
+}
+
+/**
+ * Flat "Class Features & Special Abilities" list — every feature granted by
+ * every class level already taken, across all held classes. Not new data:
+ * `buildLevelEntries` already computes this exact set for the collapsible
+ * left-rail Progression cards, but that rail is unreadable once collapsed
+ * (see `leftCollapsed` above) and interleaves features with skill-point
+ * counts per level. This tab is the same real, already-computed data in a
+ * flat, always-reachable form — no backend call, since the class/level
+ * feature table already lives client-side in `characterProgression.ts`.
+ */
+function ActionsTab(props: { levelEntries: LevelEntry[] }) {
+  const allFeatures = props.levelEntries.flatMap((entry) =>
+    entry.features.map((feature) => ({ characterLevel: entry.characterLevel, classLabel: entry.classLabel, feature }))
+  );
+  if (allFeatures.length === 0) {
+    return <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No class features granted yet.</p>;
+  }
+  return (
+    <div>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+        Every class feature and special ability granted so far, by level.
+      </p>
+      {allFeatures.map((row, index) => (
+        <div
+          key={`${row.characterLevel}-${row.feature}-${index}`}
+          style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', padding: '0.4rem 0' }}
+        >
+          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 70 }}>
+            Lvl {row.characterLevel} {row.classLabel}
+          </span>
+          <span style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>{row.feature}</span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -1213,6 +1255,8 @@ export function CharacterSheet(props: {
                 <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
                 <GearTab corpusDerived={props.detail?.corpusDerived} onAddArmor={() => setItemPickerOpen('armor')} />
+              ) : tab === 'Actions' ? (
+                <ActionsTab levelEntries={currentBenefits} />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>
               )}
