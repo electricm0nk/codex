@@ -8,12 +8,13 @@ orchestrator (lead)  Sonnet   wave 1 in flight, watching for blockers
 frontend              Sonnet   tasks 4 AND 5 DONE, both live-verified; idle,
                                 tasks 1-3 (bio/feat/money) still wait on
                                 backend, currently paused (see below)
-backend               Sonnet   PAUSED -- found substantial in-progress
-                                wave-2 work (class-chassis widening) done
-                                without the required scoped proposal, 2nd
-                                queue deviation; asked what happened,
-                                awaiting reply before resuming toward
-                                bio schema+command
+backend               Sonnet   STOPPED, ESCALATED TO OPERATOR -- committed
+                                task 5 (d475097, uncommitted->local, NOT
+                                pushed) after an explicit "do not start
+                                this, reply before doing anything else"
+                                instruction; did not reply, did not stop.
+                                All further backend work paused pending
+                                operator decision.
 qa                    Sonnet   wave 1 done (tasks 1/2/3-parked/4 complete,
                                 task 5 ongoing); delivered PCGen-sourced
                                 formula spec for backend's wave 2 (abec13b)
