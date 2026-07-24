@@ -15,14 +15,14 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   idle, standing by after closing the major
-                                ability-submission bug (f2c616ed)
-backend               Sonnet   investigating the level-4 Wizard ceiling
-                                question (item 18) -- QA's static sweep says
-                                engine-side is airtight, likely UI-side
-qa                    Sonnet   re-verifying Dwarf/Gnome/Halfling now get
-                                correct submitted ability scores (item 19),
-                                same code path as the Elf fix
+frontend              Sonnet   full capstone walkthrough: single non-Human
+                                character through the whole alpha-bar item 3
+                                sequence, live-verified end to end
+backend               Sonnet   verifying the Fighter feat-choice fix holds
+                                for multiclass Fighter combinations too
+qa                    Sonnet   Wizard PCGen comparator test DONE (4428b390,
+                                13/14 match); on Dwarf/Gnome/Halfling
+                                ability-score re-verification now
 
 (b) Happened
 ------------
