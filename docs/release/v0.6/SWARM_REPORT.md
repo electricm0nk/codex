@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-tasks 1+2 fully closed and lead-verified (4280 passed, 0 failed); starting sub-task 4 (corpus-aware Computed verdict, highest-risk step) |
-| frontend | idle | cleared to start sub-task 6 (equipment-modifier-attachment UI) |
-| qa | idle | fixture fix landed (eeaa876d); standing by |
+| backend | idle | sub-task 6's backend half landed and lead-verified (3a05539a, 4284/4284 + 211/211); found a real production bug along the way (missing persistence writer for applied_modifiers, now fixed); available for sub-task 4 next |
+| frontend | idle | cleared to wire the Gear tab against the real command/DTO |
+| qa | idle | standing by |
 
 ---
 
