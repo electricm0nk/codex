@@ -854,6 +854,15 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   confirming append-safety from the source side, not just the earlier
   empirical test). Continuing down the unverified-commit list
   (Bio/LevelUp persistence commands next).
+- QA's sweep continued: independently verified `7694b227` (level-up
+  hit-die/feat/skill persistence) -- traced the "exactly one colon"
+  validator to its real source in `local_store.rs` and confirmed via
+  `git log -S` it's genuinely pre-existing (dated 3 days before this
+  swarm started, not invented to justify the fix); read the atomicity
+  test directly and confirmed it reloads from disk (not just in-memory
+  state) to prove the class-level bump, both choice entries, and all
+  three skill allocations landed together in one mutation. 6th clean
+  independent verification today. Moving to Bio persistence next.
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
