@@ -9,33 +9,51 @@ separate, mechanical, cron-driven refresh (every 5 min, via
 staleness even if the lead goes quiet; it never touches anything above it,
 and the lead never hand-edits it.
 
-(a) Happening now (refreshed 2026-07-24, ~05:00 ET, post-quota-reset)
+Agent Status convention (operator directive, 2026-07-24): every write to
+this file includes a per-agent status line using one of: working (doing
+X), idle (queue clear, nothing assigned), waiting-on-<agent> (blocked on
+another agent's in-flight work), paused (quota/outage, with reset time
+if known). This replaces the looser free-text "Happening now" prose below
+where the two overlap -- (a) still carries the narrative detail, this
+block is the at-a-glance state.
+
+## Agent Status (2026-07-24, ~06:40 ET -- resumed after operator pause)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | starting item 7 (starting-wealth-by-class), then item 17 (feat-effects engine, Toughness slice), then item 1 (architecture-wall scoping) |
+| frontend | idle | comprehensive smoke test was interrupted by a session quota limit (resets 9:10am ET) before the operator's pause; queue re-set on resume |
+| qa | idle | was holding per the pre-pause instruction; queue re-set on resume |
+
+(a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
-orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
-                                2026-07-23, running unattended, no stops for
-                                input; deep queues loaded into all 3
-                                teammates, ~20 min check-in cadence via
-                                ScheduleWakeup (cron heartbeat script still
-                                runs too, mostly skips on a dirty tree).
-                                All 3 teammates recovered cleanly from the
-                                4:10am ET quota reset (third such outage
-                                this session, same clean-recovery pattern
-                                as the first two) after the lead re-engaged
-                                each with their paused task.
-frontend               Sonnet  wiring the Defense tab to render the real
-                                damage_reduction field (mid-edit:
-                                CharacterSheet.tsx, loadCreateCharacter.ts)
-backend                Sonnet  delivered the consolidated future-epic
-                                scoping doc (c30f9b04); standing by for
-                                next task
-qa                     Sonnet  fresh-eyes review of the lead's stewardship
-                                commit (d35521ec) found a real gap in an
-                                existing test (sd20_skill_allocation_class_
-                                skill.rs's multiclass test used bare
-                                "wizard" not "class:wizard", never actually
-                                exercised real Wizard recognition) and is
-                                adding a proper fixture-driven multiclass
-                                test with the real class ids
+orchestrator (lead)  Sonnet   RESUMED after an operator-directed pause
+                                (swarm was paused mid-cycle over a
+                                stuck-in-a-loop concern; root cause found
+                                and fixed -- a CronCreate job was still
+                                firing the 20-min check-in prompt even
+                                after the lead stopped issuing new
+                                ScheduleWakeup calls; deleted). Resuming
+                                with ScheduleWakeup only this time (single
+                                mechanism, explicit stop between cycles),
+                                not CronCreate, to avoid the same failure
+                                mode recurring. Operator also provided:
+                                the starting-wealth-by-class table
+                                (item 7, cited to d20pfsrd.com) and
+                                explicit go-aheads to un-defer items 17
+                                (feat-effects engine) and 1 (the
+                                architecture-wall math) onto the
+                                actionable backlog.
+frontend               Sonnet  re-engaging now; last known state was a
+                                comprehensive live-UI smoke test,
+                                interrupted by a quota limit before the
+                                pause (resets 9:10am ET) -- may still be
+                                unavailable, will check.
+backend                Sonnet  re-engaging now with the 3-item queue the
+                                operator just added (7, 17, 1, in that
+                                order)
+qa                     Sonnet  re-engaging now; will hold for something
+                                real to verify once backend/frontend land
+                                work, per standing practice
 
 (b) Happened
 ------------
