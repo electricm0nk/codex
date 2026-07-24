@@ -5338,6 +5338,21 @@ const ELF_SIZE_CATEGORY: &str = "Medium";
 const ELF_BASE_SPEED_FEET: i16 = 30;
 const ELF_DEX_ADJUSTMENT: i16 = 2;
 const ELF_CON_ADJUSTMENT: i16 = -2;
+/// v0.6 alpha swarm (QA-found real PCGen-parity gap): this record's own
+/// detail text used to call +2 Intelligence "the alternate PF1 +2
+/// Intelligence Elf variant... out of scope" -- checked against the real
+/// PCGen corpus (not memory) and that framing was wrong. `cr_races.lst`'s
+/// `Elf.MOD` is only a source-page citation; the real base race data lives
+/// in a separate PCC pack, `elf_abilities_race.lst:18` (
+/// `core_essentials/races/elf/elf_abilities_race.lst`), whose ability-score
+/// row is explicitly typed `TYPE:...Elf Racial Default...` (not an
+/// alternate/optional variant) and carries `BONUS:STAT|DEX,INT|2|TYPE=Racial`
+/// alongside `BONUS:STAT|CON|-2|TYPE=Racial` -- +2 Intelligence is the
+/// CRB-standard default, not an alternate. Matters now specifically because
+/// Elf Wizard is a real reachable combination (v0.6 alpha swarm) and
+/// Intelligence drives a Wizard's spell save DC and bonus spells, so
+/// omitting it silently shorted an Elf Wizard's casting stat by 2.
+const ELF_INT_ADJUSTMENT: i16 = 2;
 
 /// SD13-E2 Elf racial trait bundle explanation seam (mirroring the Dwarf pattern
 /// for the second non-Human core race).
@@ -5380,13 +5395,16 @@ fn explain_elf_race_seam(
         value: 0,
         detail: format!(
             "Elf racial trait bundle — ability modifiers: PF1 Core Elf grants a fixed \
-             {ELF_DEX_ADJUSTMENT:+} Dexterity and {ELF_CON_ADJUSTMENT:+} Constitution racial \
-             adjustment (cr_races.lst race:elf STAT:DEX|{ELF_DEX_ADJUSTMENT:+}, \
-             STAT:CON|{ELF_CON_ADJUSTMENT:+}). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Dexterity and \
+             {ELF_DEX_ADJUSTMENT:+} Dexterity, {ELF_INT_ADJUSTMENT:+} Intelligence, and \
+             {ELF_CON_ADJUSTMENT:+} Constitution racial adjustment (verified against the real \
+             PCGen corpus: core_essentials/races/elf/elf_abilities_race.lst's \"Elf Racial \
+             Default\" ability-score row, not an alternate/optional variant — \
+             BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial; \
+             cr_races.lst's own Elf.MOD record is only a source-page citation, not the real \
+             base-race data). This is a bounded recognition record naming the fixed adjustment \
+             on the deterministic pilot seam; the chosen Dexterity, Intelligence, and \
              Constitution scores are understood to already reflect it, so this record performs \
-             no arithmetic and carries no fabricated mechanical value (+0). The alternate PF1 \
-             +2 Intelligence Elf variant is out of scope for this slice."
+             no arithmetic and carries no fabricated mechanical value (+0)."
         ),
     });
 
@@ -18724,5 +18742,63 @@ mod selected_skill_class_skill_bonus_tests {
         let computation = compute_pilot_base_chassis(&input);
 
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+    }
+}
+
+/// v0.6 alpha swarm: QA found `explain_elf_race_seam`'s own recognition
+/// record text was wrong -- it called +2 Intelligence "the alternate PF1
+/// +2 Intelligence Elf variant... out of scope", but per the real PCGen
+/// corpus (`core_essentials/races/elf/elf_abilities_race.lst`'s "Elf
+/// Racial Default" ability-score row), +2 Intelligence is the CRB-standard
+/// default alongside +2 Dexterity and -2 Constitution, not an alternate.
+/// Inline here for the same reason as this file's other inline test
+/// modules (`tests/**` is QA's owned surface for this swarm); mirrors
+/// `tests/sd13_elf_race_semantics_recognition.rs`'s own substring-based
+/// assertion style exactly, reusing its ELF_FIXTURE.
+#[cfg(test)]
+mod elf_intelligence_adjustment_tests {
+    use super::compute_pilot_base_chassis;
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const ELF_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_elf_fighter_level1_sd13_deterministic_input.txt"
+    );
+
+    fn load(fixture: &str) -> CharacterInput {
+        let result = load_character_input_fixture(fixture);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        result
+            .character_input
+            .expect("valid fixture should produce a character input record")
+    }
+
+    #[test]
+    fn elf_ability_modifiers_record_now_names_the_intelligence_adjustment_too() {
+        let input = load(ELF_FIXTURE);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let ability = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.elf.trait_bundle.ability_modifiers")
+            .expect("Elf input should ground the ability-modifiers recognition record");
+
+        assert!(
+            ability.detail.contains("+2") && ability.detail.contains("Intelligence"),
+            "Elf ability modifiers record must now name the +2 Intelligence adjustment: {}",
+            ability.detail
+        );
+        assert!(
+            !ability.detail.contains("out of scope"),
+            "the stale \"out of scope\"/\"alternate variant\" framing must be gone: {}",
+            ability.detail
+        );
+        // Still a bounded recognition record: no arithmetic performed, no
+        // fabricated mechanical value.
+        assert_eq!(ability.value, 0);
     }
 }
