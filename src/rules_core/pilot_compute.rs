@@ -17926,6 +17926,39 @@ fn compute_total_saves(
 /// Any deviation from the exact supported posture is refused with a claim-blocking
 /// diagnostic and withheld selected-skill explanations rather than fabricated
 /// totals.
+/// v0.6 alpha swarm (QA-found real correctness bug): whether Climb/
+/// Intimidate/Swim are real PF1 Core Rulebook class skills for at least one
+/// of the character's classes -- the class-skill trained bonus (`+3`) only
+/// applies when true, PF1's real per-skill rule. `CLASS_SKILL_BONUS` was
+/// originally written for Fighter alone (whose real class-skill list
+/// genuinely includes all three -- cr_abilities_class.lst:2835,
+/// `CSKILL:Climb|...|Intimidate|...|Swim`) and applied unconditionally; the
+/// `has_supported_class_chassis` gate was later widened to Wizard and
+/// Rogue without this bonus being made class-aware to match. Rogue is
+/// coincidentally correct today (its own real class-skill list,
+/// cr_abilities_class.lst:2838, also includes all three) -- but Wizard's
+/// real class-skill list (cr_abilities_class.lst:2565: Appraise, Craft,
+/// Fly, Knowledge (all), Linguistics, Profession, Spellcraft) includes
+/// NONE of Climb/Intimidate/Swim, so a Wizard with this deterministic
+/// posture was silently getting a false +3 on all three -- wrong, with no
+/// diagnostic to flag it. Multiclass characters get the class-skill bonus
+/// if ANY of their classes grants it (PF1's real union rule, matching
+/// `skill_allocation.rs`'s own `class_skill_set` framing) -- checking
+/// `has_supported_class_chassis`'s class set (only Fighter/Wizard/Rogue can
+/// ever reach this function) is sufficient; no corpus access needed, this
+/// is hardcoded per-class fact data, the same "bounded, cited" shape as
+/// `skill_allocation.rs`'s `GROUNDED_FIGHTER_CLASS_SKILLS`. Applying the
+/// same boolean uniformly across all three skills is correct only because
+/// this function's own scope is already hardcoded to exactly these three
+/// skills and exactly these three classes -- not a general "all class
+/// skills match across the board" assumption to rely on if either set ever
+/// widens.
+fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.iter().any(|class_level| {
+        class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == ROGUE_CLASS_ID
+    })
+}
+
 fn compute_selected_skill_modifiers(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -17964,39 +17997,52 @@ fn compute_selected_skill_modifiers(
         format!("Chain Shirt armor-check penalty ({armor_check_penalty:+})")
     };
 
+    // v0.6 alpha swarm: the class-skill bonus only applies for a class whose
+    // real PF1 class-skill list actually includes Climb/Intimidate/Swim --
+    // see selected_skill_class_skill_bonus_applies's own doc comment.
+    let class_skill_bonus_applies = selected_skill_class_skill_bonus_applies(input);
+    let class_skill_bonus = if class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
+    let class_skill_bonus_detail = if class_skill_bonus_applies {
+        format!("class-skill bonus ({class_skill_bonus:+})")
+    } else {
+        "no class-skill bonus (Climb/Intimidate/Swim are not class skills for this character's \
+         class)"
+            .to_owned()
+    };
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let climb = rank + ability_modifiers.strength + CLASS_SKILL_BONUS + armor_check_penalty;
+    let climb = rank + ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
-            "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
-             ({:+}) + {armor_check_detail} = {climb}",
-            ability_modifiers.strength, CLASS_SKILL_BONUS
+            "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
+             {class_skill_bonus_detail} + {armor_check_detail} = {climb}",
+            ability_modifiers.strength
         ),
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
-    let intimidate = rank + ability_modifiers.charisma + CLASS_SKILL_BONUS;
+    let intimidate = rank + ability_modifiers.charisma + class_skill_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
-            "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + class-skill \
-             bonus ({:+}) = {intimidate}",
-            ability_modifiers.charisma, CLASS_SKILL_BONUS
+            "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
+             {class_skill_bonus_detail} = {intimidate}",
+            ability_modifiers.charisma
         ),
     });
 
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let swim = rank + ability_modifiers.strength + CLASS_SKILL_BONUS + armor_check_penalty;
+    let swim = rank + ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
-            "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
-             ({:+}) + {armor_check_detail} = {swim}",
-            ability_modifiers.strength, CLASS_SKILL_BONUS
+            "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
+             {class_skill_bonus_detail} + {armor_check_detail} = {swim}",
+            ability_modifiers.strength
         ),
     });
 
@@ -18566,5 +18612,117 @@ mod wizard_spellbook_spell_id_resolution_tests {
         );
         assert_eq!(parse_wizard_spellbook_spell_id("not.a.real.spell.id.at.all"), None);
         assert_eq!(parse_wizard_spellbook_spell_id("no dots and not a catalog key"), None);
+    }
+}
+
+/// v0.6 alpha swarm: QA found `compute_selected_skill_modifiers` applied
+/// the Climb/Intimidate/Swim class-skill `+3` bonus unconditionally
+/// regardless of the character's actual class -- silently wrong for
+/// Wizard (whose real class-skill list includes none of the three; see
+/// `selected_skill_class_skill_bonus_applies`'s own doc comment for the
+/// corpus citations). Inline here for the same reason as
+/// `multiclass_bab_save_stacking_generalization_tests` and
+/// `wizard_spell_save_dc_tests` above: `tests/**` is QA's owned surface
+/// for this swarm; this uses the exact same public entry point
+/// (`compute_pilot_base_chassis`) so it is trivially portable into QA's
+/// catalogue.
+#[cfg(test)]
+mod selected_skill_class_skill_bonus_tests {
+    use super::{compute_pilot_base_chassis, FIGHTER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// This fixture already carries the exact deterministic selected-skill
+    /// posture (Climb/Intimidate/Swim rank 1, Chain Shirt equipped)
+    /// `unmet_selected_skill_posture_conditions` requires -- swapping only
+    /// the class identity in place isolates the class-skill-bonus logic
+    /// from everything else that posture gate checks.
+    fn with_class(class_id: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = class_id.to_owned();
+        input
+    }
+
+    fn skill_value(computation: &super::PilotBaseChassisComputation, id: &str) -> i16 {
+        computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation {id} to be grounded: {computation:?}"))
+            .value
+    }
+
+    #[test]
+    fn fighter_still_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(FIGHTER_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        // Unchanged golden-path values: Fighter's real class-skill list
+        // includes Climb, Intimidate, and Swim (cr_abilities_class.lst:2835).
+        // Fixture: STR 16 + 2 human bonus = 18 (mod +4), CHA 8 (mod -1),
+        // level 1 (no armor-training ACP reduction, Chain Shirt ACP -2).
+        // Climb/Swim = rank 1 + STR 4 + class-skill 3 + ACP -2 = 6.
+        // Intimidate = rank 1 + CHA -1 + class-skill 3 = 3.
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    #[test]
+    fn rogue_still_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(ROGUE_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        // Rogue's real class-skill list also includes all three
+        // (cr_abilities_class.lst:2838) -- same values as Fighter, since
+        // this fixture's ability scores/equipment/armor-training math is
+        // otherwise class-identical for this bounded posture.
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    #[test]
+    fn wizard_gets_no_class_skill_bonus_on_any_of_the_three_skills() {
+        let input = with_class(WIZARD_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        // The real bug: Wizard's real class-skill list
+        // (cr_abilities_class.lst:2565) includes NONE of Climb/Intimidate/
+        // Swim, so these must be exactly 3 lower than Fighter/Rogue's
+        // values above (no +3 class-skill bonus).
+        // Climb/Swim = rank 1 + STR 4 + 0 + ACP -2 = 3.
+        // Intimidate = rank 1 + CHA -1 + 0 = 0.
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 0);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 3);
+    }
+
+    /// PF1's real multiclass rule: the class-skill bonus applies if ANY of
+    /// the character's classes grants it. A Fighter/Wizard mix must still
+    /// get the bonus (from the Fighter side), proving this isn't a
+    /// single-class-only check.
+    #[test]
+    fn multiclass_fighter_wizard_still_gets_the_bonus_via_the_fighter_side() {
+        let mut input = with_class(FIGHTER_CLASS_ID);
+        let mut wizard_level = input.chosen.class_levels[0].clone();
+        wizard_level.class_id = WIZARD_CLASS_ID.to_owned();
+        wizard_level.level = 1;
+        input.chosen.class_levels.push(wizard_level);
+
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
     }
 }
