@@ -1267,6 +1267,60 @@ mod tests {
         );
     }
 
+    // ----- Rogue end-to-end UI reachability audit (v0.6 alpha swarm) -----
+    //
+    // Investigated with the same rigor as the Wizard chain: does Rogue
+    // actually reach Computed through the real UI creation/level-up path,
+    // not just via hand-built test fixtures? Unlike Wizard, Rogue has no
+    // bespoke extra posture gate anywhere in pilot_compute.rs (no
+    // equivalent of unmet_wizard_spellbook_conditions) -- the one
+    // class-conditional sub-check in unmet_combat_posture_conditions is an
+    // `is_some()` guard that only ADDS a requirement when Fighter is the
+    // dispatch-supported class; it's skipped entirely for Rogue, never
+    // blocks it. compose_character_input has no Rogue-specific branch at
+    // all (only Wizard gets conditional seeding) -- Rogue receives the
+    // exact same fixed loadout as every other non-Wizard class, and task
+    // 4's generic chassis dispatch widening already covers it. These two
+    // tests confirm empirically, through the real compose_character_input /
+    // apply_level_up path (not a hand-built CharacterInput), that this
+    // holds for both creation and multiclass dip -- no fix needed, Rogue
+    // was already fully reachable.
+
+    #[test]
+    fn rogue_level1_reaches_computed_from_compose_character_input_alone() {
+        let rogue_request = CreateCharacterRequest {
+            class_id: "class:rogue".to_owned(),
+            ..request_for("rogue-starter-computed", 1)
+        };
+        let character_input = compose_character_input(&rogue_request);
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a freshly composed Rogue level 1 must reach Computed through the real UI creation \
+             path, with no gap analogous to Wizard's spellbook posture: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    #[test]
+    fn rogue_multiclass_dip_reaches_computed_from_apply_level_up_alone() {
+        let mut character_input = compose_character_input(&request_for("fighter-then-rogue-dip", 1));
+        apply_level_up(&mut character_input, "class:rogue");
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "multiclassing Rogue onto an existing Fighter must reach Computed through the real \
+             UI level-up path, with no seeding fix needed (unlike Wizard): {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     // ----- Real spell slot-budget enforcement (v0.6 alpha swarm) -----
     //
     // Frontend found this live while chasing an unrelated cosmetic issue:
