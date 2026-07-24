@@ -17,9 +17,10 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 teammates, cron backstop every ~20 min
 frontend              Sonnet   equipment-picker wiring against
                                 purchase_equipment, live-verifying both paths
-backend               Sonnet   fixing the class-skill-modifier bug; render-
-                                staleness REOPENED and queued next (real
-                                root cause + a trap to avoid, see Happened)
+backend               Sonnet   class-skill-modifier bug FIXED+pushed
+                                (93a0636d, PCGen-corpus-verified); on
+                                render-staleness fix now, reading full
+                                context first before touching anything
 qa                    Sonnet   purchase_equipment catalogue coverage DONE
                                 (7b38a674); continuing the bug-pattern sweep
                                 via static read only, staying out of
@@ -703,6 +704,17 @@ qa                    Sonnet   purchase_equipment catalogue coverage DONE
   frontend -- needs a per-field rename or rename_all_fields instead.
   Reopened, queued for backend next with this guidance attached so
   they don't walk into the trap.
+- MILESTONE: class-skill-modifier bug FIXED (93a0636d), verified
+  against the real PCGen corpus (cr_abilities_class.lst) before
+  writing code, not memory -- confirmed Fighter/Rogue genuinely have
+  Climb/Intimidate/Swim as class skills, Wizard has none. Now only
+  applies the +3 when the character has a class that actually grants
+  it; multiclass correctly gets it via PF1's real union rule (tested
+  explicitly, not assumed). One real test break found and coordinated
+  with QA before pushing. Reading the full render-staleness context
+  before touching that fix, per the trap flagged earlier -- correct
+  instinct given the "obvious" fix (bare rename_all) would break tag
+  matching across the frontend.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
