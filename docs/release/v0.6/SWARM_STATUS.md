@@ -105,12 +105,12 @@ alongside the existing Agent Status convention.
   omission (small UX fix). Queued for backend once the attack-bonus
   slice lands.
 
-## Agent Status (2026-07-24, ~12:28 ET)
+## Agent Status (2026-07-24, ~12:32 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | attack-bonus slice still in progress, checked in a second time; also handed the bundled-corpus-fixture finding (queued, their call on fix shape once free) |
+| backend | working | attack-bonus single-weapon slice landed (845f860c, verified 242/242 lib + 202/202 desktop); already starting on the bundled-corpus-fixture fix (pilot_compute_corpus.rs dirty) |
 | frontend | idle | queue clear since the smoke-test report; standing by |
-| qa | idle | bundled-corpus-fixture investigation complete and logged; told to stand by pending backend's fix-shape decision |
+| qa | idle | bundled-corpus-fixture investigation complete and logged; standing by for backend's fix to verify |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------

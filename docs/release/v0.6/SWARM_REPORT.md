@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17, item-1 design pass, and shape (c) all landed and independently verified; now building the bounded single-weapon attack-bonus slice (greenlit, their own proposal) |
-| frontend | idle | comprehensive smoke test complete -- fixed a real bug (`e50d7762`, ItemPickerModal React key collision) and flagged one real unresolved finding (Spells tab `corpusDerived` inconsistency for non-Human Wizards, may relate to item 18/gap C); queue clear |
-| qa | working | verified shape (c) clean (real RED reproduction, three-angle claim-gating-inertness check); now investigating the Spells tab `corpusDerived` finding |
+| backend | working | items 7, 17, item-1 design pass, shape (c), and the attack-bonus single-weapon slice all landed and independently verified; now starting the bundled-corpus-fixture fix |
+| frontend | idle | comprehensive smoke test complete -- fixed a real bug (`e50d7762`, ItemPickerModal React key collision); queue clear |
+| qa | idle | root-caused the Spells tab finding to a bundled 2-spell/2-equipment demo fixture (`corpus_fixtures.rs`) -- a bigger scope caveat also affecting shape (c)'s real-world value, not the same root cause as item 18; standing by for backend's fix to verify |
 
 ---
 
