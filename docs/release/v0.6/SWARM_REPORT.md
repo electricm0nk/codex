@@ -163,9 +163,11 @@ until now — populated for real below):
 | 1 | Wizard spell-save-DC: no computation existed at all (Paladin/Ranger/Sorcerer/Bard all had it) | **Fixed** (`3b397315`), catalogue-adopted (`e95112a1`) |
 | 2 | Wizard spell-slot-budget enforcement: real corpus spells silently bypassed the over-budget check (only the one synthetic seed spell's id shape was recognized) | **Fixed** (`365b3a1a`), live re-verified through the real Add Spell UI |
 | 3 | Class-skill-modifier bug: `compute_selected_skill_modifiers` applied the Climb/Intimidate/Swim class-skill `+3` unconditionally — silently wrong for Wizard (whose real class-skill list includes none of the three), coincidentally right for Rogue | **Fixed** (`93a0636d`), catalogue-adopted (`3b843add`), independently re-verified against the real PCGen corpus citations before adoption |
-| 4 | Racial ability-modifier gap: Elf/Dwarf/Gnome/Halfling each silently missing one real `+2` mental-ability racial component (Elf: INT, Dwarf: WIS, Gnome: CHA, Halfling: CHA) — the code's own comment mischaracterized Elf's as an "out of scope alternate variant" when it's the CRB-standard default | **Elf fixed** (`9ec0e036`), catalogue-adopted (`e9d02c25`). **Dwarf/Gnome/Halfling in progress** — backend actively editing `pilot_compute.rs` as of this checkpoint (uncommitted); not yet landed, not yet catalogue-adoptable. |
-| 5 | Racial Small-size effect miscategorization: Gnome's and Halfling's size explanations claim "no numeric effect to attack rolls, AC..." despite correctly citing `SIZE:SMALL` — real PF1 Small size grants +1 AC/+1 attack/-1 CMB-CMD/+4 Stealth | Queued alongside defect 4's in-progress fix (text-only correction; `compute_combat_baseline` has no size-modifier term for *any* race today, so this doesn't change a computed value, only stops an incorrect claim) |
+| 4 | Racial ability-modifier gap: Elf/Dwarf/Gnome/Halfling each silently missing one real `+2` mental-ability racial component (Elf: INT, Dwarf: WIS, Gnome: CHA, Halfling: CHA) — the code's own comment mischaracterized Elf's as an "out of scope alternate variant" when it's the CRB-standard default | **Fixed for all 4 races** (Elf `9ec0e036`, Dwarf/Gnome/Halfling `2f05dee4`), **catalogue-adopted for all 4** (Elf `e9d02c25`, Dwarf/Gnome/Halfling `fb01768d`) — each real PCGen citation independently re-verified before adoption, not trusted from the commit message |
+| 5 | Racial Small-size effect miscategorization: Gnome's and Halfling's size explanations claim "no numeric effect to attack rolls, AC..." despite correctly citing `SIZE:SMALL` — real PF1 Small size grants +1 AC/+1 attack/-1 CMB-CMD/+4 Stealth | **Fixed** (`2f05dee4`, bundled with defect 4), **catalogue-adopted** (`fb01768d`) — text-only correction; `compute_combat_baseline` has no size-modifier term for *any* race today, so this doesn't change a computed value, only stops an incorrect claim |
 | 6 | Feat-effects engine: verified concretely (built a real fixture, added Toughness to `selected_feats`, ran the real `build_pilot_headless_receipt` entry point) that **no feat outside the 3 hardcoded into the deterministic posture gate (Power Attack, Dodge, Weapon Focus) has any mechanical effect anywhere** — confirmed by grep this isn't Toughness-specific, there is no general feat-effects computation in `pilot_compute.rs` at all | **Not a quick fix** — logged as its own architecture gap, linked to the existing AC/attack-bonus/skill-posture widening item (risks-and-open-questions.md item 1) rather than assigned to backend as routine work. Not attempted this swarm. |
+| 7 | **MAJOR — CreateCharacterForm never actually submitted racial ability adjustments, for any of the 4 fixed-adjustment races, since the form was first built.** `calculatedScore()` (raw + racial adjustment) was computed for the on-screen preview only; the submitted `abilityScores` used raw, unadjusted `rawScore()` instead — every non-Human Elf/Dwarf/Gnome/Halfling character ever created had silently wrong ability scores, independent of and predating this session's engine-side explanation-text fixes (defect 4 above only corrected what the text *described*, not what got *submitted*) | **Fixed** (`f2c616ed`), live-verified end-to-end for Elf (disk-confirmed correct DEX/CON/INT cascade) and Dwarf (disk-confirmed `constitution:16/wisdom:14/charisma:6` on a fresh character created through the real UI). Gnome/Halfling verified via real production-code execution (actual function + actual race-catalog data, not a reimplementation) after a session-scoped GUI environment blocker (since fixed, `f6fe0df2`) prevented completing their live-disk leg — accepted as sufficient given the mechanism is unconditional/race-agnostic and already twice disk-proven |
+| 8 | Fighter multiclass/race level-lookup gap, 3 instances: `validate_fighter_feat_choice_legality` and two sibling checks in `unmet_combat_posture_conditions` used single-class-only or Human-only level lookups instead of the multiclass-aware `fighter_level_in_mix`, silently skipping validation for non-Human and/or multiclass Fighters — one instance empirically confirmed exploitable (a Human Fighter1/Rogue3 with a wrong bonus-feat choice produced zero diagnostics before the fix) | **Fixed, systematic sweep complete** (`0eb9ea65`, `32289cb4` follow-up, `68721ca0`) — all 4 `_legality`/`_conditions`/`validate_` gate functions in `pilot_compute.rs` checked, no further instances. Currently no live UI attack surface (the create/level-up flow hardcodes canonical choices for the slots these checks protect) — real defense-in-depth for the command/API layer, not an active user-visible bug today |
 
 **Bar-distance assessment (honest current picture):** the alpha bar is
 **not** met yet, and the remaining distance is now well-characterized rather
@@ -195,6 +197,57 @@ than vague:
    purchasing is now a real atomic transaction (`purchase_equipment`), and
    the render-staleness/corpus-derived wire bugs found along the way are
    both closed.
+
+### Second checkpoint (2026-07-24, post-race-bundle and post-submission-bug)
+
+A second round of real defects landed after the checkpoint above was
+written, closing out the remaining open threads from it rather than
+introducing new scope:
+
+- **The 4-race ability-modifier gap (defect 4) is now fully closed, not
+  partial.** Dwarf/Gnome/Halfling's engine-side fix landed (`2f05dee4`) and
+  was catalogue-adopted the same session (`fb01768d`), each citation
+  independently re-verified against the real PCGen corpus rather than
+  trusted from the commit message. All 4 races now correctly ground their
+  real 3-stat racial adjustment.
+- **A materially bigger, independent bug was found and fixed underneath
+  it**: the create-character form was never actually *submitting* any
+  race's adjusted ability scores — only displaying them — since the form
+  was first built (defect 7). This predates and is unrelated to the
+  engine-text fixes; it means every non-Human character created through
+  the shipped UI, this entire swarm and before, had silently wrong ability
+  scores baked into the saved file. Fixed (`f2c616ed`) and verified: Elf
+  and Dwarf both disk-confirmed correct through a real create-character
+  UI walkthrough; Gnome/Halfling confirmed via direct execution of the
+  real production function against the real race-catalog data (a session-
+  scoped GUI environment collision between concurrent agents, since fixed,
+  prevented completing their disk leg — accepted as sufficient given the
+  fix is unconditional across races and twice disk-proven already).
+- **A third, unrelated defect class was found and closed by a systematic
+  sweep**: Fighter's feat-choice-legality gate had the same "single-class
+  or Human-only level lookup" blind spot in 3 separate places, one of them
+  empirically confirmed exploitable before the fix (defect 8). All 4
+  candidate gate functions in the file were checked; sweep is complete.
+- **Housekeeping resolved, not newly found**: DR exposure through the DTO,
+  the money-panel/equipment-purchase atomic-transaction gap, and
+  `load_saved_character` exposing `spells_selected` (risks-and-open-
+  questions.md items 6/9/9a) all landed as real backend work this session
+  — closing three previously-logged "backlog, non-blocking" items outright
+  rather than leaving them to accumulate.
+- **Deferred, not fixed, and correctly so**: a non-Human Wizard's
+  spell-specific grounding (spell-save-DC, spellbook-slot ceiling) never
+  runs at all — the one function that both grounds it and enforces its
+  level-3 ceiling is itself Human-gated. BAB/saves/HP for non-Human Wizards
+  remain correct (a separate, already-widened path). Ruled a completeness
+  gap (nothing computes *wrong*, a subsystem simply doesn't run), not a
+  correctness bug — filed alongside the feat-effects and AC/attack-bonus
+  architecture items rather than fixed or blocked this wave.
+
+None of this changes the bar-distance shape below — multiclass/class-chassis
+breadth and the posture-narrowness/feat-effects architecture gaps are
+untouched — but it meaningfully strengthens confidence in the *correctness*
+of what the 3 working classes already claim, and closes out several
+previously-open threads cleanly rather than leaving them to drift.
 
 **Not signing the attestation.** Per §4.4's "Done" criteria, this requires
 every shipped calculation having red-green coverage (true) *and* the
