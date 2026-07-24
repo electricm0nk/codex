@@ -58,7 +58,8 @@ impl SelectedParityDimensions {
     /// the mandatory pilot dimensions only.
     pub fn from_receipt(receipt: &PilotHeadlessReceipt) -> Self {
         let computation = &receipt.computation;
-        let numeric_dimensions: [(&str, i16); 8] = [
+        let numeric_dimensions: [(&str, i16); 9] = [
+            ("combat.base_attack_bonus", computation.base_attack_bonus),
             (
                 "combat.baseline_melee_attack_bonus",
                 computation.baseline_melee_attack_bonus,
@@ -118,7 +119,10 @@ impl SelectedParityDimensions {
 
     /// Projects the corpus-aware `contract::PilotReceipt` (not the
     /// corpus-free headless receipt `from_receipt` reads) into
-    /// `from_receipt`'s same 8 mandatory dimensions, plus
+    /// `from_receipt`'s same 9 mandatory dimensions (including
+    /// `combat.base_attack_bonus`, the raw class-table BAB distinct from
+    /// `combat.baseline_melee_attack_bonus`'s Strength/feat-inclusive total —
+    /// self-directed backend scan, v0.6 alpha swarm), plus
     /// `durability.max_hp` and the 3 `encumbrance.*` dimensions v0.6 alpha
     /// swarm item 4 added PCGen-side extraction for
     /// (`scripts/pcgen-normalize-output.py`). Both need data
@@ -149,6 +153,7 @@ impl SelectedParityDimensions {
     ) -> Self {
         let chassis = &receipt.chassis;
         let mut numeric_dimensions: Vec<(&str, Option<i16>)> = vec![
+            ("combat.base_attack_bonus", Some(chassis.base_attack_bonus)),
             (
                 "combat.baseline_melee_attack_bonus",
                 Some(chassis.baseline_melee_attack_bonus),
@@ -251,7 +256,7 @@ mod tests {
     }
 
     #[test]
-    fn from_pilot_receipt_includes_the_original_eight_dimensions_plus_durability_and_encumbrance() {
+    fn from_pilot_receipt_includes_the_original_eight_dimensions_plus_base_attack_bonus_durability_and_encumbrance() {
         let input = load_input();
         let corpus = empty_corpus();
         let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
@@ -267,6 +272,7 @@ mod tests {
         let ids: Vec<&str> = dimensions.dimensions.iter().map(|d| d.id.as_str()).collect();
         for expected_id in [
             "character.identity",
+            "combat.base_attack_bonus",
             "combat.baseline_melee_attack_bonus",
             "defense.baseline_armor_class",
             "defense.total_save.fortitude",
@@ -288,6 +294,15 @@ mod tests {
         // +2 racial bonus, not CON here) = 12.
         let max_hp = dimensions.dimensions.iter().find(|d| d.id == "durability.max_hp").unwrap();
         assert_eq!(max_hp.value_i16, Some(12));
+
+        // Fighter level 1 raw BAB is +1 (cr_classes.lst BASEAB|classlevel),
+        // distinct from combat.baseline_melee_attack_bonus (which folds in
+        // the Strength modifier and any feats/equipment) -- confirmed
+        // empirically against a real PCGen run of the same fixture shape,
+        // whose /character/attack/melee/bab element also reads +1.
+        let base_attack_bonus =
+            dimensions.dimensions.iter().find(|d| d.id == "combat.base_attack_bonus").unwrap();
+        assert_eq!(base_attack_bonus.value_i16, Some(1));
     }
 
     #[test]
@@ -312,6 +327,28 @@ mod tests {
             !dimensions.dimensions.iter().any(|d| d.id == "durability.max_hp"),
             "a multiclass build must omit durability.max_hp, not fabricate a value: {:?}",
             dimensions.dimensions
+        );
+    }
+
+    #[test]
+    fn from_receipt_includes_the_raw_base_attack_bonus_distinct_from_the_melee_total() {
+        let input = load_input();
+        let receipt = crate::rules_core::pilot_compute::build_pilot_headless_receipt(&input);
+        let dimensions = SelectedParityDimensions::from_receipt(&receipt);
+
+        let base_attack_bonus =
+            dimensions.dimensions.iter().find(|d| d.id == "combat.base_attack_bonus")
+                .expect("from_receipt should carry a combat.base_attack_bonus dimension");
+        assert_eq!(base_attack_bonus.value_i16, Some(1), "Fighter level 1 raw BAB is +1");
+
+        let melee_total = dimensions
+            .dimensions
+            .iter()
+            .find(|d| d.id == "combat.baseline_melee_attack_bonus")
+            .unwrap();
+        assert_ne!(
+            base_attack_bonus.value_i16, melee_total.value_i16,
+            "these must be distinct dimensions, not the same value wired twice"
         );
     }
 

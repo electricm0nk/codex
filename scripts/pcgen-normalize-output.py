@@ -14,7 +14,8 @@ into the golden-fixture comparison shape consumed by:
 * ``src/oracle_validation/selected_parity_dimensions.rs`` — the
   ``SelectedDimension`` carrier shape (``id`` / ``value_string`` /
   ``value_i16`` / ``source_package_id``) for the mandatory pilot dimensions:
-  ``character.identity``, ``combat.baseline_melee_attack_bonus``,
+  ``character.identity``, ``combat.base_attack_bonus`` (v0.6 alpha swarm,
+  self-directed backend scan), ``combat.baseline_melee_attack_bonus``,
   ``defense.baseline_armor_class``, ``defense.total_save.{fortitude,reflex,will}``,
   ``skill.selected_modifier.{climb,intimidate,swim}``, and (v0.6 alpha
   swarm item 4) ``encumbrance.carrying_capacity.{light,medium,heavy}_max_lbs``,
@@ -232,6 +233,26 @@ def normalize(
         _signed_int(_text(root.find("./attack/melee/total"))),
         "missing PCGen output field for dimension 'combat.baseline_melee_attack_bonus' "
         "(expected /character/attack/melee/total)",
+    )
+
+    # v0.6 alpha swarm (self-directed backend scan, 2026-07-24): the raw
+    # class-table base attack bonus, distinct from the Strength/feat-inclusive
+    # melee total above. Uses `/character/attack/melee/bab` specifically, NOT
+    # the confusingly-named sibling `/character/attack/melee/base_attack_bonus`
+    # element -- verified empirically by running the real PCGen pipeline
+    # against the Fighter pilot fixture: both elements happened to read `+1`
+    # for that build, but `bab`'s underlying PCGen token
+    # (`ATTACK.MELEE.BASE`) is the one that's unambiguously the raw BAB by
+    # PCGen's own naming convention (identical across melee/ranged/grapple for
+    # a non-size-shifted character), while `base_attack_bonus`'s token
+    # (`ATTACK.MELEE`, no `.BASE`/`.TOTAL` suffix) is an internal PCGen
+    # intermediate whose meaning was not independently confirmed to always
+    # coincide with raw BAB for every build shape.
+    emit_i16(
+        "combat.base_attack_bonus",
+        _signed_int(_text(root.find("./attack/melee/bab"))),
+        "missing PCGen output field for dimension 'combat.base_attack_bonus' "
+        "(expected /character/attack/melee/bab)",
     )
 
     emit_i16(
