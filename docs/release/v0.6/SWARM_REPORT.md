@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17, and the item-1 design pass all landed; mid-edit implementing shape (c) (real ACP + a second AC path, no claim-gating changes) |
-| frontend | working | still on the `ItemPickerModal.tsx` bug fix (duplicate-key React collision), no report yet |
+| backend | working | items 7, 17, item-1 design pass, and shape (c) all done and passing (236/236 lib, 202/202 desktop); running a final full-workspace safety-net suite before committing |
+| frontend | idle | comprehensive smoke test complete -- fixed a real bug (`e50d7762`, ItemPickerModal React key collision) and flagged one real unresolved finding (Spells tab `corpusDerived` inconsistency for non-Human Wizards, may relate to item 18/gap C); queue clear |
 | qa | waiting-on-backend | verified items 7 and 17 clean (real ID-chain re-tracing + RED reproduction both), found one new small gap (Defense tab doesn't refetch durability after a feat pick, logged for frontend); correctly holding rather than touching backend's in-progress shape (c) edit |
 
 ---
