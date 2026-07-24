@@ -148,11 +148,28 @@ alongside the existing Agent Status convention.
   a defect. Ran targeted tests only (not a full workspace regression),
   explicitly to stay out of backend's concurrent edit -- good judgment.
 
-## Agent Status (2026-07-24, ~14:00 ET)
+- **Shape (c)'s equipmentEffects wired into the frontend (frontend,
+  `d8528ce2`).** New "Equipment Effects" stat-tile row on the Defense
+  tab, above the existing DR line -- same honest-absence discipline as
+  the rest of the tab: `armorClassDelta`/`armorCheckPenaltyTotal` always
+  render (a real 0 isn't treated as absent); `maxDexCap`/
+  `spellFailureChance`/`attackBonusDelta` only render when genuinely
+  present, with particular care taken to preserve `attackBonusDelta`'s
+  documented `Some(0)`-vs-absent distinction (exactly one weapon with no
+  enhancement is a real "+0"; zero or 2+ weapons stays honestly hidden).
+  Live-verified against a real Chain-Shirt-equipped Fighter (AC+4/ACP-2/
+  MaxDex4/SpellFail20%/AttackBonus+0, all matching real PF1 Chain Shirt
+  stats) and cross-checked identical values show up for a Wizard too --
+  correctly identified as the known pre-existing fixed-loadout
+  simplification, not something newly introduced. 69/69 suite green,
+  typecheck clean.
+
+## Agent Status (2026-07-24, ~14:03 ET)
 | Agent | Status | Detail |
 |---|---|---|
 | backend | working | widening the feat-effects engine to 3 more real feats (Great Fortitude/Iron Will/Lightning Reflexes), full-workspace safety net running before commit |
-| frontend | working | wiring shape (c)'s equipmentEffects into the frontend TS type and Defense tab |
+| frontend | idle | shape (c)'s equipmentEffects wired into the Defense tab and live-verified; queue clear |
+| qa | idle | verified the outside-demo-corpus indicator clean; standing by for the equipmentEffects wiring to verify next |
 | qa | idle | verified the outside-demo-corpus indicator clean (both tabs, RED reproduction); standing by for backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
