@@ -92,7 +92,37 @@ Per `docs/governance/no-stub-mvp-doctrine.md` (`scope: universal`), the four-che
     **Recompute-DTO parity gap closed (backend, `af2d8b9f`).** Found the DTO under its real Rust name (`CharacterSnapshotDto` in `recomputeCharacter.rs`, backing `recompute_character`) and added `damage_reduction: Option<i16>` with the identical serde shape `PilotSnapshotDto` already uses, populated from the same source field (`PilotDefenseViewModel::damage_reduction`) at the one construction site. Since no live pipeline can exercise a real non-`None` value (Barbarian never reaches `Computed`, same structural fact as above), added the meaningful test that *is* available instead: a direct serialization test proving `Some(3)` emits the camelCase `"damageReduction"` key and `None` omits it entirely (not `null`), plus a golden-path assertion that the existing Fighter fixture correctly stays `None` — same wire-shape rigor as the earlier `corpusDerived` regression tests, without needing a real compute pass to get it. 2 new tests, full suite green, zero blast radius.
 
     **Independently re-verified, not just self-reported (QA, 2026-07-24).** Read the actual diff and code rather than trusting the commit message: (1) confirmed `damageReduction?: number` is genuinely on the shared `PilotSnapshotDto` interface every consumer imports, not used ad-hoc; (2) read `DefenseTab`'s JSX directly — `!== undefined` guards the rendered line, falling through to the stub text on absence, with `snapshot?.damageReduction` correctly propagating `undefined` all the way from a `Blocked`/`None` snapshot; (3) traced Barbarian's unreachability in the compute layer itself rather than trusting the claim — `table_class_id` (used by both the single-class dispatch and `is_supported_multiclass_mix`'s per-class check) has no Barbarian entry, so no single-class or multiclass Barbarian-containing build can produce anything but `class_chassis.unsupported` → `Blocked` → `snapshot: None`. All three claims hold completely. Clean, independently confirmed record.
-7. **STILL UNRESOLVED, exhaustively searched (2026-07-24) — starting wealth by class. Genuinely an operator call, not an engineering one.** QA could not find a starting-wealth-by-class formula in the PCGen class LST file they checked. Backend followed up with a thorough dead-end search: the whole Pathfinder data tree for STARTGOLD/wealth/gold-named files, PCGen's gameMode-level `miscinfo.lst`, and the wider corpus for any starting-wealth rule text — nothing real anywhere. **One real trap caught and correctly not used**: `docs/release/SD-22/artifacts/corpus/{acg,apg}/class_*.lst.md` files do have a `starting_gold` column (e.g. Alchemist "3d6*10") that looks like a citable value at a glance — but these are explicitly labeled file-shape stubs ("Operator replaces the body of this file with the licensed Paizo APG Alchemist LST at cycle-launch"), not real verified data. Backend correctly declined to use it, and also declined to implement from unverified memory even though the real PF1 Core Rulebook table values are well-known — consistent with this whole swarm's discipline around not shipping unverified data. **This data genuinely does not exist in any real, licensed corpus source available in this environment.** Framed correctly by backend and adopted by the lead: this is a content-provenance/licensing question (whether to accept a not-independently-verified-against-a-licensed-source SRD value for what's ultimately Paizo-owned content), not a pure engineering judgment call — kept out of the autonomous-operation decision set and left for the operator's actual review, not resolved unilaterally. Not blocking anything else in the swarm.
+7. **RESOLVED (2026-07-24) — starting wealth by class, operator-provided with citation.** Was: exhaustively searched and correctly left unresolved (QA/backend found no citable value in any local corpus source, correctly declined the file-shape-stub trap in `docs/release/SD-22/artifacts/corpus/{acg,apg}/class_*.lst.md`, correctly declined to implement from unverified memory) — a genuine content-provenance/licensing question, not an engineering call, deliberately kept out of the autonomous-operation decision set.
+
+    **Operator (Todd Hintzmann) provided the full table directly, sourced from d20pfsrd.com's "Character Creation" page** (`https://www.d20pfsrd.com/basics-ability-scores/character-creation/`, Pathfinder SRD / OGL content):
+
+    | Class | Starting Wealth | Average |
+    |---|---|---|
+    | Alchemist | 3d6 × 10 gp | 105 gp |
+    | Barbarian | 3d6 × 10 gp | 105 gp |
+    | Bard | 3d6 × 10 gp | 105 gp |
+    | Cavalier | 5d6 × 10 gp | 175 gp |
+    | Cleric | 4d6 × 10 gp | 140 gp |
+    | Druid | 2d6 × 10 gp | 70 gp |
+    | Fighter | 5d6 × 10 gp | 175 gp |
+    | Gunslinger | 5d6 × 10 gp | 175 gp |
+    | Inquisitor | 4d6 × 10 gp | 140 gp |
+    | Magus | 4d6 × 10 gp | 140 gp |
+    | Monk | 1d6 × 10 gp | 35 gp |
+    | Ninja | 4d6 × 10 gp | 140 gp |
+    | Oracle | 3d6 × 10 gp | 105 gp |
+    | Paladin | 5d6 × 10 gp | 175 gp |
+    | Ranger | 5d6 × 10 gp | 175 gp |
+    | Rogue | 4d6 × 10 gp | 140 gp |
+    | Samurai | 3d6 × 10 gp | 105 gp |
+    | Sorcerer | 2d6 × 10 gp | 70 gp |
+    | Summoner | 2d6 × 10 gp | 70 gp |
+    | Witch | 3d6 × 10 gp | 105 gp |
+    | Wizard | 2d6 × 10 gp | 70 gp |
+
+    Plus the companion **Character Wealth by Level** table (for characters created above 1st level — PC level 2 through 20, 1,000 gp through 880,000 gp), same source. Worth noting: the Alchemist value (3d6×10) exactly matches what the earlier file-shape stub in `docs/release/SD-22/artifacts/corpus/apg/class_alchemist.lst.md` showed — that stub's *value* was apparently correct, it was the *provenance* (an unlicensed placeholder file, not a real source) that made it unusable at the time; this operator-cited value is independently sourced and now usable.
+
+    **Not yet implemented.** Swarm subagent dispatches are currently paused (operator instruction, 2026-07-24) pending a separate utilization-tracking discussion — this entry records the unblock so backend can pick it up (starting-wealth roll/assignment at character creation, keyed by class, for Fighter/Wizard/Rogue at minimum since those are the only classes that currently reach `Computed`) once dispatches resume.
 8. **RESOLVED — Feats tab now shows a character's existing feat list.** `chosen.selected_feats` exposed through `load_saved_character`'s response (backend, `1509124`), wired into the Feats tab (frontend, `aa611ce`) — live-verified: Aldric's Feats tab correctly showed all 5 feats (3 fixed-loadout + Cleave + newly-added Toughness), revision bumped on the new add.
 
     **Independently verified, both commits together (QA, 2026-07-24).** `febf4d80` (Feat picker)'s own "can't show the complete list" caveat was accurate when written, and its real follow-up `aa611ce1` genuinely closes it — traced all 6 `toCharacterMutationRefresh` call sites in `CharacterSheet.tsx` individually, confirmed each correctly threads the unchanged feat list for non-feat mutations and the two feat-adding paths correctly append rather than fabricate, mirroring the real server-side behavior. Both relevant test files re-run, pass. Noted as a positive contrast worth calling out: unlike item 23's stale LevelUpDialog comment, this caveat was properly retired by a real follow-up commit rather than left to rot.
