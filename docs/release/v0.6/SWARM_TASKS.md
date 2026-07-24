@@ -62,7 +62,8 @@
 | Starting wealth by class (operator-provided table, 11 CRB classes) | Backend | CRB | done | 0dbf67ad |
 | Feat-effects engine, Toughness +3 HP slice (first real feat mechanical effect) | Backend | CRB | done | 53ddd1ce |
 | Item 1 architecture-wall design/scoping pass (headless/corpus-aware split) | Backend | - | done | 4dadad51 (`item-1-architecture-wall-design.md`) |
-| Item 1 shape (c): corpus-derived AC/ACP display section (non-claim-gated) | Backend | CRB | in progress | uncommitted, final full-workspace test run before commit as of 2026-07-24 |
+| Item 1 shape (c): corpus-derived AC/ACP display section (non-claim-gated) | Backend | CRB | done | 08a829a1, verified 236/236 lib + 202/202 desktop + 4253/0 full workspace |
+| Item 1 attack-bonus, bounded single-weapon slice (no schema change, honest-absent for 0/2+ weapons) | Backend | CRB | in progress | 2026-07-24, greenlit by lead as an engineering-scope call |
 | Spells tab corpusDerived inconsistency for non-Human Wizards (found in smoke test) | Backend | CRB | queued | flagged by UI 2026-07-24, may relate to Wizard non-Human spell-math gap below |
 | Defense tab doesn't refetch durability after a feat pick (render-staleness, same shape as corpus_derived bug) | UI | - | queued | flagged by QA 2026-07-24 |
 | Item 1 attack-bonus enhancement math (needs equipment-attachment data-model decision) | Backend | CRB | blocked | design decision needed, see item 1 in risks-and-open-questions.md |
