@@ -15,17 +15,16 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   working autonomous queue: render-staleness
-                                investigation, then Rogue live verification,
-                                then class-dropdown honesty audit
-backend               Sonnet   spells_selected exposure DONE (034d1b84,
-                                unblocks frontend's routing workaround);
-                                investigating money-purchase transaction
-                                shape before building
-qa                    Sonnet   Rogue reachability catalogue proof DONE
-                                (c800d568, independently-authored rules_core
-                                -layer equivalent since backend's tests live
-                                in the other crate); on the systematic gap
+frontend              Sonnet   working autonomous queue (class-dropdown
+                                honesty audit in flight)
+backend               Sonnet   PRIORITY BUG: pivoting to the class-skill
+                                modifier correctness bug QA found (silently
+                                wrong values for Wizard, see Happened);
+                                money-purchase coupling + render-staleness
+                                elimination both DONE first
+qa                    Sonnet   MAJOR FIND: class-skill modifier bug, verified
+                                concrete wrong value; filed, not fixed;
+                                continuing the gap sweep meanwhile
                                 sweep across Fighter/Wizard/Rogue now
 
 (b) Happened
@@ -632,6 +631,37 @@ qa                    Sonnet   Rogue reachability catalogue proof DONE
   -- complementary to backend's proof, not a duplicate, now under QA's
   ownership/sign-off same as the BAB/save and DC work. Moved to the
   systematic Fighter/Wizard/Rogue gap sweep next.
+- Backend closed money-purchase coupling (29e67515): new atomic
+  purchase_equipment command, resolves real catalog cost headlessly (no
+  corpus wall -- checked before building), pre-checks affordability,
+  adds equipment + deducts cost together, honestly Blocked (never free)
+  if unaffordable or cost unknown. Re-confirmed the render-staleness
+  elimination holds for the two newest mutation commands too (same
+  synchronous, no-caching code path) -- nothing further diagnosable
+  from backend's side without frontend-specific render/state detail.
+- MAJOR FIND, priority bug: QA's systematic gap sweep found
+  compute_selected_skill_modifiers applies the Climb/Intimidate/Swim
+  class-skill bonus (+3) unconditionally regardless of actual class.
+  Written originally for Fighter (whose real class-skill list genuinely
+  includes all three); the Computed/Blocked gate was later widened to
+  any dispatch-supported class, but the +3 itself was never made
+  class-aware. Rogue is coincidentally correct (its real list also
+  includes all three); Wizard's real list includes none of them.
+  VERIFIED CONCRETELY, not reasoned abstractly: built the actual Wizard
+  posture, got climb=5 (real value should be 2, no class-skill bonus) --
+  a silently wrong number in the explanations list, no diagnostic fires.
+  Narrower and more urgent than the already-known deferred "class-skill
+  recognition is Fighter-only" finding (that one is in skill_allocation.rs,
+  doesn't gate anything reaching Computed) -- this is the narrow
+  deterministic-posture function that DOES gate Computed/Blocked, live
+  and wrong right now. Two smaller findings from the same sweep, lower
+  severity, logged but not actioned: level-up HP exposure is
+  inconsistent per-class (Fighter has a dedicated explanation, Wizard/
+  Rogue don't, though durability.rs already computes the same correct
+  value for all three) -- reads as inconsistent exposure, not a missing
+  calc; bonus spells from high ability score confirmed present and
+  correctly wired, no gap. Backend redirected to the bug ahead of
+  render-staleness (already eliminated on backend's side anyway).
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
