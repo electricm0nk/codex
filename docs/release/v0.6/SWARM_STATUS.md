@@ -9,37 +9,33 @@ separate, mechanical, cron-driven refresh (every 5 min, via
 staleness even if the lead goes quiet; it never touches anything above it,
 and the lead never hand-edits it.
 
-(a) Happening now (refreshed 2026-07-24, 01:42 ET)
+(a) Happening now (refreshed 2026-07-24, ~05:00 ET, post-quota-reset)
 ------------------------------------------
 orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, ~20 min check-in cadence via
                                 ScheduleWakeup (cron heartbeat script still
-                                runs too, mostly skips on a dirty tree)
-frontend              -        SESSION QUOTA OUTAGE, resets 4:10am ET --
-                                was mid-task wiring the still-stub Defense
-                                tab to render the real damage_reduction
-                                field; nothing landed yet, will resume on
-                                reset (same pattern as the two earlier
-                                quota outages this session, both recovered
-                                cleanly)
-backend               -        SESSION QUOTA OUTAGE, resets 4:10am ET --
-                                was mid-task on a targeted sweep for other
-                                Fighter-only-grounded computations; nothing
-                                landed yet, will resume on reset
-qa                     -        SESSION QUOTA OUTAGE, resets 4:10am ET --
-                                landed the DR-exposure catalogue test
-                                (39fef863) before hitting the wall; left a
-                                second, complete test file
-                                (v06_wizard_rogue_skill_allocation_grounding.rs)
-                                uncommitted -- lead verified it (3/3 pass,
-                                full suite clean) and landed it on QA's
-                                behalf (d35521ec) rather than risk losing
-                                finished work during the outage
-qa                    Sonnet   writing independent tests/** catalogue
-                                coverage for the DR/purchase_equipment/
-                                spells_selected DTO-exposure fixes
+                                runs too, mostly skips on a dirty tree).
+                                All 3 teammates recovered cleanly from the
+                                4:10am ET quota reset (third such outage
+                                this session, same clean-recovery pattern
+                                as the first two) after the lead re-engaged
+                                each with their paused task.
+frontend               Sonnet  wiring the Defense tab to render the real
+                                damage_reduction field (mid-edit:
+                                CharacterSheet.tsx, loadCreateCharacter.ts)
+backend                Sonnet  delivered the consolidated future-epic
+                                scoping doc (c30f9b04); standing by for
+                                next task
+qa                     Sonnet  fresh-eyes review of the lead's stewardship
+                                commit (d35521ec) found a real gap in an
+                                existing test (sd20_skill_allocation_class_
+                                skill.rs's multiclass test used bare
+                                "wizard" not "class:wizard", never actually
+                                exercised real Wizard recognition) and is
+                                adding a proper fixture-driven multiclass
+                                test with the real class ids
 
 (b) Happened
 ------------
@@ -812,6 +808,38 @@ qa                    Sonnet   writing independent tests/** catalogue
   atomicity, spells_selected) that currently only have backend's own
   inline tests -- same shape as the earlier BAB/save and Rogue
   reachability catalogue work.
+- THIRD QUOTA OUTAGE (all 3 teammates, ~01:40-04:10 ET): resets 4:10am ET,
+  same pattern as the two earlier ones. QA's finished-but-uncommitted
+  Wizard/Rogue skill-allocation test verified and landed by the lead
+  (d35521ec) to avoid losing it during the outage; QA's separate DR test
+  (39fef863) had already landed cleanly. Logged and all 3 re-engaged with
+  their paused tasks once past reset -- clean recovery again.
+- Backend's systematic Fighter-only-grounding sweep (post-reset) came back
+  clean, one near-miss (explain_rogue_level1_chassis) traced and correctly
+  ruled out (no downstream consumer, cosmetic-only). Adopted as a real
+  signal the swarm is down to architecture-level gaps -- logged as risks
+  item 21.
+- Backend consolidated the three architecture-level gaps (items 1/17/18)
+  into a single scoping doc for the operator, docs/release/v0.6/
+  future-epic-scoping.md (c30f9b04), with a pointer from the top of
+  risks-and-open-questions.md. Side-by-side table (what's blocked/why/fix
+  shape/size), explicit answer to "which gaps would bridging the headless/
+  corpus-aware wall actually unlock" (attack-bonus + skill-ACP: yes;
+  feat-effects + Wizard-non-Human spell math: no, independent problems),
+  and a plain recommendation (B/C have no architecture prerequisite and
+  can start anytime; A is the expensive, consequential piece worth its own
+  design pass). Good, disciplined commit hygiene noted: checked
+  `git diff --cached --stat` was empty before staging, confirmed only its
+  own 2 files landed, left frontend's and QA's concurrent in-progress
+  edits untouched.
+- QA's fresh-eyes review of the lead's stewardship commit (d35521ec) found
+  a real, independent gap: the pre-existing
+  sd20_skill_allocation_class_skill.rs multiclass test used the bare
+  string "wizard", not skill_allocation.rs's actual "class:wizard" id, so
+  it never really exercised Wizard recognition in a multiclass union --
+  correctly still a valid Fighter-plus-unrecognized-class test, just not
+  the Wizard proof it looked like. Writing a proper fixture-driven
+  multiclass test with the real class ids to close the gap; in progress.
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
