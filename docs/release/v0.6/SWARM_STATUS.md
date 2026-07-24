@@ -164,12 +164,40 @@ alongside the existing Agent Status convention.
   simplification, not something newly introduced. 69/69 suite green,
   typecheck clean.
 
-## Agent Status (2026-07-24, ~14:03 ET)
+- **REAL BUG FOUND (QA, 2026-07-24) — `EquipmentEffectsDto`'s three
+  optional fields never actually hide on absence, they render garbled
+  "+null"/"null%" instead.** `maxDexCap`/`spellFailureChance`/
+  `attackBonusDelta` lack `#[serde(skip_serializing_if =
+  "Option::is_none")]` (unlike the precedented `damage_reduction` field
+  in the same file, which has it), so a Rust `None` serializes as
+  `"attackBonusDelta":null` -- key present, literal `null` -- not an
+  omitted key. The frontend's `!== undefined` hide-checks are dead code
+  for this case (`null !== undefined` is `true`), so the hide-branch
+  never fires; confirmed the actual broken render strings directly:
+  `fmt(null)` -> `"+null"`, `` `${null}%` `` -> `"null%"`. **Confirmed
+  three independent ways**, not just reasoned about: a throwaway Rust
+  serialization test (reverted after, `character_hub.rs` confirmed
+  clean again), tracing `loadSavedCharacterDetail.ts`'s zero-transform
+  raw `invoke()` call, and running the actual JS comparison/template
+  logic in Node. **Why the earlier live-verification missed it**: the
+  one character tested (Chain Shirt + exactly one weapon) happens to
+  resolve `Some(...)` for all three fields, so the None/hide path was
+  never exercised -- any character with zero or 2+ weapons (a fresh
+  character, a Wizard, a dual-wielder -- the common case) would show
+  "Attack Bonus: +null" instead of nothing. **Fix is small, mechanical,
+  and precedented**: add the same `skip_serializing_if` attribute
+  `damage_reduction` already carries. Not fixed -- backend's file,
+  currently mid-feat-widening; QA correctly didn't interrupt, flagged
+  for whoever picks it up next. Typecheck clean, 69/69 still pass (no
+  existing test exercises the None path, exactly how it slipped
+  through).
+
+## Agent Status (2026-07-24, ~14:10 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | widening the feat-effects engine to 3 more real feats (Great Fortitude/Iron Will/Lightning Reflexes), full-workspace safety net running before commit |
-| frontend | idle | shape (c)'s equipmentEffects wired into the Defense tab and live-verified; queue clear |
-| qa | idle | verified the outside-demo-corpus indicator clean; standing by for the equipmentEffects wiring to verify next |
+| backend | working | widening the feat-effects engine to 3 more real feats, full-workspace safety net running; will get the EquipmentEffectsDto null-serialization bug next |
+| frontend | idle | queue clear |
+| qa | idle | found a real bug in the just-landed equipmentEffects wiring (null-vs-undefined serialization), correctly didn't interrupt backend's in-progress edit to fix it; standing by |
 | qa | idle | verified the outside-demo-corpus indicator clean (both tabs, RED reproduction); standing by for backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
