@@ -10,6 +10,7 @@ pub mod encounters;
 pub mod encumbrance;
 pub mod equipment_effects;
 pub mod equipment_resolver;
+pub mod feat_effects;
 pub mod feat_prereqs;
 pub mod level_up;
 pub mod money;

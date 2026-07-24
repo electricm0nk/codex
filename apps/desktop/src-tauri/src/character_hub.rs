@@ -24,6 +24,7 @@ use codex::rules_core::character_input::{
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
+use codex::rules_core::feat_effects;
 use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt, HeadlessReceiptStatus,
@@ -1612,12 +1613,20 @@ fn load_character_durability_at_root(root: &Path) -> Result<CharacterDurabilityD
     let constitution_score = effective_scores.constitution;
     let constitution_modifier = ability_modifier(constitution_score);
 
-    let max_hp = compute_max_hp(&envelope.character_input.chosen.class_levels, constitution_modifier)
-        .ok_or_else(|| {
-            "durability is only computed for a single-class Fighter, Wizard, or Rogue build \
-             today; this character's class levels are not one of those"
-                .to_owned()
-        })?;
+    let base_max_hp =
+        compute_max_hp(&envelope.character_input.chosen.class_levels, constitution_modifier)
+            .ok_or_else(|| {
+                "durability is only computed for a single-class Fighter, Wizard, or Rogue build \
+                 today; this character's class levels are not one of those"
+                    .to_owned()
+            })?;
+    // v0.6 alpha swarm item 17 (feat-effects engine): a grounded feat's real
+    // hit-point bonus (currently just Toughness's flat +3) is added on top
+    // of the class/Constitution-derived base, not folded into
+    // compute_max_hp itself -- feat effects are a per-character add-on, not
+    // part of the class hit-die table durability.rs owns.
+    let max_hp = base_max_hp
+        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats);
 
     let path = root.join(HP_FILE_NAME);
     let stored: StoredHp = if path.exists() {
@@ -3304,6 +3313,29 @@ mod tests {
         assert_eq!(durability.current_hp, 12);
         assert_eq!(durability.nonlethal_damage, 0);
         assert_eq!(durability.status, "Normal");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm item 17: the feat-effects engine's first real,
+    /// wired case. A Fighter with Toughness selected must show the correct
+    /// 15 HP (12 base + Toughness's real +3), not the pre-fix 12 QA found
+    /// (zero explanations mentioning the feat at all).
+    #[test]
+    fn load_character_durability_at_root_includes_toughnesss_real_plus_three_hp() {
+        let root = tempdir("hp-toughness");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.selected_feats.push("Toughness".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let durability =
+            load_character_durability_at_root(&root).expect("loading durability should not error");
+
+        assert_eq!(durability.max_hp, 15, "12 base + Toughness's real flat +3 = 15");
+        assert_eq!(
+            durability.current_hp, 15,
+            "current HP must default to the feat-inclusive max, not the pre-feat base"
+        );
 
         std::fs::remove_dir_all(&root).ok();
     }
