@@ -5019,6 +5019,14 @@ const DWARF_BASE_SPEED_FEET: i16 = 20;
 const DWARF_DARKVISION_FEET: i16 = 60;
 const DWARF_CON_ADJUSTMENT: i16 = 2;
 const DWARF_CHA_ADJUSTMENT: i16 = -2;
+/// v0.6 alpha swarm (QA-found systemic parity gap, same shape as Elf's
+/// missing +2 Intelligence): verified against the real PCGen corpus,
+/// `core_essentials/races/dwarf/dwarf_abilities_race.lst:18`'s "Dwarf
+/// Racial Default" ability-score row (not an alternate) --
+/// `BONUS:STAT|CON,WIS|2|TYPE=Racial`, `BONUS:STAT|CHA|-2|TYPE=Racial`: +2
+/// Constitution, +2 Wisdom, -2 Charisma. This engine only grounded CON/CHA;
+/// Wisdom was missing entirely, not even flagged as an alternate.
+const DWARF_WIS_ADJUSTMENT: i16 = 2;
 /// PF1 Core Rulebook Dwarf Stonecunning flat Perception situational-bonus
 /// magnitude (verified against `dwarf_abilities_race.lst:27`'s
 /// `BONUS:SITUATION|Perception=to notice unusual stonework|2|TYPE=Racial`
@@ -5104,12 +5112,14 @@ fn explain_dwarf_race_seam(
         value: 0,
         detail: format!(
             "Dwarf racial trait bundle — ability modifiers: PF1 Core Dwarf grants a fixed \
-             {DWARF_CON_ADJUSTMENT:+} Constitution and {DWARF_CHA_ADJUSTMENT:+} Charisma racial \
-             adjustment (cr_races.lst race:dwarf STAT:CON|{DWARF_CON_ADJUSTMENT:+}, \
-             STAT:CHA|{DWARF_CHA_ADJUSTMENT:+}). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
-             Charisma scores are understood to already reflect it, so this record performs no \
-             arithmetic and carries no fabricated mechanical value (+0)"
+             {DWARF_CON_ADJUSTMENT:+} Constitution, {DWARF_WIS_ADJUSTMENT:+} Wisdom, and \
+             {DWARF_CHA_ADJUSTMENT:+} Charisma racial adjustment (verified against the real \
+             PCGen corpus: core_essentials/races/dwarf/dwarf_abilities_race.lst's \"Dwarf \
+             Racial Default\" ability-score row — BONUS:STAT|CON,WIS|2|TYPE=Racial, \
+             BONUS:STAT|CHA|-2|TYPE=Racial). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution, Wisdom, \
+             and Charisma scores are understood to already reflect it, so this record performs \
+             no arithmetic and carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -5559,6 +5569,15 @@ const GNOME_SIZE_CATEGORY: &str = "Small";
 const GNOME_BASE_SPEED_FEET: i16 = 20;
 const GNOME_CON_ADJUSTMENT: i16 = 2;
 const GNOME_STR_ADJUSTMENT: i16 = -2;
+/// v0.6 alpha swarm (QA-found systemic parity gap, same shape as Elf's
+/// missing +2 Intelligence): verified against the real PCGen corpus,
+/// `core_essentials/races/gnome/gnome_abilities_race.lst:18`'s "Gnome
+/// Racial Default" ability-score row (not an alternate) --
+/// `BONUS:STAT|CON,CHA|2|TYPE=Racial`, `BONUS:STAT|STR|-2|TYPE=Racial`: +2
+/// Constitution, +2 Charisma, -2 Strength. This engine only grounded
+/// CON/STR; Charisma was missing entirely, not even flagged as an
+/// alternate.
+const GNOME_CHA_ADJUSTMENT: i16 = 2;
 
 /// SD13-E2/SD18 Gnome racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf pattern for the third non-Human core race).
@@ -5602,12 +5621,14 @@ fn explain_gnome_race_seam(
         value: 0,
         detail: format!(
             "Gnome racial trait bundle — ability modifiers: PF1 Core Gnome grants a fixed \
-             {GNOME_CON_ADJUSTMENT:+} Constitution and {GNOME_STR_ADJUSTMENT:+} Strength racial \
-             adjustment (cr_races.lst race:gnome STAT:CON|{GNOME_CON_ADJUSTMENT:+}, \
-             STAT:STR|{GNOME_STR_ADJUSTMENT:+}). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
-             Strength scores are understood to already reflect it, so this record performs no \
-             arithmetic and carries no fabricated mechanical value (+0)"
+             {GNOME_CON_ADJUSTMENT:+} Constitution, {GNOME_CHA_ADJUSTMENT:+} Charisma, and \
+             {GNOME_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the real \
+             PCGen corpus: core_essentials/races/gnome/gnome_abilities_race.lst's \"Gnome \
+             Racial Default\" ability-score row — BONUS:STAT|CON,CHA|2|TYPE=Racial, \
+             BONUS:STAT|STR|-2|TYPE=Racial). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution, \
+             Charisma, and Strength scores are understood to already reflect it, so this record \
+             performs no arithmetic and carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -5618,9 +5639,11 @@ fn explain_gnome_race_seam(
         detail: format!(
             "Gnome racial trait bundle — size: PF1 Core Gnome is {GNOME_SIZE_CATEGORY} size \
              (cr_races.lst race:gnome SIZE:SMALL). This is a bounded recognition record naming \
-             the Gnome size category on the deterministic pilot seam; it contributes no numeric \
-             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
-             value, so it carries no fabricated mechanical value (+0)"
+             the Gnome size category on the deterministic pilot seam; it grounds no numeric \
+             effect (real PF1 Small size grants +1 AC, +1 attack rolls, -1 CMB/CMD, and +4 \
+             Stealth, but no size-modifier term exists anywhere in this engine's combat \
+             baseline for any race yet, so none of that is applied here either), so it carries \
+             no fabricated mechanical value (+0)"
         ),
     });
 
@@ -6042,6 +6065,14 @@ const HALFLING_SIZE_CATEGORY: &str = "Small";
 const HALFLING_BASE_SPEED_FEET: i16 = 20;
 const HALFLING_DEX_ADJUSTMENT: i16 = 2;
 const HALFLING_STR_ADJUSTMENT: i16 = -2;
+/// v0.6 alpha swarm (QA-found systemic parity gap, same shape as Elf's
+/// missing +2 Intelligence): verified against the real PCGen corpus,
+/// `core_essentials/races/halfling/halfling_abilities_race.lst:18`'s
+/// "Halfling Racial Default" ability-score row (not an alternate) --
+/// `BONUS:STAT|DEX,CHA|2|TYPE=Racial`, `BONUS:STAT|STR|-2|TYPE=Racial`: +2
+/// Dexterity, +2 Charisma, -2 Strength. This engine only grounded DEX/STR;
+/// Charisma was missing entirely, not even flagged as an alternate.
+const HALFLING_CHA_ADJUSTMENT: i16 = 2;
 const HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS: i16 = 2;
 const HALFLING_LUCK_ALL_SAVES_BONUS: i16 = 1;
 
@@ -6092,13 +6123,15 @@ fn explain_halfling_race_seam(
         value: 0,
         detail: format!(
             "Halfling racial trait bundle — ability modifiers: PF1 Core Halfling grants a \
-             fixed {HALFLING_DEX_ADJUSTMENT:+} Dexterity and {HALFLING_STR_ADJUSTMENT:+} \
-             Strength racial adjustment (cr_races.lst race:halfling \
-             STAT:DEX|{HALFLING_DEX_ADJUSTMENT:+}, STAT:STR|{HALFLING_STR_ADJUSTMENT:+}). This \
-             is a bounded recognition record naming the fixed adjustment on the deterministic \
-             pilot seam; the chosen Dexterity and Strength scores are understood to already \
-             reflect it, so this record performs no arithmetic and carries no fabricated \
-             mechanical value (+0)"
+             fixed {HALFLING_DEX_ADJUSTMENT:+} Dexterity, {HALFLING_CHA_ADJUSTMENT:+} Charisma, \
+             and {HALFLING_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the \
+             real PCGen corpus: \
+             core_essentials/races/halfling/halfling_abilities_race.lst's \"Halfling Racial \
+             Default\" ability-score row — BONUS:STAT|DEX,CHA|2|TYPE=Racial, \
+             BONUS:STAT|STR|-2|TYPE=Racial). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Dexterity, Charisma, \
+             and Strength scores are understood to already reflect it, so this record performs \
+             no arithmetic and carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -6110,9 +6143,10 @@ fn explain_halfling_race_seam(
             "Halfling racial trait bundle — size: PF1 Core Halfling is \
              {HALFLING_SIZE_CATEGORY} size (cr_races.lst race:halfling SIZE:SMALL). This is a \
              bounded recognition record naming the Halfling size category on the deterministic \
-             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
-             ability checks, or any other computed value, so it carries no fabricated \
-             mechanical value (+0)"
+             pilot seam; it grounds no numeric effect (real PF1 Small size grants +1 AC, +1 \
+             attack rolls, -1 CMB/CMD, and +4 Stealth, but no size-modifier term exists anywhere \
+             in this engine's combat baseline for any race yet, so none of that is applied here \
+             either), so it carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -18745,23 +18779,51 @@ mod selected_skill_class_skill_bonus_tests {
     }
 }
 
-/// v0.6 alpha swarm: QA found `explain_elf_race_seam`'s own recognition
-/// record text was wrong -- it called +2 Intelligence "the alternate PF1
-/// +2 Intelligence Elf variant... out of scope", but per the real PCGen
-/// corpus (`core_essentials/races/elf/elf_abilities_race.lst`'s "Elf
-/// Racial Default" ability-score row), +2 Intelligence is the CRB-standard
-/// default alongside +2 Dexterity and -2 Constitution, not an alternate.
+/// v0.6 alpha swarm: QA found this was a systemic gap, not an Elf-only
+/// oversight -- 4 of the game's core races (Elf, Dwarf, Gnome, Halfling)
+/// each have a real PF1 3-stat racial ability adjustment (2 up, 1 down),
+/// but this engine's race-seam functions only ever grounded 2 of the 3 for
+/// each of them, apparently built from a "2-stat template" that never
+/// accounted for the third. Elf was missing +2 Intelligence (its own
+/// explanation text even mislabeled it "the alternate... variant... out of
+/// scope", which was wrong per the real corpus); Dwarf was missing +2
+/// Wisdom; Gnome was missing +2 Charisma; Halfling was missing +2
+/// Charisma. Half-Elf/Half-Orc (floating +2, no fixed 3-stat set) and
+/// Human (no racial ability adjustment at all) are unaffected -- verified
+/// against the real PCGen corpus, not memory, before writing each
+/// constant (see each race's own doc comment above for its specific
+/// citation). Also folds in a related but separate finding: Gnome's and
+/// Halfling's size-recognition record text claimed Small size "contributes
+/// no numeric effect to attack rolls, AC, skill checks..." -- true in this
+/// codebase today only because no size-modifier term exists anywhere in
+/// the combat baseline for ANY race yet, not because PF1 Small size has no
+/// real effect (it does: +1 AC, +1 attack, -1 CMB/CMD, +4 Stealth). Text
+/// corrected to state the real rule and explain why it isn't applied,
+/// rather than falsely implying Small size has no mechanical weight in
+/// PF1 itself. Not wiring size into AC/attack now -- that's real future
+/// scope overlapping the already-dropped AC/attack-bonus architecture
+/// item.
+///
 /// Inline here for the same reason as this file's other inline test
-/// modules (`tests/**` is QA's owned surface for this swarm); mirrors
-/// `tests/sd13_elf_race_semantics_recognition.rs`'s own substring-based
-/// assertion style exactly, reusing its ELF_FIXTURE.
+/// modules (`tests/**` is QA's owned surface for this swarm); mirrors each
+/// race's own `tests/sd13_*_race_semantics*.rs` substring-based assertion
+/// style exactly, reusing their fixtures.
 #[cfg(test)]
-mod elf_intelligence_adjustment_tests {
+mod race_ability_modifier_parity_tests {
     use super::compute_pilot_base_chassis;
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
     const ELF_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_elf_fighter_level1_sd13_deterministic_input.txt"
+    );
+    const DWARF_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_dwarf_fighter_level1_sd13_deterministic_input.txt"
+    );
+    const GNOME_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_gnome_fighter_level1_sd13_race_semantics_recognition_input.txt"
+    );
+    const HALFLING_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_halfling_fighter_level1_sd13_deterministic_input.txt"
     );
 
     fn load(fixture: &str) -> CharacterInput {
@@ -18776,16 +18838,23 @@ mod elf_intelligence_adjustment_tests {
             .expect("valid fixture should produce a character input record")
     }
 
+    fn ability_modifiers_record<'a>(
+        computation: &'a super::PilotBaseChassisComputation,
+        id: &str,
+    ) -> &'a super::ComputationExplanation {
+        computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation {id} to be grounded: {computation:?}"))
+    }
+
     #[test]
     fn elf_ability_modifiers_record_now_names_the_intelligence_adjustment_too() {
         let input = load(ELF_FIXTURE);
         let computation = compute_pilot_base_chassis(&input);
 
-        let ability = computation
-            .explanations
-            .iter()
-            .find(|e| e.id == "race.elf.trait_bundle.ability_modifiers")
-            .expect("Elf input should ground the ability-modifiers recognition record");
+        let ability = ability_modifiers_record(&computation, "race.elf.trait_bundle.ability_modifiers");
 
         assert!(
             ability.detail.contains("+2") && ability.detail.contains("Intelligence"),
@@ -18797,8 +18866,85 @@ mod elf_intelligence_adjustment_tests {
             "the stale \"out of scope\"/\"alternate variant\" framing must be gone: {}",
             ability.detail
         );
-        // Still a bounded recognition record: no arithmetic performed, no
-        // fabricated mechanical value.
+        assert_eq!(ability.value, 0, "still a bounded recognition record, no arithmetic performed");
+    }
+
+    #[test]
+    fn dwarf_ability_modifiers_record_now_names_the_wisdom_adjustment_too() {
+        let input = load(DWARF_FIXTURE);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let ability = ability_modifiers_record(&computation, "race.dwarf.trait_bundle.ability_modifiers");
+
+        assert!(
+            ability.detail.contains("+2") && ability.detail.contains("Wisdom"),
+            "Dwarf ability modifiers record must now name the +2 Wisdom adjustment: {}",
+            ability.detail
+        );
         assert_eq!(ability.value, 0);
+    }
+
+    #[test]
+    fn gnome_ability_modifiers_record_now_names_the_charisma_adjustment_too() {
+        let input = load(GNOME_FIXTURE);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let ability = ability_modifiers_record(&computation, "race.gnome.trait_bundle.ability_modifiers");
+
+        assert!(
+            ability.detail.contains("+2") && ability.detail.contains("Charisma"),
+            "Gnome ability modifiers record must now name the +2 Charisma adjustment: {}",
+            ability.detail
+        );
+        assert_eq!(ability.value, 0);
+    }
+
+    #[test]
+    fn halfling_ability_modifiers_record_now_names_the_charisma_adjustment_too() {
+        let input = load(HALFLING_FIXTURE);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let ability =
+            ability_modifiers_record(&computation, "race.halfling.trait_bundle.ability_modifiers");
+
+        assert!(
+            ability.detail.contains("+2") && ability.detail.contains("Charisma"),
+            "Halfling ability modifiers record must now name the +2 Charisma adjustment: {}",
+            ability.detail
+        );
+        assert_eq!(ability.value, 0);
+    }
+
+    #[test]
+    fn gnome_and_halfling_size_records_no_longer_falsely_imply_small_size_has_no_real_pf1_effect() {
+        let gnome_size = ability_modifiers_record(
+            &compute_pilot_base_chassis(&load(GNOME_FIXTURE)),
+            "race.gnome.trait_bundle.size",
+        )
+        .detail
+        .clone();
+        let halfling_size = ability_modifiers_record(
+            &compute_pilot_base_chassis(&load(HALFLING_FIXTURE)),
+            "race.halfling.trait_bundle.size",
+        )
+        .detail
+        .clone();
+
+        for detail in [&gnome_size, &halfling_size] {
+            assert!(
+                detail.contains("Small"),
+                "size record must still name the Small size category: {detail}"
+            );
+            assert!(
+                !detail.contains("contributes no numeric effect"),
+                "the false blanket claim that Small size has no numeric effect in PF1 must be \
+                 gone: {detail}"
+            );
+            assert!(
+                detail.contains("+1 AC") && detail.contains("Stealth"),
+                "the real PF1 Small-size effect must be named, even though it isn't applied by \
+                 this engine yet: {detail}"
+            );
+        }
     }
 }
