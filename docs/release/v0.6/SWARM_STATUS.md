@@ -863,6 +863,16 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   state) to prove the class-level bump, both choice entries, and all
   three skill allocations landed together in one mutation. 6th clean
   independent verification today. Moving to Bio persistence next.
+- QA's sweep continued: independently verified `0ab784df` (bio field
+  persistence) -- confirmed the "requires existing character" claim
+  traces to a real `SavedCharacterStore::load` check (not the naive
+  `root.exists()` the commit deliberately avoided), read the overwrite
+  test directly (second save's value alone survives reload, no merge),
+  confirmed the disclosed default-when-absent asymmetry in source, and
+  correctly cross-attributed the stale-test side-fix to the earlier
+  Rogue BAB/save widening rather than treating it as unexplained. 7th
+  clean independent verification today (Feats+Bio+LevelUp persistence
+  all now independently confirmed). Continuing down the unverified list.
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
