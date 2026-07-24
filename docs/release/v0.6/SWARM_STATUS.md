@@ -17,12 +17,12 @@ if known). This replaces the looser free-text "Happening now" prose below
 where the two overlap -- (a) still carries the narrative detail, this
 block is the at-a-glance state.
 
-## Agent Status (2026-07-24, ~06:40 ET -- resumed after operator pause)
+## Agent Status (2026-07-24, ~10:55 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | starting item 7 (starting-wealth-by-class), then item 17 (feat-effects engine, Toughness slice), then item 1 (architecture-wall scoping) |
-| frontend | idle | comprehensive smoke test was interrupted by a session quota limit (resets 9:10am ET) before the operator's pause; queue re-set on resume |
-| qa | idle | was holding per the pre-pause instruction; queue re-set on resume |
+| backend | working | item 7 (starting-wealth-by-class) landed (0dbf67ad), now on item 17 (feat-effects engine, Toughness slice); item 1 (architecture-wall scoping) queued third |
+| frontend | working | back from the quota reset, mid-edit on ItemPickerModal.tsx (task not yet reported) |
+| qa | waiting-on-backend | dispatched to verify item 7 once seen; will hold for item 17 next |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
