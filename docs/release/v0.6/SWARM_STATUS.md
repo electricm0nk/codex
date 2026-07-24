@@ -20,8 +20,10 @@ frontend              Sonnet   equipment-picker wiring against
 backend               Sonnet   fixing the class-skill-modifier bug; render-
                                 staleness REOPENED and queued next (real
                                 root cause + a trap to avoid, see Happened)
-qa                    Sonnet   adopting purchase_equipment catalogue
-                                coverage; bug-pattern sweep came back clean
+qa                    Sonnet   purchase_equipment catalogue coverage DONE
+                                (7b38a674); continuing the bug-pattern sweep
+                                via static read only, staying out of
+                                backend's in-flight pilot_compute.rs
 
 (b) Happened
 ------------
