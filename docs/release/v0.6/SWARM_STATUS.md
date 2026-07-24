@@ -1171,12 +1171,12 @@ prior refresh, itself already superseded by everything since)
 - risks-and-open-questions.md items 6, 9, 9a corrected from stale
   "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
-## Agent Status (2026-07-24, ~14:55 ET)
+## Agent Status (2026-07-24, ~15:00 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | null-serialization fix landed (874df6db); item 18 mis-dispatch corrected pre-work; independently caught the same contradiction and correctly held for confirmation before touching code; redirected to a closure-readiness health pass, report pending |
-| frontend | working | item-25 test-coverage self-audit in flight (an untracked `addFeatSelection.test.ts` has appeared, consistent with this), report pending |
-| qa | idle | both dispatched items closed: feat-effects widening re-verified clean (item 17 fully closed); null-serialization fix verified at the wire/test level (204/204) — live-UI leg hit a recurring environment blocker (libEGL/DRI3, now logged as item 29) and the 0-weapon case turned out structurally unreachable live anyway (no unequip affordance exists, logged as new item 28) |
+| backend | idle | null-serialization fix landed (874df6db); item 18 mis-dispatch corrected pre-work; redirected to a closure-readiness health pass, report pending |
+| frontend | idle | item-25 self-audit complete and pushed (0c602c72) — 8 files closed, 77/77 tests (up from 69), typecheck clean; lead-verified independently (reran suite + typecheck, sampled 2 new test files for real assertions); item 25 now fully closed, not partial |
+| qa | idle | feat-effects widening re-verified clean (item 17 closed); null-serialization fix verified at wire/test level (204/204), live-UI leg environment-blocked (item 29) and the 0-weapon case structurally unreachable live anyway (item 28); next queued to sample-review frontend's item-25 audit |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

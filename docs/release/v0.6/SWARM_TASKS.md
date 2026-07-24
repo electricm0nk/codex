@@ -54,6 +54,7 @@
 | LevelUpDialog feat-pick at feat-gaining levels (was silently absent) | UI | CRB | done | ddfc66bb |
 | PCGen parity comparator: new combat.base_attack_bonus dimension | Backend | CRB | done | cda3bf1c + b8eff433 |
 | Frontend test-coverage backlog (skillsModel, characterBio, spell-routing extraction, abilityScoreMethods, portraitImageProcessing) | UI | - | done | f905d656 |
+| Item 25 follow-up: test-coverage self-audit of every boundary/*.ts file this swarm touched | UI | - | done | 0c602c72, lead-verified 77/77 + typecheck clean; 8 files closed (addFeatSelection/listFeats/loadCreateCharacter/loadSavedCharacterDetail/purchaseEquipment/recordAndPrepareSpellSelection/characterDurability/characterMoney) |
 | Load-Character list stale cached row after a sheet mutation | UI | - | done | 2b13a23c |
 | ItemPickerModal duplicate-catalog-key React reconciliation bug | UI | - | done | e50d7762 |
 | Comprehensive live-UI smoke test across all 3 working classes | UI | - | done | e50d7762 (fix landed as part of this pass) |
