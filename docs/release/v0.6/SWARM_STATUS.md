@@ -117,12 +117,27 @@ alongside the existing Agent Status convention.
   typecheck clean, no new test file (pure data-refresh wiring, no new
   pure logic). Frontend's queue is clear again.
 
-## Agent Status (2026-07-24, ~13:42 ET)
+- **"Outside demo corpus" indicator landed (frontend, `5406e335`).** New
+  `UnresolvedNotice` component rendered in both SpellsTab and GearTab
+  whenever backend's new `unresolvedSpellIds`/`unresolvedEquipmentItemIds`
+  is non-empty -- minimal by design, just count + raw ids, no fabricated
+  detail. Live-verified against the exact character from frontend's
+  original smoke-test finding ("Smoke Wizard Elf"): Spells tab now reads
+  "3 spells not shown (outside demo corpus)" instead of the misleading
+  "No corpus-reachable spells selected yet," confirming backend's
+  root-cause call was right all along -- never a Wizard/race issue.
+  **Real gap flagged, not assumed covered**: shape (c)'s `equipmentEffects`
+  field (AC/ACP) is also on the wire now but isn't wired into the frontend
+  TS type at all yet -- frontend correctly didn't assume it was out of
+  scope for this task and flagged it explicitly rather than silently
+  leaving it uncovered. 69/69 suite green, typecheck clean.
+
+## Agent Status (2026-07-24, ~13:50 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | dispatched to widen the feat-effects engine to a few more real, mechanically-simple feats (e.g. Skill Focus), same bounded discipline as Toughness |
-| frontend | working | rendering the honest "not shown -- outside demo corpus" indicator |
-| qa | idle | Defense-tab fix verified clean (both call sites, correct gating, honest failure fallback); standing by |
+| backend | working | widening the feat-effects engine to 3 more real feats (Great Fortitude/Iron Will/Lightning Reflexes), full-workspace safety net running before commit |
+| frontend | idle | "outside demo corpus" indicator landed and live-verified; flagged shape (c)'s equipmentEffects as unwired on the frontend, queue clear |
+| qa | idle | standing by for either backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
