@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | operator decided items 1/18/27 (see UPDATE below); dispatched item 18 (Wizard non-Human spell-math widening) plus a scoping/sequencing plan for items 1+27 |
-| frontend | idle | queue clear; next real work follows once item 18 lands or the items 1/27 scoping plan surfaces UI follow-ups |
-| qa | idle | queue clear; standing by for item 18's landing to verify |
+| backend | working | item 18 landed and lead-verified (7c2d2ad2); now on the items 1+27 scoping/sequencing plan |
+| frontend | idle | queue clear; next real work follows once the items 1/27 scoping plan surfaces UI follow-ups |
+| qa | working | independently verifying item 18 (7c2d2ad2) |
 
 ---
 
