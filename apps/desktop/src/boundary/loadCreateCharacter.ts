@@ -85,6 +85,31 @@ export interface ResolvedEquipmentDto {
 }
 
 /**
+ * Real, corpus-resolved aggregate equipment-effect totals for the
+ * character's currently `EquippedActive` items (v0.6 alpha swarm item 1,
+ * shape (c)). Explicitly NOT claim-gated — reflects whatever gear is
+ * actually equipped regardless of whether the build reaches `Computed`.
+ *
+ * `armorClassDelta`/`armorCheckPenaltyTotal` are always real numbers,
+ * including a real `0` when nothing equipped grants either (not an
+ * "absent" case — sum of nothing is a real sum). `maxDexCap`/
+ * `spellFailureChance`/`attackBonusDelta` are genuinely absent
+ * (`undefined` on the wire) rather than zero when no equipped item sets
+ * them — `attackBonusDelta` specifically is also absent whenever zero or
+ * two-or-more weapons are equipped (which weapon a modifier attaches to is
+ * ambiguous with more than one; see `character_hub.rs`'s own doc comment) —
+ * a real `0` there means exactly one weapon equipped with no enhancement,
+ * and must render as "+0", not be treated the same as absent.
+ */
+export interface EquipmentEffectsDto {
+  armorClassDelta: number;
+  armorCheckPenaltyTotal: number;
+  maxDexCap?: number;
+  spellFailureChance?: number;
+  attackBonusDelta?: number;
+}
+
+/**
  * Corpus-derived spell/equipment reachability from `compute_pilot_with_corpus`,
  * resolved against a small bundled corpus-fixture set (see
  * `src-tauri/src/corpus_fixtures.rs`) — not the full PCGen corpus.
@@ -92,6 +117,7 @@ export interface ResolvedEquipmentDto {
 export interface CorpusDerivedDto {
   schoolCoverage: SchoolCoverageDto[];
   equippedItems: ResolvedEquipmentDto[];
+  equipmentEffects: EquipmentEffectsDto;
   /**
    * Every `spellId`/`itemId` the character actually has selected and
    * persisted that did NOT resolve against this build's tiny bundled demo

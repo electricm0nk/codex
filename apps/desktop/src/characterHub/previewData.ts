@@ -74,6 +74,7 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
           grounded: false,
         },
       ],
+      equipmentEffects: { armorClassDelta: 4, armorCheckPenaltyTotal: -2, maxDexCap: 4, attackBonusDelta: 0 },
       unresolvedSpellIds: [],
       unresolvedEquipmentItemIds: [],
     },

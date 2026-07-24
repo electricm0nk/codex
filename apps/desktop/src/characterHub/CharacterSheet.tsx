@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
-import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
+import type { AbilityScoresDto, CorpusDerivedDto, EquipmentEffectsDto } from '../boundary/loadCreateCharacter';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { addSpellSelection } from '../boundary/addSpellSelection';
@@ -834,22 +834,56 @@ function DurabilityPanel(props: {
 }
 
 /**
- * Real, bounded: HP/durability tracking (above) is real for a supported
- * build. The only other Defense stat with a backend computation to show
- * is the flat Damage Reduction magnitude (`PilotSnapshotDto.damageReduction`,
+ * Real, corpus-resolved equipment-effect totals (v0.6 alpha swarm item 1,
+ * shape (c)) — not claim-gated, reflects whatever gear is actually
+ * equipped regardless of whether the build reaches `Computed`.
+ * `armorClassDelta`/`armorCheckPenaltyTotal` are always real (a real `0`
+ * when nothing equipped grants either, not "absent"). `maxDexCap`/
+ * `spellFailureChance`/`attackBonusDelta` only render when genuinely
+ * present — most builds today only produce non-trivial values from the
+ * fixed starting loadout, and a missing tile here is the honest state for
+ * everything else, not a bug.
+ */
+function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined }) {
+  if (!props.effects) {
+    return null;
+  }
+  const { armorClassDelta, armorCheckPenaltyTotal, maxDexCap, spellFailureChance, attackBonusDelta } = props.effects;
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        Equipment Effects
+      </p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <StatTile label="AC Bonus" value={fmt(armorClassDelta)} />
+        <StatTile label="Armor Check Penalty" value={fmt(armorCheckPenaltyTotal)} />
+        {maxDexCap !== undefined ? <StatTile label="Max Dex" value={maxDexCap} /> : null}
+        {spellFailureChance !== undefined ? <StatTile label="Spell Failure" value={`${spellFailureChance}%`} /> : null}
+        {attackBonusDelta !== undefined ? <StatTile label="Attack Bonus" value={fmt(attackBonusDelta)} /> : null}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Real, bounded: HP/durability tracking and equipment effects (above) are
+ * real for whatever this build actually has equipped. The only other
+ * Defense stat with a backend computation to show is the flat Damage
+ * Reduction magnitude (`PilotSnapshotDto.damageReduction`,
  * `character_hub.rs`) — currently only ever grounded for Barbarian, which
  * isn't a chassis-supported class through this UI yet, so `undefined` here
  * is the expected, honest state for every character reachable today, not a
- * bug. AC breakdown by source, save modifiers by source, etc. have no
- * equivalent backend computation, so that part of the tab stays an honest
- * placeholder rather than a fabricated layout for uncomputed data. Note:
- * the "Recompute" menu action doesn't currently refresh `damageReduction`
- * (`RecomputedCharacterSnapshotDto` doesn't carry it), so it always
- * reflects the originally loaded snapshot — a real, narrow, pre-existing
- * gap, not something this change papers over.
+ * bug. AC breakdown *by source* (which item contributed what) and save
+ * modifiers by source have no equivalent backend computation, so that part
+ * of the tab stays an honest placeholder rather than a fabricated layout
+ * for uncomputed data. Note: the "Recompute" menu action doesn't currently
+ * refresh `damageReduction` (`RecomputedCharacterSnapshotDto` doesn't carry
+ * it), so it always reflects the originally loaded snapshot — a real,
+ * narrow, pre-existing gap, not something this change papers over.
  */
 function DefenseTab(props: {
   damageReduction: number | undefined;
+  equipmentEffects: EquipmentEffectsDto | undefined;
   durability: CharacterDurabilityDto | null;
   durabilityBusy: boolean;
   durabilityError: string | null;
@@ -863,6 +897,7 @@ function DefenseTab(props: {
         error={props.durabilityError}
         onAdjust={props.onAdjustHp}
       />
+      <EquipmentEffectsPanel effects={props.equipmentEffects} />
       {props.damageReduction !== undefined ? (
         <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
           <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
@@ -1931,6 +1966,7 @@ export function CharacterSheet(props: {
               ) : tab === 'Defense' ? (
                 <DefenseTab
                   damageReduction={snapshot?.damageReduction}
+                  equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
                   durability={durability}
                   durabilityBusy={durabilityBusy}
                   durabilityError={durabilityError}

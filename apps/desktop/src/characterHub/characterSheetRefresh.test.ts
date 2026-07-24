@@ -32,7 +32,13 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
       kind: 'Saved',
       summary,
       snapshot: SNAPSHOT,
-      corpusDerived: { schoolCoverage: [], equippedItems: [], unresolvedSpellIds: [], unresolvedEquipmentItemIds: [] },
+      corpusDerived: {
+        schoolCoverage: [],
+        equippedItems: [],
+        equipmentEffects: { armorClassDelta: 0, armorCheckPenaltyTotal: 0 },
+        unresolvedSpellIds: [],
+        unresolvedEquipmentItemIds: [],
+      },
     },
     ['feat:power_attack'],
     [{ spellId: 'Light', sourceClassId: 'class:wizard', acquisitionMode: 'Known' }]
