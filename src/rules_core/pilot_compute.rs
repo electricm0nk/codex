@@ -18334,7 +18334,17 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     // asked to satisfy a choice mechanism it can never have -- Weapon Focus itself
     // is still required for every class via the unconditional `selected_feats`
     // check immediately above.
-    if supported_fighter_level(input).is_some() {
+    //
+    // v0.6 alpha swarm (systematic sweep after finding the same brittleness twice
+    // in `validate_fighter_feat_choice_legality`): this used `supported_fighter_level`
+    // (single-class-only), so it was also blind to a Fighter+X multiclass mix with
+    // a wrong bonus-feat choice -- confirmed empirically (this function's own
+    // `unmet` list came back empty for that exact scenario) before fixing. Not
+    // currently exploitable at the system level (`validate_fighter_feat_choice_legality`,
+    // already fixed for multiclass, independently claim-blocks the same
+    // `FIGHTER_BONUS_FEAT_CHOICE_ID` slot), but fixing anyway for correctness and
+    // so the two checks don't silently diverge if either is ever touched again.
+    if fighter_level_in_mix(input).is_some() {
         let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
         if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
             unmet.push(format!(
@@ -19123,6 +19133,72 @@ mod fighter_feat_choice_legality_multiclass_tests {
                 .any(|d| d.id.starts_with("feat_choice.non_canonical") && d.claim_blocking),
             "the canonical selection must never be claim-blocked in a multiclass mix: {:?}",
             computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm: found via a systematic sweep for the same brittleness
+/// (single-class-only level lookup in a "_legality"/"_conditions" gate
+/// function, where a multiclass-aware equivalent already exists elsewhere)
+/// after finding it twice in `validate_fighter_feat_choice_legality`.
+/// `unmet_combat_posture_conditions`'s own Fighter bonus-feat sub-check had
+/// the identical blind spot. Confirmed this function's own `unmet` list
+/// came back empty for a multiclass scenario with a wrong bonus-feat
+/// choice before fixing -- not currently exploitable at the system level
+/// (the other, already-fixed function independently catches the same
+/// slot), but a real inconsistency worth closing so the two checks can't
+/// silently diverge later.
+#[cfg(test)]
+mod combat_posture_multiclass_tests {
+    use super::{unmet_combat_posture_conditions, CharacterClassLevel, FIGHTER_CLASS_ID, ROGUE_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    #[test]
+    fn multiclass_wrong_bonus_feat_is_now_named_in_this_functions_own_unmet_list() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 3 },
+        ];
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:fighter_bonus_feat");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:fighter_bonus_feat".to_owned(),
+            selection_id: "feat:cleave".to_owned(),
+        });
+
+        let unmet = unmet_combat_posture_conditions(&input);
+
+        assert!(
+            unmet.iter().any(|reason| reason.contains("choice:fighter_bonus_feat")),
+            "this function's own unmet list must now name the wrong multiclass bonus-feat \
+             choice, matching its already-correct single-class behavior: {unmet:?}"
+        );
+    }
+
+    /// Positive control: the canonical selection in a multiclass mix must
+    /// not be flagged.
+    #[test]
+    fn multiclass_canonical_bonus_feat_is_not_in_the_unmet_list() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 3 },
+        ];
+
+        let unmet = unmet_combat_posture_conditions(&input);
+
+        assert!(
+            !unmet.iter().any(|reason| reason.contains("choice:fighter_bonus_feat")),
+            "the canonical bonus-feat selection must never be flagged, in a multiclass mix: \
+             {unmet:?}"
         );
     }
 }
