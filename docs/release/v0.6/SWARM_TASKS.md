@@ -66,7 +66,7 @@
 | Item 1 attack-bonus, bounded single-weapon slice (no schema change, honest-absent for 0/2+ weapons) | Backend | CRB | done | 845f860c, verified 242/242 lib + 202/202 desktop |
 | Bundled desktop corpus fixture caps corpus_derived — backend half (surface unresolved_spell_ids/unresolved_equipment_item_ids instead of silent drop) | Backend | CRB | done | 647e52aa, verified 245/245 lib + 203/203 desktop |
 | Render an honest "not shown — outside demo corpus" indicator for the new unresolved-selection lists | UI | CRB | done | 5406e335, live-verified against the exact original smoke-test finding |
-| Wire shape (c)'s equipmentEffects (AC/ACP) into the frontend TS type and Defense tab | UI | CRB | queued | field is on the wire (backend, shape (c)/08a829a1) but not yet consumed anywhere on the frontend; flagged by UI 2026-07-24 |
+| Wire shape (c)'s equipmentEffects (AC/ACP) into the frontend TS type and Defense tab | UI | CRB | done | d8528ce2, live-verified against a real Chain-Shirt-equipped Fighter and cross-checked on a Wizard |
 | Defense tab doesn't refetch durability after a feat pick (render-staleness, same shape as corpus_derived bug) | UI | - | done | 7360fe4a, live-verified both feat-grant paths |
 | Spells tab corpusDerived inconsistency for non-Human Wizards (found in smoke test) | Backend | CRB | done | root cause identified -- NOT a Wizard/race issue, see the bundled-corpus-fixture row above; superseded, not itself a separate task |
 | Item 1 attack-bonus enhancement math for 2+ weapons (needs equipment-attachment data-model decision) | Backend | CRB | blocked | the single-weapon case is done (see above); multi-weapon attachment still needs a schema decision, see item 1 in risks-and-open-questions.md |
