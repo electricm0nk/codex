@@ -105,12 +105,24 @@ alongside the existing Agent Status convention.
   omission (small UX fix). Queued for backend once the attack-bonus
   slice lands.
 
-## Agent Status (2026-07-24, ~12:53 ET)
+- **Defense-tab feat-add render-staleness fixed (frontend, `7360fe4a`).**
+  New shared `refreshDurability()` helper called after a successful feat
+  grant on both paths (`handleAddFeat`, `handleLevelUpFeatPick`) -- falls
+  back to `null` on failure, same honest treatment as the initial load,
+  never stale or fabricated. Live-verified both paths on a real character
+  with the Defense tab already open: HP moved live (22/22 -> 25/25 via
+  the Feats-tab picker, then 31 -> mid-transition via the level-up feat
+  pick), no reselect needed. Also re-confirmed the earlier ItemPickerModal
+  compound-key fix is holding up under continued use. 69/69 suite green,
+  typecheck clean, no new test file (pure data-refresh wiring, no new
+  pure logic). Frontend's queue is clear again.
+
+## Agent Status (2026-07-24, ~13:00 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | implementing shape B (honest "not in demo corpus" indicator, backend's own well-reasoned call, agreed) for the bundled-corpus-fixture finding -- substantial progress (character_hub.rs, pilot_compute_corpus.rs, own risks-doc note all growing), not yet landed |
-| frontend | idle | queue clear since the smoke-test report; standing by |
-| qa | idle | standing by for backend's fix to verify |
+| backend | working | implementing shape B (honest "not in demo corpus" indicator) for the bundled-corpus-fixture finding -- substantial progress, not yet landed |
+| frontend | idle | Defense-tab fix landed and live-verified (7360fe4a); queue clear again |
+| qa | idle | standing by for backend's shape-B fix to verify |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
