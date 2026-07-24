@@ -268,18 +268,33 @@ the tables above this one.
 
 ## (c) Four-check wired-integration audit results
 
-**Stub — not yet run.** Per `docs/release/v0.6/risks-and-open-questions.md`,
-the receipt ceremony is waived but the audit itself is not. This section will
-be filled with the raw grep output (per the four checks in the QA teammate
-brief) against `git diff origin/develop...HEAD` immediately before the
-closure PR opens — not before, since the diff is empty/trivial until wave
-work lands.
+### Interim audit checkpoint (2026-07-24)
 
-Checks to run at closure:
-1. Forbidden tokens: `\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b` (case-insensitive), expect no hits outside tests/docs.
-2. No-op handlers: `onClick={()=>{}}` / `onClick={undefined`, expect no hits.
-3. Mock-library leaks outside tests: `mockResolvedValue|mockReturnValue(|vi.mock(|__mocks__`, expect no hits outside test files.
-4. `"Would ..."` strings: `"Would [^"]*"`, expect no hits.
+Run early at the lead's request, since the swarm's remaining distance from
+the alpha bar now looks architecture-bounded rather than "more bugs to
+find" — a good point to surface any wired-integration violation while
+backend/frontend can still fix it live, rather than as a surprise at actual
+closure. Per the operator's ceremony waiver (this doc, top), the receipt
+ceremony is waived but the audit itself is not — this is an *interim*
+checkpoint, not the final one; the closure-time audit (§7.1 of
+`release-swarm.md`) still runs separately against the final combined diff
+before the closure PR opens.
+
+**Method**: extracted every added line (`+` lines only, diff metadata
+excluded) from `git diff origin/develop...origin/tranche/6` (116 files,
+10,576 insertions across the full swarm to date), tagged by source file,
+and ran all four greps by hand against that extraction.
+
+**Result: clean. Zero real violations found.**
+
+1. **Forbidden tokens** (`\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b`, case-insensitive, outside tests/docs): 2 files matched, 5 lines total, all false positives on inspection — `apps/desktop/src-tauri/src/pf1_adapter.rs` has two doc-comment lines explicitly describing a placeholder that was *removed* ("not a synthetic placeholder", "no reason to keep seeding a placeholder now that the real path [exists]"); `apps/desktop/src/characterHub/CharacterSheet.tsx` has a real `placeholder="gp amount"` HTML input attribute (the doctrine's target is stubbed logic, not input hint text), a comment explaining why a duplicate "coming soon" tab was deliberately *removed*, and a comment explicitly documenting a case where fabricating feat options *would* violate the doctrine — i.e. recording that they correctly did **not** stub it, not that they did.
+2. **No-op handlers** (`onClick={()=>{}}` / `onClick={undefined`): 0 real hits. The only match was this document's own checklist line describing the check.
+3. **Mock-library leaks outside tests** (`mockResolvedValue|mockReturnValue(|vi.mock(|__mocks__`): 0 real hits, same self-reference-only result.
+4. **`"Would ..."` strings**: 0 real hits outside this doc's and `risks-and-open-questions.md`'s own descriptions of the check; broadened the search for near-miss phrasing (`Would compute/return/apply/resolve/handle/implement/support/do/be/have`, unquoted) to sanity-check the exact-match regex wasn't too narrow — still zero hits.
+
+Raw grep commands (reproducible): each check run against a Python-extracted
+`file\t<added-line>` table built from the diff, e.g. for check 1:
+`grep -iE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' <extracted> | grep -vE '^(tests/|docs/|.*\.test\.(ts|tsx)|.*_test\.rs)'`.
 
 ## (d) Alpha-bar items 1-3 and 7 confirmation
 
