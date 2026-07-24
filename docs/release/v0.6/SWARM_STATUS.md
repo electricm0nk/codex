@@ -1182,14 +1182,12 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~19:15 ET)
+## Agent Status (2026-07-24, ~19:30 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | pivoted from sub-task 4 to sub-task 6 (frontend's fully-unblocked attach-modifier command) without looping the lead in on the pivot beforehand (self-noted for next time); landed and lead-verified (3a05539a, 4284/4284 + 211/211); found and fixed a real production bug along the way (sub-task 1's persistence writer for `applied_modifiers` never existed, silently dropping attached modifiers on save); available for sub-task 4 next |
-| frontend | idle | cleared to wire the Gear tab against the real `attach_equipment_modifier` command/DTO shape |
+| backend | working | stopped before writing sub-task 4 code -- found the gated functions are hardcoded arithmetic, not corpus-resolved, so a naive gate swap would serve fabricated numbers for newly-accepted loadouts; lead ruled this is a doctrine-mandated implementation detail, not a new operator decision, and approved backend's proposed sequencing (move the AC/attack-bonus arithmetic to real corpus computation first, byte-identical re-check, then skill pillar, then gate swap) |
+| frontend | working | actively wiring the Gear tab against `attach_equipment_modifier` (new `attachEquipmentModifier.ts`/`.test.ts`, in-progress edits to `CharacterSheet.tsx`) |
 | qa | idle | standing by |
-
-**Note**: the mechanical Auto Heartbeat is refreshing again as of this cycle (was stale for over an hour, self-resolved).
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

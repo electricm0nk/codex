@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | sub-task 6's backend half landed and lead-verified (3a05539a, 4284/4284 + 211/211); found a real production bug along the way (missing persistence writer for applied_modifiers, now fixed); available for sub-task 4 next |
-| frontend | idle | cleared to wire the Gear tab against the real command/DTO |
+| backend | working | sub-task 4's scope grew -- gated functions are hardcoded arithmetic, not corpus-resolved; lead-approved sequencing to move the arithmetic to real corpus computation before swapping the gate (risks item 27) |
+| frontend | working | actively wiring the Gear tab against `attach_equipment_modifier` |
 | qa | idle | standing by |
 
 ---
