@@ -197,6 +197,18 @@ pub struct LoadSavedCharacterResponse {
     /// (`risks-and-open-questions.md`): the Feat picker previously had no
     /// way to render a loaded character's existing feat list.
     pub selected_feats: Vec<String>,
+    /// The character's full persisted `chosen.spells_selected`, verbatim —
+    /// not just spells added in the current session. Backlog item 9a
+    /// (`risks-and-open-questions.md`): same shape of gap as item 8
+    /// (`selected_feats`) — frontend had no way to detect a Wizard's
+    /// current spell count/contents without this, which was the root of
+    /// their "always route through record_and_prepare_spell_selection"
+    /// workaround since they couldn't tell whether a spell add was truly
+    /// "the first spell." Reuses `SpellSelectionImportDto` (already a
+    /// general-purpose round-trip wire shape for export/import, not
+    /// import-only despite the name) rather than inventing a near-duplicate
+    /// type.
+    pub spells_selected: Vec<SpellSelectionImportDto>,
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
@@ -340,6 +352,21 @@ pub(crate) fn map_diagnostics_dto(
             id: diagnostic.id.clone(),
             message: diagnostic.message.clone(),
             claim_blocking: diagnostic.claim_blocking,
+        })
+        .collect()
+}
+
+// `pub(crate)` — same reason as `map_snapshot_dto` above. Reuses
+// `SpellSelectionImportDto` (already a general-purpose export/import
+// round-trip wire shape, not import-only despite the name) rather than
+// inventing a near-duplicate type for `LoadSavedCharacterResponse`.
+pub(crate) fn map_spells_selected_dto(spells: &[SpellSelection]) -> Vec<SpellSelectionImportDto> {
+    spells
+        .iter()
+        .map(|spell| SpellSelectionImportDto {
+            spell_id: spell.spell_id.clone(),
+            source_class_id: spell.source_class_id.clone(),
+            acquisition_mode: spell.acquisition_mode.into(),
         })
         .collect()
 }
@@ -706,6 +733,7 @@ pub fn load_saved_character(
         diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
+        spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
     })
 }
 

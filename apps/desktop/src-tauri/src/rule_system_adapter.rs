@@ -146,8 +146,8 @@ mod tests {
     };
 
     use crate::character_hub::{
-        compose_character_input, AbilityScoresDto, AbilityModifiersDto, BaseSavesDto,
-        CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
+        compose_character_input, map_spells_selected_dto, AbilityScoresDto, AbilityModifiersDto,
+        BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
         PilotSnapshotDto, ResolvedEquipmentDto, SchoolCoverageDto, SelectedSkillModifiersDto,
     };
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
@@ -335,6 +335,7 @@ mod tests {
                 diagnostics,
                 corpus_derived,
                 selected_feats: envelope.character_input.chosen.selected_feats.clone(),
+                spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
             })
         }
     }

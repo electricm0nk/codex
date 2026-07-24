@@ -60,8 +60,8 @@ use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
-    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_spells_selected_dto,
+    map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
 use crate::characterHub::appendToCharacter::{
@@ -211,6 +211,7 @@ impl RuleSystemAdapter for Pf1Adapter {
             diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
             corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
             selected_feats: envelope.character_input.chosen.selected_feats.clone(),
+            spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
         })
     }
 }
@@ -1245,6 +1246,50 @@ mod tests {
         );
     }
 
+    /// Backlog item 9a (risks-and-open-questions.md): `spells_selected`
+    /// wasn't exposed through `load_saved_character`'s response, same shape
+    /// of gap as item 8's `selected_feats`. A composed Wizard already has
+    /// the seeded starter spell (Known + Prepared), so this is a real
+    /// non-empty round-trip proof, not just the empty case.
+    #[test]
+    fn load_saved_character_surfaces_persisted_spells_selected() {
+        let character_id = "pf1-adapter-spells-selected-exposure";
+        let root = tempdir("spells-selected-exposure");
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Spells Selected Exposure Test".to_owned(),
+            character_input: compose_character_input(&wizard_request_for(character_id, 1)),
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        assert_eq!(
+            loaded.spells_selected.len(),
+            2,
+            "the seeded starter spell's Known + Prepared entries must both surface: {:?}",
+            loaded.spells_selected
+        );
+        assert!(loaded.spells_selected.iter().any(|s| s.spell_id == WIZARD_STARTER_SPELL_ID
+            && s.source_class_id == WIZARD_CLASS_ID
+            && matches!(s.acquisition_mode, crate::character_hub::AcquisitionModeDto::Known)));
+        assert!(loaded.spells_selected.iter().any(|s| s.spell_id == WIZARD_STARTER_SPELL_ID
+            && s.source_class_id == WIZARD_CLASS_ID
+            && matches!(s.acquisition_mode, crate::character_hub::AcquisitionModeDto::Prepared)));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// The multiclass-dip mirror of the test above: leveling a Wizard class
     /// entry onto an existing character (not fresh creation) must also
     /// reach `Computed` with no manual spell selection, proving
@@ -1722,6 +1767,11 @@ mod tests {
                 "feat:weapon_focus".to_owned(),
             ]
         );
+        // Backlog item 9a: this Fighter fixture has no spells at all --
+        // proves the empty case round-trips honestly (not fabricated
+        // entries). See `load_saved_character_surfaces_persisted_spells_selected`
+        // below for the non-empty Wizard case.
+        assert!(loaded.spells_selected.is_empty());
 
         // append_to_character: real corpus-validated batch append.
         let append_result = adapter
