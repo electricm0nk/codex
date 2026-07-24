@@ -1175,7 +1175,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T14:05:01
-Latest commit on tranche/6: f38e9f33 feat: widen feat-effects engine to 3 save-boosting feats (46 seconds ago) (2026-07-24T14:04:15-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T14:03:29 frontend=2026-07-24T13:48:04 qa=2026-07-24T13:55:21 lead=2026-07-24T14:04:42
+Last mechanical check: 2026-07-24T14:15:02
+Latest commit on tranche/6: 874df6db fix(v0.6): EquipmentEffectsDto omits None optional fields on serialize (2 minutes ago) (2026-07-24T14:12:55-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T14:08:14 frontend=2026-07-24T13:48:04 qa=2026-07-24T14:07:50 lead=2026-07-24T14:10:17
 <!-- AUTO-HEARTBEAT-END -->
