@@ -174,21 +174,25 @@ fn wizard_level_3_with_ge06_combat_posture() -> CharacterInput {
         item_id: "item:longsword".to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "item:chain_shirt".to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "item:shield".to_string(),
         equipped_or_active: false,
         active_state: ActiveState::Absent,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "power_attack".to_string(),
         equipped_or_active: false,
         active_state: ActiveState::SelectedInactive,
+        applied_modifiers: Vec::new(),
     });
     for skill_id in ["skill:climb", "skill:intimidate", "skill:swim"] {
         input.chosen.skill_allocations.push(SkillAllocation {

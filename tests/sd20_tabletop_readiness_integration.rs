@@ -521,6 +521,7 @@ fn character_input_from_fixture(input: &Json) -> CharacterInput {
                 item_id: entry.get("item_id").as_str().to_owned(),
                 equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
                 active_state,
+                applied_modifiers: Vec::new(),
             }
         })
         .collect();
@@ -1454,16 +1455,19 @@ fn epic_probe_equipment_effects_are_real_but_not_reflected_in_corpus_derived() {
             item_id: "Longsword (Base)".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         },
         EquipmentSelection {
             item_id: "Chain Shirt (Base)".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         },
         EquipmentSelection {
             item_id: "Special Quality ~ Masterwork ~ Weapon".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         },
     ];
 
@@ -1512,11 +1516,13 @@ fn epic_probe_damage_total_covers_base_dice_str_enhancement_crit_and_honest_feat
             item_id: "Longsword (Base)".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         },
         EquipmentSelection {
             item_id: "Special Quality ~ Masterwork ~ Weapon".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         },
     ];
     let equipment_effects = compute_equipment_effects(&equipped, &corpus);

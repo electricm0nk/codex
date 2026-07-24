@@ -202,6 +202,7 @@ fn every_addressable_real_corpus_item_resolves_reaches_equipped_items_and_ground
             item_id: identity.to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         });
     }
 
