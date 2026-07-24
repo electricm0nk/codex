@@ -17,12 +17,12 @@ if known). This replaces the looser free-text "Happening now" prose below
 where the two overlap -- (a) still carries the narrative detail, this
 block is the at-a-glance state.
 
-## Agent Status (2026-07-24, ~11:35 ET)
+## Agent Status (2026-07-24, ~11:55 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17 landed; item 1's design pass done (4dadad51, reshapes the sizing, recommends bounded "shape (c)"); dispatched to implement shape (c) next (real ACP + a second AC path, zero claim-gating changes); item 27 (posture-gate philosophy) explicitly left for the operator, not dispatched |
-| frontend | working | fixing a real ItemPickerModal.tsx bug (duplicate-key React collision), checked in, awaiting response |
-| qa | working | dispatched to verify items 7 and 17 |
+| backend | working | items 7, 17, and the item-1 design pass all landed; mid-edit on shape (c) implementation (equipment_effects.rs, arms_armor.rs dirty) |
+| frontend | working | still on the ItemPickerModal.tsx bug fix (duplicate-key React collision), no report yet since the last check-in |
+| qa | waiting-on-backend | items 7/17 verified clean (both, real ID-chain re-tracing + RED reproduction), found one new small gap (Defense tab doesn't refetch durability after a feat pick, logged for frontend); correctly held off re-verifying mid-edit on backend's shape (c) work rather than touching it |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
