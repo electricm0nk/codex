@@ -12,7 +12,7 @@ this report, not just SWARM_STATUS.md)
 |---|---|---|
 | backend | working | items 7, 17, item-1 design pass, and shape (c) all landed and independently verified; now building the bounded single-weapon attack-bonus slice (greenlit, their own proposal) |
 | frontend | idle | comprehensive smoke test complete -- fixed a real bug (`e50d7762`, ItemPickerModal React key collision) and flagged one real unresolved finding (Spells tab `corpusDerived` inconsistency for non-Human Wizards, may relate to item 18/gap C); queue clear |
-| qa | working | verified items 7 and 17 clean, found one small gap (Defense tab feat-add render-staleness); dispatched to verify shape (c) next |
+| qa | working | verified shape (c) clean (real RED reproduction, three-angle claim-gating-inertness check); now investigating the Spells tab `corpusDerived` finding |
 
 ---
 

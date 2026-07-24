@@ -77,12 +77,12 @@ alongside the existing Agent Status convention.
   flagged with exact repro steps instead. Everything else: clean pass,
   no other correctness issues. 69/69 suite green throughout.
 
-## Agent Status (2026-07-24, ~12:10 ET)
+## Agent Status (2026-07-24, ~12:14 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | greenlit on the bounded single-weapon attack-bonus slice (no schema change, honest-absent for 0/2+ weapons) -- their own proposal, matches this session's established "prove the narrow provably-correct case" discipline |
+| backend | working | building the bounded single-weapon attack-bonus slice (equipment_effects.rs dirty) |
 | frontend | idle | queue clear since the smoke-test report; standing by |
-| qa | working | dispatched to independently verify shape (c) |
+| qa | working | shape (c) verified clean; now investigating (read-only) the Spells tab corpusDerived finding, cautioned about backend's concurrent file edits |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
