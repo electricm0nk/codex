@@ -71,6 +71,51 @@ once scoped. Backend has moved on to durability, money-conversion PCGen
 verification, and comparator field-extraction instead, none of which share
 this architectural constraint.
 
+### Full resurvey (2026-07-23, wave-2 close / autonomous operation start)
+
+Requested by the lead at the start of fully-autonomous operation (see
+`risks-and-open-questions.md`'s operator directive). A great deal has
+landed since the last refresh: durability grounded, the Wizard bootstrap/
+first-spell/slot-budget three-layer investigation fully closed, and a
+QA-found Wizard spell-save-DC gap fixed. Full table below supersedes both
+tables above as the current state of truth; rows unchanged since the last
+refresh are repeated for completeness rather than left to cross-reference.
+
+| # | Calculation | Status | Evidence |
+| :-- | :--- | :--- | :--- |
+| 1 | Ability scores | Covered | Unchanged — `tests/sd13_*_level1_*baseline.rs` |
+| 2 | Attack rolls | Covered | Unchanged — `tests/sd13_*`/`tests/sd18_*` per class/level |
+| 3 | BAB/save progression (single-class) | Covered | Unchanged — `tests/sd13_*_base_attack_and_saves.rs` |
+| 4 | BAB/save progression (multiclass) | **Covered, breadth still 3/11** | Fighter/Wizard/Rogue only (`table_class_id` in `pilot_compute.rs`, confirmed unchanged by direct grep this pass). 40 catalogue tests adopted (`8d814e8`). Barbarian/Bard/Cleric/Druid/Monk/Paladin/Ranger/Sorcerer remain outside the allowlist — each has its own pre-existing standalone-only chassis; widening any of them needs the same coordinated catalogue-adoption pass Rogue got, not a code-only change. |
+| 5 | Skill allocation | Covered | Unchanged — `tests/sd20_skill_allocation_*.rs`. Note: real-world reachability is separately constrained by the narrow deterministic-posture gate (item 1 in the risks doc), not a skill-calculation defect. |
+| 6 | Spell slot allocation | **Covered, and a real enforcement bug found + fixed this wave** | Base per-day counts unchanged (`tests/sd13_*_spells_per_day_counts.rs`, `tests/sd20_spellbook_*.rs`). New this wave: Wizard's slot-budget *enforcement* was silently broken for every real corpus spell (`parse_wizard_spellbook_spell_id` only recognized the one synthetic seed spell's id shape, `<school>.<level>.<name>`, so real spells like "Grease" were dropped from the consumed-slots sum before the over-budget check ever ran — a Wizard could add unlimited real spells with zero enforcement). Found by frontend live-testing, root-caused precisely, fixed by backend (`365b3a1a`, genuine RED→GREEN: fix disabled, reproduced the bug, re-enabled, confirmed green), live re-verified end-to-end through the real Add Spell UI (risks-and-open-questions.md item 13). Tested at the Tauri command layer (`apps/desktop/src-tauri`'s own suite, 188/188) and via `cargo test --lib` (197/197) — not `tests/**`, since the bug was in command-layer spell-id resolution, not a `rules_core` pure-function gap; no adoption action needed on my side, this is the correct home for that coverage. |
+| 7 | AC | Covered (baseline + equipment delta), gate-widening dropped | `defense.baseline_armor_class` and equipment AC delta unchanged and covered. Equipment AC bonus itself independently audited as already real and wired (`d475097`'s commit message). Splicing that into the `Computed`/`Blocked` gate for arbitrary loadouts was scoped, greenlit, then **dropped** after backend found the headless compute layer has no corpus parameter (see the "AC-gate widening" note above) — flagged to the operator as a possible future epic, not attempted. |
+| 8 | Durability | **Grounded, pending catalogue adoption** | `src/rules_core/durability.rs` (commit `0aeed25a`) grounds `compute_max_hp` (maximized level-1 die + average-rounded-up every level after, PF1's named non-rolling default, floored at 1 HP/level) and `classify_durability` (Normal/Staggered/Disabled/Unconscious/Dying/Dead per standard PF1/d20 SRD thresholds). Scoped to single-class Fighter/Wizard/Rogue, same reason as the multiclass BAB/save dispatch (which single level was character-level-1, for the maximized die, is genuinely ambiguous from multiclass `CharacterClassLevel`'s cumulative-level shape). 13 inline `#[cfg(test)]` tests in the module — **not yet adopted into `tests/**`** (this pass's own finding, see below). Wired into `SelectedParityDimensions::from_pilot_receipt` (not a `receipt.durability` field the way encumbrance got one) and independently PCGen-verified end-to-end (`tests/sd26_pilot_case_verification.rs`, max_hp=12 matched exactly against a real PCGen export). |
+| 9 | Carry capacity | Covered | Unchanged — `tests/v06_encumbrance.rs` |
+| 10 | Encumbrance | Covered | Unchanged — `tests/v06_encumbrance.rs` |
+| 11 | Money conversion | Covered (conversion only) | Unchanged — `tests/v06_money_conversion.rs`. Starting-wealth-by-class remains unresolved (risks item 7), correctly not guessed. |
+| 12 | Level-up hit points | Covered | Unchanged — `tests/sd13_fighter_level1_hit_point_baseline.rs`, `tests/sd20_levelup_*.rs` |
+| — | Wizard spell save DC (not a named bar-4 item, but the same DC family as Paladin/Ranger/Sorcerer/Bard) | **Covered, new this wave** | QA found zero `wizard_spell_save_dc` computation while doing item 11's LST cross-check (risks item 12) — the other 4 caster classes all had it, Wizard didn't; not a bug, an explicitly-disclaimed pre-existing gap. Fixed by backend (`3b397315`): `10 + spell_level + intelligence_modifier`, confirmed against real PCGen data (`cr_classes.lst` `SPELLSTAT:INT`). QA adopted (`e95112a1`): `tests/sd13_wizard_spell_save_dcs.rs` (7 tests, independently authored — caught and corrected one wrong assumption about multiclass behavior by running the real computation rather than guessing), plus fixed the one downstream negative-control test the new records made stale. |
+
+**Resurvey bottom line:** of the 12 alpha-bar calculations, durability is
+the only one now sitting at "grounded but not yet catalogue-adopted" —
+every other gap identified across all prior surveys (carry capacity,
+encumbrance, money conversion) is fully closed and catalogued. Multiclass
+BAB/save breadth (3/11 classes) remains the largest *known* calculation gap
+against the bar's "any class" framing, though it is a well-understood,
+bounded, repeatable pattern (Rogue's own widening + 40-test adoption is the
+template) rather than new design work. Beyond raw calculation coverage, the
+bigger alpha-bar story this wave is Wizard becoming a **second genuinely
+UI-reachable class** (class creation, first-spell bootstrap, and slot-budget
+enforcement all live-verified end-to-end) — this is bar items 2/3 progress,
+not item 4 calculation coverage, but it's the more consequential wave-2
+result. The narrow deterministic-`Computed`-posture gate (risks item 1) and
+the still-unwidened AC/attack-bonus/skill-posture architecture split remain
+the single largest structural distance between current state and "any
+class... reaches Computed for the choices a tester actually makes" — this
+is a UI-reachability problem layered on top of calculation correctness, not
+fixed by adding more calculations.
+
 ## (b) PCGen-delta defects found and fix/ticket status
 
 None found yet — wave-1 in flight, no landed calculation changes to diff
