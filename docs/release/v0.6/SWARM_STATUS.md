@@ -1099,7 +1099,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T12:30:01
-Latest commit on tranche/6: 845f860c feat: bounded single-weapon attack-bonus enhancement slice (59 seconds ago) (2026-07-24T12:29:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T12:28:25 frontend=2026-07-24T11:44:05 qa=2026-07-24T12:18:54 lead=2026-07-24T12:29:58
+Last mechanical check: 2026-07-24T13:20:01
+Latest commit on tranche/6: 647e52aa fix: surface unresolved corpus selections instead of silently dropping them (89 seconds ago) (2026-07-24T13:18:32-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T13:17:49 frontend=2026-07-24T13:12:11 qa=2026-07-24T13:12:05 lead=2026-07-24T13:18:50
 <!-- AUTO-HEARTBEAT-END -->
