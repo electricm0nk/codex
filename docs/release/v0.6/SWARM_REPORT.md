@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 4's scope grew -- gated functions are hardcoded arithmetic, not corpus-resolved; lead-approved sequencing to move the arithmetic to real corpus computation before swapping the gate (risks item 27) |
-| frontend | working | actively wiring the Gear tab against `attach_equipment_modifier` |
+| backend | working | sub-task 4's AC/skill pillars built and lead-verified (byte-identical correctness proof passing), not yet committed; moving to sub-task 5 |
+| frontend | idle | sub-task 6 fully closed (3a05539a + a768ad85), lead-verified, live-verified |
 | qa | idle | standing by |
 
 ---
