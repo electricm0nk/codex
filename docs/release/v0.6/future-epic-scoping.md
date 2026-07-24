@@ -17,6 +17,19 @@
 > scope. This file's sizing/analysis of gap B below still stands as the
 > scoping baseline; only its "not attempted this wave" framing is
 > superseded.
+>
+> **Update, 2026-07-24 (later still) — gap A's dedicated design pass is
+> done.** `item-1-architecture-wall-design.md` reads the real call chains
+> and finds the sizing below was too coarse: most of the AC/attack-bonus
+> math already exists and is already wired (the desktop equipment tab
+> uses it directly); ACP is a few-line gap, not a corpus-access problem;
+> attack-bonus enhancement has a genuine data-model gap (no
+> weapon-to-modifier attachment relationship in `EquipmentSelection`) that
+> is separate from corpus access entirely; and — the biggest correction —
+> bridging the corpus wall by itself would not let any additional
+> equipment loadout reach `Computed`, since the posture gate checks exact
+> `item_id`s independent of what the math could resolve. See that doc for
+> the full three-way fix-shape comparison and recommendation.
 
 ## The three gaps, side by side
 
