@@ -169,6 +169,7 @@ until now — populated for real below):
 | 7 | **MAJOR — CreateCharacterForm never actually submitted racial ability adjustments, for any of the 4 fixed-adjustment races, since the form was first built.** `calculatedScore()` (raw + racial adjustment) was computed for the on-screen preview only; the submitted `abilityScores` used raw, unadjusted `rawScore()` instead — every non-Human Elf/Dwarf/Gnome/Halfling character ever created had silently wrong ability scores, independent of and predating this session's engine-side explanation-text fixes (defect 4 above only corrected what the text *described*, not what got *submitted*) | **Fixed** (`f2c616ed`), live-verified end-to-end for Elf (disk-confirmed correct DEX/CON/INT cascade) and Dwarf (disk-confirmed `constitution:16/wisdom:14/charisma:6` on a fresh character created through the real UI). Gnome/Halfling verified via real production-code execution (actual function + actual race-catalog data, not a reimplementation) after a session-scoped GUI environment blocker (since fixed, `f6fe0df2`) prevented completing their live-disk leg — accepted as sufficient given the mechanism is unconditional/race-agnostic and already twice disk-proven |
 | 8 | Fighter multiclass/race level-lookup gap, 3 instances: `validate_fighter_feat_choice_legality` and two sibling checks in `unmet_combat_posture_conditions` used single-class-only or Human-only level lookups instead of the multiclass-aware `fighter_level_in_mix`, silently skipping validation for non-Human and/or multiclass Fighters — one instance empirically confirmed exploitable (a Human Fighter1/Rogue3 with a wrong bonus-feat choice produced zero diagnostics before the fix) | **Fixed, systematic sweep complete** (`0eb9ea65`, `32289cb4` follow-up, `68721ca0`) — all 4 `_legality`/`_conditions`/`validate_` gate functions in `pilot_compute.rs` checked, no further instances. Currently no live UI attack surface (the create/level-up flow hardcodes canonical choices for the slots these checks protect) — real defense-in-depth for the command/API layer, not an active user-visible bug today |
 | 9 | `skill_allocation.rs`'s class-skill recognition was Fighter-only, so neither Wizard nor Rogue had ANY grounded class-skill posture — silently left the PF1 cross-class rank cap completely unenforced for both (confirmed empirically: a level-1 Wizard could dump 5 ranks into a cross-class skill with a real cap of 1, zero diagnostic) | **Fixed** (`21f815c1`), grounded against the real PCGen corpus (Rogue: all 5 bounded skills, `cr_abilities_class.lst:2838`; Wizard: genuinely empty, `cr_abilities_class.lst:2565`, checked not assumed), **catalogue-adopted** (`d35521ec`, `2ab19bc7`) — real fixture-driven tests through the actual parser, both citations independently re-verified, and a fresh-eyes re-check found and closed a real gap in an *existing* test that used the bare string `"wizard"` instead of the real `"class:wizard"` id and so never actually exercised Wizard recognition |
+| 10 | Wire-serialization bug: `CreateCharacterResponse::Saved`'s `corpus_derived` field serialized literally as snake_case on the wire (the enum's `kind` tag deliberately keeps no `rename_all`, so a bare fix would have broken every `outcome.kind === 'Saved'` check), silently `undefined` on the TS side — the Spells/Gear tabs looked stale right after a real, successful mutation | **Fixed** (`498679d1`, per-field `#[serde(rename = "corpusDerived")]`, an identical latent bug in `PurchaseEquipmentResponse` caught and fixed proactively in the same commit) — independently re-verified by QA with a real RED reproduction (temporarily reverted the fix, watched the exact symptom reappear, restored, confirmed GREEN) and an independent re-sweep of every `#[serde(tag = ...)]` enum in the crate, not just the ones already named |
 
 **Bar-distance assessment (honest current picture):** the alpha bar is
 **not** met yet, and the remaining distance is now well-characterized rather
@@ -397,6 +398,111 @@ every shipped calculation having red-green coverage (true) *and* the
 operator's alpha bar in §1 holding (not true — items 2 and 4 above are real,
 acknowledged gaps, not stub surfaces, but still gaps against "any class...
 matches PCGen"). This checkpoint is for visibility, not closure.
+
+## Current-state summary (2026-07-24, full closure of the bounded backlog)
+
+The four checkpoints above are an incremental log of *how* the picture got
+here; this section is the *destination* — one coherent current-state read,
+so anyone (operator, future close-out pass, a teammate picking this back up
+cold) can get the whole picture without walking the history. Nothing below
+contradicts the checkpoints above; it supersedes them only in the sense of
+being the up-to-date summary, not a new finding.
+
+**Where things stand.** As of this pass, all 26 numbered items in
+`risks-and-open-questions.md`'s "Open questions" section are resolved or
+correctly deferred. Two consecutive backend self-directed scans (the
+Fighter-only-grounding correctness sweep, the parity-comparator field
+sweep) each came back clean on their own second pass — a genuine signal,
+not an absence of looking. QA's completeness sweep independently
+re-verified essentially every real `feat`/`fix`/`frontend` commit the swarm
+produced (17 areas verified clean, 2 real gaps found and since closed).
+The bounded, same-session backlog — bugs, wiring gaps, missing tests,
+missing UI surfaces for already-computed data — is genuinely exhausted
+right now. That is a narrower claim than "the alpha bar is met," addressed
+directly below.
+
+**Full defects table, brought current.** The 10-row table above (under
+"Comprehensive consolidation") is the complete, current list of every real
+PCGen-delta/correctness defect found across the whole swarm — nothing has
+been found since defect 10 (the wire-serialization bug) that isn't already
+in it. All 10 are fixed and catalogue-adopted where `tests/**` coverage
+applies, or explicitly logged as architecture-level and not attempted,
+never left ambiguous.
+
+**Beyond correctness defects, the other real work this swarm closed**
+(UI-reachability and wiring gaps, not PCGen-delta correctness bugs, so
+tracked in `risks-and-open-questions.md` rather than the defects table
+above): the full Wizard three-layer UI-bootstrap chain (class acquisition,
+first-spell, slot-budget enforcement); Rogue's UI reachability (zero gap);
+race-agnostic reachability for all three working classes, disproving a
+stale "Human only" assumption; the feat catalog + picker + persisted feat
+list; bio, money, skill-allocation, level-up, and durability persistence
+end to end; a new PCGen parity dimension (`combat.base_attack_bonus`); a
+feat-pick affordance at feat-gaining level-ups; a Load-list staleness fix;
+and a full pass closing 5 frontend modules' test-coverage gaps that QA's
+sweep surfaced (items 22/25 in the risks doc).
+
+**Bar-distance assessment, restated plainly against what's verified now:**
+1. **Multiclass breadth** — still 3 of 11 classes (Fighter/Wizard/Rogue) in
+   the BAB/save-stacking allowlist. Unchanged all session; bounded and
+   repeatable (Rogue's own widening is the template) but not attempted
+   further — no greenlight to widen beyond these three this wave.
+2. **Class-chassis breadth** — still 8 of 11 classes with zero base-chassis
+   computation for *any* race. Confirmed multiple times this session, not
+   assumed. Each needs its own multi-cycle calculation engine — not a
+   wiring fix, a genuine missing-engine problem per class.
+3. **Posture narrowness** — even for the 3 working classes, the
+   `Computed`/`Blocked` gate still only accepts one exact combination.
+   AC/attack-bonus/skill-ACP widening was scoped, then correctly dropped
+   after backend found the real blocker is the headless/corpus-aware
+   architecture split — see `future-epic-scoping.md`, not reattempted this
+   wave, flagged for the operator as a real future epic.
+4. **Feat effects** — confirmed nonexistent beyond the 3 feats hardcoded
+   into the posture gate (Power Attack, Dodge, Weapon Focus). Same
+   architecture-gap shape as item 3, not a missing calculation.
+5. **Non-Human Wizard spell-math completeness** — spell-save-DC and the
+   spellbook-slot ceiling never run for any non-Human Wizard (the one
+   function grounding both is Human-gated). BAB/saves/HP remain correct
+   for non-Human Wizards via a separate, already-widened path — this is a
+   completeness gap (a subsystem that doesn't run), not a correctness bug
+   (a value that's wrong).
+6. **What *is* solid**: the 12 named alpha-bar calculations are genuinely
+   correct and PCGen-cross-verified once a build reaches `Computed`, for
+   all three working classes — every defect found this session was about
+   *breadth* (which classes/races reach a correct answer) and *honesty*
+   (claims that overstated or understated real scope), not the core
+   arithmetic being wrong once inside the one supported posture.
+
+**What's genuinely left** (matching the lead's own bounded-backlog
+assessment, risks doc item 3):
+- **Architecture-level, not bounded work** (full detail in
+  `future-epic-scoping.md`): the headless/corpus-aware wall (blocks
+  attack-bonus and skill-ACP widening), the feat-effects engine's total
+  absence, and Wizard non-Human spell-math completeness. None of these are
+  a same-session task; each is confirmed independent of the other two —
+  fixing one buys nothing toward the others.
+- **Class/multiclass breadth**: the other 8 CRB classes, each its own
+  multi-cycle engine effort.
+- **Operator-only, not an engineering call**: starting-wealth-by-class
+  (risks item 7) — a content-provenance/licensing question, exhaustively
+  searched and confirmed absent from every real corpus source available
+  here, not an open lookup.
+- **Outside this swarm's control**: the observer-lane status (risks-doc
+  Risks §5) — operator-side infrastructure.
+
+**Not claiming the alpha bar is met.** It isn't — on class/race breadth (2
+of 4 books' worth of classes genuinely reachable) and on the three
+architecture gaps above. What this summary says is narrower and, we
+believe, fully substantiated: the bounded backlog reachable without an
+architecture decision or an operator content call is genuinely exhausted,
+not abandoned early or padded with busywork to look active.
+
+**Not signing the attestation** — same reasoning as every checkpoint above,
+restated once more for anyone reading only this section: §4.4's "Done"
+criteria needs both red-green coverage on every shipped calculation (true)
+and the operator's alpha bar genuinely holding (not true, for the breadth
+and architecture reasons above). This summary is for visibility and
+closure-readiness, not a substitute for that sign-off.
 
 ## (b) PCGen-delta defects found and fix/ticket status
 
