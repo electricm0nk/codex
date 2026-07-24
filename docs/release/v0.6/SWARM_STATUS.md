@@ -15,17 +15,14 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   live-verifying the Elf +2 INT fix (spell
-                                save DC / bonus spells should now reflect it)
-backend               Sonnet   race-adjustment bundle in flight: Elf DONE
-                                (9ec0e036), Dwarf/Gnome/Halfling + size-text
-                                fix still uncommitted, in progress
-qa                    Sonnet   SWARM_REPORT.md comprehensive consolidation
-                                DONE (42ee6606) -- honest "not signing the
-                                attestation yet" checkpoint; feat-effects
-                                architecture gap found+logged (item 17,
-                                deferred, not assigned); watching for
-                                backend's race-bundle push to adopt
+frontend              Sonnet   idle, standing by after closing the major
+                                ability-submission bug (f2c616ed)
+backend               Sonnet   investigating the level-4 Wizard ceiling
+                                question (item 18) -- QA's static sweep says
+                                engine-side is airtight, likely UI-side
+qa                    Sonnet   re-verifying Dwarf/Gnome/Halfling now get
+                                correct submitted ability scores (item 19),
+                                same code path as the Elf fix
 
 (b) Happened
 ------------
