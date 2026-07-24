@@ -15,17 +15,13 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   working autonomous queue (class-dropdown
-                                honesty audit in flight)
-backend               Sonnet   PRIORITY BUG: pivoting to the class-skill
-                                modifier correctness bug QA found (silently
-                                wrong values for Wizard, see Happened);
-                                money-purchase coupling + render-staleness
-                                elimination both DONE first
-qa                    Sonnet   MAJOR FIND: class-skill modifier bug, verified
-                                concrete wrong value; filed, not fixed;
-                                continuing the gap sweep meanwhile
-                                sweep across Fighter/Wizard/Rogue now
+frontend              Sonnet   equipment-picker wiring against
+                                purchase_equipment, live-verifying both paths
+backend               Sonnet   fixing the class-skill-modifier bug; render-
+                                staleness REOPENED and queued next (real
+                                root cause + a trap to avoid, see Happened)
+qa                    Sonnet   adopting purchase_equipment catalogue
+                                coverage; bug-pattern sweep came back clean
 
 (b) Happened
 ------------
@@ -661,7 +657,50 @@ qa                    Sonnet   MAJOR FIND: class-skill modifier bug, verified
   value for all three) -- reads as inconsistent exposure, not a missing
   calc; bonus spells from high ability score confirmed present and
   correctly wired, no gap. Backend redirected to the bug ahead of
-  render-staleness (already eliminated on backend's side anyway).
+  render-staleness (CORRECTION BELOW: this framing was wrong).
+- Both quota outages recovered cleanly. All 3 teammates resumed after
+  the ~11pm ET reset and picked up exactly where they'd left off.
+- QA's continued sweep of the adjacent narrow-posture-gate functions
+  (Fighter bonus-feat sub-check, Weapon/Armor Training level fallback)
+  came back clean -- both correctly guarded/semantically right, not
+  bugs, closing out that thread with certainty rather than leaving it
+  assumed-fine.
+- MAJOR REPORT (frontend, class-dropdown honesty audit, went deeper
+  than asked): confirmed all 11 CRB classes appear in the create-
+  character dropdown; 8 (Paladin/Ranger/Sorcerer/Bard/Barbarian/Monk/
+  Cleric/Druid) were labeled "(Human only, partial)", implying Human
+  produces a computed build. FALSE for all 8, verified via source
+  (each has its own "does not compute a supported chassis" doc
+  comment) AND live (fresh Human Barbarian -> real named Blocked
+  diagnostic, never Saved) -- these never reach Computed for ANY race
+  including Human, they just get nicer diagnostics. Fixed: new
+  ClassSupportLevel variant `human-diagnostics-only`, distinct from
+  the genuinely-working `partial-human-only`, honest dropdown/
+  description/fallback text. No stub/silent-failure anywhere -- the
+  Blocked path itself was always fine, just the labeling overclaimed.
+  BONUS, opposite direction: Wizard and Rogue (labeled
+  `partial-human-only`) turn out to be mislabeled too -- confirmed via
+  git archaeology (3484b5d never had a Human condition) AND live
+  (fresh Elf Wizard 1 and fresh Elf Rogue 1 both reached Computed/
+  Saved, disk-confirmed with race_id=race:elf). Reclassified both to
+  `full`, same as Fighter. Real, free additional alpha-bar progress on
+  item 2 ("any class or race") -- the "Human only" framing for two of
+  our three working classes was a stale, never-verified assumption.
+  Pushed 34635157, 62/62 suite green.
+- CORRECTION (frontend, re-tested live against the current build):
+  the render-staleness bug is NOT fixed -- the lead's earlier "already
+  eliminated on backend's side" framing was wrong (backend's own
+  elimination of possible causes was real, but "eliminated as a cause"
+  got conflated with "the bug is gone," and nobody had re-tested live
+  since). Root cause identified precisely: character_hub.rs's
+  CreateCharacterResponse enum has #[serde(tag = "kind")] with no
+  rename_all, so corpus_derived stays snake_case on the wire while
+  frontend expects camelCase. Real trap flagged: a bare
+  rename_all="camelCase" would ALSO lowercase the "Saved"/"Blocked"
+  tag values, breaking every outcome.kind==='Saved' check across the
+  frontend -- needs a per-field rename or rename_all_fields instead.
+  Reopened, queued for backend next with this guidance attached so
+  they don't walk into the trap.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
