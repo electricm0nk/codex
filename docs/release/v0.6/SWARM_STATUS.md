@@ -893,22 +893,42 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   verify without live-driving the app. Greenlit to continue into that
   with RUN_DESKTOP_AGENT=qa now that driver.sh is fixed.
 
-(c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
-below was stale for a long stretch; this replaces it with the true state)
+(c) Consolidated status (refreshed 2026-07-24, ~06:15 ET — supersedes the
+prior refresh, itself already superseded by everything since)
 --------------------------------------------------------------------------
-This section previously tracked wave-1/wave-2 task lists that were long
-since superseded by the Happened log above — durability, money-conversion,
-comparator field-extraction, DR exposure, money-purchase coupling, and
-spells_selected exposure all landed without this snapshot being refreshed
-to match. Corrected here rather than left misleading. Current true state:
-
 - Fighter, Wizard, and Rogue all reach `Computed`/`Saved` end-to-end
   through the shipped UI, for ANY race (not Human-only), confirmed through
   a full 6-level multiclass walkthrough and multiple independent level-up
   paths.
-- Money, equipment purchase (now atomically coupled), feats (full list +
-  selection), skill allocation, bio, level-up, DR, and spells_selected are
-  all real, persisted, and exposed through the DTO layer.
+- Money, equipment purchase (atomically coupled), feats (full list +
+  selection), skill allocation, bio, level-up, DR (both initial-load and
+  recompute DTOs), spells_selected, and durability/HP (a real tab, live
+  disk-confirmed both directions including the Dying/clamped-max
+  transitions) are all real, persisted, and exposed/rendered.
+- The multiclass `classSummary` parser and its silent-corruption bug both
+  now have real regression coverage (item 22); a new
+  `combat.base_attack_bonus` PCGen parity dimension is wired end-to-end
+  and confirmed against real PCGen output (item 24).
+- QA completed an exhaustive verification-completeness sweep today: 16
+  distinct commits/areas independently re-verified clean by reading the
+  actual code (not commit messages) — Defense tab, durability thresholds
+  against real PF1 rules, all 11 classes' support-level labeling,
+  wire-serialization with a genuine RED reproduction, feat catalog counts,
+  level-up/bio/skill-allocation/money persistence, SkillAllocationDialog,
+  Bio editor, Feat picker+Feats tab, Wizard spell routing, Actions tab
+  (Money panel's static half also clean; live-UI leg inconclusive on an
+  unrelated window-geometry quirk, not a code bug). Real findings from the
+  sweep: item 23 (LevelUpDialog never collects a feat pick, stale
+  excusing comment — frontend actively closing this now) and item 25 (a
+  confirmed systemic pattern: several frontend persistence-wiring modules
+  — classSummary parser now fixed, skillsModel, Bio editor, likely others
+  — shipped with sound logic but zero dedicated test coverage; not
+  re-flagged per-instance once the pattern was clear).
+- Backend ran two self-directed scans today beyond the originally-assigned
+  work, both real: the DTO-consumption sweep (2 gaps, both now closed)
+  and the PCGen parity-comparator scan (1 real dimension added, a clean
+  second-pass negative result closing that thread). Currently running a
+  consolidated full-workspace health check as closure-readiness prep.
 - Known, correctly-deferred future-epic gaps (not attempted this wave,
   flagged for operator review): AC/attack-bonus/skill-posture widening
   (risks item 1), the feat-effects engine's total absence (risks item 17),
