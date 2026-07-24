@@ -588,7 +588,7 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
         <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
           Add Weapon
         </button>
-        <button type="button" style={addItemButtonStyle}>
+        <button type="button" onClick={() => window.print()} style={addItemButtonStyle}>
           Print
         </button>
       </div>
