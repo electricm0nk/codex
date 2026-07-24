@@ -189,17 +189,19 @@ fn wizard_level1_fabricates_no_spell_math() {
     let computation = compute_pilot_base_chassis(&input);
 
     // No explanation may fabricate spellbook content, spells prepared, per-day spell
-    // slot totals, DCs, bonus spells, school-power math, or general spell totals.
-    // The +0 recognition record and the flat specialist-bonus-slot count (grounded
-    // by its own dedicated test below) are the only spell-adjacent explanations
-    // allowed on this bounded path.
+    // slot totals, bonus spells, school-power math, or general spell totals. The +0
+    // recognition record, the flat specialist-bonus-slot count (grounded by its own
+    // dedicated test below), and the spell-save-DC records (v0.6 alpha swarm --
+    // grounded for real, not fabricated; see tests/sd13_wizard_spell_save_dcs.rs)
+    // are the only spell-adjacent explanations allowed on this bounded path.
     for explanation in &computation.explanations {
         assert!(
             explanation.id == RECOGNITION_ID
                 || explanation.id == SPECIALIST_BONUS_SLOT_EXPLANATION_ID
+                || explanation.id.starts_with("class_chassis.wizard.spell_save_dc.")
                 || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition and the flat \
-             specialist bonus slot count: {explanation:?}"
+            "no fabricated spell explanation is allowed beyond the +0 recognition, the flat \
+             specialist bonus slot count, and the real spell-save-DC records: {explanation:?}"
         );
     }
     // The recognition itself asserts it fabricates no spell math.
