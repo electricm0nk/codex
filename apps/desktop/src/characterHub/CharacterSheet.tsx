@@ -14,7 +14,8 @@ import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
-import { blockedMessageFromDiagnostics, isWizardSpellBootstrap, toCharacterMutationRefresh } from './characterSheetRefresh';
+import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
+import { resolveSpellRouting } from './spellRoutingModel';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
@@ -1263,18 +1264,17 @@ export function CharacterSheet(props: {
     setMutationError(null);
     // `add_spell_selection`/`record_and_prepare_spell_selection` require a
     // `sourceClassId`; the picker's scope is "search, filter, pick a spell"
-    // (no class chooser). Prefers a held Wizard class when the character has
-    // one (rather than always defaulting to heldClasses[0], which could
-    // misattribute the pick to a non-caster class on a Fighter/Wizard
-    // multiclass build) and otherwise falls back to the first held class —
-    // see `heldClasses` below, parsed from the same `classSummary` the Level
-    // box already reads.
-    const heldWizardClass = heldClasses.find((held) => held.classId === WIZARD_CLASS_ID);
-    const primaryClassId = heldWizardClass?.classId ?? heldClasses[0]?.classId;
-    if (!primaryClassId) {
+    // (no class chooser) — `resolveSpellRouting` decides both which held
+    // class to attribute the pick to (preferring Wizard over
+    // `heldClasses[0]`, so a Fighter/Wizard multiclass build doesn't
+    // misattribute the pick to Fighter) and which command that resolves to.
+    const existingSpells = props.detail?.spellsSelected ?? [];
+    const routing = resolveSpellRouting(heldClasses, existingSpells, WIZARD_CLASS_ID);
+    if (!routing) {
       setMutationError('This character has no class to learn the spell from yet.');
       return;
     }
+    const { primaryClassId, useAtomicBootstrap } = routing;
     try {
       // Wizard's `unmet_wizard_spellbook_conditions` requires a non-empty
       // Known set AND a non-empty Prepared set simultaneously — no sequence
@@ -1290,9 +1290,7 @@ export function CharacterSheet(props: {
       // specific spell is in both, and the existing SpellsTab doesn't model
       // Known-vs-Prepared posture for any class either, so this isn't a
       // visible behavior change from always taking the atomic path.
-      const existingSpells = props.detail?.spellsSelected ?? [];
-      const isWizardBootstrap = isWizardSpellBootstrap(existingSpells, primaryClassId, WIZARD_CLASS_ID);
-      const outcome = isWizardBootstrap
+      const outcome = useAtomicBootstrap
         ? await recordAndPrepareSpellSelection({
             characterId: props.row.characterId,
             spellId: entry.key,
@@ -1312,7 +1310,7 @@ export function CharacterSheet(props: {
       // Mirrors exactly what the mutation itself appended — never
       // fabricated. The bootstrap path appends both a Known and a Prepared
       // entry for the same spell in one call; every other path appends one.
-      const newSpells: SpellSelectionDto[] = isWizardBootstrap
+      const newSpells: SpellSelectionDto[] = useAtomicBootstrap
         ? [
             { spellId: entry.key, sourceClassId: primaryClassId, acquisitionMode: 'Known' },
             { spellId: entry.key, sourceClassId: primaryClassId, acquisitionMode: 'Prepared' },
