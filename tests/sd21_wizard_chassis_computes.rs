@@ -241,10 +241,16 @@ fn wizard_level3_with_ge06_combat_posture_clears_the_selected_skill_diagnostic()
         computation.diagnostics
     );
     let climb = explanation(&computation, "skill.selected_modifier.climb");
-    // rank 1 + STR modifier (-1) + class-skill bonus (+3) + no armor-check
-    // penalty reduction (Wizard has no Fighter armor training, Chain Shirt
-    // ACP is -2) = 1.
-    assert_eq!(climb.value, 1, "{computation:?}");
+    // v0.6 alpha swarm fix (93a0636d): the class-skill bonus is no longer
+    // applied unconditionally -- Climb/Intimidate/Swim are not real Wizard
+    // class skills (cr_abilities_class.lst:2565: Wizard's real class skills
+    // are Appraise/Craft/Fly/Knowledge/Linguistics/Profession/Spellcraft),
+    // so a single-class Wizard gets no class-skill bonus here. Was
+    // incorrectly 1 (rank 1 + STR modifier -1 + a fabricated +3 class-skill
+    // bonus + no armor-check penalty reduction); real value is rank 1 +
+    // STR modifier (-1) + no class-skill bonus (+0) + Chain Shirt ACP (-2)
+    // = -2.
+    assert_eq!(climb.value, -2, "{computation:?}");
 }
 
 #[test]
