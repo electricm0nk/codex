@@ -1059,7 +1059,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-23T17:20:36
-Latest commit on tranche/6: 59d5bc0 frontend: build the Money panel against real balance persistence commands (84 minutes ago) (2026-07-23T15:57:03-04:00) -- STALE: no commit on tranche/6 in 83m, worth checking the swarm is still alive
-Last inbox activity (mtime proxy): backend=2026-07-23T15:33:12 frontend=2026-07-23T15:57:28 qa=2026-07-23T15:18:07 lead=2026-07-23T15:57:57
+Last mechanical check: 2026-07-24T12:00:02
+Latest commit on tranche/6: 08a829a1 docs(v0.6): refresh Agent Status — backend's shape (c) still uncommitted, checked in again (57 seconds ago) (2026-07-24T11:59:05-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T11:58:23 frontend=2026-07-24T11:44:05 qa=2026-07-24T11:30:34 lead=2026-07-24T11:44:11
 <!-- AUTO-HEARTBEAT-END -->
