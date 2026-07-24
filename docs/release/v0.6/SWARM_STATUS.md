@@ -1197,7 +1197,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T15:15:01
-Latest commit on tranche/6: d7819d57 docs(v0.6): checkpoint -- bounded swarm-actionable backlog exhausted (2 minutes ago) (2026-07-24T15:12:51-04:00)
+Last mechanical check: 2026-07-24T15:20:02
+Latest commit on tranche/6: b9e5cd9d chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-24T15:15:01-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-24T15:05:28 frontend=2026-07-24T15:02:02 qa=2026-07-24T14:32:00 lead=2026-07-24T15:07:42
 <!-- AUTO-HEARTBEAT-END -->
