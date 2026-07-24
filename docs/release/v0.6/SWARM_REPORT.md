@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | landed items 7 (starting wealth) and 17 (feat-effects engine/Toughness), then a design pass on item 1 (`item-1-architecture-wall-design.md`, `4dadad51`) -- reshaped the sizing and recommends a bounded "shape (c)" fix; standing by for next dispatch |
+| backend | working | landed items 7 (starting wealth) and 17 (feat-effects engine/Toughness), then a design pass on item 1 (`item-1-architecture-wall-design.md`, `4dadad51`) -- reshaped the sizing and recommends a bounded "shape (c)" fix; now dispatched to implement shape (c) itself (real ACP + a second AC path, no claim-gating changes) |
 | frontend | working | fixing a real bug in `ItemPickerModal.tsx` (React key collision from a genuine duplicate "Combat Expertise" feat record), uncommitted as of last check |
 | qa | working | dispatched to independently verify items 7 and 17; report not yet in |
 
