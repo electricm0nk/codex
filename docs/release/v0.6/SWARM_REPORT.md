@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | closure-readiness pass done: 4271/4271 root-crate tests, 204/204 desktop, 0-hit formal 4-check doctrine audit against the full `develop...tranche/6` diff; lead independently re-ran the doctrine checks and the full workspace suite |
-| frontend | idle | closure-readiness pass done (c014ffec): sanity baseline clean, tab completeness confirmed, one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified |
-| qa | idle | standing by; nothing currently needs independent verification |
+| backend | working | operator decided items 1/18/27 (see UPDATE below); dispatched item 18 (Wizard non-Human spell-math widening) plus a scoping/sequencing plan for items 1+27 |
+| frontend | idle | queue clear; next real work follows once item 18 lands or the items 1/27 scoping plan surfaces UI follow-ups |
+| qa | idle | queue clear; standing by for item 18's landing to verify |
 
 ---
 
@@ -50,6 +50,18 @@ than manufacturing further busywork to avoid reporting it. The swarm remains
 live and will pick up immediately on any operator direction or newly
 discovered bounded work; the standing ~20-minute autonomous check-in
 continues regardless.
+
+**UPDATE (2026-07-24, ~15:35 ET) — operator decided all three gated items.**
+Item 27: widen the posture gate to accept any equipment (real engineering
+scope; backend to produce a scoping/sequencing plan first, same shape as the
+earlier `item-1-architecture-wall-design.md`, before implementation starts).
+Item 18: widen Wizard non-Human spell-math now — dispatched to backend, who
+must empirically re-verify the formulas for a non-Human Wizard end to end,
+not just rely on the earlier read-through scoping note. Item 1's multi-weapon
+case: add a real equipment-attachment schema field, sequenced together with
+item 27 since both need the same underlying attachment data. New wave of
+backend work dispatched; docs updated in `risks-and-open-questions.md` and
+`SWARM_TASKS.md`.
 
 ---
 

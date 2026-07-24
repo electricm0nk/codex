@@ -1178,7 +1178,16 @@ prior refresh, itself already superseded by everything since)
 | frontend | idle | closure-readiness pass done and pushed (c014ffec) — one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified |
 | qa | idle | standing by; nothing currently needs independent verification |
 
-**Checkpoint (2026-07-24, ~15:25 ET): bounded swarm-actionable backlog is exhausted.** All three teammates idle with clean queues, not blocked on each other or infrastructure. Everything remaining in SWARM_TASKS.md is blocked/deferred on an operator decision (items 1, 18, 27) or is multi-cycle future-epic scope (class breadth, 12-class starting wealth). Written up plainly as a real checkpoint finding in SWARM_REPORT.md (risks item 31) rather than manufacturing busywork. Swarm remains live; standing check-in cadence continues.
+**Checkpoint (2026-07-24, ~15:25 ET): bounded swarm-actionable backlog is exhausted.** All three teammates idle with clean queues, not blocked on each other or infrastructure. Everything remaining in SWARM_TASKS.md is blocked/deferred on an operator decision (items 1, 18, 27) or is multi-cycle future-epic scope (class breadth, 12-class starting wealth). Written up plainly as a real checkpoint finding in SWARM_REPORT.md (risks item 31) rather than manufacturing busywork.
+
+**Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
+
+## Agent Status (2026-07-24, ~15:35 ET)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | dispatched item 18 (Wizard non-Human spell-math widening) first, plus a scoping/sequencing plan for items 1+27 (equipment-attachment schema + posture-gate widening) before those land as code |
+| frontend | idle | queue clear; will get real work once backend's item 18 lands (verification) or the items 1/27 scoping plan surfaces UI-facing follow-ups |
+| qa | idle | queue clear; standing by for item 18's landing to verify |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
