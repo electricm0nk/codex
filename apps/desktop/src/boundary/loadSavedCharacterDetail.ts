@@ -2,6 +2,14 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { CorpusDerivedDto, DiagnosticDto, PilotSnapshotDto } from './loadCreateCharacter';
+import type { AcquisitionModeDto } from './addSpellSelection';
+
+/** Mirrors `SpellSelectionImportDto` in `character_hub.rs` — a general-purpose round-trip shape, not import-only despite the name. */
+export interface SpellSelectionDto {
+  spellId: string;
+  sourceClassId: string;
+  acquisitionMode: AcquisitionModeDto;
+}
 
 /**
  * Read-only desktop boundary over a single saved character's detail.
@@ -23,6 +31,14 @@ export interface LoadSavedCharacterResponse {
   corpusDerived: CorpusDerivedDto;
   /** The character's full persisted `chosen.selected_feats`, verbatim — not just feats added this session. */
   selectedFeats: string[];
+  /**
+   * The character's full persisted `chosen.spells_selected`, verbatim — not
+   * just spells added this session. Lets a Wizard spell add tell whether
+   * this is truly "the first spell" (needs the atomic
+   * `recordAndPrepareSpellSelection` bootstrap) or whether the deadlock is
+   * already broken (the cheaper plain `addSpellSelection` suffices).
+   */
+  spellsSelected: SpellSelectionDto[];
 }
 
 export async function loadSavedCharacterDetail(

@@ -76,5 +76,6 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
       ],
     },
     selectedFeats: ['feat:power_attack', 'feat:dodge', 'feat:weapon_focus'],
+    spellsSelected: [],
   };
 }

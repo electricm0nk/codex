@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
-import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
 import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
@@ -14,7 +14,7 @@ import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
-import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
+import { blockedMessageFromDiagnostics, isWizardSpellBootstrap, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
@@ -993,7 +993,11 @@ export function CharacterSheet(props: {
         ],
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
+      const refresh = toCharacterMutationRefresh(
+        outcome,
+        props.detail?.selectedFeats ?? [],
+        props.detail?.spellsSelected ?? []
+      );
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1037,6 +1041,7 @@ export function CharacterSheet(props: {
         diagnostics: [],
         corpusDerived: outcome.corpusDerived,
         selectedFeats: props.detail?.selectedFeats ?? [],
+        spellsSelected: props.detail?.spellsSelected ?? [],
       });
       setMoney(outcome.money);
     } catch (cause: unknown) {
@@ -1064,32 +1069,49 @@ export function CharacterSheet(props: {
       // Wizard's `unmet_wizard_spellbook_conditions` requires a non-empty
       // Known set AND a non-empty Prepared set simultaneously — no sequence
       // of single-mode `add_spell_selection` calls can ever satisfy that
-      // (each call is independently gated on reaching `Computed` before
-      // persisting), so every Wizard pick goes through the atomic
-      // record-and-prepare command instead. The existing SpellsTab already
-      // doesn't model Known-vs-Prepared posture for any class, so treating
-      // every picked Wizard spell as both is consistent with that, not a
-      // new simplification. Every other class keeps the plain Known-only
-      // path unchanged.
-      const outcome =
-        primaryClassId === WIZARD_CLASS_ID
-          ? await recordAndPrepareSpellSelection({
-              characterId: props.row.characterId,
-              spellId: entry.key,
-              sourceClassId: primaryClassId,
-              savedAt: new Date().toISOString(),
-            })
-          : await addSpellSelection({
-              characterId: props.row.characterId,
-              spellId: entry.key,
-              sourceClassId: primaryClassId,
-              // "Known" is the closest default to "the character now has
-              // access to this spell" without picking a prepared-caster's
-              // daily list — out of scope for a search-and-select picker.
-              acquisitionMode: 'Known',
-              savedAt: new Date().toISOString(),
-            });
-      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
+      // from zero (each call is independently gated on reaching `Computed`
+      // before persisting, and neither mode alone gets there), so only the
+      // genuine bootstrap — this character's first-ever Wizard spell —
+      // needs the atomic record-and-prepare command. Once that first spell
+      // exists, both sets are already non-empty, so a plain
+      // `add_spell_selection` (Known) is enough to keep reaching `Computed`
+      // for every spell after (risks-and-open-questions.md item 9a) — the
+      // gate only checks the sets are non-empty overall, not that this
+      // specific spell is in both, and the existing SpellsTab doesn't model
+      // Known-vs-Prepared posture for any class either, so this isn't a
+      // visible behavior change from always taking the atomic path.
+      const existingSpells = props.detail?.spellsSelected ?? [];
+      const isWizardBootstrap = isWizardSpellBootstrap(existingSpells, primaryClassId, WIZARD_CLASS_ID);
+      const outcome = isWizardBootstrap
+        ? await recordAndPrepareSpellSelection({
+            characterId: props.row.characterId,
+            spellId: entry.key,
+            sourceClassId: primaryClassId,
+            savedAt: new Date().toISOString(),
+          })
+        : await addSpellSelection({
+            characterId: props.row.characterId,
+            spellId: entry.key,
+            sourceClassId: primaryClassId,
+            // "Known" is the closest default to "the character now has
+            // access to this spell" without picking a prepared-caster's
+            // daily list — out of scope for a search-and-select picker.
+            acquisitionMode: 'Known',
+            savedAt: new Date().toISOString(),
+          });
+      // Mirrors exactly what the mutation itself appended — never
+      // fabricated. The bootstrap path appends both a Known and a Prepared
+      // entry for the same spell in one call; every other path appends one.
+      const newSpells: SpellSelectionDto[] = isWizardBootstrap
+        ? [
+            { spellId: entry.key, sourceClassId: primaryClassId, acquisitionMode: 'Known' },
+            { spellId: entry.key, sourceClassId: primaryClassId, acquisitionMode: 'Prepared' },
+          ]
+        : [{ spellId: entry.key, sourceClassId: primaryClassId, acquisitionMode: 'Known' }];
+      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? [], [
+        ...existingSpells,
+        ...newSpells,
+      ]);
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1111,7 +1133,11 @@ export function CharacterSheet(props: {
       // The feat was just appended to chosen.selected_feats by this exact
       // mutation, so appending it here mirrors the real backend change —
       // not fabricated, the same append `add_feat_selection` itself made.
-      const refresh = toCharacterMutationRefresh(outcome, [...(props.detail?.selectedFeats ?? []), entry.key]);
+      const refresh = toCharacterMutationRefresh(
+        outcome,
+        [...(props.detail?.selectedFeats ?? []), entry.key],
+        props.detail?.spellsSelected ?? []
+      );
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;
@@ -1242,7 +1268,11 @@ export function CharacterSheet(props: {
           .map(([skillName, ranks]) => ({ skillId: skillIdFor(skillName), ranks })),
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
+      const refresh = toCharacterMutationRefresh(
+        outcome,
+        props.detail?.selectedFeats ?? [],
+        props.detail?.spellsSelected ?? []
+      );
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
         return;

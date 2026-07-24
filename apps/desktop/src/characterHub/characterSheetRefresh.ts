@@ -1,5 +1,5 @@
 import type { CreateCharacterOutcome, DiagnosticDto } from '../boundary/loadCreateCharacter';
-import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
 
 /**
  * Maps a `CreateCharacterResponse`-shaped mutation outcome — the shape
@@ -33,17 +33,37 @@ export function blockedMessageFromDiagnostics(diagnostics: DiagnosticDto[]): str
 }
 
 /**
- * `selectedFeats` isn't part of `CreateCharacterOutcome` (only
- * `load_saved_character` returns it, not the mutation commands), so callers
- * pass the value the refreshed `detail` should carry explicitly — the
- * previous known list carried forward unchanged for any mutation that
- * doesn't touch feats, or that list plus the newly added feat id for a feat
- * mutation. Never fabricated: either real prior data or a real just-applied
- * append, matching exactly what the backend mutation itself did.
+ * True exactly when a spell add for `classId` is a genuine Wizard bootstrap
+ * -- this character's first-ever spell recorded under the Wizard class --
+ * and therefore needs the atomic `recordAndPrepareSpellSelection` rather
+ * than the cheaper single-mode `addSpellSelection`. Once one Wizard spell
+ * already exists, `unmet_wizard_spellbook_conditions` (pilot_compute.rs)
+ * already sees non-empty Known and Prepared sets, so every later Wizard
+ * pick can take the plain path every other class already uses
+ * (risks-and-open-questions.md item 9a).
+ */
+export function isWizardSpellBootstrap(
+  existingSpells: SpellSelectionDto[],
+  classId: string,
+  wizardClassId: string
+): boolean {
+  return classId === wizardClassId && !existingSpells.some((selection) => selection.sourceClassId === wizardClassId);
+}
+
+/**
+ * `selectedFeats`/`spellsSelected` aren't part of `CreateCharacterOutcome`
+ * (only `load_saved_character` returns them, not the mutation commands), so
+ * callers pass the value the refreshed `detail` should carry explicitly —
+ * the previous known list carried forward unchanged for any mutation that
+ * doesn't touch that list, or that list plus the newly applied entry/entries
+ * for a mutation that does. Never fabricated: either real prior data or a
+ * real just-applied append, matching exactly what the backend mutation
+ * itself did.
  */
 export function toCharacterMutationRefresh(
   outcome: CreateCharacterOutcome,
-  selectedFeats: string[]
+  selectedFeats: string[],
+  spellsSelected: SpellSelectionDto[]
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
@@ -57,6 +77,7 @@ export function toCharacterMutationRefresh(
       diagnostics: [],
       corpusDerived: outcome.corpusDerived,
       selectedFeats,
+      spellsSelected,
     },
   };
 }

@@ -306,7 +306,7 @@ export function LoadCharacterScreen(props: {
         setStatus(`Imported "${outcome.summary.displayLabel}".`);
         props.onRefresh();
       } else {
-        const refresh = toCharacterMutationRefresh(outcome, []);
+        const refresh = toCharacterMutationRefresh(outcome, [], []);
         setStatus(refresh.kind === 'blocked' ? `Import failed: ${refresh.message}` : 'Import failed.');
       }
     } catch (cause: unknown) {
