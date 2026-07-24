@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 1+27 scoping plan landed (1f8dd2fa), operator resolved all 3 open questions; starting sub-task 1 (schema field) |
-| frontend | idle | queue clear; sub-task 6 (attachment UI) blocked on sub-task 1 |
-| qa | idle | queue clear; will coordinate on sub-task 1's test-fixture updates once backend starts |
+| backend | working | sub-task 1's non-QA half landed (797bd436), lead-verified 262/262 lib + 204/204 desktop; standing by on sub-task 2 sequencing |
+| frontend | idle | queue clear; sub-task 6 blocked on sub-task 1 fully landing |
+| qa | working | fixing the 42 QA-owned test-fixture construction sites backend flagged |
 
 ---
 
