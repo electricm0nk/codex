@@ -9,7 +9,7 @@ separate, mechanical, cron-driven refresh (every 5 min, via
 staleness even if the lead goes quiet; it never touches anything above it,
 and the lead never hand-edits it.
 
-(a) Happening now (refreshed 2026-07-24)
+(a) Happening now (refreshed 2026-07-24, 01:42 ET)
 ------------------------------------------
 orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
@@ -17,13 +17,26 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 teammates, ~20 min check-in cadence via
                                 ScheduleWakeup (cron heartbeat script still
                                 runs too, mostly skips on a dirty tree)
-frontend              Sonnet   wiring the still-stub Defense tab to render
-                                the real damage_reduction field, using the
-                                now-fixed driver.sh (RUN_DESKTOP_AGENT=
-                                frontend) for live verification
-backend               Sonnet   grounding Wizard's/Rogue's real class-skill
-                                lists against the PCGen corpus, widening
-                                skill_allocation.rs beyond Fighter-only
+frontend              -        SESSION QUOTA OUTAGE, resets 4:10am ET --
+                                was mid-task wiring the still-stub Defense
+                                tab to render the real damage_reduction
+                                field; nothing landed yet, will resume on
+                                reset (same pattern as the two earlier
+                                quota outages this session, both recovered
+                                cleanly)
+backend               -        SESSION QUOTA OUTAGE, resets 4:10am ET --
+                                was mid-task on a targeted sweep for other
+                                Fighter-only-grounded computations; nothing
+                                landed yet, will resume on reset
+qa                     -        SESSION QUOTA OUTAGE, resets 4:10am ET --
+                                landed the DR-exposure catalogue test
+                                (39fef863) before hitting the wall; left a
+                                second, complete test file
+                                (v06_wizard_rogue_skill_allocation_grounding.rs)
+                                uncommitted -- lead verified it (3/3 pass,
+                                full suite clean) and landed it on QA's
+                                behalf (d35521ec) rather than risk losing
+                                finished work during the outage
 qa                    Sonnet   writing independent tests/** catalogue
                                 coverage for the DR/purchase_equipment/
                                 spells_selected DTO-exposure fixes
