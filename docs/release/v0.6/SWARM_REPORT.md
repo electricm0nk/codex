@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 1's non-QA half landed (797bd436), lead-verified 262/262 lib + 204/204 desktop; standing by on sub-task 2 sequencing |
+| backend | working | sub-tasks 1+2 both landed (797bd436, 5b0c7243), lead-verified 263/263 lib + 204/204 desktop; running a background full-workspace build to confirm the QA boundary before sub-task 4 |
 | frontend | idle | queue clear; sub-task 6 blocked on sub-task 1 fully landing |
-| qa | working | fixing the 42 QA-owned test-fixture construction sites backend flagged |
+| qa | working | fixing the 42 QA-owned test-fixture construction sites |
 
 ---
 
