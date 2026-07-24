@@ -104,6 +104,19 @@ pub struct ResolvedEquipmentEffect {
     /// for every other category, and for an `equipmods` record that
     /// carries no matching `BONUS:WEAPON|...|TYPE=Enhancement` token.
     pub weapon_enhancement_bonus: Option<WeaponEnhancementBonus>,
+    /// v0.6 alpha swarm items 1+27 sub-task 2: the real, per-weapon
+    /// TOHIT-affecting bonus resolved from *this specific* selection's own
+    /// `applied_modifiers` (see `character_input::EquipmentSelection`'s doc
+    /// comment) -- `Some(n)` for every real weapon selection (a real `0`
+    /// when it has no applied modifiers, or none affect TOHIT), `None` for
+    /// every non-weapon selection (not applicable, not "no bonus"). Unlike
+    /// `EquipmentEffects.attack_bonus_delta` (still gated to the
+    /// single-weapon case for wire-contract stability -- see that field's
+    /// own doc comment), this field is genuinely unambiguous for *any*
+    /// number of equipped weapons, since each weapon's modifiers are now
+    /// explicitly attached rather than inferred from "the only weapon
+    /// equipped."
+    pub to_hit_bonus: Option<i16>,
     pub table_cell: Option<TableCellRef>,
 }
 
@@ -161,7 +174,7 @@ pub fn compute_equipment_effects(
     let mut spell_failure_chance: Option<f32> = None;
     let mut armor_check_penalty_total: i16 = 0;
     let mut weapon_count: u32 = 0;
-    let mut to_hit_bonus_total: i16 = 0;
+    let mut single_weapon_to_hit_bonus: i16 = 0;
 
     for selection in equipped {
         let Some((record, table_cell)) =
@@ -169,9 +182,12 @@ pub fn compute_equipment_effects(
         else {
             continue;
         };
-        if is_weapon_record(record) {
+        let to_hit_bonus = is_weapon_record(record).then(|| {
+            let bonus = resolve_weapon_to_hit_bonus(&selection.applied_modifiers, corpus);
             weapon_count += 1;
-        }
+            single_weapon_to_hit_bonus = bonus;
+            bonus
+        });
         let key = equipment_key_token(record)
             .unwrap_or(&record.name)
             .to_string();
@@ -199,11 +215,6 @@ pub fn compute_equipment_effects(
             EquipmentCategory::Equipmods => equipmods::compute_equipmods_effect(record),
             EquipmentCategory::ArmsArmor | EquipmentCategory::General | EquipmentCategory::MagicItems => None,
         };
-        if let Some(bonus) = &weapon_enhancement_bonus {
-            if bonus.affects.contains("TOHIT") {
-                to_hit_bonus_total += bonus.bonus;
-            }
-        }
 
         if let Some(bonus) = effect.armor_class_bonus {
             armor_class_delta += bonus;
@@ -230,14 +241,17 @@ pub fn compute_equipment_effects(
             skill_bonus,
             ability_bonus,
             weapon_enhancement_bonus,
+            to_hit_bonus,
             table_cell,
         });
     }
 
-    // v0.6 alpha swarm item 1, bounded single-weapon attack-bonus slice:
-    // unambiguous only with exactly one real weapon equipped -- see
-    // `EquipmentEffects.attack_bonus_delta`'s own doc comment.
-    let attack_bonus_delta = (weapon_count == 1).then_some(to_hit_bonus_total);
+    // v0.6 alpha swarm items 1+27 sub-task 2: `attack_bonus_delta` stays
+    // single-weapon-scoped for wire-contract stability (see its own doc
+    // comment) even though per-weapon resolution is no longer ambiguous
+    // for any weapon count -- `per_item[].to_hit_bonus` carries the real
+    // value for the 2+-weapon case.
+    let attack_bonus_delta = (weapon_count == 1).then_some(single_weapon_to_hit_bonus);
 
     EquipmentEffects {
         per_item,
@@ -247,6 +261,36 @@ pub fn compute_equipment_effects(
         armor_check_penalty_total,
         attack_bonus_delta,
     }
+}
+
+/// Resolves `applied_modifiers` (item_ids attached to one specific weapon
+/// selection -- see `character_input::EquipmentSelection`'s doc comment)
+/// against `corpus` and sums every TOHIT-affecting `equipmods` bonus. A
+/// modifier item_id that doesn't resolve, or resolves to a non-`Equipmods`
+/// category, or an `Equipmods` record with no matching
+/// `BONUS:WEAPON|...|TYPE=Enhancement` chain, contributes nothing --
+/// mirrors the main loop's own resolve-or-skip discipline, not a
+/// fabricated value.
+fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePackageContent) -> i16 {
+    let mut total = 0;
+    for modifier_item_id in applied_modifiers {
+        let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
+            continue;
+        };
+        let key = equipment_key_token(record).unwrap_or(&record.name);
+        let is_equipmods = equipment_tables()
+            .iter()
+            .any(|entry| entry.key == key && entry.category == EquipmentCategory::Equipmods);
+        if !is_equipmods {
+            continue;
+        }
+        if let Some(bonus) = equipmods::compute_equipmods_effect(record) {
+            if bonus.affects.contains("TOHIT") {
+                total += bonus.bonus;
+            }
+        }
+    }
+    total
 }
 
 /// Whether `record` is a real weapon -- carries a `DAMAGE:` corpus token.
@@ -314,34 +358,39 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
     }
 
     fn equipped(item_id: &str) -> EquipmentSelection {
+        equipped_with_modifiers(item_id, &[])
+    }
+
+    fn equipped_with_modifiers(item_id: &str, applied_modifiers: &[&str]) -> EquipmentSelection {
         EquipmentSelection {
             item_id: item_id.to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
-            applied_modifiers: Vec::new(),
+            applied_modifiers: applied_modifiers.iter().map(|id| id.to_string()).collect(),
         }
     }
 
     #[test]
     fn exactly_one_weapon_plus_a_real_enhancement_yields_a_real_attack_bonus() {
         let corpus = corpus_with_fixture();
-        let equipped_items = vec![
-            equipped("Longsword (Base)"),
-            equipped("Special Ability ~ +1 ~ Weapon"),
-        ];
+        let equipped_items = vec![equipped_with_modifiers(
+            "Longsword (Base)",
+            &["Special Ability ~ +1 ~ Weapon"],
+        )];
 
         let effects = compute_equipment_effects(&equipped_items, &corpus);
 
         assert_eq!(effects.attack_bonus_delta, Some(1), "unambiguous single weapon: +1 TOHIT applies");
+        assert_eq!(effects.per_item[0].to_hit_bonus, Some(1));
     }
 
     #[test]
     fn a_masterwork_tohit_only_bonus_also_counts() {
         let corpus = corpus_with_fixture();
-        let equipped_items = vec![
-            equipped("Longsword (Base)"),
-            equipped("Special Quality ~ Masterwork ~ Weapon"),
-        ];
+        let equipped_items = vec![equipped_with_modifiers(
+            "Longsword (Base)",
+            &["Special Quality ~ Masterwork ~ Weapon"],
+        )];
 
         let effects = compute_equipment_effects(&equipped_items, &corpus);
 
@@ -351,7 +400,10 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
     #[test]
     fn a_damage_only_enhancement_does_not_affect_the_attack_bonus() {
         let corpus = corpus_with_fixture();
-        let equipped_items = vec![equipped("Longsword (Base)"), equipped("Special Ability ~ Flaming ~ Weapon")];
+        let equipped_items = vec![equipped_with_modifiers(
+            "Longsword (Base)",
+            &["Special Ability ~ Flaming ~ Weapon"],
+        )];
 
         let effects = compute_equipment_effects(&equipped_items, &corpus);
 
@@ -377,6 +429,61 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
         );
     }
 
+    /// v0.6 alpha swarm sub-task 2: a modifier that exists in the corpus and
+    /// is genuinely equipped, but is NOT listed in any weapon's
+    /// `applied_modifiers`, must not silently attach to "the only weapon
+    /// equipped" any more -- proves attachment is now required, not merely
+    /// unambiguous-by-elimination (the old heuristic this replaced would
+    /// have applied it here).
+    #[test]
+    fn an_equipped_but_unattached_modifier_does_not_apply_to_any_weapon() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped("Longsword (Base)"), equipped("Special Ability ~ +1 ~ Weapon")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(
+            effects.attack_bonus_delta,
+            Some(0),
+            "the +1 modifier is equipped but not attached to the Longsword via applied_modifiers, \
+             so it must not count -- explicit attachment is required now"
+        );
+    }
+
+    /// v0.6 alpha swarm sub-task 2: the real, closed 2+-weapon gap. The
+    /// aggregate `attack_bonus_delta` stays honestly `None` (a single
+    /// scalar can't represent two different weapons' bonuses at once --
+    /// see its own doc comment), but each weapon's own `to_hit_bonus` in
+    /// `per_item` is now real and unambiguous, since each modifier is
+    /// explicitly attached to the specific weapon it enhances.
+    #[test]
+    fn two_weapons_each_with_their_own_attached_modifier_resolve_independently() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![
+            equipped_with_modifiers("Longsword (Base)", &["Special Ability ~ +1 ~ Weapon"]),
+            equipped("Dagger (Base)"),
+        ];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(
+            effects.attack_bonus_delta, None,
+            "the aggregate scalar stays None for 2+ weapons -- it cannot represent both at once"
+        );
+        let longsword = effects
+            .per_item
+            .iter()
+            .find(|item| item.item_id == "Longsword (Base)")
+            .expect("Longsword must resolve");
+        let dagger = effects
+            .per_item
+            .iter()
+            .find(|item| item.item_id == "Dagger (Base)")
+            .expect("Dagger must resolve");
+        assert_eq!(longsword.to_hit_bonus, Some(1), "Longsword's own attached +1 resolves independently");
+        assert_eq!(dagger.to_hit_bonus, Some(0), "Dagger has no attached modifier, a real zero");
+    }
+
     #[test]
     fn zero_weapons_equipped_leaves_the_attack_bonus_honestly_absent() {
         let corpus = corpus_with_fixture();
@@ -385,23 +492,5 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
         let effects = compute_equipment_effects(&equipped_items, &corpus);
 
         assert_eq!(effects.attack_bonus_delta, None, "no weapon at all -- nothing to attach a bonus to");
-    }
-
-    #[test]
-    fn two_weapons_equipped_leaves_the_attack_bonus_honestly_ambiguous() {
-        let corpus = corpus_with_fixture();
-        let equipped_items = vec![
-            equipped("Longsword (Base)"),
-            equipped("Dagger (Base)"),
-            equipped("Special Ability ~ +1 ~ Weapon"),
-        ];
-
-        let effects = compute_equipment_effects(&equipped_items, &corpus);
-
-        assert_eq!(
-            effects.attack_bonus_delta, None,
-            "two weapons equipped: which one the enhancement attaches to is genuinely \
-             ambiguous, must stay honestly absent rather than guess"
-        );
     }
 }
