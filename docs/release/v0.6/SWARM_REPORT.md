@@ -168,6 +168,7 @@ until now — populated for real below):
 | 6 | Feat-effects engine: verified concretely (built a real fixture, added Toughness to `selected_feats`, ran the real `build_pilot_headless_receipt` entry point) that **no feat outside the 3 hardcoded into the deterministic posture gate (Power Attack, Dodge, Weapon Focus) has any mechanical effect anywhere** — confirmed by grep this isn't Toughness-specific, there is no general feat-effects computation in `pilot_compute.rs` at all | **Not a quick fix** — logged as its own architecture gap, linked to the existing AC/attack-bonus/skill-posture widening item (risks-and-open-questions.md item 1) rather than assigned to backend as routine work. Not attempted this swarm. |
 | 7 | **MAJOR — CreateCharacterForm never actually submitted racial ability adjustments, for any of the 4 fixed-adjustment races, since the form was first built.** `calculatedScore()` (raw + racial adjustment) was computed for the on-screen preview only; the submitted `abilityScores` used raw, unadjusted `rawScore()` instead — every non-Human Elf/Dwarf/Gnome/Halfling character ever created had silently wrong ability scores, independent of and predating this session's engine-side explanation-text fixes (defect 4 above only corrected what the text *described*, not what got *submitted*) | **Fixed** (`f2c616ed`), live-verified end-to-end for Elf (disk-confirmed correct DEX/CON/INT cascade) and Dwarf (disk-confirmed `constitution:16/wisdom:14/charisma:6` on a fresh character created through the real UI). Gnome/Halfling verified via real production-code execution (actual function + actual race-catalog data, not a reimplementation) after a session-scoped GUI environment blocker (since fixed, `f6fe0df2`) prevented completing their live-disk leg — accepted as sufficient given the mechanism is unconditional/race-agnostic and already twice disk-proven |
 | 8 | Fighter multiclass/race level-lookup gap, 3 instances: `validate_fighter_feat_choice_legality` and two sibling checks in `unmet_combat_posture_conditions` used single-class-only or Human-only level lookups instead of the multiclass-aware `fighter_level_in_mix`, silently skipping validation for non-Human and/or multiclass Fighters — one instance empirically confirmed exploitable (a Human Fighter1/Rogue3 with a wrong bonus-feat choice produced zero diagnostics before the fix) | **Fixed, systematic sweep complete** (`0eb9ea65`, `32289cb4` follow-up, `68721ca0`) — all 4 `_legality`/`_conditions`/`validate_` gate functions in `pilot_compute.rs` checked, no further instances. Currently no live UI attack surface (the create/level-up flow hardcodes canonical choices for the slots these checks protect) — real defense-in-depth for the command/API layer, not an active user-visible bug today |
+| 9 | `skill_allocation.rs`'s class-skill recognition was Fighter-only, so neither Wizard nor Rogue had ANY grounded class-skill posture — silently left the PF1 cross-class rank cap completely unenforced for both (confirmed empirically: a level-1 Wizard could dump 5 ranks into a cross-class skill with a real cap of 1, zero diagnostic) | **Fixed** (`21f815c1`), grounded against the real PCGen corpus (Rogue: all 5 bounded skills, `cr_abilities_class.lst:2838`; Wizard: genuinely empty, `cr_abilities_class.lst:2565`, checked not assumed), **catalogue-adopted** (`d35521ec`, `2ab19bc7`) — real fixture-driven tests through the actual parser, both citations independently re-verified, and a fresh-eyes re-check found and closed a real gap in an *existing* test that used the bare string `"wizard"` instead of the real `"class:wizard"` id and so never actually exercised Wizard recognition |
 
 **Bar-distance assessment (honest current picture):** the alpha bar is
 **not** met yet, and the remaining distance is now well-characterized rather
@@ -248,6 +249,67 @@ breadth and the posture-narrowness/feat-effects architecture gaps are
 untouched — but it meaningfully strengthens confidence in the *correctness*
 of what the 3 working classes already claim, and closes out several
 previously-open threads cleanly rather than leaving them to drift.
+
+### Third checkpoint (2026-07-24, post-skill-allocation-fix, sweep, and scoping synthesis)
+
+A short round focused on closing out the last silent-correctness bug this
+swarm's sweep pattern found, plus a synthesis pass over the architecture
+gaps that remain:
+
+- **`skill_allocation.rs`'s Fighter-only class-skill recognition (defect 9)
+  is fixed and catalogue-adopted.** Same failure shape as the earlier
+  class-skill-modifier bug (defect 3) — a silently wrong number with no
+  claim-blocking diagnostic — but on rank enforcement rather than a
+  modifier value: neither Wizard nor Rogue had any grounded class-skill
+  posture in this module, so the PF1 cross-class rank cap never engaged
+  for either. Both PCGen citations independently re-verified. Catalogue
+  coverage went through a real fresh-eyes re-check (requested by the lead
+  after a quota-outage stewardship landing) that found and closed a real
+  gap in an *existing* test — it used the bare string `"wizard"` rather
+  than the real `"class:wizard"` id, so it never actually exercised Wizard
+  recognition in a multiclass union despite its name — and caught its own
+  mid-draft assertion error (asserted the cross-class cap value where the
+  real class-skill cap value applied) by running before trusting it.
+- **A systematic sweep for the same failure shape elsewhere came back
+  clean** (risks item 21): backend checked `pilot_compute.rs`,
+  `skill_allocation.rs`, `durability.rs`, and `money.rs` for any remaining
+  Fighter-only-grounded computation with a silent downstream consequence.
+  One candidate (`explain_rogue_level1_chassis`'s single-class-only gate)
+  was traced and ruled out — its output has no downstream consumer, so a
+  missing record there is cosmetic, not a silent wrong number, the same
+  shape already established for non-Human Rogue elsewhere. **This is the
+  signal that closes out the "keep watching for silent bugs" thread**: the
+  three working classes' shared computation paths are now confirmed clean,
+  not just unexamined.
+- **`docs/release/v0.6/future-epic-scoping.md`** consolidates the three
+  remaining gaps (risks items 1/17/18) side by side for the operator's
+  eventual review: the headless/corpus-aware architecture wall (attack-
+  bonus enhancement math, skill armor-check-penalty), the feat-effects
+  engine absence, and the non-Human Wizard spell-math gap. Confirms they
+  are independent — fixing the architecture wall would unlock the first
+  gap's two sub-problems but buys nothing for feat effects or Wizard's
+  spell math, so none of the three blocks starting on either of the others.
+  No new facts, a cross-item synthesis of what's already independently
+  established in `risks-and-open-questions.md`.
+- **Two DTO-exposure fixes (defects from risks items 6/9/9a) got real
+  fixture-driven catalogue coverage**: the DR-exposure DTO field
+  (`PilotSnapshot.damage_reduction`) now has a test driving a real
+  Barbarian fixture through the real compute pipeline (stronger than the
+  synthetic-receipt shape backend's own inline tests use, since Barbarian
+  can't reach `Computed` today and a real end-to-end proof needs one
+  synthesized field rather than a fully fabricated receipt). The other two
+  (`purchase_equipment` atomicity, `spells_selected` exposure) are
+  confirmed structurally unreachable from `tests/**` — entirely in the
+  separate `codex-desktop` crate with no `rules_core` equivalent to
+  complement — already correctly covered by backend's own inline
+  Tauri-layer tests, same crate boundary established for Rogue's UI
+  reachability earlier this swarm.
+
+Net effect: the bar-distance picture is unchanged in shape from the second
+checkpoint, but is now backed by an explicit clean-sweep result rather than
+an implicit absence of further findings, and the three remaining
+architecture gaps have a single reference document instead of being spread
+across several risks-doc entries.
 
 **Not signing the attestation.** Per §4.4's "Done" criteria, this requires
 every shipped calculation having red-green coverage (true) *and* the
