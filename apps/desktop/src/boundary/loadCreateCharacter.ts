@@ -52,6 +52,14 @@ export interface PilotSnapshotDto {
   baselineArmorClass: number;
   totalSaves: BaseSavesDto;
   selectedSkillModifiers: SelectedSkillModifiersDto;
+  /**
+   * The flat DR magnitude from a grounded class-feature DR explanation
+   * (currently only Barbarian's) — see `PilotSnapshotDto`'s own doc comment
+   * in `character_hub.rs`. Absent (not zero) when no class currently
+   * reachable through this UI grounds one; `#[serde(skip_serializing_if)]`
+   * on the Rust side means the key itself may not be present on the wire.
+   */
+  damageReduction?: number;
 }
 
 export interface DiagnosticDto {

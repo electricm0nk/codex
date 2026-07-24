@@ -726,6 +726,35 @@ function MoneyPanel(props: {
 }
 
 /**
+ * Real, bounded: the only Defense stat with a backend computation to show
+ * today is the flat Damage Reduction magnitude (`PilotSnapshotDto.damageReduction`,
+ * `character_hub.rs`) — currently only ever grounded for Barbarian, which
+ * isn't a chassis-supported class through this UI yet, so `undefined` here
+ * is the expected, honest state for every character reachable today, not a
+ * bug. AC breakdown, save modifiers by source, etc. have no equivalent
+ * backend computation, so the rest of the tab stays the same "coming soon"
+ * placeholder rather than a fabricated layout for uncomputed data. Note:
+ * the "Recompute" menu action doesn't currently refresh this field
+ * (`RecomputedCharacterSnapshotDto` doesn't carry it), so it always reflects
+ * the originally loaded snapshot — a real, narrow, pre-existing gap, not
+ * something this change papers over.
+ */
+function DefenseTab(props: { damageReduction: number | undefined }) {
+  return (
+    <div>
+      {props.damageReduction !== undefined ? (
+        <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
+          <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
+        </p>
+      ) : null}
+      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+        {props.damageReduction !== undefined ? 'Everything else in Defense — coming soon.' : 'Defense — coming soon.'}
+      </p>
+    </div>
+  );
+}
+
+/**
  * Equipped-item reachability, sourced from `compute_pilot_with_corpus` via
  * the real IPC boundary — not mock data. Same bundled-fixture scope note
  * as `SpellsTab`: derived stats (armor bonus, attack bonus, etc.) are a
@@ -1584,6 +1613,8 @@ export function CharacterSheet(props: {
             <div style={{ ...panel, minHeight: 200, padding: '1.25rem' }}>
               {tab === 'Weapons' ? (
                 <WeaponsTab proficiency={weaponProficiency} onAddWeapon={() => setItemPickerOpen('weapon')} />
+              ) : tab === 'Defense' ? (
+                <DefenseTab damageReduction={snapshot?.damageReduction} />
               ) : tab === 'Spells' ? (
                 <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
