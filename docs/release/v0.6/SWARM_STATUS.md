@@ -117,12 +117,12 @@ alongside the existing Agent Status convention.
   typecheck clean, no new test file (pure data-refresh wiring, no new
   pure logic). Frontend's queue is clear again.
 
-## Agent Status (2026-07-24, ~13:25 ET)
+## Agent Status (2026-07-24, ~13:42 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | shape B landed (647e52aa, verified 245/245 lib + 203/203 desktop); standing by |
-| frontend | working | dispatched to render the honest "not shown -- outside demo corpus" indicator for backend's new unresolved-selection lists |
-| qa | working | verifying frontend's Defense-tab fix; will also verify backend's shape B and, once landed, frontend's UI treatment |
+| backend | working | dispatched to widen the feat-effects engine to a few more real, mechanically-simple feats (e.g. Skill Focus), same bounded discipline as Toughness |
+| frontend | working | rendering the honest "not shown -- outside demo corpus" indicator |
+| qa | idle | Defense-tab fix verified clean (both call sites, correct gating, honest failure fallback); standing by |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
