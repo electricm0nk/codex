@@ -1182,12 +1182,14 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~17:25 ET)
+## Agent Status (2026-07-24, ~18:05 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-tasks 1+2 both landed (797bd436, 5b0c7243), lead-verified 263/263 lib + 204/204 desktop; flagged and got sign-off on a real design fork (per-weapon `to_hit_bonus` vs. the flat scalar) before writing sub-task 2; running a background full-workspace build to confirm the QA boundary compiles clean before moving to sub-task 4 |
-| frontend | idle | queue clear; sub-task 6 blocked on sub-task 1 fully landing |
-| qa | working | fixing the 42 `tests/**` `EquipmentSelection` construction sites (in progress in the working tree, uncommitted) |
+| backend | working | sub-tasks 1+2 fully closed and lead-verified (4280 total passed, 0 failed, 478 blocks); mid-edit on a doc-comment cleanup in `equipment_effects.rs` (uncommitted, non-functional); cleared to start sub-task 4 (corpus-aware `Computed` verdict, highest-risk step) |
+| frontend | idle | cleared to start sub-task 6 (equipment-modifier-attachment UI) now that sub-task 1 is fully landed |
+| qa | idle | fixture fix landed (eeaa876d), self-caught a real bug in their first automated pass (over-matched function signatures) before landing, correctly handled a live collision with backend's in-progress file via stash/pop; standing by |
+
+**Note**: the mechanical Auto Heartbeat block below has not refreshed since ~16:45 ET despite being described as "cron-driven every 5 min" — genuinely stale at this point, not a one-off. Not hand-fixing per standing instruction (separate mechanism), but flagging since it's been stale for over an hour now.
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

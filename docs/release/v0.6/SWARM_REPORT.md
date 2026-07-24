@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-tasks 1+2 both landed (797bd436, 5b0c7243), lead-verified 263/263 lib + 204/204 desktop; running a background full-workspace build to confirm the QA boundary before sub-task 4 |
-| frontend | idle | queue clear; sub-task 6 blocked on sub-task 1 fully landing |
-| qa | working | fixing the 42 QA-owned test-fixture construction sites |
+| backend | working | sub-tasks 1+2 fully closed and lead-verified (4280 passed, 0 failed); starting sub-task 4 (corpus-aware Computed verdict, highest-risk step) |
+| frontend | idle | cleared to start sub-task 6 (equipment-modifier-attachment UI) |
+| qa | idle | fixture fix landed (eeaa876d); standing by |
 
 ---
 
