@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | item 18 fully closed (7c2d2ad2, lead + QA both independently verified); now on the items 1+27 scoping/sequencing plan |
-| frontend | idle | queue clear; next real work follows once the items 1/27 scoping plan surfaces UI follow-ups |
-| qa | idle | independently re-verified item 18 clean via a full-function trace; standing by |
+| backend | working | items 1+27 scoping plan landed (1f8dd2fa), operator resolved all 3 open questions; starting sub-task 1 (schema field) |
+| frontend | idle | queue clear; sub-task 6 (attachment UI) blocked on sub-task 1 |
+| qa | idle | queue clear; will coordinate on sub-task 1's test-fixture updates once backend starts |
 
 ---
 
