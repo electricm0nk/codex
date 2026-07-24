@@ -1206,7 +1206,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T15:50:02
-Latest commit on tranche/6: a015ffe5 docs(v0.6): close item 18 -- Wizard non-Human spell-math widening lands (78 seconds ago) (2026-07-24T15:48:44-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T15:23:08 frontend=2026-07-24T15:02:02 qa=2026-07-24T15:48:54 lead=2026-07-24T15:30:02
+Last mechanical check: 2026-07-24T15:55:01
+Latest commit on tranche/6: 611de30e docs(v0.6): log QA's independent re-verification of item 18 (2 minutes ago) (2026-07-24T15:53:00-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T15:23:08 frontend=2026-07-24T15:02:02 qa=2026-07-24T15:48:54 lead=2026-07-24T15:52:13
 <!-- AUTO-HEARTBEAT-END -->
