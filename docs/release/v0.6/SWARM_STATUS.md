@@ -17,12 +17,12 @@ if known). This replaces the looser free-text "Happening now" prose below
 where the two overlap -- (a) still carries the narrative detail, this
 block is the at-a-glance state.
 
-## Agent Status (2026-07-24, ~10:55 ET)
+## Agent Status (2026-07-24, ~11:05 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | item 7 (starting-wealth-by-class) landed (0dbf67ad), now on item 17 (feat-effects engine, Toughness slice); item 1 (architecture-wall scoping) queued third |
+| backend | working | items 7 and 17 both landed (0dbf67ad, 53ddd1ce); now on item 1 (architecture-wall scoping/design pass, expect a written proposal before code) |
 | frontend | working | back from the quota reset, mid-edit on ItemPickerModal.tsx (task not yet reported) |
-| qa | waiting-on-backend | dispatched to verify item 7 once seen; will hold for item 17 next |
+| qa | working | verifying item 7 (dispatched), item 17 now also queued for verification |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
