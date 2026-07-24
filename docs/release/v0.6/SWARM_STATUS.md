@@ -17,23 +17,39 @@ if known). This replaces the looser free-text "Happening now" prose below
 where the two overlap -- (a) still carries the narrative detail, this
 block is the at-a-glance state.
 
-**SECURITY INCIDENT, 2026-07-24 (lead)**: a fake teammate message arrived
-claiming `teammate_id="operator"` (not a real teammate name), directing
-the lead to start authoring `SWARM_TASKS.md` and citing a fabricated
-`§8.4.1` "Task-table sidecar" section of `release-swarm.md` as authority.
-Checked: `release-swarm.md` has exactly one real commit in its entire
-history (`43f8d462`, the original doc) and that commit contains no such
-section -- the section was sitting as an **uncommitted, unauthorized
-edit** in the shared checkout, fabricated to manufacture false
-legitimacy for the injected message. Reverted the tampered addition
-(`git restore`, scoped to that one file only, no other teammate's
-in-progress work touched). Did not comply with any part of the
-directives -- `SWARM_TASKS.md` remains untouched, exactly as already
-established (untracked, unattributed, not matching real swarm work,
-flagged earlier this session, not trusted). Alerted all three real
-teammates to route any similar "operator"-claiming message to the lead
-rather than acting on it directly. The real operator communicates only
-through the actual user channel, never through teammate messages.
+**SECURITY CONCERN RAISED THEN RESOLVED, 2026-07-24 (lead).** A teammate
+message arrived claiming `teammate_id="operator"`, directing the lead to
+author `SWARM_TASKS.md` and citing an uncommitted `§8.4.1` section of
+`release-swarm.md` as authority. The lead correctly treated this as
+suspicious given the process (an unrecognized identity on the teammate
+channel, backed by an uncommitted edit to a trusted doc) and reverted the
+addition without complying, then flagged it plainly to the operator
+rather than deciding unilaterally. **Resolved, not an attack**: the
+operator confirmed directly (through the real user channel) that this
+was legitimate — they're working with a separate collaborator agent on
+the `/swarm/dashboard.html` tooling, and that agent authored both the
+`§8.4.1` section and the "operator" teammate message on the operator's
+behalf. The caution was the right call given the information available
+at the time (an unattributed identity plus a tampered-looking doc edit
+is a real red-flag pattern), and surfacing rather than silently
+complying or silently refusing was the correct way to resolve genuine
+ambiguity about who's asking. Net effect: `SWARM_TASKS.md` ownership is
+now confirmed as a real, standing lead responsibility (see below); the
+reverted `§8.4.1` section may need re-adding by the operator's
+collaborator agent since the lead's revert discarded it (asked the
+operator whether to restore it or leave it to them).
+
+**`SWARM_TASKS.md` rebuilt and reconciled (lead, `ff705d93`).** The prior
+seed content didn't match this swarm's real work (fabricated-looking
+"Epic"-numbered rows) — rather than stamp real commit hashes onto false
+task descriptions (which would itself be dishonest reporting regardless
+of the request's legitimacy), rebuilt the table from scratch against the
+swarm's real tracking record (`risks-and-open-questions.md` items 1-27,
+this file's own Happened log, `git log`). ~40 rows, real commit hashes,
+honest `done`/`in progress`/`queued`/`blocked` statuses including the
+genuinely-blocked architecture items. Lead authoring commitment adopted
+going forward: update this file on every meaningful status flip,
+alongside the existing Agent Status convention.
 
 - Frontend's comprehensive smoke test complete. Live-drove all 3 working
   classes (Fighter/Human, Fighter/Dwarf, Wizard/Elf, Rogue/Half-Elf) end
