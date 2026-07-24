@@ -1195,7 +1195,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T14:50:01
-Latest commit on tranche/6: bb6da8c2 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-24T14:45:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T14:26:27 frontend=2026-07-24T14:32:14 qa=2026-07-24T14:32:00 lead=2026-07-24T14:34:55
+Last mechanical check: 2026-07-24T15:00:02
+Latest commit on tranche/6: c014ffec fix: wire the Weapons tab's dead Print button (80 seconds ago) (2026-07-24T14:58:42-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T14:26:27 frontend=2026-07-24T14:32:14 qa=2026-07-24T14:32:00 lead=2026-07-24T14:59:38
 <!-- AUTO-HEARTBEAT-END -->
