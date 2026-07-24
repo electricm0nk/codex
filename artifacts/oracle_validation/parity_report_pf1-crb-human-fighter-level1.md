@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Matches: 8
+- Matches: 13
 - Mismatches: 1
 - Result: FAIL
 
@@ -18,6 +18,11 @@
 | skill.selected_modifier.climb | 6 | 6 | yes | — |
 | skill.selected_modifier.intimidate | 3 | 3 | yes | — |
 | skill.selected_modifier.swim | 6 | 6 | yes | — |
+| encumbrance.carrying_capacity.light_max_lbs | 100 | 100 | yes | — |
+| encumbrance.carrying_capacity.medium_max_lbs | 200 | 200 | yes | — |
+| encumbrance.carrying_capacity.heavy_max_lbs | 300 | 300 | yes | — |
+| encumbrance.total_carried_weight_lbs | 29 | 29 | yes | — |
+| durability.max_hp | 12 | 12 | yes | — |
 | combat.baseline_melee_attack_bonus | 5 | 6 | no | — |
 
 ## Normalization Rules Used
