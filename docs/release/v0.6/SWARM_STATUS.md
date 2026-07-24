@@ -192,12 +192,12 @@ alongside the existing Agent Status convention.
   existing test exercises the None path, exactly how it slipped
   through).
 
-## Agent Status (2026-07-24, ~14:03 ET)
+## Agent Status (2026-07-24, ~14:18 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | feat-effects widening diff consistent with described scope; ~34 min since last ping, checked in a second time |
+| backend | working | feat-effects widening landed and verified (f38e9f33, 254/254 lib + 203/203 desktop); already starting the null-serialization bug fix |
 | frontend | idle | queue clear |
-| qa | idle | standing by; the null-serialization bug fix is queued for backend next |
+| qa | working | dispatched to verify the feat-effects widening |
 | qa | idle | verified the outside-demo-corpus indicator clean (both tabs, RED reproduction); standing by for backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)

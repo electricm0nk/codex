@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17, item-1 design pass, shape (c), attack-bonus slice, and the corpus-fixture unresolved-selection fix all landed and independently verified; now widening the feat-effects engine to a few more real feats |
-| frontend | working | Defense-tab render-staleness fix landed and independently verified (`7360fe4a`); now rendering the honest "outside demo corpus" indicator |
-| qa | idle | verified the Defense-tab fix clean (both call sites, correct gating, honest failure fallback, no ordering risk); standing by |
+| backend | working | items 7, 17, item-1 design pass, shape (c), attack-bonus slice, corpus-fixture fix, and the 3-feat save-bonus widening all landed and independently verified; now fixing a real null-serialization bug QA found in shape (c)'s DTO |
+| frontend | idle | Defense-tab fix and shape (c)'s equipmentEffects wiring both landed and independently verified; queue clear |
+| qa | working | verified the Defense-tab fix, the outside-demo-corpus indicator, and found a real bug in equipmentEffects (null-vs-undefined serialization); now verifying the feat-effects widening |
 
 ---
 
