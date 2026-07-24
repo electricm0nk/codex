@@ -6683,6 +6683,30 @@ fn class_summary_label(input: &CharacterInput) -> String {
         .join("+")
 }
 
+/// A human-readable race label for explanation text (e.g. "Elf", "Half-Elf"),
+/// derived from `race_id` rather than a hardcoded race name -- the same
+/// "derive from the real input, don't hardcode" fix `class_summary_label`
+/// already established for class labels (v0.6 alpha swarm item 18 widening,
+/// 2026-07-24: `explain_wizard_level1_prepared_spell_baseline`'s explanation
+/// text previously said "Human Wizard" unconditionally, accurate while that
+/// function only ran for Human, now misleading once widened to any race).
+/// Capitalizes each hyphen-separated segment independently ("half-elf" ->
+/// "Half-Elf"), matching every curated `race:<name>` id this crate
+/// recognizes.
+fn race_display_label(race_id: &str) -> String {
+    let name = race_id.strip_prefix("race:").unwrap_or(race_id);
+    name.split('-')
+        .map(|segment| {
+            let mut chars = segment.chars();
+            match chars.next() {
+                Some(first) => first.to_uppercase().chain(chars).collect(),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<String>>()
+        .join("-")
+}
+
 /// Maps a wire-level `class_id` string to `rules_tables::crb::class_tables`'s
 /// `ClassId`, for Fighter, Wizard, and Rogue (v0.6 alpha swarm, task 4 --
 /// widened from a Fighter/Wizard-only pair to add Rogue, the task's own
@@ -14991,20 +15015,29 @@ fn explain_wizard_level1_prepared_spell_baseline(
     let Some(level) = wizard_level_in_mix(input) else {
         return;
     };
-    if input.chosen.race_id != HUMAN_RACE_ID {
-        return;
-    }
+    // v0.6 alpha swarm (risks-and-open-questions.md item 18, widened
+    // 2026-07-24): this function's race gate was removed after tracing every
+    // formula/explanation it grounds -- none of them reads `race_id` or any
+    // race-specific table. `ability_modifiers` already arrives race-adjusted
+    // from `apply_human_ability_bonus` (the same input every other race's
+    // chassis computation already uses), the BAB/save/spells-per-day/
+    // spell-save-DC formulas are all class-table- and level-driven, and the
+    // school-specialization recognition reads `selected_choices`, not race.
+    // The two explanation strings below previously said "Human Wizard"
+    // specifically; generalized to name the character's actual race.
+    let wizard_race_label = race_display_label(&input.chosen.race_id);
 
-    // Direct runtime evidence: recognize the deterministic Human Wizard level-1
-    // prepared arcane spell-bearing identity. This is a recognition record only;
-    // it fabricates no spell math and no school-opposition / specialty school
-    // bonus math.
+    // Direct runtime evidence: recognize the deterministic Wizard level-1
+    // prepared arcane spell-bearing identity, for any race. This is a
+    // recognition record only; it fabricates no spell math and no
+    // school-opposition / specialty school bonus math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.wizard".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Wizard level {level} prepared arcane spell-bearing \
-             baseline: the {WIZARD_CLASS_ID}:{level} class identity is acknowledged as a \
+            "Recognized deterministic {wizard_race_label} Wizard level {level} prepared arcane \
+             spell-bearing baseline: the {WIZARD_CLASS_ID}:{level} class identity is acknowledged \
+             as a \
              prepared arcane spell-bearing class on the rules-core seam rather than an \
              undocumented packet placeholder. This is a bounded recognition record only; it \
              grounds no spellbook content, no spells prepared per day, no spell slots per day, \
@@ -18757,6 +18790,175 @@ mod wizard_spell_save_dc_tests {
                 .any(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1"),
             "the spell save DC record must be grounded regardless of school specialization: \
              {computation:?}"
+        );
+    }
+}
+
+/// v0.6 alpha swarm item 18 widening (2026-07-24, operator-directed):
+/// `explain_wizard_level1_prepared_spell_baseline`'s race gate was removed
+/// after tracing every formula it grounds -- none reads `race_id` directly,
+/// `ability_modifiers` already arrives race-adjusted from
+/// `apply_human_ability_bonus`. Proves this empirically end to end for a
+/// non-Human (Elf) Wizard, through the real `build_pilot_headless_receipt`
+/// entry point, not just a direct call on the narrower
+/// `compute_pilot_base_chassis`: a correct, racially-adjusted spell-save-DC
+/// at level 1, and the real `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` ceiling
+/// correctly firing past level 3 -- both previously entirely absent for any
+/// non-Human Wizard (risks-and-open-questions.md item 18).
+#[cfg(test)]
+mod wizard_non_human_widening_tests {
+    use super::{
+        build_pilot_headless_receipt, EVOCATION_SCHOOL_SELECTION, NECROMANCY_SCHOOL_SELECTION,
+        TRANSMUTATION_SCHOOL_SELECTION, WIZARD_CLASS_ID, WIZARD_OPPOSED_SCHOOLS_CHOICE_ID,
+        WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, AcquisitionMode, CharacterInput, SelectedChoice,
+        SpellSelection,
+    };
+    use crate::rules_core::pilot_compute::HeadlessReceiptStatus;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// Builds an Elf Wizard at `level`, with `intelligence` already reflecting
+    /// Elf's real +2 Intelligence racial adjustment (base 10 + 2 = 12) --
+    /// `apply_human_ability_bonus` returns a non-Human race's submitted score
+    /// unchanged, so a non-Human fixture must submit the already-adjusted
+    /// value (the same contract risks-and-open-questions.md item 19's fix
+    /// established for the create-character submission path). Seeds the
+    /// canonical school-specialization choices and one real spell (both
+    /// Known and Prepared) exactly like a real Wizard's create/level-up path
+    /// does, so the full pipeline can reach genuine `Computed`, not just
+    /// exercise the one function in isolation.
+    fn elf_wizard_at_level(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+
+        input.chosen.race_id = "race:elf".to_owned();
+        input.chosen.ability_scores.intelligence = 12;
+        input.chosen.class_levels[0].class_id = WIZARD_CLASS_ID.to_owned();
+        input.chosen.class_levels[0].level = level;
+
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID.to_owned(),
+            selection_id: EVOCATION_SCHOOL_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WIZARD_OPPOSED_SCHOOLS_CHOICE_ID.to_owned(),
+            selection_id: NECROMANCY_SCHOOL_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WIZARD_OPPOSED_SCHOOLS_CHOICE_ID.to_owned(),
+            selection_id: TRANSMUTATION_SCHOOL_SELECTION.to_owned(),
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        input
+    }
+
+    #[test]
+    fn elf_wizard_level1_reaches_computed_with_the_real_racially_adjusted_spell_save_dc() {
+        let input = elf_wizard_at_level(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an Elf Wizard level 1 with the canonical specialization and a real prepared \
+             spell must reach Computed, got: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1")
+            .expect("an Elf Wizard must ground a spell_level_1 save DC record, not skip it entirely");
+        assert_eq!(
+            record.value, 12,
+            "10 + spell level 1 + Intelligence modifier +1 (score 12, Elf's real +2 INT \
+             already applied) = 12, not the Human-only value of 11: {record:?}"
+        );
+    }
+
+    /// Negative control: a Human Wizard built the identical way (same
+    /// spells/choices, `race_id` and `intelligence` reverted) must still get
+    /// the pre-existing, unmodified value -- proves the widening didn't
+    /// accidentally change the Human-path formula or double-apply a racial
+    /// bonus.
+    #[test]
+    fn human_wizard_level1_still_gets_the_unmodified_spell_save_dc() {
+        let mut input = elf_wizard_at_level(1);
+        input.chosen.race_id = "race:human".to_owned();
+        input.chosen.ability_scores.intelligence = 10;
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1")
+            .expect("Human Wizard must still ground the record");
+        assert_eq!(record.value, 11, "10 + 1 + 0 = 11, unchanged from before this widening");
+    }
+
+    /// The real `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` ceiling must fire for
+    /// a non-Human Wizard too, not just Human -- this is the exact gap item
+    /// 18 identified (the whole gated function, ceiling included, never ran
+    /// at all for non-Human before this widening).
+    #[test]
+    fn elf_wizard_level4_hits_the_real_spellbook_ceiling_just_like_human() {
+        let input = elf_wizard_at_level(4);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "an Elf Wizard past the real level-3 spellbook ceiling must be honestly Blocked, \
+             not silently Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.wizard.prepared_spellbook.unsupported"
+                && d.claim_blocking
+                && d.message.contains("1-3")),
+            "expected the real spellbook-ceiling diagnostic naming the 1-3 supported range, \
+             got: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The ceiling must NOT fire for an Elf Wizard at level 3 (still within
+    /// the supported range) -- confirms the gate is a genuine level
+    /// comparison, not something that was accidentally always-Blocked once
+    /// widened.
+    #[test]
+    fn elf_wizard_level3_stays_within_the_real_spellbook_ceiling() {
+        let input = elf_wizard_at_level(3);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an Elf Wizard level 3 is still within the real supported ceiling and must reach \
+             Computed: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }
