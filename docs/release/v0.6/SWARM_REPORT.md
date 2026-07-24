@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17, item-1 design pass, shape (c), attack-bonus slice, corpus-fixture fix, and the 3-feat save-bonus widening all landed and independently verified; now fixing a real null-serialization bug QA found in shape (c)'s DTO |
-| frontend | idle | Defense-tab fix and shape (c)'s equipmentEffects wiring both landed and independently verified; queue clear |
-| qa | working | verified the Defense-tab fix, the outside-demo-corpus indicator, and found a real bug in equipmentEffects (null-vs-undefined serialization); now verifying the feat-effects widening |
+| backend | idle | null-serialization fix landed (874df6db, lead-verified 204/204 desktop after finding it uncommitted post-compaction); dispatching Wizard non-Human spell-math (item 18) next |
+| frontend | idle | Defense-tab fix and shape (c)'s equipmentEffects wiring both landed and independently verified; queue clear, no bounded UI work currently queued |
+| qa | idle (per last known status) | dispatching live verification of the null-serialization fix (real 0-weapon/2-weapon builds) plus a status check on the feat-effects widening verification |
 
 ---
 

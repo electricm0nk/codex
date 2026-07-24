@@ -1171,6 +1171,26 @@ prior refresh, itself already superseded by everything since)
 - risks-and-open-questions.md items 6, 9, 9a corrected from stale
   "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
+## Agent Status (2026-07-24, ~14:20 ET)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | idle | landed the EquipmentEffectsDto null-serialization fix (lead verified 204/204 desktop and committed/pushed as 874df6db after finding it uncommitted in the working tree post-compaction); dispatching Wizard non-Human spell-math (item 18) next |
+| frontend | idle | queue clear; no bounded UI-shaped work currently queued (maxDexCap/spellFailureChance/attackBonusDelta were already fully wired in d8528ce2, so the null-serialization fix needed no frontend change) |
+| qa | idle (per last known status) | dispatching live verification of the null-serialization fix (real 0-weapon and 2-weapon builds, the exact previously-broken cases) plus a status check on the feat-effects widening verification |
+
+(d) Lead-side verification note (2026-07-24, ~14:20 ET)
+------------------------------------------
+Resumed after context compaction. Found backend's null-serialization fix
+complete but uncommitted in the working tree (character_hub.rs +
+risks-and-open-questions.md + 2 regenerated parity-report artifacts).
+Independently re-ran the new wire-serialization test and the full desktop
+suite (204/204, matching backend's own report) before committing/pushing
+as 874df6db. Also independently confirmed
+`buildLabelFixtureFreshness.test.ts` (risks item 2's frontend follow-up)
+passes with zero commits touching the 3 named fixture files -- it was
+never actually broken by the version bump in practice, so that item is
+now fully resolved, not just "in flight."
+
 No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
