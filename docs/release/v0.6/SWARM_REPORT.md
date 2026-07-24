@@ -328,7 +328,7 @@ actual code/diff directly rather than re-asserting the commit message, run
 the real tests personally rather than trusting a reported pass count, and
 reproduce RED before trusting a claimed fix wherever that was cheap to do.
 
-**16 areas independently verified clean this session, each with its own
+**17 areas independently verified clean this session, each with its own
 concrete method (not just "looks fine"):**
 
 | Area | Commit(s) | What was independently confirmed |
@@ -370,10 +370,15 @@ for full detail):
   coverage at all; frontend closed it same-day with a real
   `characterProgression.test.ts` (12 functions covered, one genuine RED
   caught along the way in a title-case regex assumption).
-- Item 23 (open, backlog): LevelUpDialog's own comment about why feat picks
-  aren't collected at level-up is now stale (the blocker it names was
-  closed hours after this commit landed); the underlying gap is real and
-  currently reachable (Fighter's level 2), not fixed this sweep.
+- Item 23 (now RESOLVED, landed minutes after this checkpoint was written):
+  LevelUpDialog's own comment about why feat picks aren't collected at
+  level-up was stale (the blocker it names was closed hours after that
+  commit landed), and the underlying gap — real, currently-reachable at
+  Fighter's level 2 — has since been fixed (`ddfc66bb`): a new
+  `levelGrantsFeat` predicate detects a feat-granting level and routes
+  through the same real feat picker the Feats tab uses, live-verified both
+  branches (a Dwarf Fighter 1→2 picked Cleave; a Wizard 1→2 with no feat at
+  that level leveled up uninterrupted).
 - Item 25 (open, backlog, systemic): a recurring pattern across 4 frontend
   persistence-wiring modules (`characterProgression.ts` — since resolved —,
   `skillsModel.ts`/`setSkillAllocations`, the LevelUpDialog module, and
@@ -521,9 +526,17 @@ cross-checked against a PCGen run):
   - `current_hp < 0` and `current_hp > -constitution_score` → **dying**
     (unconscious, loses 1 HP/round unless stabilized).
   - `current_hp <= -constitution_score` → **dead**.
-  - `nonlethal_damage >= current_hp` (current HP still `> 0`) → **staggered**.
+  - `nonlethal_damage == current_hp` (current HP still `> 0`) → **staggered**.
   - `nonlethal_damage > current_hp` → **unconscious** (stable, not dying,
     since the excess is nonlethal).
+
+  **Correction (QA, 2026-07-24):** this appendix originally wrote the
+  staggered threshold as `>=`, which overlaps with unconscious below —
+  imprecise pre-implementation spec text, not what shipped. The actual
+  `durability.rs::classify_durability` (and this session's independent
+  re-derivation of all 6 states against real PF1/d20 SRD rules) uses exact
+  equality for staggered; corrected above rather than left to mislead a
+  future reader.
 
 ### Carry capacity / encumbrance
 
@@ -584,12 +597,18 @@ hand-transcribing a `KEY:` token into fixture text.
   just `value_in_gp * {pp: 0.1, gp: 1, sp: 10, cp: 100}` and back.
 - **Starting wealth by class**: searched `data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst`
   for a `GOLD:` token (PCGen's per-class starting-gold-roll field, e.g.
-  `GOLD:5d6`) and found none in that file. **Unresolved** — either starting
-  wealth lives in a different PCGen data file I didn't check, or PCGen leaves
-  it as a manual/optional step. Needs a follow-up lookup before backend
-  builds a starting-gold formula; don't guess a value here. If v0.6 scope is
-  just "track and spend money the player already has" rather than "roll
-  starting gold automatically," this may not even be needed for alpha.
+  `GOLD:5d6`) and found none in that file. **Unresolved at the time** —
+  either starting wealth lives in a different PCGen data file not yet
+  checked, or PCGen leaves it as a manual/optional step; don't guess a value
+  here. **Follow-up completed (backend, risks-and-open-questions.md item
+  7):** the deeper search this note asked for was done — the whole data
+  tree, PCGen's gameMode-level `miscinfo.lst`, and the wider corpus — and
+  found nothing real anywhere, plus caught a real trap (a stub-labeled
+  `starting_gold` column in an unrelated closure artifact that looks
+  citable but explicitly isn't licensed data). This genuinely doesn't exist
+  in any real, licensed corpus source available in this environment — a
+  content-provenance/licensing question for the operator now, not an open
+  engineering lookup.
 
 ---
 
