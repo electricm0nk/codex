@@ -311,6 +311,82 @@ an implicit absence of further findings, and the three remaining
 architecture gaps have a single reference document instead of being spread
 across several risks-doc entries.
 
+### Fourth checkpoint (2026-07-24, independent-verification sweep)
+
+Distinct from the checkpoints above: those document what *landed*. This one
+documents what's been *independently re-checked*, by whom, and how deep —
+the coverage of the verification itself, which is what a future close-out
+pass needs to know it can rely on rather than re-derive from scratch.
+
+**Method.** Per the lead's ask (following the pattern already established
+for the 4-race ability-adjustment work), QA scanned the full commit history
+(`git log --oneline origin/develop..origin/tranche/6`, 160+ commits) for
+every real `feat`/`fix`/`frontend` commit — as opposed to `docs`/status
+commits — and worked down the list picking whichever unverified item looked
+highest-value or highest-risk, giving each the same standard: read the
+actual code/diff directly rather than re-asserting the commit message, run
+the real tests personally rather than trusting a reported pass count, and
+reproduce RED before trusting a claimed fix wherever that was cheap to do.
+
+**16 areas independently verified clean this session, each with its own
+concrete method (not just "looks fine"):**
+
+| Area | Commit(s) | What was independently confirmed |
+| :--- | :--- | :--- |
+| Defense-tab DR wiring | `26ac0704` | TS type genuinely added to the shared `PilotSnapshotDto` (not ad-hoc); absent-case JSX renders `null`, never a fabricated zero; Barbarian's unreachability traced through `compute_class_chassis` → `table_class_id` → `is_supported_multiclass_mix` — no code path lets it reach `Computed`, not assumed from the claim |
+| Durability status thresholds | `durability.rs` | All 6 `classify_durability` states independently re-derived against real PF1/d20 SRD rules from first principles, not copied from the module's own doc comment; matched backend's own parallel check exactly |
+| Class-support labeling (all 11 CRB classes) | `34635157` | Every single row checked individually against `pilot_compute.rs` source (not spot-checked) — `supported_wizard_level`/`supported_rogue_level` genuinely never check `race_id`; all 8 `human-diagnostics-only` classes independently confirmed to share the identical gate pattern and all fall outside `table_class_id`'s 3-class allowlist |
+| Wire-serialization fix | `498679d1` | Ran the 2 new tests personally; **reproduced RED myself** (temporarily reverted the `#[serde(rename)]`, watched the exact snake-case symptom reappear, restored, confirmed GREEN); independently re-swept the crate for other `#[serde(tag = ...)]` enums rather than trusting the "swept the rest" claim — found the same 4 backend already named, confirmed the 2 unaffected ones genuinely have no underscored fields |
+| Feat catalog exposure | `89c3710a` | Per-category counts (50/110/8/17=185) re-derived by grepping the raw data files directly, not trusted from the doc comment; confirmed the Tauri wrapper does a true 1:1 map with no filtering; confirmed the "safe to append" claim in `unmet_combat_posture_conditions`'s own source (a presence check, not an exact-set match) |
+| Level-up choice/skill persistence | `7694b227` | The "exactly one colon" grammar constraint traced to its real origin (`git log -S`, predates the swarm by 3 days — not invented to justify this fix); atomicity proven by reading the actual round-trip test, which reloads from disk and checks all three mutated fields landed together |
+| Bio field persistence | `0ab784df` | The "already-saved" check confirmed to use a real `SavedCharacterStore::load`, not the naive `root.exists()` the commit says it deliberately avoided; overwrite-not-append proven via the actual two-save-then-reload test |
+| `set_skill_allocations` | `e0a0bda4` | Wholesale-replace confirmed in source (`= skill_allocations`, no merge); the "reordered set proves replacement" test's premise re-derived (traced the seed fixture's real default order first, then confirmed the reversed submission round-trips exactly) |
+| Money balance persistence | `67490acb` | Negative-balance rejection confirmed in source before any write; confirmed the DTO derivation reuses the exact `money::copper_to_denominations` function QA's own `tests/v06_money_conversion.rs` already covers, not a parallel reimplementation that could drift |
+| `skill_allocation.rs` cross-class fix | `21f815c1` | Both PCGen citations re-verified against the local corpus checkout directly; **fresh-eyes re-check** (requested after a quota-outage stewardship landing) found and closed a real gap in an *existing* test that used the bare string `"wizard"` instead of the real `"class:wizard"` id |
+| `combat.base_attack_bonus` dimension | `cda3bf1c` + `b8eff433` | All 4 mechanically-specified test files updated and run personally, including both real PCGen engine invocations (not just the fast synthetic ones), before backend's commit was allowed to land per the cross-surface protocol |
+| LevelUpDialog wiring | `e8e45976` | Mechanics (hit-die choice, skill-allocation omission) confirmed clean; traced a comment's staleness by comparing commit timestamps directly, then confirmed the gap it describes is live-reachable today (Fighter's `levelOptions` includes a real bonus-feat level), not theoretical |
+| SkillAllocationDialog wiring | `75200fcb` | `skillIdFor`'s "5 confirmed ids" claim checked against `skill_key_ability_modifier` directly; the "unrecognized ids are inert" claim confirmed via the actual `continue`-on-`None` branch, not assumed from the absence of an error |
+| Bio editor wiring | `94a38657` | Character-switch reload's `cancelled`-guard against a stale in-flight load read directly in the `useEffect`, not just claimed by the commit |
+| Feat picker + Feats tab | `febf4d80` + `aa611ce1` | Every one of the 6 `toCharacterMutationRefresh` call sites individually traced to confirm each threads the correct feat list (unchanged vs. plus-the-new-feat) for its specific mutation |
+| Wizard spell-pick routing | `d55a919a` | The Wizard-preference-over-`heldClasses[0]` logic and the atomic-vs-plain routing both confirmed directly in the diff |
+| Actions tab + dead-tab removal | `743c358b` | Confirmed `ActionsTab` is a pure display component with no new computation or backend call; version-bump fixture fix confirmed genuine (`0.6.0-test` now reads correctly) |
+
+**Money panel (`59d5bc0a`) — clean on the static half, live-UI leg
+inconclusive.** The `gpToCopper`/`gp_to_copper` formula match and the
+boundary wiring were confirmed directly. The live-UI leg hit a real but
+unrelated environment quirk (this session's window reports 1920×1200 via
+`xdotool` but genuinely renders/screenshots at 1280×900, and the Load
+Character dialog's action-button row wasn't reachable at any coordinate
+tried) — not a code bug, correctly not force-fit into a false pass. Confirms
+the `RUN_DESKTOP_AGENT` fix (`f6fe0df2`) holds under real concurrent use
+though: this session's `:98` display and frontend's simultaneous `:96`
+session never interfered with each other.
+
+**2 real findings surfaced by this sweep** (both filed to the correct
+owner, not fixed by QA — see `risks-and-open-questions.md` items 22/23/25
+for full detail):
+- Item 22 (now RESOLVED): `characterProgression.ts` — the module behind the
+  classSummary comma-separator fix (`d03bc89d`) — had zero dedicated test
+  coverage at all; frontend closed it same-day with a real
+  `characterProgression.test.ts` (12 functions covered, one genuine RED
+  caught along the way in a title-case regex assumption).
+- Item 23 (open, backlog): LevelUpDialog's own comment about why feat picks
+  aren't collected at level-up is now stale (the blocker it names was
+  closed hours after this commit landed); the underlying gap is real and
+  currently reachable (Fighter's level 2), not fixed this sweep.
+- Item 25 (open, backlog, systemic): a recurring pattern across 4 frontend
+  persistence-wiring modules (`characterProgression.ts` — since resolved —,
+  `skillsModel.ts`/`setSkillAllocations`, the LevelUpDialog module, and
+  `characterBio.ts`) of sound logic shipped with zero dedicated test file.
+  Confirmed as a real, systemic gap rather than four coincidences; not
+  re-flagged a fifth/sixth time once the pattern was established.
+
+**What this checkpoint changes**: nothing about the bar-distance shape —
+still not signing. What it adds is a documented, itemized answer to "how
+much of what landed has actually been independently re-checked, and how,"
+for whenever the operator or a future close-out pass wants to know the
+verification depth wasn't assumed.
+
 **Not signing the attestation.** Per §4.4's "Done" criteria, this requires
 every shipped calculation having red-green coverage (true) *and* the
 operator's alpha bar in §1 holding (not true — items 2 and 4 above are real,
