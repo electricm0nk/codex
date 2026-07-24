@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Matches: 13
+- Matches: 14
 - Mismatches: 1
 - Result: FAIL
 
@@ -11,6 +11,7 @@
 | Dimension | PCGen | Codex | Match | Notes |
 |---|---|---|---|---|
 | character.identity | pf1-crb-human-fighter-level1 | pf1-crb-human-fighter-level1 | yes | — |
+| combat.base_attack_bonus | 1 | 1 | yes | — |
 | defense.baseline_armor_class | 17 | 17 | yes | — |
 | defense.total_save.fortitude | 4 | 4 | yes | — |
 | defense.total_save.reflex | 2 | 2 | yes | — |

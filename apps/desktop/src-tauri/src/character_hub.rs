@@ -155,8 +155,17 @@ pub struct ResolvedEquipmentDto {
 pub struct EquipmentEffectsDto {
     pub armor_class_delta: i16,
     pub armor_check_penalty_total: i16,
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): without `skip_serializing_if`,
+    /// a Rust `None` here serialized as `"maxDexCap":null` -- key present,
+    /// literal `null`, not an omitted key -- so the frontend's `!== undefined`
+    /// hide-checks (`null !== undefined` is `true`) never fired, rendering
+    /// garbled `"+null"`/`"null%"` strings instead of hiding the field. Mirrors
+    /// the precedent `PilotSnapshotDto.damage_reduction` already set.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub max_dex_cap: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub spell_failure_chance: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub attack_bonus_delta: Option<i16>,
 }
 
@@ -3668,6 +3677,48 @@ mod tests {
             !object.contains_key("corpus_derived"),
             "corpus_derived must NOT also/still appear as snake_case on the wire: {object:?}"
         );
+    }
+
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): `EquipmentEffectsDto`'s
+    /// three `Option` fields must genuinely omit their key when `None`
+    /// (mirroring `PilotSnapshotDto.damage_reduction`'s own precedent), not
+    /// serialize as `"maxDexCap":null` -- a present key with a literal
+    /// `null` value defeats the frontend's `!== undefined` hide-checks
+    /// (`null !== undefined` is `true`), rendering garbled `"+null"`/
+    /// `"null%"` strings instead of hiding the field. Only one character
+    /// build (Chain Shirt + exactly one weapon) had been live-verified
+    /// before this bug was found, and it happened to resolve `Some(...)`
+    /// for all three fields -- any zero- or two-weapon build (a fresh
+    /// character, most Wizards, a dual-wielder) would have hit this.
+    #[test]
+    fn equipment_effects_dto_omits_its_optional_fields_when_none_and_includes_them_when_some() {
+        let with_none = EquipmentEffectsDto {
+            armor_class_delta: 4,
+            armor_check_penalty_total: -2,
+            max_dex_cap: None,
+            spell_failure_chance: None,
+            attack_bonus_delta: None,
+        };
+        let json = serde_json::to_string(&with_none).expect("serialization should succeed");
+        assert!(
+            !json.contains("maxDexCap") && !json.contains("spellFailureChance") && !json.contains("attackBonusDelta"),
+            "None fields must omit their key entirely, not serialize as null: {json}"
+        );
+        // The two non-Option fields are unaffected by this fix -- always present.
+        assert!(json.contains("\"armorClassDelta\":4"));
+        assert!(json.contains("\"armorCheckPenaltyTotal\":-2"));
+
+        let with_some = EquipmentEffectsDto {
+            armor_class_delta: 4,
+            armor_check_penalty_total: -2,
+            max_dex_cap: Some(4),
+            spell_failure_chance: Some(20.0),
+            attack_bonus_delta: Some(1),
+        };
+        let json = serde_json::to_string(&with_some).expect("serialization should succeed");
+        assert!(json.contains("\"maxDexCap\":4"));
+        assert!(json.contains("\"spellFailureChance\":20.0"));
+        assert!(json.contains("\"attackBonusDelta\":1"));
     }
 
     #[test]
