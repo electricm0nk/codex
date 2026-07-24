@@ -1,4 +1,4 @@
-import type { CreateCharacterOutcome } from '../boundary/loadCreateCharacter';
+import type { CreateCharacterOutcome, DiagnosticDto } from '../boundary/loadCreateCharacter';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 
 /**
@@ -20,6 +20,19 @@ export type CharacterMutationRefresh =
 const FALLBACK_BLOCKED_MESSAGE = 'The requested change could not be applied — the recomputed build was not ready.';
 
 /**
+ * Shared with `purchaseEquipment`'s caller — `PurchaseEquipmentOutcome`'s
+ * `Blocked` variant carries the exact same `diagnostics: DiagnosticDto[]`
+ * shape as `CreateCharacterOutcome`'s, but isn't itself a
+ * `CreateCharacterOutcome` (it has a `Purchased` tag, not `Saved`, plus a
+ * `money` field `toCharacterMutationRefresh` knows nothing about), so it
+ * can't be passed to `toCharacterMutationRefresh` directly.
+ */
+export function blockedMessageFromDiagnostics(diagnostics: DiagnosticDto[]): string {
+  const messages = diagnostics.filter((diagnostic) => diagnostic.claimBlocking).map((diagnostic) => diagnostic.message);
+  return messages.length > 0 ? messages.join(' ') : FALLBACK_BLOCKED_MESSAGE;
+}
+
+/**
  * `selectedFeats` isn't part of `CreateCharacterOutcome` (only
  * `load_saved_character` returns it, not the mutation commands), so callers
  * pass the value the refreshed `detail` should carry explicitly — the
@@ -33,8 +46,7 @@ export function toCharacterMutationRefresh(
   selectedFeats: string[]
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
-    const messages = outcome.diagnostics.filter((diagnostic) => diagnostic.claimBlocking).map((diagnostic) => diagnostic.message);
-    return { kind: 'blocked', message: messages.length > 0 ? messages.join(' ') : FALLBACK_BLOCKED_MESSAGE };
+    return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
   }
 
   return {

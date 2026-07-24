@@ -3,7 +3,7 @@ import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface'
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
-import { addEquipmentSelection } from '../boundary/addEquipmentSelection';
+import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
 import { addFeatSelection } from '../boundary/addFeatSelection';
@@ -14,7 +14,7 @@ import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
-import { toCharacterMutationRefresh } from './characterSheetRefresh';
+import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
@@ -975,6 +975,16 @@ export function CharacterSheet(props: {
     }
   }
 
+  /**
+   * Routes through `purchase_equipment` (v0.6 alpha swarm, risks-and-
+   * open-questions.md item 9), not the plain `addEquipmentSelection` —
+   * the Add Weapon/Add Armor pickers only ever offer real catalog items
+   * with a real gold cost, so every pick here should atomically charge
+   * that cost against the persisted money balance rather than being a
+   * free grant. A `Blocked` purchase (insufficient funds, or an item with
+   * no known `cost_gp`) leaves both the equipment and the money balance
+   * untouched, same honest-Blocked invariant as every other mutation.
+   */
   async function handleAddEquipment(entry: ItemPickerEntry) {
     setMutationError(null);
     try {
@@ -982,18 +992,24 @@ export function CharacterSheet(props: {
       // is, by construction, actively equipping it — `EquippedActive` is
       // the only choice that matches that action without asking the user
       // to make an extra decision the picker's scope doesn't cover.
-      const outcome = await addEquipmentSelection({
+      const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
         itemId: entry.key,
         activeState: 'EquippedActive',
         savedAt: new Date().toISOString(),
       });
-      const refresh = toCharacterMutationRefresh(outcome, props.detail?.selectedFeats ?? []);
-      if (refresh.kind === 'blocked') {
-        setMutationError(refresh.message);
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return;
       }
-      props.onDetailRefreshed(refresh.detail);
+      props.onDetailRefreshed({
+        summary: outcome.summary,
+        snapshot: outcome.snapshot,
+        diagnostics: [],
+        corpusDerived: outcome.corpusDerived,
+        selectedFeats: props.detail?.selectedFeats ?? [],
+      });
+      setMoney(outcome.money);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
