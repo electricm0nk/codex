@@ -75,3 +75,4 @@
 | Wizard non-Human spell-math (spell-save-DC + spellbook-ceiling absent for non-Human) | Backend | CRB | queued | documented completeness gap, risks item 18 |
 | Class/multiclass breadth: 8 of 11 CRB classes have no working chassis at all (Cleric/Druid/Bard/Sorcerer/Barbarian/Monk/Paladin/Ranger) | Backend | CRB | blocked | multi-cycle engine work, future epic |
 | Starting wealth for the 12 non-CRB-recognized classes in the operator's table | Backend | APG/ACG | blocked | no `class:<name>` id recognized anywhere in this crate yet for those classes |
+| EquipmentEffectsDto's 3 optional fields serialize None as literal `null`, not an omitted key -- renders as garbled "+null"/"null%" for the common case (0 or 2+ weapons) | Backend | CRB | queued | real bug found by QA 2026-07-24 (3-way confirmed); small, precedented fix (same skip_serializing_if damage_reduction already has) |
