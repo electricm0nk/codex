@@ -63,10 +63,11 @@
 | Feat-effects engine, Toughness +3 HP slice (first real feat mechanical effect) | Backend | CRB | done | 53ddd1ce |
 | Item 1 architecture-wall design/scoping pass (headless/corpus-aware split) | Backend | - | done | 4dadad51 (`item-1-architecture-wall-design.md`) |
 | Item 1 shape (c): corpus-derived AC/ACP display section (non-claim-gated) | Backend | CRB | done | 08a829a1, verified 236/236 lib + 202/202 desktop + 4253/0 full workspace |
-| Item 1 attack-bonus, bounded single-weapon slice (no schema change, honest-absent for 0/2+ weapons) | Backend | CRB | in progress | 2026-07-24, greenlit by lead as an engineering-scope call |
-| Spells tab corpusDerived inconsistency for non-Human Wizards (found in smoke test) | Backend | CRB | queued | flagged by UI 2026-07-24, may relate to Wizard non-Human spell-math gap below |
+| Item 1 attack-bonus, bounded single-weapon slice (no schema change, honest-absent for 0/2+ weapons) | Backend | CRB | done | 845f860c, verified 242/242 lib + 202/202 desktop |
+| Bundled desktop corpus fixture caps corpus_derived to 2 spells/2 equipment records (affects Spells tab AND shape (c)'s real-world value) | Backend | CRB | queued | root-caused by QA 2026-07-24 (supersedes the narrower "Spells tab" framing below); fix-shape decision needed (bundle more corpus data vs. honest "not in demo corpus" indicator) |
+| Spells tab corpusDerived inconsistency for non-Human Wizards (found in smoke test) | Backend | CRB | done | root cause identified -- NOT a Wizard/race issue, see the bundled-corpus-fixture row above; superseded, not itself a separate task |
 | Defense tab doesn't refetch durability after a feat pick (render-staleness, same shape as corpus_derived bug) | UI | - | queued | flagged by QA 2026-07-24 |
-| Item 1 attack-bonus enhancement math (needs equipment-attachment data-model decision) | Backend | CRB | blocked | design decision needed, see item 1 in risks-and-open-questions.md |
+| Item 1 attack-bonus enhancement math for 2+ weapons (needs equipment-attachment data-model decision) | Backend | CRB | blocked | the single-weapon case is done (see above); multi-weapon attachment still needs a schema decision, see item 1 in risks-and-open-questions.md |
 | Item 1 posture-gate widening (would `Computed` ever accept non-hardcoded equipment?) | - | CRB | blocked | operator decision, risks-and-open-questions.md item 27 |
 | Feat-effects engine widening beyond Toughness (184 remaining CRB feats) | Backend | CRB | queued | pattern proven, not yet generalized |
 | Wizard non-Human spell-math (spell-save-DC + spellbook-ceiling absent for non-Human) | Backend | CRB | queued | documented completeness gap, risks item 18 |
