@@ -11,14 +11,19 @@ and the lead never hand-edits it.
 
 (a) Happening now
 ------------------
-orchestrator (lead)  Sonnet   wave 2 in flight, watching for blockers
-frontend              Sonnet   WIZARD INVESTIGATION FULLY CLOSED -- slot-
-                                budget fix live-verified both sides against
-                                disk; idle, standing by
-backend               Sonnet   idle, standing by; still owes the (minor,
-                                non-blocking) render-staleness fix whenever
-                                free
-qa                    Sonnet   idle, watching for further findings
+orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
+                                2026-07-23, running unattended, no stops for
+                                input; deep queues loaded into all 3
+                                teammates, cron backstop every ~20 min
+frontend              Sonnet   working autonomous queue: render-staleness
+                                investigation, then Rogue live verification,
+                                then class-dropdown honesty audit
+backend               Sonnet   Rogue confirmed reachable with ZERO gap
+                                (0bb37521); working autonomous queue: DR
+                                exposure, spells_selected, money-purchase
+                                coupling, render-staleness
+qa                    Sonnet   comprehensive coverage resurvey DONE
+                                (81785b6f); working autonomous queue
 
 (b) Happened
 ------------
@@ -581,6 +586,28 @@ qa                    Sonnet   idle, watching for further findings
   enforcement, all live-verified end-to-end. Only the cosmetic render-
   staleness bug remains open in this whole area (backend's to pick up,
   not urgent).
+- OPERATOR DIRECTIVE, 2026-07-23: fully autonomous, operatorless
+  operation, potentially for days. Resolved the 3 remaining "operator's
+  call" items with the lead's own judgment (tranche-6 CI needs no new
+  workflow; book-stub labels out of scope for this swarm; Pets/companion
+  gap is a documented non-blocker, real future feature). Cron backstop
+  set (~every 20 min, 7-day window) to keep dispatching work even if the
+  turn-based flow ever goes quiet. Deep prioritized queues loaded into
+  all 3 teammates with explicit "don't wait for check-in between tasks"
+  instructions. Full reasoning in risks-and-open-questions.md.
+- Backend confirmed Rogue reaches Computed through the real UI with
+  ZERO gap (0bb37521) -- unlike Wizard, no hidden posture/spellbook
+  gate exists for Rogue anywhere; compose_character_input uses the
+  identical fixed loadout as every non-Fighter/non-Wizard class, and
+  the one class-conditional sub-check only adds a requirement for
+  Fighter, never blocks others. Confirmed empirically with 2 new tests
+  through the real command path (creation + multiclass dip). No fix
+  needed -- task 4's BAB/save widening was already sufficient. Third
+  class (after Fighter, Wizard) confirmed reachable, for free. Moved
+  autonomously to item 2 (DR exposure) without waiting for check-in.
+- QA delivered a comprehensive coverage resurvey (81785b6f) against
+  everything that's changed this session -- durability, encumbrance,
+  money, Wizard spellbook, spell save DC, Rogue widening.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
