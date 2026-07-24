@@ -5,6 +5,15 @@ Status: DRAFT (living document, updated as waves complete). Not an attestation y
 Owner of this document: lead (orchestrator) collates; QA owns the attestation
 content per §4.4 and §7.1 of `docs/release/v0.6/release-swarm.md`.
 
+## Agent Status (operator directive, 2026-07-24: updated on every write to
+this report, not just SWARM_STATUS.md)
+
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | landed items 7 (starting wealth) and 17 (feat-effects engine/Toughness), then a design pass on item 1 (`item-1-architecture-wall-design.md`, `4dadad51`) -- reshaped the sizing and recommends a bounded "shape (c)" fix; standing by for next dispatch |
+| frontend | working | fixing a real bug in `ItemPickerModal.tsx` (React key collision from a genuine duplicate "Combat Expertise" feat record), uncommitted as of last check |
+| qa | working | dispatched to independently verify items 7 and 17; report not yet in |
+
 ---
 
 ## (a) Red-green test catalogue completeness — alpha bar §1 item 4
