@@ -873,6 +873,25 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   Rogue BAB/save widening rather than treating it as unexplained. 7th
   clean independent verification today (Feats+Bio+LevelUp persistence
   all now independently confirmed). Continuing down the unverified list.
+- QA's sweep continued: independently verified `d03bc89d` (multiclass
+  classSummary comma-separator fix) -- confirmed the fix itself is
+  correct (ran `parseHeldClasses` directly, matches the commit's
+  live-verified outcome), but found a real, concrete gap:
+  characterProgression.ts has zero test coverage anywhere, including for
+  the exact silent-multiclass-corruption bug just fixed there -- nothing
+  guards against it recurring. Logged as risks item 22, routed to
+  frontend once free (QA correctly didn't pause its own sweep or touch
+  frontend's file). Then verified `e0a0bda4` (set_skill_allocations,
+  genuine wholesale-replace confirmed via a reversed-order golden-path
+  test) and `67490acb`'s Tauri-layer money persistence (rejects negative
+  balance before any write, no duplicated/drifted conversion logic --
+  calls the same pure function QA's own earlier test already covers).
+  9 clean independent verifications today plus the 1 real gap found.
+  QA has now covered essentially every backend Tauri persistence command;
+  what's left unchecked is the 8 frontend UI-wiring commits themselves
+  (does the UI call the right command with the right shape) -- harder to
+  verify without live-driving the app. Greenlit to continue into that
+  with RUN_DESKTOP_AGENT=qa now that driver.sh is fixed.
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
