@@ -291,6 +291,7 @@ mod tests {
                     intimidate: snapshot.skill.selected_modifier.intimidate,
                     swim: snapshot.skill.selected_modifier.swim,
                 },
+                damage_reduction: snapshot.defense.damage_reduction,
             });
 
             let diagnostics = receipt

@@ -98,6 +98,14 @@ pub struct PilotSnapshotDto {
     pub baseline_armor_class: i16,
     pub total_saves: BaseSavesDto,
     pub selected_skill_modifiers: SelectedSkillModifiersDto,
+    /// v0.6 alpha swarm (risks-and-open-questions.md item 6): the flat DR
+    /// magnitude from a grounded class-feature DR explanation (currently
+    /// only Barbarian's), or absent when no such record exists or its
+    /// magnitude is the level-gate absence value of 0. See
+    /// `PilotDefenseViewModel::damage_reduction`'s own doc comment
+    /// (`pilot_view_model.rs`) for the full derivation.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub damage_reduction: Option<i16>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -293,6 +301,7 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
         selected_skill_modifiers: map_selected_skill_modifiers_dto(
             snapshot.skill.selected_modifier,
         ),
+        damage_reduction: snapshot.defense.damage_reduction,
     }
 }
 

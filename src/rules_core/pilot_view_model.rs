@@ -45,6 +45,15 @@ pub struct PilotCombatViewModel {
 pub struct PilotDefenseViewModel {
     pub baseline_armor_class: i16,
     pub total_save: BaseSaves,
+    /// The flat DR magnitude from a grounded class-feature DR explanation
+    /// (currently only Barbarian's `class_feature.barbarian.damage_reduction`
+    /// -- v0.6 alpha swarm, risks-and-open-questions.md item 6), or `None`
+    /// when no such record is present or its magnitude is the level-gate
+    /// absence value of 0 (real PF1 has no "DR 0"; omitted, not zeroed, per
+    /// this codebase's existing convention for absent-vs-zero facts). This
+    /// is a bounded display-only value: no damage-resolution engine applies
+    /// it to any actual incoming-damage total.
+    pub damage_reduction: Option<i16>,
 }
 
 /// Bounded skill surface for the pilot view model.
@@ -86,10 +95,91 @@ impl PilotSnapshot {
             defense: PilotDefenseViewModel {
                 baseline_armor_class: receipt.computation.baseline_armor_class,
                 total_save: receipt.computation.total_saves,
+                damage_reduction: receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .find(|explanation| explanation.id == "class_feature.barbarian.damage_reduction")
+                    .map(|explanation| explanation.value)
+                    .filter(|&value| value > 0),
             },
             skill: PilotSkillViewModel {
                 selected_modifier: receipt.computation.selected_skill_modifiers,
             },
         }
+    }
+}
+
+/// v0.6 alpha swarm (risks-and-open-questions.md item 6): DR data already
+/// existed as a raw `ComputationExplanation` (Barbarian's
+/// `class_feature.barbarian.damage_reduction`, `pilot_compute.rs`) but
+/// wasn't promoted to a first-class `PilotSnapshot` field, so the Defense
+/// tab had nothing structured to render. These tests exercise
+/// `PilotSnapshot::from_receipt` directly with a synthetic receipt (the
+/// production compute path never happens to produce this state today,
+/// since Barbarian isn't yet a chassis-dispatch-supported class -- see
+/// `has_supported_class_chassis` -- so this proves the wiring itself,
+/// independent of when/whether Barbarian becomes chassis-supported).
+#[cfg(test)]
+mod damage_reduction_exposure_tests {
+    use super::*;
+    use crate::rules_core::pilot_compute::PilotBaseChassisComputation;
+
+    fn receipt_with_explanations(explanations: Vec<ComputationExplanation>) -> PilotHeadlessReceipt {
+        PilotHeadlessReceipt {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            status: HeadlessReceiptStatus::Computed,
+            computation: PilotBaseChassisComputation {
+                ability_modifiers: AbilityModifiers::default(),
+                base_attack_bonus: 0,
+                base_saves: BaseSaves::default(),
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSaves::default(),
+                selected_skill_modifiers: SelectedSkillModifiers::default(),
+                explanations,
+                diagnostics: Vec::new(),
+            },
+        }
+    }
+
+    #[test]
+    fn surfaces_a_real_grounded_damage_reduction_value() {
+        let receipt = receipt_with_explanations(vec![ComputationExplanation {
+            id: "class_feature.barbarian.damage_reduction".to_owned(),
+            value: 3,
+            detail: "Barbarian DR 3/-".to_owned(),
+        }]);
+
+        let snapshot = PilotSnapshot::from_receipt(&receipt);
+
+        assert_eq!(snapshot.defense.damage_reduction, Some(3));
+    }
+
+    #[test]
+    fn omits_a_zero_level_gate_absence_value_rather_than_surfacing_a_fake_zero() {
+        let receipt = receipt_with_explanations(vec![ComputationExplanation {
+            id: "class_feature.barbarian.damage_reduction".to_owned(),
+            value: 0,
+            detail: "Barbarian DR absent below level 7".to_owned(),
+        }]);
+
+        let snapshot = PilotSnapshot::from_receipt(&receipt);
+
+        assert_eq!(
+            snapshot.defense.damage_reduction, None,
+            "real PF1 has no \"DR 0\" -- the level-gate absence record must be omitted, not \
+             surfaced as a fake zero"
+        );
+    }
+
+    #[test]
+    fn omits_damage_reduction_when_no_such_explanation_exists_at_all() {
+        let receipt = receipt_with_explanations(Vec::new());
+
+        let snapshot = PilotSnapshot::from_receipt(&receipt);
+
+        assert_eq!(snapshot.defense.damage_reduction, None);
     }
 }
