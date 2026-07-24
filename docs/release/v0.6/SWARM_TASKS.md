@@ -61,6 +61,7 @@
 | Frontend closure-readiness pass (alpha-bar UI check, doctrine sweep, lint/typecheck/build baseline) | UI | - | done | c014ffec, lead-verified 77/77 + typecheck clean; found+fixed one real pre-existing gap (WeaponsTab's dead Print button, risks item 30) |
 | driver.sh cross-agent GUI display/state-file collision fix | QA/Backend (infra) | - | done | f6fe0df2 |
 | Interim four-check wired-integration audit (doctrine compliance) | QA | - | done | c3b5fba8, lead re-verified f3676470 |
+| Backend closure-readiness pass (full workspace test+build, DTO-consumption re-check, formal 4-check doctrine audit against full develop...tranche/6 diff) | Backend | - | done | no commit needed (genuinely clean); 4271/4271 root-crate tests, 204/204 desktop, 0 doctrine-audit hits; lead independently re-ran the doctrine grep checks (0 hits, matches) and the full workspace test suite |
 | Starting wealth by class (operator-provided table, 11 CRB classes) | Backend | CRB | done | 0dbf67ad |
 | Feat-effects engine, Toughness +3 HP slice (first real feat mechanical effect) | Backend | CRB | done | 53ddd1ce |
 | Item 1 architecture-wall design/scoping pass (headless/corpus-aware split) | Backend | - | done | 4dadad51 (`item-1-architecture-wall-design.md`) |

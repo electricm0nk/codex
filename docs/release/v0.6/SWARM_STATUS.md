@@ -1171,12 +1171,14 @@ prior refresh, itself already superseded by everything since)
 - risks-and-open-questions.md items 6, 9, 9a corrected from stale
   "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
-## Agent Status (2026-07-24, ~15:15 ET)
+## Agent Status (2026-07-24, ~15:25 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | closure-readiness health pass still in flight, report pending |
-| frontend | idle | closure-readiness pass done and pushed (c014ffec) — sanity baseline all clean, tab completeness confirmed, one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified independently (77/77, typecheck clean, diff matches claim exactly) |
-| qa | idle | standing by; frontend's Print-button fix is small enough (1-line diff, lead-verified) that a QA pass is optional — will dispatch if backend's pass surfaces something needing independent verification |
+| backend | idle | closure-readiness pass done: genuinely clean (4271/4271 root-crate tests, 204/204 desktop, 0-hit formal 4-check doctrine audit against the full develop...tranche/6 diff); lead independently re-ran the doctrine checks and the full workspace suite to confirm |
+| frontend | idle | closure-readiness pass done and pushed (c014ffec) — one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified |
+| qa | idle | standing by; nothing currently needs independent verification |
+
+**Checkpoint (2026-07-24, ~15:25 ET): bounded swarm-actionable backlog is exhausted.** All three teammates idle with clean queues, not blocked on each other or infrastructure. Everything remaining in SWARM_TASKS.md is blocked/deferred on an operator decision (items 1, 18, 27) or is multi-cycle future-epic scope (class breadth, 12-class starting wealth). Written up plainly as a real checkpoint finding in SWARM_REPORT.md (risks item 31) rather than manufacturing busywork. Swarm remains live; standing check-in cadence continues.
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

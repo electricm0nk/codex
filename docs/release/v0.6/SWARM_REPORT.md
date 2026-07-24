@@ -10,9 +10,46 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | closure-readiness health pass still in flight, report pending |
+| backend | idle | closure-readiness pass done: 4271/4271 root-crate tests, 204/204 desktop, 0-hit formal 4-check doctrine audit against the full `develop...tranche/6` diff; lead independently re-ran the doctrine checks and the full workspace suite |
 | frontend | idle | closure-readiness pass done (c014ffec): sanity baseline clean, tab completeness confirmed, one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified |
 | qa | idle | standing by; nothing currently needs independent verification |
+
+---
+
+## CHECKPOINT (lead, 2026-07-24, ~15:25 ET) — bounded swarm-actionable backlog is exhausted
+
+Both backend's and frontend's closure-readiness passes came back clean (frontend
+found and fixed one real pre-existing gap — a dead Print button in `WeaponsTab`,
+`c014ffec`; backend found genuinely nothing across a full workspace test+build
+and a formal 4-check no-stub-mvp doctrine audit against the *entire*
+`develop...tranche/6` diff, not just today's commits). Lead independently
+re-verified both: the doctrine grep checks (0 hits), the full root-crate
+workspace test suite, and the desktop suite/typecheck.
+
+Cross-checked against `SWARM_TASKS.md`: every remaining open row is now one of:
+- **Blocked on an equipment-attachment schema decision** — item 1's multi-weapon
+  attack-bonus math (the single-weapon case already shipped).
+- **Blocked on an explicit operator decision** — item 27, whether `Computed`
+  should ever accept a non-hardcoded equipment posture (this is the decision
+  that would unlock real value from bridging the headless/corpus-aware wall).
+- **Deferred, not assigned this wave** — item 18, Wizard non-Human spell-math
+  completeness (a documented gap, not a wrong value; backend's scoping
+  read-through suggests the eventual fix may be smaller than first estimated,
+  see item 18's note — informational only, not a reopened decision).
+- **Multi-cycle future-epic scope** — class/multiclass breadth for 8 of 11 CRB
+  classes, and starting wealth for the 12 non-CRB-recognized classes in the
+  operator's table (no class id exists for them anywhere in the crate yet).
+
+This is a real checkpoint, not a stall or a dead swarm: nothing is broken, all
+three teammates are idle by choice with clean queues, not blocked on each
+other or on infrastructure. It reflects the edge of what this wave's scope can
+close without operator input on items 1/18/27, or a decision to open a
+substantially larger new wave (class-breadth work is its own multi-cycle
+epic, not a bounded task). Surfaced here plainly per standing guidance rather
+than manufacturing further busywork to avoid reporting it. The swarm remains
+live and will pick up immediately on any operator direction or newly
+discovered bounded work; the standing ~20-minute autonomous check-in
+continues regardless.
 
 ---
 
