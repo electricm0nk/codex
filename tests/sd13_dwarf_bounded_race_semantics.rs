@@ -134,6 +134,38 @@ fn dwarf_ability_modifiers_record_names_con_bonus_and_cha_penalty() {
     assert_eq!(computation.ability_modifiers.charisma, -2);
 }
 
+// ----- v0.6 alpha swarm: the record was missing its real +2 Wisdom adjustment
+// entirely (same systemic gap as Elf's missing +2 Intelligence) -- verified
+// independently against the real PCGen corpus
+// (core_essentials/races/dwarf/dwarf_abilities_race.lst:18's "Dwarf Racial
+// Default" row: BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial)
+// before writing this test, not just trusting the fix commit's own citation. -----
+
+#[test]
+fn dwarf_ability_modifiers_record_now_names_the_wisdom_adjustment_too() {
+    let input = load(DWARF_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let ability = explanation(&computation, "race.dwarf.trait_bundle.ability_modifiers");
+    assert!(
+        ability.detail.contains("+2") && ability.detail.contains("Wisdom"),
+        "Dwarf ability modifiers record must name the +2 Wisdom adjustment: {}",
+        ability.detail
+    );
+    // The Con/Cha adjustments must still be named alongside the new Wisdom one.
+    assert!(
+        ability.detail.contains("Constitution") && ability.detail.contains("Charisma"),
+        "Dwarf ability modifiers record must still name Constitution and Charisma: {}",
+        ability.detail
+    );
+    assert_eq!(
+        ability.value, 0,
+        "Dwarf ability modifiers record must still carry no fabricated mechanical value (+0)"
+    );
+    // Fixture Wisdom is 10 -> modifier +0; independently verified, not assumed.
+    assert_eq!(computation.ability_modifiers.wisdom, 0);
+}
+
 // ----- size: grounded PF1 Dwarf Medium size, no fabricated value -----
 
 #[test]

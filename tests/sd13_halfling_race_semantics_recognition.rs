@@ -135,6 +135,67 @@ fn halfling_ability_modifiers_record_names_dex_bonus_and_str_penalty() {
     assert_eq!(computation.ability_modifiers.strength, 0);
 }
 
+// ----- v0.6 alpha swarm: the record was missing its real +2 Charisma
+// adjustment entirely (same systemic gap as Elf's missing +2 Intelligence) --
+// verified independently against the real PCGen corpus
+// (core_essentials/races/halfling/halfling_abilities_race.lst:18's "Halfling
+// Racial Default" row: BONUS:STAT|DEX,CHA|2|TYPE=Racial,
+// BONUS:STAT|STR|-2|TYPE=Racial) before writing this test, not just trusting
+// the fix commit's own citation. -----
+
+#[test]
+fn halfling_ability_modifiers_record_now_names_the_charisma_adjustment_too() {
+    let input = load(HALFLING_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let ability = explanation(&computation, "race.halfling.trait_bundle.ability_modifiers");
+    assert!(
+        ability.detail.contains("+2") && ability.detail.contains("Charisma"),
+        "Halfling ability modifiers record must name the +2 Charisma adjustment: {}",
+        ability.detail
+    );
+    assert!(
+        ability.detail.contains("Dexterity") && ability.detail.contains("Strength"),
+        "Halfling ability modifiers record must still name Dexterity and Strength: {}",
+        ability.detail
+    );
+    assert_eq!(
+        ability.value, 0,
+        "Halfling ability modifiers record must still carry no fabricated mechanical value (+0)"
+    );
+    // Fixture Charisma is 12 -> modifier +1; independently verified, not assumed.
+    assert_eq!(computation.ability_modifiers.charisma, 1);
+}
+
+// ----- v0.6 alpha swarm: the size record falsely implied real PF1 Small size
+// has zero numeric effect; it only has zero effect in THIS codebase (no
+// size-modifier term exists in the combat baseline for any race yet). The
+// corrected text must name the real PF1 Small-size effect while still
+// explaining why it isn't applied here, not merely erase the false claim. -----
+
+#[test]
+fn halfling_size_record_no_longer_falsely_claims_small_size_has_no_real_pf1_effect() {
+    let input = load(HALFLING_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let size = explanation(&computation, "race.halfling.trait_bundle.size");
+    assert!(
+        !size.detail.contains("contributes no numeric effect"),
+        "Halfling size record must not repeat the stale blanket 'no numeric effect' claim: {}",
+        size.detail
+    );
+    assert!(
+        size.detail.contains("+1 AC") && size.detail.contains("Stealth"),
+        "Halfling size record must name the real PF1 Small-size effect (+1 AC, +4 Stealth, etc.): {}",
+        size.detail
+    );
+    assert_eq!(
+        size.value, 0,
+        "Halfling size record must still carry no fabricated mechanical value (+0) -- no \
+         size-modifier term is wired into the combat baseline yet"
+    );
+}
+
 // ----- size: grounded PF1 Halfling Small size, no fabricated value -----
 
 #[test]
