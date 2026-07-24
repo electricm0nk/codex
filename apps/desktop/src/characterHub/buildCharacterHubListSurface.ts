@@ -50,6 +50,26 @@ export function toRowSurface(summary: CharacterSummaryDto): CharacterHubListRowS
   };
 }
 
+/**
+ * Replaces one row (by `characterId`) with a freshly rebuilt row, without a
+ * full list re-fetch. Keeps the Load Character list's cached level/class
+ * label in sync after a mutation on the currently open sheet (level-up,
+ * etc.) — previously only the open sheet's own `row` state got this
+ * treatment (see `CharacterHubPage.tsx`'s `onDetailRefreshed`), leaving the
+ * list showing a stale label until the next full reload
+ * (risks-and-open-questions.md item 26). A `characterId` not present in
+ * `surface.rows` leaves it unchanged rather than fabricating a new row.
+ */
+export function replaceRowInSurface(
+  surface: CharacterHubListSurface,
+  updatedRow: CharacterHubListRowSurface
+): CharacterHubListSurface {
+  return {
+    ...surface,
+    rows: surface.rows.map((row) => (row.characterId === updatedRow.characterId ? updatedRow : row)),
+  };
+}
+
 /** Maps the raw list snapshot to a UI-ready surface: newest-first, formatted dates/labels, empty/unreadable copy. */
 export function buildCharacterHubListSurface(snapshot: ListSavedCharactersResponse): CharacterHubListSurface {
   const rows = [...snapshot.characters]

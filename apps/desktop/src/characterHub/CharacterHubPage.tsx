@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
-import { toRowSurface, type CharacterHubListSurface, type CharacterHubListRowSurface } from './buildCharacterHubListSurface';
+import {
+  replaceRowInSurface,
+  toRowSurface,
+  type CharacterHubListSurface,
+  type CharacterHubListRowSurface,
+} from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
@@ -166,13 +171,17 @@ export function CharacterHubPage() {
         row={sheet.row}
         detail={sheet.detail}
         onClose={() => setMode(sheetReturnMode)}
-        onDetailRefreshed={(detail) =>
+        onDetailRefreshed={(detail) => {
           // The Level box/class panel/Progression rail derive from
           // `row.classSummary`, not `detail` — rebuild `row` from the
           // refreshed detail's summary too, so both stay in sync without a
-          // close-and-reopen or a full list re-fetch.
-          setSheet((current) => (current ? { row: toRowSurface(detail.summary), detail } : current))
-        }
+          // close-and-reopen or a full list re-fetch. Also patch the Load
+          // Character list's cached copy of the same row (item 26) so its
+          // level/class label doesn't go stale until the next full reload.
+          const updatedRow = toRowSurface(detail.summary);
+          setSheet((current) => (current ? { row: updatedRow, detail } : current));
+          setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
+        }}
         ruleSet={ruleSet}
         onOpen={() => {
           // "Open" always returns to the Load Character screen so the
