@@ -840,6 +840,20 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   correctly still a valid Fighter-plus-unrecognized-class test, just not
   the Wizard proof it looked like. Writing a proper fixture-driven
   multiclass test with the real class ids to close the gap; in progress.
+- QA's verification-completeness sweep (self-directed, scanning the full
+  develop..HEAD commit history for anything not yet independently
+  checked): 5 clean confirmations landed today, each reading the actual
+  code/diff rather than trusting the commit message -- the Defense-tab DR
+  wiring (risks item 6), the durability status thresholds against real
+  PF1 rules (risks item 4), all 11 classes' support-level labeling (risks
+  item 15, not just the two already touched), the corpus_derived
+  wire-serialization fix (risks item 10, including QA reproducing RED
+  themselves by removing the fix and watching it fail before restoring
+  it), and the 185-record feat catalog exposure (per-category counts
+  re-grepped from the data files themselves: 50+110+8+17=185, plus
+  confirming append-safety from the source side, not just the earlier
+  empirical test). Continuing down the unverified-commit list
+  (Bio/LevelUp persistence commands next).
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
