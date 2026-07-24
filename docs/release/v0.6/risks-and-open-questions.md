@@ -1,5 +1,10 @@
 # v0.6 Alpha Release Swarm — Risks and Open Questions
 
+> **Consolidated future-epic scoping** for the three architecture-level gaps
+> tracked below (items 1, 17, 18) lives in a single cross-referenced writeup
+> at `docs/release/v0.6/future-epic-scoping.md` — read that first for the
+> operator-facing picture before diving into the chronological detail here.
+
 ## Operator directive: fully autonomous, operatorless operation (2026-07-23)
 
 The operator instructed the lead directly: keep pushing into the remaining backlog, make judgment calls without pausing for operator confirmation, and do not stall waiting for operator input — this is intended to run unattended for multiple days ("don't want to come back after 4 days and find out you have been stalled for 3.75 days"). Effective immediately:
