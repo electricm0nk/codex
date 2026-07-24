@@ -7850,18 +7850,36 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 17] = [
     ),
 ];
 
-/// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
-/// levels 1-10 seam, while preserving the accepted canonical selections exactly.
+/// Claim-block non-canonical feat-choice mutations on the deterministic Fighter
+/// levels 1-20 seam, while preserving the accepted canonical selections exactly.
 ///
 /// This is deliberately not a general feat legality or prerequisite engine. It only knows
-/// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
+/// the exact accepted deterministic feat-choice selections on the bounded Fighter
 /// seam. When one of those named choice slots is present but deviates from its canonical
 /// selection, it emits a claim-blocking diagnostic that names the offending choice identity
 /// and states plainly that alternative feat/prerequisite legality is outside this bounded
 /// proof without a general engine — instead of letting the non-canonical build ride through
 /// as a fabricated computed success.
 ///
-/// It runs only for a supported single-class Human Fighter (levels 1-10); any other posture
+/// v0.6 alpha swarm (real gap found via frontend's ceiling/limit sweep): this used to
+/// return early for any non-Human Fighter, on the documented assumption that
+/// `unmet_combat_posture_conditions` already claim-blocks every other case upstream. That
+/// assumption was wrong -- `unmet_combat_posture_conditions` only checks the level-1
+/// `FIGHTER_BONUS_FEAT_CHOICE_ID` slot; `CANONICAL_FIGHTER_FEAT_CHOICES` covers 17 slots
+/// (levels 2/4/6/8/10/12/14/16/18/20 bonus feats plus 4 weapon training groups), so a
+/// non-Human Fighter submitting a non-canonical selection for any of the other 14+ slots
+/// (reachable today via `level_up_character`'s caller-supplied `additional_choices`, no
+/// canonical-value validation anywhere else) previously reached `Computed` silently
+/// unchecked. Confirmed empirically (an Elf Fighter level 2 with a wrong
+/// `choice:fighter_bonus_feat_2` selection produced zero claim-blocking diagnostics) before
+/// removing the race gate. Fighter's own bonus-feat/weapon-training choices are Fighter
+/// class features, not Human-specific -- the one race-coupled entry in the table
+/// (`HUMAN_BONUS_FEAT_CHOICE_ID`) is self-limiting: that choice slot is never seeded for a
+/// non-Human character in the first place, so the loop's existing "slot absent, skip"
+/// handling (`let Some(selection) = ... else { continue; }`, no change needed) already
+/// covers it correctly for every race.
+///
+/// It runs only for a supported single-class Fighter (levels 1-20); any other posture
 /// is already claim-blocked upstream and is left untouched here. It grounds no alternative
 /// feat effect and does not touch the read-only canonical Human ability-bonus target.
 fn validate_fighter_feat_choice_legality(
@@ -7869,9 +7887,6 @@ fn validate_fighter_feat_choice_legality(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if supported_fighter_level(input).is_none() {
-        return;
-    }
-    if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
@@ -18946,5 +18961,82 @@ mod race_ability_modifier_parity_tests {
                  this engine yet: {detail}"
             );
         }
+    }
+}
+
+/// v0.6 alpha swarm: frontend's ceiling/limit sweep flagged (but did not
+/// verify) that `validate_fighter_feat_choice_legality`'s own doc comment
+/// claim -- "any other posture is already claim-blocked upstream" for
+/// non-Human Fighters -- might not actually hold. Confirmed empirically it
+/// didn't: `unmet_combat_posture_conditions` only checks the level-1
+/// `FIGHTER_BONUS_FEAT_CHOICE_ID` slot, leaving the other 14+ entries in
+/// `CANONICAL_FIGHTER_FEAT_CHOICES` (levels 2-20 bonus feats, weapon
+/// training groups) completely unchecked for any non-Human Fighter.
+#[cfg(test)]
+mod fighter_feat_choice_legality_race_gate_tests {
+    use super::compute_pilot_base_chassis;
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// The real gap this fix closes: before removing the Human-only race
+    /// gate, this exact scenario produced ZERO claim-blocking diagnostics
+    /// (empirically confirmed before writing the fix, not assumed) --
+    /// silently accepting a non-canonical feat choice for a non-Human
+    /// Fighter at a level the doc comment claimed was already covered.
+    #[test]
+    fn elf_fighter_level2_non_canonical_bonus_feat_is_now_claim_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.race_id = "race:elf".to_owned();
+        input.chosen.class_levels[0].level = 2;
+        // Non-canonical: real canonical is feat:toughness; select feat:cleave instead.
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:fighter_bonus_feat_2".to_owned(),
+            selection_id: "feat:cleave".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "feat_choice.non_canonical.choice:fighter_bonus_feat_2"
+                    && d.claim_blocking),
+            "a non-Human Fighter's non-canonical level-2 bonus feat choice must now be \
+             claim-blocked, matching the same treatment a Human Fighter already gets: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    /// Positive control: a non-Human Fighter with the CANONICAL selection
+    /// must NOT be claim-blocked -- this fix widens the check, it doesn't
+    /// newly reject correct builds.
+    #[test]
+    fn elf_fighter_level2_canonical_bonus_feat_is_not_claim_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.race_id = "race:elf".to_owned();
+        input.chosen.class_levels[0].level = 2;
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:fighter_bonus_feat_2".to_owned(),
+            selection_id: "feat:toughness".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            !computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id.starts_with("feat_choice.non_canonical")),
+            "the canonical selection must never be claim-blocked, for any race: {:?}",
+            computation.diagnostics
+        );
     }
 }
