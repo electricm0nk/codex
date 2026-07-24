@@ -904,6 +904,29 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   rather than silently omitting or silently calling it clean -- worth
   noting in the eventual attestation as a documented, re-verified
   non-issue. No code changes, pure verification.
+- Items 22-26 (the last wave) all resolved today: characterProgression.ts
+  test coverage, LevelUpDialog's feat-pick gap, a new PCGen BAB parity
+  dimension, the systemic frontend-test-coverage pattern across 5
+  modules, and the Load-list stale-row refresh -- every one independently
+  re-verified by QA after landing, no exceptions.
+- Lead wrote up the bounded-backlog-exhaustion assessment promised in
+  open question 3: all 26 risk items resolved or correctly deferred, two
+  clean backend self-scans in a row, a clean consolidated health check,
+  QA's completeness sweep essentially exhaustive. Not claiming the alpha
+  bar is met -- class/multiclass breadth and the three architecture gaps
+  remain real distance -- but the bounded, same-session backlog is
+  genuinely exhausted, not abandoned early.
+- QA's final comprehensive SWARM_REPORT.md consolidation (34bf1ffa): a
+  new "Current-state summary" section distinct from the four incremental
+  checkpoints -- one coherent read of where things stand, the defects
+  table brought fully current (added the wire-serialization bug as
+  defect 10), the bar-distance assessment restated plainly, and a "what's
+  genuinely left" section matching the lead's own assessment. Still
+  explicitly not signing an attestation.
+- Frontend running a comprehensive live-UI smoke test across the whole
+  app (all 3 working classes, multiple races, several levels, every
+  populated tab) as a genuine end-to-end sanity check broader than any
+  single-feature verification pass today -- in progress.
 
 (c) Consolidated status (refreshed 2026-07-24, ~06:15 ET — supersedes the
 prior refresh, itself already superseded by everything since)
