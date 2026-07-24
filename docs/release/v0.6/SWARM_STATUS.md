@@ -18,12 +18,11 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
 frontend              Sonnet   working autonomous queue: render-staleness
                                 investigation, then Rogue live verification,
                                 then class-dropdown honesty audit
-backend               Sonnet   Rogue confirmed reachable with ZERO gap
-                                (0bb37521); working autonomous queue: DR
-                                exposure, spells_selected, money-purchase
-                                coupling, render-staleness
-qa                    Sonnet   comprehensive coverage resurvey DONE
-                                (81785b6f); working autonomous queue
+backend               Sonnet   DR exposure DONE (f7ce289d); on
+                                spells_selected exposure next, then money-
+                                purchase coupling, then render-staleness
+qa                    Sonnet   durability catalogue adoption DONE
+                                (0ae18cb4); working autonomous queue
 
 (b) Happened
 ------------
