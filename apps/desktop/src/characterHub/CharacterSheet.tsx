@@ -1214,6 +1214,10 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(featRefresh.detail);
+      // Same as handleAddFeat — the feat grant can change maxHp, and
+      // neither this call's response nor the level-up's own carries a
+      // durability field.
+      await refreshDurability();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1351,6 +1355,10 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
+      // A feat can change maxHp (e.g. Toughness) but add_feat_selection's
+      // response carries no durability field — refresh it explicitly so
+      // the Defense tab doesn't show a stale pre-feat value.
+      await refreshDurability();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1453,6 +1461,26 @@ export function CharacterSheet(props: {
       setMoneyError(cause instanceof Error ? cause.message : 'Could not update the money balance.');
     } finally {
       setMoneyBusy(false);
+    }
+  }
+
+  /**
+   * Re-fetches HP/durability after a mutation that can change `maxHp` (a
+   * feat grant, e.g. Toughness's +3 HP) but whose own response carries no
+   * durability field — unlike `adjustCharacterHp`'s. Without this, the
+   * Defense tab would keep showing the pre-feat `maxHp` until the sheet
+   * was closed and reopened (QA found this verifying item 17 — same
+   * render-staleness shape as the `corpus_derived` bug and the Load-list
+   * staleness item 26 already fixed). Failure falls back to `null`, the
+   * same honest "not available" treatment the initial per-character load
+   * uses — never a stale or fabricated value.
+   */
+  async function refreshDurability() {
+    try {
+      const loaded = await loadCharacterDurability(props.row.characterId);
+      setDurability(loaded);
+    } catch {
+      setDurability(null);
     }
   }
 
