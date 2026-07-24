@@ -32,7 +32,7 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
       kind: 'Saved',
       summary,
       snapshot: SNAPSHOT,
-      corpusDerived: { schoolCoverage: [], equippedItems: [] },
+      corpusDerived: { schoolCoverage: [], equippedItems: [], unresolvedSpellIds: [], unresolvedEquipmentItemIds: [] },
     },
     ['feat:power_attack'],
     [{ spellId: 'Light', sourceClassId: 'class:wizard', acquisitionMode: 'Known' }]

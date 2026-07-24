@@ -74,6 +74,8 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
           grounded: false,
         },
       ],
+      unresolvedSpellIds: [],
+      unresolvedEquipmentItemIds: [],
     },
     selectedFeats: ['feat:power_attack', 'feat:dodge', 'feat:weapon_focus'],
     spellsSelected: [],

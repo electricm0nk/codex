@@ -92,6 +92,18 @@ export interface ResolvedEquipmentDto {
 export interface CorpusDerivedDto {
   schoolCoverage: SchoolCoverageDto[];
   equippedItems: ResolvedEquipmentDto[];
+  /**
+   * Every `spellId`/`itemId` the character actually has selected and
+   * persisted that did NOT resolve against this build's tiny bundled demo
+   * corpus (`corpus_fixtures.rs`, ~4 records total) — before this field
+   * existed, such a selection simply vanished from `schoolCoverage`/
+   * `equippedItems` with no signal at all, indistinguishable from "nothing
+   * selected" even though the underlying data was never lost (v0.6 alpha
+   * swarm, found in the frontend's own live smoke test). Render as an
+   * honest "not shown — outside demo corpus" indicator, never silence.
+   */
+  unresolvedSpellIds: string[];
+  unresolvedEquipmentItemIds: string[];
 }
 
 export type CreateCharacterOutcome =

@@ -624,8 +624,29 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
  * here; this is a reachability proof, not a spellbook or slot tracker
  * (spell slots, DCs, and prepared/known posture remain out of scope).
  */
+/**
+ * Honest "not shown" signal for `CorpusDerivedDto.unresolvedSpellIds` /
+ * `unresolvedEquipmentItemIds` — real, disk-persisted selections that fall
+ * outside the desktop app's tiny bundled demo corpus (`corpus_fixtures.rs`,
+ * ~4 records total) and so can't be resolved to a display name, school, or
+ * grounded status the way the rest of this tab renders. Shows only the raw
+ * ids, which is all that's cleanly available — no fabricated detail about
+ * what they are beyond that. This is exactly the mechanism behind the
+ * "0 of 3" / "1 of 3" spell-count inconsistency found in the frontend's own
+ * live smoke test — not a Wizard/race bug.
+ */
+function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
+  const noun = props.ids.length === 1 ? props.kind : `${props.kind}s`;
+  return (
+    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+      {props.ids.length} {noun} not shown (outside demo corpus): {props.ids.join(', ')}
+    </p>
+  );
+}
+
 function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddSpell: () => void }) {
   const schools = props.corpusDerived?.schoolCoverage ?? [];
+  const unresolved = props.corpusDerived?.unresolvedSpellIds ?? [];
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
@@ -637,6 +658,7 @@ function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddSp
           Add Spell
         </button>
       </div>
+      {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="spell" /> : null}
       {schools.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No corpus-reachable spells selected yet.
@@ -868,6 +890,7 @@ function GearTab(props: {
   onAdjustMoney: (gpAmount: number) => void;
 }) {
   const items = props.corpusDerived?.equippedItems ?? [];
+  const unresolved = props.corpusDerived?.unresolvedEquipmentItemIds ?? [];
   return (
     <div>
       <MoneyPanel money={props.money} busy={props.moneyBusy} error={props.moneyError} onAdjust={props.onAdjustMoney} />
@@ -880,6 +903,7 @@ function GearTab(props: {
           Add Armor
         </button>
       </div>
+      {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
       {items.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No corpus-reachable equipment selected yet.

@@ -46,7 +46,7 @@ function verifiesSavedOutcome() {
         totalSaves: { fortitude: 4, reflex: 2, will: 0 },
         selectedSkillModifiers: { climb: 5, intimidate: -1, swim: 5 },
       },
-      corpusDerived: { schoolCoverage: [], equippedItems: [] },
+      corpusDerived: { schoolCoverage: [], equippedItems: [], unresolvedSpellIds: [], unresolvedEquipmentItemIds: [] },
     },
     FIGHTER_CONTEXT
   );
