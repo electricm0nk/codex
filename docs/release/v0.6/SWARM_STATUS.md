@@ -1206,7 +1206,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T16:30:01
-Latest commit on tranche/6: aaf143c5 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-24T16:25:01-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T15:23:08 frontend=2026-07-24T15:02:02 qa=2026-07-24T15:48:54 lead=2026-07-24T15:52:13
+Last mechanical check: 2026-07-24T16:35:01
+Latest commit on tranche/6: 8c593865 docs(v0.6): backend clarifies quiet stretch, starting items 1+27 scoping (2 minutes ago) (2026-07-24T16:32:48-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T16:31:23 frontend=2026-07-24T15:02:02 qa=2026-07-24T15:48:54 lead=2026-07-24T16:32:23
 <!-- AUTO-HEARTBEAT-END -->
