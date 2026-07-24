@@ -344,6 +344,11 @@ mod tests {
                         .equipment_effects
                         .attack_bonus_delta,
                 },
+                unresolved_spell_ids: corpus_receipt.corpus_derived.unresolved_spell_ids.clone(),
+                unresolved_equipment_item_ids: corpus_receipt
+                    .corpus_derived
+                    .unresolved_equipment_item_ids
+                    .clone(),
             };
 
             Ok(LoadSavedCharacterResponse {

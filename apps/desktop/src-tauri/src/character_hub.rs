@@ -166,6 +166,18 @@ pub struct CorpusDerivedDto {
     pub school_coverage: Vec<SchoolCoverageDto>,
     pub equipped_items: Vec<ResolvedEquipmentDto>,
     pub equipment_effects: EquipmentEffectsDto,
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): every `spellId`/`itemId`
+    /// the caller selected that did NOT resolve against this build's
+    /// corpus -- e.g. a real, disk-persisted selection outside the
+    /// desktop app's deliberately tiny bundled demo corpus
+    /// (`corpus_fixtures.rs`, ~4 records total). Before this field, such a
+    /// selection simply vanished from `schoolCoverage`/`equippedItems`
+    /// with no signal at all, indistinguishable from "nothing selected"
+    /// even though the underlying data was never lost. The frontend
+    /// should render these as an honest "not shown -- outside demo
+    /// corpus" indicator, not silence.
+    pub unresolved_spell_ids: Vec<String>,
+    pub unresolved_equipment_item_ids: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -384,6 +396,8 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             spell_failure_chance: section.equipment_effects.spell_failure_chance,
             attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
         },
+        unresolved_spell_ids: section.unresolved_spell_ids.clone(),
+        unresolved_equipment_item_ids: section.unresolved_equipment_item_ids.clone(),
     }
 }
 
@@ -2692,6 +2706,52 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): a real equipment
+    /// selection outside the desktop app's tiny bundled demo corpus
+    /// (`corpus_fixtures.rs`, ~4 records total) must be traceable in
+    /// `corpus_derived.unresolvedEquipmentItemIds`, not silently vanish --
+    /// end to end through the real `add_equipment_selection` command
+    /// against the real bundled corpus, not a hand-built fixture.
+    #[test]
+    fn add_equipment_selection_surfaces_an_unresolvable_item_instead_of_silently_dropping_it() {
+        let root = tempdir("create-character-unresolved-equipment");
+        let request = request_for("race:human", 1);
+        create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        let response = add_equipment_selection_at_root(
+            &root,
+            "Wand of Cure Light Wounds",
+            ActiveState::EquippedActive,
+            "2026-07-24T00:00:00Z",
+        )
+        .expect("add call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { corpus_derived, .. } => {
+                // The fixed loadout's own `item:shield` (Absent) and
+                // `power_attack` (a synthetic feat-toggle id, never a real
+                // corpus item) are pre-existing, already-unresolvable
+                // entries unrelated to this test -- `contains`, not exact
+                // equality, so this doesn't assert on behavior this test
+                // isn't about.
+                assert!(
+                    corpus_derived
+                        .unresolved_equipment_item_ids
+                        .contains(&"Wand of Cure Light Wounds".to_string()),
+                    "an item outside the bundled demo corpus must be traceable, not silently \
+                     dropped: {:?}",
+                    corpus_derived.unresolved_equipment_item_ids
+                );
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("adding an inert extra item must not block an already-Computed build, got: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- create_character: starting wealth (risks item 7) -----
 
     /// A freshly created Fighter is granted the operator-cited average
@@ -3586,6 +3646,8 @@ mod tests {
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
                 },
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
             },
         };
 
@@ -3652,6 +3714,8 @@ mod tests {
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
                 },
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
             },
             money: money_dto_from_total(0),
         };

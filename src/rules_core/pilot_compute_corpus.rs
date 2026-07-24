@@ -53,23 +53,38 @@ pub struct CorpusDerivedSection {
     pub equipped_items: Vec<ResolvedEquipment>,
     /// v0.6 alpha swarm item 1, shape (c): the real, corpus-resolved
     /// aggregate equipment-effect totals (`armor_class_delta`,
-    /// `armor_check_penalty_total`, `max_dex_cap`, `spell_failure_chance`)
-    /// for the character's currently `EquippedActive` items, via the same
+    /// `armor_check_penalty_total`, `max_dex_cap`, `spell_failure_chance`,
+    /// and the bounded single-weapon `attack_bonus_delta`) for the
+    /// character's currently `EquippedActive` items, via the same
     /// already-existing `equipment_effects::compute_equipment_effects`
     /// `contract::to_pilot_receipt` already calls for `PilotReceipt`.
     /// Deliberately NOT wired into the claim-gated `PilotBaseChassisComputation`
     /// pillars (`baseline_armor_class`, `baseline_melee_attack_bonus`,
     /// `selected_skill_modifiers`) this receipt's own `base` field carries —
     /// this is an additive, explicitly-not-claim-gated section, the same
-    /// posture `equipped_items` above already has. Attack-bonus enhancement
-    /// is deliberately excluded (see `EquipmentEffects.per_item`'s own
-    /// `weapon_enhancement_bonus`, not surfaced here) — real per-item math
-    /// exists, but nothing in `character_input.rs`'s schema records which
-    /// weapon a modifier item attaches to, so aggregating it would risk
-    /// misapplying one weapon's bonus to another. See
-    /// `docs/release/v0.6/item-1-architecture-wall-design.md` for the full
-    /// design pass this field implements the recommendation of.
+    /// posture `equipped_items` above already has.
     pub equipment_effects: EquipmentEffects,
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): every `spells_selected`
+    /// entry whose `spell_id` did NOT resolve against `corpus` -- verbatim,
+    /// not deduplicated against `school_coverage`. Before this field, an
+    /// unresolved selection simply vanished from every corpus-derived
+    /// output with no trace at all (the loop below `continue`s past it) --
+    /// for the desktop app specifically, whose only bundled `corpus` is a
+    /// deliberately tiny ~4-record demo fixture
+    /// (`apps/desktop/src-tauri/src/corpus_fixtures.rs`), this meant a
+    /// real, disk-persisted selection outside that tiny bundle looked
+    /// identical to "nothing selected" -- a silent, honest-looking display
+    /// bug, not a data-loss bug (the underlying `CharacterInput` field was
+    /// never touched). This field makes that absence traceable rather than
+    /// silent, matching this crate's "never fabricate, never silently
+    /// drop" discipline. Whether/how a caller surfaces this to a user is
+    /// its own decision -- this field only guarantees the information
+    /// exists to make that decision with.
+    pub unresolved_spell_ids: Vec<String>,
+    /// Mirrors `unresolved_spell_ids` exactly, for
+    /// `equipment_selections[].item_id` that did not resolve against
+    /// `corpus`.
+    pub unresolved_equipment_item_ids: Vec<String>,
 }
 
 /// A canonical Paizo-table-cell reference. Non-`None` proves the corpus
@@ -121,10 +136,12 @@ pub fn compute_pilot_with_corpus(
     let base = compute_pilot_base_chassis(input);
 
     let mut school_coverage: BTreeMap<Pf1SchoolId, SchoolCoverage> = BTreeMap::new();
+    let mut unresolved_spell_ids = Vec::new();
     for selection in &input.chosen.spells_selected {
         let Some((record, table_cell)) =
             spell_id_resolve(&selection.spell_id, RuleSetId::Crb, corpus)
         else {
+            unresolved_spell_ids.push(selection.spell_id.clone());
             continue;
         };
         let Some(school) = record
@@ -151,10 +168,12 @@ pub fn compute_pilot_with_corpus(
     }
 
     let mut equipped_items = Vec::new();
+    let mut unresolved_equipment_item_ids = Vec::new();
     for selection in &input.chosen.equipment_selections {
         let Some((record, table_cell)) =
             equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
         else {
+            unresolved_equipment_item_ids.push(selection.item_id.clone());
             continue;
         };
         let key = crate::rules_core::equipment_resolver::equipment_key_token(record)
@@ -188,6 +207,8 @@ pub fn compute_pilot_with_corpus(
             school_coverage,
             equipped_items,
             equipment_effects,
+            unresolved_spell_ids,
+            unresolved_equipment_item_ids,
         },
     }
 }
@@ -300,5 +321,80 @@ mod tests {
         let receipt = compute_pilot_with_corpus(&input, &corpus);
 
         assert_eq!(receipt.corpus_derived.equipment_effects.armor_check_penalty_total, 0);
+    }
+
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): a real, disk-persisted
+    /// equipment selection that does not resolve against `corpus` (e.g.
+    /// the desktop app's tiny bundled demo corpus) must be traceable, not
+    /// silently vanish from every corpus-derived output with no signal at
+    /// all. A resolvable item and an unresolvable one are both present in
+    /// the same input, proving the unresolved list doesn't just echo
+    /// everything back.
+    #[test]
+    fn corpus_derived_section_tracks_an_equipment_selection_that_does_not_resolve() {
+        let corpus = corpus_with_chain_shirt();
+        let input = fighter_input_with(vec![
+            EquipmentSelection {
+                item_id: "Chain Shirt (Base)".to_string(),
+                equipped_or_active: true,
+                active_state: ActiveState::EquippedActive,
+            },
+            EquipmentSelection {
+                item_id: "Wand of Cure Light Wounds".to_string(),
+                equipped_or_active: true,
+                active_state: ActiveState::EquippedActive,
+            },
+        ]);
+
+        let receipt = compute_pilot_with_corpus(&input, &corpus);
+
+        assert_eq!(
+            receipt.corpus_derived.unresolved_equipment_item_ids,
+            vec!["Wand of Cure Light Wounds".to_string()],
+            "the unresolvable selection must be traceable, not silently dropped"
+        );
+        assert_eq!(
+            receipt.corpus_derived.equipped_items.len(),
+            1,
+            "the resolvable Chain Shirt must still resolve normally"
+        );
+    }
+
+    /// Mirrors the equipment case exactly, for `spells_selected`.
+    #[test]
+    fn corpus_derived_section_tracks_a_spell_selection_that_does_not_resolve() {
+        let corpus = corpus_with_chain_shirt();
+        let mut input = fighter_input_with(Vec::new());
+        input.chosen.spells_selected.push(crate::rules_core::character_input::SpellSelection {
+            spell_id: "Magic Missile".to_string(),
+            source_class_id: "class:wizard".to_string(),
+            acquisition_mode: crate::rules_core::character_input::AcquisitionMode::Known,
+        });
+
+        let receipt = compute_pilot_with_corpus(&input, &corpus);
+
+        assert_eq!(
+            receipt.corpus_derived.unresolved_spell_ids,
+            vec!["Magic Missile".to_string()],
+            "a real spell selection absent from this corpus must be traceable, not silently dropped"
+        );
+        assert!(receipt.corpus_derived.school_coverage.is_empty());
+    }
+
+    /// Every selection resolving cleanly must leave both unresolved lists
+    /// genuinely empty, not just unpopulated by omission.
+    #[test]
+    fn corpus_derived_section_leaves_unresolved_lists_empty_when_everything_resolves() {
+        let corpus = corpus_with_chain_shirt();
+        let input = fighter_input_with(vec![EquipmentSelection {
+            item_id: "Chain Shirt (Base)".to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+        }]);
+
+        let receipt = compute_pilot_with_corpus(&input, &corpus);
+
+        assert!(receipt.corpus_derived.unresolved_equipment_item_ids.is_empty());
+        assert!(receipt.corpus_derived.unresolved_spell_ids.is_empty());
     }
 }
