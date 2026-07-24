@@ -58,6 +58,7 @@
 | Load-Character list stale cached row after a sheet mutation | UI | - | done | 2b13a23c |
 | ItemPickerModal duplicate-catalog-key React reconciliation bug | UI | - | done | e50d7762 |
 | Comprehensive live-UI smoke test across all 3 working classes | UI | - | done | e50d7762 (fix landed as part of this pass) |
+| Frontend closure-readiness pass (alpha-bar UI check, doctrine sweep, lint/typecheck/build baseline) | UI | - | done | c014ffec, lead-verified 77/77 + typecheck clean; found+fixed one real pre-existing gap (WeaponsTab's dead Print button, risks item 30) |
 | driver.sh cross-agent GUI display/state-file collision fix | QA/Backend (infra) | - | done | f6fe0df2 |
 | Interim four-check wired-integration audit (doctrine compliance) | QA | - | done | c3b5fba8, lead re-verified f3676470 |
 | Starting wealth by class (operator-provided table, 11 CRB classes) | Backend | CRB | done | 0dbf67ad |

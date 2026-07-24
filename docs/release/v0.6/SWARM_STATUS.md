@@ -1171,12 +1171,12 @@ prior refresh, itself already superseded by everything since)
 - risks-and-open-questions.md items 6, 9, 9a corrected from stale
   "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
-## Agent Status (2026-07-24, ~15:05 ET)
+## Agent Status (2026-07-24, ~15:15 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | closure-readiness health pass in flight (full workspace test+build, sweep for remaining gaps), report pending |
-| frontend | working | closure-readiness sweep against the alpha bar's UI-facing items + full lint/typecheck/test baseline, report pending |
-| qa | idle | independently sample-reviewed frontend's item-25 tests (6 files, source-then-test, reproduced a real regression on `purchaseEquipment.test.ts` to confirm load-bearing), clean, logged; standing by |
+| backend | working | closure-readiness health pass still in flight, report pending |
+| frontend | idle | closure-readiness pass done and pushed (c014ffec) — sanity baseline all clean, tab completeness confirmed, one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified independently (77/77, typecheck clean, diff matches claim exactly) |
+| qa | idle | standing by; frontend's Print-button fix is small enough (1-line diff, lead-verified) that a QA pass is optional — will dispatch if backend's pass surfaces something needing independent verification |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

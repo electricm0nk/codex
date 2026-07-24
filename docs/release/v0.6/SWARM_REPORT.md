@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | closure-readiness health pass in flight, report pending |
-| frontend | working | closure-readiness sweep against the alpha bar's UI-facing items in flight, report pending |
-| qa | idle | independently confirmed frontend's item-25 tests clean (source-then-test read of all 6 remaining files, reproduced a real regression on one to confirm load-bearing); standing by |
+| backend | working | closure-readiness health pass still in flight, report pending |
+| frontend | idle | closure-readiness pass done (c014ffec): sanity baseline clean, tab completeness confirmed, one real pre-existing gap found and fixed (WeaponsTab's dead Print button, risks item 30); lead-verified |
+| qa | idle | standing by; nothing currently needs independent verification |
 
 ---
 
