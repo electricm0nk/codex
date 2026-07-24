@@ -237,6 +237,9 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
     }
     for eq in &input.chosen.equipment_selections {
         single_line("equipment selection item_id", &eq.item_id)?;
+        for modifier in &eq.applied_modifiers {
+            single_line("equipment selection applied_modifiers modifier_item_id", modifier)?;
+        }
     }
     for spell in &input.chosen.spells_selected {
         single_line("spell selection spell_id", &spell.spell_id)?;
@@ -349,6 +352,12 @@ fn render_character_input(input: &CharacterInput) -> String {
             ActiveState::Absent => "absent",
         };
         let _ = writeln!(out, "equipment={}:{}", eq.item_id, state);
+        // Must come after this selection's own `equipment=` line --
+        // `apply_equipment_modifier`'s own parser looks up the matching
+        // selection by `item_id` and requires it to already exist.
+        for modifier in &eq.applied_modifiers {
+            let _ = writeln!(out, "equipment_modifier={}:{}", eq.item_id, modifier);
+        }
     }
     for spell in &input.chosen.spells_selected {
         let mode = match spell.acquisition_mode {
@@ -544,5 +553,124 @@ fn io_error(path: &Path, err: std::io::Error) -> SavedCharacterStoreError {
 fn parse_error(message: impl Into<String>) -> SavedCharacterStoreError {
     SavedCharacterStoreError {
         message: message.into(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection,
+    };
+    use crate::saved_character::CURRENT_SAVED_CHARACTER_SCHEMA_VERSION;
+
+    fn tempdir(label: &str) -> std::path::PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "codex-local-store-{label}-{}-{unique}",
+            std::process::id()
+        ));
+        fs::create_dir_all(&path).expect("temp dir should be creatable");
+        path
+    }
+
+    fn envelope_with(equipment_selections: Vec<EquipmentSelection>) -> SavedCharacterEnvelope {
+        SavedCharacterEnvelope {
+            character_id: "char-local-store-test".to_owned(),
+            revision_id: "char-local-store-test.rev.1".to_owned(),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: "2026-07-24T00:00:00Z".to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
+            game_system: "pf1".to_owned(),
+            latest_authoritative_revision_ref: "char-local-store-test.rev.1".to_owned(),
+            display_label: "Local Store Test Character".to_owned(),
+            character_input: CharacterInput {
+                case_id: None,
+                source_package_id: "core_rulebook".to_owned(),
+                chosen: ChosenCharacterState {
+                    race_id: "race:human".to_owned(),
+                    class_levels: vec![CharacterClassLevel {
+                        class_id: "class:fighter".to_owned(),
+                        level: 1,
+                    }],
+                    ability_scores: AbilityScores {
+                        strength: 16,
+                        dexterity: 14,
+                        constitution: 14,
+                        intelligence: 10,
+                        wisdom: 12,
+                        charisma: 8,
+                    },
+                    selected_feats: Vec::new(),
+                    skill_allocations: Vec::new(),
+                    equipment_selections,
+                    selected_choices: Vec::new(),
+                    spells_selected: Vec::new(),
+                },
+                selection_provenance: Vec::new(),
+            },
+        }
+    }
+
+    /// v0.6 alpha swarm items 1+27 sub-task 6: `applied_modifiers` must
+    /// survive a real save/load round-trip through this store, not just
+    /// exist as an in-memory field. Found by an end-to-end desktop test
+    /// (`attach_equipment_modifier_at_root`) reloading empty after a
+    /// reported-successful attach -- traced to this exact gap: the
+    /// fixture-text *parser* (`load_character_input_fixture`) already
+    /// supported `equipment_modifier=` lines (sub-task 1), but this
+    /// store's own *writer* never emitted them, silently dropping every
+    /// attached modifier on save.
+    #[test]
+    fn save_and_load_round_trips_applied_modifiers() {
+        let root = tempdir("applied-modifiers-round-trip");
+        let envelope = envelope_with(vec![EquipmentSelection {
+            item_id: "item:longsword".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: vec![
+                "Special Ability ~ +1 ~ Weapon".to_owned(),
+                "Special Quality ~ Masterwork ~ Weapon".to_owned(),
+            ],
+        }]);
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec![
+                "Special Ability ~ +1 ~ Weapon".to_owned(),
+                "Special Quality ~ Masterwork ~ Weapon".to_owned(),
+            ]
+        );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A selection with no attached modifiers must round-trip to a real
+    /// empty list, not an error or a fabricated entry -- the common case
+    /// every pre-sub-task-1 saved character already exercises.
+    #[test]
+    fn save_and_load_round_trips_an_empty_applied_modifiers_list() {
+        let root = tempdir("applied-modifiers-empty-round-trip");
+        let envelope = envelope_with(vec![EquipmentSelection {
+            item_id: "item:longsword".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }]);
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert!(reloaded.character_input.chosen.equipment_selections[0].applied_modifiers.is_empty());
+
+        fs::remove_dir_all(&root).ok();
     }
 }

@@ -633,6 +633,33 @@ pub(crate) fn add_equipment_selection_at_root(
     })
 }
 
+/// v0.6 alpha swarm items 1+27 sub-task 6: appends `modifier_item_id` onto
+/// the `applied_modifiers` list of the `equipment_selections` entry whose
+/// `item_id` matches `item_id` -- mirrors PCGen's own single-entry
+/// `CUSTOMIZATION:EQMOD=` convention (an applied equipmod has no separate
+/// top-level selection of its own), same as
+/// `character_input::EquipmentSelection`'s own doc comment describes.
+/// Returns `false` (no mutation) when no selection matches `item_id` --
+/// the caller (`attach_equipment_modifier_at_root`) checks this before
+/// charging any money, so a not-found target never silently no-ops after
+/// a real charge.
+pub fn apply_attach_equipment_modifier(
+    character_input: &mut CharacterInput,
+    item_id: &str,
+    modifier_item_id: &str,
+) -> bool {
+    let Some(selection) = character_input
+        .chosen
+        .equipment_selections
+        .iter_mut()
+        .find(|selection| selection.item_id == item_id)
+    else {
+        return false;
+    };
+    selection.applied_modifiers.push(modifier_item_id.to_owned());
+    true
+}
+
 /// Appends one entry to `chosen.spells_selected`. Every other field is
 /// untouched.
 pub fn apply_add_spell_selection(

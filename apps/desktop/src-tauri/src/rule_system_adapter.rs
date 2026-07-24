@@ -146,10 +146,10 @@ mod tests {
     };
 
     use crate::character_hub::{
-        compose_character_input, map_spells_selected_dto, AbilityScoresDto, AbilityModifiersDto,
-        BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
-        EquipmentEffectsDto, PilotSnapshotDto, ResolvedEquipmentDto, SchoolCoverageDto,
-        SelectedSkillModifiersDto,
+        compose_character_input, map_resolved_equipment_dto, map_spells_selected_dto,
+        AbilityScoresDto, AbilityModifiersDto, BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto,
+        CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto, PilotSnapshotDto,
+        SchoolCoverageDto, SelectedSkillModifiersDto,
     };
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
@@ -321,12 +321,7 @@ mod tests {
                     .corpus_derived
                     .equipped_items
                     .iter()
-                    .map(|item| ResolvedEquipmentDto {
-                        item_id: item.item_id.clone(),
-                        equipment_record_name: item.equipment_record_name.clone(),
-                        equipment_record_key: item.equipment_record_key.clone(),
-                        grounded: item.table_cell.is_some(),
-                    })
+                    .map(map_resolved_equipment_dto)
                     .collect(),
                 equipment_effects: EquipmentEffectsDto {
                     armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,

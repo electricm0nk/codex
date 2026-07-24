@@ -114,6 +114,15 @@ pub struct ResolvedEquipment {
     pub equipment_record_key: String,
     pub derived_stats: DerivedEquipmentStats,
     pub table_cell: Option<TableCellRef>,
+    /// v0.6 alpha swarm items 1+27 sub-task 6: the resolved records for
+    /// this selection's own `applied_modifiers` item_ids (see
+    /// `character_input::EquipmentSelection`'s doc comment) -- e.g. a
+    /// resolved "+1 Enhancement to Weapon" attached to this Longsword.
+    /// Empty for a selection with no `applied_modifiers`, or whose
+    /// modifiers all failed to resolve (those land in
+    /// `CorpusDerivedSection::unresolved_equipment_item_ids` instead, same
+    /// as any other unresolved equipment identity).
+    pub applied_modifiers: Vec<ResolvedEquipment>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq)]
@@ -179,12 +188,42 @@ pub fn compute_pilot_with_corpus(
         let key = crate::rules_core::equipment_resolver::equipment_key_token(record)
             .unwrap_or(&record.name)
             .to_string();
+
+        // v0.6 alpha swarm items 1+27 sub-task 6: resolve this selection's
+        // own `applied_modifiers` the same way the selection itself just
+        // resolved -- an unresolvable modifier item_id lands in the same
+        // flat `unresolved_equipment_item_ids` list a top-level
+        // unresolvable selection would (frontend's existing
+        // `UnresolvedNotice` already renders off that one list, so this
+        // needs no new surfaced-list wiring).
+        let mut applied_modifiers = Vec::new();
+        for modifier_item_id in &selection.applied_modifiers {
+            let Some((modifier_record, modifier_table_cell)) =
+                equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus)
+            else {
+                unresolved_equipment_item_ids.push(modifier_item_id.clone());
+                continue;
+            };
+            let modifier_key = crate::rules_core::equipment_resolver::equipment_key_token(modifier_record)
+                .unwrap_or(&modifier_record.name)
+                .to_string();
+            applied_modifiers.push(ResolvedEquipment {
+                item_id: modifier_item_id.clone(),
+                equipment_record_name: modifier_record.name.clone(),
+                equipment_record_key: modifier_key,
+                derived_stats: DerivedEquipmentStats::default(),
+                table_cell: modifier_table_cell,
+                applied_modifiers: Vec::new(),
+            });
+        }
+
         equipped_items.push(ResolvedEquipment {
             item_id: selection.item_id.clone(),
             equipment_record_name: record.name.clone(),
             equipment_record_key: key,
             derived_stats: DerivedEquipmentStats::default(),
             table_cell,
+            applied_modifiers,
         });
     }
 
@@ -401,5 +440,81 @@ mod tests {
 
         assert!(receipt.corpus_derived.unresolved_equipment_item_ids.is_empty());
         assert!(receipt.corpus_derived.unresolved_spell_ids.is_empty());
+    }
+
+    // v0.6 alpha swarm items 1+27 sub-task 6: a Longsword plus the same
+    // real "+1 Enhancement to Weapon" equipmods record `equipment_effects.rs`'s
+    // own attack_bonus_delta_tests fixture uses, so `applied_modifiers`
+    // resolution can be exercised against a genuine weapon+modifier pair.
+    const LONGSWORD_AND_ENHANCEMENT_FIXTURE_TEXT: &str = "\
+Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement
+";
+
+    fn corpus_with_longsword_and_enhancement() -> SourcePackageContent<'static> {
+        let result =
+            parse_equipment_entries("cr_equip_arms_armor.lst", LONGSWORD_AND_ENHANCEMENT_FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    /// The core case: a weapon selection's own `applied_modifiers` resolve
+    /// into nested `ResolvedEquipment` entries on that selection's own
+    /// `equipped_items` entry, not a separate flat top-level record.
+    #[test]
+    fn a_resolvable_applied_modifier_resolves_nested_under_its_weapon() {
+        let corpus = corpus_with_longsword_and_enhancement();
+        let input = fighter_input_with(vec![EquipmentSelection {
+            item_id: "Longsword (Base)".to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: vec!["Special Ability ~ +1 ~ Weapon".to_string()],
+        }]);
+
+        let receipt = compute_pilot_with_corpus(&input, &corpus);
+
+        assert_eq!(receipt.corpus_derived.equipped_items.len(), 1, "no separate top-level entry for the modifier");
+        let longsword = &receipt.corpus_derived.equipped_items[0];
+        assert_eq!(longsword.applied_modifiers.len(), 1);
+        assert_eq!(longsword.applied_modifiers[0].item_id, "Special Ability ~ +1 ~ Weapon");
+        assert_eq!(longsword.applied_modifiers[0].equipment_record_name, "+1 (Enhancement to Weapon)");
+        assert!(
+            receipt.corpus_derived.unresolved_equipment_item_ids.is_empty(),
+            "a resolvable modifier must not appear in the unresolved list"
+        );
+    }
+
+    /// v0.6 alpha swarm (frontend coordination, sub-task 6): an
+    /// `applied_modifiers` item_id that does not resolve against `corpus`
+    /// (e.g. attached from the full catalog picker but outside the
+    /// desktop app's tiny bundled demo corpus) must be traceable through
+    /// the same flat `unresolved_equipment_item_ids` list a top-level
+    /// unresolvable selection already uses -- not a silent no-op, and not
+    /// a second, new list frontend's existing `UnresolvedNotice` doesn't
+    /// already render.
+    #[test]
+    fn an_unresolvable_applied_modifier_surfaces_in_the_shared_unresolved_list() {
+        let corpus = corpus_with_longsword_and_enhancement();
+        let input = fighter_input_with(vec![EquipmentSelection {
+            item_id: "Longsword (Base)".to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: vec!["Special Ability ~ Flaming ~ Weapon".to_string()],
+        }]);
+
+        let receipt = compute_pilot_with_corpus(&input, &corpus);
+
+        let longsword = &receipt.corpus_derived.equipped_items[0];
+        assert!(longsword.applied_modifiers.is_empty(), "an unresolvable modifier contributes no nested entry");
+        assert_eq!(
+            receipt.corpus_derived.unresolved_equipment_item_ids,
+            vec!["Special Ability ~ Flaming ~ Weapon".to_string()]
+        );
     }
 }

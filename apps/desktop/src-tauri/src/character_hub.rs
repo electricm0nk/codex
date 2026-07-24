@@ -29,7 +29,9 @@ use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt, HeadlessReceiptStatus,
 };
-use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, CorpusDerivedSection};
+use codex::rules_core::pilot_compute_corpus::{
+    compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
+};
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
@@ -131,6 +133,16 @@ pub struct ResolvedEquipmentDto {
     /// Whether this item also grounds through the foundation slice's
     /// bootstrap table cell (`TableCellRef`), not just the corpus.
     pub grounded: bool,
+    /// v0.6 alpha swarm items 1+27 sub-task 6: this selection's own
+    /// resolved `applied_modifiers` (e.g. a resolved "+1 Enhancement to
+    /// Weapon" attached to this Longsword) -- reuses this same DTO shape
+    /// rather than a new type, since a resolved modifier is structurally
+    /// just another resolved equipment record. Empty for a selection with
+    /// no attached modifiers, or whose modifiers all failed to resolve
+    /// (those surface via `CorpusDerivedDto.unresolvedEquipmentItemIds`
+    /// instead, same list a top-level unresolvable selection already
+    /// uses).
+    pub applied_modifiers: Vec<ResolvedEquipmentDto>,
 }
 
 /// v0.6 alpha swarm item 1, shape (c) (`item-1-architecture-wall-design.md`):
@@ -303,8 +315,9 @@ pub enum CreateCharacterResponse {
 // still call them unqualified via `use super::*`).
 pub(crate) use crate::pf1_adapter::{
     add_equipment_selection_at_root, add_feat_selection_at_root, add_spell_selection_at_root,
-    compose_character_input, level_up_character_at_root, mutate_saved_character_at_root,
-    record_and_prepare_spell_selection_at_root, set_skill_allocations_at_root,
+    apply_attach_equipment_modifier, compose_character_input, level_up_character_at_root,
+    mutate_saved_character_at_root, record_and_prepare_spell_selection_at_root,
+    set_skill_allocations_at_root,
 };
 // `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
 // / `apply_add_feat_selection` / `apply_set_skill_allocations` are only
@@ -376,6 +389,23 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
     }
 }
 
+/// Maps one `ResolvedEquipment` to its DTO, recursing into
+/// `applied_modifiers` (v0.6 alpha swarm sub-task 6) -- a resolved
+/// modifier is structurally identical to a resolved top-level selection,
+/// so this one function handles both without a near-duplicate.
+/// `pub(crate)` — same reason as `map_spells_selected_dto`:
+/// `rule_system_adapter.rs`'s `TestPf1Delegate` test double reuses this
+/// rather than hand-rolling its own mirror a second time.
+pub(crate) fn map_resolved_equipment_dto(item: &ResolvedEquipment) -> ResolvedEquipmentDto {
+    ResolvedEquipmentDto {
+        item_id: item.item_id.clone(),
+        equipment_record_name: item.equipment_record_name.clone(),
+        equipment_record_key: item.equipment_record_key.clone(),
+        grounded: item.table_cell.is_some(),
+        applied_modifiers: item.applied_modifiers.iter().map(map_resolved_equipment_dto).collect(),
+    }
+}
+
 // `pub(crate)` — same reason as `map_snapshot_dto` above.
 pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
     CorpusDerivedDto {
@@ -391,12 +421,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
         equipped_items: section
             .equipped_items
             .iter()
-            .map(|item| ResolvedEquipmentDto {
-                item_id: item.item_id.clone(),
-                equipment_record_name: item.equipment_record_name.clone(),
-                equipment_record_key: item.equipment_record_key.clone(),
-                grounded: item.table_cell.is_some(),
-            })
+            .map(map_resolved_equipment_dto)
             .collect(),
         equipment_effects: EquipmentEffectsDto {
             armor_class_delta: section.equipment_effects.armor_class_delta,
@@ -1058,6 +1083,165 @@ pub(crate) fn purchase_equipment_at_root(
             Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
         }
     }
+}
+
+/// Same wire shape as `PurchaseEquipmentResponse` (`Attached`/`Blocked`,
+/// same field set) -- deliberately not reused verbatim so the two
+/// commands' response `kind` tags stay distinct on the wire
+/// (`"Attached"` vs `"Purchased"`), matching frontend's own
+/// per-command-outcome convention.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum AttachEquipmentModifierResponse {
+    Attached {
+        summary: Box<CharacterSummaryDto>,
+        snapshot: PilotSnapshotDto,
+        #[serde(rename = "corpusDerived")]
+        corpus_derived: CorpusDerivedDto,
+        money: CharacterMoneyDto,
+    },
+    Blocked {
+        diagnostics: Vec<DiagnosticDto>,
+    },
+}
+
+/// `attach_equipment_modifier`'s real implementation (v0.6 alpha swarm
+/// items 1+27 sub-task 6, frontend-proposed shape). Mirrors
+/// `purchase_equipment_at_root`'s atomic resolve-cost -> check-affordability
+/// -> mutate -> charge sequencing, with two deliberate differences:
+///
+/// 1. **Validates `modifier_item_id` against the real equipment catalog
+///    first** (`equipment_tables()`, the same check
+///    `append_to_character_at_root` already runs), before any cost or
+///    target-selection check -- a typo'd or fabricated modifier id must
+///    never silently attach.
+/// 2. **An unknown `cost_gp` is treated as free to attach, not blocked** --
+///    a deliberate deviation from `purchase_equipment_at_root`'s own
+///    "unknown cost = blocked, same as unaffordable" rule. Checked against
+///    the real static table before choosing this: the actual magical
+///    weapon/armor enhancement records (`"Special Ability ~ +1 ~
+///    Weapon"` through `~ +10 ~`) all resolve `cost_gp: None` (real PF1
+///    enhancement pricing is a bonus-squared formula, not a flat catalog
+///    price) -- mirroring `purchase_equipment`'s block-on-unknown-cost
+///    behavior here would block exactly the headline use case this
+///    command exists for. Only a modifier with a real, known `cost_gp`
+///    (e.g. Masterwork, `Some(0.0)` in the current table -- itself a
+///    known pre-existing pricing gap, not introduced here) is ever
+///    actually charged.
+///
+/// The target `item_id` must already exist in `equipment_selections` --
+/// checked via a read before any charge, so a not-found target is a
+/// `Blocked` response with zero side effects, never a charge with nothing
+/// to attach to.
+pub(crate) fn attach_equipment_modifier_at_root(
+    root: &Path,
+    item_id: &str,
+    modifier_item_id: &str,
+    saved_at: &str,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    let is_known_modifier = codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables()
+        .iter()
+        .any(|entry| entry.key == modifier_item_id);
+    if !is_known_modifier {
+        return Ok(AttachEquipmentModifierResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "equipment.attach_modifier.unknown_item".to_owned(),
+                message: format!(
+                    "'{modifier_item_id}' is not a recognized equipment catalog item. Nothing \
+                     was attached and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
+        .map_err(|err| err.message)?;
+    let target_exists = envelope
+        .character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .any(|selection| selection.item_id == item_id);
+    if !target_exists {
+        return Ok(AttachEquipmentModifierResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "equipment.attach_modifier.target_not_found".to_owned(),
+                message: format!(
+                    "'{item_id}' is not an equipped selection on this character. Nothing was \
+                     attached and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    let cost_copper =
+        match codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(modifier_item_id) {
+            Some(cost_gp) => money::gp_to_copper(cost_gp),
+            None => 0,
+        };
+
+    if cost_copper > 0 {
+        let balance_copper = load_character_money_at_root(root)?.total_copper;
+        if balance_copper < cost_copper {
+            return Ok(AttachEquipmentModifierResponse::Blocked {
+                diagnostics: vec![DiagnosticDto {
+                    id: "money.equipment_attach_modifier.insufficient_funds".to_owned(),
+                    message: format!(
+                        "'{modifier_item_id}' costs {cost_copper} cp but the character's \
+                         balance is only {balance_copper} cp. Nothing was attached and no \
+                         funds were charged."
+                    ),
+                    claim_blocking: true,
+                }],
+            });
+        }
+    }
+
+    match mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_attach_equipment_modifier(character_input, item_id, modifier_item_id);
+    })? {
+        CreateCharacterResponse::Blocked { diagnostics } => {
+            Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
+        }
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+            let money = if cost_copper > 0 {
+                let cost_signed = i64::try_from(cost_copper)
+                    .map_err(|_| "attach cost overflows a signed 64-bit total".to_owned())?;
+                adjust_character_money_at_root(root, -cost_signed)?
+            } else {
+                load_character_money_at_root(root)?
+            };
+            Ok(AttachEquipmentModifierResponse::Attached { summary, snapshot, corpus_derived, money })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AttachEquipmentModifierRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub modifier_item_id: String,
+    pub saved_at: String,
+}
+
+/// See `attach_equipment_modifier_at_root` for the full transaction-shape
+/// reasoning (free-attach on unknown cost, target/modifier validation
+/// before any charge).
+#[tauri::command]
+pub fn attach_equipment_modifier(
+    app: tauri::AppHandle,
+    request: AttachEquipmentModifierRequest,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    attach_equipment_modifier_at_root(
+        &root,
+        &request.item_id,
+        &request.modifier_item_id,
+        &request.saved_at,
+    )
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -2978,6 +3162,309 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `attach_equipment_modifier` (v0.6 alpha swarm items 1+27 sub-task 6) -----
+
+    /// A real, known-but-formula-priced modifier (an actual magical weapon
+    /// enhancement -- the headline use case this command exists for)
+    /// attaches for free, since its real `cost_gp` is unknown (a formula,
+    /// not a flat catalog price) -- the deliberate deviation from
+    /// `purchase_equipment`'s block-on-unknown-cost rule this command's
+    /// own doc comment explains.
+    #[test]
+    fn attach_equipment_modifier_at_root_attaches_a_real_enhancement_for_free_when_cost_is_unknown() {
+        let root = tempdir("attach-modifier-free-enhancement");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp -- if this were charged at all, it would
+        // be Blocked as unaffordable, proving the free-attach path for
+        // real.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 0, "an unknown-cost modifier must attach for free");
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("a real enhancement with unknown cost must attach for free, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let longsword = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|selection| selection.item_id == "item:longsword")
+            .expect("item:longsword must still be present");
+        assert_eq!(
+            longsword.applied_modifiers,
+            vec!["Special Ability ~ +1 ~ Weapon".to_string()],
+            "the modifier must attach to the target selection's applied_modifiers, not a new top-level entry"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A modifier with a real, known `cost_gp` is still charged (not
+    /// treated as free just because it's a modifier) -- proves the
+    /// free-attach path is specifically for unknown cost, not blanket.
+    #[test]
+    fn attach_equipment_modifier_at_root_charges_a_modifier_with_a_known_cost() {
+        let root = tempdir("attach-modifier-known-cost");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 10_000).expect("funding should succeed");
+
+        // Masterwork (Item) resolves a real, known cost_gp of 50.
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Quality ~ Masterwork ~ Item",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 5_000, "10,000 cp minus a real 5,000 cp (50 gp) cost");
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an affordable known-cost modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A known-cost modifier the character cannot afford is `Blocked`,
+    /// same as any other charged mutation -- the free-attach deviation
+    /// only applies to genuinely unknown cost, never to unaffordability.
+    #[test]
+    fn attach_equipment_modifier_at_root_blocks_a_known_cost_modifier_when_unaffordable() {
+        let root = tempdir("attach-modifier-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp; Masterwork (Item) costs 5,000 cp.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Quality ~ Masterwork ~ Item",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "must carry the real insufficient-funds diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("an unaffordable modifier must never be silently attached")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let longsword = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|selection| selection.item_id == "item:longsword")
+            .expect("item:longsword must still be present");
+        assert!(longsword.applied_modifiers.is_empty(), "nothing should have attached on the rejected path");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A `modifier_item_id` that is not a real catalog item at all must be
+    /// rejected before any cost/target check -- never silently attached.
+    #[test]
+    fn attach_equipment_modifier_at_root_rejects_an_unknown_modifier_item() {
+        let root = tempdir("attach-modifier-unknown-item");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "totally-fabricated-modifier-id",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "equipment.attach_modifier.unknown_item"),
+                    "must carry the real unknown-item diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("a fabricated modifier id must never be silently attached")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when the modifier item itself is unrecognized"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A target `item_id` that does not exist among the character's
+    /// `equipment_selections` must be `Blocked` before any charge -- a
+    /// not-found target is never silently a free no-op after money moves.
+    #[test]
+    fn attach_equipment_modifier_at_root_rejects_a_target_that_does_not_exist() {
+        let root = tempdir("attach-modifier-missing-target");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:greatsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "equipment.attach_modifier.target_not_found"),
+                    "must carry the real target-not-found diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("attaching to a nonexistent target must never silently succeed")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when the target selection does not exist"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// End-to-end proof that an attached-but-corpus-unresolvable modifier
+    /// (the desktop app's bundled demo corpus has zero equipmods records)
+    /// surfaces honestly through the real `corpusDerived` response rather
+    /// than silently vanishing -- closes the loop this sub-task's
+    /// `unresolved_equipment_item_ids` extension exists for.
+    #[test]
+    fn attach_equipment_modifier_at_root_surfaces_the_real_corpus_resolution_gap() {
+        let root = tempdir("attach-modifier-corpus-gap");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { corpus_derived, .. } => {
+                assert!(
+                    corpus_derived
+                        .unresolved_equipment_item_ids
+                        .contains(&"Special Ability ~ +1 ~ Weapon".to_string()),
+                    "the bundled demo corpus has no equipmods records, so the attached modifier \
+                     must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("the attach itself must succeed even though the modifier won't resolve, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Same wire-shape proof as `purchase_equipment`'s own precedent test:
+    /// the `corpusDerived` field must be camelCase (a per-field rename,
+    /// not an enum-wide `rename_all`, which would also lowercase the
+    /// `"Attached"`/`"Blocked"` tag values themselves).
+    #[test]
+    fn attach_equipment_modifier_response_attached_serializes_corpus_derived_as_camel_case_without_touching_the_tag()
+    {
+        let response = AttachEquipmentModifierResponse::Attached {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+            },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                    attack_bonus_delta: None,
+                },
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
+            },
+            money: money_dto_from_total(0),
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Attached"));
+        assert!(object.contains_key("corpusDerived"), "{object:?}");
+        assert!(!object.contains_key("corpus_derived"), "{object:?}");
     }
 
     // ----- `add_feat_selection` (v0.6 alpha swarm) -----

@@ -137,18 +137,21 @@ pub struct ResolvedEquipmentEffect {
 ///
 /// `attack_bonus_delta` (v0.6 alpha swarm item 1, the bounded single-weapon
 /// attack-bonus slice, greenlit as an engineering-scope call distinct from
-/// item 27's claim-gating philosophy question) sums the to-hit-affecting
-/// `weapon_enhancement_bonus` of every `equipmods` item, but ONLY when
+/// item 27's claim-gating philosophy question) is `Some` only when
 /// `equipped`'s `EquippedActive` selections resolve to *exactly one* real
 /// weapon (a record carrying a `DAMAGE:` token, the same signal
 /// `damage_total.rs`'s own `resolve_base_damage_dice` uses to identify a
-/// weapon). `CharacterInput`'s schema has no field recording which weapon
-/// a modifier item attaches to (see `item-1-architecture-wall-design.md`),
-/// so with zero or two-or-more weapons equipped, which weapon (if any) an
-/// enhancement modifies is genuinely ambiguous -- `None` in both cases,
-/// honest absence rather than a guess. With exactly one weapon equipped
-/// there is no ambiguity: any equipped enhancement modifier unambiguously
-/// applies to that one weapon.
+/// weapon) -- in which case it mirrors that one weapon's own
+/// `ResolvedEquipmentEffect.to_hit_bonus`. `None` for zero or two-or-more
+/// weapons: not because the attachment is ambiguous any more (sub-task 2
+/// closed that -- see `to_hit_bonus`'s own doc comment, resolved per-weapon
+/// via `EquipmentSelection.applied_modifiers`), but because this single
+/// scalar has no way to represent more than one weapon's bonus at once
+/// (summing two different weapons' to-hit bonuses into one number would be
+/// combat-meaningless, not merely imprecise). Kept single-weapon-scoped
+/// deliberately, for wire-contract stability with the existing frontend
+/// `attackBonusDelta` stat tile; `per_item`'s own `to_hit_bonus` is the
+/// real, unambiguous per-weapon value for any weapon count.
 #[derive(Debug, Clone, Default, PartialEq)]
 pub struct EquipmentEffects {
     pub per_item: Vec<ResolvedEquipmentEffect>,
