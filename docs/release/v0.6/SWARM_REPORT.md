@@ -296,6 +296,13 @@ Raw grep commands (reproducible): each check run against a Python-extracted
 `file\t<added-line>` table built from the diff, e.g. for check 1:
 `grep -iE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' <extracted> | grep -vE '^(tests/|docs/|.*\.test\.(ts|tsx)|.*_test\.rs)'`.
 
+**Re-verified independently (lead, 2026-07-24)**, per the doctrine's
+"executed by QA, re-verified by the lead" requirement: extracted added
+lines fresh from `git diff origin/develop...origin/tranche/6` myself
+(without reading QA's extraction) and ran all four greps. Same 5 lines on
+check 1, same zero-real-hits result on checks 2-4. Confirms QA's audit —
+clean, no wired-integration violations in the swarm's diff to date.
+
 ## (d) Alpha-bar items 1-3 and 7 confirmation
 
 **Superseded by the Comprehensive consolidation section above** — this
