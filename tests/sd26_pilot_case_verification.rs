@@ -340,9 +340,9 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
     }
     assert_eq!(
         comparison.matches.len(),
-        13,
-        "expected exactly 13 genuinely matching dimensions (8 original + 5 new \
-         durability/encumbrance dimensions from wave 2): {:?}",
+        14,
+        "expected exactly 14 genuinely matching dimensions (8 original + 5 wave-2 \
+         durability/encumbrance dimensions + combat.base_attack_bonus): {:?}",
         comparison
     );
 

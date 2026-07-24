@@ -245,8 +245,8 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
     }
     assert_eq!(
         comparison.matches.len(),
-        13,
-        "expected exactly 13 genuinely matching dimensions: {:?}",
+        14,
+        "expected exactly 14 genuinely matching dimensions: {:?}",
         comparison
     );
 
