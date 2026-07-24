@@ -1182,12 +1182,12 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~16:05 ET)
+## Agent Status (2026-07-24, ~16:48 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | item 18 fully closed (7c2d2ad2, lead + QA both independently verified); now on the items 1+27 scoping/sequencing plan (equipment-attachment schema + posture-gate widening), report pending |
+| backend | working | clarified the earlier quiet stretch was item 18's own verification (RED→GREEN + a full workspace safety net), not the scoping plan -- cross-confirmed the lead's commit numbers match exactly; now actually starting the items 1+27 scoping/sequencing plan, report pending |
 | frontend | idle | queue clear; will get real work once the items 1/27 scoping plan surfaces UI-facing follow-ups |
-| qa | idle | independently re-verified item 18 with a full-function trace, clean, surfaced a sharper finding (the pre-fix bug silently skipped ceiling enforcement entirely, not just the DC display); standing by |
+| qa | idle | independently re-verified item 18 with a full-function trace, clean; standing by |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
