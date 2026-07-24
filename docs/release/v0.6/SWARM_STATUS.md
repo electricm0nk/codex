@@ -1195,7 +1195,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T14:20:02
-Latest commit on tranche/6: c0e93784 docs(v0.6): reconcile status docs after null-serialization fix lands (31 seconds ago) (2026-07-24T14:19:31-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T14:19:44 frontend=2026-07-24T13:48:04 qa=2026-07-24T14:19:52 lead=2026-07-24T14:10:17
+Last mechanical check: 2026-07-24T14:30:02
+Latest commit on tranche/6: 0c602c72 test: close item 25's remaining test-coverage gap in boundary/ (84 seconds ago) (2026-07-24T14:28:38-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T14:26:27 frontend=2026-07-24T14:20:05 qa=2026-07-24T14:25:30 lead=2026-07-24T14:29:08
 <!-- AUTO-HEARTBEAT-END -->
