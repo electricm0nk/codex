@@ -77,10 +77,10 @@ alongside the existing Agent Status convention.
   flagged with exact repro steps instead. Everything else: clean pass,
   no other correctness issues. 69/69 suite green throughout.
 
-## Agent Status (2026-07-24, ~12:05 ET)
+## Agent Status (2026-07-24, ~12:10 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | shape (c) landed (08a829a1, attribution corrected 715d3206) and independently verified by the lead (236/236 lib, 202/202 desktop); asked whether there's more from the item-1 design pass worth picking up |
+| backend | working | greenlit on the bounded single-weapon attack-bonus slice (no schema change, honest-absent for 0/2+ weapons) -- their own proposal, matches this session's established "prove the narrow provably-correct case" discipline |
 | frontend | idle | queue clear since the smoke-test report; standing by |
 | qa | working | dispatched to independently verify shape (c) |
 
