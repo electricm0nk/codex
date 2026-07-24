@@ -1973,6 +1973,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                         ActiveStateDto::EquippedActive
                     ),
                     active_state: equipment.active_state.into(),
+                    applied_modifiers: Vec::new(),
                 })
                 .collect(),
             selected_choices: dto

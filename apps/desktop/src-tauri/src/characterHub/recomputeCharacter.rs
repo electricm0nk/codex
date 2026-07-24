@@ -297,21 +297,25 @@ mod tests {
                         item_id: "item:longsword".to_owned(),
                         equipped_or_active: true,
                         active_state: ActiveState::EquippedActive,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "item:chain_shirt".to_owned(),
                         equipped_or_active: true,
                         active_state: ActiveState::EquippedActive,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "item:shield".to_owned(),
                         equipped_or_active: false,
                         active_state: ActiveState::Absent,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "power_attack".to_owned(),
                         equipped_or_active: false,
                         active_state: ActiveState::SelectedInactive,
+                        applied_modifiers: Vec::new(),
                     },
                 ],
                 selected_choices: vec![

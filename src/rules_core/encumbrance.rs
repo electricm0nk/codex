@@ -237,6 +237,7 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
             item_id: item_id.to_owned(),
             equipped_or_active: state == ActiveState::EquippedActive,
             active_state: state,
+            applied_modifiers: Vec::new(),
         }
     }
 

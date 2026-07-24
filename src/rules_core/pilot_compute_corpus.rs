@@ -278,6 +278,7 @@ mod tests {
             item_id: "Chain Shirt (Base)".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         }]);
 
         let receipt = compute_pilot_with_corpus(&input, &corpus);
@@ -299,6 +300,7 @@ mod tests {
             item_id: "Chain Shirt (Base)".to_string(),
             equipped_or_active: false,
             active_state: ActiveState::SelectedInactive,
+            applied_modifiers: Vec::new(),
         }]);
 
         let receipt = compute_pilot_with_corpus(&input, &corpus);
@@ -338,11 +340,13 @@ mod tests {
                 item_id: "Chain Shirt (Base)".to_string(),
                 equipped_or_active: true,
                 active_state: ActiveState::EquippedActive,
+                applied_modifiers: Vec::new(),
             },
             EquipmentSelection {
                 item_id: "Wand of Cure Light Wounds".to_string(),
                 equipped_or_active: true,
                 active_state: ActiveState::EquippedActive,
+                applied_modifiers: Vec::new(),
             },
         ]);
 
@@ -390,6 +394,7 @@ mod tests {
             item_id: "Chain Shirt (Base)".to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         }]);
 
         let receipt = compute_pilot_with_corpus(&input, &corpus);

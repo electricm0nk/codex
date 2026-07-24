@@ -88,6 +88,12 @@ pub struct EquipmentSelection {
     /// equipped/active, absent, and selected-but-inactive. This represents the
     /// chosen state only; it does not compute any equipment effect.
     pub active_state: ActiveState,
+    /// item_ids of equipmods-category items applied to this specific selection
+    /// (e.g. "Special Ability ~ +1 ~ Weapon" on a Longsword selection), mirroring
+    /// PCGen's own single-entry `CUSTOMIZATION:EQMOD=` convention: an applied
+    /// equipmod has no separate top-level `equipment_selections` entry of its
+    /// own -- it lives on the weapon/armor selection it modifies.
+    pub applied_modifiers: Vec<String>,
 }
 
 /// The chosen active state of a selection for baseline outputs. Represented only;
@@ -225,6 +231,7 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "feat" => parsed.selected_feats.push(value.to_owned()),
         "skill" => apply_skill_allocation(value, parsed),
         "equipment" => apply_equipment_selection(value, parsed),
+        "equipment_modifier" => apply_equipment_modifier(value, parsed),
         "choice" => apply_selected_choice(value, parsed),
         "spell" => apply_spell_selection(value, parsed),
         "provenance" => parsed.selection_provenance.push(SelectionProvenance {
@@ -351,7 +358,41 @@ fn apply_equipment_selection(value: &str, parsed: &mut ParsedFixture) {
         item_id: item_id.to_owned(),
         equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
         active_state,
+        applied_modifiers: Vec::new(),
     });
+}
+
+fn apply_equipment_modifier(value: &str, parsed: &mut ParsedFixture) {
+    // Same last-colon convention as `apply_equipment_selection`: item_id may
+    // contain its own colon (e.g. "item:longsword"), the modifier item_id does
+    // not, so the boundary is the final colon in the value.
+    let Some((item_id, modifier_item_id)) = value.rsplit_once(':') else {
+        parsed.diagnostics.push(diagnostic(
+            "equipment_selections",
+            format!(
+                "invalid character input equipment modifier '{value}' is missing a modifier item id"
+            ),
+        ));
+        return;
+    };
+
+    let Some(selection) = parsed
+        .equipment_selections
+        .iter_mut()
+        .find(|selection| selection.item_id == item_id)
+    else {
+        parsed.diagnostics.push(diagnostic(
+            "equipment_selections",
+            format!(
+                "invalid character input equipment modifier '{value}' has no matching \
+                 equipment selection for '{item_id}' -- the 'equipment_modifier' line must \
+                 come after its 'equipment' line"
+            ),
+        ));
+        return;
+    };
+
+    selection.applied_modifiers.push(modifier_item_id.to_owned());
 }
 
 fn active_state_from_token(state: &str) -> Option<ActiveState> {
@@ -492,5 +533,97 @@ fn diagnostic(
         message: message.into(),
         subject_ref: subject_ref.into(),
         claim_blocking: true,
+    }
+}
+
+#[cfg(test)]
+mod applied_modifiers_tests {
+    use super::*;
+
+    const FIXTURE: &str = "\
+case_id=case:test
+source_package_id=core_rulebook
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+equipment=item:longsword:equipped
+";
+
+    /// An existing `equipment=` fixture line with no accompanying
+    /// `equipment_modifier=` line must produce a real, empty
+    /// `applied_modifiers` -- not an absent field, since the type has no
+    /// `Option` to be absent from.
+    #[test]
+    fn equipment_selection_defaults_to_no_applied_modifiers() {
+        let result = load_character_input_fixture(FIXTURE);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert!(input.chosen.equipment_selections[0].applied_modifiers.is_empty());
+    }
+
+    /// The core case: an `equipment_modifier=` line attaches its modifier
+    /// item id onto the matching `equipment=` selection's
+    /// `applied_modifiers`, keyed by `item_id`. Uses an item_id that itself
+    /// contains a colon (`item:longsword`) to prove the last-colon split
+    /// correctly isolates the modifier id, not a substring of the item id.
+    #[test]
+    fn equipment_modifier_line_attaches_to_the_matching_equipment_selection() {
+        let fixture = format!(
+            "{FIXTURE}equipment_modifier=item:longsword:Special Ability ~ +1 ~ Weapon\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert_eq!(
+            input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["Special Ability ~ +1 ~ Weapon".to_string()]
+        );
+    }
+
+    /// Two modifiers on the same selection must both land, in order --
+    /// proves the field is a real accumulating list, not a single slot.
+    #[test]
+    fn multiple_equipment_modifier_lines_all_attach_to_the_same_selection() {
+        let fixture = format!(
+            "{FIXTURE}\
+equipment_modifier=item:longsword:Special Ability ~ +1 ~ Weapon\n\
+equipment_modifier=item:longsword:Special Ability ~ Flaming ~ Weapon\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(
+            input.chosen.equipment_selections[0].applied_modifiers,
+            vec![
+                "Special Ability ~ +1 ~ Weapon".to_string(),
+                "Special Ability ~ Flaming ~ Weapon".to_string(),
+            ]
+        );
+    }
+
+    /// An `equipment_modifier=` line naming an item_id with no matching
+    /// prior `equipment=` line is a real fixture-authoring error and must
+    /// surface a diagnostic, not silently do nothing.
+    #[test]
+    fn equipment_modifier_line_with_no_matching_selection_is_a_diagnostic() {
+        let fixture = format!("{FIXTURE}equipment_modifier=item:shield:Masterwork\n");
+        let result = load_character_input_fixture(&fixture);
+
+        assert!(result.character_input.is_none());
+        assert!(
+            result
+                .diagnostics
+                .iter()
+                .any(|d| d.subject_ref == "equipment_selections"),
+            "expected a diagnostic for the unmatched equipment_modifier line: {:?}",
+            result.diagnostics
+        );
     }
 }

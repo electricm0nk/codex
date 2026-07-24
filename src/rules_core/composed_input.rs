@@ -576,6 +576,7 @@ mod tests {
                     item_id: "item:longsword".to_string(),
                     equipped_or_active: true,
                     active_state: ActiveState::EquippedActive,
+                    applied_modifiers: Vec::new(),
                 }],
                 selected_choices: Vec::new(),
                 spells_selected: Vec::new(),

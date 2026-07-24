@@ -115,6 +115,7 @@ pub fn append_to_character_at_root(
                     item_id: item.item_id.clone(),
                     equipped_or_active: matches!(item.active_state, ActiveStateDto::EquippedActive),
                     active_state: item.active_state.into(),
+                    applied_modifiers: Vec::new(),
                 });
             }
         })?;

@@ -358,21 +358,25 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                     item_id: "item:longsword".to_owned(),
                     equipped_or_active: true,
                     active_state: ActiveState::EquippedActive,
+                    applied_modifiers: Vec::new(),
                 },
                 EquipmentSelection {
                     item_id: "item:chain_shirt".to_owned(),
                     equipped_or_active: true,
                     active_state: ActiveState::EquippedActive,
+                    applied_modifiers: Vec::new(),
                 },
                 EquipmentSelection {
                     item_id: "item:shield".to_owned(),
                     equipped_or_active: false,
                     active_state: ActiveState::Absent,
+                    applied_modifiers: Vec::new(),
                 },
                 EquipmentSelection {
                     item_id: "power_attack".to_owned(),
                     equipped_or_active: false,
                     active_state: ActiveState::SelectedInactive,
+                    applied_modifiers: Vec::new(),
                 },
             ],
             selected_choices,
@@ -611,6 +615,7 @@ pub fn apply_add_equipment_selection(
         item_id: item_id.to_owned(),
         equipped_or_active: active_state == ActiveState::EquippedActive,
         active_state,
+        applied_modifiers: Vec::new(),
     });
 }
 
