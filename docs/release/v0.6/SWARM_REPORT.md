@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | null-serialization fix landed (874df6db); item 18 dispatch was a lead error, corrected pre-work (it's a deferred completeness gap, not active backlog); redirected to a closure-readiness pass — remaining backend-ownable backlog is all genuinely blocked (item 1, item 27, class breadth, 12-class starting wealth) |
+| backend | idle | null-serialization fix landed (874df6db); item 18 dispatch was a lead error, corrected pre-work; redirected to a closure-readiness pass, report pending |
 | frontend | working | item-25 test-coverage self-audit in flight, report pending |
-| qa | working | feat-effects widening (both slices, f38e9f33 included) independently re-verified clean and fully closed; now live-verifying the null-serialization fix against real 0-weapon/2-weapon builds |
+| qa | idle | feat-effects widening fully re-verified clean (item 17 closed); null-serialization fix verified at the wire/test level (204/204) with the live-UI leg environment-blocked (new item 29) and the 0-weapon case found structurally unreachable live regardless (new item 28, no unequip affordance exists anywhere in the app) |
 
 ---
 
