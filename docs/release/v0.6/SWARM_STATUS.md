@@ -1087,7 +1087,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T12:00:02
-Latest commit on tranche/6: 08a829a1 docs(v0.6): refresh Agent Status — backend's shape (c) still uncommitted, checked in again (57 seconds ago) (2026-07-24T11:59:05-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T11:58:23 frontend=2026-07-24T11:44:05 qa=2026-07-24T11:30:34 lead=2026-07-24T11:44:11
+Last mechanical check: 2026-07-24T12:30:01
+Latest commit on tranche/6: 845f860c feat: bounded single-weapon attack-bonus enhancement slice (59 seconds ago) (2026-07-24T12:29:02-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T12:28:25 frontend=2026-07-24T11:44:05 qa=2026-07-24T12:18:54 lead=2026-07-24T12:29:58
 <!-- AUTO-HEARTBEAT-END -->
