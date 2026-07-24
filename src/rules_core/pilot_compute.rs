@@ -17997,10 +17997,14 @@ fn compute_total_saves(
 /// or block the claim if the selected-skill or Chain Shirt posture is absent or
 /// widened beyond this slice.
 ///
-/// This is intentionally not a skill engine. It computes only the three selected
-/// Fighter class skills from the accepted deterministic rank allocations, applying
-/// the already-grounded Chain Shirt armor-check penalty to the armor-check skills
-/// (Climb, Swim) only. It does not handle other skills, arbitrary classes,
+/// This is intentionally not a skill engine. It computes only the three
+/// selected deterministic-posture skills (Climb/Intimidate/Swim -- Fighter
+/// and Rogue class skills, but NOT Wizard's; see
+/// `selected_skill_class_skill_bonus_applies`'s own doc comment for the
+/// v0.6 alpha swarm class-skill-bonus fix) from the accepted deterministic
+/// rank allocations, applying the already-grounded Chain Shirt armor-check
+/// penalty to the armor-check skills (Climb, Swim) only. It does not handle
+/// other skills, arbitrary classes,
 /// feat/racial/item skill bonuses, encumbrance, or speed-dependent adjustments.
 /// Any deviation from the exact supported posture is refused with a claim-blocking
 /// diagnostic and withheld selected-skill explanations rather than fabricated
