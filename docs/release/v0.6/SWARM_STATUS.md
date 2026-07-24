@@ -117,12 +117,12 @@ alongside the existing Agent Status convention.
   typecheck clean, no new test file (pure data-refresh wiring, no new
   pure logic). Frontend's queue is clear again.
 
-## Agent Status (2026-07-24, ~13:17 ET)
+## Agent Status (2026-07-24, ~13:25 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | shape B diff unchanged for ~40 min (same 181 insertions as the prior check); checked in directly to confirm not stuck |
-| frontend | idle | Defense-tab fix landed and live-verified (7360fe4a); queue clear, standing by |
-| qa | working | dispatched to independently verify frontend's Defense-tab fix while backend's shape B is in flight |
+| backend | idle | shape B landed (647e52aa, verified 245/245 lib + 203/203 desktop); standing by |
+| frontend | working | dispatched to render the honest "not shown -- outside demo corpus" indicator for backend's new unresolved-selection lists |
+| qa | working | verifying frontend's Defense-tab fix; will also verify backend's shape B and, once landed, frontend's UI treatment |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------

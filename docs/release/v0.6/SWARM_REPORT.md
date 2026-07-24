@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | items 7, 17, item-1 design pass, shape (c), and the attack-bonus single-weapon slice all landed and independently verified; now starting the bundled-corpus-fixture fix |
-| frontend | idle | comprehensive smoke test complete -- fixed a real bug (`e50d7762`, ItemPickerModal React key collision); queue clear |
-| qa | idle | root-caused the Spells tab finding to a bundled 2-spell/2-equipment demo fixture (`corpus_fixtures.rs`) -- a bigger scope caveat also affecting shape (c)'s real-world value, not the same root cause as item 18; standing by for backend's fix to verify |
+| backend | idle | items 7, 17, item-1 design pass, shape (c), attack-bonus slice, and the corpus-fixture unresolved-selection fix (`647e52aa`) all landed and independently verified; standing by |
+| frontend | working | Defense-tab render-staleness fix landed (`7360fe4a`); now dispatched to render the honest "outside demo corpus" indicator on top of backend's new DTO fields |
+| qa | working | root-caused the Spells tab finding to the bundled-corpus-fixture issue (fixed by backend); verifying frontend's Defense-tab fix now, backend's fix next |
 
 ---
 
