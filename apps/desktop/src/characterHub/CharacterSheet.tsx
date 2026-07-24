@@ -23,6 +23,7 @@ import {
   casterLevel,
   classWeaponProficiency,
   formatHeldClasses,
+  levelGrantsFeat,
   maxHitPoints,
   parseHeldClasses,
   previewLevelUp,
@@ -1006,6 +1007,11 @@ export function CharacterSheet(props: {
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | null>(null);
+  // Set only while a level-up that grants a feat is waiting on the user to
+  // pick one via the reused feat `ItemPickerModal` (see `handleLevelUpAccept`/
+  // `handleLevelUpFeatPick`) — null the rest of the time, including for a
+  // plain Feats-tab "Add Feat" pick, which stays routed to `handleAddFeat`.
+  const [pendingFeatLevelUp, setPendingFeatLevelUp] = useState<{ classId: string; newClassLevel: number } | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
@@ -1097,24 +1103,34 @@ export function CharacterSheet(props: {
    * consistent with `maxHitPoints`'s own average-based math above, rather
    * than fabricating a dice-roll UI for a choice the compute engine doesn't
    * yet consume differently either way (backend's own test: "nothing reads
-   * these choice_set_ids as a gate"). Feat picks at feat-gaining levels are
-   * deliberately NOT collected here yet — there is still no real feat
-   * catalog exposed to the frontend (blocked on the same `list_feats` gap
-   * as the Feats-tab picker task), and fabricating feat options would
-   * violate the no-stub doctrine. Skill points stay on the existing,
+   * these choice_set_ids as a gate"). Skill points stay on the existing,
    * already-wired "Manage skill allocation" dialog rather than duplicating
    * that UI here — `skillAllocations` is deliberately omitted so a level-up
    * never overwrites an allocation the player set separately.
+   *
+   * v0.6 alpha swarm, item 23: a feat-gaining level (the universal odd-level
+   * feat, Fighter's bonus combat feat, Wizard's periodic bonus feat — see
+   * `levelGrantsFeat`) no longer levels up immediately. It instead defers to
+   * `pendingFeatLevelUp` and opens the same feat `ItemPickerModal` the
+   * Feats-tab "Add Feat" affordance already uses (real `list_feats` catalog,
+   * not a second bespoke picker) — `handleLevelUpFeatPick` below persists
+   * both the level-up and the real feat grant once the user picks one. A
+   * level that grants no feat still goes straight through, unchanged.
    */
   async function handleLevelUpAccept(classId: string) {
     setMutationError(null);
+    const preview = previewLevelUp(heldClasses, classId);
+    if (levelGrantsFeat(preview.features)) {
+      setPendingFeatLevelUp({ classId, newClassLevel: preview.classLevel });
+      setItemPickerOpen('feat');
+      return;
+    }
     try {
-      const newClassLevel = previewLevelUp(heldClasses, classId).classLevel;
       const outcome = await levelUpCharacter({
         characterId: props.row.characterId,
         classId,
         additionalChoices: [
-          { choiceSetId: `choice:level_${newClassLevel}_hit_points`, selectionId: 'hp:average' },
+          { choiceSetId: `choice:level_${preview.classLevel}_hit_points`, selectionId: 'hp:average' },
         ],
         savedAt: new Date().toISOString(),
       });
@@ -1128,6 +1144,75 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * Completes a feat-gaining level-up once the user picks a feat from the
+   * reused picker (see `handleLevelUpAccept`). Two real, sequential
+   * mutations, not one fabricated atomic call — no backend command grants a
+   * feat as part of `level_up_character` itself. The level-up's own
+   * `additionalChoices` only ever lands in the inert `chosen.selected_choices`
+   * provenance bag (nothing reads it as a gate or a grant) — and unlike the
+   * hit-die record's fixed `hp:average` selection id, a real feat catalog
+   * key (e.g. `"Cleave"`) has no colon segments, so it fails
+   * `local_store.rs`'s "at least two colon-segments to round-trip through
+   * the fixture grammar" persistence check (confirmed live: the backend
+   * rejected the level-up outright with exactly that message). So the feat
+   * pick is deliberately NOT also recorded via `additionalChoices` — only
+   * the hit-die choice is, same as the no-feat path — and the real grant
+   * comes solely from calling the exact same `addFeatSelection` the
+   * Feats-tab picker uses, into `chosen.selected_feats`. Refreshes after the
+   * level-up succeeds, before the feat call even starts, so the sheet is
+   * never stale relative to the already-persisted level increment if the
+   * follow-on feat grant fails — that failure is surfaced as its own honest
+   * error rather than silently dropped or rolled back (there is nothing to
+   * roll back; the level-up already happened).
+   */
+  async function handleLevelUpFeatPick(entry: ItemPickerEntry) {
+    const pending = pendingFeatLevelUp;
+    setPendingFeatLevelUp(null);
+    if (!pending) {
+      return;
+    }
+    setMutationError(null);
+    try {
+      const outcome = await levelUpCharacter({
+        characterId: props.row.characterId,
+        classId: pending.classId,
+        additionalChoices: [
+          { choiceSetId: `choice:level_${pending.newClassLevel}_hit_points`, selectionId: 'hp:average' },
+        ],
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(
+        outcome,
+        props.detail?.selectedFeats ?? [],
+        props.detail?.spellsSelected ?? []
+      );
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      props.onDetailRefreshed(refresh.detail);
+
+      const featOutcome = await addFeatSelection({
+        characterId: props.row.characterId,
+        featId: entry.key,
+        savedAt: new Date().toISOString(),
+      });
+      const featRefresh = toCharacterMutationRefresh(
+        featOutcome,
+        [...(props.detail?.selectedFeats ?? []), entry.key],
+        refresh.detail.spellsSelected
+      );
+      if (featRefresh.kind === 'blocked') {
+        setMutationError(`Leveled up, but the picked feat could not be added: ${featRefresh.message}`);
+        return;
+      }
+      props.onDetailRefreshed(featRefresh.detail);
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1497,7 +1582,10 @@ export function CharacterSheet(props: {
 
   // One generic `ItemPickerModal` backs all four "Add …" affordances — see
   // `buildItemPickerConfig`'s doc comment for the dispatch shape (title /
-  // corpus query / mutate-handler per `itemPickerOpen` kind).
+  // corpus query / mutate-handler per `itemPickerOpen` kind). When a
+  // feat-gaining level-up is waiting on a pick (`pendingFeatLevelUp`), the
+  // same 'feat' picker instance routes to `handleLevelUpFeatPick` instead of
+  // the plain `handleAddFeat` — same catalog and UI, different mutation.
   const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
     loadEquipment: (category) =>
       listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
@@ -1505,8 +1593,11 @@ export function CharacterSheet(props: {
     loadFeats: () => listFeats({ nameContains: null, category: null }).then((response) => mapFeatCatalogEntries(response.entries)),
     onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
-    onSelectFeat: handleAddFeat,
+    onSelectFeat: pendingFeatLevelUp ? (entry) => void handleLevelUpFeatPick(entry) : handleAddFeat,
   });
+  const itemPickerTitle = pendingFeatLevelUp
+    ? `Pick a feat — level ${pendingFeatLevelUp.newClassLevel}`
+    : itemPickerConfig?.title ?? '';
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -1844,10 +1935,13 @@ export function CharacterSheet(props: {
 
       <ItemPickerModal
         open={itemPickerConfig !== null}
-        title={itemPickerConfig?.title ?? ''}
+        title={itemPickerTitle}
         searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
         loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
-        onClose={() => setItemPickerOpen(null)}
+        onClose={() => {
+          setItemPickerOpen(null);
+          setPendingFeatLevelUp(null);
+        }}
         onSelect={(entry) => itemPickerConfig?.onSelect(entry)}
       />
     </div>

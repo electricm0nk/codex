@@ -6,6 +6,7 @@ import {
   classSkillPointsBase,
   classWeaponProficiency,
   formatHeldClasses,
+  levelGrantsFeat,
   maxHitPoints,
   parseHeldClasses,
   previewLevelUp,
@@ -31,6 +32,7 @@ async function main() {
   verifiesBuildLevelEntriesNumbersByCharacterLevel();
   verifiesBuildNextEntriesPreviewsEachHeldClassAtTheNextTotalLevel();
   verifiesPreviewLevelUpForAnExistingClassAndForANewClass();
+  verifiesLevelGrantsFeatDetectsEveryRealFeatSource();
 }
 
 /**
@@ -179,6 +181,34 @@ function verifiesPreviewLevelUpForAnExistingClassAndForANewClass() {
   assertEqual(dip.classLevel, 1, 'a brand-new class dip starts at class level 1');
   assertEqual(dip.classLabel, 'Rogue', 'a brand-new class dip resolves its label from CLASS_OPTIONS');
   assertEqual(dip.characterLevel, 3, 'a new class dip still advances the total character level by one');
+}
+
+/**
+ * v0.6 alpha swarm, item 23: `handleLevelUpAccept` needs to know which
+ * level-ups must collect a real feat pick before persisting. Covers all
+ * three real feat sources this table currently produces (the universal
+ * odd-level feat, Fighter's class-level bonus combat feat, Wizard's
+ * periodic bonus feat) plus a level that grants none.
+ */
+function verifiesLevelGrantsFeatDetectsEveryRealFeatSource() {
+  assert(levelGrantsFeat(previewLevelUp([], 'class:fighter').features), 'Fighter 1 grants the universal level-1 feat and its own bonus combat feat');
+  assert(
+    levelGrantsFeat(previewLevelUp([{ classId: 'class:fighter', classLabel: 'Fighter', level: 1 }], 'class:fighter').features),
+    'Fighter class level 2 grants its own bonus combat feat even though character level 2 is even'
+  );
+  assert(
+    levelGrantsFeat(
+      previewLevelUp(
+        [{ classId: 'class:wizard', classLabel: 'Wizard', level: 4 }],
+        'class:wizard'
+      ).features
+    ),
+    'Wizard class level 5 grants a periodic bonus feat'
+  );
+  assert(
+    !levelGrantsFeat(previewLevelUp([{ classId: 'class:rogue', classLabel: 'Rogue', level: 1 }], 'class:rogue').features),
+    'Rogue class level 2 (character level 2, even) grants no feat of any kind'
+  );
 }
 
 main().catch((error: unknown) => {

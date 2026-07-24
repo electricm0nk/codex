@@ -191,6 +191,22 @@ export function previewLevelUp(heldClasses: HeldClass[], classId: string): Level
   return makeLevelEntry(classId, classLabel, (held?.level ?? 0) + 1, totalLevel + 1);
 }
 
+/**
+ * True when a level's granted features include a feat pick — either the
+ * universal odd-character-level feat (`generalBenefits`'s `'Feat'`) or a
+ * class's own bonus-feat feature (Fighter's `'Bonus combat feat'` at 1st and
+ * every even class level, Wizard's `'Bonus feat'` at 5/10/15/20). Drives
+ * whether `LevelUpDialog`'s accept flow needs to collect a real feat pick
+ * before persisting the level-up.
+ */
+export function levelGrantsFeat(features: string[]): boolean {
+  // `\bfeat\b`, not `/feat/i` -- the fallback "<Class> class features" string
+  // (used for any class not yet in `CLASS_FEATURES`) contains "feat" as a
+  // substring of "features", which a plain substring match would wrongly
+  // treat as a feat grant.
+  return features.some((feature) => /\bfeat\b/i.test(feature));
+}
+
 function parseOneClass(segment: string): HeldClass {
   const parts = segment.split(':');
   const level = Number(parts[parts.length - 1]) || 1;
