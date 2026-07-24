@@ -213,7 +213,15 @@ pub struct LoadSavedCharacterResponse {
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
 /// `rename_all` — matching the `Ge08BaselineArmorClass` precedent so the TS
-/// boundary can match on those exact strings.
+/// boundary can match on those exact strings. v0.6 alpha swarm (real
+/// render-staleness root cause, frontend-found): a bare
+/// `#[serde(rename_all = "camelCase")]` on this enum would ALSO camelCase
+/// (lowercase-first) the `"Saved"`/`"Blocked"` tag values themselves,
+/// breaking every `outcome.kind === 'Saved'` check across the frontend —
+/// that's exactly why it was never added despite `corpus_derived` staying
+/// snake_case on the wire ever since. The real fix is a per-field rename
+/// on just the one field that actually has an underscore (every other
+/// field here already happens to have none), not an enum-wide attribute.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind")]
 pub enum CreateCharacterResponse {
@@ -224,6 +232,7 @@ pub enum CreateCharacterResponse {
         // boundary is unchanged.
         summary: Box<CharacterSummaryDto>,
         snapshot: PilotSnapshotDto,
+        #[serde(rename = "corpusDerived")]
         corpus_derived: CorpusDerivedDto,
     },
     Blocked {
@@ -868,6 +877,11 @@ pub enum PurchaseEquipmentResponse {
     Purchased {
         summary: Box<CharacterSummaryDto>,
         snapshot: PilotSnapshotDto,
+        // Same reasoning as `CreateCharacterResponse::Saved`'s own
+        // `corpus_derived` field: a per-field rename, not an enum-wide
+        // `rename_all`, which would also lowercase the `"Purchased"`/
+        // `"Blocked"` tag values themselves.
+        #[serde(rename = "corpusDerived")]
         corpus_derived: CorpusDerivedDto,
         money: CharacterMoneyDto,
     },
@@ -3281,6 +3295,123 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Render-staleness real root cause (v0.6 alpha swarm) -----
+    //
+    // Frontend traced the "Spells/Gear tab looks stale right after a
+    // mutation" bug to a real serde defect, not a React timing issue:
+    // CreateCharacterResponse's `Saved` variant serialized `corpus_derived`
+    // literally as `"corpus_derived"` on the wire (no `#[serde(tag =
+    // "kind")]`-level `rename_all`, since that would also camelCase the
+    // `"Saved"`/`"Blocked"` tag strings the frontend matches on) while the
+    // TS boundary's asserted-not-validated type declared `corpusDerived` --
+    // silently `undefined` at runtime, invisible to any Rust-side test that
+    // only checks struct field values rather than the actual JSON shape.
+    // These tests serialize a real response value and assert on the JSON
+    // keys directly -- the only way this exact bug class is actually
+    // caught.
+
+    #[test]
+    fn create_character_response_saved_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
+    ) {
+        let response = CreateCharacterResponse::Saved {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+            },
+            corpus_derived: CorpusDerivedDto { school_coverage: Vec::new(), equipped_items: Vec::new() },
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(
+            object.get("kind").and_then(|v| v.as_str()),
+            Some("Saved"),
+            "the kind tag must stay exactly \"Saved\" (PascalCase, untouched) so \
+             outcome.kind === 'Saved' checks on the frontend keep working: {object:?}"
+        );
+        assert!(
+            object.contains_key("corpusDerived"),
+            "corpus_derived must serialize as camelCase corpusDerived on the wire: {object:?}"
+        );
+        assert!(
+            !object.contains_key("corpus_derived"),
+            "corpus_derived must NOT also/still appear as snake_case on the wire: {object:?}"
+        );
+    }
+
+    #[test]
+    fn purchase_equipment_response_purchased_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
+    ) {
+        let response = PurchaseEquipmentResponse::Purchased {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+            },
+            corpus_derived: CorpusDerivedDto { school_coverage: Vec::new(), equipped_items: Vec::new() },
+            money: money_dto_from_total(0),
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Purchased"));
+        assert!(object.contains_key("corpusDerived"), "{object:?}");
+        assert!(!object.contains_key("corpus_derived"), "{object:?}");
     }
 
     // ----- `level_up_character` (Criterion 17) -----

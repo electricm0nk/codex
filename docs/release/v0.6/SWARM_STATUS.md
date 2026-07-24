@@ -21,10 +21,9 @@ backend               Sonnet   class-skill-modifier bug FIXED+pushed
                                 (93a0636d, PCGen-corpus-verified); on
                                 render-staleness fix now, reading full
                                 context first before touching anything
-qa                    Sonnet   purchase_equipment catalogue coverage DONE
-                                (7b38a674); continuing the bug-pattern sweep
-                                via static read only, staying out of
-                                backend's in-flight pilot_compute.rs
+qa                    Sonnet   found a real Elf Intelligence parity gap
+                                (see Happened), queued for backend; now
+                                checking other races for the same pattern
 
 (b) Happened
 ------------
@@ -715,6 +714,24 @@ qa                    Sonnet   purchase_equipment catalogue coverage DONE
   before touching that fix, per the trap flagged earlier -- correct
   instinct given the "obvious" fix (bare rename_all) would break tag
   matching across the frontend.
+- Frontend explained an idle-with-no-report gap when checked: purchase_
+  equipment wiring is code-complete (typecheck clean, 62/62), held
+  uncommitted pending live verification per standing practice, and hit
+  the same transient shared-checkout build break as before (backend's
+  skill-modifier commit landing mid-edit) -- correctly waited it out via
+  a background poll rather than assume a regression, resumed once clear.
+- REAL PARITY GAP found (QA, following up on the Elf Wizard/Rogue
+  confirmation): traced PCGen's actual Elf race data through the real
+  reference chain (not just the top-level citation-only line) and
+  confirmed +2 Intelligence is the CRB-standard racial default, not the
+  "alternate variant" Codex's own comment claims -- explain_elf_race_seam
+  only grounds DEX/CON, missing INT entirely. Matters specifically
+  because Elf Wizard (Intelligence-cast) is now confirmed reachable --
+  a live parity break for exactly the combination just proven to work,
+  not theoretical. Small, well-scoped fix expected (mirrors the existing
+  DEX/CON pattern). Queued for backend after render-staleness. QA moving
+  to check other grounded races for the same "comment says out-of-scope,
+  real PCGen data says default" pattern.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
