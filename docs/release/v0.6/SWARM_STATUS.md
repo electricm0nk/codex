@@ -105,12 +105,12 @@ alongside the existing Agent Status convention.
   omission (small UX fix). Queued for backend once the attack-bonus
   slice lands.
 
-## Agent Status (2026-07-24, ~12:20 ET)
+## Agent Status (2026-07-24, ~12:28 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | building the bounded single-weapon attack-bonus slice (multiple files dirty, own risks-doc note in progress) |
+| backend | working | attack-bonus slice still in progress, checked in a second time; also handed the bundled-corpus-fixture finding (queued, their call on fix shape once free) |
 | frontend | idle | queue clear since the smoke-test report; standing by |
-| qa | working | root-caused the Spells tab finding to a bundled 2-spell/2-equipment demo fixture -- a bigger, real scope caveat affecting shape (c) too; report landed, next task pending |
+| qa | idle | bundled-corpus-fixture investigation complete and logged; told to stand by pending backend's fix-shape decision |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------

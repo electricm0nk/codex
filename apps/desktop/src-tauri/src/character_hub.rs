@@ -139,13 +139,17 @@ pub struct ResolvedEquipmentDto {
 /// -- unlike `PilotSnapshotDto.baselineArmorClass` (the deterministic-posture
 /// value the `Computed`/`Blocked` gate itself is built on), these numbers
 /// reflect whatever real gear is actually equipped, corpus-resolved,
-/// regardless of whether the build reaches `Computed`. Deliberately excludes
-/// attack-bonus enhancement -- see `EquipmentEffects.per_item`'s own
-/// `weapon_enhancement_bonus` (not surfaced here): real per-item math
-/// exists, but `CharacterInput`'s schema has no field recording which
-/// weapon a modifier item attaches to, so aggregating it would risk
-/// misapplying one weapon's bonus to another (a separate, unresolved design
-/// question, not a corpus-access gap).
+/// regardless of whether the build reaches `Computed`.
+///
+/// `attack_bonus_delta` (the bounded single-weapon slice) is `null` on the
+/// wire whenever zero or two-or-more weapons are `EquippedActive` --
+/// `CharacterInput`'s schema has no field recording which weapon a modifier
+/// item attaches to, so with more than one weapon equipped, which one an
+/// enhancement modifies is genuinely ambiguous (see
+/// `EquipmentEffects.attack_bonus_delta`'s own doc comment,
+/// `equipment_effects.rs`). With exactly one weapon equipped it is a real,
+/// unambiguous value, including a real `0` when no enhancement applies --
+/// the frontend must treat `null` as "not shown" (ambiguous), not as zero.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EquipmentEffectsDto {
@@ -153,6 +157,7 @@ pub struct EquipmentEffectsDto {
     pub armor_check_penalty_total: i16,
     pub max_dex_cap: Option<i16>,
     pub spell_failure_chance: Option<f32>,
+    pub attack_bonus_delta: Option<i16>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -377,6 +382,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             armor_check_penalty_total: section.equipment_effects.armor_check_penalty_total,
             max_dex_cap: section.equipment_effects.max_dex_cap,
             spell_failure_chance: section.equipment_effects.spell_failure_chance,
+            attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
         },
     }
 }
@@ -2649,7 +2655,11 @@ mod tests {
     /// the new `corpus_derived.equipment_effects` section carries the real,
     /// corpus-resolved armor-check penalty for it end to end through the
     /// actual creation command, not just a unit test on the lower-level
-    /// `compute_pilot_with_corpus` seam.
+    /// `compute_pilot_with_corpus` seam. The loadout's only other
+    /// `EquippedActive` item is the Longsword -- exactly one weapon, no
+    /// equipmods equipped -- so `attack_bonus_delta` must land on the
+    /// unambiguous real `Some(0)`, proving the bounded single-weapon slice
+    /// end to end too.
     #[test]
     fn create_character_at_root_surfaces_the_real_armor_check_penalty_for_the_fixed_loadout() {
         let root = tempdir("create-character-equipment-effects");
@@ -2667,6 +2677,11 @@ mod tests {
                 assert!(
                     corpus_derived.equipment_effects.armor_class_delta > 0,
                     "the fixed loadout's real Chain Shirt must carry a real AC bonus"
+                );
+                assert_eq!(
+                    corpus_derived.equipment_effects.attack_bonus_delta,
+                    Some(0),
+                    "exactly one weapon (Longsword), no equipmods equipped: real, unambiguous zero"
                 );
             }
             CreateCharacterResponse::Blocked { diagnostics } => {
@@ -3569,6 +3584,7 @@ mod tests {
                     armor_check_penalty_total: 0,
                     max_dex_cap: None,
                     spell_failure_chance: None,
+                    attack_bonus_delta: None,
                 },
             },
         };
@@ -3634,6 +3650,7 @@ mod tests {
                     armor_check_penalty_total: 0,
                     max_dex_cap: None,
                     spell_failure_chance: None,
+                    attack_bonus_delta: None,
                 },
             },
             money: money_dto_from_total(0),

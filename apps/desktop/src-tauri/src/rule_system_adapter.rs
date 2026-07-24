@@ -339,6 +339,10 @@ mod tests {
                         .corpus_derived
                         .equipment_effects
                         .spell_failure_chance,
+                    attack_bonus_delta: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .attack_bonus_delta,
                 },
             };
 
