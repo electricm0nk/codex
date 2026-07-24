@@ -517,12 +517,31 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 
 // ----- Tauri commands -----
 
-#[tauri::command]
-pub fn create_character(
-    app: tauri::AppHandle,
-    request: CreateCharacterRequest,
+/// `create_character`'s real implementation, split from the `#[tauri::command]`
+/// wrapper below so it is unit-testable against a real `SavedCharacterStore`
+/// fixture without an `AppHandle` -- mirrors every other command's own
+/// `_at_root` split (`level_up_character_at_root`, `purchase_equipment_at_root`,
+/// `recompute_character_at_root`, ...). `app_version` is passed explicitly
+/// (rather than an `AppHandle`) since it is the only piece of this function's
+/// original body that ever needed one.
+///
+/// v0.6 alpha swarm item 7 (risks-and-open-questions.md): once the build
+/// reaches `Computed` and saves, this also initializes the character's
+/// starting money balance via `money::starting_wealth_gp`, for any class
+/// that function recognizes -- today that means every character that gets
+/// this far at all, since `starting_wealth_gp` covers all 11 CRB classes
+/// and only Fighter/Wizard/Rogue currently reach `Computed` in the first
+/// place (a class outside that set never reaches this line, having already
+/// returned `Blocked` above). An unrecognized class id (`None`) leaves
+/// `money.json` uninitialized -- the existing "no file yet" convention
+/// already means a 0 balance, so this never fabricates a value for a class
+/// this table doesn't cover.
+pub(crate) fn create_character_at_root(
+    root: &Path,
+    request: &CreateCharacterRequest,
+    app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
-    let character_input = compose_character_input(&request);
+    let character_input = compose_character_input(request);
     let receipt = build_pilot_headless_receipt(&character_input);
 
     if receipt.status != HeadlessReceiptStatus::Computed {
@@ -545,7 +564,7 @@ pub fn create_character(
         revision_kind: SavedCharacterRevisionKind::Authoritative,
         saved_at: request.saved_at.clone(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
-        app_or_runtime_version: app.package_info().version.to_string(),
+        app_or_runtime_version: app_version,
         content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
         game_system: GAME_SYSTEM_ID.to_owned(),
         latest_authoritative_revision_ref: format!("{}.rev.1", request.character_id),
@@ -553,14 +572,27 @@ pub fn create_character(
         character_input,
     };
 
-    let root = resolve_character_root(&app, &request.character_id)?;
-    SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+
+    if let Some(starting_wealth_gp) = money::starting_wealth_gp(&request.class_id) {
+        let starting_copper = money::gp_to_copper(f64::from(starting_wealth_gp));
+        adjust_character_money_at_root(root, starting_copper as i64)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: map_snapshot_dto(snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
+}
+
+#[tauri::command]
+pub fn create_character(
+    app: tauri::AppHandle,
+    request: CreateCharacterRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    create_character_at_root(&root, &request, app.package_info().version.to_string())
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -2567,6 +2599,93 @@ mod tests {
         assert!(
             result.is_err(),
             "adding an equipment selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- create_character: starting wealth (risks item 7) -----
+
+    /// A freshly created Fighter is granted the operator-cited average
+    /// starting wealth (175 gp = 17,500 cp) atomically as part of creation,
+    /// not as a separate call the caller has to remember to make.
+    #[test]
+    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_fighter() {
+        let root = tempdir("create-character-starting-wealth-fighter");
+        let request = request_for("race:human", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("Human Fighter level 1 must reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            17_500,
+            "175 gp (5d6 x 10, operator-cited average) = 17,500 cp"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The other two classes that currently reach `Computed` also get their
+    /// own correct, distinct starting wealth -- not a single hardcoded value
+    /// applied regardless of class.
+    #[test]
+    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_wizard_and_rogue() {
+        for (class_id, expected_copper) in [("class:wizard", 7_000_u64), ("class:rogue", 14_000_u64)] {
+            let root = tempdir(&format!("create-character-starting-wealth-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+
+            match response {
+                CreateCharacterResponse::Saved { .. } => {}
+                CreateCharacterResponse::Blocked { diagnostics } => {
+                    panic!("Human {class_id} level 1 must reach Computed, got: {diagnostics:?}")
+                }
+            }
+
+            assert_eq!(
+                load_character_money_at_root(&root).unwrap().total_copper,
+                expected_copper,
+                "{class_id}'s starting wealth"
+            );
+
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A build that does not reach `Computed` must never be granted starting
+    /// wealth -- proves the wealth grant is gated on the same successful-save
+    /// path as everything else, not a side effect that fires unconditionally.
+    #[test]
+    fn create_character_at_root_grants_no_wealth_when_the_build_is_blocked() {
+        let root = tempdir("create-character-starting-wealth-blocked");
+        // Cleric does not reach Computed today (no supported chassis) even
+        // though starting_wealth_gp itself recognizes "class:cleric".
+        let request = request_for_class("race:human", "class:cleric", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Blocked { .. } => {}
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("Human Cleric level 1 is not expected to reach Computed in this build")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "a Blocked build must never be granted wealth, fabricated or otherwise"
         );
 
         std::fs::remove_dir_all(&root).ok();

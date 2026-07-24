@@ -26,11 +26,14 @@
 //! appendix already reached, now backed by a direct second search rather
 //! than left as an open item.
 //!
-//! Deliberately scoped to conversion only. Starting-wealth-by-class (the
-//! PCGen `GOLD:` token) was not found in the class LST file QA checked --
-//! unresolved, not guessed here. Per QA's own note, if v0.6's scope is
-//! "track and spend money the player already has" rather than "auto-roll
-//! starting gold," that gap does not block this file's scope.
+//! Starting-wealth-by-class (the PCGen `GOLD:` token) was not found in any
+//! `.lst` file QA/backend checked -- exhaustively searched and correctly
+//! left unresolved as a content-provenance question, not an engineering
+//! one (`docs/release/v0.6/risks-and-open-questions.md` item 7). Resolved
+//! 2026-07-24: the operator provided the full table directly, cited to
+//! d20pfsrd.com's "Character Creation" page (Pathfinder SRD/OGL content) --
+//! see `starting_wealth_gp`'s own doc comment.
+
 
 /// A copper-piece total broken into the four PF1 denominations, largest
 /// first. `total_copper` on `Denominations` is *not* stored — callers hold
@@ -84,6 +87,141 @@ pub fn denominations_to_copper(denominations: &Denominations) -> u64 {
 /// resolution in practice, so this does not lose real precision).
 pub fn gp_to_copper(value_in_gp: f64) -> u64 {
     (value_in_gp * COPPER_PER_GOLD as f64).round() as u64
+}
+
+/// PF1 Core Rulebook class-id strings this function recognizes, matching
+/// `pilot_compute.rs`'s own `<CLASS>_CLASS_ID` literal values exactly
+/// (verified by inspection against that file, e.g. `FIGHTER_CLASS_ID`,
+/// `WIZARD_CLASS_ID`, `ROGUE_CLASS_ID`, `BARBARIAN_CLASS_ID`, ...).
+/// Re-declared here rather than imported: those constants are private to
+/// `pilot_compute.rs`, and `starting_wealth_gp` is called from
+/// `apps/desktop/src-tauri` (a separate crate) where even a `pub(crate)`
+/// item in this crate would not be visible -- the same "duplicate the
+/// literal, cite the source" idiom `skill_allocation.rs`'s own
+/// `FIGHTER_CLASS_ID`/`ROGUE_CLASS_ID`/`WIZARD_CLASS_ID` already
+/// established for the identical cross-module problem.
+const FIGHTER_CLASS_ID: &str = "class:fighter";
+const WIZARD_CLASS_ID: &str = "class:wizard";
+const ROGUE_CLASS_ID: &str = "class:rogue";
+const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+const BARD_CLASS_ID: &str = "class:bard";
+const CLERIC_CLASS_ID: &str = "class:cleric";
+const DRUID_CLASS_ID: &str = "class:druid";
+const MONK_CLASS_ID: &str = "class:monk";
+const PALADIN_CLASS_ID: &str = "class:paladin";
+const RANGER_CLASS_ID: &str = "class:ranger";
+const SORCERER_CLASS_ID: &str = "class:sorcerer";
+
+/// Average starting wealth in gold pieces for a PF1 Core Rulebook class id
+/// (v0.6 alpha swarm item 7, resolved 2026-07-24). The operator (Todd
+/// Hintzmann) provided the full table directly, sourced from
+/// d20pfsrd.com's "Character Creation" page
+/// (<https://www.d20pfsrd.com/basics-ability-scores/character-creation/>,
+/// Pathfinder SRD/OGL content) -- see
+/// `docs/release/v0.6/risks-and-open-questions.md` item 7 for the full
+/// table as recorded there, including the 12 non-Core-Rulebook classes
+/// (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Ninja, Oracle,
+/// Samurai, Summoner, Witch) this function omits -- no `class:<name>` id
+/// for any of them is recognized anywhere else in this crate yet, so
+/// adding their rows here would be inert data with no `CharacterInput`
+/// that could ever key against them. Returns `None` for any other
+/// (unrecognized or non-CRB) class id, rather than fabricating a value.
+///
+/// PF1's own rule is to roll the die (e.g. Fighter: 5d6 x 10 gp) rather
+/// than take a fixed value. This crate is deterministic throughout --
+/// every computed value carries a machine-checkable explanation and is
+/// exactly reproducible from its inputs, with no random-number generator
+/// anywhere in `rules_core` -- so rolling would be a genuine architecture
+/// departure, not a drop-in fix. The operator's own table already prints
+/// an "Average" column (die count x 3.5 x 10, always a whole number for
+/// every class); this function returns that column's value directly
+/// rather than re-deriving it, so the values here are a citation, not an
+/// independent computation. A future "reroll for real starting wealth"
+/// affordance, if ever wanted, is a separate frontend/UX feature layered
+/// on top of this deterministic default, not a change to this function.
+pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
+    match class_id {
+        MONK_CLASS_ID => Some(35),
+        DRUID_CLASS_ID | SORCERER_CLASS_ID | WIZARD_CLASS_ID => Some(70),
+        BARBARIAN_CLASS_ID | BARD_CLASS_ID => Some(105),
+        CLERIC_CLASS_ID | ROGUE_CLASS_ID => Some(140),
+        FIGHTER_CLASS_ID | PALADIN_CLASS_ID | RANGER_CLASS_ID => Some(175),
+        _ => None,
+    }
+}
+
+#[cfg(test)]
+mod starting_wealth_tests {
+    use super::*;
+
+    #[test]
+    fn matches_the_operator_cited_average_for_the_three_classes_that_reach_computed() {
+        assert_eq!(starting_wealth_gp("class:fighter"), Some(175));
+        assert_eq!(starting_wealth_gp("class:wizard"), Some(70));
+        assert_eq!(starting_wealth_gp("class:rogue"), Some(140));
+    }
+
+    #[test]
+    fn matches_the_operator_cited_average_for_every_other_crb_class() {
+        assert_eq!(starting_wealth_gp("class:barbarian"), Some(105));
+        assert_eq!(starting_wealth_gp("class:bard"), Some(105));
+        assert_eq!(starting_wealth_gp("class:cleric"), Some(140));
+        assert_eq!(starting_wealth_gp("class:druid"), Some(70));
+        assert_eq!(starting_wealth_gp("class:monk"), Some(35));
+        assert_eq!(starting_wealth_gp("class:paladin"), Some(175));
+        assert_eq!(starting_wealth_gp("class:ranger"), Some(175));
+        assert_eq!(starting_wealth_gp("class:sorcerer"), Some(70));
+    }
+
+    #[test]
+    fn every_value_is_the_dice_count_times_35_confirming_the_average_column_arithmetic() {
+        // Cross-check against the operator-cited dice formulas (die count x
+        // 3.5 x 10 = die count x 35), not just the printed average column in
+        // isolation -- an independent arithmetic check on the same citation.
+        let dice_counts = [
+            ("class:monk", 1),
+            ("class:druid", 2),
+            ("class:sorcerer", 2),
+            ("class:wizard", 2),
+            ("class:barbarian", 3),
+            ("class:bard", 3),
+            ("class:cleric", 4),
+            ("class:rogue", 4),
+            ("class:fighter", 5),
+            ("class:paladin", 5),
+            ("class:ranger", 5),
+        ];
+        for (class_id, dice_count) in dice_counts {
+            assert_eq!(
+                starting_wealth_gp(class_id),
+                Some(dice_count * 35),
+                "{class_id}: {dice_count}d6 x 10 should average to {dice_count} x 35 gp"
+            );
+        }
+    }
+
+    #[test]
+    fn returns_none_for_any_class_id_it_does_not_recognize() {
+        // Non-CRB classes (no class:<name> id recognized anywhere in this
+        // crate yet) and a nonsense id both fall through the same way --
+        // no fabricated value.
+        assert_eq!(starting_wealth_gp("class:alchemist"), None);
+        assert_eq!(starting_wealth_gp("class:cavalier"), None);
+        assert_eq!(starting_wealth_gp("not-a-real-class-id"), None);
+    }
+
+    #[test]
+    fn converts_cleanly_to_a_starting_copper_balance_via_the_existing_conversion() {
+        // Not a new conversion path -- proves starting_wealth_gp composes
+        // with the already-grounded gp_to_copper exactly the way a caller
+        // initializing a fresh character's money.json would use it.
+        assert_eq!(
+            gp_to_copper(f64::from(starting_wealth_gp("class:fighter").unwrap())),
+            17_500
+        );
+        assert_eq!(gp_to_copper(f64::from(starting_wealth_gp("class:wizard").unwrap())), 7_000);
+        assert_eq!(gp_to_copper(f64::from(starting_wealth_gp("class:rogue").unwrap())), 14_000);
+    }
 }
 
 #[cfg(test)]
