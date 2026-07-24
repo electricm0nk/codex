@@ -77,12 +77,40 @@ alongside the existing Agent Status convention.
   flagged with exact repro steps instead. Everything else: clean pass,
   no other correctness issues. 69/69 suite green throughout.
 
-## Agent Status (2026-07-24, ~12:14 ET)
+- **SIGNIFICANT FINDING (QA, 2026-07-24)**: root-caused the Spells tab
+  inconsistency, and it's bigger than the Spells tab. Traced to
+  `corpus_fixture_bundle()` (`apps/desktop/src-tauri/src/
+  corpus_fixtures.rs`) — the desktop app's corpus-aware layer
+  (`compute_pilot_with_corpus`) is bundled with a deliberately tiny,
+  hardcoded 2-spell/2-equipment-record fixture (the doc comment itself
+  says "not a general corpus provider, exhaustive corpus coverage is out
+  of scope"). Any spell/item a user actually picks that isn't one of
+  those exact 2 bundled records per category silently drops out of
+  `corpus_derived` (school_coverage, equipped_items grounding, and now
+  shape (c)'s `equipment_effects` too) with zero diagnostic -- the
+  underlying data (`spells_selected`/`equipment_selections`) persists
+  correctly the whole time, confirmed by reading the saved envelope
+  directly. **Not the same root cause as item 18** (which is a
+  race-gated chassis-explanation path, unrelated) and **not
+  race-specific at all** -- a Human Wizard picking the same spells would
+  show the identical gap. Empirically reproduced and reverted cleanly
+  (touched only `pf1_adapter.rs`, confirmed via `git status` and a clean
+  `cargo build`, never went near backend's in-progress files). **Real
+  scope implication for shape (c) specifically**: its ACP/AC value only
+  looks complete today because the fixed-loadout's Chain Shirt/Longsword
+  happen to be exactly the 2 bundled equipment records -- any other gear
+  would silently show nothing, the same gap. Two fix shapes offered, not
+  QA's call: bundle more real spells/equipment (bounded, mechanical) vs.
+  surface an honest "not in demo corpus" indicator instead of silent
+  omission (small UX fix). Queued for backend once the attack-bonus
+  slice lands.
+
+## Agent Status (2026-07-24, ~12:20 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | building the bounded single-weapon attack-bonus slice (equipment_effects.rs dirty) |
+| backend | working | building the bounded single-weapon attack-bonus slice (multiple files dirty, own risks-doc note in progress) |
 | frontend | idle | queue clear since the smoke-test report; standing by |
-| qa | working | shape (c) verified clean; now investigating (read-only) the Spells tab corpusDerived finding, cautioned about backend's concurrent file edits |
+| qa | working | root-caused the Spells tab finding to a bundled 2-spell/2-equipment demo fixture -- a bigger, real scope caveat affecting shape (c) too; report landed, next task pending |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
