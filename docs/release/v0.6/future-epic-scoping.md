@@ -10,6 +10,13 @@
 > is out of further silent-correctness bugs in the three working classes
 > (Fighter/Wizard/Rogue) and the remaining distance to the alpha bar is now
 > architecture-level, not bug-level.
+>
+> **Update, 2026-07-24 (later same day):** the operator directed gap B
+> (feat-effects engine) be built — no longer purely deferred. See risks
+> item 17's own operator-directive note for the go-ahead and starting
+> scope. This file's sizing/analysis of gap B below still stands as the
+> scoping baseline; only its "not attempted this wave" framing is
+> superseded.
 
 ## The three gaps, side by side
 
