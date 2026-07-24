@@ -118,10 +118,100 @@ class... reaches Computed for the choices a tester actually makes" — this
 is a UI-reachability problem layered on top of calculation correctness, not
 fixed by adding more calculations.
 
+### Comprehensive consolidation (2026-07-23/24, fully-autonomous-session checkpoint)
+
+Requested by the lead as a checkpoint after a long autonomous run covering
+several real defects found and fixed beyond the original calculation-gap
+surveys above. This section is the current, authoritative picture; it does
+not repeat every historical detail already recorded above, only what has
+materially changed or newly landed.
+
+**Calculation coverage** (§a's 12-item table): unchanged from the "Full
+resurvey" table above in outcome — all 12 are covered, multiclass BAB/save
+breadth is still 3 of 11 classes (Fighter/Wizard/Rogue), same well-understood
+bounded pattern, not attempted further this session (no new class was
+greenlit for widening). What *did* change is the accuracy of several
+already-"Covered" rows, captured as defects below — coverage existing is not
+the same as coverage being *correct*, and this session found several real
+gaps between the two.
+
+**Alpha-bar items 1-3/7** (§d below is largely stale as of the original
+wave-1 draft; the current truth):
+- **Item 2/3** (create + advance a character of any class/race): materially
+  further along than believed. Fighter, Wizard, and Rogue are all now
+  confirmed UI-reachable end-to-end (creation, level-up, multiclass dip) —
+  Wizard needed a real three-layer bootstrap fix (class acquisition, first
+  spell, slot-budget enforcement, all live-verified), Rogue needed none
+  (confirmed reachable with zero gap). **Race support for these three
+  classes is not Human-gated** — this was a stale, never-verified assumption
+  the swarm inherited and has now disproven: Elf Wizard and Elf Rogue both
+  live-verified reaching `Computed`/`Saved` through the real creation UI.
+  The other 8 core classes (Barbarian/Bard/Cleric/Druid/Monk/Paladin/
+  Ranger/Sorcerer) still have zero chassis computation for any race — this
+  is unchanged and is not a quick fix (each needs its own multi-epic
+  calculation engine, not a UI/wiring fix).
+- **Item 4** (every reachable calc matches PCGen): the 12 named calculations
+  are covered per the table above, but "every reachable calculation" is
+  narrower in practice than the bar's framing suggests — see the
+  bar-distance assessment below.
+
+**PCGen-delta defects found this session** (§b was empty this whole swarm
+until now — populated for real below):
+
+| # | Defect | Status |
+| :-- | :--- | :--- |
+| 1 | Wizard spell-save-DC: no computation existed at all (Paladin/Ranger/Sorcerer/Bard all had it) | **Fixed** (`3b397315`), catalogue-adopted (`e95112a1`) |
+| 2 | Wizard spell-slot-budget enforcement: real corpus spells silently bypassed the over-budget check (only the one synthetic seed spell's id shape was recognized) | **Fixed** (`365b3a1a`), live re-verified through the real Add Spell UI |
+| 3 | Class-skill-modifier bug: `compute_selected_skill_modifiers` applied the Climb/Intimidate/Swim class-skill `+3` unconditionally — silently wrong for Wizard (whose real class-skill list includes none of the three), coincidentally right for Rogue | **Fixed** (`93a0636d`), catalogue-adopted (`3b843add`), independently re-verified against the real PCGen corpus citations before adoption |
+| 4 | Racial ability-modifier gap: Elf/Dwarf/Gnome/Halfling each silently missing one real `+2` mental-ability racial component (Elf: INT, Dwarf: WIS, Gnome: CHA, Halfling: CHA) — the code's own comment mischaracterized Elf's as an "out of scope alternate variant" when it's the CRB-standard default | **Elf fixed** (`9ec0e036`), catalogue-adopted (`e9d02c25`). **Dwarf/Gnome/Halfling in progress** — backend actively editing `pilot_compute.rs` as of this checkpoint (uncommitted); not yet landed, not yet catalogue-adoptable. |
+| 5 | Racial Small-size effect miscategorization: Gnome's and Halfling's size explanations claim "no numeric effect to attack rolls, AC..." despite correctly citing `SIZE:SMALL` — real PF1 Small size grants +1 AC/+1 attack/-1 CMB-CMD/+4 Stealth | Queued alongside defect 4's in-progress fix (text-only correction; `compute_combat_baseline` has no size-modifier term for *any* race today, so this doesn't change a computed value, only stops an incorrect claim) |
+| 6 | Feat-effects engine: verified concretely (built a real fixture, added Toughness to `selected_feats`, ran the real `build_pilot_headless_receipt` entry point) that **no feat outside the 3 hardcoded into the deterministic posture gate (Power Attack, Dodge, Weapon Focus) has any mechanical effect anywhere** — confirmed by grep this isn't Toughness-specific, there is no general feat-effects computation in `pilot_compute.rs` at all | **Not a quick fix** — logged as its own architecture gap, linked to the existing AC/attack-bonus/skill-posture widening item (risks-and-open-questions.md item 1) rather than assigned to backend as routine work. Not attempted this swarm. |
+
+**Bar-distance assessment (honest current picture):** the alpha bar is
+**not** met yet, and the remaining distance is now well-characterized rather
+than vague:
+1. **Multiclass breadth** — 3 of 11 classes in the BAB/save-stacking
+   allowlist. Bounded, repeatable, not attempted for the other 8 this
+   session (no explicit greenlight to widen further).
+2. **Class-chassis breadth** — 8 of 11 classes have zero base-chassis
+   computation for *any* race, not a UI-reachability problem, a genuine
+   missing-engine problem per class.
+3. **Posture narrowness** — even for the 3 working classes, only one exact
+   equipment/skill/feat combination ever reaches `Computed`. AC-gate,
+   attack-bonus, and general-skill-posture widening were all scoped and then
+   **dropped** this swarm after backend found the real blocker is
+   architectural (the headless compute layer has no corpus parameter) —
+   flagged to the operator as a possible future epic, not a wave-2 item.
+4. **Feat effects** — confirmed nonexistent beyond the 3 feats hardcoded
+   into the posture gate itself. Same shape of problem as item 3 (a
+   structural gap, not a missing calculation), newly discovered this
+   session.
+5. **What *is* solid**: the 12 named calculations for the 3 working classes
+   are genuinely correct and PCGen-cross-verified once you're inside the one
+   supported posture — the defects found this session were about *breadth*
+   (which classes/races reach a correct answer) and *honesty* (comments
+   claiming something is out of scope when it's real), not about the core
+   arithmetic being wrong once a build is actually `Computed`. Money
+   purchasing is now a real atomic transaction (`purchase_equipment`), and
+   the render-staleness/corpus-derived wire bugs found along the way are
+   both closed.
+
+**Not signing the attestation.** Per §4.4's "Done" criteria, this requires
+every shipped calculation having red-green coverage (true) *and* the
+operator's alpha bar in §1 holding (not true — items 2 and 4 above are real,
+acknowledged gaps, not stub surfaces, but still gaps against "any class...
+matches PCGen"). This checkpoint is for visibility, not closure.
+
 ## (b) PCGen-delta defects found and fix/ticket status
 
-None found yet — wave-1 in flight, no landed calculation changes to diff
-against PCGen yet. This section updates as backend/frontend land work.
+See the consolidated table above (Comprehensive consolidation section) for
+the authoritative, current list — kept there rather than duplicated here to
+avoid two sources of truth drifting apart. Historical note: this section sat
+empty through wave-1 close and the original wave-2 resurvey, since no
+calculation-changing defect had landed yet at either checkpoint; the first
+real defects (Wizard spell-save-DC, slot-budget enforcement) landed after
+the wave-2 resurvey was already written, which is why they don't appear in
+the tables above this one.
 
 ## (c) Four-check wired-integration audit results
 
@@ -140,17 +230,32 @@ Checks to run at closure:
 
 ## (d) Alpha-bar items 1-3 and 7 confirmation
 
-- **Item 1** (installer without intervention, past SmartScreen): Not yet
-  re-verified this run — CI already builds unsigned MSI/NSIS per
-  `publish-tester-release.yml`; no regression expected from wave-1 scope, but
-  will be confirmed post-version-bump.
+**Superseded by the Comprehensive consolidation section above** — this
+section's original wave-1-era text is left below for provenance only, since
+it's now materially stale (items 2/3 in particular have real, live-verified
+progress the text below doesn't reflect).
+
+- **Item 1** (installer without intervention, past SmartScreen): Not
+  re-verified this session — no installer-affecting change landed in this
+  swarm's scope. CI already builds unsigned MSI/NSIS per
+  `publish-tester-release.yml`; still expected to hold, not re-confirmed.
 - **Item 2** (create a character from any of CRB/B1/APG/ACG, load from disk):
-  Not yet re-verified; depends on frontend's stub-tab burn-down landing.
+  Materially advanced — Fighter/Wizard/Rogue all confirmed creatable/
+  loadable for any race (not just Human), live-verified for Elf
+  specifically. The other 8 classes remain fully blocked (zero chassis
+  computation), not a stub-surface problem — a missing-engine one.
 - **Item 3** (advance 6 levels, multiclass, spells/feats/equipment/bio/money):
-  Blocked on backend's wave-1 unblocking queue (skill/level-up/bio/feat/money
-  persistence commands) and frontend's consuming UI — in flight.
+  Materially advanced — Wizard's full bootstrap chain (class acquisition,
+  first spell, slot-budget enforcement) and Rogue's UI reachability are both
+  closed and live-verified. Money purchasing is now a real atomic
+  transaction. Feat *selection* works (recorded, persisted); feat *effect*
+  does not (see defect 6 in the consolidation table) — a real, newly-found
+  gap against this item's spirit, even though nothing about feat selection
+  itself is stubbed.
 - **Item 7** (PR lands green on CI, four-check audit re-run, SWARM_REPORT.md
-  recorded): Pending — this document is that artifact, currently in draft.
+  recorded): Pending — this document is that artifact, still in draft; the
+  four-check audit itself has not been run yet (see §c above), correctly
+  held until the closure PR is genuinely being opened.
 
 ---
 
