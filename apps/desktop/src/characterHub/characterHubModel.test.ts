@@ -33,8 +33,16 @@ function verifiesUnknownClassFallsBackToLevelOneOnly() {
 function verifiesSupportLevelCopyPerLevel() {
   assert(describeClassSupportLevel('full', 'Fighter').includes('Fighter'), 'full copy should name the class');
   assert(
-    describeClassSupportLevel('partial-human-only', 'Paladin').toLowerCase().includes('human'),
+    describeClassSupportLevel('partial-human-only', 'Wizard').toLowerCase().includes('human'),
     'partial-human-only copy should mention Human'
+  );
+  assert(
+    describeClassSupportLevel('human-diagnostics-only', 'Paladin').toLowerCase().includes('human'),
+    'human-diagnostics-only copy should still mention Human (it gets named diagnostics)'
+  );
+  assert(
+    describeClassSupportLevel('human-diagnostics-only', 'Paladin').toLowerCase().includes('for any race yet, including human'),
+    'human-diagnostics-only copy should be explicit that Human never computes either'
   );
   assert(
     describeClassSupportLevel('none', 'Rogue').toLowerCase().includes("isn't computed"),

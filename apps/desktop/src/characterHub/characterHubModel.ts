@@ -138,13 +138,21 @@ export const RACE_OPTIONS: RaceOption[] = [
 
 /**
  * `full` — reaches `Computed` for any race in `RACE_OPTIONS`.
- * `partial-human-only` — the compute engine's named class seam only fires
- * for `race:human`; every other race falls back to the same 4 generic
- * diagnostics as a `none` class.
+ * `partial-human-only` — reaches `Computed` for `race:human` only; every
+ * other race falls back to the same 4 generic diagnostics as a `none`
+ * class.
+ * `human-diagnostics-only` — never reaches `Computed` for any race,
+ * including Human — the compute engine's named class seam only grounds
+ * explanation/diagnostic *text* for `race:human` (e.g. naming the specific
+ * missing rage-execution or spellcasting burden), not an actual computed
+ * build. Every other race falls back to the same 4 generic diagnostics as
+ * a `none` class. Do not present this as "partial support" — Human never
+ * produces a savable build here either, it only explains why in more
+ * detail.
  * `none` — no dedicated compute seam exists; every race produces the same 4
  * generic diagnostics.
  */
-export type ClassSupportLevel = 'full' | 'partial-human-only' | 'none';
+export type ClassSupportLevel = 'full' | 'partial-human-only' | 'human-diagnostics-only' | 'none';
 
 export interface ClassOption {
   id: string;
@@ -155,19 +163,49 @@ export interface ClassOption {
   hitDie: number;
 }
 
-/** The full PF1 core rulebook class roster. */
+/**
+ * The full PF1 core rulebook class roster.
+ *
+ * `supportLevel` reflects the compute engine's real gating, not just
+ * whether it recognizes the class — verified directly against
+ * `pilot_compute.rs`'s per-class `explain_*` functions (each of Paladin,
+ * Ranger, Sorcerer, Bard, Barbarian, Monk, Cleric, and Druid carries its own
+ * "This deliberately does not compute a supported ... chassis/surface"
+ * doc comment, and the compute path stays claim-blocked for Human exactly
+ * as it does for every other race) and live-verified for Barbarian
+ * specifically (a fresh Human Barbarian creation attempt still returns
+ * `Blocked`, just with named rage-burden diagnostics instead of the 4
+ * generic ones a non-Human race or a truly unrecognized class gets).
+ *
+ * Wizard and Rogue are `full`, not `partial-human-only` as this file
+ * previously (incorrectly) had them: `supported_wizard_level` /
+ * `supported_rogue_level` and every gate downstream of them
+ * (`wizard_has_canonical_specialization_selections`,
+ * `unmet_wizard_spellbook_conditions`, `compose_character_input`'s choice
+ * seeding) check only `class_id` and level, never `race_id` — confirmed via
+ * `git log -p` on the seeding block back to its original commit (3484b5d4),
+ * which never had a Human condition. Live-verified end-to-end via the real
+ * creation UI: a fresh Elf Wizard 1 and a fresh Elf Rogue 1 both reached
+ * `Computed`/`Saved` with real, distinct stat blocks, disk-confirmed
+ * (`race_id=race:elf` alongside a real `class_level` entry). The "Human
+ * only" framing was a stale/unverified assumption baked in when the Wizard
+ * spellbook fix first landed — the doc comments on the compute-path
+ * functions reference "Human Wizard"/"Human Rogue" descriptively (naming
+ * the deterministic baseline that was built and tested first), not as an
+ * enforced restriction.
+ */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
-  { id: 'class:paladin', label: 'Paladin', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 10 },
-  { id: 'class:ranger', label: 'Ranger', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 10 },
-  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 6 },
-  { id: 'class:wizard', label: 'Wizard', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 6 },
-  { id: 'class:bard', label: 'Bard', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 12 },
-  { id: 'class:rogue', label: 'Rogue', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:monk', label: 'Monk', supportLevel: 'partial-human-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:paladin', label: 'Paladin', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 10 },
+  { id: 'class:ranger', label: 'Ranger', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 10 },
+  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 6 },
+  { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
+  { id: 'class:bard', label: 'Bard', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 12 },
+  { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:monk', label: 'Monk', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];
@@ -182,8 +220,24 @@ export function describeClassSupportLevel(supportLevel: ClassSupportLevel, class
       return `${classLabel} is fully computed at every level offered here.`;
     case 'partial-human-only':
       return `${classLabel} is only computed for Human today — other races show what's still missing.`;
+    case 'human-diagnostics-only':
+      return `${classLabel} isn't computed by the engine for any race yet, including Human — Human just shows more specific detail about what's missing.`;
     case 'none':
       return `${classLabel} isn't computed by the engine yet.`;
+  }
+}
+
+/** The dropdown-option suffix for `CreateCharacterForm`'s Class select — kept alongside `describeClassSupportLevel` so both stay honest about the same distinction. */
+export function classSupportLevelSuffix(supportLevel: ClassSupportLevel): string {
+  switch (supportLevel) {
+    case 'full':
+      return '';
+    case 'partial-human-only':
+      return ' (Human only, partial)';
+    case 'human-diagnostics-only':
+      return ' (not yet computed for any race)';
+    case 'none':
+      return ' (not yet computed)';
   }
 }
 

@@ -8,6 +8,7 @@ import {
   DEFAULT_ABILITY_SCORES,
   RACE_OPTIONS,
   ageEffectForAbility,
+  classSupportLevelSuffix,
   describeClassSupportLevel,
   formatHeight,
   maxHitPointsAtLevelOne,
@@ -376,7 +377,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
                 {CLASS_OPTIONS.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
-                    {option.supportLevel === 'full' ? '' : option.supportLevel === 'partial-human-only' ? ' (Human only, partial)' : ' (not yet computed)'}
+                    {classSupportLevelSuffix(option.supportLevel)}
                   </option>
                 ))}
               </select>
