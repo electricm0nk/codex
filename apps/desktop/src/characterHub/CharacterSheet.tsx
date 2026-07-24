@@ -40,6 +40,7 @@ import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifi
 import { setSkillAllocations } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
+import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -726,29 +727,125 @@ function MoneyPanel(props: {
 }
 
 /**
- * Real, bounded: the only Defense stat with a backend computation to show
- * today is the flat Damage Reduction magnitude (`PilotSnapshotDto.damageReduction`,
+ * Real HP/durability tracking, wired to `load_character_durability` /
+ * `adjust_character_hp` (v0.6 alpha swarm, risks-and-open-questions.md
+ * item 4). `durability` is `null` both while the initial load is in
+ * flight and — indistinguishably, on purpose — when this build isn't
+ * durability-supported (only single-class Fighter/Wizard/Rogue); either
+ * way, the honest "not available" line is correct and nothing is
+ * fabricated in its place. `status` is a pre-computed label from the real
+ * PF1 injury/death thresholds — rendered directly, no client-side
+ * re-derivation.
+ */
+function DurabilityPanel(props: {
+  durability: CharacterDurabilityDto | null;
+  busy: boolean;
+  error: string | null;
+  onAdjust: (deltaHp: number) => void;
+}) {
+  const [amountInput, setAmountInput] = useState('');
+  const parsedAmount = Number(amountInput);
+  const validAmount = amountInput.trim() !== '' && Number.isFinite(parsedAmount) && parsedAmount > 0;
+
+  if (!props.durability) {
+    return (
+      <p style={{ color: 'var(--color-text-faint)', margin: '0 0 1rem', textAlign: 'center' }}>
+        HP tracking isn't available for this build yet — only single-class Fighter, Wizard, or Rogue.
+      </p>
+    );
+  }
+
+  const { currentHp, maxHp, nonlethalDamage, status } = props.durability;
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        Hit Points
+      </p>
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
+        <StatTile label="Current" value={currentHp} />
+        <StatTile label="Max" value={maxHp} />
+        <StatTile label="Nonlethal" value={nonlethalDamage} />
+        <StatTile label="Status" value={status} emphasize={status !== 'Normal'} />
+      </div>
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          placeholder="amount"
+          value={amountInput}
+          onChange={(event) => setAmountInput(event.target.value)}
+          style={{ ...bioFieldInputStyle, width: 110 }}
+        />
+        <button
+          type="button"
+          disabled={!validAmount || props.busy}
+          onClick={() => {
+            props.onAdjust(-parsedAmount);
+            setAmountInput('');
+          }}
+          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
+        >
+          Damage
+        </button>
+        <button
+          type="button"
+          disabled={!validAmount || props.busy}
+          onClick={() => {
+            props.onAdjust(parsedAmount);
+            setAmountInput('');
+          }}
+          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
+        >
+          Heal
+        </button>
+      </div>
+      {props.error ? (
+        <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.72rem', margin: '0.5rem 0 0' }}>
+          {props.error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * Real, bounded: HP/durability tracking (above) is real for a supported
+ * build. The only other Defense stat with a backend computation to show
+ * is the flat Damage Reduction magnitude (`PilotSnapshotDto.damageReduction`,
  * `character_hub.rs`) — currently only ever grounded for Barbarian, which
  * isn't a chassis-supported class through this UI yet, so `undefined` here
  * is the expected, honest state for every character reachable today, not a
- * bug. AC breakdown, save modifiers by source, etc. have no equivalent
- * backend computation, so the rest of the tab stays the same "coming soon"
+ * bug. AC breakdown by source, save modifiers by source, etc. have no
+ * equivalent backend computation, so that part of the tab stays an honest
  * placeholder rather than a fabricated layout for uncomputed data. Note:
- * the "Recompute" menu action doesn't currently refresh this field
- * (`RecomputedCharacterSnapshotDto` doesn't carry it), so it always reflects
- * the originally loaded snapshot — a real, narrow, pre-existing gap, not
- * something this change papers over.
+ * the "Recompute" menu action doesn't currently refresh `damageReduction`
+ * (`RecomputedCharacterSnapshotDto` doesn't carry it), so it always
+ * reflects the originally loaded snapshot — a real, narrow, pre-existing
+ * gap, not something this change papers over.
  */
-function DefenseTab(props: { damageReduction: number | undefined }) {
+function DefenseTab(props: {
+  damageReduction: number | undefined;
+  durability: CharacterDurabilityDto | null;
+  durabilityBusy: boolean;
+  durabilityError: string | null;
+  onAdjustHp: (deltaHp: number) => void;
+}) {
   return (
     <div>
+      <DurabilityPanel
+        durability={props.durability}
+        busy={props.durabilityBusy}
+        error={props.durabilityError}
+        onAdjust={props.onAdjustHp}
+      />
       {props.damageReduction !== undefined ? (
         <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
           <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
         </p>
       ) : null}
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-        {props.damageReduction !== undefined ? 'Everything else in Defense — coming soon.' : 'Defense — coming soon.'}
+        AC breakdown by source and other Defense stats — coming soon.
       </p>
     </div>
   );
@@ -948,6 +1045,34 @@ export function CharacterSheet(props: {
       .catch(() => {
         if (!cancelled) {
           setMoney({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.characterId]);
+  const [durability, setDurability] = useState<CharacterDurabilityDto | null>(null);
+  const [durabilityBusy, setDurabilityBusy] = useState(false);
+  const [durabilityError, setDurabilityError] = useState<string | null>(null);
+  // Loads the real persisted HP/durability whenever the sheet opens on a
+  // different character. Unlike bio/money, a rejection here is a real,
+  // structural "this build isn't durability-supported" outcome (only
+  // single-class Fighter/Wizard/Rogue), not an expected empty-first-load
+  // state — `durability` staying `null` is exactly how the Defense tab
+  // renders that as an honest "not available for this build" line rather
+  // than a fabricated HP value or an alarming error.
+  useEffect(() => {
+    let cancelled = false;
+    setDurability(null);
+    loadCharacterDurability(props.row.characterId)
+      .then((loaded) => {
+        if (!cancelled) {
+          setDurability(loaded);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setDurability(null);
         }
       });
     return () => {
@@ -1245,6 +1370,25 @@ export function CharacterSheet(props: {
       setMoneyError(cause instanceof Error ? cause.message : 'Could not update the money balance.');
     } finally {
       setMoneyBusy(false);
+    }
+  }
+
+  /**
+   * `deltaHp`/`deltaNonlethal` are already the exact wire deltas (positive
+   * to heal / take nonlethal damage is the caller's choice, see
+   * `adjustCharacterHp`'s own doc comment) — one atomic round trip, no
+   * read-then-write coordination needed on this side.
+   */
+  async function handleAdjustHp(deltaHp: number, deltaNonlethal: number) {
+    setDurabilityError(null);
+    setDurabilityBusy(true);
+    try {
+      const updated = await adjustCharacterHp(props.row.characterId, deltaHp, deltaNonlethal);
+      setDurability(updated);
+    } catch (cause: unknown) {
+      setDurabilityError(cause instanceof Error ? cause.message : 'Could not update HP.');
+    } finally {
+      setDurabilityBusy(false);
     }
   }
 
@@ -1644,7 +1788,13 @@ export function CharacterSheet(props: {
               {tab === 'Weapons' ? (
                 <WeaponsTab proficiency={weaponProficiency} onAddWeapon={() => setItemPickerOpen('weapon')} />
               ) : tab === 'Defense' ? (
-                <DefenseTab damageReduction={snapshot?.damageReduction} />
+                <DefenseTab
+                  damageReduction={snapshot?.damageReduction}
+                  durability={durability}
+                  durabilityBusy={durabilityBusy}
+                  durabilityError={durabilityError}
+                  onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
+                />
               ) : tab === 'Spells' ? (
                 <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
