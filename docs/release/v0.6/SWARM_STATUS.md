@@ -1208,7 +1208,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T16:45:01
-Latest commit on tranche/6: 8513dba1 docs(v0.6): operator resolves items 1+27 scoping plan's 3 open questions (5 minutes ago) (2026-07-24T16:40:10-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T16:40:20 frontend=2026-07-24T15:02:02 qa=2026-07-24T16:40:25 lead=2026-07-24T16:40:33
+Last mechanical check: 2026-07-24T19:00:01
+Latest commit on tranche/6: 3a05539a feat(v0.6): attach_equipment_modifier command (sub-task 6 backend half) (26 seconds ago) (2026-07-24T18:59:35-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T18:58:15 frontend=2026-07-24T18:59:56 qa=2026-07-24T17:43:27 lead=2026-07-24T18:58:49
 <!-- AUTO-HEARTBEAT-END -->
