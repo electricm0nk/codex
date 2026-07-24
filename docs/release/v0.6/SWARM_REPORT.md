@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | item 18 landed and lead-verified (7c2d2ad2); now on the items 1+27 scoping/sequencing plan |
+| backend | working | item 18 fully closed (7c2d2ad2, lead + QA both independently verified); now on the items 1+27 scoping/sequencing plan |
 | frontend | idle | queue clear; next real work follows once the items 1/27 scoping plan surfaces UI follow-ups |
-| qa | working | independently verifying item 18 (7c2d2ad2) |
+| qa | idle | independently re-verified item 18 clean via a full-function trace; standing by |
 
 ---
 
