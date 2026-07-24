@@ -15,15 +15,17 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   resuming equipment-picker live verification
-                                after a transient shared-checkout build hiccup
-backend               Sonnet   render-staleness bug FIXED+pushed (498679d1,
-                                also caught+fixed an identical latent bug
-                                in its own earlier commit); on the Elf
-                                Intelligence parity gap next
-qa                    Sonnet   Elf Intelligence gap filed and queued
-                                (498679d1 fixed render-staleness, not this);
-                                checking other races for the same pattern
+frontend              Sonnet   live-verifying the Elf +2 INT fix (spell
+                                save DC / bonus spells should now reflect it)
+backend               Sonnet   race-adjustment bundle in flight: Elf DONE
+                                (9ec0e036), Dwarf/Gnome/Halfling + size-text
+                                fix still uncommitted, in progress
+qa                    Sonnet   SWARM_REPORT.md comprehensive consolidation
+                                DONE (42ee6606) -- honest "not signing the
+                                attestation yet" checkpoint; feat-effects
+                                architecture gap found+logged (item 17,
+                                deferred, not assigned); watching for
+                                backend's race-bundle push to adopt
 
 (b) Happened
 ------------
