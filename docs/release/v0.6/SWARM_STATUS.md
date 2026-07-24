@@ -1171,12 +1171,12 @@ prior refresh, itself already superseded by everything since)
 - risks-and-open-questions.md items 6, 9, 9a corrected from stale
   "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
-## Agent Status (2026-07-24, ~15:00 ET)
+## Agent Status (2026-07-24, ~15:05 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | null-serialization fix landed (874df6db); item 18 mis-dispatch corrected pre-work; redirected to a closure-readiness health pass, report pending |
-| frontend | idle | item-25 self-audit complete and pushed (0c602c72) — 8 files closed, 77/77 tests (up from 69), typecheck clean; lead-verified independently (reran suite + typecheck, sampled 2 new test files for real assertions); item 25 now fully closed, not partial |
-| qa | idle | feat-effects widening re-verified clean (item 17 closed); null-serialization fix verified at wire/test level (204/204), live-UI leg environment-blocked (item 29) and the 0-weapon case structurally unreachable live anyway (item 28); next queued to sample-review frontend's item-25 audit |
+| backend | working | closure-readiness health pass in flight (full workspace test+build, sweep for remaining gaps), report pending |
+| frontend | working | closure-readiness sweep against the alpha bar's UI-facing items + full lint/typecheck/test baseline, report pending |
+| qa | idle | independently sample-reviewed frontend's item-25 tests (6 files, source-then-test, reproduced a real regression on `purchaseEquipment.test.ts` to confirm load-bearing), clean, logged; standing by |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

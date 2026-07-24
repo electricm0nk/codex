@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | null-serialization fix landed (874df6db); item 18 dispatch was a lead error, corrected pre-work; redirected to a closure-readiness pass, report pending |
-| frontend | idle | item-25 test-coverage self-audit complete and pushed (0c602c72), lead-verified (77/77, typecheck clean, sampled assertions real) — item 25 fully closed |
-| qa | idle | feat-effects widening fully re-verified clean (item 17 closed); null-serialization fix verified at the wire/test level (204/204) with the live-UI leg environment-blocked (new item 29) and the 0-weapon case found structurally unreachable live regardless (new item 28); next queued to sample-review frontend's item-25 audit |
+| backend | working | closure-readiness health pass in flight, report pending |
+| frontend | working | closure-readiness sweep against the alpha bar's UI-facing items in flight, report pending |
+| qa | idle | independently confirmed frontend's item-25 tests clean (source-then-test read of all 6 remaining files, reproduced a real regression on one to confirm load-bearing); standing by |
 
 ---
 
