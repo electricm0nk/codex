@@ -15,14 +15,14 @@ orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
                                 teammates, cron backstop every ~20 min
-frontend              Sonnet   equipment-picker wiring against
-                                purchase_equipment, live-verifying both paths
-backend               Sonnet   class-skill-modifier bug FIXED+pushed
-                                (93a0636d, PCGen-corpus-verified); on
-                                render-staleness fix now, reading full
-                                context first before touching anything
-qa                    Sonnet   found a real Elf Intelligence parity gap
-                                (see Happened), queued for backend; now
+frontend              Sonnet   resuming equipment-picker live verification
+                                after a transient shared-checkout build hiccup
+backend               Sonnet   render-staleness bug FIXED+pushed (498679d1,
+                                also caught+fixed an identical latent bug
+                                in its own earlier commit); on the Elf
+                                Intelligence parity gap next
+qa                    Sonnet   Elf Intelligence gap filed and queued
+                                (498679d1 fixed render-staleness, not this);
                                 checking other races for the same pattern
 
 (b) Happened
