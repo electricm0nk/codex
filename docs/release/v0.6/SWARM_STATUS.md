@@ -135,9 +135,25 @@ alongside the existing Agent Status convention.
 ## Agent Status (2026-07-24, ~13:50 ET)
 | Agent | Status | Detail |
 |---|---|---|
+- **"Outside demo corpus" indicator independently verified, clean (QA,
+  2026-07-24).** Confirmed both `SpellsTab` and `GearTab` are genuinely,
+  independently wired (not one path reused), the minimal-detail claim
+  holds exactly (literally count + raw joined ids, nothing else), and
+  backend's field-population diff replaces the old silent `continue` with
+  a real push in both resolve loops. Reproduced RED themselves (reverted
+  the push, watched the exact `[]` vs `["Magic Missile"]` mismatch,
+  restored). One thing noted, correctly not flagged as a bug: the list is
+  deliberately not deduplicated (a spell picked Known+Prepared shows up
+  twice) -- consistent with the "never hide information" discipline, not
+  a defect. Ran targeted tests only (not a full workspace regression),
+  explicitly to stay out of backend's concurrent edit -- good judgment.
+
+## Agent Status (2026-07-24, ~14:00 ET)
+| Agent | Status | Detail |
+|---|---|---|
 | backend | working | widening the feat-effects engine to 3 more real feats (Great Fortitude/Iron Will/Lightning Reflexes), full-workspace safety net running before commit |
-| frontend | idle | "outside demo corpus" indicator landed and live-verified; flagged shape (c)'s equipmentEffects as unwired on the frontend, queue clear |
-| qa | idle | standing by for either backend's or frontend's next landing |
+| frontend | working | wiring shape (c)'s equipmentEffects into the frontend TS type and Defense tab |
+| qa | idle | verified the outside-demo-corpus indicator clean (both tabs, RED reproduction); standing by for backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
