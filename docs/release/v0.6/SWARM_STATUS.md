@@ -892,6 +892,18 @@ qa                     Sonnet  fresh-eyes review of the lead's stewardship
   (does the UI call the right command with the right shape) -- harder to
   verify without live-driving the app. Greenlit to continue into that
   with RUN_DESKTOP_AGENT=qa now that driver.sh is fixed.
+- Backend's consolidated full-workspace health check, run fresh rather
+  than trusting the many per-commit green reports individually: `codex`
+  crate full workspace suite 4239/1 (the 1 failure a wall-clock
+  performance assertion squeezed by running 4 heavy checks concurrently,
+  confirmed a contention flake by re-running alone: 25/25, 1.13s vs the
+  2.34s threshold breach), 0 warnings; release build clean, 0 warnings,
+  1m21s; desktop Tauri crate 197/197, 1 pre-existing unrelated warning;
+  frontend typecheck clean, 63/63 tests green including against
+  frontend's own in-progress edits. Flagged the flaky test honestly
+  rather than silently omitting or silently calling it clean -- worth
+  noting in the eventual attestation as a documented, re-verified
+  non-issue. No code changes, pure verification.
 
 (c) Consolidated status (refreshed 2026-07-24, ~06:15 ET — supersedes the
 prior refresh, itself already superseded by everything since)
