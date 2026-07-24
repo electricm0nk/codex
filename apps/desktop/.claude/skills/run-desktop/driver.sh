@@ -18,10 +18,43 @@
 
 set -euo pipefail
 
-STATE_FILE="/tmp/run-desktop-driver.state"
-DISPLAY_NUM=99
+# Multiple concurrent agents (e.g. named swarm teammates) must NOT share a
+# display, state file, log file, or process-kill pattern -- doing so causes
+# launches/stops to collide across agents (one agent's launch/stop killing
+# another's running session, or windows/keystrokes crossing between them).
+# Set RUN_DESKTOP_AGENT to a distinct identifier per concurrent agent (e.g.
+# RUN_DESKTOP_AGENT=frontend) before invoking this script. Unset/default
+# behavior is unchanged from before this existed (AGENT_ID=default,
+# DISPLAY_NUM=99), so a single solo agent needs no changes.
+AGENT_ID="${RUN_DESKTOP_AGENT:-default}"
+
+# Deterministic per-agent DISPLAY_NUM: a few well-known names get fixed,
+# easy-to-recognize numbers; anything else hashes into a safe range so two
+# arbitrary agent names still (almost certainly) don't collide.
+case "$AGENT_ID" in
+  default) DISPLAY_NUM=99 ;;
+  frontend) DISPLAY_NUM=96 ;;
+  backend) DISPLAY_NUM=97 ;;
+  qa) DISPLAY_NUM=98 ;;
+  *) DISPLAY_NUM=$(( 60 + $(cksum <<<"$AGENT_ID" | cut -d' ' -f1) % 30 )) ;;
+esac
+
+STATE_FILE="/tmp/run-desktop-driver-${AGENT_ID}.state"
 WINDOW_TITLE="Codex"
-LOG_FILE="/tmp/run-desktop-driver.tauri-dev.log"
+LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.tauri-dev.log"
+XVFB_LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.xvfb.log"
+
+# Kill only codex processes whose DISPLAY env matches ours, so one agent's
+# stop/cleanup can never reap another agent's running app even if both
+# somehow ended up with an unscoped process-name match.
+kill_our_codex_processes() {
+  local pid
+  for pid in $(pgrep -f "target/debug/codex" 2>/dev/null || true); do
+    if tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null | grep -qx "DISPLAY=:$DISPLAY_NUM"; then
+      kill -9 "$pid" 2>/dev/null || true
+    fi
+  done
+}
 
 resolve_app_root() {
   if [ -n "${1:-}" ]; then
@@ -48,14 +81,14 @@ cmd_launch() {
   # Ensure we don't leak Xvfb/tauri processes on launch failures or interrupts.
   trap 'cmd_stop || true' EXIT INT TERM
   echo "Starting Xvfb on :$DISPLAY_NUM ..."
-  Xvfb ":$DISPLAY_NUM" -screen 0 1280x900x24 >/tmp/run-desktop-driver.xvfb.log 2>&1 &
+  Xvfb ":$DISPLAY_NUM" -screen 0 1280x900x24 >"$XVFB_LOG_FILE" 2>&1 &
   local xvfb_pid=$!
   for _ in $(seq 1 30); do
     DISPLAY=":$DISPLAY_NUM" xdotool getdisplaygeometry >/dev/null 2>&1 && break
     sleep 0.3
   done
   DISPLAY=":$DISPLAY_NUM" xdotool getdisplaygeometry >/dev/null 2>&1 \
-    || { echo "Xvfb did not come up; see /tmp/run-desktop-driver.xvfb.log" >&2; exit 1; }
+    || { echo "Xvfb did not come up; see $XVFB_LOG_FILE" >&2; exit 1; }
 
   # Vite's dev port must be free or `tauri dev` fails outright.
   local stale_port_pids
@@ -212,11 +245,12 @@ cmd_logs() {
 cmd_stop() {
   if [ -f "$STATE_FILE" ]; then
     # shellcheck disable=SC1090
+    source "$STATE_FILE"
     if [ -n "${TAURI_PID:-}" ]; then
       pkill -9 -P "$TAURI_PID" 2>/dev/null || true
       kill -9 "$TAURI_PID" 2>/dev/null || true
     fi
-    pkill -9 -f "target/debug/codex" 2>/dev/null || true
+    kill_our_codex_processes
     [ -n "${XVFB_PID:-}" ] && kill -9 "$XVFB_PID" 2>/dev/null || true
     rm -f "$STATE_FILE"
   fi
