@@ -133,11 +133,34 @@ pub struct ResolvedEquipmentDto {
     pub grounded: bool,
 }
 
+/// v0.6 alpha swarm item 1, shape (c) (`item-1-architecture-wall-design.md`):
+/// the real, corpus-resolved aggregate equipment-effect totals for the
+/// character's currently `EquippedActive` items. Explicitly NOT claim-gated
+/// -- unlike `PilotSnapshotDto.baselineArmorClass` (the deterministic-posture
+/// value the `Computed`/`Blocked` gate itself is built on), these numbers
+/// reflect whatever real gear is actually equipped, corpus-resolved,
+/// regardless of whether the build reaches `Computed`. Deliberately excludes
+/// attack-bonus enhancement -- see `EquipmentEffects.per_item`'s own
+/// `weapon_enhancement_bonus` (not surfaced here): real per-item math
+/// exists, but `CharacterInput`'s schema has no field recording which
+/// weapon a modifier item attaches to, so aggregating it would risk
+/// misapplying one weapon's bonus to another (a separate, unresolved design
+/// question, not a corpus-access gap).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentEffectsDto {
+    pub armor_class_delta: i16,
+    pub armor_check_penalty_total: i16,
+    pub max_dex_cap: Option<i16>,
+    pub spell_failure_chance: Option<f32>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CorpusDerivedDto {
     pub school_coverage: Vec<SchoolCoverageDto>,
     pub equipped_items: Vec<ResolvedEquipmentDto>,
+    pub equipment_effects: EquipmentEffectsDto,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -349,6 +372,12 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
                 grounded: item.table_cell.is_some(),
             })
             .collect(),
+        equipment_effects: EquipmentEffectsDto {
+            armor_class_delta: section.equipment_effects.armor_class_delta,
+            armor_check_penalty_total: section.equipment_effects.armor_check_penalty_total,
+            max_dex_cap: section.equipment_effects.max_dex_cap,
+            spell_failure_chance: section.equipment_effects.spell_failure_chance,
+        },
     }
 }
 
@@ -2613,6 +2642,41 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- corpus_derived.equipment_effects (risks item 1, shape (c)) -----
+
+    /// A freshly created Fighter's fixed loadout already equips a real
+    /// Chain Shirt (`item:chain_shirt`, `EquippedActive`) -- this proves
+    /// the new `corpus_derived.equipment_effects` section carries the real,
+    /// corpus-resolved armor-check penalty for it end to end through the
+    /// actual creation command, not just a unit test on the lower-level
+    /// `compute_pilot_with_corpus` seam.
+    #[test]
+    fn create_character_at_root_surfaces_the_real_armor_check_penalty_for_the_fixed_loadout() {
+        let root = tempdir("create-character-equipment-effects");
+        let request = request_for("race:human", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { corpus_derived, .. } => {
+                assert_ne!(
+                    corpus_derived.equipment_effects.armor_check_penalty_total, 0,
+                    "the fixed loadout's real Chain Shirt must carry a real, nonzero ACCHECK"
+                );
+                assert!(
+                    corpus_derived.equipment_effects.armor_class_delta > 0,
+                    "the fixed loadout's real Chain Shirt must carry a real AC bonus"
+                );
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("Human Fighter level 1 must reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- create_character: starting wealth (risks item 7) -----
 
     /// A freshly created Fighter is granted the operator-cited average
@@ -3497,7 +3561,16 @@ mod tests {
                 },
                 damage_reduction: None,
             },
-            corpus_derived: CorpusDerivedDto { school_coverage: Vec::new(), equipped_items: Vec::new() },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                },
+            },
         };
 
         let value = serde_json::to_value(&response).expect("response should serialize");
@@ -3553,7 +3626,16 @@ mod tests {
                 },
                 damage_reduction: None,
             },
-            corpus_derived: CorpusDerivedDto { school_coverage: Vec::new(), equipped_items: Vec::new() },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                },
+            },
             money: money_dto_from_total(0),
         };
 

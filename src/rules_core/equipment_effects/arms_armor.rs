@@ -34,6 +34,11 @@ use crate::rules_core::equipment_effects::EquipmentStatEffect;
 /// - `max_dex` and `spell_failure` come straight off the `MAXDEX:` and
 ///   `SPELLFAILURE:` tokens when present (weapons and shieldless items
 ///   carry neither, so both are `None` for e.g. a longsword).
+/// - `armor_check_penalty` comes straight off the `ACCHECK:` token (v0.6
+///   alpha swarm item 1, shape (c)) — present on every armor/shield
+///   record (`0` for no penalty, a negative number for a real one), the
+///   same token this module's own doc comment already cited as present
+///   on `KEY:Leather Armor (Base)` before this field existed to hold it.
 ///
 /// Absence (`None`) is honest: it means this record's raw tokens do not
 /// carry that field, not that the field's value is zero.
@@ -42,6 +47,7 @@ pub fn compute_arms_armor_effect(record: &EquipmentRecord) -> EquipmentStatEffec
         armor_class_bonus: armor_class_bonus_from_bonus_chains(record),
         max_dex: token_i16(record, "MAXDEX"),
         spell_failure: token_value(record, "SPELLFAILURE").and_then(|value| value.parse().ok()),
+        armor_check_penalty: token_i16(record, "ACCHECK"),
     }
 }
 
@@ -92,6 +98,7 @@ mod tests {
         assert_eq!(effect.armor_class_bonus, Some(2));
         assert_eq!(effect.max_dex, Some(6));
         assert_eq!(effect.spell_failure, Some(10.0));
+        assert_eq!(effect.armor_check_penalty, Some(0), "Leather Armor's real ACCHECK is 0");
     }
 
     /// Real verbatim tokens copied from `KEY:Buckler (Base)` (no
@@ -106,6 +113,7 @@ mod tests {
         assert_eq!(effect.armor_class_bonus, Some(1));
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, Some(5.0));
+        assert_eq!(effect.armor_check_penalty, Some(-1), "Buckler's real ACCHECK is -1");
     }
 
     /// Real verbatim tokens copied from `KEY:Longsword (Base)` — a
@@ -120,5 +128,6 @@ mod tests {
         assert_eq!(effect.armor_class_bonus, None);
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, None);
+        assert_eq!(effect.armor_check_penalty, None, "a weapon carries no ACCHECK token at all");
     }
 }

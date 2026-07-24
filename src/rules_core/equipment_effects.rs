@@ -68,6 +68,13 @@ pub struct EquipmentStatEffect {
     pub armor_class_bonus: Option<i16>,
     pub max_dex: Option<i16>,
     pub spell_failure: Option<f32>,
+    /// The record's `ACCHECK:` token (v0.6 alpha swarm item 1, shape (c)):
+    /// a negative or zero value, PF1's usual convention for a penalty. Read
+    /// the same way `max_dex`/`spell_failure` already read their own
+    /// tokens; `arms_armor.rs`'s own module doc comment already cited this
+    /// exact token as present on the records it resolves, it was simply
+    /// never extracted into this struct until now.
+    pub armor_check_penalty: Option<i16>,
 }
 
 /// One resolved equipment selection's computed effect.
@@ -79,6 +86,9 @@ pub struct ResolvedEquipmentEffect {
     pub armor_class_bonus: Option<i16>,
     pub max_dex: Option<i16>,
     pub spell_failure: Option<f32>,
+    /// Mirrors `EquipmentStatEffect::armor_check_penalty` exactly (v0.6
+    /// alpha swarm item 1, shape (c)).
+    pub armor_check_penalty: Option<i16>,
     /// The `general` category's per-item skill-check circumstance bonus
     /// (see `equipment_effects/general.rs`). `None` for every other
     /// category, and for a `general` record that carries no
@@ -105,15 +115,19 @@ pub struct ResolvedEquipmentEffect {
 /// loadout leaves it `None` (uncapped), exactly like the real rule.
 /// `spell_failure_chance` sums every resolved item's `spell_failure` —
 /// armor and shield arcane spell-failure chances stack additively per
-/// PF1's rule. Any item whose category has not resolved a value
-/// (`None`) contributes nothing to the aggregate rather than a
-/// fabricated zero.
+/// PF1's rule. `armor_check_penalty_total` sums every resolved item's
+/// `armor_check_penalty` the same way (v0.6 alpha swarm item 1, shape (c))
+/// — PF1's rule: armor and shield check penalties add together when both
+/// are worn, the same additive-stacking shape `armor_class_delta` already
+/// uses. Any item whose category has not resolved a value (`None`)
+/// contributes nothing to any aggregate rather than a fabricated zero.
 #[derive(Debug, Clone, Default, PartialEq)]
 pub struct EquipmentEffects {
     pub per_item: Vec<ResolvedEquipmentEffect>,
     pub armor_class_delta: i16,
     pub max_dex_cap: Option<i16>,
     pub spell_failure_chance: Option<f32>,
+    pub armor_check_penalty_total: i16,
 }
 
 /// The equipment-effect engine seam (`technical-design.md` §2.4, adapted
@@ -129,6 +143,7 @@ pub fn compute_equipment_effects(
     let mut armor_class_delta: i16 = 0;
     let mut max_dex_cap: Option<i16> = None;
     let mut spell_failure_chance: Option<f32> = None;
+    let mut armor_check_penalty_total: i16 = 0;
 
     for selection in equipped {
         let Some((record, table_cell)) =
@@ -174,6 +189,9 @@ pub fn compute_equipment_effects(
             spell_failure_chance =
                 Some(spell_failure_chance.map_or(failure, |current| current + failure));
         }
+        if let Some(penalty) = effect.armor_check_penalty {
+            armor_check_penalty_total += penalty;
+        }
 
         per_item.push(ResolvedEquipmentEffect {
             item_id: selection.item_id.clone(),
@@ -182,6 +200,7 @@ pub fn compute_equipment_effects(
             armor_class_bonus: effect.armor_class_bonus,
             max_dex: effect.max_dex,
             spell_failure: effect.spell_failure,
+            armor_check_penalty: effect.armor_check_penalty,
             skill_bonus,
             ability_bonus,
             weapon_enhancement_bonus,
@@ -194,6 +213,7 @@ pub fn compute_equipment_effects(
         armor_class_delta,
         max_dex_cap,
         spell_failure_chance,
+        armor_check_penalty_total,
     }
 }
 

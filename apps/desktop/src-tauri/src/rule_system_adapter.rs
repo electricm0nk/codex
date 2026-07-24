@@ -148,7 +148,8 @@ mod tests {
     use crate::character_hub::{
         compose_character_input, map_spells_selected_dto, AbilityScoresDto, AbilityModifiersDto,
         BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
-        PilotSnapshotDto, ResolvedEquipmentDto, SchoolCoverageDto, SelectedSkillModifiersDto,
+        EquipmentEffectsDto, PilotSnapshotDto, ResolvedEquipmentDto, SchoolCoverageDto,
+        SelectedSkillModifiersDto,
     };
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
@@ -327,6 +328,18 @@ mod tests {
                         grounded: item.table_cell.is_some(),
                     })
                     .collect(),
+                equipment_effects: EquipmentEffectsDto {
+                    armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,
+                    armor_check_penalty_total: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .armor_check_penalty_total,
+                    max_dex_cap: corpus_receipt.corpus_derived.equipment_effects.max_dex_cap,
+                    spell_failure_chance: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .spell_failure_chance,
+                },
             };
 
             Ok(LoadSavedCharacterResponse {

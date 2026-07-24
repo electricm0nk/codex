@@ -77,12 +77,12 @@ alongside the existing Agent Status convention.
   flagged with exact repro steps instead. Everything else: clean pass,
   no other correctness issues. 69/69 suite green throughout.
 
-## Agent Status (2026-07-24, ~11:40 ET)
+## Agent Status (2026-07-24, ~11:58 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | shape (c) implementation done and passing (236/236 lib, 202/202 desktop, confirmed by backend), running a final full-workspace safety-net suite before committing -- not stuck, just slow to compile |
-| frontend | idle | comprehensive smoke test complete, 1 bug fixed (e50d7762) + 1 real finding flagged (Spells tab corpusDerived inconsistency for non-Human Wizards) -- queue clear |
-| qa | waiting-on-backend | items 7/17 verified clean; holding for shape (c) to land before verifying it |
+| backend | working | shape (c) still uncommitted, safety-net suite running longer than expected; checked in a second time |
+| frontend | idle | queue clear since the smoke-test report; told to stand by, nothing new frontend-shaped queued yet |
+| qa | waiting-on-backend | holding for shape (c) to land before verifying it |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
