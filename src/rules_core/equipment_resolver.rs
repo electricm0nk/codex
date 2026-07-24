@@ -94,6 +94,56 @@ pub fn equipment_id_resolve<'a>(
     None
 }
 
+/// v0.6 alpha swarm (money-purchase coupling, risks-and-open-questions.md
+/// item 9): resolves an `item_id` to its `cost_gp`, with NO corpus access
+/// at all -- unlike `equipment_id_resolve` above (which needs a real
+/// `SourcePackageContent`), this only needs the flat cost figure, and
+/// `equipment_tables()` (`rules_tables::crb::equipment_tables`) already
+/// carries `cost_gp` on a `pub const`/`OnceLock`-cached table compiled
+/// directly into the binary -- generated from the corpus at build time,
+/// verified to mirror the same `KEY:`/`name` identity `equipment_id_resolve`
+/// discovers (e.g. `"item:longsword"` -> `key: "Longsword (Base)"`,
+/// `name: "Longsword"`, `cost_gp: Some(15.0)` on both paths). This is NOT
+/// the same headless-vs-corpus-aware architecture wall that blocked
+/// AC-widening earlier this swarm (real per-item AC deltas only exist via
+/// a corpus-resolved `EquipmentRecord`; cost does not have that problem) --
+/// checked, not assumed, before writing this function.
+///
+/// Mirrors `equipment_id_resolve`'s exact three-tier match (key, then
+/// unnormalized name, then normalized name) against the static table
+/// instead of corpus records, so behavior is identical for any item_id
+/// both resolvers can find. Returns `None` when no entry matches OR the
+/// matched entry's `cost_gp` is itself `None` (a genuine corpus absence --
+/// a `(Base)` template record or a formula-priced equipment modifier, per
+/// `EquipmentTableEntry.cost_gp`'s own doc comment) -- callers must treat
+/// both cases identically (an unaffordable-to-verify purchase, not a free
+/// one).
+pub fn equipment_cost_gp_headless_resolve(item_id: &str) -> Option<f64> {
+    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+    let normalized_needle = normalize_equipment_name(needle);
+    let table = equipment_tables();
+
+    for entry in table {
+        if entry.key == needle || entry.key == item_id {
+            return entry.cost_gp;
+        }
+    }
+
+    for entry in table {
+        if entry.name == needle || entry.name == item_id {
+            return entry.cost_gp;
+        }
+    }
+
+    for entry in table {
+        if normalize_equipment_name(entry.name) == normalized_needle {
+            return entry.cost_gp;
+        }
+    }
+
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -149,5 +199,26 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         let (record, _) = equipment_id_resolve("item:longsword", RuleSetId::Crb, &corpus)
             .expect("expected 'item:longsword' to resolve via the normalized fallback");
         assert_eq!(record.name, "Longsword");
+    }
+
+    #[test]
+    fn equipment_cost_gp_headless_resolve_finds_a_real_item_by_the_legacy_item_prefix() {
+        assert_eq!(equipment_cost_gp_headless_resolve("item:longsword"), Some(15.0));
+    }
+
+    #[test]
+    fn equipment_cost_gp_headless_resolve_finds_a_real_item_by_its_exact_corpus_key() {
+        assert_eq!(
+            equipment_cost_gp_headless_resolve("Longsword (Base)"),
+            Some(15.0)
+        );
+    }
+
+    #[test]
+    fn equipment_cost_gp_headless_resolve_returns_none_for_an_unknown_item() {
+        assert_eq!(
+            equipment_cost_gp_headless_resolve("item:not_a_real_item_at_all"),
+            None
+        );
     }
 }

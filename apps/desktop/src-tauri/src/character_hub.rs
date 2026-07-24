@@ -854,6 +854,135 @@ pub fn add_equipment_selection(
     )
 }
 
+/// v0.6 alpha swarm (risks-and-open-questions.md item 9): the outcome of an
+/// atomic equipment purchase. A THIRD case beyond `CreateCharacterResponse`'s
+/// `Saved`/`Blocked` doesn't exist here on purpose -- `Blocked` already
+/// carries `diagnostics: Vec<DiagnosticDto>`, so an unaffordable purchase or
+/// an item with no known cost is represented as a `Blocked` response with
+/// one hand-authored diagnostic, the same wire shape frontend already
+/// handles for every other mutation command, rather than a new response
+/// shape to integrate.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum PurchaseEquipmentResponse {
+    Purchased {
+        summary: Box<CharacterSummaryDto>,
+        snapshot: PilotSnapshotDto,
+        corpus_derived: CorpusDerivedDto,
+        money: CharacterMoneyDto,
+    },
+    Blocked {
+        diagnostics: Vec<DiagnosticDto>,
+    },
+}
+
+/// `purchase_equipment`'s real implementation: real correctness fix for
+/// risks-and-open-questions.md item 9 ("Money panel not coupled to
+/// equipment purchases... deliberately not built as two non-atomic
+/// mutations... risking a partial-apply correctness bug").
+///
+/// Sequencing (the actual transaction shape, chosen deliberately): resolve
+/// the item's real `cost_gp` (headless, no corpus needed --
+/// `equipment_cost_gp_headless_resolve`'s own doc comment explains why) and
+/// pre-check affordability against the CURRENT balance BEFORE mutating
+/// anything. Only once both checks pass does this call
+/// `add_equipment_selection_at_root` (the existing equipment mutation,
+/// unchanged); only if THAT reaches `Computed` and saves does this deduct
+/// the cost via `adjust_character_money_at_root`. This ordering means the
+/// only case where equipment is added without a successful matching charge
+/// is a true I/O failure on the money-file write immediately after an
+/// already-verified-affordable, already-persisted equipment save -- an
+/// honestly narrow residual window (same disk, same moment, would likely
+/// also have broken the equipment save itself), not the two-independent-
+/// frontend-calls-with-no-pre-check gap this fix actually closes. A full
+/// two-phase-commit / journaled rollback across the two separate files
+/// (`character_input.txt`, `money.json`) would be real engineering but is
+/// not proportionate to this codebase's current maturity level or this
+/// swarm's bar -- noted here rather than silently assumed away.
+///
+/// An item with no known `cost_gp` (a `(Base)` template record or a
+/// formula-priced equipment modifier) is treated the same as
+/// insufficient funds: `Blocked`, nothing mutated, never a free item.
+pub(crate) fn purchase_equipment_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let Some(cost_gp) =
+        codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id)
+    else {
+        return Ok(PurchaseEquipmentResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.unknown_cost".to_owned(),
+                message: format!(
+                    "'{item_id}' has no known gold-piece cost in the equipment catalog (a \
+                     template/base record with no independent price, or a formula-priced \
+                     equipment modifier), so affordability cannot be verified. The purchase \
+                     was not applied and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    };
+
+    let cost_copper = money::gp_to_copper(cost_gp);
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return Ok(PurchaseEquipmentResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.insufficient_funds".to_owned(),
+                message: format!(
+                    "'{item_id}' costs {cost_copper} cp but the character's balance is only \
+                     {balance_copper} cp. The purchase was not applied and no funds were \
+                     charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => {
+            Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
+        }
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+            let cost_signed = i64::try_from(cost_copper)
+                .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = adjust_character_money_at_root(root, -cost_signed)?;
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PurchaseEquipmentRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub active_state: ActiveStateDto,
+    pub saved_at: String,
+}
+
+/// Atomically resolves `item_id`'s real catalog cost, verifies the
+/// character can afford it, appends the equipment selection, and deducts
+/// the cost from the persisted money balance — or applies none of it and
+/// returns a `Blocked` diagnostic. See `purchase_equipment_at_root` for the
+/// full transaction-shape reasoning.
+#[tauri::command]
+pub fn purchase_equipment(
+    app: tauri::AppHandle,
+    request: PurchaseEquipmentRequest,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    purchase_equipment_at_root(
+        &root,
+        &request.item_id,
+        request.active_state.into(),
+        &request.saved_at,
+    )
+}
+
 /// The wire-level projection of `AcquisitionMode` for the
 /// `add_spell_selection` request. A separate DTO for the same reason as
 /// `ActiveStateDto` above.
@@ -2424,6 +2553,137 @@ mod tests {
         assert!(
             result.is_err(),
             "adding an equipment selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- purchase_equipment: atomic money-purchase coupling (risks item 9) -----
+
+    /// Golden path: an affordable real item is added AND its real catalog
+    /// cost is deducted from the balance, atomically, in one call.
+    #[test]
+    fn purchase_equipment_at_root_succeeds_and_deducts_the_real_catalog_cost() {
+        let root = tempdir("purchase-equipment-affordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000).expect("funding the character should succeed");
+
+        let response = purchase_equipment_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Purchased { money, .. } => {
+                // A dagger's real catalog cost is 2 gp = 200 cp.
+                assert_eq!(
+                    money.total_copper, 800,
+                    "1000 cp funded minus a dagger's real 200 cp cost must leave 800 cp"
+                );
+            }
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                panic!("an affordable real item must be purchased, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len + 1,
+            "the equipment must actually be added on the accepted path"
+        );
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An unaffordable item must be honestly rejected -- no equipment
+    /// added, no money charged. Proves the pre-flight affordability check
+    /// runs BEFORE the equipment mutation, not after.
+    #[test]
+    fn purchase_equipment_at_root_blocks_and_charges_nothing_when_unaffordable() {
+        let root = tempdir("purchase-equipment-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp; a dagger costs 200 cp -- unaffordable.
+
+        let response = purchase_equipment_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "money.equipment_purchase.insufficient_funds"),
+                    "must carry the real insufficient-funds diagnostic: {diagnostics:?}"
+                );
+            }
+            PurchaseEquipmentResponse::Purchased { .. } => {
+                panic!("an unaffordable item must never be silently purchased")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len,
+            "nothing should have been added on the rejected path"
+        );
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "nothing should have been charged on the rejected path"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An item with no known catalog cost (a `(Base)` template record) must
+    /// be treated the same as unaffordable -- never a free item.
+    #[test]
+    fn purchase_equipment_at_root_blocks_an_item_with_no_known_cost() {
+        let root = tempdir("purchase-equipment-unknown-cost");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        // The bare "Dagger" KEY resolves to the (Base) template record,
+        // which carries no independent cost_gp (None) -- a genuine corpus
+        // absence, not zero.
+        let response = purchase_equipment_at_root(
+            &root,
+            "Dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "money.equipment_purchase.unknown_cost"),
+                    "must carry the real unknown-cost diagnostic: {diagnostics:?}"
+                );
+            }
+            PurchaseEquipmentResponse::Purchased { .. } => {
+                panic!("an item with no known cost must never be treated as free")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when cost is unknown"
         );
 
         std::fs::remove_dir_all(&root).ok();
