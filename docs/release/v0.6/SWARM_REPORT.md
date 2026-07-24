@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | null-serialization fix landed (874df6db, lead-verified 204/204 desktop after finding it uncommitted post-compaction); dispatching Wizard non-Human spell-math (item 18) next |
-| frontend | idle | Defense-tab fix and shape (c)'s equipmentEffects wiring both landed and independently verified; queue clear, no bounded UI work currently queued |
-| qa | idle (per last known status) | dispatching live verification of the null-serialization fix (real 0-weapon/2-weapon builds) plus a status check on the feat-effects widening verification |
+| backend | idle | null-serialization fix landed (874df6db); item 18 dispatch was a lead error, corrected pre-work (it's a deferred completeness gap, not active backlog); redirected to a closure-readiness pass — remaining backend-ownable backlog is all genuinely blocked (item 1, item 27, class breadth, 12-class starting wealth) |
+| frontend | working | item-25 test-coverage self-audit in flight, report pending |
+| qa | working | feat-effects widening (both slices, f38e9f33 included) independently re-verified clean and fully closed; now live-verifying the null-serialization fix against real 0-weapon/2-weapon builds |
 
 ---
 
