@@ -22,8 +22,11 @@ backend               Sonnet   spells_selected exposure DONE (034d1b84,
                                 unblocks frontend's routing workaround);
                                 investigating money-purchase transaction
                                 shape before building
-qa                    Sonnet   durability catalogue adoption DONE
-                                (0ae18cb4); working autonomous queue
+qa                    Sonnet   Rogue reachability catalogue proof DONE
+                                (c800d568, independently-authored rules_core
+                                -layer equivalent since backend's tests live
+                                in the other crate); on the systematic gap
+                                sweep across Fighter/Wizard/Rogue now
 
 (b) Happened
 ------------
@@ -608,6 +611,27 @@ qa                    Sonnet   durability catalogue adoption DONE
 - QA delivered a comprehensive coverage resurvey (81785b6f) against
   everything that's changed this session -- durability, encumbrance,
   money, Wizard spellbook, spell save DC, Rogue widening.
+- Backend landed DR exposure (f7ce289d), spells_selected exposure
+  (034d1b84, unblocks frontend's earlier routing workaround), then
+  moved to investigating the money-purchase-coupling transaction shape
+  before building it. QA folded a real de-risking finding on the
+  Wizard .pcg fixture task into risks item 11 (real working syntax
+  templates found for every section needed; one real unknown flagged,
+  not assumed) -- correctly routed through the lead rather than
+  committing to a file outside its own lane, even under autonomous mode.
+- QA closed the Rogue reachability catalogue-coverage task (c800d568)
+  with good judgment on a real complication: backend's 2 proof tests
+  live in the separate codex-desktop crate (apps/desktop/src-tauri),
+  which tests/** can't target -- same crate-boundary shape as the
+  spell-slot-budget fix and mutation-op registry QA correctly left
+  alone before. Instead of skipping coverage, QA read
+  compose_character_input's source directly, confirmed its fixed
+  loadout is byte-for-byte the existing GE-06 deterministic fixture
+  shape, and wrote an independently-authored rules_core-layer
+  equivalent proving the identical claim as a permanent tests/** entry
+  -- complementary to backend's proof, not a duplicate, now under QA's
+  ownership/sign-off same as the BAB/save and DC work. Moved to the
+  systematic Fighter/Wizard/Rogue gap sweep next.
 
 (c) On deck (wave 1 — 5 tasks per teammate)
 --------------------------------------------
