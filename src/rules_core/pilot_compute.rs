@@ -7886,7 +7886,19 @@ fn validate_fighter_feat_choice_legality(
     input: &CharacterInput,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if supported_fighter_level(input).is_none() {
+    // v0.6 alpha swarm (real gap, second one found in this same function):
+    // `supported_fighter_level` is single-class-only (matches `[class_level]`
+    // exactly), so this used to also skip every Fighter+X multiclass mix
+    // entirely -- regardless of race, even Human -- since a multiclass
+    // Fighter never satisfies that single-class match. Confirmed empirically
+    // (a Human Fighter1/Rogue3 with a wrong level-1 bonus-feat choice
+    // produced zero claim-blocking diagnostics) before switching to
+    // `fighter_level_in_mix`, the multiclass-aware equivalent already used
+    // elsewhere in this file for the same reconciliation (e.g.
+    // `wizard_level_in_mix`'s identical precedent). The loop body itself
+    // never used the specific level value, only the presence/absence gate,
+    // so no other change was needed.
+    if fighter_level_in_mix(input).is_none() {
         return;
     }
 
@@ -7899,10 +7911,10 @@ fn validate_fighter_feat_choice_legality(
             diagnostics.push(ComputationDiagnostic {
                 id: format!("feat_choice.non_canonical.{choice_set_id}"),
                 message: format!(
-                    "feat-choice slot {choice_set_id} on the deterministic Human Fighter levels \
+                    "feat-choice slot {choice_set_id} on the deterministic Fighter levels \
                      1-{MAX_SUPPORTED_FIGHTER_LEVEL} seam must be the canonical {canonical_selection}; \
                      chosen selection {selection} is a non-canonical feat choice. This bounded slice \
-                     preserves only the accepted canonical Human Fighter feat-choice path and grounds \
+                     preserves only the accepted canonical Fighter feat-choice path and grounds \
                      no general feat-effect or prerequisite engine, so alternative feat/prerequisite \
                      legality is outside this proof and the non-canonical build is claim-blocked \
                      rather than computed as a legal build"
@@ -19036,6 +19048,80 @@ mod fighter_feat_choice_legality_race_gate_tests {
                 .iter()
                 .any(|d| d.id.starts_with("feat_choice.non_canonical")),
             "the canonical selection must never be claim-blocked, for any race: {:?}",
+            computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm: a second, independent gap found in the same function
+/// while confirming the race-gate fix's coverage was actually complete --
+/// `validate_fighter_feat_choice_legality` used `supported_fighter_level`
+/// (single-class-only), so it also skipped every Fighter+X multiclass mix
+/// entirely, regardless of race, even Human. Confirmed empirically (a Human
+/// Fighter1/Rogue3 with a wrong level-1 bonus-feat choice produced zero
+/// claim-blocking diagnostics) before switching to `fighter_level_in_mix`.
+#[cfg(test)]
+mod fighter_feat_choice_legality_multiclass_tests {
+    use super::{compute_pilot_base_chassis, CharacterClassLevel, FIGHTER_CLASS_ID, ROGUE_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    #[test]
+    fn human_fighter1_rogue3_non_canonical_level1_bonus_feat_is_now_claim_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 3 },
+        ];
+        // Overwrite the canonical FIGHTER_BONUS_FEAT_CHOICE_ID selection with a
+        // wrong one.
+        input.chosen.selected_choices.retain(|c| c.choice_set_id != "choice:fighter_bonus_feat");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:fighter_bonus_feat".to_owned(),
+            selection_id: "feat:cleave".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "feat_choice.non_canonical.choice:fighter_bonus_feat"
+                    && d.claim_blocking),
+            "a multiclass Fighter's non-canonical bonus feat choice must now be claim-blocked, \
+             matching single-class Fighter's existing treatment: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    /// Positive control: the canonical selection in a multiclass mix must
+    /// not be blocked, and the mix must still genuinely reach Computed
+    /// (proving this fix didn't newly break the multiclass dispatch task 4
+    /// already proved works).
+    #[test]
+    fn human_fighter1_rogue3_canonical_bonus_feat_still_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 3 },
+        ];
+
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert!(
+            !computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id.starts_with("feat_choice.non_canonical") && d.claim_blocking),
+            "the canonical selection must never be claim-blocked in a multiclass mix: {:?}",
             computation.diagnostics
         );
     }
