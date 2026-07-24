@@ -19,7 +19,7 @@ import {
   type RaceOption,
   type Sex,
 } from './characterHubModel';
-import { composeCreateCharacterRequest } from './composeCreateCharacterRequest';
+import { applyRacialAbilityAdjustments, composeCreateCharacterRequest } from './composeCreateCharacterRequest';
 import { createCharacterRuntime } from './characterHubRuntime';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import {
@@ -303,10 +303,16 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
     setSubmitting(true);
     setError(null);
     try {
-      const finalAbilityScores = ABILITY_KEYS.reduce(
+      const rawAbilityScores = ABILITY_KEYS.reduce(
         (scores, key) => ({ ...scores, [key]: rawScore(key) }),
         {} as Record<AbilityKey, number>
       );
+      // The raw entered/rolled scores don't yet include the race's fixed
+      // ability adjustments (Elf +2 DEX/-2 CON/+2 INT etc.) — `calculatedScore`
+      // applies them for the on-screen preview only. The compute engine
+      // expects them baked into the submitted score for every race except
+      // Human (see `applyRacialAbilityAdjustments`'s own doc comment).
+      const finalAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
       const request = composeCreateCharacterRequest(
         { displayLabel, raceId, classId, level: FIXED_LEVEL, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
