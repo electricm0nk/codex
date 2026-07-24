@@ -732,61 +732,36 @@ qa                    Sonnet   Wizard PCGen comparator test DONE (4428b390,
   to check other grounded races for the same "comment says out-of-scope,
   real PCGen data says default" pattern.
 
-(c) On deck (wave 1 — 5 tasks per teammate)
---------------------------------------------
-backend (REPRIORITIZED -- all 5 frontend-unblocking commands before calc work):
-  1. DONE (0c614d9). Version bump 0.5.99 -> 0.6.0.
-  2. DONE (e0a0bda). Skill-point allocation persistence.
-  3. DONE (7694b22). Level-up HP + choices persistence.
-  4. DONE (0ab784d). Bio schema field + persistence command (sidecar
-     bio.json, avoids ChosenCharacterState blast radius).
-  5. DONE (89c3710). Feat exposure: list_feat_catalog/list_feats
-     (mirrors equipment_catalog.rs) + add_feat_selection.
-  6. DONE (67490ac). Money/currency: real conversion math (money.rs),
-     money.json sidecar, track-and-spend only -- starting-wealth auto-roll
-     correctly left open (QA's unresolved PCGen wealth-by-class formula).
-  ALL 6 REPRIORITIZED TASKS COMPLETE. Checkpoint reached -- holding for
-  operator review before any wave-2 work resumes.
-  -- wave 2, DONE early (delivered before reprioritization reached backend,
-     see Happened log for the full delivery-bug story): multiclass BAB/save
-     stacking widened to Fighter/Wizard/Rogue (d20a5b9+8d814e8, 3961/0);
-     equipment AC audit + new carry-capacity/encumbrance calc (d475097).
-  -- wave 2 remaining: durability calc (near-zero production surface per
-     QA survey); money-conversion calc; comparator field-extraction fix in
-     pcgen_runner.rs/pcgen-normalize-output.py (PCGen-sourced spec ready in
-     SWARM_REPORT.md appendix, abec13b, except money-conversion unverified
-     + wealth-by-class unresolved). Backlog (non-blocking, low priority):
-     expose DR through PilotSnapshotDto/LoadSavedCharacterResponse.
-     None of wave 2 blocks another teammate.
+(c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
+below was stale for a long stretch; this replaces it with the true state)
+--------------------------------------------------------------------------
+This section previously tracked wave-1/wave-2 task lists that were long
+since superseded by the Happened log above — durability, money-conversion,
+comparator field-extraction, DR exposure, money-purchase coupling, and
+spells_selected exposure all landed without this snapshot being refreshed
+to match. Corrected here rather than left misleading. Current true state:
 
-frontend: ALL 5 TASKS COMPLETE, all live-verified against real dev builds.
-  1. DONE (94a3865). Bio editor -- real disk round-trip confirmed.
-  2. DONE (febf4d8). Feat picker -- real 185-entry catalog, on-disk
-     persistence confirmed. Named gap: can't show a character's *existing*
-     feat list (selected_feats not exposed via load_saved_character).
-  3. DONE (59d5bc0). Money panel -- both success and honest-failure paths
-     live-verified. Named gap: not coupled to equipment purchases (no
-     atomic buy-item command exists yet).
-  4. DONE (75200fc). SkillAllocationDialog wired.
-  5. DONE (e8e4597). LevelUpDialog.onAccept wired.
-  Holding at checkpoint, not self-selecting further scope.
-  BONUS (743c358): Actions tab wired for real, stub-tab audit closed on
-  Defense/Pets/Overrides (see Happened log).
+- Fighter, Wizard, and Rogue all reach `Computed`/`Saved` end-to-end
+  through the shipped UI, for ANY race (not Human-only), confirmed through
+  a full 6-level multiclass walkthrough and multiple independent level-up
+  paths.
+- Money, equipment purchase (now atomically coupled), feats (full list +
+  selection), skill allocation, bio, level-up, DR, and spells_selected are
+  all real, persisted, and exposed through the DTO layer.
+- Known, correctly-deferred future-epic gaps (not attempted this wave,
+  flagged for operator review): AC/attack-bonus/skill-posture widening
+  (risks item 1), the feat-effects engine's total absence (risks item 17),
+  Wizard non-Human spell-math completeness (risks item 18).
+- Operator-only open item: starting-wealth-by-class (risks item 7,
+  content-provenance/licensing question, not an engineering call).
+- driver.sh's cross-agent GUI collision fixed and pushed (f6fe0df2) --
+  concurrent agents now namespace DISPLAY_NUM/state/log files via
+  RUN_DESKTOP_AGENT=<name>, and cmd_stop's process-kill is DISPLAY-scoped
+  instead of global. Unblocks frontend/QA's live GUI verification.
+- risks-and-open-questions.md items 6, 9, 9a corrected from stale
+  "backlog, non-blocking" to RESOLVED to match what's actually landed.
 
-qa:
-  1. DONE -- PCGen baseline clean (pcgen_runner_smoke 2/2, sd26_pcgen_runner
-     6/6).
-  2. DONE -- gap-list survey, full table in SWARM_REPORT.md.
-  3. PARKED at wave-2 priority -- coordinating with backend once they reach
-     multiclass BAB/save stacking, not blocking.
-  4. DONE -- SWARM_REPORT.md skeleton + PCGen-sourced formula spec appendix
-     (9ffe32f, abec13b).
-  5. Ongoing -- watching for PCGen-divergence as backend/frontend land work.
-
-blocked-by notes:
-  frontend#4 <- backend#2 (command name)
-  frontend#5 <- backend#3 (command name)
-  qa#3 coordinates with backend#4 (shared test, not a hard block)
+No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
