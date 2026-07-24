@@ -1,9 +1,10 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
-import type { AbilityScoresDto, CorpusDerivedDto, EquipmentEffectsDto } from '../boundary/loadCreateCharacter';
+import type { AbilityScoresDto, CorpusDerivedDto, EquipmentEffectsDto, ResolvedEquipmentDto } from '../boundary/loadCreateCharacter';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
+import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
 import { addFeatSelection } from '../boundary/addFeatSelection';
@@ -96,6 +97,7 @@ const addItemButtonStyle: CSSProperties = {
  * a category taxonomy the corpus doesn't expose yet.
  */
 const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
+const EQUIPMODS_CATEGORY = 'Equipmods';
 
 /** Matches `characterHubModel.ts`'s `CLASS_OPTIONS` id for Wizard. */
 const WIZARD_CLASS_ID = 'class:wizard';
@@ -109,17 +111,19 @@ export interface ItemPickerConfig {
 
 /**
  * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell /
- * Add Feat onClick affordances (criterion 7.4): which title to show, which
- * real corpus query to run (`listEquipment` narrowed to `ArmsArmor`, the
- * unfiltered `listSpells`, or the unfiltered `listFeats`), and which real
- * mutation handler (`addEquipmentSelection`-backed, `addSpellSelection`-
- * backed, or `addFeatSelection`-backed) the user's pick gets routed to.
- * Extracted from the render body so it is unit-testable without a DOM —
- * this repo has no jsdom/testing-library — per the same split already used
- * for `itemPickerFilter.ts` and `characterSheetRefresh.ts`.
+ * Add Feat / Attach Modifier onClick affordances (criterion 7.4): which
+ * title to show, which real corpus query to run (`listEquipment` narrowed
+ * to `ArmsArmor` or `Equipmods`, the unfiltered `listSpells`, or the
+ * unfiltered `listFeats`), and which real mutation handler
+ * (`addEquipmentSelection`-backed, `addSpellSelection`-backed,
+ * `addFeatSelection`-backed, or `attachEquipmentModifier`-backed) the
+ * user's pick gets routed to. Extracted from the render body so it is
+ * unit-testable without a DOM — this repo has no jsdom/testing-library —
+ * per the same split already used for `itemPickerFilter.ts` and
+ * `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'spell' | 'feat' | null,
+  kind: 'weapon' | 'armor' | 'spell' | 'feat' | 'modifier' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
@@ -127,6 +131,7 @@ export function buildItemPickerConfig(
     onSelectEquipment: (entry: ItemPickerEntry) => void;
     onSelectSpell: (entry: ItemPickerEntry) => void;
     onSelectFeat: (entry: ItemPickerEntry) => void;
+    onSelectModifier: (entry: ItemPickerEntry) => void;
   }
 ): ItemPickerConfig | null {
   if (kind === 'weapon' || kind === 'armor') {
@@ -151,6 +156,14 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search feats…',
       loadEntries: deps.loadFeats,
       onSelect: deps.onSelectFeat,
+    };
+  }
+  if (kind === 'modifier') {
+    return {
+      title: 'Attach Modifier',
+      searchPlaceholder: 'Search equipment modifiers…',
+      loadEntries: () => deps.loadEquipment(EQUIPMODS_CATEGORY),
+      onSelect: deps.onSelectModifier,
     };
   }
   return null;
@@ -919,6 +932,7 @@ function DefenseTab(props: {
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onAddArmor: () => void;
+  onAttachModifier: (item: ResolvedEquipmentDto) => void;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -946,12 +960,35 @@ function GearTab(props: {
       ) : (
         items.map((item) => (
           <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
-            <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
-              ({item.itemId})
-            </span>
-            {item.grounded ? (
-              <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+            <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
+              <div>
+                <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
+                  ({item.itemId})
+                </span>
+                {item.grounded ? (
+                  <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+                ) : null}
+              </div>
+              <button
+                type="button"
+                onClick={() => props.onAttachModifier(item)}
+                style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+              >
+                Attach Modifier
+              </button>
+            </div>
+            {item.appliedModifiers.length > 0 ? (
+              <ul style={{ margin: '0.35rem 0 0', paddingLeft: '1.25rem' }}>
+                {item.appliedModifiers.map((modifier) => (
+                  <li key={modifier.itemId} style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem' }}>
+                    {modifier.equipmentRecordName}
+                    {modifier.grounded ? (
+                      <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.4rem' }}>✓ grounded</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
             ) : null}
           </div>
         ))
@@ -1066,12 +1103,18 @@ export function CharacterSheet(props: {
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
-  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | null>(null);
+  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | 'modifier' | null>(null);
   // Set only while a level-up that grants a feat is waiting on the user to
   // pick one via the reused feat `ItemPickerModal` (see `handleLevelUpAccept`/
   // `handleLevelUpFeatPick`) — null the rest of the time, including for a
   // plain Feats-tab "Add Feat" pick, which stays routed to `handleAddFeat`.
   const [pendingFeatLevelUp, setPendingFeatLevelUp] = useState<{ classId: string; newClassLevel: number } | null>(null);
+  // Set only while the Gear tab's "Attach Modifier" flow is waiting on the
+  // user to pick a modifier via the reused Equipmods `ItemPickerModal` —
+  // identifies which already-equipped selection the pick attaches to (the
+  // button lives on that specific row, so there is no separate "which
+  // weapon" step). items-1-and-27-scoping.md sub-task 6.
+  const [pendingModifierAttachment, setPendingModifierAttachment] = useState<ResolvedEquipmentDto | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
@@ -1303,6 +1346,51 @@ export function CharacterSheet(props: {
         characterId: props.row.characterId,
         itemId: entry.key,
         activeState: 'EquippedActive',
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      props.onDetailRefreshed({
+        summary: outcome.summary,
+        snapshot: outcome.snapshot,
+        diagnostics: [],
+        corpusDerived: outcome.corpusDerived,
+        selectedFeats: props.detail?.selectedFeats ?? [],
+        spellsSelected: props.detail?.spellsSelected ?? [],
+      });
+      setMoney(outcome.money);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** Opens the reused Equipmods `ItemPickerModal`, remembering which equipped selection the pick will attach to. */
+  function handleAttachModifier(item: ResolvedEquipmentDto) {
+    setPendingModifierAttachment(item);
+    setItemPickerOpen('modifier');
+  }
+
+  /**
+   * `attach_equipment_modifier` mirrors `purchase_equipment`'s atomic
+   * resolve-cost/charge sequencing, so the refresh shape here matches
+   * `handleAddEquipment`'s exactly — the one difference is `itemId` names
+   * the *target* selection to attach to (from `pendingModifierAttachment`),
+   * not a new top-level selection.
+   */
+  async function handleModifierPicked(entry: ItemPickerEntry) {
+    const target = pendingModifierAttachment;
+    setPendingModifierAttachment(null);
+    if (!target) {
+      return;
+    }
+    setMutationError(null);
+    try {
+      const outcome = await attachEquipmentModifier({
+        characterId: props.row.characterId,
+        itemId: target.itemId,
+        modifierItemId: entry.key,
         savedAt: new Date().toISOString(),
       });
       if (outcome.kind === 'Blocked') {
@@ -1679,10 +1767,13 @@ export function CharacterSheet(props: {
     onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
     onSelectFeat: pendingFeatLevelUp ? (entry) => void handleLevelUpFeatPick(entry) : handleAddFeat,
+    onSelectModifier: (entry) => void handleModifierPicked(entry),
   });
   const itemPickerTitle = pendingFeatLevelUp
     ? `Pick a feat — level ${pendingFeatLevelUp.newClassLevel}`
-    : itemPickerConfig?.title ?? '';
+    : pendingModifierAttachment
+      ? `Attach Modifier — ${pendingModifierAttachment.equipmentRecordName}`
+      : itemPickerConfig?.title ?? '';
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -1978,6 +2069,7 @@ export function CharacterSheet(props: {
                 <GearTab
                   corpusDerived={props.detail?.corpusDerived}
                   onAddArmor={() => setItemPickerOpen('armor')}
+                  onAttachModifier={handleAttachModifier}
                   money={money}
                   moneyBusy={moneyBusy}
                   moneyError={moneyError}
@@ -2027,6 +2119,7 @@ export function CharacterSheet(props: {
         onClose={() => {
           setItemPickerOpen(null);
           setPendingFeatLevelUp(null);
+          setPendingModifierAttachment(null);
         }}
         onSelect={(entry) => itemPickerConfig?.onSelect(entry)}
       />

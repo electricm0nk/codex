@@ -66,12 +66,22 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
           equipmentRecordName: 'Longsword',
           equipmentRecordKey: 'Longsword (Base)',
           grounded: true,
+          appliedModifiers: [
+            {
+              itemId: 'item:masterwork',
+              equipmentRecordName: 'Masterwork',
+              equipmentRecordKey: 'Masterwork',
+              grounded: false,
+              appliedModifiers: [],
+            },
+          ],
         },
         {
           itemId: 'item:chain_shirt',
           equipmentRecordName: 'Chain Shirt',
           equipmentRecordKey: 'Chain Shirt (Base)',
           grounded: false,
+          appliedModifiers: [],
         },
       ],
       equipmentEffects: { armorClassDelta: 4, armorCheckPenaltyTotal: -2, maxDexCap: 4, attackBonusDelta: 0 },

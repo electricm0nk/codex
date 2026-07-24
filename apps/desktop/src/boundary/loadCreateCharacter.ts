@@ -82,6 +82,17 @@ export interface ResolvedEquipmentDto {
   equipmentRecordKey: string;
   /** Whether this item also grounds through the foundation-slice table cell. */
   grounded: boolean;
+  /**
+   * This selection's own resolved `applied_modifiers` (e.g. a resolved
+   * "+1 Enhancement to Weapon" attached to this Longsword) — v0.6 alpha
+   * swarm items 1+27 sub-task 6. Reuses this same DTO shape rather than a
+   * new type, since a resolved modifier is structurally just another
+   * resolved equipment record. Empty for a selection with no attached
+   * modifiers, or whose modifiers all failed to resolve — those surface via
+   * `CorpusDerivedDto.unresolvedEquipmentItemIds` instead, same list a
+   * top-level unresolvable selection already uses.
+   */
+  appliedModifiers: ResolvedEquipmentDto[];
 }
 
 /**
