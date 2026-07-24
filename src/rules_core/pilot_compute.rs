@@ -17928,9 +17928,16 @@ fn explain_bard_level1_spell_baseline(
 /// relevant ability modifier, or block the claim if a supported Fighter chassis
 /// (levels 1–3) is absent.
 ///
-/// This is intentionally narrow: it adds only the single ability modifier each
-/// save uses (Fortitude/CON, Reflex/DEX, Will/WIS). It does not add feat-, item-,
-/// or condition-based save modifiers.
+/// Adds the single ability modifier each save uses (Fortitude/CON, Reflex/DEX,
+/// Will/WIS), plus (v0.6 alpha swarm item 17 widening, 2026-07-24) any grounded
+/// feat-derived save bonus from `feat_effects::save_bonuses_from_feats`
+/// (currently Great Fortitude/Iron Will/Lightning Reflexes's real flat +2
+/// each) -- no corpus access needed for either, so both stay fully inside
+/// this headless, claim-gated computation rather than needing the
+/// non-claim-gated DTO-enrichment pattern item 1's AC/attack-bonus/ACP work
+/// used (that pattern exists specifically for corpus-blocked math; feats are
+/// headless-accessible, like `selected_feats` always has been). Still does
+/// not add item- or condition-based save modifiers.
 fn compute_total_saves(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -17958,10 +17965,12 @@ fn compute_total_saves(
         return BaseSaves::default();
     }
 
+    let feat_save_bonuses =
+        crate::rules_core::feat_effects::save_bonuses_from_feats(&input.chosen.selected_feats);
     let total_saves = BaseSaves {
-        fortitude: base_saves.fortitude + ability_modifiers.constitution,
-        reflex: base_saves.reflex + ability_modifiers.dexterity,
-        will: base_saves.will + ability_modifiers.wisdom,
+        fortitude: base_saves.fortitude + ability_modifiers.constitution + feat_save_bonuses.fortitude,
+        reflex: base_saves.reflex + ability_modifiers.dexterity + feat_save_bonuses.reflex,
+        will: base_saves.will + ability_modifiers.wisdom + feat_save_bonuses.will,
     };
 
     let class_label = class_summary_label(input);
@@ -17969,24 +17978,28 @@ fn compute_total_saves(
         id: "defense.total_save.fortitude".to_owned(),
         value: total_saves.fortitude,
         detail: format!(
-            "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier (+{}) = {}",
-            base_saves.fortitude, ability_modifiers.constitution, total_saves.fortitude
+            "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier \
+             (+{}) + feat bonus (+{}, Great Fortitude if selected) = {}",
+            base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
+            total_saves.fortitude
         ),
     });
     explanations.push(ComputationExplanation {
         id: "defense.total_save.reflex".to_owned(),
         value: total_saves.reflex,
         detail: format!(
-            "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) = {}",
-            base_saves.reflex, ability_modifiers.dexterity, total_saves.reflex
+            "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) + \
+             feat bonus (+{}, Lightning Reflexes if selected) = {}",
+            base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex, total_saves.reflex
         ),
     });
     explanations.push(ComputationExplanation {
         id: "defense.total_save.will".to_owned(),
         value: total_saves.will,
         detail: format!(
-            "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) = {}",
-            base_saves.will, ability_modifiers.wisdom, total_saves.will
+            "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) + \
+             feat bonus (+{}, Iron Will if selected) = {}",
+            base_saves.will, ability_modifiers.wisdom, feat_save_bonuses.will, total_saves.will
         ),
     });
 
@@ -18525,6 +18538,95 @@ mod multiclass_bab_save_stacking_generalization_tests {
              stay honestly claim-blocked, not silently computed: {:?}",
             computation.diagnostics
         );
+    }
+}
+
+/// v0.6 alpha swarm item 17 widening (2026-07-24): proves
+/// `compute_total_saves` actually applies the real feat-derived save bonus
+/// for Great Fortitude/Iron Will/Lightning Reflexes, through the real
+/// `compute_pilot_base_chassis` pipeline (not a direct unit call on the
+/// private function), against the real Fighter level-1 fixture.
+#[cfg(test)]
+mod save_boosting_feats_widen_total_saves_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn load() -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        result
+            .character_input
+            .expect("valid fixture should produce a character input record")
+    }
+
+    fn compute(input: &CharacterInput) -> PilotBaseChassisComputation {
+        compute_pilot_base_chassis(input)
+    }
+
+    #[test]
+    fn baseline_fighter_gets_no_save_feat_bonus() {
+        let input = load();
+        let computation = compute(&input);
+        // The fixed loadout carries none of the three save feats -- this
+        // is the pre-widening baseline every other assertion below diffs
+        // against, so a regression that accidentally always adds the
+        // bonus would still be caught here.
+        let baseline_fortitude = computation.total_saves.fortitude;
+        let baseline_reflex = computation.total_saves.reflex;
+        let baseline_will = computation.total_saves.will;
+
+        let mut with_great_fortitude = input.clone();
+        with_great_fortitude.chosen.selected_feats.push("Great Fortitude".to_owned());
+        let with_gf = compute(&with_great_fortitude);
+        assert_eq!(
+            with_gf.total_saves.fortitude, baseline_fortitude + 2,
+            "Great Fortitude's real +2 must land on total Fortitude specifically"
+        );
+        assert_eq!(with_gf.total_saves.reflex, baseline_reflex, "must not leak onto Reflex");
+        assert_eq!(with_gf.total_saves.will, baseline_will, "must not leak onto Will");
+
+        let mut with_lightning_reflexes = input.clone();
+        with_lightning_reflexes.chosen.selected_feats.push("Lightning Reflexes".to_owned());
+        let with_lr = compute(&with_lightning_reflexes);
+        assert_eq!(
+            with_lr.total_saves.reflex, baseline_reflex + 2,
+            "Lightning Reflexes' real +2 must land on total Reflex specifically"
+        );
+        assert_eq!(with_lr.total_saves.fortitude, baseline_fortitude, "must not leak onto Fortitude");
+        assert_eq!(with_lr.total_saves.will, baseline_will, "must not leak onto Will");
+
+        let mut with_iron_will = input.clone();
+        with_iron_will.chosen.selected_feats.push("Iron Will".to_owned());
+        let with_iw = compute(&with_iron_will);
+        assert_eq!(
+            with_iw.total_saves.will, baseline_will + 2,
+            "Iron Will's real +2 must land on total Will specifically"
+        );
+        assert_eq!(with_iw.total_saves.fortitude, baseline_fortitude, "must not leak onto Fortitude");
+        assert_eq!(with_iw.total_saves.reflex, baseline_reflex, "must not leak onto Reflex");
+    }
+
+    #[test]
+    fn all_three_stack_together_on_the_real_pipeline() {
+        let mut input = load();
+        let baseline = compute(&input).total_saves;
+        input.chosen.selected_feats.push("Great Fortitude".to_owned());
+        input.chosen.selected_feats.push("Lightning Reflexes".to_owned());
+        input.chosen.selected_feats.push("Iron Will".to_owned());
+
+        let widened = compute(&input).total_saves;
+
+        assert_eq!(widened.fortitude, baseline.fortitude + 2);
+        assert_eq!(widened.reflex, baseline.reflex + 2);
+        assert_eq!(widened.will, baseline.will + 2);
     }
 }
 

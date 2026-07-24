@@ -192,12 +192,12 @@ alongside the existing Agent Status convention.
   existing test exercises the None path, exactly how it slipped
   through).
 
-## Agent Status (2026-07-24, ~14:10 ET)
+## Agent Status (2026-07-24, ~14:03 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | widening the feat-effects engine to 3 more real feats, full-workspace safety net running; will get the EquipmentEffectsDto null-serialization bug next |
+| backend | working | feat-effects widening diff consistent with described scope; ~34 min since last ping, checked in a second time |
 | frontend | idle | queue clear |
-| qa | idle | found a real bug in the just-landed equipmentEffects wiring (null-vs-undefined serialization), correctly didn't interrupt backend's in-progress edit to fix it; standing by |
+| qa | idle | standing by; the null-serialization bug fix is queued for backend next |
 | qa | idle | verified the outside-demo-corpus indicator clean (both tabs, RED reproduction); standing by for backend's or frontend's next landing |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
