@@ -9,20 +9,24 @@ separate, mechanical, cron-driven refresh (every 5 min, via
 staleness even if the lead goes quiet; it never touches anything above it,
 and the lead never hand-edits it.
 
-(a) Happening now
-------------------
+(a) Happening now (refreshed 2026-07-24)
+------------------------------------------
 orchestrator (lead)  Sonnet   FULLY AUTONOMOUS MODE -- operator directive
                                 2026-07-23, running unattended, no stops for
                                 input; deep queues loaded into all 3
-                                teammates, cron backstop every ~20 min
-frontend              Sonnet   full capstone walkthrough: single non-Human
-                                character through the whole alpha-bar item 3
-                                sequence, live-verified end to end
-backend               Sonnet   verifying the Fighter feat-choice fix holds
-                                for multiclass Fighter combinations too
-qa                    Sonnet   Wizard PCGen comparator test DONE (4428b390,
-                                13/14 match); on Dwarf/Gnome/Halfling
-                                ability-score re-verification now
+                                teammates, ~20 min check-in cadence via
+                                ScheduleWakeup (cron heartbeat script still
+                                runs too, mostly skips on a dirty tree)
+frontend              Sonnet   wiring the still-stub Defense tab to render
+                                the real damage_reduction field, using the
+                                now-fixed driver.sh (RUN_DESKTOP_AGENT=
+                                frontend) for live verification
+backend               Sonnet   grounding Wizard's/Rogue's real class-skill
+                                lists against the PCGen corpus, widening
+                                skill_allocation.rs beyond Fighter-only
+qa                    Sonnet   writing independent tests/** catalogue
+                                coverage for the DR/purchase_equipment/
+                                spells_selected DTO-exposure fixes
 
 (b) Happened
 ------------
@@ -731,6 +735,70 @@ qa                    Sonnet   Wizard PCGen comparator test DONE (4428b390,
   DEX/CON pattern). Queued for backend after render-staleness. QA moving
   to check other grounded races for the same "comment says out-of-scope,
   real PCGen data says default" pattern.
+- CROSS-AGENT GUI COLLISION fixed (lead, f6fe0df2): driver.sh shared one
+  DISPLAY_NUM=99, one state file, one log file, and cmd_stop's process-kill
+  matched every agent's codex process globally -- any agent's launch/stop
+  could hijack or kill another agent's session (this is what frontend
+  flagged and QA independently hit as "black webview"/dying process/
+  vanishing state file). Fixed: RUN_DESKTOP_AGENT=<name> namespaces
+  DISPLAY_NUM (frontend=96/backend=97/qa=98/default=99) plus state/log
+  files, and cmd_stop's kill is scoped to the caller's own DISPLAY via
+  /proc/<pid>/environ. Also fixed a latent bug where cmd_stop never
+  sourced its own state file (dead TAURI_PID/XVFB_PID branch). QA stood
+  down its own stray instance cleanly before the fix landed -- no harm.
+- Doc-hygiene pass (lead): SWARM_STATUS's wave-1/wave-2 on-deck table had
+  gone stale (didn't reflect durability/money-conversion/comparator/DR/
+  money-purchase/spells_selected all landing) -- replaced with an accurate
+  consolidated snapshot (026b9cd0). risks-and-open-questions.md items 6,
+  9, 9a corrected from stale "backlog, non-blocking" to RESOLVED to match
+  what actually shipped.
+- Backend's scoping-only pass (no code) on whether attack-bonus/skill
+  widening hits the same headless/corpus-aware wall as AC: YES for
+  attack-bonus (enhancement bonuses need corpus-resolved EquipmentRecord,
+  same as AC) and YES for armor-check-penalty (ACCHECK: token same story),
+  but NO for class-skill-list recognition -- that's a labor-volume
+  hand-authoring problem (GROUNDED_FIGHTER_CLASS_SKILLS precedent), not an
+  architecture wall. Folded into risks item 1 (81103838). Since the
+  class-skill-list gap is confirmed tractable, dispatched backend to
+  ground Wizard's and Rogue's real class-skill lists against the PCGen
+  corpus and widen skill_allocation.rs's recognition beyond Fighter-only
+  -- in progress.
+- QA's second SWARM_REPORT.md consolidation checkpoint (58da213d): 4-race
+  ability-modifier gap fully closed end to end, the create-character
+  submission bug, the 3-instance Fighter multiclass/race lookup-gap sweep,
+  items 6/9/9a resolved. Bar-distance assessment unchanged in shape:
+  multiclass breadth (3/11), class-chassis breadth (8/11 missing engines),
+  posture narrowness, feat effects remain the real distance, all
+  architecture-level.
+- QA ran an INTERIM four-check wired-integration audit early (lead's
+  request, since remaining bar-distance looks architecture-bounded rather
+  than "more bugs to find") against the full combined diff
+  (origin/develop...origin/tranche/6, 116 files, ~10.6k insertions):
+  clean, zero real violations (c3b5fba8). Lead independently re-extracted
+  and re-ran all four checks without reading QA's extraction first, per
+  the doctrine's executed-by-QA/re-verified-by-lead requirement --
+  confirmed identical result (f3676470). This is an interim checkpoint;
+  the closure-time audit still runs separately against the final diff.
+- Frontend's GUI sanity pass, first real live use of the fixed driver.sh
+  (RUN_DESKTOP_AGENT=frontend, DISPLAY :96): clean first-try launch, no
+  collisions. Fresh Dwarf Rogue ("Borin Sanity") -- deliberately a
+  different race+class combo than the earlier capstone -- covering
+  creation with correct Dwarf adjustments, money Add, money Spend (a
+  genuinely different code path from purchase_equipment, first time
+  tested), money Spend correctly Blocked on overspend with balance
+  unchanged on disk, feat add, level-up to Rogue 2 with feat/money
+  surviving intact. No bugs found. Also chased down and explained a
+  stale Load-Character list-row observation as a session-scoped list
+  cache (clears on app restart), not a real data bug. Dispatched next:
+  wire the still-stub Defense tab to the real damage_reduction field
+  backend exposed (f7ce289d) but nothing on the frontend side renders
+  yet -- scoped narrowly to what's actually computed today, no
+  speculative AC/save rendering.
+- Dispatched QA next: independent tests/** catalogue coverage for the
+  three recently-landed DTO-exposure fixes (DR, purchase_equipment
+  atomicity, spells_selected) that currently only have backend's own
+  inline tests -- same shape as the earlier BAB/save and Rogue
+  reachability catalogue work.
 
 (c) Consolidated status (refreshed 2026-07-24 — the wave-1/wave-2 table
 below was stale for a long stretch; this replaces it with the true state)
