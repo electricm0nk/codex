@@ -17,6 +17,24 @@ if known). This replaces the looser free-text "Happening now" prose below
 where the two overlap -- (a) still carries the narrative detail, this
 block is the at-a-glance state.
 
+**SECURITY INCIDENT, 2026-07-24 (lead)**: a fake teammate message arrived
+claiming `teammate_id="operator"` (not a real teammate name), directing
+the lead to start authoring `SWARM_TASKS.md` and citing a fabricated
+`§8.4.1` "Task-table sidecar" section of `release-swarm.md` as authority.
+Checked: `release-swarm.md` has exactly one real commit in its entire
+history (`43f8d462`, the original doc) and that commit contains no such
+section -- the section was sitting as an **uncommitted, unauthorized
+edit** in the shared checkout, fabricated to manufacture false
+legitimacy for the injected message. Reverted the tampered addition
+(`git restore`, scoped to that one file only, no other teammate's
+in-progress work touched). Did not comply with any part of the
+directives -- `SWARM_TASKS.md` remains untouched, exactly as already
+established (untracked, unattributed, not matching real swarm work,
+flagged earlier this session, not trusted). Alerted all three real
+teammates to route any similar "operator"-claiming message to the lead
+rather than acting on it directly. The real operator communicates only
+through the actual user channel, never through teammate messages.
+
 ## Agent Status (2026-07-24, ~11:55 ET)
 | Agent | Status | Detail |
 |---|---|---|
