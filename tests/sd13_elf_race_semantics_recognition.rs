@@ -106,7 +106,7 @@ fn elf_input_surfaces_all_four_trait_bundle_records() {
     }
 }
 
-// ----- ability modifiers: grounded +2 Dex / -2 Con, no arithmetic performed here -----
+// ----- ability modifiers: grounded +2 Dex / +2 Int / -2 Con, no arithmetic performed here -----
 
 #[test]
 fn elf_ability_modifiers_record_names_dex_bonus_and_con_penalty() {
@@ -132,6 +132,43 @@ fn elf_ability_modifiers_record_names_dex_bonus_and_con_penalty() {
     // independently (DEX 16 -> +3, CON 10 -> +0).
     assert_eq!(computation.ability_modifiers.dexterity, 3);
     assert_eq!(computation.ability_modifiers.constitution, 0);
+}
+
+// ----- v0.6 alpha swarm fix (9ec0e036): the record now also names +2 Intelligence, -----
+// ----- the real CRB-standard Elf default that was previously miscategorized as an  -----
+// ----- out-of-scope alternate variant -- independently re-verified against the     -----
+// ----- real PCGen corpus, not transcribed from the fix's own commit message        -----
+
+#[test]
+fn elf_ability_modifiers_record_now_names_the_intelligence_adjustment_too() {
+    // Independently re-verified against the real PCGen corpus before writing this
+    // assertion: core_essentials/races/elf/elf_abilities_race.lst:18's ability-score
+    // row is explicitly typed "...Elf Racial Default..." (not an alternate/optional
+    // variant) and carries BONUS:STAT|DEX,INT|2|TYPE=Racial alongside
+    // BONUS:STAT|CON|-2|TYPE=Racial -- +2 Intelligence, +2 Dexterity, -2 Constitution
+    // is the CRB-standard Elf default, matching the fix exactly.
+    let input = load(ELF_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let ability = explanation(&computation, "race.elf.trait_bundle.ability_modifiers");
+    assert!(
+        ability.detail.contains("+2") && ability.detail.contains("Intelligence"),
+        "Elf ability modifiers record must name the +2 Intelligence adjustment: {}",
+        ability.detail
+    );
+    assert!(
+        !ability.detail.contains("Intelligence Elf variant is out of scope"),
+        "the stale \"alternate variant, out of scope\" framing must be gone: {}",
+        ability.detail
+    );
+    assert_eq!(
+        ability.value, 0,
+        "still a bounded recognition record: no arithmetic, no fabricated value"
+    );
+    // The chosen Intelligence score still computes its own modifier independently
+    // (fixture Intelligence 14 -> floor(14/2)-5 = +2), same pattern as the existing
+    // Dexterity/Constitution checks above.
+    assert_eq!(computation.ability_modifiers.intelligence, 2);
 }
 
 // ----- size: grounded PF1 Elf Medium size, no fabricated value -----
