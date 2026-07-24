@@ -77,12 +77,12 @@ alongside the existing Agent Status convention.
   flagged with exact repro steps instead. Everything else: clean pass,
   no other correctness issues. 69/69 suite green throughout.
 
-## Agent Status (2026-07-24, ~11:58 ET)
+## Agent Status (2026-07-24, ~12:05 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | shape (c) still uncommitted, safety-net suite running longer than expected; checked in a second time |
-| frontend | idle | queue clear since the smoke-test report; told to stand by, nothing new frontend-shaped queued yet |
-| qa | waiting-on-backend | holding for shape (c) to land before verifying it |
+| backend | idle | shape (c) landed (08a829a1, attribution corrected 715d3206) and independently verified by the lead (236/236 lib, 202/202 desktop); asked whether there's more from the item-1 design pass worth picking up |
+| frontend | idle | queue clear since the smoke-test report; standing by |
+| qa | working | dispatched to independently verify shape (c) |
 
 (a) Happening now (refreshed 2026-07-24, ~06:40 ET, resumed after operator pause)
 ------------------------------------------
