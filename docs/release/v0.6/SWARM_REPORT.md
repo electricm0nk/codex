@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Comparison done and lead-verified: Skald is dramatically cheaper than Bloodrager/Alchemist — genuinely inherits Bard's entire spell list wholesale (`SPELLLIST:1|Bard`, zero per-spell tags of its own; Bloodrager/Alchemist both need fresh 100+ entry extractions). Greenlit — pulling Skald's spells-known/per-day table and writing the scoping doc now |
+| backend | working | Building Skald's real spellcasting (reusing Bard's spell list wholesale, greenlit). Path A's small choice-picker default (Sorcerer/Cleric/Druid, ~30-45 lines, no wire change) queued as the next item after — backend's call on exact sequencing |
 | frontend | idle | Choice-picker scoping doc landed (`cfcd43de`) and lead-verified — found a genuinely cheaper option (Path A: mirror Wizard's already-shipped silent-canonical-default pattern) instead of just answering the original 4 questions about the expensive interactive-picker path. Greenlit; implementation routed to backend (`pf1_adapter.rs`), frontend's own follow-on (`characterHubModel.ts` label update) queued for after |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -127,11 +127,11 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. **Alchemist's Mutagen (APG)** — now the active target. The cheap-win scan across all 16 APG/ACG classes is genuinely complete (5 closed: Skald/Bloodrager/Brawler/Hunter/Cavalier; 11 explicitly ruled not-cheap with real reasoning, no further scanning warranted). Mutagen is real, deliberate work, not another quick win — a choice-gated activation (which of Str/Dex/Con to enhance, with a matching mental penalty), closer in shape to Sorcerer's Arcane Bond/Cleric's Touch of Good than the 5 simpler closures. Expected to land in the same `headless-only` reachability bucket as Sorcerer/Cleric/Druid.
-2. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all (no standalone numeric value exists to ground, unlike the other 6). Not scheduled; would need its own scoping pass same as Improved Grapple's abandoned CMB/CMD pillar would.
-3. Monk's/Brawler's/Hunter's/Cavalier's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
-4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
-5. All remaining untouched ACG/APG classes' class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
+1. **Skald's real spellcasting** — backend building now, reusing Bard's already-built 164-entry spell list wholesale (`SPELLLIST:1|Bard`, confirmed zero per-spell tags of Skald's own), plus Skald's own small spells-known/per-day progression table. Would move Skald from "one ability grounded" to genuinely closer to full `Computed`.
+2. **Path A choice-picker default (Sorcerer/Cleric/Druid)** — queued for backend, small (~30-45 lines total, mirrors the already-shipped Wizard silent-canonical-default pattern exactly), no wire-contract change. Makes all 3 already-`Computed` classes genuinely reachable through the real product UI for the first time. Frontend's own follow-on (`characterHubModel.ts` label update) queued for once it lands. Path B (a real interactive picker) deliberately deferred as separate future product-decision work.
+3. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all. Not scheduled.
+4. Monk's/Brawler's/Hunter's/Cavalier's/Alchemist's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
+5. All remaining untouched ACG/APG classes' (Arcanist/Investigator/Shaman/Slayer/Swashbuckler/Warpriest/Inquisitor/Oracle/Summoner/Witch) class-skill-lists/class-features/spellcasting — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
 
 ### Honest scale note
 
