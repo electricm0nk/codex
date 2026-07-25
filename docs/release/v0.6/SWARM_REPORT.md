@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 4's AC/skill pillars built and lead-verified (byte-identical correctness proof passing), not yet committed; moving to sub-task 5 |
-| frontend | idle | sub-task 6 fully closed (3a05539a + a768ad85), lead-verified, live-verified |
-| qa | idle | standing by |
+| backend | working | sub-task 4 fully closed (6ef7f3ef, 4292/4292 + 211/211); starting sub-task 5 (gate swap, highest-risk step) |
+| frontend | idle | sub-task 6 fully closed, lead-verified, live-verified |
+| qa | idle | sub-task 6 review complete, clean |
 
 ---
 
