@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Hunter's Animal Companion (4th ACG closure) committed (`21c5b13a`) and lead re-verified against the real HEAD (411/411 lib, coverage audit 3/3). Correctly self-corrected the lead's own reachability framing — Hunter's companion is unconditional, sits in Brawler's always-on bucket, not Druid's choice-gated one — lead independently confirmed via Druid's own Nature Bond corpus text. Awaiting next assignment |
+| backend | working | Directed to one final cheap-win scan (Arcanist, Investigator, all 6 unscanned APG classes) before moving to the bigger backlog — has already correctly ruled out Warpriest/Slayer/Shaman/Swashbuckler as not-cheap. After this scan, moves to Monk's remaining 4 feats regardless of outcome (real engine work, deferred long enough) |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -122,10 +122,11 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Brawler's own test-cleanup wave, once QA scopes whether one is needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply here too — Brawler's own diagnostic is new, not a replacement).
-2. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists, same scale as CRB's other now-closed blockers were before they were solved.
-3. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
-4. The other 7 untouched ACG classes plus all 6 APG classes: class-skill-lists, class-features, and spellcasting (for casters) — the single largest remaining bucket in this whole epic. Skald/Bloodrager/Brawler's pattern (check for a cheap, structurally-simple named ability before assuming a class needs the full treatment) is now proven three times; worth checking each of the remaining 13 the same way before assuming none exists.
+1. Backend's final cheap-win scan: Arcanist, Investigator, and all 6 unscanned APG classes (Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch) — the last scan pass before pivoting to the harder backlog below, regardless of outcome. Warpriest/Slayer/Shaman/Swashbuckler already correctly ruled out (Domain-shaped choices or opponent-dependent, same harder-effort bucket as Monk's remaining feats).
+2. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists. Directed as the next real target after item 1's scan, regardless of whether it finds a 5th cheap ACG/APG win.
+3. Brawler/Hunter's own test-cleanup waves, once QA scopes whether either is needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply to both — their diagnostics are new, not replacements).
+4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
+5. Whatever remains untouched after item 1's scan, plus all remaining class-skill-lists/class-features/spellcasting work (for casters) — the single largest remaining bucket in this whole epic.
 
 ### Honest scale note
 

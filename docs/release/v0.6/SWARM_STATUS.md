@@ -1377,6 +1377,8 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 **Hunter committed (`21c5b13a`) while the lead was mid docs-update -- re-verified against the real committed HEAD, matches the pre-commit check exactly.** Full lib 411/411, re-run fresh against the actual committed tree. Fourth APG/ACG class-specific closure now fully landed. 4 of 10 ACG classes have real partial engine progress; 6 remain untouched beyond chassis dispatch. Backend idle, awaiting next assignment.
 
+**Lead set a hard boundary on the cheap-win scanning discipline: one more scan, then Monk's remaining feats regardless of outcome.** Backend asked for direction after Hunter's closure (4 of 10 ACG classes now real) -- had already scanned and correctly ruled out Warpriest/Slayer/Shaman/Swashbuckler as not-cheap, with only Arcanist/Investigator (ACG) and all 6 APG classes left unscanned. Given the scan-first discipline found a real win in 3 of the last 4 attempts, it earned one more pass -- directed backend to scan the remaining 8 classes, but explicitly not to let "one more cheap ACG class" become an indefinite loop: after this scan, whether or not it finds a 5th win, backend moves to Monk's remaining 4 feats (the genuinely deferred real engine work -- opponent-interaction/turn-economy modeling) and starts its scoping doc. Reconciled `SWARM_TASKS.md`/`SWARM_REPORT.md`'s queued-next list to reflect this explicit sequencing rather than an open-ended "keep scanning" posture.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-25T14:50:03
