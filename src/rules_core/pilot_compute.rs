@@ -123,6 +123,7 @@ use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::cleric_spell_list;
+use super::rules_tables::crb::druid_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
 use super::rules_tables::crb::sorcerer_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
@@ -3916,6 +3917,25 @@ const CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 // the deterministic nature-bond choice recognition (SD13-E5) are grounded; the
 // chosen bond's execution and the whole spell posture stay claim-blocked.
 const DRUID_CLASS_ID: &str = "class:druid";
+/// v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): the Druid
+/// spell-level access thresholds. Druid's real spells-per-day table is
+/// byte-for-byte identical to Cleric's own base table (verified
+/// independently against two primary sources, d20pfsrd.com and the
+/// Archives of Nethys aonprd.com mirror, both agreeing with each other and
+/// with Cleric's own already-grounded table), so these thresholds match
+/// Cleric's CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL through
+/// CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL constants exactly, not
+/// independently re-derived: 2nd-level spells begin at level 3, 3rd at 5,
+/// 4th at 7, 5th at 9, 6th at 11, 7th at 13, 8th at 15, 9th at 17.
+const DRUID_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
+const DRUID_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
+const DRUID_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+const DRUID_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
+const DRUID_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
+const DRUID_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
+const DRUID_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 15;
+const DRUID_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
+
 /// SD13-E5 Druid level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -6790,6 +6810,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Sorcerer)
     } else if class_id_str == CLERIC_CLASS_ID {
         Some(ClassId::Cleric)
+    } else if class_id_str == DRUID_CLASS_ID {
+        Some(ClassId::Druid)
     } else {
         None
     }
@@ -16875,8 +16897,9 @@ fn explain_cleric_level1_spell_baseline(
             id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
             message: "Cleric remains blocked on its domain powers burden: domain selection, \
                  domain spell-list contents, and the granted powers of any domain (e.g. Good's \
-                 Touch of Good, Healing's Rebuke Death) are not implemented anywhere in this \
-                 codebase, so no Cleric domain-power support is claimed"
+                 Touch of Good, Healing's Rebuke Death, whose heal amount is not a flat number) \
+                 are not implemented anywhere in this codebase, so no Cleric domain-power \
+                 support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -17738,6 +17761,74 @@ fn explain_druid_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): both
+    // Druid burdens are validated/checked regardless of whether Druid
+    // appears alone or in a multiclass mix, and regardless of race --
+    // checked BEFORE the single-class-only/Human gate below, mirroring the
+    // Ranger/Paladin/Sorcerer/Cleric fix exactly. The animal-companion/
+    // nature-bond burden is permanently unconditional (no companion stat
+    // block, advancement, or domain-power execution is grounded anywhere
+    // in this codebase, so this never becomes valid) -- its message still
+    // names whether a nature-bond selection was recognized, read once here
+    // (a race/level-independent chosen-input read) and reused by the
+    // explanation record further down, not recomputed. The prepared-divine
+    // spell posture burden is a real, conditional validation, mirroring
+    // `unmet_cleric_prepared_spell_conditions` exactly (a PREPARED caster,
+    // like Cleric, not spontaneous): validates every
+    // `AcquisitionMode::Prepared` selection with `source_class_id ==
+    // "class:druid"` against the real
+    // `druid_spell_list::DRUID_SPELL_LIST` (the general list only --
+    // domain spells, when Nature Bond chooses a domain, stay part of the
+    // separate nature-bond burden), the druid's own spell-level access
+    // ceiling (1st+; orisons have no access gate), and the per-level slot
+    // budget (base + Wisdom bonus, excluding any domain spell slot).
+    if let Some(druid_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == DRUID_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        let animal_companion_chosen_top = choice_selection(input, DRUID_NATURE_BOND_CHOICE_ID)
+            == Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID);
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.druid.animal_companion.unsupported".to_owned(),
+            message: if animal_companion_chosen_top {
+                "Druid remains blocked on its animal companion execution burden: the chosen \
+                 nature bond (an animal companion) is recognized as input only -- the \
+                 companion's stat block, its advancement, and its link and share spells \
+                 abilities are not implemented anywhere in this codebase, so no Druid animal \
+                 companion support is claimed"
+                    .to_owned()
+            } else {
+                "Druid remains blocked on its animal companion execution burden: no nature bond \
+                 selection is recognized as chosen input, and even when an animal companion bond \
+                 or a domain is chosen, neither the companion's stat block/advancement/link and \
+                 share spells abilities nor any domain's granted powers or spell-list contents \
+                 are implemented anywhere in this codebase, so no Druid nature-bond support is \
+                 claimed"
+                    .to_owned()
+            },
+            claim_blocking: true,
+        });
+
+        let unmet = unmet_druid_prepared_spell_conditions(input, druid_level, ability_modifiers);
+        if unmet.is_empty() {
+            ground_druid_prepared_spells(input, druid_level, ability_modifiers, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.druid.prepared_divine.unsupported".to_owned(),
+                message: format!(
+                    "Druid remains blocked on its prepared divine spell posture burden: Druid \
+                     is a full 9th-level divine caster (spells begin at druid level 1); unmet \
+                     prepared-spell posture: {}",
+                    unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
+    }
+
     let Some(level) = supported_druid_level(input) else {
         return;
     };
@@ -18089,45 +18180,285 @@ fn explain_druid_level1_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): name the animal companion execution burden explicitly. Wild
-    // Empathy, Nature Sense, and (when recognized) the nature-bond choice recognition
-    // are grounded above and no longer named here as blockers. The message must not
-    // claim a specific bond was chosen unless the choice-selection lookup above
-    // actually recognized one — otherwise it would fabricate the claim that an
-    // animal companion was picked when no nature-bond selection was made at all.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.druid.animal_companion.unsupported".to_owned(),
-        message: if animal_companion_chosen {
-            format!(
-                "Druid level {level} remains blocked on its animal companion \
-                 execution burden: the chosen nature bond (an animal companion) is recognized as \
-                 input only — the companion's stat block, its advancement, and its link and share \
-                 spells abilities are not implemented in this bounded prepared divine spell \
-                 baseline, so no Druid animal companion support is claimed"
-            )
+    // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): the real
+    // Druid spell math ladder, built from scratch (matching Cleric's own
+    // build -- neither pre-existed). Druid's base spells-per-day table is
+    // byte-for-byte identical to Cleric's (verified independently against
+    // two primary sources), so these are the same values, just without the
+    // guaranteed "+1" domain slot (Druid's Nature Bond choice is EITHER an
+    // animal companion OR a domain -- when a domain is chosen the same
+    // domain slot would apply, but that choice and its slot contents stay
+    // part of the separate animal-companion/nature-bond burden).
+    let druid_base_spells_per_day = druid_base_spells_per_day_table(level);
+    for (spell_level, base_count) in druid_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.druid.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Druid base spells per day at druid level {level}, spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Core Rulebook Druid class table's \
+                 spells-per-day row (verified against the raw table rows of both primary \
+                 sources; a literal table lookup, not a derived formula; byte-for-byte identical \
+                 to Cleric's own base table). This grounds the base count only: bonus spells \
+                 per day from a high Wisdom are never computed here, no prepared posture or \
+                 spell-source lineage is grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
+    let druid_spell_level_access = druid_spell_level_access(level);
+    for spell_level in 1..=druid_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.wisdom;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.druid.spell_save_dc.spell_level_{spell_level}"),
+            value: spell_save_dc,
+            detail: format!(
+                "Druid spell save DC at druid level {level}, spell level {spell_level}: 10 + \
+                 {spell_level} + Wisdom modifier {} = {spell_save_dc} (PF1 Core Rulebook: \"The \
+                 Difficulty Class for a saving throw against a druid's spell is 10 + the spell \
+                 level + the druid's Wisdom modifier\"). This grounds the base DC formula only: \
+                 no saving-throw resolution, no target, no spell selection, and no domain DC \
+                 modifiers are computed",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    for spell_level in 1..=druid_spell_level_access {
+        let bonus_spells = ability_bonus_spells(ability_modifiers.wisdom, spell_level);
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.druid.bonus_spells_per_day.spell_level_{spell_level}"),
+            value: bonus_spells,
+            detail: format!(
+                "Druid bonus spells per day at druid level {level}, spell level {spell_level}: \
+                 {bonus_spells} from Wisdom modifier {} (PF1 Core Rulebook Table: Ability \
+                 Modifiers and Bonus Spells). A computed 0 means the modifier grants no bonus at \
+                 this spell level; it is never added to the base per-day count here -- no total \
+                 is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    for (spell_level, base_count) in druid_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus_spells = if spell_level == 0 {
+            0
         } else {
-            format!(
-                "Druid level {level} remains blocked on its animal companion \
-                 execution burden: no nature bond selection is recognized as chosen input in \
-                 this bounded prepared divine spell baseline, and even when an animal companion \
-                 bond is chosen its stat block, its advancement, and its link and share spells \
-                 abilities are not implemented, so no Druid animal companion support is claimed"
-            )
-        },
-        claim_blocking: true,
+            ability_bonus_spells(ability_modifiers.wisdom, spell_level as i16)
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.druid.total_spells_per_day.spell_level_{spell_level}"),
+            value: total_spells,
+            detail: format!(
+                "Druid total spells per day at druid level {level}, spell level {spell_level}: \
+                 base table count {base_count} + Wisdom bonus {bonus_spells} = {total_spells} -- \
+                 the pure sum of the two separately grounded records, giving the actual \
+                 castable slot count per day (excluding any domain spell slot). This grounds \
+                 the count only: no prepared-posture selection, no casting execution, no slot \
+                 consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
+
+    // (v0.6 alpha swarm, risks item 8, seventh slice, 2026-07-25) Both
+    // remaining burdens are now pushed unconditionally at the top of this
+    // function (see that push site's own doc comment for why): the
+    // animal-companion/nature-bond burden is permanently unconditional,
+    // and the prepared divine spell posture is now a real, conditional
+    // validation.
+}
+
+/// The highest ACCESSIBLE druid spell level (1st+) at the given druid
+/// level -- orisons (0th level) have no access gate at all, always
+/// available from level 1. Pure function, race-independent, mirrors
+/// `cleric_spell_level_access` exactly (the same table shape) -- extracted
+/// so both the (Human-only) flat explanation block above and the real
+/// prepared-spell validation below share one source of truth.
+fn druid_spell_level_access(level: u8) -> i16 {
+    if level >= DRUID_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        9
+    } else if level >= DRUID_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        8
+    } else if level >= DRUID_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        7
+    } else if level >= DRUID_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        6
+    } else if level >= DRUID_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        5
+    } else if level >= DRUID_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= DRUID_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= DRUID_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else {
+        1
+    }
+}
+
+/// The PF1 Core Rulebook Druid class table's BASE spells-per-day row, one
+/// entry per spell level 0-9 (`None` for an inaccessible "—" column; index
+/// 0 is orisons). A literal table lookup, not a derived formula -- verified
+/// against two independent primary sources (d20pfsrd.com and the Archives
+/// of Nethys aonprd.com mirror, byte-for-byte identical, and matching
+/// Cleric's own already-grounded base table exactly). Excludes any domain
+/// spell slot (only applies when Nature Bond chooses a domain, itself part
+/// of the separate animal-companion/nature-bond burden). Pure function,
+/// race-independent, extracted for the same reason as
+/// `druid_spell_level_access`.
+fn druid_base_spells_per_day_table(level: u8) -> [Option<i16>; 10] {
+    // Byte-for-byte identical to cleric_base_spells_per_day_table -- same
+    // real PF1 Core Rulebook table, shared source of truth.
+    cleric_base_spells_per_day_table(level)
+}
+
+/// The real per-day slot budget per spell level 0-9 (base table count +
+/// Wisdom bonus for 1st+, orisons never get a bonus, `None` for an
+/// inaccessible column), excluding any domain spell slot.
+fn druid_total_spells_per_day(level: u8, wisdom_modifier: i16) -> [Option<i16>; 10] {
+    let base = druid_base_spells_per_day_table(level);
+    let mut total = [None; 10];
+    for (spell_level, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus = if spell_level == 0 {
+            0
+        } else {
+            ability_bonus_spells(wisdom_modifier, spell_level as i16)
+        };
+        total[spell_level] = Some(base_count + bonus);
+    }
+    total
+}
+
+/// Return the list of unmet conditions for Druid's real prepared-spell
+/// posture. Mirrors `unmet_cleric_prepared_spell_conditions` exactly,
+/// substituting `druid_spell_list::DRUID_SPELL_LIST` (the general list
+/// only -- domain spells, when Nature Bond chooses a domain, stay part of
+/// the separate nature-bond burden) for the cleric list. An empty list
+/// means the posture is fully valid: every `AcquisitionMode::Prepared`
+/// selection with `source_class_id == "class:druid"` names a real
+/// general-list spell, at a spell level within the druid's own access
+/// ceiling (0 always accessible), and no spell level's prepared count
+/// exceeds that level's total slot budget (base + Wisdom bonus, excluding
+/// any domain slot). Zero prepared spells is always valid, same reasoning
+/// as every other class in this family.
+fn unmet_druid_prepared_spell_conditions(
+    input: &CharacterInput,
+    druid_level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == DRUID_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = druid_spell_level_access(druid_level);
+    let total_per_day = druid_total_spells_per_day(druid_level, ability_modifiers.wisdom);
+
+    let mut consumed_per_level: [i16; 10] = [0; 10];
+    for spell_id in &prepared {
+        let Some(spell_level) = druid_spell_list::druid_spell_level(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook general \
+                 druid spell list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at druid level {druid_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (spell_level, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let total_slots = total_per_day[spell_level].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base + Wisdom bonus, excluding any domain slot)"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spell posture once
+/// `unmet_druid_prepared_spell_conditions` reports an empty unmet list.
+/// Mirrors `ground_cleric_prepared_spells` exactly.
+fn ground_druid_prepared_spells(
+    input: &CharacterInput,
+    druid_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == DRUID_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.druid.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Druid level {druid_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 Core Rulebook general druid spell list (`druid_spell_list::DRUID_SPELL_LIST`), \
+             the druid's own spell-level access ceiling, and the per-level slot budget (base \
+             table count + Wisdom bonus, excluding any domain spell slot). This grounds the \
+             prepared-spell selection for real; it computes no spell save DC resolution against \
+             a target and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
     });
 
-    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.druid.prepared_divine.unsupported".to_owned(),
-        message:
-            "Druid remains blocked on its prepared divine spell posture burden: spells prepared \
-             from the full Druid spell list, spontaneous summon nature's ally conversion, spell slots \
-             per day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for \
-             this level-1 spell baseline and no spell math is fabricated"
-                .to_owned(),
-        claim_blocking: true,
-    });
+    let total_per_day = druid_total_spells_per_day(druid_level, ability_modifiers.wisdom);
+    for (spell_level, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.druid.total_spells_per_day.spell_level_{spell_level}"),
+            value: *total,
+            detail: format!(
+                "Druid level {druid_level} total spells per day at spell level {spell_level}: \
+                 {total} (base table count + Wisdom bonus, excluding any domain spell slot -- \
+                 the same records already grounded as \
+                 `class_chassis.druid.total_spells_per_day.spell_level_{spell_level}` for a \
+                 Human druid, computed here independent of race). This is the real slot budget \
+                 the daily preparation selection above is validated against"
+            ),
+        });
+    }
 }
 
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
@@ -22180,6 +22511,237 @@ mod cleric_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): Druid's real
+/// prepared-divine spell posture, mirroring
+/// `cleric_dispatch_widening_safety_tests` exactly (PREPARED, a full
+/// 9th-level caster, same gate-ordering structural risk existed here too
+/// and was fixed proactively as part of this same slice). Unlike
+/// Ranger/Paladin/Cleric, Druid's animal-companion/nature-bond burden
+/// stays permanently unconditional (mirrors Sorcerer's bloodline-power and
+/// Cleric's domain-powers shape), so a single-class Druid never reaches
+/// `Computed` even with a fully valid prepared-spell posture -- only the
+/// spell-specific diagnostic is conditional.
+#[cfg(test)]
+mod druid_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
+        DRUID_CLASS_ID, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single-class Druid with no invalid prepared-spell selection still
+    /// stays `Blocked` (the animal-companion/nature-bond burden is
+    /// permanently unconditional), but the spell-specific diagnostic must
+    /// NOT fire when the posture is genuinely valid.
+    #[test]
+    fn single_class_druid_with_no_prepared_spells_stays_blocked_only_on_nature_bond() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Druid's animal-companion/nature-bond burden is permanently unconditional: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"
+                    && d.claim_blocking),
+            "expected the permanent nature-bond diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported"),
+            "the spell-posture diagnostic must not fire when the prepared-spell posture is \
+             valid: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Druid preparing a real, in-budget, accessible orison
+    /// (0th-level spell, always accessible from level 1) does not trip the
+    /// spell-posture diagnostic -- proving orisons have no access gate.
+    #[test]
+    fn single_class_druid_with_a_valid_orison_does_not_trip_the_spell_posture() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Detect Magic".to_owned(),
+            source_class_id: DRUID_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported"),
+            "an orison is always accessible from level 1 with no access gate: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Druid preparing a spell beyond their spell-level
+    /// access ceiling must carry the real spell-posture diagnostic.
+    #[test]
+    fn single_class_druid_with_an_inaccessible_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Barkskin".to_owned(),
+            source_class_id: DRUID_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported"
+                    && d.claim_blocking),
+            "a 2nd-level druid spell is not accessible at druid level 1: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Druid preparing a spell not on the real PF1 Core
+    /// Rulebook general druid spell list at all must also carry the
+    /// diagnostic.
+    #[test]
+    fn single_class_druid_with_an_off_list_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: DRUID_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Magic Missile is not on the real general druid spell list: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Druid at level 1 (Wisdom 12, mod +1: base 1 + bonus
+    /// 1 = total budget 2 for 1st-level spells) preparing 3 distinct
+    /// 1st-level spells over-prepares the real slot budget.
+    #[test]
+    fn single_class_druid_over_prepared_slot_budget_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 1 }];
+        for spell_id in ["Calm Animals", "Charm Animal", "Cure Light Wounds"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: DRUID_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "druid level 1 with Wisdom 12 has a real total budget of 2 slots for 1st-level \
+             spells (base 1 + Wisdom bonus 1), so preparing 3 distinct spells over-prepares: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Multiclass safety, verified directly. A Druid-containing multiclass
+    /// mix with a genuine posture violation must still stay Blocked, since
+    /// `DRUID_CLASS_ID` is deliberately not registered with
+    /// `multiclass_class_level_supported` beyond `table_class_id` itself
+    /// (the same construction Ranger/Paladin/Sorcerer/Cleric already
+    /// proved safe).
+    #[test]
+    fn druid_fighter_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: DRUID_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Druid+Fighter multiclass must not reach Computed while Druid's posture is \
+             genuinely violated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported"
                     && d.claim_blocking),
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics
