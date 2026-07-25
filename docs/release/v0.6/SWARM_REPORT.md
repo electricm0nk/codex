@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | confirmed Cleric's blocker needs genuinely new mechanism work (no hidden shortcut, lead-verified against raw corpus); writing a comparative scoping doc across Cleric/Druid/Monk's remaining options next |
+| backend | waiting-on-lead | comparative scoping doc landed (Touch of Good self-scoping candidate); holding on code while an adversarial review resolves the self-scoping/diagnostic-split/Rebuke-Death judgment calls |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Bard's 22-file test batch landed and lead-verified 100% (6dcec5ba) -- entire workspace green, standing by |
 
