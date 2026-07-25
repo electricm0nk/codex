@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Sorcerer + Cleric both landed and lead-verified (c23d4054, fca4e64e); 333/333 lib + 212/212 desktop; deciding next class |
+| backend | working | Druid landed and lead-verified (dda46d4a); 344/344 lib + 212/212 desktop; now scoping Bard |
 | frontend | working | live-verifying the non-Human-Ranger finding |
-| qa | working | reviewing the combined 54-file Sorcerer+Cleric test cleanup |
+| qa | working | picked a proactive Bard spell-list/blocker survey; Druid's 17-file test cleanup also queued |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 

@@ -1226,6 +1226,15 @@ No open blocked-by dependencies between teammates at this checkpoint.
 | frontend | working | still live-verifying the non-Human-Ranger-at-level-1 finding -- status ping sent asking for the real safe level range before touching characterHubModel.ts |
 | qa | idle | Sorcerer+Cleric 54-file batch closed; offered a proactive Bard spell-list/blocker survey (next class after Druid) as prep work, or standing by for frontend's Ranger UI change -- awaiting their pick |
 
+## Agent Status (2026-07-25, ~07:05 ET)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | Druid landed and pushed (dda46d4a), lead-verified 344/344 lib + 212/212 desktop, 169-entry spell list count and 3 spot-checks all exact, gate-ordering fix confirmed directly in code, pre-existing level-15 cap confirmed not introduced this slice. Now scoping Bard (last of the 4 spell-needing CRB classes) |
+| frontend | working | still live-verifying the non-Human-Ranger-at-level-1 finding |
+| qa | working | picked the proactive Bard spell-list/blocker survey (their own choice, citing the ACG-survey precedent); 17 new Druid-named test files also queued from backend |
+
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). Sorcerer, Cleric, Druid have real spell-posture progress, correctly still Blocked on their own named permanent burden. ACG/APG have real BAB/save/HP dispatch (still correctly Blocked pending skill/feature/spellcasting). 8 real class slices landed this session.**
+
 No new commits since fca4e64e. All three pings are routine check-ins, not corrections -- no discrepancy found this cycle.
 
 <!-- AUTO-HEARTBEAT-START -->
