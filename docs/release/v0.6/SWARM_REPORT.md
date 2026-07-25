@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | combat-time scoping plan reviewed, 6 real findings sent back for revision (Power Attack precedent overstated, ability_id validation gap, others); revising before Barbarian starts; holding on Bard/new classes per QA's ask, doing read-only Barbarian prep meanwhile |
+| backend | working | combat-time plan revised addressing all 6 review findings, lead-verified and greenlit; starting Barbarian (schema+fixture-grammar+ownership-gate first) |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); no further class-breadth follow-up queued |
 | qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, authoring Sorcerer's fixes directly (backend never delivered drafts) |
 
