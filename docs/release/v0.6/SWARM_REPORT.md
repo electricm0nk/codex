@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Druid animal-companion scoping doc endorsed (approach trusted, no full review needed); directed to verify Wolf's exact stat block against 2 primary sources before coding |
+| backend | working | scoping doc endorsed, directed to verify Wolf's stats against primary sources; actively building the Druid animal-companion work now (pilot_compute.rs in progress) |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
-| qa | working | new ~22-file Cleric wave assigned (35 tests, Rebuke Death diagnostic-id change) |
+| qa | idle | Cleric's 22-file test batch landed and lead-verified 100% (3da1cd35, pushed); entire workspace green, zero failures anywhere |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric genuinely reach Computed (8 of 27). 19 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
