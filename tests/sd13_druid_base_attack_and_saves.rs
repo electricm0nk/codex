@@ -181,14 +181,24 @@ fn druid_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocker
     assert!(has_explanation(&computation, "class_chassis.druid.nature_sense"));
     assert!(has_explanation(&computation, "class_chassis.druid.nature_bond_choice"));
 
-    // The animal companion execution burden still fires (permanently
-    // unconditional); this slice grounds no companion stat block and no spell math.
-    let animal_companion = computation
+    // (v0.6 alpha swarm, risks item 8, animal companion closure) The old flat
+    // animal-companion blocker no longer fires: this fixture's Wolf companion
+    // (chosen at druid level 1, the only verified companion level) genuinely
+    // closes; only the non-blocking advancement-absent note remains.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"),
+        "the old flat animal-companion blocker must not fire when the Wolf stat block closes: {:?}",
+        computation.diagnostics
+    );
+    let advancement_absent = computation
         .diagnostics
         .iter()
-        .find(|d| d.id == "class_feature.druid.animal_companion.unsupported")
-        .expect("animal companion blocker must still fire");
-    assert!(animal_companion.claim_blocking);
+        .find(|d| d.id == "class_feature.druid.animal_companion.advancement_absent")
+        .expect("the advancement-absent note must still fire");
+    assert!(!advancement_absent.claim_blocking);
 
     // (v0.6 alpha swarm, risks item 8) class_spell.druid.prepared_divine.unsupported
     // is no longer unconditional -- this bare fixture has zero prepared spells, a
