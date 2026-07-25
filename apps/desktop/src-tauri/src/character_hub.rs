@@ -2754,10 +2754,13 @@ mod tests {
         // diagnostic is also no longer unconditional -- it's a real
         // validation now, and compose_character_input seeds no Druid
         // spell selections, so the (valid, empty) prepared-spell posture
-        // no longer trips it. Only the permanently-unconditional
-        // animal-companion/nature-bond diagnostic remains (no companion
-        // stat block, advancement, or domain-power execution is grounded
-        // anywhere in this codebase).
+        // no longer trips it. The animal-companion/nature-bond diagnostic
+        // remains here too -- not because it's still permanently
+        // unconditional (a later slice made an animal companion's own
+        // Wolf stat block genuinely closable at Druid level 1), but
+        // because compose_character_input seeds no nature-bond choice at
+        // all for this bare fixture, so it falls into the still-blocking
+        // catch-all branch (no nature bond chosen).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
             BTreeSet::from(["class_feature.druid.animal_companion.unsupported".to_owned()])

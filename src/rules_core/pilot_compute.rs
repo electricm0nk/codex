@@ -4249,6 +4249,46 @@ const DRUID_NATURE_SENSE_BONUS: i16 = 2;
 const DRUID_NATURE_BOND_CHOICE_ID: &str = "choice:druid_nature_bond";
 const DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID: &str = "bond:animal_companion";
 
+/// v0.6 alpha swarm, risks item 8 (Druid animal companion closure): Wolf's
+/// real PF1 Core Rulebook base statistics, verified against three
+/// independent sources -- d20pfsrd's Animal Companions page, the Archives
+/// of Nethys aonprd.com mirror's own Wolf companion page, and the PCGen
+/// corpus (`cr_races_companion.lst`, citing Core Rulebook p.56 directly).
+/// Ability scores agree across all three (Str 13, Dex 15, Con 15, Int 2,
+/// Wis 12, Cha 6). Natural armor and Trip disagreed between d20pfsrd (+1,
+/// no Trip until 4th-level advancement) and the other two (+2, Trip
+/// present from 1st level) -- resolved in favor of the 2-of-3 majority,
+/// the aonprd.com/corpus pair, the latter backed by a real page citation.
+/// Wolf chosen as the canonical companion species: the simplest stat line
+/// (one natural attack, no special movement modes), same "smallest
+/// defensible single case" discipline as every other class's own fixed
+/// canonical choice this session (Barbarian's Longsword, Sorcerer's
+/// Arcane bloodline, etc.).
+const WOLF_COMPANION_STRENGTH_SCORE: i16 = 13;
+const WOLF_COMPANION_CONSTITUTION_SCORE: i16 = 15;
+const WOLF_COMPANION_NATURAL_ARMOR: i16 = 2;
+const WOLF_COMPANION_HIT_DIE_SIZE: u8 = 8;
+
+/// PF1 Core Rulebook Animal Companion Base Statistics table (verified
+/// against d20pfsrd, and independently confirmed by reading the actual
+/// PCGen `CLASS:Companion` formulas directly: `BASEAB = classlevel*3/4`,
+/// `Fort/Ref = classlevel/2+2`, `Will = classlevel/3`). At companion
+/// level 1 (`MONSTERCLASS:Companion:2`, i.e. 2 HD -- an animal companion's
+/// effective level starts at 2 HD even for a 1st-level druid), this
+/// evaluates to base attack +1, Fortitude/Reflex +3/+3, Will +0. Pure
+/// function so a future level-widening slice can extend it the same way
+/// every other class's own progression table was extended, without
+/// re-deriving the formula.
+fn wolf_companion_hit_dice(companion_level: u8) -> u8 {
+    // A 1st-level druid's animal companion always starts at 2 HD
+    // regardless of the druid's own level (PF1 Core Rulebook): this
+    // bounded slice only computes companion level 1 (2 HD), named
+    // explicitly rather than derived from a formula this slice doesn't
+    // have verified data for beyond this single case.
+    debug_assert_eq!(companion_level, 1, "only companion level 1 is grounded this slice");
+    2
+}
+
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -18454,12 +18494,13 @@ fn explain_druid_level1_spell_baseline(
     // appears alone or in a multiclass mix, and regardless of race --
     // checked BEFORE the single-class-only/Human gate below, mirroring the
     // Ranger/Paladin/Sorcerer/Cleric fix exactly. The animal-companion/
-    // nature-bond burden is permanently unconditional (no companion stat
-    // block, advancement, or domain-power execution is grounded anywhere
-    // in this codebase, so this never becomes valid) -- its message still
-    // names whether a nature-bond selection was recognized, read once here
-    // (a race/level-independent chosen-input read) and reused by the
-    // explanation record further down, not recomputed. The prepared-divine
+    // nature-bond burden is no longer flatly permanently unconditional (a
+    // later slice made an animal companion's own Wolf stat block genuinely
+    // closable at Druid level 1 -- see the conditional block below for the
+    // full shape); the exact original unconditional diagnostic is
+    // preserved as the catch-all for every case that closure doesn't
+    // specifically cover (a domain-type bond, an unrecognized/absent
+    // nature bond, or any Druid level other than 1). The prepared-divine
     // spell posture burden is a real, conditional validation, mirroring
     // `unmet_cleric_prepared_spell_conditions` exactly (a PREPARED caster,
     // like Cleric, not spontaneous): validates every
@@ -18479,26 +18520,195 @@ fn explain_druid_level1_spell_baseline(
     {
         let animal_companion_chosen_top = choice_selection(input, DRUID_NATURE_BOND_CHOICE_ID)
             == Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID);
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.druid.animal_companion.unsupported".to_owned(),
-            message: if animal_companion_chosen_top {
-                "Druid remains blocked on its animal companion execution burden: the chosen \
-                 nature bond (an animal companion) is recognized as input only -- the \
-                 companion's stat block, its advancement, and its link and share spells \
-                 abilities are not implemented anywhere in this codebase, so no Druid animal \
-                 companion support is claimed"
-                    .to_owned()
-            } else {
-                "Druid remains blocked on its animal companion execution burden: no nature bond \
-                 selection is recognized as chosen input, and even when an animal companion bond \
-                 or a domain is chosen, neither the companion's stat block/advancement/link and \
-                 share spells abilities nor any domain's granted powers or spell-list contents \
-                 are implemented anywhere in this codebase, so no Druid nature-bond support is \
-                 claimed"
-                    .to_owned()
-            },
-            claim_blocking: true,
-        });
+
+        // v0.6 alpha swarm, risks item 8 (Druid animal companion closure,
+        // adversarially reviewed 2026-07-25): the animal-companion burden
+        // is no longer flatly unconditional for every Druid -- an animal
+        // companion's own stat block (Wolf, the canonical species) can
+        // genuinely close it at Druid level 1, the only companion level
+        // this slice has verified data for. The catch-all below (no
+        // nature bond chosen, a domain-type bond chosen -- never
+        // recognized by this seam -- or Druid level != 1) preserves the
+        // EXACT original unconditional diagnostic unchanged, mirroring
+        // the Cleric review's catch-all-preservation requirement exactly:
+        // no input this seam didn't specifically improve can silently
+        // reach Computed.
+        if animal_companion_chosen_top && druid_level == 1 {
+            let companion_hd = wolf_companion_hit_dice(druid_level);
+            let companion_hd_value = i16::from(companion_hd);
+            let companion_base_attack_bonus = companion_hd_value * 3 / 4;
+            let companion_fort_ref_save = companion_hd_value / 2 + 2;
+            let companion_will_save = companion_hd_value / 3;
+            let strength_modifier = ability_modifier(WOLF_COMPANION_STRENGTH_SCORE);
+            let constitution_modifier = ability_modifier(WOLF_COMPANION_CONSTITUTION_SCORE);
+            let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
+            // Primary natural attack: 1.5x Strength modifier, floored (PF1
+            // Core Rulebook natural-attack damage rule), added to the base
+            // 1d6 bite die (the die itself is not a flat number and is
+            // named, not rolled).
+            let companion_bite_damage_bonus = (strength_modifier * 3) / 2;
+            // Maximized first HD plus average for the second (this
+            // codebase's own established HP idiom, `durability.rs`'s
+            // `compute_max_hp`), each plus the companion's own Constitution
+            // modifier. The maximized first HD is simply the die size
+            // itself (a maximized roll always equals the die's maximum
+            // face value).
+            let companion_max_first_hit_die = i16::from(WOLF_COMPANION_HIT_DIE_SIZE);
+            let companion_average_second_hit_die = crate::rules_core::durability::average_hit_die_value(
+                WOLF_COMPANION_HIT_DIE_SIZE,
+            );
+            let companion_hp = (companion_max_first_hit_die + constitution_modifier)
+                + (companion_average_second_hit_die + constitution_modifier);
+
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.wolf_stat_block".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Druid level {druid_level} animal companion, Wolf (the canonical PF1 Core \
+                     Rulebook companion species this bounded seam grounds): a wholly separate \
+                     creature with its own combat statistics -- none of the values below are \
+                     ever applied to the Druid's own integrated totals. Base ability scores \
+                     (verified against d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                     the PCGen corpus cr_races_companion.lst, Core Rulebook p.56): Str \
+                     {WOLF_COMPANION_STRENGTH_SCORE}, Con {WOLF_COMPANION_CONSTITUTION_SCORE}. \
+                     This is a bounded recognition record only (+0); the companion's own flat \
+                     stat values are grounded separately as standalone explanation records \
+                     below"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.base_attack_bonus".to_owned(),
+                value: companion_attack_bonus,
+                detail: format!(
+                    "Wolf companion base attack bonus at companion level {companion_hd} HD (PF1 \
+                     Core Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
+                     {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, \
+                     Str {WOLF_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone \
+                     record; the companion is a separate creature, not integrated into the \
+                     Druid's own combat totals"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.base_save.fortitude".to_owned(),
+                value: companion_fort_ref_save,
+                detail: format!(
+                    "Wolf companion base Fortitude save at companion level {companion_hd} HD \
+                     (PF1 Core Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+                     {companion_fort_ref_save}). Standalone record; not the Druid's own save"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.base_save.reflex".to_owned(),
+                value: companion_fort_ref_save,
+                detail: format!(
+                    "Wolf companion base Reflex save at companion level {companion_hd} HD (PF1 \
+                     Core Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+                     {companion_fort_ref_save}). Standalone record; not the Druid's own save"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.base_save.will".to_owned(),
+                value: companion_will_save,
+                detail: format!(
+                    "Wolf companion base Will save at companion level {companion_hd} HD (PF1 \
+                     Core Rulebook Animal Companion Base Statistics: classlevel/3 = \
+                     {companion_will_save}). Standalone record; not the Druid's own save"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.armor_class".to_owned(),
+                value: 10 + WOLF_COMPANION_NATURAL_ARMOR,
+                detail: format!(
+                    "Wolf companion armor class: base 10 + natural armor \
+                     (+{WOLF_COMPANION_NATURAL_ARMOR}) = {}. Verified against 2 of 3 sources \
+                     (aonprd.com's own Wolf companion page and the PCGen corpus, which disagreed \
+                     with d20pfsrd's +1 figure; resolved in favor of the majority, the corpus \
+                     citing Core Rulebook p.56 directly). Standalone record; Dexterity's own \
+                     contribution to the companion's AC is not grounded this slice",
+                    10 + WOLF_COMPANION_NATURAL_ARMOR
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.bite_attack".to_owned(),
+                value: companion_bite_damage_bonus,
+                detail: format!(
+                    "Wolf companion bite attack: 1d6 (a real die, named not rolled) + \
+                     {companion_bite_damage_bonus:+} (1.5x Strength modifier \
+                     ({strength_modifier:+}), floored, PF1 Core Rulebook's primary-natural-\
+                     attack damage rule), plus the Trip special attack (verified present at \
+                     companion level 1 via aonprd.com and the PCGen corpus, which disagreed with \
+                     d20pfsrd's 4th-level-advancement framing). No attack-roll or damage-roll \
+                     resolution engine exists in this codebase, so this grounds the flat damage \
+                     bonus only, not an actual attack or damage outcome"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.druid.animal_companion.hit_points".to_owned(),
+                value: companion_hp,
+                detail: format!(
+                    "Wolf companion hit points at {companion_hd} HD (d{WOLF_COMPANION_HIT_DIE_SIZE}): \
+                     maximized first Hit Die plus average for the second (this codebase's own \
+                     established HP idiom, durability.rs's compute_max_hp), each plus the \
+                     companion's Constitution modifier ({constitution_modifier:+}, Con \
+                     {WOLF_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.druid.animal_companion.link_vacuous".to_owned(),
+                value: 0,
+                detail: "Wolf companion's Link ability (PF1 Core Rulebook: \"A druid can handle \
+                     her animal companion as a free action, or push it as a move action, even \
+                     if she doesn't have any ranks in the Handle Animal skill\") is vacuous \
+                     under this bounded seam: this codebase computes exactly three selected \
+                     skills (Climb, Intimidate, Swim), never Handle Animal, so the skill-check \
+                     exemption Link grants can never matter here regardless of build. This \
+                     record documents that correction only; it carries no mechanical value (+0)"
+                    .to_owned(),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.druid.animal_companion.share_spells_vacuous".to_owned(),
+                value: 0,
+                detail: "Wolf companion's Share Spells ability (PF1 Core Rulebook: \"The druid \
+                     may cast a spell with a target of 'You' on her animal companion... instead \
+                     of on herself\") is vacuous under this bounded seam: this codebase has no \
+                     spell-casting-resolution engine anywhere, for any class -- no spell is ever \
+                     actually cast, so retargeting one is never triggerable here regardless of \
+                     build (the same structural gap that made Sorcerer's Arcane Bond \
+                     spell-casting benefit provably vacuous). This record documents that \
+                     correction only; it carries no mechanical value (+0)"
+                    .to_owned(),
+            });
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.druid.animal_companion.advancement_absent".to_owned(),
+                message: "Druid animal companion advancement past companion level 1 (2 HD) is \
+                     not grounded: this bounded seam only computes Druid level 1, the companion's \
+                     only verified level. A future Druid level-range widening must revisit this, \
+                     the same split Sorcerer's own bonus-spells-at-3rd+ level required"
+                    .to_owned(),
+                claim_blocking: false,
+            });
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.druid.animal_companion.unsupported".to_owned(),
+                message: if animal_companion_chosen_top {
+                    "Druid remains blocked on its animal companion execution burden: the chosen \
+                     nature bond (an animal companion) is recognized as input only -- the \
+                     companion's stat block, its advancement, and its link and share spells \
+                     abilities are not implemented anywhere in this codebase, so no Druid animal \
+                     companion support is claimed"
+                        .to_owned()
+                } else {
+                    "Druid remains blocked on its animal companion execution burden: no nature bond \
+                     selection is recognized as chosen input, and even when an animal companion bond \
+                     or a domain is chosen, neither the companion's stat block/advancement/link and \
+                     share spells abilities nor any domain's granted powers or spell-list contents \
+                     are implemented anywhere in this codebase, so no Druid nature-bond support is \
+                     claimed"
+                        .to_owned()
+                },
+                claim_blocking: true,
+            });
+        }
 
         let unmet = unmet_druid_prepared_spell_conditions(input, druid_level, ability_modifiers);
         if unmet.is_empty() {
@@ -18955,12 +19165,13 @@ fn explain_druid_level1_spell_baseline(
         });
     }
 
-    // (v0.6 alpha swarm, risks item 8, seventh slice, 2026-07-25) Both
-    // remaining burdens are now pushed unconditionally at the top of this
-    // function (see that push site's own doc comment for why): the
-    // animal-companion/nature-bond burden is permanently unconditional,
-    // and the prepared divine spell posture is now a real, conditional
-    // validation.
+    // (v0.6 alpha swarm, risks item 8) Both remaining burdens are pushed
+    // at the top of this function (see that push site's own doc comment
+    // for the full conditional shape): the animal-companion/nature-bond
+    // burden is no longer flatly unconditional -- an animal companion's
+    // own Wolf stat block can genuinely close it at Druid level 1 -- and
+    // the prepared divine spell posture is a real, conditional validation,
+    // same as before.
 }
 
 /// The highest ACCESSIBLE druid spell level (1st+) at the given druid
@@ -23886,10 +24097,13 @@ mod cleric_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod druid_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
-        DRUID_CLASS_ID, FIGHTER_CLASS_ID,
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        DRUID_CLASS_ID, DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID,
+        DRUID_NATURE_BOND_CHOICE_ID, FIGHTER_CLASS_ID, HeadlessReceiptStatus,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -24102,15 +24316,176 @@ mod druid_dispatch_widening_safety_tests {
             receipt.computation.diagnostics
         );
     }
+
+    fn human_druid_input_with_nature_bond(level: u8, bond_selection: Option<&str>) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: DRUID_CLASS_ID.to_owned(), level }];
+        if let Some(selection) = bond_selection {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: DRUID_NATURE_BOND_CHOICE_ID.to_owned(),
+                selection_id: selection.to_owned(),
+            });
+        }
+        input
+    }
+
+    /// v0.6 alpha swarm, risks item 8 (Druid animal companion closure): a
+    /// single-class Human Druid at level 1 with the animal companion
+    /// nature bond chosen, and a genuinely valid (empty) prepared-spell
+    /// posture, reaches `Computed` -- the animal-companion burden is no
+    /// longer permanently unconditional once the companion's own stat
+    /// block (Wolf, the canonical species) is grounded, and Link/Share
+    /// Spells are recognized as vacuous under this bounded seam.
+    #[test]
+    fn single_class_druid_level1_with_animal_companion_reaches_computed() {
+        let input = human_druid_input_with_nature_bond(
+            1,
+            Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID),
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a level-1 Druid with an animal companion and a valid spell posture should reach \
+             Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        let stat_block_ids = [
+            "class_chassis.druid.animal_companion.wolf_stat_block",
+            "class_chassis.druid.animal_companion.base_attack_bonus",
+            "class_chassis.druid.animal_companion.base_save.fortitude",
+            "class_chassis.druid.animal_companion.base_save.reflex",
+            "class_chassis.druid.animal_companion.base_save.will",
+            "class_chassis.druid.animal_companion.armor_class",
+            "class_chassis.druid.animal_companion.bite_attack",
+            "class_chassis.druid.animal_companion.hit_points",
+        ];
+        for id in stat_block_ids {
+            assert!(
+                receipt.computation.explanations.iter().any(|e| e.id == id),
+                "expected the real companion stat-block record {id}: {:?}",
+                receipt.computation.explanations
+            );
+        }
+        // Wolf: HD 2, BAB = 2*3/4 = 1, Str 13 (+1 mod) -> attack bonus 2.
+        let companion_attack = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.druid.animal_companion.base_attack_bonus")
+            .expect("companion base attack bonus must be grounded");
+        assert_eq!(companion_attack.value, 2);
+        // Fort/Ref = 2/2+2 = 3, Will = 2/3 = 0.
+        let companion_fort = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.druid.animal_companion.base_save.fortitude")
+            .expect("companion Fortitude save must be grounded");
+        assert_eq!(companion_fort.value, 3);
+        // AC = 10 + 2 natural armor = 12.
+        let companion_ac = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.druid.animal_companion.armor_class")
+            .expect("companion armor class must be grounded");
+        assert_eq!(companion_ac.value, 12);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.druid.animal_companion.advancement_absent"
+                    && !d.claim_blocking),
+            "expected the honest, non-blocking advancement-absent diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Druid at a level OTHER than 1 with an animal companion chosen
+    /// still falls through to the unchanged catch-all -- companion
+    /// advancement past level 1 is not grounded this slice.
+    #[test]
+    fn single_class_druid_level5_with_animal_companion_still_blocks_on_the_catch_all() {
+        let input = human_druid_input_with_nature_bond(
+            5,
+            Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID),
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"
+                    && d.claim_blocking),
+            "companion advancement past level 1 must still trip the catch-all: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Druid with no nature bond selection at all still falls through
+    /// to the unchanged catch-all diagnostic.
+    #[test]
+    fn single_class_druid_level1_with_no_nature_bond_still_blocks_on_the_catch_all() {
+        let input = human_druid_input_with_nature_bond(1, None);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"
+                    && d.claim_blocking),
+            "no nature bond chosen must still trip the catch-all: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Druid choosing a domain-type nature bond (never recognized by
+    /// this seam at all) also falls through to the unchanged catch-all --
+    /// confirms the animal-companion closure doesn't silently ignore the
+    /// domain-bond alternative.
+    #[test]
+    fn single_class_druid_level1_with_a_domain_bond_still_blocks_on_the_catch_all() {
+        let input = human_druid_input_with_nature_bond(1, Some("bond:domain"));
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"
+                    && d.claim_blocking),
+            "an unrecognized domain-type nature bond must still trip the catch-all: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
 }
 
-/// v0.6 alpha swarm, risks item 8: Barbarian is the FIRST class in this
-/// class-breadth epic whose remaining gap was a genuine execution engine
-/// (not a permanent, unconditional class-feature burden like Sorcerer's
-/// bloodline / Cleric's domain powers / Druid's animal companion) -- so
-/// unlike every `<class>_dispatch_widening_safety_tests` module before this
-/// one, a valid Barbarian posture actually reaches `Computed`, not merely
-/// "blocked only on the permanent burden."
+/// v0.6 alpha swarm, risks item 8: Barbarian, Sorcerer, and Cleric all
+/// eventually reached `Computed` from what started as a permanent,
+/// unconditional class-feature burden (Rage execution, Arcane Bond,
+/// Touch of Good respectively) -- and Druid's animal companion joined
+/// them too. Unlike every `<class>_dispatch_widening_safety_tests` module
+/// before Barbarian's own, a valid posture in these classes actually
+/// reaches `Computed`, not merely "blocked only on the permanent burden."
 #[cfg(test)]
 mod barbarian_dispatch_widening_safety_tests {
     use super::{
