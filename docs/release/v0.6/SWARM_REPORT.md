@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Inquisitor's Judgment built, gate/formulas verified correct — but lead found a real gap before commit: the new code never enforces an over-budget check on `rounds_consumed_today` the way Rage/Bloodrage/Skald all do, and the doc comment's justification for skipping it misdescribes Rage's own actual behavior (which does enforce it). Flagged precisely with code citations; backend fixing before commit |
+| backend | working | Fixed the over-budget gap in Inquisitor's Judgment — found it needed patching in TWO places (the diagnostic function AND the separate bonus-application helper), wrote the over-budget test first and it caught the second spot (diagnostic fired but bonus still silently applied). Lead independently verified both fixes, the new test, full lib 435/435, coverage audit 3/3, full workspace sweep clean. Ready to commit |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 

@@ -33,7 +33,7 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 |---|---|---|---|---|---|---|
 | Alchemist | APG | 20 / 20 | 1 / 24 | Yes | No | P1 |
 | Cavalier | APG | 20 / 20 | 1 / 16 | Yes | No | P1 |
-| Inquisitor | APG | 20 / 20 | 0 / 19 | No | No | P1 |
+| Inquisitor | APG | 20 / 20 | 1 / 19 | Yes | No | P1 |
 | Oracle | APG | 20 / 20 | 0 / 19 | No | No | P1 |
 | Summoner | APG | 20 / 20 | 0 / 17 | No | No | P1 |
 | Witch | APG | 20 / 20 | 0 / 7 | No | No | P1 |
@@ -50,6 +50,8 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 **Update (v0.6 alpha swarm, risks item 8, Cavalier Mount closure, first APG class-specific closure, 2026-07-25):** this audit's own findings no longer hold unconditionally for Cavalier specifically — its row above is updated accordingly (1 named feature wired, `pilot_compute_integrated: Yes`). Cavalier's 1st-level Mount is now genuinely wired via `is_supported_cavalier_single_class`, the first widening of `has_supported_class_chassis` to any APG class, reusing the same exact-match gate-widening pattern already proven 4 times for ACG (Skald/Bloodrager/Brawler/Hunter). Cavalier still does not reach `Computed` (its other named features remain deferred) and is still not multiclass-eligible (`ApgClassId::from_class_id_str` remains deliberately unregistered with `multiclass_class_level_supported`), so criterion 4.5's Epic 5 multiclass-deferral conclusion is unaffected. Every other APG class's row is unchanged. See `./apg_cavalier_coverage.md`'s own update note for the full record.
 
 **Update (v0.6 alpha swarm, risks item 8, Alchemist Mutagen closure, second APG class-specific closure, 2026-07-25):** the same update applies to Alchemist -- its row above is updated accordingly (1 named feature wired, `pilot_compute_integrated: Yes`). Alchemist's Mutagen is now genuinely wired via `is_supported_alchemist_single_class`, combining the choice-recognition pattern (Sorcerer/Cleric) with the activation-gating pattern (Barbarian/Skald/Bloodrager) for the first time. Alchemist still does not reach `Computed` (spellcasting and every other named feature remain deferred) and is still not multiclass-eligible, so criterion 4.5's conclusion remains unaffected. Every other APG class's row (including Cavalier's, already updated above) is unchanged. See `./apg_alchemist_coverage.md`'s own update note for the full record.
+
+**Update (v0.6 alpha swarm, risks item 8, Inquisitor Judgment closure, third APG class-specific closure, 2026-07-25):** the same update applies to Inquisitor -- its row above is updated accordingly (1 named feature wired, `pilot_compute_integrated: Yes`). Inquisitor's Justice judgment is now genuinely wired via `is_supported_inquisitor_single_class`, combining the choice-recognition pattern with the activation-gating pattern -- the same combination Alchemist's Mutagen already proved. Inquisitor still does not reach `Computed` (spellcasting, the other 7 judgment types, and every other named feature remain deferred) and is still not multiclass-eligible, so criterion 4.5's conclusion remains unaffected. Every other APG class's row (including Cavalier's/Alchemist's, already updated above) is unchanged. See `./apg_inquisitor_coverage.md`'s own update note for the full record.
 
 **Per-class detail:** `./apg_alchemist_coverage.md`, `./apg_cavalier_coverage.md`, `./apg_inquisitor_coverage.md`, `./apg_oracle_coverage.md`, `./apg_summoner_coverage.md`, `./apg_witch_coverage.md` (per `content-unit-inventory.md` §3.1's cycle-artifact-path column).
 

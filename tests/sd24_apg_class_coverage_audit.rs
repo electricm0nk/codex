@@ -54,18 +54,21 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// stale.
 ///
 /// **Updated (v0.6 alpha swarm, risks item 8, Cavalier Mount / Alchemist
-/// Mutagen closures, 2026-07-25):** exactly this canary fired --
-/// Cavalier's Mount and Alchemist's Mutagen are now genuinely wired, the
-/// first two named APG class features this repo computes. Both are
-/// carved out of the "stays 0" loop below and given their own dedicated
-/// assertions (`named_features_wired == 1` each), per this test's own
-/// documented update instruction. Every other APG class remains at 0,
-/// unchanged.
+/// Mutagen / Inquisitor Judgment closures, 2026-07-25):** exactly this
+/// canary fired -- Cavalier's Mount, Alchemist's Mutagen, and
+/// Inquisitor's Justice judgment are now genuinely wired, the first three
+/// named APG class features this repo computes. All three are carved out
+/// of the "stays 0" loop below and given their own dedicated assertions
+/// (`named_features_wired == 1` each), per this test's own documented
+/// update instruction. Every other APG class remains at 0, unchanged.
 #[test]
-fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_and_alchemists_mutagen()
+fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_and_inquisitors_judgment()
 {
     for row in coverage_report() {
-        if matches!(row.class_id, ApgClassId::Cavalier | ApgClassId::Alchemist) {
+        if matches!(
+            row.class_id,
+            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor
+        ) {
             continue;
         }
         assert_eq!(
@@ -82,9 +85,11 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         );
     }
 
-    for (class_id, feature_name) in
-        [(ApgClassId::Cavalier, "Mount"), (ApgClassId::Alchemist, "Mutagen")]
-    {
+    for (class_id, feature_name) in [
+        (ApgClassId::Cavalier, "Mount"),
+        (ApgClassId::Alchemist, "Mutagen"),
+        (ApgClassId::Inquisitor, "Justice judgment"),
+    ] {
         let row = class_coverage(class_id);
         assert_eq!(
             row.named_features_wired, 1,
@@ -136,6 +141,8 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Alchemist {
             "class_feature.apg.alchemist.spellcasting_deferred.unsupported".to_owned()
+        } else if *class_id == ApgClassId::Inquisitor {
+            "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned()
         } else {
             format!("class_feature.apg.{}.unsupported", class_id.name())
         };
@@ -157,7 +164,10 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
-        if matches!(*class_id, ApgClassId::Cavalier | ApgClassId::Alchemist) {
+        if matches!(
+            *class_id,
+            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor
+        ) {
             let retired_diagnostic_id = format!("class_feature.apg.{}.unsupported", class_id.name());
             assert!(
                 !computation.diagnostics.iter().any(|d| d.id == retired_diagnostic_id),

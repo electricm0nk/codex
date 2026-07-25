@@ -166,11 +166,13 @@ pub struct ApgClassCoverage {
     /// Challenge, ...) this repo has independent wired computation logic
     /// for, analogous to `level_up/fighter.rs`'s `explain_fighter_class_features`
     /// wiring for the CRB Fighter. Zero for every APG class except
-    /// Cavalier and Alchemist as of the v0.6 alpha swarm's Cavalier Mount
-    /// / Alchemist Mutagen closures (risks item 8): Cavalier's 1st-level
-    /// Mount and Alchemist's Mutagen are now genuinely wired
+    /// Cavalier, Alchemist, and Inquisitor as of the v0.6 alpha swarm's
+    /// Cavalier Mount / Alchemist Mutagen / Inquisitor Judgment closures
+    /// (risks item 8): Cavalier's 1st-level Mount, Alchemist's Mutagen,
+    /// and Inquisitor's Justice judgment are now genuinely wired
     /// (`pilot_compute::ground_cavalier_mount_and_defer_the_rest`,
-    /// `pilot_compute::ground_or_block_alchemist_mutagen`) -- see
+    /// `pilot_compute::ground_or_block_alchemist_mutagen`,
+    /// `pilot_compute::ground_or_block_inquisitor_judgment`) -- see
     /// `class_coverage`'s own branches for each. Every other APG class
     /// remains at 0: SD-22 Epic 3 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_alchemist.rs`'s own doc
@@ -246,11 +248,18 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
         ApgClassId::Witch => class_witch::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): Cavalier's
-    // Mount is the one real, wired named class feature among all six APG
-    // classes today -- see this field's own doc comment above.
-    let named_features_wired =
-        if matches!(class_id, ApgClassId::Cavalier | ApgClassId::Alchemist) { 1 } else { 0 };
+    // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen /
+    // Inquisitor Judgment closures): these three each have exactly one
+    // real, wired named class feature among all six APG classes today --
+    // see this field's own doc comment above.
+    let named_features_wired = if matches!(
+        class_id,
+        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor
+    ) {
+        1
+    } else {
+        0
+    };
 
     ApgClassCoverage {
         class_id,

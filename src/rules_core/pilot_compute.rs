@@ -1841,6 +1841,54 @@ const ALCHEMIST_MUTAGEN_STAT_PENALTY: i16 = -2;
 /// PF1 Advanced Player's Guide Mutagen: "a +2 natural armor bonus."
 const ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS: i16 = 2;
 
+/// v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, third
+/// APG class-specific closure): APG Inquisitor's Judgment, verified
+/// directly against `apg_abilities_class.lst`'s own `Inquisitor ~
+/// Judgment`/`Judgment (Sacred)`/`Judgment (Profane)`/`Judgment / Justice`
+/// entries. Combines the activation-gating pattern (Barbarian/Skald/
+/// Bloodrager Rage-shaped mechanics) with the choice-recognition pattern
+/// (Cleric's domain choice / Alchemist's mutagen-stat choice) -- the same
+/// combination Alchemist's Mutagen already proved, not a new architecture.
+/// Justice is the one canonical judgment type this closure grounds (see
+/// `INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID`'s own doc comment for why);
+/// the other 7 judgment types (Destruction, Healing, Piercing, Protection,
+/// Purity, Resiliency, Resistance/Smiting) stay named-but-unbuilt behind
+/// the narrowed deferred diagnostic, mirroring every prior partial
+/// closure this session.
+const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
+/// `ClassAbilityActivation.ability_id` for Inquisitor Judgment. Unlike
+/// Mutagen, Judgment DOES have a real per-day use budget (see
+/// `inquisitor_judgment_uses_per_day`), genuinely enforced via
+/// `activation.rounds_consumed_today` -- mirroring Rage's/Bloodrage's own
+/// enforced rounds-per-day budget exactly (an earlier draft of this
+/// closure incorrectly claimed this budget was informational-only; caught
+/// in review 2026-07-25 against the actual Rage/Bloodrage code, which
+/// does enforce theirs, and fixed before commit).
+const INQUISITOR_JUDGMENT_ABILITY_ID: &str = "judgment";
+/// The choice set for which judgment type is currently pronounced. A
+/// swift action can change this mid-combat per the corpus text, but this
+/// codebase computes one deterministic snapshot, not a turn sequence, so
+/// only the currently-selected type matters here -- the same "one
+/// snapshot, not a turn-by-turn simulation" scope every activation-gated
+/// closure this session already assumes.
+const INQUISITOR_JUDGMENT_CHOICE_ID: &str = "choice:inquisitor_judgment";
+/// PF1 Advanced Player's Guide Judgment (Justice): "granting a +X sacred
+/// [or profane] bonus on all attack rolls" -- picked as the one canonical
+/// judgment type this closure grounds because it is the only one of the 8
+/// whose bonus is a pure numeric attack-roll bonus with no new state this
+/// codebase would need to introduce (Destruction/damage rolls has no
+/// damage-roll total anywhere in this codebase to layer onto; Healing/
+/// Resiliency/Resistance/Protection need fast-healing, damage-reduction,
+/// or energy-resistance state that doesn't exist yet; Piercing/Purity/
+/// Smiting are opponent- or effect-type-dependent). Justice's own bonus
+/// number is identical whether the inquisitor's alignment grants the
+/// Sacred or Profane variant (`1+InqJudgeJusticeLVL/5` either way, per the
+/// corpus's own two DESC blocks), so no alignment branching is needed for
+/// the VALUE -- only the flavor name differs, which this closure does not
+/// attempt to pick correctly per-alignment (see
+/// `inquisitor_justice_judgment_attack_bonus`'s own doc comment).
+const INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID: &str = "judgment:justice";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7422,6 +7470,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_hunter_single_class(input)
         || is_supported_cavalier_single_class(input)
         || is_supported_alchemist_single_class(input)
+        || is_supported_inquisitor_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7454,6 +7503,23 @@ fn is_supported_alchemist_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     apg::class_chassis_resolve(ApgClassId::Alchemist, class_level.level, RuleSetId::Apg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure): whether
+/// `input` is a single-class Inquisitor at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Inquisitor --
+/// mirrors `is_supported_cavalier_single_class`/
+/// `is_supported_alchemist_single_class` exactly, including the same
+/// exact-match discipline (`== Some(ApgClassId::Inquisitor)`, not a broad
+/// `.is_some()`).
+fn is_supported_inquisitor_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Inquisitor) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Inquisitor, class_level.level, RuleSetId::Apg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
@@ -7846,28 +7912,31 @@ fn compute_apg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen
-    // closures, first/second APG class-specific closures, spot-checked
-    // 2026-07-25): Cavalier and Alchemist are the two APG classes with a
-    // genuinely real class feature now (the Mount, unconditional on
-    // class ownership and level alone; Mutagen, choice- and activation-
-    // gated -- see each one's own doc comment). The other 4 APG classes
-    // keep the exact original unconditional diagnostic unchanged. These
-    // branches are reached only for single-class Cavalier/Alchemist (this
-    // function is only ever called from `compute_class_chassis`'s
+    // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen /
+    // Inquisitor Judgment closures, first/second/third APG class-specific
+    // closures, spot-checked 2026-07-25): Cavalier, Alchemist, and
+    // Inquisitor are the three APG classes with a genuinely real class
+    // feature now (the Mount, unconditional on class ownership and level
+    // alone; Mutagen and Judgment, both choice- and activation-gated --
+    // see each one's own doc comment). The other 3 APG classes keep the
+    // exact original unconditional diagnostic unchanged. These branches
+    // are reached only for single-class Cavalier/Alchemist/Inquisitor
+    // (this function is only ever called from `compute_class_chassis`'s
     // single-class-only section; `ApgClassId::from_class_id_str` is
     // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Cavalier- or Alchemist-containing multiclass mix never reaches
-    // this function at all).
+    // so a Cavalier-, Alchemist-, or Inquisitor-containing multiclass mix
+    // never reaches this function at all).
     if class_id == ApgClassId::Cavalier {
         ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
+    } else if class_id == ApgClassId::Inquisitor {
+        ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
         // named class features, no spellcasting (even for the casters
-        // among the 4 remaining).
+        // among the 3 remaining).
         diagnostics.push(ComputationDiagnostic {
             id: format!("class_feature.apg.{}.unsupported", class_id.name()),
             message: format!(
@@ -8227,6 +8296,237 @@ fn apply_alchemist_mutagen_ac_bonus_to_combat_baseline(input: &CharacterInput) -
     } else {
         0
     }
+}
+
+/// PF1 Advanced Player's Guide Judgment: "an inquisitor can use this
+/// ability 1 + 1 for every three inquisitor levels beyond 1st". Verified
+/// directly against `apg_abilities_class.lst`'s own `BONUS:VAR|
+/// InquisitorJudgmentTimes|1+(InquisitorLVL-1)/3`. Informational only --
+/// see `INQUISITOR_JUDGMENT_ABILITY_ID`'s own doc comment for why this
+/// codebase never enforces a per-day-use budget.
+fn inquisitor_judgment_uses_per_day(level: u8) -> i16 {
+    1 + (i16::from(level) - 1) / 3
+}
+
+/// PF1 Advanced Player's Guide Judgment / Justice: "granting a +1 sacred
+/// [or profane] bonus on all attack rolls" at 1st level, scaling per
+/// `1+InqJudgeJusticeLVL/5` (verified directly against
+/// `apg_abilities_class.lst`'s own two Judgment/Justice DESC blocks,
+/// Sacred and Profane, which share this exact formula).
+fn inquisitor_justice_judgment_attack_bonus(level: u8) -> i16 {
+    1 + i16::from(level) / 5
+}
+
+/// Whether `input` is an Inquisitor actively, validly pronouncing the
+/// Justice judgment (v0.6 alpha swarm, risks item 8, Inquisitor Judgment
+/// closure) -- mirrors `active_cleric_touch_of_good_bonus`'s exact shape
+/// (class ownership, then a recognized choice, then an active
+/// class_ability_activations entry), the closest existing precedent for
+/// a self-applied attack-roll bonus gated on both a choice and an
+/// activation.
+fn active_inquisitor_justice_judgment_bonus(input: &CharacterInput) -> Option<(u8, i16)> {
+    let inquisitor_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == INQUISITOR_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let judgment_selection = choice_selection(input, INQUISITOR_JUDGMENT_CHOICE_ID);
+    if judgment_selection != Some(INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID) {
+        return None;
+    }
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == INQUISITOR_JUDGMENT_ABILITY_ID)?;
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    if let Some(uses_consumed_today) = activation.rounds_consumed_today {
+        let uses_per_day = inquisitor_judgment_uses_per_day(inquisitor_level);
+        if i32::from(uses_consumed_today) > i32::from(uses_per_day) {
+            return None;
+        }
+    }
+
+    Some((inquisitor_level, inquisitor_justice_judgment_attack_bonus(inquisitor_level)))
+}
+
+/// Grounds or claim-blocks Inquisitor's Judgment execution engine for
+/// `inquisitor_level` (v0.6 alpha swarm, risks item 8, Inquisitor
+/// Judgment closure). Called from `compute_apg_class_chassis`'s
+/// Inquisitor branch, gated only on Inquisitor class-ownership.
+///
+/// A character who simply isn't currently pronouncing judgment (no
+/// `class_ability_activations` entry for `INQUISITOR_JUDGMENT_ABILITY_ID`,
+/// or one present but `active_state != EquippedActive`) is a genuinely
+/// valid PF1 posture -- not every Inquisitor is always judging -- so this
+/// grounds a real "not judging" recognition record rather than claim-
+/// blocking, mirroring "not mutated"/"not raging" from every other
+/// activation-gated closure this session. An activation that IS active
+/// but names no recognized `choice:inquisitor_judgment` selection (or
+/// names one of the other 7 judgment types this closure does not ground)
+/// is a genuine posture violation -- pronouncing judgment always requires
+/// choosing a type first per the corpus's own sequencing -- and claim-
+/// blocks, mirroring Alchemist's own "active but no recognized stat
+/// choice" shape. An activation whose `rounds_consumed_today` exceeds the
+/// grounded uses-per-day budget also claim-blocks, mirroring Rage's/
+/// Bloodrage's own genuinely-enforced over-budget check exactly (caught
+/// in review 2026-07-25: an earlier version of this closure's own doc
+/// comment incorrectly claimed the budget was informational-only, citing
+/// Rage/Bloodrage as precedent for that claim -- but both of those
+/// actually DO enforce their budget with a real over-budget diagnostic,
+/// so this closure was missing the same check, not deliberately scoping
+/// it out).
+fn ground_or_block_inquisitor_judgment(
+    input: &CharacterInput,
+    inquisitor_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == INQUISITOR_JUDGMENT_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.inquisitor.judgment_execution.not_judging".to_owned(),
+            value: 0,
+            detail: format!(
+                "Inquisitor level {inquisitor_level} is not currently pronouncing judgment (no \
+                 class_ability_activations entry for \
+                 \"{INQUISITOR_JUDGMENT_ABILITY_ID}\"): a genuinely valid PF1 posture, so no \
+                 attack-roll bonus is claimed. This grounds the Judgment execution engine's \
+                 \"inactive\" branch only; being actively judging is grounded separately below \
+                 when an active activation with the recognized Justice choice is present"
+            ),
+        });
+        push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    let uses_per_day = inquisitor_judgment_uses_per_day(inquisitor_level);
+    if let Some(uses_consumed_today) = activation.rounds_consumed_today {
+        if i32::from(uses_consumed_today) > i32::from(uses_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.apg.inquisitor.judgment_execution.uses_exceeded".to_owned(),
+                message: format!(
+                    "Inquisitor level {inquisitor_level} Judgment activation claims \
+                     {uses_consumed_today} uses consumed today, exceeding the grounded \
+                     uses-per-day budget of {uses_per_day} (1 + (level-1)/3): a genuine posture \
+                     violation, so no attack-roll bonus is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let judgment_selection = choice_selection(input, INQUISITOR_JUDGMENT_CHOICE_ID);
+            if judgment_selection != Some(INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID) {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.apg.inquisitor.judgment_execution.judgment_choice_missing"
+                        .to_owned(),
+                    message: format!(
+                        "Inquisitor level {inquisitor_level} claims an active Judgment \
+                         ({INQUISITOR_JUDGMENT_ABILITY_ID}) but has no recognized \
+                         {INQUISITOR_JUDGMENT_CHOICE_ID} selection naming Justice (got \
+                         {judgment_selection:?}): pronouncing judgment always requires choosing \
+                         a type first per the PF1 Advanced Player's Guide's own sequencing, and \
+                         Justice is the only one of the 8 judgment types this codebase grounds \
+                         (see INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID's own doc comment for \
+                         why), so an active judgment naming any other type -- or none -- is a \
+                         genuine posture violation, not a silently passing one -- no attack-roll \
+                         bonus is claimed for this input"
+                    ),
+                    claim_blocking: true,
+                });
+                push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+                return;
+            }
+
+            let attack_bonus = inquisitor_justice_judgment_attack_bonus(inquisitor_level);
+            let uses_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                value: attack_bonus,
+                detail: format!(
+                    "Inquisitor level {inquisitor_level} is actively pronouncing the Justice \
+                     judgment, within the grounded uses-per-day budget ({uses_per_day} uses; \
+                     {uses_consumed_today} consumed today), granting a +{attack_bonus} sacred \
+                     (or profane) bonus on all attack rolls. The bonus is applied to her own \
+                     baseline melee attack bonus only (see compute_combat_baseline) -- this \
+                     codebase does not model which of Sacred/Profane Judgment an inquisitor's \
+                     own alignment grants, since the numeric bonus is identical either way, only \
+                     the flavor name differs"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.inquisitor.judgment_execution.uses_per_day".to_owned(),
+                value: uses_per_day,
+                detail: format!(
+                    "Inquisitor level {inquisitor_level} Judgment uses per day: \
+                     1 + (level-1)/3 = {uses_per_day}. Genuinely enforced -- an activation whose \
+                     rounds_consumed_today exceeds this budget claim-blocks (see the \
+                     uses_exceeded check above), mirroring Rage's/Bloodrage's own enforced \
+                     budget exactly"
+                ),
+            });
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.inquisitor.judgment_execution.not_judging".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Inquisitor level {inquisitor_level} has a \
+                     \"{INQUISITOR_JUDGMENT_ABILITY_ID}\" activation entry but it is not active \
+                     for this snapshot: a genuinely valid PF1 posture, so no attack-roll bonus \
+                     is claimed"
+                ),
+            });
+        }
+    }
+
+    push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.apg.inquisitor.unsupported` for Inquisitor specifically
+/// (v0.6 alpha swarm, risks item 8, Inquisitor Judgment closure): named
+/// ONLY the genuinely still-missing pieces. Inquisitor's Domain (verified
+/// directly against `apg_abilities_class.lst`'s own KEY list: no "Domain"
+/// entry exists for Inquisitor at all, unlike Cleric -- it manifests
+/// purely as spell-list access, never a domain power) is folded into the
+/// spellcasting bucket rather than named separately, since there is no
+/// separate domain-power burden to name. Pushed unconditionally regardless
+/// of Judgment's own active state, mirroring Alchemist's/Skald's own
+/// diagnostic-honesty fix.
+fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{INQUISITOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar and the Justice judgment: this APG class has no class-skill list, \
+             no spellcasting posture (Inquisitor casts divine spells and gets one domain, but \
+             the domain only ever grants spell-list access -- no domain power exists for \
+             Inquisitor per the corpus -- and no spells-known/per-day table has been \
+             independently verified or built), no other 7 judgment types (Destruction, \
+             Healing, Piercing, Protection, Purity, Resiliency, Resistance/Smiting), and no \
+             other named class feature (Bane, Cunning Initiative, Discern Lies, Exploit \
+             Weakness, Monster Lore, Solo Tactics, Stalwart, Stern Gaze, Track) grounded \
+             anywhere in this codebase yet; no class-feature or spell execution is fabricated \
+             in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
 }
 
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
@@ -23329,12 +23629,22 @@ fn compute_combat_baseline(
     // 0 for every non-Cleric, non-Good-domain, or not-currently-active
     // character.
     let touch_of_good_attack_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure):
+    // Inquisitor Justice judgment's sacred (or profane) bonus on attack
+    // rolls applies here too -- class-ownership-gated by
+    // `active_inquisitor_justice_judgment_bonus` construction, 0 for
+    // every non-Inquisitor, non-Justice-judgment, or not-currently-active
+    // character.
+    let justice_judgment_attack_bonus = active_inquisitor_justice_judgment_bonus(input)
+        .map(|(_, bonus)| bonus)
+        .unwrap_or(0);
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
         + weapon_training_bonus
         + inspire_courage_attack_bonus
-        + touch_of_good_attack_bonus;
+        + touch_of_good_attack_bonus
+        + justice_judgment_attack_bonus;
     let weapon_training_detail = if weapon_training_bonus > 0 {
         format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
     } else {
@@ -23350,6 +23660,11 @@ fn compute_combat_baseline(
     } else {
         String::new()
     };
+    let justice_judgment_detail = if justice_judgment_attack_bonus > 0 {
+        format!(" + Inquisitor Justice judgment sacred/profane bonus (+{justice_judgment_attack_bonus})")
+    } else {
+        String::new()
+    };
 
     let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
@@ -23357,7 +23672,7 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}; \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
@@ -25361,19 +25676,24 @@ mod apg_class_chassis_dispatch_tests {
     /// genuinely ungrounded, so this must never silently read as
     /// `Computed`.
     ///
-    /// Cavalier and Alchemist are carved out of this loop (v0.6 alpha
-    /// swarm, risks item 8, Cavalier Mount / Alchemist Mutagen closures,
-    /// first/second APG class-specific closures): each has its own
-    /// generic `class_feature.apg.<class>.unsupported` diagnostic
-    /// retired and replaced with a narrower one, since the Mount /
-    /// Mutagen are now genuinely grounded -- see
+    /// Cavalier, Alchemist, and Inquisitor are carved out of this loop
+    /// (v0.6 alpha swarm, risks item 8, Cavalier Mount / Alchemist
+    /// Mutagen / Inquisitor Judgment closures, first/second/third APG
+    /// class-specific closures): each has its own generic
+    /// `class_feature.apg.<class>.unsupported` diagnostic retired and
+    /// replaced with a narrower one, since the Mount / Mutagen / Judgment
+    /// are now genuinely grounded -- see
     /// `cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// / `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// below for each class's own dedicated coverage.
     #[test]
     fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:cavalier" || class_id == "class:alchemist" {
+            if class_id == "class:cavalier"
+                || class_id == "class:alchemist"
+                || class_id == "class:inquisitor"
+            {
                 continue;
             }
 
@@ -25503,19 +25823,71 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Inquisitor-specific coverage for the retired-diagnostic/new-
+    /// diagnostic swap: the OLD generic `class_feature.apg.inquisitor
+    /// .unsupported` diagnostic must never appear for Inquisitor, while
+    /// the NEW, narrower `class_feature.apg.inquisitor
+    /// .other_features_deferred.unsupported` diagnostic always does --
+    /// Inquisitor stays `Blocked` on its other named features alone, even
+    /// when Judgment itself is genuinely grounded and active.
+    #[test]
+    fn inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = ranger_style_input("class:inquisitor", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Inquisitor must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.unsupported"),
+            "the retired generic diagnostic must never appear for Inquisitor: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.not_judging"),
+            "expected the honest not-judging recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
     /// The critical negative-leak test, mirroring the ACG-side one
-    /// exactly: the OTHER 4 APG classes must produce ZERO
+    /// exactly: the OTHER 3 APG classes must produce ZERO
     /// `defense.total_save.*`/`combat.baseline_*`/
     /// `skill.selected_modifier.*` explanations at level 1, even under
-    /// the exact same satisfying posture that genuinely admits Cavalier
-    /// and Alchemist -- proving `is_supported_cavalier_single_class` and
-    /// `is_supported_alchemist_single_class` are real exact matches, not
+    /// the exact same satisfying posture that genuinely admits Cavalier,
+    /// Alchemist, and Inquisitor -- proving `is_supported_cavalier_single_class`,
+    /// `is_supported_alchemist_single_class`, and
+    /// `is_supported_inquisitor_single_class` are real exact matches, not
     /// broad `.is_some()` checks that would silently admit all 6 APG
     /// classes into real pillar computation.
     #[test]
-    fn the_other_four_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_three_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:cavalier" || class_id == "class:alchemist" {
+            if class_id == "class:cavalier"
+                || class_id == "class:alchemist"
+                || class_id == "class:inquisitor"
+            {
                 continue;
             }
 
@@ -25585,6 +25957,29 @@ mod apg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Alchemist: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Inquisitor's own positive counterpart, mirroring Cavalier's/
+    /// Alchemist's exactly -- proves the gate genuinely admits Inquisitor
+    /// regardless of Judgment's own (here, inactive) state.
+    #[test]
+    fn inquisitor_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = ranger_style_input("class:inquisitor", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Inquisitor: {:?}",
                 receipt.computation.explanations
             );
         }
@@ -28482,6 +28877,282 @@ mod alchemist_dispatch_widening_safety_tests {
             receipt.computation.ability_modifiers.strength, 4,
             "a non-Alchemist character's spoofed mutagen entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, third APG
+/// class-specific closure, 2026-07-25): Inquisitor's Judgment combines the
+/// activation-gating pattern with the choice-recognition pattern, the
+/// same shape as Alchemist's Mutagen, mirroring its own test module
+/// exactly. Like Cavalier/Alchemist, a valid Inquisitor posture never
+/// reaches full `Computed` this slice (spellcasting/other named features
+/// stay permanently deferred behind the narrowed diagnostic).
+#[cfg(test)]
+mod inquisitor_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, INQUISITOR_CLASS_ID,
+        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
+        INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_inquisitor_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: INQUISITOR_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Inquisitor who is not currently pronouncing
+    /// judgment (no `class_ability_activations` entry at all) is a
+    /// genuinely valid PF1 posture -- stays `Blocked` on the new, narrower
+    /// `other_features_deferred` diagnostic alone (never the retired
+    /// generic one), with the honest "not judging" recognition record
+    /// grounded.
+    #[test]
+    fn single_class_inquisitor_not_judging_stays_blocked_on_deferred_features_only() {
+        let input = human_inquisitor_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Inquisitor must stay Blocked on other-features alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.not_judging"),
+            "expected the honest not-judging recognition record: {:?}",
+            receipt.computation.explanations
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.unsupported"),
+            "the retired generic diagnostic must never appear for Inquisitor: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Justice judgment applies the real attack-roll bonus to the
+    /// integrated melee attack bonus -- but still stays `Blocked`
+    /// (other_features_deferred), mirroring Alchemist's own "real bonus
+    /// applied, still Blocked overall" shape.
+    ///
+    /// Level 1 Justice bonus: 1 + 1/5 = 1.
+    #[test]
+    fn single_class_inquisitor_actively_judging_justice_with_recognized_choice_applies_real_bonus()
+    {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Inquisitor stays Blocked on other features even while actively, validly judging: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic even while judging: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // Base attack bonus (Inquisitor level 1: 0) + Strength modifier
+        // (fixture base 16 + Human +2 -> +4) + Weapon Focus (+1) +
+        // Justice judgment bonus (+1) = 6.
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "Justice judgment's attack-roll bonus must be applied: {:?}",
+            melee_attack_bonus
+        );
+    }
+
+    /// An Inquisitor claiming an active Judgment but with no recognized
+    /// `choice:inquisitor_judgment` selection naming Justice is a genuine
+    /// posture violation and must claim-block -- never silently passed,
+    /// mirroring Alchemist's own "active but no recognized stat choice"
+    /// shape.
+    #[test]
+    fn single_class_inquisitor_active_judgment_without_a_recognized_justice_choice_stays_blocked() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.apg.inquisitor.judgment_execution.judgment_choice_missing"
+                    && d.claim_blocking),
+            "expected the missing-judgment-choice claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // No Justice judgment bonus applied for an active-but-unrecognized-
+        // choice posture: 0 (BAB) + 4 (STR) + 1 (Weapon Focus) = 5.
+        assert_eq!(
+            melee_attack_bonus.value, 5,
+            "no Judgment bonus is applied for an active-but-unrecognized-choice posture: {:?}",
+            melee_attack_bonus
+        );
+    }
+
+    /// A Judgment activation that exceeds the grounded uses-per-day
+    /// budget is a genuine posture violation and must claim-block -- never
+    /// silently capped, mirroring Rage's/Bloodrage's own over-budget check
+    /// exactly (caught in review 2026-07-25: an earlier draft of this
+    /// closure was missing this check entirely).
+    ///
+    /// Level 1 uses per day: 1 + (1-1)/3 = 1.
+    #[test]
+    fn single_class_inquisitor_over_budget_judgment_stays_blocked_and_applies_no_bonus() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(2),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.inquisitor.judgment_execution.uses_exceeded"
+                    && d.claim_blocking),
+            "expected the uses-exceeded claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // No Justice judgment bonus applied for an over-budget posture:
+        // 0 (BAB) + 4 (STR) + 1 (Weapon Focus) = 5.
+        assert_eq!(
+            melee_attack_bonus.value, 5,
+            "no Judgment bonus is applied for an over-budget posture: {:?}",
+            melee_attack_bonus
+        );
+    }
+
+    /// A non-Inquisitor character carrying a spoofed `"judgment"`
+    /// activation entry (plus a spoofed Justice choice) must have it
+    /// silently ignored, not applied -- the class-ownership gate is by
+    /// construction (`active_inquisitor_justice_judgment_bonus` only ever
+    /// reads `class_ability_activations`/`selected_choices` after
+    /// confirming `class_levels` contains Inquisitor), not a bolt-on
+    /// rejection. Also proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_inquisitor_characters_spoofed_judgment_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Inquisitor judgment entry: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "a non-Inquisitor character's spoofed judgment entry must never apply a bonus: {:?}",
+            melee_attack_bonus
         );
     }
 }
