@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Bard's Inspire Courage + the doctrine-audit fix both lead-verified; still uncommitted, actively running a final workspace verification pass before committing (pilot_compute.rs touched ~6 min ago) |
+| backend | working | Bard's Inspire Courage committed and lead-verified (0374b96a, 368/368 lib against committed state); just redirected to new engine work (Monk scoping pass vs. more Sorcerer/Cleric/Druid work, backend's call) |
 | frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
-| qa | working | Druid genuinely fully closed (67 files); now working the Barbarian 20-file test batch (older of the 2 queued waves), Bard's 18-file batch queued behind it |
+| qa | working | actively editing tests/sd13_barbarian_level1_chassis_baseline.rs (confirmed via git status) -- mid the 25-file Barbarian wave, Bard's 32-file wave queued behind it |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
@@ -41,11 +41,11 @@ engine work lands.
 | Rogue | **Computed** | `full` — every race, level 1 | pre-existing |
 | Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
-| Barbarian | **Computed** | real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking); UI label not yet updated by frontend (flagged just now, in progress) | Barbarian rage engine (uncommitted at last check, lead-verified 364/364 lib + 212/212 desktop) |
+| Barbarian | **Computed** | real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking); UI label not yet updated by frontend (flagged, live-verification in progress) | Barbarian rage engine, lead-verified 364/364 lib + 212/212 desktop |
 | Sorcerer | **Blocked** — real progress | known-spell posture fully computed and validated; permanently blocked on bloodline-power execution (no bloodline engine exists) | `c23d4054` |
 | Cleric | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on domain-power execution | `fca4e64e` |
 | Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
-| Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | Inspire Courage (uncommitted at last check, lead-verified 368/368 lib + 4/4 new tests) |
+| Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | `0374b96a`, lead-verified 368/368 lib against the committed state |
 | Monk | **Not started** | zero dispatch, zero chassis work | not yet queued — bonus-feat gap (7 restricted-list feats) confirmed to need its own future scoping pass (a feat-effect-engine problem, not an activation-state problem); Dodge identified as likely the easiest of the 7 |
 
 **CRB tally: 6 of 11 genuinely Computed, 4 of 11 with real partial engine progress (permanently or temporarily blocked), 1 of 11 (Monk) not started at all.**
@@ -91,8 +91,8 @@ precedent — flagged below.
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Barbarian's own 20-file QA-facing test-cleanup wave (references the now-retired unconditional rage diagnostic) — not yet started by QA or backend.
-2. Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) — the piece that would make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
+1. Barbarian's own 25-file QA-facing test-cleanup wave (references the now-retired unconditional rage diagnostic) — QA actively working this now.
+2. Bard's own 32-file test-cleanup wave, queued behind Barbarian, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) — the piece that would make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
 3. Monk — needs its own scoping pass (combat-time activation-state plan covered Barbarian/Bard; Monk's 7 restricted-list feats are a different shape entirely, closer to the Toughness feat-effects precedent).
 4. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
 
