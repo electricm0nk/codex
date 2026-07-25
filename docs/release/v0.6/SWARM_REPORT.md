@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Monk's 6th and 7th feats (Combat Reflexes, Scorpion Style, Improved Grapple) committed (`e45b622f`) and lead re-verified against the real HEAD (414/414 lib, full workspace sweep zero failures). Awaiting next assignment |
+| backend | working | Directed to Cavalier's Mount (APG) next — first-ever APG gate-widening, reuses the twice-proven animal-companion pattern. Lead confirmed `ApgClassId` structurally mirrors `AcgClassId` (no new architecture needed for the gate itself); Horse's own stat block needs the same 2+-source verification Wolf's got. Deflect Arrows and the CMB/CMD pillar both correctly deferred (no forced consumer yet) |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -122,12 +122,11 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. **Monk's own test-cleanup**, once QA scopes whether one is needed for the 6th/7th feat closures (Combat Reflexes/Scorpion Style/Improved Grapple) — one stale pre-existing test already caught and fixed pre-commit by backend, lead-verified.
+1. **Cavalier's Mount (APG)** — now the active target, directed by the lead. First-ever APG gate-widening; reuses the twice-proven Hunter/Druid animal-companion pattern (effective druid level = cavalier level). No new architecture needed for the gate itself (`ApgClassId` structurally mirrors `AcgClassId`, lead-confirmed); Horse's own stat block needs the same 2+-source verification Wolf's got before backend builds. Camel-or-Horse-only constraint for Medium cavaliers and the Share-Spells carve-out both already found, to be named honestly the same way Hunter/Druid's own species-assumption was.
 2. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all (no standalone numeric value exists to ground, unlike the other 6). Not scheduled; would need its own scoping pass same as Improved Grapple's abandoned CMB/CMD pillar would.
-3. Brawler/Hunter's own test-cleanup waves, once QA scopes whether either is needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply to both — their diagnostics are new, not replacements).
+3. Monk's/Brawler's/Hunter's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
 4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
-5. **Cavalier's Mount (APG)** — flagged as a real near-miss during the final ACG/APG scan, not built now: reuses the Hunter/Druid animal-companion pattern (effective druid level = cavalier level), but a Medium cavalier can only choose Camel or Horse (not Wolf), needs its own independently-verified stat block, a Share-Spells carve-out, and would be the first-ever APG gate-widening. Lead independently confirmed all three details against the raw corpus. Worth a future slice, not this one.
-6. All remaining untouched ACG/APG classes' class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
+5. All remaining untouched ACG/APG classes (beyond Cavalier) class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
 
 ### Honest scale note
 
