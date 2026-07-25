@@ -14,7 +14,91 @@ this report, not just SWARM_STATUS.md)
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
 | qa | idle | Sorcerer/Cleric/Druid batches (76fe82da, c578ede6, 5eae17d7+dfbb0810) all 66 files landed and lead-verified 100%; Barbarian's 20-file wave next |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
+
+---
+
+## Full class/race chassis breadth — detailed status (operator request, 2026-07-25)
+
+Authorized 2026-07-24 (operator go-ahead alongside item 7's wealth work,
+in response to a dashboard status question); running continuously since.
+27 total classes across the corpus: 11 CRB + 6 APG + 10 ACG (Bestiary has
+no PC classes). Race dimension: 7 playable races (Human, Dwarf, Elf,
+Gnome, Half-Elf, Half-Orc, Halfling). Once a class reaches `Computed`, it
+works identically across all 7 races at the levels offered — the only
+race-specific wrinkle found anywhere in this epic is a historical,
+pre-existing gate (`explain_hybrid_level1_chassis`) that blocks a
+single-class Human specifically at level 1 for Ranger/Paladin only; every
+other race/level/class combination is race-independent once its own
+engine work lands.
+
+### CRB (11 classes) — the only book with real per-class engine work started
+
+| Class | Status | Race/level support | Landed in |
+|---|---|---|---|
+| Fighter | **Computed** | `full` — every race, levels 1-3 | pre-existing (SD-13/SD-18 era) |
+| Wizard | **Computed** | `full` — every race, level 1 | pre-existing |
+| Rogue | **Computed** | `full` — every race, level 1 | pre-existing |
+| Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
+| Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
+| Barbarian | **Computed** | real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking); UI label not yet updated by frontend (flagged just now, in progress) | Barbarian rage engine (uncommitted at last check, lead-verified 364/364 lib + 212/212 desktop) |
+| Sorcerer | **Blocked** — real progress | known-spell posture fully computed and validated; permanently blocked on bloodline-power execution (no bloodline engine exists) | `c23d4054` |
+| Cleric | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on domain-power execution | `fca4e64e` |
+| Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
+| Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | Inspire Courage (uncommitted at last check, lead-verified 368/368 lib + 4/4 new tests) |
+| Monk | **Not started** | zero dispatch, zero chassis work | not yet queued — bonus-feat gap (7 restricted-list feats) confirmed to need its own future scoping pass (a feat-effect-engine problem, not an activation-state problem); Dodge identified as likely the easiest of the 7 |
+
+**CRB tally: 6 of 11 genuinely Computed, 4 of 11 with real partial engine progress (permanently or temporarily blocked), 1 of 11 (Monk) not started at all.**
+
+### APG (6 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
+
+All 6 landed together in one commit (`c511c132`): real BAB/save progression
+and real hit-die-derived HP via each class's own `HD:` token, deliberately
+kept OUTSIDE `table_class_id`/`multiclass_class_level_supported` to avoid
+a false-Computed multiclass loophole. Every class stays honestly `Blocked`
+via its own unconditional `class_feature.apg.<class>.unsupported`
+diagnostic. **None of the 6 have any class-skill-list, class-feature, or
+spellcasting work started** — that is the entire remaining bucket for all 6.
+
+| Class | BAB | Hit die | Status |
+|---|---|---|---|
+| Alchemist | 3/4 | d8 | dispatch-only, Blocked |
+| Cavalier | **full** (flagged: pre-existing coverage-audit test's "unsupported = 0 BAB" premise breaks for this one, needs its own restructuring) | d10 | dispatch-only, Blocked |
+| Inquisitor | 3/4 | d8 | dispatch-only, Blocked |
+| Oracle | 3/4 | d8 | dispatch-only, Blocked |
+| Summoner | 3/4 | d8 | dispatch-only, Blocked |
+| Witch | 1/2 | d6 | dispatch-only, Blocked |
+
+### ACG (10 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
+
+Landed together in one commit (`71cd41b6`), same shape and same
+multiclass-loophole avoidance as APG. QA's per-class survey found **4 real
+full-BAB classes**, not the 1 originally assumed from APG's Cavalier
+precedent — flagged below.
+
+| Class | BAB | Hit die | Status |
+|---|---|---|---|
+| Arcanist | 3/4 | d6 | dispatch-only, Blocked |
+| Bloodrager | **full** | d10 | dispatch-only, Blocked |
+| Brawler | **full** | d10 | dispatch-only, Blocked |
+| Hunter | 3/4 | d8 | dispatch-only, Blocked |
+| Investigator | 3/4 | d8 | dispatch-only, Blocked |
+| Shaman | 3/4 | d8 | dispatch-only, Blocked |
+| Skald | 3/4 | d8 | dispatch-only, Blocked |
+| Slayer | **full** | d10 | dispatch-only, Blocked |
+| Swashbuckler | **full** | d10 | dispatch-only, Blocked |
+| Warpriest | 3/4 | d8 | dispatch-only, Blocked |
+
+### What's actually queued next (in order, as currently planned)
+
+1. Barbarian's own 20-file QA-facing test-cleanup wave (references the now-retired unconditional rage diagnostic) — not yet started by QA or backend.
+2. Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) — the piece that would make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
+3. Monk — needs its own scoping pass (combat-time activation-state plan covered Barbarian/Bard; Monk's 7 restricted-list feats are a different shape entirely, closer to the Toughness feat-effects precedent).
+4. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
+
+### Honest scale note
+
+This item was flagged from the start as **not a bounded task** — each class needs its own real BAB/save progression, HP, class-skill list, spellcasting (for casters), and class-feature implementation, roughly the same order of magnitude as the original Fighter/Wizard/Rogue chassis work multiplied by up to 26 more classes. 6 classes are genuinely done, 4 more have real (if partial) engine progress, and the largest bucket (skill lists/features/spellcasting for all 27, plus all class-feature work for 16 APG/ACG classes) hasn't been started yet. This is expected to keep running for a while longer — the operator's standing "no job too big" directive is what's keeping it moving rather than treating the size as a reason to stop.
 
 ---
 
