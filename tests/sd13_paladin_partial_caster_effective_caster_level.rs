@@ -21,7 +21,9 @@
 //! `class_spell.paladin.partial_caster.unsupported` diagnostic remains
 //! claim-blocking for all of that, exactly as before this slice.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
     compute_pilot_base_chassis,
@@ -121,7 +123,20 @@ fn paladin_level1_grounds_effective_caster_level_as_correct_zero_absence() {
 
 #[test]
 fn paladin_effective_caster_level_grounding_does_not_retire_the_spell_burden_blocker() {
-    let input = load(PALADIN_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_BLOCKER_ID is no longer unconditional: this
+    // fixture's bare (zero prepared spells) posture is genuinely valid, so
+    // the blocker would not fire at all. This test is specifically about
+    // the blocker remaining a real, non-fabricated diagnostic, so a
+    // genuinely invalid preparation (an off-list spell) is added to make it
+    // fire for real -- proving the spell burden hasn't been silently
+    // retired, just made conditional on a genuine violation.
+    let mut input = load(PALADIN_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Magic Missile".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     // Grounding the caster-level gate arithmetic must not silently retire the

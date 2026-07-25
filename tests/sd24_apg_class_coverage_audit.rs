@@ -71,50 +71,63 @@ fn zero_named_class_features_are_wired_for_any_apg_class_yet() {
 }
 
 /// The audit's third finding, proven empirically rather than by inspection
-/// alone: `pilot_compute::compute_pilot_base_chassis` -- the function the
-/// live character-hub pilot flow actually calls -- does not recognize any
-/// APG class. Driving a real, minimal `CharacterInput` for each of the six
-/// classes through it must produce the honest, already-established
-/// claim-blocking `class_chassis.unsupported` diagnostic (the same
-/// diagnostic every non-Fighter/Wizard CRB class also trips today, per
-/// `tests/sd20_contract_pilot_receipt.rs` and `tests/sd21_wizard_chassis_computes.rs`),
-/// never a fabricated base_attack_bonus/base_saves value. This is the
-/// "no-stub" doctrine's own worked example: an honest gap, not silent
-/// fabrication.
+/// alone. **Superseded (v0.6 alpha swarm, risks item 8, second slice):**
+/// `pilot_compute::compute_pilot_base_chassis` now genuinely wires real
+/// BAB/save/HP for all six APG classes via `compute_apg_class_chassis`
+/// (verified against the actual `apg_classes.lst` corpus tokens), so the old
+/// universal `class_chassis.unsupported` diagnostic no longer fires for any
+/// of them -- that claim is stale. Each class instead trips its own real,
+/// unconditional `class_feature.apg.<class>.unsupported` diagnostic: the
+/// class-skill list, named class features, and spellcasting (5 of the 6
+/// cast) are all still genuinely ungrounded, the same shape as Ranger's own
+/// `class_spell.ranger.partial_caster.unsupported` (risks item 8's first
+/// slice). This remains the "no-stub" doctrine's own worked example -- an
+/// honest, named gap, not silent fabrication -- just a narrower gap than
+/// before.
 #[test]
-fn apg_classes_trip_the_honest_class_chassis_unsupported_diagnostic() {
+fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic() {
     for class_id in ApgClassId::ALL {
         let input = minimal_input_for(*class_id);
         let computation = compute_pilot_base_chassis(&input);
 
+        // Real level-1 base attack bonus per class (matches
+        // `pilot_compute.rs`'s own `all_six_apg_classes_ground_real_bab_save_and_hp_at_level_1`
+        // reference test, itself verified against `apg_classes.lst`): every
+        // class is 0 except Cavalier, whose full-BAB progression already
+        // gives +1 at level 1.
+        let expected_bab = if *class_id == ApgClassId::Cavalier { 1 } else { 0 };
         assert_eq!(
-            computation.base_attack_bonus, 0,
-            "{:?}: unsupported chassis must report zero, never a fabricated number",
+            computation.base_attack_bonus, expected_bab,
+            "{:?}: base attack bonus is now genuinely computed from the real chassis, not a \
+             fabricated/blocked zero",
             class_id
         );
 
+        let expected_diagnostic_id = format!("class_feature.apg.{}.unsupported", class_id.name());
         let unsupported = computation
             .diagnostics
             .iter()
-            .find(|d| d.id == "class_chassis.unsupported")
+            .find(|d| d.id == expected_diagnostic_id)
             .unwrap_or_else(|| {
                 panic!(
-                    "{:?}: expected a class_chassis.unsupported diagnostic -- if this now \
-                     fails, pilot_compute.rs has started recognizing this APG class and the \
-                     coverage row's pilot_compute_integrated field (currently false) is stale",
+                    "{:?}: expected the real '{expected_diagnostic_id}' diagnostic -- if this \
+                     now fails, pilot_compute.rs's class-feature/skill/spellcasting coverage for \
+                     this APG class has changed again and this test (plus the coverage-matrix \
+                     artifact) needs updating",
                     class_id
                 )
             });
         assert!(
             unsupported.claim_blocking,
-            "{:?}: class_chassis.unsupported must remain claim_blocking: true",
+            "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
 
         let row = class_coverage(*class_id);
         assert!(
-            !row.pilot_compute_integrated,
-            "{:?}: coverage row's pilot_compute_integrated should be false today",
+            row.pilot_compute_integrated,
+            "{:?}: coverage row's pilot_compute_integrated should now be true -- the BAB/save \
+             chassis is genuinely wired into compute_pilot_base_chassis",
             class_id
         );
     }

@@ -219,14 +219,26 @@ fn paladin_level10_effective_caster_level_rises_to_seven() {
         caster_level.detail
     );
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == PARTIAL_CASTER_BLOCKER_ID && d.claim_blocking),
-        "level-10 Paladin must still claim-block on the partial-caster spell burden: {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional: it's a real, conditional validation of
+    // AcquisitionMode::Prepared selections. This fixture predates
+    // spells_selected (zero prepared), so the posture is genuinely valid and
+    // the blocker correctly does not fire -- the real "no spell slots are
+    // fabricated" guarantee now comes from the daily-preparation record's own
+    // count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 10: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- Channel Positive Energy dice stay 5 at level 10 (rise lands at 11th) -----

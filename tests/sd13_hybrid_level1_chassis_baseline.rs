@@ -98,14 +98,22 @@ fn paladin_level1_leaves_direct_chassis_recognition_evidence() {
         "paladin chassis recognition must name the class:paladin:1 identity: {}",
         chassis.detail
     );
-    // It is recognition only; it must not fabricate a Fighter-style computed chassis.
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) Paladin's base
+    // attack bonus is now genuinely integrated via the table-driven
+    // `compute_generic_table_chassis` dispatch (`table_class_id` widened to
+    // recognize Paladin) -- the value 1 is Paladin's real full-BAB progression
+    // at level 1, not a fabricated absence, and the integrated explanation now
+    // legitimately exists alongside the standalone
+    // `class_chassis.hybrid_baseline.paladin` recognition record above.
+    // Mirrors the identical Ranger-widening flip just below.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "hybrid baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "paladin level 1's real full-BAB progression (classlevel) is 1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "hybrid baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "paladin base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 14 -> +2).
@@ -123,13 +131,22 @@ fn ranger_level1_leaves_direct_chassis_recognition_evidence() {
         "ranger chassis recognition must name the class:ranger:1 identity: {}",
         chassis.detail
     );
+    // (v0.6 swarm update, risks item 8) Ranger's base attack bonus is now
+    // genuinely integrated via the table-driven `compute_generic_table_chassis`
+    // dispatch (`table_class_id` widened to recognize Ranger) -- the value 1 is
+    // Ranger's real full-BAB progression at level 1, not a fabricated absence,
+    // and the integrated explanation now legitimately exists alongside the
+    // standalone `class_chassis.hybrid_baseline.ranger` recognition record
+    // above. Mirrors the identical Rogue-widening flip in
+    // `sd13_rogue_level1_chassis_baseline.rs`.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "hybrid baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "ranger level 1's real full-BAB progression (classlevel) is 1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "hybrid baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "ranger base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 
     // Ability modifiers remain class-independent and still compute (STR 16 -> +3).

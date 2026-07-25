@@ -62,7 +62,8 @@
 //! Wizard's/Sorcerer's/Bard's own fix shape.
 
 use codex::rules_core::character_input::{
-    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    AbilityScores, AcquisitionMode, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    SpellSelection,
 };
 use codex::rules_core::level_up::paladin::compute_paladin_level_up_grants;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
@@ -250,7 +251,24 @@ fn partial_caster_unsupported_diagnostic_never_leaks_into_explanations_or_grants
     for from_level in 1..20u8 {
         let to_level = from_level + 1;
         let character = paladin_at_level(to_level);
-        let computation = compute_pilot_base_chassis(&character);
+
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+        // PARTIAL_CASTER_UNSUPPORTED_DIAGNOSTIC_ID is no longer unconditional:
+        // `paladin_at_level`'s bare fixture (zero prepared spells) has a
+        // genuinely valid posture at every level, so the blocker would not
+        // fire at all. This test is specifically about the diagnostic never
+        // leaking into .explanations or a fabricated LevelUpPlan Grant, so a
+        // genuinely invalid preparation (an off-list spell) is added -- to a
+        // clone used only for the chassis computation below, not to
+        // `character` itself, so the level-up grant check further down still
+        // exercises the real, unmodified per-level transition.
+        let mut chassis_input = character.clone();
+        chassis_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: "class:paladin".to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        let computation = compute_pilot_base_chassis(&chassis_input);
 
         let diagnostic = computation
             .diagnostics

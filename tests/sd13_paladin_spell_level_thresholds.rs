@@ -181,14 +181,23 @@ fn paladin_level10_spell_burden_stays_claim_blocked_despite_the_access_record() 
         access.detail
     );
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == PARTIAL_CASTER_BLOCKER_ID && d.claim_blocking),
-        "the partial-caster spell burden must stay claim-blocking at level 10: {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional: it's a real, conditional validation of
+    // AcquisitionMode::Prepared selections. PALADIN_LEVEL10_FIXTURE predates
+    // spells_selected (zero prepared), so the posture is genuinely valid and
+    // the blocker correctly does not fire -- the real "no slot counts
+    // fabricated" guarantee now comes from the daily-preparation record's
+    // own count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(blocker) => assert!(blocker.claim_blocking),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 10: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- Negative control: no leak onto other classes -----

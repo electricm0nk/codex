@@ -27,6 +27,17 @@
 //! ranger spell burden, or Ranger level 2+ -- those stay named-but-unproven exactly as
 //! before. Track, Favored Enemy, and the combat-style level-gate absence record
 //! (grounded by earlier SD13-E3/E5 slices) are unaffected.
+//!
+//! **Superseded (v0.6 alpha swarm, risks item 8):** `table_class_id` was widened to
+//! recognize Ranger via the shared table-driven `compute_generic_table_chassis`
+//! dispatch, giving Ranger its own real, integrated `class_chassis.*` computation
+//! (not just the standalone `class_chassis.ranger.*` pillar records this file's
+//! original slice grounded). This makes the paragraph above's "standalone, not wired
+//! into `PilotBaseChassisComputation`" claim stale: Ranger's base-attack/base-save ARE
+//! now wired into the integrated `class_chassis.base_attack_bonus` /
+//! `class_chassis.base_save.*` explanations, mirroring the identical Rogue-widening
+//! flip in `sd13_rogue_level1_chassis_baseline.rs`. See the test marked "(v0.6 swarm
+//! update)" below for the exact current truth.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -141,30 +152,35 @@ fn ranger_level1_grounds_base_save_progression() {
     }
 }
 
-// ----- The grounded records are standalone: not wired into any integrated total -----
+// ----- (v0.6 swarm update, risks item 8): the standalone records now ALSO have a genuinely wired integrated total -----
 
 #[test]
-fn ranger_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() {
+fn ranger_level1_base_attack_and_saves_are_now_wired_into_integrated_totals() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The grounded standalone records exist...
+    // The grounded standalone records still exist...
     assert!(has_explanation(&computation, BASE_ATTACK_ID));
     assert!(has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported
-    // for Ranger) is untouched: no fabricated base_attack_bonus field, and no
-    // supported Fighter-style base-attack chassis explanation leaks in.
+    // ...and, since `table_class_id` was widened to recognize Ranger via the
+    // shared table-driven `compute_generic_table_chassis` dispatch, the
+    // integrated chassis compute path now genuinely computes Ranger too: a
+    // real, non-fabricated base_attack_bonus (Ranger's full-BAB progression,
+    // 1 at level 1), and the generic `class_chassis.base_attack_bonus`
+    // explanation now legitimately appears alongside the standalone
+    // `class_chassis.ranger.*` records above. Mirrors the identical Rogue
+    // widening flip in `sd13_rogue_level1_chassis_baseline.rs`.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "the standalone ranger base-attack explanation must not be wired into the integrated \
-         base_attack_bonus field"
+        computation.base_attack_bonus, 1,
+        "ranger level 1's real full-BAB progression (classlevel) is now genuinely integrated"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "ranger baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "ranger base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 }
 

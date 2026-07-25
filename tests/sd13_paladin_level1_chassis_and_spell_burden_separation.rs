@@ -34,7 +34,9 @@
 //! to pass), the Sorcerer F7 baseline truth, and the Human race / interaction
 //! seam.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -168,20 +170,37 @@ fn paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers() {
         );
     }
 
-    // The accepted F6 hybrid pair and the partial-caster spell burden remain
-    // claim-blocking: this slice grounds level gates, not the hybrid chassis
-    // pair and not the spell surface.
-    for id in [
-        F6_HYBRID_PALADIN_FEATURE_ID,
-        F6_HYBRID_PALADIN_SPELL_ID,
-        PALADIN_PARTIAL_CASTER_ID,
-    ] {
+    // The accepted F6 hybrid pair remains claim-blocking: this slice grounds
+    // level gates, not the hybrid chassis pair.
+    for id in [F6_HYBRID_PALADIN_FEATURE_ID, F6_HYBRID_PALADIN_SPELL_ID] {
         let diag = claim_blocking(&computation, id);
         assert!(
             !diag.message.is_empty(),
             "remaining paladin blocker '{id}' must carry a non-empty message"
         );
     }
+
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: at level 1 no
+    // paladin spell level is accessible at all, so a bare fixture with zero
+    // prepared spells has a genuinely valid (empty) posture and the blocker
+    // correctly does not fire here -- this slice still grounds no spell
+    // surface, it just no longer claims a burden that isn't genuinely
+    // violated. A genuinely invalid preparation (an off-list spell) still
+    // trips it, proving the blocker isn't simply retired outright.
+    let mut invalid_input = input;
+    invalid_input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Magic Missile".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
+    let invalid_computation = compute_pilot_base_chassis(&invalid_input);
+    let diag = claim_blocking(&invalid_computation, PALADIN_PARTIAL_CASTER_ID);
+    assert!(
+        !diag.message.is_empty(),
+        "the partial-caster blocker must still fire and carry a non-empty message when the \
+         posture is genuinely violated"
+    );
 }
 
 #[test]
@@ -328,7 +347,20 @@ fn paladin_smite_evil_uses_per_day_attack_and_damage_bonus_are_grounded() {
 
 #[test]
 fn paladin_partial_caster_blocker_is_separate_and_partial_caster_specific() {
-    let input = load(PALADIN_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: a bare level-1
+    // fixture (zero prepared spells, nothing accessible yet anyway) has a
+    // genuinely valid posture, so the blocker would not fire at all. This
+    // test is specifically about the blocker's MESSAGE content, so a
+    // genuinely invalid preparation (an off-list spell) is added to make it
+    // fire for real, mirroring the same construction used in
+    // `paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers`.
+    let mut input = load(PALADIN_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Magic Missile".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     let spell = claim_blocking(&computation, PALADIN_PARTIAL_CASTER_ID);
