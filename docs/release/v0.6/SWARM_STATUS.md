@@ -1221,7 +1221,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T04:35:02
-Latest commit on tranche/6: c23d4054 feat(v0.6): Sorcerer's real known-spell posture (risks item 8, fifth slice) (43 seconds ago) (2026-07-25T04:34:19-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T04:31:16 frontend=2026-07-25T04:31:25 qa=2026-07-25T04:34:42 lead=2026-07-25T04:34:57
+Last mechanical check: 2026-07-25T05:50:02
+Latest commit on tranche/6: fca4e64e feat(v0.6): Cleric's real spell math ladder + prepared-divine posture (risks item 8, sixth slice) (57 seconds ago) (2026-07-25T05:49:05-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T05:47:17 frontend=2026-07-25T04:31:25 qa=2026-07-25T05:49:32 lead=2026-07-25T05:47:47
 <!-- AUTO-HEARTBEAT-END -->
