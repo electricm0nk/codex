@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | MILESTONE: Cleric's Good-only posture reaches Computed, committed and lead-verified against real HEAD (b98a20d7, 384/384 lib); standing by for next direction |
+| backend | working | Druid animal-companion scoping doc endorsed (approach trusted, no full review needed); directed to verify Wolf's exact stat block against 2 primary sources before coding |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | working | new ~22-file Cleric wave assigned (35 tests, Rebuke Death diagnostic-id change) |
 
