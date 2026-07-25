@@ -1219,6 +1219,15 @@ now fully resolved, not just "in flight."
 
 No open blocked-by dependencies between teammates at this checkpoint.
 
+## Agent Status (2026-07-25, ~06:35 ET)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | Druid's spell posture in progress (uncommitted: pilot_compute.rs +638, druid_spell_list.rs 273 lines, character_hub.rs, crb/mod.rs wiring) -- status ping sent asking for the honest-framing confirmation and any self-caught regressions before commit |
+| frontend | working | still live-verifying the non-Human-Ranger-at-level-1 finding -- status ping sent asking for the real safe level range before touching characterHubModel.ts |
+| qa | idle | Sorcerer+Cleric 54-file batch closed; offered a proactive Bard spell-list/blocker survey (next class after Druid) as prep work, or standing by for frontend's Ranger UI change -- awaiting their pick |
+
+No new commits since fca4e64e. All three pings are routine check-ins, not corrections -- no discrepancy found this cycle.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-25T05:50:02
