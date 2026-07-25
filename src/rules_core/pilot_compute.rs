@@ -1799,6 +1799,48 @@ const HUNTER_CLASS_ID: &str = "class:hunter";
 /// applies unchanged.
 const CAVALIER_CLASS_ID: &str = "class:cavalier";
 
+/// v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure, second APG
+/// class-specific closure): APG Alchemist's Mutagen, verified directly
+/// against `apg_abilities_class.lst:75`. Unlike every prior activation-
+/// gated closure this session (Barbarian/Skald/Bloodrager Rage-shaped
+/// mechanics, which affect a FIXED set of stats), Mutagen genuinely
+/// requires a choice: "you select one physical ability score -- either
+/// Strength, Dexterity, or Constitution" -- and the mental-score PENALTY
+/// target depends on that choice (Str->Int, Dex->Wis, Con->Cha, per the
+/// corpus DESC). This combines the choice-recognition pattern (Sorcerer's
+/// Arcane Bond / Cleric's domain choice) with the activation-gating
+/// pattern (Barbarian's Rage) for the first time -- both independently
+/// proven, combined here, confirmed by the lead not to need a full
+/// adversarial review. Confirmed (grepping `CharacterSheet.tsx` directly
+/// before scoping) that this lands in the same headless-only
+/// reachability bucket as Sorcerer/Cleric/Druid's own choice-gated
+/// mechanics: no generic choice-picker exists anywhere in the creation/
+/// level-up UI for an arbitrary choice set like this one.
+const ALCHEMIST_CLASS_ID: &str = "class:alchemist";
+/// `ClassAbilityActivation.ability_id` for Alchemist Mutagen. Unlike
+/// Rage-shaped mechanics, Mutagen has no rounds-per-day budget to
+/// validate (the corpus text has no daily-use cap, only a "one dose at a
+/// time" brewing-supply constraint this codebase's activation-state
+/// schema doesn't need to model to ground the ability-score/AC values
+/// honestly).
+const ALCHEMIST_MUTAGEN_ABILITY_ID: &str = "mutagen";
+/// The choice set and selection prefix for which physical ability score
+/// Mutagen enhances -- reuses `ABILITY_SELECTION_PREFIX` (`"ability:"`),
+/// the same idiom Human's own ability-bonus choice already uses, rather
+/// than inventing a new naming scheme.
+const ALCHEMIST_MUTAGEN_STAT_CHOICE_ID: &str = "choice:alchemist_mutagen_stat";
+/// PF1 Advanced Player's Guide Mutagen: "+4 alchemical bonus to the
+/// selected ability score" (an ability-SCORE bonus, halved onto the
+/// ability-MODIFIER exactly like every other Rage-shaped bonus this
+/// session grounds -- an even score bonus always halves exactly).
+const ALCHEMIST_MUTAGEN_STAT_BONUS: i16 = 4;
+/// PF1 Advanced Player's Guide Mutagen: "a -2 penalty to one of your
+/// mental ability scores" -- an ability-SCORE penalty, halved onto the
+/// ability-MODIFIER the same way the bonus above is.
+const ALCHEMIST_MUTAGEN_STAT_PENALTY: i16 = -2;
+/// PF1 Advanced Player's Guide Mutagen: "a +2 natural armor bonus."
+const ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS: i16 = 2;
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -5255,8 +5297,18 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // identical shape -- class-ownership-gated by
     // `active_bloodrager_bloodrage_bonus` construction, so a non-Bloodrager
     // character sees no change here.
-    let ability_modifiers = apply_bloodrager_bloodrage_ability_bonuses(
+    let ability_modifiers_after_bloodrage = apply_bloodrager_bloodrage_ability_bonuses(
         ability_modifiers_after_inspired_rage,
+        input,
+        &mut explanations,
+    );
+    // v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure): Mutagen's
+    // ability-score bonus/penalty layers on last, the identical
+    // "apply on top of the chain" shape -- class-ownership-gated by
+    // `active_alchemist_mutagen_bonus` construction, so a non-Alchemist
+    // character sees no change here.
+    let ability_modifiers = apply_alchemist_mutagen_ability_bonuses(
+        ability_modifiers_after_bloodrage,
         input,
         &mut explanations,
     );
@@ -7369,6 +7421,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_brawler_single_class(input)
         || is_supported_hunter_single_class(input)
         || is_supported_cavalier_single_class(input)
+        || is_supported_alchemist_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7385,6 +7438,22 @@ fn is_supported_cavalier_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     apg::class_chassis_resolve(ApgClassId::Cavalier, class_level.level, RuleSetId::Apg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure): whether
+/// `input` is a single-class Alchemist at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Alchemist --
+/// mirrors `is_supported_cavalier_single_class` exactly, including the
+/// same exact-match discipline (`== Some(ApgClassId::Alchemist)`, not a
+/// broad `.is_some()`).
+fn is_supported_alchemist_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Alchemist) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Alchemist, class_level.level, RuleSetId::Apg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
@@ -7717,6 +7786,7 @@ fn compute_apg_class_chassis(
     class_id: ApgClassId,
     class_id_str: &str,
     level: u8,
+    input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
@@ -7776,27 +7846,28 @@ fn compute_apg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
-    // class-specific closure, adversarially spot-checked 2026-07-25):
-    // Cavalier is the one APG class with a genuinely real class feature
-    // now (the Mount, unconditional on class ownership and level alone --
-    // see `ground_cavalier_mount_and_defer_the_rest`'s own doc comment
-    // for why no `selected_choices`/`class_ability_activations` gating is
-    // needed, mirroring Hunter's own Animal Companion shape more closely
-    // than Druid's choice-gated one). The other 5 APG classes keep the
-    // exact original unconditional diagnostic unchanged. This branch is
-    // reached only for single-class Cavalier (this function is only ever
-    // called from `compute_class_chassis`'s single-class-only section;
-    // `ApgClassId::from_class_id_str` is deliberately not registered with
-    // `multiclass_class_level_supported`, so a Cavalier-containing
-    // multiclass mix never reaches this function at all).
+    // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen
+    // closures, first/second APG class-specific closures, spot-checked
+    // 2026-07-25): Cavalier and Alchemist are the two APG classes with a
+    // genuinely real class feature now (the Mount, unconditional on
+    // class ownership and level alone; Mutagen, choice- and activation-
+    // gated -- see each one's own doc comment). The other 4 APG classes
+    // keep the exact original unconditional diagnostic unchanged. These
+    // branches are reached only for single-class Cavalier/Alchemist (this
+    // function is only ever called from `compute_class_chassis`'s
+    // single-class-only section; `ApgClassId::from_class_id_str` is
+    // deliberately not registered with `multiclass_class_level_supported`,
+    // so a Cavalier- or Alchemist-containing multiclass mix never reaches
+    // this function at all).
     if class_id == ApgClassId::Cavalier {
         ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
+    } else if class_id == ApgClassId::Alchemist {
+        ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
         // named class features, no spellcasting (even for the casters
-        // among the 5 remaining).
+        // among the 4 remaining).
         diagnostics.push(ComputationDiagnostic {
             id: format!("class_feature.apg.{}.unsupported", class_id.name()),
             message: format!(
@@ -7875,6 +7946,287 @@ fn ground_cavalier_mount_and_defer_the_rest(
         ),
         claim_blocking: true,
     });
+}
+
+/// Alchemist Mutagen's duration: `level * 10` minutes (v0.6 alpha swarm,
+/// risks item 8, Alchemist Mutagen closure), verified against the corpus
+/// formula `AlchemistMutagenDuration = AlchemistLVL*10`. Informational
+/// only -- this codebase tracks no elapsed-time state, the same "named
+/// but not simulated" shape every other timed value this session grounds
+/// uses (e.g. Barbarian Rage's own rounds-consumed-today budget, which is
+/// validated but never causes time to actually pass).
+fn alchemist_mutagen_duration_minutes(level: u8) -> i16 {
+    i16::from(level) * 10
+}
+
+/// Mutagen's mental-ability-score penalty target for a given chosen
+/// physical ability (v0.6 alpha swarm, risks item 8, Alchemist Mutagen
+/// closure), verified verbatim against the corpus DESC text: "If the
+/// mutagen enhances your Strength, it applies a penalty to your
+/// Intelligence. If it enhances your Dexterity, it applies a penalty to
+/// your Wisdom. If it enhances your Constitution, it applies a penalty
+/// to your Charisma." Returns `None` for any ability outside the three
+/// valid Mutagen targets (Strength/Dexterity/Constitution), so an
+/// unrecognized or non-physical selection is never silently mapped to a
+/// fabricated penalty target.
+fn alchemist_mutagen_mental_penalty_target(physical_ability: &str) -> Option<&'static str> {
+    match physical_ability {
+        "strength" => Some("intelligence"),
+        "dexterity" => Some("wisdom"),
+        "constitution" => Some("charisma"),
+        _ => None,
+    }
+}
+
+/// Whether `input` is an Alchemist validly, actively mutated right now
+/// with a recognized stat choice, and if so, the chosen physical ability
+/// and its corresponding mental-penalty target (v0.6 alpha swarm, risks
+/// item 8, Alchemist Mutagen closure). Class-ownership-gated by
+/// construction, mirroring every other `active_<class>_<ability>_bonus`
+/// query function this session: only returns `Some` when `class_levels`
+/// actually contains Alchemist. An activation present but not
+/// `ActiveState::EquippedActive`, or one active but missing/naming an
+/// unrecognized `choice:alchemist_mutagen_stat` selection, is treated the
+/// same as "not mutated" here -- pushes no diagnostic itself
+/// (`ground_or_block_alchemist_mutagen` is the single place that pushes
+/// the posture-violation claim-blocking diagnostic and the informational
+/// recognition records).
+fn active_alchemist_mutagen_bonus(
+    input: &CharacterInput,
+) -> Option<(u8, &str, &'static str)> {
+    let alchemist_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ALCHEMIST_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == ALCHEMIST_MUTAGEN_ABILITY_ID)?;
+
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    let selection = choice_selection(input, ALCHEMIST_MUTAGEN_STAT_CHOICE_ID)?;
+    let physical_ability = selection.strip_prefix(ABILITY_SELECTION_PREFIX).unwrap_or(selection);
+    let mental_ability = alchemist_mutagen_mental_penalty_target(physical_ability)?;
+
+    Some((alchemist_level, physical_ability, mental_ability))
+}
+
+/// Grounds or claim-blocks Alchemist's Mutagen execution engine for
+/// `alchemist_level` (v0.6 alpha swarm, risks item 8, Alchemist Mutagen
+/// closure). Called from `compute_apg_class_chassis`'s Alchemist branch,
+/// gated only on Alchemist class-ownership.
+///
+/// A character who simply hasn't brewed/isn't currently mutated (no
+/// `class_ability_activations` entry for `ALCHEMIST_MUTAGEN_ABILITY_ID`,
+/// or one present but `active_state != EquippedActive`) is a genuinely
+/// valid PF1 posture -- not every Alchemist is always mutated -- so this
+/// grounds a real "not mutated" recognition record rather than
+/// claim-blocking, mirroring "not raging"/"not singing"/"not
+/// bloodraging" from the Rage-shaped classes. An activation that IS
+/// active but has no recognized `choice:alchemist_mutagen_stat` selection
+/// is a genuine posture violation (claiming to be mutated without saying
+/// which stat is enhanced is inconsistent input, since brewing always
+/// requires choosing a stat first per the corpus's own sequencing) and
+/// claim-blocks, mirroring Sorcerer's own "recognized bloodline but no
+/// bond choice given" shape.
+fn ground_or_block_alchemist_mutagen(
+    input: &CharacterInput,
+    alchemist_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == ALCHEMIST_MUTAGEN_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.alchemist.mutagen_execution.not_mutated".to_owned(),
+            value: 0,
+            detail: format!(
+                "Alchemist level {alchemist_level} is not currently mutated (no \
+                 class_ability_activations entry for \
+                 \"{ALCHEMIST_MUTAGEN_ABILITY_ID}\"): a genuinely valid PF1 posture, so no \
+                 ability-score bonus/penalty or natural armor bonus is claimed. This grounds \
+                 the Mutagen execution engine's \"inactive\" branch only; being mutated is \
+                 grounded separately below when an active activation with a recognized stat \
+                 choice is present"
+            ),
+        });
+        push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let selection = choice_selection(input, ALCHEMIST_MUTAGEN_STAT_CHOICE_ID);
+            let recognized = selection.and_then(|selection| {
+                let physical_ability =
+                    selection.strip_prefix(ABILITY_SELECTION_PREFIX).unwrap_or(selection);
+                alchemist_mutagen_mental_penalty_target(physical_ability)
+                    .map(|mental_ability| (physical_ability, mental_ability))
+            });
+
+            let Some((physical_ability, mental_ability)) = recognized else {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.apg.alchemist.mutagen_execution.stat_choice_missing"
+                        .to_owned(),
+                    message: format!(
+                        "Alchemist level {alchemist_level} claims an active Mutagen \
+                         ({ALCHEMIST_MUTAGEN_ABILITY_ID}) but has no recognized \
+                         {ALCHEMIST_MUTAGEN_STAT_CHOICE_ID} selection naming Strength, \
+                         Dexterity, or Constitution (got {selection:?}): brewing a mutagen \
+                         always requires choosing a physical ability score first per the PF1 \
+                         Advanced Player's Guide's own sequencing, so an active mutagen with no \
+                         recognized stat choice is a genuine posture violation, not a silently \
+                         passing one -- no ability-score bonus/penalty or natural armor bonus is \
+                         claimed for this input"
+                    ),
+                    claim_blocking: true,
+                });
+                push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+                return;
+            };
+
+            let duration_minutes = alchemist_mutagen_duration_minutes(alchemist_level);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.mutagen_execution.active".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Alchemist level {alchemist_level} is actively mutated, enhancing \
+                     {physical_ability} (+{ALCHEMIST_MUTAGEN_STAT_BONUS} alchemical bonus, \
+                     ability score) at the cost of {mental_ability} \
+                     ({ALCHEMIST_MUTAGEN_STAT_PENALTY:+} penalty, ability score), plus a \
+                     {ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS:+} natural armor bonus. The \
+                     ability-score bonus/penalty are applied to the integrated ability \
+                     modifiers, and the natural armor bonus to baseline Armor Class -- see \
+                     apply_alchemist_mutagen_ability_bonuses and compute_combat_baseline"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.mutagen_execution.duration_minutes".to_owned(),
+                value: duration_minutes,
+                detail: format!(
+                    "Alchemist level {alchemist_level} Mutagen duration: level * 10 = \
+                     {duration_minutes} minutes. Informational only -- this codebase tracks no \
+                     elapsed-time state, so this names the real duration value without \
+                     simulating its passage"
+                ),
+            });
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.mutagen_execution.not_mutated".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Alchemist level {alchemist_level} has a \
+                     \"{ALCHEMIST_MUTAGEN_ABILITY_ID}\" activation entry but it is not active \
+                     for this snapshot: a genuinely valid PF1 posture (a dose may be brewed but \
+                     not yet drunk), so no ability-score bonus/penalty or natural armor bonus is \
+                     claimed"
+                ),
+            });
+        }
+    }
+
+    push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.apg.alchemist.unsupported` for Alchemist specifically
+/// (v0.6 alpha swarm, risks item 8, Alchemist Mutagen closure): named
+/// ONLY the genuinely still-missing pieces (spellcasting -- Alchemist
+/// genuinely casts extracts, confirmed via `apg_classes.lst:11`'s own
+/// `SPELLSTAT:INT` -- and every other named-but-unbuilt Alchemist class
+/// feature beyond Mutagen: Bomb, Discovery, Poison Resistance, Swift
+/// Alchemy, Swift Poisoning). Pushed unconditionally regardless of
+/// Mutagen's own active state, mirroring Skald's/Bloodrager's own
+/// diagnostic-honesty fix.
+fn push_alchemist_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.alchemist.spellcasting_deferred.unsupported".to_owned(),
+        message: format!(
+            "{ALCHEMIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar and Mutagen: this APG class has no class-skill list, no \
+             spellcasting posture (Alchemist casts extracts from its own spellbook-like list, \
+             but its own spells-known/per-day table numbers have not yet been independently \
+             verified or built), and no other named class feature (Bomb, Discovery, Poison \
+             Resistance, Swift Alchemy, Swift Poisoning) grounded anywhere in this codebase yet; \
+             no class-feature or spell execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Applies Alchemist Mutagen's ability-score bonus/penalty to `base` when
+/// a valid, active, in-choice Mutagen activation is present for this
+/// character (v0.6 alpha swarm, risks item 8, Alchemist Mutagen closure).
+/// Mirrors `apply_rage_ability_bonuses`'s own pattern (layering onto
+/// `compute_ability_modifiers`'s output rather than baking into it), but
+/// unlike every Rage-shaped bonus, the TARGET ability is chosen input,
+/// not fixed -- `assign_modifier`/`ability_modifier_for` (the same
+/// generic-by-name helpers `compute_ability_modifiers` itself uses) apply
+/// the bonus/penalty to whichever ability `active_alchemist_mutagen_bonus`
+/// names, rather than a hardcoded field access.
+fn apply_alchemist_mutagen_ability_bonuses(
+    base: AbilityModifiers,
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> AbilityModifiers {
+    let Some((alchemist_level, physical_ability, mental_ability)) =
+        active_alchemist_mutagen_bonus(input)
+    else {
+        return base;
+    };
+
+    let physical_modifier_bonus = ALCHEMIST_MUTAGEN_STAT_BONUS / 2;
+    let mental_modifier_penalty = ALCHEMIST_MUTAGEN_STAT_PENALTY / 2;
+    let mut modifiers = base;
+    let new_physical_modifier =
+        ability_modifier_for(&modifiers, physical_ability) + physical_modifier_bonus;
+    assign_modifier(&mut modifiers, physical_ability, new_physical_modifier);
+    let new_mental_modifier =
+        ability_modifier_for(&modifiers, mental_ability) + mental_modifier_penalty;
+    assign_modifier(&mut modifiers, mental_ability, new_mental_modifier);
+
+    explanations.push(ComputationExplanation {
+        id: "ability_modifier.alchemist.mutagen_bonus_applied".to_owned(),
+        value: physical_modifier_bonus,
+        detail: format!(
+            "Alchemist level {alchemist_level} Mutagen applied to ability modifiers: \
+             +{ALCHEMIST_MUTAGEN_STAT_BONUS} {physical_ability} alchemical bonus (ability score) \
+             is +{physical_modifier_bonus} {physical_ability} modifier, and \
+             {ALCHEMIST_MUTAGEN_STAT_PENALTY:+} {mental_ability} penalty (ability score) is \
+             {mental_modifier_penalty:+} {mental_ability} modifier (an even score bonus/penalty \
+             always halves exactly onto the floored modifier). Applied only while actively, \
+             validly mutated with a recognized stat choice; the \
+             {ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS:+} natural armor bonus is layered onto \
+             compute_combat_baseline separately"
+        ),
+    });
+    modifiers
+}
+
+/// Applies Alchemist Mutagen's natural armor bonus to `base_armor_class`
+/// when `input` is an Alchemist actively, validly mutated with a
+/// recognized stat choice (v0.6 alpha swarm, risks item 8, Alchemist
+/// Mutagen closure). Mirrors Barbarian's/Skald's/Bloodrager's own inline
+/// `if active_<x>_bonus(...).is_some() { BONUS } else { 0 }` shape at
+/// `compute_combat_baseline`'s own call site.
+fn apply_alchemist_mutagen_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
+    if active_alchemist_mutagen_bonus(input).is_some() {
+        ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS
+    } else {
+        0
+    }
 }
 
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
@@ -8779,6 +9131,7 @@ fn compute_class_chassis(
             apg_class_id,
             &class_level.class_id,
             class_level.level,
+            input,
             explanations,
             diagnostics,
         )
@@ -22818,6 +23171,11 @@ fn compute_combat_baseline(
     // provably-vacuous light-armor precondition -- see
     // `apply_brawler_ac_bonus_to_combat_baseline`'s own doc comment).
     let brawler_ac_bonus_value = apply_brawler_ac_bonus_to_combat_baseline(input);
+    // v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure): Mutagen's
+    // natural armor bonus applies here too -- class-ownership-gated by
+    // `active_alchemist_mutagen_bonus` construction, 0 for every
+    // non-Alchemist or not-currently-mutated character.
+    let alchemist_mutagen_ac_bonus_value = apply_alchemist_mutagen_ac_bonus_to_combat_baseline(input);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -22825,7 +23183,8 @@ fn compute_combat_baseline(
         + rage_armor_class_penalty
         + inspired_rage_armor_class_penalty
         + bloodrage_armor_class_penalty
-        + brawler_ac_bonus_value;
+        + brawler_ac_bonus_value
+        + alchemist_mutagen_ac_bonus_value;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -22837,7 +23196,9 @@ fn compute_combat_baseline(
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
              while actively, validly singing) + Bloodrager Bloodrage penalty ({bloodrage_armor_class_penalty}, \
              only while actively, validly bloodraging) + Brawler AC Bonus (+{brawler_ac_bonus_value}, while \
-             wearing light or no armor); shield is absent (+0) = {armor_class}"
+             wearing light or no armor) + Alchemist Mutagen natural armor bonus \
+             (+{alchemist_mutagen_ac_bonus_value}, only while actively, validly mutated); shield \
+             is absent (+0) = {armor_class}"
         ),
     });
 
@@ -24756,23 +25117,25 @@ mod apg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// APG class OTHER THAN Cavalier stays honestly `Blocked` with the
-    /// original, unmodified generic diagnostic -- BAB/save/HP are real,
-    /// but the class-skill/feature/spellcasting bucket is genuinely
-    /// ungrounded, so this must never silently read as `Computed`.
+    /// APG class OTHER THAN Cavalier/Alchemist stays honestly `Blocked`
+    /// with the original, unmodified generic diagnostic -- BAB/save/HP
+    /// are real, but the class-skill/feature/spellcasting bucket is
+    /// genuinely ungrounded, so this must never silently read as
+    /// `Computed`.
     ///
-    /// Cavalier is carved out of this loop (v0.6 alpha swarm, risks item
-    /// 8, Cavalier Mount closure, first APG class-specific closure): its
-    /// own generic `class_feature.apg.cavalier.unsupported` diagnostic
-    /// was retired and replaced with the narrower
-    /// `other_features_deferred` diagnostic, since the Mount is now
-    /// genuinely grounded -- see
+    /// Cavalier and Alchemist are carved out of this loop (v0.6 alpha
+    /// swarm, risks item 8, Cavalier Mount / Alchemist Mutagen closures,
+    /// first/second APG class-specific closures): each has its own
+    /// generic `class_feature.apg.<class>.unsupported` diagnostic
+    /// retired and replaced with a narrower one, since the Mount /
+    /// Mutagen are now genuinely grounded -- see
     /// `cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
-    /// below for Cavalier's own dedicated coverage.
+    /// / `alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// below for each class's own dedicated coverage.
     #[test]
     fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:cavalier" {
+            if class_id == "class:cavalier" || class_id == "class:alchemist" {
                 continue;
             }
 
@@ -24853,18 +25216,68 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Alchemist-specific coverage for the retired-diagnostic/new-
+    /// diagnostic swap: the OLD generic `class_feature.apg.alchemist
+    /// .unsupported` diagnostic must never appear for Alchemist, while
+    /// the NEW, narrower `class_feature.apg.alchemist
+    /// .spellcasting_deferred.unsupported` diagnostic always does --
+    /// Alchemist stays `Blocked` on spellcasting/other-features alone,
+    /// even when Mutagen itself is genuinely grounded and active.
+    #[test]
+    fn alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = ranger_style_input("class:alchemist", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Alchemist must stay Blocked on its deferred spellcasting/other-features posture \
+             alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.alchemist.unsupported"),
+            "the retired generic diagnostic must never appear for Alchemist: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.alchemist.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.apg.alchemist.mutagen_execution.not_mutated"),
+            "expected the honest not-mutated recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
     /// The critical negative-leak test, mirroring the ACG-side one
-    /// exactly: the OTHER 5 APG classes must produce ZERO
+    /// exactly: the OTHER 4 APG classes must produce ZERO
     /// `defense.total_save.*`/`combat.baseline_*`/
     /// `skill.selected_modifier.*` explanations at level 1, even under
     /// the exact same satisfying posture that genuinely admits Cavalier
-    /// -- proving `is_supported_cavalier_single_class` is a real exact
-    /// match, not a broad `.is_some()` check that would silently admit
-    /// all 6 APG classes into real pillar computation.
+    /// and Alchemist -- proving `is_supported_cavalier_single_class` and
+    /// `is_supported_alchemist_single_class` are real exact matches, not
+    /// broad `.is_some()` checks that would silently admit all 6 APG
+    /// classes into real pillar computation.
     #[test]
-    fn the_other_five_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_four_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:cavalier" {
+            if class_id == "class:cavalier" || class_id == "class:alchemist" {
                 continue;
             }
 
@@ -24911,6 +25324,29 @@ mod apg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Cavalier: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Alchemist's own positive counterpart, mirroring Cavalier's
+    /// exactly -- proves the gate genuinely admits Alchemist regardless
+    /// of Mutagen's own (here, inactive) state.
+    #[test]
+    fn alchemist_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = ranger_style_input("class:alchemist", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Alchemist: {:?}",
                 receipt.computation.explanations
             );
         }
@@ -27419,6 +27855,208 @@ mod bloodrager_dispatch_widening_safety_tests {
         assert_eq!(
             receipt.computation.ability_modifiers.strength, 4,
             "a non-Bloodrager character's spoofed bloodrage entry must never apply a bonus: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure, second APG
+/// class-specific closure, 2026-07-25): the first mechanic this session
+/// combines the choice-recognition pattern (Sorcerer's Arcane Bond /
+/// Cleric's domain choice) with the activation-gating pattern
+/// (Barbarian's Rage) -- both independently proven, combined here for
+/// the first time. Like every other choice-gated closure, Alchemist
+/// still never reaches `Computed` (spellcasting/other features stay
+/// deferred), so this mirrors `bloodrager_dispatch_widening_safety_tests`'s
+/// shape (stays Blocked throughout) rather than Barbarian's own
+/// (which reaches Computed).
+#[cfg(test)]
+mod alchemist_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_MUTAGEN_ABILITY_ID,
+        ALCHEMIST_MUTAGEN_STAT_CHOICE_ID, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_alchemist_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: ALCHEMIST_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Alchemist actively, validly mutated with a
+    /// recognized Strength choice applies the real ability-modifier
+    /// bonus/penalty and natural armor bonus to the integrated totals --
+    /// but still stays `Blocked` (spellcasting_deferred), mirroring every
+    /// other Rage-shaped closure that never reaches full Computed.
+    ///
+    /// Base fixture is Strength 16 (+4 with the fixture's chosen Human
+    /// +2 floating Strength bonus applied) -> Mutagen's +4 Strength
+    /// alchemical bonus (ability score) is +2 ability modifier -> +6.
+    /// Intelligence 10 (+0) -> Mutagen's -2 penalty (ability score) is -1
+    /// ability modifier -> -1.
+    #[test]
+    fn single_class_alchemist_actively_mutated_with_strength_choice_applies_real_bonuses() {
+        let mut input = human_alchemist_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_MUTAGEN_STAT_CHOICE_ID.to_owned(),
+            selection_id: "ability:strength".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ALCHEMIST_MUTAGEN_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Alchemist stays Blocked on spellcasting even while actively, validly mutated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.alchemist.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the spellcasting_deferred diagnostic even while mutated: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        assert_eq!(receipt.computation.ability_modifiers.strength, 6);
+        assert_eq!(receipt.computation.ability_modifiers.intelligence, -1);
+
+        let armor_class = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect("baseline Armor Class must be grounded");
+        // Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) + Mutagen
+        // natural armor bonus (2) = 19.
+        assert_eq!(
+            armor_class.value, 19,
+            "Mutagen's natural armor bonus must be applied: {:?}",
+            armor_class
+        );
+    }
+
+    /// A single-class Human Alchemist actively, validly mutated with a
+    /// recognized Constitution choice applies the bonus/penalty to the
+    /// correct, DIFFERENT pair of abilities (Con/Cha, not Str/Int) --
+    /// proving the choice genuinely drives which fields are touched, not
+    /// a hardcoded pair.
+    ///
+    /// Constitution 14 (+2) -> +2 ability modifier -> +4. Charisma 8
+    /// (-1) -> -1 ability modifier -> -2.
+    #[test]
+    fn single_class_alchemist_actively_mutated_with_constitution_choice_applies_the_correct_pair() {
+        let mut input = human_alchemist_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_MUTAGEN_STAT_CHOICE_ID.to_owned(),
+            selection_id: "ability:constitution".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ALCHEMIST_MUTAGEN_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.computation.ability_modifiers.constitution, 4);
+        assert_eq!(receipt.computation.ability_modifiers.charisma, -2);
+        // The Strength/Intelligence pair from the other test must be
+        // untouched here -- proves the choice is genuinely read, not a
+        // hardcoded Str/Int pair applied regardless of selection.
+        assert_eq!(receipt.computation.ability_modifiers.strength, 4);
+        assert_eq!(receipt.computation.ability_modifiers.intelligence, 0);
+    }
+
+    /// An Alchemist claiming an active Mutagen but with no recognized
+    /// `choice:alchemist_mutagen_stat` selection is a genuine posture
+    /// violation and must claim-block -- never silently passed, mirroring
+    /// Sorcerer's own "recognized bloodline but no bond choice given"
+    /// shape.
+    #[test]
+    fn single_class_alchemist_active_mutagen_without_a_recognized_stat_choice_stays_blocked() {
+        let mut input = human_alchemist_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ALCHEMIST_MUTAGEN_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.apg.alchemist.mutagen_execution.stat_choice_missing"
+                    && d.claim_blocking),
+            "expected the missing-stat-choice claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "no Mutagen bonus is applied for an active-but-unrecognized-choice posture: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// A non-Alchemist character carrying a spoofed `"mutagen"`
+    /// activation entry (plus a spoofed stat choice) must have it
+    /// silently ignored, not applied -- the class-ownership gate is by
+    /// construction (`active_alchemist_mutagen_bonus` only ever reads
+    /// `class_ability_activations`/`selected_choices` after confirming
+    /// `class_levels` contains Alchemist), not a bolt-on rejection. Also
+    /// proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_alchemist_characters_spoofed_mutagen_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_MUTAGEN_STAT_CHOICE_ID.to_owned(),
+            selection_id: "ability:strength".to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: ALCHEMIST_MUTAGEN_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Alchemist mutagen entry: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "a non-Alchemist character's spoofed mutagen entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
         );
     }

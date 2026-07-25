@@ -166,10 +166,12 @@ pub struct ApgClassCoverage {
     /// Challenge, ...) this repo has independent wired computation logic
     /// for, analogous to `level_up/fighter.rs`'s `explain_fighter_class_features`
     /// wiring for the CRB Fighter. Zero for every APG class except
-    /// Cavalier as of the v0.6 alpha swarm's Cavalier Mount closure (risks
-    /// item 8): Cavalier's 1st-level Mount is now genuinely wired
-    /// (`pilot_compute::ground_cavalier_mount_and_defer_the_rest`) -- see
-    /// `class_coverage`'s own Cavalier branch. Every other APG class
+    /// Cavalier and Alchemist as of the v0.6 alpha swarm's Cavalier Mount
+    /// / Alchemist Mutagen closures (risks item 8): Cavalier's 1st-level
+    /// Mount and Alchemist's Mutagen are now genuinely wired
+    /// (`pilot_compute::ground_cavalier_mount_and_defer_the_rest`,
+    /// `pilot_compute::ground_or_block_alchemist_mutagen`) -- see
+    /// `class_coverage`'s own branches for each. Every other APG class
     /// remains at 0: SD-22 Epic 3 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_alchemist.rs`'s own doc
     /// comment), and no follow-on cycle has since ingested
@@ -247,7 +249,8 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): Cavalier's
     // Mount is the one real, wired named class feature among all six APG
     // classes today -- see this field's own doc comment above.
-    let named_features_wired = if class_id == ApgClassId::Cavalier { 1 } else { 0 };
+    let named_features_wired =
+        if matches!(class_id, ApgClassId::Cavalier | ApgClassId::Alchemist) { 1 } else { 0 };
 
     ApgClassCoverage {
         class_id,
