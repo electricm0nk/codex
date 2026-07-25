@@ -10,9 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Ranger genuinely reaches Computed now (b7642d97, lead-verified); already on Paladin, proactively fixed the same structural flaw before shipping this time |
-| frontend | working | updating Ranger's characterHubModel.ts support level, pending backend's confirmed safe level range |
-| qa | working | Ranger's tests/** update + APG coverage-audit restructuring + a new permanent positive-case test the lead flagged |
+| backend | idle | Paladin genuinely reaches Computed too now (ee3c50ce, lead-verified 307/307 + 212/212); proactively fixed the Ranger-shaped structural flaw before shipping -- confirmed in code, not just claimed |
+| frontend | working | updating Ranger's characterHubModel.ts support level |
+| qa | working | 4 tests/** files in flight (Ranger, APG, Paladin) + the new permanent positive-case test |
+
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain.**
 
 ---
 

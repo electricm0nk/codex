@@ -1193,12 +1193,14 @@ prior refresh, itself already superseded by everything since)
 
 **LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Backend confirmed the corrected terminology going forward ("done" = reaches `Computed`, always) and landed APG's 6-class BAB/save/HP dispatch (`c511c132`) correctly labeled as still-Blocked from the start — lead-verified 283/283 lib + 212/212 desktop, including a dedicated multiclass-safety test proving backend proactively avoided the exact loophole Ranger's review found. Next: Ranger's real spellcasting (genuinely new engine work, no prior art in this codebase). See risks-and-open-questions.md item 8 for the full record.
 
-## Agent Status (2026-07-25, ~00:35 ET)
+## Agent Status (2026-07-25, ~02:20 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | RANGER GENUINELY REACHES COMPUTED (b7642d97, lead-verified 8/8 new tests + 293/293 lib, plus a lead-added scratch test closing a real positive-case coverage gap); already moved to Paladin, proactively fixing the same structural flaw class the Ranger review found before shipping this time |
-| frontend | idle | dispatched to update Ranger's characterHubModel.ts support level now that it's genuinely earned, pending backend confirming the real safe level range |
-| qa | working | landing Ranger's 4-site tests/** update + APG coverage-audit restructuring; will need to add the permanent valid-non-empty-prepared-spell test the lead's scratch check identified as missing |
+| backend | idle | PALADIN GENUINELY REACHES COMPUTED (ee3c50ce, lead-verified 8/8 new tests + 307/307 lib + 212/212 desktop); the Ranger-fix flaw was proactively caught and fixed this time, confirmed directly in the committed code; 2 more QA-owned tests/** flagged, same shape as Ranger's |
+| frontend | working | updating Ranger's characterHubModel.ts support level, coordinating with backend on the real safe level range |
+| qa | working | landing Ranger's + APG's + now Paladin's tests/** updates (4 files total in flight), plus the permanent valid-spell test the lead flagged |
+
+**Progress: Fighter, Wizard, Rogue, Ranger, and Paladin genuinely reach Computed (5 of 27 classes). 22 remain.**
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
