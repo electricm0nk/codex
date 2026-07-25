@@ -259,22 +259,36 @@ fn spontaneous_known_and_per_day_diagnostic_never_leaks_into_explanations_or_gra
         let character = bard_at_level(to_level);
         let computation = compute_pilot_base_chassis(&character);
 
-        let diagnostic = computation
+        // (v0.6 alpha swarm, risks item 8, known-spell closure)
+        // SPONTANEOUS_UNSUPPORTED_DIAGNOSTIC_ID is no longer unconditional --
+        // these fixtures have zero known spells, a genuinely valid posture,
+        // so the diagnostic correctly does not fire. If absent, confirm no
+        // spell is fabricated merely because it stopped firing.
+        match computation
             .diagnostics
             .iter()
             .find(|d| d.id == SPONTANEOUS_UNSUPPORTED_DIAGNOSTIC_ID)
-            .unwrap_or_else(|| {
-                panic!(
-                    "bard level {to_level} must still carry the spontaneous known-spell / \
-                     per-day claim-blocking diagnostic: {:?}",
+        {
+            Some(diagnostic) => assert!(
+                diagnostic.claim_blocking,
+                "the spontaneous known-spell / per-day diagnostic must stay claim-blocking at \
+                 level {to_level}"
+            ),
+            None => {
+                let known_count = computation
+                    .explanations
+                    .iter()
+                    .find(|e| e.id == "class_spell.bard.known_spells")
+                    .map(|e| e.value)
+                    .unwrap_or(-1);
+                assert_eq!(
+                    known_count, 0,
+                    "no spells are fabricated merely because the blocker stopped firing at \
+                     level {to_level}: {:?}",
                     computation.diagnostics
-                )
-            });
-        assert!(
-            diagnostic.claim_blocking,
-            "the spontaneous known-spell / per-day diagnostic must stay claim-blocking at \
-             level {to_level}"
-        );
+                );
+            }
+        }
         assert!(
             !computation
                 .explanations

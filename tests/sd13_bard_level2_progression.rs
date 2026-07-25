@@ -300,13 +300,26 @@ fn bard_level2_still_claim_blocks_performance_execution_and_spontaneous_spell_bu
             );
         }
     }
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
-            && d.claim_blocking),
-        "level-2 Bard must still claim-block on the spontaneous spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.bard.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- The accepted Bard level-1 truth is unaffected -----

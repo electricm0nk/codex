@@ -40,7 +40,8 @@
 //! Human race seam on the spell-bearing path.
 
 use codex::rules_core::character_input::{
-    ActiveState, CharacterInput, ClassAbilityActivation, load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterInput, ClassAbilityActivation, SpellSelection,
+    load_character_input_fixture,
 };
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
@@ -193,6 +194,10 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
         // posture, so ground_or_block_bard_bardic_performance's honest
         // (value 0) inactive-branch record now surfaces too.
         "class_feature.bard.bardic_performance_execution.not_performing",
+        // (v0.6 alpha swarm, risks item 8, known-spell closure) the bare
+        // fixture has zero known spells, a genuinely valid posture, so the
+        // real known-spell-count record (honestly 0) now surfaces too.
+        "class_spell.bard.known_spells",
     ];
     for explanation in &computation.explanations {
         assert!(
@@ -463,28 +468,43 @@ fn bard_level1_stays_blocked_on_a_genuine_bardic_performance_execution_violation
 }
 
 #[test]
-fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
-    let input = load(BARD_FIXTURE);
+fn bard_level1_stays_blocked_on_a_genuine_spontaneous_spell_posture_violation() {
+    // (v0.6 alpha swarm, risks item 8, known-spell closure) SPONTANEOUS_BLOCKER_ID
+    // is no longer unconditional -- the bare fixture is a genuinely valid
+    // posture (zero known spells), so this test (whose whole purpose is
+    // proving the blocker still fires) now needs a real violation: "Alter
+    // Self" is a real PF1 Core Rulebook 2nd-level bard spell, not yet
+    // accessible at bard level 1 (access ceiling 1st level).
+    let mut input = load(BARD_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Alter Self".to_owned(),
+        source_class_id: "class:bard".to_owned(),
+        acquisition_mode: AcquisitionMode::Known,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
-    // The spontaneous known-spell / slot posture burden must be a separate, explicit,
-    // claim-blocking diagnostic.
     let spontaneous = claim_blocking(&computation, SPONTANEOUS_BLOCKER_ID);
     assert!(
-        spontaneous.message.contains("spontaneous")
-            && spontaneous.message.contains("spells known")
-            && spontaneous.message.contains("spells per day"),
-        "bard spell blocker must name the spontaneous known-spell / slot posture burden: {}",
+        spontaneous.message.contains("spontaneous") && spontaneous.message.contains("Alter Self"),
+        "bard spell blocker must name the spontaneous posture burden and the violating spell: {}",
+        spontaneous.message
+    );
+    assert!(
+        spontaneous.message.contains("not yet accessible"),
+        "bard spell blocker must explain why the spell is not yet accessible: {}",
         spontaneous.message
     );
 
-    // (v0.6 alpha swarm, risks item 8) Only ONE class-specific claim-blocking
-    // diagnostic remains here: this bare fixture has no bardic performance
-    // activation, a genuinely valid posture, so
-    // class_feature.bard.bardic_performance_execution.rounds_exceeded correctly
-    // does not fire, and other_performances_not_modeled is non-blocking. Bardic
-    // Knowledge and the flat Bardic Performance surface are no longer among
-    // them because they are grounded.
+    // No spell is fabricated for an invalid known-spell posture.
+    assert!(
+        !has_explanation(&computation, "class_spell.bard.known_spells"),
+        "an invalid known-spell posture must not ground the known-spell-count explanation record"
+    );
+
+    // Only ONE class-specific claim-blocking diagnostic remains: this bare
+    // fixture (aside from the injected violation) has no bardic performance
+    // activation, a genuinely valid posture, so rounds_exceeded correctly
+    // does not fire, and other_performances_not_modeled is non-blocking.
     let distinct_blocking = computation
         .diagnostics
         .iter()
@@ -492,8 +512,8 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         .count();
     assert_eq!(
         distinct_blocking, 1,
-        "bard must leave exactly one class-specific claim-blocking diagnostic (spontaneous \
-         spell posture) on a valid performance posture: {:?}",
+        "bard must leave exactly one class-specific claim-blocking diagnostic (the injected \
+         spontaneous-spell violation) on a valid performance posture: {:?}",
         computation.diagnostics
     );
 }

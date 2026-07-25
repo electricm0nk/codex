@@ -194,13 +194,30 @@ fn bard_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blockers
         "class_chassis.bard.fascinate_affected_creatures"
     ));
 
-    // The spontaneous spell posture burden stays permanently unconditional.
-    let spontaneous_spells = computation
+    // (v0.6 alpha swarm, risks item 8, known-spell closure) class_spell.bard
+    // .spontaneous_known_and_per_day.unsupported is no longer unconditional --
+    // this bare fixture has zero known spells, a genuinely valid posture, so
+    // the blocker correctly does not fire here.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported")
-        .expect("spontaneous known-spell / slot posture blocker must still fire");
-    assert!(spontaneous_spells.claim_blocking);
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.bard.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 
     // (v0.6 alpha swarm, risks item 8) class_feature.bard.bardic_performance_execution
     // .unsupported is retired -- this bare fixture has no bardic performance
