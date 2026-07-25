@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Druid's animal-companion posture lead-verified (388/388 lib, real HeadlessReceiptStatus::Computed); fixing one stale doc comment before committing |
+| backend | working | MILESTONE: Druid's animal-companion posture reaches Computed, committed and lead-verified against real HEAD (9aeec493, 388/388 lib); deciding what's next (Monk's remaining 4 feats or elsewhere) |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
-| qa | idle | Cleric's 22-file test batch landed and lead-verified 100% (3da1cd35, pushed); entire workspace green, zero failures anywhere |
+| qa | working | small 4-test Druid wave assigned |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric genuinely reach Computed (8 of 27). 19 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid genuinely reach Computed (9 of 27). 18 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
 ---
 
@@ -44,11 +44,11 @@ engine work lands.
 | Barbarian | **Computed** | `full` -- unconditional, no race/level carve-out at all (never appears in the shared hybrid gate); real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking) | Rage engine + UI fix (`d020a5e8`), both lead-verified |
 | Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
 | Cleric | **Computed** (Good domain only; Good+Healing stays Blocked on Rebuke Death) | prepared-spell posture + Good domain's Touch of Good (self-application only, ally-targeting unmodeled) both real; domain spell-list contents named non-blocking; Healing's Rebuke Death stays a genuine separate blocker | `fca4e64e`, `b98a20d7`, lead-verified 384/384 lib against real `HeadlessReceiptStatus::Computed` |
-| Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
+| Druid | **Computed** (level 1 only, Wolf companion; advancement past level 1 named non-blocking) | prepared-spell posture + animal-companion Wolf stat block (standalone, non-integrating) both real; Link/Share Spells vacuous corrections; domain-type nature bond still falls through to the catch-all | `dda46d4a`, `9aeec493`, lead-verified 388/388 lib against real `HeadlessReceiptStatus::Computed` |
 | Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | `0374b96a`, lead-verified 368/368 lib against the committed state |
 | Monk | **Blocked** — 3 of 7 feats closed | `table_class_id` not widened (base-attack/save/fast-movement stay standalone); Dodge, Catch Off-Guard, and Throw Anything all closed for real (each provably has zero effect under this codebase's fixed-Longsword posture, or its mechanics are already grounded elsewhere); remaining 4 (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need their own resolution engine | `18920c3d` + `b1a453a1`, lead-verified 374/374 lib + 212/212 desktop, zero regression |
 
-**CRB tally: 8 of 11 genuinely Computed, 3 of 11 with real partial engine progress (permanently or temporarily blocked). All 11 CRB classes now have at least some real engine work landed.**
+**CRB tally: 9 of 11 genuinely Computed, 2 of 11 with real partial engine progress (permanently or temporarily blocked: Bard, Monk). All 11 CRB classes now have at least some real engine work landed.**
 
 ### APG (6 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
 
