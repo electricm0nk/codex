@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Skald spellcasting scoping doc landed — found Skald's own spells-known/per-day tables are byte-identical to Bard's, not just similar (2-source verified). Lead independently confirmed `bard_spell_level_access`/`bard_spells_known_table` are genuinely pure (no side effects), endorsing the direct-reuse plan over duplicating. Building now. Path A choice-picker default still queued next |
+| backend | working | Self-caught and corrected a real mistake before it shipped: Skald will NOT reach full Computed once spellcasting closes (unlike Bard, whose Computed status rests on ~20 other already-grounded named features from a pre-swarm cycle Skald doesn't have). Lead independently confirmed both feature-counts in code. Skald's spellcasting still real and worth closing, just stays honestly Blocked on its own remaining `other_features_deferred` gap. Building now |
 | frontend | idle | Choice-picker scoping doc landed (`cfcd43de`) and lead-verified — found a genuinely cheaper option (Path A: mirror Wizard's already-shipped silent-canonical-default pattern) instead of just answering the original 4 questions about the expensive interactive-picker path. Greenlit; implementation routed to backend (`pf1_adapter.rs`), frontend's own follow-on (`characterHubModel.ts` label update) queued for after |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
