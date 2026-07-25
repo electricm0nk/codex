@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Monk's Dodge exception built and lead-verified (371/371 lib, 3/3 new tests); survived and self-caught a raw file-content lost-update race mid-edit; ready to commit |
+| backend | working | Monk's Dodge fix committed and lead-verified (18920c3d, 371/371 lib, zero regression); deciding next -- picking whichever of Sorcerer/Cleric/Druid's permanent blockers is most tractable, or Monk's other 6 feats |
 | frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
-| qa | working | Barbarian's 22-file test batch landed and lead-verified 100% (5ba54695); working Bard's 32-file wave now |
+| qa | working | actively editing tests/sd13_bard_level1_spell_baseline.rs (confirmed via git status) -- mid the 32-file Bard wave |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
@@ -46,9 +46,9 @@ engine work lands.
 | Cleric | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on domain-power execution | `fca4e64e` |
 | Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
 | Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | `0374b96a`, lead-verified 368/368 lib against the committed state |
-| Monk | **Not started** | zero dispatch, zero chassis work | not yet queued — bonus-feat gap (7 restricted-list feats) confirmed to need its own future scoping pass (a feat-effect-engine problem, not an activation-state problem); Dodge identified as likely the easiest of the 7 |
+| Monk | **Blocked** — one small closure | `table_class_id` not widened (base-attack/save/fast-movement stay standalone); Dodge bonus-feat burden closed for real (Dodge's mechanics already grounded elsewhere in the codebase), the other 6 restricted-list feats each still need their own feat-effect engine | `18920c3d`, lead-verified 371/371 lib + 212/212 desktop, zero regression (16 pre-existing Monk files unchanged) |
 
-**CRB tally: 6 of 11 genuinely Computed, 4 of 11 with real partial engine progress (permanently or temporarily blocked), 1 of 11 (Monk) not started at all.**
+**CRB tally: 6 of 11 genuinely Computed, 5 of 11 with real partial engine progress (permanently or temporarily blocked). All 11 CRB classes now have at least some real engine work landed.**
 
 ### APG (6 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
 
@@ -93,7 +93,7 @@ precedent — flagged below.
 
 1. Barbarian's 22-file test-cleanup wave — done and lead-verified (`5ba54695`).
 2. Bard's own 32-file test-cleanup wave — QA working this now, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) still needed to make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
-3. Monk — backend building the Dodge exception now (Dodge's mechanics already grounded elsewhere in the codebase, so a genuinely-active Dodge bonus feat closes that one burden); the other 6 restricted-list feats each need their own feat-effect engine work, not yet started.
+3. Monk — Dodge's burden closed for real (`18920c3d`, zero regression). `table_class_id` widening and the other 6 restricted-list feats (each needing its own feat-effect engine, likely bigger lifts) remain untouched.
 4. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
 
 ### Honest scale note
