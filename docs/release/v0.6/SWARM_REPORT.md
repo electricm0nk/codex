@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Path A shipped (`9bafe303`) — Sorcerer/Cleric/Druid now reach `Computed` through the real creation UI, zero claim-blocking diagnostics. Lead independently verified (212/212 desktop, 78/78 frontend, traced `create_character_at_root`'s own gating logic to confirm equivalence). Awaiting next assignment |
+| backend | working | New target: Inquisitor's Judgment (APG), narrowed to Justice as the canonical MVP judgment type — a real course-correction from the earlier "not cheap" scan verdict (which was about the full judgment/domain/spellcasting breadth, not a narrowed slice). Lead independently verified all formulas and confirmed the attack-bonus integration point is already proven (Bard/Cleric's own precedent). Building now |
 | frontend | working | Confirmed all 3 are honestly `full` (no hybrid-level-1-Human carve-out), but found real per-class level-range differences: Sorcerer only levels 1-2 (`ARCANE_BLOODLINE_BONUS_LEVEL` gate), Cleric no cap, Druid only exactly level 1. Lead independently verified all three constants/conditions. Live-verifying through the real dev build now before finalizing `levelOptions` |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
