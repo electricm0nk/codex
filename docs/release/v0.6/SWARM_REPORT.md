@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Directed to Alchemist's Mutagen (APG) next — cheap-win scan across all 16 APG/ACG classes is now genuinely complete (5 closed, 11 explicitly ruled not-cheap), so this is deliberate real work, not another scan. Lead flagged it's bigger than the 5 closed so far (a real choice dimension — which stat to enhance — closer to Sorcerer's Arcane Bond/Cleric's Touch of Good in shape) and will likely land in the same `headless-only` reachability bucket as Sorcerer/Cleric/Druid |
+| backend | working | Mutagen scoping doc landed and greenlit — first slice combining choice-recognition (which stat) and activation-gating (mutated/not) in one closure. Lead independently re-verified all corpus formulas and traced the 3-branch combination logic's edge cases directly, found it sound (no gap, no full review needed). Confirmed headless-only reachability, same bucket as Sorcerer/Cleric/Druid. Building now |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
