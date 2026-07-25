@@ -1333,7 +1333,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T11:25:01
-Latest commit on tranche/6: 2d503e5d chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-25T11:20:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T11:17:35 frontend=2026-07-25T10:06:35 qa=2026-07-25T11:10:41 lead=2026-07-25T11:20:11
+Last mechanical check: 2026-07-25T11:30:01
+Latest commit on tranche/6: c4ffa208 QA: fix Druid test batch for animal companion Wolf stat block closure (69 seconds ago) (2026-07-25T11:28:52-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T11:25:23 frontend=2026-07-25T10:06:35 qa=2026-07-25T11:25:30 lead=2026-07-25T11:26:19
 <!-- AUTO-HEARTBEAT-END -->
