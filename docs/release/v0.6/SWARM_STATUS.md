@@ -1193,12 +1193,12 @@ prior refresh, itself already superseded by everything since)
 
 **LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Backend confirmed the corrected terminology going forward ("done" = reaches `Computed`, always) and landed APG's 6-class BAB/save/HP dispatch (`c511c132`) correctly labeled as still-Blocked from the start — lead-verified 283/283 lib + 212/212 desktop, including a dedicated multiclass-safety test proving backend proactively avoided the exact loophole Ranger's review found. Next: Ranger's real spellcasting (genuinely new engine work, no prior art in this codebase). See risks-and-open-questions.md item 8 for the full record.
 
-## Agent Status (2026-07-25, ~04:47 ET)
+## Agent Status (2026-07-25, ~05:55 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Sorcerer's known-spell posture landed (c23d4054), lead-verified 327/327 lib + 212/212 desktop; confirmed the genuine cheap win among the 4 casters (Bard confirmed not one, same as Cleric/Druid); now building Cleric's real 9-column spells-per-day table from scratch |
-| frontend | working | hit and self-caught an environment issue (a backgrounded rebuild silently died between tool calls), relaunched properly; still live-verifying the non-Human-Ranger-at-level-1 finding before committing the UI label |
-| qa | working | accepted backend's diff-draft offer for Sorcerer's ~29-file cleanup batch, verifying the count now |
+| backend | idle | Cleric's real spell math ladder landed (fca4e64e), lead-verified 333/333 lib + 212/212 desktop, spell list spot-checked, table verified against 2 independent primary sources; also self-caught and fixed 2 of their own lib-test regressions before I even looked. Deciding on next class |
+| frontend | working | still live-verifying the non-Human-Ranger-at-level-1 finding before committing the UI label |
+| qa | working | reviewing Sorcerer + Cleric's combined 54-file test-cleanup batch (both diff-drafts accepted); proactively flagged the faster back-to-back pace, not yet a bottleneck |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). ACG/APG have real BAB/save/HP dispatch (still correctly Blocked pending skill/feature/spellcasting).**
 

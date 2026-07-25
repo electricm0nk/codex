@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Sorcerer's known-spell posture landed and lead-verified (c23d4054); now building Cleric's real spell math from scratch |
-| frontend | working | live-verifying the non-Human-Ranger finding, recovered from an environment hiccup |
-| qa | working | Sorcerer's ~29-file test cleanup |
+| backend | idle | Sorcerer + Cleric both landed and lead-verified (c23d4054, fca4e64e); 333/333 lib + 212/212 desktop; deciding next class |
+| frontend | working | live-verifying the non-Human-Ranger finding |
+| qa | working | reviewing the combined 54-file Sorcerer+Cleric test cleanup |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
