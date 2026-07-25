@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 5 landed (350e6566) -- items-1+27 plan's sub-tasks 1-5 all fully closed; a real regression was found and fixed during re-verification, not shipped; now on the queued non-CRB starting-wealth work |
+| backend | working | non-CRB wealth recognition landed (4576fe5f); redirected to the corrected mandate -- full chassis for every class across all 4 primary books, primary active work now |
 | frontend | idle | queue clear |
-| qa | working | researching corpus coverage for the 8 class-breadth target classes |
+| qa | working | researching corpus coverage, scope corrected to all 4 books |
 
 ---
 
@@ -50,6 +50,8 @@ than manufacturing further busywork to avoid reporting it. The swarm remains
 live and will pick up immediately on any operator direction or newly
 discovered bounded work; the standing ~20-minute autonomous check-in
 continues regardless.
+
+**CORRECTION (operator, 2026-07-24, ~21:20 ET) — "future-epic scope" and "backlog" language above was read, correctly, as shoving real work off to a later cycle. It was not intended as deferral, but it reads as one, and that's what matters.** Operator directive, verbatim in substance: build every class from all four primary books (CRB, Bestiary 1, APG, ACG) fully wired, no shortcuts. This is not the 8-CRB-class framing used above — of the roughly 29 classes across all four books, only 3 (Fighter/Wizard/Rogue) have a working chassis today; the other ~26, CRB and non-CRB alike, all need real BAB/save/HP/skill/spellcasting/feature computation, not a data-only stub. The earlier split of "8 CRB classes = future epic" vs. "non-CRB classes = just add wealth data" was itself a shortcut — non-CRB classes need full chassis work too, not a wealth number standing in for it. This is now the swarm's primary active work, not backlog. See risks-and-open-questions.md item 8 for the corrected scope and framing.
 
 **UPDATE (2026-07-24, ~15:35 ET) — operator decided all three gated items.**
 Item 27: widen the posture gate to accept any equipment (real engineering
