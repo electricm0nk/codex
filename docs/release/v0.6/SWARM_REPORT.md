@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | MILESTONE: Sorcerer genuinely reaches Computed, committed and lead-verified (d6067603, 378/378 lib, real HeadlessReceiptStatus::Computed confirmed); deciding next between Cleric/Druid's blockers or Monk's remaining feats |
-| frontend | working | Barbarian's CLASS_OPTIONS update in progress uncommitted (supportLevel: 'full', levelOptions [1,2,3]) -- matches independent analysis, not yet committed |
+| backend | working | confirmed Cleric's blocker needs genuinely new mechanism work (no hidden shortcut, lead-verified against raw corpus); writing a comparative scoping doc across Cleric/Druid/Monk's remaining options next |
+| frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Bard's 22-file test batch landed and lead-verified 100% (6dcec5ba) -- entire workspace green, standing by |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer genuinely reach Computed (7 of 27). 20 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
@@ -41,7 +41,7 @@ engine work lands.
 | Rogue | **Computed** | `full` — every race, level 1 | pre-existing |
 | Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
-| Barbarian | **Computed** | real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking); UI label not yet updated by frontend (flagged, live-verification in progress) | Barbarian rage engine, lead-verified 364/364 lib + 212/212 desktop |
+| Barbarian | **Computed** | `full` -- unconditional, no race/level carve-out at all (never appears in the shared hybrid gate); real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking) | Rage engine + UI fix (`d020a5e8`), both lead-verified |
 | Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
 | Cleric | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on domain-power execution | `fca4e64e` |
 | Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
