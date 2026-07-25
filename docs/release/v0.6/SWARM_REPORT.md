@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Adversarial review of Monk's scoping doc back: greenlight with required changes. Big scope reduction found — an existing precedent (Dwarf Stability's CMD-bonus-magnitude record) means Improved Grapple needs no new CMB/CMD pillar after all, closes the same way Dodge/Catch Off-Guard/Throw Anything did. Lead independently confirmed this and a stale-blanket-claim bug the review also caught. Revising the doc now: Combat Reflexes + Scorpion Style + Improved Grapple this slice, CMB/CMD pillar deferred to its own future reviewed slice |
+| backend | working | Monk build done per revised plan, all 4 required changes verified correct in code by the lead (formulas, conditional blanket-claim fix, 3 quote-fidelity fixes). Full lib 414/414 matches. Lead's own full workspace sweep caught 1 stale pre-existing test (`sd13_monk_bonus_feat_choice.rs`) backend's own sweep hadn't reached yet — same shape as every prior class's stale-fixture fix, not a real bug. Fixing now before commit |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
