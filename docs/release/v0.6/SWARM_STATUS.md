@@ -1208,7 +1208,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T20:10:01
-Latest commit on tranche/6: 6ef7f3ef feat(v0.6): corpus-aware combat-baseline + selected-skill pillars (sub-task 4) (3 minutes ago) (2026-07-24T20:06:59-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T20:06:14 frontend=2026-07-24T19:24:25 qa=2026-07-24T19:24:32 lead=2026-07-24T20:07:19
+Last mechanical check: 2026-07-24T21:10:02
+Latest commit on tranche/6: 37d271da docs(v0.6): operator correction -- class breadth is primary work, all 4 books (23 seconds ago) (2026-07-24T21:09:39-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T21:10:00 frontend=2026-07-24T19:24:25 qa=2026-07-24T21:00:40 lead=2026-07-24T21:06:45
 <!-- AUTO-HEARTBEAT-END -->
