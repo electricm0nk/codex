@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Full-build comparison across all 9 untouched classes landed and lead-verified — Arcanist chosen: cleanest spell-list-AND-shape match of any candidate this session (Wizard's own prepared/spellbook infrastructure, not just a shared list), smallest class-skill list (8), fewest named features with real reuse (9), and a genuine shot at full `Computed` (not just narrower-Blocked) — the first APG/ACG class to have that path. Writing the actual build scoping doc next |
+| backend | working | Arcanist's full-build scoping doc landed — self-caught and corrected a real over-claim from the earlier comparison (Arcanist's spells-per-day table is NOT Wizard's, genuinely its own, verified against 2 sources). Lead independently re-verified the correction and the Wizard bootstrap-deadlock precedent it cites. Greenlit to build as one cohesive slice (chassis+skills+Reservoir+spellcasting+exploits-deferral), no full review needed. Building now |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
