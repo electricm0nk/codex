@@ -154,17 +154,21 @@ fn sorcerer_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() 
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported for
-    // Sorcerer) is untouched: no fabricated base_attack_bonus field, and no supported
-    // Fighter-style base-attack chassis explanation leaks in.
+    // (v0.6 alpha swarm, risks item 8) `table_class_id` was widened to recognize
+    // Sorcerer via the shared table-driven `compute_generic_table_chassis` dispatch,
+    // so the integrated `class_chassis.base_attack_bonus` explanation now genuinely
+    // exists -- but Sorcerer's real 1/2-BAB progression still floors to 0 at level 1
+    // (classlevel / 2 = 0), so the *value* coincidentally stays 0, same shape as
+    // Rogue's own 3/4-BAB widening in `sd13_rogue_level1_chassis_baseline.rs`. Only
+    // the explanation's *presence* flips, not the value.
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "the standalone sorcerer base-attack explanation must not be wired into the integrated \
-         base_attack_bonus field"
+        "sorcerer level 1's real 1/2-BAB progression (classlevel / 2) is 0"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "sorcerer baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "sorcerer base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 }
 
@@ -193,12 +197,36 @@ fn sorcerer_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_bloc
         .find(|d| d.id == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported")
         .expect("Arcane Bond / bloodline progression blocker must still fire");
     assert!(arcane_bond.claim_blocking);
-    let spontaneous_spells = computation
+
+    // (v0.6 alpha swarm, risks item 8) class_spell.sorcerer.spontaneous.unsupported is
+    // no longer unconditional -- it's a real, conditional validation of
+    // AcquisitionMode::Known selections. This fixture predates spells_selected (zero
+    // known spells), so the posture is genuinely valid and the blocker correctly does
+    // not fire -- the real "no spells are fabricated" guarantee now comes from the
+    // known-spell record's own count being honestly 0.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported")
-        .expect("spontaneous known-spell / slot posture blocker must still fire");
-    assert!(spontaneous_spells.claim_blocking);
+    {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.sorcerer.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the spell blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Sorcerer level 2 was later widened into the supported tranche -----

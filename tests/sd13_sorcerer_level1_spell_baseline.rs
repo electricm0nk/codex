@@ -37,7 +37,9 @@
 //! spells/feats at 3rd+ level. The row stays `Partial` and the spontaneous spell burden
 //! stays untouched.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -134,19 +136,23 @@ fn sorcerer_level1_leaves_direct_spell_baseline_recognition_evidence() {
         recognition.detail
     );
 
-    // It is recognition only: it must carry no fabricated mechanical value (+0) and must
-    // not fabricate a Fighter-style computed chassis.
+    // It is recognition only: it must carry no fabricated mechanical value (+0).
     assert_eq!(
         recognition.value, 0,
         "sorcerer spell baseline recognition must carry no fabricated value (+0)"
     );
+    // (v0.6 alpha swarm, risks item 8) `table_class_id` was widened to recognize
+    // Sorcerer, so the integrated `class_chassis.base_attack_bonus` explanation now
+    // genuinely exists -- but Sorcerer's real 1/2-BAB progression still floors to 0 at
+    // level 1, so the value coincidentally stays 0 (see
+    // `sd13_sorcerer_base_attack_and_saves.rs` for the same flip in full).
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "spell baseline must not fabricate a base attack bonus"
+        "sorcerer level 1's real 1/2-BAB progression (classlevel / 2) is 0"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "spell baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "sorcerer base-attack bonus is now a genuinely integrated chassis explanation"
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 17 -> +3).
@@ -200,6 +206,12 @@ fn sorcerer_level1_fabricates_no_spell_math() {
                 || explanation
                     .id
                     .starts_with("class_chassis.sorcerer.spontaneous.total_spells_per_day.")
+                // (v0.6 alpha swarm, risks item 8) class_spell.sorcerer.known_spells is
+                // the real, non-fabricated known-spell-selection record --
+                // `ground_sorcerer_known_spells` now runs once the posture is genuinely
+                // valid (this fixture has zero known spells, so the record honestly
+                // reports 0, not a fabricated value).
+                || explanation.id == "class_spell.sorcerer.known_spells"
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the \
              access-ladder record: {explanation:?}"
@@ -399,7 +411,19 @@ fn sorcerer_level1_with_no_bloodline_choice_stays_bloodline_agnostic() {
 
 #[test]
 fn sorcerer_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
-    let input = load(SORCERER_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8) SPONTANEOUS_BLOCKER_ID is no longer
+    // unconditional -- a bare fixture (zero known spells) is honestly a valid
+    // posture and the blocker correctly does not fire. This test is specifically
+    // about the blocker staying claim-blocking, so a genuinely invalid known-spell
+    // selection is added: "Acid Arrow" is a real 2nd-level sorcerer spell
+    // (`sorcerer_spell_list::SORCERER_SPELL_LIST`), not yet accessible at sorcerer
+    // level 1 (access ceiling 1st).
+    let mut input = load(SORCERER_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Acid Arrow".to_owned(),
+        source_class_id: "class:sorcerer".to_owned(),
+        acquisition_mode: AcquisitionMode::Known,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     // The spontaneous known-spell / slot posture burden must be a separate, explicit,
@@ -407,9 +431,11 @@ fn sorcerer_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
     let spontaneous = claim_blocking(&computation, SPONTANEOUS_BLOCKER_ID);
     assert!(
         spontaneous.message.contains("spontaneous")
-            && spontaneous.message.contains("spells known")
-            && spontaneous.message.contains("spell slot"),
-        "sorcerer spell blocker must name the spontaneous known-spell / slot posture burden: {}",
+            && spontaneous.message.contains("known-spell")
+            && spontaneous.message.contains("Acid Arrow")
+            && spontaneous.message.contains("not yet accessible"),
+        "sorcerer spell blocker must name the spontaneous known-spell posture burden and the \
+         real unmet condition: {}",
         spontaneous.message
     );
 

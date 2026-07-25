@@ -117,6 +117,7 @@ fn sorcerer_at_level(level: u8) -> CharacterInput {
                 },
             ],
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -339,21 +340,37 @@ fn spontaneous_unsupported_diagnostic_never_leaks_into_explanations_or_grants() 
         let character = sorcerer_at_level(to_level);
         let computation = compute_pilot_base_chassis(&character);
 
-        let diagnostic = computation
+        // (v0.6 alpha swarm, risks item 8) SPONTANEOUS_UNSUPPORTED_DIAGNOSTIC_ID is no
+        // longer unconditional -- `sorcerer_at_level` builds a bare fixture (zero known
+        // spells), a genuinely valid posture, so the diagnostic correctly does not fire
+        // at any level here. The real property this test needs -- that the diagnostic
+        // never leaks into .explanations and never fabricates a Grant -- holds
+        // regardless of whether the diagnostic fires, so it's checked either way below.
+        match computation
             .diagnostics
             .iter()
             .find(|d| d.id == SPONTANEOUS_UNSUPPORTED_DIAGNOSTIC_ID)
-            .unwrap_or_else(|| {
-                panic!(
-                    "sorcerer level {to_level} must still carry the spontaneous-spell \
-                     claim-blocking diagnostic: {:?}",
+        {
+            Some(diagnostic) => assert!(
+                diagnostic.claim_blocking,
+                "the spontaneous spell posture diagnostic must stay claim-blocking at level \
+                 {to_level}"
+            ),
+            None => {
+                let known_count = computation
+                    .explanations
+                    .iter()
+                    .find(|e| e.id == "class_spell.sorcerer.known_spells")
+                    .map(|e| e.value)
+                    .unwrap_or(-1);
+                assert_eq!(
+                    known_count, 0,
+                    "no spells are fabricated merely because the diagnostic stopped firing at \
+                     level {to_level}: {:?}",
                     computation.diagnostics
-                )
-            });
-        assert!(
-            diagnostic.claim_blocking,
-            "the spontaneous spell posture diagnostic must stay claim-blocking at level {to_level}"
-        );
+                );
+            }
+        }
 
         assert!(
             !computation
