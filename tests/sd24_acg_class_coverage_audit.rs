@@ -176,11 +176,24 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         );
 
         let expected_diagnostic_id = match class_id {
-            AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Hunter => {
+            AcgClassId::Bloodrager | AcgClassId::Hunter => {
                 format!("class_feature.acg.{}.spellcasting_deferred.unsupported", class_id.name())
             }
             AcgClassId::Brawler => {
                 "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned()
+            }
+            AcgClassId::Skald => {
+                // v0.6 alpha swarm, risks item 8 (Skald spellcasting
+                // closure): Skald's own spellcasting_deferred diagnostic
+                // is now retired too -- known-spell posture is genuinely
+                // validated (reusing Bard's own spell list/tables,
+                // verified identical), so the remaining claim-blocking
+                // diagnostic is renamed to other_features_deferred,
+                // naming only Skald's OTHER still-ungrounded named
+                // features (unlike Bard, whose own remaining features
+                // were already built in an earlier SD13-E5 cycle, Skald
+                // never reaches Computed this closure either).
+                "class_feature.acg.skald.other_features_deferred.unsupported".to_owned()
             }
             _ => format!("class_feature.acg.{}.unsupported", class_id.name()),
         };

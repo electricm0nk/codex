@@ -8319,6 +8319,8 @@ fn compute_acg_class_chassis(
     // `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
+        ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
+        push_skald_other_features_deferred_diagnostic(diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
     } else if class_id == AcgClassId::Brawler {
@@ -8442,15 +8444,12 @@ fn active_skald_inspired_rage_bonus(
 /// the grounded rounds-per-day budget is a genuine posture violation and
 /// claim-blocks.
 ///
-/// Unlike Barbarian, this is Skald's ONLY grounded class feature this
-/// slice -- spellcasting and every other named-but-unbuilt Skald feature
-/// remain claim-blocked via the new, narrower
-/// `class_feature.acg.skald.spellcasting_deferred.unsupported` diagnostic
-/// pushed unconditionally below (replacing the generic
-/// `class_feature.acg.skald.unsupported` diagnostic the other 9 ACG
-/// classes still get, per the adversarial review's finding 2 -- the old
-/// diagnostic's blanket "no named class-feature computation... grounded
-/// anywhere" claim is false for Skald now that Inspired Rage is real).
+/// This function no longer pushes Skald's own "other features deferred"
+/// diagnostic itself (v0.6 alpha swarm, risks item 8, Skald spellcasting
+/// closure) -- that diagnostic is now independent of Inspired Rage's own
+/// state and is pushed exactly once from the top-level Skald dispatch
+/// branch, alongside `ground_or_block_skald_spellcasting`'s own call. See
+/// `push_skald_other_features_deferred_diagnostic`'s own doc comment.
 fn ground_or_block_skald_inspired_rage(
     input: &CharacterInput,
     skald_level: u8,
@@ -8476,7 +8475,6 @@ fn ground_or_block_skald_inspired_rage(
                  active, in-budget activation is present"
             ),
         });
-        push_skald_spellcasting_deferred_diagnostic(diagnostics);
         return;
     };
 
@@ -8496,7 +8494,6 @@ fn ground_or_block_skald_inspired_rage(
                 ),
                 claim_blocking: true,
             });
-            push_skald_spellcasting_deferred_diagnostic(diagnostics);
             return;
         }
     }
@@ -8540,33 +8537,274 @@ fn ground_or_block_skald_inspired_rage(
             });
         }
     }
-
-    push_skald_spellcasting_deferred_diagnostic(diagnostics);
 }
 
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.acg.skald.unsupported` for Skald specifically (per the
-/// adversarial review's finding 2): named ONLY the genuinely still-missing
-/// pieces (spellcasting and every other named-but-unbuilt Skald class
-/// feature beyond Inspired Rage), unlike the retired diagnostic's blanket
-/// "no named class-feature computation... grounded anywhere" claim, which
-/// is now false for Skald. Pushed unconditionally regardless of Inspired
-/// Rage's own raging state (singing Inspired Rage doesn't grant
-/// spellcasting), mirroring how Sorcerer's/Bard's own narrowed diagnostics
-/// still claim-block every time despite their own grounded pieces.
-fn push_skald_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// adversarial review's finding 2, updated for the spellcasting closure):
+/// named ONLY the genuinely still-missing pieces (Skald's own remaining
+/// named features beyond Inspired Rage and known-spell posture --
+/// Bardic Knowledge-analog, Iron Will, Rage Powers shared-list access,
+/// Spell Kenning, Versatile Performance, War Chant), unlike the retired
+/// diagnostic's blanket "no named class-feature computation... grounded
+/// anywhere" claim, which is now false for Skald.
+///
+/// **Updated (v0.6 alpha swarm, risks item 8, Skald spellcasting
+/// closure)**: this diagnostic no longer claims spellcasting is
+/// ungrounded -- known-spell posture is now genuinely validated by
+/// `ground_or_block_skald_spellcasting`, reusing Bard's own spell list
+/// and progression tables (verified identical to Skald's own). Unlike
+/// Bard, whose own remaining named features were already grounded in an
+/// earlier SD13-E5 cycle (so Bard reaches full `Computed` once its own
+/// known-spell/performance postures are valid), Skald's OTHER named
+/// features remain completely unbuilt, so this diagnostic still
+/// claim-blocks unconditionally -- Skald does not reach `Computed` this
+/// closure either, confirmed directly rather than assumed by analogy to
+/// Bard. Pushed exactly once from the top-level Skald dispatch branch,
+/// independent of Inspired Rage's/spellcasting's own state.
+fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.acg.skald.spellcasting_deferred.unsupported".to_owned(),
+        id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and Inspired Rage: this ACG class has no class-skill list, no spellcasting \
-             posture (Skald casts from the Bard spell list, but its own spells-known/per-day \
-             table numbers have not yet been independently verified or built), and no other \
-             named class feature grounded anywhere in this codebase yet; no class-feature or \
-             spell execution is fabricated in this bounded chassis baseline"
+             pillar, Inspired Rage, and known-spell posture: this ACG class has no class-skill \
+             list and no other named class feature (Bardic Knowledge-analog, Iron Will, Rage \
+             Powers shared-list access, Spell Kenning, Versatile Performance, War Chant) \
+             grounded anywhere in this codebase yet; no class-feature execution is fabricated \
+             in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
+}
+
+/// Skald's base spells-per-day table (v0.6 alpha swarm, risks item 8,
+/// Skald spellcasting closure), verified byte-identical to Bard's own
+/// inline `bard_base_spells_per_day` table (`explain_bard_level1_spell_baseline`)
+/// against two independent primary sources (aonprd.com and d20pfsrd.com,
+/// agreeing with each other). Duplicated here as a small, separate,
+/// Skald-named table rather than extracting Bard's own inline table into
+/// a shared function -- Bard's table lives inline inside an already-
+/// shipped, already-tested function, and extracting it would be a
+/// refactor touching that function for zero necessary benefit (the table
+/// is only 10 short match arms), the same "parallel copy over refactor-
+/// risk" discipline the Wolf/Horse companion functions established.
+fn skald_base_spells_per_day_table(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(1), None, None, None],
+        2 => [Some(2), None, None, None],
+        3 => [Some(3), None, None, None],
+        4 => [Some(3), Some(1), None, None],
+        5 => [Some(4), Some(2), None, None],
+        6 => [Some(4), Some(3), None, None],
+        7 => [Some(4), Some(3), Some(1), None],
+        8 => [Some(4), Some(4), Some(2), None],
+        9 => [Some(5), Some(4), Some(3), None],
+        10 => [Some(5), Some(4), Some(3), Some(1)],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Skald's spell-level access ladder and base spells-known/spells-per-day
+/// tables are byte-identical to Bard's own (v0.6 alpha swarm, risks item
+/// 8, Skald spellcasting closure), verified against two independent
+/// primary sources (aonprd.com and d20pfsrd.com, agreeing with each
+/// other) before writing this function -- not assumed from the shared
+/// `SPELLLIST:1|Bard` corpus token alone. `bard_spell_level_access` and
+/// `bard_spells_known_table` are pure, side-effect-free lookups (they
+/// push no explanations/diagnostics themselves), so calling them
+/// directly here introduces zero risk to Bard's own behavior, unlike the
+/// Wolf/Horse companion functions (which push explanation records and
+/// were kept as deliberately separate parallel copies for that reason).
+/// `bard_spell_list::BARD_SPELL_LIST`/`bard_spell_list::bard_spell_level`
+/// are reused directly for the same reason: Skald's `SPELLLIST:1|Bard`
+/// confirms this is the same list, not merely a similar one.
+fn unmet_skald_known_spell_conditions(input: &CharacterInput, skald_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == SKALD_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = bard_spell_level_access(skald_level);
+    let known_table = bard_spells_known_table(skald_level);
+
+    let mut known_per_level: [i16; 5] = [0; 5];
+    for spell_id in &known {
+        let Some(spell_level) = bard_spell_list::bard_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Bard spell list Skald casts \
+                 from"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at skald level {skald_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        if usize::from(spell_level) >= known_per_level.len() {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, beyond this bounded \
+                 seam's verified spells-known table (spell levels 0-4 only)"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Skald Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Grounds the real known-spell posture once
+/// `unmet_skald_known_spell_conditions` reports an empty unmet list,
+/// mirroring `ground_bard_known_spells` exactly.
+fn ground_skald_known_spells(
+    input: &CharacterInput,
+    skald_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == SKALD_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.skald.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Skald level {skald_level} known-spell selection ({} spells, AcquisitionMode::Known): \
+             {}. Each known spell is verified against the real PF1 Bard spell list Skald casts \
+             from (`bard_spell_list::BARD_SPELL_LIST` -- Skald's own `SPELLLIST:1|Bard` corpus \
+             token confirms this is the same list, not merely a similar one), the shared \
+             spell-level access ceiling (`bard_spell_level_access`), and the shared Spells Known \
+             table's own per-level cap (`bard_spells_known_table` -- verified identical to \
+             Skald's own table against two independent primary sources). Real PF1 Skald rules \
+             have no daily preparation step at all (spontaneous, like Bard) -- a skald's known \
+             spells are permanent once learned, cast spontaneously using the already-grounded \
+             per-day slot totals. This grounds the known-spell selection for real; it computes \
+             no spell save DC resolution against a target and no casting execution",
+            known.len(),
+            known.join(", ")
+        ),
+    });
+}
+
+/// Grounds or claim-blocks Skald's known-spell posture (v0.6 alpha swarm,
+/// risks item 8, Skald spellcasting closure), mirroring
+/// `ground_or_block_bard_known_spells` exactly. Called from
+/// `compute_acg_class_chassis`'s Skald branch, independent of Inspired
+/// Rage's own state -- a Skald can be validly not-singing with a valid
+/// known-spell posture, validly singing with an invalid posture, or any
+/// other combination, since the two closures are unrelated PF1
+/// mechanics.
+fn ground_or_block_skald_spellcasting(
+    input: &CharacterInput,
+    skald_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // Flat records grounded unconditionally, mirroring
+    // `explain_bard_level1_spell_baseline`'s own shape exactly: the
+    // spell-level access ladder, the base spells-per-day counts, and the
+    // base spell-save-DC arithmetic are all real regardless of the
+    // known-spell posture's own validity (a Skald with an invalid
+    // known-spell posture still has a real access ladder and per-day
+    // budget; the posture violation is about WHICH spells are known, not
+    // whether the ladder/budget exist at all).
+    let access_ceiling = bard_spell_level_access(skald_level);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.skald.spontaneous.spell_level_access".to_owned(),
+        value: access_ceiling,
+        detail: format!(
+            "Skald spell-level access at skald level {skald_level}: {access_ceiling} (verified \
+             byte-identical to Bard's own access ladder against two independent primary \
+             sources, aonprd.com and d20pfsrd.com -- Skald casts from the Bard spell list per \
+             its own SPELLLIST:1|Bard corpus token). This grounds the access ladder only: no \
+             spells-per-day counts, no spells-known posture, no bonus slots from a high \
+             Charisma, and no spell save DCs are computed by this record"
+        ),
+    });
+
+    let base_spells_per_day = skald_base_spells_per_day_table(skald_level);
+    for (index, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.skald.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Skald base spells per day at skald level {skald_level}, spell level \
+                 {spell_level}: {base_count}, verified byte-identical to Bard's own base \
+                 spells-per-day table against two independent primary sources. This grounds the \
+                 base count only: bonus spells per day from a high Charisma are never computed, \
+                 spells KNOWN (a separate table) is not grounded, and no spell save DCs are \
+                 computed"
+            ),
+        });
+    }
+
+    for spell_level in 1..=access_ceiling {
+        let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+        let spell_save_dc = 10 + spell_level + charisma_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.skald.spontaneous.spell_save_dc.spell_level_{spell_level}"),
+            value: spell_save_dc,
+            detail: format!(
+                "Skald spell save DC at skald level {skald_level}, spell level {spell_level}: \
+                 10 + {spell_level} + Charisma modifier {charisma_modifier} = {spell_save_dc} \
+                 (the universal PF1 spell-save-DC formula, identical in shape to Bard's own --\
+                 Skald's SPELLSTAT is Charisma too). This grounds the base DC formula only: no \
+                 saving-throw resolution, no target, no spell selection, and no feat DC \
+                 modifiers are computed"
+            ),
+        });
+    }
+
+    let unmet = unmet_skald_known_spell_conditions(input, skald_level);
+    if unmet.is_empty() {
+        ground_skald_known_spells(input, skald_level, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.skald.spontaneous_known_and_per_day.unsupported".to_owned(),
+            message: format!(
+                "Skald remains blocked on its spontaneous known-spell / slot posture burden: \
+                 spontaneous casting execution (slot consumption, tracking, and casting itself) \
+                 is out of scope for this bounded baseline regardless (the spell-level access \
+                 ladder, the base spells per day table counts, and the base spell-save-DC \
+                 arithmetic are grounded separately as flat records above); unmet known-spell \
+                 posture: {}",
+                unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
 }
 
 /// Applies Skald Inspired Rage's Strength/Constitution morale bonus to
@@ -25534,9 +25772,16 @@ mod acg_class_chassis_dispatch_tests {
     /// swap (adversarial review finding 2): the OLD generic
     /// `class_feature.acg.skald.unsupported` diagnostic must never appear
     /// for Skald at any raging state, while the NEW, narrower
-    /// `class_feature.acg.skald.spellcasting_deferred.unsupported`
-    /// diagnostic always does -- Skald stays `Blocked` on spellcasting
-    /// alone, even though Inspired Rage itself is now genuinely grounded.
+    /// `class_feature.acg.skald.other_features_deferred.unsupported`
+    /// diagnostic always does -- Skald stays `Blocked` on its remaining
+    /// named features alone, even though Inspired Rage AND known-spell
+    /// posture are now both genuinely grounded (v0.6 alpha swarm, risks
+    /// item 8, Skald spellcasting closure: unlike Bard, whose own
+    /// remaining named features were already built in an earlier SD13-E5
+    /// cycle, Skald's own (Bardic Knowledge-analog, Iron Will, Rage
+    /// Powers shared-list access, Spell Kenning, Versatile Performance,
+    /// War Chant) remain completely unbuilt, so this diagnostic still
+    /// unconditionally claim-blocks).
     #[test]
     fn skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
         let input = acg_style_input("class:skald", 1);
@@ -25545,7 +25790,7 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Skald must stay Blocked on its deferred spellcasting posture alone: {:?}",
+            "Skald must stay Blocked on its other-features-deferred posture alone: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -25558,14 +25803,34 @@ mod acg_class_chassis_dispatch_tests {
             receipt.computation.diagnostics
         );
         assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"),
+            "the now-retired spellcasting_deferred diagnostic must never appear for Skald \
+             either, now that known-spell posture is genuinely validated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_spell.skald.known_spells"),
+            "expected the real known-spell posture to be grounded (zero known spells is a \
+             valid PF1 posture, mirroring Bard's own precedent): {:?}",
+            receipt.computation.explanations
         );
     }
 
@@ -27424,10 +27689,13 @@ mod barbarian_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod skald_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, FIGHTER_CLASS_ID, SKALD_CLASS_ID, SKALD_INSPIRED_RAGE_ABILITY_ID,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
+        CharacterInput, HeadlessReceiptStatus, FIGHTER_CLASS_ID, SKALD_CLASS_ID,
+        SKALD_INSPIRED_RAGE_ABILITY_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -27482,9 +27750,9 @@ mod skald_dispatch_widening_safety_tests {
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -27492,7 +27760,7 @@ mod skald_dispatch_widening_safety_tests {
     /// A single-class Human Skald actively, validly singing Inspired Rage
     /// (within budget) applies the real Strength/Constitution/Will/Armor-
     /// Class bonuses and penalty to the integrated totals -- but still
-    /// stays `Blocked` (spellcasting_deferred), unlike Barbarian's own
+    /// stays `Blocked` (other_features_deferred), unlike Barbarian's own
     /// equivalent test which reaches `Computed`.
     ///
     /// Charisma 8 (fixture base) -> -1 modifier: rounds per day = 3 + (-1)
@@ -27519,9 +27787,9 @@ mod skald_dispatch_widening_safety_tests {
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the spellcasting_deferred diagnostic even while singing: {:?}",
+            "expected the other_features_deferred diagnostic even while singing: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -27630,6 +27898,162 @@ mod skald_dispatch_widening_safety_tests {
             "a non-Skald character's spoofed inspired_rage entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
         );
+    }
+
+    /// v0.6 alpha swarm, risks item 8 (Skald spellcasting closure): a
+    /// single-class Skald knowing 2 real, valid, in-budget 1st-level
+    /// spells (within skald level 1's real cap of 2, byte-identical to
+    /// Bard's own cap) must NOT trip the spell-posture diagnostic --
+    /// proving real validation, not a vacuous check, mirroring Bard's own
+    /// known-spell closure exactly (same spell names too, since Skald
+    /// casts from the same Bard spell list).
+    #[test]
+    fn single_class_skald_with_valid_known_spells_does_not_trip_the_spell_posture() {
+        let mut input = human_skald_input(1);
+        for spell_id in ["Alarm", "Charm Person"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: SKALD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.skald.spontaneous_known_and_per_day.unsupported"),
+            "2 distinct first-level spells is within skald level 1's real cap of 2: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.skald.known_spells")
+            .expect("expected the real known-spell posture to be grounded");
+        assert_eq!(known.value, 2, "expected 2 known spells grounded: {:?}", known);
+    }
+
+    /// A single-class Skald at level 1 (cap 2 first-level spells known)
+    /// knowing 3 distinct first-level spells over-knows its real cap and
+    /// must carry the spell-posture diagnostic.
+    #[test]
+    fn single_class_skald_over_known_spells_stays_blocked_on_spell_posture() {
+        let mut input = human_skald_input(1);
+        for spell_id in ["Alarm", "Charm Person", "Cause Fear"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: SKALD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.skald.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "skald level 1 only knows 2 first-level spells; 3 distinct known spells over-knows \
+             the real cap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Skald preparing a spell not on the real Bard spell
+    /// list Skald casts from must carry the diagnostic.
+    #[test]
+    fn single_class_skald_with_an_off_list_known_spell_stays_blocked_on_spell_posture() {
+        let mut input = human_skald_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Not A Real Spell".to_owned(),
+            source_class_id: SKALD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.skald.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "an off-list spell must trip the spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Skald knowing a real 2nd-level bard spell at level 1
+    /// (2nd-level access begins at level 4, identical to Bard's own
+    /// ladder) must carry the diagnostic -- proving the access-ceiling
+    /// check, not just the off-list/over-known checks.
+    #[test]
+    fn single_class_skald_with_an_inaccessible_known_spell_stays_blocked() {
+        let mut input = human_skald_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Alter Self".to_owned(),
+            source_class_id: SKALD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.skald.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "a 2nd-level bard spell is not accessible at skald level 1: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The flat spellcasting chassis records (access ladder, base
+    /// spells-per-day, spell save DC) are grounded for real, mirroring
+    /// Bard's own reference values exactly (byte-identical tables).
+    /// Charisma 8 (fixture base) -> -1 modifier.
+    #[test]
+    fn single_class_skald_grounds_the_flat_spellcasting_chassis_records() {
+        let input = human_skald_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let access = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.skald.spontaneous.spell_level_access")
+            .expect("expected the spell-level access ladder to be grounded");
+        assert_eq!(access.value, 1, "skald level 1 access ceiling is 1st level: {:?}", access);
+
+        let base_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.skald.spontaneous.base_spells_per_day.spell_level_1")
+            .expect("expected the base spells-per-day record to be grounded");
+        assert_eq!(base_per_day.value, 1, "skald level 1 base 1st-level spells per day: {:?}", base_per_day);
+
+        let dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.skald.spontaneous.spell_save_dc.spell_level_1")
+            .expect("expected the spell save DC record to be grounded");
+        // 10 + spell level 1 + Charisma modifier (-1) = 10.
+        assert_eq!(dc.value, 10, "10 + 1 + (-1) = 10: {:?}", dc);
     }
 }
 
