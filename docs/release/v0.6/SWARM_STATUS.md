@@ -1189,7 +1189,9 @@ prior refresh, itself already superseded by everything since)
 | frontend | idle | queue clear |
 | qa | working | landing the disclosed 4-site `tests/**` update for Ranger's dispatch widening (caught mid-flight, correct) |
 
-**Operator directive (2026-07-24), acted on:** full class chassis across all 4 primary books is the swarm's primary active work. The adversarial review dispatched on the scoping plan found a real correctness gap (a false-positive-Computed risk) before it shipped — backend fixed all 4 findings, lead independently verified every one rather than trusting the report. Class 1 of 24 is genuinely done; continuing through the sequence per the operator's standing directive, no further pause for approval. See risks-and-open-questions.md item 8.
+**Operator directive (2026-07-24), acted on:** full class chassis across all 4 primary books is the swarm's primary active work. The adversarial review dispatched on the scoping plan found a real correctness gap (a false-positive-Computed risk) before it shipped — backend fixed all 4 findings, lead independently verified every one rather than trusting the report.
+
+**LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Clarifying with backend whether Ranger's spell posture is next or deferred, and confirming going forward that "done" means "genuinely reaches Computed" for all 24 classes, not "dispatch landed safely." See risks-and-open-questions.md item 8 for the full record.
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
