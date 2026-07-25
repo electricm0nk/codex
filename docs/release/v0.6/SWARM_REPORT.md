@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Cavalier's Mount (APG) committed (`d256bc9c`) and lead re-verified against the real HEAD — first-ever APG class-specific closure (417/417 lib, coverage audit 3/3). Awaiting next assignment |
+| backend | working | Directed to Alchemist's Mutagen (APG) next — cheap-win scan across all 16 APG/ACG classes is now genuinely complete (5 closed, 11 explicitly ruled not-cheap), so this is deliberate real work, not another scan. Lead flagged it's bigger than the 5 closed so far (a real choice dimension — which stat to enhance — closer to Sorcerer's Arcane Bond/Cleric's Touch of Good in shape) and will likely land in the same `headless-only` reachability bucket as Sorcerer/Cleric/Druid |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -125,11 +125,11 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Cavalier's own test-cleanup wave, once committed and QA scopes whether one is needed (likely not — no globally-shared diagnostic retired, same reasoning as Bloodrager/Hunter's own closures).
+1. **Alchemist's Mutagen (APG)** — now the active target. The cheap-win scan across all 16 APG/ACG classes is genuinely complete (5 closed: Skald/Bloodrager/Brawler/Hunter/Cavalier; 11 explicitly ruled not-cheap with real reasoning, no further scanning warranted). Mutagen is real, deliberate work, not another quick win — a choice-gated activation (which of Str/Dex/Con to enhance, with a matching mental penalty), closer in shape to Sorcerer's Arcane Bond/Cleric's Touch of Good than the 5 simpler closures. Expected to land in the same `headless-only` reachability bucket as Sorcerer/Cleric/Druid.
 2. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all (no standalone numeric value exists to ground, unlike the other 6). Not scheduled; would need its own scoping pass same as Improved Grapple's abandoned CMB/CMD pillar would.
-3. Monk's/Brawler's/Hunter's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
+3. Monk's/Brawler's/Hunter's/Cavalier's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
 4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
-5. All remaining untouched ACG/APG classes (beyond Cavalier) class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
+5. All remaining untouched ACG/APG classes' class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
 
 ### Honest scale note
 
