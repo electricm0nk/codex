@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | ACG's 10-class dispatch landed and verified (71cd41b6, 311/311 + 212/212); continuing the class sequence |
+| backend | working | continuing the class sequence |
 | frontend | working | updating Ranger's characterHubModel.ts support level |
-| qa | idle | Paladin's 29-file cleanup confirmed fully resolved |
+| qa | working | Paladin's 29-file cleanup committed (c1844765) and lead-reverified; now fixing the ACG coverage-audit gap |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
