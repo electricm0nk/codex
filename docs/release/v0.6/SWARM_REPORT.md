@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | combat-time plan revised addressing all 6 review findings, lead-verified and greenlit; starting Barbarian (schema+fixture-grammar+ownership-gate first) |
-| frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); no further class-breadth follow-up queued |
+| backend | working | schema field broke 64+8 construction sites (real scale surprise, self-caught, mechanical zero-judgment fix); applied and lead-spot-checked clean against QA's in-flight files; full workspace build running |
+| frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
 | qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, authoring Sorcerer's fixes directly (backend never delivered drafts) |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
