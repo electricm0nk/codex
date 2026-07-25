@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | scoping doc for Sorcerer's Arcane bloodline closure lead-verified and endorsed; actively building it now (pilot_compute.rs in progress) |
-| frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
-| qa | idle | Bard's 22-file test batch landed and lead-verified 100% (6dcec5ba) -- entire workspace is green (zero test failures anywhere), standing by |
+| backend | working | MILESTONE: Sorcerer genuinely reaches Computed, committed and lead-verified (d6067603, 378/378 lib, real HeadlessReceiptStatus::Computed confirmed); deciding next between Cleric/Druid's blockers or Monk's remaining feats |
+| frontend | working | Barbarian's CLASS_OPTIONS update in progress uncommitted (supportLevel: 'full', levelOptions [1,2,3]) -- matches independent analysis, not yet committed |
+| qa | idle | Bard's 22-file test batch landed and lead-verified 100% (6dcec5ba) -- entire workspace green, standing by |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer genuinely reach Computed (7 of 27). 20 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
 ---
 
@@ -42,13 +42,13 @@ engine work lands.
 | Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
 | Barbarian | **Computed** | real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking); UI label not yet updated by frontend (flagged, live-verification in progress) | Barbarian rage engine, lead-verified 364/364 lib + 212/212 desktop |
-| Sorcerer | **Blocked** — real progress, closure in progress | known-spell posture fully computed and validated; bloodline-power blocker's two named pieces confirmed provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase); backend actively building the small remaining recognition work now | `c23d4054`; scoping doc lead-verified and endorsed |
+| Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
 | Cleric | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on domain-power execution | `fca4e64e` |
 | Druid | **Blocked** — real progress | prepared-spell posture fully computed; permanently blocked on animal-companion/nature-bond execution | `dda46d4a` |
 | Bard | **Blocked** — real progress | BAB/save/HP dispatch widened, Bardic Performance execution engine real (Inspire Courage attack-bonus applies, other 6 performance types honestly named as unmodeled); Bard's own spontaneous-spell posture not yet built | `0374b96a`, lead-verified 368/368 lib against the committed state |
 | Monk | **Blocked** — 3 of 7 feats closed | `table_class_id` not widened (base-attack/save/fast-movement stay standalone); Dodge, Catch Off-Guard, and Throw Anything all closed for real (each provably has zero effect under this codebase's fixed-Longsword posture, or its mechanics are already grounded elsewhere); remaining 4 (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need their own resolution engine | `18920c3d` + `b1a453a1`, lead-verified 374/374 lib + 212/212 desktop, zero regression |
 
-**CRB tally: 6 of 11 genuinely Computed, 5 of 11 with real partial engine progress (permanently or temporarily blocked). All 11 CRB classes now have at least some real engine work landed.**
+**CRB tally: 7 of 11 genuinely Computed, 4 of 11 with real partial engine progress (permanently or temporarily blocked). All 11 CRB classes now have at least some real engine work landed.**
 
 ### APG (6 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
 
