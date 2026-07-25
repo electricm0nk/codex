@@ -1717,6 +1717,36 @@ const SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY: i16 = -1;
 /// own Bardic Performance formula with a different base -- 3, not 4).
 const SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY: i16 = 3;
 
+/// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): ACG
+/// Bloodrager, a Barbarian+Sorcerer hybrid whose Bloodrage class feature
+/// is, per the PCGen corpus's own DESC text, explicitly "the barbarian's
+/// rage class feature for the purpose of feat prerequisites, feat
+/// abilities, magic item abilities, and spell effects" -- a near-exact
+/// mechanical clone of Barbarian's own Rage (same base four values, same
+/// rounds-per-day formula once algebraically simplified, and the same
+/// 11th/17th/20th tier/fatigue-immunity/mighty thresholds as
+/// `BARBARIAN_GREATER_RAGE_LEVEL`/`BARBARIAN_TIRELESS_RAGE_LEVEL`/
+/// `BARBARIAN_MIGHTY_RAGE_LEVEL`, reused directly rather than
+/// re-declared). Unlike Skald, Bloodrage is self-only by RAW with no
+/// exception-clause self-application inference needed.
+const BLOODRAGER_CLASS_ID: &str = "class:bloodrager";
+/// `ClassAbilityActivation.ability_id` for Bloodrager Bloodrage.
+const BLOODRAGER_BLOODRAGE_ABILITY_ID: &str = "bloodrage";
+/// PF1 Advanced Class Guide Bloodrage's Armor Class penalty: -2,
+/// unconditionally the same at every tier -- identical to Barbarian's own
+/// Rage penalty (`BARBARIAN_RAGE_ARMOR_CLASS_PENALTY`), verified
+/// independently against the PCGen corpus DESC text rather than assumed
+/// from the Rage-equivalence claim alone.
+const BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY: i16 = -2;
+/// PF1 Advanced Class Guide Bloodrage rounds-per-day base: the corpus
+/// formula is `2 + Constitution modifier + 2*level`; algebraically
+/// identical to Barbarian's own `4 + Constitution modifier + 2*(level-1)`
+/// (both reduce to `2 + Constitution modifier + 2*level`), so this base
+/// constant is 2 (not Barbarian's 4) to match the corpus's own additive
+/// decomposition -- see `bloodrager_bloodrage_rounds_per_day`'s own doc
+/// comment for the exact formula used.
+const BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY: i16 = 2;
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -4753,8 +4783,18 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // Barbarian's, the identical shape -- class-ownership-gated by
     // `active_skald_inspired_rage_bonus` construction, so a non-Skald
     // character (which includes every Barbarian) sees no change here.
-    let ability_modifiers = apply_skald_inspired_rage_ability_bonuses(
+    let ability_modifiers_after_inspired_rage = apply_skald_inspired_rage_ability_bonuses(
         ability_modifiers_after_rage,
+        input,
+        &mut explanations,
+    );
+    // v0.6 alpha swarm, risks item 8 (second APG/ACG closure): Bloodrager
+    // Bloodrage's Strength/Constitution morale bonus layers on next, the
+    // identical shape -- class-ownership-gated by
+    // `active_bloodrager_bloodrage_bonus` construction, so a non-Bloodrager
+    // character sees no change here.
+    let ability_modifiers = apply_bloodrager_bloodrage_ability_bonuses(
+        ability_modifiers_after_inspired_rage,
         input,
         &mut explanations,
     );
@@ -6863,6 +6903,23 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_multiclass_mix(input)
         || is_supported_generic_single_class(input)
         || is_supported_skald_single_class(input)
+        || is_supported_bloodrager_single_class(input)
+}
+
+/// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
+/// `input` is a single-class Bloodrager at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Bloodrager --
+/// mirrors `is_supported_skald_single_class` exactly, including the same
+/// exact-match discipline (`== Some(AcgClassId::Bloodrager)`, not a broad
+/// `.is_some()` that would admit any of the 10 ACG classes).
+fn is_supported_bloodrager_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Bloodrager) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Bloodrager, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (first APG/ACG closure): whether `input`
@@ -7298,20 +7355,23 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first APG/ACG closure, adversarially
-    // reviewed 2026-07-25): Skald is the one ACG class with a genuinely
-    // real class feature now (Inspired Rage) -- the other 9 ACG classes,
-    // and every APG class, keep the exact original unconditional
-    // diagnostic unchanged. This branch is reached only for single-class
-    // Skald (this function is only ever called from `compute_class_chassis`'s
+    // v0.6 alpha swarm, risks item 8 (first and second APG/ACG closures,
+    // adversarially reviewed 2026-07-25): Skald and Bloodrager are the two
+    // ACG classes with a genuinely real class feature now (Inspired
+    // Rage / Bloodrage) -- the other 8 ACG classes, and every APG class,
+    // keep the exact original unconditional diagnostic unchanged. These
+    // branches are reached only for single-class Skald/Bloodrager (this
+    // function is only ever called from `compute_class_chassis`'s
     // single-class-only section; `AcgClassId::from_class_id_str` is
     // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Skald-containing multiclass mix never reaches this function at
-    // all), so no separate gate-ordering/hoisting fix is needed the way
-    // CRB classes required once `table_class_id` recognized them
-    // generically.
+    // so a Skald- or Bloodrager-containing multiclass mix never reaches
+    // this function at all), so no separate gate-ordering/hoisting fix is
+    // needed the way CRB classes required once `table_class_id` recognized
+    // them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
+    } else if class_id == AcgClassId::Bloodrager {
+        ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -7599,6 +7659,278 @@ fn apply_skald_inspired_rage_ability_bonuses(
              validly singing; the Will-save bonus (+{will_save_bonus}) is layered onto \
              compute_total_saves separately, and the \
              {SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY} Armor Class penalty onto \
+             compute_combat_baseline separately"
+        ),
+    });
+    boosted
+}
+
+/// Bloodrager's Bloodrage rounds-per-day budget: the PCGen corpus formula
+/// `2 + Constitution modifier + 2*level` (v0.6 alpha swarm, risks item 8,
+/// second APG/ACG closure) -- algebraically identical to Barbarian's own
+/// `4 + Constitution modifier + 2*(level-1)`, both reducing to
+/// `2 + Constitution modifier + 2*level`, so this uses
+/// `BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY` (2) with a plain `2*level`
+/// term rather than Barbarian's own `2*(level-1)` shape, matching the
+/// corpus's own additive decomposition exactly.
+fn bloodrager_bloodrage_rounds_per_day(constitution_modifier: i16, level: u8) -> i16 {
+    BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY + constitution_modifier + 2 * i16::from(level)
+}
+
+/// Bloodrager's Bloodrage magnitude tier: (Strength/Constitution morale
+/// bonus, Will-save morale bonus), verified against the PCGen corpus DESC
+/// text and `BONUS:VAR` formulas -- rising from Bloodrage (+4/+4/+2) to
+/// Greater Bloodrage at `BARBARIAN_GREATER_RAGE_LEVEL` (+6/+6/+3) to
+/// Mighty Bloodrage at `BARBARIAN_MIGHTY_RAGE_LEVEL` (+8/+8/+4),
+/// identical thresholds and magnitudes to Barbarian's own Rage tiers, so
+/// the shared constants are reused directly rather than re-declared under
+/// a Bloodrager-specific name. The Armor Class penalty stays -2 at every
+/// tier (not part of this tuple, mirrors Barbarian's own shape) --
+/// callers needing it use `BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY`
+/// directly.
+fn bloodrager_bloodrage_tier(level: u8) -> (i16, i16) {
+    if level >= BARBARIAN_MIGHTY_RAGE_LEVEL {
+        (8, 4)
+    } else if level >= BARBARIAN_GREATER_RAGE_LEVEL {
+        (6, 3)
+    } else {
+        (4, 2)
+    }
+}
+
+/// Whether `input` is a Bloodrager validly, actively bloodraging right
+/// now, and if so, the magnitude tier to apply (v0.6 alpha swarm, risks
+/// item 8, second APG/ACG closure). Class-ownership-gated by construction,
+/// mirroring `active_barbarian_rage_bonus`/`active_skald_inspired_rage_bonus`
+/// exactly: only returns `Some` when `class_levels` actually contains
+/// Bloodrager, so a non-Bloodrager character's stray
+/// `class_ability_activations` entry for `BLOODRAGER_BLOODRAGE_ABILITY_ID`
+/// is never read at all. Unlike Skald, Bloodrage is self-only by RAW, so
+/// no self-application inference or disclaimer is needed here.
+fn active_bloodrager_bloodrage_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(u8, i16, i16)> {
+    let bloodrager_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BLOODRAGER_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BLOODRAGER_BLOODRAGE_ABILITY_ID)?;
+
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
+        let rounds_per_day =
+            bloodrager_bloodrage_rounds_per_day(constitution_modifier, bloodrager_level);
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            return None;
+        }
+    }
+
+    let (strength_constitution_bonus, will_save_bonus) = bloodrager_bloodrage_tier(bloodrager_level);
+    Some((bloodrager_level, strength_constitution_bonus, will_save_bonus))
+}
+
+/// Grounds or claim-blocks Bloodrager's Bloodrage execution engine for
+/// `bloodrager_level` (v0.6 alpha swarm, risks item 8, second APG/ACG
+/// closure). Called from `compute_acg_class_chassis`'s Bloodrager branch,
+/// gated only on Bloodrager class-ownership -- mirrors
+/// `ground_or_block_barbarian_rage`/`ground_or_block_skald_inspired_rage`
+/// structurally, including the same fatigue-not-modeled honesty note
+/// below `BARBARIAN_TIRELESS_RAGE_LEVEL` (Bloodrager's own Tireless
+/// Bloodrage fires at the identical 17th-level threshold, per the corpus).
+///
+/// Unlike Barbarian, this is Bloodrager's ONLY grounded class feature this
+/// slice -- spellcasting (Bloodrager casts from its own
+/// `SPELLLIST:1|Bloodrager`, not Bard's list) and every other
+/// named-but-unbuilt Bloodrager feature remain claim-blocked via the new,
+/// narrower `class_feature.acg.bloodrager.spellcasting_deferred.unsupported`
+/// diagnostic pushed unconditionally below, mirroring Skald's own
+/// diagnostic-honesty fix.
+fn ground_or_block_bloodrager_bloodrage(
+    input: &CharacterInput,
+    bloodrager_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BLOODRAGER_BLOODRAGE_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bloodrager level {bloodrager_level} is not currently bloodraging (no \
+                 class_ability_activations entry for \
+                 \"{BLOODRAGER_BLOODRAGE_ABILITY_ID}\"): a genuinely valid PF1 posture, so no \
+                 rage bonus, penalty, or budget is claimed. This grounds the Bloodrage execution \
+                 engine's \"inactive\" branch only; bloodraging is grounded separately below \
+                 when an active, in-budget activation is present"
+            ),
+        });
+        push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
+    let rounds_per_day =
+        bloodrager_bloodrage_rounds_per_day(constitution_modifier, bloodrager_level);
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.acg.bloodrager.bloodrage_execution.rounds_exceeded".to_owned(),
+                message: format!(
+                    "Bloodrager level {bloodrager_level} Bloodrage activation claims \
+                     {rounds_consumed} rounds consumed today, exceeding the grounded \
+                     rounds-per-day budget of {rounds_per_day} (2 + Constitution modifier \
+                     ({constitution_modifier}) + 2*level): a genuine posture violation, so no \
+                     rage bonus, penalty, or budget is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let (strength_constitution_bonus, will_save_bonus) =
+                bloodrager_bloodrage_tier(bloodrager_level);
+            let rounds_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.bloodrager.bloodrage_execution.active".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Bloodrager level {bloodrager_level} is actively bloodraging, within the \
+                     grounded rounds-per-day budget ({rounds_per_day} rounds; \
+                     {rounds_consumed_today} consumed today). The \
+                     +{strength_constitution_bonus} Strength / +{strength_constitution_bonus} \
+                     Constitution / +{will_save_bonus} Will morale bonuses and the \
+                     {BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY} Armor Class penalty are applied \
+                     to the integrated ability modifiers, total saves, and baseline Armor Class \
+                     respectively -- see apply_bloodrager_bloodrage_ability_bonuses, \
+                     compute_total_saves, and compute_combat_baseline. Bloodrage is self-only by \
+                     RAW (no exception-clause self-application inference is needed, unlike \
+                     Skald's Inspired Rage)"
+                ),
+            });
+            if bloodrager_level < BARBARIAN_TIRELESS_RAGE_LEVEL {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.acg.bloodrager.bloodrage_execution.fatigue_not_modeled"
+                        .to_owned(),
+                    message: format!(
+                        "Bloodrager level {bloodrager_level} is bloodraging below the Tireless \
+                         Bloodrage threshold ({BARBARIAN_TIRELESS_RAGE_LEVEL}th level): PF1 \
+                         Bloodrage causes fatigue once the bloodrage ends (for twice the number \
+                         of rounds spent bloodraging), which this codebase does not yet \
+                         represent as a transient post-bloodrage state, so no fatigue condition \
+                         is applied. Named honestly rather than silently modeled or silently \
+                         dropped"
+                    ),
+                    claim_blocking: false,
+                });
+            }
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Bloodrager level {bloodrager_level} has a \
+                     \"{BLOODRAGER_BLOODRAGE_ABILITY_ID}\" activation entry but it is not active \
+                     for this snapshot: a genuinely valid PF1 posture (available but not \
+                     currently bloodraging), so no rage bonus, penalty, or budget is claimed"
+                ),
+            });
+        }
+    }
+
+    push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.bloodrager.unsupported` for Bloodrager specifically
+/// (mirroring `push_skald_spellcasting_deferred_diagnostic`): named ONLY
+/// the genuinely still-missing pieces (spellcasting from Bloodrager's own
+/// spell list, and every other named-but-unbuilt Bloodrager class feature
+/// beyond Bloodrage), unlike the retired diagnostic's blanket "no named
+/// class-feature computation... grounded anywhere" claim, which is now
+/// false for Bloodrager. Pushed unconditionally regardless of Bloodrage's
+/// own raging state.
+fn push_bloodrager_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.bloodrager.spellcasting_deferred.unsupported".to_owned(),
+        message: format!(
+            "{BLOODRAGER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar and Bloodrage: this ACG class has no class-skill list, no \
+             spellcasting posture (Bloodrager casts from its own spell list, but its \
+             spells-known/per-day table numbers have not yet been independently verified or \
+             built), and no other named class feature grounded anywhere in this codebase yet; \
+             no class-feature or spell execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Applies Bloodrager Bloodrage's Strength/Constitution morale bonus to
+/// `base` when a valid, active, in-budget Bloodrage activation is present
+/// for this character (v0.6 alpha swarm, risks item 8, second APG/ACG
+/// closure). Mirrors `apply_rage_ability_bonuses`/
+/// `apply_skald_inspired_rage_ability_bonuses` exactly -- chained
+/// immediately after Skald's in `compute_pilot_base_chassis`;
+/// class-ownership-gated by construction via
+/// `active_bloodrager_bloodrage_bonus`.
+///
+/// The Strength/Constitution ability-SCORE bonus (+4/+6/+8, always even)
+/// becomes exactly half that as an ability-MODIFIER bonus (+2/+3/+4):
+/// modifier = floor((score - 10) / 2), and adding an even N to score adds
+/// exactly N/2 to the floored modifier regardless of the original score's
+/// parity (identical reasoning to `apply_rage_ability_bonuses`).
+fn apply_bloodrager_bloodrage_ability_bonuses(
+    base: AbilityModifiers,
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> AbilityModifiers {
+    let Some((bloodrager_level, strength_constitution_bonus, will_save_bonus)) =
+        active_bloodrager_bloodrage_bonus(input, &base)
+    else {
+        return base;
+    };
+
+    let ability_modifier_bonus = strength_constitution_bonus / 2;
+    let boosted = AbilityModifiers {
+        strength: base.strength + ability_modifier_bonus,
+        constitution: base.constitution + ability_modifier_bonus,
+        ..base
+    };
+    explanations.push(ComputationExplanation {
+        id: "ability_modifier.bloodrager.bloodrage_bonus_applied".to_owned(),
+        value: ability_modifier_bonus,
+        detail: format!(
+            "Bloodrager level {bloodrager_level} Bloodrage applied to ability modifiers: \
+             +{strength_constitution_bonus} Strength / +{strength_constitution_bonus} \
+             Constitution morale bonus (ability score) is +{ability_modifier_bonus} Strength \
+             modifier / +{ability_modifier_bonus} Constitution modifier (an even score bonus \
+             always halves exactly onto the floored modifier). Applied only while actively, \
+             validly bloodraging; the Will-save bonus (+{will_save_bonus}) is layered onto \
+             compute_total_saves separately, and the \
+             {BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY} Armor Class penalty onto \
              compute_combat_baseline separately"
         ),
     });
@@ -21209,6 +21541,14 @@ fn compute_total_saves(
     let inspired_rage_will_bonus = active_skald_inspired_rage_bonus(input, ability_modifiers)
         .map(|(_, _, will_save_bonus)| will_save_bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8 (second APG/ACG closure): Bloodrager
+    // Bloodrage's Will-save morale bonus layers on here too, the same
+    // shape as Barbarian's/Skald's -- class-ownership-gated by
+    // `active_bloodrager_bloodrage_bonus` construction, 0 for every
+    // non-Bloodrager or not-currently-bloodraging character.
+    let bloodrage_will_bonus = active_bloodrager_bloodrage_bonus(input, ability_modifiers)
+        .map(|(_, _, will_save_bonus)| will_save_bonus)
+        .unwrap_or(0);
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
     // sacred bonus (self-application only) applies to all three saves --
     // class-ownership-gated by `active_cleric_touch_of_good_bonus`
@@ -21229,6 +21569,7 @@ fn compute_total_saves(
             + feat_save_bonuses.will
             + rage_will_bonus
             + inspired_rage_will_bonus
+            + bloodrage_will_bonus
             + touch_of_good_save_bonus,
     };
 
@@ -21262,13 +21603,15 @@ fn compute_total_saves(
             "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) + \
              feat bonus (+{}, Iron Will if selected) + Barbarian Rage morale bonus (+{}, only \
              while actively, validly raging) + Skald Inspired Rage morale bonus (+{}, only \
-             while actively, validly singing) + Cleric Touch of Good sacred bonus (+{}, \
+             while actively, validly singing) + Bloodrager Bloodrage morale bonus (+{}, only \
+             while actively, validly bloodraging) + Cleric Touch of Good sacred bonus (+{}, \
              self-applied) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
             rage_will_bonus,
             inspired_rage_will_bonus,
+            bloodrage_will_bonus,
             touch_of_good_save_bonus,
             total_saves.will
         ),
@@ -21617,12 +21960,24 @@ fn compute_combat_baseline(
         } else {
             0
         };
+    // v0.6 alpha swarm, risks item 8 (second APG/ACG closure): Bloodrager
+    // Bloodrage's Armor Class penalty applies here too, the same shape as
+    // Barbarian's/Skald's -- class-ownership-gated by
+    // `active_bloodrager_bloodrage_bonus` construction, 0 for every
+    // non-Bloodrager or not-currently-bloodraging character.
+    let bloodrage_armor_class_penalty =
+        if active_bloodrager_bloodrage_bonus(input, ability_modifiers).is_some() {
+            BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY
+        } else {
+            0
+        };
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
         + DODGE_AC_BONUS
         + rage_armor_class_penalty
-        + inspired_rage_armor_class_penalty;
+        + inspired_rage_armor_class_penalty
+        + bloodrage_armor_class_penalty;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -21632,7 +21987,8 @@ fn compute_combat_baseline(
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
              + Dodge (+{DODGE_AC_BONUS}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
-             while actively, validly singing); shield is absent (+0) = {armor_class}"
+             while actively, validly singing) + Bloodrager Bloodrage penalty ({bloodrage_armor_class_penalty}, \
+             only while actively, validly bloodraging); shield is absent (+0) = {armor_class}"
         ),
     });
 
@@ -23706,22 +24062,24 @@ mod acg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// ACG class OTHER THAN Skald stays honestly `Blocked` with the
-    /// original, unmodified generic diagnostic -- BAB/save/HP are real, but
-    /// the class-skill/feature/spellcasting bucket is genuinely ungrounded,
-    /// so this must never silently read as `Computed`.
+    /// ACG class OTHER THAN Skald/Bloodrager stays honestly `Blocked` with
+    /// the original, unmodified generic diagnostic -- BAB/save/HP are
+    /// real, but the class-skill/feature/spellcasting bucket is genuinely
+    /// ungrounded, so this must never silently read as `Computed`.
     ///
-    /// Skald is carved out of this loop (v0.6 alpha swarm, risks item 8,
-    /// first APG/ACG closure, adversarial review finding 2): its own
-    /// generic `class_feature.acg.skald.unsupported` diagnostic was retired
-    /// and replaced with the narrower `spellcasting_deferred` diagnostic,
-    /// since Inspired Rage is now genuinely grounded -- see
+    /// Skald and Bloodrager are carved out of this loop (v0.6 alpha swarm,
+    /// risks item 8, first/second APG/ACG closures, adversarial review
+    /// finding 2, reapplied identically for Bloodrager): each has its own
+    /// generic `class_feature.acg.<class>.unsupported` diagnostic retired
+    /// and replaced with a narrower `spellcasting_deferred` diagnostic,
+    /// since Inspired Rage / Bloodrage are now genuinely grounded -- see
     /// `skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
-    /// below for Skald's own dedicated coverage.
+    /// / `bloodrager_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// below for each class's own dedicated coverage.
     #[test]
     fn all_ten_acg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:skald" {
+            if class_id == "class:skald" || class_id == "class:bloodrager" {
                 continue;
             }
 
@@ -23788,23 +24146,61 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
-    /// The critical negative-leak test (adversarial review finding 1,
-    /// flagged by the lead as the one to verify most carefully): the OTHER
-    /// 9 ACG classes must produce ZERO `defense.total_save.*`/
-    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
-    /// level 1, even when built from the exact same Longsword/Chain Shirt/
-    /// Dodge/Weapon-Focus/skill-rank posture that genuinely satisfies every
-    /// non-class-recognition precondition those pillars check -- proving
-    /// the new `is_supported_skald_single_class` gate is a real exact
-    /// match on `AcgClassId::Skald`, not a broad `.is_some()` check that
-    /// would silently admit all 10 ACG classes into real pillar
-    /// computation. This is stronger than the pre-existing "stays Blocked"
-    /// assertion above, which does not by itself rule out a silent
-    /// pillar-output leak alongside an unrelated claim-blocking diagnostic.
+    /// Bloodrager's own counterpart to the Skald diagnostic-swap test above
+    /// (v0.6 alpha swarm, risks item 8, second APG/ACG closure): mirrors it
+    /// exactly.
     #[test]
-    fn the_other_nine_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn bloodrager_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:bloodrager", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Bloodrager must stay Blocked on its deferred spellcasting posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.bloodrager.unsupported"),
+            "the retired generic diagnostic must never appear for Bloodrager: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The critical negative-leak test (adversarial review finding 1,
+    /// flagged by the lead as the one to verify most carefully, reapplied
+    /// for Bloodrager): the OTHER 8 ACG classes (every class other than
+    /// Skald and Bloodrager, the two now genuinely admitted) must produce
+    /// ZERO `defense.total_save.*`/`combat.baseline_*`/
+    /// `skill.selected_modifier.*` explanations at level 1, even when built
+    /// from the exact same Longsword/Chain Shirt/Dodge/Weapon-Focus/
+    /// skill-rank posture that genuinely satisfies every non-class-
+    /// recognition precondition those pillars check -- proving both
+    /// `is_supported_skald_single_class` and
+    /// `is_supported_bloodrager_single_class` are real exact matches, not
+    /// broad `.is_some()` checks that would silently admit all 10 ACG
+    /// classes into real pillar computation. This is stronger than the
+    /// pre-existing "stays Blocked" assertion above, which does not by
+    /// itself rule out a silent pillar-output leak alongside an unrelated
+    /// claim-blocking diagnostic.
+    #[test]
+    fn the_other_eight_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:skald" {
+            if class_id == "class:skald" || class_id == "class:bloodrager" {
                 continue;
             }
 
@@ -23851,6 +24247,27 @@ mod acg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Skald: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Bloodrager's own positive counterpart, mirroring Skald's exactly.
+    #[test]
+    fn bloodrager_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:bloodrager", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Bloodrager: {:?}",
                 receipt.computation.explanations
             );
         }
@@ -25598,6 +26015,233 @@ mod skald_dispatch_widening_safety_tests {
         assert_eq!(
             receipt.computation.ability_modifiers.strength, 4,
             "a non-Skald character's spoofed inspired_rage entry must never apply a bonus: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, second APG/ACG closure (2026-07-25):
+/// Bloodrager's Bloodrage mirrors Barbarian's Rage even more closely than
+/// Skald's Inspired Rage did (identical base four values, identical
+/// 11th/17th/20th tier thresholds once the rounds-per-day formula is
+/// algebraically simplified) -- see
+/// `docs/release/v0.6/bloodrager-acg-second-class-scoping.md` for the
+/// full corpus verification. Like Skald, a valid Bloodrager posture never
+/// reaches `Computed` this slice (spellcasting stays permanently
+/// deferred), so this module mirrors `skald_dispatch_widening_safety_tests`'s
+/// shape, not Barbarian's own (which does reach `Computed`).
+#[cfg(test)]
+mod bloodrager_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, BLOODRAGER_CLASS_ID, BLOODRAGER_BLOODRAGE_ABILITY_ID,
+        FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_bloodrager_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BLOODRAGER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Bloodrager who is not bloodraging (no
+    /// `class_ability_activations` entry at all) is a genuinely valid PF1
+    /// posture -- reaches only as far as this slice allows, i.e. `Blocked`
+    /// on the new, narrower spellcasting_deferred diagnostic alone (never
+    /// the retired generic one), with the honest "not raging" recognition
+    /// record grounded.
+    #[test]
+    fn single_class_bloodrager_not_raging_stays_blocked_on_deferred_spellcasting_only() {
+        let input = human_bloodrager_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Bloodrager must stay Blocked on spellcasting alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.bloodrager.bloodrage_execution.not_raging"),
+            "expected the honest not-raging recognition record: {:?}",
+            receipt.computation.explanations
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.bloodrager.unsupported"),
+            "the retired generic diagnostic must never appear for Bloodrager: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Bloodrager actively, validly bloodraging
+    /// (within budget) applies the real Strength/Constitution/Will/Armor-
+    /// Class bonuses and penalty to the integrated totals -- but still
+    /// stays `Blocked` (spellcasting_deferred), unlike Barbarian's own
+    /// equivalent test which reaches `Computed`.
+    ///
+    /// Constitution 14 (fixture base) -> +2 modifier: rounds per day =
+    /// 2 + 2 + 2*1 = 6, so up to 6 rounds consumed today stays in budget.
+    #[test]
+    fn single_class_bloodrager_actively_raging_in_budget_applies_real_bonuses_but_stays_blocked() {
+        let mut input = human_bloodrager_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BLOODRAGER_BLOODRAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(1),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Bloodrager stays Blocked on spellcasting even while actively, validly bloodraging: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the spellcasting_deferred diagnostic even while bloodraging: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        // Base fixture is Strength 16 (+4 with the fixture's chosen Human
+        // +2 floating Strength bonus applied), Constitution 14 (+2).
+        // Bloodrage (level 1) adds +4 Strength / +4 Constitution ability
+        // SCORE, i.e. +2/+2 ability MODIFIER.
+        assert_eq!(receipt.computation.ability_modifiers.strength, 6);
+        assert_eq!(receipt.computation.ability_modifiers.constitution, 4);
+
+        let will_save = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.will")
+            .expect("total Will save must be grounded");
+        // Base Will save (Bloodrager level 1, poor Will: 0) + Wisdom
+        // modifier (12 -> +1) + feat bonus (0) + Bloodrage Will bonus
+        // (+2) = 3.
+        assert_eq!(
+            will_save.value, 3,
+            "Bloodrage's Will-save morale bonus must be applied: {:?}",
+            will_save
+        );
+
+        let armor_class = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect("baseline Armor Class must be grounded");
+        // Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) - Bloodrage
+        // penalty (2) = 15.
+        assert_eq!(
+            armor_class.value, 15,
+            "Bloodrage's Armor Class penalty must be applied: {:?}",
+            armor_class
+        );
+    }
+
+    /// A Bloodrage activation that exceeds the grounded rounds-per-day
+    /// budget is a genuine posture violation and must claim-block -- never
+    /// silently capped, mirroring every other over-budget check landed
+    /// this session.
+    #[test]
+    fn single_class_bloodrager_over_budget_bloodrage_stays_blocked_and_applies_no_bonus() {
+        let mut input = human_bloodrager_input(1);
+        // Constitution 14 (+2): rounds per day = 2 + 2 + 2*1 = 6.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BLOODRAGER_BLOODRAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(7),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.bloodrager.bloodrage_execution.rounds_exceeded"
+                    && d.claim_blocking),
+            "expected the over-budget claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "no Bloodrage bonus is applied for an over-budget, invalid posture: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// A non-Bloodrager character carrying a spoofed `"bloodrage"`
+    /// activation entry must have it silently ignored, not applied -- the
+    /// class-ownership gate is by construction
+    /// (`active_bloodrager_bloodrage_bonus` only ever reads
+    /// `class_ability_activations` after confirming `class_levels`
+    /// contains Bloodrager), not a bolt-on rejection. Also proves
+    /// Fighter's own golden path (including reaching `Computed`) is
+    /// unaffected by a stray Bloodrager activation entry.
+    #[test]
+    fn non_bloodrager_characters_spoofed_bloodrage_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BLOODRAGER_BLOODRAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Bloodrager bloodrage entry: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "a non-Bloodrager character's spoofed bloodrage entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
         );
     }

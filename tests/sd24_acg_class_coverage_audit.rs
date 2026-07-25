@@ -61,17 +61,19 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// assertion (and the coverage-matrix artifact) rather than silently
 /// leaving the audit stale.
 ///
-/// **Updated (v0.6 alpha swarm, risks item 8, first APG/ACG class-specific
-/// closure, 2026-07-25):** exactly this canary fired -- Skald's Inspired
-/// Rage is now genuinely wired, the first named ACG class feature this
-/// repo computes. Skald is carved out of the "stays 0" loop below and
-/// given its own dedicated assertion (`named_features_wired == 1`), per
-/// this test's own documented update instruction. Every other ACG class
+/// **Updated (v0.6 alpha swarm, risks item 8, first/second APG/ACG
+/// class-specific closures, 2026-07-25):** exactly this canary fired --
+/// Skald's Inspired Rage and Bloodrager's Bloodrage are now genuinely
+/// wired, the first two named ACG class features this repo computes.
+/// Both are carved out of the "stays 0" loop below and given their own
+/// dedicated assertions (`named_features_wired == 1` each), per this
+/// test's own documented update instruction. Every other ACG class
 /// remains at 0, unchanged.
 #[test]
-fn zero_named_class_features_are_wired_for_any_acg_class_except_skalds_inspired_rage() {
+fn zero_named_class_features_are_wired_for_any_acg_class_except_skalds_inspired_rage_and_bloodragers_bloodrage()
+{
     for row in coverage_report() {
-        if row.class_id == AcgClassId::Skald {
+        if row.class_id == AcgClassId::Skald || row.class_id == AcgClassId::Bloodrager {
             continue;
         }
         assert_eq!(
@@ -88,17 +90,22 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_skalds_inspired_
         );
     }
 
-    let skald_row = class_coverage(AcgClassId::Skald);
-    assert_eq!(
-        skald_row.named_features_wired, 1,
-        "Skald's Inspired Rage (Raging Song's 1st-level song type) is now genuinely wired -- \
-         update this assertion (and the coverage-matrix artifact) if this count changes again"
-    );
-    assert!(
-        skald_row.named_features_expected > skald_row.named_features_wired,
-        "Skald: named_features_expected should still exceed named_features_wired (spellcasting \
-         and every other named feature besides Inspired Rage remain ungrounded)"
-    );
+    for (class_id, feature_name) in
+        [(AcgClassId::Skald, "Inspired Rage"), (AcgClassId::Bloodrager, "Bloodrage")]
+    {
+        let row = class_coverage(class_id);
+        assert_eq!(
+            row.named_features_wired, 1,
+            "{class_id:?}'s {feature_name} is now genuinely wired -- update this assertion (and \
+             the coverage-matrix artifact) if this count changes again"
+        );
+        assert!(
+            row.named_features_expected > row.named_features_wired,
+            "{class_id:?}: named_features_expected should still exceed named_features_wired \
+             (spellcasting and every other named feature besides {feature_name} remain \
+             ungrounded)"
+        );
+    }
 }
 
 /// The audit's third finding, proven empirically rather than by
@@ -162,10 +169,11 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             class_id
         );
 
-        let expected_diagnostic_id = if class_id == AcgClassId::Skald {
-            "class_feature.acg.skald.spellcasting_deferred.unsupported".to_owned()
-        } else {
-            format!("class_feature.acg.{}.unsupported", class_id.name())
+        let expected_diagnostic_id = match class_id {
+            AcgClassId::Skald | AcgClassId::Bloodrager => {
+                format!("class_feature.acg.{}.spellcasting_deferred.unsupported", class_id.name())
+            }
+            _ => format!("class_feature.acg.{}.unsupported", class_id.name()),
         };
         let unsupported = computation
             .diagnostics
@@ -185,13 +193,12 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
-        if class_id == AcgClassId::Skald {
+        if matches!(class_id, AcgClassId::Skald | AcgClassId::Bloodrager) {
+            let retired_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
             assert!(
-                !computation
-                    .diagnostics
-                    .iter()
-                    .any(|d| d.id == "class_feature.acg.skald.unsupported"),
-                "the retired generic diagnostic must never appear for Skald: {:?}",
+                !computation.diagnostics.iter().any(|d| d.id == retired_diagnostic_id),
+                "the retired generic diagnostic must never appear for {:?}: {:?}",
+                class_id,
                 computation.diagnostics
             );
         }

@@ -210,11 +210,13 @@ pub struct AcgClassCoverage {
     /// Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
-    /// for. Zero for every ACG class except Skald as of the v0.6 alpha
-    /// swarm's first APG/ACG class-specific closure (risks item 8): Skald's
-    /// 1st-level Raging Song song type, Inspired Rage, is now genuinely
-    /// wired (`pilot_compute::ground_or_block_skald_inspired_rage`) --
-    /// see `class_coverage`'s own Skald branch. Every other ACG class
+    /// for. Zero for every ACG class except Skald and Bloodrager as of the
+    /// v0.6 alpha swarm's first/second APG/ACG class-specific closures
+    /// (risks item 8): Skald's 1st-level Raging Song song type, Inspired
+    /// Rage, and Bloodrager's Bloodrage are now genuinely wired
+    /// (`pilot_compute::ground_or_block_skald_inspired_rage`,
+    /// `pilot_compute::ground_or_block_bloodrager_bloodrage`) -- see
+    /// `class_coverage`'s own branches for each. Every other ACG class
     /// remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
     /// comment), and no follow-on cycle has since ingested
@@ -296,11 +298,14 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first APG/ACG class-specific
-    // closure): Skald's Inspired Rage is the one real, wired named class
-    // feature among all ten ACG classes today -- see this field's own doc
-    // comment above.
-    let named_features_wired = if class_id == AcgClassId::Skald { 1 } else { 0 };
+    // v0.6 alpha swarm, risks item 8 (first/second APG/ACG class-specific
+    // closures): Skald's Inspired Rage and Bloodrager's Bloodrage are the
+    // two real, wired named class features among all ten ACG classes
+    // today -- see this field's own doc comment above.
+    let named_features_wired = match class_id {
+        AcgClassId::Skald | AcgClassId::Bloodrager => 1,
+        _ => 0,
+    };
 
     AcgClassCoverage {
         class_id,
