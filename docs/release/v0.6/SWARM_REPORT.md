@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Druid landed and lead-verified (dda46d4a); 344/344 lib + 212/212 desktop; now scoping Bard |
-| frontend | working | live-verifying the non-Human-Ranger finding |
-| qa | working | picked a proactive Bard spell-list/blocker survey; Druid's 17-file test cleanup also queued |
+| backend | waiting-on-qa | Druid landed and lead-verified (dda46d4a); holding on further classes/drafts per QA's pacing-hold ask until the ~75-file Sorcerer/Cleric/Druid queue clears |
+| frontend | working | in-progress uncommitted fix for Ranger's UI support level (`full-except-human-level-1`); not yet independently verified |
+| qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, working Sorcerer -> Cleric -> Druid review in order |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
