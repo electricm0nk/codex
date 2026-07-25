@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Brawler's AC Bonus (third APG/ACG closure) built and lead-verified end-to-end pre-commit (409/409 lib, multi-level progression test confirmed correct, full workspace sweep clean) — ready to commit, awaiting next assignment |
+| backend | working | Brawler committed (`19c792e1`, lead re-verified). Starting Hunter's Animal Companion (4th ACG closure) — found and verified it reuses Druid's own already-reviewed Wolf stat block, since Hunter's corpus text states its effective druid level equals its own hunter level. Lead confirmed the corpus quote directly and greenlit without a formal review, flagging it will land in the same `headless-only` reachability bucket as Druid's own companion (species-choice picker still missing) |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
