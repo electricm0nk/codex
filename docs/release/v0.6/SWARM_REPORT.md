@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Cavalier's Mount (APG) scoping doc landed; Horse's stat block cross-verified against aonprd + d20pfsrd + the raw corpus, 2 genuine source disagreements resolved (natural armor +4, speed 50ft — both corpus-confirmed). Lead independently re-verified both resolutions directly against `cr_races_companion.lst`, greenlit to build — first-ever APG gate-widening, no new architecture, just fresh data verification |
+| backend | working | Cavalier's Mount (APG) built and lead-verified end-to-end pre-commit — first-ever APG class-specific closure (417/417 lib, Druid's/Hunter's own tests confirmed unaffected, coverage audit 3/3, full workspace sweep zero failures). Ready to commit |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 3 of 7 restricted-list feats closed (partial). Skald, Bloodrager, Brawler, and Hunter (all ACG, all committed) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial). 13 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier (APG, first cross-book closure) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial). 12 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -50,24 +50,27 @@ engine work lands.
 
 **CRB tally: 10 of 11 genuinely Computed, 1 of 11 (Monk) with real partial engine progress (6 of 7 restricted-list feats closed — only Deflect Arrows remains, needing a genuinely new opponent-interaction engine). All 11 CRB classes now have at least some real engine work landed.**
 
-### APG (6 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
+### APG (6 classes) — 1 of 6 has real partial engine progress, 5 still dispatch-only
 
-All 6 landed together in one commit (`c511c132`): real BAB/save progression
-and real hit-die-derived HP via each class's own `HD:` token, deliberately
-kept OUTSIDE `table_class_id`/`multiclass_class_level_supported` to avoid
-a false-Computed multiclass loophole. Every class stays honestly `Blocked`
-via its own unconditional `class_feature.apg.<class>.unsupported`
-diagnostic. **None of the 6 have any class-skill-list, class-feature, or
-spellcasting work started** — that is the entire remaining bucket for all 6.
+Chassis (BAB/save/HP) landed together in one commit (`c511c132`): real
+BAB/save progression and real hit-die-derived HP via each class's own
+`HD:` token, deliberately kept OUTSIDE `table_class_id`/
+`multiclass_class_level_supported` to avoid a false-Computed multiclass
+loophole. Since then, Cavalier has gone beyond chassis-only: its Mount
+(reusing the Hunter/Druid animal-companion pattern with Horse's own
+independently-verified stat block) is the first-ever APG class-specific
+closure, proving the ACG-side pattern generalizes across books.
 
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
-| Alchemist | 3/4 | d8 | dispatch-only, Blocked |
-| Cavalier | **full** (flagged: pre-existing coverage-audit test's "unsupported = 0 BAB" premise breaks for this one, needs its own restructuring) | d10 | dispatch-only, Blocked |
-| Inquisitor | 3/4 | d8 | dispatch-only, Blocked |
-| Oracle | 3/4 | d8 | dispatch-only, Blocked |
-| Summoner | 3/4 | d8 | dispatch-only, Blocked |
-| Witch | 1/2 | d6 | dispatch-only, Blocked |
+| Alchemist | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Cavalier | **full** | d10 | **Blocked** — real progress: Mount (Horse companion stat block, effective druid level = cavalier level, AC 14 = base 10 + natural armor 4) genuinely grounded; Share Spells correctly not fabricated (the Mount doesn't have that ability at all per RAW); still Blocked on 10+ other deferred named features (no spellcasting — pure martial class). Lead-verified pre-commit: 417/417 lib, Druid's/Hunter's own tests confirmed unaffected, `sd24_apg_class_coverage_audit` 3/3, full workspace sweep zero failures |
+| Inquisitor | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Oracle | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Summoner | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Witch | 1/2 | d6 | dispatch-only, Blocked — queued, untouched |
+
+**APG tally: 0 of 6 reach Computed (a real named-feature or spellcasting gap keeps every APG class Blocked regardless of chassis work), 1 of 6 (Cavalier) has a real named ability genuinely grounded, 5 of 6 untouched beyond chassis dispatch.**
 
 ### ACG (10 classes) — 4 of 10 have real partial engine progress, 6 still dispatch-only
 
@@ -122,7 +125,7 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. **Cavalier's Mount (APG)** — now the active target, directed by the lead. First-ever APG gate-widening; reuses the twice-proven Hunter/Druid animal-companion pattern (effective druid level = cavalier level). No new architecture needed for the gate itself (`ApgClassId` structurally mirrors `AcgClassId`, lead-confirmed); Horse's own stat block needs the same 2+-source verification Wolf's got before backend builds. Camel-or-Horse-only constraint for Medium cavaliers and the Share-Spells carve-out both already found, to be named honestly the same way Hunter/Druid's own species-assumption was.
+1. Cavalier's own test-cleanup wave, once committed and QA scopes whether one is needed (likely not — no globally-shared diagnostic retired, same reasoning as Bloodrager/Hunter's own closures).
 2. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all (no standalone numeric value exists to ground, unlike the other 6). Not scheduled; would need its own scoping pass same as Improved Grapple's abandoned CMB/CMD pillar would.
 3. Monk's/Brawler's/Hunter's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
 4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
