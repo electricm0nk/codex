@@ -1313,7 +1313,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T09:55:01
-Latest commit on tranche/6: d6067603 Close Sorcerer's Arcane bloodline burden -- first full-class completion (3 minutes ago) (2026-07-25T09:51:45-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T09:41:32 frontend=2026-07-25T09:44:02 qa=2026-07-25T09:17:38 lead=2026-07-25T09:52:12
+Last mechanical check: 2026-07-25T10:05:02
+Latest commit on tranche/6: d020a5e8 fix(v0.6): Barbarian UI support label reflects genuine full Computed scope (25 seconds ago) (2026-07-25T10:04:37-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T10:03:52 frontend=2026-07-25T10:04:11 qa=2026-07-25T09:17:38 lead=2026-07-25T10:02:24
 <!-- AUTO-HEARTBEAT-END -->
