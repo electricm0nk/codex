@@ -1889,6 +1889,41 @@ const INQUISITOR_JUDGMENT_CHOICE_ID: &str = "choice:inquisitor_judgment";
 /// `inquisitor_justice_judgment_attack_bonus`'s own doc comment).
 const INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID: &str = "judgment:justice";
 
+/// v0.6 alpha swarm, risks item 8 (Arcanist full-build closure, first
+/// non-CRB class attempting real `Computed` status): APG/ACG Arcanist,
+/// verified directly against `acg_abilities_class.lst`'s own `Arcanist ~
+/// Spells Prepared`/`Arcane Reservoir` records. Unlike every prior ACG/
+/// APG closure this session (a single named feature, spellcasting
+/// deferred), this closure builds Arcanist's REAL prepared-spellbook
+/// spellcasting from scratch, mirroring `unmet_wizard_spellbook_conditions`/
+/// `ground_wizard_prepared_spellbook`'s own shape -- confirmed via two
+/// independent sources (the raw corpus `BONUS:VAR` formulas, hand-
+/// evaluated at levels 1-5, and legacy.aonprd.com's own printed "Table:
+/// Arcanist Spells Prepared") that Arcanist's own per-day counts and
+/// access ladder are genuinely DIFFERENT from Wizard's (4/2 at level 1
+/// vs Wizard's 3/1; 2nd-level spells at Arcanist level 4 vs Wizard level
+/// 3) even though the spell-list CONTENT and casting SHAPE (prepared,
+/// spellbook-gated, `SPELLLIST:1|Wizard`) are genuinely shared -- so
+/// `arcanist_base_spells_per_day` is a real, independently-verified
+/// parallel table, not a byte-identical reuse the way Skald's own tables
+/// turned out to be for Bard. Arcanist also has NO arcane-school/
+/// specialization mechanic at all (confirmed: no "School" record
+/// anywhere in its own `KEY:Arcanist ~ ...` list), so its own spellbook
+/// validation needs no opposed-school gate or per-school slot-cost
+/// multiplier the way Wizard's own `wizard_opposed_school_slot_cost`
+/// does -- genuinely simpler than Wizard's own validation in that one
+/// respect. See `docs/release/v0.6/arcanist-acg-full-build-scoping.md`
+/// for the full corpus verification and scope record.
+const ARCANIST_CLASS_ID: &str = "class:arcanist";
+/// Mirrors `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope
+/// discipline exactly: this slice verifies Arcanist's own spells-per-day
+/// table only for levels 1-3, the same incremental-widening idiom every
+/// other per-level table in this codebase already uses. Levels 4-20 keep
+/// the claim-blocking `class_chassis.unsupported`-shaped diagnostic
+/// (level exceeds this grounding's own supported ceiling) until a later
+/// cycle widens it.
+const ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7471,6 +7506,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_cavalier_single_class(input)
         || is_supported_alchemist_single_class(input)
         || is_supported_inquisitor_single_class(input)
+        || is_supported_arcanist_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7551,6 +7587,22 @@ fn is_supported_hunter_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Hunter, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Arcanist full-build closure, fifth
+/// APG/ACG class-specific closure): whether `input` is a single-class
+/// Arcanist at a level within `acg::class_chassis_resolve`'s declared
+/// ceiling for Arcanist -- mirrors the other four ACG exact-match gates
+/// exactly, including the same exact-match discipline (`==
+/// Some(AcgClassId::Arcanist)`, not a broad `.is_some()`).
+fn is_supported_arcanist_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Arcanist) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Arcanist, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -8529,6 +8581,323 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
     });
 }
 
+/// PF1 Advanced Class Guide Arcane Reservoir: "Each day, when preparing
+/// spells, your arcane reservoir fills... gaining a number of points
+/// equal to [3 + 1/2 arcanist level]." Verified directly against
+/// `acg_abilities_class.lst`'s own `BONUS:VAR|ArcanistReservoirSize|
+/// 3+ArcanistLVL/2`. A flat, choice-free daily resource -- unlike every
+/// activation-gated closure this session, this needs no
+/// `class_ability_activations` entry at all, mirroring Cleric's own
+/// `channel_energy_dice`/`channel_energy_uses_per_day`'s "flat, no gate"
+/// shape.
+fn arcanist_reservoir_daily_fill(level: u8) -> i16 {
+    3 + i16::from(level) / 2
+}
+
+/// PF1 Advanced Class Guide Arcane Reservoir: "The arcane reservoir can
+/// hold a maximum of [3 + arcanist level] points." Verified directly
+/// against `acg_abilities_class.lst`'s own `BONUS:VAR|
+/// MaxArcanistReservoirSize|3+ArcanistLVL`.
+fn arcanist_reservoir_max(level: u8) -> i16 {
+    3 + i16::from(level)
+}
+
+/// PF1 Advanced Class Guide Arcanist "Spells Prepared" table, base counts
+/// before any Intelligence bonus spells, for spell levels 0 (cantrip)
+/// through 3rd, bounded to `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL`
+/// (mirroring `wizard_base_spells_per_day`'s own bounded-scope
+/// discipline). Verified via two independent sources (see
+/// `ARCANIST_CLASS_ID`'s own doc comment): the raw corpus `BONUS:VAR`
+/// formulas (`ArcanistPreparedLVL_0 = 4+(CastingLVL>=2)+(>=4)+(>=6)+
+/// (>=8)+(>=10)`, `ArcanistPreparedLVL_1 = 2+(>=3)+(>=5)+(>=7)`,
+/// `ArcanistPreparedLVL_2 = (>=4)+(>=5)+(>=7)+(>=9)+(>=11)`,
+/// hand-evaluated at levels 1-3) and legacy.aonprd.com's own printed
+/// "Table: Arcanist Spells Prepared" (levels 1-3 read `4/2/-/-`,
+/// `5/2/-/-`, `5/3/-/-`) -- both agree exactly. Genuinely DIFFERENT from
+/// `wizard_base_spells_per_day` (level 1 Wizard is `3/1/-/-`; Arcanist's
+/// own 2nd-level spells first become accessible at Arcanist level 4, not
+/// Wizard's level 3) -- this is a real, independently-verified parallel
+/// table, not a byte-identical reuse.
+fn arcanist_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(4), Some(2), None, None],
+        2 => [Some(5), Some(2), None, None],
+        3 => [Some(5), Some(3), None, None],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for this grounding's bounded
+/// prepared-spellbook posture. An empty list means the posture is fully
+/// supported: an Arcanist at a supported level, with at least one spell
+/// recorded (`AcquisitionMode::Known`) and at least one prepared today
+/// (`AcquisitionMode::Prepared`), every prepared spell already recorded,
+/// and no spell level's prepared count exceeding that level's total slot
+/// budget (base table count + the Intelligence bonus). Mirrors
+/// `unmet_wizard_spellbook_conditions`'s own shape MINUS the school-
+/// specialization check and the opposed-school slot-cost multiplier --
+/// Arcanist has no arcane-school mechanic at all (verified directly
+/// against its own `KEY:Arcanist ~ ...` list: no "School" record exists),
+/// so every prepared spell costs exactly 1 slot, never 2.
+fn unmet_arcanist_spellbook_conditions(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if level > ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL {
+        unmet.push(format!(
+            "prepared spellbook grounding is only supported for arcanist levels \
+             1-{ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL}, got {level}"
+        ));
+        return unmet;
+    }
+
+    let arcanist_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == ARCANIST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = arcanist_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = arcanist_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no arcanist spells recorded in the spellbook (AcquisitionMode::Known)".to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no arcanist spells prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not recorded in the spellbook"
+            ));
+        }
+    }
+
+    let base_spells_per_day = arcanist_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let spell_level = spell_level as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+                .any(|(_, l)| l == spell_level)
+            {
+                unmet.push(format!(
+                    "a prepared spell targets spell level {spell_level}, not yet accessible at \
+                     arcanist level {level}"
+                ));
+            }
+            continue;
+        };
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total_slots = base_count + int_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+            .filter(|(_, l)| *l == spell_level)
+            .count() as i16;
+        if consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base {base_count} + Intelligence bonus \
+                 {int_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spellbook / daily-preparation state once
+/// `unmet_arcanist_spellbook_conditions` reports an empty unmet list:
+/// the recorded spellbook contents, the daily preparation selection, and
+/// the base/Intelligence-bonus/total spells-per-day counts per accessible
+/// spell level. Mirrors `ground_wizard_prepared_spellbook`'s own shape
+/// minus the specialist-bonus-slot term (Arcanist has none).
+fn ground_arcanist_prepared_spellbook(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let arcanist_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == ARCANIST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = arcanist_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = arcanist_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.arcanist.spellbook_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Arcanist level {level} recorded spellbook contents ({} spells, \
+             AcquisitionMode::Known): {}. This grounds which spells are recorded as real, \
+             chosen input; it does not verify against any corpus that a named spell genuinely \
+             exists or genuinely belongs to the level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.arcanist.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Arcanist level {level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared, each already verified recorded in the spellbook above): \
+             {}. This grounds the prepared-vs-known distinction for real: every prepared spell \
+             is drawn from the recorded spellbook, consuming its spell level's slot budget (one \
+             slot each -- Arcanist has no opposed-school double-cost rule, unlike Wizard). It \
+             computes no spell save DC and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let base_spells_per_day = arcanist_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = spell_level as u8;
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total = base_count + int_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.arcanist.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Arcanist level {level} base spells per day at spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Advanced Class Guide Arcanist class \
+                 table's spells-prepared row (verified against the raw corpus BONUS:VAR \
+                 formulas, hand-evaluated, and legacy.aonprd.com's own printed table -- both \
+                 agree)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.arcanist.intelligence_bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: int_bonus,
+            detail: format!(
+                "Arcanist level {level} Intelligence bonus spells per day at spell level \
+                 {spell_level}: {int_bonus} from Intelligence modifier \
+                 {} (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)",
+                ability_modifiers.intelligence
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.arcanist.total_spells_per_day.spell_level_{spell_level}"),
+            value: total,
+            detail: format!(
+                "Arcanist level {level} total spells per day at spell level {spell_level}: base \
+                 {base_count} + Intelligence bonus {int_bonus} = {total} (no specialist bonus \
+                 slot -- Arcanist has no arcane school)"
+            ),
+        });
+    }
+}
+
+/// Grounds Arcanist's class features for `level` (v0.6 alpha swarm, risks
+/// item 8, Arcanist full-build closure). Called from
+/// `compute_acg_class_chassis`'s Arcanist branch, gated only on Arcanist
+/// class-ownership. Grounds the Arcane Reservoir (flat, unconditional --
+/// no choice or activation gate) and the real prepared-spellbook
+/// posture (conditional on `unmet_arcanist_spellbook_conditions`), then
+/// pushes the narrowed `exploits_deferred` diagnostic naming the
+/// genuinely still-missing pieces (Exploits, Greater Exploits, Consume
+/// Spells, Magical Supremacy) regardless of the spellbook's own state.
+fn ground_or_block_arcanist_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let reservoir_max = arcanist_reservoir_max(level);
+    let reservoir_daily_fill = arcanist_reservoir_daily_fill(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.arcanist.arcane_reservoir_max".to_owned(),
+        value: reservoir_max,
+        detail: format!(
+            "Arcanist level {level} Arcane Reservoir maximum: 3 + level = {reservoir_max}. A \
+             flat, choice-free daily resource pool -- no class_ability_activations entry is \
+             needed to ground this value, unlike every activation-gated closure this session"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.arcanist.arcane_reservoir_daily_fill".to_owned(),
+        value: reservoir_daily_fill,
+        detail: format!(
+            "Arcanist level {level} Arcane Reservoir daily fill: 3 + level/2 = \
+             {reservoir_daily_fill}. This grounds only the flat daily-fill count; it does not \
+             track intraday consumption from casting Exploits or Consume Spells"
+        ),
+    });
+
+    let spellbook_unmet = unmet_arcanist_spellbook_conditions(input, level, ability_modifiers);
+    if spellbook_unmet.is_empty() {
+        ground_arcanist_prepared_spellbook(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.arcanist.prepared_spellbook.unsupported".to_owned(),
+            message: format!(
+                "Arcanist remains blocked on its prepared spellbook / spells prepared / spell \
+                 slot posture burden: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    push_arcanist_exploits_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.arcanist.unsupported` for Arcanist specifically
+/// (v0.6 alpha swarm, risks item 8, Arcanist full-build closure): named
+/// ONLY the genuinely still-missing pieces (Arcanist Exploits / Greater
+/// Arcanist Exploits -- a chooser-list, real mechanical variety --
+/// Consume Spells, and Magical Supremacy). Pushed unconditionally
+/// regardless of the spellbook's own state, mirroring every prior
+/// diagnostic-narrowing closure this session.
+fn push_arcanist_exploits_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.arcanist.exploits_deferred.unsupported".to_owned(),
+        message: format!(
+            "{ARCANIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar, Arcane Reservoir, and prepared spellbook: Arcanist Exploits and Greater \
+             Arcanist Exploits (a chooser-list of real mechanical variety, named but not built), \
+             Consume Spells (a real formula, Charisma-modifier-gated resource conversion), and \
+             Magical Supremacy (a capstone ability) remain ungrounded anywhere in this codebase; \
+             no class-feature execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -8602,21 +8971,23 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first/second/third/fourth APG/ACG
-    // closures, adversarially reviewed 2026-07-25 for the gate-widening
-    // piece): Skald, Bloodrager, Brawler, and Hunter are the four ACG
-    // classes with a genuinely real class feature now (Inspired Rage /
-    // Bloodrage / AC Bonus / Animal Companion) -- the other 6 ACG
-    // classes, and every APG class, keep the exact original unconditional
+    // v0.6 alpha swarm, risks item 8 (first/second/third/fourth/fifth
+    // APG/ACG closures, adversarially reviewed 2026-07-25 for the
+    // gate-widening piece): Skald, Bloodrager, Brawler, Hunter, and
+    // Arcanist are the five ACG classes with a genuinely real class
+    // feature now (Inspired Rage / Bloodrage / AC Bonus / Animal
+    // Companion / real prepared spellcasting + Arcane Reservoir) -- the
+    // other 5 ACG classes, and every APG class except Cavalier/
+    // Alchemist/Inquisitor, keep the exact original unconditional
     // diagnostic unchanged. These branches are reached only for
-    // single-class Skald/Bloodrager/Brawler/Hunter (this function is only
-    // ever called from `compute_class_chassis`'s single-class-only
-    // section; `AcgClassId::from_class_id_str` is deliberately not
-    // registered with `multiclass_class_level_supported`, so a Skald-,
-    // Bloodrager-, Brawler-, or Hunter-containing multiclass mix never
-    // reaches this function at all), so no separate gate-ordering/
-    // hoisting fix is needed the way CRB classes required once
-    // `table_class_id` recognized them generically.
+    // single-class Skald/Bloodrager/Brawler/Hunter/Arcanist (this
+    // function is only ever called from `compute_class_chassis`'s
+    // single-class-only section; `AcgClassId::from_class_id_str` is
+    // deliberately not registered with `multiclass_class_level_supported`,
+    // so a Skald-, Bloodrager-, Brawler-, Hunter-, or Arcanist-containing
+    // multiclass mix never reaches this function at all), so no separate
+    // gate-ordering/hoisting fix is needed the way CRB classes required
+    // once `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
@@ -8627,6 +8998,14 @@ fn compute_acg_class_chassis(
         ground_brawler_ac_bonus_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == AcgClassId::Hunter {
         ground_hunter_animal_companion_and_defer_the_rest(level, explanations, diagnostics);
+    } else if class_id == AcgClassId::Arcanist {
+        ground_or_block_arcanist_class_features(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -24468,7 +24847,10 @@ mod wizard_spellbook_spell_id_resolution_tests {
 /// catalogue.
 #[cfg(test)]
 mod selected_skill_class_skill_bonus_tests {
-    use super::{compute_pilot_base_chassis, FIGHTER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID};
+    use super::{
+        compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, ROGUE_CLASS_ID,
+        WIZARD_CLASS_ID,
+    };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -24544,6 +24926,25 @@ mod selected_skill_class_skill_bonus_tests {
         // values above (no +3 class-skill bonus).
         // Climb/Swim = rank 1 + STR 4 + 0 + ACP -2 = 3.
         // Intimidate = rank 1 + CHA -1 + 0 = 0.
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 0);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 3);
+    }
+
+    /// Arcanist's own class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Arcanist ~ Class Skills`: Appraise, Craft, Fly, Knowledge
+    /// (all), Linguistics, Profession, Spellcraft, Use Magic Device) also
+    /// includes NONE of Climb/Intimidate/Swim -- same shape as Wizard, so
+    /// this needed no new wiring in `selected_skill_class_skill_bonus_applies`
+    /// at all once the chassis gate admitted Arcanist (v0.6 alpha swarm,
+    /// risks item 8, Arcanist full-build closure): the existing generic
+    /// mechanism already produces the correct answer for a class outside
+    /// its own hardcoded Fighter/Rogue bonus-eligibility set.
+    #[test]
+    fn arcanist_gets_no_class_skill_bonus_on_any_of_the_three_skills() {
+        let input = with_class(ARCANIST_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 3);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 0);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 3);
@@ -26135,6 +26536,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:bloodrager"
                 || class_id == "class:brawler"
                 || class_id == "class:hunter"
+                || class_id == "class:arcanist"
             {
                 continue;
             }
@@ -26360,31 +26762,105 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Arcanist's own counterpart to the Skald/Bloodrager/Brawler/Hunter
+    /// diagnostic-swap tests above (v0.6 alpha swarm, risks item 8,
+    /// Arcanist full-build closure, fifth APG/ACG closure): mirrors them,
+    /// using `exploits_deferred` (Arcanist's own genuinely built
+    /// spellcasting means the remaining gap is Exploits/Consume Spells/
+    /// Magical Supremacy, not spellcasting itself). A bare Arcanist with
+    /// no spells recorded is a genuinely valid "hasn't chosen spells yet"
+    /// posture (mirrors Wizard's own pre-bootstrap-fix shape), so it
+    /// stays Blocked on the prepared-spellbook diagnostic too -- this
+    /// test also verifies the Arcane Reservoir's own flat values ground
+    /// unconditionally regardless of spellbook state.
+    #[test]
+    fn arcanist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:arcanist", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Arcanist must stay Blocked on its exploits-deferred/spellbook posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.unsupported"),
+            "the retired generic diagnostic must never appear for Arcanist: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower exploits_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.arcanist.prepared_spellbook.unsupported"
+                    && d.claim_blocking),
+            "a bare Arcanist with no recorded spells is a genuinely valid but incomplete \
+             posture, mirroring Wizard's own pre-bootstrap-fix shape: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let reservoir_max = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.arcanist.arcane_reservoir_max")
+            .expect("Arcane Reservoir max must ground unconditionally, regardless of spellbook state");
+        assert_eq!(reservoir_max.value, 4, "Arcanist level 1 Reservoir max: 3 + 1 = 4: {:?}", reservoir_max);
+        let reservoir_fill = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.arcanist.arcane_reservoir_daily_fill")
+            .expect("Arcane Reservoir daily fill must ground unconditionally");
+        assert_eq!(
+            reservoir_fill.value, 3,
+            "Arcanist level 1 Reservoir daily fill: 3 + 1/2 = 3: {:?}",
+            reservoir_fill
+        );
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager, Brawler, and Hunter): the OTHER 6 ACG classes
-    /// (every class other than Skald, Bloodrager, Brawler, and Hunter,
-    /// the four now genuinely admitted) must produce ZERO
-    /// `defense.total_save.*`/`combat.baseline_*`/
+    /// for Bloodrager, Brawler, Hunter, and Arcanist): the OTHER 5 ACG
+    /// classes (every class other than Skald, Bloodrager, Brawler,
+    /// Hunter, and Arcanist, the five now genuinely admitted) must
+    /// produce ZERO `defense.total_save.*`/`combat.baseline_*`/
     /// `skill.selected_modifier.*` explanations at level 1, even when
     /// built from the exact same Longsword/Chain Shirt/Dodge/Weapon-
     /// Focus/skill-rank posture that genuinely satisfies every non-class-
     /// recognition precondition those pillars check -- proving
     /// `is_supported_skald_single_class`, `is_supported_bloodrager_single_class`,
-    /// `is_supported_brawler_single_class`, and
-    /// `is_supported_hunter_single_class` are all real exact matches, not
-    /// broad `.is_some()` checks that would silently admit all 10 ACG
-    /// classes into real pillar computation. This is stronger than the
-    /// pre-existing "stays Blocked" assertion above, which does not by
-    /// itself rule out a silent pillar-output leak alongside an unrelated
-    /// claim-blocking diagnostic.
+    /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
+    /// and `is_supported_arcanist_single_class` are all real exact
+    /// matches, not broad `.is_some()` checks that would silently admit
+    /// all 10 ACG classes into real pillar computation. This is stronger
+    /// than the pre-existing "stays Blocked" assertion above, which does
+    /// not by itself rule out a silent pillar-output leak alongside an
+    /// unrelated claim-blocking diagnostic.
     #[test]
-    fn the_other_six_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_five_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
                 || class_id == "class:brawler"
                 || class_id == "class:hunter"
+                || class_id == "class:arcanist"
             {
                 continue;
             }
@@ -26501,6 +26977,30 @@ mod acg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Hunter: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Arcanist's own positive counterpart, mirroring Skald's/
+    /// Bloodrager's/Brawler's/Hunter's exactly -- proves the gate
+    /// genuinely admits Arcanist regardless of its own (here, bare/no
+    /// spells) spellbook state.
+    #[test]
+    fn arcanist_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:arcanist", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Arcanist: {:?}",
                 receipt.computation.explanations
             );
         }
@@ -29154,6 +29654,249 @@ mod inquisitor_dispatch_widening_safety_tests {
             "a non-Inquisitor character's spoofed judgment entry must never apply a bonus: {:?}",
             melee_attack_bonus
         );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Arcanist full-build closure, first
+/// non-CRB class attempting real `Computed` status): tests the real
+/// prepared-spellbook grounding directly, mirroring the Wizard
+/// dispatch-widening test module's own shape.
+#[cfg(test)]
+mod arcanist_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_arcanist_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: ARCANIST_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Arcanist with a real recorded and prepared
+    /// spell reaches a genuinely grounded spellbook posture -- stays
+    /// `Blocked` only on `exploits_deferred` (never the retired generic
+    /// diagnostic, never `prepared_spellbook.unsupported`), with the real
+    /// base/Intelligence-bonus/total spells-per-day counts grounded.
+    ///
+    /// Fixture Intelligence 10 (+0 modifier, no bonus spells). Level 1
+    /// base: cantrips 4, 1st-level 2 (verified against the raw corpus
+    /// formula and legacy.aonprd.com's own printed table).
+    #[test]
+    fn single_class_arcanist_with_a_real_prepared_spell_grounds_the_spellbook_and_stays_blocked_only_on_exploits()
+    {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Arcanist stays Blocked on exploits_deferred alone, even with a real, valid \
+             spellbook posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.arcanist.prepared_spellbook.unsupported"),
+            "the prepared_spellbook diagnostic must not fire once a real, valid posture is \
+             recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the exploits_deferred diagnostic even with a valid spellbook: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let base_cantrips = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.arcanist.base_spells_per_day.spell_level_0")
+            .expect("base cantrips per day must be grounded");
+        assert_eq!(base_cantrips.value, 4, "Arcanist level 1 base cantrips: 4: {:?}", base_cantrips);
+
+        let base_first_level = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.arcanist.base_spells_per_day.spell_level_1")
+            .expect("base 1st-level spells per day must be grounded");
+        assert_eq!(
+            base_first_level.value, 2,
+            "Arcanist level 1 base 1st-level spells: 2 (not Wizard's own 1): {:?}",
+            base_first_level
+        );
+    }
+
+    /// An Arcanist with a prepared spell that was never recorded in the
+    /// spellbook is a genuine posture violation and must claim-block,
+    /// mirroring `unmet_wizard_spellbook_conditions`'s own shape.
+    #[test]
+    fn single_class_arcanist_with_an_unrecorded_prepared_spell_stays_blocked() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.arcanist.prepared_spellbook.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_spellbook diagnostic for an unrecorded prepared spell: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Arcanist who over-prepares a spell level (more spells prepared
+    /// than the real slot budget allows) is a genuine posture violation
+    /// and must claim-block, mirroring the same over-budget discipline
+    /// used throughout this session (Rage/Bloodrage/Judgment's own
+    /// rounds/uses-per-day checks).
+    ///
+    /// Level 1 base 1st-level slots: 2 (+0 Intelligence bonus). Preparing
+    /// 3 distinct 1st-level spells exceeds this budget.
+    #[test]
+    fn single_class_arcanist_over_prepared_at_a_spell_level_stays_blocked() {
+        let mut input = human_arcanist_input(1);
+        for spell_id in ["Magic Missile", "Light", "Mage Armor"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ARCANIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+        for spell_id in ["Magic Missile", "Mage Armor"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ARCANIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+        // A third 1st-level prepared spell (Light is 0-level, so use a
+        // second real 1st-level spell instead to trigger the over-budget
+        // check at spell level 1 specifically).
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Comprehend Languages".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Comprehend Languages".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.arcanist.prepared_spellbook.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_spellbook diagnostic for an over-prepared spell level: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Arcanist character carrying spoofed Arcanist spell
+    /// selections must have them silently ignored, not applied -- the
+    /// class-ownership gate is by construction
+    /// (`unmet_arcanist_spellbook_conditions`/`ground_arcanist_prepared_spellbook`
+    /// only ever read `spells_selected` entries whose `source_class_id`
+    /// matches `ARCANIST_CLASS_ID`), not a bolt-on rejection. Also proves
+    /// Fighter's own golden path is unaffected.
+    #[test]
+    fn non_arcanist_characters_spoofed_arcanist_spells_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by stray Arcanist spell selections: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Arcane Reservoir progression at higher levels, verified against
+    /// the raw corpus `BONUS:VAR` formulas directly.
+    #[test]
+    fn arcane_reservoir_progression_matches_the_corpus_formula_at_higher_levels() {
+        for (level, expected_max, expected_fill) in [(1, 4, 3), (2, 5, 4), (4, 7, 5), (6, 9, 6)] {
+            let input = human_arcanist_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let max = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.arcanist.arcane_reservoir_max")
+                .expect("Arcane Reservoir max must be grounded");
+            assert_eq!(max.value, expected_max, "level {level} Reservoir max: {:?}", max);
+
+            let fill = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.arcanist.arcane_reservoir_daily_fill")
+                .expect("Arcane Reservoir daily fill must be grounded");
+            assert_eq!(fill.value, expected_fill, "level {level} Reservoir daily fill: {:?}", fill);
+        }
     }
 }
 

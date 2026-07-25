@@ -61,22 +61,34 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// assertion (and the coverage-matrix artifact) rather than silently
 /// leaving the audit stale.
 ///
-/// **Updated (v0.6 alpha swarm, risks item 8, first/second/third/fourth
+/// **Updated (v0.6 alpha swarm, risks item 8, first through fifth
 /// APG/ACG class-specific closures, 2026-07-25):** exactly this canary
 /// fired -- Skald's Inspired Rage, Bloodrager's Bloodrage, Brawler's AC
-/// Bonus, and Hunter's Animal Companion are now genuinely wired, the
-/// first four named ACG class features this repo computes. All four are
-/// carved out of the "stays 0" loop below and given their own dedicated
-/// assertions (`named_features_wired == 1` each), per this test's own
-/// documented update instruction. Every other ACG class remains at 0,
-/// unchanged.
+/// Bonus, Hunter's Animal Companion, and Arcanist's Arcane Reservoir +
+/// Spells Prepared are now genuinely wired. All five are carved out of
+/// the "stays 0" loop below and given their own dedicated assertions,
+/// per this test's own documented update instruction. Every other ACG
+/// class remains at 0, unchanged. Arcanist's own `named_features_wired
+/// == 2` (not 1, unlike every other carve-out here) because its real
+/// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
+/// ...` record (`Spells Prepared`) beyond Arcane Reservoir -- see
+/// `AcgClassCoverage::named_features_wired`'s own doc comment in
+/// `rules_tables::acg::mod` for why `Cantrips` (also a real, distinct
+/// KEY record) does NOT add a third: its own distinguishing mechanical
+/// content (no-slot-consumption) is not separately implemented anywhere,
+/// mirroring Bloodrager's own Greater/Mighty/Tireless tiers, which stay
+/// at 1 wired feature for the same reason.
 #[test]
-fn zero_named_class_features_are_wired_for_any_acg_class_except_the_four_named_closures_landed_so_far()
+fn zero_named_class_features_are_wired_for_any_acg_class_except_the_five_named_closures_landed_so_far()
 {
     for row in coverage_report() {
         if matches!(
             row.class_id,
-            AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter
+            AcgClassId::Skald
+                | AcgClassId::Bloodrager
+                | AcgClassId::Brawler
+                | AcgClassId::Hunter
+                | AcgClassId::Arcanist
         ) {
             continue;
         }
@@ -94,15 +106,16 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_the_four_named_c
         );
     }
 
-    for (class_id, feature_name) in [
-        (AcgClassId::Skald, "Inspired Rage"),
-        (AcgClassId::Bloodrager, "Bloodrage"),
-        (AcgClassId::Brawler, "AC Bonus"),
-        (AcgClassId::Hunter, "Animal Companion"),
+    for (class_id, feature_name, expected_wired) in [
+        (AcgClassId::Skald, "Inspired Rage", 1),
+        (AcgClassId::Bloodrager, "Bloodrage", 1),
+        (AcgClassId::Brawler, "AC Bonus", 1),
+        (AcgClassId::Hunter, "Animal Companion", 1),
+        (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared", 2),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
-            row.named_features_wired, 1,
+            row.named_features_wired, expected_wired,
             "{class_id:?}'s {feature_name} is now genuinely wired -- update this assertion (and \
              the coverage-matrix artifact) if this count changes again"
         );
@@ -195,6 +208,20 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                 // never reaches Computed this closure either).
                 "class_feature.acg.skald.other_features_deferred.unsupported".to_owned()
             }
+            AcgClassId::Arcanist => {
+                // v0.6 alpha swarm, risks item 8 (Arcanist full-build
+                // closure): a bare, minimal-input Arcanist (no spells
+                // recorded) trips BOTH the new exploits_deferred
+                // diagnostic (always pushed, unconditional on spellbook
+                // state) and the prepared_spellbook diagnostic (since
+                // this minimal fixture records no spells at all) --
+                // checking for exploits_deferred here is sufficient to
+                // prove the retired generic diagnostic is gone; the
+                // dedicated pilot_compute.rs test module separately
+                // proves prepared_spellbook is retired too once a real
+                // spell is recorded.
+                "class_feature.acg.arcanist.exploits_deferred.unsupported".to_owned()
+            }
             _ => format!("class_feature.acg.{}.unsupported", class_id.name()),
         };
         let unsupported = computation
@@ -217,7 +244,11 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         );
         if matches!(
             class_id,
-            AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter
+            AcgClassId::Skald
+                | AcgClassId::Bloodrager
+                | AcgClassId::Brawler
+                | AcgClassId::Hunter
+                | AcgClassId::Arcanist
         ) {
             let retired_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
             assert!(

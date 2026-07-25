@@ -211,11 +211,11 @@ pub struct AcgClassCoverage {
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
     /// for. Zero for every ACG class except Skald, Bloodrager, Brawler,
-    /// and Hunter as of the v0.6 alpha swarm's first/second/third/fourth
-    /// APG/ACG class-specific closures (risks item 8): Skald's 1st-level
-    /// Raging Song song type, Inspired Rage, Bloodrager's Bloodrage,
-    /// Brawler's AC Bonus, and Hunter's Animal Companion are now genuinely
-    /// wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
+    /// Hunter, and Arcanist as of the v0.6 alpha swarm's first through
+    /// fifth APG/ACG class-specific closures (risks item 8): Skald's
+    /// 1st-level Raging Song song type, Inspired Rage, Bloodrager's
+    /// Bloodrage, Brawler's AC Bonus, and Hunter's Animal Companion are
+    /// now genuinely wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
     /// `pilot_compute::ground_or_block_bloodrager_bloodrage`,
     /// `pilot_compute::ground_brawler_ac_bonus_and_defer_the_rest`,
     /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`)
@@ -225,6 +225,29 @@ pub struct AcgClassCoverage {
     /// comment), and no follow-on cycle has since ingested
     /// `acg_abilities_class.lst`'s per-level feature blocks for any other
     /// ACG class.
+    ///
+    /// Arcanist counts 2, not 1, unlike every prior closure this session:
+    /// Arcane Reservoir AND Spells Prepared
+    /// (`pilot_compute::ground_or_block_arcanist_class_features`/
+    /// `ground_arcanist_prepared_spellbook`) are both real, distinct
+    /// `KEY:Arcanist ~ ...` records with genuine backing logic now.
+    /// `Cantrips` is a real, distinct KEY record too (verified directly:
+    /// "prepare N cantrips, cast like any spell but don't consume a slot,
+    /// not expended when cast"), but its own DISTINGUISHING mechanical
+    /// content (no-slot-consumption, not-expended-when-cast) is not
+    /// separately implemented anywhere -- the cantrip count is grounded
+    /// by the exact same generic per-spell-level table loop that grounds
+    /// every other spell level (`class_spell.acg.arcanist.
+    /// base_spells_per_day.spell_level_0`, same shape as `spell_level_1`/
+    /// `spell_level_2`), so it does not get its own count, mirroring
+    /// Bloodrager's own precedent: Greater/Mighty/Tireless Bloodrage are
+    /// each their own separate `KEY:Bloodrager ~ ...` record too, layered
+    /// on one base Bloodrage mechanism, and that closure correctly
+    /// stayed at 1 (not 4) since they are facets of one grounded
+    /// mechanism, not independently-implemented features. Applying the
+    /// same discipline here keeps the "count real distinct KEY records
+    /// with genuine, SEPARATELY-implemented backing logic" methodology
+    /// consistent across classes rather than letting it drift per-class.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -301,13 +324,16 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first/second/third/fourth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through fifth APG/ACG
     // class-specific closures): Skald's Inspired Rage, Bloodrager's
-    // Bloodrage, Brawler's AC Bonus, and Hunter's Animal Companion are the
-    // four real, wired named class features among all ten ACG classes
-    // today -- see this field's own doc comment above.
+    // Bloodrage, Brawler's AC Bonus, Hunter's Animal Companion, and
+    // Arcanist's Arcane Reservoir + Spells Prepared are the real, wired
+    // named class features among all ten ACG classes today -- see this
+    // field's own doc comment above for why Arcanist counts 2, not 1
+    // (and why Cantrips does not add a third).
     let named_features_wired = match class_id {
         AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter => 1,
+        AcgClassId::Arcanist => 2,
         _ => 0,
     };
 
