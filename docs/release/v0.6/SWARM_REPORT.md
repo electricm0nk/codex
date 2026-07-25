@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Druid level-up bug fixed and lead-verified (55a856c8); now building Bard's Inspire Courage (reusing the activation-state pattern) |
+| backend | working | Druid level-up bug fixed and lead-verified (55a856c8); building Bard's Inspire Courage, endorsed scope addition to widen table_class_id for Bard first (verified safe, mirrors Barbarian) |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
 | qa | idle | Sorcerer/Cleric/Druid batches (76fe82da, c578ede6, 5eae17d7+dfbb0810) all 66 files landed and lead-verified 100%; Barbarian's 20-file wave next |
 
