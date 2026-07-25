@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Arcanist's full-build scoping doc landed — self-caught and corrected a real over-claim from the earlier comparison (Arcanist's spells-per-day table is NOT Wizard's, genuinely its own, verified against 2 sources). Lead independently re-verified the correction and the Wizard bootstrap-deadlock precedent it cites. Greenlit to build as one cohesive slice (chassis+skills+Reservoir+spellcasting+exploits-deferral), no full review needed. Building now |
+| backend | working | Arcanist's full build code-complete — lead independently verified the exact-match gate, real spellbook validation (genuinely reaches `HeadlessReceiptStatus::Blocked` on exploits alone with a valid spellbook, matching the two-cycle framing exactly), full lib 443/443, coverage audit 3/3. One named-features-wired count question resolved (2, not 3 — Cantrips isn't separately implemented, same precedent as Bloodrager's own Greater/Mighty/Tireless not being double-counted), already applied. Full workspace sweep running |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
