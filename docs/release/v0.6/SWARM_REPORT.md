@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Final scan complete — no 5th cheap win found (Arcanist/Investigator/6 APG classes all correctly ruled not-cheap; lead spot-checked the closest near-miss, Cavalier's Mount, against the raw corpus and confirmed backend's reading exactly, flagged for a later slice, not now). Starting Monk's remaining-4-feats scoping doc, will flag for the lead's review before building given the scale |
+| backend | holding | Monk's remaining-4-feats scoping doc landed — revises the premise: 3 of 4 feats (Combat Reflexes, Scorpion Style, Improved Grapple) turn out to have a real groundable static number, only Deflect Arrows genuinely needs the full opponent engine. Lead independently verified every corpus/code claim in the doc (all accurate) and dispatched a full adversarial review given the new CMB/CMD baseline pillar this proposes — first new pillar this session, not a per-class layer-on. Holding on all code until it lands |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
