@@ -4672,6 +4672,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         input,
         &ability_modifiers,
         &mut explanations,
+        &mut diagnostics,
     );
 
     explain_sorcerer_level1_spell_baseline(
@@ -6721,10 +6722,10 @@ fn race_display_label(race_id: &str) -> String {
 /// multiclass-support range check below share one implementation instead of
 /// several.
 ///
-/// Deliberately NOT widened to the remaining 8 core classes in one pass:
+/// Deliberately NOT widened to all 11 core classes in one pass:
 /// `class_tables()` (`rules_tables/crb/class_tables.rs`) carries real data
 /// for all 11, but several of those classes (Barbarian, Bard, Cleric,
-/// Druid, Monk, Paladin, Ranger, Sorcerer) already have their OWN deliberate
+/// Druid, Monk, Paladin, Sorcerer) already have their OWN deliberate
 /// standalone-only `class_chassis.<class>.*` chassis explanations elsewhere
 /// in this file, each with an existing `tests/*.rs` file asserting that
 /// class's own base-attack/base-save stay claim-blocked / not integrated
@@ -6735,11 +6736,23 @@ fn race_display_label(race_id: &str) -> String {
 /// step broke ~60 of those pre-existing negative-control assertions across
 /// ~15 QA-owned test files in this task's own RED/GREEN loop -- confirmed
 /// by running `cargo test --test '*' --no-fail-fast` before scoping back
-/// down to this 3-class allowlist. Rogue's own equivalent standalone tests
-/// (`sd13_rogue_level1_chassis_baseline.rs`) still break by this narrower
-/// change and are flagged to `qa` directly rather than silently pushed;
-/// widening the other 8 classes is future scope, one class (and one
-/// coordinated test update) at a time.
+/// down to a narrower allowlist. Rogue's own equivalent standalone tests
+/// (`sd13_rogue_level1_chassis_baseline.rs`) still broke by that narrower
+/// change and were flagged to `qa` directly rather than silently pushed;
+/// widening the other classes is one class (and one coordinated test
+/// update) at a time (`class-multiclass-breadth-scoping.md`, risks item 8).
+///
+/// **Ranger added (v0.6 alpha swarm, risks item 8, first slice, 2026-07-24)**
+/// -- the one class of the remaining 8 with no self-imposed claim-blocking
+/// diagnostic of its own (`explain_ranger_level1_chassis_and_class_feature_separation`'s
+/// signature never took a `diagnostics` parameter, so it structurally
+/// could not self-block), and the largest existing investment (full
+/// level-20 chassis, Track, combat style, Favored Enemy/Terrain, Hunter's
+/// Bond, and a complete partial-caster spell ladder already grounded as
+/// standalone explanations). Widening only this one entry lets Ranger
+/// reach a real `Computed` status via `compute_generic_table_chassis`
+/// (already built, already used for Rogue) without touching any other
+/// class's dispatch.
 /// `pub(crate)` (rather than private) so `durability.rs`'s max-HP
 /// computation (v0.6 alpha swarm, item 2) can reuse the same class-id
 /// recognition this module's chassis dispatch already established, rather
@@ -6751,6 +6764,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Wizard)
     } else if class_id_str == ROGUE_CLASS_ID {
         Some(ClassId::Rogue)
+    } else if class_id_str == RANGER_CLASS_ID {
+        Some(ClassId::Ranger)
     } else {
         None
     }
@@ -6838,14 +6853,19 @@ fn compute_generic_table_chassis(
 
 /// Whether `class_level` is a class this dispatch grounds a base-chassis
 /// computation for (a bespoke `compute_<class>_chassis` for Fighter/Wizard,
-/// or the generic table-driven path for every other class
-/// `class_tables()` covers), at a level within that class's own
-/// `class_tables()`-declared ceiling. Widened v0.6 alpha swarm task 4 from
-/// a Fighter/Wizard-only pair to every core class this table carries data
-/// for (Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger,
-/// Rogue, Sorcerer, Wizard) -- the only remaining bound is each class's own
-/// table-declared level ceiling (e.g. Druid 15, Monk 12), not an artificial
-/// two-class allowlist.
+/// or the generic table-driven path for every other class `table_class_id`
+/// recognizes), at a level within that class's own `class_tables()`-declared
+/// ceiling.
+///
+/// **Doc-accuracy correction (v0.6 alpha swarm, risks item 8, 2026-07-24)**:
+/// this comment previously claimed the widening covered "every core class"
+/// `class_tables()` carries data for (naming all 11). That was never true
+/// of the code -- this function has always bottomed out in
+/// `table_class_id`, which recognizes only the classes named on that
+/// function's own doc comment (Fighter, Wizard, Rogue, and now Ranger --
+/// see `table_class_id`'s doc comment for the real, current allowlist and
+/// why it isn't wider yet). Corrected here rather than left to mislead a
+/// future reader into believing multiclass already supports all 11.
 fn multiclass_class_level_supported(class_level: &CharacterClassLevel) -> bool {
     let Some(class_id) = table_class_id(&class_level.class_id) else {
         return false;
@@ -9180,7 +9200,45 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8 (2026-07-24): Ranger's partial-caster
+    // spell posture is unsupported regardless of whether Ranger appears
+    // alone or in a multiclass mix -- checked BEFORE the single-class-only
+    // gate below (`supported_ranger_level` requires an exact one-element
+    // `class_levels` slice) specifically so a Ranger+Fighter/Wizard/Rogue
+    // multiclass cannot silently bypass it. This matters because
+    // `table_class_id` recognizing Ranger (this same slice) makes
+    // `multiclass_class_level_supported`/`is_supported_multiclass_mix`
+    // newly accept a Ranger-containing mix too -- `compute_multiclass_base_chassis`
+    // deliberately discards each isolated per-class sub-computation's own
+    // diagnostics (see that function's own doc comment), so nothing else
+    // in the multiclass path would ever surface this burden. Mirrors
+    // Paladin's `class_spell.paladin.partial_caster.unsupported` shape
+    // exactly; verified this gap is real (not theoretical) by adversarial
+    // review before this fix landed.
+    if input
+        .chosen
+        .class_levels
+        .iter()
+        .any(|class_level| class_level.class_id == RANGER_CLASS_ID)
+    {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.ranger.partial_caster.unsupported".to_owned(),
+            message: "Ranger remains blocked on its divine, Wisdom-based partial-caster spell \
+                 burden: Ranger is a partial caster (spells begin at ranger level 4, with \
+                 effective caster level = ranger level - 3 in PF1 Core Rulebook), so the \
+                 spells known/prepared posture, bonus spell slots from Wisdom, and spell save \
+                 DCs are deferred to a later spellcasting slice (the effective-caster-level \
+                 gate, the spell-level access ladder, and the BASE spells-per-day table counts \
+                 are grounded separately as flat records for a single-class Ranger); no \
+                 partial-caster spell execution is fabricated in this bounded chassis baseline, \
+                 whether Ranger appears alone or in a multiclass mix"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+
     let Some(level) = supported_ranger_level(input) else {
         return;
     };
@@ -11176,11 +11234,10 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // doctrine, verified against the raw table rows of both primary
     // sources). Both records ground gate arithmetic and the access ladder
     // ONLY — no per-day counts, no prepared posture (Wisdom-based, from the
-    // ranger list), no bonus slots, and no spell save DCs — and NO new
-    // claim-blocking diagnostic is added: the ranger spell burden stays
-    // named by the accepted F6 level-1 hybrid spell blocker and the matrix
-    // row's note, and the computation stays claim-blocked overall via the
-    // generic chassis diagnostics.
+    // ranger list), no bonus slots, and no spell save DCs. The real
+    // claim-blocking diagnostic for this burden is pushed unconditionally
+    // near the top of this function (covering both single-class and
+    // multiclass Ranger) — see that diagnostic's own doc comment for why.
     let ranger_effective_caster_level = (level_value - 3).max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.partial_caster.effective_caster_level".to_owned(),
@@ -19508,5 +19565,126 @@ mod combat_posture_multiclass_tests {
             "the canonical bonus-feat selection must never be flagged, in a multiclass mix: \
              {unmet:?}"
         );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (2026-07-24): direct verification that
+/// widening `table_class_id` to recognize Ranger cannot produce a false
+/// `Computed` status, for either a single-class Ranger at any supported
+/// level or a Ranger-containing multiclass mix. Written after an
+/// adversarial scoping review found this was a real, not theoretical, risk:
+/// `table_class_id` recognizing Ranger also makes
+/// `multiclass_class_level_supported`/`is_supported_multiclass_mix` accept
+/// a Ranger+Fighter/Wizard/Rogue mix, and `compute_multiclass_base_chassis`
+/// deliberately discards each isolated per-class sub-computation's own
+/// diagnostics -- so without `explain_ranger_level1_chassis_and_class_feature_separation`'s
+/// own unconditional (not single-class-gated) spell-posture diagnostic,
+/// nothing else in the multiclass path would ever block a Ranger's
+/// genuinely-ungrounded spell posture.
+#[cfg(test)]
+mod ranger_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, RANGER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single-class Ranger at a representative mid-range level (5,
+    /// inside the partial-caster range where the false-positive risk was
+    /// found) must stay `Blocked`, carrying the real spell-posture
+    /// diagnostic this fix added -- pinned directly here (not relying
+    /// solely on the QA-owned `tests/**` files this widening also affects)
+    /// so a future change to those files can't silently drop this
+    /// coverage.
+    #[test]
+    fn single_class_ranger_level5_stays_blocked_with_the_real_spell_posture_diagnostic() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a single-class Ranger must not reach Computed while its spell posture is \
+             ungrounded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported" && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The real regression this fix closes: a Ranger+Fighter multiclass
+    /// mix must also stay `Blocked`, not silently reach `Computed` via the
+    /// isolated per-class sub-computation path that discards diagnostics.
+    #[test]
+    fn ranger_fighter_multiclass_stays_blocked_not_falsely_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Ranger+Fighter multiclass must not reach Computed while Ranger's spell posture \
+             is ungrounded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported" && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Same proof for Ranger+Wizard and Ranger+Rogue -- the risk is generic
+    /// to any multiclass partner `table_class_id` already recognized before
+    /// this slice, not specific to Fighter.
+    #[test]
+    fn ranger_wizard_and_ranger_rogue_multiclass_also_stay_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let base_input = result.character_input.expect("valid fixture");
+
+        for partner_class_id in [WIZARD_CLASS_ID, ROGUE_CLASS_ID] {
+            let mut input = base_input.clone();
+            input.chosen.class_levels = vec![
+                CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
+                CharacterClassLevel { class_id: partner_class_id.to_owned(), level: 1 },
+            ];
+
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "Ranger+{partner_class_id} multiclass must not reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
     }
 }

@@ -2591,11 +2591,24 @@ mod tests {
             ])
         );
 
+        // v0.6 alpha swarm, risks item 8 (2026-07-24): `table_class_id` now
+        // recognizes Ranger (`class-multiclass-breadth-scoping.md`'s
+        // recommended first slice), so Ranger no longer trips any of the 4
+        // generic chassis-wide diagnostics -- same shape as Wizard's own
+        // transition, below. A real, unconditional
+        // `class_spell.ranger.partial_caster.unsupported` diagnostic
+        // replaces the generic bucket's role in keeping this class honestly
+        // Blocked (found necessary by adversarial review: without it, a
+        // level-2+ Ranger or a Ranger-containing multiclass mix would have
+        // reached a false `Computed` status while its spell posture is
+        // genuinely not real -- see that diagnostic's own doc comment in
+        // `pilot_compute.rs`).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:ranger", 1),
-            generic_plus(&[
-                "class_feature.hybrid.ranger.unsupported",
-                "class_spell.hybrid.ranger.unsupported",
+            BTreeSet::from([
+                "class_feature.hybrid.ranger.unsupported".to_owned(),
+                "class_spell.hybrid.ranger.unsupported".to_owned(),
+                "class_spell.ranger.partial_caster.unsupported".to_owned(),
             ])
         );
 
