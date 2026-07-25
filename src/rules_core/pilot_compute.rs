@@ -194,7 +194,7 @@ pub struct ComputationDiagnostic {
     pub claim_blocking: bool,
 }
 
-const FIGHTER_CLASS_ID: &str = "class:fighter";
+pub(crate) const FIGHTER_CLASS_ID: &str = "class:fighter";
 
 // SD13-E3-F6 hybrid chassis baseline identities. Paladin and Ranger are hybrid
 // (martial + later spellcasting) classes; this slice recognizes only their bounded
@@ -2397,7 +2397,7 @@ const FASCINATE_DC_BASE: i16 = 10;
 // surfaces explicitly: the prepared posture (spellbook + spells prepared per day +
 // spell slots per day) and the school specialization (one school chosen, two
 // opposed schools locked, specialty school bonus at later levels).
-const WIZARD_CLASS_ID: &str = "class:wizard";
+pub(crate) const WIZARD_CLASS_ID: &str = "class:wizard";
 
 // SD13-E5 Wizard level-2/level-3/level-4/level-5/level-6 progression widening:
 // mirrors the Fighter `supported_fighter_level` / Paladin `supported_paladin_level` /
@@ -2753,7 +2753,7 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // replacement ability) — out of SD18's Core Rulebook scope, not modeled
 // here. This is the final level within PF1's 1-20 character-level cap for
 // this class row.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 20;
+pub(crate) const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 20;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -4206,14 +4206,14 @@ const HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1: u8 = 4;
 const HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL: u8 = 1;
 
 // Grounded deterministic combat-baseline contributors and posture identities.
-const LONGSWORD_ITEM_ID: &str = "item:longsword";
+pub(crate) const LONGSWORD_ITEM_ID: &str = "item:longsword";
 const CHAIN_SHIRT_ITEM_ID: &str = "item:chain_shirt";
 const SHIELD_ITEM_ID: &str = "item:shield";
-const POWER_ATTACK_ITEM_ID: &str = "power_attack";
-const DODGE_FEAT_ID: &str = "feat:dodge";
-const WEAPON_FOCUS_FEAT_ID: &str = "feat:weapon_focus";
-const FIGHTER_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat";
-const WEAPON_FOCUS_LONGSWORD_SELECTION: &str = "feat:weapon_focus:weapon:longsword";
+pub(crate) const POWER_ATTACK_ITEM_ID: &str = "power_attack";
+pub(crate) const DODGE_FEAT_ID: &str = "feat:dodge";
+pub(crate) const WEAPON_FOCUS_FEAT_ID: &str = "feat:weapon_focus";
+pub(crate) const FIGHTER_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat";
+pub(crate) const WEAPON_FOCUS_LONGSWORD_SELECTION: &str = "feat:weapon_focus:weapon:longsword";
 
 // SD13-E5-F9 canonical Human Fighter feat-choice seam. These name the exact accepted
 // deterministic feat-choice selections on the level-1/2/3 seam. This slice preserves
@@ -4227,11 +4227,11 @@ const TOUGHNESS_FEAT_SELECTION: &str = "feat:toughness";
 //   cr_equip_arms_armor.lst:40  Chain Shirt -> BONUS:COMBAT|AC|4|TYPE=Armor, MAXDEX:4
 //   cr_feats.lst:53             Dodge       -> BONUS:COMBAT|AC|1|TYPE=Dodge
 //   cr_feats.lst:184            Weapon Focus-> +1 to-hit with the selected weapon
-const ARMOR_CLASS_BASE: i16 = 10;
+pub(crate) const ARMOR_CLASS_BASE: i16 = 10;
 const CHAIN_SHIRT_ARMOR_BONUS: i16 = 4;
 const CHAIN_SHIRT_MAX_DEX: i16 = 4;
-const DODGE_AC_BONUS: i16 = 1;
-const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
+pub(crate) const DODGE_AC_BONUS: i16 = 1;
+pub(crate) const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 
 // Grounded selected-skill contributors (source evidence only; not oracle-checked):
 //   cr_skills.lst:10   Climb      -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Climb|3|TYPE=ClassSkill
@@ -4239,11 +4239,11 @@ const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 //   cr_skills.lst:102  Swim       -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Swim|3|TYPE=ClassSkill
 //   cr_abilities_class.lst:2835   Fighter class skills include Climb, Intimidate, Swim
 //   cr_equip_arms_armor.lst:40    Chain Shirt -> ACCHECK:-2
-const CLIMB_SKILL_ID: &str = "skill:climb";
-const INTIMIDATE_SKILL_ID: &str = "skill:intimidate";
-const SWIM_SKILL_ID: &str = "skill:swim";
-const SELECTED_SKILL_RANK: u8 = 1;
-const CLASS_SKILL_BONUS: i16 = 3;
+pub(crate) const CLIMB_SKILL_ID: &str = "skill:climb";
+pub(crate) const INTIMIDATE_SKILL_ID: &str = "skill:intimidate";
+pub(crate) const SWIM_SKILL_ID: &str = "skill:swim";
+pub(crate) const SELECTED_SKILL_RANK: u8 = 1;
+pub(crate) const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3/SD13-E5 Fighter milestone widening. The accepted level-1 pilot
@@ -4300,7 +4300,7 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // (levels 4 and 8) need no separate seam: the chosen ability score is
 // trusted at face value, like every other ability adjustment in this
 // codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 20;
+pub(crate) const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 20;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -6398,7 +6398,7 @@ fn explain_human_trait_bundle(
 }
 
 /// Return the selection id chosen for the named choice set, if present.
-fn choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
+pub(crate) fn choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
     input
         .chosen
         .selected_choices
@@ -6439,7 +6439,7 @@ fn ability_modifier_for(modifiers: &AbilityModifiers, ability: &str) -> i16 {
 /// one of the supported milestone levels (1, 2, or 3). Returns `None` for no
 /// Fighter, a non-Fighter class, a multiclass mix, or a level-4+ Fighter this slice
 /// does not yet ground — each of which stays claim-blocked as before.
-fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
+pub(crate) fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == FIGHTER_CLASS_ID
@@ -6456,17 +6456,17 @@ fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
 /// 11, and armor training 4 at level 15 (SD18 widening); before level 3 there
 /// is no armor-training effect.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct FighterArmorTraining {
+pub(crate) struct FighterArmorTraining {
     /// Armor-training rank (0 before level 3, 1 from level 3, 2 from level 7,
     /// 3 from level 11, 4 from level 15).
-    rank: u8,
+    pub(crate) rank: u8,
     /// Reduction applied to the worn armor's armor-check penalty (moves it toward 0).
-    armor_check_reduction: i16,
+    pub(crate) armor_check_reduction: i16,
     /// Increase applied to the worn armor's maximum Dexterity bonus.
-    max_dex_increase: i16,
+    pub(crate) max_dex_increase: i16,
 }
 
-fn fighter_armor_training(level: u8) -> FighterArmorTraining {
+pub(crate) fn fighter_armor_training(level: u8) -> FighterArmorTraining {
     if level >= FIGHTER_ARMOR_TRAINING_4_LEVEL {
         FighterArmorTraining {
             rank: 4,
@@ -6526,7 +6526,7 @@ fn fighter_weapon_training_rank(level: u8) -> i16 {
 /// (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately claim-blocks a
 /// present-but-non-canonical selection, so this function only needs to
 /// distinguish "canonical" from "absent or anything else."
-fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
+pub(crate) fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
     if choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID)
         == Some(HEAVY_BLADES_GROUP_SELECTION)
     {
@@ -6631,7 +6631,7 @@ fn compute_fighter_chassis(
 /// `compute_generic_table_chassis` path) still independently checks its own
 /// level range and pushes `class_chassis.unsupported` itself when out of
 /// range, so this dispatch only needs to route by `class_id` / mix shape.
-fn has_supported_class_chassis(input: &CharacterInput) -> bool {
+pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
     supported_fighter_level(input).is_some()
         || supported_wizard_level(input).is_some()
         || is_supported_multiclass_mix(input)
@@ -6663,7 +6663,7 @@ fn is_supported_generic_single_class(input: &CharacterInput) -> bool {
 /// 4), a hardcoded "Fighter" became misleading for any other class even
 /// though the underlying numeric values were always correct (v0.6 alpha
 /// swarm fix, flagged by QA).
-fn class_summary_label(input: &CharacterInput) -> String {
+pub(crate) fn class_summary_label(input: &CharacterInput) -> String {
     input
         .chosen
         .class_levels
@@ -7154,7 +7154,7 @@ fn compute_wizard_chassis(
 /// chassis becoming genuinely supported -- and returns `None` when Fighter is
 /// absent from the mix entirely, so introducing another class never makes
 /// Fighter's features appear for a build that isn't actually part-Fighter.
-fn fighter_level_in_mix(input: &CharacterInput) -> Option<u8> {
+pub(crate) fn fighter_level_in_mix(input: &CharacterInput) -> Option<u8> {
     if let Some(level) = supported_fighter_level(input) {
         return Some(level);
     }
@@ -18082,7 +18082,7 @@ fn compute_total_saves(
 /// skills and exactly these three classes -- not a general "all class
 /// skills match across the board" assumption to rely on if either set ever
 /// widens.
-fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
+pub(crate) fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == ROGUE_CLASS_ID
     })
@@ -18231,7 +18231,7 @@ fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String
 
 /// Record an unmet condition unless the named skill is allocated exactly the
 /// supported deterministic rank.
-fn require_selected_skill_rank(
+pub(crate) fn require_selected_skill_rank(
     allocations: &[SkillAllocation],
     skill_id: &str,
     unmet: &mut Vec<String>,
@@ -18407,7 +18407,7 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
 }
 
 /// Record an unmet condition unless the named item has exactly `expected` state.
-fn require_active_state(
+pub(crate) fn require_active_state(
     input: &CharacterInput,
     item_id: &str,
     expected: ActiveState,
