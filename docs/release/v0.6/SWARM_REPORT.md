@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Barbarian milestone verified, committing soon; proactively re-fixed ge06_* a 3rd time (Monk swap, uncommitted) after Barbarian's own widening broke it again; moving to Inspire Courage next |
+| backend | working | fixing a real bug QA found in level_up/druid.rs (spell-math grants silently dropped from LevelUpPlan); Barbarian + ge06/durability Monk-swap fixes lead-verified and landed |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
-| qa | working | Sorcerer (76fe82da) + Cleric (c578ede6) batches both landed and lead-verified 100%; moving to Druid's 17-file batch next, Barbarian's 20-file wave queued behind it |
+| qa | working | Sorcerer/Cleric/Druid batches (76fe82da, c578ede6, 5eae17d7) all landed and lead-verified 100%; holding 1 Druid file pending backend's real-bug fix; Barbarian's 20-file wave queued next |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
