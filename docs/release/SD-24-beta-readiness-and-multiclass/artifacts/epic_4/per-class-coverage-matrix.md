@@ -32,7 +32,7 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 | Class | Book | Chassis rows wired / expected | Named class features wired / expected | `pilot_compute.rs` integrated | `level_up::<class>` module exists | Gap priority |
 |---|---|---|---|---|---|---|
 | Alchemist | APG | 20 / 20 | 0 / 24 | No | No | P1 |
-| Cavalier | APG | 20 / 20 | 0 / 16 | No | No | P1 |
+| Cavalier | APG | 20 / 20 | 1 / 16 | Yes | No | P1 |
 | Inquisitor | APG | 20 / 20 | 0 / 19 | No | No | P1 |
 | Oracle | APG | 20 / 20 | 0 / 19 | No | No | P1 |
 | Summoner | APG | 20 / 20 | 0 / 17 | No | No | P1 |
@@ -46,6 +46,8 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 4. **No `level_up::<class>` module exists for any APG class.** `src/rules_core/level_up/` (the SD-20 Epic 7 per-level automatic-feature-grant model) contains only the 11 CRB classes (`barbarian.rs` … `wizard.rs`). No APG (or ACG) class has one.
 
 **Conclusion feeding criterion 4.5:** APG classes are *not* fully wired (chassis-only; zero named features; zero live-compute integration; zero level-up grant modules). This is the exact condition `loop-instruction.md §4.2`'s hard-stop row anticipates ("Epic 4 finds APG/ACG classes are *not* fully wired → Multiclass Epic 5 scope is restricted to Fighter + Wizard only … defer APG/ACG-class multiclass to a follow-on bundle"). No blocker is raised here — this is the expected, already-decided outcome; criterion 4.5 records the deferral formally.
+
+**Update (v0.6 alpha swarm, risks item 8, Cavalier Mount closure, first APG class-specific closure, 2026-07-25):** this audit's own findings no longer hold unconditionally for Cavalier specifically — its row above is updated accordingly (1 named feature wired, `pilot_compute_integrated: Yes`). Cavalier's 1st-level Mount is now genuinely wired via `is_supported_cavalier_single_class`, the first widening of `has_supported_class_chassis` to any APG class, reusing the same exact-match gate-widening pattern already proven 4 times for ACG (Skald/Bloodrager/Brawler/Hunter). Cavalier still does not reach `Computed` (its other named features remain deferred) and is still not multiclass-eligible (`ApgClassId::from_class_id_str` remains deliberately unregistered with `multiclass_class_level_supported`), so criterion 4.5's Epic 5 multiclass-deferral conclusion is unaffected. Every other APG class's row is unchanged. See `./apg_cavalier_coverage.md`'s own update note for the full record.
 
 **Per-class detail:** `./apg_alchemist_coverage.md`, `./apg_cavalier_coverage.md`, `./apg_inquisitor_coverage.md`, `./apg_oracle_coverage.md`, `./apg_summoner_coverage.md`, `./apg_witch_coverage.md` (per `content-unit-inventory.md` §3.1's cycle-artifact-path column).
 

@@ -1785,6 +1785,20 @@ const BRAWLER_CLASS_ID: &str = "class:brawler";
 /// asked the character to pick a species either).
 const HUNTER_CLASS_ID: &str = "class:hunter";
 
+/// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
+/// class-specific closure): APG Cavalier's 1st-level Mount is, per the
+/// PF1 Core Rulebook, "the same mechanic as a druid's animal companion,
+/// using the cavalier's level as his effective druid level" -- verified
+/// directly against `apg_abilities_class.lst`. Unconditional on class
+/// ownership and level alone (no choice/activation gating needed,
+/// mirroring Hunter's own Animal Companion shape), Horse assumed as the
+/// canonical species for this codebase's Medium-only Human fixture. This
+/// is the FIRST widening of `has_supported_class_chassis` to any APG
+/// class -- `ApgClassId::from_class_id_str` mirrors `AcgClassId`'s own
+/// structure exactly, so the same exact-match gate-widening discipline
+/// applies unchanged.
+const CAVALIER_CLASS_ID: &str = "class:cavalier";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -4368,6 +4382,33 @@ const WOLF_COMPANION_CONSTITUTION_SCORE: i16 = 15;
 const WOLF_COMPANION_NATURAL_ARMOR: i16 = 2;
 const WOLF_COMPANION_HIT_DIE_SIZE: u8 = 8;
 
+/// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
+/// class-specific closure): Horse's real PF1 Core Rulebook base
+/// statistics, verified against two independent primary sources --
+/// aonprd.com's own Horse companion page and d20pfsrd's Animal
+/// Companions page -- plus the PCGen corpus (`cr_races_companion.lst`,
+/// `bestiary/b1_races.lst`) as tiebreaker, mirroring the exact Wolf
+/// natural-armor/Trip resolution methodology. Ability scores agree
+/// completely across both sources (Str 16, Dex 13, Con 15, Int 2, Wis
+/// 12, Cha 6). Natural armor disagreed (aonprd +4, d20pfsrd +1) --
+/// resolved in favor of aonprd, backed directly by the PCGen corpus's
+/// own `BONUS:VAR|AC_Natural_Armor|4|TYPE=Base`
+/// (`cr_races_companion.lst:21`). Speed also disagreed (aonprd 50 ft.,
+/// d20pfsrd 60 ft.) -- resolved in favor of aonprd, backed by the
+/// corpus's own base Horse race `MOVE:Walk,50` (`bestiary/b1_races.lst:235`);
+/// speed itself is not grounded anywhere in this codebase (no movement/
+/// mobility pillar exists), named here only for the verification record.
+/// Horse is the Cavalier's Mount for a Medium cavalier (this codebase's
+/// only race), per "A Medium cavalier can select a camel or a horse" --
+/// Horse chosen as the canonical species over Camel, the same
+/// "smallest defensible single case" discipline as every other class's
+/// own fixed canonical choice (Wolf for Druid/Hunter, Longsword for
+/// Barbarian, etc.).
+const HORSE_COMPANION_STRENGTH_SCORE: i16 = 16;
+const HORSE_COMPANION_CONSTITUTION_SCORE: i16 = 15;
+const HORSE_COMPANION_NATURAL_ARMOR: i16 = 4;
+const HORSE_COMPANION_HIT_DIE_SIZE: u8 = 8;
+
 /// PF1 Core Rulebook Animal Companion Base Statistics table (verified
 /// against d20pfsrd, and independently confirmed by reading the actual
 /// PCGen `CLASS:Companion` formulas directly: `BASEAB = classlevel*3/4`,
@@ -4563,6 +4604,201 @@ fn ground_wolf_companion_link_and_share_spells_vacuous(
              retargeting one is never triggerable here regardless of build (the same structural \
              gap that made Sorcerer's Arcane Bond spell-casting benefit provably vacuous). This \
              record documents that correction only; it carries no mechanical value (+0)"
+        ),
+    });
+}
+
+/// Horse companion's Hit Dice at `companion_level` (v0.6 alpha swarm,
+/// risks item 8, Cavalier Mount closure) -- a parallel, deliberately NOT
+/// shared copy of `wolf_companion_hit_dice`'s own identical logic (the
+/// PF1 Core Rulebook "Animal Companion Base Statistics" HD progression is
+/// universal to every companion species), kept separate rather than
+/// reusing the Wolf-named function directly so neither this function's
+/// name nor its own future evolution ever risks touching Druid's/
+/// Hunter's already-shipped Wolf call sites.
+fn horse_companion_hit_dice(companion_level: u8) -> u8 {
+    debug_assert_eq!(companion_level, 1, "only companion level 1 is grounded this slice");
+    2
+}
+
+/// Grounds the Horse companion's standalone stat block as explanation
+/// records under `id_prefix` (v0.6 alpha swarm, risks item 8, Cavalier
+/// Mount closure, first APG class-specific closure) -- a parallel,
+/// deliberately NOT genericized copy of `ground_wolf_companion_stat_block`'s
+/// own structure, using Horse's own verified constants instead of Wolf's.
+/// Kept as a separate function (per the lead's own review) rather than
+/// genericizing the shared Wolf function, so this closure carries zero
+/// risk to Druid's/Hunter's already-shipped, already-tested Wolf output.
+fn ground_horse_companion_stat_block(
+    id_prefix: &str,
+    owner_class_label: &str,
+    companion_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let companion_hd = horse_companion_hit_dice(companion_level);
+    let companion_hd_value = i16::from(companion_hd);
+    let companion_base_attack_bonus = companion_hd_value * 3 / 4;
+    let companion_fort_ref_save = companion_hd_value / 2 + 2;
+    let companion_will_save = companion_hd_value / 3;
+    let strength_modifier = ability_modifier(HORSE_COMPANION_STRENGTH_SCORE);
+    let constitution_modifier = ability_modifier(HORSE_COMPANION_CONSTITUTION_SCORE);
+    let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
+    // Primary natural attack: 1.5x Strength modifier, floored (PF1 Core
+    // Rulebook natural-attack damage rule), added to the base 1d6 hoof
+    // die (the die itself is not a flat number and is named, not
+    // rolled). Hooves, not bite, are grounded as the primary attack: the
+    // PCGen corpus's own base (non-companion) Horse race entry
+    // (bestiary/b1_races.lst:235) has ONLY a hoof natural attack, no
+    // bite at all, confirming hooves are the Horse's fundamental attack
+    // -- the companion-specific bite (1d4, per aonprd.com) is a
+    // secondary attack layered on top, not separately grounded this
+    // slice (mirrors the Wolf record's own single-attack-only scope; no
+    // primary/secondary natural-attack Strength-multiplier distinction
+    // is modeled anywhere in this codebase).
+    let companion_hoof_damage_bonus = (strength_modifier * 3) / 2;
+    let companion_max_first_hit_die = i16::from(HORSE_COMPANION_HIT_DIE_SIZE);
+    let companion_average_second_hit_die =
+        crate::rules_core::durability::average_hit_die_value(HORSE_COMPANION_HIT_DIE_SIZE);
+    let companion_hp = (companion_max_first_hit_die + constitution_modifier)
+        + (companion_average_second_hit_die + constitution_modifier);
+
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.horse_stat_block"),
+        value: 0,
+        detail: format!(
+            "{owner_class_label} level {companion_level} Mount, Horse (the canonical PF1 Core \
+             Rulebook Medium-cavalier companion species this bounded seam grounds; Camel is the \
+             other Medium option but is not built this slice -- no species-selection input is \
+             modeled for either, mirroring Wolf's own \"assumed, not chosen\" precedent): a \
+             wholly separate creature with its own combat statistics -- none of the values \
+             below are ever applied to the {owner_class_label}'s own integrated totals. Base \
+             ability scores (verified against aonprd.com's own Horse companion page and \
+             d20pfsrd's Animal Companions page, both agreeing completely; the PCGen corpus \
+             cr_races_companion.lst backs the natural-armor/speed values below): Str \
+             {HORSE_COMPANION_STRENGTH_SCORE}, Con {HORSE_COMPANION_CONSTITUTION_SCORE}. This is \
+             a bounded recognition record only (+0); the companion's own flat stat values are \
+             grounded separately as standalone explanation records below"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_attack_bonus"),
+        value: companion_attack_bonus,
+        detail: format!(
+            "Horse companion base attack bonus at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
+             {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, Str \
+             {HORSE_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone record; \
+             the companion is a separate creature, not integrated into the \
+             {owner_class_label}'s own combat totals"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.fortitude"),
+        value: companion_fort_ref_save,
+        detail: format!(
+            "Horse companion base Fortitude save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+             {companion_fort_ref_save}). Standalone record; not the {owner_class_label}'s own \
+             save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.reflex"),
+        value: companion_fort_ref_save,
+        detail: format!(
+            "Horse companion base Reflex save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+             {companion_fort_ref_save}). Standalone record; not the {owner_class_label}'s own \
+             save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.will"),
+        value: companion_will_save,
+        detail: format!(
+            "Horse companion base Will save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/3 = {companion_will_save}). \
+             Standalone record; not the {owner_class_label}'s own save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.armor_class"),
+        value: 10 + HORSE_COMPANION_NATURAL_ARMOR,
+        detail: format!(
+            "Horse companion armor class: base 10 + natural armor \
+             (+{HORSE_COMPANION_NATURAL_ARMOR}) = {}. Verified against aonprd.com's own Horse \
+             companion page, backed directly by the PCGen corpus's \
+             BONUS:VAR|AC_Natural_Armor|4|TYPE=Base (cr_races_companion.lst:21) -- d20pfsrd's \
+             own +1 figure disagreed and was rejected as the uncorroborated minority reading, \
+             the same resolution methodology as Wolf's own natural-armor question. Standalone \
+             record; Dexterity's own contribution to the companion's AC is not grounded this \
+             slice",
+            10 + HORSE_COMPANION_NATURAL_ARMOR
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.hoof_attack"),
+        value: companion_hoof_damage_bonus,
+        detail: format!(
+            "Horse companion hoof attack: 1d6 (a real die, named not rolled) + \
+             {companion_hoof_damage_bonus:+} (1.5x Strength modifier ({strength_modifier:+}), \
+             floored, PF1 Core Rulebook's primary-natural-attack damage rule). Hooves are \
+             grounded as the primary natural attack, not the companion's own secondary bite \
+             (1d4, per aonprd.com) -- the PCGen corpus's base, non-companion Horse race entry \
+             (bestiary/b1_races.lst:235) has only a hoof attack, no bite at all, confirming \
+             hooves as the Horse's fundamental natural weapon. No attack-roll or damage-roll \
+             resolution engine exists in this codebase, so this grounds the flat damage bonus \
+             only, not an actual attack or damage outcome, and no primary/secondary natural-\
+             attack Strength-multiplier distinction is modeled (mirroring the Wolf record's own \
+             single-attack-only scope)"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.hit_points"),
+        value: companion_hp,
+        detail: format!(
+            "Horse companion hit points at {companion_hd} HD (d{HORSE_COMPANION_HIT_DIE_SIZE}): \
+             maximized first Hit Die plus average for the second (this codebase's own \
+             established HP idiom, durability.rs's compute_max_hp), each plus the companion's \
+             Constitution modifier ({constitution_modifier:+}, Con \
+             {HORSE_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
+        ),
+    });
+}
+
+/// Grounds the Horse companion's Link ability as a vacuous-correction
+/// record (v0.6 alpha swarm, risks item 8, Cavalier Mount closure) --
+/// mirrors `ground_wolf_companion_link_and_share_spells_vacuous`'s own
+/// Link reasoning exactly (this codebase computes no Handle Animal
+/// check, so Link's skill-check exemption can never matter here).
+/// Deliberately does NOT ground a Share-Spells vacuous-correction record
+/// at all: the PF1 Core Rulebook explicitly states "a cavalier's mount
+/// does not gain the share spells special ability" -- the Mount never
+/// has this ability in the first place, so grounding a "correction" for
+/// an ability it doesn't even possess would misrepresent what's being
+/// corrected, unlike Wolf's Share Spells (which Druids/Hunters' own
+/// companions DO have, just provably vacuous under this codebase's
+/// model).
+fn ground_horse_companion_link_vacuous(
+    id_prefix: &str,
+    owner_class_label: &str,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.link_vacuous"),
+        value: 0,
+        detail: format!(
+            "Horse Mount's Link ability (PF1 Core Rulebook: \"A {owner_class_label} can handle \
+             her animal companion as a free action, or push it as a move action, even if she \
+             doesn't have any ranks in the Handle Animal skill\") is vacuous under this bounded \
+             seam: this codebase computes exactly three selected skills (Climb, Intimidate, \
+             Swim), never Handle Animal, so the skill-check exemption Link grants can never \
+             matter here regardless of build. This record documents that correction only; it \
+             carries no mechanical value (+0). Unlike Druid's/Hunter's own companion, a \
+             cavalier's Mount does not gain the Share Spells special ability at all (per the \
+             PF1 Core Rulebook's own Mount description), so no Share-Spells vacuous-correction \
+             record is grounded here -- there is nothing to correct for an ability the Mount \
+             never has"
         ),
     });
 }
@@ -7132,6 +7368,23 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_bloodrager_single_class(input)
         || is_supported_brawler_single_class(input)
         || is_supported_hunter_single_class(input)
+        || is_supported_cavalier_single_class(input)
+}
+
+/// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
+/// `input` is a single-class Cavalier at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Cavalier -- the
+/// FIRST widening of this gate to any APG class, mirroring the four ACG
+/// exact-match gates exactly (`== Some(ApgClassId::Cavalier)`, not a
+/// broad `.is_some()` that would admit any of the 6 APG classes).
+fn is_supported_cavalier_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Cavalier) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Cavalier, class_level.level, RuleSetId::Apg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
@@ -7523,22 +7776,105 @@ fn compute_apg_class_chassis(
         ),
     });
 
-    // The real, unconditional blocker: nothing beyond BAB/save/HP is
-    // grounded for any APG class yet -- no class-skill list, no named
-    // class features, no spellcasting (even for the 5 of 6 that cast).
+    // v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
+    // class-specific closure, adversarially spot-checked 2026-07-25):
+    // Cavalier is the one APG class with a genuinely real class feature
+    // now (the Mount, unconditional on class ownership and level alone --
+    // see `ground_cavalier_mount_and_defer_the_rest`'s own doc comment
+    // for why no `selected_choices`/`class_ability_activations` gating is
+    // needed, mirroring Hunter's own Animal Companion shape more closely
+    // than Druid's choice-gated one). The other 5 APG classes keep the
+    // exact original unconditional diagnostic unchanged. This branch is
+    // reached only for single-class Cavalier (this function is only ever
+    // called from `compute_class_chassis`'s single-class-only section;
+    // `ApgClassId::from_class_id_str` is deliberately not registered with
+    // `multiclass_class_level_supported`, so a Cavalier-containing
+    // multiclass mix never reaches this function at all).
+    if class_id == ApgClassId::Cavalier {
+        ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
+    } else {
+        // The real, unconditional blocker: nothing beyond BAB/save/HP is
+        // grounded for any other APG class yet -- no class-skill list, no
+        // named class features, no spellcasting (even for the casters
+        // among the 5 remaining).
+        diagnostics.push(ComputationDiagnostic {
+            id: format!("class_feature.apg.{}.unsupported", class_id.name()),
+            message: format!(
+                "{class_id_str} remains blocked beyond its base-attack-bonus/base-save chassis \
+                 pillar: this APG class has no class-skill list, no named class-feature \
+                 computation, and no spellcasting posture grounded anywhere in this codebase yet \
+                 (only the BAB/save table and hit die are transcribed); no class-feature or spell \
+                 execution is fabricated in this bounded chassis baseline"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    Some((base_attack_bonus, base_saves))
+}
+
+/// Grounds Cavalier's 1st-level Mount (v0.6 alpha swarm, risks item 8,
+/// Cavalier Mount closure, first APG class-specific closure) by reusing
+/// the "Animal Companion Base Statistics" shared progression math via
+/// the new parallel Horse-specific helpers -- the PF1 Core Rulebook
+/// confirms this is the same mechanic as Druid's/Hunter's own companion
+/// ("This mount functions as a druid's animal companion, using the
+/// cavalier's level as his effective druid level"), just a different
+/// species. Called from `compute_apg_class_chassis`'s Cavalier branch,
+/// unconditional on Cavalier class ownership and level alone: unlike
+/// Druid's own choice-gated Nature Bond, every Cavalier gets a Mount
+/// automatically at 1st level (the corpus states this as fact, never as
+/// one of several options), the same "always on, no gate" shape Hunter's
+/// own Animal Companion already established. Horse is assumed as the
+/// canonical species for a Medium cavalier (this codebase's only race;
+/// Camel is the other option, not built this slice; Small-cavalier
+/// Pony/Wolf options don't apply to a Human fixture) -- no species-
+/// selection input is modeled for any companion-granting class in this
+/// codebase, mirroring Wolf's own precedent exactly.
+///
+/// Cavalier has no `SPELLSTAT` at all (confirmed directly against
+/// `apg_classes.lst:42`) -- a pure martial class like Brawler, so the
+/// permanent remaining bucket here is Cavalier's OTHER named features
+/// (Challenge, Order, Tactician, Cavalier's Charge, and the rest), not
+/// deferred spell math -- stays claim-blocked via the new, narrower
+/// `class_feature.apg.cavalier.other_features_deferred.unsupported`
+/// diagnostic, replacing the generic `class_feature.apg.cavalier
+/// .unsupported` diagnostic for Cavalier specifically, mirroring
+/// Brawler's own diagnostic-honesty fix exactly.
+fn ground_cavalier_mount_and_defer_the_rest(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    ground_horse_companion_stat_block(
+        "class_chassis.cavalier.mount",
+        "Cavalier",
+        level,
+        explanations,
+    );
+    ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
     diagnostics.push(ComputationDiagnostic {
-        id: format!("class_feature.apg.{}.unsupported", class_id.name()),
+        id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
+        message: "Cavalier Mount advancement past companion level 1 (2 HD) is not grounded: \
+                   this bounded seam only computes Cavalier level 1, the companion's only \
+                   verified level, mirroring Druid's/Hunter's own identical advancement gap. \
+                   Light Armor Proficiency and \"combat trained\"/no-armor-check-penalty-on-\
+                   Ride grants are also not grounded: this codebase computes no Ride check and \
+                   no armor-proficiency-gated-benefit engine at all"
+            .to_owned(),
+        claim_blocking: false,
+    });
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{class_id_str} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar: this APG class has no class-skill list, no named class-feature \
-             computation, and no spellcasting posture grounded anywhere in this codebase yet \
-             (only the BAB/save table and hit die are transcribed); no class-feature or spell \
-             execution is fabricated in this bounded chassis baseline"
+            "{CAVALIER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and the Mount: this APG class has no class-skill list and no other named \
+             class-feature computation (Challenge, Order, Tactician, Cavalier's Charge, and the \
+             rest) grounded anywhere in this codebase yet; no class-feature execution is \
+             fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
-
-    Some((base_attack_bonus, base_saves))
 }
 
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
@@ -24420,12 +24756,26 @@ mod apg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// APG class stays honestly `Blocked` -- BAB/save/HP are real, but the
-    /// class-skill/feature/spellcasting bucket is genuinely ungrounded, so
-    /// this must never silently read as `Computed`.
+    /// APG class OTHER THAN Cavalier stays honestly `Blocked` with the
+    /// original, unmodified generic diagnostic -- BAB/save/HP are real,
+    /// but the class-skill/feature/spellcasting bucket is genuinely
+    /// ungrounded, so this must never silently read as `Computed`.
+    ///
+    /// Cavalier is carved out of this loop (v0.6 alpha swarm, risks item
+    /// 8, Cavalier Mount closure, first APG class-specific closure): its
+    /// own generic `class_feature.apg.cavalier.unsupported` diagnostic
+    /// was retired and replaced with the narrower
+    /// `other_features_deferred` diagnostic, since the Mount is now
+    /// genuinely grounded -- see
+    /// `cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// below for Cavalier's own dedicated coverage.
     #[test]
     fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
+            if class_id == "class:cavalier" {
+                continue;
+            }
+
             let input = ranger_style_input(class_id, 1);
             let receipt = build_pilot_headless_receipt(&input);
 
@@ -24446,6 +24796,122 @@ mod apg_class_chassis_dispatch_tests {
                     .any(|d| d.id == expected_diagnostic_id && d.claim_blocking),
                 "expected {expected_diagnostic_id}: {:?}",
                 receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Cavalier-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap: the OLD generic `class_feature.apg.cavalier.unsupported`
+    /// diagnostic must never appear for Cavalier, while the NEW, narrower
+    /// `class_feature.apg.cavalier.other_features_deferred.unsupported`
+    /// diagnostic always does -- Cavalier stays `Blocked` on its other
+    /// named features alone, even though the Mount itself is now
+    /// genuinely grounded. Also verifies the reused Horse companion stat
+    /// block is grounded under Cavalier's own id prefix, with the real
+    /// verified values (Str 16 -> +3 modifier; +4 natural armor -> AC 14).
+    #[test]
+    fn cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = ranger_style_input("class:cavalier", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Cavalier must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.unsupported"),
+            "the retired generic diagnostic must never appear for Cavalier: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let armor_class = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.cavalier.mount.armor_class")
+            .expect("Cavalier's own reused Horse companion stat block must be grounded");
+        assert_eq!(
+            armor_class.value, 14,
+            "Horse companion AC: base 10 + natural armor +4 = 14: {:?}",
+            armor_class
+        );
+    }
+
+    /// The critical negative-leak test, mirroring the ACG-side one
+    /// exactly: the OTHER 5 APG classes must produce ZERO
+    /// `defense.total_save.*`/`combat.baseline_*`/
+    /// `skill.selected_modifier.*` explanations at level 1, even under
+    /// the exact same satisfying posture that genuinely admits Cavalier
+    /// -- proving `is_supported_cavalier_single_class` is a real exact
+    /// match, not a broad `.is_some()` check that would silently admit
+    /// all 6 APG classes into real pillar computation.
+    #[test]
+    fn the_other_five_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+        for (class_id, ..) in EXPECTED_LEVEL_1 {
+            if class_id == "class:cavalier" {
+                continue;
+            }
+
+            let input = ranger_style_input(class_id, 1);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let leaked: Vec<&str> = receipt
+                .computation
+                .explanations
+                .iter()
+                .map(|e| e.id.as_str())
+                .filter(|id| {
+                    id.starts_with("defense.total_save.")
+                        || id.starts_with("defense.baseline_")
+                        || id.starts_with("combat.baseline_")
+                        || id.starts_with("skill.selected_modifier.")
+                })
+                .collect();
+            assert!(
+                leaked.is_empty(),
+                "{class_id} must produce zero total-save/combat-baseline/selected-skill \
+                 explanations (the chassis-integration gate must not silently admit it): {leaked:?}"
+            );
+        }
+    }
+
+    /// Cavalier's own positive counterpart: the SAME satisfying posture
+    /// DOES produce real total-save/combat-baseline/selected-skill
+    /// explanations for Cavalier specifically, proving the new gate
+    /// genuinely admits it (not merely failing to admit the other 5 by
+    /// accident) -- the first-ever proof this gate admits any APG class.
+    #[test]
+    fn cavalier_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = ranger_style_input("class:cavalier", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Cavalier: {:?}",
+                receipt.computation.explanations
             );
         }
     }

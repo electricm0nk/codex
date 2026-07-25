@@ -52,9 +52,20 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// wiring named features, it must consciously update this assertion (and
 /// the coverage-matrix artifact) rather than silently leaving the audit
 /// stale.
+///
+/// **Updated (v0.6 alpha swarm, risks item 8, Cavalier Mount closure,
+/// 2026-07-25):** exactly this canary fired -- Cavalier's Mount is now
+/// genuinely wired, the first named APG class feature this repo
+/// computes. Cavalier is carved out of the "stays 0" loop below and
+/// given its own dedicated assertion (`named_features_wired == 1`), per
+/// this test's own documented update instruction. Every other APG class
+/// remains at 0, unchanged.
 #[test]
-fn zero_named_class_features_are_wired_for_any_apg_class_yet() {
+fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount() {
     for row in coverage_report() {
+        if row.class_id == ApgClassId::Cavalier {
+            continue;
+        }
         assert_eq!(
             row.named_features_wired, 0,
             "{:?}: named_features_wired should be 0 (documented SD-24 Epic 4 finding); \
@@ -68,6 +79,19 @@ fn zero_named_class_features_are_wired_for_any_apg_class_yet() {
             row.class_id
         );
     }
+
+    let cavalier_row = class_coverage(ApgClassId::Cavalier);
+    assert_eq!(
+        cavalier_row.named_features_wired, 1,
+        "Cavalier's Mount is now genuinely wired -- update this assertion (and the \
+         coverage-matrix artifact) if this count changes again"
+    );
+    assert!(
+        cavalier_row.named_features_expected > cavalier_row.named_features_wired,
+        "Cavalier: named_features_expected should still exceed named_features_wired (Challenge/\
+         Order/Tactician/Cavalier's Charge and every other named feature besides the Mount \
+         remain ungrounded)"
+    );
 }
 
 /// The audit's third finding, proven empirically rather than by inspection
@@ -103,7 +127,11 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             class_id
         );
 
-        let expected_diagnostic_id = format!("class_feature.apg.{}.unsupported", class_id.name());
+        let expected_diagnostic_id = if *class_id == ApgClassId::Cavalier {
+            "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned()
+        } else {
+            format!("class_feature.apg.{}.unsupported", class_id.name())
+        };
         let unsupported = computation
             .diagnostics
             .iter()
@@ -122,6 +150,16 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
+        if *class_id == ApgClassId::Cavalier {
+            assert!(
+                !computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == "class_feature.apg.cavalier.unsupported"),
+                "the retired generic diagnostic must never appear for Cavalier: {:?}",
+                computation.diagnostics
+            );
+        }
 
         let row = class_coverage(*class_id);
         assert!(
