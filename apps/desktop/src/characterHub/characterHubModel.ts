@@ -149,10 +149,29 @@ export const RACE_OPTIONS: RaceOption[] = [
  * a `none` class. Do not present this as "partial support" — Human never
  * produces a savable build here either, it only explains why in more
  * detail.
+ * `full-except-human-level-1` — the inverse of `partial-human-only`:
+ * reaches `Computed` for every race at every level offered here, EXCEPT a
+ * single-class Human at level 1 specifically, which stays claim-blocked
+ * (`explain_hybrid_level1_chassis` in `pilot_compute.rs` unconditionally
+ * names the still-missing non-spell class-feature burden and later spell
+ * burden for a single-class Human at exactly level 1 — a historical
+ * boundary from the class's original hybrid-baseline slice, not touched by
+ * the later per-pillar/spell-posture work that unblocked every other
+ * race/level combination). Human reaches the identical computed build from
+ * level 2 onward. Live-verified: a fresh Human at level 1 stays `Blocked`
+ * with the named hybrid diagnostics; a fresh Elf at level 1 reaches
+ * `Computed`/`Saved`, and leveling that same character up through level 4
+ * (past the point spells first become accessible) stays `Computed` at
+ * every step with no new blocker.
  * `none` — no dedicated compute seam exists; every race produces the same 4
  * generic diagnostics.
  */
-export type ClassSupportLevel = 'full' | 'partial-human-only' | 'human-diagnostics-only' | 'none';
+export type ClassSupportLevel =
+  | 'full'
+  | 'partial-human-only'
+  | 'human-diagnostics-only'
+  | 'full-except-human-level-1'
+  | 'none';
 
 export interface ClassOption {
   id: string;
@@ -168,14 +187,25 @@ export interface ClassOption {
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
- * `pilot_compute.rs`'s per-class `explain_*` functions (each of Paladin,
- * Ranger, Sorcerer, Bard, Barbarian, Monk, Cleric, and Druid carries its own
- * "This deliberately does not compute a supported ... chassis/surface"
- * doc comment, and the compute path stays claim-blocked for Human exactly
- * as it does for every other race) and live-verified for Barbarian
+ * `pilot_compute.rs`'s per-class `explain_*` functions (each of Sorcerer,
+ * Bard, Barbarian, Monk, Cleric, and Druid carries its own "This
+ * deliberately does not compute a supported ... chassis/surface" doc
+ * comment, and the compute path stays claim-blocked for Human exactly as
+ * it does for every other race) and live-verified for Barbarian
  * specifically (a fresh Human Barbarian creation attempt still returns
  * `Blocked`, just with named rage-burden diagnostics instead of the 4
  * generic ones a non-Human race or a truly unrecognized class gets).
+ *
+ * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
+ * class-breadth epic, 2026-07-25): both reached real `Computed` status once
+ * their spell posture was genuinely computed (`b7642d97` Ranger,
+ * `ee3c50ce` Paladin) rather than left as an unconditional blocker. Both
+ * still share `explain_hybrid_level1_chassis`'s original, untouched
+ * single-class-Human-at-level-1 gate, so that one combination stays
+ * `Blocked` while every other race/level combination genuinely computes —
+ * see the `full-except-human-level-1` doc above for the live-verification
+ * detail (repeated independently for each class: Human blocked at level 1,
+ * Elf computed at level 1 and through level 4 of leveling up).
  *
  * Wizard and Rogue are `full`, not `partial-human-only` as this file
  * previously (incorrectly) had them: `supported_wizard_level` /
@@ -196,8 +226,8 @@ export interface ClassOption {
  */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
-  { id: 'class:paladin', label: 'Paladin', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 10 },
-  { id: 'class:ranger', label: 'Ranger', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 10 },
+  { id: 'class:paladin', label: 'Paladin', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
+  { id: 'class:ranger', label: 'Ranger', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
   { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 6 },
   { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
   { id: 'class:bard', label: 'Bard', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
@@ -222,6 +252,8 @@ export function describeClassSupportLevel(supportLevel: ClassSupportLevel, class
       return `${classLabel} is only computed for Human today — other races show what's still missing.`;
     case 'human-diagnostics-only':
       return `${classLabel} isn't computed by the engine for any race yet, including Human — Human just shows more specific detail about what's missing.`;
+    case 'full-except-human-level-1':
+      return `${classLabel} is computed at every level offered here for every race — except Human at level 1 specifically, which stays blocked; Human reaches the same computed build from level 2 on.`;
     case 'none':
       return `${classLabel} isn't computed by the engine yet.`;
   }
@@ -236,6 +268,8 @@ export function classSupportLevelSuffix(supportLevel: ClassSupportLevel): string
       return ' (Human only, partial)';
     case 'human-diagnostics-only':
       return ' (not yet computed for any race)';
+    case 'full-except-human-level-1':
+      return ' (Human: not at level 1)';
     case 'none':
       return ' (not yet computed)';
   }
