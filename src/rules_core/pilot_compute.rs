@@ -1763,6 +1763,28 @@ const BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY: i16 = 2;
 /// unconditionally on class ownership and level alone.
 const BRAWLER_CLASS_ID: &str = "class:brawler";
 
+/// v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure): ACG Hunter, a
+/// Druid+Ranger hybrid whose 1st-level Animal Companion is, per the PCGen
+/// corpus's own DESC text, mechanically identical to Druid's own: "the
+/// hunter's effective druid level is equal to her hunter level." Unlike
+/// Druid's own Nature Bond (a genuine choice between an animal companion
+/// and a domain), Hunter's Animal Companion is unconditional -- every
+/// Hunter gets one automatically at 1st level, per the corpus text
+/// ("At 1st level, a hunter forms a bond with an animal companion",
+/// stated as fact, never framed as one of several options) -- so unlike
+/// every choice-gated or activation-gated mechanic built this session,
+/// Hunter's companion needs neither a `selected_choices` nor a
+/// `class_ability_activations` entry at all; it is grounded purely on
+/// class ownership and level, mirroring Brawler's own "always on" shape
+/// even more directly than Druid's (which needed a bond-type choice
+/// check). The species choice the corpus also names ("any of the
+/// animals on the druid list") is handled the same way Druid's own was:
+/// this codebase models no species-selection input at all, so Wolf is
+/// assumed as the canonical species (the same "smallest defensible
+/// slice" choice, not a new reachability gap -- Druid's own build never
+/// asked the character to pick a species either).
+const HUNTER_CLASS_ID: &str = "class:hunter";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -4357,6 +4379,185 @@ fn wolf_companion_hit_dice(companion_level: u8) -> u8 {
     2
 }
 
+/// Grounds the Wolf companion's standalone stat block as explanation
+/// records under `id_prefix` (v0.6 alpha swarm, risks item 8, fourth
+/// APG/ACG closure): extracted from Druid's own original inline
+/// implementation so Hunter's own animal companion (whose corpus text
+/// reads "the hunter's effective druid level is equal to her hunter
+/// level" -- mechanically identical to Druid's own progression, not a
+/// new mechanic) can reuse the exact same, already-3-source-verified math
+/// rather than re-deriving or copy-pasting it. `owner_class_label` is
+/// used only in explanation prose (e.g. "Druid" or "Hunter"); the values
+/// themselves depend only on `companion_level` (the owning character's
+/// own level, matching `wolf_companion_hit_dice`'s own parameter shape).
+/// Callers are responsible for their own class-ownership/level/choice
+/// gating -- this function only grounds the stat block itself.
+fn ground_wolf_companion_stat_block(
+    id_prefix: &str,
+    owner_class_label: &str,
+    companion_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let companion_hd = wolf_companion_hit_dice(companion_level);
+    let companion_hd_value = i16::from(companion_hd);
+    let companion_base_attack_bonus = companion_hd_value * 3 / 4;
+    let companion_fort_ref_save = companion_hd_value / 2 + 2;
+    let companion_will_save = companion_hd_value / 3;
+    let strength_modifier = ability_modifier(WOLF_COMPANION_STRENGTH_SCORE);
+    let constitution_modifier = ability_modifier(WOLF_COMPANION_CONSTITUTION_SCORE);
+    let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
+    // Primary natural attack: 1.5x Strength modifier, floored (PF1 Core
+    // Rulebook natural-attack damage rule), added to the base 1d6 bite
+    // die (the die itself is not a flat number and is named, not rolled).
+    let companion_bite_damage_bonus = (strength_modifier * 3) / 2;
+    // Maximized first HD plus average for the second (this codebase's own
+    // established HP idiom, `durability.rs`'s `compute_max_hp`), each plus
+    // the companion's own Constitution modifier. The maximized first HD is
+    // simply the die size itself (a maximized roll always equals the
+    // die's maximum face value).
+    let companion_max_first_hit_die = i16::from(WOLF_COMPANION_HIT_DIE_SIZE);
+    let companion_average_second_hit_die =
+        crate::rules_core::durability::average_hit_die_value(WOLF_COMPANION_HIT_DIE_SIZE);
+    let companion_hp = (companion_max_first_hit_die + constitution_modifier)
+        + (companion_average_second_hit_die + constitution_modifier);
+
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.wolf_stat_block"),
+        value: 0,
+        detail: format!(
+            "{owner_class_label} level {companion_level} animal companion, Wolf (the canonical \
+             PF1 Core Rulebook companion species this bounded seam grounds): a wholly separate \
+             creature with its own combat statistics -- none of the values below are ever \
+             applied to the {owner_class_label}'s own integrated totals. Base ability scores \
+             (verified against d20pfsrd, the Archives of Nethys aonprd.com mirror, and the \
+             PCGen corpus cr_races_companion.lst, Core Rulebook p.56): Str \
+             {WOLF_COMPANION_STRENGTH_SCORE}, Con {WOLF_COMPANION_CONSTITUTION_SCORE}. This is a \
+             bounded recognition record only (+0); the companion's own flat stat values are \
+             grounded separately as standalone explanation records below"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_attack_bonus"),
+        value: companion_attack_bonus,
+        detail: format!(
+            "Wolf companion base attack bonus at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
+             {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, Str \
+             {WOLF_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone record; the \
+             companion is a separate creature, not integrated into the {owner_class_label}'s own \
+             combat totals"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.fortitude"),
+        value: companion_fort_ref_save,
+        detail: format!(
+            "Wolf companion base Fortitude save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+             {companion_fort_ref_save}). Standalone record; not the {owner_class_label}'s own \
+             save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.reflex"),
+        value: companion_fort_ref_save,
+        detail: format!(
+            "Wolf companion base Reflex save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
+             {companion_fort_ref_save}). Standalone record; not the {owner_class_label}'s own \
+             save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.base_save.will"),
+        value: companion_will_save,
+        detail: format!(
+            "Wolf companion base Will save at companion level {companion_hd} HD (PF1 Core \
+             Rulebook Animal Companion Base Statistics: classlevel/3 = {companion_will_save}). \
+             Standalone record; not the {owner_class_label}'s own save"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.armor_class"),
+        value: 10 + WOLF_COMPANION_NATURAL_ARMOR,
+        detail: format!(
+            "Wolf companion armor class: base 10 + natural armor (+{WOLF_COMPANION_NATURAL_ARMOR}) \
+             = {}. Verified against 2 of 3 sources (aonprd.com's own Wolf companion page and the \
+             PCGen corpus, which disagreed with d20pfsrd's +1 figure; resolved in favor of the \
+             majority, the corpus citing Core Rulebook p.56 directly). Standalone record; \
+             Dexterity's own contribution to the companion's AC is not grounded this slice",
+            10 + WOLF_COMPANION_NATURAL_ARMOR
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.bite_attack"),
+        value: companion_bite_damage_bonus,
+        detail: format!(
+            "Wolf companion bite attack: 1d6 (a real die, named not rolled) + \
+             {companion_bite_damage_bonus:+} (1.5x Strength modifier ({strength_modifier:+}), \
+             floored, PF1 Core Rulebook's primary-natural-attack damage rule), plus the Trip \
+             special attack (verified present at companion level 1 via aonprd.com and the PCGen \
+             corpus, which disagreed with d20pfsrd's 4th-level-advancement framing). No \
+             attack-roll or damage-roll resolution engine exists in this codebase, so this \
+             grounds the flat damage bonus only, not an actual attack or damage outcome"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.hit_points"),
+        value: companion_hp,
+        detail: format!(
+            "Wolf companion hit points at {companion_hd} HD (d{WOLF_COMPANION_HIT_DIE_SIZE}): \
+             maximized first Hit Die plus average for the second (this codebase's own \
+             established HP idiom, durability.rs's compute_max_hp), each plus the companion's \
+             Constitution modifier ({constitution_modifier:+}, Con \
+             {WOLF_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
+        ),
+    });
+}
+
+/// Grounds the Wolf companion's Link and Share Spells abilities as
+/// vacuous-correction records (v0.6 alpha swarm, risks item 8, extracted
+/// alongside `ground_wolf_companion_stat_block` for the same reuse
+/// reason): both are provably vacuous under this codebase's model (Link's
+/// Handle Animal skill-check exemption can never matter since this
+/// codebase never computes a Handle Animal check; Share Spells' retarget-
+/// a-cast-spell benefit can never trigger since this codebase has no
+/// spell-casting-resolution engine anywhere, for any class), not merely
+/// unmodeled -- the same "provably zero, not merely unmodeled" shape
+/// Sorcerer's Arcane Bond spell-casting benefit needed.
+fn ground_wolf_companion_link_and_share_spells_vacuous(
+    id_prefix: &str,
+    owner_class_label: &str,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.link_vacuous"),
+        value: 0,
+        detail: format!(
+            "Wolf companion's Link ability (PF1 Core Rulebook: \"A {owner_class_label} can \
+             handle her animal companion as a free action, or push it as a move action, even if \
+             she doesn't have any ranks in the Handle Animal skill\") is vacuous under this \
+             bounded seam: this codebase computes exactly three selected skills (Climb, \
+             Intimidate, Swim), never Handle Animal, so the skill-check exemption Link grants \
+             can never matter here regardless of build. This record documents that correction \
+             only; it carries no mechanical value (+0)"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: format!("{id_prefix}.share_spells_vacuous"),
+        value: 0,
+        detail: format!(
+            "Wolf companion's Share Spells ability (PF1 Core Rulebook: \"The {owner_class_label} \
+             may cast a spell with a target of 'You' on her animal companion... instead of on \
+             herself\") is vacuous under this bounded seam: this codebase has no spell-casting-\
+             resolution engine anywhere, for any class -- no spell is ever actually cast, so \
+             retargeting one is never triggerable here regardless of build (the same structural \
+             gap that made Sorcerer's Arcane Bond spell-casting benefit provably vacuous). This \
+             record documents that correction only; it carries no mechanical value (+0)"
+        ),
+    });
+}
+
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -6921,6 +7122,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_skald_single_class(input)
         || is_supported_bloodrager_single_class(input)
         || is_supported_brawler_single_class(input)
+        || is_supported_hunter_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
@@ -6938,6 +7140,20 @@ fn is_supported_brawler_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Brawler, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure): whether
+/// `input` is a single-class Hunter at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Hunter -- mirrors
+/// the other three exact-match gates exactly.
+fn is_supported_hunter_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Hunter) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Hunter, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -7389,18 +7605,19 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first/second/third APG/ACG closures,
-    // adversarially reviewed 2026-07-25 for the gate-widening piece):
-    // Skald, Bloodrager, and Brawler are the three ACG classes with a
-    // genuinely real class feature now (Inspired Rage / Bloodrage / AC
-    // Bonus) -- the other 7 ACG classes, and every APG class, keep the
-    // exact original unconditional diagnostic unchanged. These branches
-    // are reached only for single-class Skald/Bloodrager/Brawler (this
-    // function is only ever called from `compute_class_chassis`'s
-    // single-class-only section; `AcgClassId::from_class_id_str` is
-    // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Skald-, Bloodrager-, or Brawler-containing multiclass mix
-    // never reaches this function at all), so no separate gate-ordering/
+    // v0.6 alpha swarm, risks item 8 (first/second/third/fourth APG/ACG
+    // closures, adversarially reviewed 2026-07-25 for the gate-widening
+    // piece): Skald, Bloodrager, Brawler, and Hunter are the four ACG
+    // classes with a genuinely real class feature now (Inspired Rage /
+    // Bloodrage / AC Bonus / Animal Companion) -- the other 6 ACG
+    // classes, and every APG class, keep the exact original unconditional
+    // diagnostic unchanged. These branches are reached only for
+    // single-class Skald/Bloodrager/Brawler/Hunter (this function is only
+    // ever called from `compute_class_chassis`'s single-class-only
+    // section; `AcgClassId::from_class_id_str` is deliberately not
+    // registered with `multiclass_class_level_supported`, so a Skald-,
+    // Bloodrager-, Brawler-, or Hunter-containing multiclass mix never
+    // reaches this function at all), so no separate gate-ordering/
     // hoisting fix is needed the way CRB classes required once
     // `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
@@ -7409,6 +7626,8 @@ fn compute_acg_class_chassis(
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
     } else if class_id == AcgClassId::Brawler {
         ground_brawler_ac_bonus_and_defer_the_rest(level, explanations, diagnostics);
+    } else if class_id == AcgClassId::Hunter {
+        ground_hunter_animal_companion_and_defer_the_rest(level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -8080,6 +8299,68 @@ fn ground_brawler_ac_bonus_and_defer_the_rest(
 /// ternary, called directly from `compute_combat_baseline`.
 fn apply_brawler_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
     active_brawler_ac_bonus(input).unwrap_or(0)
+}
+
+/// Grounds Hunter's 1st-level Animal Companion (v0.6 alpha swarm, risks
+/// item 8, fourth APG/ACG closure) by reusing the exact Wolf stat-block
+/// math Druid's own closure already verified and shipped -- the corpus
+/// text confirms this is the same mechanic ("the hunter's effective
+/// druid level is equal to her hunter level"), not merely a similar one.
+/// Called from `compute_acg_class_chassis`'s Hunter branch, unconditional
+/// on Hunter class ownership and level alone (no `selected_choices` or
+/// `class_ability_activations` entry is required -- see `HUNTER_CLASS_ID`'s
+/// own doc comment for why this is unconditional, unlike Druid's own
+/// Nature-Bond-choice-gated version).
+///
+/// Hunter casts (from the Druid/Ranger spell lists, restricted to Summon
+/// Nature's Ally spells only per the corpus's own `KNOWNSPELLS` token --
+/// a narrower and structurally different known-spell list than either
+/// Druid's or Ranger's own, not yet independently verified or built) and
+/// has its own remaining named features (Animal Focus, Nature Training,
+/// Wild Empathy, Precise Companion) still ungrounded -- stays claim-
+/// blocked via the new, narrower
+/// `class_feature.acg.hunter.spellcasting_deferred.unsupported`
+/// diagnostic, replacing the generic `class_feature.acg.hunter
+/// .unsupported` diagnostic for Hunter specifically, mirroring Skald's
+/// and Bloodrager's own diagnostic-honesty fix.
+fn ground_hunter_animal_companion_and_defer_the_rest(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    ground_wolf_companion_stat_block(
+        "class_chassis.hunter.animal_companion",
+        "Hunter",
+        level,
+        explanations,
+    );
+    ground_wolf_companion_link_and_share_spells_vacuous(
+        "class_feature.hunter.animal_companion",
+        "hunter",
+        explanations,
+    );
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.hunter.animal_companion.advancement_absent".to_owned(),
+        message: "Hunter animal companion advancement past companion level 1 (2 HD) is not \
+                   grounded: this bounded seam only computes Hunter level 1, the companion's \
+                   only verified level, mirroring Druid's own identical advancement gap"
+            .to_owned(),
+        claim_blocking: false,
+    });
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.hunter.spellcasting_deferred.unsupported".to_owned(),
+        message: format!(
+            "{HUNTER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and Animal Companion: this ACG class has no class-skill list, no \
+             spellcasting posture (Hunter casts a restricted Summon Nature's Ally-only known-\
+             spell list from the Druid/Ranger spell lists, but its own spells-known/per-day \
+             table numbers have not yet been independently verified or built), and no other \
+             named class feature (Animal Focus, Nature Training, Wild Empathy, Precise \
+             Companion) grounded anywhere in this codebase yet; no class-feature or spell \
+             execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
 }
 
 /// Whether `class_level` is a class this dispatch grounds a base-chassis
@@ -19366,150 +19647,24 @@ fn explain_druid_level1_spell_baseline(
         // no input this seam didn't specifically improve can silently
         // reach Computed.
         if animal_companion_chosen_top && druid_level == 1 {
-            let companion_hd = wolf_companion_hit_dice(druid_level);
-            let companion_hd_value = i16::from(companion_hd);
-            let companion_base_attack_bonus = companion_hd_value * 3 / 4;
-            let companion_fort_ref_save = companion_hd_value / 2 + 2;
-            let companion_will_save = companion_hd_value / 3;
-            let strength_modifier = ability_modifier(WOLF_COMPANION_STRENGTH_SCORE);
-            let constitution_modifier = ability_modifier(WOLF_COMPANION_CONSTITUTION_SCORE);
-            let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
-            // Primary natural attack: 1.5x Strength modifier, floored (PF1
-            // Core Rulebook natural-attack damage rule), added to the base
-            // 1d6 bite die (the die itself is not a flat number and is
-            // named, not rolled).
-            let companion_bite_damage_bonus = (strength_modifier * 3) / 2;
-            // Maximized first HD plus average for the second (this
-            // codebase's own established HP idiom, `durability.rs`'s
-            // `compute_max_hp`), each plus the companion's own Constitution
-            // modifier. The maximized first HD is simply the die size
-            // itself (a maximized roll always equals the die's maximum
-            // face value).
-            let companion_max_first_hit_die = i16::from(WOLF_COMPANION_HIT_DIE_SIZE);
-            let companion_average_second_hit_die = crate::rules_core::durability::average_hit_die_value(
-                WOLF_COMPANION_HIT_DIE_SIZE,
+            // v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure):
+            // extracted into shared helpers so Hunter's own animal
+            // companion (mechanically identical -- see
+            // `ground_wolf_companion_stat_block`'s own doc comment) can
+            // reuse this exact, already-3-source-verified math. Byte-for-
+            // byte identical output to the original inline implementation
+            // for Druid (owner_class_label = "Druid").
+            ground_wolf_companion_stat_block(
+                "class_chassis.druid.animal_companion",
+                "Druid",
+                druid_level,
+                explanations,
             );
-            let companion_hp = (companion_max_first_hit_die + constitution_modifier)
-                + (companion_average_second_hit_die + constitution_modifier);
-
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.wolf_stat_block".to_owned(),
-                value: 0,
-                detail: format!(
-                    "Druid level {druid_level} animal companion, Wolf (the canonical PF1 Core \
-                     Rulebook companion species this bounded seam grounds): a wholly separate \
-                     creature with its own combat statistics -- none of the values below are \
-                     ever applied to the Druid's own integrated totals. Base ability scores \
-                     (verified against d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
-                     the PCGen corpus cr_races_companion.lst, Core Rulebook p.56): Str \
-                     {WOLF_COMPANION_STRENGTH_SCORE}, Con {WOLF_COMPANION_CONSTITUTION_SCORE}. \
-                     This is a bounded recognition record only (+0); the companion's own flat \
-                     stat values are grounded separately as standalone explanation records \
-                     below"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.base_attack_bonus".to_owned(),
-                value: companion_attack_bonus,
-                detail: format!(
-                    "Wolf companion base attack bonus at companion level {companion_hd} HD (PF1 \
-                     Core Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
-                     {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, \
-                     Str {WOLF_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone \
-                     record; the companion is a separate creature, not integrated into the \
-                     Druid's own combat totals"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.base_save.fortitude".to_owned(),
-                value: companion_fort_ref_save,
-                detail: format!(
-                    "Wolf companion base Fortitude save at companion level {companion_hd} HD \
-                     (PF1 Core Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
-                     {companion_fort_ref_save}). Standalone record; not the Druid's own save"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.base_save.reflex".to_owned(),
-                value: companion_fort_ref_save,
-                detail: format!(
-                    "Wolf companion base Reflex save at companion level {companion_hd} HD (PF1 \
-                     Core Rulebook Animal Companion Base Statistics: classlevel/2+2 = \
-                     {companion_fort_ref_save}). Standalone record; not the Druid's own save"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.base_save.will".to_owned(),
-                value: companion_will_save,
-                detail: format!(
-                    "Wolf companion base Will save at companion level {companion_hd} HD (PF1 \
-                     Core Rulebook Animal Companion Base Statistics: classlevel/3 = \
-                     {companion_will_save}). Standalone record; not the Druid's own save"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.armor_class".to_owned(),
-                value: 10 + WOLF_COMPANION_NATURAL_ARMOR,
-                detail: format!(
-                    "Wolf companion armor class: base 10 + natural armor \
-                     (+{WOLF_COMPANION_NATURAL_ARMOR}) = {}. Verified against 2 of 3 sources \
-                     (aonprd.com's own Wolf companion page and the PCGen corpus, which disagreed \
-                     with d20pfsrd's +1 figure; resolved in favor of the majority, the corpus \
-                     citing Core Rulebook p.56 directly). Standalone record; Dexterity's own \
-                     contribution to the companion's AC is not grounded this slice",
-                    10 + WOLF_COMPANION_NATURAL_ARMOR
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.bite_attack".to_owned(),
-                value: companion_bite_damage_bonus,
-                detail: format!(
-                    "Wolf companion bite attack: 1d6 (a real die, named not rolled) + \
-                     {companion_bite_damage_bonus:+} (1.5x Strength modifier \
-                     ({strength_modifier:+}), floored, PF1 Core Rulebook's primary-natural-\
-                     attack damage rule), plus the Trip special attack (verified present at \
-                     companion level 1 via aonprd.com and the PCGen corpus, which disagreed with \
-                     d20pfsrd's 4th-level-advancement framing). No attack-roll or damage-roll \
-                     resolution engine exists in this codebase, so this grounds the flat damage \
-                     bonus only, not an actual attack or damage outcome"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_chassis.druid.animal_companion.hit_points".to_owned(),
-                value: companion_hp,
-                detail: format!(
-                    "Wolf companion hit points at {companion_hd} HD (d{WOLF_COMPANION_HIT_DIE_SIZE}): \
-                     maximized first Hit Die plus average for the second (this codebase's own \
-                     established HP idiom, durability.rs's compute_max_hp), each plus the \
-                     companion's Constitution modifier ({constitution_modifier:+}, Con \
-                     {WOLF_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
-                ),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_feature.druid.animal_companion.link_vacuous".to_owned(),
-                value: 0,
-                detail: "Wolf companion's Link ability (PF1 Core Rulebook: \"A druid can handle \
-                     her animal companion as a free action, or push it as a move action, even \
-                     if she doesn't have any ranks in the Handle Animal skill\") is vacuous \
-                     under this bounded seam: this codebase computes exactly three selected \
-                     skills (Climb, Intimidate, Swim), never Handle Animal, so the skill-check \
-                     exemption Link grants can never matter here regardless of build. This \
-                     record documents that correction only; it carries no mechanical value (+0)"
-                    .to_owned(),
-            });
-            explanations.push(ComputationExplanation {
-                id: "class_feature.druid.animal_companion.share_spells_vacuous".to_owned(),
-                value: 0,
-                detail: "Wolf companion's Share Spells ability (PF1 Core Rulebook: \"The druid \
-                     may cast a spell with a target of 'You' on her animal companion... instead \
-                     of on herself\") is vacuous under this bounded seam: this codebase has no \
-                     spell-casting-resolution engine anywhere, for any class -- no spell is ever \
-                     actually cast, so retargeting one is never triggerable here regardless of \
-                     build (the same structural gap that made Sorcerer's Arcane Bond \
-                     spell-casting benefit provably vacuous). This record documents that \
-                     correction only; it carries no mechanical value (+0)"
-                    .to_owned(),
-            });
+            ground_wolf_companion_link_and_share_spells_vacuous(
+                "class_feature.druid.animal_companion",
+                "druid",
+                explanations,
+            );
             diagnostics.push(ComputationDiagnostic {
                 id: "class_feature.druid.animal_companion.advancement_absent".to_owned(),
                 message: "Druid animal companion advancement past companion level 1 (2 HD) is \
@@ -24217,21 +24372,23 @@ mod acg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// ACG class OTHER THAN Skald/Bloodrager/Brawler stays honestly
+    /// ACG class OTHER THAN Skald/Bloodrager/Brawler/Hunter stays honestly
     /// `Blocked` with the original, unmodified generic diagnostic --
     /// BAB/save/HP are real, but the class-skill/feature/spellcasting
     /// bucket is genuinely ungrounded, so this must never silently read
     /// as `Computed`.
     ///
-    /// Skald, Bloodrager, and Brawler are carved out of this loop (v0.6
-    /// alpha swarm, risks item 8, first/second/third APG/ACG closures,
-    /// adversarial review finding 2, reapplied identically each time):
-    /// each has its own generic `class_feature.acg.<class>.unsupported`
-    /// diagnostic retired and replaced with a narrower one, since Inspired
-    /// Rage / Bloodrage / AC Bonus are now genuinely grounded -- see
+    /// Skald, Bloodrager, Brawler, and Hunter are carved out of this loop
+    /// (v0.6 alpha swarm, risks item 8, first/second/third/fourth APG/ACG
+    /// closures, adversarial review finding 2, reapplied identically each
+    /// time): each has its own generic `class_feature.acg.<class>
+    /// .unsupported` diagnostic retired and replaced with a narrower one,
+    /// since Inspired Rage / Bloodrage / AC Bonus / Animal Companion are
+    /// now genuinely grounded -- see
     /// `skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `bloodrager_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `brawler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// / `hunter_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// below for each class's own dedicated coverage.
     #[test]
     fn all_ten_acg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
@@ -24239,6 +24396,7 @@ mod acg_class_chassis_dispatch_tests {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
                 || class_id == "class:brawler"
+                || class_id == "class:hunter"
             {
                 continue;
             }
@@ -24385,28 +24543,83 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(ac_bonus.value, 0, "Brawler level 1 AC Bonus is genuinely +0: {:?}", ac_bonus);
     }
 
+    /// Hunter's own counterpart to the Skald/Bloodrager/Brawler
+    /// diagnostic-swap tests above (v0.6 alpha swarm, risks item 8,
+    /// fourth APG/ACG closure): mirrors them, and additionally verifies
+    /// the reused Wolf companion stat block is grounded under Hunter's
+    /// own id prefix.
+    #[test]
+    fn hunter_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:hunter", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Hunter must stay Blocked on its deferred spellcasting posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.unsupported"),
+            "the retired generic diagnostic must never appear for Hunter: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        let companion_hp = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.hunter.animal_companion.hit_points")
+            .expect("Hunter's own reused Wolf companion stat block must be grounded");
+        // Same Wolf stat block math Druid's own closure verified: d8 HD,
+        // maximized first Hit Die (8) + average second (average_hit_die_value(8)
+        // = 8/2+1 = 5) + Constitution modifier (+2, Con 15) each = (8+2) +
+        // (5+2) = 17.
+        assert_eq!(
+            companion_hp.value, 17,
+            "Hunter's reused companion HP must match Druid's own verified math: {:?}",
+            companion_hp
+        );
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager and Brawler): the OTHER 7 ACG classes (every class
-    /// other than Skald, Bloodrager, and Brawler, the three now genuinely
-    /// admitted) must produce ZERO `defense.total_save.*`/
-    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
-    /// level 1, even when built from the exact same Longsword/Chain Shirt/
-    /// Dodge/Weapon-Focus/skill-rank posture that genuinely satisfies every
-    /// non-class-recognition precondition those pillars check -- proving
+    /// for Bloodrager, Brawler, and Hunter): the OTHER 6 ACG classes
+    /// (every class other than Skald, Bloodrager, Brawler, and Hunter,
+    /// the four now genuinely admitted) must produce ZERO
+    /// `defense.total_save.*`/`combat.baseline_*`/
+    /// `skill.selected_modifier.*` explanations at level 1, even when
+    /// built from the exact same Longsword/Chain Shirt/Dodge/Weapon-
+    /// Focus/skill-rank posture that genuinely satisfies every non-class-
+    /// recognition precondition those pillars check -- proving
     /// `is_supported_skald_single_class`, `is_supported_bloodrager_single_class`,
-    /// and `is_supported_brawler_single_class` are all real exact matches,
-    /// not broad `.is_some()` checks that would silently admit all 10 ACG
+    /// `is_supported_brawler_single_class`, and
+    /// `is_supported_hunter_single_class` are all real exact matches, not
+    /// broad `.is_some()` checks that would silently admit all 10 ACG
     /// classes into real pillar computation. This is stronger than the
     /// pre-existing "stays Blocked" assertion above, which does not by
     /// itself rule out a silent pillar-output leak alongside an unrelated
     /// claim-blocking diagnostic.
     #[test]
-    fn the_other_seven_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_six_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
                 || class_id == "class:brawler"
+                || class_id == "class:hunter"
             {
                 continue;
             }
@@ -24501,6 +24714,28 @@ mod acg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Brawler: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Hunter's own positive counterpart, mirroring Skald's/Bloodrager's/
+    /// Brawler's exactly.
+    #[test]
+    fn hunter_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:hunter", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Hunter: {:?}",
                 receipt.computation.explanations
             );
         }
