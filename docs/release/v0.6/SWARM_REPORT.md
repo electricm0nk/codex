@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | scoping doc endorsed, directed to verify Wolf's stats against primary sources; actively building the Druid animal-companion work now (pilot_compute.rs in progress) |
+| backend | working | Druid's animal-companion posture lead-verified (388/388 lib, real HeadlessReceiptStatus::Computed); fixing one stale doc comment before committing |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Cleric's 22-file test batch landed and lead-verified 100% (3da1cd35, pushed); entire workspace green, zero failures anywhere |
 
