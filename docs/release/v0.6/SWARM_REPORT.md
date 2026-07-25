@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Paladin genuinely reaches Computed too now (ee3c50ce, lead-verified 307/307 + 212/212); proactively fixed the Ranger-shaped structural flaw before shipping -- confirmed in code, not just claimed |
+| backend | working | ACG's 10-class dispatch landed and verified (71cd41b6, 311/311 + 212/212); continuing the class sequence |
 | frontend | working | updating Ranger's characterHubModel.ts support level |
-| qa | working | 4 tests/** files in flight (Ranger, APG, Paladin) + the new permanent positive-case test |
+| qa | idle | Paladin's 29-file cleanup confirmed fully resolved |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
 ---
 
