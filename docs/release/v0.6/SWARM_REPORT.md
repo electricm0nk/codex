@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | holding | Monk's remaining-4-feats scoping doc landed — revises the premise: 3 of 4 feats (Combat Reflexes, Scorpion Style, Improved Grapple) turn out to have a real groundable static number, only Deflect Arrows genuinely needs the full opponent engine. Lead independently verified every corpus/code claim in the doc (all accurate) and dispatched a full adversarial review given the new CMB/CMD baseline pillar this proposes — first new pillar this session, not a per-class layer-on. Holding on all code until it lands |
+| backend | working | Adversarial review of Monk's scoping doc back: greenlight with required changes. Big scope reduction found — an existing precedent (Dwarf Stability's CMD-bonus-magnitude record) means Improved Grapple needs no new CMB/CMD pillar after all, closes the same way Dodge/Catch Off-Guard/Throw Anything did. Lead independently confirmed this and a stale-blanket-claim bug the review also caught. Revising the doc now: Combat Reflexes + Scorpion Style + Improved Grapple this slice, CMB/CMD pillar deferred to its own future reviewed slice |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
