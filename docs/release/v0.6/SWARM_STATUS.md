@@ -1301,7 +1301,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T08:35:02
-Latest commit on tranche/6: b4726222 docs(v0.6): Druid batch verified 100%; real level-up filter bug found and routed (52 seconds ago) (2026-07-25T08:34:10-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T08:30:40 frontend=2026-07-25T07:05:54 qa=2026-07-25T08:32:20 lead=2026-07-25T08:33:31
+Last mechanical check: 2026-07-25T09:30:02
+Latest commit on tranche/6: 9daa37ea docs(v0.6): second Monk closure verified against raw corpus (Catch Off-Guard + Throw Anything) (15 seconds ago) (2026-07-25T09:29:47-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T09:28:35 frontend=2026-07-25T08:52:45 qa=2026-07-25T09:17:38 lead=2026-07-25T09:29:59
 <!-- AUTO-HEARTBEAT-END -->
