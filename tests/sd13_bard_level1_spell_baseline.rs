@@ -39,7 +39,9 @@
 //! spell totals, and it grounds no Bard level 2+. It also preserves the accepted
 //! Human race seam on the spell-bearing path.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    ActiveState, CharacterInput, ClassAbilityActivation, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -61,8 +63,6 @@ const FASCINATE_DC_ID: &str = "class_chassis.bard.fascinate_dc";
 const FASCINATE_AFFECTED_CREATURES_ID: &str = "class_chassis.bard.fascinate_affected_creatures";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
 const SPELL_LEVEL_ACCESS_ID: &str = "class_chassis.bard.spontaneous.spell_level_access";
-const PERFORMANCE_EXECUTION_BLOCKER_ID: &str =
-    "class_feature.bard.bardic_performance_execution.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -145,13 +145,16 @@ fn bard_level1_leaves_direct_spell_baseline_recognition_evidence() {
         recognition.value, 0,
         "bard spell baseline recognition must carry no fabricated value (+0)"
     );
+    // (v0.6 alpha swarm, risks item 8) Bard is now recognized by
+    // table_class_id (3/4 BAB), so the generic class-chassis explanation IS
+    // surfaced; the value still floors to 0 at level 1, only presence changed.
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "spell baseline must not fabricate a base attack bonus"
+        "bard level 1's real 3/4 base attack bonus formula floors to 0 (floor(3/4 * 1) = 0)"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "spell baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "bard is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 15 -> +2).
@@ -185,6 +188,11 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
         FASCINATE_AFFECTED_CREATURES_ID,
         INSPIRE_COMPETENCE_ID,
         SPELL_LEVEL_ACCESS_ID,
+        // (v0.6 alpha swarm, risks item 8) the bare fixture has no bardic
+        // performance activation, a genuinely valid "not performing"
+        // posture, so ground_or_block_bard_bardic_performance's honest
+        // (value 0) inactive-branch record now surfaces too.
+        "class_feature.bard.bardic_performance_execution.not_performing",
     ];
     for explanation in &computation.explanations {
         assert!(
@@ -342,35 +350,63 @@ fn bard_level1_grounds_inspire_courage_flat_magnitude() {
 // ----- Still blocked: performance execution and the spontaneous spell posture burden -----
 
 #[test]
-fn bard_level1_stays_blocked_on_bardic_performance_execution_burden() {
+fn bard_level1_names_the_permanently_unmodeled_other_performances() {
+    // (v0.6 alpha swarm, risks item 8) The old unconditional
+    // "class_feature.bard.bardic_performance_execution.unsupported"
+    // diagnostic is retired outright:
+    // ground_or_block_bard_bardic_performance is now a real, conditional
+    // engine (mirrors Barbarian's Rage). The permanently unconditional part
+    // that remains is a NON-blocking diagnostic naming the other bardic
+    // performances (Countersong, Distraction, etc.) that stay entirely
+    // unexecuted regardless of activation state -- it does not block a
+    // genuinely valid Inspire Courage posture.
     let input = load(BARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The narrowed performance-execution burden must be named explicitly by its own
-    // diagnostic, not hidden behind a generic "unsupported caster" label: the
-    // performance-state engine (start/maintain action economy, round tracking and
-    // consumption) and the other level-1 performances are still unproven.
-    let execution = claim_blocking(&computation, PERFORMANCE_EXECUTION_BLOCKER_ID);
-    for token in [
-        "start",
-        "maintain",
-        "action economy",
-        "round tracking",
-        "countersong",
-        "distraction",
-        "fascinate",
-    ] {
+    let other_performances = computation
+        .diagnostics
+        .iter()
+        .find(|d| {
+            d.id == "class_feature.bard.bardic_performance_execution.other_performances_not_modeled"
+        })
+        .expect("the other-performances-not-modeled diagnostic must always fire");
+    assert!(
+        !other_performances.claim_blocking,
+        "the other-performances-not-modeled diagnostic must not block a valid Inspire Courage \
+         posture: {other_performances:?}"
+    );
+    for token in ["Countersong", "Distraction"] {
         assert!(
-            execution.message.contains(token),
-            "the performance-execution blocker must name the '{token}' burden: {}",
-            execution.message
+            other_performances.message.contains(token),
+            "the other-performances-not-modeled diagnostic must name '{token}': {}",
+            other_performances.message
         );
     }
     assert!(
-        !execution.message.contains("bardic knowledge"),
-        "the performance-execution blocker must not re-bundle the grounded Bardic Knowledge \
-         pillar: {}",
-        execution.message
+        !other_performances.message.contains("bardic knowledge"),
+        "the other-performances-not-modeled diagnostic must not re-bundle the grounded Bardic \
+         Knowledge pillar: {}",
+        other_performances.message
+    );
+
+    // On this bare (not-performing) fixture, the honest inactive-branch
+    // record grounds, not a claim-blocking diagnostic.
+    let not_performing = explanation(
+        &computation,
+        "class_feature.bard.bardic_performance_execution.not_performing",
+    );
+    assert_eq!(
+        not_performing.value, 0,
+        "the not-performing record carries no fabricated mechanical value"
+    );
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.starts_with("class_feature.bard.bardic_performance_execution")
+                && d.claim_blocking),
+        "a genuinely valid not-performing posture must not claim-block on performance execution: {:?}",
+        computation.diagnostics
     );
 
     // The old combined diagnostic id must no longer appear at all.
@@ -393,6 +429,40 @@ fn bard_level1_stays_blocked_on_bardic_performance_execution_burden() {
 }
 
 #[test]
+fn bard_level1_stays_blocked_on_a_genuine_bardic_performance_execution_violation() {
+    // (v0.6 alpha swarm, risks item 8) Proving the real, conditional
+    // performance-execution engine still claim-blocks on a genuine posture
+    // violation: an active bardic-performance activation whose
+    // rounds_consumed_today exceeds the grounded rounds-per-day budget
+    // (4 + Cha modifier +3 = 7 at level 1 on this fixture).
+    let mut input = load(BARD_FIXTURE);
+    input.chosen.class_ability_activations.push(ClassAbilityActivation {
+        ability_id: "bardic_performance".to_owned(),
+        active_state: ActiveState::EquippedActive,
+        rounds_consumed_today: Some(8),
+    });
+    let computation = compute_pilot_base_chassis(&input);
+
+    let execution = claim_blocking(
+        &computation,
+        "class_feature.bard.bardic_performance_execution.rounds_exceeded",
+    );
+    for token in ["rounds consumed", "exceeding", "rounds-per-day budget"] {
+        assert!(
+            execution.message.contains(token),
+            "the performance-execution blocker must name the '{token}' burden: {}",
+            execution.message
+        );
+    }
+
+    // No performance bonus is fabricated for an over-budget activation.
+    assert!(
+        !has_explanation(&computation, "class_feature.bard.bardic_performance_execution.active"),
+        "an over-budget performance activation must not ground the active-performance explanation record"
+    );
+}
+
+#[test]
 fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
     let input = load(BARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
@@ -408,22 +478,22 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         spontaneous.message
     );
 
-    // The two remaining burdens (performance execution, spontaneous spell posture) are
-    // genuinely distinct diagnostics; Bardic Knowledge and the flat Bardic Performance
-    // surface are no longer among them because they are grounded.
-    assert_ne!(
-        PERFORMANCE_EXECUTION_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "performance-execution and spontaneous burdens must be separate diagnostics"
-    );
+    // (v0.6 alpha swarm, risks item 8) Only ONE class-specific claim-blocking
+    // diagnostic remains here: this bare fixture has no bardic performance
+    // activation, a genuinely valid posture, so
+    // class_feature.bard.bardic_performance_execution.rounds_exceeded correctly
+    // does not fire, and other_performances_not_modeled is non-blocking. Bardic
+    // Knowledge and the flat Bardic Performance surface are no longer among
+    // them because they are grounded.
     let distinct_blocking = computation
         .diagnostics
         .iter()
         .filter(|d| d.claim_blocking && d.id.starts_with("class_") && d.id.contains("bard"))
         .count();
     assert_eq!(
-        distinct_blocking, 2,
-        "bard must leave exactly two class-specific claim-blocking diagnostics \
-         (performance execution, spontaneous spell posture): {:?}",
+        distinct_blocking, 1,
+        "bard must leave exactly one class-specific claim-blocking diagnostic (spontaneous \
+         spell posture) on a valid performance posture: {:?}",
         computation.diagnostics
     );
 }

@@ -292,13 +292,25 @@ fn bard_level3_still_claim_blocks_performance_execution_and_spontaneous_spell_bu
     let input = load(BARD_LEVEL3_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_feature.bard.bardic_performance_execution.unsupported"
-            && d.claim_blocking),
-        "level-3 Bard must still claim-block on the bardic performance-execution burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.bard.bardic_performance_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_performing = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.bard.bardic_performance_execution.not_performing");
+            assert!(
+                not_performing.is_some(),
+                "level-3 Bard must ground an honest not-performing record when no \
+                 bardic-performance posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
     assert!(
         computation.diagnostics.iter().any(|d| d.id
             == "class_spell.bard.spontaneous_known_and_per_day.unsupported"

@@ -285,6 +285,10 @@ fn bard_level7_gains_no_new_bard_namespaced_explanation_id() {
 
     let known_bard_ids = [
         "class_chassis.spell_baseline.bard",
+        // (v0.6 alpha swarm, risks item 8) bardic-performance-execution's
+        // not-performing record is checked unconditionally at every level
+        // once a bare Bard input exists, not a new class feature.
+        "class_feature.bard.bardic_performance_execution.not_performing",
         "class_chassis.bard.base_attack_bonus",
         "class_chassis.bard.base_save.fortitude",
         "class_chassis.bard.base_save.reflex",
@@ -357,13 +361,25 @@ fn bard_level7_still_claim_blocks_performance_execution_and_spontaneous_spell_bu
     let input = load(BARD_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_feature.bard.bardic_performance_execution.unsupported"
-            && d.claim_blocking),
-        "level-7 Bard must still claim-block on the bardic performance-execution burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.bard.bardic_performance_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_performing = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.bard.bardic_performance_execution.not_performing");
+            assert!(
+                not_performing.is_some(),
+                "level-7 Bard must ground an honest not-performing record when no \
+                 bardic-performance posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
     assert!(
         computation.diagnostics.iter().any(|d| d.id
             == "class_spell.bard.spontaneous_known_and_per_day.unsupported"

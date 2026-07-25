@@ -33,8 +33,8 @@ const BARD_FIXTURE: &str =
 
 const FASCINATE_DC_ID: &str = "class_chassis.bard.fascinate_dc";
 const FASCINATE_AFFECTED_CREATURES_ID: &str = "class_chassis.bard.fascinate_affected_creatures";
-const PERFORMANCE_EXECUTION_BLOCKER_ID: &str =
-    "class_feature.bard.bardic_performance_execution.unsupported";
+const OTHER_PERFORMANCES_NOT_MODELED_ID: &str =
+    "class_feature.bard.bardic_performance_execution.other_performances_not_modeled";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -140,15 +140,20 @@ fn bard_level1_fascinate_grounds_no_resolution_or_targeting_engine() {
     // resolution/targeting engine or any other unrelated computed chassis.
     assert_eq!(computation.base_attack_bonus, 0);
 
-    // The performance-execution blocker must still be present and claim-blocking,
-    // and it must no longer claim Fascinate is entirely "not grounded" -- Fascinate's
-    // two flat numbers are now grounded, only its resolution stays unproven -- while
-    // Countersong and Distraction must still be named as fully unproven (they need an
-    // opposed Perform-check-vs-effect resolution, not a flat number).
-    let blocker = diagnostic(&computation, PERFORMANCE_EXECUTION_BLOCKER_ID);
+    // (v0.6 alpha swarm, risks item 8) The old unconditional performance-execution
+    // blocker is retired; the permanently unconditional other-performances-not-modeled
+    // note (non-blocking) is what still names Countersong and Distraction as fully
+    // unproven (they need an opposed Perform-check-vs-effect resolution, not a flat
+    // number) -- Fascinate's two flat numbers are grounded, only its resolution stays
+    // unproven, so it is not named here.
+    let blocker = diagnostic(&computation, OTHER_PERFORMANCES_NOT_MODELED_ID);
     assert!(
-        blocker.message.contains("countersong") && blocker.message.contains("distraction"),
-        "performance-execution blocker must still name countersong and distraction as \
+        !blocker.claim_blocking,
+        "the other-performances-not-modeled note must not block a valid Inspire Courage posture"
+    );
+    assert!(
+        blocker.message.contains("Countersong") && blocker.message.contains("Distraction"),
+        "the other-performances-not-modeled note must still name Countersong and Distraction as \
          unproven: {}",
         blocker.message
     );

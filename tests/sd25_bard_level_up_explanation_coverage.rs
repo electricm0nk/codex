@@ -54,8 +54,10 @@ use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 const BARD_RECOGNITION_ID: &str = "class_chassis.spell_baseline.bard";
 const BARD_EXPLANATION_PREFIX: &str = "class_chassis.bard.";
 const BARD_FEATURE_PREFIX: &str = "class_feature.bard.";
-const PERFORMANCE_EXECUTION_UNSUPPORTED_DIAGNOSTIC_ID: &str =
-    "class_feature.bard.bardic_performance_execution.unsupported";
+const PERFORMANCE_EXECUTION_ROUNDS_EXCEEDED_DIAGNOSTIC_ID: &str =
+    "class_feature.bard.bardic_performance_execution.rounds_exceeded";
+const PERFORMANCE_EXECUTION_NOT_PERFORMING_EXPLANATION_ID: &str =
+    "class_feature.bard.bardic_performance_execution.not_performing";
 const SPONTANEOUS_UNSUPPORTED_DIAGNOSTIC_ID: &str =
     "class_spell.bard.spontaneous_known_and_per_day.unsupported";
 
@@ -200,34 +202,41 @@ fn bard_recognition_explanation_produces_a_grant_on_first_level() {
 
 #[test]
 fn bardic_performance_execution_diagnostic_never_leaks_into_explanations_or_grants() {
+    // (v0.6 alpha swarm, risks item 8) The old unconditional "unsupported"
+    // diagnostic is retired -- ground_or_block_bard_bardic_performance is
+    // now a real, conditional engine. These bare fixtures have no bardic
+    // performance activation, a genuinely valid posture, so
+    // rounds_exceeded correctly never fires across the whole sweep; the
+    // honest not_performing record grounds instead.
     for from_level in 1..20u8 {
         let to_level = from_level + 1;
         let character = bard_at_level(to_level);
         let computation = compute_pilot_base_chassis(&character);
 
-        let diagnostic = computation
-            .diagnostics
-            .iter()
-            .find(|d| d.id == PERFORMANCE_EXECUTION_UNSUPPORTED_DIAGNOSTIC_ID)
-            .unwrap_or_else(|| {
-                panic!(
-                    "bard level {to_level} must still carry the bardic performance-execution \
-                     claim-blocking diagnostic: {:?}",
-                    computation.diagnostics
-                )
-            });
         assert!(
-            diagnostic.claim_blocking,
-            "the bardic performance-execution diagnostic must stay claim-blocking at level \
-             {to_level}"
+            !computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == PERFORMANCE_EXECUTION_ROUNDS_EXCEEDED_DIAGNOSTIC_ID),
+            "a genuinely valid not-performing posture must not claim-block on rounds_exceeded at \
+             level {to_level}: {:?}",
+            computation.diagnostics
+        );
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == PERFORMANCE_EXECUTION_NOT_PERFORMING_EXPLANATION_ID),
+            "bard level {to_level} must ground the honest not-performing record: {:?}",
+            computation.explanations
         );
         assert!(
             !computation
                 .explanations
                 .iter()
-                .any(|e| e.id == PERFORMANCE_EXECUTION_UNSUPPORTED_DIAGNOSTIC_ID),
-            "the bardic performance-execution diagnostic id must never appear in .explanations \
-             at level {to_level}"
+                .any(|e| e.id == PERFORMANCE_EXECUTION_ROUNDS_EXCEEDED_DIAGNOSTIC_ID),
+            "the rounds_exceeded diagnostic id must never appear in .explanations at level \
+             {to_level}"
         );
 
         let plan = compute_bard_level_up_grants(&character, from_level, to_level);
@@ -235,7 +244,7 @@ fn bardic_performance_execution_diagnostic_never_leaks_into_explanations_or_gran
             !plan.automatic_features.iter().any(|grant| grant
                 .source_table
                 .column_key
-                == PERFORMANCE_EXECUTION_UNSUPPORTED_DIAGNOSTIC_ID),
+                == PERFORMANCE_EXECUTION_ROUNDS_EXCEEDED_DIAGNOSTIC_ID),
             "the LevelUpPlan for bard {from_level} -> {to_level} must never fabricate a Grant \
              from the bardic performance-execution claim-blocking diagnostic: {:#?}",
             plan.automatic_features
