@@ -56,3 +56,7 @@ pub fn class_table() -> Vec<ClassTableRow> {
         })
         .collect()
 }
+
+/// `HD:6` on the real `CLASS:Arcanist` record (Arcanist HD:6 in
+/// `advanced_class_guide/acg_classes.lst`).
+pub const HIT_DIE: u8 = 6;

@@ -116,6 +116,31 @@ impl AcgClassId {
             AcgClassId::Warpriest => "warpriest",
         }
     }
+
+    /// Reverse of `name`: resolves a `"class:<name>"` id string (the
+    /// convention `pilot_compute.rs`'s per-class constants use) back to
+    /// an `AcgClassId`. Mirrors `rules_tables::apg::ApgClassId::from_class_id_str`.
+    pub fn from_class_id_str(class_id_str: &str) -> Option<Self> {
+        Self::ALL.iter().copied().find(|id| class_id_str == format!("class:{}", id.name()))
+    }
+}
+
+/// The real per-class hit die (`HD:` token on each class's real
+/// `CLASS:` record in `acg_classes.lst`). Mirrors
+/// `rules_tables::apg::hit_die_for` exactly.
+pub fn hit_die_for(class_id: AcgClassId) -> u8 {
+    match class_id {
+        AcgClassId::Arcanist => class_arcanist::HIT_DIE,
+        AcgClassId::Bloodrager => class_bloodrager::HIT_DIE,
+        AcgClassId::Brawler => class_brawler::HIT_DIE,
+        AcgClassId::Hunter => class_hunter::HIT_DIE,
+        AcgClassId::Investigator => class_investigator::HIT_DIE,
+        AcgClassId::Shaman => class_shaman::HIT_DIE,
+        AcgClassId::Skald => class_skald::HIT_DIE,
+        AcgClassId::Slayer => class_slayer::HIT_DIE,
+        AcgClassId::Swashbuckler => class_swashbuckler::HIT_DIE,
+        AcgClassId::Warpriest => class_warpriest::HIT_DIE,
+    }
 }
 
 /// Resolves an ACG class's chassis-table row for `level`, scoped to
@@ -204,12 +229,16 @@ pub struct AcgClassCoverage {
     pub named_features_expected: u32,
     /// Whether `pilot_compute.rs`'s live `compute_class_chassis` dispatch
     /// (the function the character-hub pilot flow actually calls)
-    /// recognizes this class at all. `false` for every ACG class today —
-    /// confirmed both by inspection (`compute_class_chassis` only matches
-    /// `FIGHTER_CLASS_ID`/`WIZARD_CLASS_ID`) and empirically by
-    /// `tests/sd24_acg_class_coverage_audit.rs`'s
-    /// `acg_classes_trip_the_honest_class_chassis_unsupported_diagnostic`
-    /// test.
+    /// recognizes this class at all. `true` as of the v0.6 alpha swarm's
+    /// ACG BAB/save/HP dispatch wiring cycle (risks item 8, fourth slice,
+    /// mirroring the identical APG cycle): `compute_class_chassis` now has
+    /// an `AcgClassId::from_class_id_str` branch dispatching to
+    /// `compute_acg_class_chassis`, deliberately NOT registered with
+    /// `table_class_id` (same reasoning as the APG branch -- see
+    /// `compute_apg_class_chassis`'s own doc comment). This does NOT mean
+    /// any ACG class reaches `Computed`: only the BAB/save/HP chassis
+    /// pillar is real; class-skill lists, named features, and
+    /// spellcasting remain unconditionally claim-blocked.
     pub pilot_compute_integrated: bool,
     /// Whether a `level_up::<class>` module (the SD-20 Epic 7 per-level
     /// automatic-feature-grant model CRB's 11 classes all have) exists for
@@ -268,7 +297,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         chassis_rows_expected,
         named_features_wired: 0,
         named_features_expected: named_features_expected(class_id),
-        pilot_compute_integrated: false,
+        pilot_compute_integrated: true,
         level_up_wired: false,
     }
 }

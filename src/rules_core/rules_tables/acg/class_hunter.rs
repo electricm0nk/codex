@@ -54,3 +54,7 @@ pub fn class_table() -> Vec<ClassTableRow> {
         })
         .collect()
 }
+
+/// `HD:8` on the real `CLASS:Hunter` record (Hunter HD:8 in
+/// `advanced_class_guide/acg_classes.lst`).
+pub const HIT_DIE: u8 = 8;

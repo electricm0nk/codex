@@ -37,6 +37,7 @@
 
 use crate::rules_core::character_input::CharacterClassLevel;
 use crate::rules_core::pilot_compute::table_class_id;
+use crate::rules_core::rules_tables::acg::{self, AcgClassId};
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
 use crate::rules_core::rules_tables::crb::class_tables::hit_die_for;
 
@@ -57,14 +58,19 @@ pub fn compute_max_hp(class_levels: &[CharacterClassLevel], constitution_modifie
     let [class_level] = class_levels else {
         return None;
     };
-    // v0.6 alpha swarm, risks item 8: falls back to the APG hit-die table
-    // when the class isn't one of the 4 `table_class_id` recognizes --
-    // `ApgClassId::from_class_id_str` is not registered with
-    // `table_class_id`, so this stays single-class-only by the same
-    // `[class_level]` destructure above, not a new multiclass path.
+    // v0.6 alpha swarm, risks item 8: falls back to the APG, then ACG,
+    // hit-die table when the class isn't one of the 5 `table_class_id`
+    // recognizes -- neither `ApgClassId::from_class_id_str` nor
+    // `AcgClassId::from_class_id_str` is registered with `table_class_id`,
+    // so this stays single-class-only by the same `[class_level]`
+    // destructure above, not a new multiclass path.
     let hit_die_size = match table_class_id(&class_level.class_id).and_then(hit_die_for) {
         Some(hit_die_size) => hit_die_size,
-        None => ApgClassId::from_class_id_str(&class_level.class_id).map(apg::hit_die_for)?,
+        None => match ApgClassId::from_class_id_str(&class_level.class_id) {
+            Some(apg_class_id) => apg::hit_die_for(apg_class_id),
+            None => AcgClassId::from_class_id_str(&class_level.class_id)
+                .map(acg::hit_die_for)?,
+        },
     };
 
     let mut total = 0_i16;
