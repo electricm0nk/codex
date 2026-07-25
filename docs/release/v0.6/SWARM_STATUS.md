@@ -1221,7 +1221,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T03:05:01
-Latest commit on tranche/6: c4d35d6c docs(v0.6): log QA's proactive per-class file-count survey (4 minutes ago) (2026-07-25T03:01:28-04:00)
+Last mechanical check: 2026-07-25T03:10:02
+Latest commit on tranche/6: 249983b0 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-25T03:05:01-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-25T02:20:14 frontend=2026-07-25T00:35:55 qa=2026-07-25T02:58:57 lead=2026-07-25T03:00:42
 <!-- AUTO-HEARTBEAT-END -->
