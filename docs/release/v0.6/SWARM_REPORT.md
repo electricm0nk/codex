@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Cheap-win scan exhausted (6 classes closed, confirmed complete). Directed to scope which of Skald/Bloodrager/Alchemist's own deferred spellcasting is cheapest to build next — checking whether any reuse an already-built spell list (e.g. Bard's, Sorcerer's) the way Druid reused Cleric's spell table |
+| backend | working | Comparison done and lead-verified: Skald is dramatically cheaper than Bloodrager/Alchemist — genuinely inherits Bard's entire spell list wholesale (`SPELLLIST:1|Bard`, zero per-spell tags of its own; Bloodrager/Alchemist both need fresh 100+ entry extractions). Greenlit — pulling Skald's spells-known/per-day table and writing the scoping doc now |
 | frontend | working | New assignment: scoping the choice-picker UI gap for Sorcerer/Cleric/Druid (bloodline+bond/domain/nature-bond) — a generic-vs-bespoke picker design question, the wire-contract change needed, and where it surfaces in the creation flow. Scoping doc first, no build yet |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
