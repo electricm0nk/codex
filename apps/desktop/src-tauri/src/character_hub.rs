@@ -2683,12 +2683,25 @@ mod tests {
              to the seeded canonical starter spell"
         );
 
+        // v0.6 alpha swarm, risks item 8, Inspire Courage slice (2026-07-25):
+        // `table_class_id` now recognizes Bard too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The bardic-performance-
+        // execution burden is also no longer unconditional -- it's a real,
+        // conditional engine now (`ground_or_block_bard_bardic_performance`),
+        // and `compose_character_input` seeds no `class_ability_activations`
+        // for Bard, so the (valid, "not performing") posture no longer trips
+        // it either (the "other performances not modeled" diagnostic it
+        // pushes unconditionally is deliberately non-claim-blocking, so it
+        // never appears in this claim-blocking-only set). Only the
+        // still-permanent spontaneous known-spell/per-day spell-posture
+        // diagnostic remains -- that slice is separately scoped, not part of
+        // this one.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:bard", 1),
-            generic_plus(&[
-                "class_feature.bard.bardic_performance_execution.unsupported",
-                "class_spell.bard.spontaneous_known_and_per_day.unsupported",
-            ])
+            BTreeSet::from(["class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned()]),
+            "Human Bard L1 (not performing) keeps only the still-permanent spell-posture \
+             diagnostic; the bardic-performance-execution diagnostic no longer fires on a valid \
+             (not performing) posture"
         );
 
         // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue

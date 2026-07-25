@@ -2213,6 +2213,18 @@ const BARD_WELL_VERSED_BONUS: i16 = 4;
 /// per day" (verified against d20pfsrd and legacy.aonprd.com, not assumed from
 /// Barbarian's superficially similar Rage-rounds progression).
 const BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL: i16 = 2;
+/// `ClassAbilityActivation.ability_id` for Bard Bardic Performance (v0.6
+/// alpha swarm, risks item 8) -- the flat compound-string idiom
+/// `character_input.rs`'s `ClassAbilityActivation` doc comment specifies,
+/// not a per-performance-type enum. The schema has no separate field
+/// distinguishing WHICH performance is active (Inspire Courage,
+/// Countersong, etc.), so an active `"bardic_performance"` entry is
+/// interpreted as Inspire Courage specifically -- the only performance
+/// this bounded slice grounds real mechanics for (mirrors this file's own
+/// pre-existing `inspire_courage_bonus` explanation, which already
+/// assumed the fixture's chosen performance is Inspire Courage without a
+/// separate choice gate).
+const BARD_BARDIC_PERFORMANCE_ABILITY_ID: &str = "bardic_performance";
 /// PF1 Core Rulebook level gate at which Bard gains Inspire Competence (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
@@ -6824,7 +6836,7 @@ fn race_display_label(race_id: &str) -> String {
 ///
 /// Deliberately NOT widened to all 11 core classes in one pass:
 /// `class_tables()` (`rules_tables/crb/class_tables.rs`) carries real data
-/// for all 11, but several of those classes (Bard, Monk) already have their
+/// for all 11, but one of those classes (Monk) already has its
 /// OWN deliberate standalone-only `class_chassis.<class>.*` chassis explanations elsewhere
 /// in this file, each with an existing `tests/*.rs` file asserting that
 /// class's own base-attack/base-save stay claim-blocked / not integrated
@@ -6886,6 +6898,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Druid)
     } else if class_id_str == BARBARIAN_CLASS_ID {
         Some(ClassId::Barbarian)
+    } else if class_id_str == BARD_CLASS_ID {
+        Some(ClassId::Bard)
     } else {
         None
     }
@@ -18882,6 +18896,28 @@ fn explain_bard_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8: validated regardless of whether Bard
+    // appears alone or in a multiclass mix, and regardless of race --
+    // checked BEFORE the single-class-only/Human gate below, mirroring the
+    // Ranger/Paladin/Sorcerer/Cleric/Druid/Barbarian fix exactly (a
+    // false-Computed/false-grounding risk now that `table_class_id`
+    // recognizes Bard generically too).
+    if let Some(bard_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BARD_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        ground_or_block_bard_bardic_performance(
+            input,
+            bard_level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
+    }
+
     let Some(level) = supported_bard_level(input) else {
         return;
     };
@@ -18898,13 +18934,14 @@ fn explain_bard_level1_spell_baseline(
         detail: format!(
             "Recognized deterministic Human Bard level {level} spell-bearing baseline: the \
              {BARD_CLASS_ID}:{level} class identity is acknowledged as a spontaneous arcane \
-             spell-bearing class with its named bardic performance-execution \
-             chassis-class-feature burden on the rules-core seam rather than an undocumented \
-             packet placeholder. This is a bounded recognition record only; it grounds no \
-             bardic performance execution (no start/maintain action economy, no round tracking \
-             or consumption, no countersong / distraction / fascinate resolution) and no spell \
+             spell-bearing class on the rules-core seam rather than an undocumented packet placeholder. \
+             This is a bounded recognition record only; it fabricates no spell \
              math (spells known, spells per day, spell DCs, bonus spells, or prepared posture), \
-             so it carries no fabricated mechanical value (+0)"
+             so it carries no fabricated mechanical value (+0). Inspire Courage's own \
+             bardic-performance-execution engine (start/maintain, round-budget validation, \
+             attack-bonus application) is real now -- see \
+             ground_or_block_bard_bardic_performance -- while countersong / distraction / \
+             fascinate resolution and the other bardic performances remain unmodeled"
         ),
     });
 
@@ -19043,18 +19080,12 @@ fn explain_bard_level1_spell_baseline(
     // rather than trusted from an earlier cycle's phrasing at face value: "At 5th
     // level, and every six bard levels thereafter, this bonus increases by +1" —
     // the increase lands AT level 5, not after it, so the earlier cycle's "stays
-    // +1 through level 5" framing turns out to have been precise). Only the flat
-    // magnitude is grounded; no performance-state engine exists to start the
-    // performance or apply the bonus to any computed total.
-    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL {
-        BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER
-    } else if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
-        BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER
-    } else if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
-        BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER
-    } else {
-        BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER
-    };
+    // +1 through level 5" framing turns out to have been precise). Uses
+    // `bard_inspire_courage_bonus` (v0.6 alpha swarm, risks item 8) rather than
+    // re-deriving the tier inline, the same pure function
+    // `active_bard_inspire_courage_attack_bonus` calls for the real conditional
+    // application.
+    let inspire_courage_bonus = bard_inspire_courage_bonus(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.inspire_courage_bonus".to_owned(),
         value: inspire_courage_bonus,
@@ -19068,11 +19099,13 @@ fn explain_bard_level1_spell_baseline(
              +4 exactly at bard level {BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL} (PF1 Core \
              Rulebook: \"At 5th level, and every six bard levels thereafter, this bonus \
              increases by +1\"), so it is +{inspire_courage_bonus} at level {level}; the next \
-             increase (to +5) is at bard level 23, out of scope for this bounded slice. This \
-             grounds only the flat magnitude of the fixture's chosen performance \
-             (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
-             any attack, damage, or save total because the performance-state engine \
-             (start/maintain action economy, round tracking) is not implemented"
+             increase (to +5) is at bard level 23, out of scope for this bounded slice. This is \
+             the identity/recognition record only; the real conditional application of the \
+             attack-roll bonus to the integrated baseline melee attack bonus (gated on a valid, \
+             active, in-budget performance) happens in compute_combat_baseline, not here. The \
+             weapon-damage and saves-vs-charm/fear bonuses are not applied to any integrated \
+             total: this codebase has no integrated weapon-damage total and no \
+             save-vs-effect-type sub-category to apply either to"
         ),
     });
 
@@ -19497,46 +19530,19 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): name the narrowed bardic performance-execution burden
-    // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
-    // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
-    // DC / affected-creature-count formulas). The performance-state engine, the
-    // two remaining level-1 performances (Countersong, Distraction), and
-    // Versatile Performance (the Bard's other 2nd-level class feature, which
-    // requires a choice-gated skill-substitution engine, not a flat number)
-    // remain unproven — none is attempted here.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.bard.bardic_performance_execution.unsupported".to_owned(),
-        message: format!(
-            "Bard level {level} remains blocked on its bardic performance-execution burden: \
-             the performance-state engine is not implemented (no start/maintain action \
-             economy, no round tracking or consumption of the grounded rounds-per-day budget, \
-             no application of the grounded inspire courage magnitude to any attack, damage, \
-             or save total, no application of the grounded fascinate DC or \
-             affected-creature-count to any actual Will-save resolution or targeting), the two \
-             remaining level-1 performances (countersong, distraction) are not grounded at all \
-             — both require an opposed Perform-check-vs-effect substitution resolution rather \
-             than a flat number — Versatile Performance (the Bard's other 2nd-level class \
-             feature) is not grounded either — it requires a choice-gated skill-substitution \
-             engine rather than a flat number — and Soothing Performance (the Bard's 12th-level \
-             class feature, granted only as a bounded identity record) is not executed either \
-             — it requires a healing-application engine and a condition-removal engine, \
-             neither of which exists in this codebase — and Frightening Tune (the Bard's \
-             14th-level class feature, granted only as a bounded flat Will-save DC magnitude) \
-             is not executed either — it requires the same performance-state engine plus a \
-             fear/frightened-condition-resolution engine, neither of which exists in this \
-             codebase — and Inspire Heroics (the Bard's 15th-level class feature, granted only \
-             as bounded flat save-bonus/AC-bonus/target-count magnitudes) is not executed \
-             either — it requires the same performance-state engine plus a \
-             targeting/save-application/AC-application engine, none of which exists in this \
-             codebase — and Deadly Performance (the Bard's 20th-level class capstone, granted \
-             only as a bounded flat Will-save DC magnitude) is not executed either — it \
-             requires the same performance-state engine plus a death-effect-resolution engine, \
-             neither of which exists in this codebase — so no Bard bardic-performance \
-             execution support is claimed"
-        ),
-        claim_blocking: true,
-    });
+    // v0.6 alpha swarm, risks item 8: the unconditional "bardic
+    // performance-execution engine is missing" diagnostic that used to
+    // live here moved to `ground_or_block_bard_bardic_performance`, called
+    // at the top of this function -- Inspire Courage's own engine is real
+    // now (start/maintain, round-budget validation, attack-bonus
+    // application), and its validity depends on
+    // `class_ability_activations`, not on level/race alone, so it could
+    // not stay a flat unconditional diagnostic at this position. The other
+    // six named-but-unexecuted performances (Countersong, Distraction,
+    // Versatile Performance, Soothing Performance, Frightening Tune,
+    // Inspire Heroics, Deadly Performance) are still named as permanently
+    // unmodeled -- see the non-blocking diagnostic
+    // `ground_or_block_bard_bardic_performance` pushes unconditionally.
 
     // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
     // Paladin spell_level_access record and the Cleric/Wizard
@@ -19841,6 +19847,212 @@ fn explain_bard_level1_spell_baseline(
                 .to_owned(),
         claim_blocking: true,
     });
+}
+
+/// Bard's Bardic Performance rounds-per-day budget: 4 + Charisma modifier +
+/// 2 * (level - 1), floored at 0 (PF1 Core Rulebook Bardic Performance: "4
+/// + his Charisma modifier ... at each level after 1st a bard can use
+/// bardic performance for 2 additional rounds per day"). Pure function
+/// (v0.6 alpha swarm, risks item 8) so the informational explanation
+/// record inside `explain_bard_level1_spell_baseline` and the real
+/// bardic-performance validation (`ground_or_block_bard_bardic_performance`,
+/// `active_bard_inspire_courage_attack_bonus`) call the identical formula
+/// rather than either duplicating it or parsing it back out of explanation
+/// text.
+fn bard_bardic_performance_rounds_per_day(charisma_modifier: i16, level: u8) -> i16 {
+    (4 + charisma_modifier
+        + BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL * (i16::from(level) - 1))
+        .max(0)
+}
+
+/// Bard's Inspire Courage magnitude tier, rising from +1 at level 1 to +2
+/// at `BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL`, +3 at
+/// `BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL`, +4 at
+/// `BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL`. Pure function (v0.6 alpha
+/// swarm, risks item 8) so the informational flat-magnitude explanation
+/// record and the real attack-bonus application
+/// (`active_bard_inspire_courage_attack_bonus`) share one source of truth.
+fn bard_inspire_courage_bonus(level: u8) -> i16 {
+    if level >= BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER
+    } else {
+        BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER
+    }
+}
+
+/// Whether `input` is a Bard validly, actively performing Inspire Courage
+/// right now, and if so, the attack/damage competence bonus to apply (v0.6
+/// alpha swarm, risks item 8). Class-ownership-gated by construction: only
+/// returns `Some` when `class_levels` actually contains Bard, so a
+/// non-Bard character's stray `class_ability_activations` entry for
+/// `BARD_BARDIC_PERFORMANCE_ABILITY_ID` is never read at all (mirrors the
+/// Barbarian Rage spoofed-activation shape exactly). The schema has no
+/// field distinguishing which performance is active, so an active,
+/// in-budget `"bardic_performance"` entry is interpreted as Inspire
+/// Courage specifically -- the only performance this bounded slice models
+/// (matches the pre-existing `inspire_courage_bonus` explanation record's
+/// own assumption). An activation present but not
+/// `ActiveState::EquippedActive`, or one that exceeds the grounded
+/// rounds-per-day budget, is treated the same as "not performing" here --
+/// pushes no diagnostic itself (`ground_or_block_bard_bardic_performance`
+/// is the single place that pushes the over-budget claim-blocking
+/// diagnostic and the informational recognition records).
+fn active_bard_inspire_courage_attack_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(u8, i16)> {
+    let bard_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BARD_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BARD_BARDIC_PERFORMANCE_ABILITY_ID)?;
+
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+        let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level);
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            return None;
+        }
+    }
+
+    Some((bard_level, bard_inspire_courage_bonus(bard_level)))
+}
+
+/// Grounds or claim-blocks Bard's Bardic Performance execution engine for
+/// `bard_level` (v0.6 alpha swarm, risks item 8). Called from the top of
+/// `explain_bard_level1_spell_baseline`, gated only on Bard class-ownership
+/// -- independent of race/single-class status, mirroring the Barbarian
+/// Rage gate-ordering fix exactly.
+///
+/// A character who simply isn't performing (no `class_ability_activations`
+/// entry for `BARD_BARDIC_PERFORMANCE_ABILITY_ID`, or one present but
+/// `active_state != EquippedActive`) is a genuinely valid PF1 posture --
+/// not every Bard is always performing -- so this grounds a real "not
+/// performing" recognition record rather than claim-blocking, mirroring
+/// "zero prepared spells is always valid" / "not raging is always valid"
+/// from the earlier classes. An activation that IS active but exceeds the
+/// grounded rounds-per-day budget is a genuine posture violation and
+/// claim-blocks, mirroring every other over-budget check landed this
+/// session. Separately, an unconditional, NON-blocking diagnostic always
+/// names the six other bardic performances (Countersong, Distraction,
+/// Versatile Performance, Soothing Performance, Frightening Tune, Inspire
+/// Heroics, Deadly Performance) as permanently unmodeled -- the schema has
+/// no way to represent using any of them, so this is a genuine, honest,
+/// non-blocking capability gap rather than a stub.
+fn ground_or_block_bard_bardic_performance(
+    input: &CharacterInput,
+    bard_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.bard.bardic_performance_execution.other_performances_not_modeled"
+            .to_owned(),
+        message: format!(
+            "Bard level {bard_level}: only Inspire Courage's mechanics are modeled among \
+             bardic performances -- the schema has no field distinguishing which performance is \
+             active, so Countersong, Distraction, Versatile Performance, Soothing Performance, \
+             Frightening Tune, Inspire Heroics, and Deadly Performance remain entirely \
+             unexecuted regardless of activation state (each requires its own opposed-check, \
+             skill-substitution, healing, condition-removal, or death-effect-resolution engine, \
+             none of which exists in this codebase). Named honestly rather than silently \
+             modeled or silently dropped; this does not block a genuinely valid Inspire Courage \
+             posture"
+        ),
+        claim_blocking: false,
+    });
+
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BARD_BARDIC_PERFORMANCE_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.bardic_performance_execution.not_performing".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard level {bard_level} is not currently performing (no \
+                 class_ability_activations entry for \"{BARD_BARDIC_PERFORMANCE_ABILITY_ID}\"): \
+                 a genuinely valid PF1 posture, so no performance bonus or budget is claimed. \
+                 This grounds the bardic-performance-execution engine's \"inactive\" branch \
+                 only; entering Inspire Courage is grounded separately below when an active, \
+                 in-budget activation is present"
+            ),
+        });
+        return;
+    };
+
+    let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level);
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.bard.bardic_performance_execution.rounds_exceeded".to_owned(),
+                message: format!(
+                    "Bard level {bard_level} bardic performance activation claims \
+                     {rounds_consumed} rounds consumed today, exceeding the grounded \
+                     rounds-per-day budget of {rounds_per_day} (4 + Charisma modifier \
+                     ({charisma_modifier}) + 2 * (level - 1), floored at 0): a genuine posture \
+                     violation, so no performance bonus is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let bonus = bard_inspire_courage_bonus(bard_level);
+            let rounds_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.bard.bardic_performance_execution.active".to_owned(),
+                value: bonus,
+                detail: format!(
+                    "Bard level {bard_level} is actively performing Inspire Courage, within \
+                     the grounded rounds-per-day budget ({rounds_per_day} rounds; \
+                     {rounds_consumed_today} consumed today). The +{bonus} competence bonus on \
+                     attack rolls is applied to the integrated baseline melee attack bonus -- \
+                     see compute_combat_baseline. The matching +{bonus} competence bonus on \
+                     weapon damage rolls and the +{bonus} morale bonus on saves against charm \
+                     and fear effects are not applied to any integrated total: this codebase has \
+                     no integrated weapon-damage total and no save-vs-effect-type sub-category \
+                     to apply either to, so both stay flat, non-fabricated magnitudes only \
+                     (see class_chassis.bard.inspire_courage_bonus)"
+                ),
+            });
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.bard.bardic_performance_execution.not_performing".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Bard level {bard_level} has a \"{BARD_BARDIC_PERFORMANCE_ABILITY_ID}\" \
+                     activation entry but it is not active for this snapshot: a genuinely valid \
+                     PF1 posture (available but not currently performing), so no performance \
+                     bonus or budget is claimed"
+                ),
+            });
+        }
+    }
 }
 
 /// Compute total saving throws as the grounded Fighter level 1–3 base save plus the
@@ -20181,12 +20393,26 @@ fn compute_combat_baseline(
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = ability_modifiers.strength;
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    // v0.6 alpha swarm, risks item 8: Bard Inspire Courage's competence
+    // bonus on attack rolls applies here -- class-ownership-gated by
+    // `active_bard_inspire_courage_attack_bonus` construction, 0 for every
+    // non-Bard or not-actively-performing character.
+    let inspire_courage_attack_bonus =
+        active_bard_inspire_courage_attack_bonus(input, ability_modifiers)
+            .map(|(_, bonus)| bonus)
+            .unwrap_or(0);
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
-        + weapon_training_bonus;
+        + weapon_training_bonus
+        + inspire_courage_attack_bonus;
     let weapon_training_detail = if weapon_training_bonus > 0 {
         format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
+    } else {
+        String::new()
+    };
+    let inspire_courage_detail = if inspire_courage_attack_bonus > 0 {
+        format!(" + Bard Inspire Courage competence bonus (+{inspire_courage_attack_bonus})")
     } else {
         String::new()
     };
@@ -20197,7 +20423,7 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}; \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
@@ -23318,5 +23544,181 @@ mod barbarian_dispatch_widening_safety_tests {
         // Base Strength 16 (+4 with the fixture's chosen Human +2 floating
         // Strength bonus applied) + Greater Rage's +3 modifier bonus = +7.
         assert_eq!(receipt.computation.ability_modifiers.strength, 7);
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8: Bard's Inspire Courage is the second
+/// class to exercise the combat-time activation-state pattern Barbarian's
+/// cycle proved out. Unlike Barbarian, Bard still carries a SEPARATE
+/// permanent diagnostic (`class_spell.bard.spontaneous_known_and_per_day.unsupported`,
+/// out of scope for this slice), so a valid Inspire Courage posture stays
+/// `Blocked` overall -- these tests check the bardic-performance-execution
+/// diagnostic and the real attack-bonus application specifically, not the
+/// overall receipt status.
+#[cfg(test)]
+mod bard_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        BARD_BARDIC_PERFORMANCE_ABILITY_ID, BARD_CLASS_ID, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_bard_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BARD_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn claim_blocking_ids(input: &CharacterInput) -> Vec<String> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect()
+    }
+
+    /// A single-class Human Bard who is not performing (no
+    /// `class_ability_activations` entry at all) is a genuinely valid PF1
+    /// posture -- not every Bard is always performing -- and the
+    /// bardic-performance-execution diagnostic does not fire (the
+    /// remaining spell-posture diagnostic is a separate, still-permanent
+    /// burden, unrelated to this slice).
+    #[test]
+    fn single_class_bard_not_performing_does_not_trip_the_performance_diagnostic() {
+        let input = human_bard_input(1);
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.iter().any(|id| id.starts_with("class_feature.bard.bardic_performance_execution")),
+            "a Bard who isn't performing is a genuinely valid PF1 posture: {ids:?}"
+        );
+        assert!(
+            ids.contains(&"class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned()),
+            "the separate, still-permanent spell-posture diagnostic must remain: {ids:?}"
+        );
+    }
+
+    /// A single-class Human Bard actively, validly performing Inspire
+    /// Courage (within budget) does not trip the performance diagnostic,
+    /// and the real attack-bonus is genuinely applied to the integrated
+    /// baseline melee attack bonus, not merely described.
+    #[test]
+    fn single_class_bard_actively_performing_in_budget_applies_the_attack_bonus() {
+        let mut input = human_bard_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARD_BARDIC_PERFORMANCE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(1),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let ids: Vec<String> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id.clone())
+            .collect();
+        assert!(
+            !ids.iter().any(|id| id.starts_with("class_feature.bard.bardic_performance_execution")),
+            "an active, in-budget Inspire Courage is a genuinely valid PF1 posture: {ids:?}"
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // Bard level 1 base attack bonus (3/4 BAB: 1*3/4 = 0) + Strength
+        // modifier (+4, fixture's chosen Human +2 Strength applied to
+        // base 16) + Weapon Focus (+1) + Inspire Courage (+1, first tier)
+        // = 6.
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "Inspire Courage's attack-roll bonus must be applied: {melee_attack_bonus:?}"
+        );
+    }
+
+    /// A Bardic Performance activation that exceeds the grounded
+    /// rounds-per-day budget is a genuine posture violation and must
+    /// claim-block -- never silently capped.
+    #[test]
+    fn single_class_bard_over_budget_performance_claim_blocks() {
+        let mut input = human_bard_input(1);
+        // Charisma 8 (-1 modifier): rounds per day = max(4 + (-1) + 2*(1-1), 0) = 3.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARD_BARDIC_PERFORMANCE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(4),
+        });
+
+        let ids = claim_blocking_ids(&input);
+        assert!(
+            ids.contains(
+                &"class_feature.bard.bardic_performance_execution.rounds_exceeded".to_owned()
+            ),
+            "expected the over-budget claim-blocking diagnostic: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert_eq!(
+            melee_attack_bonus.value, 5,
+            "no Inspire Courage bonus is applied for an over-budget, invalid posture: \
+             {melee_attack_bonus:?}"
+        );
+    }
+
+    /// A non-Bard character carrying a spoofed `"bardic_performance"`
+    /// activation entry must have it silently ignored, not applied -- the
+    /// class-ownership gate is by construction
+    /// (`active_bard_inspire_courage_attack_bonus` only ever reads
+    /// `class_ability_activations` after confirming `class_levels`
+    /// contains Bard), not a bolt-on rejection.
+    #[test]
+    fn non_bard_characters_spoofed_performance_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARD_BARDIC_PERFORMANCE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_eq!(
+            receipt.status,
+            super::HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Bard performance entry: {:?}",
+            receipt.computation.diagnostics
+        );
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "a non-Bard character's spoofed performance entry must never apply a bonus: \
+             {melee_attack_bonus:?}"
+        );
     }
 }
