@@ -2651,19 +2651,19 @@ mod tests {
         // diagnostic is also no longer unconditional -- it's a real
         // validation now, and compose_character_input seeds no Sorcerer
         // spell selections, so the (valid, empty) known-spell posture no
-        // longer trips it. The bloodline-power diagnostic remains here too
-        // -- not because it's still permanently unconditional (a later
-        // slice made it real/conditional for a genuinely recognized Arcane
-        // bloodline + Arcane Bond choice), but because compose_character_input
-        // seeds no bloodline or Arcane Bond choice at all for this bare
-        // fixture, so it falls into the still-blocking "no bloodline
-        // recognized" branch.
+        // longer trips it. The bloodline-power diagnostic used to remain
+        // here too, since compose_character_input seeded no bloodline or
+        // Arcane Bond choice for this bare fixture. Choice-picker Path A
+        // (2026-07-25) now seeds a canonical Arcane bloodline + familiar
+        // Arcane Bond choice for every Sorcerer, mirroring Wizard's own
+        // starter-spell precedent, so that diagnostic is genuinely cleared
+        // too -- Human Sorcerer L1 now reaches Computed with zero
+        // claim-blocking diagnostics, the same golden path as Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
-            BTreeSet::from([
-                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
-                    .to_owned(),
-            ])
+            BTreeSet::new(),
+            "Human Sorcerer L1 now reaches Computed with zero claim-blocking diagnostics, \
+             thanks to the seeded canonical bloodline + arcane bond choice"
         );
 
         // SD-21 Epic 6 gave Wizard a real compute_wizard_chassis (BAB + saves, via
@@ -2739,15 +2739,19 @@ mod tests {
         // diagnostic is also no longer unconditional -- it's a real
         // validation now, and compose_character_input seeds no Cleric
         // spell selections, so the (valid, empty) prepared-spell posture no
-        // longer trips it. The domain-powers diagnostic remains here too --
-        // not because it's still permanently unconditional (a later slice
-        // made Good domain's Touch of Good genuinely closable, self-scoped),
-        // but because compose_character_input seeds no domain choice at
-        // all for this bare fixture, so it falls into the still-blocking
-        // catch-all branch (no domain chosen).
+        // longer trips it. The domain-powers diagnostic used to remain
+        // here too, since compose_character_input seeded no domain choice
+        // for this bare fixture. Choice-picker Path A (2026-07-25) now
+        // seeds a canonical Good domain choice for every Cleric, mirroring
+        // Wizard's own starter-spell precedent, so that diagnostic is
+        // genuinely cleared too -- Human Cleric L1 now reaches Computed
+        // with zero claim-blocking diagnostics, the same golden path as
+        // Sorcerer/Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
-            BTreeSet::from(["class_feature.cleric.domain_powers.unsupported".to_owned()])
+            BTreeSet::new(),
+            "Human Cleric L1 now reaches Computed with zero claim-blocking diagnostics, \
+             thanks to the seeded canonical Good domain choice"
         );
 
         // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25):
@@ -2757,15 +2761,19 @@ mod tests {
         // validation now, and compose_character_input seeds no Druid
         // spell selections, so the (valid, empty) prepared-spell posture
         // no longer trips it. The animal-companion/nature-bond diagnostic
-        // remains here too -- not because it's still permanently
-        // unconditional (a later slice made an animal companion's own
-        // Wolf stat block genuinely closable at Druid level 1), but
-        // because compose_character_input seeds no nature-bond choice at
-        // all for this bare fixture, so it falls into the still-blocking
-        // catch-all branch (no nature bond chosen).
+        // used to remain here too, since compose_character_input seeded no
+        // nature-bond choice for this bare fixture. Choice-picker Path A
+        // (2026-07-25) now seeds a canonical animal-companion nature-bond
+        // choice for every Druid (Wolf is automatic once the bond type is
+        // recognized, no species picker needed), so that diagnostic is
+        // genuinely cleared too -- Human Druid L1 now reaches Computed
+        // with zero claim-blocking diagnostics, the same golden path as
+        // Cleric/Sorcerer/Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
-            BTreeSet::from(["class_feature.druid.animal_companion.unsupported".to_owned()])
+            BTreeSet::new(),
+            "Human Druid L1 now reaches Computed with zero claim-blocking diagnostics, thanks \
+             to the seeded canonical animal-companion nature-bond choice"
         );
 
         // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) This
@@ -3098,9 +3106,13 @@ mod tests {
     #[test]
     fn create_character_at_root_grants_no_wealth_when_the_build_is_blocked() {
         let root = tempdir("create-character-starting-wealth-blocked");
-        // Cleric does not reach Computed today (no supported chassis) even
-        // though starting_wealth_gp itself recognizes "class:cleric".
-        let request = request_for_class("race:human", "class:cleric", 1);
+        // Oracle does not reach Computed today (no supported chassis) even
+        // though starting_wealth_gp itself recognizes "class:oracle". Cleric
+        // used to be this test's subject, but choice-picker Path A
+        // (2026-07-25) seeds a canonical domain choice for Cleric, so Cleric
+        // now genuinely reaches Computed and can no longer serve as a
+        // still-blocked fixture here.
+        let request = request_for_class("race:human", "class:oracle", 1);
 
         let response = create_character_at_root(&root, &request, "test-version".to_owned())
             .expect("create call should not error");
@@ -3108,7 +3120,7 @@ mod tests {
         match response {
             CreateCharacterResponse::Blocked { .. } => {}
             CreateCharacterResponse::Saved { .. } => {
-                panic!("Human Cleric level 1 is not expected to reach Computed in this build")
+                panic!("Human Oracle level 1 is not expected to reach Computed in this build")
             }
         }
 

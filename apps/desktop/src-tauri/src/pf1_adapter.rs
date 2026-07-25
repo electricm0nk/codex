@@ -105,6 +105,18 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 /// exists).
 const WIZARD_STARTER_SPELL_ID: &str = "Light";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure): needed by
+/// `compose_character_input`'s Sorcerer/Cleric/Druid canonical-choice
+/// seeding below, mirroring `WIZARD_CLASS_ID`'s own precedent exactly --
+/// each of these three classes' engine (`pilot_compute.rs`) can reach
+/// `Computed` today, but only once its own real, recognized choice is
+/// present, and no picker anywhere in the creation UI can submit one (see
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`). Not re-exported
+/// from `character_hub.rs` since nothing outside this file needs them yet.
+const SORCERER_CLASS_ID: &str = "class:sorcerer";
+const CLERIC_CLASS_ID: &str = "class:cleric";
+const DRUID_CLASS_ID: &str = "class:druid";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -327,6 +339,65 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
             source_class_id: WIZARD_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Prepared,
+        });
+    }
+
+    // v0.6 alpha swarm (Path A choice-picker gap closure, per
+    // `docs/release/v0.6/choice-picker-ui-gap-scoping.md`): Sorcerer,
+    // Cleric, and Druid can each genuinely reach `Computed` today, but
+    // only once their own real, recognized choice is present -- and, same
+    // as Wizard's own school-specialization gap before this fix, nothing
+    // in the creation UI has ever had a way to submit one (no picker, no
+    // wire-contract field). Mirrors the Wizard block immediately above:
+    // a fixed, canonical default, silently applied to every character of
+    // that class, NOT a real in-game choice -- that picker is separate,
+    // larger, out-of-scope future work (Path B in the scoping doc). Unlike
+    // Wizard, none of these three classes need a bootstrapped
+    // known/prepared spell to avoid a save-time deadlock (each engine's
+    // own known-spell posture is genuinely valid with zero known spells,
+    // proven directly by each closure's own `..._reaches_computed` test),
+    // so no `spells_selected` entries are seeded here.
+    if request.class_id == SORCERER_CLASS_ID {
+        // Verified directly against `pilot_compute.rs`'s own
+        // `single_class_sorcerer_with_arcane_bond_recognized_reaches_computed`
+        // test: Arcane bloodline + a familiar Arcane Bond (chosen over
+        // bonded object as the more commonly played, equally-supported
+        // option -- both are recognized identically) is sufficient, with
+        // no other precondition, to reach `Computed`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:sorcerer_bloodline".to_owned(),
+            selection_id: "bloodline:arcane".to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:sorcerer_arcane_bond".to_owned(),
+            selection_id: "bond:familiar".to_owned(),
+        });
+    } else if request.class_id == CLERIC_CLASS_ID {
+        // Verified directly against `pilot_compute.rs`'s own Cleric
+        // closure: a recognized Good domain (with no Healing domain also
+        // chosen, and Touch of Good correctly left inactive -- a
+        // genuinely valid PF1 posture, not every Good-domain Cleric is
+        // using this limited-use power at every moment) is sufficient to
+        // reach `Computed`. No `class_ability_activations` entry is
+        // seeded for Touch of Good -- "not currently active" is the
+        // honest default, mirroring how Barbarian Rage's own "not raging"
+        // default needs no activation entry either.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:cleric_domain".to_owned(),
+            selection_id: "domain:good".to_owned(),
+        });
+    } else if request.class_id == DRUID_CLASS_ID {
+        // Verified directly against `pilot_compute.rs`'s own
+        // `single_class_druid_level1_with_animal_companion_reaches_computed`
+        // test: a recognized animal-companion nature bond is sufficient,
+        // with no other precondition, to reach `Computed`. No species
+        // choice is seeded -- Wolf is the only companion species this
+        // codebase's Druid/Hunter seam ever grounds, assumed automatically
+        // once the bond type is recognized (no species-selection input is
+        // modeled for this class at all).
+        selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:druid_nature_bond".to_owned(),
+            selection_id: "bond:animal_companion".to_owned(),
         });
     }
 
