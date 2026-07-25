@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | schema field broke 64+8 construction sites (real scale surprise, self-caught, mechanical zero-judgment fix); applied and lead-spot-checked clean against QA's in-flight files; full workspace build running |
+| backend | working | schema fix applied clean (64+8 sites); flagged 3 previously-unknown stale ge06_* negative-control tests found during lead's full-suite verification; continuing Barbarian pillar integration |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
-| qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, authoring Sorcerer's fixes directly (backend never delivered drafts) |
+| qa | working | Sorcerer batch landed and lead-verified 100% (76fe82da, all 27 files run clean); moving to Cleric next |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
