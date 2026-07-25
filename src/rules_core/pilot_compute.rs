@@ -122,6 +122,7 @@ use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
+use super::rules_tables::crb::cleric_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
 use super::rules_tables::crb::sorcerer_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
@@ -6787,6 +6788,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Paladin)
     } else if class_id_str == SORCERER_CLASS_ID {
         Some(ClassId::Sorcerer)
+    } else if class_id_str == CLERIC_CLASS_ID {
+        Some(ClassId::Cleric)
     } else {
         None
     }
@@ -16844,6 +16847,57 @@ fn explain_cleric_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25): both Cleric
+    // burdens are validated/checked regardless of whether Cleric appears
+    // alone or in a multiclass mix, and regardless of race -- checked
+    // BEFORE the single-class-only/Human gate below, mirroring the Ranger/
+    // Paladin/Sorcerer fix exactly. The domain-powers burden is permanently
+    // unconditional (no domain-power execution or domain spell-list content
+    // is grounded anywhere in this codebase, so this never becomes valid).
+    // The prepared-divine spell posture burden is a real, conditional
+    // validation, mirroring `unmet_ranger_prepared_spell_conditions` exactly
+    // (a PREPARED caster, like Ranger/Paladin, not spontaneous like
+    // Sorcerer): validates every `AcquisitionMode::Prepared` selection with
+    // `source_class_id == "class:cleric"` against the real
+    // `cleric_spell_list::CLERIC_SPELL_LIST` (the general list only --
+    // domain spells stay part of the separate domain-powers burden), the
+    // cleric's own spell-level access ceiling (1st+; orisons have no access
+    // gate, always available from level 1), and the per-level slot budget
+    // (base + Wisdom bonus, excluding the separate domain spell slot).
+    if let Some(cleric_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == CLERIC_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
+            message: "Cleric remains blocked on its domain powers burden: domain selection, \
+                 domain spell-list contents, and the granted powers of any domain (e.g. Good's \
+                 Touch of Good, Healing's Rebuke Death) are not implemented anywhere in this \
+                 codebase, so no Cleric domain-power support is claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+
+        let unmet = unmet_cleric_prepared_spell_conditions(input, cleric_level, ability_modifiers);
+        if unmet.is_empty() {
+            ground_cleric_prepared_spells(input, cleric_level, ability_modifiers, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.cleric.prepared_divine.unsupported".to_owned(),
+                message: format!(
+                    "Cleric remains blocked on its prepared divine spell posture burden: Cleric \
+                     is a full 9th-level divine caster (spells begin at cleric level 1); unmet \
+                     prepared-spell posture: {}",
+                    unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
+    }
+
     let Some(level) = supported_cleric_level(input) else {
         return;
     };
@@ -17186,40 +17240,370 @@ fn explain_cleric_level1_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): name the domain powers burden explicitly, narrowed by the
-    // grounding above. Channel Energy, the domain choice seam, the flat domain spell
-    // slot count, Touch of Good (bonus and uses per day), and Rebuke Death's uses per
-    // day are all grounded; the Rebuke Death heal amount and the domain spell-list
-    // contents remain entirely unproven.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
-        message: format!(
-            "Cleric level {level} remains blocked on its domain powers burden: \
-             the granted powers of the chosen domains (Good: Touch of Good; Healing: Rebuke \
-             Death — each usable 3 + Wisdom modifier times per day) narrow to a single unproven \
-             piece each cycle grounds more of. Touch of Good's flat sacred-bonus magnitude and \
-             flat uses-per-day count are now both grounded. Rebuke Death's flat uses-per-day \
-             count is grounded, but its heal amount (1d4 points of damage plus 1 for every two \
-             cleric levels, usable only on a creature below 0 hit points) is not a flat number \
-             and remains unproven, along with the domain spell-list contents that could fill \
-             the grounded domain spell slot. No touch-attack resolution, healing-application \
-             engine, hit-point-state gating check, or per-use consumption tracking exists for \
-             either power, so no further Cleric domain power or domain spell support is claimed"
+    // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25): the real
+    // Cleric spell math ladder, built from scratch (unlike Ranger/Paladin/
+    // Sorcerer, none of this pre-existed -- confirmed by direct grep before
+    // starting). Cleric is a full 9th-level caster (spells begin at cleric
+    // level 1, including 0th-level orisons), so this covers spell levels
+    // 0-9, not the 4-column partial-caster shape. The base spells-per-day
+    // table was verified against two independent primary sources
+    // (d20pfsrd.com and the Archives of Nethys aonprd.com mirror,
+    // byte-for-byte identical for all 20 rows): level 1 "3/1/—/—/—/—/—/—/—/—",
+    // level 2 "4/2/—/—/—/—/—/—/—/—", level 3 "4/2/1/—/—/—/—/—/—/—", level 4
+    // "4/3/2/—/—/—/—/—/—/—", level 5 "4/3/2/1/—/—/—/—/—/—", level 6
+    // "4/3/3/2/—/—/—/—/—/—", level 7 "4/4/3/2/1/—/—/—/—/—", level 8
+    // "4/4/3/3/2/—/—/—/—/—", level 9 "4/4/4/3/2/1/—/—/—/—", level 10
+    // "4/4/4/3/3/2/—/—/—/—", level 11 "4/4/4/4/3/2/1/—/—/—", level 12
+    // "4/4/4/4/3/3/2/—/—/—", level 13 "4/4/4/4/4/3/2/1/—/—", level 14
+    // "4/4/4/4/4/3/3/2/—/—", level 15 "4/4/4/4/4/4/3/2/1/—", level 16
+    // "4/4/4/4/4/4/3/3/2/—", level 17 "4/4/4/4/4/4/4/3/2/1", level 18
+    // "4/4/4/4/4/4/4/3/3/2", level 19 "4/4/4/4/4/4/4/4/3/3", level 20
+    // "4/4/4/4/4/4/4/4/4/4" (these are the BASE counts only, excluding the
+    // separate "+1" domain spell slot per accessible spell level, already
+    // grounded above as `class_chassis.cleric.domain_spell_slot` -- the raw
+    // table's own "+1" notation names that domain slot, verified via both
+    // primary sources' own rule text: "A cleric gains one domain spell slot
+    // for each level of cleric spell she can cast, from 1st on up"). The
+    // 0th-level (orison) column never gets a domain-slot addition or a
+    // Wisdom bonus (PF1 rule: bonus spells apply only to spell levels 1+),
+    // and the level thresholds for each spell-level column's first
+    // appearance exactly match the already-grounded
+    // CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL through
+    // CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL constants (cross-checked
+    // against this same table, not independently re-derived).
+    let cleric_base_spells_per_day = cleric_base_spells_per_day_table(level);
+    for (spell_level, base_count) in cleric_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.cleric.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Cleric base spells per day at cleric level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Cleric class table's spells-per-day row (verified against the raw table rows \
+                 of both primary sources; a literal table lookup, not a derived formula; \
+                 excludes the separate domain spell slot, already grounded above). This grounds \
+                 the base count only: bonus spells per day from a high Wisdom are never \
+                 computed here, no prepared posture or spell-source lineage is grounded, and no \
+                 spell save DCs are computed"
+            ),
+        });
+    }
+
+    // Grounded: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level 1+ (0th-level orisons have no save-DC record, mirroring
+    // the Sorcerer/Wizard/Ranger/Paladin precedent of DC records starting
+    // at 1st level). Verified against both primary sources, which state the
+    // rule identically: "The Difficulty Class for a saving throw against a
+    // cleric's spell is 10 + the spell level + the cleric's Wisdom modifier."
+    let cleric_spell_level_access = cleric_spell_level_access(level);
+    for spell_level in 1..=cleric_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.wisdom;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.cleric.spell_save_dc.spell_level_{spell_level}"),
+            value: spell_save_dc,
+            detail: format!(
+                "Cleric spell save DC at cleric level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Wisdom modifier {} = {spell_save_dc} (PF1 Core Rulebook, \
+                 verified identically on both primary sources: \"The Difficulty Class for a \
+                 saving throw against a cleric's spell is 10 + the spell level + the cleric's \
+                 Wisdom modifier\"). This grounds the base DC formula only: no saving-throw \
+                 resolution, no target, no spell selection, and no domain DC modifiers are \
+                 computed",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // Grounded: the bonus spells per day from a high Wisdom, one record per
+    // ACCESSIBLE spell level 1+, from PF1's shared Table: Ability Modifiers
+    // and Bonus Spells (the same shared formula already grounded for
+    // Ranger/Paladin/Sorcerer/Wizard): for modifier m and spell level N, 0
+    // when m < N, otherwise (m - N)/4 + 1. Orisons (0th level) never gain a
+    // bonus slot from Wisdom, per the same rule text cited for every other
+    // caster in this family.
+    for spell_level in 1..=cleric_spell_level_access {
+        let bonus_spells = ability_bonus_spells(ability_modifiers.wisdom, spell_level);
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.cleric.bonus_spells_per_day.spell_level_{spell_level}"),
+            value: bonus_spells,
+            detail: format!(
+                "Cleric bonus spells per day at cleric level {level}, spell level {spell_level}: \
+                 {bonus_spells} from Wisdom modifier {} (PF1 Core Rulebook Table: Ability \
+                 Modifiers and Bonus Spells). A computed 0 means the modifier grants no bonus at \
+                 this spell level; it is never added to the base per-day count here -- no total \
+                 is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // Grounded: the TOTAL spells per day -- the pure sum of the base table
+    // count and the Wisdom bonus count (0 for orisons) per accessible spell
+    // level, completing the integrated totals across the whole partial/
+    // full-caster family now grounded in this codebase. This deliberately
+    // does NOT include the separate domain spell slot (its own contents
+    // remain the unproven domain-powers burden).
+    for (spell_level, base_count) in cleric_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus_spells = if spell_level == 0 {
+            0
+        } else {
+            ability_bonus_spells(ability_modifiers.wisdom, spell_level as i16)
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.cleric.total_spells_per_day.spell_level_{spell_level}"),
+            value: total_spells,
+            detail: format!(
+                "Cleric total spells per day at cleric level {level}, spell level {spell_level}: \
+                 base table count {base_count} + Wisdom bonus {bonus_spells} = {total_spells} -- \
+                 the pure sum of the two separately grounded records, giving the actual \
+                 castable slot count per day (excluding the separate domain spell slot). This \
+                 grounds the count only: no prepared-posture selection, no casting execution, \
+                 no slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
+
+    // (v0.6 alpha swarm, risks item 8, sixth slice, 2026-07-25) Both
+    // remaining burdens are now pushed unconditionally at the top of this
+    // function (see that push site's own doc comment for why): the
+    // domain-powers burden is permanently unconditional, and the prepared
+    // divine spell posture is now a real, conditional validation.
+}
+
+/// The highest ACCESSIBLE cleric spell level (1st+) at the given cleric
+/// level -- orisons (0th level) have no access gate at all, always
+/// available from level 1. Pure function, race-independent, mirrors
+/// `ranger_spell_level_access`/`paladin_spell_level_access`/
+/// `sorcerer_spell_level_access` -- extracted so both the (Human-only)
+/// flat explanation block above and the real prepared-spell validation
+/// below share one source of truth.
+fn cleric_spell_level_access(level: u8) -> i16 {
+    if level >= CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        9
+    } else if level >= CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        8
+    } else if level >= CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        7
+    } else if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        6
+    } else if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        5
+    } else if level >= CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else {
+        1
+    }
+}
+
+/// The PF1 Core Rulebook Cleric class table's BASE spells-per-day row, one
+/// entry per spell level 0-9 (`None` for an inaccessible "—" column; index
+/// 0 is orisons). A literal table lookup, not a derived formula -- verified
+/// against two independent primary sources (d20pfsrd.com and the Archives
+/// of Nethys aonprd.com mirror, byte-for-byte identical) -- see
+/// `explain_cleric_level1_spell_baseline`'s own doc comment for the full
+/// row-by-row citation. Excludes the separate "+1" domain spell slot,
+/// already grounded independently as `class_chassis.cleric.domain_spell_slot`.
+/// Pure function, race-independent, extracted for the same reason as
+/// `cleric_spell_level_access`.
+fn cleric_base_spells_per_day_table(level: u8) -> [Option<i16>; 10] {
+    match level {
+        1 => [Some(3), Some(1), None, None, None, None, None, None, None, None],
+        2 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(4), Some(2), Some(1), None, None, None, None, None, None, None],
+        4 => [Some(4), Some(3), Some(2), None, None, None, None, None, None, None],
+        5 => [Some(4), Some(3), Some(2), Some(1), None, None, None, None, None, None],
+        6 => [Some(4), Some(3), Some(3), Some(2), None, None, None, None, None, None],
+        7 => [Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None, None],
+        8 => [Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None, None],
+        9 => [Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        10 => [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None],
+        11 => [Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        12 => [Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None],
+        13 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None]
+        }
+        14 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None]
+        }
+        15 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None]
+        }
+        16 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None]
+        }
+        17 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2),
+            Some(1),
+        ],
+        18 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3),
+            Some(2),
+        ],
+        19 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3),
+            Some(3),
+        ],
+        20 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4),
+            Some(4),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
+    }
+}
+
+/// The real per-day slot budget per spell level 0-9 (base table count +
+/// Wisdom bonus for 1st+, orisons never get a bonus, `None` for an
+/// inaccessible column), excluding the separate domain spell slot.
+fn cleric_total_spells_per_day(level: u8, wisdom_modifier: i16) -> [Option<i16>; 10] {
+    let base = cleric_base_spells_per_day_table(level);
+    let mut total = [None; 10];
+    for (spell_level, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus = if spell_level == 0 {
+            0
+        } else {
+            ability_bonus_spells(wisdom_modifier, spell_level as i16)
+        };
+        total[spell_level] = Some(base_count + bonus);
+    }
+    total
+}
+
+/// Return the list of unmet conditions for Cleric's real prepared-spell
+/// posture. Mirrors `unmet_ranger_prepared_spell_conditions` exactly,
+/// substituting Wisdom (same ability) and
+/// `cleric_spell_list::CLERIC_SPELL_LIST` (the general list only -- domain
+/// spells stay part of the separate domain-powers burden) for the ranger
+/// list, and covering spell levels 0-9 (a full caster) instead of 1-4 (a
+/// partial caster). An empty list means the posture is fully valid: every
+/// `AcquisitionMode::Prepared` selection with `source_class_id ==
+/// "class:cleric"` names a real general-list spell, at a spell level within
+/// the cleric's own access ceiling (0 always accessible), and no spell
+/// level's prepared count exceeds that level's total slot budget (base +
+/// Wisdom bonus, excluding the domain slot). Zero prepared spells is always
+/// valid, same reasoning as every other class in this family.
+fn unmet_cleric_prepared_spell_conditions(
+    input: &CharacterInput,
+    cleric_level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == CLERIC_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = cleric_spell_level_access(cleric_level);
+    let total_per_day = cleric_total_spells_per_day(cleric_level, ability_modifiers.wisdom);
+
+    let mut consumed_per_level: [i16; 10] = [0; 10];
+    for spell_id in &prepared {
+        let Some(spell_level) = cleric_spell_list::cleric_spell_level(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook general \
+                 cleric spell list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at cleric level {cleric_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (spell_level, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let total_slots = total_per_day[spell_level].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base + Wisdom bonus, excluding the domain slot)"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spell posture once
+/// `unmet_cleric_prepared_spell_conditions` reports an empty unmet list.
+/// Mirrors `ground_ranger_prepared_spells` exactly, substituting Wisdom and
+/// covering spell levels 0-9.
+fn ground_cleric_prepared_spells(
+    input: &CharacterInput,
+    cleric_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == CLERIC_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.cleric.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Cleric level {cleric_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 Core Rulebook general cleric spell list (`cleric_spell_list::CLERIC_SPELL_LIST`), \
+             the cleric's own spell-level access ceiling, and the per-level slot budget (base \
+             table count + Wisdom bonus, excluding the separate domain spell slot). This grounds \
+             the prepared-spell selection for real; it computes no spell save DC resolution \
+             against a target and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.cleric.prepared_divine.unsupported".to_owned(),
-        message:
-            "Cleric remains blocked on its prepared divine spell posture burden: spells prepared \
-             from the full Cleric spell list, spontaneous cure/inflict conversion, spell slots per \
-             day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for this \
-             level-1 spell baseline and no spell math is fabricated"
-                .to_owned(),
-        claim_blocking: true,
-    });
+    let total_per_day = cleric_total_spells_per_day(cleric_level, ability_modifiers.wisdom);
+    for (spell_level, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.cleric.total_spells_per_day.spell_level_{spell_level}"),
+            value: *total,
+            detail: format!(
+                "Cleric level {cleric_level} total spells per day at spell level {spell_level}: \
+                 {total} (base table count + Wisdom bonus, excluding the separate domain spell \
+                 slot -- the same records already grounded as \
+                 `class_chassis.cleric.total_spells_per_day.spell_level_{spell_level}` for a \
+                 Human cleric, computed here independent of race). This is the real slot budget \
+                 the daily preparation selection above is validated against"
+            ),
+        });
+    }
 }
 
 /// The bounded Druid milestone level this decomposition surface grounds, if any.
@@ -19437,13 +19821,24 @@ mod multiclass_bab_save_stacking_generalization_tests {
     /// deliberately out of this task's scope).
     #[test]
     fn fighter1_cleric1_stays_out_of_this_tasks_scoped_allowlist() {
+        // (v0.6 alpha swarm, risks item 8, sixth slice, 2026-07-25) `table_class_id`
+        // now recognizes Cleric too (this task's original Fighter/Wizard/
+        // Rogue-only allowlist has since grown across several sessions), so
+        // the generic `class_chassis.unsupported` diagnostic this test
+        // originally checked no longer fires -- Cleric genuinely resolves a
+        // real BAB/save chassis row now, the same way Ranger/Paladin/
+        // Sorcerer do. The real invariant this test protects (a
+        // Fighter+Cleric mix must never be silently Computed) still holds:
+        // Cleric's domain-powers burden is permanently unconditional, so it
+        // still honestly claim-blocks the mix, just via a different,
+        // real diagnostic id.
         let input = multiclass(FIGHTER_CLASS_ID, 1, CLERIC_CLASS_ID, 1);
         let computation = compute_pilot_base_chassis(&input);
 
         assert!(
-            has_diagnostic(&computation, "class_chassis.unsupported"),
-            "Cleric is outside this task's scoped Fighter/Wizard/Rogue allowlist and must \
-             stay honestly claim-blocked, not silently computed: {:?}",
+            has_diagnostic(&computation, "class_feature.cleric.domain_powers.unsupported"),
+            "a Fighter+Cleric multiclass must stay honestly claim-blocked on Cleric's \
+             permanently-unconditional domain-powers burden, not silently computed: {:?}",
             computation.diagnostics
         );
     }
@@ -21555,6 +21950,236 @@ mod sorcerer_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25): Cleric's real
+/// prepared-divine known-spell posture, mirroring
+/// `ranger_dispatch_widening_safety_tests`/`paladin_dispatch_widening_safety_tests`
+/// exactly (PREPARED, like Ranger/Paladin, not spontaneous like Sorcerer;
+/// same gate-ordering structural risk existed here too and was fixed
+/// proactively as part of this same slice). Unlike Ranger/Paladin, Cleric's
+/// domain-powers burden stays permanently unconditional (mirrors Sorcerer's
+/// bloodline-power shape), so a single-class Cleric never reaches
+/// `Computed` even with a fully valid prepared-spell posture -- only the
+/// spell-specific diagnostic is conditional.
+#[cfg(test)]
+mod cleric_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
+        CLERIC_CLASS_ID, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single-class Cleric with no invalid prepared-spell selection still
+    /// stays `Blocked` (the domain-powers burden is permanently
+    /// unconditional), but the spell-specific diagnostic must NOT fire when
+    /// the posture is genuinely valid.
+    #[test]
+    fn single_class_cleric_with_no_prepared_spells_stays_blocked_only_on_domain_powers() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Cleric's domain-powers burden is permanently unconditional: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the permanent domain-powers diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"),
+            "the spell-posture diagnostic must not fire when the prepared-spell posture is \
+             valid: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Cleric preparing a real, in-budget, accessible orison
+    /// (0th-level spell, always accessible from level 1) does not trip the
+    /// spell-posture diagnostic -- proving orisons have no access gate.
+    #[test]
+    fn single_class_cleric_with_a_valid_orison_does_not_trip_the_spell_posture() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Bleed".to_owned(),
+            source_class_id: CLERIC_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"),
+            "an orison is always accessible from level 1 with no access gate: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Cleric preparing a spell beyond their spell-level
+    /// access ceiling must carry the real spell-posture diagnostic.
+    #[test]
+    fn single_class_cleric_with_an_inaccessible_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Aid".to_owned(),
+            source_class_id: CLERIC_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"
+                    && d.claim_blocking),
+            "a 2nd-level cleric spell is not accessible at cleric level 1: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Cleric preparing a spell not on the real PF1 Core
+    /// Rulebook general cleric spell list at all must also carry the
+    /// diagnostic.
+    #[test]
+    fn single_class_cleric_with_an_off_list_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: CLERIC_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Magic Missile is not on the real general cleric spell list: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Cleric at level 1 (Wisdom 12, mod +1: base 1 + bonus
+    /// 1 = total budget 2 for 1st-level spells) preparing 3 distinct
+    /// 1st-level spells over-prepares the real slot budget.
+    #[test]
+    fn single_class_cleric_over_prepared_slot_budget_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 1 }];
+        for spell_id in ["Bane", "Bless", "Cause Fear"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: CLERIC_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "cleric level 1 with Wisdom 12 has a real total budget of 2 slots for 1st-level \
+             spells (base 1 + Wisdom bonus 1), so preparing 3 distinct spells over-prepares: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Multiclass safety, verified directly. A Cleric-containing multiclass
+    /// mix with a genuine posture violation must still stay Blocked, since
+    /// `CLERIC_CLASS_ID` is deliberately not registered with
+    /// `multiclass_class_level_supported` beyond `table_class_id` itself
+    /// (the same construction Ranger/Paladin/Sorcerer already proved safe).
+    #[test]
+    fn cleric_fighter_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: CLERIC_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Cleric+Fighter multiclass must not reach Computed while Cleric's posture is \
+             genuinely violated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported"
                     && d.claim_blocking),
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics

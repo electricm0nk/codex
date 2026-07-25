@@ -2700,12 +2700,18 @@ mod tests {
             generic_plus(&["class_feature.monk.bounded_progression.bonus_feat.unsupported"])
         );
 
+        // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25):
+        // `table_class_id` now recognizes Cleric too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The spell-posture
+        // diagnostic is also no longer unconditional -- it's a real
+        // validation now, and compose_character_input seeds no Cleric
+        // spell selections, so the (valid, empty) prepared-spell posture no
+        // longer trips it. Only the permanently-unconditional
+        // domain-powers diagnostic remains (no domain-power execution or
+        // domain spell-list content is grounded anywhere in this codebase).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
-            generic_plus(&[
-                "class_feature.cleric.domain_powers.unsupported",
-                "class_spell.cleric.prepared_divine.unsupported",
-            ])
+            BTreeSet::from(["class_feature.cleric.domain_powers.unsupported".to_owned()])
         );
 
         assert_eq!(
