@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sizing Barbarian (real state-tracking needed) vs Monk (7-feat spread) as the next class |
+| backend | working | Barbarian/Monk deferred pending a combat-time state design pass; proceeding with Cleric's spell posture now |
 | frontend | working | live-verifying a genuine non-Human-Ranger-reaches-Computed-at-level-1 finding before committing the UI label |
 | qa | idle | per-class survey delivered; standing by |
 

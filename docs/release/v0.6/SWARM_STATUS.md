@@ -1193,11 +1193,11 @@ prior refresh, itself already superseded by everything since)
 
 **LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Backend confirmed the corrected terminology going forward ("done" = reaches `Computed`, always) and landed APG's 6-class BAB/save/HP dispatch (`c511c132`) correctly labeled as still-Blocked from the start — lead-verified 283/283 lib + 212/212 desktop, including a dedicated multiclass-safety test proving backend proactively avoided the exact loophole Ranger's review found. Next: Ranger's real spellcasting (genuinely new engine work, no prior art in this codebase). See risks-and-open-questions.md item 8 for the full record.
 
-## Agent Status (2026-07-25, ~03:22 ET)
+## Agent Status (2026-07-25, ~03:35 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | not stalled -- prior quiet stretch was work sitting with QA for review (c1844765), lead-confirmed with backend directly; now sizing Barbarian (real state-tracking, first class needing CharacterInput schema changes) vs Monk (7-feat spread), leaning Barbarian |
-| frontend | working | found and lead-confirmed a genuinely surprising result: `explain_hybrid_level1_chassis` returns early for any non-Human race, so a non-Human Ranger at level 1 may reach Computed where Human doesn't -- an inverted human-diagnostics-only scope; live-verifying via the real dev build before committing the UI label |
+| backend | working | Barbarian/Monk deliberately deferred -- genuinely new combat-time transient-state concept needed, no prior art in CharacterInput, held for a dedicated design pass. Proceeding with Cleric's prepared-divine spell posture now (lead-verified both diagnostics exist); domain powers stay blocking, explicitly not "Cleric done" |
+| frontend | working | live-verifying the non-Human-Ranger-reaches-Computed-at-level-1 finding via the real dev build before committing the UI label |
 | qa | idle | per-class survey delivered; standing by |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). ACG/APG have real BAB/save/HP dispatch (still correctly Blocked pending skill/feature/spellcasting).**
