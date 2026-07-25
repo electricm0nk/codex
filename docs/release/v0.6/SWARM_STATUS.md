@@ -1206,7 +1206,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T19:00:01
-Latest commit on tranche/6: 3a05539a feat(v0.6): attach_equipment_modifier command (sub-task 6 backend half) (26 seconds ago) (2026-07-24T18:59:35-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T18:58:15 frontend=2026-07-24T18:59:56 qa=2026-07-24T17:43:27 lead=2026-07-24T18:58:49
+Last mechanical check: 2026-07-24T20:10:01
+Latest commit on tranche/6: 6ef7f3ef feat(v0.6): corpus-aware combat-baseline + selected-skill pillars (sub-task 4) (3 minutes ago) (2026-07-24T20:06:59-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-24T20:06:14 frontend=2026-07-24T19:24:25 qa=2026-07-24T19:24:32 lead=2026-07-24T20:07:19
 <!-- AUTO-HEARTBEAT-END -->
