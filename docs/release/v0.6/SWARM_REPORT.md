@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Directed to one final cheap-win scan (Arcanist, Investigator, all 6 unscanned APG classes) before moving to the bigger backlog — has already correctly ruled out Warpriest/Slayer/Shaman/Swashbuckler as not-cheap. After this scan, moves to Monk's remaining 4 feats regardless of outcome (real engine work, deferred long enough) |
+| backend | working | Final scan complete — no 5th cheap win found (Arcanist/Investigator/6 APG classes all correctly ruled not-cheap; lead spot-checked the closest near-miss, Cavalier's Mount, against the raw corpus and confirmed backend's reading exactly, flagged for a later slice, not now). Starting Monk's remaining-4-feats scoping doc, will flag for the lead's review before building given the scale |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -122,11 +122,11 @@ clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Backend's final cheap-win scan: Arcanist, Investigator, and all 6 unscanned APG classes (Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch) — the last scan pass before pivoting to the harder backlog below, regardless of outcome. Warpriest/Slayer/Shaman/Swashbuckler already correctly ruled out (Domain-shaped choices or opponent-dependent, same harder-effort bucket as Monk's remaining feats).
-2. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists. Directed as the next real target after item 1's scan, regardless of whether it finds a 5th cheap ACG/APG win.
-3. Brawler/Hunter's own test-cleanup waves, once QA scopes whether either is needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply to both — their diagnostics are new, not replacements).
-4. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
-5. Whatever remains untouched after item 1's scan, plus all remaining class-skill-lists/class-features/spellcasting work (for casters) — the single largest remaining bucket in this whole epic.
+1. **Monk's remaining 4 restricted-list feats** (Combat Reflexes, Deflect Arrows, Improved Grapple, Scorpion Style) — the final cheap-win scan is complete (8 more classes checked, no 5th win found, lead spot-verified the closest near-miss), so this is now the active target. Each needs a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists. Backend writing the scoping doc now; the lead expects to dispatch an adversarial review before any code, same reasoning as the original combat-time-activation-state plan.
+2. Brawler/Hunter's own test-cleanup waves, once QA scopes whether either is needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply to both — their diagnostics are new, not replacements).
+3. The Sorcerer/Cleric/Druid choice-picker gap (confirmed real, see above) — a new picker component + request field + backend consumption. Not yet scoped or assigned; flagged for the operator's prioritization call.
+4. **Cavalier's Mount (APG)** — flagged as a real near-miss during the final scan, not built now: reuses the Hunter/Druid animal-companion pattern (effective druid level = cavalier level), but a Medium cavalier can only choose Camel or Horse (not Wolf), needs its own independently-verified stat block, a Share-Spells carve-out, and would be the first-ever APG gate-widening. Lead independently confirmed all three details against the raw corpus. Worth a future slice, not this one.
+5. All remaining untouched ACG/APG classes' class-skill-lists/class-features/spellcasting (for casters) — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
 
 ### Honest scale note
 
