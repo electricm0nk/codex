@@ -1221,7 +1221,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T03:25:02
-Latest commit on tranche/6: b92d5ef1 docs(v0.6): both status checks resolved -- neither teammate was stalled (2 minutes ago) (2026-07-25T03:23:25-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T03:24:27 frontend=2026-07-25T03:21:29 qa=2026-07-25T02:58:57 lead=2026-07-25T03:23:21
+Last mechanical check: 2026-07-25T04:35:02
+Latest commit on tranche/6: c23d4054 feat(v0.6): Sorcerer's real known-spell posture (risks item 8, fifth slice) (43 seconds ago) (2026-07-25T04:34:19-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T04:31:16 frontend=2026-07-25T04:31:25 qa=2026-07-25T04:34:42 lead=2026-07-25T04:34:57
 <!-- AUTO-HEARTBEAT-END -->
