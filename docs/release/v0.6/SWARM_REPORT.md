@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Building Skald's real spellcasting (reusing Bard's spell list wholesale, greenlit). Path A's small choice-picker default (Sorcerer/Cleric/Druid, ~30-45 lines, no wire change) queued as the next item after — backend's call on exact sequencing |
+| backend | working | Skald spellcasting scoping doc landed — found Skald's own spells-known/per-day tables are byte-identical to Bard's, not just similar (2-source verified). Lead independently confirmed `bard_spell_level_access`/`bard_spells_known_table` are genuinely pure (no side effects), endorsing the direct-reuse plan over duplicating. Building now. Path A choice-picker default still queued next |
 | frontend | idle | Choice-picker scoping doc landed (`cfcd43de`) and lead-verified — found a genuinely cheaper option (Path A: mirror Wizard's already-shipped silent-canonical-default pattern) instead of just answering the original 4 questions about the expensive interactive-picker path. Greenlit; implementation routed to backend (`pf1_adapter.rs`), frontend's own follow-on (`characterHubModel.ts` label update) queued for after |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
