@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Cavalier's Mount (APG) built and lead-verified end-to-end pre-commit — first-ever APG class-specific closure (417/417 lib, Druid's/Hunter's own tests confirmed unaffected, coverage audit 3/3, full workspace sweep zero failures). Ready to commit |
+| backend | idle | Cavalier's Mount (APG) committed (`d256bc9c`) and lead re-verified against the real HEAD — first-ever APG class-specific closure (417/417 lib, coverage audit 3/3). Awaiting next assignment |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
@@ -64,7 +64,7 @@ closure, proving the ACG-side pattern generalizes across books.
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
 | Alchemist | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
-| Cavalier | **full** | d10 | **Blocked** — real progress: Mount (Horse companion stat block, effective druid level = cavalier level, AC 14 = base 10 + natural armor 4) genuinely grounded; Share Spells correctly not fabricated (the Mount doesn't have that ability at all per RAW); still Blocked on 10+ other deferred named features (no spellcasting — pure martial class). Lead-verified pre-commit: 417/417 lib, Druid's/Hunter's own tests confirmed unaffected, `sd24_apg_class_coverage_audit` 3/3, full workspace sweep zero failures |
+| Cavalier | **full** | d10 | **Blocked** — real progress: Mount (Horse companion stat block, effective druid level = cavalier level, AC 14 = base 10 + natural armor 4) genuinely grounded; Share Spells correctly not fabricated (the Mount doesn't have that ability at all per RAW); still Blocked on 10+ other deferred named features (no spellcasting — pure martial class). Committed `d256bc9c`, lead re-verified against the real HEAD: 417/417 lib, Druid's/Hunter's own tests confirmed unaffected, `sd24_apg_class_coverage_audit` 3/3 |
 | Inquisitor | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Oracle | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Summoner | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
