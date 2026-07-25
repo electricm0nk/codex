@@ -188,13 +188,14 @@ export interface ClassOption {
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
  * `pilot_compute.rs`'s per-class `explain_*` functions (each of Sorcerer,
- * Bard, Barbarian, Monk, Cleric, and Druid carries its own "This
- * deliberately does not compute a supported ... chassis/surface" doc
- * comment, and the compute path stays claim-blocked for Human exactly as
- * it does for every other race) and live-verified for Barbarian
- * specifically (a fresh Human Barbarian creation attempt still returns
- * `Blocked`, just with named rage-burden diagnostics instead of the 4
- * generic ones a non-Human race or a truly unrecognized class gets).
+ * Bard, Monk, Cleric, and Druid carries its own "This deliberately does not
+ * compute a supported ... chassis/surface" doc comment, and the compute
+ * path stays claim-blocked for Human exactly as it does for every other
+ * race) and live-verified for Barbarian specifically back when it was in
+ * this same bucket (a fresh Human Barbarian creation attempt returned
+ * `Blocked` with named rage-burden diagnostics instead of the 4 generic
+ * ones) — since superseded now that Barbarian's rage-execution engine is
+ * real; see its own note below.
  *
  * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
  * class-breadth epic, 2026-07-25): both reached real `Computed` status once
@@ -223,6 +224,18 @@ export interface ClassOption {
  * functions reference "Human Wizard"/"Human Rogue" descriptively (naming
  * the deterministic baseline that was built and tested first), not as an
  * enforced restriction.
+ *
+ * Barbarian is also `full` (v0.6 alpha swarm, combat-time activation-state
+ * epic, 2026-07-25): unlike Paladin/Ranger, its remaining gap
+ * (`ground_or_block_barbarian_rage`) is keyed only on class-ownership, not
+ * on `hybrid_level1_class`'s shared level-1/Human gate — Barbarian never
+ * appears in that function's match arms at all. Not raging is itself a
+ * genuinely valid PF1 posture (an honest recognition record, no
+ * diagnostic), so there is no race/level carve-out. Live-verified: a fresh
+ * Human Barbarian 1 (the default, not-raging posture) and a fresh Dwarf
+ * Barbarian 1 both reached `Computed`/`Saved`; leveling the Dwarf character
+ * up through the real `LevelUpDialog` reached level 2 cleanly, disk-
+ * confirmed (`class_level=class:barbarian:2`).
  */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
@@ -231,7 +244,7 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 6 },
   { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
   { id: 'class:bard', label: 'Bard', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 12 },
+  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 12 },
   { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
   { id: 'class:cleric', label: 'Cleric', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
   { id: 'class:druid', label: 'Druid', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },

@@ -5,6 +5,7 @@ async function main() {
   verifiesFighterGetsThreeLevels();
   verifiesRangerGetsFiveLevels();
   verifiesPaladinGetsFiveLevels();
+  verifiesBarbarianGetsThreeLevels();
   verifiesEveryOtherClassGetsLevelOneOnly();
   verifiesUnknownClassFallsBackToLevelOneOnly();
   verifiesSupportLevelCopyPerLevel();
@@ -41,9 +42,28 @@ function verifiesPaladinGetsFiveLevels() {
   assertEqual(levels[4], 5, 'paladin level option 4');
 }
 
+// Barbarian is genuinely `full` (no hybrid-level-1/Human carve-out at all --
+// unlike Ranger/Paladin, it never appears in hybrid_level1_class's match
+// arms). Live-verified through the real dev build: a fresh Human Barbarian 1
+// (the default, not-raging posture) and a fresh Dwarf Barbarian 1 both
+// reached Computed/Saved; leveling the Dwarf character up reached level 2
+// cleanly, disk-confirmed.
+function verifiesBarbarianGetsThreeLevels() {
+  const levels = getLevelOptionsForClass('class:barbarian');
+  assertEqual(levels.length, 3, 'barbarian level option count');
+  assertEqual(levels[0], 1, 'barbarian level option 0');
+  assertEqual(levels[2], 3, 'barbarian level option 2');
+}
+
 function verifiesEveryOtherClassGetsLevelOneOnly() {
   for (const option of CLASS_OPTIONS) {
-    if (option.id === 'class:fighter' || option.id === 'class:ranger' || option.id === 'class:paladin') continue;
+    if (
+      option.id === 'class:fighter' ||
+      option.id === 'class:ranger' ||
+      option.id === 'class:paladin' ||
+      option.id === 'class:barbarian'
+    )
+      continue;
     const levels = getLevelOptionsForClass(option.id);
     assertEqual(levels.length, 1, `${option.id} level option count`);
     assertEqual(levels[0], 1, `${option.id} level option 0`);
@@ -63,11 +83,11 @@ function verifiesSupportLevelCopyPerLevel() {
     'partial-human-only copy should mention Human'
   );
   assert(
-    describeClassSupportLevel('human-diagnostics-only', 'Barbarian').toLowerCase().includes('human'),
+    describeClassSupportLevel('human-diagnostics-only', 'Monk').toLowerCase().includes('human'),
     'human-diagnostics-only copy should still mention Human (it gets named diagnostics)'
   );
   assert(
-    describeClassSupportLevel('human-diagnostics-only', 'Barbarian').toLowerCase().includes('for any race yet, including human'),
+    describeClassSupportLevel('human-diagnostics-only', 'Monk').toLowerCase().includes('for any race yet, including human'),
     'human-diagnostics-only copy should be explicit that Human never computes either'
   );
   assert(
