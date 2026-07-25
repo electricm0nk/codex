@@ -122,6 +122,7 @@ use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
+use super::rules_tables::crb::bard_spell_list;
 use super::rules_tables::crb::cleric_spell_list;
 use super::rules_tables::crb::druid_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
@@ -19490,7 +19491,12 @@ fn explain_bard_level1_spell_baseline(
     // checked BEFORE the single-class-only/Human gate below, mirroring the
     // Ranger/Paladin/Sorcerer/Cleric/Druid/Barbarian fix exactly (a
     // false-Computed/false-grounding risk now that `table_class_id`
-    // recognizes Bard generically too).
+    // recognizes Bard generically too). The known-spell / per-day posture
+    // burden was found NOT yet hoisted here when this slice started --
+    // the exact same gate-ordering bug every other class needed fixed
+    // before its own spell-posture became conditional, caught and fixed
+    // proactively as part of closing it, not left for a future review to
+    // find.
     if let Some(bard_level) = input
         .chosen
         .class_levels
@@ -19505,6 +19511,7 @@ fn explain_bard_level1_spell_baseline(
             explanations,
             diagnostics,
         );
+        ground_or_block_bard_known_spells(input, bard_level, explanations, diagnostics);
     }
 
     let Some(level) = supported_bard_level(input) else {
@@ -20141,16 +20148,7 @@ fn explain_bard_level1_spell_baseline(
     // ACCESSIBLE bard spell level only; the per-day counts themselves are
     // never computed. Cantrips (0th level, "spells known" only) are outside
     // the spells-per-day ladder and are not counted.
-    let bard_spell_level_access: i16 =
-        if level >= BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            4
-        } else if level >= BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            3
-        } else if level >= BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            2
-        } else {
-            1
-        };
+    let bard_spell_level_access: i16 = bard_spell_level_access(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.spontaneous.spell_level_access".to_owned(),
         value: bard_spell_level_access,
@@ -20260,19 +20258,7 @@ fn explain_bard_level1_spell_baseline(
     // (cantrips) — exactly where the access-ladder record's "cantrips are
     // spells known only" note lands. Only the known COUNTS are grounded:
     // the selection of WHICH spells are known is never computed.
-    let bard_spells_known: [Option<i16>; 5] = match level {
-        1 => [Some(4), Some(2), None, None, None],
-        2 => [Some(5), Some(3), None, None, None],
-        3 => [Some(6), Some(4), None, None, None],
-        4 => [Some(6), Some(4), Some(2), None, None],
-        5 => [Some(6), Some(4), Some(3), None, None],
-        6 => [Some(6), Some(4), Some(4), None, None],
-        7 => [Some(6), Some(5), Some(4), Some(2), None],
-        8 => [Some(6), Some(5), Some(4), Some(3), None],
-        9 => [Some(6), Some(5), Some(4), Some(4), None],
-        10 => [Some(6), Some(5), Some(5), Some(4), Some(2)],
-        _ => [None, None, None, None, None],
-    };
+    let bard_spells_known: [Option<i16>; 5] = bard_spells_known_table(level);
     for (spell_level, known_count) in bard_spells_known.iter().enumerate() {
         let Some(known_count) = known_count else {
             continue;
@@ -20415,27 +20401,194 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
-    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection and the spontaneous
-    // casting execution stay ungrounded; the access ladder, base per-day
-    // counts, base save DCs, base known counts, bonus-slot counts, and the
-    // integrated totals are grounded as flat records.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
-        message:
-            "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting execution (slot consumption, tracking, and casting itself) \
-             and the selection of WHICH spells known (from the Bard list) \
-             are actually chosen are out \
-             of scope for this bounded baseline (the spell-level access ladder, the base \
-             spells per day table counts, the base spell-save-DC arithmetic, the base \
-             spells-known table counts, the Charisma bonus spell slot counts, and the \
-             integrated base+bonus totals are \
-             grounded separately as flat records) and no spell math is fabricated beyond \
-             them"
-                .to_owned(),
-        claim_blocking: true,
+    // v0.6 alpha swarm, risks item 8: the unconditional "known-spell / slot
+    // posture burden" diagnostic that used to live here moved to
+    // `ground_or_block_bard_known_spells`, called at the top of this
+    // function -- the engine is real now (mirrors Sorcerer's own
+    // spontaneous known-spell validation exactly), and its validity
+    // depends on `spells_selected`, not on level/race alone, so it could
+    // not stay a flat unconditional diagnostic at this position.
+}
+
+/// The highest ACCESSIBLE bard spell level (1st+) at the given bard level
+/// -- cantrips (0th level) have no access gate and sit outside this
+/// ladder. Pure function (v0.6 alpha swarm, risks item 8) so the
+/// informational explanation record and the real known-spell validation
+/// (`unmet_bard_known_spell_conditions`) share one source of truth,
+/// mirroring `sorcerer_spell_level_access`'s own shape. Levels 11+ are not
+/// yet verified beyond this bounded seam's existing level-1-10 table, so
+/// this stays capped at 4 (the highest level this seam has verified data
+/// for) -- a future widening must extend both this and
+/// `bard_spells_known_table` together, the same split Sorcerer's own
+/// bonus-spells-at-3rd+ level required.
+fn bard_spell_level_access(level: u8) -> i16 {
+    if level >= BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else {
+        1
+    }
+}
+
+/// PF1 Core Rulebook Bard Spells Known table (0th through 4th spell
+/// level), verified against the raw table rows of both primary sources.
+/// Pure function (v0.6 alpha swarm, risks item 8) mirroring
+/// `sorcerer_spells_known_table`'s own shape -- levels 11-20 return all
+/// `None` (this seam's verified data stops at level 10 / spell level 4;
+/// a future widening must extend this table for real, not silently
+/// assume higher levels), which correctly still validates a genuinely
+/// empty (zero known spells) posture as valid at any level, the same
+/// "zero selected spells is always valid" idiom every prepared/known
+/// caster class this session already uses.
+fn bard_spells_known_table(level: u8) -> [Option<i16>; 5] {
+    match level {
+        1 => [Some(4), Some(2), None, None, None],
+        2 => [Some(5), Some(3), None, None, None],
+        3 => [Some(6), Some(4), None, None, None],
+        4 => [Some(6), Some(4), Some(2), None, None],
+        5 => [Some(6), Some(4), Some(3), None, None],
+        6 => [Some(6), Some(4), Some(4), None, None],
+        7 => [Some(6), Some(5), Some(4), Some(2), None],
+        8 => [Some(6), Some(5), Some(4), Some(3), None],
+        9 => [Some(6), Some(5), Some(4), Some(4), None],
+        10 => [Some(6), Some(5), Some(5), Some(4), Some(2)],
+        _ => [None, None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for the Bard's spontaneous
+/// known-spell posture (v0.6 alpha swarm, risks item 8), mirroring
+/// `unmet_sorcerer_known_spell_conditions` exactly (a spontaneous caster,
+/// like Sorcerer -- known spells are permanent, not a per-day consumable
+/// resource, unlike Ranger/Paladin/Cleric/Druid's prepared posture). An
+/// empty list means the posture is genuinely valid -- zero known spells
+/// is always a valid PF1 posture, not every Bard has selected their full
+/// complement.
+fn unmet_bard_known_spell_conditions(input: &CharacterInput, bard_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == BARD_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = bard_spell_level_access(bard_level);
+    let known_table = bard_spells_known_table(bard_level);
+
+    let mut known_per_level: [i16; 5] = [0; 5];
+    for spell_id in &known {
+        let Some(spell_level) = bard_spell_list::bard_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Core Rulebook bard spell list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at bard level {bard_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        if usize::from(spell_level) >= known_per_level.len() {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, beyond this bounded \
+                 seam's verified spells-known table (spell levels 0-4 only)"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Bard Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real known-spell posture once
+/// `unmet_bard_known_spell_conditions` reports an empty unmet list,
+/// mirroring `ground_sorcerer_known_spells` exactly.
+fn ground_bard_known_spells(
+    input: &CharacterInput,
+    bard_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == BARD_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.bard.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Bard level {bard_level} known-spell selection ({} spells, AcquisitionMode::Known): \
+             {}. Each known spell is verified against the real PF1 Core Rulebook bard spell list \
+             (`bard_spell_list::BARD_SPELL_LIST`), the bard's own spell-level access ceiling, and \
+             the Bard Spells Known table's own per-level cap. Real PF1 Bard rules have no daily \
+             preparation step at all (like Sorcerer, unlike Ranger/Paladin/Cleric/Druid) -- a \
+             bard's known spells are permanent once learned, cast spontaneously using the \
+             already-grounded per-day slot totals. This grounds the known-spell selection for \
+             real; it computes no spell save DC resolution against a target and no casting \
+             execution",
+            known.len(),
+            known.join(", ")
+        ),
     });
+}
+
+/// Grounds or claim-blocks Bard's spontaneous known-spell / per-day
+/// posture burden for `bard_level` (v0.6 alpha swarm, risks item 8).
+/// Called from the top of `explain_bard_level1_spell_baseline`, gated
+/// only on Bard class-ownership -- independent of race/single-class
+/// status, the exact gate-ordering fix this session has applied to every
+/// other class's own spell/ability posture. Mirrors the Sorcerer known-
+/// spell closure's shape exactly (a spontaneous caster, not prepared).
+fn ground_or_block_bard_known_spells(
+    input: &CharacterInput,
+    bard_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let unmet = unmet_bard_known_spell_conditions(input, bard_level);
+    if unmet.is_empty() {
+        ground_bard_known_spells(input, bard_level, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
+            message: format!(
+                "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
+                 spontaneous casting execution (slot consumption, tracking, and casting itself) \
+                 is out of scope for this bounded baseline regardless (the spell-level access \
+                 ladder, the base spells per day table counts, the base spell-save-DC \
+                 arithmetic, the base spells-known table counts, the Charisma bonus spell slot \
+                 counts, and the integrated base+bonus totals are grounded separately as flat \
+                 records); unmet known-spell posture: {}",
+                unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
 }
 
 /// Bard's Bardic Performance rounds-per-day budget: 4 + Charisma modifier +
@@ -24739,10 +24892,13 @@ mod barbarian_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod bard_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        BARD_BARDIC_PERFORMANCE_ABILITY_ID, BARD_CLASS_ID, FIGHTER_CLASS_ID,
+        build_pilot_headless_receipt, ActiveState, AcquisitionMode, CharacterClassLevel,
+        CharacterInput, BARD_BARDIC_PERFORMANCE_ABILITY_ID, BARD_CLASS_ID, FIGHTER_CLASS_ID,
+        HeadlessReceiptStatus,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -24782,9 +24938,21 @@ mod bard_dispatch_widening_safety_tests {
             !ids.iter().any(|id| id.starts_with("class_feature.bard.bardic_performance_execution")),
             "a Bard who isn't performing is a genuinely valid PF1 posture: {ids:?}"
         );
+        // v0.6 alpha swarm, risks item 8 (Bard known-spell closure): the
+        // spell-posture diagnostic is no longer permanently unconditional
+        // either -- this fixture selects zero spells, a genuinely valid
+        // posture (mirrors Sorcerer's own "zero known spells is valid"
+        // shape), so it no longer fires. A Bard who is neither performing
+        // nor carrying an invalid known-spell posture now reaches
+        // Computed in full.
         assert!(
-            ids.contains(&"class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned()),
-            "the separate, still-permanent spell-posture diagnostic must remain: {ids:?}"
+            ids.is_empty(),
+            "a Bard who isn't performing and has a valid (empty) known-spell posture should \
+             have no claim-blocking diagnostics at all: {ids:?}"
+        );
+        assert_eq!(
+            build_pilot_headless_receipt(&input).status,
+            super::HeadlessReceiptStatus::Computed
         );
     }
 
@@ -24900,6 +25068,155 @@ mod bard_dispatch_widening_safety_tests {
             melee_attack_bonus.value, 6,
             "a non-Bard character's spoofed performance entry must never apply a bonus: \
              {melee_attack_bonus:?}"
+        );
+    }
+
+    /// v0.6 alpha swarm, risks item 8 (Bard known-spell closure): a
+    /// single-class Bard knowing 2 real, valid, in-budget 1st-level spells
+    /// (within bard level 1's real cap of 2) must NOT trip the spell-
+    /// posture diagnostic -- proving real validation, not a vacuous check,
+    /// mirroring Sorcerer's own known-spell closure exactly.
+    #[test]
+    fn single_class_bard_with_valid_known_spells_does_not_trip_the_spell_posture() {
+        let mut input = human_bard_input(1);
+        for spell_id in ["Alarm", "Charm Person"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: BARD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported"),
+            "2 distinct first-level spells is within bard level 1's real cap of 2: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Bard at level 1 (cap 2 first-level spells known)
+    /// knowing 3 distinct first-level spells over-knows its real cap and
+    /// must carry the spell-posture diagnostic.
+    #[test]
+    fn single_class_bard_over_known_spells_stays_blocked_on_spell_posture() {
+        let mut input = human_bard_input(1);
+        for spell_id in ["Alarm", "Charm Person", "Cause Fear"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: BARD_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "bard level 1 only knows 2 first-level spells; 3 distinct known spells over-knows \
+             the real cap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Bard preparing a spell not on the real PF1 Core
+    /// Rulebook bard spell list at all must carry the diagnostic.
+    #[test]
+    fn single_class_bard_with_an_off_list_known_spell_stays_blocked_on_spell_posture() {
+        let mut input = human_bard_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Not A Real Spell".to_owned(),
+            source_class_id: BARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "an off-list spell must trip the spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Bard knowing a real 2nd-level bard spell at level 1
+    /// (2nd-level access begins at bard level 4) must carry the
+    /// diagnostic -- proving the access-ceiling check, not just the
+    /// off-list/over-known checks.
+    #[test]
+    fn single_class_bard_with_an_inaccessible_known_spell_stays_blocked() {
+        let mut input = human_bard_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Alter Self".to_owned(),
+            source_class_id: BARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "a 2nd-level bard spell is not accessible at bard level 1: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Multiclass safety, verified directly: a Bard-containing multiclass
+    /// mix with a genuine known-spell posture violation must still stay
+    /// Blocked, mirroring Sorcerer's own multiclass-safety test.
+    #[test]
+    fn bard_fighter_multiclass_with_an_invalid_known_spell_stays_blocked() {
+        let mut input = human_bard_input(1);
+        input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: FIGHTER_CLASS_ID.to_owned(),
+            level: 1,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Alter Self".to_owned(),
+            source_class_id: BARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Bard+Fighter multiclass must not reach Computed while Bard's known-spell posture \
+             is genuinely violated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }

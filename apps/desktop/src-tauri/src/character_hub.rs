@@ -2696,16 +2696,18 @@ mod tests {
         // for Bard, so the (valid, "not performing") posture no longer trips
         // it either (the "other performances not modeled" diagnostic it
         // pushes unconditionally is deliberately non-claim-blocking, so it
-        // never appears in this claim-blocking-only set). Only the
-        // still-permanent spontaneous known-spell/per-day spell-posture
-        // diagnostic remains -- that slice is separately scoped, not part of
-        // this one.
+        // never appears in this claim-blocking-only set). The known-spell/
+        // per-day spell-posture diagnostic is ALSO no longer unconditional
+        // (a later slice made it real/conditional, mirroring Sorcerer's own
+        // known-spell closure) -- compose_character_input seeds no Bard
+        // spell selections, so the (valid, empty) known-spell posture no
+        // longer trips it either. Human Bard L1 now reaches Computed with
+        // zero claim-blocking diagnostics, the same golden path as Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:bard", 1),
-            BTreeSet::from(["class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned()]),
-            "Human Bard L1 (not performing) keeps only the still-permanent spell-posture \
-             diagnostic; the bardic-performance-execution diagnostic no longer fires on a valid \
-             (not performing) posture"
+            BTreeSet::new(),
+            "Human Bard L1 (not performing, valid empty known-spell posture) reaches Computed \
+             with zero claim-blocking diagnostics"
         );
 
         // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue
