@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Barbarian genuinely reaches Computed (uncommitted, lead-verified: 364/364 lib + 212/212 desktop, class-ownership gate confirmed against the spoofed-activation test); holding on a new 19-file QA wave until QA has capacity |
+| backend | working | Barbarian milestone verified, committing soon; proactively re-fixed ge06_* a 3rd time (Monk swap, uncommitted) after Barbarian's own widening broke it again; moving to Inspire Courage next |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
-| qa | working | Sorcerer + Cleric batches both landed and lead-verified (76fe82da; Cleric pending commit); moving to Druid next, Barbarian's 19-file wave queued behind it |
+| qa | working | Sorcerer (76fe82da) + Cleric (c578ede6) batches both landed and lead-verified 100%; moving to Druid's 17-file batch next, Barbarian's 20-file wave queued behind it |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
