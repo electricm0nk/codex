@@ -263,7 +263,7 @@ fn cleric_level8_still_claim_blocks_domain_powers_and_prepared_divine_burdens() 
         computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking),
+            .any(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking),
         "level-8 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );

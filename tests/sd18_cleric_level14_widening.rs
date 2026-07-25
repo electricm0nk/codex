@@ -215,7 +215,7 @@ fn cleric_level14_still_claim_blocks_domain_powers_and_prepared_spell_burdens() 
         computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking),
+            .any(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking),
         "level-14 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );
@@ -286,9 +286,15 @@ fn cleric_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
+            .any(|e| (e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
+                || e.id == "class_chassis.spell_baseline.cleric")
+                // (v0.6 alpha swarm, risks item 8, Good domain closure)
+                // Touch of Good's not-active explanation is checked
+                // unconditionally, regardless of level bound or
+                // single-class status (mirrors every other class's
+                // gate-ordering fix)
+                && e.id != "class_feature.cleric.good_domain.touch_of_good_not_active"),
         "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
@@ -325,8 +331,14 @@ fn multiclass_cleric_level14_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")),
+            .any(|e| (e.id.starts_with("class_chassis.cleric.")
+                || e.id.starts_with("class_feature.cleric."))
+                // (v0.6 alpha swarm, risks item 8, Good domain closure)
+                // Touch of Good's not-active explanation is checked
+                // unconditionally, regardless of level bound or
+                // single-class status (mirrors every other class's
+                // gate-ordering fix)
+                && e.id != "class_feature.cleric.good_domain.touch_of_good_not_active"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );

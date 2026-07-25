@@ -196,14 +196,17 @@ fn cleric_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocke
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day"
     ));
 
-    // The domain powers burden still fires (permanently unconditional); this
-    // slice grounds no domain spell-list contents and no spell math.
-    let domain_powers = computation
+    // (v0.6 alpha swarm, risks item 8, Good domain closure) Touch of Good
+    // (Good domain) can now genuinely close; Rebuke Death (Healing domain)
+    // is the real, still-claim-blocking burden for this Good+Healing
+    // fixture. This slice grounds no domain spell-list contents and no
+    // spell math.
+    let rebuke_death = computation
         .diagnostics
         .iter()
-        .find(|d| d.id == "class_feature.cleric.domain_powers.unsupported")
-        .expect("domain powers blocker must still fire");
-    assert!(domain_powers.claim_blocking);
+        .find(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported")
+        .expect("rebuke death blocker must still fire");
+    assert!(rebuke_death.claim_blocking);
 
     // (v0.6 alpha swarm, risks item 8) class_spell.cleric.prepared_divine.unsupported
     // is no longer unconditional -- this bare fixture has zero prepared spells, a

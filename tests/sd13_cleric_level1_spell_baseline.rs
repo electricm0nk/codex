@@ -54,7 +54,12 @@ const CHANNEL_ENERGY_DICE_ID: &str = "class_chassis.cleric.channel_energy_dice";
 const CHANNEL_ENERGY_USES_PER_DAY_ID: &str = "class_chassis.cleric.channel_energy_uses_per_day";
 const DOMAIN_CHOICE_ID: &str = "class_chassis.cleric.domain_choice";
 const DOMAIN_SPELL_SLOT_ID: &str = "class_chassis.cleric.domain_spell_slot";
-const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.domain_powers.unsupported";
+// (v0.6 alpha swarm, risks item 8, Good domain closure) the old flat
+// "class_feature.cleric.domain_powers.unsupported" no longer fires for
+// this Good+Healing fixture -- Rebuke Death (Healing domain) is the real,
+// still-claim-blocking equivalent for this fixture's own domain selection
+// (Touch of Good, Good domain, can now genuinely close).
+const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.healing_domain.rebuke_death.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.cleric.prepared_divine.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -342,7 +347,11 @@ fn cleric_level1_without_domain_selections_does_not_fabricate_the_choice_seam() 
         has_explanation(&computation, DOMAIN_SPELL_SLOT_ID),
         "the flat domain spell slot count does not depend on which domains were chosen"
     );
-    claim_blocking(&computation, DOMAIN_BLOCKER_ID);
+    // (v0.6 alpha swarm, risks item 8, Good domain closure) with NO domain
+    // selection at all, this falls into the original catch-all branch, so
+    // the old flat diagnostic still fires here (unlike the Good+Healing
+    // fixture, where it's replaced by the narrowed rebuke_death id).
+    claim_blocking(&computation, "class_feature.cleric.domain_powers.unsupported");
     assert_prepared_blocker_state_is_valid_or_blocking(&computation);
 }
 
@@ -353,27 +362,40 @@ fn cleric_level1_stays_blocked_on_domain_powers_burden() {
     let input = load(CLERIC_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // (v0.6 alpha swarm, risks item 8, Good domain closure) Touch of Good
+    // (Good domain) can now genuinely close; Rebuke Death (Healing domain)
+    // is the real, still-claim-blocking burden for this Good+Healing
+    // fixture, under its own narrowed id.
     let domain = claim_blocking(&computation, DOMAIN_BLOCKER_ID);
     assert!(
-        domain.message.contains("domain power"),
-        "cleric domain blocker must name the domain powers burden: {}",
+        domain.message.contains("Rebuke Death"),
+        "rebuke death blocker must name the concrete unimplemented granted power: {}",
         domain.message
     );
     assert!(
-        domain.message.contains("Touch of Good") && domain.message.contains("Rebuke Death"),
-        "cleric domain powers blocker must name the concrete unimplemented granted powers: {}",
+        domain.message.contains("Touch of Good"),
+        "rebuke death blocker must contrast against the closed Touch of Good burden: {}",
         domain.message
     );
     assert!(
-        domain.message.contains("spell-list"),
-        "cleric domain powers blocker must also name the unproven domain spell-list contents: {}",
+        domain.message.contains("heal amount"),
+        "rebuke death blocker must name the unproven heal amount: {}",
         domain.message
     );
     assert!(
         !domain.message.contains("channel energy"),
-        "cleric domain powers blocker must not name channel energy, which is grounded: {}",
+        "rebuke death blocker must not name channel energy, which is grounded: {}",
         domain.message
     );
+
+    // The separate, non-blocking domain spell-list-contents note still fires.
+    let spell_list_note = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.cleric.domain_spell_list_contents.unmodeled")
+        .expect("the domain spell-list-contents note must still fire");
+    assert!(!spell_list_note.claim_blocking);
+    assert!(spell_list_note.message.contains("spell-list"));
 }
 
 #[test]

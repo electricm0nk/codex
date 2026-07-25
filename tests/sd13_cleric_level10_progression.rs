@@ -211,7 +211,7 @@ fn cleric_level10_still_claim_blocks_domain_power_and_prepared_divine_burdens() 
 
     assert!(
         computation.diagnostics.iter().any(
-            |d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking
+            |d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking
         ),
         "level-10 Cleric must still claim-block on the domain-power execution burden: {:?}",
         computation.diagnostics

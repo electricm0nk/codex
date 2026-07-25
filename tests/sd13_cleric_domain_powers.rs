@@ -41,7 +41,6 @@ const TOUCH_OF_GOOD_USES_PER_DAY_ID: &str =
     "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day";
 const REBUKE_DEATH_USES_PER_DAY_ID: &str =
     "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day";
-const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.domain_powers.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -192,31 +191,49 @@ fn cleric_level1_domain_powers_ground_no_spell_list_or_prepared_posture() {
         "grounding domain powers must not fabricate the prepared divine spell posture"
     );
 
-    // The domain powers blocker narrows but stays claim-blocking (spell-list contents
-    // and the Rebuke Death heal amount remain unproven).
-    let domain = claim_blocking(&computation, DOMAIN_BLOCKER_ID);
-    assert!(
-        domain.message.contains("Touch of Good") && domain.message.contains("Rebuke Death"),
-        "domain powers blocker must still name both granted powers: {}",
-        domain.message
+    // (v0.6 alpha swarm, risks item 8, Good domain closure) the old flat
+    // "class_feature.cleric.domain_powers.unsupported" diagnostic no longer
+    // fires for this Good+Healing fixture -- Good domain's Touch of Good can now genuinely
+    // close (self-application only), so the domain-powers burden is split:
+    // Rebuke Death's heal amount stays claim-blocking under its own narrowed
+    // id (Healing is chosen on this fixture), and the domain spell-list
+    // contents gap is a separate, non-blocking note.
+    let rebuke_death = claim_blocking(
+        &computation,
+        "class_feature.cleric.healing_domain.rebuke_death.unsupported",
     );
     assert!(
-        domain.message.contains("spell-list"),
-        "domain powers blocker must still name the unproven domain spell-list contents: {}",
-        domain.message
+        rebuke_death.message.contains("Touch of Good") && rebuke_death.message.contains("Rebuke Death"),
+        "rebuke death blocker must contrast against the closed Touch of Good burden: {}",
+        rebuke_death.message
     );
     assert!(
-        domain.message.contains("heal amount"),
-        "domain powers blocker must name the still-unproven Rebuke Death heal amount: {}",
-        domain.message
+        rebuke_death.message.contains("heal amount"),
+        "rebuke death blocker must name the still-unproven heal amount: {}",
+        rebuke_death.message
+    );
+
+    let spell_list_note = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.cleric.domain_spell_list_contents.unmodeled")
+        .expect("the domain spell-list-contents note must still fire");
+    assert!(
+        !spell_list_note.claim_blocking,
+        "the domain spell-list-contents note must not block an otherwise-valid Good-domain posture"
+    );
+    assert!(
+        spell_list_note.message.contains("spell-list"),
+        "the domain spell-list-contents note must name the unproven spell-list contents: {}",
+        spell_list_note.message
     );
 
     // (v0.6 alpha swarm, risks item 8) Only ONE cleric-specific claim-blocking
     // diagnostic remains here: this fixture has zero prepared spells selected, a
     // genuinely valid prepared-divine posture, so
-    // class_spell.cleric.prepared_divine.unsupported correctly no longer fires.
-    // Domain powers stays permanently unconditional (no domain-power execution or
-    // domain spell-list content is grounded anywhere in this codebase).
+    // class_spell.cleric.prepared_divine.unsupported correctly no longer fires,
+    // and Touch of Good (Good domain) can now genuinely close -- only Rebuke
+    // Death (Healing domain) stays claim-blocking.
     let distinct_blocking = computation
         .diagnostics
         .iter()
