@@ -394,6 +394,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             ],
             selected_choices,
             spells_selected,
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

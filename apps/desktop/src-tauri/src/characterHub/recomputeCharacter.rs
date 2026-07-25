@@ -341,6 +341,7 @@ mod tests {
                         acquisition_mode: AcquisitionMode::Granted,
                     },
                 ],
+                class_ability_activations: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }

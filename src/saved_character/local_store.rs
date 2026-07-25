@@ -611,6 +611,7 @@ mod tests {
                     equipment_selections,
                     selected_choices: Vec::new(),
                     spells_selected: Vec::new(),
+                    class_ability_activations: Vec::new(),
                 },
                 selection_provenance: Vec::new(),
             },

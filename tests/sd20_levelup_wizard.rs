@@ -69,6 +69,7 @@ fn human_wizard_input(level: u8) -> CharacterInput {
                 },
             ],
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

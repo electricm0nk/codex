@@ -87,6 +87,7 @@ fn wizard_input_with_chill_touch_prepared(intelligence: i16) -> CharacterInput {
                 source_class_id: "class:wizard".to_string(),
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

@@ -2174,6 +2174,11 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                     acquisition_mode: spell.acquisition_mode.into(),
                 })
                 .collect(),
+            // v0.6 alpha swarm, risks item 8 (combat-time activation state):
+            // no DTO field exists for this yet -- out of scope for this
+            // backend-only slice, mirroring how `applied_modifiers` just
+            // above is also not yet carried through the import DTO.
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

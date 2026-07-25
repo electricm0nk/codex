@@ -625,6 +625,7 @@ mod wizard_and_rogue_class_skill_grounding_tests {
                 equipment_selections: Vec::new(),
                 selected_choices: Vec::new(),
                 spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
