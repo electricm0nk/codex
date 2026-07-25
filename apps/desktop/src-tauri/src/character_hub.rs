@@ -2582,34 +2582,46 @@ mod tests {
             "Human Fighter L1 is the golden path and must reach Computed with zero claim-blocking diagnostics"
         );
 
+        // v0.6 alpha swarm, risks item 8, third slice (2026-07-25): `table_class_id`
+        // now recognizes Paladin too (mirroring the Ranger widening), so the 4
+        // generic chassis-wide diagnostics no longer trip. Paladin's own
+        // `class_spell.paladin.partial_caster.unsupported` diagnostic is also no
+        // longer unconditional -- it's now a real validation
+        // (`unmet_paladin_prepared_spell_conditions`) that only fires on a genuine
+        // posture violation, and `compose_character_input` seeds no Paladin spell
+        // selections, so the (valid, empty) posture no longer trips it. Only the
+        // still-untouched F6 hybrid-level-1 diagnostics remain, naming the
+        // non-spell class-feature burden and a separate, more general spell
+        // burden than the real one this slice grounds.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 1),
-            generic_plus(&[
-                "class_feature.hybrid.paladin.unsupported",
-                "class_spell.hybrid.paladin.unsupported",
-                "class_spell.paladin.partial_caster.unsupported",
-            ])
+            BTreeSet::from([
+                "class_feature.hybrid.paladin.unsupported".to_owned(),
+                "class_spell.hybrid.paladin.unsupported".to_owned(),
+            ]),
+            "Human Paladin L1 keeps only the F6 hybrid diagnostics; the real \
+             per-class spell-posture diagnostic no longer fires on a valid (empty) posture"
         );
 
         // v0.6 alpha swarm, risks item 8 (2026-07-24): `table_class_id` now
         // recognizes Ranger (`class-multiclass-breadth-scoping.md`'s
         // recommended first slice), so Ranger no longer trips any of the 4
         // generic chassis-wide diagnostics -- same shape as Wizard's own
-        // transition, below. A real, unconditional
-        // `class_spell.ranger.partial_caster.unsupported` diagnostic
-        // replaces the generic bucket's role in keeping this class honestly
-        // Blocked (found necessary by adversarial review: without it, a
-        // level-2+ Ranger or a Ranger-containing multiclass mix would have
-        // reached a false `Computed` status while its spell posture is
-        // genuinely not real -- see that diagnostic's own doc comment in
-        // `pilot_compute.rs`).
+        // transition, below. A first version of this assertion here still
+        // named `class_spell.ranger.partial_caster.unsupported` because that
+        // diagnostic was unconditional at the time; the 2026-07-25 slice made
+        // it a real, conditional validation (mirrors the Paladin update just
+        // above), and `compose_character_input` seeds no Ranger spell
+        // selections, so a Human Ranger L1's (valid, empty) posture no longer
+        // trips it -- only the still-untouched F6 hybrid diagnostics remain.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:ranger", 1),
             BTreeSet::from([
                 "class_feature.hybrid.ranger.unsupported".to_owned(),
                 "class_spell.hybrid.ranger.unsupported".to_owned(),
-                "class_spell.ranger.partial_caster.unsupported".to_owned(),
-            ])
+            ]),
+            "Human Ranger L1 keeps only the F6 hybrid diagnostics; the real per-class \
+             spell-posture diagnostic no longer fires on a valid (empty) posture"
         );
 
         assert_eq!(
@@ -2695,21 +2707,33 @@ mod tests {
             ])
         );
 
-        // Proves the Human-only gate: a non-Human race on a partially-supported
-        // class collapses to the same 4 generic diagnostics as an unsupported class.
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) This
+        // previously proved the Human-only gate collapsed a non-Human Paladin to
+        // the 4 generic diagnostics. That's no longer true: `table_class_id`
+        // recognizes Paladin regardless of race (real BAB/save/HP via the generic
+        // table dispatch), the F6 hybrid diagnostics are Human-gated so they don't
+        // fire for a Dwarf, and the real spell-posture check is race-independent
+        // and valid (empty) here too -- so a non-Human Paladin L1 now reaches
+        // Computed with ZERO claim-blocking diagnostics, same as Fighter/Wizard/
+        // Rogue/Ranger's golden path.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:dwarf", "class:paladin", 1),
-            generic_ids(),
-            "non-Human Paladin must not receive any named Paladin diagnostic"
+            BTreeSet::new(),
+            "non-Human Paladin L1 now reaches Computed too -- table_class_id and the real \
+             spell-posture check are both race-independent"
         );
 
-        // Proves the SD13-E5 level-2 widening: lay on hands, divine grace, smite evil,
-        // and the effective-caster-level gate are all grounded at level 2, so only the
-        // still-unproven spell burden diagnostic remains claim-blocking.
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) Previously
+        // proved only the spell burden remained claim-blocking at level 2. Now
+        // that burden is a real, conditional validation instead of an
+        // unconditional blocker, and a level-2 Paladin has no spells accessible
+        // yet (access ceiling 0) so there's nothing to violate -- Paladin level 2
+        // now reaches Computed with zero claim-blocking diagnostics too.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 2),
-            generic_plus(&["class_spell.paladin.partial_caster.unsupported"]),
-            "Paladin level 2 chassis is grounded; only the spell burden stays claim-blocking"
+            BTreeSet::new(),
+            "Paladin level 2 now reaches Computed: chassis is grounded, and the real spell \
+             posture is valid (no spells accessible yet, none prepared)"
         );
     }
 

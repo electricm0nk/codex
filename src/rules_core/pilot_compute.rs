@@ -120,6 +120,7 @@ use super::character_input::{
 };
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
+use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 use super::rules_tables::RuleSetId;
@@ -6756,6 +6757,17 @@ fn race_display_label(race_id: &str) -> String {
 /// reach a real `Computed` status via `compute_generic_table_chassis`
 /// (already built, already used for Rogue) without touching any other
 /// class's dispatch.
+///
+/// **Paladin added (v0.6 alpha swarm, risks item 8, second slice, 2026-07-25)**
+/// -- same shape as Ranger: `explain_paladin_level1_chassis_and_spell_burden_separation`
+/// had its own self-imposed diagnostic (`class_spell.paladin.partial_caster.unsupported`)
+/// but pushed it AFTER the single-class-only Human-gate check, the exact
+/// structural flaw the Ranger adversarial review found -- fixed here the
+/// same way, moving the check (and now the real validation) to the top of
+/// that function, unconditional on single-class/race, before this widening
+/// landed, so a Paladin+X multiclass or non-Human Paladin cannot silently
+/// bypass it via this widening the way an unfixed copy of the flaw would
+/// have allowed.
 /// `pub(crate)` (rather than private) so `durability.rs`'s max-HP
 /// computation (v0.6 alpha swarm, item 2) can reuse the same class-id
 /// recognition this module's chassis dispatch already established, rather
@@ -6769,6 +6781,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Rogue)
     } else if class_id_str == RANGER_CLASS_ID {
         Some(ClassId::Ranger)
+    } else if class_id_str == PALADIN_CLASS_ID {
+        Some(ClassId::Paladin)
     } else {
         None
     }
@@ -8350,6 +8364,49 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8, second slice (2026-07-25): Paladin's
+    // partial-caster spell posture is validated regardless of whether
+    // Paladin appears alone or in a multiclass mix, and regardless of race
+    // -- checked BEFORE the single-class-only/Human gate below, mirroring
+    // the Ranger fix exactly (`ranger_dispatch_widening_safety_tests`'
+    // own doc comment has the full history of why this ordering matters:
+    // `table_class_id` recognizing Paladin makes
+    // `multiclass_class_level_supported`/`is_supported_multiclass_mix`
+    // accept a Paladin-containing mix too, and `compute_multiclass_base_chassis`
+    // deliberately discards each isolated per-class sub-computation's own
+    // diagnostics, so nothing else in the multiclass path would ever
+    // surface this burden). `unmet_paladin_prepared_spell_conditions`
+    // mirrors `unmet_ranger_prepared_spell_conditions` exactly, substituting
+    // Charisma for Wisdom and `paladin_spell_list::PALADIN_SPELL_LIST` for
+    // the ranger list -- see that function's own doc comment for why zero
+    // prepared spells is valid (real PF1 doesn't require filling every
+    // slot, and paladin spells aren't accessible before level 4 at all).
+    if let Some(paladin_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == PALADIN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        let unmet =
+            unmet_paladin_prepared_spell_conditions(input, paladin_level, ability_modifiers);
+        if unmet.is_empty() {
+            ground_paladin_prepared_spells(input, paladin_level, ability_modifiers, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
+                message: format!(
+                    "Paladin remains blocked on its divine partial-caster spell burden: Paladin \
+                     is a partial caster (spells begin at paladin level 4, with effective caster \
+                     level = paladin level - 3 in PF1 Core Rulebook); unmet prepared-spell \
+                     posture: {}",
+                    unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
+    }
+
     let Some(level) = supported_paladin_level(input) else {
         return;
     };
@@ -8895,18 +8952,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // highest ACCESSIBLE paladin spell level only; the per-day slot values
     // themselves ("0", "1", "2") are never computed, and the "0"-entry
     // bonus-spells-only nuance is surfaced in the record text.
-    let paladin_spell_level_access: i16 =
-        if level >= PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            4
-        } else if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            3
-        } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            2
-        } else if level >= PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            1
-        } else {
-            0
-        };
+    let paladin_spell_level_access: i16 = paladin_spell_level_access(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.paladin.partial_caster.spell_level_access".to_owned(),
         value: paladin_spell_level_access,
@@ -8976,25 +9022,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // inaccessible spell levels ("—" columns) get no record at all. Only
     // the base counts are grounded: bonus spells per day from a high
     // Charisma are never computed.
-    let paladin_base_spells_per_day: [Option<i16>; 4] = match level {
-        4 => [Some(0), None, None, None],
-        5 | 6 => [Some(1), None, None, None],
-        7 => [Some(1), Some(0), None, None],
-        8 => [Some(1), Some(1), None, None],
-        9 => [Some(2), Some(1), None, None],
-        10 => [Some(2), Some(1), Some(0), None],
-        11 => [Some(2), Some(1), Some(1), None],
-        12 => [Some(2), Some(2), Some(1), None],
-        13 => [Some(3), Some(2), Some(1), Some(0)],
-        14 => [Some(3), Some(2), Some(1), Some(1)],
-        15 => [Some(3), Some(2), Some(2), Some(1)],
-        16 => [Some(3), Some(3), Some(2), Some(1)],
-        17 => [Some(4), Some(3), Some(2), Some(1)],
-        18 => [Some(4), Some(3), Some(2), Some(2)],
-        19 => [Some(4), Some(3), Some(3), Some(2)],
-        20 => [Some(4), Some(4), Some(3), Some(3)],
-        _ => [None, None, None, None],
-    };
+    let paladin_base_spells_per_day: [Option<i16>; 4] = paladin_base_spells_per_day_table(level);
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
             continue;
@@ -9126,30 +9154,196 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
             ),
         });
     }
+}
 
-    // The partial-caster spell burden is its own blocker, distinct from the
-    // grounded non-spell chassis records above. Paladin is a divine partial
-    // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
-    // caster level = paladin level - 3), and the blocker must name that
-    // partial-caster posture so the later spell-burden closure cannot confuse
-    // Paladin with a full divine caster (Cleric / Druid). Unchanged by the
-    // level-2 widening: still claim-blocking at every level this slice
-    // supports.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
-        message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
-             partial caster (spells begin at paladin level 4, with effective caster level = \
-             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage and the \
-             spells known or prepared posture are \
-             deferred \
-             to a later spellcasting slice (the spell-level access ladder, the BASE \
-             spells-per-day table counts, the base spell-save-DC arithmetic, the \
-             Charisma bonus spell slot counts, and the integrated base+bonus totals are \
-             grounded separately as flat records); no partial-caster spell execution is \
-             fabricated in this bounded chassis baseline"
-            .to_owned(),
-        claim_blocking: true,
+/// The highest paladin spell level with a non-"—" spells-per-day column at
+/// the given paladin level (0 means no spell access yet). Pure function,
+/// race-independent -- mirrors `ranger_spell_level_access` exactly, extracted
+/// so both the (Human-only) flat explanation block above and the real
+/// prepared-spell validation below share one source of truth.
+fn paladin_spell_level_access(level: u8) -> i16 {
+    if level >= PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else if level >= PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        1
+    } else {
+        0
+    }
+}
+
+/// The PF1 Core Rulebook Paladin class table's BASE spells-per-day row, one
+/// entry per spell level 1-4 (`None` for an inaccessible "—" column). A
+/// literal table lookup, not a derived formula -- see
+/// `explain_paladin_level1_chassis_and_spell_burden_separation`'s own doc
+/// comment for the two-source verification history of every row. Pure
+/// function, race-independent, mirrors `ranger_base_spells_per_day_table`.
+fn paladin_base_spells_per_day_table(level: u8) -> [Option<i16>; 4] {
+    match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
+        15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
+        18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
+        _ => [None, None, None, None],
+    }
+}
+
+/// The real per-day slot budget per spell level 1-4 (base table count +
+/// Charisma bonus, `None` for an inaccessible column), reusing
+/// `ability_bonus_spells` -- mirrors `ranger_total_spells_per_day` exactly,
+/// substituting Charisma for Wisdom.
+fn paladin_total_spells_per_day(level: u8, charisma_modifier: i16) -> [Option<i16>; 4] {
+    let base = paladin_base_spells_per_day_table(level);
+    let mut total = [None; 4];
+    for (index, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        total[index] = Some(base_count + ability_bonus_spells(charisma_modifier, spell_level));
+    }
+    total
+}
+
+/// Return the list of unmet conditions for Paladin's real prepared-spell
+/// posture. Mirrors `unmet_ranger_prepared_spell_conditions` exactly,
+/// substituting Charisma for Wisdom and `paladin_spell_list::PALADIN_SPELL_LIST`
+/// for the ranger list. An empty list means the posture is fully valid: every
+/// `AcquisitionMode::Prepared` selection with `source_class_id ==
+/// "class:paladin"` names a real spell on
+/// `paladin_spell_list::PALADIN_SPELL_LIST`, at a spell level within the
+/// paladin's own access ceiling for their paladin level, and no spell
+/// level's prepared count exceeds that level's total slot budget (base
+/// table count + Charisma bonus). Zero prepared spells is always valid --
+/// see the call site's own doc comment for why.
+fn unmet_paladin_prepared_spell_conditions(
+    input: &CharacterInput,
+    paladin_level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == PALADIN_CLASS_ID
+                && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = paladin_spell_level_access(paladin_level);
+    let total_per_day = paladin_total_spells_per_day(paladin_level, ability_modifiers.charisma);
+
+    let mut consumed_per_level: [i16; 4] = [0; 4];
+    for spell_id in &prepared {
+        let Some(spell_level) = paladin_spell_list::paladin_spell_level(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook paladin \
+                 spell list"
+            ));
+            continue;
+        };
+        if i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at paladin level {paladin_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level) - 1] += 1;
+    }
+
+    for (index, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let spell_level = index + 1;
+        let total_slots = total_per_day[index].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base {} + Charisma bonus)",
+                paladin_base_spells_per_day_table(paladin_level)[index].unwrap_or(0)
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spell posture once
+/// `unmet_paladin_prepared_spell_conditions` reports an empty unmet list.
+/// Mirrors `ground_ranger_prepared_spells` exactly, substituting Charisma
+/// for Wisdom.
+fn ground_paladin_prepared_spells(
+    input: &CharacterInput,
+    paladin_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == PALADIN_CLASS_ID
+                && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.paladin.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Paladin level {paladin_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 Core Rulebook paladin spell list (`paladin_spell_list::PALADIN_SPELL_LIST`), \
+             the paladin's own spell-level access ceiling, and the per-level slot budget (base \
+             table count + Charisma bonus). This grounds the prepared-spell selection for real; \
+             it computes no spell save DC resolution against a target and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
     });
+
+    let total_per_day = paladin_total_spells_per_day(paladin_level, ability_modifiers.charisma);
+    for (index, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.paladin.total_spells_per_day.spell_level_{spell_level}"),
+            value: *total,
+            detail: format!(
+                "Paladin level {paladin_level} total spells per day at spell level \
+                 {spell_level}: {total} (base table count + Charisma bonus, the same records \
+                 already grounded as \
+                 `class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_{spell_level}` \
+                 for a Human paladin, computed here independent of race). This is the real slot \
+                 budget the daily preparation selection above is validated against"
+            ),
+        });
+    }
 }
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
@@ -19937,6 +20131,54 @@ mod ranger_dispatch_widening_safety_tests {
         );
     }
 
+    /// The permanent-test gap the lead found while verifying b7642d97: the
+    /// existing positive proof above only exercises the *empty* prepared-spell
+    /// case, which can't by itself distinguish "correctly validates real
+    /// spells" from "just happens to allow the trivial empty case" -- a
+    /// vacuous check would pass both this test's absence and the empty-case
+    /// test identically. This proves a real, *non-empty*, genuinely valid
+    /// prepared spell also reaches `Computed`: "Alarm" is a real 1st-level
+    /// ranger spell (`rules_tables::crb::ranger_spell_list`), accessible at
+    /// ranger level 4 (spells begin at ranger level 4), and fits the real
+    /// total budget at that level (base 0 + Wisdom-12 bonus 1 = 1 slot,
+    /// exactly matching this fixture's own
+    /// `single_class_ranger_over_prepared_slot_budget_stays_blocked` sibling
+    /// test's own cited budget arithmetic for the identical level/Wisdom
+    /// combination, just staying within it here instead of exceeding it).
+    #[test]
+    fn single_class_ranger_with_a_real_valid_prepared_spell_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Alarm".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a single-class Ranger preparing a real, in-budget, accessible spell must reach \
+             Computed, not just an empty prepared-spell list: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported"),
+            "the spell-posture diagnostic must not fire when a real prepared spell is \
+             genuinely valid: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     /// A single-class Ranger with a genuinely invalid prepared-spell
     /// selection (a spell level not yet accessible at ranger level 5, whose
     /// highest accessible level is 1st) must still stay `Blocked`, carrying
@@ -20182,6 +20424,282 @@ mod ranger_dispatch_widening_safety_tests {
                 .iter()
                 .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported" && d.claim_blocking),
             "expected the real Ranger spell-posture diagnostic to fire in this mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, third slice (2026-07-25): Paladin's real
+/// prepared-spell posture, mirroring `ranger_dispatch_widening_safety_tests`
+/// exactly (same shape: a genuine structural risk existed here too --
+/// `explain_paladin_level1_chassis_and_spell_burden_separation`'s own
+/// diagnostic was pushed AFTER the single-class-only/Human gate, so widening
+/// `table_class_id` to recognize Paladin would have let a Paladin+X
+/// multiclass or a non-Human Paladin silently reach `Computed` the exact
+/// way the Ranger adversarial review found -- fixed as part of this same
+/// slice, not left for a follow-up, since the fix was already proven and
+/// cheap to apply directly this time).
+#[cfg(test)]
+mod paladin_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, PALADIN_CLASS_ID, ROGUE_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single-class Paladin at a representative mid-range level (5, inside
+    /// the partial-caster range), with no spells prepared, genuinely reaches
+    /// `Computed` -- proving the same real posture that landed for Ranger
+    /// now also applies to Paladin.
+    #[test]
+    fn single_class_paladin_level5_with_no_prepared_spells_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a single-class Paladin with a valid (empty) spell posture must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.paladin.partial_caster.unsupported"),
+            "the spell-posture diagnostic must not fire when the posture is valid: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Human single-class Paladin with no prepared spells must also
+    /// reach `Computed` -- the fix moved the check outside the Human-only
+    /// gate deliberately, so this proves the gate no longer silently
+    /// exempts non-Human Paladins from validation (or from Computed).
+    #[test]
+    fn non_human_single_class_paladin_with_no_prepared_spells_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.race_id = "race:elf".to_owned();
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a non-Human Paladin with a valid spell posture must also reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Paladin preparing a spell beyond their spell-level
+    /// access ceiling must stay `Blocked`.
+    #[test]
+    fn single_class_paladin_with_an_inaccessible_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 5 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Break Enchantment".to_owned(),
+            source_class_id: PALADIN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a 4th-level paladin spell is not accessible at paladin level 5 (access ceiling \
+             1st): {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.paladin.partial_caster.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Paladin preparing a spell not on the real PF1 Core
+    /// Rulebook paladin spell list must also stay `Blocked`.
+    #[test]
+    fn single_class_paladin_with_an_off_list_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 4 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: PALADIN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Magic Missile is not on the real paladin spell list: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A valid Paladin+Fighter multiclass mix (no invalid preparation) now
+    /// genuinely reaches `Computed` too.
+    #[test]
+    fn paladin_fighter_multiclass_with_no_prepared_spells_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Paladin+Fighter multiclass with a valid spell posture must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The real regression this mirrors: a Paladin+Fighter multiclass mix
+    /// with a genuine posture violation must still stay `Blocked`, not
+    /// silently reach `Computed` via the isolated per-class sub-computation
+    /// path that discards diagnostics.
+    #[test]
+    fn paladin_fighter_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: PALADIN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Paladin+Fighter multiclass must not reach Computed while Paladin's spell posture \
+             is genuinely violated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.paladin.partial_caster.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Same positive+negative proof for Paladin+Rogue -- the risk is generic
+    /// to any multiclass partner `table_class_id` already recognizes, not
+    /// specific to Fighter.
+    #[test]
+    fn paladin_rogue_multiclass_both_directions() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let base_input = result.character_input.expect("valid fixture");
+
+        let mut valid_input = base_input.clone();
+        valid_input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 1 },
+        ];
+        let valid_receipt = build_pilot_headless_receipt(&valid_input);
+        assert_eq!(
+            valid_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Paladin+Rogue multiclass with a valid spell posture must reach Computed: {:?}",
+            valid_receipt.computation.diagnostics
+        );
+
+        let mut invalid_input = valid_input;
+        invalid_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: PALADIN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        let invalid_receipt = build_pilot_headless_receipt(&invalid_input);
+        assert_eq!(
+            invalid_receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Paladin+Rogue multiclass must still block a genuine posture violation: {:?}",
+            invalid_receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Paladin at level 4 (base spells-per-day for 1st-level
+    /// spells is a genuine 0 -- the fixture's Charisma 8 grants no bonus
+    /// spells at all) preparing any 1st-level spell over-prepares its slot
+    /// budget (0 total) and must stay `Blocked`.
+    #[test]
+    fn single_class_paladin_over_prepared_slot_budget_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: PALADIN_CLASS_ID.to_owned(), level: 4 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Bless".to_owned(),
+            source_class_id: PALADIN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "paladin level 4 has a genuine 0 base slots for 1st-level spells, and the \
+             fixture's Charisma 8 (mod -1) grants no bonus, so preparing any 1st-level spell \
+             over-prepares: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.paladin.partial_caster.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
             receipt.computation.diagnostics
         );
     }
