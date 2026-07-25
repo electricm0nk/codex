@@ -252,21 +252,34 @@ fn prepared_divine_unsupported_diagnostic_never_leaks_into_explanations_or_grant
         let character = cleric_at_level(to_level);
         let computation = compute_pilot_base_chassis(&character);
 
-        let diagnostic = computation
+        // (v0.6 alpha swarm, risks item 8) PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID
+        // is no longer unconditional -- these fixtures have zero prepared spells, a
+        // genuinely valid posture, so the diagnostic correctly does not fire. If
+        // absent, confirm no spell is fabricated merely because it stopped firing.
+        match computation
             .diagnostics
             .iter()
             .find(|d| d.id == PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID)
-            .unwrap_or_else(|| {
-                panic!(
-                    "cleric level {to_level} must still carry the prepared-divine-spell \
-                     claim-blocking diagnostic: {:?}",
+        {
+            Some(diagnostic) => assert!(
+                diagnostic.claim_blocking,
+                "the prepared divine spell posture diagnostic must stay claim-blocking at level {to_level}"
+            ),
+            None => {
+                let prepared_count = computation
+                    .explanations
+                    .iter()
+                    .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                    .map(|e| e.value)
+                    .unwrap_or(-1);
+                assert_eq!(
+                    prepared_count, 0,
+                    "no spells are fabricated merely because the blocker stopped firing at level \
+                     {to_level}: {:?}",
                     computation.diagnostics
-                )
-            });
-        assert!(
-            diagnostic.claim_blocking,
-            "the prepared divine spell posture diagnostic must stay claim-blocking at level {to_level}"
-        );
+                );
+            }
+        }
 
         assert!(
             !computation

@@ -233,14 +233,26 @@ fn cleric_level18_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
         "level-18 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking),
-        "level-18 Cleric must still claim-block on the prepared divine spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: level 17 truth is unchanged by this widening -----

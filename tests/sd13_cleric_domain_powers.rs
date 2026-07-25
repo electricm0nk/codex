@@ -211,17 +211,32 @@ fn cleric_level1_domain_powers_ground_no_spell_list_or_prepared_posture() {
         domain.message
     );
 
-    // Exactly two cleric-specific claim-blocking diagnostics remain (domain powers,
-    // prepared divine spell posture) — grounding narrows messages, not diagnostic
-    // count.
+    // (v0.6 alpha swarm, risks item 8) Only ONE cleric-specific claim-blocking
+    // diagnostic remains here: this fixture has zero prepared spells selected, a
+    // genuinely valid prepared-divine posture, so
+    // class_spell.cleric.prepared_divine.unsupported correctly no longer fires.
+    // Domain powers stays permanently unconditional (no domain-power execution or
+    // domain spell-list content is grounded anywhere in this codebase).
     let distinct_blocking = computation
         .diagnostics
         .iter()
         .filter(|d| d.claim_blocking && d.id.starts_with("class_") && d.id.contains("cleric"))
         .count();
     assert_eq!(
-        distinct_blocking, 2,
-        "cleric must still leave exactly two class-specific claim-blocking diagnostics: {:?}",
+        distinct_blocking, 1,
+        "cleric must leave exactly one class-specific claim-blocking diagnostic (domain powers) \
+         on a valid prepared-spell posture: {:?}",
+        computation.diagnostics
+    );
+    let prepared_count = computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "class_spell.cleric.daily_preparation")
+        .map(|e| e.value)
+        .unwrap_or(-1);
+    assert_eq!(
+        prepared_count, 0,
+        "no spells are fabricated merely because the prepared-divine blocker stopped firing: {:?}",
         computation.diagnostics
     );
 }

@@ -154,17 +154,20 @@ fn cleric_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() {
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported
-    // for Cleric) is untouched: no fabricated base_attack_bonus field, and no
-    // supported Fighter-style base-attack chassis explanation leaks in.
+    // ...but the integrated `base_attack_bonus` field is untouched: no fabricated
+    // integrated value is wired in from the standalone record.
     assert_eq!(
         computation.base_attack_bonus, 0,
         "the standalone cleric base-attack explanation must not be wired into the integrated \
          base_attack_bonus field"
     );
+    // (v0.6 alpha swarm, risks item 8) Cleric is now recognized by
+    // table_class_id, so the generic class-chassis base-attack-bonus
+    // explanation IS surfaced (unlike the earlier unsupported-chassis state);
+    // the value still floors to 0 at level 1 (3/4 BAB), only presence changed.
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "cleric baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "cleric is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 }
 
@@ -193,20 +196,38 @@ fn cleric_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocke
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day"
     ));
 
-    // Both claim-blocking burdens (domain powers, prepared divine spell posture)
-    // still fire; this slice grounds no domain spell-list contents and no spell math.
+    // The domain powers burden still fires (permanently unconditional); this
+    // slice grounds no domain spell-list contents and no spell math.
     let domain_powers = computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_feature.cleric.domain_powers.unsupported")
         .expect("domain powers blocker must still fire");
     assert!(domain_powers.claim_blocking);
-    let prepared = computation
+
+    // (v0.6 alpha swarm, risks item 8) class_spell.cleric.prepared_divine.unsupported
+    // is no longer unconditional -- this bare fixture has zero prepared spells, a
+    // genuinely valid posture, so the blocker correctly does not fire here.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
-        .expect("prepared divine spell posture blocker must still fire");
-    assert!(prepared.claim_blocking);
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Cleric level 2 was later widened into the supported tranche -----

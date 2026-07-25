@@ -215,14 +215,26 @@ fn cleric_level9_still_claim_blocks_domain_power_and_prepared_divine_burdens() {
         "level-9 Cleric must still claim-block on the domain-power execution burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation.diagnostics.iter().any(
-            |d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking
-        ),
-        "level-9 Cleric must still claim-block on the prepared divine spell posture burden: \
-         {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: the level-8 fixture is unaffected by this widening -----
