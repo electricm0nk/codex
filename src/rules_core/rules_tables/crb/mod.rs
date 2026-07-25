@@ -1,5 +1,6 @@
 //! Core Rulebook (CRB) table data.
 
+pub mod bard_spell_list;
 pub mod class_tables;
 pub mod cleric_spell_list;
 pub mod druid_spell_list;
