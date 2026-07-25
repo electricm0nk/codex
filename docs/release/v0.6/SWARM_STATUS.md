@@ -1191,7 +1191,14 @@ prior refresh, itself already superseded by everything since)
 
 **Operator directive (2026-07-24), acted on:** full class chassis across all 4 primary books is the swarm's primary active work. The adversarial review dispatched on the scoping plan found a real correctness gap (a false-positive-Computed risk) before it shipped — backend fixed all 4 findings, lead independently verified every one rather than trusting the report.
 
-**LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Clarifying with backend whether Ranger's spell posture is next or deferred, and confirming going forward that "done" means "genuinely reaches Computed" for all 24 classes, not "dispatch landed safely." See risks-and-open-questions.md item 8 for the full record.
+**LEAD CORRECTION (2026-07-24): "class 1 of 24 is genuinely done" above was an overstatement, caught by frontend.** Ranger's BAB/save dispatch-widening landed and is proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and unconditionally blocked. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no code change. Backend confirmed the corrected terminology going forward ("done" = reaches `Computed`, always) and landed APG's 6-class BAB/save/HP dispatch (`c511c132`) correctly labeled as still-Blocked from the start — lead-verified 283/283 lib + 212/212 desktop, including a dedicated multiclass-safety test proving backend proactively avoided the exact loophole Ranger's review found. Next: Ranger's real spellcasting (genuinely new engine work, no prior art in this codebase). See risks-and-open-questions.md item 8 for the full record.
+
+## Agent Status (2026-07-24, ~23:55 ET)
+| Agent | Status | Detail |
+|---|---|---|
+| backend | working | APG's 6-class BAB/save/HP dispatch landed and lead-verified (c511c132, correctly labeled still-Blocked, proactively avoided the Ranger multiclass loophole); starting Ranger's real spellcasting next |
+| frontend | idle | correctly declined a lead instruction after investigating and finding the premise false; queue clear |
+| qa | working | landing Ranger's disclosed 4-site tests/** update plus the APG coverage-audit test restructuring (Cavalier's real nonzero BAB breaks the old "unsupported means zero BAB" premise) |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------

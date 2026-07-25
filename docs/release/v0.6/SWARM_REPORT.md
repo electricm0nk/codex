@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | non-CRB wealth recognition landed (4576fe5f); redirected to the corrected mandate -- full chassis for every class across all 4 primary books, primary active work now |
-| frontend | idle | queue clear |
-| qa | working | researching corpus coverage, scope corrected to all 4 books |
+| backend | working | APG's 6-class BAB/save/HP dispatch landed and lead-verified (c511c132, correctly labeled still-Blocked, proactively avoided the Ranger multiclass loophole); starting Ranger's real spellcasting next |
+| frontend | idle | correctly declined a lead instruction after investigating and finding the premise false; queue clear |
+| qa | working | landing Ranger's 4-site tests/** update plus the APG coverage-audit test restructuring |
 
 ---
 
@@ -56,6 +56,8 @@ continues regardless.
 **UPDATE (2026-07-24, ~22:45 ET) — Ranger's BAB/save dispatch-widening landed and independently verified.** Given the scale of this decision, one adversarial review was run on the scoping plan before greenlighting continuous implementation — it found a real bug: the plan's "Ranger has zero self-block" claim was wrong in a way that risked a false-positive `Computed` status while Ranger's spellcasting was genuinely uncomputed. Backend fixed all 4 findings (real spell-posture diagnostic added, Paladin confirmed unaffected, multiclass combos tested, plan/comment corrected). Lead independently verified every claim rather than trusting the report — 4296/4296 lib, 212/212 desktop, all 4 review requirements confirmed by directly running the relevant tests.
 
 **CORRECTION (~23:45 ET) — "class 1 of 24 done" overstated this; caught by frontend.** The dispatch-widening is real, valuable, and proven safe, but Ranger still cannot reach `Computed` — its spell posture is genuinely uncomputed and the new diagnostic blocks it unconditionally. Frontend investigated an instruction of the lead's before implementing it, found the premise false, live-verified via the real dev build, and correctly made no change. Clarifying with backend whether Ranger's spell posture is next or intentionally deferred, and confirming "done" means "genuinely reaches Computed" for all 24 classes going forward. See risks-and-open-questions.md item 8 for the full record.
+
+**UPDATE (~00:00) — backend confirmed terminology, APG's 6-class dispatch landed correctly labeled.** Backend will state exactly which pillar advanced vs. whether the class actually reaches `Computed` in every future report. APG's BAB/save/HP dispatch (`c511c132`) landed for all 6 classes, explicitly stated as NOT making them reach `Computed`, and proactively avoided the exact multiclass loophole Ranger's review found. Lead-verified 283/283 lib + 212/212 desktop. Next: Ranger's real spellcasting.
 
 **UPDATE (2026-07-24, ~15:35 ET) — operator decided all three gated items.**
 Item 27: widen the posture gate to accept any equipment (real engineering
