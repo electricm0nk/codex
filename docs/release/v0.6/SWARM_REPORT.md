@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Skald plan revision verified and greenlit (all 3 review findings addressed correctly); building the first APG/ACG class closure now |
+| backend | working | MILESTONE: Skald (first APG/ACG class with real pillar integration) fully lead-verified pre-commit (400/400 lib, all safety tests pass); committing now |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green |
 
@@ -84,7 +84,7 @@ precedent — flagged below.
 | Hunter | 3/4 | d8 | dispatch-only, Blocked |
 | Investigator | 3/4 | d8 | dispatch-only, Blocked |
 | Shaman | 3/4 | d8 | dispatch-only, Blocked |
-| Skald | 3/4 | d8 | dispatch-only, Blocked |
+| Skald | 3/4 | d8 | **Blocked** — real progress: Inspired Rage (self-application, mirrors Barbarian's Rage) genuinely grounded; still Blocked on deferred spellcasting. First APG/ACG class with any real pillar-integration work, lead-verified 400/400 lib |
 | Slayer | **full** | d10 | dispatch-only, Blocked |
 | Swashbuckler | **full** | d10 | dispatch-only, Blocked |
 | Warpriest | 3/4 | d8 | dispatch-only, Blocked |
