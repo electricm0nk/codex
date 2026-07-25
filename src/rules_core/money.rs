@@ -112,6 +112,32 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 
+/// The 10 non-Core-Rulebook (APG/ACG) class id strings this function also
+/// recognizes (v0.6 alpha swarm item 7, second phase, 2026-07-24 -- operator
+/// go-ahead, re-confirming d20pfsrd.com as an approved source). Re-checked
+/// directly against the real d20pfsrd "Character Creation" table before
+/// implementing (rather than trusting this doc's own prose, which
+/// miscounted "12" where the table itself always named exactly these 10):
+/// every id/value pair here matches that table's own printed row verbatim,
+/// zero mismatches, zero missing rows. No `class_tables()` row and no
+/// `compute_class_chassis` dispatch arm exists for any of these -- they are
+/// recognized *only* by this function, the same "recognized but narrow"
+/// shape as any `class:<name>` string this crate has never built chassis
+/// support for; a character using one of these ids still reaches `Blocked`
+/// exactly like any other unsupported class (verified by test), so
+/// recognizing the id here carries no risk of ever granting wealth to a
+/// build that hasn't proven `Computed`.
+const ALCHEMIST_CLASS_ID: &str = "class:alchemist";
+const CAVALIER_CLASS_ID: &str = "class:cavalier";
+const GUNSLINGER_CLASS_ID: &str = "class:gunslinger";
+const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
+const MAGUS_CLASS_ID: &str = "class:magus";
+const NINJA_CLASS_ID: &str = "class:ninja";
+const ORACLE_CLASS_ID: &str = "class:oracle";
+const SAMURAI_CLASS_ID: &str = "class:samurai";
+const SUMMONER_CLASS_ID: &str = "class:summoner";
+const WITCH_CLASS_ID: &str = "class:witch";
+
 /// Average starting wealth in gold pieces for a PF1 Core Rulebook class id
 /// (v0.6 alpha swarm item 7, resolved 2026-07-24). The operator (Todd
 /// Hintzmann) provided the full table directly, sourced from
@@ -119,13 +145,18 @@ const SORCERER_CLASS_ID: &str = "class:sorcerer";
 /// (<https://www.d20pfsrd.com/basics-ability-scores/character-creation/>,
 /// Pathfinder SRD/OGL content) -- see
 /// `docs/release/v0.6/risks-and-open-questions.md` item 7 for the full
-/// table as recorded there, including the 12 non-Core-Rulebook classes
-/// (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Ninja, Oracle,
-/// Samurai, Summoner, Witch) this function omits -- no `class:<name>` id
-/// for any of them is recognized anywhere else in this crate yet, so
-/// adding their rows here would be inert data with no `CharacterInput`
-/// that could ever key against them. Returns `None` for any other
-/// (unrecognized or non-CRB) class id, rather than fabricating a value.
+/// table as recorded there. Also recognizes the 10 non-Core-Rulebook
+/// (APG/ACG) classes named on the same real d20pfsrd table (Alchemist,
+/// Cavalier, Gunslinger, Inquisitor, Magus, Ninja, Oracle, Samurai,
+/// Summoner, Witch -- re-counted directly against the live source before
+/// implementing, not assumed from this doc's own prose, which had
+/// miscounted "12"). None of the 10 has a `class_tables()` row or a
+/// `compute_class_chassis` dispatch arm -- recognized only by this
+/// function, the same "recognized but narrow" shape; a build using one of
+/// these ids still reaches `Blocked` like any other unsupported class
+/// (verified by test), so no wealth is ever granted to an unproven build.
+/// Returns `None` for any other (genuinely unrecognized) class id, rather
+/// than fabricating a value.
 ///
 /// PF1's own rule is to roll the die (e.g. Fighter: 5d6 x 10 gp) rather
 /// than take a fixed value. This crate is deterministic throughout --
@@ -142,10 +173,13 @@ const SORCERER_CLASS_ID: &str = "class:sorcerer";
 pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
     match class_id {
         MONK_CLASS_ID => Some(35),
-        DRUID_CLASS_ID | SORCERER_CLASS_ID | WIZARD_CLASS_ID => Some(70),
-        BARBARIAN_CLASS_ID | BARD_CLASS_ID => Some(105),
-        CLERIC_CLASS_ID | ROGUE_CLASS_ID => Some(140),
-        FIGHTER_CLASS_ID | PALADIN_CLASS_ID | RANGER_CLASS_ID => Some(175),
+        DRUID_CLASS_ID | SORCERER_CLASS_ID | WIZARD_CLASS_ID | SUMMONER_CLASS_ID => Some(70),
+        BARBARIAN_CLASS_ID | BARD_CLASS_ID | ALCHEMIST_CLASS_ID | ORACLE_CLASS_ID
+        | SAMURAI_CLASS_ID | WITCH_CLASS_ID => Some(105),
+        CLERIC_CLASS_ID | ROGUE_CLASS_ID | INQUISITOR_CLASS_ID | MAGUS_CLASS_ID
+        | NINJA_CLASS_ID => Some(140),
+        FIGHTER_CLASS_ID | PALADIN_CLASS_ID | RANGER_CLASS_ID | CAVALIER_CLASS_ID
+        | GUNSLINGER_CLASS_ID => Some(175),
         _ => None,
     }
 }
@@ -183,13 +217,23 @@ mod starting_wealth_tests {
             ("class:druid", 2),
             ("class:sorcerer", 2),
             ("class:wizard", 2),
+            ("class:summoner", 2),
             ("class:barbarian", 3),
             ("class:bard", 3),
+            ("class:alchemist", 3),
+            ("class:oracle", 3),
+            ("class:samurai", 3),
+            ("class:witch", 3),
             ("class:cleric", 4),
             ("class:rogue", 4),
+            ("class:inquisitor", 4),
+            ("class:magus", 4),
+            ("class:ninja", 4),
             ("class:fighter", 5),
             ("class:paladin", 5),
             ("class:ranger", 5),
+            ("class:cavalier", 5),
+            ("class:gunslinger", 5),
         ];
         for (class_id, dice_count) in dice_counts {
             assert_eq!(
@@ -200,14 +244,29 @@ mod starting_wealth_tests {
         }
     }
 
+    /// v0.6 alpha swarm item 7 (second phase, 2026-07-24): the 10 non-CRB
+    /// (APG/ACG) classes from the same real d20pfsrd table, re-checked
+    /// directly against the live source before implementing (not assumed
+    /// from this doc's own prose, which had miscounted "12" -- the table
+    /// itself always named exactly these 10, zero missing rows).
     #[test]
-    fn returns_none_for_any_class_id_it_does_not_recognize() {
-        // Non-CRB classes (no class:<name> id recognized anywhere in this
-        // crate yet) and a nonsense id both fall through the same way --
-        // no fabricated value.
-        assert_eq!(starting_wealth_gp("class:alchemist"), None);
-        assert_eq!(starting_wealth_gp("class:cavalier"), None);
+    fn matches_the_operator_cited_average_for_every_non_crb_class() {
+        assert_eq!(starting_wealth_gp("class:alchemist"), Some(105));
+        assert_eq!(starting_wealth_gp("class:cavalier"), Some(175));
+        assert_eq!(starting_wealth_gp("class:gunslinger"), Some(175));
+        assert_eq!(starting_wealth_gp("class:inquisitor"), Some(140));
+        assert_eq!(starting_wealth_gp("class:magus"), Some(140));
+        assert_eq!(starting_wealth_gp("class:ninja"), Some(140));
+        assert_eq!(starting_wealth_gp("class:oracle"), Some(105));
+        assert_eq!(starting_wealth_gp("class:samurai"), Some(105));
+        assert_eq!(starting_wealth_gp("class:summoner"), Some(70));
+        assert_eq!(starting_wealth_gp("class:witch"), Some(105));
+    }
+
+    #[test]
+    fn returns_none_for_a_class_id_it_does_not_recognize() {
         assert_eq!(starting_wealth_gp("not-a-real-class-id"), None);
+        assert_eq!(starting_wealth_gp("class:samurai "), None, "trailing whitespace must not fuzzy-match");
     }
 
     #[test]

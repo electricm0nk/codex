@@ -3023,6 +3023,41 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// v0.6 alpha swarm item 7 (second phase, 2026-07-24): explicitly
+    /// verifies, rather than assumes, that a non-CRB class id
+    /// `starting_wealth_gp` newly recognizes (Alchemist) still reaches
+    /// `Blocked` exactly like any other unsupported class -- recognizing
+    /// the id for wealth purposes carries no risk of ever granting wealth
+    /// to a build that hasn't proven `Computed`, since nothing else in the
+    /// compute/chassis dispatch has ever heard of "class:alchemist" either.
+    #[test]
+    fn create_character_at_root_grants_no_wealth_for_a_newly_recognized_non_crb_class() {
+        let root = tempdir("create-character-starting-wealth-non-crb-blocked");
+        let request = request_for_class("race:human", "class:alchemist", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Blocked { .. } => {}
+            CreateCharacterResponse::Saved { .. } => {
+                panic!(
+                    "Human Alchemist level 1 is not expected to reach Computed -- no chassis \
+                     dispatch exists for this class id"
+                )
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "a non-CRB class newly recognized for wealth purposes must still grant zero wealth \
+             while genuinely Blocked"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- purchase_equipment: atomic money-purchase coupling (risks item 9) -----
 
     /// Golden path: an affordable real item is added AND its real catalog
