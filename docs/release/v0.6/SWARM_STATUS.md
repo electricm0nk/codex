@@ -1182,14 +1182,14 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~21:25 ET)
+## Agent Status (2026-07-24, ~21:35 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | wealth recognition for the 10 non-CRB classes landed (4576fe5f, lead-verified 276/276 + 212/212); redirected to the corrected, larger mandate -- full chassis (BAB/save/HP/skill/spell/feature) for every class across all 4 primary books, dispatched as primary active work per the operator's correction |
+| backend | working | class-breadth scoping plan landed (cde21ba3, all 27 classes, CRB/APG/ACG resolver-infra parity confirmed); started Ranger's `table_class_id` widening; an adversarial review found the plan's "Ranger has no self-block" claim is wrong (real false-positive-Computed risk at levels 4+) -- relayed in full, backend fixing before commit |
 | frontend | idle | queue clear |
-| qa | working | researching data/corpus/ coverage, now scoped to all 4 books' classes, not just the 8 CRB ones |
+| qa | working | delivered Ranger test-coordination prep, APG/ACG hit-die table (16 classes), and confirmed Gunslinger/Magus/Ninja/Samurai data is real and present (not a dead end) -- all lead-verified |
 
-**CORRECTION (operator, 2026-07-24, ~21:20 ET):** the lead's earlier "future-epic/backlog" framing of class breadth was read, correctly, as deferral. Corrected: full class chassis across all 4 primary books (CRB/Bestiary 1/APG/ACG) is now the swarm's primary active work, not backlog. See risks-and-open-questions.md item 8 and SWARM_REPORT.md for the full correction.
+**Operator directive (2026-07-24, ~21:20 ET), acted on since:** full class chassis across all 4 primary books (CRB/Bestiary 1/APG/ACG) is the swarm's primary active work, not backlog. Given the scale of what this decision determines, one adversarial review agent was dispatched on the scoping plan before greenlighting continuous implementation -- it found a real correctness gap (above), validating the review. See risks-and-open-questions.md item 8 for the full record.
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
