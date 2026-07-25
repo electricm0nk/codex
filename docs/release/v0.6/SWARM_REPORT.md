@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | schema fix applied clean (64+8 sites); flagged 3 previously-unknown stale ge06_* negative-control tests found during lead's full-suite verification; continuing Barbarian pillar integration |
+| backend | idle | Barbarian genuinely reaches Computed (uncommitted, lead-verified: 364/364 lib + 212/212 desktop, class-ownership gate confirmed against the spoofed-activation test); holding on a new 19-file QA wave until QA has capacity |
 | frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
-| qa | working | Sorcerer batch landed and lead-verified 100% (76fe82da, all 27 files run clean); moving to Cleric next |
+| qa | working | Sorcerer + Cleric batches both landed and lead-verified (76fe82da; Cleric pending commit); moving to Druid next, Barbarian's 19-file wave queued behind it |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
