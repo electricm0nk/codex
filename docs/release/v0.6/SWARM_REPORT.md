@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Inquisitor's Judgment (3rd APG closure) landed (`22abe6e5`, bundled via a git-index race with the lead's own docs commit — content fully verified, nothing lost). Awaiting next assignment |
+| backend | working | Directed to a new phase: scoping the cheapest FULL build (class-skill-list + named features + spellcasting) among the 9 fully-untouched ACG/APG classes, same scale as the original Cleric/Druid/Sorcerer CRB builds — not another single-ability slice. Checking for spell-list reuse, corpus skill-list size, and named-feature complexity across all 9 before picking one |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
