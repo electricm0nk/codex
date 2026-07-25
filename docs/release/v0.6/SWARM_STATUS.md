@@ -1407,7 +1407,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T16:00:04
-Latest commit on tranche/6: 332740d8 docs(v0.6): direct backend to Cavalier's Mount, first APG gate-widening (3 minutes ago) (2026-07-25T15:57:00-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T15:56:02 frontend=2026-07-25T14:35:42 qa=2026-07-25T12:03:53 lead=2026-07-25T15:51:50
+Last mechanical check: 2026-07-25T16:55:03
+Latest commit on tranche/6: 41c24f0b docs(v0.6): new phase -- backend scopes spellcasting reuse, frontend scopes picker gap (68 seconds ago) (2026-07-25T16:53:55-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T16:52:59 frontend=2026-07-25T16:53:12 qa=2026-07-25T12:03:53 lead=2026-07-25T16:50:04
 <!-- AUTO-HEARTBEAT-END -->
