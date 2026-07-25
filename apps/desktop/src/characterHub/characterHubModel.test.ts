@@ -7,10 +7,12 @@ async function main() {
   verifiesPaladinGetsFiveLevels();
   verifiesBarbarianGetsThreeLevels();
   verifiesBardGetsThreeLevels();
+  verifiesSorcererGetsTwoLevels();
+  verifiesClericGetsThreeLevels();
+  verifiesDruidGetsOneLevelOnly();
   verifiesEveryOtherClassGetsLevelOneOnly();
   verifiesUnknownClassFallsBackToLevelOneOnly();
   verifiesSupportLevelCopyPerLevel();
-  verifiesHeadlessOnlyClassesAreCorrectlyBucketed();
 }
 
 function verifiesFighterGetsThreeLevels() {
@@ -69,6 +71,37 @@ function verifiesBardGetsThreeLevels() {
   assertEqual(levels[2], 3, 'bard level option 2');
 }
 
+// Sorcerer/Cleric/Druid moved from `headless-only` to `full` once Path A's
+// canonical-default choice-seeding landed (9bafe303). Each still has its own
+// real level range, verified directly against pilot_compute.rs and
+// live-verified through the real dev build + LevelUpDialog:
+// - Sorcerer: Computed at levels 1-2 only (ARCANE_BLOODLINE_BONUS_LEVEL = 3);
+//   a real level-3 attempt correctly stayed at level 2 with the named
+//   bloodline-progression diagnostic shown, not silently advanced.
+// - Cleric: no level cap found; verified clean through level 3.
+// - Druid: Computed at EXACTLY level 1 (animal_companion_chosen_top &&
+//   druid_level == 1); a real level-2 attempt correctly stayed at level 1
+//   with the named animal-companion diagnostic shown.
+function verifiesSorcererGetsTwoLevels() {
+  const levels = getLevelOptionsForClass('class:sorcerer');
+  assertEqual(levels.length, 2, 'sorcerer level option count');
+  assertEqual(levels[0], 1, 'sorcerer level option 0');
+  assertEqual(levels[1], 2, 'sorcerer level option 1');
+}
+
+function verifiesClericGetsThreeLevels() {
+  const levels = getLevelOptionsForClass('class:cleric');
+  assertEqual(levels.length, 3, 'cleric level option count');
+  assertEqual(levels[0], 1, 'cleric level option 0');
+  assertEqual(levels[2], 3, 'cleric level option 2');
+}
+
+function verifiesDruidGetsOneLevelOnly() {
+  const levels = getLevelOptionsForClass('class:druid');
+  assertEqual(levels.length, 1, 'druid level option count');
+  assertEqual(levels[0], 1, 'druid level option 0');
+}
+
 function verifiesEveryOtherClassGetsLevelOneOnly() {
   for (const option of CLASS_OPTIONS) {
     if (
@@ -76,26 +109,14 @@ function verifiesEveryOtherClassGetsLevelOneOnly() {
       option.id === 'class:ranger' ||
       option.id === 'class:paladin' ||
       option.id === 'class:barbarian' ||
-      option.id === 'class:bard'
+      option.id === 'class:bard' ||
+      option.id === 'class:sorcerer' ||
+      option.id === 'class:cleric'
     )
       continue;
     const levels = getLevelOptionsForClass(option.id);
     assertEqual(levels.length, 1, `${option.id} level option count`);
     assertEqual(levels[0], 1, `${option.id} level option 0`);
-  }
-}
-
-// Sorcerer/Cleric/Druid are `headless-only`, not `full` and not
-// `human-diagnostics-only` -- each has a real Computed path in the engine
-// gated on a specific choice (bloodline+bond / domain / nature bond) that
-// no current UI surface can supply. Live-verified: fresh default-settings
-// Human attempts at all three returned "This build isn't ready yet" with
-// the predicted named diagnostic, and none persisted to disk.
-function verifiesHeadlessOnlyClassesAreCorrectlyBucketed() {
-  for (const classId of ['class:sorcerer', 'class:cleric', 'class:druid']) {
-    const option = CLASS_OPTIONS.find((candidate) => candidate.id === classId);
-    assert(option !== undefined, `${classId} should exist in CLASS_OPTIONS`);
-    assertEqual(option?.supportLevel, 'headless-only', `${classId} support level`);
   }
 }
 

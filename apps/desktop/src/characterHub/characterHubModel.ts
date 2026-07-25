@@ -199,19 +199,18 @@ export interface ClassOption {
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
- * `pilot_compute.rs`'s per-class `explain_*` functions (each of Monk,
- * Cleric, and Druid carries its own "This deliberately does not compute a
- * supported ... chassis/surface" doc comment, and the compute path stays
- * claim-blocked for Human exactly as it does for every other race) and
- * live-verified for Barbarian specifically back when it was in this same
- * bucket (a fresh Human Barbarian creation attempt returned `Blocked` with
- * named rage-burden diagnostics instead of the 4 generic ones) — since
- * superseded now that Barbarian's rage-execution engine is real; see its
- * own note below. Cleric and Druid's own doc comments are now stale in one
- * specific way — their domain-powers/animal-companion burdens are no
- * longer *permanently* unconditional (see the `headless-only` note below)
- * — but the class-features-vs-Human framing they were cited for still
- * holds for everything except that one now-conditional diagnostic.
+ * `pilot_compute.rs`'s per-class `explain_*` functions (each of Monk and
+ * the other still-`human-diagnostics-only` classes carries its own "This
+ * deliberately does not compute a supported ... chassis/surface" doc
+ * comment, and the compute path stays claim-blocked for Human exactly as
+ * it does for every other race) and live-verified for Barbarian
+ * specifically back when it was in this same bucket (a fresh Human
+ * Barbarian creation attempt returned `Blocked` with named rage-burden
+ * diagnostics instead of the 4 generic ones) — since superseded now that
+ * Barbarian's rage-execution engine is real; see its own note below.
+ * Cleric and Druid have since moved out of this bucket entirely (see the
+ * `full` note below) once their own domain-powers/animal-companion
+ * burdens stopped being *permanently* unconditional.
  *
  * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
  * class-breadth epic, 2026-07-25): both reached real `Computed` status once
@@ -263,47 +262,59 @@ export interface ClassOption {
  * disk-confirmed; leveling that character up through the real
  * `LevelUpDialog` reached level 2 cleanly.
  *
- * Sorcerer, Cleric, and Druid are `headless-only` (v0.6 alpha swarm,
- * class-breadth epic, 2026-07-25) — a genuinely new bucket, not a copy of
- * Barbarian/Bard's `full`. Each engine has a real `Computed` path now
- * (`d6067603` Sorcerer, `fca4e64e`+`b98a20d7` Cleric, `dda46d4a`+`9aeec493`
- * Druid), but each requires a specific build-time choice selection that no
- * current UI surface can provide: Sorcerer needs BOTH
- * `choice:sorcerer_bloodline -> bloodline:arcane` AND
- * `choice:sorcerer_arcane_bond` recognized (at level 1-2 only — level 3+
- * stays blocked on bonus spells/feats regardless); Cleric needs
- * `choice:cleric_domain -> domain:good` recognized (Good+Healing together
- * stays blocked on the separate Rebuke Death burden); Druid needs
- * `choice:druid_nature_bond -> bond:animal_companion` recognized (Wolf is
- * the only companion this bounded slice computes, but it's the sole
- * species this seam grounds regardless of choice — no species picker is
- * needed, just the bond-type choice itself). None of these three choice
- * ids appear anywhere in `CreateCharacterForm.tsx`, `character_hub.rs`'s
- * `compose_character_input` (no auto-seeded default either), or
- * `composeCreateCharacterRequest.ts`'s wire shape (`CreateCharacterRequest`
- * has exactly 7 fields: displayLabel/raceId/classId/level/abilityScores/
- * abilityBonusTarget/savedAt — no choices field at all). This is a real,
- * structural UI/wire-contract gap (a picker component plus a request field
- * plus backend consumption), not a small copy fix — do not build it as
- * part of a `characterHubModel.ts` update; flag it and let it be scoped
- * separately. Live-verified: fresh default-settings Human attempts at all
- * three (no domain/bloodline/nature-bond input possible today) each
- * returned "This build isn't ready yet" with exactly the predicted named
- * diagnostic (bloodline-and-progression / domain-powers /
- * animal-companion-execution), and none of the three attempts persisted to
- * disk — confirmed via `~/.local/share/io.electricm0nk.codex/characters/`.
+ * Sorcerer, Cleric, and Druid moved from `headless-only` to `full`
+ * (v0.6 alpha swarm, choice-picker Path A closure, `9bafe303`,
+ * 2026-07-25): per `docs/release/v0.6/choice-picker-ui-gap-scoping.md`,
+ * `compose_character_input` now silently seeds each class's own canonical
+ * choice (Sorcerer: Arcane bloodline + a familiar Arcane Bond; Cleric:
+ * Good domain; Druid: an animal-companion nature bond, which resolves to
+ * Wolf automatically), mirroring Wizard's own pre-existing school-
+ * specialization default — a real, working choice, but not yet a player-
+ * facing pick (that picker is Path B, deliberately deferred, tracked in
+ * the same scoping doc).
+ *
+ * None of the three share Paladin/Ranger's hybrid-level-1-Human gate —
+ * checked directly, not assumed: none of the three appear in
+ * `hybrid_level1_class`'s match arms, and each of their own
+ * bloodline/domain/nature-bond checks is explicitly coded and documented
+ * as race-independent, evaluated before any Human-only gate. But two of
+ * the three have a real, separate LEVEL cap this file's `levelOptions`
+ * must respect, or the `full` label would overclaim:
+ * - **Sorcerer**: `ARCANE_BLOODLINE_BONUS_LEVEL = 3` — Computed for any
+ *   race at levels 1-2 only; level 3+ stays genuinely `Blocked` (bloodline
+ *   bonus spells/feats at 3rd+ aren't grounded). Live-verified: a fresh
+ *   Human Sorcerer 1 reached `Computed`/`Saved`, disk-confirmed; leveling
+ *   up through the real `LevelUpDialog` reached level 2 cleanly, then
+ *   attempting level 3 correctly stayed at level 2 with the real
+ *   `class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported`
+ *   diagnostic shown, not silently advanced.
+ * - **Cleric**: no level cap found (Good domain, without Healing, has no
+ *   level-gated condition anywhere in `explain_cleric_level1_spell_baseline`).
+ *   Live-verified: a fresh Human Cleric 1 reached `Computed`/`Saved`,
+ *   disk-confirmed; leveled cleanly through level 3 with no blocker.
+ * - **Druid**: Computed only at EXACTLY level 1 — the code's own condition
+ *   is `animal_companion_chosen_top && druid_level == 1`; level 2+ falls
+ *   to the catch-all `Blocked` diagnostic (companion advancement isn't
+ *   grounded past level 1). Live-verified: a fresh Human Druid 1 reached
+ *   `Computed`/`Saved`, disk-confirmed; attempting level 2 through the
+ *   real `LevelUpDialog` correctly stayed at level 1 with the real
+ *   `class_feature.druid.animal_companion.unsupported` diagnostic shown.
+ *
+ * `levelOptions` reflects exactly this: Sorcerer `[1, 2]`, Cleric
+ * `[1, 2, 3]` (Fighter's own conservative verified-range convention, not
+ * the theoretical max), Druid `[1]` only.
  */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
   { id: 'class:paladin', label: 'Paladin', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
   { id: 'class:ranger', label: 'Ranger', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'headless-only', levelOptions: [1], hitDie: 6 },
+  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'full', levelOptions: [1, 2], hitDie: 6 },
   { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
   { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
   { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 12 },
   { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'headless-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'headless-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
   { id: 'class:monk', label: 'Monk', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
 ];
 
