@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | second Monk closure (Catch Off-Guard + Throw Anything) committed and lead-verified (b1a453a1, 374/374 lib, corpus cross-checked); deciding next among the 4 remaining Monk feats or Sorcerer/Cleric/Druid's blockers |
+| backend | working | reached a real inflection point -- all remaining Monk feats and Sorcerer/Cleric/Druid's blockers are now multi-session-scale; deciding which to scope first (lead flagged a full-class-completion ROI edge toward Sorcerer/Cleric/Druid over Monk's Combat Reflexes) |
 | frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
 | qa | working | mid the 32-file Bard test-cleanup wave |
 
@@ -93,8 +93,9 @@ precedent — flagged below.
 
 1. Barbarian's 22-file test-cleanup wave — done and lead-verified (`5ba54695`).
 2. Bard's own 32-file test-cleanup wave — QA working this now, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) still needed to make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
-3. Monk — Dodge's burden closed for real (`18920c3d`, zero regression). `table_class_id` widening and the other 6 restricted-list feats (each needing its own feat-effect engine, likely bigger lifts) remain untouched.
-4. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
+3. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists, same scale as item 4 below.
+4. **Real inflection point reached**: every remaining item in this epic (Sorcerer's bloodline power, Cleric's domain powers, Druid's animal companion, Monk's remaining 4 feats) is now multi-session-scale — no more cheap incremental slices exist. Backend deciding which to scope first; finishing any ONE of Sorcerer/Cleric/Druid's blockers completes a full additional class (vs. Monk's remaining feats, none of which alone move Monk's overall status).
+5. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
 
 ### Honest scale note
 
