@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | MILESTONE: Bard genuinely reaches full Computed, lead-verified pre-commit (393/393 lib, real HeadlessReceiptStatus::Computed); also caught and fixed a real gate-ordering bug along the way; committing now |
+| backend | working | Bard closure committed and re-verified against real HEAD (86d26f88, 393/393 lib); deciding between Monk's remaining feats and APG/ACG's untouched classes (lead leans APG/ACG) |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
-| qa | idle | Druid's 4-test wave landed and lead-verified 100% (c4ffa208); entire workspace green, zero failures anywhere |
+| qa | working | new 17-file Bard known-spell wave assigned |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). 17 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
