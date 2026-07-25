@@ -2629,11 +2629,20 @@ mod tests {
              spell-posture diagnostic no longer fires on a valid (empty) posture"
         );
 
+        // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25):
+        // `table_class_id` now recognizes Barbarian too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The rage-execution
+        // burden is also no longer unconditional -- it's a real, conditional
+        // engine now (`ground_or_block_barbarian_rage`), and
+        // `compose_character_input` seeds no `class_ability_activations`
+        // for Barbarian, so the (valid, "not raging") posture no longer
+        // trips it either. Human Barbarian L1 reaches Computed with zero
+        // claim-blocking diagnostics, the same golden path as Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:barbarian", 1),
-            generic_plus(&[
-                "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Barbarian L1 (not raging) reaches Computed with zero claim-blocking \
+             diagnostics now that the rage-execution engine is real and conditional"
         );
 
         // v0.6 alpha swarm, risks item 8, fifth slice (2026-07-25):

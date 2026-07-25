@@ -250,19 +250,20 @@ fn absent_chain_shirt_blocks_skill_modifiers() {
 
 #[test]
 fn unsupported_chassis_blocks_skill_modifiers() {
-    // Replace the Fighter level-1 chassis with a Barbarian level-1 chassis.
-    // The selected-skill surface is grounded only on the Fighter class
-    // posture and must refuse rather than fabricate Fighter class-skill
-    // bonuses. (Was Cleric level-1 until the v0.6 alpha swarm's CRB
-    // dispatch-widening pass (fca4e64e) gave Cleric its own real
-    // class_chassis.* computation, so Cleric stopped being an unsupported
-    // negative control -- Barbarian still is, confirmed against
-    // `table_class_id`. Was Rogue level-1 before that -- see
-    // ge06_failure_classifier.rs for why that stopped being one first.)
+    // Replace the Fighter level-1 chassis with a Monk level-1 chassis. The
+    // selected-skill surface is grounded only on the Fighter class posture
+    // and must refuse rather than fabricate Fighter class-skill bonuses.
+    // (Was Barbarian level-1 until the v0.6 alpha swarm's Barbarian
+    // rage-execution-engine pass gave Barbarian its own real
+    // class_chassis.* computation, so Barbarian stopped being an
+    // unsupported negative control -- Monk still is, confirmed against
+    // `table_class_id`. Was Cleric level-1 before that, then Rogue level-1
+    // before that -- see ge06_failure_classifier.rs for why Rogue stopped
+    // being one first.)
     let mutated = DETERMINISTIC_FIXTURE
-        .replace("class_level=class:fighter:1", "class_level=class:barbarian:1");
+        .replace("class_level=class:fighter:1", "class_level=class:monk:1");
     assert!(
-        mutated.contains("class_level=class:barbarian:1"),
+        mutated.contains("class_level=class:monk:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

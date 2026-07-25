@@ -2913,6 +2913,16 @@ const WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 // familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 
+/// `ClassAbilityActivation.ability_id` for Barbarian Rage (v0.6 alpha swarm,
+/// risks item 8) -- the flat compound-string idiom `character_input.rs`'s
+/// `ClassAbilityActivation` doc comment specifies, not a per-class enum.
+const BARBARIAN_RAGE_ABILITY_ID: &str = "rage";
+
+/// PF1 Core Rulebook Rage's Armor Class penalty: -2, unconditionally the
+/// same at every tier (Rage/Greater Rage/Mighty Rage) -- Greater Rage's own
+/// rule text confirms "the -2 penalty to AC remains".
+const BARBARIAN_RAGE_ARMOR_CLASS_PENALTY: i16 = -2;
+
 /// PF1 Core Rulebook rage power slots, verified identically on both primary
 /// sources: "Starting at 2nd level, a barbarian gains a rage power. She
 /// gains another rage power for every two levels of barbarian attained
@@ -4611,8 +4621,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     let mut diagnostics = Vec::new();
 
     let ability_scores_for_modifiers = apply_human_ability_bonus(input, &mut explanations);
-    let ability_modifiers =
+    let base_ability_modifiers =
         compute_ability_modifiers(&ability_scores_for_modifiers, &mut explanations);
+    // v0.6 alpha swarm, risks item 8: Barbarian Rage's Strength/Constitution
+    // morale bonus layers onto the base modifiers here (mirrors
+    // `compute_total_saves`'s existing feat-bonus layering pattern), so
+    // every downstream consumer of `ability_modifiers` (combat baseline,
+    // total saves, selected-skill modifiers) sees the boosted values while
+    // actively raging. The rage-rounds-per-day budget check itself uses the
+    // separate `base_ability_modifiers` (pre-rage Constitution), since PF1's
+    // rounds-per-day is derived from the character's normal Constitution,
+    // not a value that depends on already being raged.
+    let ability_modifiers =
+        apply_rage_ability_bonuses(base_ability_modifiers, input, &mut explanations);
 
     let (base_attack_bonus, base_saves) =
         compute_class_chassis(input, &mut explanations, &mut diagnostics).unwrap_or_else(|| {
@@ -4664,7 +4685,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(
         input,
-        &ability_modifiers,
+        &base_ability_modifiers,
         &mut explanations,
         &mut diagnostics,
     );
@@ -4902,6 +4923,58 @@ fn compute_ability_modifiers(
     }
 
     modifiers
+}
+
+/// Applies Barbarian Rage's Strength/Constitution morale bonus to `base`
+/// when a valid, active, in-budget Rage activation is present for this
+/// character (v0.6 alpha swarm, risks item 8). Mirrors `compute_total_saves`'s
+/// existing pattern of layering `feat_effects::save_bonuses_from_feats`'s
+/// separately-computed result onto a base total, rather than baking this
+/// into `compute_ability_modifiers` itself -- `compute_ability_modifiers` is
+/// called for every class, every request, and stays completely untouched.
+/// Class-ownership-gated by construction: `active_barbarian_rage_bonus` only
+/// returns `Some` when `class_levels` actually contains Barbarian, so a
+/// non-Barbarian character's stray `class_ability_activations` entry for
+/// `BARBARIAN_RAGE_ABILITY_ID` is never read at all.
+///
+/// The Strength/Constitution ability-SCORE bonus (+4/+6/+8, always even)
+/// becomes exactly half that as an ability-MODIFIER bonus (+2/+3/+4):
+/// modifier = floor((score - 10) / 2), and adding an even N to score adds
+/// exactly N/2 to the floored modifier regardless of the original score's
+/// parity.
+fn apply_rage_ability_bonuses(
+    base: AbilityModifiers,
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> AbilityModifiers {
+    let Some((barbarian_level, strength_bonus, constitution_bonus, will_save_bonus, rage_source_feature)) =
+        active_barbarian_rage_bonus(input, &base)
+    else {
+        return base;
+    };
+
+    let strength_modifier_bonus = strength_bonus / 2;
+    let constitution_modifier_bonus = constitution_bonus / 2;
+    let boosted = AbilityModifiers {
+        strength: base.strength + strength_modifier_bonus,
+        constitution: base.constitution + constitution_modifier_bonus,
+        ..base
+    };
+    explanations.push(ComputationExplanation {
+        id: "ability_modifier.barbarian.rage_bonus_applied".to_owned(),
+        value: strength_modifier_bonus,
+        detail: format!(
+            "Barbarian level {barbarian_level} {rage_source_feature} applied to ability \
+             modifiers: +{strength_bonus} Strength / +{constitution_bonus} Constitution morale \
+             bonus (ability score) is +{strength_modifier_bonus} Strength modifier / \
+             +{constitution_modifier_bonus} Constitution modifier (an even score bonus always \
+             halves exactly onto the floored modifier). Applied only while actively, validly \
+             raging; the Will-save bonus (+{will_save_bonus}) is layered onto compute_total_saves \
+             separately, and the {BARBARIAN_RAGE_ARMOR_CLASS_PENALTY} Armor Class penalty onto \
+             compute_combat_baseline separately"
+        ),
+    });
+    boosted
 }
 
 /// Pathfinder ability modifier: `floor(score / 2) - 5`. `div_euclid` gives true
@@ -6751,9 +6824,8 @@ fn race_display_label(race_id: &str) -> String {
 ///
 /// Deliberately NOT widened to all 11 core classes in one pass:
 /// `class_tables()` (`rules_tables/crb/class_tables.rs`) carries real data
-/// for all 11, but several of those classes (Barbarian, Bard, Cleric,
-/// Druid, Monk, Paladin, Sorcerer) already have their OWN deliberate
-/// standalone-only `class_chassis.<class>.*` chassis explanations elsewhere
+/// for all 11, but several of those classes (Bard, Monk) already have their
+/// OWN deliberate standalone-only `class_chassis.<class>.*` chassis explanations elsewhere
 /// in this file, each with an existing `tests/*.rs` file asserting that
 /// class's own base-attack/base-save stay claim-blocked / not integrated
 /// into the generic `class_chassis.base_attack_bonus` pillar (e.g.
@@ -6812,6 +6884,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Cleric)
     } else if class_id_str == DRUID_CLASS_ID {
         Some(ClassId::Druid)
+    } else if class_id_str == BARBARIAN_CLASS_ID {
+        Some(ClassId::Barbarian)
     } else {
         None
     }
@@ -12339,12 +12413,45 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Barbarian martial identity, its grounded
 /// pillar values, and its remaining named pillar burden legible on the runtime path.
+///
+/// **v0.6 alpha swarm, risks item 8 update**: the rage-state execution engine
+/// this doc comment describes as permanently missing is now real (see
+/// `ground_or_block_barbarian_rage`, called at the top of this function,
+/// checked regardless of race/single-class status -- mirroring the Ranger/
+/// Paladin/Sorcerer/Cleric/Druid gate-ordering fix exactly, since
+/// `table_class_id` now recognizes Barbarian generically too). Everything
+/// else this doc comment says about the OTHER named-but-unexecuted features
+/// (Rage Power choice-list, weapon familiarity, Improved Uncanny Dodge
+/// flanking, Damage Reduction application) is still accurate: only the
+/// rage-execution burden itself became real.
 fn explain_barbarian_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8: validated regardless of whether
+    // Barbarian appears alone or in a multiclass mix, and regardless of
+    // race -- checked BEFORE the single-class-only/Human gate below,
+    // mirroring the Ranger/Paladin/Sorcerer/Cleric/Druid fix exactly (a
+    // false-Computed/false-grounding risk now that `table_class_id`
+    // recognizes Barbarian generically).
+    if let Some(barbarian_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BARBARIAN_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        ground_or_block_barbarian_rage(
+            input,
+            barbarian_level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
+    }
+
     let Some(level) = supported_barbarian_level(input) else {
         return;
     };
@@ -12481,7 +12588,7 @@ fn explain_barbarian_level1_chassis(
     // +3, 7 rounds at level 1, 9 rounds at level 2) never hits this branch, but the
     // public compute seam accepts any Human Barbarian input.
     let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
-    let rage_rounds_per_day = 4 + constitution_modifier + 2 * (level_value - 1);
+    let rage_rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, level);
     if rage_rounds_per_day > 0 {
         explanations.push(ComputationExplanation {
             id: "class_chassis.barbarian.rage_rounds_per_day".to_owned(),
@@ -12510,38 +12617,26 @@ fn explain_barbarian_level1_chassis(
         });
     }
 
-    // Grounded: the four flat while-raging constants, as value-only records. None of
-    // these is applied to any computed total — application is exactly the rage-state
-    // execution burden named by the claim-blocking diagnostic below. Each entry also
-    // carries a terse label (4th field) so the claim-blocking diagnostic below can
-    // cite the same four values without hand-retyping them as a separate literal.
-    // At level 11+ (BARBARIAN_GREATER_RAGE_LEVEL), Rage becomes Greater Rage: the
-    // Strength/Constitution morale bonuses genuinely rise from +4 to +6 and the
-    // Will-save morale bonus genuinely rises from +2 to +3; the Armor Class penalty
-    // stays -2 either way (PF1 Core Rulebook Greater Rage: "the -2 penalty to AC
-    // remains"). At level 20+ (BARBARIAN_MIGHTY_RAGE_LEVEL), Greater Rage becomes
-    // Mighty Rage: the Strength/Constitution morale bonuses genuinely rise again
-    // to +8 and the Will-save morale bonus genuinely rises to +4 (PF1 Core
-    // Rulebook Mighty Rage: "the morale bonus to her Strength and Constitution
-    // increases to +8 and the morale bonus on her Will saves increases to +4").
-    // This is a third tier on the same flat-constant pillar, not a new
-    // rage-state execution engine.
-    let is_mighty_rage = level >= BARBARIAN_MIGHTY_RAGE_LEVEL;
-    let is_greater_rage = level >= BARBARIAN_GREATER_RAGE_LEVEL;
-    let rage_source_feature = if is_mighty_rage {
-        "Mighty Rage"
-    } else if is_greater_rage {
-        "Greater Rage"
-    } else {
-        "Rage"
-    };
-    let (strength_bonus, constitution_bonus, will_save_bonus) = if is_mighty_rage {
-        (8, 8, 4)
-    } else if is_greater_rage {
-        (6, 6, 3)
-    } else {
-        (4, 4, 2)
-    };
+    // Grounded: the four flat while-raging constants, as value-only records.
+    // These are identity/recognition values only; the real conditional
+    // application (v0.6 alpha swarm, risks item 8) happens in
+    // `apply_rage_ability_bonuses` (Strength/Constitution), `compute_total_saves`
+    // (Will), and `compute_combat_baseline` (Armor Class), each gated on a
+    // valid, active, in-budget `class_ability_activations` entry -- see
+    // `active_barbarian_rage_bonus`. At level 11+ (BARBARIAN_GREATER_RAGE_LEVEL),
+    // Rage becomes Greater Rage: the Strength/Constitution morale bonuses
+    // genuinely rise from +4 to +6 and the Will-save morale bonus genuinely
+    // rises from +2 to +3; the Armor Class penalty stays -2 either way (PF1
+    // Core Rulebook Greater Rage: "the -2 penalty to AC remains"). At level
+    // 20+ (BARBARIAN_MIGHTY_RAGE_LEVEL), Greater Rage becomes Mighty Rage: the
+    // Strength/Constitution morale bonuses genuinely rise again to +8 and the
+    // Will-save morale bonus genuinely rises to +4 (PF1 Core Rulebook Mighty
+    // Rage: "the morale bonus to her Strength and Constitution increases to
+    // +8 and the morale bonus on her Will saves increases to +4"). This is a
+    // third tier on the same flat-constant pillar via `barbarian_rage_tier`,
+    // the same pure function `active_barbarian_rage_bonus` calls.
+    let (strength_bonus, constitution_bonus, will_save_bonus, rage_source_feature) =
+        barbarian_rage_tier(level);
     let rage_constants: [(&str, i16, String, &str); 4] = [
         (
             "class_chassis.barbarian.rage.strength_morale_bonus",
@@ -12574,18 +12669,14 @@ fn explain_barbarian_level1_chassis(
             value: *value,
             detail: format!(
                 "{class_name} {rage_source_feature} flat constant from the PF1 Core Rulebook \
-                 {rage_source_feature} class feature: {effect}. This slice grounds only the \
-                 flat value; it is never applied to the integrated ability modifiers, saves, or \
-                 armor class — temporary application is part of the unimplemented rage-state \
-                 execution engine"
+                 {rage_source_feature} class feature: {effect}. This is the identity/recognition \
+                 record only; the real conditional application to the integrated ability \
+                 modifiers, total saves, and Armor Class (gated on a valid, active, in-budget \
+                 rage activation) happens in `apply_rage_ability_bonuses`, `compute_total_saves`, \
+                 and `compute_combat_baseline` respectively, not here"
             ),
         });
     }
-    let rage_constants_summary = rage_constants
-        .iter()
-        .map(|(_, value, _, short_label)| format!("{value:+} {short_label}"))
-        .collect::<Vec<_>>()
-        .join(", ");
 
     // Grounded (SD13-E5): Uncanny Dodge, a 2nd-level Barbarian class feature verified
     // independently against two primary PF1 sources (d20pfsrd and legacy.aonprd.com
@@ -12890,19 +12981,224 @@ fn explain_barbarian_level1_chassis(
         });
     }
 
-    // Still blocked: name the rage-state execution burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.rage_execution.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {level} remains blocked on its rage-state execution \
-             engine: rage activation and deactivation, round-by-round consumption of the grounded rage \
-             rounds per day, the fatigue condition after a rage ends, and temporary application of the \
-             grounded rage constants ({rage_constants_summary}) to computed totals are not implemented \
-             in this bounded martial chassis baseline, so no {class_name} rage-execution support is \
-             claimed"
-        ),
-        claim_blocking: true,
-    });
+    // v0.6 alpha swarm, risks item 8: the unconditional "rage-state
+    // execution engine is missing" diagnostic that used to live here moved
+    // to `ground_or_block_barbarian_rage`, called at the top of this
+    // function -- the engine is real now, and its validity depends on
+    // `class_ability_activations`, not on level/race alone, so it could
+    // not stay a flat unconditional diagnostic at this position.
+}
+
+/// Barbarian's Rage rounds-per-day budget: 4 + Constitution modifier + 2 *
+/// (level - 1) (PF1 Core Rulebook Rage: "4 + her Constitution modifier ...
+/// at each level after 1st, she can rage for 2 additional rounds"). Pure
+/// function (v0.6 alpha swarm, risks item 8) so the informational
+/// explanation record inside `explain_barbarian_level1_chassis` and the
+/// real rage-execution validation (`ground_or_block_barbarian_rage`,
+/// `active_barbarian_rage_bonus`) call the identical formula rather than
+/// either duplicating it or parsing it back out of explanation text.
+fn barbarian_rage_rounds_per_day(constitution_modifier: i16, level: u8) -> i16 {
+    4 + constitution_modifier + 2 * (i16::from(level) - 1)
+}
+
+/// Barbarian's Rage magnitude tier: (Strength morale bonus, Constitution
+/// morale bonus, Will-save morale bonus, feature name), rising from Rage
+/// (+4/+4/+2) to Greater Rage at `BARBARIAN_GREATER_RAGE_LEVEL` (+6/+6/+3)
+/// to Mighty Rage at `BARBARIAN_MIGHTY_RAGE_LEVEL` (+8/+8/+4). The Armor
+/// Class penalty stays -2 at every tier (PF1 Core Rulebook Greater Rage:
+/// "the -2 penalty to AC remains"), so it is not part of this tuple --
+/// callers needing it use `BARBARIAN_RAGE_ARMOR_CLASS_PENALTY` directly.
+/// Pure function (v0.6 alpha swarm, risks item 8) so the informational
+/// flat-constant explanation records and the real rage-execution engine
+/// (ability modifiers, total saves, Armor Class) share one source of truth.
+fn barbarian_rage_tier(level: u8) -> (i16, i16, i16, &'static str) {
+    if level >= BARBARIAN_MIGHTY_RAGE_LEVEL {
+        (8, 8, 4, "Mighty Rage")
+    } else if level >= BARBARIAN_GREATER_RAGE_LEVEL {
+        (6, 6, 3, "Greater Rage")
+    } else {
+        (4, 4, 2, "Rage")
+    }
+}
+
+/// Whether `input` is a Barbarian validly, actively raging right now, and
+/// if so, the magnitude tier to apply (v0.6 alpha swarm, risks item 8).
+/// Class-ownership-gated by construction: only returns `Some` when
+/// `class_levels` actually contains Barbarian, so a non-Barbarian
+/// character's stray `class_ability_activations` entry for
+/// `BARBARIAN_RAGE_ABILITY_ID` is never read at all, not merely rejected
+/// after the fact (mirrors the Ranger/Paladin/Sorcerer/Cleric/Druid
+/// spell-posture shape exactly). An activation present but not
+/// `ActiveState::EquippedActive`, or one that exceeds the grounded
+/// rounds-per-day budget, is treated the same as "not raging" here --
+/// pushes no diagnostic itself (`ground_or_block_barbarian_rage` is the
+/// single place that pushes the over-budget claim-blocking diagnostic and
+/// the informational recognition records), so no value is fabricated for
+/// an already-claim-blocked posture, mirroring how an over-prepared
+/// Ranger/Paladin/Cleric/Druid grounds no spell math either.
+fn active_barbarian_rage_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(u8, i16, i16, i16, &'static str)> {
+    let barbarian_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BARBARIAN_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BARBARIAN_RAGE_ABILITY_ID)?;
+
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
+        let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level);
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            return None;
+        }
+    }
+
+    let (strength_bonus, constitution_bonus, will_save_bonus, rage_source_feature) =
+        barbarian_rage_tier(barbarian_level);
+    Some((
+        barbarian_level,
+        strength_bonus,
+        constitution_bonus,
+        will_save_bonus,
+        rage_source_feature,
+    ))
+}
+
+/// Grounds or claim-blocks Barbarian's Rage execution engine for
+/// `barbarian_level` (v0.6 alpha swarm, risks item 8). Called from the top
+/// of `explain_barbarian_level1_chassis`, gated only on Barbarian
+/// class-ownership -- independent of race/single-class status, so a
+/// multiclass or non-Human Barbarian gets the identical validation a
+/// single-class Human Barbarian does (the gate-ordering fix this session
+/// already applied to Ranger/Paladin/Sorcerer/Cleric/Druid).
+///
+/// A character who simply isn't raging (no `class_ability_activations`
+/// entry for `BARBARIAN_RAGE_ABILITY_ID`, or one present but
+/// `active_state != EquippedActive`) is a genuinely valid PF1 posture --
+/// not every Barbarian is always raging -- so this grounds a real
+/// "not raging" recognition record rather than claim-blocking, mirroring
+/// "zero prepared spells is always valid" from the spell-posture classes.
+/// An activation that IS active but exceeds the grounded rounds-per-day
+/// budget is a genuine posture violation and claim-blocks, mirroring every
+/// other over-budget check landed this session (Ranger/Paladin/Cleric/
+/// Druid's over-prepared-slot checks, Sorcerer's over-known check) --
+/// never silently capped.
+fn ground_or_block_barbarian_rage(
+    input: &CharacterInput,
+    barbarian_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == BARBARIAN_RAGE_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.rage_execution.not_raging".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian level {barbarian_level} is not currently raging (no \
+                 class_ability_activations entry for \"{BARBARIAN_RAGE_ABILITY_ID}\"): a \
+                 genuinely valid PF1 posture, so no rage bonus, penalty, or budget is claimed. \
+                 This grounds the rage-state execution engine's \"inactive\" branch only; \
+                 entering rage is grounded separately below when an active, in-budget activation \
+                 is present"
+            ),
+        });
+        return;
+    };
+
+    let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
+    let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level);
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.barbarian.rage_execution.rounds_exceeded".to_owned(),
+                message: format!(
+                    "Barbarian level {barbarian_level} rage activation claims \
+                     {rounds_consumed} rounds consumed today, exceeding the grounded \
+                     rounds-per-day budget of {rounds_per_day} (4 + Constitution modifier \
+                     ({constitution_modifier}) + 2 * (level - 1)): a genuine posture violation, \
+                     so no rage bonus, penalty, or budget is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let (strength_bonus, constitution_bonus, will_save_bonus, rage_source_feature) =
+                barbarian_rage_tier(barbarian_level);
+            let rounds_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.barbarian.rage_execution.active".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Barbarian level {barbarian_level} is actively raging \
+                     ({rage_source_feature}), within the grounded rounds-per-day budget \
+                     ({rounds_per_day} rounds; {rounds_consumed_today} consumed today). The \
+                     +{strength_bonus} Strength / +{constitution_bonus} Constitution / \
+                     +{will_save_bonus} Will morale bonuses and the \
+                     {BARBARIAN_RAGE_ARMOR_CLASS_PENALTY} Armor Class penalty are applied to the \
+                     integrated ability modifiers, total saves, and baseline Armor Class \
+                     respectively -- see apply_rage_ability_bonuses, compute_total_saves, and \
+                     compute_combat_baseline"
+                ),
+            });
+            // Fatigue after rage ends has no representation in this schema yet
+            // (a second, separate transient state, per the combat-time
+            // activation-state scoping doc's open question) -- named honestly
+            // rather than silently modeled or silently ignored, mirroring
+            // every other "grant-only identity record, no execution engine"
+            // note this session already uses. Non-blocking: the gap is
+            // named, not hidden, but it does not claim-block an otherwise
+            // valid rage posture.
+            if barbarian_level < BARBARIAN_TIRELESS_RAGE_LEVEL {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.barbarian.rage_execution.fatigue_not_modeled".to_owned(),
+                    message: format!(
+                        "Barbarian level {barbarian_level} is raging below the Tireless Rage \
+                         threshold ({BARBARIAN_TIRELESS_RAGE_LEVEL}th level): PF1 Rage causes \
+                         fatigue once the rage ends, which this codebase does not yet represent \
+                         as a transient post-rage state, so no fatigue condition (-2 Strength, \
+                         -2 Dexterity, no run/charge) is applied. Named honestly rather than \
+                         silently modeled or silently dropped"
+                    ),
+                    claim_blocking: false,
+                });
+            }
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.barbarian.rage_execution.not_raging".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Barbarian level {barbarian_level} has a \
+                     \"{BARBARIAN_RAGE_ABILITY_ID}\" activation entry but it is not active for \
+                     this snapshot: a genuinely valid PF1 posture (available but not currently \
+                     raging), so no rage bonus, penalty, or budget is claimed"
+                ),
+            });
+        }
+    }
 }
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
@@ -19590,10 +19886,17 @@ fn compute_total_saves(
 
     let feat_save_bonuses =
         crate::rules_core::feat_effects::save_bonuses_from_feats(&input.chosen.selected_feats);
+    // v0.6 alpha swarm, risks item 8: Barbarian Rage's Will-save morale
+    // bonus layers on here, the same shape as `feat_save_bonuses` --
+    // class-ownership-gated by `active_barbarian_rage_bonus` construction,
+    // 0 for every non-Barbarian or not-currently-raging character.
+    let rage_will_bonus = active_barbarian_rage_bonus(input, ability_modifiers)
+        .map(|(_, _, _, will_save_bonus, _)| will_save_bonus)
+        .unwrap_or(0);
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude + ability_modifiers.constitution + feat_save_bonuses.fortitude,
         reflex: base_saves.reflex + ability_modifiers.dexterity + feat_save_bonuses.reflex,
-        will: base_saves.will + ability_modifiers.wisdom + feat_save_bonuses.will,
+        will: base_saves.will + ability_modifiers.wisdom + feat_save_bonuses.will + rage_will_bonus,
     };
 
     let class_label = class_summary_label(input);
@@ -19621,8 +19924,13 @@ fn compute_total_saves(
         value: total_saves.will,
         detail: format!(
             "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) + \
-             feat bonus (+{}, Iron Will if selected) = {}",
-            base_saves.will, ability_modifiers.wisdom, feat_save_bonuses.will, total_saves.will
+             feat bonus (+{}, Iron Will if selected) + Barbarian Rage morale bonus (+{}, only \
+             while actively, validly raging) = {}",
+            base_saves.will,
+            ability_modifiers.wisdom,
+            feat_save_bonuses.will,
+            rage_will_bonus,
+            total_saves.will
         ),
     });
 
@@ -19900,8 +20208,22 @@ fn compute_combat_baseline(
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
-    let armor_class =
-        ARMOR_CLASS_BASE + CHAIN_SHIRT_ARMOR_BONUS + dexterity_contribution + DODGE_AC_BONUS;
+    // v0.6 alpha swarm, risks item 8: Barbarian Rage's Armor Class penalty
+    // applies here -- class-ownership-gated by `active_barbarian_rage_bonus`
+    // construction, 0 for every non-Barbarian or not-currently-raging
+    // character. The penalty magnitude is the same -2 at every Rage tier
+    // (Greater/Mighty Rage don't change it), so the tier tuple's other
+    // fields are unused here.
+    let rage_armor_class_penalty = if active_barbarian_rage_bonus(input, ability_modifiers).is_some() {
+        BARBARIAN_RAGE_ARMOR_CLASS_PENALTY
+    } else {
+        0
+    };
+    let armor_class = ARMOR_CLASS_BASE
+        + CHAIN_SHIRT_ARMOR_BONUS
+        + dexterity_contribution
+        + DODGE_AC_BONUS
+        + rage_armor_class_penalty;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -19909,7 +20231,8 @@ fn compute_combat_baseline(
         detail: format!(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
-             + Dodge (+{DODGE_AC_BONUS}); shield is absent (+0) = {armor_class}"
+             + Dodge (+{DODGE_AC_BONUS}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
+             actively, validly raging); shield is absent (+0) = {armor_class}"
         ),
     });
 
@@ -22746,5 +23069,254 @@ mod druid_dispatch_widening_safety_tests {
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics
         );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8: Barbarian is the FIRST class in this
+/// class-breadth epic whose remaining gap was a genuine execution engine
+/// (not a permanent, unconditional class-feature burden like Sorcerer's
+/// bloodline / Cleric's domain powers / Druid's animal companion) -- so
+/// unlike every `<class>_dispatch_widening_safety_tests` module before this
+/// one, a valid Barbarian posture actually reaches `Computed`, not merely
+/// "blocked only on the permanent burden."
+#[cfg(test)]
+mod barbarian_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, BARBARIAN_CLASS_ID, BARBARIAN_RAGE_ABILITY_ID, FIGHTER_CLASS_ID,
+        ROGUE_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_barbarian_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BARBARIAN_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Barbarian who is not raging (no
+    /// `class_ability_activations` entry at all) is a genuinely valid PF1
+    /// posture -- not every Barbarian is always raging -- and reaches
+    /// `Computed` with zero claim-blocking diagnostics, the same golden
+    /// path as Fighter now that `table_class_id` recognizes Barbarian and
+    /// the rage-execution engine is real and conditional.
+    #[test]
+    fn single_class_barbarian_not_raging_reaches_computed() {
+        let input = human_barbarian_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Barbarian who isn't raging is a genuinely valid PF1 posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.barbarian.rage_execution.not_raging"),
+            "expected the honest not-raging recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A single-class Human Barbarian actively, validly raging (within
+    /// budget) also reaches `Computed` (Fatigue is named but non-blocking
+    /// below the Tireless Rage threshold), and the Strength/Constitution/
+    /// Will/Armor-Class bonuses and penalty are genuinely applied to the
+    /// integrated totals, not merely described.
+    #[test]
+    fn single_class_barbarian_actively_raging_in_budget_reaches_computed_and_applies_bonuses() {
+        let mut input = human_barbarian_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(1),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an active, in-budget Rage is a genuinely valid PF1 posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.barbarian.rage_execution.fatigue_not_modeled"
+                    && !d.claim_blocking),
+            "expected the honest, non-blocking Fatigue-not-modeled diagnostic below level 17: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        // Base fixture is Strength 16 (+3 from score, +4 with the fixture's
+        // chosen Human +2 floating Strength bonus applied), Constitution 14
+        // (+2). Rage (level 1, not Greater/Mighty) adds +4 Strength / +4
+        // Constitution ability SCORE, i.e. +2/+2 ability MODIFIER.
+        assert_eq!(receipt.computation.ability_modifiers.strength, 6);
+        assert_eq!(receipt.computation.ability_modifiers.constitution, 4);
+
+        let will_save = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.will")
+            .expect("total Will save must be grounded");
+        // Base Will save (barbarian level 1: 1/3 = 0) + Wisdom modifier
+        // (12 -> +1) + feat bonus (0) + Rage Will bonus (+2) = 3.
+        assert_eq!(will_save.value, 3, "Rage's Will-save morale bonus must be applied: {:?}", will_save);
+
+        let armor_class = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect("baseline Armor Class must be grounded");
+        // Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) - Rage penalty
+        // (2) = 15.
+        assert_eq!(armor_class.value, 15, "Rage's Armor Class penalty must be applied: {:?}", armor_class);
+    }
+
+    /// A Rage activation that exceeds the grounded rounds-per-day budget is
+    /// a genuine posture violation and must claim-block -- never silently
+    /// capped, mirroring every other over-budget check landed this session.
+    #[test]
+    fn single_class_barbarian_over_budget_rage_stays_blocked() {
+        let mut input = human_barbarian_input(1);
+        // Constitution 14 (+2): rounds per day = 4 + 2 + 2*(1-1) = 6.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(7),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.barbarian.rage_execution.rounds_exceeded"
+                    && d.claim_blocking),
+            "expected the over-budget claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "no rage bonus is applied for an over-budget, invalid posture: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// A Rage activation present but not `EquippedActive` (available but
+    /// not currently raging) is a genuinely valid posture too -- reaches
+    /// `Computed`, and applies no bonus.
+    #[test]
+    fn single_class_barbarian_selected_inactive_rage_reaches_computed_with_no_bonus() {
+        let mut input = human_barbarian_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::SelectedInactive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        assert_eq!(receipt.computation.ability_modifiers.strength, 4);
+    }
+
+    /// A non-Barbarian character carrying a spoofed `"rage"` activation
+    /// entry must have it silently ignored, not applied -- the
+    /// class-ownership gate is by construction (`active_barbarian_rage_bonus`
+    /// only ever reads `class_ability_activations` after confirming
+    /// `class_levels` contains Barbarian), not a bolt-on rejection.
+    #[test]
+    fn non_barbarian_characters_spoofed_rage_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Barbarian rage entry: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "a non-Barbarian character's spoofed rage entry must never apply a bonus: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// A Barbarian+Rogue multiclass mix with a valid, active, in-budget
+    /// Rage still gets the rage bonus applied -- the class-ownership gate
+    /// checks "does `class_levels` contain Barbarian", not "is Barbarian
+    /// the character's only class."
+    #[test]
+    fn barbarian_rogue_multiclass_with_active_rage_still_applies_the_bonus() {
+        let mut input = human_barbarian_input(2);
+        input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: ROGUE_CLASS_ID.to_owned(),
+            level: 1,
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(1),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        // Constitution 14 (+2) -> +2 Constitution modifier bonus from Rage.
+        assert_eq!(
+            receipt.computation.ability_modifiers.constitution, 4,
+            "a Barbarian+Rogue multiclass mix must still get Rage's bonus applied: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// Rage's tier rises to Greater Rage at 11th level: the Strength/
+    /// Constitution/Will bonuses rise from +4/+4/+2 to +6/+6/+3 (ability
+    /// modifier +3/+3), and the Armor Class penalty stays -2.
+    #[test]
+    fn single_class_barbarian_at_greater_rage_level_applies_the_higher_tier() {
+        let mut input = human_barbarian_input(11);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        // Base Strength 16 (+4 with the fixture's chosen Human +2 floating
+        // Strength bonus applied) + Greater Rage's +3 modifier bonus = +7.
+        assert_eq!(receipt.computation.ability_modifiers.strength, 7);
     }
 }

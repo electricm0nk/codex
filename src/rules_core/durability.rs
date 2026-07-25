@@ -134,12 +134,13 @@ mod tests {
     const FIGHTER_CLASS_ID: &str = "class:fighter";
     const WIZARD_CLASS_ID: &str = "class:wizard";
     const ROGUE_CLASS_ID: &str = "class:rogue";
-    // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25): Barbarian,
-    // not Cleric -- table_class_id now recognizes Cleric too (this test's
-    // original example), so it genuinely resolves a real max HP now.
-    // Barbarian remains genuinely unrecognized (not in table_class_id, APG,
-    // or ACG), so it's still a real negative-control example.
-    const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+    // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): Monk, not
+    // Barbarian -- table_class_id now recognizes Barbarian too (this test's
+    // previous example, itself substituted in for Cleric for the same
+    // reason), so it genuinely resolves a real max HP now. Monk remains
+    // genuinely unrecognized (not in table_class_id, APG, or ACG), so it's
+    // still a real negative-control example.
+    const MONK_CLASS_ID: &str = "class:monk";
 
     fn class_level(class_id: &str, level: u8) -> CharacterClassLevel {
         CharacterClassLevel { class_id: class_id.to_owned(), level }
@@ -195,7 +196,7 @@ mod tests {
 
     #[test]
     fn compute_max_hp_returns_none_for_an_unrecognized_class() {
-        let max_hp = compute_max_hp(&[class_level(BARBARIAN_CLASS_ID, 1)], 2);
+        let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 2);
         assert_eq!(max_hp, None);
     }
 

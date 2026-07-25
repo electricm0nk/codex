@@ -131,11 +131,12 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
     // narrow class chassis must refuse to fabricate Fighter values and must emit
     // a claim-blocking diagnostic instead.
     //
-    // The negative-control class is `class:barbarian:1` (was `class:cleric:1`
-    // until the v0.6 alpha swarm's CRB dispatch-widening pass (fca4e64e) gave
-    // Cleric its own real class_chassis.* computation via the table-driven
-    // dispatch path, so Cleric stopped being an unsupported input --
-    // Barbarian still is, confirmed against `table_class_id`). As of the
+    // The negative-control class is `class:monk:1` (was `class:barbarian:1`
+    // until the v0.6 alpha swarm's Barbarian rage-execution-engine pass gave
+    // Barbarian its own real class_chassis.* computation via the
+    // table-driven dispatch path, so Barbarian stopped being an unsupported
+    // input -- Monk still is, confirmed against `table_class_id`; was
+    // `class:cleric:1` before that, for the same reason). As of the
     // SD13-E3 Rogue chassis-recognition slice, every core-roster class now
     // emits its own bounded, non-fabricating `class_chassis.*` recognition
     // record (mirroring the earlier Wizard-vs-Rogue collision this comment
@@ -147,7 +148,7 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
         "case_id=non-fighter\n\
          source_package_id=pf1.core_rulebook\n\
          race_id=race:human\n\
-         class_level=class:barbarian:1\n\
+         class_level=class:monk:1\n\
          ability=strength:16\n\
          ability=dexterity:14\n\
          ability=constitution:14\n\

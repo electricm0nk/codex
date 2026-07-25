@@ -151,17 +151,20 @@ fn druid_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() {
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported
-    // for Druid) is untouched: no fabricated base_attack_bonus field, and no
-    // supported Fighter-style base-attack chassis explanation leaks in.
+    // ...but the integrated `base_attack_bonus` field is untouched: no fabricated
+    // integrated value is wired in from the standalone record.
     assert_eq!(
         computation.base_attack_bonus, 0,
         "the standalone druid base-attack explanation must not be wired into the integrated \
          base_attack_bonus field"
     );
+    // (v0.6 alpha swarm, risks item 8) Druid is now recognized by
+    // table_class_id, so the generic class-chassis base-attack-bonus
+    // explanation IS surfaced (unlike the earlier unsupported-chassis state);
+    // the value still floors to 0 at level 1 (3/4 BAB), only presence changed.
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "druid baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "druid is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 }
 
@@ -178,21 +181,38 @@ fn druid_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocker
     assert!(has_explanation(&computation, "class_chassis.druid.nature_sense"));
     assert!(has_explanation(&computation, "class_chassis.druid.nature_bond_choice"));
 
-    // Both claim-blocking burdens (animal companion execution, prepared divine
-    // spell posture) still fire; this slice grounds no companion stat block and no
-    // spell math.
+    // The animal companion execution burden still fires (permanently
+    // unconditional); this slice grounds no companion stat block and no spell math.
     let animal_companion = computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_feature.druid.animal_companion.unsupported")
         .expect("animal companion blocker must still fire");
     assert!(animal_companion.claim_blocking);
-    let prepared = computation
+
+    // (v0.6 alpha swarm, risks item 8) class_spell.druid.prepared_divine.unsupported
+    // is no longer unconditional -- this bare fixture has zero prepared spells, a
+    // genuinely valid posture, so the blocker correctly does not fire here.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.druid.prepared_divine.unsupported")
-        .expect("prepared divine spell posture blocker must still fire");
-    assert!(prepared.claim_blocking);
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.druid.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Druid level 2 was later widened into the supported tranche -----

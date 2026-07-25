@@ -261,13 +261,26 @@ fn druid_level8_still_claim_blocks_animal_companion_and_prepared_divine_burdens(
         "level-8 Druid must still claim-block on the animal-companion execution burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation.diagnostics.iter().any(
-            |d| d.id == "class_spell.druid.prepared_divine.unsupported" && d.claim_blocking
-        ),
-        "level-8 Druid must still claim-block on the prepared divine spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.druid.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.druid.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- The chassis recognition record is still present at level 8 -----

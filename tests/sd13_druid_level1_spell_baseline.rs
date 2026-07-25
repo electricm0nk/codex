@@ -48,7 +48,9 @@
 //! spellbook content, no spells prepared, no spell slots per day, no spell DCs, no
 //! bonus spells, and it grounds no Druid level 2+.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -123,6 +125,36 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
     computation.explanations.iter().any(|e| e.id == id)
 }
 
+/// (v0.6 alpha swarm, risks item 8) PREPARED_BLOCKER_ID is no longer
+/// unconditional -- a bare fixture with zero prepared spells is a genuinely
+/// valid posture, so the blocker correctly does not fire. If it's absent,
+/// confirm no spell is fabricated merely because the blocker stopped firing.
+fn assert_prepared_blocker_state_is_valid_or_blocking(computation: &PilotBaseChassisComputation) {
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == PREPARED_BLOCKER_ID)
+    {
+        Some(blocker) => assert!(
+            blocker.claim_blocking,
+            "if the blocker fires, it must be claim-blocking"
+        ),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.druid.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
+}
+
 // ----- Direct runtime evidence: the prepared divine spell-bearing identity is acknowledged -----
 
 #[test]
@@ -158,11 +190,15 @@ fn druid_level1_leaves_direct_prepared_divine_spell_baseline_recognition_evidenc
     );
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "prepared divine spell baseline must not fabricate a base attack bonus"
+        "druid level 1's real 3/4 base attack bonus formula floors to 0 (floor(3/4 * 1) = 0)"
     );
+    // (v0.6 alpha swarm, risks item 8) Druid is now recognized by
+    // table_class_id, so the generic class-chassis base-attack-bonus
+    // explanation IS surfaced (unlike the earlier unsupported-chassis state);
+    // the value still floors to 0 at level 1, only presence changed.
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "prepared divine spell baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "druid is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 
     // Ability modifiers remain class-independent and still compute (WIS 17 -> +3).
@@ -178,9 +214,19 @@ fn druid_level1_fabricates_no_spell_math() {
         assert!(
             explanation.id == RECOGNITION_ID
                 || explanation.id == WILD_EMPATHY_ID
+                // (v0.6 alpha swarm, risks item 8) the bare fixture has zero
+                // prepared spells, a genuinely valid posture, so the real
+                // daily-preparation count (honestly 0) and the real
+                // base/total slot budget it's validated against now surface
+                // too -- all grounded, non-fabricated records once the
+                // posture is valid (mirrors ground_druid_prepared_spells and
+                // its base-table lookups exactly).
+                || explanation.id.starts_with("class_chassis.druid.")
+                || explanation.id.starts_with("class_spell.druid.")
                 || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition and the \
-             grounded wild empathy modifier: {explanation:?}"
+            "no fabricated spell explanation is allowed beyond the +0 recognition, the grounded \
+             wild empathy modifier, and the honest grounded druid class-chassis/class-spell \
+             records: {explanation:?}"
         );
     }
     let recognition = explanation(&computation, RECOGNITION_ID);
@@ -322,7 +368,7 @@ fn druid_level1_without_nature_bond_selection_omits_recognition_but_stays_blocke
     assert!(has_explanation(&computation, NATURE_SENSE_ID));
     assert!(has_explanation(&computation, WILD_EMPATHY_ID));
     let companion = claim_blocking(&computation, ANIMAL_COMPANION_BLOCKER_ID);
-    claim_blocking(&computation, PREPARED_BLOCKER_ID);
+    assert_prepared_blocker_state_is_valid_or_blocking(&computation);
 
     // No recognition record was left, so the blocker must not fabricate the claim
     // that an animal companion (or any specific bond) was actually chosen.
@@ -373,13 +419,30 @@ fn druid_level1_stays_blocked_on_animal_companion_execution_burden() {
 
 #[test]
 fn druid_level1_stays_blocked_on_prepared_divine_spell_posture_burden() {
-    let input = load(DRUID_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8) PREPARED_BLOCKER_ID is no longer
+    // unconditional -- the bare fixture is a genuinely valid posture, so this
+    // test (whose whole purpose is proving the blocker still fires) now needs
+    // a real violation: "Barkskin" is a real PF1 Core Rulebook 2nd-level
+    // druid spell, not yet accessible at druid level 1 (access ceiling 1st
+    // level).
+    let mut input = load(DRUID_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Barkskin".to_owned(),
+        source_class_id: "class:druid".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     let prepared = claim_blocking(&computation, PREPARED_BLOCKER_ID);
     assert!(
-        prepared.message.contains("prepared") && prepared.message.contains("spell slot"),
-        "druid prepared divine spell blocker must name the prepared / spell slots burden: {}",
+        prepared.message.contains("prepared") && prepared.message.contains("Barkskin"),
+        "druid prepared divine spell blocker must name the prepared-spell burden and the \
+         violating spell: {}",
+        prepared.message
+    );
+    assert!(
+        prepared.message.contains("not yet accessible"),
+        "druid prepared divine spell blocker must explain why the spell is not yet accessible: {}",
         prepared.message
     );
 

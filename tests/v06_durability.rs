@@ -20,7 +20,12 @@ use codex::rules_core::durability::{classify_durability, compute_max_hp, Durabil
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 const WIZARD_CLASS_ID: &str = "class:wizard";
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+// v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): Monk, not
+// Barbarian -- table_class_id now recognizes Barbarian too (this test's
+// previous example), so it genuinely resolves a real max HP now. Monk
+// remains genuinely unrecognized (not in table_class_id, APG, or ACG), so
+// it's still a real negative-control example.
+const MONK_CLASS_ID: &str = "class:monk";
 
 fn class_level(class_id: &str, level: u8) -> CharacterClassLevel {
     CharacterClassLevel { class_id: class_id.to_owned(), level }
@@ -85,12 +90,12 @@ fn compute_max_hp_returns_none_for_a_wizard_rogue_multiclass_build() {
 }
 
 #[test]
-fn compute_max_hp_returns_none_for_barbarian_outside_the_table_class_id_allowlist() {
-    let max_hp = compute_max_hp(&[class_level(BARBARIAN_CLASS_ID, 1)], 3);
+fn compute_max_hp_returns_none_for_monk_outside_the_table_class_id_allowlist() {
+    let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 3);
     assert_eq!(
         max_hp, None,
-        "durability is scoped to the same table_class_id allowlist (Fighter/Wizard/Rogue) as \
-         the multiclass BAB/save dispatch -- Barbarian is not in it"
+        "durability is scoped to the same table_class_id allowlist as the multiclass BAB/save \
+         dispatch -- Monk is not in it"
     );
 }
 
