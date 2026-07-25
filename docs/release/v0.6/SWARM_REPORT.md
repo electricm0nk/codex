@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Bard closure committed and re-verified against real HEAD (86d26f88, 393/393 lib); deciding between Monk's remaining feats and APG/ACG's untouched classes (lead leans APG/ACG) |
+| backend | waiting-on-lead | first APG/ACG scoping doc (Skald) landed; adversarial review dispatched on the gate-widening safety and a self-application evidence gap lead found; holding on code |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | working | new 17-file Bard known-spell wave assigned |
 
