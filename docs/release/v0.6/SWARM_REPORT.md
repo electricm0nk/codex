@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Fixed the over-budget gap in Inquisitor's Judgment — found it needed patching in TWO places (the diagnostic function AND the separate bonus-application helper), wrote the over-budget test first and it caught the second spot (diagnostic fired but bonus still silently applied). Lead independently verified both fixes, the new test, full lib 435/435, coverage audit 3/3, full workspace sweep clean. Ready to commit |
+| backend | idle | Inquisitor's Judgment (3rd APG closure) landed (`22abe6e5`, bundled via a git-index race with the lead's own docs commit — content fully verified, nothing lost). Awaiting next assignment |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — all 10 now reachable through the real product UI, fully closed out (Sorcerer/Cleric/Druid's choice-picker gap closed via `9bafe303`'s canonical-default seeding, `characterHubModel.ts` updated and live-verified in `adf57cfb` with real per-class `levelOptions`: Sorcerer `[1,2]`, Cleric `[1,2,3]`, Druid `[1]`). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier and Alchemist (both APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial) — 6 classes total across both books, the cheap-win scan is now genuinely complete. 10 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — all 10 now reachable through the real product UI, fully closed out (Sorcerer/Cleric/Druid's choice-picker gap closed via `9bafe303`'s canonical-default seeding, `characterHubModel.ts` updated and live-verified in `adf57cfb` with real per-class `levelOptions`: Sorcerer `[1,2]`, Cleric `[1,2,3]`, Druid `[1]`). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier, Alchemist, and Inquisitor (all APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial) — 7 classes total across both books. Skald's own spellcasting also genuinely reaches real validation now (`7e7f6fbd`), though still not enough alone to reach full Computed. 9 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -50,29 +50,31 @@ engine work lands.
 
 **CRB tally: 10 of 11 genuinely Computed, 1 of 11 (Monk) with real partial engine progress (6 of 7 restricted-list feats closed — only Deflect Arrows remains, needing a genuinely new opponent-interaction engine). All 11 CRB classes now have at least some real engine work landed.**
 
-### APG (6 classes) — 2 of 6 have real partial engine progress, 4 still dispatch-only
+### APG (6 classes) — 3 of 6 have real partial engine progress, 3 still dispatch-only
 
 Chassis (BAB/save/HP) landed together in one commit (`c511c132`): real
 BAB/save progression and real hit-die-derived HP via each class's own
 `HD:` token, deliberately kept OUTSIDE `table_class_id`/
 `multiclass_class_level_supported` to avoid a false-Computed multiclass
-loophole. Since then, Cavalier and Alchemist have both gone beyond
-chassis-only: Cavalier's Mount (reusing the Hunter/Druid animal-companion
-pattern) was the first-ever APG class-specific closure; Alchemist's
-Mutagen is the first closure this session combining choice-recognition
-(which physical stat) with activation-gating (mutated/not) in one
-mechanic.
+loophole. Since then, Cavalier, Alchemist, and Inquisitor have all gone
+beyond chassis-only: Cavalier's Mount (reusing the Hunter/Druid
+animal-companion pattern) was the first-ever APG class-specific closure;
+Alchemist's Mutagen combined choice-recognition with activation-gating
+for the first time; Inquisitor's Judgment (narrowed to Justice as the
+canonical MVP judgment type) is the third, and caught a real pre-commit
+bug (a missing over-budget check in a second, separate helper function)
+before it shipped.
 
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
 | Alchemist | 3/4 | d8 | **Blocked** — real progress: Mutagen (+4 chosen physical stat/-2 corresponding mental stat/+2 natural armor, genuinely choice-driven — verified two separate ways, Strength and Constitution, proving the selection is read not hardcoded) genuinely grounded; still Blocked on deferred spellcasting + Bomb/Discovery/Poison Resistance/Swift Alchemy/Swift Poisoning and the rest. Committed `101bf40d`, lead re-verified against the real HEAD: 423/423 lib, `sd24_apg_class_coverage_audit` 3/3 |
 | Cavalier | **full** | d10 | **Blocked** — real progress: Mount (Horse companion stat block, effective druid level = cavalier level, AC 14 = base 10 + natural armor 4) genuinely grounded; Share Spells correctly not fabricated (the Mount doesn't have that ability at all per RAW); still Blocked on 10+ other deferred named features (no spellcasting — pure martial class). Committed `d256bc9c`, lead re-verified against the real HEAD: 417/417 lib, Druid's/Hunter's own tests confirmed unaffected, `sd24_apg_class_coverage_audit` 3/3 |
-| Inquisitor | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Inquisitor | 3/4 | d8 | **Blocked** — real progress: Justice judgment (+1+level/5 sacred/profane bonus to all attack rolls, activation-gated with a real uses-per-day budget enforced in both the diagnostic AND the separate bonus-application helper — a pre-commit bug where only the first was checked was caught and fixed) genuinely grounded; still Blocked on 7 other judgment types, Domain (grants no power per RAW, provably out of scope), Monster Lore/Stern Gaze/Cunning Initiative/Track/Orisons, and spellcasting. Committed `22abe6e5`, lead re-verified against the real HEAD: 435/435 lib, `sd24_apg_class_coverage_audit` 3/3, full workspace sweep zero failures |
 | Oracle | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Summoner | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Witch | 1/2 | d6 | dispatch-only, Blocked — queued, untouched |
 
-**APG tally: 0 of 6 reach Computed (a real named-feature or spellcasting gap keeps every APG class Blocked regardless of chassis work), 2 of 6 (Cavalier, Alchemist) have a real named ability genuinely grounded, 4 of 6 untouched beyond chassis dispatch.**
+**APG tally: 0 of 6 reach Computed (a real named-feature or spellcasting gap keeps every APG class Blocked regardless of chassis work), 3 of 6 (Cavalier, Alchemist, Inquisitor) have a real named ability genuinely grounded, 3 of 6 untouched beyond chassis dispatch.**
 
 ### ACG (10 classes) — 4 of 10 have real partial engine progress, 6 still dispatch-only
 
@@ -151,11 +153,10 @@ level.
 
 ### What's actually queued next (in order, as currently planned)
 
-1. **Skald's real spellcasting** — backend building now, reusing Bard's already-built 164-entry spell list wholesale (`SPELLLIST:1|Bard`, confirmed zero per-spell tags of Skald's own), plus Skald's own small spells-known/per-day progression table. Would move Skald from "one ability grounded" to genuinely closer to full `Computed`.
-2. **Path A choice-picker default (Sorcerer/Cleric/Druid)** — queued for backend, small (~30-45 lines total, mirrors the already-shipped Wizard silent-canonical-default pattern exactly), no wire-contract change. Makes all 3 already-`Computed` classes genuinely reachable through the real product UI for the first time. Frontend's own follow-on (`characterHubModel.ts` label update) queued for once it lands. Path B (a real interactive picker) deliberately deferred as separate future product-decision work.
-3. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all. Not scheduled.
-4. Monk's/Brawler's/Hunter's/Cavalier's/Alchemist's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
-5. All remaining untouched ACG/APG classes' (Arcanist/Investigator/Shaman/Slayer/Swashbuckler/Warpriest/Inquisitor/Oracle/Summoner/Witch) class-skill-lists/class-features/spellcasting — the single largest remaining bucket in this whole epic, no further cheap wins expected without new corpus developments.
+1. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all. Not scheduled.
+2. Monk's/Brawler's/Hunter's/Cavalier's/Alchemist's/Inquisitor's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements). Monk's one stale pre-existing test was already caught and fixed pre-commit.
+3. All remaining untouched ACG/APG classes' (Arcanist/Investigator/Shaman/Slayer/Swashbuckler/Warpriest/Oracle/Summoner/Witch — 9 total) class-skill-lists/class-features/spellcasting — the single largest remaining bucket in this whole epic. The cheap-win scan is genuinely complete across all 16 (7 closed, 9 explicitly ruled not-cheap, though Inquisitor's course-correction shows a "not cheap" verdict can still be revisited if a narrower canonical-choice slice emerges).
+4. Backend's own next target, not yet chosen as of the last check-in.
 
 ### Honest scale note
 
