@@ -1373,7 +1373,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T14:30:02
-Latest commit on tranche/6: d3fcc63a docs(v0.6): Bloodrager independently re-verified against committed HEAD (40 seconds ago) (2026-07-25T14:29:22-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T14:29:46 frontend=2026-07-25T14:24:21 qa=2026-07-25T12:03:53 lead=2026-07-25T14:25:42
+Last mechanical check: 2026-07-25T14:50:03
+Latest commit on tranche/6: 5a05db66 docs(v0.6): Brawler AC Bonus independently re-verified against committed HEAD (16 seconds ago) (2026-07-25T14:49:47-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T14:47:18 frontend=2026-07-25T14:35:42 qa=2026-07-25T12:03:53 lead=2026-07-25T14:49:43
 <!-- AUTO-HEARTBEAT-END -->
