@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Barbarian/Monk deferred pending a combat-time state design pass; proceeding with Cleric's spell posture now |
-| frontend | working | live-verifying a genuine non-Human-Ranger-reaches-Computed-at-level-1 finding before committing the UI label |
-| qa | idle | per-class survey delivered; standing by |
+| backend | working | Sorcerer's known-spell posture landed and lead-verified (c23d4054); now building Cleric's real spell math from scratch |
+| frontend | working | live-verifying the non-Human-Ranger finding, recovered from an environment hiccup |
+| qa | working | Sorcerer's ~29-file test cleanup |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
