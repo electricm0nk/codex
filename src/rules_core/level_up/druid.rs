@@ -97,8 +97,24 @@ const DRUID_CAPSTONE_LEVEL: u8 = 20;
 /// value-always-0, always-granted identity record — never produces a
 /// grant since it never changes between `from_level` and `to_level`) by
 /// simply not matching its different id shape.
+///
+/// **Bug fix (v0.6 alpha swarm, risks item 8, seventh slice follow-up,
+/// 2026-07-25)**: originally admitted only `class_chassis.druid.` and
+/// `class_feature.druid.`, missing the `class_spell.druid.` family
+/// (`class_spell.druid.daily_preparation`,
+/// `class_spell.druid.total_spells_per_day.spell_level_N`) the Druid
+/// dispatch-widening slice (dda46d4a) started grounding as real,
+/// level-varying explanations (`druid_base_spells_per_day_table`: level 1
+/// spell_level_0 = 3, level 2 = 4 — a genuinely rising value). This is the
+/// exact SD-24 Wizard bug shape: a later-landing real grounding whose
+/// prefix was never added to this module's own filter, silently dropping
+/// real level-rising facts from every Druid `LevelUpPlan`. Caught by
+/// `tests/sd25_druid_level_up_explanation_filter_audit.rs`'s
+/// `every_real_druid_explanation_id_survives_the_level_up_filter_except_the_documented_recognition_exclusion`.
 fn is_druid_pillar_id(id: &str) -> bool {
-    id.starts_with("class_chassis.druid.") || id.starts_with("class_feature.druid.")
+    id.starts_with("class_chassis.druid.")
+        || id.starts_with("class_feature.druid.")
+        || id.starts_with("class_spell.druid.")
 }
 
 /// Composes a Druid `LevelUpPlan` for the transition from `from_level` to
