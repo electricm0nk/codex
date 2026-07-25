@@ -79,49 +79,81 @@ fn zero_named_class_features_are_wired_for_any_acg_class_yet() {
 }
 
 /// The audit's third finding, proven empirically rather than by
-/// inspection alone: `pilot_compute::compute_pilot_base_chassis` -- the
-/// function the live character-hub pilot flow actually calls -- does not
-/// recognize any ACG class. Driving a real, minimal `CharacterInput` for
-/// each of the ten classes through it must produce the honest,
-/// already-established claim-blocking `class_chassis.unsupported`
-/// diagnostic (the same diagnostic every non-Fighter/Wizard CRB and every
-/// APG class also trips today), never a fabricated
-/// base_attack_bonus/base_saves value. This is the "no-stub" doctrine's
-/// own worked example: an honest gap, not silent fabrication.
+/// inspection alone. **Superseded (v0.6 alpha swarm, risks item 8, fourth
+/// slice):** `pilot_compute::compute_pilot_base_chassis` now genuinely
+/// wires real BAB/save/HP for all ten ACG classes via
+/// `compute_acg_class_chassis` (verified against the actual
+/// `acg_classes.lst` corpus tokens, cross-checked against
+/// `pilot_compute.rs`'s own `all_ten_acg_classes_ground_real_bab_save_and_hp_at_level_1`
+/// reference test), so the old universal `class_chassis.unsupported`
+/// diagnostic no longer fires for any of them -- that claim is stale.
+/// Each class instead trips its own real, unconditional
+/// `class_feature.acg.<class>.unsupported` diagnostic: the class-skill
+/// list, named class features, and spellcasting are all still genuinely
+/// ungrounded, the same shape as the APG dispatch slice before it. This
+/// remains the "no-stub" doctrine's own worked example -- an honest,
+/// named gap, not silent fabrication -- just a narrower gap than before.
+///
+/// Worth stating plainly since the APG equivalent of this fix had only
+/// one BAB surprise (Cavalier, full BAB): ACG has **four** -- Bloodrager,
+/// Brawler, Slayer, and Swashbuckler are all real full-BAB classes (+1 at
+/// level 1), not the 3/4- or 1/2-BAB shape most of the other six share
+/// (which floor to +0 at level 1). Checked each of the ten individually
+/// against the real corpus rather than assuming a single exception would
+/// cover it.
 #[test]
-fn acg_classes_trip_the_honest_class_chassis_unsupported_diagnostic() {
+fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic() {
     for class_id in AcgClassId::ALL {
         let input = minimal_input_for(class_id);
         let computation = compute_pilot_base_chassis(&input);
 
+        // Real level-1 base attack bonus per class (matches
+        // `pilot_compute.rs`'s own `all_ten_acg_classes_ground_real_bab_save_and_hp_at_level_1`
+        // reference test, itself verified against `acg_classes.lst`): every
+        // class is 0 except the four real full-BAB classes.
+        let expected_bab = if matches!(
+            class_id,
+            AcgClassId::Bloodrager
+                | AcgClassId::Brawler
+                | AcgClassId::Slayer
+                | AcgClassId::Swashbuckler
+        ) {
+            1
+        } else {
+            0
+        };
         assert_eq!(
-            computation.base_attack_bonus, 0,
-            "{:?}: unsupported chassis must report zero, never a fabricated number",
+            computation.base_attack_bonus, expected_bab,
+            "{:?}: base attack bonus is now genuinely computed from the real chassis, not a \
+             fabricated/blocked zero",
             class_id
         );
 
+        let expected_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
         let unsupported = computation
             .diagnostics
             .iter()
-            .find(|d| d.id == "class_chassis.unsupported")
+            .find(|d| d.id == expected_diagnostic_id)
             .unwrap_or_else(|| {
                 panic!(
-                    "{:?}: expected a class_chassis.unsupported diagnostic -- if this now \
-                     fails, pilot_compute.rs has started recognizing this ACG class and the \
-                     coverage row's pilot_compute_integrated field (currently false) is stale",
+                    "{:?}: expected the real '{expected_diagnostic_id}' diagnostic -- if this \
+                     now fails, pilot_compute.rs's class-feature/skill/spellcasting coverage for \
+                     this ACG class has changed again and this test (plus the coverage-matrix \
+                     artifact) needs updating",
                     class_id
                 )
             });
         assert!(
             unsupported.claim_blocking,
-            "{:?}: class_chassis.unsupported must remain claim_blocking: true",
+            "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
 
         let row = class_coverage(class_id);
         assert!(
-            !row.pilot_compute_integrated,
-            "{:?}: coverage row's pilot_compute_integrated should be false today",
+            row.pilot_compute_integrated,
+            "{:?}: coverage row's pilot_compute_integrated should now be true -- the BAB/save \
+             chassis is genuinely wired into compute_pilot_base_chassis",
             class_id
         );
     }
