@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | waiting-on-qa | Druid landed and lead-verified (dda46d4a); holding on further classes/drafts per QA's pacing-hold ask until the ~75-file Sorcerer/Cleric/Druid queue clears |
-| frontend | working | in-progress uncommitted fix for Ranger's UI support level (`full-except-human-level-1`); not yet independently verified |
-| qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, working Sorcerer -> Cleric -> Druid review in order |
+| backend | waiting-on-lead | wrote the combat-time activation-state scoping plan while holding on Bard/new classes per QA's ask; adversarial review dispatched, holding on Barbarian implementation until it lands |
+| frontend | working | live-verified Ranger's inverted scope for real, committing after a second clean suite run; also asked to fix Paladin's identically-stale UI label |
+| qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, authoring Sorcerer's fixes directly (backend never delivered drafts) |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
