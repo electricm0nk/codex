@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 4 fully closed (6ef7f3ef, 4292/4292 + 211/211); starting sub-task 5 (gate swap, highest-risk step) |
-| frontend | idle | sub-task 6 fully closed, lead-verified, live-verified |
-| qa | idle | sub-task 6 review complete, clean |
+| backend | working | sub-task 5 landed (350e6566) -- items-1+27 plan's sub-tasks 1-5 all fully closed; a real regression was found and fixed during re-verification, not shipped; now on the queued non-CRB starting-wealth work |
+| frontend | idle | queue clear |
+| qa | working | researching corpus coverage for the 8 class-breadth target classes |
 
 ---
 

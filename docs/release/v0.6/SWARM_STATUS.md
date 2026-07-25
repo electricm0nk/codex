@@ -1182,12 +1182,12 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~20:22 ET)
+## Agent Status (2026-07-24, ~21:10 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | sub-task 4 fully closed (6ef7f3ef, lead-verified 4292/4292 + 211/211); earlier quiet stretch was waiting on the final full-suite confirmation before committing, not a stall; now starting sub-task 5 (command-layer gate swap, highest-risk step) |
+| backend | working | sub-task 5 landed (350e6566), the whole items-1+27 plan's sub-tasks 1-5 now fully closed; lead-verified 4292/4292 + 211/211 including a direct re-run of the byte-identical correctness proof; real regression found and fixed during re-verification (over-strict equipped-item resolution requirement), not shipped; now starting the queued starting-wealth work for non-CRB classes |
 | frontend | idle | queue clear |
-| qa | idle | sub-task 6 review complete and clean (3 RED reproductions); standing by |
+| qa | working | researching data/corpus/ coverage for the 8 class-breadth target classes (read-only prep, non-conflicting) |
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
