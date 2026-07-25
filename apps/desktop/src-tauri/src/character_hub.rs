@@ -32,7 +32,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
 };
-use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
+use codex::rules_core::pilot_view_model::PilotSnapshot;
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -317,7 +317,7 @@ pub(crate) use crate::pf1_adapter::{
     add_equipment_selection_at_root, add_feat_selection_at_root, add_spell_selection_at_root,
     apply_attach_equipment_modifier, compose_character_input, level_up_character_at_root,
     mutate_saved_character_at_root, record_and_prepare_spell_selection_at_root,
-    set_skill_allocations_at_root,
+    resolve_unified_pilot_snapshot, set_skill_allocations_at_root,
 };
 // `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
 // / `apply_add_feat_selection` / `apply_set_skill_allocations` are only
@@ -626,21 +626,16 @@ pub(crate) fn create_character_at_root(
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
     let character_input = compose_character_input(request);
-    let receipt = build_pilot_headless_receipt(&character_input);
 
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: request.character_id.clone(),
@@ -665,7 +660,7 @@ pub(crate) fn create_character_at_root(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
@@ -704,20 +699,15 @@ pub fn clone_character(
     let mut character_input = source_envelope.character_input.clone();
     character_input.case_id = Some(request.new_character_id.clone());
 
-    let receipt = build_pilot_headless_receipt(&character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: request.new_character_id.clone(),
@@ -744,7 +734,7 @@ pub fn clone_character(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
@@ -847,15 +837,20 @@ pub fn load_saved_character(
     let root = resolve_character_root(&app, &request.character_id)?;
     let envelope = SavedCharacterStore::load(&root).map_err(|err| err.message)?;
 
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let corpus_receipt =
-        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+    let (snapshot, diagnostics, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+            Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
+            Err(diagnostics) => (
+                None,
+                diagnostics,
+                compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
+            ),
+        };
 
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
-        snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
-        diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        snapshot: snapshot.as_ref().map(map_snapshot_dto),
+        diagnostics: map_diagnostics_dto(&diagnostics),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
@@ -2282,20 +2277,15 @@ fn import_character_from_json(
 
     let character_input = character_input_from_dto(parsed.character_input, fresh_character_id);
 
-    let receipt = build_pilot_headless_receipt(&character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: fresh_character_id.to_owned(),
@@ -2315,7 +2305,7 @@ fn import_character_from_json(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }

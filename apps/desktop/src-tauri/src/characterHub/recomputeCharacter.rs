@@ -28,11 +28,10 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
-use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::saved_character::local_store::SavedCharacterStore;
 
-use crate::pf1_adapter::Pf1Adapter;
+use crate::corpus_fixtures::corpus_fixture_bundle;
+use crate::pf1_adapter::{resolve_unified_pilot_snapshot, Pf1Adapter};
 use crate::rule_system_adapter::RuleSystemAdapter;
 use crate::stub_adapter::StubAdapter;
 
@@ -125,30 +124,24 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
         }
     };
 
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        let blocking_messages: Vec<String> = receipt
-            .computation
-            .diagnostics
-            .iter()
-            .filter(|diagnostic| diagnostic.claim_blocking)
-            .map(|diagnostic| diagnostic.message.clone())
-            .collect();
-        return RecomputeCharacterResponse {
-            success: false,
-            character: None,
-            error: Some(format!(
-                "character_not_computable: {}",
-                blocking_messages.join("; ")
-            )),
-        };
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
+    let snapshot = match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+        Ok((snapshot, _corpus_receipt)) => snapshot,
+        Err(diagnostics) => {
+            let blocking_messages: Vec<String> = diagnostics
+                .iter()
+                .filter(|diagnostic| diagnostic.claim_blocking)
+                .map(|diagnostic| diagnostic.message.clone())
+                .collect();
+            return RecomputeCharacterResponse {
+                success: false,
+                character: None,
+                error: Some(format!(
+                    "character_not_computable: {}",
+                    blocking_messages.join("; ")
+                )),
+            };
+        }
+    };
 
     RecomputeCharacterResponse {
         success: true,

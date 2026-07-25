@@ -26,7 +26,7 @@ use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
-use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
+use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::pilot_compute::{
     choice_selection, compute_pilot_base_chassis, fighter_armor_training, fighter_level_in_mix,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
@@ -37,7 +37,6 @@ use crate::rules_core::pilot_compute::{
     POWER_ATTACK_ITEM_ID, SELECTED_SKILL_RANK, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
     WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS, WIZARD_CLASS_ID,
 };
-use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
@@ -339,31 +338,22 @@ pub fn compute_combat_baseline_from_corpus(
         }
     }
 
-    // v0.6 alpha swarm sub-task 4: every EquippedActive selection must
-    // resolve against corpus with a known category -- the actual widening.
-    for selection in &chosen.equipment_selections {
-        if selection.active_state != ActiveState::EquippedActive {
-            continue;
-        }
-        let Some((record, _table_cell)) =
-            equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
-        else {
-            unmet.push(format!(
-                "equipped item '{}' does not resolve against the corpus",
-                selection.item_id
-            ));
-            continue;
-        };
-        let key = equipment_key_token(record).unwrap_or(&record.name);
-        let known_category = equipment_tables().iter().any(|entry| entry.key == key);
-        if !known_category {
-            unmet.push(format!(
-                "equipped item '{}' has no known equipment category",
-                selection.item_id
-            ));
-        }
-    }
-
+    // v0.6 alpha swarm sub-task 4 (real regression found and fixed during
+    // sub-task 5's re-verification): deliberately does NOT require every
+    // EquippedActive selection to resolve against corpus. The desktop app's
+    // real bundled demo corpus (`corpus_fixtures.rs`) has only 2 equipment
+    // records -- an earlier version of this function hard-blocked on any
+    // OTHER equipped item (e.g. a Dagger added on top of the required
+    // Longsword) failing to resolve, which regressed every existing test
+    // that equips a second, non-fixed item the old exact-posture gate never
+    // cared about. `compute_equipment_effects` already tolerates an
+    // unresolvable selection gracefully (skips it, contributes nothing to
+    // any total) -- this function trusts that same tolerance rather than
+    // re-imposing a stricter, blocking requirement on top of it. The one
+    // real requirement equipment resolution DOES need to enforce is below:
+    // genuine 2-real-weapon ambiguity, which `attack_bonus_delta` already
+    // detects on its own (an unresolvable item is never counted as a
+    // weapon, so it can't manufacture a false ambiguity here either).
     let equipped: Vec<EquipmentSelection> = chosen
         .equipment_selections
         .iter()
@@ -373,8 +363,9 @@ pub fn compute_combat_baseline_from_corpus(
     let effects = compute_equipment_effects(&equipped, corpus);
 
     // Longsword is required above, so `None` here specifically means a
-    // second real weapon is also equipped -- genuinely ambiguous, same
-    // honest-absence reasoning `attack_bonus_delta` itself already uses.
+    // second real (successfully resolved) weapon is also equipped --
+    // genuinely ambiguous, same honest-absence reasoning `attack_bonus_delta`
+    // itself already uses.
     let Some(attack_bonus_delta) = effects.attack_bonus_delta else {
         unmet.push(
             "more than one real weapon is equipped alongside the required Longsword; the \
@@ -455,33 +446,11 @@ pub fn compute_selected_skill_modifiers_from_corpus(
         }
     }
 
-    // v0.6 alpha swarm sub-task 4: every EquippedActive selection must
-    // resolve against corpus with a known category, same widening as
-    // `compute_combat_baseline_from_corpus` -- replaces the old exact
-    // "Chain Shirt equipped" requirement.
-    for selection in &input.chosen.equipment_selections {
-        if selection.active_state != ActiveState::EquippedActive {
-            continue;
-        }
-        let Some((record, _table_cell)) =
-            equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
-        else {
-            unmet.push(format!(
-                "equipped item '{}' does not resolve against the corpus",
-                selection.item_id
-            ));
-            continue;
-        };
-        let key = equipment_key_token(record).unwrap_or(&record.name);
-        let known_category = equipment_tables().iter().any(|entry| entry.key == key);
-        if !known_category {
-            unmet.push(format!(
-                "equipped item '{}' has no known equipment category",
-                selection.item_id
-            ));
-        }
-    }
-
+    // v0.6 alpha swarm sub-task 4: deliberately does not require every
+    // EquippedActive selection to resolve against corpus -- see
+    // `compute_combat_baseline_from_corpus`'s own doc comment for the real
+    // regression this caused and why `compute_equipment_effects`'s existing
+    // graceful-skip tolerance is trusted instead of re-blocking on top of it.
     if !unmet.is_empty() {
         return Err(unmet);
     }
@@ -782,9 +751,17 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
     }
 
     /// An equipped item that does not resolve against the corpus at all
-    /// must Block -- never silently accepted as if it contributed nothing.
+    /// must NOT block the build -- it silently contributes nothing, same as
+    /// `compute_equipment_effects`'s own existing graceful-skip tolerance
+    /// (mirrors the OLD exact-posture gate's own behavior, which never
+    /// noticed or cared about any equipped item beyond its 3 hardcoded
+    /// ones). Real regression found during sub-task 5's re-verification: an
+    /// earlier version of this function DID hard-block here, which broke
+    /// every existing test that equips a second, non-fixed item against
+    /// the desktop app's real, tiny (2-record) bundled corpus -- see this
+    /// function's own doc comment for the full account.
     #[test]
-    fn an_unresolvable_equipped_item_is_honestly_blocked() {
+    fn an_unresolvable_equipped_item_does_not_block_and_contributes_nothing() {
         let corpus = corpus_with_fixture();
         let fixture = format!(
             "{}equipment=Wand of Cure Light Wounds:equipped_worn_active\n",
@@ -793,12 +770,12 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
         let input = load(&fixture);
         let base = build_pilot_headless_receipt(&input).computation;
 
-        let unmet = compute_combat_baseline_from_corpus(&base, &input, &corpus)
-            .expect_err("an unresolvable equipped item must be honestly blocked");
+        let result = compute_combat_baseline_from_corpus(&base, &input, &corpus)
+            .expect("an unresolvable equipped item must not block the build");
 
-        assert!(
-            unmet.iter().any(|message| message.contains("does not resolve")),
-            "expected the real unresolvable-item diagnostic: {unmet:?}"
+        assert_eq!(
+            result.armor_class, base.baseline_armor_class,
+            "an unresolvable item must contribute nothing, matching today's hardcoded value"
         );
     }
 

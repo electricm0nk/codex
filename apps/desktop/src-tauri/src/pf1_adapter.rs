@@ -52,11 +52,19 @@ use codex::rules_core::character_input::{
 };
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
-    build_pilot_headless_receipt, compute_pilot_base_chassis, HeadlessReceiptStatus,
-    PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
+    PilotBaseChassisComputation, SelectedSkillModifiers,
 };
-use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
-use codex::rules_core::pilot_view_model::PilotViewModel;
+#[cfg(test)]
+use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
+use codex::rules_core::pilot_compute_corpus::{
+    compute_combat_baseline_from_corpus, compute_pilot_with_corpus,
+    compute_selected_skill_modifiers_from_corpus, CorpusPilotReceipt,
+};
+use codex::rules_core::pilot_view_model::{
+    PilotCombatViewModel, PilotDefenseViewModel, PilotSkillViewModel, PilotSnapshot,
+};
+use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
@@ -200,15 +208,20 @@ impl RuleSystemAdapter for Pf1Adapter {
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
         let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
-        let receipt = build_pilot_headless_receipt(&envelope.character_input);
-        let view_model = PilotViewModel::from_receipt(&receipt);
-        let corpus_receipt =
-            compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+        let (snapshot, diagnostics, corpus_receipt) =
+            match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+                Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
+                Err(diagnostics) => (
+                    None,
+                    diagnostics,
+                    compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
+                ),
+            };
 
         Ok(LoadSavedCharacterResponse {
             summary: summarize_envelope(&envelope),
-            snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+            snapshot: snapshot.as_ref().map(map_snapshot_dto),
+            diagnostics: map_diagnostics_dto(&diagnostics),
             corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
             selected_feats: envelope.character_input.chosen.selected_feats.clone(),
             spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
@@ -404,6 +417,121 @@ fn next_mutation_revision_id(character_id: &str, current_revision_id: &str) -> S
     format!("{prefix}{next_n}")
 }
 
+/// v0.6 alpha swarm items 1+27 sub-task 5: the single, unified
+/// Computed/Blocked verdict every command below now goes through, replacing
+/// the exact-posture-only headless check each used to run directly.
+/// `combat.baseline_unsupported`/`skill.selected_modifier.unsupported` are
+/// no longer independently claim-blocking here — the corpus-aware
+/// combat-baseline/selected-skill pillars (sub-task 4,
+/// `pilot_compute_corpus::compute_combat_baseline_from_corpus`/
+/// `compute_selected_skill_modifiers_from_corpus`) decide those two
+/// specifically, for ANY resolvable armor/shield loadout (weapon and feat
+/// requirements unchanged — see that sub-task's own scope note). Every
+/// OTHER headless diagnostic (chassis unsupported, spellbook unsupported,
+/// etc.) still blocks exactly as before, unaffected by this replacement.
+///
+/// Returns the projected `PilotSnapshot` (ready for `map_snapshot_dto`) and
+/// the already-computed `CorpusPilotReceipt` (ready for
+/// `map_corpus_derived_dto`) together, since every caller needs both and
+/// computing the corpus-aware receipt twice would be wasteful. On failure,
+/// returns the full diagnostic list — the original headless diagnostics
+/// with the two posture-specific ones replaced by the real corpus-aware
+/// unmet reasons when either combat or selected-skill blocked, or the
+/// original diagnostics verbatim when something else (chassis, spellbook,
+/// etc.) blocked regardless.
+pub(crate) fn resolve_unified_pilot_snapshot(
+    character_input: &CharacterInput,
+    corpus: &SourcePackageContent,
+) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
+    let receipt = build_pilot_headless_receipt(character_input);
+    let corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
+
+    let other_diagnostics_present = receipt.computation.diagnostics.iter().any(|diagnostic| {
+        diagnostic.claim_blocking
+            && diagnostic.id != "combat.baseline_unsupported"
+            && diagnostic.id != "skill.selected_modifier.unsupported"
+    });
+    if other_diagnostics_present {
+        return Err(receipt.computation.diagnostics.clone());
+    }
+
+    let combat_result =
+        compute_combat_baseline_from_corpus(&receipt.computation, character_input, corpus);
+    let skills_result =
+        compute_selected_skill_modifiers_from_corpus(&receipt.computation, character_input, corpus);
+
+    match (combat_result, skills_result) {
+        (Ok(combat), Ok(skills)) => {
+            let snapshot = PilotSnapshot {
+                ability_modifiers: receipt.computation.ability_modifiers,
+                base_attack_bonus: receipt.computation.base_attack_bonus,
+                base_saves: receipt.computation.base_saves,
+                combat: PilotCombatViewModel {
+                    baseline_melee_attack_bonus: combat.melee_attack_bonus,
+                },
+                defense: PilotDefenseViewModel {
+                    baseline_armor_class: combat.armor_class,
+                    total_save: receipt.computation.total_saves,
+                    damage_reduction: receipt
+                        .computation
+                        .explanations
+                        .iter()
+                        .find(|explanation| {
+                            explanation.id == "class_feature.barbarian.damage_reduction"
+                        })
+                        .map(|explanation| explanation.value)
+                        .filter(|&value| value > 0),
+                },
+                skill: PilotSkillViewModel {
+                    selected_modifier: SelectedSkillModifiers {
+                        climb: skills.climb,
+                        intimidate: skills.intimidate,
+                        swim: skills.swim,
+                    },
+                },
+            };
+            Ok((snapshot, corpus_receipt))
+        }
+        (combat_result, skills_result) => {
+            let mut diagnostics: Vec<ComputationDiagnostic> = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .filter(|diagnostic| {
+                    diagnostic.id != "combat.baseline_unsupported"
+                        && diagnostic.id != "skill.selected_modifier.unsupported"
+                })
+                .cloned()
+                .collect();
+            if let Err(unmet) = combat_result {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "combat.baseline_unsupported".to_owned(),
+                    message: format!(
+                        "baseline combat totals require every equipped item to resolve \
+                         against the corpus with known math (armor/shield loadout is \
+                         widened; the Longsword and Dodge/Weapon Focus requirements are \
+                         unchanged); unmet conditions: {}",
+                        unmet.join("; ")
+                    ),
+                    claim_blocking: true,
+                });
+            }
+            if let Err(unmet) = skills_result {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "skill.selected_modifier.unsupported".to_owned(),
+                    message: format!(
+                        "selected skill modifiers require every equipped item to resolve \
+                         against the corpus with known math; unmet conditions: {}",
+                        unmet.join("; ")
+                    ),
+                    claim_blocking: true,
+                });
+            }
+            Err(diagnostics)
+        }
+    }
+}
+
 /// Shared load -> recompute -> re-save -> return-envelope tail for every
 /// `mutate_saved_character` operation: applies `mutate` to the loaded
 /// envelope's `CharacterInput`, recomputes via the real engine, and either
@@ -440,21 +568,15 @@ pub(crate) fn mutate_saved_character_at_root(
 
     mutate(&mut envelope.character_input);
 
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt =
-        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let next_revision_id =
         next_mutation_revision_id(&envelope.character_id, &envelope.revision_id);
@@ -466,7 +588,7 @@ pub(crate) fn mutate_saved_character_at_root(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
