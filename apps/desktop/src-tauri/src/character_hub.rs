@@ -2631,11 +2631,20 @@ mod tests {
             ])
         );
 
+        // v0.6 alpha swarm, risks item 8, fifth slice (2026-07-25):
+        // `table_class_id` now recognizes Sorcerer too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The spell-posture
+        // diagnostic is also no longer unconditional -- it's a real
+        // validation now, and compose_character_input seeds no Sorcerer
+        // spell selections, so the (valid, empty) known-spell posture no
+        // longer trips it. Only the permanently-unconditional
+        // bloodline-power diagnostic remains (no bloodline execution is
+        // grounded anywhere in this codebase).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
-            generic_plus(&[
-                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
-                "class_spell.sorcerer.spontaneous.unsupported",
+            BTreeSet::from([
+                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                    .to_owned(),
             ])
         );
 

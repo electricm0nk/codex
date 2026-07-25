@@ -123,6 +123,7 @@ use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
+use super::rules_tables::crb::sorcerer_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 use super::rules_tables::RuleSetId;
 
@@ -6784,6 +6785,8 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Ranger)
     } else if class_id_str == PALADIN_CLASS_ID {
         Some(ClassId::Paladin)
+    } else if class_id_str == SORCERER_CLASS_ID {
+        Some(ClassId::Sorcerer)
     } else {
         None
     }
@@ -14752,6 +14755,101 @@ fn explain_sorcerer_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // v0.6 alpha swarm, risks item 8, fifth slice (2026-07-25): both Sorcerer
+    // burdens are validated/checked regardless of whether Sorcerer appears
+    // alone or in a multiclass mix, and regardless of race -- checked
+    // BEFORE the single-class-only/Human gate below, mirroring the Ranger/
+    // Paladin fix exactly (see `ranger_dispatch_widening_safety_tests`' doc
+    // comment for the full history of why this ordering matters once
+    // `table_class_id` recognizes a class). The bloodline-power burden is
+    // permanently unconditional (mirrors APG/ACG's own
+    // `class_feature.<book>.<class>.unsupported` shape -- no bloodline
+    // power execution is grounded anywhere in this codebase, so this never
+    // becomes valid). The spell posture burden is a real, conditional
+    // validation, mirroring `unmet_ranger_prepared_spell_conditions`
+    // exactly, substituted for a spontaneous caster: validates every
+    // `AcquisitionMode::Known` selection with `source_class_id ==
+    // "class:sorcerer"` against the real
+    // `sorcerer_spell_list::SORCERER_SPELL_LIST`, the sorcerer's own
+    // spell-level access ceiling (1st+; cantrips have no access gate), and
+    // the Sorcerer Spells Known table's own per-level cap on distinct known
+    // spells (not a per-day consumable resource, unlike Ranger/Paladin's
+    // prepared posture -- known spells are permanent).
+    if let Some(sorcerer_level) = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == SORCERER_CLASS_ID)
+        .map(|class_level| class_level.level)
+    {
+        // Read once here (race/level-independent chosen-input reads) so the
+        // diagnostic message below can name whether the class-skill grant is
+        // already grounded separately, same detail the pre-widening message
+        // carried -- reused again by the explanation records further down,
+        // not recomputed.
+        let bloodline_selection = choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID);
+        let recognized_arcane_bloodline =
+            bloodline_selection == Some(ARCANE_BLOODLINE_SELECTION_ID);
+        let bloodline_class_skill_selection =
+            choice_selection(input, SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID);
+        let recognized_bloodline_class_skill_name = bloodline_class_skill_selection
+            .filter(|_| recognized_arcane_bloodline)
+            .and_then(knowledge_skill_display_name);
+
+        let arcane_bond_message = if recognized_arcane_bloodline {
+            if recognized_bloodline_class_skill_name.is_some() {
+                "Sorcerer remains blocked on its Arcane Bond and bloodline progression burden: \
+                 the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded object \
+                 -- an execution engine, not a flat number), the bloodline arcana (+1 spell save \
+                 DC on spells modified by a metamagic feat that raises the spell's level -- a \
+                 conditional effect), and the bloodline bonus spells and bonus feats at 3rd+ \
+                 level are not implemented anywhere in this codebase, so no Sorcerer \
+                 bloodline-power support is claimed. The bloodline class skill grant (a player's \
+                 choice of any one Knowledge skill) is grounded separately above as a \
+                 recognition record and is no longer part of this blocker"
+                    .to_owned()
+            } else {
+                "Sorcerer remains blocked on its Arcane Bond and bloodline progression burden: \
+                 the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded object \
+                 -- an execution engine, not a flat number), the bloodline arcana (+1 spell save \
+                 DC on spells modified by a metamagic feat that raises the spell's level -- a \
+                 conditional effect), the bloodline class skill grant (a player's choice of any \
+                 one Knowledge skill), and the bloodline bonus spells and bonus feats at 3rd+ \
+                 level are not implemented anywhere in this codebase, so no Sorcerer \
+                 bloodline-power support is claimed"
+                    .to_owned()
+            }
+        } else {
+            "Sorcerer remains blocked on its bloodline power and progression burden: no \
+             bloodline power, bloodline arcana, bloodline class skill grant, or bonus \
+             spells/feats at 3rd+ level are implemented for any bloodline anywhere in this \
+             codebase, so no Sorcerer bloodline-power support is claimed"
+                .to_owned()
+        };
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                .to_owned(),
+            message: arcane_bond_message,
+            claim_blocking: true,
+        });
+
+        let unmet = unmet_sorcerer_known_spell_conditions(input, sorcerer_level);
+        if unmet.is_empty() {
+            ground_sorcerer_known_spells(input, sorcerer_level, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
+                message: format!(
+                    "Sorcerer remains blocked on its spontaneous known-spell posture burden: \
+                     Sorcerer is a full spontaneous arcane caster (spells known from 1st level); \
+                     unmet known-spell posture: {}",
+                    unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
+    }
+
     let Some(level) = supported_sorcerer_level(input) else {
         return;
     };
@@ -14939,56 +15037,17 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): with the bloodline choice recognized above, narrow the former
-    // combined bloodline-power blocker to what actually remains unimplemented. The message
-    // names the Arcane bloodline specifically only when it was actually the recognized
-    // selection above; when no bloodline is chosen, or a different bloodline is chosen,
-    // it stays bloodline-agnostic so it never asserts a specific bloodline's mechanics as
-    // "remaining" for a character whose chosen bloodline this seam did not recognize. Once
-    // the class-skill choice above is also recognized, the class-skill grant is dropped
-    // from this "not implemented" list — it is grounded separately above — and the message
-    // states the corrected rule ("a player's choice of any one Knowledge skill") rather
-    // than repeating the earlier imprecise "(Knowledge [arcana])" wording.
-    let arcane_bond_message = if recognized_arcane_bloodline {
-        if recognized_bloodline_class_skill_name.is_some() {
-            format!(
-                "Sorcerer level {level} remains blocked on its Arcane Bond and \
-                 bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
-                 (a familiar or a bonded object — an execution engine, not a flat number), the \
-                 bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
-                 raises the spell's level — a conditional effect), and the bloodline bonus \
-                 spells and bonus feats at 3rd+ level are not implemented in this bounded spell \
-                 baseline, so no Sorcerer bloodline-power support is claimed. The bloodline \
-                 class skill grant (a player's choice of any one Knowledge skill, per \"Class \
-                 Skill: Knowledge [any one]\") is grounded separately above as a recognition \
-                 record and is no longer part of this blocker"
-            )
-        } else {
-            format!(
-                "Sorcerer level {level} remains blocked on its Arcane Bond and \
-                 bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
-                 (a familiar or a bonded object — an execution engine, not a flat number), the \
-                 bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
-                 raises the spell's level — a conditional effect), the bloodline class skill \
-                 grant (a player's choice of any one Knowledge skill, per \"Class Skill: \
-                 Knowledge [any one]\"), and the bloodline bonus spells and bonus feats at 3rd+ \
-                 level are not implemented in this bounded spell baseline, so no Sorcerer \
-                 bloodline-power support is claimed"
-            )
-        }
-    } else {
-        format!(
-            "Sorcerer level {level} remains blocked on its bloodline power and \
-             progression burden: no bloodline power, bloodline arcana, bloodline class skill \
-             grant, or bonus spells/feats at 3rd+ level are implemented for any bloodline in this \
-             bounded spell baseline, so no Sorcerer bloodline-power support is claimed"
-        )
-    };
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported".to_owned(),
-        message: arcane_bond_message,
-        claim_blocking: true,
-    });
+    // (v0.6 alpha swarm, risks item 8, fifth slice, 2026-07-25) The
+    // bloodline-power blocker itself is now pushed unconditionally at the
+    // top of this function (see that push site's own doc comment for why:
+    // it must fire regardless of race/multiclass once table_class_id
+    // recognizes Sorcerer). `recognized_arcane_bloodline`/
+    // `recognized_bloodline_class_skill_name` still drive the two
+    // choice-recognition EXPLANATIONS above (unaffected, still real,
+    // non-fabricated +0 records); only the redundant second diagnostic
+    // push that used to live here (with bloodline-specific message
+    // wording) was removed, since a single diagnostic ID pushed twice
+    // would be confusing, not more informative.
 
     // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
     // Paladin/Bard spell_level_access records and the Cleric/Wizard
@@ -15385,27 +15444,190 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
-    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection and the spontaneous
-    // casting execution stay ungrounded; the access ladder, base per-day
-    // counts, base save DCs, base known counts, bonus-slot counts, and the
-    // integrated totals are grounded as flat records.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
-        message:
-            "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting execution (slot consumption, tracking, and casting itself) \
-             and the selection of WHICH spells known are actually chosen \
-             are out of scope for this \
-             bounded baseline (the spell-level access \
-             ladder, the base spells-per-day table counts, the base spell-save-DC \
-             arithmetic, the base spells-known table counts, the Charisma bonus \
-             spell slot counts, and the integrated base+bonus totals are grounded \
-             separately as \
-             flat records) and \
-             no spell math is fabricated beyond them"
-                .to_owned(),
-        claim_blocking: true,
+    // (v0.6 alpha swarm, risks item 8, fifth slice, 2026-07-25) The spell
+    // posture blocker is now pushed conditionally at the top of this
+    // function (real validation, see that push site's own doc comment) --
+    // the redundant unconditional push that used to live here was removed.
+}
+
+/// The highest ACCESSIBLE sorcerer spell level (1st+) at the given sorcerer
+/// level -- cantrips (0th level) have no access gate at all, always
+/// available from level 1. Pure function, race-independent, mirrors
+/// `ranger_spell_level_access`/`paladin_spell_level_access` -- extracted so
+/// both the (Human-only) flat explanation block above and the real
+/// known-spell validation below share one source of truth.
+fn sorcerer_spell_level_access(level: u8) -> i16 {
+    if level >= SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        9
+    } else if level >= SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        8
+    } else if level >= SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        7
+    } else if level >= SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        6
+    } else if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        5
+    } else if level >= SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else {
+        1
+    }
+}
+
+/// The PF1 Core Rulebook Sorcerer Spells Known table's row, one entry per
+/// spell level 0-9 (`None` for an inaccessible "—" column; index 0 is
+/// cantrips). A literal table lookup, not a derived formula -- see
+/// `explain_sorcerer_level1_spell_baseline`'s own doc comment for the
+/// two-source verification history. Pure function, race-independent,
+/// extracted for the same reason as `sorcerer_spell_level_access`. This is
+/// the cap on distinct spells KNOWN (permanent), not a per-day consumable
+/// resource like Ranger/Paladin's prepared-spell slot budget.
+fn sorcerer_spells_known_table(level: u8) -> [Option<i16>; 10] {
+    match level {
+        1 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None, None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None, None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None, None, None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None, None, None],
+        14 => {
+            [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1), None, None]
+        }
+        15 => {
+            [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), None, None]
+        }
+        16 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None,
+        ],
+        17 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None,
+        ],
+        18 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2),
+            Some(1),
+        ],
+        19 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(2),
+        ],
+        20 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(3),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for Sorcerer's real known-spell
+/// posture. An empty list means the posture is fully valid: every
+/// `AcquisitionMode::Known` selection with `source_class_id ==
+/// "class:sorcerer"` names a real spell on
+/// `sorcerer_spell_list::SORCERER_SPELL_LIST`, at a spell level within the
+/// sorcerer's own access ceiling for their sorcerer level (1st+ only --
+/// cantrips have no access gate), and no spell level's known count exceeds
+/// that level's real cap from the Sorcerer Spells Known table. Zero known
+/// spells is always valid, same reasoning as Ranger/Paladin's prepared
+/// posture: real PF1 rules don't require every fixture to have picked
+/// spells yet.
+fn unmet_sorcerer_known_spell_conditions(input: &CharacterInput, sorcerer_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == SORCERER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = sorcerer_spell_level_access(sorcerer_level);
+    let known_table = sorcerer_spells_known_table(sorcerer_level);
+
+    let mut known_per_level: [i16; 10] = [0; 10];
+    for spell_id in &known {
+        let Some(spell_level) = sorcerer_spell_list::sorcerer_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Core Rulebook sorcerer spell \
+                 list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at sorcerer level {sorcerer_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Sorcerer Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real known-spell posture once
+/// `unmet_sorcerer_known_spell_conditions` reports an empty unmet list: the
+/// known-spell selection (count + list, mirroring
+/// `class_spell.ranger.daily_preparation`'s shape, substituting "known" for
+/// "prepared" since spontaneous casters have no daily preparation step at
+/// all).
+fn ground_sorcerer_known_spells(
+    input: &CharacterInput,
+    sorcerer_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == SORCERER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.sorcerer.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Sorcerer level {sorcerer_level} known-spell selection ({} spells, \
+             AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
+             Core Rulebook sorcerer spell list (`sorcerer_spell_list::SORCERER_SPELL_LIST`), the \
+             sorcerer's own spell-level access ceiling, and the Sorcerer Spells Known table's \
+             own per-level cap. Real PF1 Sorcerer rules have no daily preparation step at all \
+             (unlike Ranger/Paladin) -- a sorcerer's known spells are permanent once learned, \
+             cast spontaneously using the already-grounded per-day slot totals. This grounds \
+             the known-spell selection for real; it computes no spell save DC resolution \
+             against a target and no casting execution",
+            known.len(),
+            known.join(", ")
+        ),
     });
 }
 
@@ -21105,6 +21327,236 @@ mod acg_class_chassis_dispatch_tests {
                 .iter()
                 .any(|d| d.id == "class_chassis.unsupported"),
             "{:?}",
+            receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, fifth slice (2026-07-25): Sorcerer's
+/// real known-spell posture, mirroring `ranger_dispatch_widening_safety_tests`/
+/// `paladin_dispatch_widening_safety_tests` exactly (same gate-ordering
+/// structural risk existed here too and was fixed proactively as part of
+/// this same slice). Unlike Ranger/Paladin, Sorcerer's bloodline-power
+/// burden stays permanently unconditional (mirrors APG/ACG's own
+/// `class_feature.<book>.<class>.unsupported` shape), so a single-class
+/// Sorcerer never reaches `Computed` even with a fully valid known-spell
+/// posture -- only the spell-specific diagnostic is conditional.
+#[cfg(test)]
+mod sorcerer_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, SORCERER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single-class Sorcerer with no invalid known-spell selection still
+    /// stays `Blocked` (the bloodline-power burden is permanently
+    /// unconditional), but the spell-specific diagnostic must NOT fire when
+    /// the posture is genuinely valid.
+    #[test]
+    fn single_class_sorcerer_with_no_known_spells_stays_blocked_only_on_bloodline() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 5 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Sorcerer's bloodline-power burden is permanently unconditional: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                    && d.claim_blocking),
+            "expected the permanent bloodline diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"),
+            "the spell-posture diagnostic must not fire when the known-spell posture is valid: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Sorcerer preparing a known spell beyond their
+    /// spell-level access ceiling must carry the real spell-posture
+    /// diagnostic too (in addition to the permanent bloodline one).
+    #[test]
+    fn single_class_sorcerer_with_an_inaccessible_known_spell_carries_both_diagnostics() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Acid Arrow".to_owned(),
+            source_class_id: SORCERER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
+                    && d.claim_blocking),
+            "a 2nd-level sorcerer spell is not accessible at sorcerer level 1: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Sorcerer preparing a spell not on the real PF1 Core
+    /// Rulebook sorcerer spell list at all must also carry the diagnostic.
+    #[test]
+    fn single_class_sorcerer_with_an_off_list_known_spell_stays_blocked_on_spell_posture() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Not A Real Spell".to_owned(),
+            source_class_id: SORCERER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
+                    && d.claim_blocking),
+            "an off-list spell must trip the spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Sorcerer at level 1 (cap 4 cantrips, 2 first-level
+    /// spells known) knowing 3 distinct first-level spells over-knows its
+    /// real cap and must carry the spell-posture diagnostic.
+    #[test]
+    fn single_class_sorcerer_over_known_spells_stays_blocked_on_spell_posture() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        for spell_id in ["Burning Hands", "Charm Person", "Cause Fear"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: SORCERER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
+                    && d.claim_blocking),
+            "sorcerer level 1 only knows 2 first-level spells; 3 distinct known spells \
+             over-knows the real cap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Sorcerer knowing 2 real, valid, in-budget first-level
+    /// spells (within the real cap) must NOT trip the spell-posture
+    /// diagnostic -- proving real validation, not a vacuous check.
+    #[test]
+    fn single_class_sorcerer_with_valid_known_spells_does_not_trip_the_spell_posture() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        for spell_id in ["Burning Hands", "Charm Person"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: SORCERER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"),
+            "2 distinct first-level spells is within sorcerer level 1's real cap of 2: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Multiclass safety, verified directly. A Sorcerer-containing
+    /// multiclass mix with a genuine posture violation must still stay
+    /// Blocked, since `SORCERER_CLASS_ID` is deliberately not registered
+    /// with `multiclass_class_level_supported` beyond `table_class_id`
+    /// itself (the same construction Ranger/Paladin already proved safe).
+    #[test]
+    fn sorcerer_fighter_multiclass_with_an_invalid_known_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Acid Arrow".to_owned(),
+            source_class_id: SORCERER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "a Sorcerer+Fighter multiclass must not reach Computed while Sorcerer's posture is \
+             genuinely violated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
+                    && d.claim_blocking),
+            "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics
         );
     }
