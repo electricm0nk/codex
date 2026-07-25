@@ -3722,6 +3722,15 @@ const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
 const SCORPION_STYLE_FEAT_SELECTION: &str = "feat:scorpion_style";
 const THROW_ANYTHING_FEAT_SELECTION: &str = "feat:throw_anything";
 
+/// PF1 Core Rulebook Improved Grapple's flat bonus magnitude (v0.6 alpha
+/// swarm, risks item 8, Monk remaining-feats closure): "+2 bonus on
+/// checks made to grapple a foe" and "+2 bonus to your Combat Maneuver
+/// Defense whenever an opponent tries to grapple you" (corpus:
+/// `BONUS:VAR|CMB_Grapple,CMD_Grapple|2`) -- both share this same
+/// magnitude, mirroring `DWARF_STABILITY_CMD_BONUS`'s own bundled-
+/// magnitude idiom exactly.
+const MONK_IMPROVED_GRAPPLE_BONUS: i16 = 2;
+
 // Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3/level-4 prepared divine
 // spell-bearing baseline identity. Cleric is the canonical PF1 prepared divine full
 // caster; unlike the arcane Sorcerer/Wizard/Bard baselines already recognized, its
@@ -14508,9 +14517,17 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// feat grant (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level; this
 /// widening does not add a second choice-slot or recognition for either), and no
 /// execution of what the recognized level-1 bonus
-/// feat actually does (no attack-of-opportunity engine for Combat Reflexes, no
-/// grapple-check engine for Improved Grapple, no DC/save engine for Stunning
-/// Fist, and so on). It:
+/// feat actually does, for the opponent-dependent resolution piece only
+/// (no attack-of-opportunity trigger engine, no grapple-check engine, no
+/// ranged-attack-deflection engine, no target's-own-saving-throw engine).
+/// **Updated (Monk remaining-feats closure)**: this no longer means zero
+/// value is ever grounded for Combat Reflexes/Scorpion Style/Improved
+/// Grapple specifically -- each now grounds a flat, standalone number
+/// purely from the Monk's own stats (extra-AoO capacity, a save DC and
+/// duration, a flat CMB/CMD magnitude) when recognized as the level-1
+/// bonus feat; only the opponent-dependent resolution around each stays
+/// unmodeled. Deflect Arrows has no such standalone number at all and
+/// stays fully claim-blocked, unchanged. It:
 /// - leaves one chassis-recognition explanation so the `class:monk:N` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -14532,6 +14549,27 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// and is untouched here) but makes the Monk martial identity, its grounded pillars,
 /// its recognized bonus feat choice, and its one remaining named burden legible on
 /// the runtime path.
+///
+/// PF1 Core Rulebook Combat Reflexes (v0.6 alpha swarm, risks item 8, Monk
+/// remaining-feats closure): the corpus formula token
+/// `BONUS:VAR|CombatReflexesAttacks|DEX` resolves to the Dexterity
+/// modifier, floored at 0 (a feat never subtracts from the base
+/// attack-of-opportunity capacity). Pure function so the real grounding
+/// below shares one source of truth with any future consumer.
+fn monk_combat_reflexes_additional_attacks_of_opportunity(dexterity_modifier: i16) -> i16 {
+    dexterity_modifier.max(0)
+}
+
+/// PF1 Core Rulebook Scorpion Style's save DC (v0.6 alpha swarm, risks
+/// item 8, Monk remaining-feats closure): the corpus formula
+/// `10+(TL/2)+WIS` -- `level` here is this bounded single-class seam's
+/// own Monk level, standing in for total character level since no
+/// multiclass mix is admitted here. Pure function so the real grounding
+/// below shares one source of truth with any future consumer.
+fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
+    10 + i16::from(level) / 2 + wisdom_modifier
+}
+
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -15068,7 +15106,44 @@ fn explain_monk_level1_chassis(
         }
     });
     if let Some(selection) = bonus_feat_selection {
+        // v0.6 alpha swarm, risks item 8 (Monk scoping follow-up, adversarial
+        // review fix): this record's own claim about "{feat_name}'s own
+        // mechanics are not grounded here" was stale for every feat this
+        // seam separately closes below (Dodge, Catch Off-Guard, Throw
+        // Anything, and now Combat Reflexes, Scorpion Style, Improved
+        // Grapple) -- the blanket claim was already false for the first
+        // three before this fix, just never caught. Made conditional so
+        // this recognition record never asserts a specific feat's
+        // mechanics are ungrounded when they genuinely are grounded
+        // elsewhere (see each feat's own dedicated explanation record
+        // below), while every other restricted-list feat (Deflect Arrows,
+        // and any 6th/10th-level addition selected here) keeps the
+        // original honest claim unchanged.
+        let feat_own_mechanics_closed_elsewhere = |feat_name: &str| {
+            matches!(
+                feat_name,
+                "Dodge"
+                    | "Catch Off-Guard"
+                    | "Throw Anything"
+                    | "Combat Reflexes"
+                    | "Scorpion Style"
+                    | "Improved Grapple"
+            )
+        };
         let detail = if let Some(feat_name) = recognized_bonus_feat_name {
+            let mechanics_clause = if feat_own_mechanics_closed_elsewhere(feat_name) {
+                format!(
+                    "{feat_name}'s own mechanics are grounded separately below (when genuinely \
+                     applicable/active), not fabricated as part of this choice-recognition \
+                     record itself"
+                )
+            } else {
+                format!(
+                    "{feat_name}'s own mechanics are not grounded here, and no \
+                     attack-resolution, grapple-check, or DC/save engine exists in this \
+                     codebase for it"
+                )
+            };
             format!(
                 "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice recognized: the \
                  canonical deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) \
@@ -15079,10 +15154,8 @@ fn explain_monk_level1_chassis(
                  Trip, stay unrecognized on this bounded seam), as chosen input on the \
                  compute seam. This is a recognition \
                  record of the choice slot only, so it carries no fabricated mechanical value \
-                 (+0): {feat_name}'s own mechanics are not grounded here, and no \
-                 attack-resolution, grapple-check, or DC/save engine exists in this \
-                 codebase. Improved Unarmed Strike and Stunning Fist are not part of this \
-                 restricted choice set \
+                 (+0): {mechanics_clause}. Improved Unarmed Strike and Stunning Fist are not \
+                 part of this restricted choice set \
                  because the PF1 Core Rulebook grants each to every monk automatically at level \
                  {MONK_BONUS_FEAT_GRANT_LEVEL} (\"the monk gains Stunning Fist as a bonus \
                  feat, even if he does not meet the prerequisites\"), separate from this \
@@ -15328,6 +15401,136 @@ fn explain_monk_level1_chassis(
                 } else {
                     ""
                 }
+            ),
+        });
+        return;
+    }
+
+    // v0.6 alpha swarm, risks item 8 (Monk remaining-feats closure,
+    // adversarially reviewed 2026-07-25): Combat Reflexes, Scorpion Style,
+    // and Improved Grapple are a THIRD genuine exception -- each grants a
+    // flat, standalone number derived purely from the Monk's own stats
+    // (extra attack-of-opportunity capacity, a save DC and duration, a
+    // flat CMB/CMD magnitude), not an opponent-dependent resolution.
+    // Mirrors the Sneak-Attack-die-count / Dwarf-Stability-CMD-magnitude
+    // idiom exactly: the NUMBER is real; the EVENT it would feed into (an
+    // opponent actually triggering an attack of opportunity, an opponent
+    // failing the Fortitude save, an opposed grapple check) is not
+    // resolved, since no such engine exists anywhere in this codebase.
+    // Deflect Arrows is deliberately NOT included here -- unlike these
+    // three, it has no standalone numeric value at all (its entire
+    // benefit IS the resolution: an opponent's ranged attack occurring
+    // and being negated), so it stays exactly as claim-blocked as before,
+    // confirmed correctly categorized by the adversarial review.
+    if recognized_bonus_feat_name == Some("Combat Reflexes") {
+        // PF1 Core Rulebook Combat Reflexes (cr_feats.lst:34): "You may
+        // make %1 additional attacks of opportunity per round... " with
+        // %1 substituting the corpus's own BONUS:VAR|CombatReflexesAttacks|DEX
+        // formula token -- not a literal quoted "equal to your Dexterity
+        // bonus" phrase (that description is this codebase's own gloss on
+        // the formula, named honestly as such rather than presented as a
+        // direct quote). A negative Dexterity modifier grants no
+        // additional attacks (a feat never subtracts from the base
+        // capacity), so this floors at 0.
+        let additional_attacks_of_opportunity = monk_combat_reflexes_additional_attacks_of_opportunity(
+            ability_modifiers.dexterity,
+        );
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.combat_reflexes_capacity"
+                .to_owned(),
+            value: additional_attacks_of_opportunity,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is Combat Reflexes: the corpus formula \
+                 token BONUS:VAR|CombatReflexesAttacks|DEX resolves to \
+                 max(Dexterity modifier, 0) = {additional_attacks_of_opportunity} additional \
+                 attacks of opportunity available per round (this codebase's own gloss on the \
+                 formula, not a literal quote of the feat's BENEFIT text, which only says \
+                 \"You may make %1 additional attacks of opportunity per round\" with %1 \
+                 substituting that formula). This grounds only the CAPACITY as a flat number \
+                 derived from the Monk's own Dexterity modifier -- it does not claim any \
+                 attack of opportunity is ever actually triggered, since no \
+                 attack-of-opportunity trigger engine (tracking an opponent's own movement or \
+                 actions) exists anywhere in this codebase. With this feat, attacks of \
+                 opportunity may also be made while flat-footed, per the same BENEFIT text; \
+                 flat-footed state is not modeled here either"
+            ),
+        });
+        return;
+    }
+    if recognized_bonus_feat_name == Some("Scorpion Style") {
+        // PF1 Core Rulebook Scorpion Style (cr_feats.lst:142): "the
+        // target's base land speed is reduced to 5 feet for a number of
+        // rounds equal to your Wisdom modifier unless it makes a
+        // Fortitude saving throw (DC %1)" with corpus formula
+        // "10+(TL/2)+WIS" -- TL is total/character level, not
+        // specifically "monk level"; this bounded seam is single-class
+        // Human Monk only, so TL and the Monk's own level are identical
+        // here, named precisely as such rather than silently conflated
+        // for a hypothetical multiclass mix this seam doesn't admit.
+        let wisdom_modifier = ability_modifiers.wisdom;
+        let save_dc = monk_scorpion_style_dc(level, wisdom_modifier);
+        let duration_rounds = wisdom_modifier.max(0);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.scorpion_style_dc".to_owned(),
+            value: save_dc,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is Scorpion Style: the corpus formula \
+                 \"10+(TL/2)+WIS\" (DC %1 in the feat's own BENEFIT text) resolves to \
+                 10 + (total level / 2) + Wisdom modifier = 10 + ({level}/2) + {wisdom_modifier} \
+                 = {save_dc}, using this bounded single-class seam's own Monk level as total \
+                 level (no multiclass mix is admitted here). This grounds only the Fortitude \
+                 save DC a target would need to beat, not the target's own saving throw -- no \
+                 opponent Fortitude-save resolution engine exists anywhere in this codebase, \
+                 and the unarmed strike attack roll needed to trigger this effect at all is \
+                 not resolved either"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.scorpion_style_duration"
+                .to_owned(),
+            value: duration_rounds,
+            detail: format!(
+                "Monk level {level} Scorpion Style speed-reduction duration: \"a number of \
+                 rounds equal to your Wisdom modifier\" = max({wisdom_modifier}, 0) = \
+                 {duration_rounds} rounds (a Wisdom penalty grants no negative duration). This \
+                 grounds only the duration NUMBER; whether the effect is ever actually applied \
+                 to a target depends on the unresolved attack roll and save above"
+            ),
+        });
+        return;
+    }
+    if recognized_bonus_feat_name == Some("Improved Grapple") {
+        // PF1 Core Rulebook Improved Grapple (cr_feats.lst:98): "You do
+        // not provoke an attack of opportunity when performing a grapple
+        // combat maneuver. In addition, you receive a +2 bonus on checks
+        // made to grapple a foe. You also receive a +2 bonus to your
+        // Combat Maneuver Defense whenever an opponent tries to grapple
+        // you" (corpus: BONUS:VAR|CMB_Grapple,CMD_Grapple|2). Mirrors the
+        // already-grounded Dwarf Stability idiom exactly (a flat
+        // CMB/CMD-bonus-magnitude recognition record, not a Combat-
+        // Maneuver-Bonus/Defense-total engine, which does not exist
+        // anywhere in this codebase) -- per the adversarial review, this
+        // needs no new CMB/CMD baseline pillar, since the bonus magnitude
+        // alone is the same self-contained shape Dwarf Stability already
+        // proved out.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.improved_grapple_bonus"
+                .to_owned(),
+            value: MONK_IMPROVED_GRAPPLE_BONUS,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is Improved Grapple: a flat \
+                 {MONK_IMPROVED_GRAPPLE_BONUS:+} bonus on checks made to grapple a foe, and a \
+                 flat {MONK_IMPROVED_GRAPPLE_BONUS:+} bonus to Combat Maneuver Defense whenever \
+                 an opponent tries to grapple you (not a general CMD bonus -- grapple-specific \
+                 only, per the feat's own BENEFIT text), mirroring the already-grounded Dwarf \
+                 Stability flat-CMD-bonus-magnitude idiom exactly. No Combat-Maneuver-Bonus- or \
+                 Combat-Maneuver-Defense-total engine exists anywhere in this codebase, so no \
+                 grapple check or opposed-check resolution is fabricated from this record -- \
+                 only the flat bonus magnitude is grounded. This feat also removes the attack \
+                 of opportunity normally provoked when performing a grapple combat maneuver; \
+                 attack-of-opportunity provocation is not tracked anywhere in this codebase, so \
+                 this is a vacuous-correction note (+0 contribution to this record), not a \
+                 fabricated mechanic"
             ),
         });
         return;
@@ -27290,19 +27493,158 @@ mod monk_bonus_feat_improvised_weapon_closure_tests {
         );
     }
 
-    /// A Monk whose level-1 bonus feat is Combat Reflexes (one of the
-    /// four still-unresolved feats) still blocks -- confirms this closure
-    /// is narrowly scoped to Dodge/Catch Off-Guard/Throw Anything only.
+    /// A Monk whose level-1 bonus feat is Deflect Arrows -- the one
+    /// remaining restricted-list feat with no standalone numeric value at
+    /// all (its entire benefit IS the resolution: an opponent's ranged
+    /// attack occurring and being negated) -- still blocks. Confirms the
+    /// v0.6 alpha swarm Monk remaining-feats closure is narrowly scoped
+    /// to Combat Reflexes/Scorpion Style/Improved Grapple (plus the
+    /// already-closed Dodge/Catch Off-Guard/Throw Anything) and does not
+    /// silently widen to Deflect Arrows too.
     #[test]
-    fn monk_with_combat_reflexes_bonus_feat_still_blocks() {
-        let input = human_monk_input_with_bonus_feat("feat:combat_reflexes");
+    fn monk_with_deflect_arrows_bonus_feat_still_blocks() {
+        let input = human_monk_input_with_bonus_feat("feat:deflect_arrows");
         let ids = claim_blocking_ids(&input);
 
         assert!(
             ids.contains(
                 &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
             ),
-            "Combat Reflexes still has zero execution engine and must still block: {ids:?}"
+            "Deflect Arrows has no standalone numeric value and must still block: {ids:?}"
         );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Monk remaining-feats closure,
+/// adversarially reviewed 2026-07-25): Combat Reflexes, Scorpion Style,
+/// and Improved Grapple each grant a flat, standalone number derived
+/// purely from the Monk's own stats -- mirrors the Dodge/Catch-Off-Guard/
+/// Throw-Anything closure shape, but for a genuinely new reason (a real
+/// number grounded alongside an honestly-unresolved opponent-dependent
+/// trigger, not a vacuous-under-this-scope precondition).
+#[cfg(test)]
+mod monk_bonus_feat_remaining_three_closure_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, MONK_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_monk_input_with_bonus_feat(feat_selection: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: MONK_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:monk_bonus_feat".to_owned(),
+            selection_id: feat_selection.to_owned(),
+        });
+        input
+    }
+
+    fn claim_blocking_ids(input: &CharacterInput) -> Vec<String> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect()
+    }
+
+    /// A Monk whose level-1 bonus feat is Combat Reflexes is not blocked,
+    /// and the real extra-AoO capacity is grounded: Dexterity 14 (+2
+    /// modifier, unaffected by the fixture's Human Strength bonus) ->
+    /// max(2, 0) = 2.
+    #[test]
+    fn monk_with_combat_reflexes_bonus_feat_grounds_the_real_capacity() {
+        let input = human_monk_input_with_bonus_feat("feat:combat_reflexes");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Combat Reflexes' extra-AoO capacity is a real, groundable number, so it must not \
+             claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let capacity = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.monk.bounded_progression.bonus_feat.combat_reflexes_capacity"
+            })
+            .expect("expected the real combat_reflexes_capacity record");
+        assert_eq!(capacity.value, 2, "Dexterity +2 modifier -> 2 additional AoOs: {:?}", capacity);
+    }
+
+    /// A Monk whose level-1 bonus feat is Scorpion Style is not blocked,
+    /// and the real save DC and duration are grounded: level 1, Wisdom 12
+    /// (+1 modifier) -> DC = 10 + (1/2=0) + 1 = 11, duration = max(1, 0)
+    /// = 1 round.
+    #[test]
+    fn monk_with_scorpion_style_bonus_feat_grounds_the_real_dc_and_duration() {
+        let input = human_monk_input_with_bonus_feat("feat:scorpion_style");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Scorpion Style's save DC and duration are real, groundable numbers, so it must not \
+             claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.monk.bounded_progression.bonus_feat.scorpion_style_dc")
+            .expect("expected the real scorpion_style_dc record");
+        assert_eq!(dc.value, 11, "10 + (level 1 / 2 = 0) + Wisdom +1 = 11: {:?}", dc);
+
+        let duration = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.monk.bounded_progression.bonus_feat.scorpion_style_duration"
+            })
+            .expect("expected the real scorpion_style_duration record");
+        assert_eq!(duration.value, 1, "Wisdom +1 modifier -> 1 round duration: {:?}", duration);
+    }
+
+    /// A Monk whose level-1 bonus feat is Improved Grapple is not
+    /// blocked, and the real flat +2 CMB/CMD-grapple bonus magnitude is
+    /// grounded, mirroring the Dwarf Stability idiom.
+    #[test]
+    fn monk_with_improved_grapple_bonus_feat_grounds_the_real_bonus_magnitude() {
+        let input = human_monk_input_with_bonus_feat("feat:improved_grapple");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Improved Grapple's +2/+2 bonus magnitude is a real, groundable number, so it must \
+             not claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.monk.bounded_progression.bonus_feat.improved_grapple_bonus"
+            })
+            .expect("expected the real improved_grapple_bonus record");
+        assert_eq!(bonus.value, 2, "flat +2 CMB/CMD-grapple bonus magnitude: {:?}", bonus);
     }
 }

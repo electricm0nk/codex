@@ -164,6 +164,18 @@ fn monk_level1_stunning_fist_selection_is_the_automatic_grant_not_a_list_member(
     );
 }
 
+/// **Updated (v0.6 alpha swarm, risks item 8, Monk remaining-feats
+/// closure, 2026-07-25):** Combat Reflexes is no longer one of the
+/// permanently-unproven restricted-list feats -- its extra-attack-of-
+/// opportunity CAPACITY (a flat number derived purely from the Monk's
+/// own Dexterity modifier) is now genuinely grounded, so
+/// `class_feature.monk.bounded_progression.bonus_feat.unsupported` no
+/// longer fires for this selection at all. This test previously asserted
+/// the pre-closure behavior (that diagnostic firing and naming Combat
+/// Reflexes); updated to assert the new behavior instead: the
+/// choice-recognition record still names Combat Reflexes as before, and
+/// the real capacity value is now grounded under its own dedicated
+/// explanation id.
 #[test]
 fn monk_level1_recognizes_combat_reflexes_as_an_alternate_restricted_selection() {
     let input = load(MONK_FIXTURE_COMBAT_REFLEXES);
@@ -177,14 +189,27 @@ fn monk_level1_recognizes_combat_reflexes_as_an_alternate_restricted_selection()
         choice.detail
     );
 
-    let bonus_feat = claim_blocking(
-        &computation,
-        "class_feature.monk.bounded_progression.bonus_feat.unsupported",
-    );
     assert!(
-        bonus_feat.message.contains("Combat Reflexes"),
-        "narrowed bonus-feat blocker must name the recognized Combat Reflexes selection: {}",
-        bonus_feat.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.monk.bounded_progression.bonus_feat.unsupported"),
+        "Combat Reflexes' own extra-AoO capacity is genuinely grounded now, so the narrowed \
+         bonus-feat blocker must not fire for this selection: {:?}",
+        computation.diagnostics
+    );
+
+    let capacity = explanation(
+        &computation,
+        "class_feature.monk.bounded_progression.bonus_feat.combat_reflexes_capacity",
+    );
+    // This fixture's Dexterity 16 (no Human bonus applied here -- the
+    // fixture's own Human ability bonus targets Wisdom) -> +3 modifier ->
+    // max(3, 0) = 3 additional attacks of opportunity.
+    assert_eq!(
+        capacity.value, 3,
+        "expected the real, non-fabricated extra-AoO capacity value: {:?}",
+        capacity
     );
 }
 
