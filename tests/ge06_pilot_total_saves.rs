@@ -117,15 +117,18 @@ fn computes_total_saves_with_contributors() {
 
 #[test]
 fn unsupported_chassis_blocks_total_saves() {
-    // Replace the Fighter level-1 chassis with a Cleric level-1 chassis. The total
-    // saves must refuse to fabricate values, withhold total-save explanations, and
-    // emit a claim-blocking diagnostic. (Was Rogue level-1 -- see
-    // ge06_failure_classifier.rs for why that stopped being an unsupported
-    // negative control.)
-    let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
+    // Replace the Fighter level-1 chassis with a Barbarian level-1 chassis.
+    // The total saves must refuse to fabricate values, withhold total-save
+    // explanations, and emit a claim-blocking diagnostic. (Was Cleric level-1
+    // until the v0.6 alpha swarm's CRB dispatch-widening pass (fca4e64e) gave
+    // Cleric its own real class_chassis.* computation, so Cleric stopped
+    // being an unsupported negative control -- Barbarian still is,
+    // confirmed against `table_class_id`. Was Rogue level-1 before that --
+    // see ge06_failure_classifier.rs for why that stopped being one first.)
+    let mutated = DETERMINISTIC_FIXTURE
+        .replace("class_level=class:fighter:1", "class_level=class:barbarian:1");
     assert!(
-        mutated.contains("class_level=class:cleric:1"),
+        mutated.contains("class_level=class:barbarian:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);
