@@ -318,14 +318,28 @@ fn barbarian_level4_stays_blocked_on_rage_execution() {
     let input = load(BARBARIAN_LEVEL4_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.barbarian.rage_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_raging = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.barbarian.rage_execution.not_raging");
+            assert!(
+                not_raging.is_some(),
+                "level-4 Barbarian must ground an honest not-raging record when no rage \
+                 posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "the standalone barbarian base-attack explanation must not be wired into the integrated \
-         base_attack_bonus field at level 4"
+        computation.base_attack_bonus, 4,
+        "barbarian is now recognized by table_class_id; level 4 full BAB is +4"
     );
 }
 

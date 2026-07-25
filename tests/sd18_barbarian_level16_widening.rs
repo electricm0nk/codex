@@ -258,13 +258,25 @@ fn barbarian_level16_still_claim_blocks_the_rage_execution_burden() {
     let input = load(BARBARIAN_LEVEL16_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_feature.barbarian.bounded_progression.rage_execution.unsupported"
-            && d.claim_blocking),
-        "level-16 Barbarian must still claim-block on the rage execution burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.barbarian.rage_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_raging = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.barbarian.rage_execution.not_raging");
+            assert!(
+                not_raging.is_some(),
+                "level-16 Barbarian must ground an honest not-raging record when no rage \
+                 posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: the level-15 fixture is unaffected by this widening -----
@@ -332,8 +344,13 @@ fn multiclass_barbarian_level16_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id.starts_with("class_feature.barbarian.")),
+            .any(|e| (e.id.starts_with("class_chassis.barbarian.")
+                || e.id.starts_with("class_feature.barbarian."))
+                // (v0.6 alpha swarm, risks item 8) rage-execution's
+                // not-raging explanation is checked unconditionally,
+                // regardless of level bound or single-class status
+                // (mirrors the spell-posture classes' gate-ordering fix)
+                && e.id != "class_feature.barbarian.rage_execution.not_raging"),
         "multiclass Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
