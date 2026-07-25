@@ -1305,7 +1305,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T09:30:02
-Latest commit on tranche/6: 9daa37ea docs(v0.6): second Monk closure verified against raw corpus (Catch Off-Guard + Throw Anything) (15 seconds ago) (2026-07-25T09:29:47-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T09:28:35 frontend=2026-07-25T08:52:45 qa=2026-07-25T09:17:38 lead=2026-07-25T09:29:59
+Last mechanical check: 2026-07-25T09:35:05
+Latest commit on tranche/6: c7b7352c docs(v0.6): real inflection point reached -- all remaining work is multi-session scale (2 minutes ago) (2026-07-25T09:32:54-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T09:31:22 frontend=2026-07-25T08:52:45 qa=2026-07-25T09:17:38 lead=2026-07-25T09:30:46
 <!-- AUTO-HEARTBEAT-END -->
