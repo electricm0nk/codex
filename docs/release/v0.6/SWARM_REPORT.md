@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Directed to Cavalier's Mount (APG) next — first-ever APG gate-widening, reuses the twice-proven animal-companion pattern. Lead confirmed `ApgClassId` structurally mirrors `AcgClassId` (no new architecture needed for the gate itself); Horse's own stat block needs the same 2+-source verification Wolf's got. Deflect Arrows and the CMB/CMD pillar both correctly deferred (no forced consumer yet) |
+| backend | working | Cavalier's Mount (APG) scoping doc landed; Horse's stat block cross-verified against aonprd + d20pfsrd + the raw corpus, 2 genuine source disagreements resolved (natural armor +4, speed 50ft — both corpus-confirmed). Lead independently re-verified both resolutions directly against `cr_races_companion.lst`, greenlit to build — first-ever APG gate-widening, no new architecture, just fresh data verification |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
