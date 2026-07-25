@@ -1423,7 +1423,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T16:55:03
-Latest commit on tranche/6: 41c24f0b docs(v0.6): new phase -- backend scopes spellcasting reuse, frontend scopes picker gap (68 seconds ago) (2026-07-25T16:53:55-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T16:52:59 frontend=2026-07-25T16:53:12 qa=2026-07-25T12:03:53 lead=2026-07-25T16:50:04
+Last mechanical check: 2026-07-25T17:50:01
+Latest commit on tranche/6: fd419f56 docs(v0.6): verify Sorcerer/Cleric/Druid's real per-class level ranges (65 seconds ago) (2026-07-25T17:48:56-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T17:47:06 frontend=2026-07-25T17:48:06 qa=2026-07-25T12:03:53 lead=2026-07-25T17:44:53
 <!-- AUTO-HEARTBEAT-END -->
