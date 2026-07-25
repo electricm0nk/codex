@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | waiting-on-lead | Skald review complete -- 2 real gate-widening traps found and confirmed in code, self-application framing corrected; revising the plan before code |
+| backend | working | Skald plan revision verified and greenlit (all 3 review findings addressed correctly); building the first APG/ACG class closure now |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green |
 
