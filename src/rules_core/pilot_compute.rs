@@ -1747,6 +1747,22 @@ const BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY: i16 = -2;
 /// comment for the exact formula used.
 const BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY: i16 = 2;
 
+/// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): ACG Brawler, a
+/// pure martial class (no `SPELLSTAT`, `ROLE:None`) whose AC Bonus class
+/// feature ("when wearing light or no armor, a brawler adds %1 AC as a
+/// dodge bonus") is a pure function of level with NO activation state and
+/// NO choice -- structurally simpler than every other class built this
+/// session, which all needed either a `class_ability_activations` entry
+/// (Barbarian/Skald/Bloodrager) or a `selected_choices` entry (Sorcerer/
+/// Cleric/Druid). The "not wearing Medium/Heavy armor" precondition is
+/// provably vacuous in this codebase: no Medium- or Heavy-armor item id
+/// exists anywhere for any class to equip (the only armor this codebase
+/// can express at all is Chain Shirt, itself light armor), and the shared
+/// combat-baseline posture gate already requires Chain Shirt
+/// `EquippedActive` unconditionally, so the value is grounded
+/// unconditionally on class ownership and level alone.
+const BRAWLER_CLASS_ID: &str = "class:brawler";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -6904,6 +6920,24 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_generic_single_class(input)
         || is_supported_skald_single_class(input)
         || is_supported_bloodrager_single_class(input)
+        || is_supported_brawler_single_class(input)
+}
+
+/// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
+/// is a single-class Brawler at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Brawler --
+/// mirrors `is_supported_skald_single_class`/
+/// `is_supported_bloodrager_single_class` exactly, including the same
+/// exact-match discipline (`== Some(AcgClassId::Brawler)`, not a broad
+/// `.is_some()` that would admit any of the 10 ACG classes).
+fn is_supported_brawler_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Brawler) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Brawler, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -7355,23 +7389,26 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first and second APG/ACG closures,
-    // adversarially reviewed 2026-07-25): Skald and Bloodrager are the two
-    // ACG classes with a genuinely real class feature now (Inspired
-    // Rage / Bloodrage) -- the other 8 ACG classes, and every APG class,
-    // keep the exact original unconditional diagnostic unchanged. These
-    // branches are reached only for single-class Skald/Bloodrager (this
+    // v0.6 alpha swarm, risks item 8 (first/second/third APG/ACG closures,
+    // adversarially reviewed 2026-07-25 for the gate-widening piece):
+    // Skald, Bloodrager, and Brawler are the three ACG classes with a
+    // genuinely real class feature now (Inspired Rage / Bloodrage / AC
+    // Bonus) -- the other 7 ACG classes, and every APG class, keep the
+    // exact original unconditional diagnostic unchanged. These branches
+    // are reached only for single-class Skald/Bloodrager/Brawler (this
     // function is only ever called from `compute_class_chassis`'s
     // single-class-only section; `AcgClassId::from_class_id_str` is
     // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Skald- or Bloodrager-containing multiclass mix never reaches
-    // this function at all), so no separate gate-ordering/hoisting fix is
-    // needed the way CRB classes required once `table_class_id` recognized
-    // them generically.
+    // so a Skald-, Bloodrager-, or Brawler-containing multiclass mix
+    // never reaches this function at all), so no separate gate-ordering/
+    // hoisting fix is needed the way CRB classes required once
+    // `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
+    } else if class_id == AcgClassId::Brawler {
+        ground_brawler_ac_bonus_and_defer_the_rest(level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -7935,6 +7972,114 @@ fn apply_bloodrager_bloodrage_ability_bonuses(
         ),
     });
     boosted
+}
+
+/// Brawler's AC Bonus dodge-bonus progression: `(level>3) + (level>8) +
+/// (level>12) + (level>17)` (v0.6 alpha swarm, risks item 8, third
+/// APG/ACG closure), verified against the PCGen corpus `BONUS:VAR`
+/// formula -- +0 at levels 1-3, +1 at 4-8, +2 at 9-12, +3 at 13-17, +4 at
+/// 18-20. A pure function of level, unlike every Rage-shaped mechanic
+/// this session built: no activation state, no choice, no rounds-per-day
+/// budget -- Brawler's AC Bonus is always on while the (provably vacuous
+/// in this codebase, see `BRAWLER_CLASS_ID`'s own doc comment) light-or-
+/// no-armor precondition holds.
+fn brawler_ac_bonus(level: u8) -> i16 {
+    i16::from(level > 3) + i16::from(level > 8) + i16::from(level > 12) + i16::from(level > 17)
+}
+
+/// Whether `input` is a Brawler, and if so, its AC Bonus value at its own
+/// level (v0.6 alpha swarm, risks item 8, third APG/ACG closure).
+/// Class-ownership-gated by construction, mirroring every other
+/// `active_<class>_<ability>_bonus` query function this session:
+/// only returns `Some` when `class_levels` actually contains Brawler.
+/// Unlike the Rage-shaped equivalents, there is no activation-state or
+/// rounds-budget check here -- AC Bonus is always on given class
+/// ownership and level alone, so a non-Brawler character's ability
+/// modifiers/combat baseline are never touched, and a Brawler's own value
+/// is never conditional on any per-instance input beyond level.
+fn active_brawler_ac_bonus(input: &CharacterInput) -> Option<i16> {
+    let brawler_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == BRAWLER_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    Some(brawler_ac_bonus(brawler_level))
+}
+
+/// Grounds Brawler's AC Bonus as a standalone explanation record and
+/// pushes the new, narrower diagnostic naming Brawler's remaining
+/// ungrounded features (v0.6 alpha swarm, risks item 8, third APG/ACG
+/// closure). Called from `compute_acg_class_chassis`'s Brawler branch.
+///
+/// Unlike Skald/Bloodrager, Brawler has no spellcasting at all
+/// (`ROLE:None`, no `SPELLSTAT` in the corpus) -- the permanent remaining
+/// bucket here is Brawler's OTHER named features (Brawler's Flurry,
+/// Knockout, Martial Flexibility, Awesome Blow, Improved Awesome Blow,
+/// Brawler's Cunning, Martial Training, Bonus Feats, Close Weapon
+/// Mastery, Brawler's Strike, Maneuver Training), not deferred spell
+/// math, so the diagnostic is named
+/// `class_feature.acg.brawler.other_features_deferred.unsupported`
+/// rather than `spellcasting_deferred`, mirroring the same
+/// diagnostic-honesty discipline (retire the blanket "no named
+/// class-feature computation... grounded anywhere" claim, replace with a
+/// narrower one naming only what's genuinely still missing).
+fn ground_brawler_ac_bonus_and_defer_the_rest(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let ac_bonus = brawler_ac_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.brawler.ac_bonus".to_owned(),
+        value: ac_bonus,
+        detail: format!(
+            "Brawler level {level} AC Bonus: dodge bonus to Armor Class while wearing light or \
+             no armor, (level>3) + (level>8) + (level>12) + (level>17) = {ac_bonus}. The \
+             \"not wearing Medium/Heavy armor\" precondition is provably vacuous in this \
+             codebase (no Medium- or Heavy-armor item id exists anywhere for any class to \
+             equip, and the shared combat-baseline posture requires Chain Shirt, itself light \
+             armor, EquippedActive unconditionally), so this value is grounded unconditionally \
+             on class ownership and level alone -- see apply_brawler_ac_bonus_to_combat_baseline \
+             for its integration into the shared Armor Class total"
+        ),
+    });
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.brawler.helpless_or_immobilized_not_modeled".to_owned(),
+        message: "PF1 Brawler AC Bonus is lost while helpless or immobilized: this codebase has \
+                   no transient combat-state representation for either condition (the same gap \
+                   category as Barbarian Rage's own post-rage Fatigue), so the bonus above is \
+                   always computed as though neither condition applies. Named honestly rather \
+                   than silently modeled or silently dropped"
+            .to_owned(),
+        claim_blocking: false,
+    });
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{BRAWLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and AC Bonus: this ACG class has no class-skill list and no other named \
+             class-feature computation (Brawler's Flurry, Knockout, Martial Flexibility, Awesome \
+             Blow, Improved Awesome Blow, Brawler's Cunning, Martial Training, Bonus Feats, \
+             Close Weapon Mastery, Brawler's Strike, Maneuver Training) grounded anywhere in \
+             this codebase yet; no class-feature execution is fabricated in this bounded \
+             chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Applies Brawler's AC Bonus dodge bonus to `base_armor_class` when
+/// `input` is a Brawler (v0.6 alpha swarm, risks item 8, third APG/ACG
+/// closure). Unlike Barbarian/Skald/Bloodrager's own AC penalties (which
+/// are applied inline in `compute_combat_baseline` via an
+/// `if active_<x>_bonus(...).is_some() { PENALTY } else { 0 }` shape,
+/// since those are activation-gated and either 0 or a single fixed
+/// value), Brawler's own bonus is level-dependent and always-on given
+/// class ownership, so this is a small helper rather than an inline
+/// ternary, called directly from `compute_combat_baseline`.
+fn apply_brawler_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
+    active_brawler_ac_bonus(input).unwrap_or(0)
 }
 
 /// Whether `class_level` is a class this dispatch grounds a base-chassis
@@ -21971,13 +22116,22 @@ fn compute_combat_baseline(
         } else {
             0
         };
+    // v0.6 alpha swarm, risks item 8 (third APG/ACG closure): Brawler's AC
+    // Bonus dodge bonus applies here too -- class-ownership-gated by
+    // `active_brawler_ac_bonus` construction, 0 for every non-Brawler
+    // character. Unlike the Rage-shaped bonuses above, this is not
+    // activation-gated: it is always on for a Brawler (subject to the
+    // provably-vacuous light-armor precondition -- see
+    // `apply_brawler_ac_bonus_to_combat_baseline`'s own doc comment).
+    let brawler_ac_bonus_value = apply_brawler_ac_bonus_to_combat_baseline(input);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
         + DODGE_AC_BONUS
         + rage_armor_class_penalty
         + inspired_rage_armor_class_penalty
-        + bloodrage_armor_class_penalty;
+        + bloodrage_armor_class_penalty
+        + brawler_ac_bonus_value;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -21988,7 +22142,8 @@ fn compute_combat_baseline(
              + Dodge (+{DODGE_AC_BONUS}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
              while actively, validly singing) + Bloodrager Bloodrage penalty ({bloodrage_armor_class_penalty}, \
-             only while actively, validly bloodraging); shield is absent (+0) = {armor_class}"
+             only while actively, validly bloodraging) + Brawler AC Bonus (+{brawler_ac_bonus_value}, while \
+             wearing light or no armor); shield is absent (+0) = {armor_class}"
         ),
     });
 
@@ -24062,24 +24217,29 @@ mod acg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// ACG class OTHER THAN Skald/Bloodrager stays honestly `Blocked` with
-    /// the original, unmodified generic diagnostic -- BAB/save/HP are
-    /// real, but the class-skill/feature/spellcasting bucket is genuinely
-    /// ungrounded, so this must never silently read as `Computed`.
+    /// ACG class OTHER THAN Skald/Bloodrager/Brawler stays honestly
+    /// `Blocked` with the original, unmodified generic diagnostic --
+    /// BAB/save/HP are real, but the class-skill/feature/spellcasting
+    /// bucket is genuinely ungrounded, so this must never silently read
+    /// as `Computed`.
     ///
-    /// Skald and Bloodrager are carved out of this loop (v0.6 alpha swarm,
-    /// risks item 8, first/second APG/ACG closures, adversarial review
-    /// finding 2, reapplied identically for Bloodrager): each has its own
-    /// generic `class_feature.acg.<class>.unsupported` diagnostic retired
-    /// and replaced with a narrower `spellcasting_deferred` diagnostic,
-    /// since Inspired Rage / Bloodrage are now genuinely grounded -- see
+    /// Skald, Bloodrager, and Brawler are carved out of this loop (v0.6
+    /// alpha swarm, risks item 8, first/second/third APG/ACG closures,
+    /// adversarial review finding 2, reapplied identically each time):
+    /// each has its own generic `class_feature.acg.<class>.unsupported`
+    /// diagnostic retired and replaced with a narrower one, since Inspired
+    /// Rage / Bloodrage / AC Bonus are now genuinely grounded -- see
     /// `skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `bloodrager_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// / `brawler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// below for each class's own dedicated coverage.
     #[test]
     fn all_ten_acg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:skald" || class_id == "class:bloodrager" {
+            if class_id == "class:skald"
+                || class_id == "class:bloodrager"
+                || class_id == "class:brawler"
+            {
                 continue;
             }
 
@@ -24181,26 +24341,73 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Brawler's own counterpart to the Skald/Bloodrager diagnostic-swap
+    /// tests above (v0.6 alpha swarm, risks item 8, third APG/ACG
+    /// closure): mirrors them, using
+    /// `other_features_deferred` (not `spellcasting_deferred`, since
+    /// Brawler has no spellcasting at all).
+    #[test]
+    fn brawler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:brawler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Brawler must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.brawler.unsupported"),
+            "the retired generic diagnostic must never appear for Brawler: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        let ac_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.brawler.ac_bonus")
+            .expect("Brawler's own AC Bonus explanation must be grounded");
+        assert_eq!(ac_bonus.value, 0, "Brawler level 1 AC Bonus is genuinely +0: {:?}", ac_bonus);
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager): the OTHER 8 ACG classes (every class other than
-    /// Skald and Bloodrager, the two now genuinely admitted) must produce
-    /// ZERO `defense.total_save.*`/`combat.baseline_*`/
-    /// `skill.selected_modifier.*` explanations at level 1, even when built
-    /// from the exact same Longsword/Chain Shirt/Dodge/Weapon-Focus/
-    /// skill-rank posture that genuinely satisfies every non-class-
-    /// recognition precondition those pillars check -- proving both
-    /// `is_supported_skald_single_class` and
-    /// `is_supported_bloodrager_single_class` are real exact matches, not
-    /// broad `.is_some()` checks that would silently admit all 10 ACG
+    /// for Bloodrager and Brawler): the OTHER 7 ACG classes (every class
+    /// other than Skald, Bloodrager, and Brawler, the three now genuinely
+    /// admitted) must produce ZERO `defense.total_save.*`/
+    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
+    /// level 1, even when built from the exact same Longsword/Chain Shirt/
+    /// Dodge/Weapon-Focus/skill-rank posture that genuinely satisfies every
+    /// non-class-recognition precondition those pillars check -- proving
+    /// `is_supported_skald_single_class`, `is_supported_bloodrager_single_class`,
+    /// and `is_supported_brawler_single_class` are all real exact matches,
+    /// not broad `.is_some()` checks that would silently admit all 10 ACG
     /// classes into real pillar computation. This is stronger than the
     /// pre-existing "stays Blocked" assertion above, which does not by
     /// itself rule out a silent pillar-output leak alongside an unrelated
     /// claim-blocking diagnostic.
     #[test]
-    fn the_other_eight_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_seven_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:skald" || class_id == "class:bloodrager" {
+            if class_id == "class:skald"
+                || class_id == "class:bloodrager"
+                || class_id == "class:brawler"
+            {
                 continue;
             }
 
@@ -24269,6 +24476,72 @@ mod acg_class_chassis_dispatch_tests {
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Bloodrager: {:?}",
                 receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Brawler's own positive counterpart, mirroring Skald's/Bloodrager's
+    /// exactly. Note Brawler's own AC Bonus is +0 at level 1 (the
+    /// progression only starts at 4th level), but `defense.baseline_*`
+    /// explanations are always pushed once a class is genuinely admitted
+    /// through the chassis-integration gate regardless of the specific
+    /// value, so this still proves the gate admits Brawler.
+    #[test]
+    fn brawler_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:brawler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Brawler: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Brawler's AC Bonus progression at higher levels, verified against
+    /// the PCGen corpus `BONUS:VAR` formula directly (not merely trusting
+    /// the level-1 zero case above): +1 at 4th, +2 at 9th, +3 at 13th, +4
+    /// at 18th.
+    #[test]
+    fn brawler_ac_bonus_progression_matches_the_corpus_formula_at_higher_levels() {
+        for (level, expected_ac_bonus) in [(1, 0), (3, 0), (4, 1), (8, 1), (9, 2), (12, 2), (13, 3), (17, 3), (18, 4), (20, 4)]
+        {
+            let input = acg_style_input("class:brawler", level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let ac_bonus = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.brawler.ac_bonus")
+                .unwrap_or_else(|| panic!("level {level}: Brawler's own AC Bonus must be grounded"));
+            assert_eq!(
+                ac_bonus.value, expected_ac_bonus,
+                "level {level}: expected AC Bonus {expected_ac_bonus}, got {:?}",
+                ac_bonus
+            );
+
+            let armor_class = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "defense.baseline_armor_class")
+                .unwrap_or_else(|| panic!("level {level}: baseline Armor Class must be grounded"));
+            // Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) + AC Bonus.
+            assert_eq!(
+                armor_class.value,
+                17 + expected_ac_bonus,
+                "level {level}: AC Bonus must be integrated into the shared Armor Class total: \
+                 {:?}",
+                armor_class
             );
         }
     }

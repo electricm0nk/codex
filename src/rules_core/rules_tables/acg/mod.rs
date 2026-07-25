@@ -210,14 +210,16 @@ pub struct AcgClassCoverage {
     /// Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
-    /// for. Zero for every ACG class except Skald and Bloodrager as of the
-    /// v0.6 alpha swarm's first/second APG/ACG class-specific closures
-    /// (risks item 8): Skald's 1st-level Raging Song song type, Inspired
-    /// Rage, and Bloodrager's Bloodrage are now genuinely wired
+    /// for. Zero for every ACG class except Skald, Bloodrager, and
+    /// Brawler as of the v0.6 alpha swarm's first/second/third APG/ACG
+    /// class-specific closures (risks item 8): Skald's 1st-level Raging
+    /// Song song type, Inspired Rage, Bloodrager's Bloodrage, and
+    /// Brawler's AC Bonus are now genuinely wired
     /// (`pilot_compute::ground_or_block_skald_inspired_rage`,
-    /// `pilot_compute::ground_or_block_bloodrager_bloodrage`) -- see
-    /// `class_coverage`'s own branches for each. Every other ACG class
-    /// remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
+    /// `pilot_compute::ground_or_block_bloodrager_bloodrage`,
+    /// `pilot_compute::ground_brawler_ac_bonus_and_defer_the_rest`) --
+    /// see `class_coverage`'s own branches for each. Every other ACG
+    /// class remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
     /// comment), and no follow-on cycle has since ingested
     /// `acg_abilities_class.lst`'s per-level feature blocks for any other
@@ -298,12 +300,13 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first/second APG/ACG class-specific
-    // closures): Skald's Inspired Rage and Bloodrager's Bloodrage are the
-    // two real, wired named class features among all ten ACG classes
-    // today -- see this field's own doc comment above.
+    // v0.6 alpha swarm, risks item 8 (first/second/third APG/ACG
+    // class-specific closures): Skald's Inspired Rage, Bloodrager's
+    // Bloodrage, and Brawler's AC Bonus are the three real, wired named
+    // class features among all ten ACG classes today -- see this field's
+    // own doc comment above.
     let named_features_wired = match class_id {
-        AcgClassId::Skald | AcgClassId::Bloodrager => 1,
+        AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler => 1,
         _ => 0,
     };
 
