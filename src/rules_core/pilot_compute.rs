@@ -120,6 +120,7 @@ use super::character_input::{
 };
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
+use super::rules_tables::crb::ranger_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 use super::rules_tables::RuleSetId;
 
@@ -9321,41 +9322,61 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    // v0.6 alpha swarm, risks item 8 (2026-07-24): Ranger's partial-caster
-    // spell posture is unsupported regardless of whether Ranger appears
-    // alone or in a multiclass mix -- checked BEFORE the single-class-only
-    // gate below (`supported_ranger_level` requires an exact one-element
-    // `class_levels` slice) specifically so a Ranger+Fighter/Wizard/Rogue
-    // multiclass cannot silently bypass it. This matters because
-    // `table_class_id` recognizing Ranger (this same slice) makes
+    // v0.6 alpha swarm, risks item 8 (2026-07-24, real spell posture landed
+    // 2026-07-24): Ranger's partial-caster spell posture is validated
+    // regardless of whether Ranger appears alone or in a multiclass mix --
+    // checked BEFORE the single-class-only gate below (`supported_ranger_level`
+    // requires an exact one-element `class_levels` slice) specifically so a
+    // Ranger+Fighter/Wizard/Rogue multiclass cannot silently bypass it. This
+    // matters because `table_class_id` recognizing Ranger makes
     // `multiclass_class_level_supported`/`is_supported_multiclass_mix`
     // newly accept a Ranger-containing mix too -- `compute_multiclass_base_chassis`
     // deliberately discards each isolated per-class sub-computation's own
-    // diagnostics (see that function's own doc comment), so nothing else
-    // in the multiclass path would ever surface this burden. Mirrors
-    // Paladin's `class_spell.paladin.partial_caster.unsupported` shape
-    // exactly; verified this gap is real (not theoretical) by adversarial
-    // review before this fix landed.
-    if input
+    // diagnostics (see that function's own doc comment), so nothing else in
+    // the multiclass path would ever surface this burden.
+    //
+    // Unlike the earlier bounded slice (which pushed this diagnostic
+    // unconditionally), the posture is now genuinely computed:
+    // `unmet_ranger_prepared_spell_conditions` validates every
+    // `AcquisitionMode::Prepared` selection with `source_class_id ==
+    // "class:ranger"` against the real `ranger_spell_list::RANGER_SPELL_LIST`
+    // (spell-list membership), the character's own spell-level access
+    // ceiling for their ranger level, and the per-level slot budget (base +
+    // Wisdom bonus, both already grounded elsewhere in this function). A
+    // Ranger with zero prepared spells is NOT an unmet condition -- unlike
+    // Wizard's bounded slice (which requires at least one recorded and one
+    // prepared spell before ever leaving `Blocked`), real PF1 rules do not
+    // require a caster to fill every slot, and Ranger spells aren't
+    // accessible at all before ranger level 4: requiring a non-empty
+    // preparation would leave every level 1-3 Ranger (the most common case,
+    // and the exact one frontend's live-verification found broken)
+    // permanently blocked. Real PF1 also has no "recorded in a personal
+    // spellbook" step for Ranger (unlike Wizard) -- a Ranger prepares
+    // directly from the full ranger spell list each day, so this validates
+    // `Prepared` selections directly with no prior `Known` requirement.
+    if let Some(ranger_level) = input
         .chosen
         .class_levels
         .iter()
-        .any(|class_level| class_level.class_id == RANGER_CLASS_ID)
+        .find(|class_level| class_level.class_id == RANGER_CLASS_ID)
+        .map(|class_level| class_level.level)
     {
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_spell.ranger.partial_caster.unsupported".to_owned(),
-            message: "Ranger remains blocked on its divine, Wisdom-based partial-caster spell \
-                 burden: Ranger is a partial caster (spells begin at ranger level 4, with \
-                 effective caster level = ranger level - 3 in PF1 Core Rulebook), so the \
-                 spells known/prepared posture, bonus spell slots from Wisdom, and spell save \
-                 DCs are deferred to a later spellcasting slice (the effective-caster-level \
-                 gate, the spell-level access ladder, and the BASE spells-per-day table counts \
-                 are grounded separately as flat records for a single-class Ranger); no \
-                 partial-caster spell execution is fabricated in this bounded chassis baseline, \
-                 whether Ranger appears alone or in a multiclass mix"
-                .to_owned(),
-            claim_blocking: true,
-        });
+        let unmet = unmet_ranger_prepared_spell_conditions(input, ranger_level, ability_modifiers);
+        if unmet.is_empty() {
+            ground_ranger_prepared_spells(input, ranger_level, ability_modifiers, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.ranger.partial_caster.unsupported".to_owned(),
+                message: format!(
+                    "Ranger remains blocked on its divine, Wisdom-based partial-caster spell \
+                     burden: Ranger is a partial caster (spells begin at ranger level 4, with \
+                     effective caster level = ranger level - 3 in PF1 Core Rulebook); unmet \
+                     prepared-spell posture: {}",
+                    unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
     }
 
     let Some(level) = supported_ranger_level(input) else {
@@ -11371,18 +11392,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         ),
     });
 
-    let ranger_spell_level_access: i16 =
-        if level >= RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            4
-        } else if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            3
-        } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            2
-        } else if level >= RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-            1
-        } else {
-            0
-        };
+    let ranger_spell_level_access: i16 = ranger_spell_level_access(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.partial_caster.spell_level_access".to_owned(),
         value: ranger_spell_level_access,
@@ -11462,25 +11472,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // absence — inaccessible spell levels ("—" columns) get no record at
     // all. Only the base counts are grounded: bonus spells per day from a
     // high Wisdom are never computed.
-    let ranger_base_spells_per_day: [Option<i16>; 4] = match level {
-        4 => [Some(0), None, None, None],
-        5 | 6 => [Some(1), None, None, None],
-        7 => [Some(1), Some(0), None, None],
-        8 => [Some(1), Some(1), None, None],
-        9 => [Some(2), Some(1), None, None],
-        10 => [Some(2), Some(1), Some(0), None],
-        11 => [Some(2), Some(1), Some(1), None],
-        12 => [Some(2), Some(2), Some(1), None],
-        13 => [Some(3), Some(2), Some(1), Some(0)],
-        14 => [Some(3), Some(2), Some(1), Some(1)],
-        15 => [Some(3), Some(2), Some(2), Some(1)],
-        16 => [Some(3), Some(3), Some(2), Some(1)],
-        17 => [Some(4), Some(3), Some(2), Some(1)],
-        18 => [Some(4), Some(3), Some(2), Some(2)],
-        19 => [Some(4), Some(3), Some(3), Some(2)],
-        20 => [Some(4), Some(4), Some(3), Some(3)],
-        _ => [None, None, None, None],
-    };
+    let ranger_base_spells_per_day: [Option<i16>; 4] = ranger_base_spells_per_day_table(level);
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
             continue;
@@ -11611,6 +11603,196 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  (accessible spell level, no castable slots at this Wisdom). This grounds \
                  the count only: no prepared-posture selection, no casting execution, no \
                  slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
+}
+
+/// The highest ranger spell level with a non-"—" spells-per-day column at
+/// the given ranger level (0 means no spell access yet). Pure function,
+/// race-independent -- extracted so both the (Human-only) flat explanation
+/// block above and the real prepared-spell validation below share one
+/// source of truth instead of two copies of the same level-gate ladder.
+fn ranger_spell_level_access(level: u8) -> i16 {
+    if level >= RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        4
+    } else if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        3
+    } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        2
+    } else if level >= RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        1
+    } else {
+        0
+    }
+}
+
+/// The PF1 Core Rulebook Ranger class table's BASE spells-per-day row, one
+/// entry per spell level 1-4 (`None` for an inaccessible "—" column). A
+/// literal table lookup, not a derived formula -- see
+/// `explain_ranger_level1_chassis_and_class_feature_separation`'s own doc
+/// comment for the two-source verification history of every row. Pure
+/// function, race-independent, extracted for the same reason as
+/// `ranger_spell_level_access`.
+fn ranger_base_spells_per_day_table(level: u8) -> [Option<i16>; 4] {
+    match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
+        15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
+        18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
+        _ => [None, None, None, None],
+    }
+}
+
+/// The real per-day slot budget per spell level 1-4 (base table count +
+/// Wisdom bonus, `None` for an inaccessible column), reusing
+/// `ability_bonus_spells` -- the same shared "Table: Ability Modifiers and
+/// Bonus Spells" formula already grounded for Wizard/Paladin/Sorcerer/Bard.
+fn ranger_total_spells_per_day(level: u8, wisdom_modifier: i16) -> [Option<i16>; 4] {
+    let base = ranger_base_spells_per_day_table(level);
+    let mut total = [None; 4];
+    for (index, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        total[index] = Some(base_count + ability_bonus_spells(wisdom_modifier, spell_level));
+    }
+    total
+}
+
+/// Return the list of unmet conditions for Ranger's real prepared-spell
+/// posture. An empty list means the posture is fully valid: every
+/// `AcquisitionMode::Prepared` selection with `source_class_id ==
+/// "class:ranger"` names a real spell on `ranger_spell_list::RANGER_SPELL_LIST`,
+/// at a spell level within the ranger's own access ceiling for their ranger
+/// level, and no spell level's prepared count exceeds that level's total
+/// slot budget (base table count + Wisdom bonus). Zero prepared spells is
+/// always valid -- see the call site's own doc comment for why this
+/// deliberately does not mirror Wizard's "at least one recorded and one
+/// prepared" requirement.
+fn unmet_ranger_prepared_spell_conditions(
+    input: &CharacterInput,
+    ranger_level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == RANGER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = ranger_spell_level_access(ranger_level);
+    let total_per_day = ranger_total_spells_per_day(ranger_level, ability_modifiers.wisdom);
+
+    let mut consumed_per_level: [i16; 4] = [0; 4];
+    for spell_id in &prepared {
+        let Some(spell_level) = ranger_spell_list::ranger_spell_level(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook ranger spell \
+                 list"
+            ));
+            continue;
+        };
+        if i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at ranger level {ranger_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level) - 1] += 1;
+    }
+
+    for (index, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let spell_level = index + 1;
+        let total_slots = total_per_day[index].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base {} + Wisdom bonus)",
+                ranger_base_spells_per_day_table(ranger_level)[index].unwrap_or(0)
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spell posture once
+/// `unmet_ranger_prepared_spell_conditions` reports an empty unmet list:
+/// the daily preparation selection (count + list, mirroring
+/// `class_spell.wizard.daily_preparation`'s shape) and the total
+/// spells-per-day budget per accessible spell level.
+fn ground_ranger_prepared_spells(
+    input: &CharacterInput,
+    ranger_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == RANGER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.ranger.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Ranger level {ranger_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 Core Rulebook ranger spell list (`ranger_spell_list::RANGER_SPELL_LIST`), the \
+             ranger's own spell-level access ceiling, and the per-level slot budget (base table \
+             count + Wisdom bonus). Real PF1 Ranger rules have no personal 'recorded spellbook' \
+             step (unlike Wizard) -- a ranger prepares directly from the full ranger spell list \
+             each day. This grounds the prepared-spell selection for real; it computes no spell \
+             save DC resolution against a target and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let total_per_day = ranger_total_spells_per_day(ranger_level, ability_modifiers.wisdom);
+    for (index, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.ranger.total_spells_per_day.spell_level_{spell_level}"),
+            value: *total,
+            detail: format!(
+                "Ranger level {ranger_level} total spells per day at spell level {spell_level}: \
+                 {total} (base table count + Wisdom bonus, the same records already grounded as \
+                 `class_chassis.ranger.partial_caster.total_spells_per_day.spell_level_{spell_level}` \
+                 for a Human ranger, computed here independent of race). This is the real slot \
+                 budget the daily preparation selection above is validated against"
             ),
         });
     }
@@ -19687,40 +19869,49 @@ mod combat_posture_multiclass_tests {
     }
 }
 
-/// v0.6 alpha swarm, risks item 8 (2026-07-24): direct verification that
-/// widening `table_class_id` to recognize Ranger cannot produce a false
-/// `Computed` status, for either a single-class Ranger at any supported
-/// level or a Ranger-containing multiclass mix. Written after an
-/// adversarial scoping review found this was a real, not theoretical, risk:
-/// `table_class_id` recognizing Ranger also makes
-/// `multiclass_class_level_supported`/`is_supported_multiclass_mix` accept
-/// a Ranger+Fighter/Wizard/Rogue mix, and `compute_multiclass_base_chassis`
-/// deliberately discards each isolated per-class sub-computation's own
-/// diagnostics -- so without `explain_ranger_level1_chassis_and_class_feature_separation`'s
-/// own unconditional (not single-class-gated) spell-posture diagnostic,
-/// nothing else in the multiclass path would ever block a Ranger's
-/// genuinely-ungrounded spell posture.
+/// v0.6 alpha swarm, risks item 8 (2026-07-24, real spell posture landed
+/// 2026-07-25): direct verification of Ranger's real prepared-spell
+/// posture, for both a single-class Ranger at any supported level and a
+/// Ranger-containing multiclass mix. The first version of this module
+/// (written after an adversarial scoping review found widening
+/// `table_class_id` to recognize Ranger was a real, not theoretical, false-
+/// `Computed` risk: `multiclass_class_level_supported`/
+/// `is_supported_multiclass_mix` accept a Ranger+Fighter/Wizard/Rogue mix,
+/// and `compute_multiclass_base_chassis` deliberately discards each
+/// isolated per-class sub-computation's own diagnostics) asserted Ranger
+/// stayed `Blocked` unconditionally. That is no longer true: Ranger's spell
+/// posture is now genuinely computed (`unmet_ranger_prepared_spell_conditions`
+/// / `ground_ranger_prepared_spells`), so a Ranger (alone or multiclassed)
+/// with no invalid `AcquisitionMode::Prepared` selection now reaches real
+/// `Computed` -- this module proves both that positive case and that a
+/// genuine posture violation (an off-list spell, a too-high spell level,
+/// or an over-prepared slot) still blocks, in both the single-class and
+/// multiclass shapes, so the original adversarial-review finding's spirit
+/// (nothing silently bypasses this diagnostic in a multiclass mix) still
+/// holds.
 #[cfg(test)]
 mod ranger_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, CharacterClassLevel, HeadlessReceiptStatus,
-        FIGHTER_CLASS_ID, RANGER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID,
+        build_pilot_headless_receipt, CharacterClassLevel, HeadlessReceiptStatus, FIGHTER_CLASS_ID,
+        RANGER_CLASS_ID, ROGUE_CLASS_ID, WIZARD_CLASS_ID,
     };
-    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, AcquisitionMode, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     );
 
-    /// A single-class Ranger at a representative mid-range level (5,
-    /// inside the partial-caster range where the false-positive risk was
-    /// found) must stay `Blocked`, carrying the real spell-posture
-    /// diagnostic this fix added -- pinned directly here (not relying
-    /// solely on the QA-owned `tests/**` files this widening also affects)
-    /// so a future change to those files can't silently drop this
-    /// coverage.
+    /// A single-class Ranger at a representative mid-range level (5, inside
+    /// the partial-caster range where the original false-positive risk was
+    /// found), with no spells prepared, now genuinely reaches `Computed` --
+    /// the first real proof Ranger can reach `Computed` at all, pinned
+    /// directly here (not relying solely on the QA-owned `tests/**` files
+    /// this widening also affects) so a future change to those files can't
+    /// silently drop this coverage.
     #[test]
-    fn single_class_ranger_level5_stays_blocked_with_the_real_spell_posture_diagnostic() {
+    fn single_class_ranger_level5_with_no_prepared_spells_reaches_computed() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty());
         let mut input = result.character_input.expect("valid fixture");
@@ -19731,9 +19922,45 @@ mod ranger_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a single-class Ranger with a valid (empty) spell posture must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported"),
+            "the spell-posture diagnostic must not fire when the posture is valid: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Ranger with a genuinely invalid prepared-spell
+    /// selection (a spell level not yet accessible at ranger level 5, whose
+    /// highest accessible level is 1st) must still stay `Blocked`, carrying
+    /// the real spell-posture diagnostic.
+    #[test]
+    fn single_class_ranger_with_an_inaccessible_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 5 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Animal Growth".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "a single-class Ranger must not reach Computed while its spell posture is \
-             ungrounded: {:?}",
+            "a 4th-level ranger spell is not accessible at ranger level 5 (access ceiling 1st): \
+             {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -19747,11 +19974,77 @@ mod ranger_dispatch_widening_safety_tests {
         );
     }
 
-    /// The real regression this fix closes: a Ranger+Fighter multiclass
-    /// mix must also stay `Blocked`, not silently reach `Computed` via the
-    /// isolated per-class sub-computation path that discards diagnostics.
+    /// A single-class Ranger at level 4 (base spells-per-day for 1st-level
+    /// spells is a genuine 0 -- the fixture's Wisdom 12 grants exactly one
+    /// bonus slot, so the real total budget is 1) preparing the same real
+    /// 1st-level ranger spell twice consumes 2 against a budget of 1 and
+    /// must stay `Blocked`.
     #[test]
-    fn ranger_fighter_multiclass_stays_blocked_not_falsely_computed() {
+    fn single_class_ranger_over_prepared_slot_budget_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 }];
+        for _ in 0..2 {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: "Alarm".to_owned(),
+                source_class_id: RANGER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "ranger level 4 with Wisdom 12 has a real total budget of 1 slot for 1st-level \
+             spells (base 0 + Wisdom bonus 1), so preparing the same spell twice over-prepares: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported" && d.claim_blocking),
+            "expected the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Ranger preparing a spell that is not on the real PF1
+    /// Core Rulebook ranger spell list at all must also stay `Blocked`.
+    #[test]
+    fn single_class_ranger_with_an_off_list_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 }];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Magic Missile is not on the real ranger spell list: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A valid Ranger+Fighter multiclass mix (no invalid preparation) now
+    /// genuinely reaches `Computed` too -- the multiclass counterpart of the
+    /// single-class positive proof above.
+    #[test]
+    fn ranger_fighter_multiclass_with_no_prepared_spells_reaches_computed() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty());
         let mut input = result.character_input.expect("valid fixture");
@@ -19764,9 +20057,38 @@ mod ranger_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Ranger+Fighter multiclass with a valid spell posture must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The real regression the original review found still holds: a
+    /// Ranger+Fighter multiclass mix with a genuine posture violation must
+    /// still stay `Blocked`, not silently reach `Computed` via the isolated
+    /// per-class sub-computation path that discards diagnostics.
+    #[test]
+    fn ranger_fighter_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
             HeadlessReceiptStatus::Blocked,
             "a Ranger+Fighter multiclass must not reach Computed while Ranger's spell posture \
-             is ungrounded: {:?}",
+             is genuinely violated: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -19780,31 +20102,88 @@ mod ranger_dispatch_widening_safety_tests {
         );
     }
 
-    /// Same proof for Ranger+Wizard and Ranger+Rogue -- the risk is generic
-    /// to any multiclass partner `table_class_id` already recognized before
-    /// this slice, not specific to Fighter.
+    /// Same positive proof for Ranger+Rogue -- the risk is generic to any
+    /// multiclass partner `table_class_id` already recognized, not specific
+    /// to Fighter. (Ranger+Wizard is deliberately not used for the positive
+    /// direction here: a level-1 Wizard has its own, unrelated posture
+    /// requirement -- the canonical Evocation specialization -- that a bare
+    /// fixture doesn't satisfy, which would conflate a Wizard-side gate
+    /// with what this test is actually proving about Ranger. Ranger+Wizard
+    /// is exercised below for the negative direction instead, where either
+    /// class's own blocker independently proves the mix cannot be falsely
+    /// Computed.)
     #[test]
-    fn ranger_wizard_and_ranger_rogue_multiclass_also_stay_blocked() {
+    fn ranger_rogue_multiclass_both_directions() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty());
         let base_input = result.character_input.expect("valid fixture");
 
-        for partner_class_id in [WIZARD_CLASS_ID, ROGUE_CLASS_ID] {
-            let mut input = base_input.clone();
-            input.chosen.class_levels = vec![
-                CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
-                CharacterClassLevel { class_id: partner_class_id.to_owned(), level: 1 },
-            ];
+        let mut valid_input = base_input.clone();
+        valid_input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: ROGUE_CLASS_ID.to_owned(), level: 1 },
+        ];
+        let valid_receipt = build_pilot_headless_receipt(&valid_input);
+        assert_eq!(
+            valid_receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Ranger+Rogue multiclass with a valid spell posture must reach Computed: {:?}",
+            valid_receipt.computation.diagnostics
+        );
 
-            let receipt = build_pilot_headless_receipt(&input);
+        let mut invalid_input = valid_input;
+        invalid_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        let invalid_receipt = build_pilot_headless_receipt(&invalid_input);
+        assert_eq!(
+            invalid_receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Ranger+Rogue multiclass must still block a genuine posture violation: {:?}",
+            invalid_receipt.computation.diagnostics
+        );
+    }
 
-            assert_eq!(
-                receipt.status,
-                HeadlessReceiptStatus::Blocked,
-                "Ranger+{partner_class_id} multiclass must not reach Computed: {:?}",
-                receipt.computation.diagnostics
-            );
-        }
+    /// Ranger+Wizard multiclass still cannot be falsely Computed when
+    /// Ranger's own posture is genuinely violated -- proving the original
+    /// adversarial-review finding's fix isn't specific to Fighter/Rogue
+    /// partners. (Not tested for the positive direction: see this test
+    /// module's doc comment on why a bare level-1 Wizard has its own
+    /// unrelated blocker.)
+    #[test]
+    fn ranger_wizard_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![
+            CharacterClassLevel { class_id: RANGER_CLASS_ID.to_owned(), level: 4 },
+            CharacterClassLevel { class_id: WIZARD_CLASS_ID.to_owned(), level: 1 },
+        ];
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: RANGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Ranger+Wizard multiclass must block a genuine Ranger posture violation: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported" && d.claim_blocking),
+            "expected the real Ranger spell-posture diagnostic to fire in this mix too: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 }
 
