@@ -63,7 +63,7 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 | Hunter | ACG | 20 / 20 | 0 / 21 | No | No | P1 |
 | Investigator | ACG | 20 / 20 | 0 / 95 | No | No | P1 |
 | Shaman | ACG | 20 / 20 | 0 / 10 | No | No | P1 |
-| Skald | ACG | 20 / 20 | 0 / 20 | No | No | P1 |
+| Skald | ACG | 20 / 20 | 1 / 20 | Yes | No | P1 |
 | Slayer | ACG | 20 / 20 | 0 / 15 | No | No | P1 |
 | Swashbuckler | ACG | 20 / 20 | 0 / 29 | No | No | P1 |
 | Warpriest | ACG | 20 / 20 | 0 / 18 | No | No | P1 |
@@ -76,5 +76,7 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 4. **No `level_up::<class>` module exists for any ACG class.** `src/rules_core/level_up/` (the SD-20 Epic 7 per-level automatic-feature-grant model) contains only the 11 CRB classes.
 
 **Conclusion feeding criterion 4.5:** ACG classes are *not* fully wired (chassis-only; zero named features; zero live-compute integration; zero level-up grant modules) — the identical shape criterion 4.2 found for APG. This is the exact condition `loop-instruction.md §4.2`'s hard-stop row anticipates ("Epic 4 finds APG/ACG classes are *not* fully wired → Multiclass Epic 5 scope is restricted to Fighter + Wizard only … defer APG/ACG-class multiclass to a follow-on bundle"). No blocker is raised here — this is the expected, already-decided outcome; criterion 4.5 records the deferral formally, jointly for APG and ACG.
+
+**Update (v0.6 alpha swarm, risks item 8, first APG/ACG class-specific closure, 2026-07-25):** this audit's own findings 2 and 3 no longer hold unconditionally for Skald specifically — its Skald row above is updated accordingly (1 named feature wired, `pilot_compute_integrated: Yes`). Skald's Inspired Rage is now genuinely wired and its own chassis-integration gate (`is_supported_skald_single_class`) recognizes single-class Skald in `has_supported_class_chassis`. Skald still does not reach `Computed` (spellcasting and every other named feature remain deferred) and is still not multiclass-eligible (`AcgClassId::from_class_id_str` remains deliberately unregistered with `multiclass_class_level_supported`), so criterion 4.5's Epic 5 multiclass-deferral conclusion is unaffected. Every other ACG class's row is unchanged from the original 2026-07-21 audit. See `./acg_skald_coverage.md`'s own update note for the full record.
 
 **Per-class detail:** `./acg_arcanist_coverage.md`, `./acg_bloodrager_coverage.md`, `./acg_brawler_coverage.md`, `./acg_hunter_coverage.md`, `./acg_investigator_coverage.md`, `./acg_shaman_coverage.md`, `./acg_skald_coverage.md`, `./acg_slayer_coverage.md`, `./acg_swashbuckler_coverage.md`, `./acg_warpriest_coverage.md` (per `content-unit-inventory.md` §3.1's cycle-artifact-path column).

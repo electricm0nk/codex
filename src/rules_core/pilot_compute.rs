@@ -1696,6 +1696,27 @@ const SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID: &str = "choice:sorcerer_bloodlin
 // it.
 const BARD_CLASS_ID: &str = "class:bard";
 
+/// v0.6 alpha swarm, risks item 8 (first APG/ACG closure): ACG Skald, a
+/// Bard+Barbarian hybrid whose Raging Song is explicitly "the bard's
+/// bardic performance special ability for any effect that affects bardic
+/// performances" (verified against the PCGen corpus
+/// `acg_abilities_class.lst`), and whose 1st-level song, Inspired Rage,
+/// grants the same four-value shape as Barbarian's own Rage (STR/CON
+/// morale bonus, Will-save morale bonus, AC penalty).
+const SKALD_CLASS_ID: &str = "class:skald";
+/// `ClassAbilityActivation.ability_id` for Skald Inspired Rage.
+const SKALD_INSPIRED_RAGE_ABILITY_ID: &str = "inspired_rage";
+/// PF1 Advanced Class Guide Inspired Rage: a flat -1 penalty to AC,
+/// unconditional at every tier (verified against the PCGen corpus DESC
+/// text: "but also take a -1 penalty to AC" -- not tiered, unlike the
+/// STR/CON/Will values).
+const SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY: i16 = -1;
+/// PF1 Advanced Class Guide Raging Song rounds-per-day: 3 + Charisma
+/// modifier at 1st level, +2 additional rounds per level thereafter
+/// (verified against the PCGen corpus DESC text, the same shape as Bard's
+/// own Bardic Performance formula with a different base -- 3, not 4).
+const SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY: i16 = 3;
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -4725,11 +4746,22 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // separate `base_ability_modifiers` (pre-rage Constitution), since PF1's
     // rounds-per-day is derived from the character's normal Constitution,
     // not a value that depends on already being raged.
-    let ability_modifiers =
+    let ability_modifiers_after_rage =
         apply_rage_ability_bonuses(base_ability_modifiers, input, &mut explanations);
+    // v0.6 alpha swarm, risks item 8 (first APG/ACG closure): Skald Inspired
+    // Rage's Strength/Constitution morale bonus layers on immediately after
+    // Barbarian's, the identical shape -- class-ownership-gated by
+    // `active_skald_inspired_rage_bonus` construction, so a non-Skald
+    // character (which includes every Barbarian) sees no change here.
+    let ability_modifiers = apply_skald_inspired_rage_ability_bonuses(
+        ability_modifiers_after_rage,
+        input,
+        &mut explanations,
+    );
 
     let (base_attack_bonus, base_saves) =
-        compute_class_chassis(input, &mut explanations, &mut diagnostics).unwrap_or_else(|| {
+        compute_class_chassis(input, &ability_modifiers, &mut explanations, &mut diagnostics)
+            .unwrap_or_else(|| {
             diagnostics.push(ComputationDiagnostic {
                 id: "class_chassis.unsupported".to_owned(),
                 message: format!(
@@ -6830,6 +6862,29 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || supported_wizard_level(input).is_some()
         || is_supported_multiclass_mix(input)
         || is_supported_generic_single_class(input)
+        || is_supported_skald_single_class(input)
+}
+
+/// v0.6 alpha swarm, risks item 8 (first APG/ACG closure): whether `input`
+/// is a single-class Skald at a level within `acg::class_chassis_resolve`'s
+/// declared ceiling for Skald. This is the first time this gate admits any
+/// APG/ACG class -- deliberately an EXACT match on `AcgClassId::Skald`, not
+/// a broad `AcgClassId::from_class_id_str(...).is_some()` check (which
+/// would resolve `Some` for any of the 10 ACG classes, silently admitting
+/// all of them into real save/combat/skill-modifier computation --
+/// verified directly against `AcgClassId::from_class_id_str`'s own
+/// `Self::ALL.iter()` search before writing this). The other 9 ACG classes
+/// (and every APG class) remain genuinely unsupported by this gate; only
+/// Skald's own chassis dispatch (`compute_acg_class_chassis`) grounds
+/// anything beyond BAB/save for now.
+fn is_supported_skald_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Skald) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Skald, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// Whether `input` is a single class, other than Fighter/Wizard (which have
@@ -7182,6 +7237,8 @@ fn compute_acg_class_chassis(
     class_id: AcgClassId,
     class_id_str: &str,
     level: u8,
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
@@ -7241,22 +7298,311 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // The real, unconditional blocker: nothing beyond BAB/save/HP is
-    // grounded for any ACG class yet -- no class-skill list, no named
-    // class features, no spellcasting (even for the casters among the 10).
+    // v0.6 alpha swarm, risks item 8 (first APG/ACG closure, adversarially
+    // reviewed 2026-07-25): Skald is the one ACG class with a genuinely
+    // real class feature now (Inspired Rage) -- the other 9 ACG classes,
+    // and every APG class, keep the exact original unconditional
+    // diagnostic unchanged. This branch is reached only for single-class
+    // Skald (this function is only ever called from `compute_class_chassis`'s
+    // single-class-only section; `AcgClassId::from_class_id_str` is
+    // deliberately not registered with `multiclass_class_level_supported`,
+    // so a Skald-containing multiclass mix never reaches this function at
+    // all), so no separate gate-ordering/hoisting fix is needed the way
+    // CRB classes required once `table_class_id` recognized them
+    // generically.
+    if class_id == AcgClassId::Skald {
+        ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
+    } else {
+        // The real, unconditional blocker: nothing beyond BAB/save/HP is
+        // grounded for any other ACG class yet -- no class-skill list, no
+        // named class features, no spellcasting (even for the casters
+        // among the 10).
+        diagnostics.push(ComputationDiagnostic {
+            id: format!("class_feature.acg.{}.unsupported", class_id.name()),
+            message: format!(
+                "{class_id_str} remains blocked beyond its base-attack-bonus/base-save chassis \
+                 pillar: this ACG class has no class-skill list, no named class-feature \
+                 computation, and no spellcasting posture grounded anywhere in this codebase yet \
+                 (only the BAB/save table and hit die are transcribed); no class-feature or spell \
+                 execution is fabricated in this bounded chassis baseline"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    Some((base_attack_bonus, base_saves))
+}
+
+/// Skald's Raging Song rounds-per-day budget: 3 + Charisma modifier + 2 *
+/// (level - 1) (PF1 Advanced Class Guide, verified against the PCGen corpus
+/// DESC text -- the same shape as `bard_bardic_performance_rounds_per_day`
+/// with a different base, 3 rather than 4). Pure function (v0.6 alpha
+/// swarm, risks item 8, first APG/ACG closure) so the real rage-execution
+/// validation (`ground_or_block_skald_inspired_rage`,
+/// `active_skald_inspired_rage_bonus`) shares one source of truth.
+fn skald_inspired_rage_rounds_per_day(charisma_modifier: i16, level: u8) -> i16 {
+    SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY + charisma_modifier + 2 * (i16::from(level) - 1)
+}
+
+/// Skald's Inspired Rage magnitude tier: (Strength/Constitution morale
+/// bonus, Will-save morale bonus), verified against the PCGen corpus DESC
+/// text and `BONUS:VAR` formulas: STR/CON = 2 + floor(level/8)*2 (+2 at
+/// 1-7, +4 at 8-15, +6 at 16+), Will = 1 + floor(level/4) (+1 at 1-3, rising
+/// every 4 levels). The Armor Class penalty is a flat -1 at every tier
+/// (unlike Barbarian's Rage, which stays -2 at every tier for a different
+/// reason -- Inspired Rage's penalty simply never scales at all), so it is
+/// not part of this tuple -- callers needing it use
+/// `SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY` directly. Pure function so the
+/// real rage-execution engine (ability modifiers, total saves) shares one
+/// source of truth with any future informational explanation record.
+fn skald_inspired_rage_tier(level: u8) -> (i16, i16) {
+    let strength_constitution_bonus = 2 + (i16::from(level) / 8) * 2;
+    let will_save_bonus = 1 + i16::from(level) / 4;
+    (strength_constitution_bonus, will_save_bonus)
+}
+
+/// Whether `input` is a Skald validly, actively singing Inspired Rage right
+/// now, and if so, the magnitude tier to apply (v0.6 alpha swarm, risks
+/// item 8, first APG/ACG closure). Class-ownership-gated by construction:
+/// only returns `Some` when `class_levels` actually contains Skald, so a
+/// non-Skald character's stray `class_ability_activations` entry for
+/// `SKALD_INSPIRED_RAGE_ABILITY_ID` is never read at all, mirroring
+/// `active_barbarian_rage_bonus` exactly. An activation present but not
+/// `ActiveState::EquippedActive`, or one that exceeds the grounded
+/// rounds-per-day budget, is treated the same as "not singing" here --
+/// pushes no diagnostic itself (`ground_or_block_skald_inspired_rage` is
+/// the single place that pushes the over-budget claim-blocking diagnostic
+/// and the informational recognition records).
+///
+/// Self-application: the PCGen corpus text carves out an explicit
+/// exception "allies other than the skald cannot use any Charisma-,
+/// Dexterity-, or Intelligence-based skills..." while raging -- an
+/// exception naming the skald specifically only makes sense if she is
+/// among the affected targets by default, so self-application is modeled
+/// here as Inspired Rage's ordinary behavior, not a narrowed alternate
+/// use. This inference is weaker evidence than Bard's own explicit
+/// "including yourself" phrasing (confirmed absent from the Raging Song/
+/// Inspired Rage corpus text entirely), so the grounded explanation text
+/// in `ground_or_block_skald_inspired_rage` states this evidentiary gap
+/// honestly rather than implying it is as settled as Bard's or Cleric's
+/// Touch of Good self-targeting.
+fn active_skald_inspired_rage_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<(u8, i16, i16)> {
+    let skald_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == SKALD_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == SKALD_INSPIRED_RAGE_ABILITY_ID)?;
+
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+        let rounds_per_day = skald_inspired_rage_rounds_per_day(charisma_modifier, skald_level);
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            return None;
+        }
+    }
+
+    let (strength_constitution_bonus, will_save_bonus) = skald_inspired_rage_tier(skald_level);
+    Some((skald_level, strength_constitution_bonus, will_save_bonus))
+}
+
+/// Grounds or claim-blocks Skald's Inspired Rage execution engine for
+/// `skald_level` (v0.6 alpha swarm, risks item 8, first APG/ACG closure).
+/// Called from `compute_acg_class_chassis`'s Skald branch, gated only on
+/// Skald class-ownership -- mirrors `ground_or_block_barbarian_rage`'s
+/// structure exactly: a character who simply isn't singing is a genuinely
+/// valid PF1 posture (grounds a real "not singing" recognition record,
+/// not a claim-blocking one), and an activation that IS active but exceeds
+/// the grounded rounds-per-day budget is a genuine posture violation and
+/// claim-blocks.
+///
+/// Unlike Barbarian, this is Skald's ONLY grounded class feature this
+/// slice -- spellcasting and every other named-but-unbuilt Skald feature
+/// remain claim-blocked via the new, narrower
+/// `class_feature.acg.skald.spellcasting_deferred.unsupported` diagnostic
+/// pushed unconditionally below (replacing the generic
+/// `class_feature.acg.skald.unsupported` diagnostic the other 9 ACG
+/// classes still get, per the adversarial review's finding 2 -- the old
+/// diagnostic's blanket "no named class-feature computation... grounded
+/// anywhere" claim is false for Skald now that Inspired Rage is real).
+fn ground_or_block_skald_inspired_rage(
+    input: &CharacterInput,
+    skald_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == SKALD_INSPIRED_RAGE_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.inspired_rage_execution.not_singing".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald level {skald_level} is not currently singing Raging Song / Inspired Rage \
+                 (no class_ability_activations entry for \
+                 \"{SKALD_INSPIRED_RAGE_ABILITY_ID}\"): a genuinely valid PF1 posture, so no rage \
+                 bonus, penalty, or budget is claimed. This grounds the Inspired Rage execution \
+                 engine's \"inactive\" branch only; singing is grounded separately below when an \
+                 active, in-budget activation is present"
+            ),
+        });
+        push_skald_spellcasting_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    let rounds_per_day = skald_inspired_rage_rounds_per_day(charisma_modifier, skald_level);
+
+    if let Some(rounds_consumed) = activation.rounds_consumed_today {
+        if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.acg.skald.inspired_rage_execution.rounds_exceeded".to_owned(),
+                message: format!(
+                    "Skald level {skald_level} Raging Song activation claims \
+                     {rounds_consumed} rounds consumed today, exceeding the grounded \
+                     rounds-per-day budget of {rounds_per_day} (3 + Charisma modifier \
+                     ({charisma_modifier}) + 2 * (level - 1)): a genuine posture violation, so \
+                     no rage bonus, penalty, or budget is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            push_skald_spellcasting_deferred_diagnostic(diagnostics);
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let (strength_constitution_bonus, will_save_bonus) =
+                skald_inspired_rage_tier(skald_level);
+            let rounds_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.skald.inspired_rage_execution.active".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Skald level {skald_level} is actively singing Inspired Rage, within the \
+                     grounded rounds-per-day budget ({rounds_per_day} rounds; \
+                     {rounds_consumed_today} consumed today). The \
+                     +{strength_constitution_bonus} Strength / +{strength_constitution_bonus} \
+                     Constitution / +{will_save_bonus} Will morale bonuses and the \
+                     {SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY} Armor Class penalty are applied to \
+                     the integrated ability modifiers, total saves, and baseline Armor Class \
+                     respectively -- see apply_skald_inspired_rage_ability_bonuses, \
+                     compute_total_saves, and compute_combat_baseline. Self-application is \
+                     modeled by inference from the corpus's \"allies other than the skald\" \
+                     exception clause (an exception naming the skald specifically only makes \
+                     sense if she is among the affected targets by default); the corpus carries \
+                     no explicit self-inclusion language here, unlike Bard's \"including \
+                     yourself\""
+                ),
+            });
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.skald.inspired_rage_execution.not_singing".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Skald level {skald_level} has a \"{SKALD_INSPIRED_RAGE_ABILITY_ID}\" \
+                     activation entry but it is not active for this snapshot: a genuinely valid \
+                     PF1 posture (available but not currently singing), so no rage bonus, \
+                     penalty, or budget is claimed"
+                ),
+            });
+        }
+    }
+
+    push_skald_spellcasting_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.skald.unsupported` for Skald specifically (per the
+/// adversarial review's finding 2): named ONLY the genuinely still-missing
+/// pieces (spellcasting and every other named-but-unbuilt Skald class
+/// feature beyond Inspired Rage), unlike the retired diagnostic's blanket
+/// "no named class-feature computation... grounded anywhere" claim, which
+/// is now false for Skald. Pushed unconditionally regardless of Inspired
+/// Rage's own raging state (singing Inspired Rage doesn't grant
+/// spellcasting), mirroring how Sorcerer's/Bard's own narrowed diagnostics
+/// still claim-block every time despite their own grounded pieces.
+fn push_skald_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
-        id: format!("class_feature.acg.{}.unsupported", class_id.name()),
+        id: "class_feature.acg.skald.spellcasting_deferred.unsupported".to_owned(),
         message: format!(
-            "{class_id_str} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar: this ACG class has no class-skill list, no named class-feature \
-             computation, and no spellcasting posture grounded anywhere in this codebase yet \
-             (only the BAB/save table and hit die are transcribed); no class-feature or spell \
-             execution is fabricated in this bounded chassis baseline"
+            "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and Inspired Rage: this ACG class has no class-skill list, no spellcasting \
+             posture (Skald casts from the Bard spell list, but its own spells-known/per-day \
+             table numbers have not yet been independently verified or built), and no other \
+             named class feature grounded anywhere in this codebase yet; no class-feature or \
+             spell execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
+}
 
-    Some((base_attack_bonus, base_saves))
+/// Applies Skald Inspired Rage's Strength/Constitution morale bonus to
+/// `base` when a valid, active, in-budget Inspired Rage activation is
+/// present for this character (v0.6 alpha swarm, risks item 8, first
+/// APG/ACG closure). Mirrors `apply_rage_ability_bonuses` exactly --
+/// chained immediately after it in `compute_pilot_base_chassis` so a
+/// (structurally impossible, but defensively independent) character
+/// matching both gates would still see both bonuses layered correctly;
+/// class-ownership-gated by construction via `active_skald_inspired_rage_bonus`.
+///
+/// The Strength/Constitution ability-SCORE bonus (+2/+4/+6, always even)
+/// becomes exactly half that as an ability-MODIFIER bonus (+1/+2/+3):
+/// modifier = floor((score - 10) / 2), and adding an even N to score adds
+/// exactly N/2 to the floored modifier regardless of the original score's
+/// parity (identical reasoning to `apply_rage_ability_bonuses`).
+fn apply_skald_inspired_rage_ability_bonuses(
+    base: AbilityModifiers,
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> AbilityModifiers {
+    let Some((skald_level, strength_constitution_bonus, will_save_bonus)) =
+        active_skald_inspired_rage_bonus(input, &base)
+    else {
+        return base;
+    };
+
+    let ability_modifier_bonus = strength_constitution_bonus / 2;
+    let boosted = AbilityModifiers {
+        strength: base.strength + ability_modifier_bonus,
+        constitution: base.constitution + ability_modifier_bonus,
+        ..base
+    };
+    explanations.push(ComputationExplanation {
+        id: "ability_modifier.skald.inspired_rage_bonus_applied".to_owned(),
+        value: ability_modifier_bonus,
+        detail: format!(
+            "Skald level {skald_level} Inspired Rage applied to ability modifiers: \
+             +{strength_constitution_bonus} Strength / +{strength_constitution_bonus} \
+             Constitution morale bonus (ability score) is +{ability_modifier_bonus} Strength \
+             modifier / +{ability_modifier_bonus} Constitution modifier (an even score bonus \
+             always halves exactly onto the floored modifier). Applied only while actively, \
+             validly singing; the Will-save bonus (+{will_save_bonus}) is layered onto \
+             compute_total_saves separately, and the \
+             {SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY} Armor Class penalty onto \
+             compute_combat_baseline separately"
+        ),
+    });
+    boosted
 }
 
 /// Whether `class_level` is a class this dispatch grounds a base-chassis
@@ -7298,11 +7644,12 @@ fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
 
 fn compute_class_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
     if input.chosen.class_levels.len() >= 2 {
-        return compute_multiclass_base_chassis(input, explanations, diagnostics);
+        return compute_multiclass_base_chassis(input, ability_modifiers, explanations, diagnostics);
     }
     let [class_level] = input.chosen.class_levels.as_slice() else {
         return None;
@@ -7340,6 +7687,8 @@ fn compute_class_chassis(
             acg_class_id,
             &class_level.class_id,
             class_level.level,
+            input,
+            ability_modifiers,
             explanations,
             diagnostics,
         )
@@ -7372,6 +7721,7 @@ fn compute_class_chassis(
 /// which is not a naive sum and diverges from this shape at some level pairs.
 fn compute_multiclass_base_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     // Every class in a supported multiclass mix (per `is_supported_multiclass_mix`)
     // resolves its own isolated `compute_class_chassis` to `Some`, so no
@@ -7395,8 +7745,12 @@ fn compute_multiclass_base_chassis(
 
         let mut isolated_explanations = Vec::new();
         let mut isolated_diagnostics = Vec::new();
-        let (bab, _isolated_saves) =
-            compute_class_chassis(&isolated, &mut isolated_explanations, &mut isolated_diagnostics)?;
+        let (bab, _isolated_saves) = compute_class_chassis(
+            &isolated,
+            ability_modifiers,
+            &mut isolated_explanations,
+            &mut isolated_diagnostics,
+        )?;
         total_bab += bab;
 
         // SD-21 E7.29: PF1's multiclass base-save rule sums each class's
@@ -20847,6 +21201,14 @@ fn compute_total_saves(
     let rage_will_bonus = active_barbarian_rage_bonus(input, ability_modifiers)
         .map(|(_, _, _, will_save_bonus, _)| will_save_bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8 (first APG/ACG closure): Skald Inspired
+    // Rage's Will-save morale bonus layers on here too, the same shape as
+    // Barbarian's -- class-ownership-gated by
+    // `active_skald_inspired_rage_bonus` construction, 0 for every non-Skald
+    // or not-currently-singing character.
+    let inspired_rage_will_bonus = active_skald_inspired_rage_bonus(input, ability_modifiers)
+        .map(|(_, _, will_save_bonus)| will_save_bonus)
+        .unwrap_or(0);
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
     // sacred bonus (self-application only) applies to all three saves --
     // class-ownership-gated by `active_cleric_touch_of_good_bonus`
@@ -20866,6 +21228,7 @@ fn compute_total_saves(
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
             + rage_will_bonus
+            + inspired_rage_will_bonus
             + touch_of_good_save_bonus,
     };
 
@@ -20898,12 +21261,14 @@ fn compute_total_saves(
         detail: format!(
             "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) + \
              feat bonus (+{}, Iron Will if selected) + Barbarian Rage morale bonus (+{}, only \
-             while actively, validly raging) + Cleric Touch of Good sacred bonus (+{}, \
+             while actively, validly raging) + Skald Inspired Rage morale bonus (+{}, only \
+             while actively, validly singing) + Cleric Touch of Good sacred bonus (+{}, \
              self-applied) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
             rage_will_bonus,
+            inspired_rage_will_bonus,
             touch_of_good_save_bonus,
             total_saves.will
         ),
@@ -21241,11 +21606,23 @@ fn compute_combat_baseline(
     } else {
         0
     };
+    // v0.6 alpha swarm, risks item 8 (first APG/ACG closure): Skald Inspired
+    // Rage's Armor Class penalty applies here too, the same shape as
+    // Barbarian's Rage penalty -- class-ownership-gated by
+    // `active_skald_inspired_rage_bonus` construction, 0 for every non-Skald
+    // or not-currently-singing character.
+    let inspired_rage_armor_class_penalty =
+        if active_skald_inspired_rage_bonus(input, ability_modifiers).is_some() {
+            SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY
+        } else {
+            0
+        };
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
         + DODGE_AC_BONUS
-        + rage_armor_class_penalty;
+        + rage_armor_class_penalty
+        + inspired_rage_armor_class_penalty;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -21254,7 +21631,8 @@ fn compute_combat_baseline(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
              + Dodge (+{DODGE_AC_BONUS}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
-             actively, validly raging); shield is absent (+0) = {armor_class}"
+             actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
+             while actively, validly singing); shield is absent (+0) = {armor_class}"
         ),
     });
 
@@ -23328,12 +23706,25 @@ mod acg_class_chassis_dispatch_tests {
     }
 
     /// The real safety property this slice's own design depends on: every
-    /// ACG class stays honestly `Blocked` -- BAB/save/HP are real, but the
-    /// class-skill/feature/spellcasting bucket is genuinely ungrounded, so
-    /// this must never silently read as `Computed`.
+    /// ACG class OTHER THAN Skald stays honestly `Blocked` with the
+    /// original, unmodified generic diagnostic -- BAB/save/HP are real, but
+    /// the class-skill/feature/spellcasting bucket is genuinely ungrounded,
+    /// so this must never silently read as `Computed`.
+    ///
+    /// Skald is carved out of this loop (v0.6 alpha swarm, risks item 8,
+    /// first APG/ACG closure, adversarial review finding 2): its own
+    /// generic `class_feature.acg.skald.unsupported` diagnostic was retired
+    /// and replaced with the narrower `spellcasting_deferred` diagnostic,
+    /// since Inspired Rage is now genuinely grounded -- see
+    /// `skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// below for Skald's own dedicated coverage.
     #[test]
     fn all_ten_acg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
+            if class_id == "class:skald" {
+                continue;
+            }
+
             let input = acg_style_input(class_id, 1);
             let receipt = build_pilot_headless_receipt(&input);
 
@@ -23354,6 +23745,113 @@ mod acg_class_chassis_dispatch_tests {
                     .any(|d| d.id == expected_diagnostic_id && d.claim_blocking),
                 "expected {expected_diagnostic_id}: {:?}",
                 receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Skald-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap (adversarial review finding 2): the OLD generic
+    /// `class_feature.acg.skald.unsupported` diagnostic must never appear
+    /// for Skald at any raging state, while the NEW, narrower
+    /// `class_feature.acg.skald.spellcasting_deferred.unsupported`
+    /// diagnostic always does -- Skald stays `Blocked` on spellcasting
+    /// alone, even though Inspired Rage itself is now genuinely grounded.
+    #[test]
+    fn skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:skald", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Skald must stay Blocked on its deferred spellcasting posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.unsupported"),
+            "the retired generic diagnostic must never appear for Skald: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The critical negative-leak test (adversarial review finding 1,
+    /// flagged by the lead as the one to verify most carefully): the OTHER
+    /// 9 ACG classes must produce ZERO `defense.total_save.*`/
+    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
+    /// level 1, even when built from the exact same Longsword/Chain Shirt/
+    /// Dodge/Weapon-Focus/skill-rank posture that genuinely satisfies every
+    /// non-class-recognition precondition those pillars check -- proving
+    /// the new `is_supported_skald_single_class` gate is a real exact
+    /// match on `AcgClassId::Skald`, not a broad `.is_some()` check that
+    /// would silently admit all 10 ACG classes into real pillar
+    /// computation. This is stronger than the pre-existing "stays Blocked"
+    /// assertion above, which does not by itself rule out a silent
+    /// pillar-output leak alongside an unrelated claim-blocking diagnostic.
+    #[test]
+    fn the_other_nine_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+        for (class_id, ..) in EXPECTED_LEVEL_1 {
+            if class_id == "class:skald" {
+                continue;
+            }
+
+            let input = acg_style_input(class_id, 1);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let leaked: Vec<&str> = receipt
+                .computation
+                .explanations
+                .iter()
+                .map(|e| e.id.as_str())
+                .filter(|id| {
+                    id.starts_with("defense.total_save.")
+                        || id.starts_with("defense.baseline_")
+                        || id.starts_with("combat.baseline_")
+                        || id.starts_with("skill.selected_modifier.")
+                })
+                .collect();
+            assert!(
+                leaked.is_empty(),
+                "{class_id} must produce zero total-save/combat-baseline/selected-skill \
+                 explanations (the chassis-integration gate must not silently admit it): {leaked:?}"
+            );
+        }
+    }
+
+    /// Skald's own positive counterpart to the negative-leak test above:
+    /// the SAME satisfying posture DOES produce real total-save/combat-
+    /// baseline/selected-skill explanations for Skald specifically, proving
+    /// the new gate genuinely admits Skald (not merely failing to admit the
+    /// other 9 by accident).
+    #[test]
+    fn skald_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:skald", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Skald: {:?}",
+                receipt.computation.explanations
             );
         }
     }
@@ -24878,6 +25376,230 @@ mod barbarian_dispatch_widening_safety_tests {
         // Base Strength 16 (+4 with the fixture's chosen Human +2 floating
         // Strength bonus applied) + Greater Rage's +3 modifier bonus = +7.
         assert_eq!(receipt.computation.ability_modifiers.strength, 7);
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, first APG/ACG closure (2026-07-25):
+/// Skald's Inspired Rage mirrors Barbarian's Rage execution shape exactly
+/// (same four-value STR/CON/Will/AC pattern), but UNLIKE every
+/// `<class>_dispatch_widening_safety_tests` module since Barbarian's own,
+/// a valid Skald posture never reaches `Computed` -- Skald's own
+/// spellcasting and every other named-but-unbuilt class feature stay
+/// permanently claim-blocked via `class_feature.acg.skald.spellcasting_deferred.unsupported`,
+/// the same permanent-burden shape Sorcerer's own bloodline diagnostic
+/// keeps regardless of Arcane Bond's own resolution. This module also
+/// exercises the genuinely new chassis-integration gate
+/// (`is_supported_skald_single_class`) itself, not just the Rage-mirroring
+/// pillar work.
+#[cfg(test)]
+mod skald_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, SKALD_CLASS_ID, SKALD_INSPIRED_RAGE_ABILITY_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_skald_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SKALD_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Skald who is not singing Raging Song (no
+    /// `class_ability_activations` entry at all) is a genuinely valid PF1
+    /// posture -- reaches only as far as this slice allows, i.e. `Blocked`
+    /// on the new, narrower spellcasting_deferred diagnostic alone (never
+    /// the retired generic one), with the honest "not singing" recognition
+    /// record grounded.
+    #[test]
+    fn single_class_skald_not_singing_stays_blocked_on_deferred_spellcasting_only() {
+        let input = human_skald_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Skald must stay Blocked on spellcasting alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.skald.inspired_rage_execution.not_singing"),
+            "expected the honest not-singing recognition record: {:?}",
+            receipt.computation.explanations
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.unsupported"),
+            "the retired generic diagnostic must never appear for Skald: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Skald actively, validly singing Inspired Rage
+    /// (within budget) applies the real Strength/Constitution/Will/Armor-
+    /// Class bonuses and penalty to the integrated totals -- but still
+    /// stays `Blocked` (spellcasting_deferred), unlike Barbarian's own
+    /// equivalent test which reaches `Computed`.
+    ///
+    /// Charisma 8 (fixture base) -> -1 modifier: rounds per day = 3 + (-1)
+    /// + 2*(1-1) = 2, so only 1-2 rounds consumed today stays in budget.
+    #[test]
+    fn single_class_skald_actively_singing_in_budget_applies_real_bonuses_but_stays_blocked() {
+        let mut input = human_skald_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(1),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Skald stays Blocked on spellcasting even while actively, validly singing: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the spellcasting_deferred diagnostic even while singing: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        // Base fixture is Strength 16 (+4 with the fixture's chosen Human +2
+        // floating Strength bonus applied), Constitution 14 (+2). Inspired
+        // Rage (level 1) adds +2 Strength / +2 Constitution ability SCORE,
+        // i.e. +1/+1 ability MODIFIER.
+        assert_eq!(receipt.computation.ability_modifiers.strength, 5);
+        assert_eq!(receipt.computation.ability_modifiers.constitution, 3);
+
+        let will_save = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.will")
+            .expect("total Will save must be grounded");
+        // Base Will save (Skald level 1, good Will: 2) + Wisdom modifier
+        // (12 -> +1) + feat bonus (0) + Inspired Rage Will bonus (+1) = 4.
+        assert_eq!(
+            will_save.value, 4,
+            "Inspired Rage's Will-save morale bonus must be applied: {:?}",
+            will_save
+        );
+
+        let armor_class = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect("baseline Armor Class must be grounded");
+        // Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) - Inspired
+        // Rage penalty (1) = 16.
+        assert_eq!(
+            armor_class.value, 16,
+            "Inspired Rage's Armor Class penalty must be applied: {:?}",
+            armor_class
+        );
+    }
+
+    /// An Inspired Rage activation that exceeds the grounded rounds-per-day
+    /// budget is a genuine posture violation and must claim-block -- never
+    /// silently capped, mirroring every other over-budget check landed
+    /// this session.
+    #[test]
+    fn single_class_skald_over_budget_inspired_rage_stays_blocked_and_applies_no_bonus() {
+        let mut input = human_skald_input(1);
+        // Charisma 8 (-1): rounds per day = 3 + (-1) + 2*(1-1) = 2.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(3),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.skald.inspired_rage_execution.rounds_exceeded"
+                    && d.claim_blocking),
+            "expected the over-budget claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "no Inspired Rage bonus is applied for an over-budget, invalid posture: {:?}",
+            receipt.computation.ability_modifiers
+        );
+    }
+
+    /// A non-Skald character carrying a spoofed `"inspired_rage"`
+    /// activation entry must have it silently ignored, not applied -- the
+    /// class-ownership gate is by construction
+    /// (`active_skald_inspired_rage_bonus` only ever reads
+    /// `class_ability_activations` after confirming `class_levels` contains
+    /// Skald), not a bolt-on rejection. Also proves Fighter's own golden
+    /// path (including reaching `Computed`) is unaffected by a stray Skald
+    /// activation entry.
+    #[test]
+    fn non_skald_characters_spoofed_inspired_rage_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Skald inspired_rage entry: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.computation.ability_modifiers.strength, 4,
+            "a non-Skald character's spoofed inspired_rage entry must never apply a bonus: {:?}",
+            receipt.computation.ability_modifiers
+        );
     }
 }
 

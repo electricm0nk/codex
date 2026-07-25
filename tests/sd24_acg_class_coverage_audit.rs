@@ -60,9 +60,20 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// starts wiring named features, it must consciously update this
 /// assertion (and the coverage-matrix artifact) rather than silently
 /// leaving the audit stale.
+///
+/// **Updated (v0.6 alpha swarm, risks item 8, first APG/ACG class-specific
+/// closure, 2026-07-25):** exactly this canary fired -- Skald's Inspired
+/// Rage is now genuinely wired, the first named ACG class feature this
+/// repo computes. Skald is carved out of the "stays 0" loop below and
+/// given its own dedicated assertion (`named_features_wired == 1`), per
+/// this test's own documented update instruction. Every other ACG class
+/// remains at 0, unchanged.
 #[test]
-fn zero_named_class_features_are_wired_for_any_acg_class_yet() {
+fn zero_named_class_features_are_wired_for_any_acg_class_except_skalds_inspired_rage() {
     for row in coverage_report() {
+        if row.class_id == AcgClassId::Skald {
+            continue;
+        }
         assert_eq!(
             row.named_features_wired, 0,
             "{:?}: named_features_wired should be 0 (documented SD-24 Epic 4 finding); \
@@ -76,6 +87,18 @@ fn zero_named_class_features_are_wired_for_any_acg_class_yet() {
             row.class_id
         );
     }
+
+    let skald_row = class_coverage(AcgClassId::Skald);
+    assert_eq!(
+        skald_row.named_features_wired, 1,
+        "Skald's Inspired Rage (Raging Song's 1st-level song type) is now genuinely wired -- \
+         update this assertion (and the coverage-matrix artifact) if this count changes again"
+    );
+    assert!(
+        skald_row.named_features_expected > skald_row.named_features_wired,
+        "Skald: named_features_expected should still exceed named_features_wired (spellcasting \
+         and every other named feature besides Inspired Rage remain ungrounded)"
+    );
 }
 
 /// The audit's third finding, proven empirically rather than by
@@ -101,6 +124,16 @@ fn zero_named_class_features_are_wired_for_any_acg_class_yet() {
 /// (which floor to +0 at level 1). Checked each of the ten individually
 /// against the real corpus rather than assuming a single exception would
 /// cover it.
+///
+/// **Updated (v0.6 alpha swarm, risks item 8, first APG/ACG class-specific
+/// closure, 2026-07-25):** Skald is carved out of the per-class diagnostic
+/// assertion below. Its own generic `class_feature.acg.skald.unsupported`
+/// diagnostic was retired (its blanket "no named class-feature
+/// computation... grounded anywhere" claim became false once Inspired Rage
+/// was genuinely wired) and replaced with the narrower
+/// `class_feature.acg.skald.spellcasting_deferred.unsupported` diagnostic,
+/// naming only the pieces still genuinely missing. Every other ACG class
+/// keeps the original, unmodified diagnostic.
 #[test]
 fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic() {
     for class_id in AcgClassId::ALL {
@@ -129,7 +162,11 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             class_id
         );
 
-        let expected_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
+        let expected_diagnostic_id = if class_id == AcgClassId::Skald {
+            "class_feature.acg.skald.spellcasting_deferred.unsupported".to_owned()
+        } else {
+            format!("class_feature.acg.{}.unsupported", class_id.name())
+        };
         let unsupported = computation
             .diagnostics
             .iter()
@@ -148,6 +185,16 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
             class_id
         );
+        if class_id == AcgClassId::Skald {
+            assert!(
+                !computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == "class_feature.acg.skald.unsupported"),
+                "the retired generic diagnostic must never appear for Skald: {:?}",
+                computation.diagnostics
+            );
+        }
 
         let row = class_coverage(class_id);
         assert!(

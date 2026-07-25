@@ -210,11 +210,16 @@ pub struct AcgClassCoverage {
     /// Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
-    /// for. Zero for every ACG class today: SD-22 Epic 4 deliberately
-    /// scoped its ingest to the BAB/save chassis only (see e.g.
-    /// `class_arcanist.rs`'s own doc comment), and no follow-on cycle has
-    /// since ingested `acg_abilities_class.lst`'s per-level feature blocks
-    /// for any ACG class.
+    /// for. Zero for every ACG class except Skald as of the v0.6 alpha
+    /// swarm's first APG/ACG class-specific closure (risks item 8): Skald's
+    /// 1st-level Raging Song song type, Inspired Rage, is now genuinely
+    /// wired (`pilot_compute::ground_or_block_skald_inspired_rage`) --
+    /// see `class_coverage`'s own Skald branch. Every other ACG class
+    /// remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
+    /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
+    /// comment), and no follow-on cycle has since ingested
+    /// `acg_abilities_class.lst`'s per-level feature blocks for any other
+    /// ACG class.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -291,11 +296,17 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
+    // v0.6 alpha swarm, risks item 8 (first APG/ACG class-specific
+    // closure): Skald's Inspired Rage is the one real, wired named class
+    // feature among all ten ACG classes today -- see this field's own doc
+    // comment above.
+    let named_features_wired = if class_id == AcgClassId::Skald { 1 } else { 0 };
+
     AcgClassCoverage {
         class_id,
         chassis_rows_wired,
         chassis_rows_expected,
-        named_features_wired: 0,
+        named_features_wired,
         named_features_expected: named_features_expected(class_id),
         pilot_compute_integrated: true,
         level_up_wired: false,
