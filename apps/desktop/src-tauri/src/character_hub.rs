@@ -2737,9 +2737,12 @@ mod tests {
         // diagnostic is also no longer unconditional -- it's a real
         // validation now, and compose_character_input seeds no Cleric
         // spell selections, so the (valid, empty) prepared-spell posture no
-        // longer trips it. Only the permanently-unconditional
-        // domain-powers diagnostic remains (no domain-power execution or
-        // domain spell-list content is grounded anywhere in this codebase).
+        // longer trips it. The domain-powers diagnostic remains here too --
+        // not because it's still permanently unconditional (a later slice
+        // made Good domain's Touch of Good genuinely closable, self-scoped),
+        // but because compose_character_input seeds no domain choice at
+        // all for this bare fixture, so it falls into the still-blocking
+        // catch-all branch (no domain chosen).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
             BTreeSet::from(["class_feature.cleric.domain_powers.unsupported".to_owned()])

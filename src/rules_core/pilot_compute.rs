@@ -3849,6 +3849,18 @@ const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
 const GOOD_DOMAIN_SELECTION: &str = "domain:good";
 const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 
+/// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure): `ability_id`
+/// for the Good domain's granted power, Touch of Good. Grounds SELF-
+/// application only -- PF1 Core Rulebook Good Domain reads "touch a
+/// creature, granting IT a sacred bonus," and this codebase has no
+/// target-creature entity anywhere, so the only honest reuse of the
+/// `ClassAbilityActivation` schema (which has no `target` field) is the
+/// cleric touching herself. This is Touch of Good's RAW-secondary use
+/// case (buffing an ally is the primary one), named explicitly wherever
+/// this ability is explained -- narrows by TARGET, not by facet, unlike
+/// Inspire Courage's attack-only narrowing.
+const CLERIC_TOUCH_OF_GOOD_ABILITY_ID: &str = "touch_of_good";
+
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
 // cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
 // she casts only 1st-level cleric spells (2nd-level cleric spells begin at caster
@@ -17424,16 +17436,112 @@ fn explain_cleric_level1_spell_baseline(
         .find(|class_level| class_level.class_id == CLERIC_CLASS_ID)
         .map(|class_level| class_level.level)
     {
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
-            message: "Cleric remains blocked on its domain powers burden: domain selection, \
-                 domain spell-list contents, and the granted powers of any domain (e.g. Good's \
-                 Touch of Good, Healing's Rebuke Death, whose heal amount is not a flat number) \
-                 are not implemented anywhere in this codebase, so no Cleric domain-power \
-                 support is claimed"
-                .to_owned(),
-            claim_blocking: true,
-        });
+        // v0.6 alpha swarm, risks item 8 (Cleric Good domain closure,
+        // adversarially reviewed 2026-07-25): the domain-powers burden is
+        // no longer flatly unconditional for every Cleric -- Good domain's
+        // Touch of Good (self-application only) can now genuinely close.
+        // The catch-all below (no domain chosen, an unrecognized domain
+        // chosen, or Good not chosen at all) preserves the EXACT original
+        // unconditional diagnostic unchanged, so no input this seam didn't
+        // specifically improve can silently reach Computed -- the same
+        // false-Computed risk the Ranger dispatch review caught, closed
+        // here by construction rather than by review alone.
+        let domain_selections_top: Vec<&str> = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == CLERIC_DOMAIN_CHOICE_ID)
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        let good_domain_chosen = domain_selections_top.contains(&GOOD_DOMAIN_SELECTION);
+        let healing_domain_chosen = domain_selections_top.contains(&HEALING_DOMAIN_SELECTION);
+        let unrecognized_other_domain_chosen = domain_selections_top
+            .iter()
+            .any(|d| *d != GOOD_DOMAIN_SELECTION && *d != HEALING_DOMAIN_SELECTION);
+
+        if good_domain_chosen && !unrecognized_other_domain_chosen {
+            let touch_of_good_bonus = cleric_touch_of_good_bonus(cleric_level);
+            let touch_of_good_activation = input
+                .chosen
+                .class_ability_activations
+                .iter()
+                .find(|activation| activation.ability_id == CLERIC_TOUCH_OF_GOOD_ABILITY_ID);
+            match touch_of_good_activation.map(|activation| activation.active_state) {
+                Some(ActiveState::EquippedActive) => {
+                    explanations.push(ComputationExplanation {
+                        id: "class_feature.cleric.good_domain.touch_of_good_self_application"
+                            .to_owned(),
+                        value: touch_of_good_bonus,
+                        detail: format!(
+                            "Cleric level {cleric_level} is actively using Touch of Good on \
+                             HERSELF, SELF-APPLICATION ONLY (PF1 Core Rulebook Good Domain: \
+                             touch a creature, granting it a +{touch_of_good_bonus} sacred bonus \
+                             on attack rolls, skill checks, ability checks, and saving throws \
+                             for 1 round). The +{touch_of_good_bonus} bonus is applied to her \
+                             own baseline melee attack bonus, selected-skill modifiers, and \
+                             total saves (see compute_combat_baseline, \
+                             compute_selected_skill_modifiers, compute_total_saves). Granting \
+                             this bonus to ANOTHER creature -- Touch of Good's real primary use \
+                             in play -- is NOT modeled: no target-creature entity exists \
+                             anywhere in this codebase, only the acting character's own rolls \
+                             are ever computed. The ability-check facet has no separate \
+                             integrated total in this codebase and stays a flat, unintegrated \
+                             magnitude"
+                        ),
+                    });
+                }
+                _ => {
+                    explanations.push(ComputationExplanation {
+                        id: "class_feature.cleric.good_domain.touch_of_good_not_active".to_owned(),
+                        value: 0,
+                        detail: format!(
+                            "Cleric level {cleric_level} is not currently using Touch of Good \
+                             (no active class_ability_activations entry for \
+                             \"{CLERIC_TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 \
+                             posture -- not every Good-domain Cleric is using this limited-use \
+                             power at every moment -- so no sacred bonus is claimed"
+                        ),
+                    });
+                }
+            }
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.cleric.domain_spell_list_contents.unmodeled".to_owned(),
+                message: "Cleric domain spell-list contents remain unmodeled: which specific \
+                     domain spell fills the already-grounded domain spell slot (per domain, per \
+                     spell level) is not implemented for any domain in this codebase. The slot \
+                     COUNT is grounded for real; its CONTENT is named but not computed, the \
+                     same 'grant-only identity record, no execution engine' idiom used \
+                     throughout this session (e.g. Bard's six other bardic performances). This \
+                     does not block an otherwise-valid Good-domain posture"
+                    .to_owned(),
+                claim_blocking: false,
+            });
+            if healing_domain_chosen {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.cleric.healing_domain.rebuke_death.unsupported".to_owned(),
+                    message: "Cleric remains blocked on the Healing domain's granted power, \
+                         Rebuke Death: the heal amount (1d4 points plus 1 per two cleric levels) \
+                         is a real dice roll, not a flat number, and its target (a living \
+                         creature below 0 hit points) is a different creature's hit-point state \
+                         this codebase has no concept of anywhere -- unlike Touch of Good, there \
+                         is no honest self-scoped version of healing another creature, so no \
+                         Rebuke Death support is claimed"
+                        .to_owned(),
+                    claim_blocking: true,
+                });
+            }
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
+                message: "Cleric remains blocked on its domain powers burden: domain selection, \
+                     domain spell-list contents, and the granted powers of any domain (e.g. Good's \
+                     Touch of Good, Healing's Rebuke Death, whose heal amount is not a flat number) \
+                     are not implemented anywhere in this codebase, so no Cleric domain-power \
+                     support is claimed"
+                    .to_owned(),
+                claim_blocking: true,
+            });
+        }
 
         let unmet = unmet_cleric_prepared_spell_conditions(input, cleric_level, ability_modifiers);
         if unmet.is_empty() {
@@ -17924,11 +18032,60 @@ fn explain_cleric_level1_spell_baseline(
         });
     }
 
-    // (v0.6 alpha swarm, risks item 8, sixth slice, 2026-07-25) Both
-    // remaining burdens are now pushed unconditionally at the top of this
-    // function (see that push site's own doc comment for why): the
-    // domain-powers burden is permanently unconditional, and the prepared
-    // divine spell posture is now a real, conditional validation.
+    // (v0.6 alpha swarm, risks item 8) Both remaining burdens are pushed at
+    // the top of this function (see that push site's own doc comment for
+    // the full conditional shape): the domain-powers burden is no longer
+    // flatly unconditional -- Good domain's Touch of Good (self-scoped)
+    // can genuinely close it -- and the prepared divine spell posture is a
+    // real, conditional validation, same as before.
+}
+
+/// Good domain's Touch of Good sacred bonus: half cleric level, minimum 1
+/// (PF1 Core Rulebook Good Domain). Pure function (v0.6 alpha swarm, risks
+/// item 8) so the pre-existing informational explanation record and the
+/// real self-application closure share one source of truth, mirroring
+/// `bard_inspire_courage_bonus`'s own shape.
+fn cleric_touch_of_good_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Whether `input` is a Cleric actively, validly using Touch of Good on
+/// herself right now, and if so, the sacred bonus to apply (v0.6 alpha
+/// swarm, risks item 8). Class-ownership-gated by construction: only
+/// returns `Some` when `class_levels` contains Cleric AND the Good domain
+/// is recognized as chosen (mirrors the Barbarian Rage / Bard Inspire
+/// Courage spoofed-activation shape exactly) -- a non-Cleric or a Cleric
+/// without Good domain chosen never has this bonus applied regardless of
+/// any stray `class_ability_activations` entry.
+fn active_cleric_touch_of_good_bonus(input: &CharacterInput) -> Option<i16> {
+    let cleric_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == CLERIC_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+
+    let domain_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == CLERIC_DOMAIN_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    if !domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
+        return None;
+    }
+
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == CLERIC_TOUCH_OF_GOOD_ABILITY_ID)?;
+    if activation.active_state != ActiveState::EquippedActive {
+        return None;
+    }
+
+    Some(cleric_touch_of_good_bonus(cleric_level))
 }
 
 /// The highest ACCESSIBLE cleric spell level (1st+) at the given cleric
@@ -20326,10 +20483,26 @@ fn compute_total_saves(
     let rage_will_bonus = active_barbarian_rage_bonus(input, ability_modifiers)
         .map(|(_, _, _, will_save_bonus, _)| will_save_bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
+    // sacred bonus (self-application only) applies to all three saves --
+    // class-ownership-gated by `active_cleric_touch_of_good_bonus`
+    // construction, 0 for every non-Cleric, non-Good-domain, or
+    // not-currently-active character.
+    let touch_of_good_save_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
     let total_saves = BaseSaves {
-        fortitude: base_saves.fortitude + ability_modifiers.constitution + feat_save_bonuses.fortitude,
-        reflex: base_saves.reflex + ability_modifiers.dexterity + feat_save_bonuses.reflex,
-        will: base_saves.will + ability_modifiers.wisdom + feat_save_bonuses.will + rage_will_bonus,
+        fortitude: base_saves.fortitude
+            + ability_modifiers.constitution
+            + feat_save_bonuses.fortitude
+            + touch_of_good_save_bonus,
+        reflex: base_saves.reflex
+            + ability_modifiers.dexterity
+            + feat_save_bonuses.reflex
+            + touch_of_good_save_bonus,
+        will: base_saves.will
+            + ability_modifiers.wisdom
+            + feat_save_bonuses.will
+            + rage_will_bonus
+            + touch_of_good_save_bonus,
     };
 
     let class_label = class_summary_label(input);
@@ -20338,9 +20511,10 @@ fn compute_total_saves(
         value: total_saves.fortitude,
         detail: format!(
             "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier \
-             (+{}) + feat bonus (+{}, Great Fortitude if selected) = {}",
+             (+{}) + feat bonus (+{}, Great Fortitude if selected) + Cleric Touch of Good sacred \
+             bonus (+{}, self-applied) = {}",
             base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
-            total_saves.fortitude
+            touch_of_good_save_bonus, total_saves.fortitude
         ),
     });
     explanations.push(ComputationExplanation {
@@ -20348,8 +20522,10 @@ fn compute_total_saves(
         value: total_saves.reflex,
         detail: format!(
             "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) + \
-             feat bonus (+{}, Lightning Reflexes if selected) = {}",
-            base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex, total_saves.reflex
+             feat bonus (+{}, Lightning Reflexes if selected) + Cleric Touch of Good sacred bonus \
+             (+{}, self-applied) = {}",
+            base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex,
+            touch_of_good_save_bonus, total_saves.reflex
         ),
     });
     explanations.push(ComputationExplanation {
@@ -20358,11 +20534,13 @@ fn compute_total_saves(
         detail: format!(
             "Total Will save: {class_label} base Will save (+{}) + Wisdom modifier (+{}) + \
              feat bonus (+{}, Iron Will if selected) + Barbarian Rage morale bonus (+{}, only \
-             while actively, validly raging) = {}",
+             while actively, validly raging) + Cleric Touch of Good sacred bonus (+{}, \
+             self-applied) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
             rage_will_bonus,
+            touch_of_good_save_bonus,
             total_saves.will
         ),
     });
@@ -20470,38 +20648,59 @@ fn compute_selected_skill_modifiers(
             .to_owned()
     };
 
+    // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
+    // sacred bonus (self-application only) applies to all three selected
+    // skills -- class-ownership-gated by `active_cleric_touch_of_good_bonus`
+    // construction, 0 for every non-Cleric, non-Good-domain, or
+    // not-currently-active character.
+    let touch_of_good_skill_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
+    let touch_of_good_skill_detail = if touch_of_good_skill_bonus > 0 {
+        format!(" + Cleric Touch of Good sacred bonus ({touch_of_good_skill_bonus:+}, self-applied)")
+    } else {
+        String::new()
+    };
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let climb = rank + ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
+    let climb = rank
+        + ability_modifiers.strength
+        + class_skill_bonus
+        + armor_check_penalty
+        + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
-             {class_skill_bonus_detail} + {armor_check_detail} = {climb}",
+             {class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = {climb}",
             ability_modifiers.strength
         ),
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
-    let intimidate = rank + ability_modifiers.charisma + class_skill_bonus;
+    let intimidate =
+        rank + ability_modifiers.charisma + class_skill_bonus + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
             "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
-             {class_skill_bonus_detail} = {intimidate}",
+             {class_skill_bonus_detail}{touch_of_good_skill_detail} = {intimidate}",
             ability_modifiers.charisma
         ),
     });
 
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let swim = rank + ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
+    let swim = rank
+        + ability_modifiers.strength
+        + class_skill_bonus
+        + armor_check_penalty
+        + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
-             {class_skill_bonus_detail} + {armor_check_detail} = {swim}",
+             {class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = {swim}",
             ability_modifiers.strength
         ),
     });
@@ -20622,11 +20821,18 @@ fn compute_combat_baseline(
         active_bard_inspire_courage_attack_bonus(input, ability_modifiers)
             .map(|(_, bonus)| bonus)
             .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
+    // sacred bonus (self-application only) applies here -- class-
+    // ownership-gated by `active_cleric_touch_of_good_bonus` construction,
+    // 0 for every non-Cleric, non-Good-domain, or not-currently-active
+    // character.
+    let touch_of_good_attack_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
         + weapon_training_bonus
-        + inspire_courage_attack_bonus;
+        + inspire_courage_attack_bonus
+        + touch_of_good_attack_bonus;
     let weapon_training_detail = if weapon_training_bonus > 0 {
         format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
     } else {
@@ -20637,6 +20843,11 @@ fn compute_combat_baseline(
     } else {
         String::new()
     };
+    let touch_of_good_detail = if touch_of_good_attack_bonus > 0 {
+        format!(" + Cleric Touch of Good sacred bonus (+{touch_of_good_attack_bonus}, self-applied)")
+    } else {
+        String::new()
+    };
 
     let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
@@ -20644,7 +20855,7 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}; \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
@@ -23219,19 +23430,26 @@ mod sorcerer_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod cleric_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
-        CLERIC_CLASS_ID, FIGHTER_CLASS_ID,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
+        CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, CLERIC_TOUCH_OF_GOOD_ABILITY_ID,
+        FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION, HeadlessReceiptStatus,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     );
 
-    /// A single-class Cleric with no invalid prepared-spell selection still
-    /// stays `Blocked` (the domain-powers burden is permanently
-    /// unconditional), but the spell-specific diagnostic must NOT fire when
-    /// the posture is genuinely valid.
+    /// A single-class Cleric with no domain chosen at all (this test's
+    /// fixture never selects a domain) stays `Blocked` on the catch-all
+    /// domain-powers diagnostic -- unlike the Good-domain-recognized case
+    /// (see `single_class_cleric_with_good_domain_touch_of_good_active_reaches_computed`
+    /// below), an unrecognized/absent domain choice has no vacuous or
+    /// self-scopable pieces to resolve, so it stays unconditionally
+    /// blocking. The spell-specific diagnostic must NOT fire when the
+    /// posture is genuinely valid, regardless.
     #[test]
     fn single_class_cleric_with_no_prepared_spells_stays_blocked_only_on_domain_powers() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
@@ -23432,6 +23650,225 @@ mod cleric_dispatch_widening_safety_tests {
                     && d.claim_blocking),
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+
+    fn human_cleric_input_with_domains(level: u8, domains: &[&str]) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CLERIC_CLASS_ID.to_owned(), level }];
+        for domain in domains {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: CLERIC_DOMAIN_CHOICE_ID.to_owned(),
+                selection_id: (*domain).to_owned(),
+            });
+        }
+        input
+    }
+
+    /// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure): a
+    /// single-class Human Cleric with ONLY the Good domain chosen, no
+    /// prepared-spell posture violation, and Touch of Good genuinely
+    /// active (self-application) reaches `Computed` -- the domain-powers
+    /// burden is no longer permanently unconditional once Good's Touch of
+    /// Good is the ONLY domain power in play (no Healing domain's Rebuke
+    /// Death to keep it blocked).
+    #[test]
+    fn single_class_cleric_with_good_domain_touch_of_good_active_reaches_computed() {
+        let mut input = human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION]);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Good-domain-only Cleric with Touch of Good active and a valid spell posture \
+             should reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.domain_spell_list_contents.unmodeled"
+                    && !d.claim_blocking),
+            "expected the honest, non-blocking domain-spell-list-contents diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // Cleric level 1 base attack bonus (3/4 BAB: 1*3/4 = 0) + Strength
+        // modifier (+4, fixture's chosen Human +2 Strength applied to
+        // base 16) + Weapon Focus (+1) + Touch of Good (+1, half level 1
+        // = 0, floored to minimum 1) = 6.
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "Touch of Good's sacred bonus must be applied to the attack roll: {melee_attack_bonus:?}"
+        );
+    }
+
+    /// A Good-domain Cleric who is NOT currently using Touch of Good (no
+    /// activation entry) is a genuinely valid posture too, and also
+    /// reaches `Computed` (with no bonus applied).
+    #[test]
+    fn single_class_cleric_with_good_domain_not_using_touch_of_good_reaches_computed() {
+        let input = human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION]);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        // Cleric level 1 base attack bonus (0) + Strength modifier (+4) +
+        // Weapon Focus (+1) + no Touch of Good bonus (not active) = 5.
+        assert_eq!(melee_attack_bonus.value, 5);
+    }
+
+    /// A Cleric with BOTH Good and Healing domains (the pre-existing
+    /// fixture shape) still stays `Blocked` -- Healing's Rebuke Death heal
+    /// amount is a real dice roll targeting a different creature's
+    /// hit-point state, which has no honest self-scoped closure the way
+    /// Touch of Good does.
+    #[test]
+    fn single_class_cleric_with_good_and_healing_domains_stays_blocked_on_rebuke_death() {
+        let mut input =
+            human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION]);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Rebuke Death's heal amount stays a genuine, unresolved blocker: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported"
+                    && d.claim_blocking),
+            "expected the real, still-blocking Rebuke Death diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported"),
+            "the old generic catch-all diagnostic must not ALSO fire once Good is recognized: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Cleric with an unrecognized domain (not Good or Healing) still
+    /// falls through to the unchanged catch-all diagnostic -- the false-
+    /// Computed risk the adversarial review specifically checked for.
+    #[test]
+    fn single_class_cleric_with_an_unrecognized_domain_stays_blocked_on_the_catch_all() {
+        let input = human_cleric_input_with_domains(1, &["domain:fire"]);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported"
+                    && d.claim_blocking),
+            "an unrecognized domain must still trip the original catch-all diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Cleric with Good domain PLUS an unrecognized second domain also
+    /// falls through to the catch-all -- Good's recognition alone must
+    /// not silently ignore an otherwise-unmodeled domain slot.
+    #[test]
+    fn single_class_cleric_with_good_plus_an_unrecognized_domain_stays_blocked_on_the_catch_all() {
+        let input = human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION, "domain:travel"]);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported"
+                    && d.claim_blocking),
+            "Good + an unrecognized domain must still trip the catch-all, not silently reach \
+             Computed on Good alone: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Cleric character carrying a spoofed `"touch_of_good"`
+    /// activation entry must have it silently ignored -- the class-
+    /// ownership gate is by construction
+    /// (`active_cleric_touch_of_good_bonus` only ever reads
+    /// `class_ability_activations` after confirming both `class_levels`
+    /// contains Cleric and the Good domain is chosen), not a bolt-on
+    /// rejection.
+    #[test]
+    fn non_cleric_characters_spoofed_touch_of_good_activation_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Cleric Touch of Good entry: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert_eq!(
+            melee_attack_bonus.value, 6,
+            "a non-Cleric character's spoofed Touch of Good entry must never apply a bonus: \
+             {melee_attack_bonus:?}"
         );
     }
 }
