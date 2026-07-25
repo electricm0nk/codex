@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | MILESTONE: Druid's animal-companion posture reaches Computed, committed and lead-verified against real HEAD (9aeec493, 388/388 lib); deciding what's next (Monk's remaining 4 feats or elsewhere) |
+| backend | working | corrected on the real current backlog (workspace is fully clean, no waves left); ruled out Monk's Combat Reflexes correctly; deciding between APG/ACG class-skill-lists or Bard's spell posture |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
-| qa | working | small 4-test Druid wave assigned |
+| qa | idle | Druid's 4-test wave landed and lead-verified 100% (c4ffa208); entire workspace green, zero failures anywhere |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid genuinely reach Computed (9 of 27). 18 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
