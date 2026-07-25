@@ -14052,6 +14052,44 @@ fn explain_monk_level1_chassis(
         });
     }
 
+    // v0.6 alpha swarm, risks item 8 (Monk scoping follow-up, 2026-07-25):
+    // Dodge is a genuine exception to "no feat-effect engine exists" -- its
+    // entire mechanical effect (a flat +1 dodge bonus to Armor Class,
+    // `DODGE_AC_BONUS`) is ALREADY computed unconditionally in
+    // `compute_combat_baseline` whenever `chosen.selected_feats` contains
+    // `DODGE_FEAT_ID`, regardless of which choice slot granted it (mirrors
+    // exactly how the Human bonus-feat slot's own Dodge grant already
+    // works). A Monk whose level-1 bonus feat choice recognizably names
+    // Dodge AND who also carries `feat:dodge` in `selected_feats` (so the
+    // bonus is genuinely, not just nominally, active) is not blocked on
+    // this feature: the claimed benefit is already real, not fabricated.
+    // A Monk who chose Dodge via the slot but does NOT carry it in
+    // `selected_feats` (an inconsistent/incomplete input) still blocks --
+    // this is not a silent pass, it is a genuine unmet precondition. All
+    // six other restricted-list feats (Catch Off-Guard, Combat Reflexes,
+    // Deflect Arrows, Improved Grapple, Scorpion Style, Throw Anything)
+    // still have zero execution engine anywhere in this codebase and stay
+    // unconditionally blocked.
+    let dodge_bonus_feat_is_genuinely_active = recognized_bonus_feat_name == Some("Dodge")
+        && input.chosen.selected_feats.iter().any(|feat| feat == DODGE_FEAT_ID);
+
+    if dodge_bonus_feat_is_genuinely_active {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.dodge_active".to_owned(),
+            value: DODGE_AC_BONUS,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is Dodge, and it is genuinely active: \
+                 the same flat +{DODGE_AC_BONUS} dodge bonus to Armor Class \
+                 `compute_combat_baseline` already applies unconditionally for any character \
+                 carrying feat:dodge in selected_feats (regardless of which choice slot granted \
+                 it) is already being applied here, not merely claimed as chosen input. Unlike \
+                 the other six restricted-list feats, Dodge needed no new feat-effect engine to \
+                 close this burden -- its effect was already real elsewhere in this codebase"
+            ),
+        });
+        return;
+    }
+
     // Still blocked (the one remaining named burden): the level-1 bonus feat's own
     // mechanics. The choice-slot identity is recognized above (when present and
     // in-list); this diagnostic narrows to naming only what remains
@@ -14061,13 +14099,25 @@ fn explain_monk_level1_chassis(
     // mechanics as "remaining" for a character whose chosen feat this seam did
     // not recognize.
     let bonus_feat_message = if let Some(feat_name) = recognized_bonus_feat_name {
-        format!(
-            "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: the \
-             recognized choice ({feat_name}) is acknowledged as chosen input only — \
-             {feat_name}'s actual feat effect requires a general feat-selection or \
-             feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
-             baseline, so no Monk bonus-feat execution support is claimed"
-        )
+        if feat_name == "Dodge" {
+            format!(
+                "Monk level {level} remains blocked on its level-1 bonus feat: the recognized \
+                 choice (Dodge) is acknowledged as chosen input, but Dodge's own +{DODGE_AC_BONUS} \
+                 dodge bonus to Armor Class is not yet genuinely active -- feat:dodge is not \
+                 present in selected_feats for this input, so the claimed benefit is not yet \
+                 real (this is a genuine unmet precondition, not a missing engine: Dodge's \
+                 mechanics are already computed elsewhere in this codebase whenever selected_feats \
+                 carries feat:dodge)"
+            )
+        } else {
+            format!(
+                "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: the \
+                 recognized choice ({feat_name}) is acknowledged as chosen input only — \
+                 {feat_name}'s actual feat effect requires a general feat-selection or \
+                 feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
+                 baseline, so no Monk bonus-feat execution support is claimed"
+            )
+        }
     } else {
         format!(
             "Monk level {level} remains blocked on its level-1 bonus feat grant: the free bonus \
@@ -23719,6 +23769,116 @@ mod bard_dispatch_widening_safety_tests {
             melee_attack_bonus.value, 6,
             "a non-Bard character's spoofed performance entry must never apply a bonus: \
              {melee_attack_bonus:?}"
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Monk scoping follow-up): Dodge is a
+/// genuine exception among Monk's 7 restricted-list bonus feats -- its
+/// effect was already real elsewhere in this codebase (the unconditional
+/// `DODGE_AC_BONUS` gate in `compute_combat_baseline`), so recognizing it
+/// closes this specific burden with no new feat-effect engine. The other
+/// six feats (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Improved
+/// Grapple, Scorpion Style, Throw Anything) are untouched and stay
+/// unconditionally blocked -- Monk as a whole does not reach `Computed`
+/// from this slice (base-attack/base-save/fast-movement pillars are also
+/// still standalone, not integrated, since `table_class_id` was not
+/// widened for Monk this slice).
+#[cfg(test)]
+mod monk_bonus_feat_dodge_closure_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, MONK_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_monk_input(dodge_choice: bool, dodge_selected_feat: bool) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: MONK_CLASS_ID.to_owned(), level: 1 }];
+        if dodge_choice {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:monk_bonus_feat".to_owned(),
+                selection_id: "feat:dodge".to_owned(),
+            });
+        }
+        if !dodge_selected_feat {
+            input.chosen.selected_feats.retain(|feat| feat != "feat:dodge");
+        }
+        input
+    }
+
+    fn claim_blocking_ids(input: &CharacterInput) -> Vec<String> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect()
+    }
+
+    /// A Monk who chose Dodge as their level-1 bonus feat, and genuinely
+    /// carries feat:dodge in selected_feats (so the AC bonus is really
+    /// active, not just claimed), is not blocked on the bonus-feat burden.
+    #[test]
+    fn monk_with_dodge_bonus_feat_genuinely_active_does_not_trip_the_diagnostic() {
+        let input = human_monk_input(true, true);
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Dodge's effect is already real elsewhere in this codebase, so a genuinely active \
+             Dodge bonus feat must not claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.monk.bounded_progression.bonus_feat.dodge_active"),
+            "expected the real dodge_active recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A Monk who chose Dodge via the bonus-feat slot but does NOT
+    /// genuinely carry feat:dodge in selected_feats (an inconsistent
+    /// input) still blocks -- this is a real unmet precondition, not a
+    /// missing engine, so it must not silently pass.
+    #[test]
+    fn monk_with_dodge_bonus_feat_choice_but_not_genuinely_active_still_blocks() {
+        let input = human_monk_input(true, false);
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Dodge chosen via the slot but absent from selected_feats is a genuine unmet \
+             precondition, not a silently-passing posture: {ids:?}"
+        );
+    }
+
+    /// A Monk with no recognized bonus-feat choice at all still blocks
+    /// (the original, unconditional behavior for every feat except Dodge).
+    #[test]
+    fn monk_with_no_bonus_feat_choice_still_blocks() {
+        let input = human_monk_input(false, false);
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "an unrecognized/absent bonus-feat choice must still block: {ids:?}"
         );
     }
 }
