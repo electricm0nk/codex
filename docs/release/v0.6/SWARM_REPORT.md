@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Druid level-up bug fixed and lead-verified (55a856c8); building Bard's Inspire Courage, endorsed scope addition to widen table_class_id for Bard first (verified safe, mirrors Barbarian) |
-| frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); genuinely no bounded work available right now |
-| qa | idle | Sorcerer/Cleric/Druid batches (76fe82da, c578ede6, 5eae17d7+dfbb0810) all 66 files landed and lead-verified 100%; Barbarian's 20-file wave next |
+| backend | idle | Bard's Inspire Courage engine built and lead-verified (368/368 lib, 4/4 new tests); Druid level-up bug also fixed (55a856c8); ready to commit |
+| frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); Barbarian's stale UI label flagged, pending their check |
+| qa | idle | Sorcerer/Cleric/Druid batches all 67 files landed and lead-verified 100% (76fe82da, c578ede6, 5eae17d7+dfbb0810+4e246e3b) -- Druid genuinely fully closed; Barbarian's 20-file wave next |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
