@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Bard's Inspire Courage committed and lead-verified (0374b96a, 368/368 lib against committed state); just redirected to new engine work (Monk scoping pass vs. more Sorcerer/Cleric/Druid work, backend's call) |
+| backend | working | building Monk's Dodge exception (pilot_compute.rs actively modified) -- Dodge's mechanical effect is already grounded elsewhere in the codebase, so a genuinely-active Dodge bonus feat unblocks Monk on that one burden; other 6 restricted-list feats stay blocked pending their own engine work |
 | frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
-| qa | working | actively editing tests/sd13_barbarian_level1_chassis_baseline.rs (confirmed via git status) -- mid the 25-file Barbarian wave, Bard's 32-file wave queued behind it |
+| qa | working | Barbarian's 22-file test batch landed and lead-verified 100% (5ba54695); moving to Bard's 32-file wave next |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
@@ -91,9 +91,9 @@ precedent — flagged below.
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Barbarian's own 25-file QA-facing test-cleanup wave (references the now-retired unconditional rage diagnostic) — QA actively working this now.
-2. Bard's own 32-file test-cleanup wave, queued behind Barbarian, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) — the piece that would make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
-3. Monk — needs its own scoping pass (combat-time activation-state plan covered Barbarian/Bard; Monk's 7 restricted-list feats are a different shape entirely, closer to the Toughness feat-effects precedent).
+1. Barbarian's 22-file test-cleanup wave — done and lead-verified (`5ba54695`).
+2. Bard's own 32-file test-cleanup wave — QA working this now, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) still needed to make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
+3. Monk — backend building the Dodge exception now (Dodge's mechanics already grounded elsewhere in the codebase, so a genuinely-active Dodge bonus feat closes that one burden); the other 6 restricted-list feats each need their own feat-effect engine work, not yet started.
 4. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
 
 ### Honest scale note
