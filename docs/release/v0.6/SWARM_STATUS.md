@@ -1309,7 +1309,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T09:35:05
-Latest commit on tranche/6: c7b7352c docs(v0.6): real inflection point reached -- all remaining work is multi-session scale (2 minutes ago) (2026-07-25T09:32:54-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T09:31:22 frontend=2026-07-25T08:52:45 qa=2026-07-25T09:17:38 lead=2026-07-25T09:30:46
+Last mechanical check: 2026-07-25T09:55:01
+Latest commit on tranche/6: d6067603 Close Sorcerer's Arcane bloodline burden -- first full-class completion (3 minutes ago) (2026-07-25T09:51:45-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T09:41:32 frontend=2026-07-25T09:44:02 qa=2026-07-25T09:17:38 lead=2026-07-25T09:52:12
 <!-- AUTO-HEARTBEAT-END -->
