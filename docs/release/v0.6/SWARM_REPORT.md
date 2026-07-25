@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Bloodrager committed and pushed (`15560e62`) while lead was mid check-in; lead independently re-verified against the real committed HEAD (406/406 lib, audit 3/3, full workspace sweep zero failures) — matches exactly. Awaiting next assignment |
+| backend | idle | Scanned Warpriest/Slayer/Brawler for the next cheap ACG win (correctly ruled out the first two as Cleric/Monk-shaped, not cheap); proposed Brawler's AC Bonus as a Monk-AC-Bonus copy, but lead independently found the corpus formula is actually a level-scaled dodge bonus (+0 until 4th level), not Wisdom-based — corrected before any code landed. Deciding next target |
 | frontend | working | Confirmed not stuck: the dev-build launch keeps timing out before its window-search retry budget since it's a cold Rust rebuild each time (Rust side keeps changing under backend's work); relaunched with more patience. Still mid-verify on Sorcerer/Cleric/Druid/Bard's real creation-flow outcome |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
