@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | APG's 6-class BAB/save/HP dispatch landed and lead-verified (c511c132, correctly labeled still-Blocked, proactively avoided the Ranger multiclass loophole); starting Ranger's real spellcasting next |
-| frontend | idle | correctly declined a lead instruction after investigating and finding the premise false; queue clear |
-| qa | working | landing Ranger's 4-site tests/** update plus the APG coverage-audit test restructuring |
+| backend | working | Ranger genuinely reaches Computed now (b7642d97, lead-verified); already on Paladin, proactively fixed the same structural flaw before shipping this time |
+| frontend | working | updating Ranger's characterHubModel.ts support level, pending backend's confirmed safe level range |
+| qa | working | Ranger's tests/** update + APG coverage-audit restructuring + a new permanent positive-case test the lead flagged |
 
 ---
 
