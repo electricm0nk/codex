@@ -12,7 +12,7 @@ this report, not just SWARM_STATUS.md)
 |---|---|---|
 | backend | working | continuing the class sequence |
 | frontend | working | updating Ranger's characterHubModel.ts support level |
-| qa | working | Paladin's 29-file cleanup committed (c1844765) and lead-reverified; now fixing the ACG coverage-audit gap |
+| qa | idle | ACG coverage-audit gap fixed (a7ae86d6); workspace fully clean, lead-verified (4330/4330 + 212/212), zero known gaps anywhere |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
