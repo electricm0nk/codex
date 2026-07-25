@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | adversarial review complete -- self-scoping OK with framing conditions, but the diagnostic split needs a catch-all + 2 more pieces (lead-verified both code claims); revising the plan before writing code |
+| backend | working | Touch of Good plan revised addressing all 3 review gaps, lead traced the pseudocode edge cases and greenlit; starting the build now |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
 | qa | idle | Bard's 22-file test batch landed and lead-verified 100% (6dcec5ba) -- entire workspace green, standing by |
 
