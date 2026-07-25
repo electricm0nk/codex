@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | waiting-on-lead | wrote the combat-time activation-state scoping plan while holding on Bard/new classes per QA's ask; adversarial review dispatched, holding on Barbarian implementation until it lands |
-| frontend | working | live-verified Ranger's inverted scope for real, committing after a second clean suite run; also asked to fix Paladin's identically-stale UI label |
+| backend | working | combat-time scoping plan reviewed, 6 real findings sent back for revision (Power Attack precedent overstated, ability_id validation gap, others); revising before Barbarian starts; holding on Bard/new classes per QA's ask, doing read-only Barbarian prep meanwhile |
+| frontend | idle | Ranger+Paladin UI fix landed and lead-verified (3fd04f25, 78/78 + typecheck clean); no further class-breadth follow-up queued |
 | qa | working | Bard survey done and lead-verified exact (164 spells); invoked the pacing hold, authoring Sorcerer's fixes directly (backend never delivered drafts) |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
