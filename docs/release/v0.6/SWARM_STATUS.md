@@ -1230,7 +1230,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T05:50:02
-Latest commit on tranche/6: fca4e64e feat(v0.6): Cleric's real spell math ladder + prepared-divine posture (risks item 8, sixth slice) (57 seconds ago) (2026-07-25T05:49:05-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T05:47:17 frontend=2026-07-25T04:31:25 qa=2026-07-25T05:49:32 lead=2026-07-25T05:47:47
+Last mechanical check: 2026-07-25T06:40:03
+Latest commit on tranche/6: dda46d4a feat(v0.6): Druid's real spell math ladder + prepared-divine posture (risks item 8, seventh slice) (2 minutes ago) (2026-07-25T06:38:04-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T06:39:22 frontend=2026-07-25T06:35:48 qa=2026-07-25T06:38:56 lead=2026-07-25T06:39:29
 <!-- AUTO-HEARTBEAT-END -->
