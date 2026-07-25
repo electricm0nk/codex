@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Skald spellcasting committed (`7e7f6fbd`) and lead re-verified against the real HEAD (428/428 lib, coverage audit 3/3). Starting Path A choice-picker default (Sorcerer/Cleric/Druid) next, mirroring the Wizard precedent |
-| frontend | idle | Choice-picker scoping doc landed (`cfcd43de`) and lead-verified — found a genuinely cheaper option (Path A: mirror Wizard's already-shipped silent-canonical-default pattern) instead of just answering the original 4 questions about the expensive interactive-picker path. Greenlit; implementation routed to backend (`pf1_adapter.rs`), frontend's own follow-on (`characterHubModel.ts` label update) queued for after |
+| backend | idle | Path A shipped (`9bafe303`) — Sorcerer/Cleric/Druid now reach `Computed` through the real creation UI, zero claim-blocking diagnostics. Lead independently verified (212/212 desktop, 78/78 frontend, traced `create_character_at_root`'s own gating logic to confirm equivalence). Awaiting next assignment |
+| frontend | working | Cued to update `characterHubModel.ts` for Sorcerer/Cleric/Druid now that Path A landed — re-checking per class (Sorcerer's level-2 cap, whether the shared hybrid-level-1-Human gate applies to any of the three), live-verifying through the real dev build before finalizing labels |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier and Alchemist (both APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial) — 6 classes total across both books, the cheap-win scan is now genuinely complete. 10 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — all 10 now reachable through the real product UI (Sorcerer/Cleric/Druid's choice-picker gap closed via `9bafe303`'s canonical-default seeding, lead-verified against the real `create_character_at_root` command path; frontend's `characterHubModel.ts` label update pending re-check per class before this is fully closed out). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier and Alchemist (both APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial) — 6 classes total across both books, the cheap-win scan is now genuinely complete. 10 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -42,9 +42,9 @@ engine work lands.
 | Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
 | Barbarian | **Computed** | `full` -- unconditional, no race/level carve-out at all (never appears in the shared hybrid gate); real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking) | Rage engine + UI fix (`d020a5e8`), both lead-verified |
-| Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) — **UI: `headless-only`, not reachable via the real creation flow today** | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
-| Cleric | **Computed** (Good domain only; Good+Healing stays Blocked on Rebuke Death) — **UI: `headless-only`, not reachable via the real creation flow today** | prepared-spell posture + Good domain's Touch of Good (self-application only, ally-targeting unmodeled) both real; domain spell-list contents named non-blocking; Healing's Rebuke Death stays a genuine separate blocker | `fca4e64e`, `b98a20d7`, lead-verified 384/384 lib against real `HeadlessReceiptStatus::Computed` |
-| Druid | **Computed** (level 1 only, Wolf companion; advancement past level 1 named non-blocking) — **UI: `headless-only`, not reachable via the real creation flow today** | prepared-spell posture + animal-companion Wolf stat block (standalone, non-integrating) both real; Link/Share Spells vacuous corrections; domain-type nature bond still falls through to the catch-all | `dda46d4a`, `9aeec493`, lead-verified 388/388 lib against real `HeadlessReceiptStatus::Computed` |
+| Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) — **UI: now reachable, `9bafe303`** — canonical Arcane bloodline + familiar bond seeded by default; frontend's `characterHubModel.ts` label update pending re-check | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
+| Cleric | **Computed** (Good domain only; Good+Healing stays Blocked on Rebuke Death) — **UI: now reachable, `9bafe303`** — canonical Good domain seeded by default; frontend's label update pending re-check | prepared-spell posture + Good domain's Touch of Good (self-application only, ally-targeting unmodeled) both real; domain spell-list contents named non-blocking; Healing's Rebuke Death stays a genuine separate blocker | `fca4e64e`, `b98a20d7`, lead-verified 384/384 lib against real `HeadlessReceiptStatus::Computed` |
+| Druid | **Computed** (level 1 only, Wolf companion; advancement past level 1 named non-blocking) — **UI: now reachable, `9bafe303`** — canonical animal-companion nature bond seeded by default; frontend's label update pending re-check | prepared-spell posture + animal-companion Wolf stat block (standalone, non-integrating) both real; Link/Share Spells vacuous corrections; domain-type nature bond still falls through to the catch-all | `dda46d4a`, `9aeec493`, lead-verified 388/388 lib against real `HeadlessReceiptStatus::Computed` |
 | Bard | **Computed** — UI: `full`, live-verified reachable | Inspire Courage attack-bonus engine + known-spell posture both real (gate-ordering bug caught and fixed proactively along the way); other 6 performance types honestly named as unmodeled; spell tables verified through level 10 only | `0374b96a` (Inspire Courage), `86d26f88` (known-spell closure), test wave `cb372cb3`, `833ea89c` (UI label), lead-verified 393/393 lib + 78/78 desktop against real `HeadlessReceiptStatus::Computed` |
 | Monk | **Blocked** — 6 of 7 feats closed | `table_class_id` still not widened (base-attack/save/fast-movement stay standalone). Dodge/Catch Off-Guard/Throw Anything (provably vacuous preconditions) plus Combat Reflexes (extra-AoO capacity, `max(Dex mod,0)`), Scorpion Style (DC + duration, both real Monk-derived numbers), and Improved Grapple (+2/+2 CMB/CMD magnitude, reusing the Dwarf Stability idiom — no new pillar needed) are all closed for real, each explicitly not claiming the trigger event itself is resolved. Only Deflect Arrows remains — the one feat with zero standalone numeric value, genuinely needs a full opponent-interaction/incoming-attack engine this codebase has no framework for at all | `18920c3d` + `b1a453a1` (first 3), `e45b622f` (remaining 3, adversarial-reviewed: dropped an originally-proposed new CMB/CMD pillar per the review's Dwarf Stability finding), lead re-verified against committed HEAD: 414/414 lib, full workspace sweep zero failures |
 
@@ -101,29 +101,42 @@ closure's own machinery rather than fresh corpus derivation).
 
 **ACG tally: 0 of 10 reach Computed (a real named-feature or spellcasting gap keeps every ACG class Blocked regardless of chassis work), 4 of 10 (Skald, Bloodrager, Brawler, Hunter) have a real named ability genuinely grounded, 6 of 10 untouched beyond chassis dispatch.**
 
-### Product-reachability gap — CONFIRMED (frontend, 2026-07-25, `833ea89c`)
+### Product-reachability gap — CLOSED via Path A (backend, 2026-07-25, `9bafe303`)
 
 Sorcerer/Cleric/Druid's `Computed` posture each requires a specific choice
 (Arcane bloodline+bond, Good domain, Wolf nature-bond respectively) that
-**the real character-creation UI has no way to submit today** — confirmed
-three independent ways (no picker in `CreateCharacterForm.tsx`; no
-auto-seeded default in `character_hub.rs`'s `compose_character_input`; no
-choices field in the wire contract, `composeCreateCharacterRequest.ts`'s
-`CreateCharacterRequest` has exactly 7 fields). **Live-verified, not just
-code-read**: fresh default-settings Human attempts at all three, through
-the real dev build, each returned "This build isn't ready yet" with the
-predicted named diagnostic, and none persisted to disk. **This means the
-"10 of 27 Computed" figure above is a compute-engine claim — only 7 of
-those 10 (Fighter/Wizard/Rogue/Ranger/Paladin/Barbarian/Bard) are currently
-reachable through the real product; Sorcerer/Cleric/Druid are not**, pending
-a new picker component + request field + backend consumption (real,
-separately-scopeable work, not attempted here). Bard is unaffected (empty
-known-spell selection is honestly valid, no picker needed; live-verified
-`full`). Skald/Bloodrager are also unaffected (activation-gated via
-`class_ability_activations`, not choice-gated). Full writeup in
-`risks-and-open-questions.md` item 8's chain, credited to frontend. Lead
-independently re-verified the commit (diff read directly, 78/78 + typecheck
-clean against the real committed HEAD).
+**the real character-creation UI had no way to submit** — confirmed three
+independent ways when first found (no picker in `CreateCharacterForm.tsx`;
+no auto-seeded default in `compose_character_input`; no choices field on
+the wire contract). Rather than building the full interactive picker this
+implied (Path B — a new request field, new frontend UI, per-class option
+content authored honestly for 3 different shapes), frontend's own scoping
+found a cheaper option already shipped once: **Path A**, mirroring the
+existing Wizard silent-canonical-default precedent (a fixed choice seeded
+for every character of a class, no player-facing picker, the same
+"documented, honest limitation" shape Wizard's own school-specialization
+choice already uses). Backend implemented Path A in `compose_character_input`
+(`9bafe303`) — Sorcerer gets Arcane bloodline + a familiar Arcane Bond,
+Cleric gets the Good domain, Druid gets the animal-companion nature bond
+(Wolf automatic, no species picker needed) — all three now reach `Computed`
+with zero claim-blocking diagnostics through the real creation UI. **Lead
+independently verified**: read all 3 conditional blocks directly, ran the
+full desktop Rust suite (212/212) and frontend suite (78/78) against the
+real committed HEAD, and traced `create_character_at_root`'s own Blocked/
+Saved gating logic to confirm it's the exact same code path the updated
+tests exercise — a genuine proof of the real command path, not a divorced
+internal check. Path B (a real interactive picker, letting a player
+actually choose their own bloodline/domain/companion) remains deliberately
+deferred as separate future product-decision work, framed the same
+"out-of-scope for now" way Wizard's own precedent already is. Bard was
+always unaffected (empty known-spell selection is honestly valid). Skald/
+Bloodrager/Brawler/Hunter/Cavalier are also unaffected (activation-gated
+or always-on, never choice-gated). Full writeup in
+`risks-and-open-questions.md` item 8's chain. **Frontend's own follow-on
+(`characterHubModel.ts`'s label update, re-checked per class rather than
+assumed uniform) is the one piece not yet landed** — until that lands, the
+top-of-doc UI-support labels for these 3 classes are stale, even though the
+underlying engine/UI-reachability gap itself is now genuinely closed.
 
 ### What's actually queued next (in order, as currently planned)
 
