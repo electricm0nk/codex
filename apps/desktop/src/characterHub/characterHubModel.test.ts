@@ -6,9 +6,11 @@ async function main() {
   verifiesRangerGetsFiveLevels();
   verifiesPaladinGetsFiveLevels();
   verifiesBarbarianGetsThreeLevels();
+  verifiesBardGetsThreeLevels();
   verifiesEveryOtherClassGetsLevelOneOnly();
   verifiesUnknownClassFallsBackToLevelOneOnly();
   verifiesSupportLevelCopyPerLevel();
+  verifiesHeadlessOnlyClassesAreCorrectlyBucketed();
 }
 
 function verifiesFighterGetsThreeLevels() {
@@ -55,18 +57,45 @@ function verifiesBarbarianGetsThreeLevels() {
   assertEqual(levels[2], 3, 'barbarian level option 2');
 }
 
+// Bard is genuinely `full` too (no special choice gate -- its known-spell
+// posture treats an empty spell list as honestly valid, same shape as
+// Ranger's prepared-spell posture). Live-verified: a fresh Human Bard 1
+// (default settings) reached Computed/Saved, disk-confirmed; leveling that
+// character up through the real LevelUpDialog reached level 2 cleanly.
+function verifiesBardGetsThreeLevels() {
+  const levels = getLevelOptionsForClass('class:bard');
+  assertEqual(levels.length, 3, 'bard level option count');
+  assertEqual(levels[0], 1, 'bard level option 0');
+  assertEqual(levels[2], 3, 'bard level option 2');
+}
+
 function verifiesEveryOtherClassGetsLevelOneOnly() {
   for (const option of CLASS_OPTIONS) {
     if (
       option.id === 'class:fighter' ||
       option.id === 'class:ranger' ||
       option.id === 'class:paladin' ||
-      option.id === 'class:barbarian'
+      option.id === 'class:barbarian' ||
+      option.id === 'class:bard'
     )
       continue;
     const levels = getLevelOptionsForClass(option.id);
     assertEqual(levels.length, 1, `${option.id} level option count`);
     assertEqual(levels[0], 1, `${option.id} level option 0`);
+  }
+}
+
+// Sorcerer/Cleric/Druid are `headless-only`, not `full` and not
+// `human-diagnostics-only` -- each has a real Computed path in the engine
+// gated on a specific choice (bloodline+bond / domain / nature bond) that
+// no current UI surface can supply. Live-verified: fresh default-settings
+// Human attempts at all three returned "This build isn't ready yet" with
+// the predicted named diagnostic, and none persisted to disk.
+function verifiesHeadlessOnlyClassesAreCorrectlyBucketed() {
+  for (const classId of ['class:sorcerer', 'class:cleric', 'class:druid']) {
+    const option = CLASS_OPTIONS.find((candidate) => candidate.id === classId);
+    assert(option !== undefined, `${classId} should exist in CLASS_OPTIONS`);
+    assertEqual(option?.supportLevel, 'headless-only', `${classId} support level`);
   }
 }
 
@@ -101,6 +130,14 @@ function verifiesSupportLevelCopyPerLevel() {
   assert(
     describeClassSupportLevel('full-except-human-level-1', 'Ranger').toLowerCase().includes('level 1'),
     'full-except-human-level-1 copy should be explicit that the exception is level 1 specifically'
+  );
+  assert(
+    describeClassSupportLevel('headless-only', 'Sorcerer').toLowerCase().includes('sorcerer'),
+    'headless-only copy should name the class'
+  );
+  assert(
+    describeClassSupportLevel('headless-only', 'Sorcerer').toLowerCase().includes('picker'),
+    'headless-only copy should name the real cause (a missing picker), not a vague "not computed"'
   );
 }
 

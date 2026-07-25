@@ -165,12 +165,24 @@ export const RACE_OPTIONS: RaceOption[] = [
  * every step with no new blocker.
  * `none` — no dedicated compute seam exists; every race produces the same 4
  * generic diagnostics.
+ * `headless-only` — the compute engine has a real `Computed` path for this
+ * class (given a specific build-time choice: e.g. a bloodline, a domain, a
+ * nature bond), but no picker for that choice exists anywhere in the real
+ * creation UI today — `CreateCharacterForm`'s create-character request has
+ * no field for it, and no default is seeded on the backend either. Every
+ * live creation attempt stays `Blocked`, for any race (the gate is
+ * race-independent, unlike `human-diagnostics-only`'s Human-gets-nicer-
+ * diagnostics split), carrying the same named "missing choice" diagnostic
+ * regardless of race. This is a UI/wire-contract gap, not an engine gap —
+ * distinguishing it from `human-diagnostics-only` matters because the fix
+ * is "add a picker + a request field," not "compute more of the class."
  */
 export type ClassSupportLevel =
   | 'full'
   | 'partial-human-only'
   | 'human-diagnostics-only'
   | 'full-except-human-level-1'
+  | 'headless-only'
   | 'none';
 
 export interface ClassOption {
@@ -187,15 +199,19 @@ export interface ClassOption {
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
- * `pilot_compute.rs`'s per-class `explain_*` functions (each of Sorcerer,
- * Bard, Monk, Cleric, and Druid carries its own "This deliberately does not
- * compute a supported ... chassis/surface" doc comment, and the compute
- * path stays claim-blocked for Human exactly as it does for every other
- * race) and live-verified for Barbarian specifically back when it was in
- * this same bucket (a fresh Human Barbarian creation attempt returned
- * `Blocked` with named rage-burden diagnostics instead of the 4 generic
- * ones) — since superseded now that Barbarian's rage-execution engine is
- * real; see its own note below.
+ * `pilot_compute.rs`'s per-class `explain_*` functions (each of Monk,
+ * Cleric, and Druid carries its own "This deliberately does not compute a
+ * supported ... chassis/surface" doc comment, and the compute path stays
+ * claim-blocked for Human exactly as it does for every other race) and
+ * live-verified for Barbarian specifically back when it was in this same
+ * bucket (a fresh Human Barbarian creation attempt returned `Blocked` with
+ * named rage-burden diagnostics instead of the 4 generic ones) — since
+ * superseded now that Barbarian's rage-execution engine is real; see its
+ * own note below. Cleric and Druid's own doc comments are now stale in one
+ * specific way — their domain-powers/animal-companion burdens are no
+ * longer *permanently* unconditional (see the `headless-only` note below)
+ * — but the class-features-vs-Human framing they were cited for still
+ * holds for everything except that one now-conditional diagnostic.
  *
  * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
  * class-breadth epic, 2026-07-25): both reached real `Computed` status once
@@ -236,18 +252,58 @@ export interface ClassOption {
  * Barbarian 1 both reached `Computed`/`Saved`; leveling the Dwarf character
  * up through the real `LevelUpDialog` reached level 2 cleanly, disk-
  * confirmed (`class_level=class:barbarian:2`).
+ *
+ * Bard is also `full` (v0.6 alpha swarm, class-breadth epic, 2026-07-25):
+ * its known-spell posture (`unmet_bard_known_spell_conditions`) works
+ * purely off `spells_selected`, same mechanism the other spontaneous/
+ * prepared casters already use — zero known spells is honestly valid, same
+ * "empty is valid" shape as Ranger's prepared-spell posture. No special
+ * choice gate, so no picker gap either. Live-verified: a fresh Human Bard 1
+ * (default settings, no spells picked) reached `Computed`/`Saved`,
+ * disk-confirmed; leveling that character up through the real
+ * `LevelUpDialog` reached level 2 cleanly.
+ *
+ * Sorcerer, Cleric, and Druid are `headless-only` (v0.6 alpha swarm,
+ * class-breadth epic, 2026-07-25) — a genuinely new bucket, not a copy of
+ * Barbarian/Bard's `full`. Each engine has a real `Computed` path now
+ * (`d6067603` Sorcerer, `fca4e64e`+`b98a20d7` Cleric, `dda46d4a`+`9aeec493`
+ * Druid), but each requires a specific build-time choice selection that no
+ * current UI surface can provide: Sorcerer needs BOTH
+ * `choice:sorcerer_bloodline -> bloodline:arcane` AND
+ * `choice:sorcerer_arcane_bond` recognized (at level 1-2 only — level 3+
+ * stays blocked on bonus spells/feats regardless); Cleric needs
+ * `choice:cleric_domain -> domain:good` recognized (Good+Healing together
+ * stays blocked on the separate Rebuke Death burden); Druid needs
+ * `choice:druid_nature_bond -> bond:animal_companion` recognized (Wolf is
+ * the only companion this bounded slice computes, but it's the sole
+ * species this seam grounds regardless of choice — no species picker is
+ * needed, just the bond-type choice itself). None of these three choice
+ * ids appear anywhere in `CreateCharacterForm.tsx`, `character_hub.rs`'s
+ * `compose_character_input` (no auto-seeded default either), or
+ * `composeCreateCharacterRequest.ts`'s wire shape (`CreateCharacterRequest`
+ * has exactly 7 fields: displayLabel/raceId/classId/level/abilityScores/
+ * abilityBonusTarget/savedAt — no choices field at all). This is a real,
+ * structural UI/wire-contract gap (a picker component plus a request field
+ * plus backend consumption), not a small copy fix — do not build it as
+ * part of a `characterHubModel.ts` update; flag it and let it be scoped
+ * separately. Live-verified: fresh default-settings Human attempts at all
+ * three (no domain/bloodline/nature-bond input possible today) each
+ * returned "This build isn't ready yet" with exactly the predicted named
+ * diagnostic (bloodline-and-progression / domain-powers /
+ * animal-companion-execution), and none of the three attempts persisted to
+ * disk — confirmed via `~/.local/share/io.electricm0nk.codex/characters/`.
  */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
   { id: 'class:paladin', label: 'Paladin', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
   { id: 'class:ranger', label: 'Ranger', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 6 },
+  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'headless-only', levelOptions: [1], hitDie: 6 },
   { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
-  { id: 'class:bard', label: 'Bard', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
   { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 12 },
   { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'headless-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'headless-only', levelOptions: [1], hitDie: 8 },
   { id: 'class:monk', label: 'Monk', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
 ];
 
@@ -267,6 +323,8 @@ export function describeClassSupportLevel(supportLevel: ClassSupportLevel, class
       return `${classLabel} isn't computed by the engine for any race yet, including Human — Human just shows more specific detail about what's missing.`;
     case 'full-except-human-level-1':
       return `${classLabel} is computed at every level offered here for every race — except Human at level 1 specifically, which stays blocked; Human reaches the same computed build from level 2 on.`;
+    case 'headless-only':
+      return `${classLabel}'s engine can compute a real build, but the picker it needs (a bloodline, a domain, a nature bond, etc.) doesn't exist in this UI yet, so every character created here stays blocked today, for any race.`;
     case 'none':
       return `${classLabel} isn't computed by the engine yet.`;
   }
@@ -283,6 +341,8 @@ export function classSupportLevelSuffix(supportLevel: ClassSupportLevel): string
       return ' (not yet computed for any race)';
     case 'full-except-human-level-1':
       return ' (Human: not at level 1)';
+    case 'headless-only':
+      return ' (blocked today — needs a choice picker not yet built)';
     case 'none':
       return ' (not yet computed)';
   }
