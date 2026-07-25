@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | continuing the class sequence |
-| frontend | working | updating Ranger's characterHubModel.ts support level |
-| qa | idle | ACG coverage-audit gap fixed (a7ae86d6); workspace fully clean, lead-verified (4330/4330 + 212/212), zero known gaps anywhere |
+| backend | working | sizing Barbarian (real state-tracking needed) vs Monk (7-feat spread) as the next class |
+| frontend | working | live-verifying a genuine non-Human-Ranger-reaches-Computed-at-level-1 finding before committing the UI label |
+| qa | idle | per-class survey delivered; standing by |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin genuinely reach Computed (5 of 27). 22 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
