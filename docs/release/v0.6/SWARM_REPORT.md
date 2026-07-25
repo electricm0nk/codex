@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Skald landed and pushed (d2eb0798), lead-verified; now building ACG Bloodrager (second APG/ACG class-specific closure) — scoping doc + corpus findings verified by lead, gate-widening pattern reused without a second formal review per twice-proven precedent; `pilot_compute.rs` in progress uncommitted (683 insertions) |
-| frontend | assigned | Was genuinely idle since Barbarian's UI fix (d020a5e8, ~10:06); lead found real outstanding work — Sorcerer/Cleric/Druid/Bard all reached Computed since then but `characterHubModel.ts` still labels all four `human-diagnostics-only`. Dispatched with per-class nuances (Sorcerer level cap, Cleric/Druid's choice-picker gap) just now; not yet started |
+| backend | working | Bloodrager (second APG/ACG closure) built and lead-verified end-to-end (406/406 lib, exact gate/formula match), background sweep in flight before committing |
+| frontend | working | Found a bigger issue than the label fix: Sorcerer/Cleric/Druid's Computed posture needs a choice (bloodline/domain/nature-bond) the real creation UI has no way to submit — lead independently corroborated via the request DTO. Running a live dev-build verify now to confirm what a player actually sees |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; no new wave queued yet pending Bloodrager's test batch |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). 17 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
