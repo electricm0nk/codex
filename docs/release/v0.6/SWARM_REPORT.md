@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Scanned Warpriest/Slayer/Brawler for the next cheap ACG win (correctly ruled out the first two as Cleric/Monk-shaped, not cheap); proposed Brawler's AC Bonus as a Monk-AC-Bonus copy, but lead independently found the corpus formula is actually a level-scaled dodge bonus (+0 until 4th level), not Wisdom-based — corrected before any code landed. Deciding next target |
-| frontend | working | Confirmed not stuck: the dev-build launch keeps timing out before its window-search retry budget since it's a cold Rust rebuild each time (Rust side keeps changing under backend's work); relaunched with more patience. Still mid-verify on Sorcerer/Cleric/Druid/Bard's real creation-flow outcome |
+| backend | working | Third APG/ACG closure in progress: Brawler's AC Bonus (a pure level-scaled dodge bonus, no activation/choice gate at all — structurally the simplest yet). Scoping doc already has the correct formula and vacuous-armor-precondition reasoning; gate function wired and lead-verified (exact match), grounding function not yet written |
+| frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). Monk has 3 of 7 restricted-list feats closed (partial). Skald and Bloodrager (both ACG) have a real Rage-shaped ability genuinely grounded but stay Blocked on deferred spellcasting (partial) — Bloodrager built and lead-verified, not yet committed. 15 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 3 of 7 restricted-list feats closed (partial). Skald and Bloodrager (both ACG, committed) have a real Rage-shaped ability genuinely grounded but stay Blocked on deferred spellcasting (partial); Brawler's AC Bonus (third ACG closure) is in progress. 14 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -42,10 +42,10 @@ engine work lands.
 | Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
 | Barbarian | **Computed** | `full` -- unconditional, no race/level carve-out at all (never appears in the shared hybrid gate); real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking) | Rage engine + UI fix (`d020a5e8`), both lead-verified |
-| Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
-| Cleric | **Computed** (Good domain only; Good+Healing stays Blocked on Rebuke Death) | prepared-spell posture + Good domain's Touch of Good (self-application only, ally-targeting unmodeled) both real; domain spell-list contents named non-blocking; Healing's Rebuke Death stays a genuine separate blocker | `fca4e64e`, `b98a20d7`, lead-verified 384/384 lib against real `HeadlessReceiptStatus::Computed` |
-| Druid | **Computed** (level 1 only, Wolf companion; advancement past level 1 named non-blocking) | prepared-spell posture + animal-companion Wolf stat block (standalone, non-integrating) both real; Link/Share Spells vacuous corrections; domain-type nature bond still falls through to the catch-all | `dda46d4a`, `9aeec493`, lead-verified 388/388 lib against real `HeadlessReceiptStatus::Computed` |
-| Bard | **Computed** | Inspire Courage attack-bonus engine + known-spell posture both real (gate-ordering bug caught and fixed proactively along the way); other 6 performance types honestly named as unmodeled; spell tables verified through level 10 only | `0374b96a` (Inspire Courage), `86d26f88` (known-spell closure), test wave `cb372cb3`, lead-verified 393/393 lib against real `HeadlessReceiptStatus::Computed` |
+| Sorcerer | **Computed** (levels 1-2; level 3+ still blocked on bonus spells/feats, a separate future slice) — **UI: `headless-only`, not reachable via the real creation flow today** | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603`, lead-verified 378/378 lib against real `HeadlessReceiptStatus::Computed` |
+| Cleric | **Computed** (Good domain only; Good+Healing stays Blocked on Rebuke Death) — **UI: `headless-only`, not reachable via the real creation flow today** | prepared-spell posture + Good domain's Touch of Good (self-application only, ally-targeting unmodeled) both real; domain spell-list contents named non-blocking; Healing's Rebuke Death stays a genuine separate blocker | `fca4e64e`, `b98a20d7`, lead-verified 384/384 lib against real `HeadlessReceiptStatus::Computed` |
+| Druid | **Computed** (level 1 only, Wolf companion; advancement past level 1 named non-blocking) — **UI: `headless-only`, not reachable via the real creation flow today** | prepared-spell posture + animal-companion Wolf stat block (standalone, non-integrating) both real; Link/Share Spells vacuous corrections; domain-type nature bond still falls through to the catch-all | `dda46d4a`, `9aeec493`, lead-verified 388/388 lib against real `HeadlessReceiptStatus::Computed` |
+| Bard | **Computed** — UI: `full`, live-verified reachable | Inspire Courage attack-bonus engine + known-spell posture both real (gate-ordering bug caught and fixed proactively along the way); other 6 performance types honestly named as unmodeled; spell tables verified through level 10 only | `0374b96a` (Inspire Courage), `86d26f88` (known-spell closure), test wave `cb372cb3`, `833ea89c` (UI label), lead-verified 393/393 lib + 78/78 desktop against real `HeadlessReceiptStatus::Computed` |
 | Monk | **Blocked** — 3 of 7 feats closed | `table_class_id` not widened (base-attack/save/fast-movement stay standalone); Dodge, Catch Off-Guard, and Throw Anything all closed for real (each provably has zero effect under this codebase's fixed-Longsword posture, or its mechanics are already grounded elsewhere); remaining 4 (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need their own resolution engine | `18920c3d` + `b1a453a1`, lead-verified 374/374 lib + 212/212 desktop, zero regression |
 
 **CRB tally: 10 of 11 genuinely Computed, 1 of 11 (Monk) with real partial engine progress (3 of 7 restricted-list feats closed). All 11 CRB classes now have at least some real engine work landed.**
@@ -94,24 +94,29 @@ engine work this epic has done.
 
 **ACG tally: 0 of 10 reach Computed (spellcasting stays deferred for every ACG class regardless of chassis work), 2 of 10 (Skald, Bloodrager) have a real named ability genuinely grounded, 8 of 10 untouched beyond chassis dispatch.**
 
-### Product-reachability gap flagged (frontend, 2026-07-25) — pending live confirmation
+### Product-reachability gap — CONFIRMED (frontend, 2026-07-25, `833ea89c`)
 
-Frontend found that Sorcerer/Cleric/Druid's `Computed` posture each requires
-a specific choice (Arcane bloodline+bond, Good domain, Wolf nature-bond
-respectively) that **the real character-creation UI currently has no way to
-submit** — no picker component exists, and neither `character_hub.rs` nor
-the request DTO (`composeCreateCharacterRequest.ts`) seed or carry any of
-the three choice ids. Independently corroborated by the lead from a third
-angle (the DTO shape itself). If confirmed, this means those 3 classes'
-`Computed` status is currently reachable only via headless test fixtures,
-not the shipped product — **the "10 of 27 Computed" figure above is a
-compute-engine claim, not yet a verified product-reachable claim for those
-3.** Bard is unaffected (empty known-spell selection is honestly valid, no
-picker needed). Skald/Bloodrager are also unaffected (their Rage-shaped
-abilities are activation-gated via `class_ability_activations`, not
-choice-gated). Frontend is running a live dev-build verify now to confirm
-exactly what a player sees today; this section will be corrected with the
-confirmed outcome once that lands.
+Sorcerer/Cleric/Druid's `Computed` posture each requires a specific choice
+(Arcane bloodline+bond, Good domain, Wolf nature-bond respectively) that
+**the real character-creation UI has no way to submit today** — confirmed
+three independent ways (no picker in `CreateCharacterForm.tsx`; no
+auto-seeded default in `character_hub.rs`'s `compose_character_input`; no
+choices field in the wire contract, `composeCreateCharacterRequest.ts`'s
+`CreateCharacterRequest` has exactly 7 fields). **Live-verified, not just
+code-read**: fresh default-settings Human attempts at all three, through
+the real dev build, each returned "This build isn't ready yet" with the
+predicted named diagnostic, and none persisted to disk. **This means the
+"10 of 27 Computed" figure above is a compute-engine claim — only 7 of
+those 10 (Fighter/Wizard/Rogue/Ranger/Paladin/Barbarian/Bard) are currently
+reachable through the real product; Sorcerer/Cleric/Druid are not**, pending
+a new picker component + request field + backend consumption (real,
+separately-scopeable work, not attempted here). Bard is unaffected (empty
+known-spell selection is honestly valid, no picker needed; live-verified
+`full`). Skald/Bloodrager are also unaffected (activation-gated via
+`class_ability_activations`, not choice-gated). Full writeup in
+`risks-and-open-questions.md` item 8's chain, credited to frontend. Lead
+independently re-verified the commit (diff read directly, 78/78 + typecheck
+clean against the real committed HEAD).
 
 ### What's actually queued next (in order, as currently planned)
 
