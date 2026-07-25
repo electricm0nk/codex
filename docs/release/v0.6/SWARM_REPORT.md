@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | waiting-on-lead | first APG/ACG scoping doc (Skald) landed; adversarial review dispatched on the gate-widening safety and a self-application evidence gap lead found; holding on code |
+| backend | waiting-on-lead | Skald review complete -- 2 real gate-widening traps found and confirmed in code, self-application framing corrected; revising the plan before code |
 | frontend | idle | Barbarian's UI fix committed and lead-verified (d020a5e8, 78/78 + typecheck clean); standing by |
-| qa | working | new 17-file Bard known-spell wave assigned |
+| qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). 17 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
