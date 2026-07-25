@@ -14,7 +14,7 @@ this report, not just SWARM_STATUS.md)
 | frontend | working | Found a bigger issue than the label fix: Sorcerer/Cleric/Druid's Computed posture needs a choice (bloodline/domain/nature-bond) the real creation UI has no way to submit — lead independently corroborated via the request DTO. Running a live dev-build verify now to confirm what a player actually sees |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; no new wave queued yet pending Bloodrager's test batch |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). 17 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). Monk has 3 of 7 restricted-list feats closed (partial). Skald and Bloodrager (both ACG) have a real Rage-shaped ability genuinely grounded but stay Blocked on deferred spellcasting (partial) — Bloodrager built and lead-verified, not yet committed. 15 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -69,37 +69,60 @@ spellcasting work started** — that is the entire remaining bucket for all 6.
 | Summoner | 3/4 | d8 | dispatch-only, Blocked |
 | Witch | 1/2 | d6 | dispatch-only, Blocked |
 
-### ACG (10 classes) — dispatch-only, no per-class work started beyond BAB/save/HP
+### ACG (10 classes) — 2 of 10 have real partial engine progress, 8 still dispatch-only
 
-Landed together in one commit (`71cd41b6`), same shape and same
-multiclass-loophole avoidance as APG. QA's per-class survey found **4 real
-full-BAB classes**, not the 1 originally assumed from APG's Cavalier
-precedent — flagged below.
+Chassis (BAB/save/HP) landed together in one commit (`71cd41b6`), same shape
+and same multiclass-loophole avoidance as APG. QA's per-class survey found
+**4 real full-BAB classes**, not the 1 originally assumed from APG's
+Cavalier precedent — flagged below. Since then, 2 of the 10 have gone
+beyond chassis-only: Skald (committed) and Bloodrager (built, lead-verified,
+not yet committed) both have a real Rage-shaped ability genuinely grounded,
+the first APG/ACG class-specific engine work this epic has done.
 
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
-| Arcanist | 3/4 | d6 | dispatch-only, Blocked |
-| Bloodrager | **full** | d10 | dispatch-only, Blocked |
-| Brawler | **full** | d10 | dispatch-only, Blocked |
-| Hunter | 3/4 | d8 | dispatch-only, Blocked |
-| Investigator | 3/4 | d8 | dispatch-only, Blocked |
-| Shaman | 3/4 | d8 | dispatch-only, Blocked |
-| Skald | 3/4 | d8 | **Blocked** — real progress: Inspired Rage (self-application, mirrors Barbarian's Rage) genuinely grounded; still Blocked on deferred spellcasting. First APG/ACG class with any real pillar-integration work, lead-verified 400/400 lib |
-| Slayer | **full** | d10 | dispatch-only, Blocked |
-| Swashbuckler | **full** | d10 | dispatch-only, Blocked |
-| Warpriest | 3/4 | d8 | dispatch-only, Blocked |
+| Arcanist | 3/4 | d6 | dispatch-only, Blocked — queued, untouched |
+| Bloodrager | **full** | d10 | **Blocked** — real progress: Bloodrage (Str/Con/Will/AC, self-only by RAW, mirrors Barbarian's Rage exactly, verified against `acg_abilities_class.lst`) genuinely grounded; still Blocked on deferred spellcasting. Built and lead-verified end-to-end (406/406 lib), **not yet committed** — backend's sweep in flight |
+| Brawler | **full** | d10 | dispatch-only, Blocked — queued, untouched |
+| Hunter | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Investigator | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Shaman | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Skald | 3/4 | d8 | **Blocked** — real progress: Inspired Rage (self-application inferred, mirrors Barbarian's Rage) genuinely grounded; still Blocked on deferred spellcasting. First APG/ACG class with any real pillar-integration work, committed `d2eb0798`, lead-verified 400/400 lib |
+| Slayer | **full** | d10 | dispatch-only, Blocked — queued, untouched |
+| Swashbuckler | **full** | d10 | dispatch-only, Blocked — queued, untouched |
+| Warpriest | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+
+**ACG tally: 0 of 10 reach Computed (spellcasting stays deferred for every ACG class regardless of chassis work), 2 of 10 (Skald, Bloodrager) have a real named ability genuinely grounded, 8 of 10 untouched beyond chassis dispatch.**
+
+### Product-reachability gap flagged (frontend, 2026-07-25) — pending live confirmation
+
+Frontend found that Sorcerer/Cleric/Druid's `Computed` posture each requires
+a specific choice (Arcane bloodline+bond, Good domain, Wolf nature-bond
+respectively) that **the real character-creation UI currently has no way to
+submit** — no picker component exists, and neither `character_hub.rs` nor
+the request DTO (`composeCreateCharacterRequest.ts`) seed or carry any of
+the three choice ids. Independently corroborated by the lead from a third
+angle (the DTO shape itself). If confirmed, this means those 3 classes'
+`Computed` status is currently reachable only via headless test fixtures,
+not the shipped product — **the "10 of 27 Computed" figure above is a
+compute-engine claim, not yet a verified product-reachable claim for those
+3.** Bard is unaffected (empty known-spell selection is honestly valid, no
+picker needed). Skald/Bloodrager are also unaffected (their Rage-shaped
+abilities are activation-gated via `class_ability_activations`, not
+choice-gated). Frontend is running a live dev-build verify now to confirm
+exactly what a player sees today; this section will be corrected with the
+confirmed outcome once that lands.
 
 ### What's actually queued next (in order, as currently planned)
 
-1. Barbarian's 22-file test-cleanup wave — done and lead-verified (`5ba54695`).
-2. Bard's own 32-file test-cleanup wave — QA working this now, plus Bard's own spontaneous-spell posture (known-spells table, save DCs, per-day counts) still needed to make Bard's *spell* side match Sorcerer's shape; Bard's Inspire Courage/BAB work is separate and already done.
-3. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists, same scale as item 4 below.
-4. **Real inflection point reached**: every remaining item in this epic (Sorcerer's bloodline power, Cleric's domain powers, Druid's animal companion, Monk's remaining 4 feats) is now multi-session-scale — no more cheap incremental slices exist. Backend deciding which to scope first; finishing any ONE of Sorcerer/Cleric/Druid's blockers completes a full additional class (vs. Monk's remaining feats, none of which alone move Monk's overall status).
-5. All 16 APG/ACG classes' class-skill-lists, class-features, and spellcasting (for the casters among them) — the single largest remaining bucket in this whole epic, untouched so far regardless of book.
+1. Bloodrager's own test-cleanup wave, once committed — mirrors every prior class's QA wave.
+2. Frontend's live-verify outcome on the product-reachability gap above, plus the corresponding `characterHubModel.ts` label fix for Sorcerer/Cleric/Druid/Bard (in progress).
+3. Monk — 3 of 7 restricted-list feats closed for real (Dodge, Catch Off-Guard, Throw Anything — `18920c3d` + `b1a453a1`, zero regression). `table_class_id` widening and the remaining 4 feats (Combat Reflexes/Deflect Arrows/Improved Grapple/Scorpion Style) each need a genuinely new subsystem (turn/action economy, opponent-action modeling) — confirmed no shortcut exists, same scale as CRB's other now-closed blockers were before they were solved.
+4. The other 8 untouched ACG classes plus all 6 APG classes: class-skill-lists, class-features, and spellcasting (for casters) — the single largest remaining bucket in this whole epic. Skald/Bloodrager's Rage-shaped-ability pattern is a proven template for any other APG/ACG class with a similar limited-use ability, worth checking each of the remaining 14 for the same cheap-angle-first discipline that found Skald/Bloodrager before assuming none exists.
 
 ### Honest scale note
 
-This item was flagged from the start as **not a bounded task** — each class needs its own real BAB/save progression, HP, class-skill list, spellcasting (for casters), and class-feature implementation, roughly the same order of magnitude as the original Fighter/Wizard/Rogue chassis work multiplied by up to 26 more classes. 6 classes are genuinely done, 4 more have real (if partial) engine progress, and the largest bucket (skill lists/features/spellcasting for all 27, plus all class-feature work for 16 APG/ACG classes) hasn't been started yet. This is expected to keep running for a while longer — the operator's standing "no job too big" directive is what's keeping it moving rather than treating the size as a reason to stop.
+This item was flagged from the start as **not a bounded task** — each class needs its own real BAB/save progression, HP, class-skill list, spellcasting (for casters), and class-feature implementation, roughly the same order of magnitude as the original Fighter/Wizard/Rogue chassis work multiplied by up to 26 more classes. 10 CRB classes are genuinely done, Monk has 3 of 7 feats closed, 2 ACG classes have one real ability each grounded, and the largest bucket (skill lists/features/spellcasting for all 27, plus all remaining class-feature work for 14 of 16 APG/ACG classes) hasn't been started yet. This is expected to keep running for a while longer — the operator's standing "no job too big" directive is what's keeping it moving rather than treating the size as a reason to stop.
 
 ---
 
