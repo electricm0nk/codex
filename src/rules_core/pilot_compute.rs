@@ -14065,11 +14065,7 @@ fn explain_monk_level1_chassis(
     // this feature: the claimed benefit is already real, not fabricated.
     // A Monk who chose Dodge via the slot but does NOT carry it in
     // `selected_feats` (an inconsistent/incomplete input) still blocks --
-    // this is not a silent pass, it is a genuine unmet precondition. All
-    // six other restricted-list feats (Catch Off-Guard, Combat Reflexes,
-    // Deflect Arrows, Improved Grapple, Scorpion Style, Throw Anything)
-    // still have zero execution engine anywhere in this codebase and stay
-    // unconditionally blocked.
+    // this is not a silent pass, it is a genuine unmet precondition.
     let dodge_bonus_feat_is_genuinely_active = recognized_bonus_feat_name == Some("Dodge")
         && input.chosen.selected_feats.iter().any(|feat| feat == DODGE_FEAT_ID);
 
@@ -14083,8 +14079,62 @@ fn explain_monk_level1_chassis(
                  `compute_combat_baseline` already applies unconditionally for any character \
                  carrying feat:dodge in selected_feats (regardless of which choice slot granted \
                  it) is already being applied here, not merely claimed as chosen input. Unlike \
-                 the other six restricted-list feats, Dodge needed no new feat-effect engine to \
-                 close this burden -- its effect was already real elsewhere in this codebase"
+                 the four remaining restricted-list feats with zero execution engine (Combat \
+                 Reflexes, Deflect Arrows, Improved Grapple, Scorpion Style), Dodge needed no new \
+                 feat-effect engine to close this burden -- its effect was already real elsewhere \
+                 in this codebase"
+            ),
+        });
+        return;
+    }
+
+    // v0.6 alpha swarm, risks item 8 (Monk scoping follow-up, second pass):
+    // Catch Off-Guard and Throw Anything are a SECOND genuine exception,
+    // verified independently against two primary sources (d20pfsrd and the
+    // Archives of Nethys aonprd.com mirror, byte-for-byte agreement).
+    // Catch Off-Guard: "You do not suffer any penalties for using an
+    // improvised melee weapon. Unarmed opponents are flat-footed against
+    // any attacks you make with an improvised melee weapon" (Normal: "You
+    // take a -4 penalty on attack rolls made with an improvised weapon").
+    // Throw Anything: "You do not suffer any penalties for using an
+    // improvised ranged weapon. You receive a +1 circumstance bonus on
+    // attack rolls made with thrown splash weapons" (same Normal penalty).
+    // Both feats' entire benefit applies ONLY to improvised or splash
+    // weapons -- and this codebase's bounded combat-baseline computation
+    // (`compute_combat_baseline`) always computes a single deterministic
+    // Longsword attack, a real (non-improvised, non-splash) weapon, with
+    // no improvised-weapon penalty and no splash-weapon bonus modeled
+    // anywhere in this codebase (confirmed by direct search: zero
+    // "improvised"/"splash" references outside this comment). So under
+    // every input this bounded slice can compute, both feats' triggering
+    // condition never arises -- their benefit is genuinely, provably zero
+    // here, not merely unclaimed, mirroring exactly how the Barbarian
+    // illiteracy burden was retired as vacuous rather than left
+    // claim-blocked. Unlike Dodge, no `selected_feats` cross-check is
+    // needed: this is true for every input regardless of feat selection.
+    if recognized_bonus_feat_name == Some("Catch Off-Guard")
+        || recognized_bonus_feat_name == Some("Throw Anything")
+    {
+        let feat_name = recognized_bonus_feat_name.expect("checked above");
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.improvised_weapon_penalty_absent"
+                .to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is {feat_name}: its entire benefit \
+                 (removing the -4 improvised/splash-weapon attack penalty{}) applies only to \
+                 improvised or splash weapons, and this codebase's bounded combat-baseline \
+                 computation always computes a single deterministic Longsword attack -- a real, \
+                 proficient weapon, never improvised or splash. No improvised-weapon penalty and \
+                 no splash-weapon bonus is modeled anywhere in this codebase, so {feat_name}'s \
+                 triggering condition never arises here: its benefit is genuinely zero under \
+                 every input this bounded slice can compute, not merely unclaimed. This record \
+                 documents that correction only; it carries no mechanical value (+0)",
+                if feat_name == "Throw Anything" {
+                    ", plus a +1 circumstance bonus on thrown splash weapon attacks"
+                } else {
+                    ""
+                }
             ),
         });
         return;
@@ -23868,7 +23918,8 @@ mod monk_bonus_feat_dodge_closure_tests {
     }
 
     /// A Monk with no recognized bonus-feat choice at all still blocks
-    /// (the original, unconditional behavior for every feat except Dodge).
+    /// (the original, unconditional behavior for every feat except Dodge,
+    /// Catch Off-Guard, and Throw Anything).
     #[test]
     fn monk_with_no_bonus_feat_choice_still_blocks() {
         let input = human_monk_input(false, false);
@@ -23879,6 +23930,107 @@ mod monk_bonus_feat_dodge_closure_tests {
                 &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
             ),
             "an unrecognized/absent bonus-feat choice must still block: {ids:?}"
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Monk scoping follow-up, second pass):
+/// Catch Off-Guard and Throw Anything's entire benefit applies only to
+/// improvised/splash weapons, which this codebase's bounded
+/// combat-baseline computation never models (always a single
+/// deterministic Longsword, a real proficient weapon) -- so recognizing
+/// either as the Monk's bonus feat closes the burden with no new
+/// feat-effect engine, the same "genuinely vacuous under this bounded
+/// slice" shape as the retired Barbarian illiteracy burden. Unlike
+/// Dodge, no `selected_feats` cross-check is needed: this is true for
+/// every input regardless of feat selection.
+#[cfg(test)]
+mod monk_bonus_feat_improvised_weapon_closure_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, MONK_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_monk_input_with_bonus_feat(feat_selection: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: MONK_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:monk_bonus_feat".to_owned(),
+            selection_id: feat_selection.to_owned(),
+        });
+        input
+    }
+
+    fn claim_blocking_ids(input: &CharacterInput) -> Vec<String> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect()
+    }
+
+    /// A Monk whose level-1 bonus feat is Catch Off-Guard is not blocked:
+    /// its improvised-melee-weapon benefit never triggers in this
+    /// codebase's always-Longsword bounded computation.
+    #[test]
+    fn monk_with_catch_off_guard_bonus_feat_does_not_trip_the_diagnostic() {
+        let input = human_monk_input_with_bonus_feat("feat:catch_off_guard");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Catch Off-Guard's benefit never triggers under this bounded Longsword-only \
+             computation, so it must not claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt.computation.explanations.iter().any(|e| e.id
+                == "class_feature.monk.bounded_progression.bonus_feat.improvised_weapon_penalty_absent"),
+            "expected the real vacuous-under-this-scope recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A Monk whose level-1 bonus feat is Throw Anything is not blocked
+    /// either, for the identical reason (improvised ranged weapons and
+    /// splash weapons are never modeled).
+    #[test]
+    fn monk_with_throw_anything_bonus_feat_does_not_trip_the_diagnostic() {
+        let input = human_monk_input_with_bonus_feat("feat:throw_anything");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Throw Anything's benefit never triggers under this bounded Longsword-only \
+             computation, so it must not claim-block: {ids:?}"
+        );
+    }
+
+    /// A Monk whose level-1 bonus feat is Combat Reflexes (one of the
+    /// four still-unresolved feats) still blocks -- confirms this closure
+    /// is narrowly scoped to Dodge/Catch Off-Guard/Throw Anything only.
+    #[test]
+    fn monk_with_combat_reflexes_bonus_feat_still_blocks() {
+        let input = human_monk_input_with_bonus_feat("feat:combat_reflexes");
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Combat Reflexes still has zero execution engine and must still block: {ids:?}"
         );
     }
 }
