@@ -81,6 +81,17 @@ impl ApgClassId {
             ApgClassId::Witch => "witch",
         }
     }
+
+    /// The inverse of `name`, matching a real `CharacterClassLevel.class_id`
+    /// string (`"class:alchemist"`, etc.) back to its `ApgClassId` (v0.6
+    /// alpha swarm, risks item 8) -- the lookup `pilot_compute.rs`'s
+    /// dispatch needs to recognize an APG class by its real chosen-input id.
+    /// Returns `None` for any string that isn't one of the 6 real APG
+    /// class ids (including any real CRB/ACG class id, by construction --
+    /// no cross-book name collision exists today).
+    pub fn from_class_id_str(class_id_str: &str) -> Option<Self> {
+        Self::ALL.iter().copied().find(|id| class_id_str == format!("class:{}", id.name()))
+    }
 }
 
 /// Resolves an APG class's chassis-table row for `level`, scoped to
@@ -115,6 +126,23 @@ pub fn class_chassis_resolve(
         ApgClassId::Witch => class_witch::class_table()
             .into_iter()
             .find(|row| row.level == level),
+    }
+}
+
+/// `class_id`'s real hit-die size (v0.6 alpha swarm, risks item 8), each
+/// per-class module's own `HIT_DIE` constant -- verified directly against
+/// its real `apg_classes.lst` `HD:` token, same as
+/// `rules_tables::crb::class_tables::hit_die_for`'s precedent. Unlike
+/// `class_chassis_resolve`, this is not `RuleSetId`-gated -- hit-die size
+/// has no per-book collision risk the way a class *name* could.
+pub fn hit_die_for(class_id: ApgClassId) -> u8 {
+    match class_id {
+        ApgClassId::Alchemist => class_alchemist::HIT_DIE,
+        ApgClassId::Cavalier => class_cavalier::HIT_DIE,
+        ApgClassId::Inquisitor => class_inquisitor::HIT_DIE,
+        ApgClassId::Oracle => class_oracle::HIT_DIE,
+        ApgClassId::Summoner => class_summoner::HIT_DIE,
+        ApgClassId::Witch => class_witch::HIT_DIE,
     }
 }
 
@@ -158,15 +186,19 @@ pub struct ApgClassCoverage {
     pub named_features_expected: u32,
     /// Whether `pilot_compute.rs`'s live `compute_class_chassis` dispatch
     /// (the function the character-hub pilot flow actually calls)
-    /// recognizes this class at all. `false` for every APG class today —
-    /// confirmed both by inspection (`compute_class_chassis` only matches
-    /// `FIGHTER_CLASS_ID`/`WIZARD_CLASS_ID`) and empirically by
-    /// `tests/sd24_apg_class_coverage_audit.rs`'s
-    /// `apg_classes_trip_the_honest_class_chassis_unsupported_diagnostic`
-    /// test, which drives a real `CharacterInput` for each APG class
-    /// through `compute_pilot_base_chassis` and confirms the claim-blocking
-    /// `class_chassis.unsupported` diagnostic fires rather than any
-    /// fabricated chassis numbers.
+    /// recognizes this class at all.
+    ///
+    /// **`true` as of v0.6 alpha swarm, risks item 8 (2026-07-24)**:
+    /// `compute_class_chassis` now recognizes all 6 real APG classes via
+    /// `ApgClassId::from_class_id_str` + `compute_apg_class_chassis`,
+    /// grounding real BAB/save (and, via `durability::compute_max_hp`, real
+    /// HP) for each. This was deliberately left unwired since SD-22; the
+    /// class-skill/feature/spellcasting bucket is still genuinely
+    /// ungrounded, so a real, unconditional `class_feature.apg.<class>.unsupported`
+    /// diagnostic keeps every APG class honestly `Blocked` overall (see
+    /// `compute_apg_class_chassis`'s own doc comment in `pilot_compute.rs`
+    /// for why this replaces the old generic `class_chassis.unsupported`
+    /// diagnostic this field's previous doc comment cited).
     pub pilot_compute_integrated: bool,
     /// Whether a `level_up::<class>` module (the SD-20 Epic 7 per-level
     /// automatic-feature-grant model CRB's 11 classes all have) exists for
@@ -213,7 +245,9 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
         chassis_rows_expected,
         named_features_wired: 0,
         named_features_expected: named_features_expected(class_id),
-        pilot_compute_integrated: false,
+        // v0.6 alpha swarm, risks item 8: real as of `compute_apg_class_chassis`
+        // (`pilot_compute.rs`) -- see this field's own doc comment.
+        pilot_compute_integrated: true,
         level_up_wired: false,
     }
 }

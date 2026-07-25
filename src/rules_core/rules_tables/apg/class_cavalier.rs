@@ -32,6 +32,10 @@ use super::ClassTableRow;
 /// `MAXLEVEL:20` on the real `CLASS:Cavalier` record.
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
+/// `HD:10` on the real `CLASS:Cavalier` record (v0.6 alpha swarm, risks
+/// item 8), verified directly against `apg_classes.lst` line 42.
+pub const HIT_DIE: u8 = 10;
+
 fn base_attack_bonus(level: u8) -> i16 {
     level as i16
 }

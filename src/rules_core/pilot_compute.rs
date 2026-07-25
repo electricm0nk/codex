@@ -118,8 +118,10 @@ use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
     SkillAllocation,
 };
+use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use super::rules_tables::RuleSetId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -6851,6 +6853,110 @@ fn compute_generic_table_chassis(
     Some((base_attack_bonus, base_saves))
 }
 
+/// v0.6 alpha swarm, risks item 8 -- the class/multiclass breadth scoping
+/// plan's second slice: the same generic table-driven BAB/save pillar as
+/// `compute_generic_table_chassis`, sourced from `rules_tables::apg`'s own
+/// already-built `ApgClassId`/`class_chassis_resolve` (built in a past
+/// SD-22 cycle, deliberately left unwired -- see
+/// `class-multiclass-breadth-scoping.md`'s "central finding"). Deliberately
+/// single-class-only by construction: this is only ever reached from
+/// `compute_class_chassis`'s single-class branch, and is never registered
+/// with `table_class_id`/`multiclass_class_level_supported`, so an
+/// APG-class-containing multiclass mix cannot reach this path at all --
+/// avoiding the exact multiclass loophole the Ranger slice's adversarial
+/// review found and fixed (see `class_spell.ranger.partial_caster.unsupported`'s
+/// own doc comment).
+///
+/// Unlike `compute_generic_table_chassis` (CRB classes, which each have
+/// their own `explain_<class>_...` function separately deciding what else
+/// is missing), an APG class has zero existing per-class investment beyond
+/// this BAB/save table -- no class-skill list, no named class features, no
+/// spellcasting. This function pushes a real, unconditional claim-blocking
+/// diagnostic naming that whole remaining bucket, every time it's called,
+/// so recognizing the class for BAB/save purposes can never silently
+/// produce a false `Computed` status while that bucket stays genuinely
+/// unbuilt.
+fn compute_apg_class_chassis(
+    class_id: ApgClassId,
+    class_id_str: &str,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    let Some(row) = apg::class_chassis_resolve(class_id, level, RuleSetId::Apg) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {class_id_str} APG class_chassis_resolve row at \
+                 level {level} (exceeds this class's real MAXLEVEL ceiling), so no chassis \
+                 values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return None;
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_id_str} level {level} base attack bonus from \
+             rules_tables::apg::class_chassis_resolve's row for this class: {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "{class_id_str} level {level} base Fortitude save from \
+             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "{class_id_str} level {level} base Reflex save from \
+             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "{class_id_str} level {level} base Will save from \
+             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+            base_saves.will
+        ),
+    });
+
+    // The real, unconditional blocker: nothing beyond BAB/save/HP is
+    // grounded for any APG class yet -- no class-skill list, no named
+    // class features, no spellcasting (even for the 5 of 6 that cast).
+    diagnostics.push(ComputationDiagnostic {
+        id: format!("class_feature.apg.{}.unsupported", class_id.name()),
+        message: format!(
+            "{class_id_str} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar: this APG class has no class-skill list, no named class-feature \
+             computation, and no spellcasting posture grounded anywhere in this codebase yet \
+             (only the BAB/save table and hit die are transcribed); no class-feature or spell \
+             execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+
+    Some((base_attack_bonus, base_saves))
+}
+
 /// Whether `class_level` is a class this dispatch grounds a base-chassis
 /// computation for (a bespoke `compute_<class>_chassis` for Fighter/Wizard,
 /// or the generic table-driven path for every other class `table_class_id`
@@ -6906,6 +7012,19 @@ fn compute_class_chassis(
     } else if let Some(class_id) = table_class_id(&class_level.class_id) {
         compute_generic_table_chassis(
             class_id,
+            &class_level.class_id,
+            class_level.level,
+            explanations,
+            diagnostics,
+        )
+    } else if let Some(apg_class_id) = ApgClassId::from_class_id_str(&class_level.class_id) {
+        // Deliberately NOT registered with `table_class_id` -- this branch
+        // is only ever reached here, from the single-class-only section of
+        // `compute_class_chassis` (multiclass returns early above), so an
+        // APG-class-containing multiclass mix cannot reach this path at
+        // all. See `compute_apg_class_chassis`'s own doc comment.
+        compute_apg_class_chassis(
+            apg_class_id,
             &class_level.class_id,
             class_level.level,
             explanations,
@@ -19686,5 +19805,157 @@ mod ranger_dispatch_widening_safety_tests {
                 receipt.computation.diagnostics
             );
         }
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8, second slice: APG BAB/save dispatch
+/// wiring for all 6 real APG classes. Proves the whole pattern end-to-end
+/// (real BAB/save values, real HP via the hit-die addition, honest
+/// unconditional blocking so none of the 6 can reach a false `Computed`,
+/// and multiclass safety by construction) before rolling the identical
+/// pattern out to ACG's 10 classes in a follow-up cycle.
+#[cfg(test)]
+mod apg_class_chassis_dispatch_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, HeadlessReceiptStatus, FIGHTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+    use crate::rules_core::durability::compute_max_hp;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// Real BAB/save/HP values for all 6 APG classes at level 1, verified
+    /// directly against `apg_classes.lst`'s real `BONUS:COMBAT|BASEAB|...`/
+    /// `BONUS:SAVE|...`/`HD:` tokens (the same source each per-class file's
+    /// own doc comment already cites) -- not re-derived here, just
+    /// exercised end-to-end through the real dispatch and HP paths.
+    const EXPECTED_LEVEL_1: [(&str, i16, i16, i16, i16, i16); 6] = [
+        // (class_id, base_attack_bonus, fort, ref, will, max_hp)
+        ("class:alchemist", 0, 2, 2, 0, 8),
+        ("class:cavalier", 1, 2, 0, 0, 10),
+        ("class:inquisitor", 0, 2, 0, 2, 8),
+        ("class:oracle", 0, 0, 0, 2, 8),
+        ("class:summoner", 0, 0, 0, 2, 8),
+        ("class:witch", 0, 0, 0, 2, 6),
+    ];
+
+    fn ranger_style_input(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    #[test]
+    fn all_six_apg_classes_ground_real_bab_save_and_hp_at_level_1() {
+        for (class_id, expected_bab, expected_fort, expected_ref, expected_will, expected_hp) in
+            EXPECTED_LEVEL_1
+        {
+            let input = ranger_style_input(class_id, 1);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.computation.base_attack_bonus, expected_bab,
+                "{class_id} level 1 base attack bonus"
+            );
+            assert_eq!(
+                receipt.computation.base_saves.fortitude, expected_fort,
+                "{class_id} level 1 Fortitude save"
+            );
+            assert_eq!(
+                receipt.computation.base_saves.reflex, expected_ref,
+                "{class_id} level 1 Reflex save"
+            );
+            assert_eq!(
+                receipt.computation.base_saves.will, expected_will,
+                "{class_id} level 1 Will save"
+            );
+
+            let max_hp = compute_max_hp(&input.chosen.class_levels, 0)
+                .unwrap_or_else(|| panic!("{class_id} must resolve a real max HP"));
+            assert_eq!(max_hp, expected_hp, "{class_id} level 1 max HP (0 CON modifier)");
+        }
+    }
+
+    /// The real safety property this slice's own design depends on: every
+    /// APG class stays honestly `Blocked` -- BAB/save/HP are real, but the
+    /// class-skill/feature/spellcasting bucket is genuinely ungrounded, so
+    /// this must never silently read as `Computed`.
+    #[test]
+    fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
+        for (class_id, ..) in EXPECTED_LEVEL_1 {
+            let input = ranger_style_input(class_id, 1);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "{class_id} must not reach Computed while class-skill/feature/spellcasting is \
+                 ungrounded: {:?}",
+                receipt.computation.diagnostics
+            );
+            let class_name = class_id.trim_start_matches("class:");
+            let expected_diagnostic_id = format!("class_feature.apg.{class_name}.unsupported");
+            assert!(
+                receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == expected_diagnostic_id && d.claim_blocking),
+                "expected {expected_diagnostic_id}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Multiclass safety, verified directly (not assumed from "this path is
+    /// unreachable") -- the same discipline the Ranger slice's adversarial
+    /// review established. An APG-class-containing multiclass mix must
+    /// stay Blocked, since `ApgClassId::from_class_id_str` is deliberately
+    /// not registered with `table_class_id`/`multiclass_class_level_supported`.
+    #[test]
+    fn an_apg_class_multiclassed_with_fighter_stays_blocked() {
+        for (class_id, ..) in EXPECTED_LEVEL_1 {
+            let mut input = ranger_style_input(class_id, 4);
+            input
+                .chosen
+                .class_levels
+                .push(CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 });
+
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "{class_id}+Fighter multiclass must not reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// A level beyond an APG class's real `MAXLEVEL:20` ceiling stays
+    /// honestly blocked with the generic diagnostic, not a fabricated row.
+    /// (All 6 real APG classes share the same `MAXLEVEL:20` ceiling, unlike
+    /// CRB's Druid/Monk asymmetry.)
+    #[test]
+    fn a_level_beyond_the_real_maxlevel_ceiling_stays_blocked() {
+        let input = ranger_style_input("class:alchemist", 21);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_chassis.unsupported"),
+            "{:?}",
+            receipt.computation.diagnostics
+        );
     }
 }
