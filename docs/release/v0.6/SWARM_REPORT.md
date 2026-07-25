@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | New target: Inquisitor's Judgment (APG), narrowed to Justice as the canonical MVP judgment type — a real course-correction from the earlier "not cheap" scan verdict (which was about the full judgment/domain/spellcasting breadth, not a narrowed slice). Lead independently verified all formulas and confirmed the attack-bonus integration point is already proven (Bard/Cleric's own precedent). Building now |
+| backend | working | Inquisitor's Judgment built, gate/formulas verified correct — but lead found a real gap before commit: the new code never enforces an over-budget check on `rounds_consumed_today` the way Rage/Bloodrage/Skald all do, and the doc comment's justification for skipping it misdescribes Rage's own actual behavior (which does enforce it). Flagged precisely with code citations; backend fixing before commit |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
