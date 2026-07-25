@@ -10,9 +10,9 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | building Monk's Dodge exception (pilot_compute.rs actively modified) -- Dodge's mechanical effect is already grounded elsewhere in the codebase, so a genuinely-active Dodge bonus feat unblocks Monk on that one burden; other 6 restricted-list feats stay blocked pending their own engine work |
+| backend | working | Monk's Dodge exception built and lead-verified (371/371 lib, 3/3 new tests); survived and self-caught a raw file-content lost-update race mid-edit; ready to commit |
 | frontend | working | live-verifying Barbarian's real race/level support range in the dev build before updating its stale characterHubModel.ts row (task assigned, no report back yet) |
-| qa | working | Barbarian's 22-file test batch landed and lead-verified 100% (5ba54695); moving to Bard's 32-file wave next |
+| qa | working | Barbarian's 22-file test batch landed and lead-verified 100% (5ba54695); working Bard's 32-file wave now |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian genuinely reach Computed (6 of 27). 21 remain. APG/ACG have real BAB/save/HP dispatch, still correctly Blocked pending skill/feature/spellcasting.**
 
