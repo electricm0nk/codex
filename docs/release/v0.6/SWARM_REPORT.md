@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Brawler committed (`19c792e1`, lead re-verified). Starting Hunter's Animal Companion (4th ACG closure) — found and verified it reuses Druid's own already-reviewed Wolf stat block, since Hunter's corpus text states its effective druid level equals its own hunter level. Lead confirmed the corpus quote directly and greenlit without a formal review, flagging it will land in the same `headless-only` reachability bucket as Druid's own companion (species-choice picker still missing) |
+| backend | working | Hunter's Animal Companion (4th ACG closure) built and lead-verified end-to-end pre-commit (411/411 lib, coverage audit 3/3, Druid's own 15 tests unaffected by the shared-function refactor, full workspace sweep clean). Correctly self-corrected the lead's own reachability framing — Hunter's companion is unconditional (no choice), so it sits in Brawler's always-on bucket, not Druid's choice-gated one — lead independently confirmed via Druid's own Nature Bond corpus text. Ready to commit |
 | frontend | idle | Live-verified and confirmed the product-reachability gap for real: Sorcerer/Cleric/Druid landed `headless-only`, Bard confirmed `full` (`833ea89c`), lead-verified 78/78 + typecheck clean against committed HEAD. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 3 of 7 restricted-list feats closed (partial). Skald, Bloodrager, and Brawler (all ACG, all committed) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial); Brawler's AC Bonus is a structurally new always-on shape, no activation/choice gate at all. 14 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — but only 7 of those 10 are reachable through the real product UI today (Sorcerer/Cleric/Druid need a class-choice picker that doesn't exist yet; confirmed live, see below). Monk has 3 of 7 restricted-list feats closed (partial). Skald, Bloodrager, Brawler, and Hunter (all ACG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial) — Skald/Bloodrager/Brawler committed, Hunter built and lead-verified, not yet committed. 13 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -69,23 +69,24 @@ spellcasting work started** — that is the entire remaining bucket for all 6.
 | Summoner | 3/4 | d8 | dispatch-only, Blocked |
 | Witch | 1/2 | d6 | dispatch-only, Blocked |
 
-### ACG (10 classes) — 3 of 10 have real partial engine progress, 7 still dispatch-only
+### ACG (10 classes) — 4 of 10 have real partial engine progress, 6 still dispatch-only
 
 Chassis (BAB/save/HP) landed together in one commit (`71cd41b6`), same shape
 and same multiclass-loophole avoidance as APG. QA's per-class survey found
 **4 real full-BAB classes**, not the 1 originally assumed from APG's
-Cavalier precedent — flagged below. Since then, 3 of the 10 have gone
-beyond chassis-only: Skald and Bloodrager (both committed) each have a real
-Rage-shaped ability genuinely grounded; Brawler's AC Bonus (built,
-lead-verified, not yet committed) is a structurally new shape — no
-activation gate, no choice gate, a pure function of level.
+Cavalier precedent — flagged below. Since then, 4 of the 10 have gone
+beyond chassis-only: Skald and Bloodrager (Rage-shaped, activation-gated);
+Brawler (always-on, pure function of level); Hunter (always-on, reuses
+Druid's own reviewed Wolf companion stat block via 2 newly-shared
+functions — the first ACG closure built on top of an earlier closure's
+own machinery rather than fresh corpus derivation).
 
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
 | Arcanist | 3/4 | d6 | dispatch-only, Blocked — queued, untouched |
 | Bloodrager | **full** | d10 | **Blocked** — real progress: Bloodrage (Str/Con/Will/AC, self-only by RAW, mirrors Barbarian's Rage exactly, verified against `acg_abilities_class.lst`) genuinely grounded; still Blocked on deferred spellcasting. Committed `15560e62`, lead re-verified against the real committed HEAD: exact gate/formula/tier-threshold match, 406/406 lib, `sd24_acg_class_coverage_audit` 3/3, full workspace sweep zero failures |
 | Brawler | **full** | d10 | **Blocked** — real progress: AC Bonus (level-scaled dodge bonus, `+0` until 4th level, verified against `acg_abilities_class.lst`) genuinely grounded; still Blocked on 11 other deferred named features (no spellcasting at all — pure martial class). Committed `19c792e1`, lead re-verified against the real committed HEAD: 409/409 lib, multi-level progression test (levels 1-20) confirmed correct, `sd24_acg_class_coverage_audit` 3/3 |
-| Hunter | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Hunter | 3/4 | d8 | **Blocked** — real progress: Animal Companion (Wolf, effective druid level = hunter level, reuses Druid's own reviewed stat-block math via 2 newly-shared functions) genuinely grounded; unconditional (no choice, no activation gate) — same always-on reachability bucket as Brawler, NOT Druid's own choice-gated bucket, corrected and lead-confirmed against Druid's own Nature Bond corpus text before this table was written. Still Blocked on deferred spellcasting + Wild Empathy/Animal Focus/Nature Training. Built, lead-verified pre-commit: 411/411 lib, coverage audit 3/3, Druid's own 15 tests confirmed unaffected by the refactor, full workspace sweep zero failures. **Not yet committed** |
 | Investigator | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Shaman | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 | Skald | 3/4 | d8 | **Blocked** — real progress: Inspired Rage (self-application inferred, mirrors Barbarian's Rage) genuinely grounded; still Blocked on deferred spellcasting. First APG/ACG class with any real pillar-integration work, committed `d2eb0798`, lead-verified 400/400 lib |
@@ -93,7 +94,7 @@ activation gate, no choice gate, a pure function of level.
 | Swashbuckler | **full** | d10 | dispatch-only, Blocked — queued, untouched |
 | Warpriest | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
 
-**ACG tally: 0 of 10 reach Computed (a real named-feature or spellcasting gap keeps every ACG class Blocked regardless of chassis work), 3 of 10 (Skald, Bloodrager, Brawler) have a real named ability genuinely grounded, 7 of 10 untouched beyond chassis dispatch.**
+**ACG tally: 0 of 10 reach Computed (a real named-feature or spellcasting gap keeps every ACG class Blocked regardless of chassis work), 4 of 10 (Skald, Bloodrager, Brawler, Hunter) have a real named ability genuinely grounded, 6 of 10 untouched beyond chassis dispatch.**
 
 ### Product-reachability gap — CONFIRMED (frontend, 2026-07-25, `833ea89c`)
 
