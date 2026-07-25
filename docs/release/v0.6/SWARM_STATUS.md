@@ -1221,7 +1221,7 @@ No open blocked-by dependencies between teammates at this checkpoint.
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-24T21:20:01
-Latest commit on tranche/6: 1e2ceeb7 docs: scoping plan for class/multiclass breadth (risks item 8) (3 minutes ago) (2026-07-24T21:16:56-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-24T21:18:31 frontend=2026-07-24T19:24:25 qa=2026-07-24T21:13:47 lead=2026-07-24T21:19:35
+Last mechanical check: 2026-07-25T02:55:01
+Latest commit on tranche/6: a7ae86d6 test(v0.6): update ACG coverage-audit test for real BAB/save dispatch (risks item 8) (24 seconds ago) (2026-07-25T02:54:37-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T02:20:14 frontend=2026-07-25T00:35:55 qa=2026-07-25T02:50:14 lead=2026-07-25T02:54:53
 <!-- AUTO-HEARTBEAT-END -->
