@@ -1649,6 +1649,34 @@ const SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 18;
 const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
 const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
 
+/// v0.6 alpha swarm, risks item 8 (Sorcerer Arcane bloodline closure): the
+/// Arcane bloodline's 1st-level power, Arcane Bond ("you gain an arcane
+/// bond, as a wizard... Once per day, your bonded item allows you to cast
+/// any one of your spells known"), grants a choice between a familiar and
+/// a bonded item, verified independently against two primary sources.
+/// Recognition only: the "cast a spell known" half of this benefit
+/// requires a spell-casting-resolution engine that exists nowhere in this
+/// codebase, for any class (confirmed by direct inspection) -- so no
+/// power value beyond the chosen bond type and its flat 1/day budget is
+/// ever fabricated from this choice.
+const SORCERER_ARCANE_BOND_CHOICE_ID: &str = "choice:sorcerer_arcane_bond";
+const ARCANE_BOND_FAMILIAR_SELECTION_ID: &str = "bond:familiar";
+const ARCANE_BOND_BONDED_OBJECT_SELECTION_ID: &str = "bond:bonded_object";
+/// PF1 Core Rulebook Arcane Bond: "Once per day, your bonded item allows
+/// you to cast any one of your spells known" -- a flat, non-level-scaled
+/// daily budget (unlike Rage/Bardic Performance's rising rounds-per-day).
+const ARCANE_BOND_USES_PER_DAY: i16 = 1;
+/// PF1 Core Rulebook level at which the Arcane bloodline's bonus spells
+/// begin (verified via web search aggregation against the standard
+/// Arcane bloodline bonus-spell table: identify at 3rd, invisibility at
+/// 5th, dispel magic at 7th, etc.). Below this level, "no bonus spells or
+/// bonus feats are implemented" is a correct level-gate absence, not a
+/// gap; at or above it, real bonus-spell/bonus-feat grants exist in PF1
+/// and stay genuinely unimplemented here, so the diagnostic must keep
+/// blocking at 3rd level and above even once Arcane Bond itself is
+/// recognized.
+const ARCANE_BLOODLINE_BONUS_LEVEL: u8 = 3;
+
 // SD13-E5 Arcane bloodline class-skill choice seam. The PF1 Core Rulebook Arcane
 // bloodline entry reads "Class Skill: Knowledge (any one)" (verified against both
 // d20pfsrd and the legacy Paizo PRD mirror) — a player's choice of any one Knowledge
@@ -15231,42 +15259,135 @@ fn explain_sorcerer_level1_spell_baseline(
             .filter(|_| recognized_arcane_bloodline)
             .and_then(knowledge_skill_display_name);
 
-        let arcane_bond_message = if recognized_arcane_bloodline {
-            if recognized_bloodline_class_skill_name.is_some() {
-                "Sorcerer remains blocked on its Arcane Bond and bloodline progression burden: \
-                 the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded object \
-                 -- an execution engine, not a flat number), the bloodline arcana (+1 spell save \
-                 DC on spells modified by a metamagic feat that raises the spell's level -- a \
-                 conditional effect), and the bloodline bonus spells and bonus feats at 3rd+ \
-                 level are not implemented anywhere in this codebase, so no Sorcerer \
-                 bloodline-power support is claimed. The bloodline class skill grant (a player's \
-                 choice of any one Knowledge skill) is grounded separately above as a \
-                 recognition record and is no longer part of this blocker"
+        // v0.6 alpha swarm, risks item 8 (Sorcerer Arcane bloodline closure):
+        // Arcane Bond's own identity (familiar vs. bonded object) is a real,
+        // representable choice -- recognized the same way the bloodline and
+        // class-skill choices already are.
+        let arcane_bond_selection =
+            choice_selection(input, SORCERER_ARCANE_BOND_CHOICE_ID).filter(|_| recognized_arcane_bloodline);
+        let recognized_arcane_bond_name = arcane_bond_selection.and_then(|selection| {
+            if selection == ARCANE_BOND_FAMILIAR_SELECTION_ID {
+                Some("a familiar")
+            } else if selection == ARCANE_BOND_BONDED_OBJECT_SELECTION_ID {
+                Some("a bonded object")
+            } else {
+                None
+            }
+        });
+        // Bonus spells/feats at 3rd+ level are correctly absent below
+        // ARCANE_BLOODLINE_BONUS_LEVEL (a genuine PF1 level gate); at or
+        // above it, they are real, unimplemented grants, so the diagnostic
+        // must keep blocking even once Arcane Bond itself is recognized.
+        let bonus_spells_and_feats_correctly_absent = sorcerer_level < ARCANE_BLOODLINE_BONUS_LEVEL;
+
+        if recognized_arcane_bloodline
+            && recognized_arcane_bond_name.is_some()
+            && bonus_spells_and_feats_correctly_absent
+        {
+            let bond_name = recognized_arcane_bond_name.expect("checked by the if-condition above");
+            explanations.push(ComputationExplanation {
+                id: "class_feature.sorcerer.arcane_bloodline.arcane_bond_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Recognized Sorcerer level {sorcerer_level} Arcane Bond choice \
+                     ({SORCERER_ARCANE_BOND_CHOICE_ID} -> {}): the Arcane bloodline's level-1 \
+                     power grants {bond_name}. This is a recognition record of the chosen bond \
+                     type only; it fabricates no familiar or bonded-item stat block, and no \
+                     spell is ever actually cast through it -- this codebase has no \
+                     spell-casting-resolution engine anywhere, for any class, so \"cast any one \
+                     of your spells known\" can never be triggered here regardless of build \
+                     (+0)",
+                    arcane_bond_selection.expect("checked by recognized_arcane_bond_name above")
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.sorcerer.arcane_bloodline.arcane_bond_uses_per_day".to_owned(),
+                value: ARCANE_BOND_USES_PER_DAY,
+                detail: format!(
+                    "Sorcerer Arcane Bond daily use budget (PF1 Core Rulebook: \"Once per day, \
+                     your bonded item allows you to cast any one of your spells known\"): a \
+                     flat {ARCANE_BOND_USES_PER_DAY} use per day, not level-scaled. This grounds \
+                     only the flat budget value; no consumption is ever tracked, since the \
+                     underlying benefit (casting a spell known) can never be exercised in this \
+                     codebase regardless (no spell-casting-resolution engine exists for any \
+                     class), so there is nothing for a consumption count to meaningfully gate"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.sorcerer.arcane_bloodline.bloodline_arcana_absent".to_owned(),
+                value: 0,
+                detail: "Sorcerer Arcane bloodline arcana (PF1 Core Rulebook: \"Whenever you \
+                     apply a metamagic feat to a spell that increases the slot used by at least \
+                     one level, increase the spell's DC by +1\") is vacuous under this bounded \
+                     seam: SpellSelection carries no metamagic field or slot-level-override \
+                     concept anywhere in this codebase, so a metamagic feat can never be \
+                     represented as applied to a known spell here. The precondition is not \
+                     merely unclaimed -- it is unrepresentable, so it never arises for any \
+                     input this bounded slice can compute. This record documents that \
+                     correction only; it carries no mechanical value (+0)"
+                    .to_owned(),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.sorcerer.arcane_bloodline.bonus_spells_and_feats_absent"
+                    .to_owned(),
+                value: 0,
+                detail: format!(
+                    "Sorcerer Arcane bloodline bonus spells and bonus feats at \
+                     {ARCANE_BLOODLINE_BONUS_LEVEL}rd level and above are correctly absent at \
+                     level {sorcerer_level} by PF1 Core Rulebook level gate; the at-grant rules \
+                     are named but not computed. Real bonus-spell/bonus-feat grants exist at \
+                     level {ARCANE_BLOODLINE_BONUS_LEVEL} and above and stay genuinely \
+                     unimplemented -- widening this seam past level \
+                     {}, once it happens, must re-block on this specific record rather than \
+                     silently treat it as still absent",
+                    ARCANE_BLOODLINE_BONUS_LEVEL - 1
+                ),
+            });
+        } else {
+            let arcane_bond_clause = if recognized_arcane_bloodline {
+                if recognized_arcane_bond_name.is_some() {
+                    "the bloodline arcana and Arcane Bond's own choice are resolved, but the \
+                     bloodline bonus spells and bonus feats at 3rd+ level are not implemented \
+                     anywhere in this codebase"
+                        .to_owned()
+                } else {
+                    "the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded \
+                     object) is not recognized as chosen input on this bounded seam, the \
+                     bloodline arcana (+1 spell save DC on spells modified by a metamagic feat \
+                     that raises the spell's level -- a conditional effect not yet resolved \
+                     until Arcane Bond itself is recognized), and the bloodline bonus spells and \
+                     bonus feats at 3rd+ level are not implemented anywhere in this codebase"
+                        .to_owned()
+                }
+            } else {
+                "no bloodline power, bloodline arcana, bloodline class skill grant, or bonus \
+                 spells/feats at 3rd+ level are implemented for any bloodline anywhere in this \
+                 codebase"
+                    .to_owned()
+            };
+            let class_skill_clause = if recognized_bloodline_class_skill_name.is_some() {
+                ". The bloodline class skill grant (a player's choice of any one Knowledge \
+                 skill) is grounded separately above as a recognition record and is no longer \
+                 part of this blocker"
+                    .to_owned()
+            } else if recognized_arcane_bloodline {
+                ", plus the bloodline class skill grant (a player's choice of any one \
+                 Knowledge skill)"
                     .to_owned()
             } else {
-                "Sorcerer remains blocked on its Arcane Bond and bloodline progression burden: \
-                 the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded object \
-                 -- an execution engine, not a flat number), the bloodline arcana (+1 spell save \
-                 DC on spells modified by a metamagic feat that raises the spell's level -- a \
-                 conditional effect), the bloodline class skill grant (a player's choice of any \
-                 one Knowledge skill), and the bloodline bonus spells and bonus feats at 3rd+ \
-                 level are not implemented anywhere in this codebase, so no Sorcerer \
-                 bloodline-power support is claimed"
-                    .to_owned()
-            }
-        } else {
-            "Sorcerer remains blocked on its bloodline power and progression burden: no \
-             bloodline power, bloodline arcana, bloodline class skill grant, or bonus \
-             spells/feats at 3rd+ level are implemented for any bloodline anywhere in this \
-             codebase, so no Sorcerer bloodline-power support is claimed"
-                .to_owned()
-        };
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
-                .to_owned(),
-            message: arcane_bond_message,
-            claim_blocking: true,
-        });
+                String::new()
+            };
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                    .to_owned(),
+                message: format!(
+                    "Sorcerer remains blocked on its bloodline power and progression burden: \
+                     {arcane_bond_clause}{class_skill_clause}, so no Sorcerer bloodline-power \
+                     support is claimed"
+                ),
+                claim_blocking: true,
+            });
+        }
 
         let unmet = unmet_sorcerer_known_spell_conditions(input, sorcerer_level);
         if unmet.is_empty() {
@@ -22720,18 +22841,25 @@ mod acg_class_chassis_dispatch_tests {
 mod sorcerer_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, HeadlessReceiptStatus,
-        FIGHTER_CLASS_ID, SORCERER_CLASS_ID,
+        ARCANE_BLOODLINE_SELECTION_ID, ARCANE_BOND_BONDED_OBJECT_SELECTION_ID,
+        ARCANE_BOND_FAMILIAR_SELECTION_ID, FIGHTER_CLASS_ID, SORCERER_ARCANE_BOND_CHOICE_ID,
+        SORCERER_BLOODLINE_CHOICE_ID, SORCERER_CLASS_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     );
 
-    /// A single-class Sorcerer with no invalid known-spell selection still
-    /// stays `Blocked` (the bloodline-power burden is permanently
-    /// unconditional), but the spell-specific diagnostic must NOT fire when
-    /// the posture is genuinely valid.
+    /// A single-class Sorcerer with no bloodline chosen at all (this test's
+    /// fixture never selects Arcane bloodline) still stays `Blocked` on the
+    /// bloodline-power diagnostic -- unlike the Arcane-bloodline-recognized
+    /// case (see `single_class_sorcerer_with_arcane_bond_recognized_reaches_computed`
+    /// below), an unrecognized bloodline has no vacuous pieces to resolve,
+    /// so it stays unconditionally blocking. The spell-specific diagnostic
+    /// must NOT fire when the posture is genuinely valid, regardless.
     #[test]
     fn single_class_sorcerer_with_no_known_spells_stays_blocked_only_on_bloodline() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
@@ -22932,6 +23060,147 @@ mod sorcerer_dispatch_widening_safety_tests {
                 .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported"
                     && d.claim_blocking),
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// v0.6 alpha swarm, risks item 8 (Sorcerer Arcane bloodline closure):
+    /// a single-class Human Sorcerer at level 1 with the Arcane bloodline
+    /// chosen, Arcane Bond recognized (either bond type), and a genuinely
+    /// valid (empty) known-spell posture reaches `Computed` -- the
+    /// bloodline-power burden is no longer permanently unconditional once
+    /// its two vacuous pieces (bloodline arcana, Arcane Bond's
+    /// spell-casting half) and its one real, recognizable piece (which
+    /// bond type) are all resolved, and bonus spells/feats are correctly
+    /// absent below level 3.
+    #[test]
+    fn single_class_sorcerer_with_arcane_bond_recognized_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODLINE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_ARCANE_BOND_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BOND_FAMILIAR_SELECTION_ID.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Sorcerer with Arcane bloodline + Arcane Bond recognized + a valid known-spell \
+             posture should reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.sorcerer.arcane_bloodline.arcane_bond_choice"),
+            "expected the real Arcane Bond choice recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A bonded-object Arcane Bond choice is recognized identically to a
+    /// familiar (both are real, representable choices), and also reaches
+    /// `Computed`.
+    #[test]
+    fn single_class_sorcerer_with_bonded_object_arcane_bond_reaches_computed() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODLINE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_ARCANE_BOND_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BOND_BONDED_OBJECT_SELECTION_ID.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+    }
+
+    /// Arcane bloodline chosen but NO Arcane Bond selection recognized
+    /// still blocks -- a genuine unmet precondition (the choice was never
+    /// made), not a silent pass.
+    #[test]
+    fn single_class_sorcerer_with_arcane_bloodline_but_no_bond_choice_stays_blocked() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODLINE_SELECTION_ID.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                    && d.claim_blocking),
+            "no Arcane Bond choice recognized is a genuine unmet precondition: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Even with Arcane Bond fully recognized, a Sorcerer at 3rd level or
+    /// above still blocks: bonus spells/feats are real, unimplemented
+    /// grants at that level, not a vacuous absence.
+    #[test]
+    fn single_class_sorcerer_with_arcane_bond_at_level_3_still_blocks_on_bonus_grants() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 3 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODLINE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_ARCANE_BOND_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BOND_FAMILIAR_SELECTION_ID.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "bonus spells/feats at 3rd level are real, unimplemented grants, not a vacuous \
+             absence: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                    && d.claim_blocking),
+            "expected the diagnostic to re-block on bonus spells/feats at level 3: {:?}",
             receipt.computation.diagnostics
         );
     }

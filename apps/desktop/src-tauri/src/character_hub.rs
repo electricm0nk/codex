@@ -2651,9 +2651,13 @@ mod tests {
         // diagnostic is also no longer unconditional -- it's a real
         // validation now, and compose_character_input seeds no Sorcerer
         // spell selections, so the (valid, empty) known-spell posture no
-        // longer trips it. Only the permanently-unconditional
-        // bloodline-power diagnostic remains (no bloodline execution is
-        // grounded anywhere in this codebase).
+        // longer trips it. The bloodline-power diagnostic remains here too
+        // -- not because it's still permanently unconditional (a later
+        // slice made it real/conditional for a genuinely recognized Arcane
+        // bloodline + Arcane Bond choice), but because compose_character_input
+        // seeds no bloodline or Arcane Bond choice at all for this bare
+        // fixture, so it falls into the still-blocking "no bloodline
+        // recognized" branch.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
             BTreeSet::from([
