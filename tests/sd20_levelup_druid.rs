@@ -227,13 +227,32 @@ fn druid_level_19_to_20_crosses_the_capstone_threshold_without_fabricating_featu
         "level 20 is the PF1 Core Rulebook capstone level for every core class"
     );
 
-    // Beyond Druid's grounded ceiling (level 15), pilot_compute.rs's
-    // chassis produces no druid-namespaced explanations at all — the
-    // plan must honestly reflect that rather than fabricating a grant.
+    // (v0.6 alpha swarm, risks item 8) Beyond Druid's grounded CLASS-FEATURE
+    // ceiling (level 15), pilot_compute.rs's chassis still produces no
+    // class_chassis.druid.* or class_feature.druid.* explanations -- that
+    // part of this test's original premise still holds. But the seventh
+    // slice's prepared-divine spell grounding (ground_druid_prepared_spells)
+    // is checked unconditionally for any druid class level, not gated by
+    // MAX_SUPPORTED_DRUID_LEVEL, and reuses Cleric's real, full-range PF1
+    // Core Rulebook spells-per-day table (byte-for-byte identical, valid
+    // through level 20) -- so class_spell.druid.total_spells_per_day.*
+    // genuinely keeps rising past level 15 too. This is real, grounded
+    // spell math, not fabrication: the plan must reflect it rather than
+    // over-claiming an emptiness that no longer holds.
     assert!(
-        plan.automatic_features.is_empty(),
-        "no grounded druid data exists beyond level 15; automatic_features must stay honestly \
-         empty rather than fabricated: {:?}",
+        !plan.automatic_features.is_empty(),
+        "class_spell.druid.total_spells_per_day.* is real, grounded spell math (Cleric's shared \
+         table, valid through level 20) and must still surface a grant on the level 19 -> 20 \
+         transition, even beyond Druid's own class-feature ceiling of 15: {:?}",
+        plan.automatic_features
+    );
+    assert!(
+        plan.automatic_features
+            .iter()
+            .all(|grant| grant.source_table.column_key.starts_with("class_spell.druid.")),
+        "beyond Druid's grounded class-feature ceiling (level 15), only real class_spell.druid.* \
+         spell-math grants may appear -- no class_chassis.druid.* or class_feature.druid.* \
+         explanation is fabricated: {:?}",
         plan.automatic_features
     );
 }
