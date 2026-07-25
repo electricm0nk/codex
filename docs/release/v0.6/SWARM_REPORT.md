@@ -10,8 +10,8 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Bloodrager (second APG/ACG closure) built and lead-verified end-to-end (406/406 lib, exact gate/formula match), background sweep in flight before committing |
-| frontend | working | Found a bigger issue than the label fix: Sorcerer/Cleric/Druid's Computed posture needs a choice (bloodline/domain/nature-bond) the real creation UI has no way to submit — lead independently corroborated via the request DTO. Running a live dev-build verify now to confirm what a player actually sees |
+| backend | checking in | Bloodrager (second APG/ACG closure) built and lead-verified end-to-end (406/406 lib, exact gate/formula match) as of last contact; no active process visible and diff unchanged for several cycles since — pinged directly, awaiting reply before assuming still-working |
+| frontend | working | Confirmed not stuck: the dev-build launch keeps timing out before its window-search retry budget since it's a cold Rust rebuild each time (Rust side keeps changing under backend's work); relaunched with more patience. Still mid-verify on Sorcerer/Cleric/Druid/Bard's real creation-flow outcome |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; no new wave queued yet pending Bloodrager's test batch |
 
 **Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed (10 of 27). Monk has 3 of 7 restricted-list feats closed (partial). Skald and Bloodrager (both ACG) have a real Rage-shaped ability genuinely grounded but stay Blocked on deferred spellcasting (partial) — Bloodrager built and lead-verified, not yet committed. 15 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
