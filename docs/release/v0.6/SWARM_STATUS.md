@@ -1182,14 +1182,14 @@ prior refresh, itself already superseded by everything since)
 
 **Operator decisions received (2026-07-24, ~15:35 ET):** all three gated items resolved directly by the operator following the checkpoint. Item 27: widen the posture gate to accept any equipment (real engineering scope, backend to scope/sequence first). Item 18: widen Wizard non-Human spell-math now, backend's smaller-than-feared scoping read notwithstanding still needs full empirical verification. Item 1's multi-weapon case: add a real equipment-attachment schema field, sequenced together with item 27 since both need the same underlying data. New wave of real, bounded (item 18) and larger-scope (items 1/27) backend work dispatched.
 
-## Agent Status (2026-07-24, ~21:35 ET)
+## Agent Status (2026-07-24, ~22:45 ET)
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | class-breadth scoping plan landed (cde21ba3, all 27 classes, CRB/APG/ACG resolver-infra parity confirmed); started Ranger's `table_class_id` widening; an adversarial review found the plan's "Ranger has no self-block" claim is wrong (real false-positive-Computed risk at levels 4+) -- relayed in full, backend fixing before commit |
+| backend | idle | Ranger (class 1 of 24) fully landed and lead-verified (f75cdff0, 4296/4296 + 212/212), all 4 adversarial-review findings independently confirmed fixed; ready to start class 2 once QA's test-fixture update is confirmed |
 | frontend | idle | queue clear |
-| qa | working | delivered Ranger test-coordination prep, APG/ACG hit-die table (16 classes), and confirmed Gunslinger/Magus/Ninja/Samurai data is real and present (not a dead end) -- all lead-verified |
+| qa | working | landing the disclosed 4-site `tests/**` update for Ranger's dispatch widening (caught mid-flight, correct) |
 
-**Operator directive (2026-07-24, ~21:20 ET), acted on since:** full class chassis across all 4 primary books (CRB/Bestiary 1/APG/ACG) is the swarm's primary active work, not backlog. Given the scale of what this decision determines, one adversarial review agent was dispatched on the scoping plan before greenlighting continuous implementation -- it found a real correctness gap (above), validating the review. See risks-and-open-questions.md item 8 for the full record.
+**Operator directive (2026-07-24), acted on:** full class chassis across all 4 primary books is the swarm's primary active work. The adversarial review dispatched on the scoping plan found a real correctness gap (a false-positive-Computed risk) before it shipped — backend fixed all 4 findings, lead independently verified every one rather than trusting the report. Class 1 of 24 is genuinely done; continuing through the sequence per the operator's standing directive, no further pause for approval. See risks-and-open-questions.md item 8.
 
 (d) Lead-side verification note (2026-07-24, ~14:20 ET)
 ------------------------------------------
