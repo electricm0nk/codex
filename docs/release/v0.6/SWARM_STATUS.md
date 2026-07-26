@@ -1495,7 +1495,7 @@ Directed next to systematically re-derive every already-landed closure's formula
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T11:20:01
-Latest commit on tranche/6: beb94146 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T11:15:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T11:11:50 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T11:12:12
+Last mechanical check: 2026-07-26T11:25:02
+Latest commit on tranche/6: 55922e61 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T11:20:01-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T11:21:09 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T11:12:12
 <!-- AUTO-HEARTBEAT-END -->
