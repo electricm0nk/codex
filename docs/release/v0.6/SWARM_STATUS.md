@@ -1467,7 +1467,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T22:30:02
-Latest commit on tranche/6: f64534d8 docs(v0.6): MILESTONE -- Arcanist reaches Computed, docs reconciled (56 seconds ago) (2026-07-25T22:29:06-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T22:29:21 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T22:26:01
+Last mechanical check: 2026-07-25T22:45:02
+Latest commit on tranche/6: 56874e27 docs(v0.6): Arcanist Path A verified + real CLASS_OPTIONS gap found and corrected (3 minutes ago) (2026-07-25T22:41:59-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T22:43:08 frontend=2026-07-25T22:42:25 qa=2026-07-25T12:03:53 lead=2026-07-25T22:42:35
 <!-- AUTO-HEARTBEAT-END -->
