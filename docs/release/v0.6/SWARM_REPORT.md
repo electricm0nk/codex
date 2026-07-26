@@ -10,11 +10,11 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Warpriest's full build code-complete — lead independently verified the exact-match gate, all 8 Warpriest tests, the skill-bonus fix's regression tests (Fighter/Rogue/multiclass/Wizard/Arcanist all unaffected, Warpriest now correctly included), named_features_wired=2 confirmed correct. Full lib 451/451, coverage audit 3/3. Full workspace sweep running |
+| backend | idle | Warpriest's full build committed (`03bb35d3`, 6th ACG/APG class-specific closure) — lead re-verified against the real committed HEAD: all 8 Warpriest tests, coverage audit 3/3 ("six" closures), full lib 451/451, skill-bonus regression tests confirmed clean. Standing by |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
-**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — all 10 now reachable through the real product UI, fully closed out (Sorcerer/Cleric/Druid's choice-picker gap closed via `9bafe303`'s canonical-default seeding, `characterHubModel.ts` updated and live-verified in `adf57cfb` with real per-class `levelOptions`: Sorcerer `[1,2]`, Cleric `[1,2,3]`, Druid `[1]`). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier, Alchemist, and Inquisitor (all APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial). **Arcanist (ACG, `ce73a598`) is the first class this segment to attempt a genuine FULL build outside CRB** — real prepared spellcasting with its own independently-verified table, Arcane Reservoir, class-skill wiring all real; stays Blocked on Exploits alone even with a valid spellbook — unlike Wizard's own history, a spell-seed follow-on alone won't reach `Computed` here, since `exploits_deferred` is unconditionally claim-blocking (backend attempted the seed, caught this before committing, correctly reverted). 8 classes total across both books have real partial engine progress. 9 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
+**Progress: Fighter, Wizard, Rogue, Ranger, Paladin, Barbarian, Sorcerer, Cleric, Druid, Bard genuinely reach Computed via the compute engine (10 of 27) — all 10 now reachable through the real product UI, fully closed out (Sorcerer/Cleric/Druid's choice-picker gap closed via `9bafe303`'s canonical-default seeding, `characterHubModel.ts` updated and live-verified in `adf57cfb` with real per-class `levelOptions`: Sorcerer `[1,2]`, Cleric `[1,2,3]`, Druid `[1]`). Monk has 6 of 7 restricted-list feats closed (partial, only Deflect Arrows remains). Skald, Bloodrager, Brawler, and Hunter (all ACG) plus Cavalier, Alchemist, and Inquisitor (all APG) each have a real named ability genuinely grounded but stay Blocked on other deferred features (partial). **Arcanist (ACG, `ce73a598`) and Warpriest (ACG, `03bb35d3`) are the first two classes this segment to attempt genuine FULL builds outside CRB** — real prepared spellcasting with independently-verified own tables, plus a class-specific resource/feature (Arcane Reservoir for Arcanist; Blessings/Sacred Weapon for Warpriest), all real; Arcanist stays Blocked on Exploits alone even with a valid spellbook (a spell-seed follow-on alone won't reach `Computed` here, since `exploits_deferred` is unconditionally claim-blocking — backend attempted the seed, caught this before committing, correctly reverted); Warpriest stays Blocked on its own other-features diagnostic alone. Warpriest's closure also caught and fixed a real class-skill-bonus widening bug (Climb/Intimidate/Swim bonus was silently not applying for a class whose real corpus list includes all three). 9 classes total across both books have real partial engine progress. 8 classes remain fully untouched beyond BAB/save/HP dispatch. See the detailed table below for the full done/in-progress/queued breakdown by class.**
 
 ---
 
@@ -76,19 +76,18 @@ before it shipped.
 
 **APG tally: 0 of 6 reach Computed (a real named-feature or spellcasting gap keeps every APG class Blocked regardless of chassis work), 3 of 6 (Cavalier, Alchemist, Inquisitor) have a real named ability genuinely grounded, 3 of 6 untouched beyond chassis dispatch.**
 
-### ACG (10 classes) — 5 of 10 have real partial engine progress, 5 still dispatch-only
+### ACG (10 classes) — 6 of 10 have real partial engine progress, 4 still dispatch-only
 
 Chassis (BAB/save/HP) landed together in one commit (`71cd41b6`), same shape
 and same multiclass-loophole avoidance as APG. QA's per-class survey found
 **4 real full-BAB classes**, not the 1 originally assumed from APG's
-Cavalier precedent — flagged below. Since then, 5 of the 10 have gone
+Cavalier precedent — flagged below. Since then, 6 of the 10 have gone
 beyond chassis-only: Skald and Bloodrager (Rage-shaped, activation-gated);
 Brawler (always-on, pure function of level); Hunter (always-on, reuses
-Druid's own reviewed Wolf companion stat block); **Arcanist** — the first
-of any of these to attempt a genuine FULL build (chassis + skills + real
-spellcasting + a resource pool), not a single ability, and the first
-ACG/APG class with any real spellcasting or a genuine (if not-yet-reached)
-shot at full `Computed` outside CRB.
+Druid's own reviewed Wolf companion stat block); **Arcanist and Warpriest**
+— the first two of any of these to attempt genuine FULL builds (chassis +
+skills + real spellcasting + a class-specific resource/feature), not a
+single ability, and the first ACG/APG classes with any real spellcasting.
 
 | Class | BAB | Hit die | Status |
 |---|---|---|---|
@@ -101,9 +100,9 @@ shot at full `Computed` outside CRB.
 | Skald | 3/4 | d8 | **Blocked** — real progress: Inspired Rage (self-application inferred, mirrors Barbarian's Rage) AND real spontaneous spellcasting (known-spell posture + access ladder/per-day/save-DC, reusing Bard's spell list and pure lookup functions directly — byte-identical tables, 2-source verified) both genuinely grounded; still Blocked on 18 other unbuilt named features (Bardic Knowledge, Rage Powers, Raging Song, Spell Kenning, and the rest — Skald has none of Bard's ~20-feature prior investment, confirmed not expected to reach full Computed this cycle). First APG/ACG class with any real pillar-integration work, committed `d2eb0798` (Inspired Rage) + `7e7f6fbd` (spellcasting), lead re-verified against the real HEAD: 428/428 lib, coverage audit 3/3 |
 | Slayer | **full** | d10 | dispatch-only, Blocked — queued, untouched |
 | Swashbuckler | **full** | d10 | dispatch-only, Blocked — queued, untouched |
-| Warpriest | 3/4 | d8 | dispatch-only, Blocked — queued, untouched |
+| Warpriest | 3/4 | d8 | **Blocked** — real progress: full build, not a single ability. Real prepared spellbook (own independently-verified per-day table — matches Cleric's exactly at levels 1-2, genuinely diverges from level 3 on, even though spell-list content/casting shape are shared via `SPELLLIST:1|Cleric`) + Blessings (flat uses-per-day `level/2+3`, save DC `level/2+10+WIS`) + Sacred Weapon (base-damage-die formula, honestly near-zero at level 1) + Destruction Blessing's Destructive Attacks (self-application-only activation-gated minor power, mirroring Cleric's Touch of Good) all genuinely grounded. Also caught and fixed a real class-skill-bonus widening bug: `selected_skill_class_skill_bonus_applies` was missing Warpriest despite its real corpus class-skill list including Climb/Intimidate/Swim (mirror image of a historical Wizard false-positive bug). Stays Blocked on `other_features_deferred` alone (19 other Blessing types, Sacred Weapon's active enhancement mechanic, Fervor, Channel Energy, Sacred Armor, and more) — confirmed via the actual `HeadlessReceiptStatus::Blocked` test. Committed `03bb35d3`, lead re-verified against the real committed HEAD: 451/451 lib, `sd24_acg_class_coverage_audit` 3/3 ("six" closures), all 8 Warpriest-specific tests individually confirmed, skill-bonus regression tests confirmed clean |
 
-**ACG tally: 0 of 10 reach Computed (a real named-feature or spellcasting gap keeps every ACG class Blocked regardless of chassis work), 5 of 10 (Skald, Bloodrager, Brawler, Hunter, Arcanist) have real engine progress genuinely grounded — all 5 stay Blocked on their own permanent remaining-feature gaps, Arcanist's own `exploits_deferred` diagnostic confirmed unconditionally claim-blocking (a Wizard-style spell-seed alone can't clear it, unlike Wizard's own genuinely-conditional remaining diagnostic) — 5 of 10 untouched beyond chassis dispatch.**
+**ACG tally: 0 of 10 reach Computed (a real named-feature or spellcasting gap keeps every ACG class Blocked regardless of chassis work), 6 of 10 (Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest) have real engine progress genuinely grounded — all 6 stay Blocked on their own permanent remaining-feature gaps, Arcanist's own `exploits_deferred` diagnostic confirmed unconditionally claim-blocking (a Wizard-style spell-seed alone can't clear it, unlike Wizard's own genuinely-conditional remaining diagnostic) — 4 of 10 untouched beyond chassis dispatch.**
 
 ### Product-reachability gap — FULLY CLOSED (backend `9bafe303` + frontend `adf57cfb`, 2026-07-25)
 
@@ -158,7 +157,7 @@ level.
 1. **Arcanist's real remaining blocker: Exploits (or an equivalent deferral change)** — backend attempted the Wizard-style `compose_character_input` spell-seed follow-on and found it has zero product-visible effect: `exploits_deferred` is unconditionally `claim_blocking` (unlike Wizard's own genuinely-conditional remaining diagnostic), so `create_character_at_root` stays `Blocked` regardless of whether a spell is seeded. Correctly reverted rather than shipped speculatively. Reaching product-visible `Computed` needs Exploits itself addressed (built, or given its own honest deferral treatment that doesn't unconditionally block), not just a spell seed. Not yet scoped.
 2. **Deflect Arrows** — Monk's one remaining restricted-list feat, correctly re-confirmed as needing a genuinely new opponent-interaction/incoming-attack engine this codebase has no framework for at all. Not scheduled.
 3. Monk's/Brawler's/Hunter's/Cavalier's/Alchemist's/Inquisitor's/Arcanist's own test-cleanup waves, once QA scopes whether any are needed (same "no globally-retired diagnostic" reasoning that made Bloodrager's wave unnecessary may apply — their diagnostics are new, not replacements).
-4. Remaining untouched ACG/APG classes' (Investigator/Shaman/Slayer/Swashbuckler/Warpriest/Oracle/Summoner/Witch — 8 total) class-skill-lists/class-features/spellcasting — the single largest remaining bucket in this whole epic.
+4. Remaining untouched ACG/APG classes' (Investigator/Shaman/Slayer/Swashbuckler/Oracle/Summoner/Witch — 7 total) class-skill-lists/class-features/spellcasting — the single largest remaining bucket in this whole epic.
 5. Backend's own next target, not yet chosen as of the last check-in.
 
 ### Honest scale note
