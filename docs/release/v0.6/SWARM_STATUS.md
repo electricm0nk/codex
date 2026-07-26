@@ -1475,7 +1475,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T05:55:01
-Latest commit on tranche/6: 8bfca641 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T05:50:02-04:00)
+Last mechanical check: 2026-07-26T06:00:02
+Latest commit on tranche/6: d3b6eac9 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T05:55:01-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-25T23:58:46 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:58:57
 <!-- AUTO-HEARTBEAT-END -->
