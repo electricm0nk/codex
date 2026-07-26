@@ -30,7 +30,8 @@ use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::pilot_compute::{
     choice_selection, compute_pilot_base_chassis, fighter_armor_training, fighter_level_in_mix,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
-    require_selected_skill_rank, selected_skill_class_skill_bonus_applies,
+    require_selected_skill_rank, selected_skill_climb_is_class_skill,
+    selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, DODGE_AC_BONUS, DODGE_FEAT_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
@@ -470,12 +471,23 @@ pub fn compute_selected_skill_modifiers_from_corpus(
             .min(0);
 
     let rank = i16::from(SELECTED_SKILL_RANK);
-    let class_skill_bonus =
-        if selected_skill_class_skill_bonus_applies(input) { CLASS_SKILL_BONUS } else { 0 };
+    // v0.6 alpha swarm, Investigator full-build closure: three independent
+    // per-skill checks, not one shared scalar -- see
+    // `selected_skill_climb_is_class_skill`'s own doc comment in
+    // `pilot_compute.rs` for why (Investigator's own real class-skill list
+    // is a genuine partial match, Climb/Intimidate yes, Swim no).
+    let climb_class_skill_bonus =
+        if selected_skill_climb_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+    let intimidate_class_skill_bonus =
+        if selected_skill_intimidate_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+    let swim_class_skill_bonus =
+        if selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
 
-    let climb = rank + base.ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
-    let intimidate = rank + base.ability_modifiers.charisma + class_skill_bonus;
-    let swim = rank + base.ability_modifiers.strength + class_skill_bonus + armor_check_penalty;
+    let climb =
+        rank + base.ability_modifiers.strength + climb_class_skill_bonus + armor_check_penalty;
+    let intimidate = rank + base.ability_modifiers.charisma + intimidate_class_skill_bonus;
+    let swim =
+        rank + base.ability_modifiers.strength + swim_class_skill_bonus + armor_check_penalty;
 
     Ok(CorpusAwareSelectedSkillModifiers { climb, intimidate, swim })
 }

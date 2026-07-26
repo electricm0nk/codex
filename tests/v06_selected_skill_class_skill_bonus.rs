@@ -91,9 +91,17 @@ fn wizard_solo_explanation_text_states_no_class_skill_bonus_applies() {
     let input = with_class("class:wizard");
     let computation = compute_pilot_base_chassis(&input);
 
+    // v0.6 alpha swarm, Investigator full-build closure: this message is
+    // now per-skill ("Climb is not a class skill...") rather than the
+    // old shared-scalar phrasing ("Climb/Intimidate/Swim are not class
+    // skills..."), since Investigator's own genuine 2-of-3 partial match
+    // forced the class-skill-bonus helper to split into three
+    // independent per-skill determinations -- see
+    // `selected_skill_climb_is_class_skill`'s own doc comment in
+    // `pilot_compute.rs`.
     let climb = explanation(&computation, "skill.selected_modifier.climb");
     assert!(
-        climb.detail.contains("no class-skill bonus") && climb.detail.contains("not class skills"),
+        climb.detail.contains("no class-skill bonus") && climb.detail.contains("not a class skill"),
         "the explanation must state no class-skill bonus applies and why: {}",
         climb.detail
     );

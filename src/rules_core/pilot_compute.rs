@@ -2167,6 +2167,28 @@ const SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID: &str = "charmed_life";
 /// "bound the scope, don't guess at the edge" discipline.
 const SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL: u8 = 2;
 
+/// v0.6 alpha swarm, risks item 8 (Investigator full-build closure, 10th
+/// ACG/APG class-specific closure): APG Investigator, verified directly
+/// against `acg_classes.lst`'s own `SPELLSTAT:INT`/`MEMORIZE:YES`/
+/// `SPELLBOOK:YES` tokens -- a PREPARED caster like Wizard/Arcanist/
+/// Warpriest, not the harder spontaneous shape Oracle needed. This
+/// closure is a smaller no-spellcasting MVP: Investigator's own
+/// `SPELLLIST:1|Alchemist` reuses the Alchemist formula list, and no
+/// Alchemist spell-list mapping exists anywhere in this codebase yet
+/// (confirmed directly) -- building one is a genuinely new data-
+/// ingestion cost, deferred to its own dedicated follow-on slice
+/// (mirroring the Skald spellcasting split). This slice grounds only
+/// Trapfinding, Trap Sense, and Inspiration's flat pool-size fact.
+///
+/// Investigator's own real class-skill list is a genuine 2-of-3 PARTIAL
+/// match (Climb and Intimidate present, Swim absent) -- the first
+/// partial match on the whole roster, forcing the class-skill-bonus
+/// helper to split from one shared scalar into three independent per-
+/// skill functions (see `selected_skill_climb_is_class_skill`'s own doc
+/// comment). See `docs/release/v0.6/investigator-acg-full-build-scoping.md`
+/// for the full corpus verification and scope record.
+const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7754,6 +7776,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_warpriest_single_class(input)
         || is_supported_slayer_single_class(input)
         || is_supported_swashbuckler_single_class(input)
+        || is_supported_investigator_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7909,6 +7932,21 @@ fn is_supported_swashbuckler_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Swashbuckler, class_level.level, RuleSetId::Acg)
+        .is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Investigator full-build closure):
+/// whether `input` is a single-class Investigator at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Investigator --
+/// mirrors the other eight ACG/APG exact-match gates exactly.
+fn is_supported_investigator_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Investigator) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Investigator, class_level.level, RuleSetId::Acg)
         .is_some()
 }
 
@@ -10335,6 +10373,141 @@ fn push_swashbuckler_other_features_deferred_diagnostic(
     });
 }
 
+/// PF1 Advanced Class Guide Investigator Trapfinding: `max(InvestigatorLVL/2,1)`,
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|InvestigatorTrapfindingBonus|max(InvestigatorLVL/2,1)`. **Has**
+/// the floor -- do not confuse with Investigator's own Trap Sense, which
+/// does not (see `investigator_trap_sense_bonus`'s own doc comment for
+/// the real swapped-floors hazard between this class and Slayer). A
+/// bonus on Perception (to locate traps) and Disable Device -- neither
+/// tracked by `compute_selected_skill_modifiers`, so this grounds as a
+/// standalone flat record, the same idiom as Slayer's own Trapfinding.
+fn investigator_trapfinding_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// PF1 Advanced Class Guide Investigator Trap Sense: `InvestigatorLVL/3`,
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|TrapSenseBonus|InvestigatorLVL/3`. **Does NOT** have a
+/// `max(1,...)` floor -- genuinely different from Slayer's own Trap
+/// Sense (`max(1,SlayerTrapSenseLVL/3)`, `slayer_trap_sense_bonus`
+/// above), even though both records share the same `TrapSenseBonus`
+/// `BONUS:VAR` name. The floors are effectively swapped between the two
+/// classes' two features (Investigator's Trapfinding has the floor,
+/// Trap Sense doesn't; Slayer's Trap Sense has the floor, Trapfinding
+/// doesn't) -- verified each formula against its own class's own
+/// record directly, not copied from the other, per the real
+/// implementation hazard the scoping doc flagged.
+fn investigator_trap_sense_bonus(level: u8) -> i16 {
+    i16::from(level) / 3
+}
+
+/// PF1 Advanced Class Guide Investigator Inspiration pool size:
+/// `max(1,InvestigatorLVL/2+INT)`, verified directly against
+/// `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|InvestigatorInspirationPoolBonus|max(1,InvestigatorLVL/2+INT)`
+/// (die `1d6`, verified via the same record's own
+/// `InvestigatorInspirationDice|1`/`InvestigatorInspirationDieSize|6`
+/// tags). Grounds only the flat, choice-free daily pool SIZE, the same
+/// "pool size only" MVP shape as Swashbuckler's own Panache -- the
+/// pool's USE (spend one use as a free action to add 1d6 to a skill/
+/// ability check, two uses for an attack roll or saving throw, or the
+/// free Knowledge/Linguistics/Spellcraft interaction) ties into per-roll
+/// resolution this codebase has no surface for, and stays deferred.
+fn investigator_inspiration_pool_size(level: u8, intelligence_modifier: i16) -> i16 {
+    (i16::from(level) / 2 + intelligence_modifier).max(1)
+}
+
+/// Grounds Investigator's class features for `level` (v0.6 alpha swarm,
+/// risks item 8, Investigator full-build closure, 10th ACG/APG class-
+/// specific closure, no-spellcasting MVP). Called from
+/// `compute_acg_class_chassis`'s Investigator branch, gated only on
+/// Investigator class-ownership. All three sub-features are flat,
+/// always-on class features (not activation-gated, not choice-gated) --
+/// grounds each as its own standalone explanation record, then pushes
+/// the narrowed `other_features_deferred` diagnostic naming spellcasting
+/// (deferred to its own follow-on slice pending an Alchemist formula
+/// spell list), Inspiration's use, and Investigator Talents (a chooser-
+/// list) as the genuinely still-missing pieces.
+fn ground_or_block_investigator_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let trapfinding_bonus = investigator_trapfinding_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.trapfinding_bonus".to_owned(),
+        value: trapfinding_bonus,
+        detail: format!(
+            "Investigator level {level} Trapfinding: a +{trapfinding_bonus} bonus on Perception \
+             checks made to locate traps and Disable Device checks (max(level/2, 1) = \
+             {trapfinding_bonus}). Neither Perception nor Disable Device is among the three \
+             skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so this \
+             grounds as a standalone flat record"
+        ),
+    });
+
+    let trap_sense_bonus = investigator_trap_sense_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.trap_sense_bonus".to_owned(),
+        value: trap_sense_bonus,
+        detail: format!(
+            "Investigator level {level} Trap Sense: a +{trap_sense_bonus} bonus on Reflex saves \
+             made to avoid traps and a +{trap_sense_bonus} dodge bonus to AC against attacks \
+             made by traps (level/3 = {trap_sense_bonus}, no floor -- genuinely different from \
+             Slayer's own floored Trap Sense despite sharing the same corpus BONUS:VAR name). \
+             This codebase has no trap-specific AC/save pillar; grounded as a standalone flat \
+             record"
+        ),
+    });
+
+    let inspiration_pool_size =
+        investigator_inspiration_pool_size(level, ability_modifiers.intelligence);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.inspiration_pool_size".to_owned(),
+        value: inspiration_pool_size,
+        detail: format!(
+            "Investigator level {level} Inspiration pool size: max(1, level/2 + Intelligence \
+             modifier ({})) = {inspiration_pool_size} points at the start of each day, each \
+             worth 1d6 when spent. Grounds only the flat daily maximum -- spending a use on a \
+             skill/ability/attack/save roll, and the free Knowledge/Linguistics/Spellcraft \
+             interaction, are not modeled (no per-roll resolution surface exists in this \
+             codebase)",
+            ability_modifiers.intelligence
+        ),
+    });
+
+    push_investigator_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.investigator.unsupported` for Investigator
+/// specifically (v0.6 alpha swarm, risks item 8, Investigator full-
+/// build closure): named ONLY the genuinely still-missing pieces.
+fn push_investigator_other_features_deferred_diagnostic(
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.investigator.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar, Trapfinding, Trap Sense, and Inspiration's flat pool-size fact: \
+             prepared extract spellcasting (reusing the Alchemist formula list -- no Alchemist \
+             spell-list mapping exists anywhere in this codebase yet, a genuinely new data-\
+             ingestion cost deferred to its own follow-on slice), Inspiration's actual spend (a \
+             free/two-use action on skill/ability/attack/save rolls, plus the free Knowledge/\
+             Linguistics/Spellcraft interaction), Investigator Talents (a chooser-list of real \
+             mechanical variety including the large Rogue Talent and Discovery sub-lists), \
+             Alchemy, Studied Combat, Studied Strike, Keen Recollection, Poison Lore/\
+             Resistance, Swift Alchemy, True Inspiration, and every other named class feature \
+             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
+             is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -10408,25 +10581,27 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first through eighth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through ninth APG/ACG
     // closures, adversarially reviewed 2026-07-25 for the gate-widening
     // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest,
-    // Slayer, and Swashbuckler are the eight ACG classes with a genuinely
-    // real class feature now (Inspired Rage / Bloodrage / AC Bonus /
-    // Animal Companion / real prepared spellcasting + Arcane Reservoir /
-    // real prepared spellcasting + Blessings + Sacred Weapon / Sneak
-    // Attack dice + Trap Sense + Trapfinding + Track / Panache + Charmed
-    // Life + Nimble) -- the other 2 ACG classes, and every APG class
-    // except Cavalier/Alchemist/Inquisitor/Oracle, keep the exact
-    // original unconditional diagnostic unchanged. These branches are
-    // reached only for single-class Skald/Bloodrager/Brawler/Hunter/
-    // Arcanist/Warpriest/Slayer/Swashbuckler (this function is only ever
-    // called from `compute_class_chassis`'s single-class-only section;
-    // `AcgClassId::from_class_id_str` is deliberately not registered with
-    // `multiclass_class_level_supported`, so any of these eight classes
-    // in a multiclass mix never reaches this function at all), so no
-    // separate gate-ordering/hoisting fix is needed the way CRB classes
-    // required once `table_class_id` recognized them generically.
+    // Slayer, Swashbuckler, and Investigator are the nine ACG classes
+    // with a genuinely real class feature now (Inspired Rage / Bloodrage
+    // / AC Bonus / Animal Companion / real prepared spellcasting + Arcane
+    // Reservoir / real prepared spellcasting + Blessings + Sacred Weapon
+    // / Sneak Attack dice + Trap Sense + Trapfinding + Track / Panache +
+    // Charmed Life + Nimble / Trapfinding + Trap Sense + Inspiration
+    // pool-size) -- the other 1 ACG class, and every APG class except
+    // Cavalier/Alchemist/Inquisitor/Oracle, keep the exact original
+    // unconditional diagnostic unchanged. These branches are reached
+    // only for single-class Skald/Bloodrager/Brawler/Hunter/Arcanist/
+    // Warpriest/Slayer/Swashbuckler/Investigator (this function is only
+    // ever called from `compute_class_chassis`'s single-class-only
+    // section; `AcgClassId::from_class_id_str` is deliberately not
+    // registered with `multiclass_class_level_supported`, so any of
+    // these nine classes in a multiclass mix never reaches this function
+    // at all), so no separate gate-ordering/hoisting fix is needed the
+    // way CRB classes required once `table_class_id` recognized them
+    // generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
@@ -10463,6 +10638,8 @@ fn compute_acg_class_chassis(
             explanations,
             diagnostics,
         );
+    } else if class_id == AcgClassId::Investigator {
+        ground_or_block_investigator_class_features(level, ability_modifiers, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -25247,7 +25424,60 @@ fn compute_total_saves(
 /// test (`slayer_gets_the_class_skill_bonus_on_all_three_skills`)
 /// written before this widening landed, per the lead's own instruction
 /// to verify rather than assume.
-pub(crate) fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
+///
+/// **Split into three per-skill functions (v0.6 alpha swarm, risks item
+/// 8, Investigator full-build closure, 2026-07-26)**, replacing the
+/// single scalar `selected_skill_class_skill_bonus_applies` this doc
+/// comment used to document: Investigator's own real class-skill list
+/// (`acg_abilities_class.lst`'s own `KEY:Investigator ~ Class Skills`
+/// record) is a genuine 2-of-3 PARTIAL match -- Climb and Intimidate
+/// present, Swim absent -- the first partial match on the whole roster.
+/// A single boolean cannot represent "true for Climb/Intimidate, false
+/// for Swim" for the same character, so the shared scalar had to become
+/// three independent per-skill determinations. Behavior-preserving for
+/// every class verified before Investigator (Fighter/Rogue/Warpriest/
+/// Slayer/Swashbuckler are all cleanly all-three, Wizard/Arcanist/Oracle
+/// are cleanly none-of-three) -- each of those six classes still yields
+/// the identical bonus on all three skills as before; only Investigator
+/// produces a genuinely different answer per skill.
+pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.iter().any(|class_level| {
+        class_level.class_id == FIGHTER_CLASS_ID
+            || class_level.class_id == ROGUE_CLASS_ID
+            || class_level.class_id == WARPRIEST_CLASS_ID
+            || class_level.class_id == SLAYER_CLASS_ID
+            || class_level.class_id == SWASHBUCKLER_CLASS_ID
+            || class_level.class_id == INVESTIGATOR_CLASS_ID
+    })
+}
+
+/// Whether Intimidate is a real class skill for at least one of the
+/// character's classes -- see `selected_skill_climb_is_class_skill`'s
+/// own doc comment for the full history of this per-skill split. Same
+/// class set as Climb today (Investigator's own list includes both),
+/// but kept as its own independent function rather than delegating to
+/// Climb's, since a future partial-match class could genuinely diverge
+/// on Climb vs. Intimidate specifically.
+pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.iter().any(|class_level| {
+        class_level.class_id == FIGHTER_CLASS_ID
+            || class_level.class_id == ROGUE_CLASS_ID
+            || class_level.class_id == WARPRIEST_CLASS_ID
+            || class_level.class_id == SLAYER_CLASS_ID
+            || class_level.class_id == SWASHBUCKLER_CLASS_ID
+            || class_level.class_id == INVESTIGATOR_CLASS_ID
+    })
+}
+
+/// Whether Swim is a real class skill for at least one of the
+/// character's classes -- see `selected_skill_climb_is_class_skill`'s
+/// own doc comment for the full history of this per-skill split.
+/// Investigator is deliberately EXCLUDED here: its real class-skill
+/// list (`acg_abilities_class.lst`'s own `KEY:Investigator ~ Class
+/// Skills` record) genuinely does not include Swim, verified directly
+/// -- the first class this segment has found with a real partial match
+/// rather than all-three-or-none.
+pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID
             || class_level.class_id == ROGUE_CLASS_ID
@@ -25296,16 +25526,35 @@ fn compute_selected_skill_modifiers(
     };
 
     // v0.6 alpha swarm: the class-skill bonus only applies for a class whose
-    // real PF1 class-skill list actually includes Climb/Intimidate/Swim --
-    // see selected_skill_class_skill_bonus_applies's own doc comment.
-    let class_skill_bonus_applies = selected_skill_class_skill_bonus_applies(input);
-    let class_skill_bonus = if class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
-    let class_skill_bonus_detail = if class_skill_bonus_applies {
-        format!("class-skill bonus ({class_skill_bonus:+})")
+    // real PF1 class-skill list actually includes the skill in question --
+    // see selected_skill_climb_is_class_skill's own doc comment for why
+    // this is three independent per-skill checks, not one shared scalar,
+    // since Investigator's own real class-skill list is a genuine partial
+    // match (Climb/Intimidate yes, Swim no).
+    let climb_class_skill_bonus_applies = selected_skill_climb_is_class_skill(input);
+    let climb_class_skill_bonus = if climb_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
+    let climb_class_skill_bonus_detail = if climb_class_skill_bonus_applies {
+        format!("class-skill bonus ({climb_class_skill_bonus:+})")
     } else {
-        "no class-skill bonus (Climb/Intimidate/Swim are not class skills for this character's \
-         class)"
+        "no class-skill bonus (Climb is not a class skill for this character's class)".to_owned()
+    };
+
+    let intimidate_class_skill_bonus_applies = selected_skill_intimidate_is_class_skill(input);
+    let intimidate_class_skill_bonus =
+        if intimidate_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
+    let intimidate_class_skill_bonus_detail = if intimidate_class_skill_bonus_applies {
+        format!("class-skill bonus ({intimidate_class_skill_bonus:+})")
+    } else {
+        "no class-skill bonus (Intimidate is not a class skill for this character's class)"
             .to_owned()
+    };
+
+    let swim_class_skill_bonus_applies = selected_skill_swim_is_class_skill(input);
+    let swim_class_skill_bonus = if swim_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
+    let swim_class_skill_bonus_detail = if swim_class_skill_bonus_applies {
+        format!("class-skill bonus ({swim_class_skill_bonus:+})")
+    } else {
+        "no class-skill bonus (Swim is not a class skill for this character's class)".to_owned()
     };
 
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
@@ -25323,7 +25572,7 @@ fn compute_selected_skill_modifiers(
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     let climb = rank
         + ability_modifiers.strength
-        + class_skill_bonus
+        + climb_class_skill_bonus
         + armor_check_penalty
         + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
@@ -25331,20 +25580,21 @@ fn compute_selected_skill_modifiers(
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
-             {class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = {climb}",
+             {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = \
+             {climb}",
             ability_modifiers.strength
         ),
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
     let intimidate =
-        rank + ability_modifiers.charisma + class_skill_bonus + touch_of_good_skill_bonus;
+        rank + ability_modifiers.charisma + intimidate_class_skill_bonus + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
             "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
-             {class_skill_bonus_detail}{touch_of_good_skill_detail} = {intimidate}",
+             {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} = {intimidate}",
             ability_modifiers.charisma
         ),
     });
@@ -25352,7 +25602,7 @@ fn compute_selected_skill_modifiers(
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     let swim = rank
         + ability_modifiers.strength
-        + class_skill_bonus
+        + swim_class_skill_bonus
         + armor_check_penalty
         + touch_of_good_skill_bonus;
     explanations.push(ComputationExplanation {
@@ -25360,7 +25610,8 @@ fn compute_selected_skill_modifiers(
         value: swim,
         detail: format!(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
-             {class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = {swim}",
+             {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = \
+             {swim}",
             ability_modifiers.strength
         ),
     });
@@ -26327,8 +26578,8 @@ mod wizard_spellbook_spell_id_resolution_tests {
 #[cfg(test)]
 mod selected_skill_class_skill_bonus_tests {
     use super::{
-        compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, ROGUE_CLASS_ID,
-        SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
+        compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
+        ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -26451,6 +26702,35 @@ mod selected_skill_class_skill_bonus_tests {
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Investigator's own real class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Investigator ~ Class Skills`: Acrobatics, Appraise, Bluff,
+    /// Climb, Craft, Diplomacy, Disable Device, Disguise, Escape Artist,
+    /// Heal, Intimidate, Knowledge (all), Linguistics, Perception,
+    /// Perform, Profession, Sense Motive, Sleight of Hand, Spellcraft,
+    /// Stealth, Use Magic Device) is a genuine 2-of-3 PARTIAL match --
+    /// Climb and Intimidate present, Swim absent -- the first partial
+    /// match on the whole roster (v0.6 alpha swarm, risks item 8,
+    /// Investigator full-build closure). This is exactly why
+    /// `selected_skill_class_skill_bonus_applies`'s single scalar had to
+    /// split into three independent per-skill functions
+    /// (`selected_skill_climb_is_class_skill`/`..._intimidate_.../
+    /// ..._swim_...`): no single boolean could represent Climb/Intimidate
+    /// true while Swim is false for the same character.
+    #[test]
+    fn investigator_gets_the_class_skill_bonus_on_climb_and_intimidate_but_not_swim() {
+        let input = with_class(INVESTIGATOR_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(
+            skill_value(&computation, "skill.selected_modifier.swim"),
+            3,
+            "Swim is NOT a real Investigator class skill -- must match the no-bonus value, not \
+             the class-skill-bonus value"
+        );
     }
 
     #[test]
@@ -28147,6 +28427,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:warpriest"
                 || class_id == "class:slayer"
                 || class_id == "class:swashbuckler"
+                || class_id == "class:investigator"
             {
                 continue;
             }
@@ -28614,30 +28895,84 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(panache.value, 1, "fixture Charisma 8 (-1 modifier): max(1,-1)=1: {:?}", panache);
     }
 
+    /// Investigator-specific coverage for the retired-diagnostic/new-
+    /// diagnostic swap (v0.6 alpha swarm, risks item 8, Investigator
+    /// full-build closure, tenth ACG/APG closure): the OLD generic
+    /// `class_feature.acg.investigator.unsupported` diagnostic must
+    /// never appear, while the NEW, narrower `other_features_deferred`
+    /// diagnostic always does. Trapfinding/Trap Sense/Inspiration pool
+    /// size ground unconditionally regardless (no choice or activation
+    /// gate for any of them in this no-spellcasting MVP).
+    #[test]
+    fn investigator_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:investigator", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Investigator must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.investigator.unsupported"),
+            "the retired generic diagnostic must never appear for Investigator: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.investigator.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let trapfinding = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.trapfinding_bonus")
+            .expect("Trapfinding must ground unconditionally");
+        assert_eq!(
+            trapfinding.value, 1,
+            "Investigator level 1 Trapfinding: max(0,1)=1: {:?}",
+            trapfinding
+        );
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer, and
-    /// Swashbuckler): the OTHER 2 ACG classes (every class other than
-    /// Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer,
-    /// and Swashbuckler, the eight now genuinely admitted) must produce
-    /// ZERO `defense.total_save.*`/`combat.baseline_*`/
-    /// `skill.selected_modifier.*` explanations at level 1, even when
-    /// built from the exact same Longsword/Chain Shirt/Dodge/Weapon-
-    /// Focus/skill-rank posture that genuinely satisfies every non-class-
-    /// recognition precondition those pillars check -- proving
-    /// `is_supported_skald_single_class`,
+    /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer,
+    /// Swashbuckler, and Investigator): the OTHER 1 ACG class (every
+    /// class other than Skald, Bloodrager, Brawler, Hunter, Arcanist,
+    /// Warpriest, Slayer, Swashbuckler, and Investigator, the nine now
+    /// genuinely admitted) must produce ZERO `defense.total_save.*`/
+    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
+    /// level 1, even when built from the exact same Longsword/Chain
+    /// Shirt/Dodge/Weapon-Focus/skill-rank posture that genuinely
+    /// satisfies every non-class-recognition precondition those pillars
+    /// check -- proving `is_supported_skald_single_class`,
     /// `is_supported_bloodrager_single_class`,
     /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
     /// `is_supported_arcanist_single_class`, `is_supported_warpriest_single_class`,
-    /// `is_supported_slayer_single_class`, and
-    /// `is_supported_swashbuckler_single_class` are all real exact
+    /// `is_supported_slayer_single_class`,
+    /// `is_supported_swashbuckler_single_class`, and
+    /// `is_supported_investigator_single_class` are all real exact
     /// matches, not broad `.is_some()` checks that would silently admit
     /// all 10 ACG classes into real pillar computation. This is stronger
     /// than the pre-existing "stays Blocked" assertion above, which does
     /// not by itself rule out a silent pillar-output leak alongside an
     /// unrelated claim-blocking diagnostic.
     #[test]
-    fn the_other_two_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_one_acg_class_produces_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
@@ -28647,6 +28982,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:warpriest"
                 || class_id == "class:slayer"
                 || class_id == "class:swashbuckler"
+                || class_id == "class:investigator"
             {
                 continue;
             }
@@ -28902,6 +29238,57 @@ mod acg_class_chassis_dispatch_tests {
             "Swashbuckler genuinely earns the class-skill bonus on Climb (real class-skill \
              list includes it): {:?}",
             climb
+        );
+    }
+
+    /// Investigator's own positive counterpart, mirroring Swashbuckler's
+    /// exactly -- proves the gate genuinely admits Investigator, AND
+    /// (unlike every prior positive counterpart) proves the real 2-of-3
+    /// partial class-skill match: Climb/Intimidate genuinely earn the
+    /// bonus, Swim genuinely does not.
+    #[test]
+    fn investigator_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:investigator", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Investigator: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Investigator");
+        assert_eq!(
+            climb.value, 6,
+            "Investigator genuinely earns the class-skill bonus on Climb (real class-skill \
+             list includes it): {:?}",
+            climb
+        );
+
+        let swim = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.swim")
+            .expect("Swim must be grounded for Investigator");
+        assert_eq!(
+            swim.value, 3,
+            "Investigator does NOT earn the class-skill bonus on Swim (real class-skill list \
+             excludes it, the first partial match on the roster): {:?}",
+            swim
         );
     }
 
@@ -33124,6 +33511,181 @@ mod swashbuckler_dispatch_widening_safety_tests {
                 .iter()
                 .any(|e| e.id.starts_with("class_feature.acg.swashbuckler.")),
             "a non-Swashbuckler character must never ground any Swashbuckler explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Investigator full-build closure, 10th
+/// ACG/APG class-specific closure, no-spellcasting MVP): tests the three
+/// flat class-feature formulas directly, mirroring Slayer's own
+/// dispatch-widening test module shape (no choice/activation gates for
+/// any of them).
+#[cfg(test)]
+mod investigator_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_investigator_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: INVESTIGATOR_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Investigator stays `Blocked` on the new,
+    /// narrower `other_features_deferred` diagnostic alone (never the
+    /// retired generic one), with all three flat sub-feature formulas
+    /// grounded unconditionally -- Investigator has no choice or
+    /// activation gate for any of them in this MVP.
+    ///
+    /// Level 1: Trapfinding max(1/2,1)=1, Trap Sense 1/3=0 (no floor),
+    /// Inspiration pool size max(1, 1/2 + INT(0))=max(1,0)=1 (fixture
+    /// Intelligence 10, +0 modifier -- the fixture's Human ability bonus
+    /// choice applies to Strength, not Intelligence).
+    #[test]
+    fn single_class_investigator_stays_blocked_on_other_features_only_with_all_three_flat_formulas_grounded()
+    {
+        let input = human_investigator_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Investigator must stay Blocked on other-features-deferred alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.investigator.unsupported"),
+            "the retired generic diagnostic must never appear for Investigator: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.investigator.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let trapfinding = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.trapfinding_bonus")
+            .expect("Trapfinding must ground unconditionally");
+        assert_eq!(trapfinding.value, 1, "Investigator level 1 Trapfinding: max(0,1)=1: {:?}", trapfinding);
+
+        let trap_sense = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.trap_sense_bonus")
+            .expect("Trap Sense must ground unconditionally");
+        assert_eq!(
+            trap_sense.value, 0,
+            "Investigator level 1 Trap Sense: level/3=0, no floor (genuinely different from \
+             Slayer's own floored formula): {:?}",
+            trap_sense
+        );
+
+        let inspiration = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.inspiration_pool_size")
+            .expect("Inspiration pool size must ground unconditionally");
+        assert_eq!(
+            inspiration.value, 1,
+            "Investigator level 1 Inspiration pool size: max(1, 0 + 0)=1 (fixture Intelligence \
+             10, +0 modifier): {:?}",
+            inspiration
+        );
+    }
+
+    /// Investigator's Trapfinding/Trap Sense/Inspiration progression at a
+    /// higher level, verified against the PCGen corpus formulas directly
+    /// (not merely trusting the level-1 zero/floor case above): level 6
+    /// Trapfinding max(3,1)=3, Trap Sense 6/3=2 (still no floor to
+    /// distinguish from a floored value at this level), Inspiration pool
+    /// size max(1, 3 + 0)=3 (fixture Intelligence 10, +0 modifier).
+    #[test]
+    fn investigator_flat_formulas_match_the_corpus_at_a_higher_level() {
+        let input = human_investigator_input(6);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let trapfinding = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.trapfinding_bonus")
+            .expect("Trapfinding must ground unconditionally");
+        assert_eq!(trapfinding.value, 3, "level 6 Trapfinding: max(3,1)=3: {:?}", trapfinding);
+
+        let trap_sense = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.trap_sense_bonus")
+            .expect("Trap Sense must ground unconditionally");
+        assert_eq!(trap_sense.value, 2, "level 6 Trap Sense: 6/3=2: {:?}", trap_sense);
+
+        let inspiration = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.inspiration_pool_size")
+            .expect("Inspiration pool size must ground unconditionally");
+        assert_eq!(
+            inspiration.value, 3,
+            "level 6 Inspiration pool size: max(1, 3 + 0)=3 (fixture Intelligence 10, +0 \
+             modifier): {:?}",
+            inspiration
+        );
+    }
+
+    /// A non-Investigator character carrying no Investigator entries at
+    /// all must never ground any Investigator explanation. Also proves
+    /// Fighter's own golden path is unaffected.
+    #[test]
+    fn non_investigator_characters_never_ground_investigator_explanations() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.investigator.")),
+            "a non-Investigator character must never ground any Investigator explanation: {:?}",
             receipt.computation.explanations
         );
     }
