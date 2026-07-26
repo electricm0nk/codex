@@ -118,6 +118,7 @@ use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
     SkillAllocation,
 };
+use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
@@ -1992,6 +1993,54 @@ const WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID: &str = "destructive_attacks";
 /// again. See `docs/release/v0.6/second-full-class-build-comparative-scoping.md`
 /// for the full corpus verification and scope record.
 const SLAYER_CLASS_ID: &str = "class:slayer";
+
+/// v0.6 alpha swarm, risks item 8 (Arcanist Metamagic Knowledge Exploit
+/// closure, follow-on to the Arcanist full-build closure): of Arcanist's
+/// 46 real `KEY:Arcanist Exploit ~ ...` records, Metamagic Knowledge is
+/// the one genuinely different from the other 45 -- verified directly
+/// against its own raw corpus record: no `BONUS:VAR` reservoir-cost tag
+/// at all (it uses `BONUS:ABILITYPOOL` instead), unlike every other
+/// Exploit checked (Quick Study/Potent Magic/Fast Healing/See Magic all
+/// explicitly "expend one point from your arcane reservoir"). It is a
+/// one-time bonus-feat GRANT, not an activation-gated, Reservoir-
+/// consuming ability -- the same shape as Fighter's own bonus feat
+/// choice, not the Rage-shaped/Judgment-shaped activation pattern.
+/// Reuses `feat_prereqs::metamagic::evaluate_metamagic_feat_prerequisites`/
+/// `resolve_metamagic_feat_effect` directly (a real, already-built,
+/// already-tested module from an earlier, unrelated SD-20 Epic 3 cycle)
+/// to validate the chosen feat against the real CRB Metamagic feat
+/// catalog -- genuine reuse, not new validation logic. `Empower Spell`
+/// is the canonical MVP: verified directly against `cr_feats.lst` to
+/// carry zero `PREREQ:` token of any kind (no CRB Metamagic feat does,
+/// per PF1 rules -- this isn't an arbitrary pick among ambiguous
+/// options). Confirmed before building: `push_arcanist_exploits_deferred_diagnostic`
+/// is the ONLY claim-blocking diagnostic left once a valid spellbook
+/// posture exists, so narrowing it to recognize Metamagic Knowledge
+/// genuinely closes the last claim-blocking gap -- Arcanist reaches
+/// real `HeadlessReceiptStatus::Computed` for the first time among all
+/// ACG/APG classes this session, in a headless test fixture. This is
+/// explicitly NOT the same as product-reachability: no picker exists in
+/// the real character-creation UI for `choice:arcanist_metamagic_knowledge`
+/// either, the same Path A gap Sorcerer/Cleric/Druid/Wizard's own
+/// `compose_character_input` seeding closed -- a genuine, separate
+/// follow-on, not assumed free here. See
+/// `docs/release/v0.6/arcanist-metamagic-knowledge-exploit-scoping.md`
+/// for the full record.
+const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_knowledge";
+/// `Empower Spell` is the canonical, proven example this closure's own
+/// tests exercise -- but unlike Destruction Blessing's own hardcoded
+/// single-value recognition (where every OTHER Blessing type genuinely
+/// lacks any built minor power to check), `ground_or_block_arcanist_metamagic_knowledge`
+/// deliberately validates WHATEVER real metamagic feat the choice names,
+/// not only this one literal. This is a conscious difference, not an
+/// oversight: `feat_prereqs::metamagic::evaluate_metamagic_feat_prerequisites`
+/// already validates every real CRB Metamagic-category feat with equal
+/// confidence (bounded to catalog membership either way, no per-feat
+/// distinction in what's "more built" for one feat over another), so
+/// artificially restricting recognition to only `Empower Spell` would be
+/// a narrower, less honest claim than what the reused module already
+/// proves for the whole category.
+const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "Empower Spell";
 
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
@@ -8925,9 +8974,14 @@ fn ground_arcanist_prepared_spellbook(
 /// class-ownership. Grounds the Arcane Reservoir (flat, unconditional --
 /// no choice or activation gate) and the real prepared-spellbook
 /// posture (conditional on `unmet_arcanist_spellbook_conditions`), then
-/// pushes the narrowed `exploits_deferred` diagnostic naming the
-/// genuinely still-missing pieces (Exploits, Greater Exploits, Consume
-/// Spells, Magical Supremacy) regardless of the spellbook's own state.
+/// grounds or blocks Metamagic Knowledge (v0.6 alpha swarm, Metamagic
+/// Knowledge Exploit closure): a recognized `choice:
+/// arcanist_metamagic_knowledge` selection naming `Empower Spell`
+/// (validated for real via `feat_prereqs::metamagic`, genuine reuse, not
+/// hand-rolled) clears the claim-blocking exploits diagnostic in favor
+/// of a non-blocking note naming the other 45 Exploits as still
+/// deferred; an unrecognized/missing choice keeps the original
+/// claim-blocking `exploits_deferred` diagnostic unchanged.
 fn ground_or_block_arcanist_class_features(
     input: &CharacterInput,
     level: u8,
@@ -8971,17 +9025,89 @@ fn ground_or_block_arcanist_class_features(
         });
     }
 
-    push_arcanist_exploits_deferred_diagnostic(diagnostics);
+    ground_or_block_arcanist_metamagic_knowledge(input, explanations, diagnostics);
 }
 
-/// Pushes the new, narrower diagnostic replacing
+/// Grounds or claim-blocks Arcanist's Metamagic Knowledge Exploit (v0.6
+/// alpha swarm, risks item 8, Arcanist Metamagic Knowledge Exploit
+/// closure). A recognized `choice:arcanist_metamagic_knowledge`
+/// selection naming `Empower Spell` -- validated for real via
+/// `feat_prereqs::metamagic::evaluate_metamagic_feat_prerequisites`
+/// (genuine reuse of an already-built, already-tested module from an
+/// earlier, unrelated SD-20 Epic 3 cycle, not hand-rolled validation) --
+/// grounds the real feat grant (its own catalog description text, via
+/// `resolve_metamagic_feat_effect`) and replaces the claim-blocking
+/// `exploits_deferred` diagnostic with a non-blocking note naming the
+/// other 45 Exploits (plus Greater Exploits, Consume Spells, Magical
+/// Supremacy) as still deferred. An unrecognized or missing choice keeps
+/// the original claim-blocking `exploits_deferred` diagnostic
+/// unchanged, mirroring the exact "recognized choice clears the
+/// blocker, unrecognized stays blocked" shape Cleric's domain and
+/// Warpriest's Blessing already established.
+fn ground_or_block_arcanist_metamagic_knowledge(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let selection = choice_selection(input, ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID);
+
+    let Some(selection) = selection else {
+        push_arcanist_exploits_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    let evaluation = evaluate_metamagic_feat_prerequisites(selection);
+    if !evaluation.is_eligible {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.arcanist.metamagic_knowledge.feat_ineligible".to_owned(),
+            message: format!(
+                "Arcanist's Metamagic Knowledge Exploit names '{selection}' via \
+                 {ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID}, but this is not a recognized, \
+                 eligible Metamagic feat: {}",
+                evaluation.failing_prerequisites.join("; ")
+            ),
+            claim_blocking: true,
+        });
+        push_arcanist_exploits_deferred_diagnostic(diagnostics);
+        return;
+    }
+
+    let effect = resolve_metamagic_feat_effect(selection)
+        .expect("evaluate_metamagic_feat_prerequisites already confirmed eligibility");
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.arcanist.metamagic_knowledge.feat_granted".to_owned(),
+        value: 0,
+        detail: format!(
+            "Arcanist's Metamagic Knowledge Exploit grants '{}' as a bonus feat (validated via \
+             feat_prereqs::metamagic against the real CRB Metamagic feat catalog): {}",
+            effect.feat_id, effect.description
+        ),
+    });
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.arcanist.exploits_deferred.unsupported".to_owned(),
+        message: format!(
+            "{ARCANIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar, Arcane Reservoir, prepared spellbook, and Metamagic Knowledge: the other \
+             45 Arcanist Exploits (a chooser-list of real mechanical variety, named but not \
+             built), Greater Arcanist Exploits, Consume Spells (a real formula, Charisma-\
+             modifier-gated resource conversion), and Magical Supremacy (a capstone ability) \
+             remain ungrounded anywhere in this codebase; no class-feature execution is \
+             fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: false,
+    });
+}
+
+/// Pushes the ORIGINAL, unconditional diagnostic replacing
 /// `class_feature.acg.arcanist.unsupported` for Arcanist specifically
 /// (v0.6 alpha swarm, risks item 8, Arcanist full-build closure): named
 /// ONLY the genuinely still-missing pieces (Arcanist Exploits / Greater
 /// Arcanist Exploits -- a chooser-list, real mechanical variety --
-/// Consume Spells, and Magical Supremacy). Pushed unconditionally
-/// regardless of the spellbook's own state, mirroring every prior
-/// diagnostic-narrowing closure this session.
+/// Consume Spells, and Magical Supremacy). Called only from
+/// `ground_or_block_arcanist_metamagic_knowledge`'s own not-recognized
+/// branches -- once Metamagic Knowledge IS recognized, a different,
+/// non-blocking version of this same diagnostic id is pushed inline
+/// there instead (see that function's own doc comment).
 fn push_arcanist_exploits_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.arcanist.exploits_deferred.unsupported".to_owned(),
@@ -30575,9 +30701,12 @@ mod inquisitor_dispatch_widening_safety_tests {
 mod arcanist_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID,
+        HeadlessReceiptStatus, ARCANIST_CLASS_ID, ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID,
+        EMPOWER_SPELL_METAMAGIC_SELECTION, FIGHTER_CLASS_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -30664,6 +30793,259 @@ mod arcanist_dispatch_widening_safety_tests {
             base_first_level.value, 2,
             "Arcanist level 1 base 1st-level spells: 2 (not Wizard's own 1): {:?}",
             base_first_level
+        );
+    }
+
+    /// **The milestone test** (v0.6 alpha swarm, risks item 8, Arcanist
+    /// Metamagic Knowledge Exploit closure): a real, valid spellbook
+    /// posture PLUS a recognized Metamagic Knowledge choice naming
+    /// `Empower Spell` clears the last remaining claim-blocking
+    /// diagnostic (`exploits_deferred` becomes non-blocking) -- Arcanist
+    /// reaches genuine `HeadlessReceiptStatus::Computed` for the first
+    /// time among all ACG/APG classes this session. Confirmed before
+    /// building (per team-lead review) that this is the real last gap,
+    /// not another standalone fact.
+    #[test]
+    fn single_class_arcanist_with_a_valid_spellbook_and_recognized_metamagic_knowledge_reaches_computed()
+    {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Arcanist with a valid spellbook and recognized Metamagic Knowledge must reach \
+             Computed -- the last claim-blocking diagnostic should be cleared: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.claim_blocking),
+            "zero claim-blocking diagnostics expected for this posture: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let feat_grant = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.arcanist.metamagic_knowledge.feat_granted")
+            .expect("the Metamagic Knowledge feat grant must be grounded");
+        assert!(
+            feat_grant.detail.contains("Empower Spell"),
+            "expected the granted feat to be named: {:?}",
+            feat_grant
+        );
+    }
+
+    /// Proves the recognition is genuinely general, not hardcoded to
+    /// `Empower Spell` alone: a different real, catalog-verified
+    /// Metamagic feat (`Silent Spell`) is equally recognized and clears
+    /// the same diagnostic.
+    #[test]
+    fn single_class_arcanist_metamagic_knowledge_recognizes_other_real_metamagic_feats_too() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: "Silent Spell".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a different real metamagic feat must be recognized equally: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Arcanist naming an unrecognized (non-Metamagic, or nonexistent)
+    /// feat via the Metamagic Knowledge choice is a genuine posture
+    /// violation and must claim-block, mirroring every other "active but
+    /// unrecognized" shape this session.
+    #[test]
+    fn single_class_arcanist_with_an_ineligible_metamagic_knowledge_feat_stays_blocked() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: "Toughness".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.metamagic_knowledge.feat_ineligible"
+                    && d.claim_blocking),
+            "expected the feat_ineligible claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
+                    && d.claim_blocking),
+            "the original claim-blocking exploits_deferred diagnostic must remain: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Arcanist with a valid spellbook but NO Metamagic Knowledge
+    /// choice at all stays Blocked on exploits_deferred alone -- the
+    /// pre-existing shape, unchanged by this closure.
+    #[test]
+    fn single_class_arcanist_without_a_metamagic_knowledge_choice_stays_blocked_on_exploits() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "no Metamagic Knowledge choice means exploits_deferred still claim-blocks: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the original claim-blocking exploits_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Arcanist with a recognized Metamagic Knowledge choice, but an
+    /// INVALID spellbook posture (no spells recorded at all), must still
+    /// stay Blocked -- Metamagic Knowledge alone is not sufficient; the
+    /// spellbook posture is a genuinely separate, still-required gate.
+    #[test]
+    fn single_class_arcanist_with_metamagic_knowledge_but_no_spellbook_stays_blocked() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Metamagic Knowledge alone, without a valid spellbook, must still stay Blocked: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.arcanist.prepared_spellbook.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_spellbook diagnostic since no spells are recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
+                    && d.claim_blocking),
+            "exploits_deferred should be non-blocking now that Metamagic Knowledge is \
+             recognized, even though the spellbook gate still blocks overall: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Arcanist with a spoofed Metamagic Knowledge choice granted to
+    /// a NON-Arcanist character must have it silently ignored. Also
+    /// proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_arcanist_characters_spoofed_metamagic_knowledge_choice_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Arcanist choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.arcanist.")),
+            "a non-Arcanist character must never ground any Arcanist Metamagic Knowledge \
+             explanation: {:?}",
+            receipt.computation.explanations
         );
     }
 
