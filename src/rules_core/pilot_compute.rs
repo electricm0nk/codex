@@ -1886,6 +1886,20 @@ const ALCHEMIST_MUTAGEN_STAT_BONUS: i16 = 4;
 const ALCHEMIST_MUTAGEN_STAT_PENALTY: i16 = -2;
 /// PF1 Advanced Player's Guide Mutagen: "a +2 natural armor bonus."
 const ALCHEMIST_MUTAGEN_NATURAL_ARMOR_BONUS: i16 = 2;
+/// PF1 Advanced Player's Guide Alchemist Poison Resistance's level gates
+/// (deepening 2026-07-26, task #4), re-derived directly against
+/// `apg_abilities_class.lst`'s own `AlchemistPoisonLVL` tier tokens
+/// (`PREVARGTEQ:AlchemistLVL,2/5/8/10`) rather than assumed from
+/// Investigator's own identical-shaped feature: None below level 2,
+/// +2 (2-4), +4 (5-7), +6 (8-9), full immunity at 10+. Kept as
+/// Alchemist's own separate constants/functions rather than reusing
+/// Investigator's directly, the same "parallel copy over cross-class-
+/// function-reuse" discipline Skald's own spellcasting closure and
+/// Inquisitor's own Track already used.
+const ALCHEMIST_POISON_RESISTANCE_LEVEL: u8 = 2;
+const ALCHEMIST_POISON_RESISTANCE_TWO_LEVEL: u8 = 5;
+const ALCHEMIST_POISON_RESISTANCE_THREE_LEVEL: u8 = 8;
+const ALCHEMIST_POISON_IMMUNITY_LEVEL: u8 = 10;
 
 /// v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, third
 /// APG class-specific closure): APG Inquisitor's Judgment, verified
@@ -5850,6 +5864,14 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    // v0.6 alpha swarm: standalone feat-derived skill facts (turnkey
+    // consumer wiring for `feat_effects::standalone_skill_facts_from_feats`/
+    // `skill_focus_facts_from_choices`, both already built and tested).
+    // Unconditional on class ownership/posture -- these are general feat
+    // effects, not class-specific, so they ground for every character
+    // regardless of chassis support.
+    ground_standalone_feat_skill_facts(input, &mut explanations);
+
     explain_fighter_class_features(input, &mut explanations);
 
     explain_fighter_level1_hit_points(input, &ability_modifiers, &mut explanations);
@@ -8508,6 +8530,33 @@ fn compute_apg_class_chassis(
         ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
+        let alchemist_intelligence_modifier =
+            ability_modifier(input.chosen.ability_scores.intelligence);
+        ground_alchemist_bomb_and_poison_resistance(
+            level,
+            alchemist_intelligence_modifier,
+            explanations,
+        );
+        let extract_unmet =
+            unmet_alchemist_extract_conditions(input, level, alchemist_intelligence_modifier);
+        if extract_unmet.is_empty() {
+            ground_alchemist_prepared_extracts(
+                input,
+                level,
+                alchemist_intelligence_modifier,
+                explanations,
+            );
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.apg.alchemist.prepared_extracts.unsupported".to_owned(),
+                message: format!(
+                    "Alchemist remains blocked on its prepared extract / daily preparation / \
+                     extract slot posture burden: {}",
+                    extract_unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
     } else if class_id == ApgClassId::Inquisitor {
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
         ground_inquisitor_flat_named_facts(input, level, explanations);
@@ -8670,6 +8719,419 @@ fn active_alchemist_mutagen_bonus(
     Some((alchemist_level, physical_ability, mental_ability))
 }
 
+/// PF1 Advanced Player's Guide Alchemist Bomb damage dice (deepening
+/// 2026-07-26, task #4): a base 1d6 plus `(level-1)/2` additional d6 --
+/// verified directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|AlchemistBombAdditionalDice|(AlchemistBombLVL-1)/2`
+/// (`AlchemistBombDiceSize|6` confirms the die size). **Verified the full
+/// 1-20 progression carefully, not just the base formula shape** (the
+/// same rigor the Sacred Weapon dice-count bug demanded): the corpus also
+/// carries 10 conditional `-1` override branches at levels 3/5/7/9/11/
+/// 13/15/17/19, each gated behind `PREVAREQ:Alchemist_CF_BombDamage<N>,1`
+/// -- but `Alchemist_CF_BombDamage<N>` is `DEFINE`d to `0` for the base
+/// Alchemist class (`apg_abilities_globalvar.lst`) and is ONLY ever set
+/// to `1` by two specific Ultimate Magic archetype feature grants
+/// (Psychonaut, Reanimator, `um_abilities_class.lst`), entirely
+/// out-of-scope splatbook/archetype content this codebase's own
+/// single-book, base-class-only build never reaches. These 10 branches
+/// are therefore provably vacuous for every character this engine
+/// represents, the same "provably vacuous precondition" shape Brawler's
+/// own light-armor check and Dodge's own AC bonus already established --
+/// the base formula is the real, complete answer for this closure's
+/// scope.
+fn alchemist_bomb_damage_dice(level: u8) -> i16 {
+    1 + (i16::from(level) - 1) / 2
+}
+
+/// PF1 Advanced Player's Guide Alchemist Bomb damage bonus: a flat
+/// Intelligence modifier added to bomb damage (deepening 2026-07-26,
+/// task #4), verified directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|AlchemistBombDamageBonus|INT`.
+fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
+    intelligence_modifier
+}
+
+/// PF1 Advanced Player's Guide Alchemist Bomb save DC: `10 + (level/2) +
+/// Intelligence modifier` (deepening 2026-07-26, task #4), verified
+/// directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|AlchemistBombDC|10+(AlchemistBombLVL/2)+INT`, the same
+/// flat-DC standalone shape Blessing's/Mutagen's own DC-style facts use.
+fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
+    10 + i16::from(level) / 2 + intelligence_modifier
+}
+
+/// PF1 Advanced Player's Guide Alchemist Bomb uses per day: `level +
+/// Intelligence modifier` (deepening 2026-07-26, task #4), verified
+/// directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|AlchemistBombTimes|AlchemistBombLVL+INT`. A second
+/// contribution exists in the corpus (`BONUS:VAR|AlchemistBombTimes|
+/// BonusBombCount/2`), but `BonusBombCount` (`DEFINE:BonusBombCount|0`,
+/// `apg_abilities_race.lst`) only ever increments via a Gnome-specific
+/// Favored Class Bonus CHOICE this codebase's own fixed Human posture
+/// never reaches (no favored-class-bonus selection mechanism exists
+/// anywhere in this engine) -- provably `0` for every character this
+/// engine represents, the same "provably vacuous" shape the Bomb damage
+/// dice's own override branches already established above.
+fn alchemist_bomb_uses_per_day(level: u8, intelligence_modifier: i16) -> i16 {
+    i16::from(level) + intelligence_modifier
+}
+
+/// PF1 Advanced Player's Guide Alchemist Poison Resistance's numeric
+/// bonus tier (deepening 2026-07-26, task #4), re-derived directly
+/// against `apg_abilities_class.lst`'s own `AlchemistPoisonLVL`
+/// tier-gating tokens: `None` below level 2 (not yet gained), `Some(2)`
+/// from level 2, `Some(4)` from level 5, `Some(6)` from level 8 --
+/// identical shape to Investigator's own Poison Resistance, confirmed
+/// independently rather than assumed. Kept as Alchemist's own separate
+/// function per the established parallel-copy discipline.
+fn alchemist_poison_resistance_bonus(level: u8) -> Option<i16> {
+    if level < ALCHEMIST_POISON_RESISTANCE_LEVEL {
+        None
+    } else if level < ALCHEMIST_POISON_RESISTANCE_TWO_LEVEL {
+        Some(2)
+    } else if level < ALCHEMIST_POISON_RESISTANCE_THREE_LEVEL {
+        Some(4)
+    } else {
+        Some(6)
+    }
+}
+
+/// Whether `level` has reached full poison immunity (deepening
+/// 2026-07-26, task #4), verified directly against the corpus's own
+/// immunity gate at `AlchemistPoisonLVL,4` (resolving to Alchemist level
+/// 10) -- identical shape to Investigator's own
+/// `investigator_is_poison_immune`, kept as Alchemist's own separate copy.
+fn alchemist_is_poison_immune(level: u8) -> bool {
+    level >= ALCHEMIST_POISON_IMMUNITY_LEVEL
+}
+
+/// Grounds Alchemist's Bomb (damage dice/bonus, save DC, uses-per-day)
+/// and Poison Resistance as standalone explanation records (deepening
+/// 2026-07-26, task #4) -- both are flat, unconditional, always-on
+/// facts (no choice or activation gate, unlike Mutagen), so this never
+/// claim-blocks. Called unconditionally from `compute_apg_class_chassis`'s
+/// Alchemist branch, independent of Mutagen's own state.
+fn ground_alchemist_bomb_and_poison_resistance(
+    level: u8,
+    intelligence_modifier: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let bomb_damage_dice = alchemist_bomb_damage_dice(level);
+    let bomb_damage_bonus = alchemist_bomb_damage_bonus(intelligence_modifier);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.alchemist.bomb_damage".to_owned(),
+        value: bomb_damage_dice,
+        detail: format!(
+            "Alchemist level {level} Bomb damage: {bomb_damage_dice}d6 (1 + (level-1)/2 = \
+             {bomb_damage_dice}) + {bomb_damage_bonus:+} Intelligence modifier. This is a \
+             weapon-like damage magnitude against any target, not conditioned on an \
+             opponent-tracking interaction (unlike Studied Combat/Strike), so it grounds \
+             standalone the same way Sacred Weapon's dice count and the Wolf companion's bite \
+             damage already do"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.alchemist.bomb_dc".to_owned(),
+        value: alchemist_bomb_dc(level, intelligence_modifier),
+        detail: format!(
+            "Alchemist level {level} Bomb save DC: 10 + (level/2) + Intelligence modifier \
+             ({intelligence_modifier:+}) = {}",
+            alchemist_bomb_dc(level, intelligence_modifier)
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.alchemist.bomb_uses_per_day".to_owned(),
+        value: alchemist_bomb_uses_per_day(level, intelligence_modifier),
+        detail: format!(
+            "Alchemist level {level} Bomb uses per day: level + Intelligence modifier \
+             ({intelligence_modifier:+}) = {}. A Gnome-specific Favored Class Bonus can add \
+             further uses in the real PF1 rules, but this codebase models no favored-class-\
+             bonus selection mechanism at all, so that term is provably 0 here",
+            alchemist_bomb_uses_per_day(level, intelligence_modifier)
+        ),
+    });
+
+    match alchemist_poison_resistance_bonus(level) {
+        None => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.poison_resistance_bonus".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Alchemist level {level} Poison Resistance: correctly absent below level 2 \
+                     by PF1 Advanced Player's Guide level gate; the at-grant magnitude is named \
+                     but not computed"
+                ),
+            });
+        }
+        Some(bonus) if alchemist_is_poison_immune(level) => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.poison_resistance_bonus".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Alchemist level {level} is fully immune to poison (PF1 Advanced Player's \
+                     Guide, granted at level 10): a qualitatively different fact from the \
+                     numeric resistance bonus (which topped out at +{bonus} at level 8-9), not \
+                     a fourth scaling tier, so no numeric bonus value applies here"
+                ),
+            });
+        }
+        Some(bonus) => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.apg.alchemist.poison_resistance_bonus".to_owned(),
+                value: bonus,
+                detail: format!(
+                    "Alchemist level {level} Poison Resistance: a +{bonus} bonus on all saving \
+                     throws against poison (2 at level 2, 4 at level 5, 6 at level 8, immune at \
+                     level 10). No poison-save total exists anywhere in this codebase, so this \
+                     grounds only the flat bonus value, identical shape to Investigator's own \
+                     Poison Resistance"
+                ),
+            });
+        }
+    }
+}
+
+/// PF1 Advanced Player's Guide Alchemist "Extracts Prepared" table
+/// (deepening 2026-07-26, task #4), for extract levels 1st through 6th,
+/// indexed 0=1st..5=6th -- identical to Investigator's own table (both
+/// verified directly against d20pfsrd.com's own separate Alchemist page:
+/// byte-for-byte the same progression), kept as Alchemist's own separate
+/// copy per the established parallel-copy discipline. `apg_classes.lst`
+/// has no per-level `CAST:`/`KNOWN:` rows for Alchemist at all -- the
+/// same external-source caveat Investigator/Hunter/Arcanist/Warpriest
+/// already had.
+fn alchemist_base_extracts_per_day(level: u8) -> [Option<i16>; 6] {
+    match level {
+        1 => [Some(1), None, None, None, None, None],
+        2 => [Some(2), None, None, None, None, None],
+        3 => [Some(3), None, None, None, None, None],
+        4 => [Some(3), Some(1), None, None, None, None],
+        5 => [Some(4), Some(2), None, None, None, None],
+        6 => [Some(4), Some(3), None, None, None, None],
+        7 => [Some(4), Some(3), Some(1), None, None, None],
+        8 => [Some(4), Some(4), Some(2), None, None, None],
+        9 => [Some(5), Some(4), Some(3), None, None, None],
+        10 => [Some(5), Some(4), Some(3), Some(1), None, None],
+        11 => [Some(5), Some(4), Some(4), Some(2), None, None],
+        12 => [Some(5), Some(5), Some(4), Some(3), None, None],
+        13 => [Some(5), Some(5), Some(4), Some(3), Some(1), None],
+        14 => [Some(5), Some(5), Some(4), Some(4), Some(2), None],
+        15 => [Some(5), Some(5), Some(5), Some(4), Some(3), None],
+        16 => [Some(5), Some(5), Some(5), Some(4), Some(3), Some(1)],
+        17 => [Some(5), Some(5), Some(5), Some(4), Some(4), Some(2)],
+        18 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(3)],
+        19 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(4)],
+        _ => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5)],
+    }
+}
+
+/// PF1 Advanced Player's Guide Alchemist extract save DC: `10 + extract
+/// level + Intelligence modifier` (deepening 2026-07-26, task #4),
+/// identical shape to Investigator's own extract save DC, kept as
+/// Alchemist's own separate copy.
+fn alchemist_extract_save_dc(extract_level: u8, intelligence_modifier: i16) -> i16 {
+    10 + i16::from(extract_level) + intelligence_modifier
+}
+
+/// Parses an Alchemist extract's `spell_id` into its real Alchemist-
+/// specific extract level (deepening 2026-07-26, task #4), by looking it
+/// up directly in `alchemist_spell_list::ALCHEMIST_SPELL_LIST` -- the
+/// same shared list Investigator's own `parse_investigator_extract_id`
+/// already consumes (Alchemist IS the list's own namesake class, so this
+/// is direct reuse of the underlying data, not a parallel copy of it).
+/// No arcane-school mechanic exists for Alchemist (confirmed: no
+/// "School" record anywhere in its own `KEY:Alchemist ~ ...` list), so
+/// every prepared extract costs exactly 1 slot.
+fn parse_alchemist_extract_id(spell_id: &str) -> Option<u8> {
+    alchemist_spell_list::alchemist_spell_level(spell_id)
+}
+
+/// Return the list of unmet conditions for Alchemist's prepared-extract
+/// posture (deepening 2026-07-26, task #4). Mirrors
+/// `unmet_investigator_extract_conditions`'s exact shape (itself mirroring
+/// `unmet_arcanist_spellbook_conditions`): an empty list means the
+/// posture is fully supported.
+fn unmet_alchemist_extract_conditions(
+    input: &CharacterInput,
+    level: u8,
+    intelligence_modifier: i16,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let alchemist_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == ALCHEMIST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = alchemist_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = alchemist_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no alchemist extracts recorded in the formula book (AcquisitionMode::Known)"
+                .to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no alchemist extracts prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared extract '{spell_id}' is not recorded in the formula book"
+            ));
+        }
+    }
+
+    let base_extracts_per_day = alchemist_base_extracts_per_day(level);
+    for (index, base_count) in base_extracts_per_day.iter().enumerate() {
+        let extract_level = (index + 1) as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_alchemist_extract_id(id))
+                .any(|l| l == extract_level)
+            {
+                unmet.push(format!(
+                    "a prepared extract targets extract level {extract_level}, not yet \
+                     accessible at alchemist level {level}"
+                ));
+            }
+            continue;
+        };
+        let int_bonus = ability_bonus_spells(intelligence_modifier, i16::from(extract_level));
+        let total_slots = base_count + int_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_alchemist_extract_id(id))
+            .filter(|l| *l == extract_level)
+            .count() as i16;
+        if consumed > total_slots {
+            unmet.push(format!(
+                "extract level {extract_level} over-prepared: {consumed} extracts prepared but \
+                 only {total_slots} slots available (base {base_count} + Intelligence bonus \
+                 {int_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-extract / daily-preparation state once
+/// `unmet_alchemist_extract_conditions` reports an empty unmet list
+/// (deepening 2026-07-26, task #4). Mirrors
+/// `ground_investigator_prepared_extracts`'s exact shape.
+fn ground_alchemist_prepared_extracts(
+    input: &CharacterInput,
+    level: u8,
+    intelligence_modifier: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let alchemist_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == ALCHEMIST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = alchemist_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = alchemist_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.alchemist.formula_book_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Alchemist level {level} recorded formula book contents ({} extracts, \
+             AcquisitionMode::Known): {}. This grounds which extracts are recorded as real, \
+             chosen input; it does not verify against any corpus that a named extract genuinely \
+             exists or genuinely belongs to the level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.alchemist.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Alchemist level {level} daily preparation selection ({} extracts, \
+             AcquisitionMode::Prepared, each already verified recorded in the formula book \
+             above): {}. Every prepared extract is drawn from the recorded formula book, \
+             consuming its extract level's slot budget (one slot each -- Alchemist has no \
+             opposed-school double-cost rule). It computes no extract-drinking execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let base_extracts_per_day = alchemist_base_extracts_per_day(level);
+    for (index, base_count) in base_extracts_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let extract_level = (index + 1) as u8;
+        let int_bonus = ability_bonus_spells(intelligence_modifier, i16::from(extract_level));
+        let total = base_count + int_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.apg.alchemist.base_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Alchemist level {level} base extracts per day at extract level \
+                 {extract_level}: {base_count}, read directly from the real Extracts Prepared \
+                 table (verified via d20pfsrd.com's own Alchemist page, byte-for-byte identical \
+                 to Investigator's own table)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.apg.alchemist.intelligence_bonus_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: int_bonus,
+            detail: format!(
+                "Alchemist level {level} Intelligence bonus extracts per day at extract level \
+                 {extract_level}: {int_bonus} from Intelligence modifier {intelligence_modifier} \
+                 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.apg.alchemist.total_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: total,
+            detail: format!(
+                "Alchemist level {level} total extracts per day at extract level \
+                 {extract_level}: base {base_count} + Intelligence bonus {int_bonus} = {total} \
+                 (no specialist bonus slot -- Alchemist has no arcane school)"
+            ),
+        });
+
+        let save_dc = alchemist_extract_save_dc(extract_level, intelligence_modifier);
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.apg.alchemist.extract_save_dc.extract_level_{extract_level}"),
+            value: save_dc,
+            detail: format!(
+                "Alchemist level {level} extract level {extract_level} save DC: \
+                 10 + {extract_level} + Intelligence modifier ({intelligence_modifier}) = \
+                 {save_dc}"
+            ),
+        });
+    }
+}
+
 /// Grounds or claim-blocks Alchemist's Mutagen execution engine for
 /// `alchemist_level` (v0.6 alpha swarm, risks item 8, Alchemist Mutagen
 /// closure). Called from `compute_apg_class_chassis`'s Alchemist branch,
@@ -8713,7 +9175,7 @@ fn ground_or_block_alchemist_mutagen(
                  choice is present"
             ),
         });
-        push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+        push_alchemist_other_features_deferred_diagnostic(diagnostics);
         return;
     };
 
@@ -8744,7 +9206,7 @@ fn ground_or_block_alchemist_mutagen(
                     ),
                     claim_blocking: true,
                 });
-                push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+                push_alchemist_other_features_deferred_diagnostic(diagnostics);
                 return;
             };
 
@@ -8789,29 +9251,35 @@ fn ground_or_block_alchemist_mutagen(
         }
     }
 
-    push_alchemist_spellcasting_deferred_diagnostic(diagnostics);
+    push_alchemist_other_features_deferred_diagnostic(diagnostics);
 }
 
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.apg.alchemist.unsupported` for Alchemist specifically
 /// (v0.6 alpha swarm, risks item 8, Alchemist Mutagen closure): named
-/// ONLY the genuinely still-missing pieces (spellcasting -- Alchemist
-/// genuinely casts extracts, confirmed via `apg_classes.lst:11`'s own
-/// `SPELLSTAT:INT` -- and every other named-but-unbuilt Alchemist class
-/// feature beyond Mutagen: Bomb, Discovery, Poison Resistance, Swift
-/// Alchemy, Swift Poisoning). Pushed unconditionally regardless of
-/// Mutagen's own active state, mirroring Skald's/Bloodrager's own
-/// diagnostic-honesty fix.
-fn push_alchemist_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// ONLY the genuinely still-missing pieces.
+///
+/// **Updated (deepening 2026-07-26, task #4)**: renamed from
+/// `push_alchemist_spellcasting_deferred_diagnostic`
+/// (`class_feature.apg.alchemist.spellcasting_deferred.unsupported`) now
+/// that Bomb, Poison Resistance, and prepared-extract spellcasting are
+/// all genuinely wired -- mirrors Investigator's own diagnostic-honesty
+/// fix (`other_features_deferred` replacing `spellcasting_deferred`
+/// once spellcasting stopped being entirely ungrounded). Spellcasting
+/// now has its own separate
+/// `class_spell.apg.alchemist.prepared_extracts.unsupported` diagnostic
+/// (mirroring `class_spell.acg.investigator.prepared_extracts.unsupported`).
+/// Pushed unconditionally regardless of Mutagen's own active state,
+/// mirroring Skald's/Bloodrager's own diagnostic-honesty fix.
+fn push_alchemist_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.apg.alchemist.spellcasting_deferred.unsupported".to_owned(),
+        id: "class_feature.apg.alchemist.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{ALCHEMIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar and Mutagen: this APG class has no class-skill list, no \
-             spellcasting posture (Alchemist casts extracts from its own spellbook-like list, \
-             but its own spells-known/per-day table numbers have not yet been independently \
-             verified or built), and no other named class feature (Bomb, Discovery, Poison \
-             Resistance, Swift Alchemy, Swift Poisoning) grounded anywhere in this codebase yet; \
+             chassis pillar, Mutagen, Bomb, Poison Resistance, and (subject to its own real \
+             prepared-extract validation) spellcasting: this APG class has no class-skill list, \
+             and no other named class feature (Discovery -- a chooser-list of real mechanical \
+             variety -- Swift Alchemy, Swift Poisoning) grounded anywhere in this codebase yet; \
              no class-feature or spell execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
@@ -27208,6 +27676,64 @@ fn compute_selected_skill_modifiers(
     }
 }
 
+/// Grounds every standalone feat-derived skill fact this engine's
+/// `feat_effects` module already computes but has no live total to layer
+/// onto (turnkey consumer wiring for `feat_effects::
+/// standalone_skill_facts_from_feats`/`skill_focus_facts_from_choices`,
+/// both already built and independently tested by the feat-effects agent).
+/// Unlike `skill_bonuses_from_feats` (wired directly into
+/// `compute_selected_skill_modifiers`'s Climb/Intimidate/Swim totals),
+/// these facts target skills this codebase computes no total for at all
+/// (Acrobatics, Fly, Perception, Sense Motive, Handle Animal, Ride,
+/// Bluff, Disguise, Disable Device, Sleight of Hand, Spellcraft, Use
+/// Magic Device, Diplomacy, Heal, Survival, Escape Artist, Stealth, or
+/// whichever skill Skill Focus's own player choice names) -- so each
+/// grounds as its own standalone explanation record, explicitly labeled
+/// as not wired into any skill total, mirroring the established
+/// standalone-fact idiom (Bard's Bardic Knowledge, Slayer's Track,
+/// Barbarian's Damage Reduction, Inquisitor's Smiting). Unconditional on
+/// class ownership or posture -- these are general feat effects, not
+/// class-specific, so every character's `selected_feats`/
+/// `selected_choices` is scanned regardless of chassis support.
+fn ground_standalone_feat_skill_facts(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    for fact in
+        crate::rules_core::feat_effects::standalone_skill_facts_from_feats(&input.chosen.selected_feats)
+    {
+        let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.standalone_skill_bonus.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "{} grants a +{} bonus on {} checks. {} is not among the three skills \
+                 compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so this \
+                 grounds as a standalone flat record, not wired into any skill total this \
+                 codebase computes",
+                fact.feat_key, fact.bonus, fact.skill_name, fact.skill_name
+            ),
+        });
+    }
+
+    for fact in crate::rules_core::feat_effects::skill_focus_facts_from_choices(
+        &input.chosen.selected_feats,
+        &input.chosen.selected_choices,
+    ) {
+        let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.skill_focus_bonus.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "Skill Focus grants a +{} bonus on {} checks (the player-chosen target, \
+                 recorded via choice:skill_focus_target). This grounds as a standalone flat \
+                 record; it is not wired into any skill total this codebase computes",
+                fact.bonus, fact.skill_name
+            ),
+        });
+    }
+}
+
 /// Return the list of unmet conditions for the exact deterministic selected-skill
 /// posture. An empty list means the posture is fully supported.
 ///
@@ -27943,6 +28469,169 @@ mod skill_boosting_feats_widen_selected_skill_modifiers_tests {
         assert!(
             climb_detail.contains("Athletic"),
             "climb explanation should name Athletic as the feat source: {climb_detail}"
+        );
+    }
+}
+
+/// v0.6 alpha swarm: turnkey consumer wiring for the feat-effects agent's
+/// own `standalone_skill_facts_from_feats`/`skill_focus_facts_from_choices`
+/// (both already built and independently tested in `feat_effects.rs`) --
+/// proves each grounds a real, standalone explanation record through the
+/// actual `compute_pilot_base_chassis` pipeline, not just `feat_effects.rs`'s
+/// own unit-level tests, mirroring `skill_boosting_feats_widen_selected_skill_modifiers_tests`'s
+/// own end-to-end shape.
+#[cfg(test)]
+mod standalone_feat_skill_facts_consumer_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, CharacterInput, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn load() -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        result
+            .character_input
+            .expect("valid fixture should produce a character input record")
+    }
+
+    fn compute(input: &CharacterInput) -> PilotBaseChassisComputation {
+        compute_pilot_base_chassis(input)
+    }
+
+    #[test]
+    fn baseline_fighter_grounds_no_standalone_feat_skill_facts() {
+        let input = load();
+        let computation = compute(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("feat.standalone_skill_bonus.")
+                    || e.id.starts_with("feat.skill_focus_bonus.")),
+            "the fixed loadout carries none of the grounding feats: {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn acrobatic_grounds_its_two_uncomputed_skills_as_standalone_facts() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Acrobatic".to_owned());
+        let computation = compute(&input);
+
+        let acrobatics = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "feat.standalone_skill_bonus.acrobatics")
+            .expect("expected the Acrobatics standalone fact to be grounded");
+        assert_eq!(acrobatics.value, 2, "{:?}", acrobatics);
+
+        let fly = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "feat.standalone_skill_bonus.fly")
+            .expect("expected the Fly standalone fact to be grounded");
+        assert_eq!(fly.value, 2, "{:?}", fly);
+    }
+
+    #[test]
+    fn persuasive_grounds_only_its_diplomacy_half_as_a_standalone_fact() {
+        // Persuasive's Intimidate half is already wired into the real
+        // Intimidate total by `skill_bonuses_from_feats` -- only its
+        // Diplomacy half (an uncomputed skill) should appear here, with no
+        // double-counted Intimidate standalone fact.
+        let mut input = load();
+        input.chosen.selected_feats.push("Persuasive".to_owned());
+        let computation = compute(&input);
+
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "feat.standalone_skill_bonus.diplomacy" && e.value == 2),
+            "expected the Diplomacy standalone fact: {:?}",
+            computation.explanations
+        );
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "feat.standalone_skill_bonus.intimidate"),
+            "Intimidate must not be double-grounded as a standalone fact: {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn skill_focus_grounds_nothing_without_an_explicit_target_choice() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Skill Focus".to_owned());
+        let computation = compute(&input);
+
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("feat.skill_focus_bonus.")),
+            "Skill Focus with no target choice must ground nothing (no fabricated canonical \
+             skill): {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn skill_focus_grounds_the_chosen_skill_when_a_real_target_choice_is_present() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Skill Focus".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:skill_focus_target".to_owned(),
+            selection_id: "skill:Stealth".to_owned(),
+        });
+        let computation = compute(&input);
+
+        let fact = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "feat.skill_focus_bonus.stealth")
+            .expect("expected the Stealth Skill Focus fact to be grounded");
+        assert_eq!(fact.value, 3, "{:?}", fact);
+    }
+
+    #[test]
+    fn skill_focus_grounds_one_fact_per_target_when_taken_more_than_once() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Skill Focus".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:skill_focus_target".to_owned(),
+            selection_id: "skill:Stealth".to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:skill_focus_target".to_owned(),
+            selection_id: "skill:Perception".to_owned(),
+        });
+        let computation = compute(&input);
+
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "feat.skill_focus_bonus.stealth" && e.value == 3),
+            "{:?}",
+            computation.explanations
+        );
+        assert!(
+            computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "feat.skill_focus_bonus.perception" && e.value == 3),
+            "{:?}",
+            computation.explanations
         );
     }
 }
@@ -29785,9 +30474,12 @@ mod apg_class_chassis_dispatch_tests {
     /// diagnostic swap: the OLD generic `class_feature.apg.alchemist
     /// .unsupported` diagnostic must never appear for Alchemist, while
     /// the NEW, narrower `class_feature.apg.alchemist
-    /// .spellcasting_deferred.unsupported` diagnostic always does --
-    /// Alchemist stays `Blocked` on spellcasting/other-features alone,
-    /// even when Mutagen itself is genuinely grounded and active.
+    /// .other_features_deferred.unsupported` diagnostic always does --
+    /// Alchemist stays `Blocked` on other-features alone, even when
+    /// Mutagen/Bomb/Poison Resistance/spellcasting are all genuinely
+    /// grounded (deepening 2026-07-26, task #4: this test's own
+    /// expected diagnostic ID was updated from the now-retired
+    /// `spellcasting_deferred` name).
     #[test]
     fn alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
         let input = ranger_style_input("class:alchemist", 1);
@@ -29796,8 +30488,7 @@ mod apg_class_chassis_dispatch_tests {
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Alchemist must stay Blocked on its deferred spellcasting/other-features posture \
-             alone: {:?}",
+            "Alchemist must stay Blocked on its deferred other-features posture alone: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -29814,9 +30505,9 @@ mod apg_class_chassis_dispatch_tests {
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.apg.alchemist.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.apg.alchemist.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -33898,12 +34589,12 @@ mod hunter_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod alchemist_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_MUTAGEN_ABILITY_ID,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
+        CharacterInput, HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_MUTAGEN_ABILITY_ID,
         ALCHEMIST_MUTAGEN_STAT_CHOICE_ID, FIGHTER_CLASS_ID,
     };
     use crate::rules_core::character_input::{
-        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
     };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -33922,8 +34613,8 @@ mod alchemist_dispatch_widening_safety_tests {
     /// A single-class Human Alchemist actively, validly mutated with a
     /// recognized Strength choice applies the real ability-modifier
     /// bonus/penalty and natural armor bonus to the integrated totals --
-    /// but still stays `Blocked` (spellcasting_deferred), mirroring every
-    /// other Rage-shaped closure that never reaches full Computed.
+    /// but still stays `Blocked` (other_features_deferred), mirroring
+    /// every other Rage-shaped closure that never reaches full Computed.
     ///
     /// Base fixture is Strength 16 (+4 with the fixture's chosen Human
     /// +2 floating Strength bonus applied) -> Mutagen's +4 Strength
@@ -33948,7 +34639,8 @@ mod alchemist_dispatch_widening_safety_tests {
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Alchemist stays Blocked on spellcasting even while actively, validly mutated: {:?}",
+            "Alchemist stays Blocked on other-features even while actively, validly mutated: \
+             {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -33956,9 +34648,9 @@ mod alchemist_dispatch_widening_safety_tests {
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.apg.alchemist.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.apg.alchemist.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the spellcasting_deferred diagnostic even while mutated: {:?}",
+            "expected the other_features_deferred diagnostic even while mutated: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -34083,6 +34775,272 @@ mod alchemist_dispatch_widening_safety_tests {
             receipt.computation.ability_modifiers.strength, 4,
             "a non-Alchemist character's spoofed mutagen entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
+        );
+    }
+
+    /// Bomb (damage dice/bonus, save DC, uses-per-day) and Poison
+    /// Resistance are unconditional the moment Alchemist levels are
+    /// present -- no choice, no activation gate, unlike Mutagen
+    /// (deepening 2026-07-26, task #4). Fixture: Intelligence 10 -> +0
+    /// modifier. Level 1: Bomb damage 1d6+0 (1+(1-1)/2=1), DC
+    /// 10+0+0=10, uses/day 1+0=1. Poison Resistance honestly absent
+    /// below level 2.
+    #[test]
+    fn single_class_alchemist_gets_the_unconditional_bomb_and_poison_resistance_facts() {
+        let input = human_alchemist_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let bomb_damage = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.alchemist.bomb_damage")
+            .expect("Bomb damage must be grounded");
+        assert_eq!(bomb_damage.value, 1, "level 1 Bomb damage dice: 1: {:?}", bomb_damage);
+
+        let bomb_dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.alchemist.bomb_dc")
+            .expect("Bomb DC must be grounded");
+        assert_eq!(bomb_dc.value, 10, "level 1 Bomb DC: 10+0+0=10: {:?}", bomb_dc);
+
+        let bomb_uses = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.alchemist.bomb_uses_per_day")
+            .expect("Bomb uses per day must be grounded");
+        assert_eq!(bomb_uses.value, 1, "level 1 Bomb uses/day: 1+0=1: {:?}", bomb_uses);
+
+        let poison_resistance = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.alchemist.poison_resistance_bonus")
+            .expect("Poison Resistance must ground unconditionally, even when absent");
+        assert_eq!(
+            poison_resistance.value, 0,
+            "level 1 Poison Resistance is honestly absent below the real level-2 gate: {:?}",
+            poison_resistance
+        );
+    }
+
+    /// Bomb damage dice's real level-scaling progression, proven at every
+    /// real level gate (1 + (level-1)/2), and Poison Resistance's own
+    /// tier progression (+2/+4/+6, immune at 10), both re-derived
+    /// independently rather than assumed from Investigator's own numbers.
+    #[test]
+    fn alchemist_bomb_damage_and_poison_resistance_match_the_real_corpus_progression() {
+        for (level, expected_dice, expected_poison) in
+            [(1, 1, 0), (3, 2, 2), (5, 3, 4), (8, 4, 6), (9, 5, 6), (10, 5, 0), (20, 10, 0)]
+        {
+            let input = human_alchemist_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let bomb_damage = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.apg.alchemist.bomb_damage")
+                .unwrap_or_else(|| panic!("expected Bomb damage grounded at level {level}"));
+            assert_eq!(bomb_damage.value, expected_dice, "level {level} Bomb damage dice: {:?}", bomb_damage);
+
+            let poison_resistance = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.apg.alchemist.poison_resistance_bonus")
+                .unwrap_or_else(|| panic!("expected Poison Resistance grounded at level {level}"));
+            assert_eq!(
+                poison_resistance.value, expected_poison,
+                "level {level} Poison Resistance: {:?}",
+                poison_resistance
+            );
+        }
+    }
+
+    /// A single-class Alchemist with a real, valid prepared-extract
+    /// posture (a recorded and prepared extract from the shared
+    /// Alchemist formula list) grounds the extract posture for real, but
+    /// stays `Blocked` overall on `other_features_deferred` alone
+    /// (deepening 2026-07-26, task #4) -- mirroring Investigator's own
+    /// "posture grounds for real, stays Blocked on the rest" shape.
+    ///
+    /// Level 1 base 1st-level extracts: 1 (fixture Intelligence 10, +0
+    /// modifier, so no Intelligence bonus extracts).
+    #[test]
+    fn single_class_alchemist_with_a_real_prepared_extract_grounds_the_posture_and_stays_blocked_on_other_features_only()
+    {
+        let mut input = human_alchemist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Alchemist stays Blocked on other_features_deferred alone, even with a real, valid \
+             prepared-extract posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.alchemist.prepared_extracts.unsupported"),
+            "the prepared_extracts diagnostic must not fire once a real, valid posture is \
+             recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.alchemist.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected other_features_deferred even with a valid extract posture: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let base_first_level = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.alchemist.base_extracts_per_day.extract_level_1")
+            .expect("base 1st-level extracts per day must be grounded");
+        assert_eq!(base_first_level.value, 1, "level 1 base 1st-level extracts: 1: {:?}", base_first_level);
+
+        let save_dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.alchemist.extract_save_dc.extract_level_1")
+            .expect("extract level 1 save DC must be grounded");
+        assert_eq!(save_dc.value, 11, "10 + 1 + 0 = 11: {:?}", save_dc);
+    }
+
+    /// An Alchemist with no extracts recorded/prepared at all is a
+    /// genuine, honest "hasn't started casting yet" posture -- claim-
+    /// blocks on the dedicated prepared_extracts diagnostic, mirroring
+    /// Investigator's/Arcanist's own "must have a real formula book" bar.
+    #[test]
+    fn single_class_alchemist_with_zero_extracts_stays_blocked_on_the_prepared_extracts_diagnostic()
+    {
+        let input = human_alchemist_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.alchemist.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for a bare Alchemist with no extracts: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A prepared extract that was never recorded in the formula book is
+    /// a genuine posture violation and must claim-block.
+    #[test]
+    fn single_class_alchemist_with_an_unrecorded_prepared_extract_stays_blocked() {
+        let mut input = human_alchemist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.alchemist.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for an unrecorded prepared extract: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Over-preparing a spell level beyond its real total slot budget is
+    /// a genuine posture violation. Level 1 has exactly 1 first-level
+    /// extract slot; preparing 2 different 1st-level extracts overflows it.
+    #[test]
+    fn single_class_alchemist_over_prepared_at_an_extract_level_stays_blocked() {
+        let mut input = human_alchemist_input(1);
+        for spell_id in ["Cure Light Wounds", "Shield"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.alchemist.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for an over-prepared extract level: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Alchemist character carrying spoofed Alchemist spell
+    /// selections must have them silently ignored, not applied. Also
+    /// proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_alchemist_characters_spoofed_extracts_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Alchemist extract entry: \
+             {:?}",
+            receipt.computation.diagnostics
         );
     }
 }

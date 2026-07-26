@@ -199,7 +199,20 @@ pub struct ApgClassCoverage {
     /// Slayer's Track/Trapfinding, Barbarian's Damage Reduction all
     /// already ground a standalone flat fact with zero live consumer)
     /// shows a consumer was never actually required, only a genuinely
-    /// verified magnitude; all three now ground the same way. Oracle's
+    /// verified magnitude; all three now ground the same way. Alchemist
+    /// counts 3 (Mutagen slot + Bomb slot + Poison Resistance slot,
+    /// deepening 2026-07-26, task #4): Bomb (`KEY:Alchemist ~ Bomb`, one
+    /// record covering damage dice/bonus, save DC, and uses-per-day as
+    /// three numeric facets of the SAME feature, not separate slots --
+    /// the same "one record, several parameters" shape Cleric's Channel
+    /// Energy and Warpriest's Blessings-DC-plus-uses already established)
+    /// and Poison Resistance (`KEY:Alchemist ~ Poison Resistance`, its
+    /// own separate record, identical tiers to Investigator's own,
+    /// re-derived independently rather than assumed) are both genuinely
+    /// wired now. Alchemist's own prepared-extract spellcasting (reusing
+    /// the shared `alchemist_spell_list` module Investigator's own
+    /// closure built) does NOT add a fourth slot, per the same
+    /// spellcasting-sharing convention below. Oracle's
     /// known-spell posture and Orisons are NOT counted separately here,
     /// the same "shares the general spellcasting mechanism, not
     /// independently implemented" reasoning that already excluded
@@ -284,8 +297,9 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // Inquisitor Judgment / Oracle full-build closures): see this field's
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
-        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Witch => 1,
+        ApgClassId::Cavalier | ApgClassId::Witch => 1,
         ApgClassId::Oracle => 2,
+        ApgClassId::Alchemist => 3,
         ApgClassId::Inquisitor => 5,
         _ => 0,
     };

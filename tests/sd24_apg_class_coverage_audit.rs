@@ -96,6 +96,18 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// live consumer) shows a consumer was never actually required, only a
 /// genuinely verified magnitude. Inquisitor's `named_features_wired`
 /// rises again, from 2 to 5.
+///
+/// **Updated again (Alchemist deepening, 2026-07-26, task #4):** Bomb
+/// (`KEY:Alchemist ~ Bomb`, one record covering damage dice/bonus, save
+/// DC, and uses-per-day as three facets of the SAME feature, so it
+/// stays one slot, not three) and Poison Resistance (`KEY:Alchemist ~
+/// Poison Resistance`, its own separate record, identical tiers to
+/// Investigator's own, re-derived independently) are now genuinely
+/// wired alongside the already-grounded Mutagen. Alchemist's own
+/// prepared-extract spellcasting (reusing the shared
+/// `alchemist_spell_list` module Investigator's own closure built)
+/// does not add a fourth slot, per the established spellcasting-sharing
+/// convention. Alchemist's `named_features_wired` rises from 1 to 3.
 #[test]
 fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_oracles_mystery_and_curse_and_witchs_ward_hex()
 {
@@ -126,7 +138,7 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
 
     for (class_id, feature_name, expected_wired) in [
         (ApgClassId::Cavalier, "Mount", 1),
-        (ApgClassId::Alchemist, "Mutagen", 1),
+        (ApgClassId::Alchemist, "Mutagen + Bomb + Poison Resistance", 3),
         (
             ApgClassId::Inquisitor,
             "Judgment (Justice/Protection/Purity/Smiting) + Stern Gaze + Monster Lore + \
@@ -186,7 +198,7 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         let expected_diagnostic_id = if *class_id == ApgClassId::Cavalier {
             "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Alchemist {
-            "class_feature.apg.alchemist.spellcasting_deferred.unsupported".to_owned()
+            "class_feature.apg.alchemist.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Inquisitor {
             "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Oracle {
