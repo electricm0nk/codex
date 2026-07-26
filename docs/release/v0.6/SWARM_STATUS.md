@@ -1495,7 +1495,7 @@ Directed next to systematically re-derive every already-landed closure's formula
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T09:20:02
-Latest commit on tranche/6: 86409ea5 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T09:15:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T23:58:46 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:58:57
+Last mechanical check: 2026-07-26T10:45:02
+Latest commit on tranche/6: d70f70d7 v0.6 alpha swarm: APG Witch full-class build (eleventh closure, corrects the Familiar-blocked verdict) (68 seconds ago) (2026-07-26T10:43:54-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T10:44:27 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T10:44:18
 <!-- AUTO-HEARTBEAT-END -->
