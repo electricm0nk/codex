@@ -2189,6 +2189,33 @@ const SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL: u8 = 2;
 /// for the full corpus verification and scope record.
 const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
 
+/// v0.6 alpha swarm, risks item 8 (Witch full-build closure, 11th
+/// ACG/APG class-specific closure): APG Witch, verified directly against
+/// `apg_classes.lst`'s own `SPELLSTAT:INT` token (no `SPELLLIST:` reuse
+/// token at all -- a fresh, own-list caster, deferred entirely this
+/// slice, mirroring Skald's own spellcasting split). This closure was
+/// re-scoped after a third comparative pass corrected the standing "all
+/// three remaining classes blocked on an unbuilt Familiar/Eidolon"
+/// verdict: Witch's own Ward hex (`KEY:Witch Hex ~ Ward`) is a flat,
+/// self-scoped deflection/resistance bonus that does NOT require the
+/// unbuilt Familiar subsystem at all -- confirmed its own gate
+/// (`PREVARGTEQ:WitchHexAbilityLVL,1`, where `WitchHexAbilityLVL =
+/// WitchLVL` unconditionally) is genuinely immediate at level 1, not a
+/// delayed grant. See
+/// `docs/release/v0.6/shaman-summoner-witch-comparative-scoping.md` for
+/// the full corpus verification and scope record.
+const WITCH_CLASS_ID: &str = "class:witch";
+/// The choice set for which Hex a Witch selects at 1st level (mirrors
+/// `ORACLE_MYSTERY_CHOICE_ID`'s own single-selection shape).
+const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
+/// Ward is the one canonical Hex this closure grounds -- the cleanest of
+/// the ~19 base hexes checked: a flat, self-scoped deflection/resistance
+/// bonus with no opponent/save-DC interaction (most other hexes --
+/// Evil Eye, Misfortune, Slumber, Cackle, Fortune -- are opponent/ally-
+/// targeted, the same "opponent-dependent" wall Slayer's Studied Target
+/// already hit).
+const WARD_HEX_SELECTION: &str = "hex:ward";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7777,6 +7804,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_slayer_single_class(input)
         || is_supported_swashbuckler_single_class(input)
         || is_supported_investigator_single_class(input)
+        || is_supported_witch_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7948,6 +7976,21 @@ fn is_supported_investigator_single_class(input: &CharacterInput) -> bool {
     }
     acg::class_chassis_resolve(AcgClassId::Investigator, class_level.level, RuleSetId::Acg)
         .is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Witch full-build closure): whether
+/// `input` is a single-class Witch at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Witch -- mirrors
+/// `is_supported_oracle_single_class`/the other APG exact-match gates
+/// exactly.
+fn is_supported_witch_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Witch) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Witch, class_level.level, RuleSetId::Apg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -8310,21 +8353,22 @@ fn compute_apg_class_chassis(
     });
 
     // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen /
-    // Inquisitor Judgment / Oracle full-build closures, first through
-    // fourth APG class-specific closures, spot-checked 2026-07-25):
-    // Cavalier, Alchemist, Inquisitor, and Oracle are the four APG classes
-    // with a genuinely real class feature now (the Mount, unconditional on
-    // class ownership and level alone; Mutagen and Judgment, both choice-
-    // and activation-gated; Oracle's own known-spell posture plus Mystery/
-    // Curse choices -- see each one's own doc comment). The other 2 APG
-    // classes keep the exact original unconditional diagnostic unchanged.
-    // These branches are reached only for single-class Cavalier/Alchemist/
-    // Inquisitor/Oracle (this function is only ever called from
+    // Inquisitor Judgment / Oracle / Witch full-build closures, first
+    // through fifth APG class-specific closures, spot-checked
+    // 2026-07-26): Cavalier, Alchemist, Inquisitor, Oracle, and Witch are
+    // the five APG classes with a genuinely real class feature now (the
+    // Mount, unconditional on class ownership and level alone; Mutagen
+    // and Judgment, both choice- and activation-gated; Oracle's own
+    // known-spell posture plus Mystery/Curse choices; Witch's Ward hex --
+    // see each one's own doc comment). The other 1 APG class keeps the
+    // exact original unconditional diagnostic unchanged. These branches
+    // are reached only for single-class Cavalier/Alchemist/Inquisitor/
+    // Oracle/Witch (this function is only ever called from
     // `compute_class_chassis`'s single-class-only section;
     // `ApgClassId::from_class_id_str` is deliberately not registered with
     // `multiclass_class_level_supported`, so a Cavalier-, Alchemist-,
-    // Inquisitor-, or Oracle-containing multiclass mix never reaches this
-    // function at all).
+    // Inquisitor-, Oracle-, or Witch-containing multiclass mix never
+    // reaches this function at all).
     if class_id == ApgClassId::Cavalier {
         ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == ApgClassId::Alchemist {
@@ -8333,11 +8377,13 @@ fn compute_apg_class_chassis(
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Oracle {
         ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
+    } else if class_id == ApgClassId::Witch {
+        ground_or_block_witch_class_features(input, level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
         // named class features, no spellcasting (even for the casters
-        // among the 2 remaining).
+        // among the 1 remaining).
         diagnostics.push(ComputationDiagnostic {
             id: format!("class_feature.apg.{}.unsupported", class_id.name()),
             message: format!(
@@ -9217,6 +9263,109 @@ fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
              conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap), and Tongues \
              remain ungrounded anywhere in this codebase; no class-feature or spell execution is \
              fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// PF1 Advanced Player's Guide Witch Ward hex: a flat deflection-AC/
+/// saving-throw-resistance bonus, verified directly against
+/// `apg_abilities_class.lst`'s own `BONUS:VAR|WitchWardBonus|2` (base),
+/// `+1` at level 8 (`PREVARGTEQ:WitchHexAbilityLVL,8`), `+1` at level 16
+/// (`PREVARGTEQ:WitchHexAbilityLVL,16`) -- `WitchHexAbilityLVL` resolves
+/// to `WitchLVL` directly, confirmed unconditional (no delayed-grant gate
+/// the way Shaman's Healer's Touch has).
+fn witch_ward_bonus(level: u8) -> i16 {
+    let mut bonus = 2;
+    if level >= 8 {
+        bonus += 1;
+    }
+    if level >= 16 {
+        bonus += 1;
+    }
+    bonus
+}
+
+/// Grounds or claim-blocks Witch's Hex choice (v0.6 alpha swarm, risks
+/// item 8, Witch full-build closure, 11th ACG/APG class-specific
+/// closure). A recognized `choice:witch_hex` selection naming
+/// `hex:ward` grounds the flat deflection/resistance bonus and replaces
+/// the claim-blocking hex-powers diagnostic with a non-blocking note
+/// naming the other ~18 hexes as still deferred, mirroring Oracle's own
+/// Mystery/Curse three-branch dispatch shape (and Warpriest's Blessing
+/// shape before that). An unrecognized or missing choice keeps a
+/// claim-blocking `hex_powers.unsupported` diagnostic.
+fn ground_or_block_witch_class_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let hex_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WITCH_HEX_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    if hex_selections.contains(&WARD_HEX_SELECTION) {
+        let ward_bonus = witch_ward_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus".to_owned(),
+            value: ward_bonus,
+            detail: format!(
+                "Witch level {level} with the Ward hex grants a warded creature a \
+                 +{ward_bonus} deflection bonus to AC and a +{ward_bonus} resistance bonus on \
+                 saving throws (base 2, +1 at level 8, +1 at level 16). Grounds only the flat \
+                 magnitude -- this headless engine computes no player AC/save total to \
+                 integrate this into (unlike attack bonus, which does have a real integrated \
+                 total); self-application (the witch may ward herself) is the only case \
+                 named, warding another creature is not modeled"
+            ),
+        });
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.witch.hex_powers_beyond_ward.unmodeled".to_owned(),
+            message: "Witch Hex content beyond Ward remains unmodeled: the other ~18 base hexes \
+                 (Evil Eye, Misfortune, Slumber, Cackle, Fortune, Healing, and the rest, plus \
+                 the separate Major Hex/Grand Hex tiers) are not implemented. This does not \
+                 block an otherwise-valid Ward posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.witch.hex_powers.unsupported".to_owned(),
+            message: "Witch remains blocked on its Hex powers burden: no recognized Ward hex \
+                 choice is present (only Ward's own deflection/resistance bonus is genuinely \
+                 grounded in this codebase), so no Witch Hex-power support is claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+
+    push_witch_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.apg.witch.unsupported` for Witch specifically (v0.6
+/// alpha swarm, risks item 8, Witch full-build closure): named ONLY the
+/// genuinely still-missing pieces. Pushed unconditionally regardless of
+/// the Hex posture's own state, mirroring Oracle's/Warpriest's own
+/// diagnostic-honesty pattern -- this is the permanent claim-blocking
+/// gap for Witch this slice.
+fn push_witch_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.witch.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{WITCH_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and Ward hex's own deflection/resistance bonus: fresh own-list \
+             spellcasting (Cantrips, Patron Spells -- no `SPELLLIST:` reuse token, a genuinely \
+             new data-ingestion cost), the Familiar and Familiar Touch Spells (an unbuilt \
+             subsystem, mechanically distinct from the already-built Animal Companion Wolf \
+             stat block), and the other ~18 base hexes plus the Major Hex/Grand Hex tiers \
+             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
+             is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -25469,10 +25618,13 @@ pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> boo
 /// Whether Intimidate is a real class skill for at least one of the
 /// character's classes -- see `selected_skill_climb_is_class_skill`'s
 /// own doc comment for the full history of this per-skill split. Same
-/// class set as Climb today (Investigator's own list includes both),
-/// but kept as its own independent function rather than delegating to
-/// Climb's, since a future partial-match class could genuinely diverge
-/// on Climb vs. Intimidate specifically.
+/// class set as Climb for Investigator (whose own list includes both),
+/// but genuinely diverges for Witch (v0.6 alpha swarm, risks item 8,
+/// Witch full-build closure): Witch's own real class-skill list
+/// (`apg_abilities_class.lst`'s own `KEY:Witch ~ Class Skills` record)
+/// includes Intimidate but NOT Climb or Swim -- a second, different
+/// partial-match shape, proving this function needed to stay
+/// independent from Climb's rather than delegate to it.
 pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID
@@ -25481,6 +25633,7 @@ pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -
             || class_level.class_id == SLAYER_CLASS_ID
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == INVESTIGATOR_CLASS_ID
+            || class_level.class_id == WITCH_CLASS_ID
     })
 }
 
@@ -26594,7 +26747,8 @@ mod wizard_spellbook_spell_id_resolution_tests {
 mod selected_skill_class_skill_bonus_tests {
     use super::{
         compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
-        ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
+        ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WITCH_CLASS_ID,
+        WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -26745,6 +26899,35 @@ mod selected_skill_class_skill_bonus_tests {
             3,
             "Swim is NOT a real Investigator class skill -- must match the no-bonus value, not \
              the class-skill-bonus value"
+        );
+    }
+
+    /// Witch's own real class-skill list (`apg_abilities_class.lst`'s
+    /// `KEY:Witch ~ Class Skills`: Craft, Fly, Heal, Intimidate,
+    /// Knowledge (Arcana/History/Nature/Planes), Profession, Spellcraft,
+    /// Use Magic Device) is ANOTHER genuine partial match -- Intimidate
+    /// present, Climb and Swim both absent (v0.6 alpha swarm, risks item
+    /// 8, Witch full-build closure). A different partial shape than
+    /// Investigator's own (Climb+Intimidate yes, Swim no), proving the
+    /// per-skill split generalizes correctly to more than one partial
+    /// pattern, not just Investigator's specific one.
+    #[test]
+    fn witch_gets_the_class_skill_bonus_on_intimidate_only() {
+        let input = with_class(WITCH_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(
+            skill_value(&computation, "skill.selected_modifier.climb"),
+            3,
+            "Climb is NOT a real Witch class skill: {:?}",
+            computation
+        );
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(
+            skill_value(&computation, "skill.selected_modifier.swim"),
+            3,
+            "Swim is NOT a real Witch class skill: {:?}",
+            computation
         );
     }
 
@@ -27916,12 +28099,13 @@ mod apg_class_chassis_dispatch_tests {
     /// first/second/third/fourth APG class-specific closures): each has
     /// its own generic `class_feature.apg.<class>.unsupported` diagnostic
     /// retired and replaced with a narrower one, since the Mount / Mutagen
-    /// / Judgment / known-spell+Mystery+Curse posture are now genuinely
-    /// grounded -- see
+    /// / Judgment / known-spell+Mystery+Curse posture / Ward hex are now
+    /// genuinely grounded -- see
     /// `cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `oracle_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// / `witch_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// below for each class's own dedicated coverage.
     #[test]
     fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
@@ -27930,6 +28114,7 @@ mod apg_class_chassis_dispatch_tests {
                 || class_id == "class:alchemist"
                 || class_id == "class:inquisitor"
                 || class_id == "class:oracle"
+                || class_id == "class:witch"
             {
                 continue;
             }
@@ -28148,24 +28333,66 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Witch-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap: the OLD generic `class_feature.apg.witch.unsupported`
+    /// diagnostic must never appear for Witch, while the NEW, narrower
+    /// `class_feature.apg.witch.other_features_deferred.unsupported`
+    /// diagnostic always does -- Witch stays permanently `Blocked` on
+    /// this diagnostic (like Oracle, no MVP narrowing beyond Ward was
+    /// found this slice), with the hex_powers claim-blocking diagnostic
+    /// also firing for a bare Witch.
+    #[test]
+    fn witch_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = ranger_style_input("class:witch", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Witch must stay Blocked on its other-features-deferred posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.unsupported"),
+            "the retired generic diagnostic must never appear for Witch: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     /// The critical negative-leak test, mirroring the ACG-side one
-    /// exactly: the OTHER 2 APG classes must produce ZERO
+    /// exactly: the OTHER 1 APG class must produce ZERO
     /// `defense.total_save.*`/`combat.baseline_*`/
     /// `skill.selected_modifier.*` explanations at level 1, even under
     /// the exact same satisfying posture that genuinely admits Cavalier,
-    /// Alchemist, Inquisitor, and Oracle -- proving `is_supported_cavalier_single_class`,
+    /// Alchemist, Inquisitor, Oracle, and Witch -- proving `is_supported_cavalier_single_class`,
     /// `is_supported_alchemist_single_class`,
-    /// `is_supported_inquisitor_single_class`, and
-    /// `is_supported_oracle_single_class` are real exact matches, not
+    /// `is_supported_inquisitor_single_class`,
+    /// `is_supported_oracle_single_class`, and
+    /// `is_supported_witch_single_class` are all real exact matches, not
     /// broad `.is_some()` checks that would silently admit all 6 APG
     /// classes into real pillar computation.
     #[test]
-    fn the_other_two_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_one_apg_class_produces_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:cavalier"
                 || class_id == "class:alchemist"
                 || class_id == "class:inquisitor"
                 || class_id == "class:oracle"
+                || class_id == "class:witch"
             {
                 continue;
             }
@@ -28286,6 +28513,57 @@ mod apg_class_chassis_dispatch_tests {
                 receipt.computation.explanations
             );
         }
+    }
+
+    /// Witch's own positive counterpart, mirroring Oracle's/Inquisitor's/
+    /// Alchemist's/Cavalier's exactly -- proves the gate genuinely admits
+    /// Witch, AND (unlike every other APG positive counterpart) proves
+    /// the real Intimidate-only partial class-skill match: Intimidate
+    /// genuinely earns the bonus, Climb genuinely does not.
+    #[test]
+    fn witch_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = ranger_style_input("class:witch", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Witch: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let intimidate = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.intimidate")
+            .expect("Intimidate must be grounded for Witch");
+        assert_eq!(
+            intimidate.value, 3,
+            "Witch genuinely earns the class-skill bonus on Intimidate (real class-skill list \
+             includes it): {:?}",
+            intimidate
+        );
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Witch");
+        assert_eq!(
+            climb.value, 3,
+            "Witch does NOT earn the class-skill bonus on Climb (real class-skill list \
+             excludes it): {:?}",
+            climb
+        );
     }
 
     /// Multiclass safety, verified directly (not assumed from "this path is
@@ -33349,6 +33627,186 @@ mod oracle_dispatch_widening_safety_tests {
                 .any(|e| e.id.starts_with("class_feature.apg.oracle.")
                     || e.id.starts_with("class_spell.apg.oracle.")),
             "a non-Oracle character must never ground any Oracle explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Witch full-build closure, 11th
+/// ACG/APG class-specific closure): tests the Ward hex choice dispatch,
+/// mirroring the established dispatch-widening test module shape.
+#[cfg(test)]
+mod witch_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, WARD_HEX_SELECTION, WITCH_CLASS_ID, WITCH_HEX_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_witch_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: WITCH_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A bare single-class Human Witch (no Hex choice) stays `Blocked`
+    /// on both the hex_powers diagnostic and other_features_deferred,
+    /// never the retired generic diagnostic.
+    #[test]
+    fn single_class_witch_bare_stays_blocked_on_hex_powers_and_other_features() {
+        let input = human_witch_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Witch must stay Blocked without a recognized Hex choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.unsupported"),
+            "the retired generic diagnostic must never appear for Witch: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the hex_powers claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Witch with the Ward hex recognized grounds
+    /// the flat deflection/resistance bonus for real and clears the
+    /// hex_powers diagnostic in favor of the non-blocking "other hexes"
+    /// note -- stays `Blocked` on other_features_deferred regardless.
+    ///
+    /// Level 1 Ward bonus: base 2 (no level-8/16 bump yet).
+    #[test]
+    fn single_class_witch_with_ward_hex_grounds_the_real_bonus() {
+        let mut input = human_witch_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: WARD_HEX_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers.unsupported"),
+            "hex_powers must not fire once Ward is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers_beyond_ward.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking other-hexes note: {:?}",
+            receipt.computation.diagnostics
+        );
+        let ward = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus")
+            .expect("Ward's bonus must be grounded once recognized");
+        assert_eq!(ward.value, 2, "Witch level 1 Ward bonus: base 2: {:?}", ward);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Witch still stays Blocked on other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Ward's bonus progression at higher levels, verified against the
+    /// PCGen corpus formula directly (not merely trusting the level-1
+    /// base case above): +1 at level 8, +1 more at level 16.
+    #[test]
+    fn witch_ward_hex_bonus_progression_matches_the_corpus_formula_at_higher_levels() {
+        for (level, expected_bonus) in [(1, 2), (7, 2), (8, 3), (15, 3), (16, 4), (20, 4)] {
+            let mut input = human_witch_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+                selection_id: WARD_HEX_SELECTION.to_owned(),
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let ward = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| {
+                    e.id == "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus"
+                })
+                .expect("Ward's bonus must be grounded");
+            assert_eq!(ward.value, expected_bonus, "Witch level {level} Ward bonus: {:?}", ward);
+        }
+    }
+
+    /// A non-Witch character carrying a spoofed Ward hex choice must
+    /// have it silently ignored -- the class-ownership gate is by
+    /// construction, not a bolt-on rejection. Also proves Fighter's own
+    /// golden path is unaffected.
+    #[test]
+    fn non_witch_characters_spoofed_ward_hex_choice_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: WARD_HEX_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Witch choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.witch.")),
+            "a non-Witch character must never ground any Witch explanation: {:?}",
             receipt.computation.explanations
         );
     }

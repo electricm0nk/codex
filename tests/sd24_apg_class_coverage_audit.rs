@@ -69,13 +69,23 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// known-spell posture and Orisons are not counted separately, the same
 /// "shares the general spellcasting mechanism" reasoning already applied
 /// to Arcanist's Cantrips and Warpriest's Orisons).
+///
+/// **Updated again (Witch full-build closure, 2026-07-26):** Witch's
+/// Ward hex is also now genuinely wired -- carved out below with its own
+/// dedicated `named_features_wired == 1` assertion (the Hex slot alone;
+/// unlike Oracle's Mystery+Curse, Witch has no second independent choice
+/// this slice grounds).
 #[test]
-fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_and_oracles_mystery_and_curse()
+fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_oracles_mystery_and_curse_and_witchs_ward_hex()
 {
     for row in coverage_report() {
         if matches!(
             row.class_id,
-            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Oracle
+            ApgClassId::Cavalier
+                | ApgClassId::Alchemist
+                | ApgClassId::Inquisitor
+                | ApgClassId::Oracle
+                | ApgClassId::Witch
         ) {
             continue;
         }
@@ -98,6 +108,7 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         (ApgClassId::Alchemist, "Mutagen", 1),
         (ApgClassId::Inquisitor, "Justice judgment", 1),
         (ApgClassId::Oracle, "Mystery+Curse", 2),
+        (ApgClassId::Witch, "Ward hex", 1),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
@@ -154,6 +165,8 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Oracle {
             "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned()
+        } else if *class_id == ApgClassId::Witch {
+            "class_feature.apg.witch.other_features_deferred.unsupported".to_owned()
         } else {
             format!("class_feature.apg.{}.unsupported", class_id.name())
         };
@@ -177,7 +190,11 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         );
         if matches!(
             *class_id,
-            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Oracle
+            ApgClassId::Cavalier
+                | ApgClassId::Alchemist
+                | ApgClassId::Inquisitor
+                | ApgClassId::Oracle
+                | ApgClassId::Witch
         ) {
             let retired_diagnostic_id = format!("class_feature.apg.{}.unsupported", class_id.name());
             assert!(

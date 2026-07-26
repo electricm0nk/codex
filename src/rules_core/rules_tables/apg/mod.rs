@@ -166,29 +166,33 @@ pub struct ApgClassCoverage {
     /// Challenge, ...) this repo has independent wired computation logic
     /// for, analogous to `level_up/fighter.rs`'s `explain_fighter_class_features`
     /// wiring for the CRB Fighter. Zero for every APG class except
-    /// Cavalier, Alchemist, Inquisitor, and Oracle as of the v0.6 alpha
-    /// swarm's Cavalier Mount / Alchemist Mutagen / Inquisitor Judgment /
-    /// Oracle full-build closures (risks item 8): Cavalier's 1st-level
-    /// Mount, Alchemist's Mutagen, Inquisitor's Justice judgment, and
-    /// Oracle's Mystery (Life/Healing Hands) and Curse (Clouded Vision)
-    /// are now genuinely wired
+    /// Cavalier, Alchemist, Inquisitor, Oracle, and Witch as of the v0.6
+    /// alpha swarm's Cavalier Mount / Alchemist Mutagen / Inquisitor
+    /// Judgment / Oracle / Witch full-build closures (risks item 8):
+    /// Cavalier's 1st-level Mount, Alchemist's Mutagen, Inquisitor's
+    /// Justice judgment, Oracle's Mystery (Life/Healing Hands) and Curse
+    /// (Clouded Vision), and Witch's Ward hex are now genuinely wired
     /// (`pilot_compute::ground_cavalier_mount_and_defer_the_rest`,
     /// `pilot_compute::ground_or_block_alchemist_mutagen`,
     /// `pilot_compute::ground_or_block_inquisitor_judgment`,
     /// `pilot_compute::ground_or_block_oracle_mystery`/
-    /// `ground_or_block_oracle_curse`) -- see `class_coverage`'s own
-    /// branches for each. Oracle counts 2 (Mystery slot + Curse slot),
-    /// mirroring Warpriest's own 2-slot count: Oracle's known-spell
-    /// posture and Orisons are NOT counted separately here, the same
-    /// "shares the general spellcasting mechanism, not independently
-    /// implemented" reasoning that already excluded Arcanist's Cantrips
-    /// and Warpriest's Orisons from their own counts (see
-    /// `docs/release/v0.6/oracle-apg-full-build-scoping.md`). Every other
-    /// APG class remains at 0: SD-22 Epic 3 deliberately scoped its
-    /// ingest to the BAB/save chassis only (see e.g. `class_alchemist.rs`'s
-    /// own doc comment), and no follow-on cycle has since ingested
-    /// `apg_abilities_class.lst`'s per-level feature blocks for any other
-    /// APG class.
+    /// `ground_or_block_oracle_curse`,
+    /// `pilot_compute::ground_or_block_witch_class_features`) -- see
+    /// `class_coverage`'s own branches for each. Oracle counts 2
+    /// (Mystery slot + Curse slot), mirroring Warpriest's own 2-slot
+    /// count: Oracle's known-spell posture and Orisons are NOT counted
+    /// separately here, the same "shares the general spellcasting
+    /// mechanism, not independently implemented" reasoning that already
+    /// excluded Arcanist's Cantrips and Warpriest's Orisons from their
+    /// own counts (see `docs/release/v0.6/oracle-apg-full-build-scoping.md`).
+    /// Witch counts 1 (the Hex slot alone -- unlike Oracle's Mystery+Curse,
+    /// Witch has no second independent choice this slice grounds; the
+    /// Familiar and fresh own-list spellcasting are both deferred
+    /// entirely, not partially counted). Every other APG class remains
+    /// at 0: SD-22 Epic 3 deliberately scoped its ingest to the BAB/save
+    /// chassis only (see e.g. `class_alchemist.rs`'s own doc comment),
+    /// and no follow-on cycle has since ingested `apg_abilities_class.lst`'s
+    /// per-level feature blocks for any other APG class.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -262,7 +266,7 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // Inquisitor Judgment / Oracle full-build closures): see this field's
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
-        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor => 1,
+        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Witch => 1,
         ApgClassId::Oracle => 2,
         _ => 0,
     };
