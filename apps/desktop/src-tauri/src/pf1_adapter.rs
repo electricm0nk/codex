@@ -117,6 +117,24 @@ const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const DRUID_CLASS_ID: &str = "class:druid";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure, Arcanist's own):
+/// needed by `compose_character_input`'s Arcanist canonical-choice
+/// seeding below. Unlike Sorcerer/Cleric/Druid (a choice alone
+/// sufficient) or Wizard (a spell alone sufficient), Arcanist needs
+/// BOTH: a starter spell (the same bootstrap-deadlock shape Wizard has)
+/// AND a recognized Metamagic Knowledge choice (the same "no picker
+/// exists for this choice set" gap Sorcerer/Cleric/Druid have) --
+/// verified directly against `pilot_compute.rs`'s own
+/// `single_class_arcanist_with_a_valid_spellbook_and_recognized_metamagic_knowledge_reaches_computed`
+/// test that this exact combination is sufficient, with no other
+/// precondition, to reach `Computed`. See
+/// `docs/release/v0.6/arcanist-metamagic-knowledge-exploit-scoping.md`
+/// and `risks-and-open-questions.md` for the full record of this gap.
+const ARCANIST_CLASS_ID: &str = "class:arcanist";
+const ARCANIST_STARTER_SPELL_ID: &str = "Light";
+const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_knowledge";
+const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "Empower Spell";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -338,6 +356,28 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         spells_selected.push(SpellSelection {
             spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
             source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == ARCANIST_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure, Arcanist's
+        // own): see `ARCANIST_CLASS_ID`'s own doc comment above. Needs
+        // BOTH a starter spell (Wizard's own bootstrap-deadlock shape)
+        // AND a recognized Metamagic Knowledge choice (Sorcerer/Cleric/
+        // Druid's own "no picker for this choice" shape) -- verified
+        // together, not either alone, per
+        // `single_class_arcanist_with_a_valid_spellbook_and_recognized_metamagic_knowledge_reaches_computed`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Prepared,
         });
     }
@@ -725,6 +765,29 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
                 source_class_id: WIZARD_CLASS_ID.to_owned(),
                 acquisition_mode: AcquisitionMode::Prepared,
             });
+        } else if class_id == ARCANIST_CLASS_ID {
+            // v0.6 alpha swarm (Path A choice-picker gap closure,
+            // Arcanist's own): the same starter-spell-plus-Metamagic-
+            // Knowledge-choice seed `compose_character_input` gets for
+            // fresh Arcanist creation, applied to the multiclass-dip
+            // path for the identical reason -- see `ARCANIST_CLASS_ID`'s
+            // own doc comment. Same once-only guarantee as the Wizard
+            // block above (this whole branch only runs the first time
+            // Arcanist is added).
+            character_input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+                selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
+            });
+            character_input.chosen.spells_selected.push(SpellSelection {
+                spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
+                source_class_id: ARCANIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+            character_input.chosen.spells_selected.push(SpellSelection {
+                spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
+                source_class_id: ARCANIST_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
         }
     }
 }
@@ -1023,6 +1086,10 @@ mod tests {
 
     fn wizard_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: WIZARD_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    fn arcanist_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest { class_id: ARCANIST_CLASS_ID.to_owned(), ..request_for(character_id, level) }
     }
 
     fn seed_envelope(character_id: &str, level: u8) -> SavedCharacterEnvelope {
@@ -1468,6 +1535,87 @@ mod tests {
             HeadlessReceiptStatus::Computed,
             "a freshly composed Wizard level 1 must reach Computed with no caller-added spells, \
              proving the starter-spell seed alone breaks the bootstrap deadlock: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Arcanist's own Path A gap closure (v0.6 alpha swarm, 2026-07-25):
+    /// mirrors `compose_character_input_seeds_the_canonical_wizard_starter_spell_only_for_wizard`'s
+    /// own shape, plus the Metamagic Knowledge choice. A composed
+    /// Arcanist must have both the starter spell AND the canonical
+    /// Metamagic Knowledge choice seeded; a non-Arcanist class must
+    /// receive neither.
+    #[test]
+    fn compose_character_input_seeds_the_canonical_arcanist_starter_spell_and_metamagic_knowledge_only_for_arcanist()
+    {
+        let arcanist_input = compose_character_input(&arcanist_request_for("arcanist-starter-spell", 1));
+        let known: Vec<&str> = arcanist_input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| {
+                s.source_class_id == ARCANIST_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+            })
+            .map(|s| s.spell_id.as_str())
+            .collect();
+        let prepared: Vec<&str> = arcanist_input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| {
+                s.source_class_id == ARCANIST_CLASS_ID
+                    && s.acquisition_mode == AcquisitionMode::Prepared
+            })
+            .map(|s| s.spell_id.as_str())
+            .collect();
+        assert_eq!(known, vec![ARCANIST_STARTER_SPELL_ID], "{:?}", arcanist_input.chosen.spells_selected);
+        assert_eq!(prepared, vec![ARCANIST_STARTER_SPELL_ID], "{:?}", arcanist_input.chosen.spells_selected);
+
+        let metamagic_choice = arcanist_input
+            .chosen
+            .selected_choices
+            .iter()
+            .find(|c| c.choice_set_id == ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID)
+            .expect("a composed Arcanist must have the canonical Metamagic Knowledge choice seeded");
+        assert_eq!(metamagic_choice.selection_id, EMPOWER_SPELL_METAMAGIC_SELECTION);
+
+        let fighter_input = compose_character_input(&request_for("fighter-no-arcanist-seed", 1));
+        assert!(
+            fighter_input.chosen.spells_selected.is_empty(),
+            "a composed Fighter must not receive the Arcanist-only starter spell: {:?}",
+            fighter_input.chosen.spells_selected
+        );
+        assert!(
+            !fighter_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID),
+            "a composed Fighter must not receive the Arcanist-only Metamagic Knowledge choice: {:?}",
+            fighter_input.chosen.selected_choices
+        );
+    }
+
+    /// **The milestone test**: a freshly composed Arcanist, with NO
+    /// manual spell/choice selection added by the caller, must reach
+    /// `Computed` purely from what `compose_character_input` itself
+    /// seeds -- mirroring `wizard_level1_reaches_computed_from_compose_character_input_alone`
+    /// exactly. This is the exact starting state `create_character`
+    /// builds and tries to save -- proving Arcanist is now genuinely
+    /// product-reachable through the real creation flow, not just
+    /// engine-Computed in a hand-built test fixture.
+    #[test]
+    fn arcanist_level1_reaches_computed_from_compose_character_input_alone() {
+        let character_input = compose_character_input(&arcanist_request_for("arcanist-starter-computed", 1));
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a freshly composed Arcanist level 1 must reach Computed with no caller-added \
+             spells/choices, proving the starter-spell + Metamagic Knowledge seed together \
+             break the last remaining gap: {:?}",
             receipt.computation.diagnostics
         );
     }
