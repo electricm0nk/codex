@@ -1924,6 +1924,51 @@ const ARCANIST_CLASS_ID: &str = "class:arcanist";
 /// cycle widens it.
 const ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
 
+/// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure, sixth
+/// ACG/APG class-specific closure): APG/ACG Warpriest, verified directly
+/// against `acg_classes.lst`'s own `SPELLLIST:1|Cleric`/Level-progression
+/// `CAST:` rows and `acg_abilities_class.lst`'s own `KEY:Warpriest ~
+/// Blessings`/`Sacred Weapon`/`Class Skills` records. Reuses Cleric's own
+/// spell-list content and prepared-casting shape (no `MEMORIZE:NO`), but
+/// -- confirmed via two independent checks, the same discipline the
+/// Arcanist closure's own correction established -- Warpriest's real
+/// per-level spells-per-day table matches Cleric's exactly at levels 1-2
+/// but genuinely diverges from level 3 on (Cleric grants a 2nd-level slot
+/// at level 3; Warpriest not until level 4, and at a lower count), so
+/// this needs its own real, independently-verified table, not a
+/// byte-identical reuse. Blessings (Warpriest's own domain-equivalent, a
+/// choice of 2 from ~20 types matching Cleric's own domain list) gets the
+/// same "pick ONE canonical, self-scoped-only option" narrowing Cleric's
+/// own domain closure used (Good domain / Touch of Good) -- Destruction
+/// Blessing's own Minor power (Destructive Attacks: touch an ally, grant
+/// a flat morale bonus) is structurally identical to Touch of Good, so
+/// it is the one Blessing this closure grounds. Also fixes a real,
+/// independently-confirmed bug (not just a verification): Warpriest's own
+/// class-skill list genuinely includes Climb/Intimidate/Swim (unlike
+/// Wizard/Arcanist, whose lists include none of the three), so
+/// `selected_skill_class_skill_bonus_applies` needed real widening, not
+/// just a "verify it already answers correctly" check -- the mirror-image
+/// of the original Wizard class-skill-modifier bug (false positive there,
+/// false negative here). See
+/// `docs/release/v0.6/warpriest-acg-full-build-scoping.md` for the full
+/// corpus verification and scope record.
+const WARPRIEST_CLASS_ID: &str = "class:warpriest";
+/// Mirrors `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`/
+/// `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope discipline
+/// exactly: this slice verifies Warpriest's own spells-per-day table only
+/// for levels 1-3.
+const WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// The choice set for which 2 Blessings a Warpriest selects at 1st level
+/// (mirrors `CLERIC_DOMAIN_CHOICE_ID`'s own shape exactly -- a Vec of
+/// selections under one choice-set id, not a single value).
+const WARPRIEST_BLESSING_CHOICE_ID: &str = "choice:warpriest_blessing";
+/// Destruction Blessing is the one canonical Blessing this closure
+/// grounds -- see this const's own containing doc comment above for why.
+const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
+/// `ClassAbilityActivation.ability_id` for Destruction Blessing's own
+/// Destructive Attacks minor power.
+const WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID: &str = "destructive_attacks";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7507,6 +7552,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_alchemist_single_class(input)
         || is_supported_inquisitor_single_class(input)
         || is_supported_arcanist_single_class(input)
+        || is_supported_warpriest_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7603,6 +7649,20 @@ fn is_supported_arcanist_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Arcanist, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure): whether
+/// `input` is a single-class Warpriest at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Warpriest --
+/// mirrors the other five ACG/APG exact-match gates exactly.
+fn is_supported_warpriest_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Warpriest) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Warpriest, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -8898,6 +8958,426 @@ fn push_arcanist_exploits_deferred_diagnostic(diagnostics: &mut Vec<ComputationD
     });
 }
 
+/// PF1 Advanced Class Guide Warpriest "Spells" table, base counts before
+/// any Wisdom bonus spells, for spell levels 0 (cantrip) through 3rd,
+/// bounded to `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`. Verified
+/// directly against `acg_classes.lst`'s own real per-level `CAST:` rows
+/// (not a derived formula): level 1 `CAST:3,1`, level 2 `CAST:4,2`,
+/// level 3 `CAST:4,3`. Genuinely DIFFERENT from
+/// `cleric_base_spells_per_day_table` starting at level 3 (Cleric grants
+/// a 2nd-level spell slot at level 3; Warpriest does not, first
+/// unlocking 2nd-level spells at level 4) even though the spell-list
+/// CONTENT and casting SHAPE (prepared, no known-spells cap,
+/// `SPELLLIST:1|Cleric`) are genuinely shared -- see `WARPRIEST_CLASS_ID`'s
+/// own doc comment for the full verification record.
+fn warpriest_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(3), Some(1), None, None],
+        2 => [Some(4), Some(2), None, None],
+        3 => [Some(4), Some(3), None, None],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for this grounding's bounded
+/// prepared-spellbook posture. Mirrors `unmet_arcanist_spellbook_conditions`'s
+/// own shape exactly (Warpriest has no opposed-school/specialization
+/// mechanic either -- it is a divine caster with a domain-equivalent
+/// Blessing choice, not an arcane school).
+fn unmet_warpriest_spellbook_conditions(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if level > WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL {
+        unmet.push(format!(
+            "prepared spellbook grounding is only supported for warpriest levels \
+             1-{WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL}, got {level}"
+        ));
+        return unmet;
+    }
+
+    let warpriest_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WARPRIEST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = warpriest_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = warpriest_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no warpriest spells recorded in the spellbook (AcquisitionMode::Known)".to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no warpriest spells prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not recorded in the spellbook"
+            ));
+        }
+    }
+
+    let base_spells_per_day = warpriest_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let spell_level = spell_level as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+                .any(|(_, l)| l == spell_level)
+            {
+                unmet.push(format!(
+                    "a prepared spell targets spell level {spell_level}, not yet accessible at \
+                     warpriest level {level}"
+                ));
+            }
+            continue;
+        };
+        let wisdom_bonus =
+            ability_bonus_spells(ability_modifiers.wisdom, i16::from(spell_level));
+        let total_slots = base_count + wisdom_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+            .filter(|(_, l)| *l == spell_level)
+            .count() as i16;
+        if consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base {base_count} + Wisdom bonus {wisdom_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spellbook / daily-preparation state once
+/// `unmet_warpriest_spellbook_conditions` reports an empty unmet list.
+/// Mirrors `ground_arcanist_prepared_spellbook`'s own shape exactly,
+/// substituting Wisdom for Intelligence as the casting ability.
+fn ground_warpriest_prepared_spellbook(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let warpriest_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WARPRIEST_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = warpriest_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = warpriest_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.warpriest.spellbook_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Warpriest level {level} recorded spellbook contents ({} spells, \
+             AcquisitionMode::Known): {}. This grounds which spells are recorded as real, \
+             chosen input; it does not verify against any corpus that a named spell genuinely \
+             exists or genuinely belongs to the level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.warpriest.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Warpriest level {level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared, each already verified recorded in the spellbook above): \
+             {}. This grounds the prepared-vs-known distinction for real: every prepared spell \
+             is drawn from the recorded spellbook, consuming its spell level's slot budget (one \
+             slot each). It computes no spell save DC and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let base_spells_per_day = warpriest_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = spell_level as u8;
+        let wisdom_bonus =
+            ability_bonus_spells(ability_modifiers.wisdom, i16::from(spell_level));
+        let total = base_count + wisdom_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.warpriest.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Warpriest level {level} base spells per day at spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Advanced Class Guide Warpriest class \
+                 table's own real per-level CAST rows (acg_classes.lst) -- a literal table \
+                 lookup, not a derived formula"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.warpriest.wisdom_bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: wisdom_bonus,
+            detail: format!(
+                "Warpriest level {level} Wisdom bonus spells per day at spell level \
+                 {spell_level}: {wisdom_bonus} from Wisdom modifier \
+                 {} (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)",
+                ability_modifiers.wisdom
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.warpriest.total_spells_per_day.spell_level_{spell_level}"),
+            value: total,
+            detail: format!(
+                "Warpriest level {level} total spells per day at spell level {spell_level}: base \
+                 {base_count} + Wisdom bonus {wisdom_bonus} = {total}"
+            ),
+        });
+    }
+}
+
+/// Destruction Blessing's own Minor power, Destructive Attacks: "+[max(1,
+/// level/2)] morale bonus on weapon damage rolls" (PF1 Advanced Class
+/// Guide), verified directly against `acg_abilities_class.lst`'s own
+/// `KEY:Destruction Blessing ~ Destructive Attacks` DESC and
+/// `max(1,WarpriestLVL/2)` formula. Byte-identical shape to
+/// `cleric_touch_of_good_bonus`.
+fn warpriest_destructive_attacks_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Warpriest's Blessings uses-per-day: `(level/2)+3` (PF1 Advanced Class
+/// Guide), verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|WarpriestBlessingUses|(WarpriestBlessingLVL/2)+3`.
+fn warpriest_blessing_uses_per_day(level: u8) -> i16 {
+    i16::from(level) / 2 + 3
+}
+
+/// Warpriest's Blessings save DC: `(level/2)+10+Wisdom modifier` (PF1
+/// Advanced Class Guide), verified directly against
+/// `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|WarpriestBlessingDC|(WarpriestBlessingLVL/2)+10+WIS`.
+fn warpriest_blessing_dc(level: u8, wisdom_modifier: i16) -> i16 {
+    i16::from(level) / 2 + 10 + wisdom_modifier
+}
+
+/// Sacred Weapon's base-damage-die upgrade for a Medium weapon (this
+/// codebase's own Longsword fixture), verified directly against
+/// `acg_abilities_class.lst`'s own size-branched `BONUS:VAR` formulas
+/// (`PREBASESIZEEQ:M` branch): dice size `if(LVL<5,6,if(LVL<10,8,
+/// if(LVL<15,10,if(LVL<20,6,8))))`, dice count `1+min(1,LVL/20)`.
+/// Returns `(dice_count, dice_size)`. At every level within this
+/// grounding's own bounded 1-3 range, this evaluates to a flat `1d6` --
+/// genuinely near-zero value for a Longsword (whose own native base
+/// damage, 1d8, is already better), named honestly rather than
+/// suppressed, mirroring Brawler's own "AC Bonus is genuinely +0 at
+/// level 1" precedent.
+fn warpriest_sacred_weapon_base_dice(level: u8) -> (i16, i16) {
+    let level = i16::from(level);
+    let dice_size = if level < 5 {
+        6
+    } else if level < 10 {
+        8
+    } else if level < 15 {
+        10
+    } else if level < 20 {
+        6
+    } else {
+        8
+    };
+    let dice_count = 1 + 1.min(level / 20);
+    (dice_count, dice_size)
+}
+
+/// Grounds Warpriest's class features for `level` (v0.6 alpha swarm,
+/// risks item 8, Warpriest full-build closure). Called from
+/// `compute_acg_class_chassis`'s Warpriest branch, gated only on
+/// Warpriest class-ownership. Grounds Blessings' flat uses-per-day/DC
+/// (unconditional) and Sacred Weapon's flat base-damage-die (unconditional
+/// -- both are always-on class features, not activation-gated), the
+/// Destructive Attacks self-application closure (conditional on a
+/// recognized Destruction Blessing choice plus activation, mirroring
+/// `ground_or_block_cleric_domain`'s own three-branch shape), and the
+/// real prepared-spellbook posture (conditional on
+/// `unmet_warpriest_spellbook_conditions`), then pushes the narrowed
+/// `other_features_deferred` diagnostic regardless of any of the above.
+fn ground_or_block_warpriest_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let blessing_uses_per_day = warpriest_blessing_uses_per_day(level);
+    let blessing_dc = warpriest_blessing_dc(level, ability_modifiers.wisdom);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.warpriest.blessing_uses_per_day".to_owned(),
+        value: blessing_uses_per_day,
+        detail: format!(
+            "Warpriest level {level} Blessings uses per day: level/2 + 3 = \
+             {blessing_uses_per_day}. Genuinely enforced by nothing in this codebase yet -- \
+             flat count only, no per-use consumption tracked here"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.warpriest.blessing_dc".to_owned(),
+        value: blessing_dc,
+        detail: format!(
+            "Warpriest level {level} Blessings save DC: level/2 + 10 + Wisdom modifier \
+             ({}) = {blessing_dc}",
+            ability_modifiers.wisdom
+        ),
+    });
+
+    let (sacred_weapon_dice_count, sacred_weapon_dice_size) =
+        warpriest_sacred_weapon_base_dice(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.warpriest.sacred_weapon_base_damage_die".to_owned(),
+        value: sacred_weapon_dice_size,
+        detail: format!(
+            "Warpriest level {level} Sacred Weapon base damage die for a Medium weapon (this \
+             codebase's own Longsword fixture): {sacred_weapon_dice_count}d{sacred_weapon_dice_size}. \
+             Genuinely near-zero value at this level -- the Longsword's own native base damage \
+             (1d8) is already better -- named honestly rather than suppressed. The active \
+             weapon-enhancement mechanic (a swift-action enhancement bonus plus a menu of \
+             weapon special abilities) is not grounded"
+        ),
+    });
+
+    let blessing_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WARPRIEST_BLESSING_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    if blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION) {
+        let destructive_attacks_bonus = warpriest_destructive_attacks_bonus(level);
+        let activation = input
+            .chosen
+            .class_ability_activations
+            .iter()
+            .find(|activation| {
+                activation.ability_id == WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID
+            });
+        match activation.map(|activation| activation.active_state) {
+            Some(ActiveState::EquippedActive) => {
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.warpriest.destruction_blessing.destructive_attacks_self_application"
+                        .to_owned(),
+                    value: destructive_attacks_bonus,
+                    detail: format!(
+                        "Warpriest level {level} is actively using Destructive Attacks on \
+                         HERSELF, SELF-APPLICATION ONLY (PF1 Advanced Class Guide Destruction \
+                         Blessing: touch an ally, granting it a +{destructive_attacks_bonus} \
+                         morale bonus on weapon damage rolls for 1 minute). Grounds only the \
+                         flat magnitude -- this headless engine computes no weapon-damage total \
+                         anywhere (unlike attack bonus/AC/saves/skills, which do have real \
+                         integrated totals), so there is no existing pillar to layer this bonus \
+                         onto; granting it to ANOTHER creature is also not modeled, mirroring \
+                         Cleric's own Touch of Good self-application-only precedent"
+                    ),
+                });
+            }
+            _ => {
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.acg.warpriest.destruction_blessing.destructive_attacks_not_active"
+                        .to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Warpriest level {level} is not currently using Destructive Attacks (no \
+                         active class_ability_activations entry for \
+                         \"{WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID}\"): a genuinely valid PF1 \
+                         posture -- not every Destruction-Blessing Warpriest is using this \
+                         limited-use power at every moment -- so no morale bonus is claimed"
+                    ),
+                });
+            }
+        }
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled".to_owned(),
+            message: "Warpriest Blessing minor/major power content beyond Destruction's own \
+                 Destructive Attacks remains unmodeled: which specific power the OTHER chosen \
+                 Blessing type grants (minor at 1st level, major at a later level) is not \
+                 implemented for any of the other ~19 Blessing types. This does not block an \
+                 otherwise-valid Destruction-Blessing posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.warpriest.blessing_powers.unsupported".to_owned(),
+            message: "Warpriest remains blocked on its Blessing powers burden: no recognized \
+                 Destruction Blessing choice is present (only Destruction's own Destructive \
+                 Attacks minor power is genuinely grounded in this codebase), so no Warpriest \
+                 Blessing-power support is claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+
+    let spellbook_unmet = unmet_warpriest_spellbook_conditions(input, level, ability_modifiers);
+    if spellbook_unmet.is_empty() {
+        ground_warpriest_prepared_spellbook(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.warpriest.prepared_spellbook.unsupported".to_owned(),
+            message: format!(
+                "Warpriest remains blocked on its prepared spellbook / spells prepared / spell \
+                 slot posture burden: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    push_warpriest_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.warpriest.unsupported` for Warpriest specifically
+/// (v0.6 alpha swarm, risks item 8, Warpriest full-build closure): named
+/// ONLY the genuinely still-missing pieces.
+fn push_warpriest_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.warpriest.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{WARPRIEST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar, Blessings' flat uses-per-day/DC, Sacred Weapon's base damage die, \
+             and prepared spellbook: 19 of the 20 Blessing types (only Destruction's own \
+             Destructive Attacks is grounded), Sacred Weapon's active weapon-enhancement \
+             mechanic, Fervor, Channel Energy, Sacred Armor, Aspect of War, Spontaneous \
+             Casting, Aura, Focus Weapon, and Bonus Languages remain ungrounded anywhere in \
+             this codebase; no class-feature execution is fabricated in this bounded chassis \
+             baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -8971,23 +9451,23 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first/second/third/fourth/fifth
-    // APG/ACG closures, adversarially reviewed 2026-07-25 for the
-    // gate-widening piece): Skald, Bloodrager, Brawler, Hunter, and
-    // Arcanist are the five ACG classes with a genuinely real class
-    // feature now (Inspired Rage / Bloodrage / AC Bonus / Animal
-    // Companion / real prepared spellcasting + Arcane Reservoir) -- the
-    // other 5 ACG classes, and every APG class except Cavalier/
-    // Alchemist/Inquisitor, keep the exact original unconditional
-    // diagnostic unchanged. These branches are reached only for
-    // single-class Skald/Bloodrager/Brawler/Hunter/Arcanist (this
-    // function is only ever called from `compute_class_chassis`'s
-    // single-class-only section; `AcgClassId::from_class_id_str` is
-    // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Skald-, Bloodrager-, Brawler-, Hunter-, or Arcanist-containing
-    // multiclass mix never reaches this function at all), so no separate
-    // gate-ordering/hoisting fix is needed the way CRB classes required
-    // once `table_class_id` recognized them generically.
+    // v0.6 alpha swarm, risks item 8 (first through sixth APG/ACG
+    // closures, adversarially reviewed 2026-07-25 for the gate-widening
+    // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, and Warpriest
+    // are the six ACG classes with a genuinely real class feature now
+    // (Inspired Rage / Bloodrage / AC Bonus / Animal Companion / real
+    // prepared spellcasting + Arcane Reservoir / real prepared
+    // spellcasting + Blessings + Sacred Weapon) -- the other 4 ACG
+    // classes, and every APG class except Cavalier/Alchemist/Inquisitor,
+    // keep the exact original unconditional diagnostic unchanged. These
+    // branches are reached only for single-class Skald/Bloodrager/
+    // Brawler/Hunter/Arcanist/Warpriest (this function is only ever
+    // called from `compute_class_chassis`'s single-class-only section;
+    // `AcgClassId::from_class_id_str` is deliberately not registered
+    // with `multiclass_class_level_supported`, so any of these six
+    // classes in a multiclass mix never reaches this function at all),
+    // so no separate gate-ordering/hoisting fix is needed the way CRB
+    // classes required once `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
@@ -9000,6 +9480,14 @@ fn compute_acg_class_chassis(
         ground_hunter_animal_companion_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == AcgClassId::Arcanist {
         ground_or_block_arcanist_class_features(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
+    } else if class_id == AcgClassId::Warpriest {
+        ground_or_block_warpriest_class_features(
             input,
             level,
             ability_modifiers,
@@ -23762,19 +24250,33 @@ fn compute_total_saves(
 /// posture was silently getting a false +3 on all three -- wrong, with no
 /// diagnostic to flag it. Multiclass characters get the class-skill bonus
 /// if ANY of their classes grants it (PF1's real union rule, matching
-/// `skill_allocation.rs`'s own `class_skill_set` framing) -- checking
-/// `has_supported_class_chassis`'s class set (only Fighter/Wizard/Rogue can
-/// ever reach this function) is sufficient; no corpus access needed, this
-/// is hardcoded per-class fact data, the same "bounded, cited" shape as
-/// `skill_allocation.rs`'s `GROUNDED_FIGHTER_CLASS_SKILLS`. Applying the
-/// same boolean uniformly across all three skills is correct only because
-/// this function's own scope is already hardcoded to exactly these three
-/// skills and exactly these three classes -- not a general "all class
-/// skills match across the board" assumption to rely on if either set ever
-/// widens.
+/// `skill_allocation.rs`'s own `class_skill_set` framing) -- this is
+/// hardcoded per-class fact data, the same "bounded, cited" shape as
+/// `skill_allocation.rs`'s `GROUNDED_FIGHTER_CLASS_SKILLS`; no corpus
+/// access needed. Applying the same boolean uniformly across all three
+/// skills is correct only because this function's own scope is already
+/// hardcoded to exactly these three skills -- not a general "all class
+/// skills match across the board" assumption to rely on if the class set
+/// ever widens.
+///
+/// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure): the
+/// note above that "only Fighter/Wizard/Rogue can ever reach this
+/// function" is now stale -- `has_supported_class_chassis` has widened
+/// to many more classes since (Skald, Bloodrager, Brawler, Hunter,
+/// Cavalier, Alchemist, Inquisitor, Arcanist, Warpriest), but this
+/// function's own per-class fact-check must still be updated one class
+/// at a time as each is genuinely verified, not assumed. Warpriest is
+/// the SECOND real bug found here (the mirror image of Wizard's own
+/// false positive): its real class-skill list
+/// (`acg_abilities_class.lst`'s own `KEY:Warpriest ~ Class Skills`
+/// record) genuinely INCLUDES Climb, Intimidate, and Swim, so without
+/// this widening a Warpriest would silently get a false ZERO bonus on
+/// all three, despite genuinely earning one per RAW.
 pub(crate) fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
-        class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == ROGUE_CLASS_ID
+        class_level.class_id == FIGHTER_CLASS_ID
+            || class_level.class_id == ROGUE_CLASS_ID
+            || class_level.class_id == WARPRIEST_CLASS_ID
     })
 }
 
@@ -24849,7 +25351,7 @@ mod wizard_spellbook_spell_id_resolution_tests {
 mod selected_skill_class_skill_bonus_tests {
     use super::{
         compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, ROGUE_CLASS_ID,
-        WIZARD_CLASS_ID,
+        WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -24910,6 +25412,26 @@ mod selected_skill_class_skill_bonus_tests {
         // (cr_abilities_class.lst:2838) -- same values as Fighter, since
         // this fixture's ability scores/equipment/armor-training math is
         // otherwise class-identical for this bounded posture.
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Warpriest's own real class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Warpriest ~ Class Skills`: Climb, Craft, Diplomacy, Handle
+    /// Animal, Heal, Intimidate, Knowledge (Engineering), Knowledge
+    /// (Religion), Profession, Ride, Sense Motive, Spellcraft, Survival,
+    /// Swim) genuinely includes all three of Climb/Intimidate/Swim (v0.6
+    /// alpha swarm, risks item 8, Warpriest full-build closure): the
+    /// mirror-image of the Wizard bug this test module's own name
+    /// documents (false positive there, false negative here) -- before
+    /// this widening, a Warpriest would have silently gotten a false
+    /// ZERO bonus on all three despite genuinely earning one.
+    #[test]
+    fn warpriest_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(WARPRIEST_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
         assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
@@ -26537,6 +27059,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:brawler"
                 || class_id == "class:hunter"
                 || class_id == "class:arcanist"
+                || class_id == "class:warpriest"
             {
                 continue;
             }
@@ -26835,32 +27358,107 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Warpriest-specific coverage for the retired-diagnostic/new-
+    /// diagnostic swap (v0.6 alpha swarm, risks item 8, Warpriest
+    /// full-build closure, sixth ACG/APG closure): the OLD generic
+    /// `class_feature.acg.warpriest.unsupported` diagnostic must never
+    /// appear, while the NEW, narrower `other_features_deferred`
+    /// diagnostic always does. This bare fixture (no Blessing choice, no
+    /// spells) also trips `blessing_powers.unsupported` and
+    /// `prepared_spellbook.unsupported` -- both genuinely valid but
+    /// incomplete postures -- while Blessings' flat uses-per-day/DC and
+    /// Sacred Weapon's base damage die still ground unconditionally.
+    #[test]
+    fn warpriest_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:warpriest", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Warpriest must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.unsupported"),
+            "the retired generic diagnostic must never appear for Warpriest: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_powers.unsupported"
+                    && d.claim_blocking),
+            "a bare Warpriest with no recognized Destruction Blessing choice is a genuinely \
+             valid but incomplete posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.warpriest.prepared_spellbook.unsupported"
+                    && d.claim_blocking),
+            "a bare Warpriest with no recorded spells is a genuinely valid but incomplete \
+             posture: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let uses = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.blessing_uses_per_day")
+            .expect("Blessings uses per day must ground unconditionally");
+        assert_eq!(uses.value, 3, "Warpriest level 1 Blessing uses: 1/2 + 3 = 3: {:?}", uses);
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager, Brawler, Hunter, and Arcanist): the OTHER 5 ACG
-    /// classes (every class other than Skald, Bloodrager, Brawler,
-    /// Hunter, and Arcanist, the five now genuinely admitted) must
-    /// produce ZERO `defense.total_save.*`/`combat.baseline_*`/
-    /// `skill.selected_modifier.*` explanations at level 1, even when
-    /// built from the exact same Longsword/Chain Shirt/Dodge/Weapon-
-    /// Focus/skill-rank posture that genuinely satisfies every non-class-
-    /// recognition precondition those pillars check -- proving
-    /// `is_supported_skald_single_class`, `is_supported_bloodrager_single_class`,
+    /// for Bloodrager, Brawler, Hunter, Arcanist, and Warpriest): the
+    /// OTHER 4 ACG classes (every class other than Skald, Bloodrager,
+    /// Brawler, Hunter, Arcanist, and Warpriest, the six now genuinely
+    /// admitted) must produce ZERO `defense.total_save.*`/
+    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
+    /// level 1, even when built from the exact same Longsword/Chain
+    /// Shirt/Dodge/Weapon-Focus/skill-rank posture that genuinely
+    /// satisfies every non-class-recognition precondition those pillars
+    /// check -- proving `is_supported_skald_single_class`,
+    /// `is_supported_bloodrager_single_class`,
     /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
-    /// and `is_supported_arcanist_single_class` are all real exact
-    /// matches, not broad `.is_some()` checks that would silently admit
-    /// all 10 ACG classes into real pillar computation. This is stronger
-    /// than the pre-existing "stays Blocked" assertion above, which does
-    /// not by itself rule out a silent pillar-output leak alongside an
-    /// unrelated claim-blocking diagnostic.
+    /// `is_supported_arcanist_single_class`, and
+    /// `is_supported_warpriest_single_class` are all real exact matches,
+    /// not broad `.is_some()` checks that would silently admit all 10 ACG
+    /// classes into real pillar computation. This is stronger than the
+    /// pre-existing "stays Blocked" assertion above, which does not by
+    /// itself rule out a silent pillar-output leak alongside an unrelated
+    /// claim-blocking diagnostic.
     #[test]
-    fn the_other_five_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_four_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
                 || class_id == "class:brawler"
                 || class_id == "class:hunter"
                 || class_id == "class:arcanist"
+                || class_id == "class:warpriest"
             {
                 continue;
             }
@@ -27004,6 +27602,46 @@ mod acg_class_chassis_dispatch_tests {
                 receipt.computation.explanations
             );
         }
+    }
+
+    /// Warpriest's own positive counterpart, mirroring the other five
+    /// exactly -- proves the gate genuinely admits Warpriest regardless
+    /// of its own (here, bare/no-Blessing-chosen) posture, AND that
+    /// Warpriest genuinely gets the class-skill bonus on Climb/
+    /// Intimidate/Swim (v0.6 alpha swarm, risks item 8, Warpriest
+    /// full-build closure: the mirror-image of the Wizard class-skill
+    /// bug fixed once already).
+    #[test]
+    fn warpriest_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:warpriest", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Warpriest: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Warpriest");
+        assert_eq!(
+            climb.value, 6,
+            "Warpriest genuinely earns the class-skill bonus on Climb (real class-skill list \
+             includes it): {:?}",
+            climb
+        );
     }
 
     /// Brawler's AC Bonus progression at higher levels, verified against
@@ -29897,6 +30535,301 @@ mod arcanist_dispatch_widening_safety_tests {
                 .expect("Arcane Reservoir daily fill must be grounded");
             assert_eq!(fill.value, expected_fill, "level {level} Reservoir daily fill: {:?}", fill);
         }
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure, sixth
+/// ACG/APG class-specific closure): tests the real prepared-spellbook
+/// grounding and the Destruction Blessing self-application closure
+/// directly, mirroring the Arcanist/Cleric dispatch-widening test
+/// modules' own shape.
+#[cfg(test)]
+mod warpriest_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
+        CharacterInput, HeadlessReceiptStatus, DESTRUCTION_BLESSING_SELECTION, FIGHTER_CLASS_ID,
+        WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID, WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_warpriest_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: WARPRIEST_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Warpriest who has not chosen the Destruction
+    /// Blessing is a genuinely valid PF1 posture only for the OTHER
+    /// blessing types (unbuilt), so the blessing-powers diagnostic
+    /// claim-blocks -- stays `Blocked`, never the retired generic
+    /// diagnostic, with the Blessings uses-per-day/DC and Sacred Weapon
+    /// base die grounded regardless (unconditional class features).
+    #[test]
+    fn single_class_warpriest_without_destruction_blessing_stays_blocked_on_blessing_powers() {
+        let input = human_warpriest_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Warpriest must stay Blocked without a recognized Destruction Blessing choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.unsupported"),
+            "the retired generic diagnostic must never appear for Warpriest: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the blessing_powers claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let uses = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.blessing_uses_per_day")
+            .expect("Blessings uses per day must ground unconditionally");
+        assert_eq!(uses.value, 3, "Warpriest level 1 Blessing uses: 1/2 + 3 = 3: {:?}", uses);
+
+        let dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.blessing_dc")
+            .expect("Blessings DC must ground unconditionally");
+        // Fixture Wisdom 12 (+1 modifier): 1/2 + 10 + 1 = 11.
+        assert_eq!(dc.value, 11, "Warpriest level 1 Blessing DC: 0 + 10 + 1 = 11: {:?}", dc);
+
+        let sacred_weapon = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.sacred_weapon_base_damage_die")
+            .expect("Sacred Weapon base damage die must ground unconditionally");
+        assert_eq!(
+            sacred_weapon.value, 6,
+            "Warpriest level 1 Sacred Weapon base die: 1d6: {:?}",
+            sacred_weapon
+        );
+    }
+
+    /// A single-class Human Warpriest with the Destruction Blessing
+    /// chosen but not currently using Destructive Attacks is a genuinely
+    /// valid posture -- stays `Blocked` on other_features_deferred alone
+    /// (never blessing_powers, never the retired generic diagnostic),
+    /// with the honest "not active" recognition record grounded.
+    #[test]
+    fn single_class_warpriest_with_destruction_blessing_not_active_stays_blocked_on_other_features_only()
+    {
+        let mut input = human_warpriest_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Warpriest must stay Blocked on other-features/spellbook alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_powers.unsupported"),
+            "blessing_powers must not fire once Destruction is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id
+                    == "class_feature.acg.warpriest.destruction_blessing.destructive_attacks_not_active"),
+            "expected the honest not-active recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A single-class Human Warpriest actively, validly using Destructive
+    /// Attacks (Destruction Blessing recognized) grounds the real morale
+    /// bonus as a standalone explanation record -- this codebase computes
+    /// no weapon-damage total anywhere to layer it onto.
+    ///
+    /// Level 1 bonus: max(1, 1/2) = 1.
+    #[test]
+    fn single_class_warpriest_actively_using_destructive_attacks_grounds_the_real_bonus() {
+        let mut input = human_warpriest_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.acg.warpriest.destruction_blessing.destructive_attacks_self_application"
+            })
+            .expect("the active Destructive Attacks explanation must be grounded");
+        assert_eq!(bonus.value, 1, "Warpriest level 1 Destructive Attacks bonus: max(1,0)=1: {:?}", bonus);
+    }
+
+    /// A single-class Human Warpriest with a real recorded and prepared
+    /// spell, plus the Destruction Blessing recognized, grounds the
+    /// spellbook for real -- stays `Blocked` only on other_features_deferred
+    /// (never blessing_powers, never prepared_spellbook.unsupported),
+    /// with the real base/Wisdom-bonus/total spells-per-day counts
+    /// grounded.
+    ///
+    /// Fixture Wisdom 12 (+1 modifier, no bonus spells at spell level 0,
+    /// but a real bonus at level 1: (1-1)/4+1 = 1). Level 1 base:
+    /// cantrips 3, 1st-level 1 (verified against the raw corpus CAST
+    /// rows).
+    #[test]
+    fn single_class_warpriest_with_a_real_prepared_spell_grounds_the_spellbook_and_stays_blocked_only_on_other_features()
+    {
+        let mut input = human_warpriest_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.warpriest.prepared_spellbook.unsupported"),
+            "the prepared_spellbook diagnostic must not fire once a real, valid posture is \
+             recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic even with a valid spellbook: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let base_cantrips = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.warpriest.base_spells_per_day.spell_level_0")
+            .expect("base cantrips per day must be grounded");
+        assert_eq!(base_cantrips.value, 3, "Warpriest level 1 base cantrips: 3: {:?}", base_cantrips);
+
+        let base_first_level = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.warpriest.base_spells_per_day.spell_level_1")
+            .expect("base 1st-level spells per day must be grounded");
+        assert_eq!(
+            base_first_level.value, 1,
+            "Warpriest level 1 base 1st-level spells: 1: {:?}",
+            base_first_level
+        );
+    }
+
+    /// A non-Warpriest character carrying spoofed Warpriest choice/
+    /// activation/spell entries must have them silently ignored -- the
+    /// class-ownership gate is by construction, not a bolt-on rejection.
+    /// Also proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_warpriest_characters_spoofed_warpriest_entries_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by stray Warpriest entries: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.warpriest.")),
+            "a non-Warpriest character must never ground any Warpriest explanation: {:?}",
+            receipt.computation.explanations
+        );
     }
 }
 

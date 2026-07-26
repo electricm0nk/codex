@@ -211,14 +211,16 @@ pub struct AcgClassCoverage {
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
     /// for. Zero for every ACG class except Skald, Bloodrager, Brawler,
-    /// Hunter, and Arcanist as of the v0.6 alpha swarm's first through
-    /// fifth APG/ACG class-specific closures (risks item 8): Skald's
-    /// 1st-level Raging Song song type, Inspired Rage, Bloodrager's
-    /// Bloodrage, Brawler's AC Bonus, and Hunter's Animal Companion are
-    /// now genuinely wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
+    /// Hunter, Arcanist, and Warpriest as of the v0.6 alpha swarm's first
+    /// through sixth APG/ACG class-specific closures (risks item 8):
+    /// Skald's 1st-level Raging Song song type, Inspired Rage,
+    /// Bloodrager's Bloodrage, Brawler's AC Bonus, Hunter's Animal
+    /// Companion, and Warpriest's Blessings + Sacred Weapon are now
+    /// genuinely wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
     /// `pilot_compute::ground_or_block_bloodrager_bloodrage`,
     /// `pilot_compute::ground_brawler_ac_bonus_and_defer_the_rest`,
-    /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`)
+    /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`,
+    /// `pilot_compute::ground_or_block_warpriest_class_features`)
     /// -- see `class_coverage`'s own branches for each. Every other ACG
     /// class remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
@@ -248,6 +250,24 @@ pub struct AcgClassCoverage {
     /// same discipline here keeps the "count real distinct KEY records
     /// with genuine, SEPARATELY-implemented backing logic" methodology
     /// consistent across classes rather than letting it drift per-class.
+    ///
+    /// Warpriest ALSO counts 2 (Blessings, Sacred Weapon), for a related
+    /// but distinct reason: Warpriest's own `KEY:Warpriest ~ ...` list
+    /// has NO record at all for the general prepared-spellcasting
+    /// mechanism (unlike Arcanist's own "Spells Prepared") -- only
+    /// `Orisons` names the 0-level-specific sub-rule, and this closure's
+    /// own build does not separately implement Orisons' own
+    /// distinguishing "known at will, no preparation needed" content (it
+    /// grounds level 0 via the exact same unified per-spell-level table
+    /// as levels 1-3), so spellcasting does not add a count here either,
+    /// the same "not separately implemented" reasoning that already
+    /// excluded Arcanist's own Cantrips. Destruction Blessing's own
+    /// Destructive Attacks is tagged `KEY:Destruction Blessing ~ ...` in
+    /// the corpus -- a DIFFERENT class prefix, not `KEY:Warpriest ~ ...`
+    /// -- so it is a sub-selectable-list entry under the single
+    /// `Blessings` feature slot (the same "floor, not ceiling" sub-list
+    /// exclusion `named_features_expected`'s own doc comment already
+    /// documents for Investigator's Discoveries), not a separate count.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -324,16 +344,34 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first through fifth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through sixth APG/ACG
     // class-specific closures): Skald's Inspired Rage, Bloodrager's
-    // Bloodrage, Brawler's AC Bonus, Hunter's Animal Companion, and
-    // Arcanist's Arcane Reservoir + Spells Prepared are the real, wired
-    // named class features among all ten ACG classes today -- see this
-    // field's own doc comment above for why Arcanist counts 2, not 1
-    // (and why Cantrips does not add a third).
+    // Bloodrage, Brawler's AC Bonus, Hunter's Animal Companion,
+    // Arcanist's Arcane Reservoir + Spells Prepared, and Warpriest's
+    // Blessings + Sacred Weapon are the real, wired named class features
+    // among all ten ACG classes today -- see this field's own doc
+    // comment above for why Arcanist counts 2, not 1 (and why Cantrips
+    // does not add a third). Warpriest ALSO counts 2 (Blessings, Sacred
+    // Weapon), for a related but distinct reason: Warpriest's own
+    // `KEY:Warpriest ~ ...` list has NO record at all for the general
+    // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
+    // Prepared" record) -- only `Orisons` names the 0-level-specific
+    // sub-rule, and this closure's own build does not separately
+    // implement Orisons' own distinguishing "known at will, no
+    // preparation needed" content (it grounds level 0 via the exact same
+    // unified per-spell-level table as levels 1-3), the same "not
+    // separately implemented" reasoning that already excluded Cantrips
+    // from Arcanist's count. Destruction Blessing's own Destructive
+    // Attacks is tagged `KEY:Destruction Blessing ~ ...` in the corpus,
+    // a DIFFERENT class prefix, not `KEY:Warpriest ~ ...` -- it is a
+    // sub-selectable-list entry under the single `Blessings` feature
+    // slot (the same "floor, not ceiling" sub-list exclusion this
+    // struct's own `named_features_expected` doc comment already
+    // documents for Investigator's Discoveries), so it does not add a
+    // separate count either.
     let named_features_wired = match class_id {
         AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter => 1,
-        AcgClassId::Arcanist => 2,
+        AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
         _ => 0,
     };
 
