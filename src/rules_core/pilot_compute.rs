@@ -1969,6 +1969,30 @@ const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
 /// Destructive Attacks minor power.
 const WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID: &str = "destructive_attacks";
 
+/// v0.6 alpha swarm, risks item 8 (Slayer full-build closure, seventh
+/// ACG/APG class-specific closure): APG/ACG Slayer, verified directly
+/// against `acg_classes.lst`'s own confirmed non-caster status (no
+/// `SPELLSTAT` token at all) and `acg_abilities_class.lst`'s own
+/// `KEY:Slayer ~ Sneak Attack`/`Trap Sense`/`Trapfinding`/`Track`/`Class
+/// Skills` records. Zero spellcasting scope, unlike every prior closure
+/// this session except Cavalier/Brawler/Hunter. Grounds four real, flat
+/// formulas as standalone explanation records with no further total-
+/// integration -- an already-established idiom, not a new compromise:
+/// Barbarian's own `class_feature.barbarian.trap_sense` and Rogue's own
+/// `class_feature.rogue.trap_sense` are both already grounded the same
+/// way. Studied Target (this class's own real name for its marquee
+/// feature -- there is no separate "Quarry" record) stays confirmed
+/// opponent-dependent, the same "no target-creature representation
+/// exists anywhere in this codebase" wall that already excluded it from
+/// the single-ability scan. Also fixes a real, independently-confirmed
+/// bug, the THIRD class needing this exact widening: Slayer's own
+/// class-skill list genuinely includes Climb/Intimidate/Swim (like
+/// Warpriest, unlike Wizard/Arcanist), so
+/// `selected_skill_class_skill_bonus_applies` needed real widening
+/// again. See `docs/release/v0.6/second-full-class-build-comparative-scoping.md`
+/// for the full corpus verification and scope record.
+const SLAYER_CLASS_ID: &str = "class:slayer";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7553,6 +7577,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_inquisitor_single_class(input)
         || is_supported_arcanist_single_class(input)
         || is_supported_warpriest_single_class(input)
+        || is_supported_slayer_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7663,6 +7688,20 @@ fn is_supported_warpriest_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Warpriest, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Slayer full-build closure): whether
+/// `input` is a single-class Slayer at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Slayer -- mirrors
+/// the other six ACG/APG exact-match gates exactly.
+fn is_supported_slayer_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Slayer) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Slayer, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -9378,6 +9417,121 @@ fn push_warpriest_other_features_deferred_diagnostic(diagnostics: &mut Vec<Compu
     });
 }
 
+/// PF1 Advanced Class Guide Slayer Sneak Attack: dice count
+/// `SlayerLVL/3`, verified directly against `acg_abilities_class.lst`'s
+/// own `BONUS:VAR|SneakAttackDice|SlayerSneakAttackLVL/3`.
+fn slayer_sneak_attack_dice(level: u8) -> i16 {
+    i16::from(level) / 3
+}
+
+/// PF1 Advanced Class Guide Slayer Trap Sense: `max(1, SlayerLVL/3)`,
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|TrapSenseBonus|max(1,SlayerTrapSenseLVL/3)`. Grounded as a
+/// standalone flat record with no further total-integration, mirroring
+/// Barbarian's own `class_feature.barbarian.trap_sense` and Rogue's own
+/// `class_feature.rogue.trap_sense` exactly -- this codebase has no
+/// "trap AC/save" pillar for either of those closures to integrate into
+/// either, an already-established idiom.
+fn slayer_trap_sense_bonus(level: u8) -> i16 {
+    (i16::from(level) / 3).max(1)
+}
+
+/// PF1 Advanced Class Guide Slayer Trapfinding: `SlayerLVL/2`, verified
+/// directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|SlayerTrapfindingBonus|SlayerTrapfindingLVL/2`. A bonus on
+/// Perception (to locate traps) and Disable Device -- neither tracked by
+/// `compute_selected_skill_modifiers` (which only tracks Climb/
+/// Intimidate/Swim), so this grounds as a standalone flat record.
+fn slayer_trapfinding_bonus(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// PF1 Advanced Class Guide Slayer Track: `max(SlayerLVL/2, 1)`,
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|SlayerTrackBonus|max(SlayerTrackLVL/2,1)`. A bonus on
+/// Survival (to follow tracks) -- also not among the three tracked
+/// skills, so this grounds as a standalone flat record too.
+fn slayer_track_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Grounds Slayer's class features for `level` (v0.6 alpha swarm, risks
+/// item 8, Slayer full-build closure). Called from
+/// `compute_acg_class_chassis`'s Slayer branch, gated only on Slayer
+/// class-ownership. All four sub-features are flat, always-on class
+/// features (not activation-gated, not choice-gated) -- grounds each as
+/// its own standalone explanation record, then pushes the narrowed
+/// `other_features_deferred` diagnostic naming Studied Target
+/// (opponent-dependent) and Slayer Talents (a chooser-list) as the
+/// genuinely still-missing pieces.
+fn ground_or_block_slayer_class_features(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let sneak_attack_dice = slayer_sneak_attack_dice(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.sneak_attack_dice".to_owned(),
+        value: sneak_attack_dice,
+        detail: format!(
+            "Slayer level {level} Sneak Attack dice: level/3 = {sneak_attack_dice}d6. This \
+             codebase computes no sneak-attack-damage total to layer this onto; the flat dice \
+             count is grounded as a standalone record only"
+        ),
+    });
+
+    let trap_sense_bonus = slayer_trap_sense_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.trap_sense_bonus".to_owned(),
+        value: trap_sense_bonus,
+        detail: format!(
+            "Slayer level {level} Trap Sense: a +{trap_sense_bonus} bonus on Reflex saves made \
+             to avoid traps and a +{trap_sense_bonus} dodge bonus to AC against attacks made by \
+             traps (max(1, level/3) = {trap_sense_bonus}). This codebase has no trap-specific \
+             AC/save pillar; grounded as a standalone flat record, mirroring Barbarian's/Rogue's \
+             own Trap Sense precedent exactly"
+        ),
+    });
+
+    let trapfinding_bonus = slayer_trapfinding_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.trapfinding_bonus".to_owned(),
+        value: trapfinding_bonus,
+        detail: format!(
+            "Slayer level {level} Trapfinding: a +{trapfinding_bonus} bonus on Perception \
+             checks made to locate traps and Disable Device checks (level/2 = \
+             {trapfinding_bonus}). Neither Perception nor Disable Device is among the three \
+             skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so this \
+             grounds as a standalone flat record"
+        ),
+    });
+
+    let track_bonus = slayer_track_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.track_bonus".to_owned(),
+        value: track_bonus,
+        detail: format!(
+            "Slayer level {level} Track: a +{track_bonus} bonus on Survival checks made to \
+             follow tracks (max(level/2, 1) = {track_bonus}). Survival is not among the three \
+             tracked skills either, so this grounds as a standalone flat record"
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.slayer.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{SLAYER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar, Sneak Attack dice, Trap Sense, Trapfinding, and Track: Studied Target \
+             (Slayer's own marquee ability -- bonuses against a studied opponent, opponent-\
+             dependent, no target-creature representation exists anywhere in this codebase) and \
+             Slayer Talents (a chooser-list of real mechanical variety, named but not built) \
+             remain ungrounded; no class-feature execution is fabricated in this bounded \
+             chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -9451,23 +9605,25 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first through sixth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through seventh APG/ACG
     // closures, adversarially reviewed 2026-07-25 for the gate-widening
-    // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, and Warpriest
-    // are the six ACG classes with a genuinely real class feature now
-    // (Inspired Rage / Bloodrage / AC Bonus / Animal Companion / real
-    // prepared spellcasting + Arcane Reservoir / real prepared
-    // spellcasting + Blessings + Sacred Weapon) -- the other 4 ACG
+    // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest,
+    // and Slayer are the seven ACG classes with a genuinely real class
+    // feature now (Inspired Rage / Bloodrage / AC Bonus / Animal
+    // Companion / real prepared spellcasting + Arcane Reservoir / real
+    // prepared spellcasting + Blessings + Sacred Weapon / Sneak Attack
+    // dice + Trap Sense + Trapfinding + Track) -- the other 3 ACG
     // classes, and every APG class except Cavalier/Alchemist/Inquisitor,
     // keep the exact original unconditional diagnostic unchanged. These
     // branches are reached only for single-class Skald/Bloodrager/
-    // Brawler/Hunter/Arcanist/Warpriest (this function is only ever
-    // called from `compute_class_chassis`'s single-class-only section;
-    // `AcgClassId::from_class_id_str` is deliberately not registered
-    // with `multiclass_class_level_supported`, so any of these six
-    // classes in a multiclass mix never reaches this function at all),
-    // so no separate gate-ordering/hoisting fix is needed the way CRB
-    // classes required once `table_class_id` recognized them generically.
+    // Brawler/Hunter/Arcanist/Warpriest/Slayer (this function is only
+    // ever called from `compute_class_chassis`'s single-class-only
+    // section; `AcgClassId::from_class_id_str` is deliberately not
+    // registered with `multiclass_class_level_supported`, so any of
+    // these seven classes in a multiclass mix never reaches this
+    // function at all), so no separate gate-ordering/hoisting fix is
+    // needed the way CRB classes required once `table_class_id`
+    // recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
@@ -9494,6 +9650,8 @@ fn compute_acg_class_chassis(
             explanations,
             diagnostics,
         );
+    } else if class_id == AcgClassId::Slayer {
+        ground_or_block_slayer_class_features(level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -24265,18 +24423,25 @@ fn compute_total_saves(
 /// to many more classes since (Skald, Bloodrager, Brawler, Hunter,
 /// Cavalier, Alchemist, Inquisitor, Arcanist, Warpriest), but this
 /// function's own per-class fact-check must still be updated one class
-/// at a time as each is genuinely verified, not assumed. Warpriest is
+/// at a time as each is genuinely verified, not assumed. Warpriest was
 /// the SECOND real bug found here (the mirror image of Wizard's own
 /// false positive): its real class-skill list
 /// (`acg_abilities_class.lst`'s own `KEY:Warpriest ~ Class Skills`
 /// record) genuinely INCLUDES Climb, Intimidate, and Swim, so without
 /// this widening a Warpriest would silently get a false ZERO bonus on
-/// all three, despite genuinely earning one per RAW.
+/// all three, despite genuinely earning one per RAW. Slayer is the
+/// THIRD, same shape: its own class-skill list
+/// (`acg_abilities_class.lst`'s own `KEY:Slayer ~ Class Skills` record)
+/// also genuinely includes all three -- proven with a dedicated failing
+/// test (`slayer_gets_the_class_skill_bonus_on_all_three_skills`)
+/// written before this widening landed, per the lead's own instruction
+/// to verify rather than assume.
 pub(crate) fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID
             || class_level.class_id == ROGUE_CLASS_ID
             || class_level.class_id == WARPRIEST_CLASS_ID
+            || class_level.class_id == SLAYER_CLASS_ID
     })
 }
 
@@ -25351,7 +25516,7 @@ mod wizard_spellbook_spell_id_resolution_tests {
 mod selected_skill_class_skill_bonus_tests {
     use super::{
         compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, ROGUE_CLASS_ID,
-        WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
+        SLAYER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -25430,6 +25595,25 @@ mod selected_skill_class_skill_bonus_tests {
     #[test]
     fn warpriest_gets_the_class_skill_bonus_on_all_three_skills() {
         let input = with_class(WARPRIEST_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Slayer's own real class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Slayer ~ Class Skills`: Acrobatics, Bluff, Climb, Craft,
+    /// Disguise, Heal, Intimidate, Knowledge (Dungeoneering/Geography/
+    /// Local), Profession, Ride, Sense Motive, Stealth, Survival, Swim)
+    /// genuinely includes all three of Climb/Intimidate/Swim (v0.6 alpha
+    /// swarm, risks item 8, Slayer full-build closure) -- the THIRD
+    /// class needing this exact widening, same shape as Warpriest.
+    /// Written first, per the lead's own instruction, to prove the bug
+    /// exists before fixing it.
+    #[test]
+    fn slayer_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(SLAYER_CLASS_ID);
         let computation = compute_pilot_base_chassis(&input);
 
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
@@ -27060,6 +27244,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:hunter"
                 || class_id == "class:arcanist"
                 || class_id == "class:warpriest"
+                || class_id == "class:slayer"
             {
                 continue;
             }
@@ -27430,12 +27615,60 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(uses.value, 3, "Warpriest level 1 Blessing uses: 1/2 + 3 = 3: {:?}", uses);
     }
 
+    /// Slayer-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap (v0.6 alpha swarm, risks item 8, Slayer full-build closure,
+    /// seventh ACG/APG closure): the OLD generic
+    /// `class_feature.acg.slayer.unsupported` diagnostic must never
+    /// appear, while the NEW, narrower `other_features_deferred`
+    /// diagnostic always does. All four flat sub-feature formulas ground
+    /// unconditionally regardless (no choice or activation gate for any
+    /// of them).
+    #[test]
+    fn slayer_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:slayer", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Slayer must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.slayer.unsupported"),
+            "the retired generic diagnostic must never appear for Slayer: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.slayer.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let sneak_attack = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.sneak_attack_dice")
+            .expect("Sneak Attack dice must ground unconditionally");
+        assert_eq!(sneak_attack.value, 0, "Slayer level 1 Sneak Attack dice: {:?}", sneak_attack);
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager, Brawler, Hunter, Arcanist, and Warpriest): the
-    /// OTHER 4 ACG classes (every class other than Skald, Bloodrager,
-    /// Brawler, Hunter, Arcanist, and Warpriest, the six now genuinely
-    /// admitted) must produce ZERO `defense.total_save.*`/
+    /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, and Slayer):
+    /// the OTHER 3 ACG classes (every class other than Skald, Bloodrager,
+    /// Brawler, Hunter, Arcanist, Warpriest, and Slayer, the seven now
+    /// genuinely admitted) must produce ZERO `defense.total_save.*`/
     /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
     /// level 1, even when built from the exact same Longsword/Chain
     /// Shirt/Dodge/Weapon-Focus/skill-rank posture that genuinely
@@ -27443,15 +27676,15 @@ mod acg_class_chassis_dispatch_tests {
     /// check -- proving `is_supported_skald_single_class`,
     /// `is_supported_bloodrager_single_class`,
     /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
-    /// `is_supported_arcanist_single_class`, and
-    /// `is_supported_warpriest_single_class` are all real exact matches,
+    /// `is_supported_arcanist_single_class`, `is_supported_warpriest_single_class`,
+    /// and `is_supported_slayer_single_class` are all real exact matches,
     /// not broad `.is_some()` checks that would silently admit all 10 ACG
     /// classes into real pillar computation. This is stronger than the
     /// pre-existing "stays Blocked" assertion above, which does not by
     /// itself rule out a silent pillar-output leak alongside an unrelated
     /// claim-blocking diagnostic.
     #[test]
-    fn the_other_four_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_three_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
@@ -27459,6 +27692,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:hunter"
                 || class_id == "class:arcanist"
                 || class_id == "class:warpriest"
+                || class_id == "class:slayer"
             {
                 continue;
             }
@@ -27639,6 +27873,44 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(
             climb.value, 6,
             "Warpriest genuinely earns the class-skill bonus on Climb (real class-skill list \
+             includes it): {:?}",
+            climb
+        );
+    }
+
+    /// Slayer's own positive counterpart, mirroring the other six
+    /// exactly -- proves the gate genuinely admits Slayer, AND that
+    /// Slayer genuinely gets the class-skill bonus on Climb/Intimidate/
+    /// Swim (v0.6 alpha swarm, risks item 8, Slayer full-build closure:
+    /// the third class needing this exact widening).
+    #[test]
+    fn slayer_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:slayer", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Slayer: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Slayer");
+        assert_eq!(
+            climb.value, 6,
+            "Slayer genuinely earns the class-skill bonus on Climb (real class-skill list \
              includes it): {:?}",
             climb
         );
@@ -30828,6 +31100,155 @@ mod warpriest_dispatch_widening_safety_tests {
                 .iter()
                 .any(|e| e.id.starts_with("class_feature.acg.warpriest.")),
             "a non-Warpriest character must never ground any Warpriest explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Slayer full-build closure, seventh
+/// ACG/APG class-specific closure): tests the four flat class-feature
+/// formulas directly, mirroring the established dispatch-widening test
+/// module shape.
+#[cfg(test)]
+mod slayer_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, SLAYER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_slayer_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SLAYER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Slayer stays `Blocked` on the new, narrower
+    /// `other_features_deferred` diagnostic alone (never the retired
+    /// generic one), with all four flat sub-feature formulas grounded
+    /// unconditionally -- Slayer has no choice or activation gate for
+    /// any of them.
+    ///
+    /// Level 1: Sneak Attack 1/3=0d6, Trap Sense max(1,1/3)=1,
+    /// Trapfinding 1/2=0, Track max(1/2,1)=1.
+    #[test]
+    fn single_class_slayer_stays_blocked_on_other_features_only_with_all_four_flat_formulas_grounded()
+    {
+        let input = human_slayer_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Slayer must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.slayer.unsupported"),
+            "the retired generic diagnostic must never appear for Slayer: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.slayer.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let sneak_attack = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.sneak_attack_dice")
+            .expect("Sneak Attack dice must be grounded");
+        assert_eq!(sneak_attack.value, 0, "Slayer level 1 Sneak Attack dice: 1/3=0: {:?}", sneak_attack);
+
+        let trap_sense = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.trap_sense_bonus")
+            .expect("Trap Sense bonus must be grounded");
+        assert_eq!(trap_sense.value, 1, "Slayer level 1 Trap Sense: max(1,1/3)=1: {:?}", trap_sense);
+
+        let trapfinding = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.trapfinding_bonus")
+            .expect("Trapfinding bonus must be grounded");
+        assert_eq!(trapfinding.value, 0, "Slayer level 1 Trapfinding: 1/2=0: {:?}", trapfinding);
+
+        let track = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.track_bonus")
+            .expect("Track bonus must be grounded");
+        assert_eq!(track.value, 1, "Slayer level 1 Track: max(1/2,1)=1: {:?}", track);
+    }
+
+    /// Sneak Attack dice progression at higher levels, verified against
+    /// the raw corpus `BONUS:VAR` formula directly.
+    #[test]
+    fn slayer_sneak_attack_dice_progression_matches_the_corpus_formula_at_higher_levels() {
+        for (level, expected_dice) in [(3, 1), (6, 2), (9, 3), (12, 4)] {
+            let input = human_slayer_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let sneak_attack = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.slayer.sneak_attack_dice")
+                .expect("Sneak Attack dice must be grounded");
+            assert_eq!(
+                sneak_attack.value, expected_dice,
+                "level {level} Sneak Attack dice: {:?}",
+                sneak_attack
+            );
+        }
+    }
+
+    /// A non-Slayer character must never ground any Slayer explanation.
+    /// Also proves Fighter's own golden path is unaffected.
+    #[test]
+    fn non_slayer_characters_never_ground_slayer_explanations() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.slayer.")),
+            "a non-Slayer character must never ground any Slayer explanation: {:?}",
             receipt.computation.explanations
         );
     }

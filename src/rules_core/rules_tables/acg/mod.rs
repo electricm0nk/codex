@@ -211,16 +211,18 @@ pub struct AcgClassCoverage {
     /// Combat, Spirit, Raging Song, Sneak Attack talents, Panache,
     /// Blessings, ...) this repo has independent wired computation logic
     /// for. Zero for every ACG class except Skald, Bloodrager, Brawler,
-    /// Hunter, Arcanist, and Warpriest as of the v0.6 alpha swarm's first
-    /// through sixth APG/ACG class-specific closures (risks item 8):
-    /// Skald's 1st-level Raging Song song type, Inspired Rage,
-    /// Bloodrager's Bloodrage, Brawler's AC Bonus, Hunter's Animal
-    /// Companion, and Warpriest's Blessings + Sacred Weapon are now
-    /// genuinely wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
+    /// Hunter, Arcanist, Warpriest, and Slayer as of the v0.6 alpha
+    /// swarm's first through seventh APG/ACG class-specific closures
+    /// (risks item 8): Skald's 1st-level Raging Song song type, Inspired
+    /// Rage, Bloodrager's Bloodrage, Brawler's AC Bonus, Hunter's Animal
+    /// Companion, Warpriest's Blessings + Sacred Weapon, and Slayer's
+    /// Sneak Attack + Trap Sense + Trapfinding + Track are now genuinely
+    /// wired (`pilot_compute::ground_or_block_skald_inspired_rage`,
     /// `pilot_compute::ground_or_block_bloodrager_bloodrage`,
     /// `pilot_compute::ground_brawler_ac_bonus_and_defer_the_rest`,
     /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`,
-    /// `pilot_compute::ground_or_block_warpriest_class_features`)
+    /// `pilot_compute::ground_or_block_warpriest_class_features`,
+    /// `pilot_compute::ground_or_block_slayer_class_features`)
     /// -- see `class_coverage`'s own branches for each. Every other ACG
     /// class remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
     /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
@@ -268,6 +270,15 @@ pub struct AcgClassCoverage {
     /// `Blessings` feature slot (the same "floor, not ceiling" sub-list
     /// exclusion `named_features_expected`'s own doc comment already
     /// documents for Investigator's Discoveries), not a separate count.
+    ///
+    /// Slayer counts 4 (Sneak Attack, Trap Sense, Trapfinding, Track) --
+    /// genuinely different from Arcanist's/Warpriest's own 2, because all
+    /// four are real, distinct `KEY:Slayer ~ ...` records, each with its
+    /// OWN separately-implemented formula (no shared table or mechanism
+    /// links them the way Cantrips/Orisons shared their class's general
+    /// spellcasting table) -- an honest 4, not folded down for
+    /// consistency's own sake where the underlying mechanisms are
+    /// genuinely independent.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -344,14 +355,17 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first through sixth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through seventh APG/ACG
     // class-specific closures): Skald's Inspired Rage, Bloodrager's
     // Bloodrage, Brawler's AC Bonus, Hunter's Animal Companion,
-    // Arcanist's Arcane Reservoir + Spells Prepared, and Warpriest's
-    // Blessings + Sacred Weapon are the real, wired named class features
-    // among all ten ACG classes today -- see this field's own doc
-    // comment above for why Arcanist counts 2, not 1 (and why Cantrips
-    // does not add a third). Warpriest ALSO counts 2 (Blessings, Sacred
+    // Arcanist's Arcane Reservoir + Spells Prepared, Warpriest's
+    // Blessings + Sacred Weapon, and Slayer's Sneak Attack + Trap Sense +
+    // Trapfinding + Track are the real, wired named class features among
+    // all ten ACG classes today -- see this field's own doc comment
+    // above for why Arcanist counts 2, not 1 (and why Cantrips does not
+    // add a third), why Slayer counts a genuine 4 (its four sub-features
+    // are structurally independent, not facets of one shared mechanism),
+    // and why Warpriest ALSO counts 2 (Blessings, Sacred
     // Weapon), for a related but distinct reason: Warpriest's own
     // `KEY:Warpriest ~ ...` list has NO record at all for the general
     // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
@@ -372,6 +386,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     let named_features_wired = match class_id {
         AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
+        AcgClassId::Slayer => 4,
         _ => 0,
     };
 
