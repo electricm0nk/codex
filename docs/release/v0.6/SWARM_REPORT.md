@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | idle | Arcanist's full ACG build committed (`ce73a598`) and lead re-verified against the real HEAD — 443/443 lib, coverage audit 3/3, all 8 Arcanist-specific tests individually confirmed. First ACG class with real spellcasting, first genuine shot at full Computed outside CRB (stays Blocked on a bare posture this slice, same as Wizard's pre-bootstrap-fix history). Awaiting next assignment |
+| backend | working | Warpriest's full-build scoping doc landed — applied the Arcanist lesson proactively (spell table diverges from Cleric's own past level 2, verified before it became a doc claim). Also caught a real correctness bug: Warpriest's own class-skill list genuinely includes Climb/Intimidate/Swim but `selected_skill_class_skill_bonus_applies` only recognizes Fighter/Rogue today — a false-negative mirror of the historical Wizard false-positive bug. Lead independently verified both findings and greenlit Destruction Blessing (MVP) + the skill-bonus widening fix. Building now |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
