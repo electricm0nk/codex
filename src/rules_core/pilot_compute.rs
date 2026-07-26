@@ -1804,6 +1804,31 @@ const BRAWLER_CLASS_ID: &str = "class:brawler";
 /// slice" choice, not a new reachability gap -- Druid's own build never
 /// asked the character to pick a species either).
 const HUNTER_CLASS_ID: &str = "class:hunter";
+/// PF1 Advanced Class Guide Wild Empathy: "adds ... Hunter level +
+/// Charisma modifier + any other bonuses" -- verified directly against
+/// `acg_abilities_class.lst`'s own `BONUS:VAR|HunterWildEmpatyBonus|
+/// CHA+HunterLVL` (deepening 2026-07-26, task #2). A flat, unconditional
+/// check-modifier fact (not an activated ability with any duration or
+/// budget, unlike Animal Focus below) -- grounds as a standalone
+/// explanation record, no live consumer needed, the same corrected bar
+/// Inquisitor's Monster Lore/Cunning Initiative/Track and Skald's Bardic
+/// Knowledge/Damage Reduction already established. No `class_ability_
+/// activations`/`selected_choices` entry is needed at all -- it is a
+/// passive check modifier, not an activated ability.
+/// `ClassAbilityActivation.ability_id` for Hunter Animal Focus -- unlike
+/// Wild Empathy, this IS a real activated ability ("swift action...
+/// usable %1 minutes per day", `BONUS:VAR|HunterAnimalFocusMinutes|
+/// HunterLVL`), the same activation-gating pattern Judgment/Rage/Mutagen
+/// already use, with a genuinely enforced per-day minutes budget.
+const HUNTER_ANIMAL_FOCUS_ABILITY_ID: &str = "animal_focus";
+/// The choice set for which Animal Focus type is currently active. 13
+/// real options exist in the corpus (`KEY:Hunter Animal Focus ~ ...`);
+/// this codebase recognizes only Bull, the cleanest flat self-scoped
+/// magnitude of the set (a pure STR enhancement bonus, `2 + 2 at level 8
+/// + 2 at level 15`), mirroring Oracle's Mystery/Shaman's Spirit
+/// canonical-narrowing shape -- the other 12 stay named-but-unbuilt.
+const HUNTER_ANIMAL_FOCUS_CHOICE_ID: &str = "choice:hunter_animal_focus";
+const HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID: &str = "animal_focus:bull";
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
 /// class-specific closure): APG Cavalier's 1st-level Mount is, per the
@@ -11296,7 +11321,13 @@ fn compute_acg_class_chassis(
     } else if class_id == AcgClassId::Brawler {
         ground_brawler_ac_bonus_and_defer_the_rest(input, level, explanations, diagnostics);
     } else if class_id == AcgClassId::Hunter {
-        ground_hunter_animal_companion_and_defer_the_rest(level, explanations, diagnostics);
+        ground_hunter_animal_companion_and_defer_the_rest(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else if class_id == AcgClassId::Arcanist {
         ground_or_block_arcanist_class_features(
             input,
@@ -12473,8 +12504,191 @@ fn apply_brawler_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
 /// diagnostic, replacing the generic `class_feature.acg.hunter
 /// .unsupported` diagnostic for Hunter specifically, mirroring Skald's
 /// and Bloodrager's own diagnostic-honesty fix.
-fn ground_hunter_animal_companion_and_defer_the_rest(
+/// Hunter Wild Empathy's flat check-modifier magnitude: Hunter level +
+/// Charisma modifier (deepening 2026-07-26, task #2), verified directly
+/// against `acg_abilities_class.lst`'s own `CHA+HunterLVL` formula.
+fn hunter_wild_empathy_bonus(level: u8, charisma_modifier: i16) -> i16 {
+    charisma_modifier + i16::from(level)
+}
+
+/// Hunter Animal Focus's genuinely enforced per-day minutes budget:
+/// equal to Hunter level (deepening 2026-07-26, task #2), verified
+/// directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|HunterAnimalFocusMinutes|HunterLVL`.
+fn hunter_animal_focus_uses_per_day(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Hunter Animal Focus (Bull)'s STR enhancement bonus: +2 base, +2 more
+/// at level 8, +2 more at level 15 (deepening 2026-07-26, task #2),
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `KEY:Hunter Animal Focus ~ Bull` record (three stacking
+/// `BONUS:VAR|HunterAnimalFocusBullBonus|2` entries, the third and
+/// second gated on `PREVARGTEQ:HunterAnimalFocusLVL,8`/`,15`, and
+/// `HunterAnimalFocusLVL` itself resolves to `HunterLVL` unconditionally).
+/// Bull was picked as the one canonical focus of the 13 real options this
+/// closure grounds -- the cleanest flat, self-scoped ability-enhancement
+/// magnitude of the set (Tiger's own DEX version is structurally
+/// identical; the other 11 stay named-but-unbuilt).
+fn hunter_animal_focus_bull_bonus(level: u8) -> i16 {
+    let mut bonus = 2;
+    if level >= 8 {
+        bonus += 2;
+    }
+    if level >= 15 {
+        bonus += 2;
+    }
+    bonus
+}
+
+/// Grounds Hunter's Wild Empathy as a standalone explanation record
+/// (deepening 2026-07-26, task #2, correcting an earlier over-strict
+/// "needs a live consumer" exclusion -- see Inquisitor's own task #18 and
+/// Skald's own task #7 for the same correction applied first): no "wild
+/// empathy check" total exists anywhere in this codebase, so this
+/// grounds only the flat bonus value. Unconditional on class ownership
+/// and level alone; never claim-blocks.
+fn ground_hunter_wild_empathy(
     level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let wild_empathy_bonus = hunter_wild_empathy_bonus(level, ability_modifiers.charisma);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.hunter.wild_empathy_bonus".to_owned(),
+        value: wild_empathy_bonus,
+        detail: format!(
+            "Hunter level {level} Wild Empathy: a +{wild_empathy_bonus} bonus (Hunter level \
+             {level} + Charisma modifier {:+}) added to a 1d20 roll to improve an animal's \
+             attitude. No wild-empathy-check total exists anywhere in this codebase, so this \
+             grounds only the flat bonus value",
+            ability_modifiers.charisma
+        ),
+    });
+}
+
+/// Grounds or claim-blocks Hunter's Animal Focus execution engine for
+/// `level` (deepening 2026-07-26, task #2). Mirrors
+/// `ground_or_block_inquisitor_judgment`'s exact three-branch shape
+/// (activation-gating + choice-recognition): a character not currently
+/// focused (no `class_ability_activations` entry, or one present but not
+/// `EquippedActive`) is a genuinely valid PF1 posture -- grounds a real
+/// "not focused" recognition record, no claim-block. An active focus
+/// naming no recognized `choice:hunter_animal_focus` selection (or a
+/// request for one of the other 12 unbuilt options) is a genuine posture
+/// violation and claim-blocks. Only an active focus with the recognized
+/// Bull choice grounds the real STR enhancement bonus. The per-day
+/// minutes budget is genuinely enforced against
+/// `activation.rounds_consumed_today`, mirroring Rage's/Judgment's own
+/// enforced budget exactly.
+fn ground_or_block_hunter_animal_focus(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(activation) = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == HUNTER_ANIMAL_FOCUS_ABILITY_ID)
+    else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.hunter.animal_focus_execution.not_focused".to_owned(),
+            value: 0,
+            detail: format!(
+                "Hunter level {level} is not currently using Animal Focus (no \
+                 class_ability_activations entry for \
+                 \"{HUNTER_ANIMAL_FOCUS_ABILITY_ID}\"): a genuinely valid PF1 posture, so no \
+                 focus bonus is claimed"
+            ),
+        });
+        return;
+    };
+
+    let uses_per_day = hunter_animal_focus_uses_per_day(level);
+    if let Some(minutes_consumed_today) = activation.rounds_consumed_today {
+        if i32::from(minutes_consumed_today) > i32::from(uses_per_day) {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.acg.hunter.animal_focus_execution.uses_exceeded".to_owned(),
+                message: format!(
+                    "Hunter level {level} Animal Focus activation claims \
+                     {minutes_consumed_today} minutes consumed today, exceeding the grounded \
+                     per-day budget of {uses_per_day} minutes (equal to Hunter level): a genuine \
+                     posture violation, so no focus bonus is claimed for this input"
+                ),
+                claim_blocking: true,
+            });
+            return;
+        }
+    }
+
+    match activation.active_state {
+        ActiveState::EquippedActive => {
+            let focus_selection = choice_selection(input, HUNTER_ANIMAL_FOCUS_CHOICE_ID);
+            if focus_selection != Some(HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID) {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.acg.hunter.animal_focus_execution.focus_choice_missing"
+                        .to_owned(),
+                    message: format!(
+                        "Hunter level {level} claims an active Animal Focus \
+                         ({HUNTER_ANIMAL_FOCUS_ABILITY_ID}) but has no recognized \
+                         {HUNTER_ANIMAL_FOCUS_CHOICE_ID} selection naming Bull (got \
+                         {focus_selection:?}): taking on an animal focus always requires \
+                         choosing a type first per the corpus's own sequencing, and Bull is the \
+                         only one of the 13 focus options this codebase grounds, so an active \
+                         focus naming any other type -- or none -- is a genuine posture \
+                         violation, not a silently passing one -- no focus bonus is claimed for \
+                         this input"
+                    ),
+                    claim_blocking: true,
+                });
+                return;
+            }
+
+            let bull_bonus = hunter_animal_focus_bull_bonus(level);
+            let minutes_consumed_today = activation.rounds_consumed_today.unwrap_or(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
+                value: bull_bonus,
+                detail: format!(
+                    "Hunter level {level} is actively using the Bull Animal Focus, within the \
+                     grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
+                     consumed today), granting a +{bull_bonus} enhancement bonus to Strength. \
+                     This is a standalone fact -- it is not applied to any integrated ability \
+                     modifier or ability-score total"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.hunter.animal_focus_execution.uses_per_day".to_owned(),
+                value: uses_per_day,
+                detail: format!(
+                    "Hunter level {level} Animal Focus minutes per day: equal to Hunter level = \
+                     {uses_per_day}. Genuinely enforced -- an activation whose \
+                     rounds_consumed_today exceeds this budget claim-blocks (see the \
+                     uses_exceeded check above), mirroring Judgment's/Rage's own enforced budget \
+                     exactly"
+                ),
+            });
+        }
+        ActiveState::SelectedInactive | ActiveState::Absent => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.hunter.animal_focus_execution.not_focused".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Hunter level {level} has a \"{HUNTER_ANIMAL_FOCUS_ABILITY_ID}\" activation \
+                     entry but it is not active for this snapshot: a genuinely valid PF1 \
+                     posture, so no focus bonus is claimed"
+                ),
+            });
+        }
+    }
+}
+
+fn ground_hunter_animal_companion_and_defer_the_rest(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -12497,17 +12711,22 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
             .to_owned(),
         claim_blocking: false,
     });
+    ground_hunter_wild_empathy(level, ability_modifiers, explanations);
+    ground_or_block_hunter_animal_focus(input, level, explanations, diagnostics);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.hunter.spellcasting_deferred.unsupported".to_owned(),
         message: format!(
             "{HUNTER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and Animal Companion: this ACG class has no class-skill list, no \
-             spellcasting posture (Hunter casts a restricted Summon Nature's Ally-only known-\
-             spell list from the Druid/Ranger spell lists, but its own spells-known/per-day \
-             table numbers have not yet been independently verified or built), and no other \
-             named class feature (Animal Focus, Nature Training, Wild Empathy, Precise \
-             Companion) grounded anywhere in this codebase yet; no class-feature or spell \
-             execution is fabricated in this bounded chassis baseline"
+             pillar, Animal Companion, Wild Empathy, and the Bull Animal Focus: this ACG class \
+             has no class-skill list, no spellcasting posture (Hunter casts a restricted Summon \
+             Nature's Ally-only known-spell list from the Druid/Ranger spell lists, but its own \
+             spells-known/per-day table numbers have not yet been independently verified or \
+             built), no Nature Training (a real corpus record with zero numeric BONUS of any \
+             kind -- a qualification flag only, no magnitude to ground), no Precise Companion, \
+             and no other 12 Animal Focus options (Bat, Bear, Falcon, Frog, Monkey, Mouse, Owl, \
+             Snake, Stag, Tiger, plus the \"No Ability\" sentinel) grounded anywhere in this \
+             codebase yet; no class-feature or spell execution is fabricated in this bounded \
+             chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -33066,6 +33285,207 @@ mod bloodrager_dispatch_widening_safety_tests {
             receipt.computation.ability_modifiers.strength, 4,
             "a non-Bloodrager character's spoofed bloodrage entry must never apply a bonus: {:?}",
             receipt.computation.ability_modifiers
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Hunter deepening, 2026-07-26, task
+/// #2): Wild Empathy (a flat, unconditional check-modifier fact) and
+/// Animal Focus (Bull) (activation-gated, mirroring Judgment's own
+/// three-branch shape) are grounded alongside the already-shipped Animal
+/// Companion. Hunter still never reaches `Computed` (spellcasting/Nature
+/// Training/the other 12 Animal Focus options stay deferred), so this
+/// mirrors `bloodrager_dispatch_widening_safety_tests`'s shape (stays
+/// Blocked throughout).
+#[cfg(test)]
+mod hunter_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, HUNTER_ANIMAL_FOCUS_ABILITY_ID, HUNTER_ANIMAL_FOCUS_CHOICE_ID,
+        HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID, HUNTER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_hunter_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: HUNTER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// Wild Empathy is unconditional the moment Hunter levels are present
+    /// -- no choice, no activation gate. Fixture: CHA 8 -> -1 modifier.
+    /// Level 1: -1 + 1 = 0. (Hunter's own Animal Companion math is only
+    /// verified at level 1 in this codebase -- see
+    /// `wolf_companion_hit_dice`'s own `debug_assert_eq!` -- so the full
+    /// end-to-end pipeline can only be exercised at level 1; the formula's
+    /// own level-scaling is proven separately below via a direct,
+    /// pipeline-free unit test.)
+    #[test]
+    fn single_class_hunter_gets_the_unconditional_wild_empathy_bonus() {
+        let input = human_hunter_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let wild_empathy = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.wild_empathy_bonus")
+            .expect("expected Wild Empathy grounded at level 1");
+        assert_eq!(wild_empathy.value, 0, "level 1 Wild Empathy: {:?}", wild_empathy);
+    }
+
+    /// Wild Empathy's own real level-scaling (Hunter level + Charisma
+    /// modifier), proven directly rather than through the level-1-only
+    /// end-to-end pipeline (see the test above's own doc comment for why).
+    #[test]
+    fn hunter_wild_empathy_bonus_matches_the_real_cha_plus_level_formula() {
+        for (level, charisma_modifier, expected) in [(1, -1, 0), (5, -1, 4), (10, 2, 12), (20, 0, 20)] {
+            assert_eq!(
+                super::hunter_wild_empathy_bonus(level, charisma_modifier),
+                expected,
+                "level {level}, CHA mod {charisma_modifier}"
+            );
+        }
+    }
+
+    /// A Hunter not using Animal Focus (no activation entry at all) is a
+    /// genuinely valid PF1 posture -- stays Blocked on deferred features
+    /// only, with the honest "not focused" recognition record grounded.
+    #[test]
+    fn single_class_hunter_not_focused_stays_blocked_on_deferred_features_only() {
+        let input = human_hunter_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.not_focused"),
+            "expected the honest not-focused recognition record: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A single-class Hunter actively using the Bull Animal Focus applies
+    /// the real STR enhancement bonus as a standalone fact (level 1: +2;
+    /// see the test above's own doc comment for why the full pipeline is
+    /// level-1-bounded -- the formula's own level scaling is proven
+    /// separately below).
+    #[test]
+    fn single_class_hunter_actively_focused_on_bull_applies_the_real_bonus() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active")
+            .expect("expected Bull Animal Focus grounded at level 1");
+        assert_eq!(active.value, 2, "level 1 Bull bonus: {:?}", active);
+    }
+
+    /// Bull Animal Focus's own real level-scaling (+2 base, +2 more at
+    /// level 8, +2 more at level 15), proven directly rather than through
+    /// the level-1-only end-to-end pipeline.
+    #[test]
+    fn hunter_animal_focus_bull_bonus_matches_the_real_level_gates() {
+        for (level, expected) in [(1, 2), (7, 2), (8, 4), (14, 4), (15, 6), (20, 6)] {
+            assert_eq!(
+                super::hunter_animal_focus_bull_bonus(level),
+                expected,
+                "level {level} Bull bonus"
+            );
+        }
+    }
+
+    /// An active Animal Focus naming no recognized choice (or one of the
+    /// other 12 unbuilt options) is a genuine posture violation and must
+    /// claim-block -- never silently passed.
+    #[test]
+    fn single_class_hunter_active_focus_without_a_recognized_bull_choice_stays_blocked() {
+        let mut input = human_hunter_input(1);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.hunter.animal_focus_execution.focus_choice_missing"
+                    && d.claim_blocking),
+            "expected the missing-focus-choice claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Animal Focus activation that exceeds the grounded per-day
+    /// minutes budget is a genuine posture violation and must claim-block.
+    ///
+    /// Level 1 uses per day: 1 minute.
+    #[test]
+    fn single_class_hunter_over_budget_animal_focus_stays_blocked_and_applies_no_bonus() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(2),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.animal_focus_execution.uses_exceeded"
+                    && d.claim_blocking),
+            "expected the uses-exceeded claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.hunter.animal_focus_execution.active"),
+            "no Bull bonus should be applied for an over-budget posture: {:?}",
+            receipt.computation.explanations
         );
     }
 }

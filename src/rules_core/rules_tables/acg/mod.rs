@@ -429,8 +429,16 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // the general spellcasting mechanism, not independently implemented"
     // reasoning that already excluded Oracle's known-spell posture,
     // Arcanist's Cantrips, and Warpriest's Orisons from their own counts.
-    // And why Warpriest counts 2 (Blessings, Sacred Weapon), for a
-    // related but distinct reason: Warpriest's own
+    // Hunter ALSO counts a genuine 3 (Animal Companion, Wild Empathy,
+    // Animal Focus -- deepening 2026-07-26, task #2): Wild Empathy is a
+    // flat, unconditional check-modifier fact (`CHA+HunterLVL`), and
+    // Animal Focus grounds its one canonical Bull option (a real STR
+    // enhancement bonus, `+2`/`+4`/`+6` at levels 1/8/15) via the same
+    // activation-gated choice-recognition shape Judgment/Mutagen already
+    // proved; Hunter's own known-spell posture (still deferred) would not
+    // add a fourth even if built, per the same spellcasting-sharing
+    // convention. And why Warpriest counts 2 (Blessings, Sacred Weapon),
+    // for a related but distinct reason: Warpriest's own
     // `KEY:Warpriest ~ ...` list has NO record at all for the general
     // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
     // Prepared" record) -- only `Orisons` names the 0-level-specific
@@ -448,9 +456,13 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // documents for Investigator's Discoveries), so it does not add a
     // separate count either.
     let named_features_wired = match class_id {
-        AcgClassId::Bloodrager | AcgClassId::Hunter | AcgClassId::Shaman => 1,
+        AcgClassId::Bloodrager | AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
-        AcgClassId::Swashbuckler | AcgClassId::Investigator | AcgClassId::Brawler | AcgClassId::Skald => 3,
+        AcgClassId::Swashbuckler
+        | AcgClassId::Investigator
+        | AcgClassId::Brawler
+        | AcgClassId::Skald
+        | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
     };
 
