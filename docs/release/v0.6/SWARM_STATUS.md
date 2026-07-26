@@ -1509,7 +1509,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T12:00:02
-Latest commit on tranche/6: 4555a862 v0.6 alpha swarm: deepen Brawler (Cunning + Strike + 6th class-skill-bonus fix) (3 minutes ago) (2026-07-26T11:56:45-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T11:57:22 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T11:57:13
+Last mechanical check: 2026-07-26T12:25:01
+Latest commit on tranche/6: 19f1a2b3 docs(v0.6): feat-effects widening (Athletic/Persuasive/Intimidating Prowess) landed and re-verified (5 minutes ago) (2026-07-26T12:20:04-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T12:20:46 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T12:20:50
 <!-- AUTO-HEARTBEAT-END -->
