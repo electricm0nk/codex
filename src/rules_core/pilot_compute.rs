@@ -9863,13 +9863,28 @@ fn warpriest_blessing_dc(level: u8, wisdom_modifier: i16) -> i16 {
 /// codebase's own Longsword fixture), verified directly against
 /// `acg_abilities_class.lst`'s own size-branched `BONUS:VAR` formulas
 /// (`PREBASESIZEEQ:M` branch): dice size `if(LVL<5,6,if(LVL<10,8,
-/// if(LVL<15,10,if(LVL<20,6,8))))`, dice count `1+min(1,LVL/20)`.
+/// if(LVL<15,10,if(LVL<20,6,8))))`, dice count `1+min(1,LVL/15)`.
 /// Returns `(dice_count, dice_size)`. At every level within this
 /// grounding's own bounded 1-3 range, this evaluates to a flat `1d6` --
 /// genuinely near-zero value for a Longsword (whose own native base
 /// damage, 1d8, is already better), named honestly rather than
 /// suppressed, mirroring Brawler's own "AC Bonus is genuinely +0 at
 /// level 1" precedent.
+///
+/// **Real bug found and fixed (v0.6 alpha swarm, 2026-07-26, scout's
+/// formula-audit pass, lead independently confirmed)**: `dice_count`
+/// previously used `LVL/20`, the `PREBASESIZELT:M` (smaller-than-Medium)
+/// branch's own denominator, transcribed by mistake into this function's
+/// EQ:M (Medium) branch -- a sibling-branch mix-up, not a fabricated
+/// value; the doc comment above also incorrectly cited `/20` as if
+/// corpus-verified, so the error was internally self-consistent and
+/// wouldn't have been caught by a doc-vs-code check alone. Corrected to
+/// the real EQ:M formula, `1+min(1,LVL/15)`, verified directly against
+/// the corpus record. Real effect: levels 15-19 previously computed
+/// `dice_count = 1` (wrong; `15/20` through `19/20` all floor to 0) but
+/// should be `2` (`15/15 = 1`, `min(1,1) = 1`, `+1 = 2`) -- this
+/// grounding's own bounded 1-3 level range never exercised the wrong
+/// branch, but the function itself was wrong at every level 15+.
 fn warpriest_sacred_weapon_base_dice(level: u8) -> (i16, i16) {
     let level = i16::from(level);
     let dice_size = if level < 5 {
@@ -9883,7 +9898,7 @@ fn warpriest_sacred_weapon_base_dice(level: u8) -> (i16, i16) {
     } else {
         8
     };
-    let dice_count = 1 + 1.min(level / 20);
+    let dice_count = 1 + 1.min(level / 15);
     (dice_count, dice_size)
 }
 
@@ -32775,6 +32790,44 @@ mod warpriest_dispatch_widening_safety_tests {
             "a non-Warpriest character must never ground any Warpriest explanation: {:?}",
             receipt.computation.explanations
         );
+    }
+
+    /// Real bug found and fixed (v0.6 alpha swarm, 2026-07-26, scout's
+    /// formula-audit pass, lead independently confirmed): `dice_count`
+    /// previously used the `PREBASESIZELT:M` branch's own `/20`
+    /// denominator by mistake instead of the applicable `PREBASESIZEEQ:M`
+    /// branch's `/15` -- silently wrong for any level 15+ Warpriest
+    /// (never caught by this closure's own bounded 1-3 level scope,
+    /// which never diverges between the two denominators). Tests the
+    /// pure formula directly across the full level range, including the
+    /// specific 15-19 band the bug affected, since `dice_count` is only
+    /// ever embedded in the explanation's own prose text (never a
+    /// separate `.value` field any existing test could have caught).
+    #[test]
+    fn warpriest_sacred_weapon_dice_count_matches_the_real_eq_m_corpus_branch_at_every_level() {
+        for (level, expected_dice_count, expected_dice_size) in [
+            (1, 1, 6),
+            (4, 1, 6),
+            (5, 1, 8),
+            (9, 1, 8),
+            (10, 1, 10),
+            (14, 1, 10),
+            (15, 2, 6),
+            (17, 2, 6),
+            (19, 2, 6),
+            (20, 2, 8),
+        ] {
+            let (dice_count, dice_size) = super::warpriest_sacred_weapon_base_dice(level);
+            assert_eq!(
+                dice_count, expected_dice_count,
+                "level {level} Sacred Weapon dice count: 1+min(1,level/15) = \
+                 {expected_dice_count}"
+            );
+            assert_eq!(
+                dice_size, expected_dice_size,
+                "level {level} Sacred Weapon dice size: {expected_dice_size}"
+            );
+        }
     }
 }
 
