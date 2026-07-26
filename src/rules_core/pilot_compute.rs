@@ -10960,7 +10960,7 @@ fn compute_acg_class_chassis(
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
     } else if class_id == AcgClassId::Brawler {
-        ground_brawler_ac_bonus_and_defer_the_rest(level, explanations, diagnostics);
+        ground_brawler_ac_bonus_and_defer_the_rest(input, level, explanations, diagnostics);
     } else if class_id == AcgClassId::Hunter {
         ground_hunter_animal_companion_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == AcgClassId::Arcanist {
@@ -11827,24 +11827,71 @@ fn active_brawler_ac_bonus(input: &CharacterInput) -> Option<i16> {
     Some(brawler_ac_bonus(brawler_level))
 }
 
-/// Grounds Brawler's AC Bonus as a standalone explanation record and
-/// pushes the new, narrower diagnostic naming Brawler's remaining
-/// ungrounded features (v0.6 alpha swarm, risks item 8, third APG/ACG
-/// closure). Called from `compute_acg_class_chassis`'s Brawler branch.
+/// PF1 Advanced Class Guide Brawler's Cunning: "if the brawler's
+/// Intelligence score is less than 13, it counts as 13 for the purpose
+/// of meeting the prerequisites of combat feats." Verified directly
+/// against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|CombatFeatIntRequirement|max(13,INTSCORE)`. Flat,
+/// unconditional from level 1 -- no `PREVARGTEQ`/`PRECLASS` gate on this
+/// record at all, unlike Brawler's Strike below. Takes the raw
+/// Intelligence SCORE (not the derived ability modifier), since the real
+/// rule floors the score itself, not a modifier.
+fn brawler_cunning_effective_intelligence_score(intelligence_score: i16) -> i16 {
+    intelligence_score.max(13)
+}
+
+/// PF1 Advanced Class Guide Brawler's Strike progression tier:
+/// `(level>=5)+(level>=9)+(level>=12)+(level>=17)`, verified directly
+/// against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|BrawlersStrikeProgression|(BrawlerLVL>=5)+(BrawlerLVL>=9)+(BrawlerLVL>=12)+(BrawlerLVL>=17)`.
+/// Returns `None` below level 5 -- the feature genuinely doesn't exist
+/// yet at that point (the real rule text is granted at 5th level per
+/// the corpus's own level-gated progression counter, not a formula that
+/// merely evaluates to a zero magnitude), the same "not yet gained"
+/// shape as Swashbuckler's own Charmed Life (granted at 2nd) and
+/// Shaman's own Healer's Touch (gated to 8th, deliberately NOT the MVP
+/// grounded for that class). Tier 1 (levels 5-8) grants "unarmed
+/// strikes count as magic weapons for DR"; tier 2+ (level 9+) grants
+/// "magic, cold iron, and silver" -- verified directly against the
+/// record's own two real `DESC:` lines, each gated on
+/// `PREVARGTEQ:BrawlersStrikeProgression,1`/`,2`. Tiers 3 (level 12) and
+/// 4 (level 17) do not add a further DR-bypass DESC line; they instead
+/// grant `Brawler's Strike Alignment Selection` ability-pool points (a
+/// real chooser -- which alignment type to add -- this closure does not
+/// model, named honestly in the deferred diagnostic below).
+fn brawler_strike_progression_tier(level: u8) -> Option<i16> {
+    let tier = i16::from(level >= 5)
+        + i16::from(level >= 9)
+        + i16::from(level >= 12)
+        + i16::from(level >= 17);
+    if tier == 0 {
+        None
+    } else {
+        Some(tier)
+    }
+}
+
+/// Grounds Brawler's AC Bonus, Brawler's Cunning, and Brawler's Strike
+/// as standalone explanation records, then pushes the new, narrower
+/// diagnostic naming Brawler's remaining ungrounded features (v0.6 alpha
+/// swarm, risks item 8, third APG/ACG closure, deepened 2026-07-26 to
+/// add Cunning and Strike). Called from `compute_acg_class_chassis`'s
+/// Brawler branch.
 ///
 /// Unlike Skald/Bloodrager, Brawler has no spellcasting at all
 /// (`ROLE:None`, no `SPELLSTAT` in the corpus) -- the permanent remaining
 /// bucket here is Brawler's OTHER named features (Brawler's Flurry,
 /// Knockout, Martial Flexibility, Awesome Blow, Improved Awesome Blow,
-/// Brawler's Cunning, Martial Training, Bonus Feats, Close Weapon
-/// Mastery, Brawler's Strike, Maneuver Training), not deferred spell
-/// math, so the diagnostic is named
+/// Martial Training, Bonus Feats, Close Weapon Mastery, Maneuver
+/// Training, and Brawler's Strike's own Alignment Selection chooser),
+/// not deferred spell math, so the diagnostic is named
 /// `class_feature.acg.brawler.other_features_deferred.unsupported`
 /// rather than `spellcasting_deferred`, mirroring the same
 /// diagnostic-honesty discipline (retire the blanket "no named
 /// class-feature computation... grounded anywhere" claim, replace with a
 /// narrower one naming only what's genuinely still missing).
 fn ground_brawler_ac_bonus_and_defer_the_rest(
+    input: &CharacterInput,
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
@@ -11874,16 +11921,77 @@ fn ground_brawler_ac_bonus_and_defer_the_rest(
             .to_owned(),
         claim_blocking: false,
     });
+
+    let effective_intelligence =
+        brawler_cunning_effective_intelligence_score(input.chosen.ability_scores.intelligence);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.brawler.cunning_effective_intelligence_for_combat_feats".to_owned(),
+        value: effective_intelligence,
+        detail: format!(
+            "Brawler's Cunning: for the purpose of meeting combat-feat prerequisites, an \
+             Intelligence score below 13 counts as 13. Real Intelligence score \
+             {} -> effective {effective_intelligence} for combat-feat prerequisite checks. \
+             Grounds only the flat effective-score fact; this codebase's feat_prereqs modules \
+             do not check ability scores as a prerequisite type, so no actual feat-prerequisite \
+             resolution is computed against it",
+            input.chosen.ability_scores.intelligence
+        ),
+    });
+
+    match brawler_strike_progression_tier(level) {
+        None => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.brawler.strike_not_yet_gained".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Brawler level {level} has not yet gained Brawler's Strike (granted \
+                     starting at level 5): a genuinely valid PF1 posture for a 1st-4th-level \
+                     Brawler, not a gap"
+                ),
+            });
+        }
+        Some(tier) => {
+            let dr_bypass = if tier == 1 {
+                "magic"
+            } else {
+                "magic, cold iron, and silver"
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.brawler.strike_dr_bypass".to_owned(),
+                value: tier,
+                detail: format!(
+                    "Brawler level {level} Brawler's Strike (progression tier {tier}): unarmed \
+                     strikes are treated as {dr_bypass} weapons for the purpose of overcoming \
+                     damage reduction. Grounds only the flat DR-bypass fact; this codebase \
+                     computes no damage-reduction resolution to apply it against"
+                ),
+            });
+            if tier >= 3 {
+                diagnostics.push(ComputationDiagnostic {
+                    id: "class_feature.acg.brawler.strike_alignment_selection.unmodeled"
+                        .to_owned(),
+                    message: "Brawler's Strike Alignment Selection (the chooser unlocked at \
+                         progression tier 3+, level 12) is not modeled: which alignment \
+                         (lawful/chaotic/good/evil) the DR-bypass gains is a real chooser this \
+                         codebase does not implement. This does not block the otherwise-valid \
+                         magic/cold-iron/silver DR-bypass fact grounded above"
+                        .to_owned(),
+                    claim_blocking: false,
+                });
+            }
+        }
+    }
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{BRAWLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and AC Bonus: this ACG class has no class-skill list and no other named \
-             class-feature computation (Brawler's Flurry, Knockout, Martial Flexibility, Awesome \
-             Blow, Improved Awesome Blow, Brawler's Cunning, Martial Training, Bonus Feats, \
-             Close Weapon Mastery, Brawler's Strike, Maneuver Training) grounded anywhere in \
-             this codebase yet; no class-feature execution is fabricated in this bounded \
-             chassis baseline"
+             pillar, AC Bonus, Brawler's Cunning, and Brawler's Strike: Brawler's Flurry, \
+             Knockout, Martial Flexibility, Awesome Blow, Improved Awesome Blow, Martial \
+             Training, Bonus Feats, Close Weapon Mastery, Maneuver Training, and Brawler's \
+             Strike's own Alignment Selection chooser (unlocked at level 12+) remain \
+             ungrounded anywhere in this codebase; no class-feature execution is fabricated in \
+             this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -25793,6 +25901,17 @@ fn compute_total_saves(
 /// are cleanly none-of-three) -- each of those six classes still yields
 /// the identical bonus on all three skills as before; only Investigator
 /// produces a genuinely different answer per skill.
+///
+/// Brawler is the SIXTH class needing the "all three" widening (v0.6
+/// alpha swarm, risks item 8, Brawler deepening, 2026-07-26), found
+/// while grounding Brawler's own Cunning/Strike features for an
+/// unrelated reason: its real class-skill list
+/// (`acg_abilities_class.lst`'s own `KEY:Brawler ~ Class Skills` record)
+/// genuinely includes Climb, Intimidate, and Swim, the same clean
+/// all-three shape as Warpriest/Slayer/Swashbuckler -- proven with a
+/// dedicated failing test
+/// (`brawler_gets_the_class_skill_bonus_on_all_three_skills`) written
+/// before this widening landed.
 pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID
@@ -25801,6 +25920,7 @@ pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> boo
             || class_level.class_id == SLAYER_CLASS_ID
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == INVESTIGATOR_CLASS_ID
+            || class_level.class_id == BRAWLER_CLASS_ID
     })
 }
 
@@ -25823,6 +25943,7 @@ pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == INVESTIGATOR_CLASS_ID
             || class_level.class_id == WITCH_CLASS_ID
+            || class_level.class_id == BRAWLER_CLASS_ID
     })
 }
 
@@ -25841,6 +25962,7 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
             || class_level.class_id == WARPRIEST_CLASS_ID
             || class_level.class_id == SLAYER_CLASS_ID
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
+            || class_level.class_id == BRAWLER_CLASS_ID
     })
 }
 
@@ -26935,9 +27057,9 @@ mod wizard_spellbook_spell_id_resolution_tests {
 #[cfg(test)]
 mod selected_skill_class_skill_bonus_tests {
     use super::{
-        compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
-        ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WITCH_CLASS_ID,
-        WIZARD_CLASS_ID,
+        compute_pilot_base_chassis, ARCANIST_CLASS_ID, BRAWLER_CLASS_ID, FIGHTER_CLASS_ID,
+        INVESTIGATOR_CLASS_ID, ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID,
+        WARPRIEST_CLASS_ID, WITCH_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -27118,6 +27240,27 @@ mod selected_skill_class_skill_bonus_tests {
             "Swim is NOT a real Witch class skill: {:?}",
             computation
         );
+    }
+
+    /// Brawler's own real class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Brawler ~ Class Skills`: Acrobatics, Climb, Craft, Escape
+    /// Artist, Handle Animal, Intimidate, Knowledge (Dungeoneering/
+    /// Local), Perception, Profession, Ride, Sense Motive, Swim)
+    /// genuinely includes all three of Climb/Intimidate/Swim (v0.6 alpha
+    /// swarm, risks item 8, Brawler deepening, 2026-07-26) -- the SIXTH
+    /// class needing this exact widening, same shape as Warpriest/
+    /// Slayer/Swashbuckler. Found while deepening Brawler's own closure
+    /// for an unrelated reason (Cunning/Strike), not the original task --
+    /// written first, per the lead's own established instruction, to
+    /// prove the bug exists before fixing it.
+    #[test]
+    fn brawler_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(BRAWLER_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
     }
 
     #[test]
@@ -29893,6 +30036,141 @@ mod acg_class_chassis_dispatch_tests {
                 armor_class
             );
         }
+    }
+
+    /// Brawler's Cunning grounds unconditionally from level 1 (v0.6 alpha
+    /// swarm, risks item 8, Brawler deepening, 2026-07-26): the fixture's
+    /// real Intelligence score is 10 (below 13), so the effective score
+    /// for combat-feat prerequisites is floored to 13.
+    #[test]
+    fn brawler_cunning_grounds_the_effective_intelligence_floor() {
+        let input = acg_style_input("class:brawler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let cunning = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.acg.brawler.cunning_effective_intelligence_for_combat_feats"
+            })
+            .expect("Brawler's Cunning must ground unconditionally");
+        assert_eq!(
+            cunning.value, 13,
+            "fixture Intelligence 10 (below 13) floors to 13: {:?}",
+            cunning
+        );
+    }
+
+    /// Brawler's Strike is honestly not-yet-gained below level 5, then
+    /// grounds the real DR-bypass tier from level 5 on, verified against
+    /// the PCGen corpus progression formula directly (v0.6 alpha swarm,
+    /// risks item 8, Brawler deepening, 2026-07-26) -- the same "not yet
+    /// gained" honesty already established for Swashbuckler's Charmed
+    /// Life.
+    #[test]
+    fn brawler_strike_is_honestly_not_yet_gained_below_level_5_then_progresses() {
+        for (level, expected_tier) in [(1, None), (4, None), (5, Some(1)), (8, Some(1)), (9, Some(2)), (11, Some(2)), (12, Some(3)), (17, Some(4))]
+        {
+            let input = acg_style_input("class:brawler", level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            match expected_tier {
+                None => {
+                    let not_yet_gained = receipt
+                        .computation
+                        .explanations
+                        .iter()
+                        .find(|e| e.id == "class_feature.acg.brawler.strike_not_yet_gained");
+                    assert!(
+                        not_yet_gained.is_some(),
+                        "level {level}: expected the honest not-yet-gained record: {:?}",
+                        receipt.computation.explanations
+                    );
+                    assert!(
+                        !receipt
+                            .computation
+                            .explanations
+                            .iter()
+                            .any(|e| e.id == "class_feature.acg.brawler.strike_dr_bypass"),
+                        "level {level}: strike_dr_bypass must not fire before level 5: {:?}",
+                        receipt.computation.explanations
+                    );
+                }
+                Some(tier) => {
+                    let dr_bypass = receipt
+                        .computation
+                        .explanations
+                        .iter()
+                        .find(|e| e.id == "class_feature.acg.brawler.strike_dr_bypass")
+                        .unwrap_or_else(|| {
+                            panic!("level {level}: expected the real DR-bypass tier: {:?}", receipt.computation.explanations)
+                        });
+                    assert_eq!(
+                        dr_bypass.value, tier,
+                        "level {level}: expected DR-bypass tier {tier}: {:?}",
+                        dr_bypass
+                    );
+
+                    let alignment_unmodeled = receipt
+                        .computation
+                        .diagnostics
+                        .iter()
+                        .any(|d| d.id == "class_feature.acg.brawler.strike_alignment_selection.unmodeled");
+                    assert_eq!(
+                        alignment_unmodeled,
+                        tier >= 3,
+                        "level {level}: alignment-selection diagnostic should only fire at tier \
+                         3+ (level 12+): {:?}",
+                        receipt.computation.diagnostics
+                    );
+                }
+            }
+        }
+    }
+
+    /// Brawler's own `other_features_deferred` diagnostic acknowledges
+    /// Cunning and Strike as now-grounded (in its own "remains blocked
+    /// beyond X, Y, Z" preamble) and no longer lists either among the
+    /// still-missing features (v0.6 alpha swarm, risks item 8, Brawler
+    /// deepening, 2026-07-26).
+    #[test]
+    fn brawler_other_features_deferred_acknowledges_cunning_and_strike_as_grounded() {
+        let input = acg_style_input("class:brawler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported")
+            .expect("other_features_deferred must still fire");
+        assert!(
+            deferred.message.contains("AC Bonus, Brawler's Cunning, and Brawler's Strike:"),
+            "the diagnostic's own preamble must acknowledge Cunning/Strike as genuinely \
+             grounded, not just AC Bonus: {:?}",
+            deferred
+        );
+        // `rsplit_once` (not `split_once`): the message's own leading
+        // `{BRAWLER_CLASS_ID}` (e.g. "class:brawler") itself contains a
+        // colon, so splitting on the FIRST colon would cut mid-class-id
+        // rather than at the real preamble/missing-list boundary.
+        let missing_features_clause = deferred
+            .message
+            .rsplit_once(':')
+            .expect("the diagnostic message must have a still-missing clause after the colon")
+            .1;
+        assert!(
+            !missing_features_clause.contains("Brawler's Cunning"),
+            "Brawler's Cunning must not appear in the still-missing clause: {:?}",
+            deferred
+        );
+        assert!(
+            missing_features_clause.contains("Brawler's Strike's own Alignment Selection"),
+            "Brawler's Strike's own still-unmodeled Alignment Selection chooser must still be \
+             named as missing (only the base DR-bypass fact is grounded): {:?}",
+            deferred
+        );
     }
 
     /// Multiclass safety, verified directly. An ACG-class-containing

@@ -75,28 +75,41 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// explicitly rather than left silently vacuous (mirrors
 /// `pilot_compute.rs`'s own
 /// `all_ten_acg_classes_are_now_genuinely_admitted_no_leak_target_remains`
-/// milestone test). Arcanist's and Warpriest's own
-/// `named_features_wired == 2` each (not 1, unlike Skald/Bloodrager/
-/// Brawler/Hunter/Shaman) for related but distinct reasons, and
-/// Slayer's/Swashbuckler's/Investigator's own `== 4`/`== 3`/`== 3` for
-/// yet another reason -- see `AcgClassCoverage::named_features_wired`'s
-/// own doc comment in `rules_tables::acg::mod` for the full record:
-/// Arcanist's real spellcasting build genuinely closes 1 more distinct
-/// `KEY:Arcanist ~ ...` record (`Spells Prepared`) beyond Arcane
-/// Reservoir, while `Cantrips` does NOT add a third (not separately
-/// implemented); Warpriest has NO general-spellcasting KEY record at
-/// all (only `Orisons`, also not separately implemented), so its own
-/// count is Blessings + Sacred Weapon, with Destruction Blessing's own
+/// milestone test). **Deepened again (Brawler, 2026-07-26, operator
+/// direction to complete in-progress classes rather than start new
+/// ones):** Brawler's own count moved from 1 to 3 -- Brawler's Cunning
+/// (a flat, unconditional Intelligence floor for combat-feat
+/// prerequisites) and Brawler's Strike (a real level-gated DR-bypass
+/// progression, honestly inert below level 5) are now genuinely wired
+/// alongside AC Bonus, the same three-genuinely-independent-mechanisms
+/// reasoning as Swashbuckler/Investigator. Arcanist's and Warpriest's
+/// own `named_features_wired == 2` each (not 1, unlike Skald/Bloodrager/
+/// Hunter/Shaman) for related but distinct reasons, and Slayer's/
+/// Swashbuckler's/Investigator's/Brawler's own `== 4`/`== 3`/`== 3`/`==
+/// 3` for yet another reason -- see
+/// `AcgClassCoverage::named_features_wired`'s own doc comment in
+/// `rules_tables::acg::mod` for the full record: Arcanist's real
+/// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
+/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
+/// `Cantrips` does NOT add a third (not separately implemented);
+/// Warpriest has NO general-spellcasting KEY record at all (only
+/// `Orisons`, also not separately implemented), so its own count is
+/// Blessings + Sacred Weapon, with Destruction Blessing's own
 /// Destructive Attacks folded into the single Blessings slot (a
 /// different corpus class-prefix, `KEY:Destruction Blessing ~ ...`, not
 /// `KEY:Warpriest ~ ...`); Slayer's own four sub-features,
-/// Swashbuckler's own three sub-features, and Investigator's own three
-/// sub-features are each genuinely structurally independent (no shared
-/// table/mechanism links any pair of them the way Cantrips/Orisons
-/// shared their class's spellcasting table), so each one counts
-/// honestly, not folded down. Investigator's own prepared extract
-/// spellcasting (the Alchemist formula list) is explicitly deferred to
-/// its own follow-on slice, so it does not add a fourth count. Shaman
+/// Swashbuckler's own three sub-features, Investigator's own three
+/// sub-features, and Brawler's own three sub-features are each
+/// genuinely structurally independent (no shared table/mechanism links
+/// any pair of them the way Cantrips/Orisons shared their class's
+/// spellcasting table), so each one counts honestly, not folded down.
+/// Investigator's own prepared extract spellcasting (the Alchemist
+/// formula list) is explicitly deferred to its own follow-on slice, so
+/// it does not add a fourth count. Brawler's own remaining features
+/// (Brawler's Flurry, Knockout, Martial Flexibility, and the rest) are
+/// all genuinely out of scope for a bounded slice (opponent-interaction,
+/// feat-choosers, or missing sub-tables), so it does not add a fourth
+/// count either. Shaman
 /// counts 1 (the Spirit slot alone) -- its own fresh own-list
 /// spellcasting and Life Spirit's own higher-tier abilities (Healer's
 /// Touch, genuinely gated to level 8+, not immediately available) both
@@ -137,7 +150,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
     for (class_id, feature_name, expected_wired) in [
         (AcgClassId::Skald, "Inspired Rage", 1),
         (AcgClassId::Bloodrager, "Bloodrage", 1),
-        (AcgClassId::Brawler, "AC Bonus", 1),
+        (AcgClassId::Brawler, "AC Bonus + Brawler's Cunning + Brawler's Strike", 3),
         (AcgClassId::Hunter, "Animal Companion", 1),
         (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared", 2),
         (AcgClassId::Warpriest, "Blessings + Sacred Weapon", 2),

@@ -300,16 +300,29 @@ pub struct AcgClassCoverage {
     /// count here.
     ///
     /// Shaman counts 1 (Life Spirit's own Channel ability), the same
-    /// single-slot shape as Skald/Bloodrager/Brawler/Hunter: the Spirit
-    /// choice itself is one slot, and Channel is the only immediately-
-    /// available power this closure grounds under it (Life Spirit's own
-    /// higher-tier Healer's Touch/Quick Healing/Manifestation abilities,
-    /// the other 9 primary spirits, Spirit Magic, Orisons, and fresh
+    /// single-slot shape as Skald/Bloodrager/Hunter: the Spirit choice
+    /// itself is one slot, and Channel is the only immediately-available
+    /// power this closure grounds under it (Life Spirit's own higher-
+    /// tier Healer's Touch/Quick Healing/Manifestation abilities, the
+    /// other 9 primary spirits, Spirit Magic, Orisons, and fresh
     /// own-list spellcasting all stay deferred). With Shaman's own
     /// closure, all ten real ACG classes now have at least one genuinely
     /// wired named feature -- the match below is exhaustive over
     /// `AcgClassId`, not a wildcard fallback, since every real ACG class
     /// has a real answer now.
+    ///
+    /// Brawler counts 3 (AC Bonus, Brawler's Cunning, Brawler's Strike),
+    /// same "genuinely independent mechanisms" reasoning as Swashbuckler/
+    /// Investigator: no shared table or formula links any pair of the
+    /// three (AC Bonus is a flat level-driven dodge bonus, Cunning is a
+    /// flat unconditional ability-score floor, Strike is a level-gated
+    /// DR-bypass progression) -- three separate `KEY:Brawler ~ ...`
+    /// records, each with its own separately-implemented formula.
+    /// Brawler was the third ACG class closed (AC Bonus only, `== 1`)
+    /// and was deepened later (v0.6 alpha swarm, risks item 8, Brawler
+    /// deepening, 2026-07-26, directed by the operator to complete
+    /// in-progress classes rather than start new ones) to add Cunning
+    /// and Strike, moving it out of the single-slot bucket.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -420,13 +433,9 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // documents for Investigator's Discoveries), so it does not add a
     // separate count either.
     let named_features_wired = match class_id {
-        AcgClassId::Skald
-        | AcgClassId::Bloodrager
-        | AcgClassId::Brawler
-        | AcgClassId::Hunter
-        | AcgClassId::Shaman => 1,
+        AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Hunter | AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
-        AcgClassId::Swashbuckler | AcgClassId::Investigator => 3,
+        AcgClassId::Swashbuckler | AcgClassId::Investigator | AcgClassId::Brawler => 3,
         AcgClassId::Slayer => 4,
     };
 
