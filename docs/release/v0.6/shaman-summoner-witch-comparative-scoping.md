@@ -64,21 +64,32 @@
   Oracle's Mysteries**, verified via `KEY:Shaman Spirit ~ <Name>`. The
   identical narrowing Oracle used applies: pick ONE canonical spirit,
   ground its flat power, defer the other nine.
-- **The flat, self-scoped, familiar-independent power exists.** Shaman
-  Life Spirit grants `Life Spirit ~ Healer's Touch`, whose real record is
-  `BONUS:SKILL|Heal|4` — "the shaman gains a +4 bonus on Heal checks"
-  (verified directly). This is the **exact structural twin of Oracle's
-  Life Mystery → Healing Hands** (+4 Heal, self-scoped, always-on once
-  chosen, Heal not among the three tracked selected-skills so it grounds
-  as a standalone flat record like Trapfinding). Independent of the Spirit
-  Animal (Familiar).
+- **CORRECTION (backend, pre-build verification, 2026-07-26): the
+  original MVP pick, `Life Spirit ~ Healer's Touch`, is level-8-gated,
+  not immediately available.** Its own `ABILITY` grant line carries
+  `PREVARGTEQ:ShamanSpiritGreater,1`, and `ShamanSpiritGreater` only sets
+  via `PREMULT:2,[PRECLASS:1,Shaman=8],...` — genuinely a level 8+
+  feature, unlike Oracle's own Healing Hands which has no such gate. This
+  doc's original "exact structural twin of Oracle's Life Mystery" framing
+  overstated it; the +4 Heal formula itself was correctly transcribed,
+  but the DESC-text citation didn't check the surrounding `ABILITY` grant
+  condition. **Real fix, verified directly**: Life Spirit's OTHER
+  immediately-granted power (no `PREVARGTEQ` at all on its own primary
+  `KEY:Shaman Spirit ~ Life` record's grant line) is `Life Spirit ~
+  Channel` — a real Channel Positive Energy variant, structurally
+  identical to Cleric's own already-built Channel Energy: uses/day
+  `1+CHA`, dice `(ShamanSpiritLVL+1)/2` (d6), DC
+  `10+(ShamanSpiritLVL/2)+CHA`, all confirmed directly against the corpus.
+  Independent of the Spirit Animal (Familiar) either way.
 - **Spirit Animal** confirmed `TYPE:...Familiar` (not an Animal
   Companion) — stays deferred exactly as Oracle's subsystem parts did.
   Spirit Magic (spirit-granted bonus spells), Orisons, Manifestation
-  (capstone), and Hexes/Spirit Hexes (a large chooser-list,
-  `KEY:Shaman Spirit Hex ~ ...`) all stay deferred.
+  (capstone), Healer's Touch (now correctly named as level-8-gated, not
+  merely deferred-for-scope), and Hexes/Spirit Hexes (a large
+  chooser-list, `KEY:Shaman Spirit Hex ~ ...`) all stay deferred.
 - **Verdict**: a real Oracle-shaped MVP — chassis gate + Life Spirit's
-  flat +4 Heal, defer the Familiar/spellcasting/other 9 spirits/hexes.
+  Channel (flat uses-per-day/dice/DC), defer the Familiar/spellcasting/
+  other 9 spirits/hexes/Healer's Touch.
   Stays `Blocked`. Not blocked on the Familiar at all.
 
 ## Witch (APG) — real MVP, NOT blocked on the Familiar
@@ -142,7 +153,9 @@
 
 Two real, honest MVPs are available that the standing verdict missed —
 **Witch (cleanest: Ward hex, flat +2/+2 self-scoped) and Shaman (Life
-Spirit's flat +4 Heal, a direct Oracle twin)** — both landing WITHOUT any
+Spirit's Channel — corrected from the original Healer's Touch pick,
+which turned out to be level-8-gated; Channel is Cleric-Channel-Energy-
+shaped and immediately available)** — both landing WITHOUT any
 Familiar-subsystem work, by narrowing to one canonical power exactly as
 Oracle/Warpriest did. **Summoner is the genuine outlier**: no cheap
 familiar/eidolon-independent power, only a thin Summon-Monster pool.
@@ -161,14 +174,16 @@ deliberate subsystem investment — is your call.
 ## Open questions for the lead
 
 1. Build **Witch** next (Ward hex MVP, cleanest of the three), and/or
-   **Shaman** (Life Spirit +4 Heal MVP)? Both are real and honest but
-   thin and stay `Blocked`; confirm they clear the value bar, or that
-   you'd rather stop cheap-narrowing closures here.
+   **Shaman** (Life Spirit's Channel MVP — corrected from Healer's Touch,
+   which turned out to be level-8-gated, not immediately available; see
+   the correction above)? Both are real and honest but thin and stay
+   `Blocked`; confirm they clear the value bar, or that you'd rather stop
+   cheap-narrowing closures here.
 2. For **Summoner**, confirm the read: no cheap MVP, only a thin
    Summon-Monster-pool closure or a deliberate Eidolon subsystem — is it
    worth a subsystem investment, or does Summoner stay untouched?
 3. If Witch/Shaman are greenlit: is the canonical pick right (**Witch →
-   Ward**, **Shaman → Life Spirit / Healer's Touch**), mirroring Oracle's
+   Ward**, **Shaman → Life Spirit / Channel**), mirroring Oracle's
    Life-Mystery precedent, or is a different spirit/hex preferred?
 4. Bigger-picture: is there appetite to fund **one** Familiar-or-Eidolon
    subsystem as a large deliberate slice (unblocking Shaman's Spirit
