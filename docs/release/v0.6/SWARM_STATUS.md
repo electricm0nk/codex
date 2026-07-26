@@ -1471,7 +1471,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T23:30:01
-Latest commit on tranche/6: 1f31e873 docs(v0.6): colon-fix + Oracle closure re-verified against committed HEAD, docs reconciled (3 minutes ago) (2026-07-25T23:27:15-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T23:28:11 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:22:07
+Last mechanical check: 2026-07-25T23:35:01
+Latest commit on tranche/6: 406349ea docs(v0.6): third comparative scoping pass -- Swashbuckler recommended, correcting the "all 5 harder" assumption (2 minutes ago) (2026-07-25T23:33:24-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T23:33:53 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:34:07
 <!-- AUTO-HEARTBEAT-END -->
