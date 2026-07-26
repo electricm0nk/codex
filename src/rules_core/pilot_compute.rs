@@ -121,6 +121,7 @@ use super::character_input::{
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::apg::{self, ApgClassId};
+use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::bard_spell_list;
@@ -11031,6 +11032,270 @@ fn investigator_alchemy_creation_bonus(level: u8) -> i16 {
     i16::from(level)
 }
 
+/// PF1 Advanced Class Guide Investigator "Extracts Prepared" table
+/// (deepening 2026-07-26, task #8), for extract levels 1st through 6th,
+/// indexed 0=1st..5=6th (Investigator has no 0th-level extracts, the
+/// same "no cantrip slot" shape Skald's own base-spells-per-day table
+/// uses). `acg_classes.lst` has no per-level `CAST:`/`KNOWN:` rows for
+/// Investigator at all -- an external-source table, verified via THREE
+/// independent sources before committing: aonprd.com's own Investigator
+/// page, d20pfsrd.com's own Investigator page, and d20pfsrd.com's own
+/// separate Alchemist page (confirming a general claim found while
+/// searching -- "Investigators get just as many extracts per day as an
+/// alchemist" -- with the real numbers, not just the claim). All three
+/// agree byte-for-byte. Unlike Wizard/Arcanist, this closure grounds the
+/// FULL 1-20 range, not bounded to level 3 -- that bound was an idiom
+/// inherited from the original GE-06 pilot slice, not a genuine
+/// verification limit (confirmed directly in review), and Investigator's
+/// own base chassis already supports all 20 levels with real, fully-
+/// verified data in hand for every one of them.
+fn investigator_base_extracts_per_day(level: u8) -> [Option<i16>; 6] {
+    match level {
+        1 => [Some(1), None, None, None, None, None],
+        2 => [Some(2), None, None, None, None, None],
+        3 => [Some(3), None, None, None, None, None],
+        4 => [Some(3), Some(1), None, None, None, None],
+        5 => [Some(4), Some(2), None, None, None, None],
+        6 => [Some(4), Some(3), None, None, None, None],
+        7 => [Some(4), Some(3), Some(1), None, None, None],
+        8 => [Some(4), Some(4), Some(2), None, None, None],
+        9 => [Some(5), Some(4), Some(3), None, None, None],
+        10 => [Some(5), Some(4), Some(3), Some(1), None, None],
+        11 => [Some(5), Some(4), Some(4), Some(2), None, None],
+        12 => [Some(5), Some(5), Some(4), Some(3), None, None],
+        13 => [Some(5), Some(5), Some(4), Some(3), Some(1), None],
+        14 => [Some(5), Some(5), Some(4), Some(4), Some(2), None],
+        15 => [Some(5), Some(5), Some(5), Some(4), Some(3), None],
+        16 => [Some(5), Some(5), Some(5), Some(4), Some(3), Some(1)],
+        17 => [Some(5), Some(5), Some(5), Some(4), Some(4), Some(2)],
+        18 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(3)],
+        19 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(4)],
+        _ => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5)],
+    }
+}
+
+/// PF1 Advanced Class Guide Investigator extract save DC: `10 + extract
+/// level + Intelligence modifier` (deepening 2026-07-26, task #8),
+/// verified directly against `acg_abilities_class.lst`'s own Alchemy
+/// DESC text ("The saving throw DC for an investigator's extract is
+/// equal to 10 + the extract's level + the investigator's Intelligence
+/// modifier"), mirroring Arcanist's/Warpriest's own spell-save-DC
+/// formula shape exactly (same `10 + spell level + casting ability
+/// modifier` structure every prepared/spontaneous caster in this
+/// codebase already uses).
+fn investigator_extract_save_dc(extract_level: u8, intelligence_modifier: i16) -> i16 {
+    10 + i16::from(extract_level) + intelligence_modifier
+}
+
+/// Parses an Investigator extract's `spell_id` into its real Alchemist-
+/// specific extract level (deepening 2026-07-26, task #8), by looking it
+/// up directly in `alchemist_spell_list::ALCHEMIST_SPELL_LIST` --
+/// Investigator's own `SPELLLIST:1|Alchemist` corpus token confirms this
+/// is the real, shared list, not a separate one. Unlike
+/// `parse_wizard_spellbook_spell_id`, this resolves no school at all:
+/// Investigator has no arcane-school mechanic (confirmed: no "School"
+/// record anywhere in its own `KEY:Investigator ~ ...` list), so every
+/// prepared extract costs exactly 1 slot, the same simpler shape
+/// Arcanist's own parser already established relative to Wizard's.
+fn parse_investigator_extract_id(spell_id: &str) -> Option<u8> {
+    alchemist_spell_list::alchemist_spell_level(spell_id)
+}
+
+/// Return the list of unmet conditions for Investigator's prepared-
+/// extract posture (deepening 2026-07-26, task #8). Mirrors
+/// `unmet_arcanist_spellbook_conditions`'s exact shape: an empty list
+/// means the posture is fully supported (an Investigator with at least
+/// one extract recorded (`AcquisitionMode::Known`) and at least one
+/// prepared today (`AcquisitionMode::Prepared`), every prepared extract
+/// already recorded, and no extract level's prepared count exceeding
+/// that level's total slot budget). No arcane-school mechanic exists for
+/// Investigator (same as Arcanist), so every prepared extract costs
+/// exactly 1 slot, never 2.
+fn unmet_investigator_extract_conditions(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let investigator_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == INVESTIGATOR_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = investigator_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = investigator_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no investigator extracts recorded in the formula book (AcquisitionMode::Known)"
+                .to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no investigator extracts prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared extract '{spell_id}' is not recorded in the formula book"
+            ));
+        }
+    }
+
+    let base_extracts_per_day = investigator_base_extracts_per_day(level);
+    for (index, base_count) in base_extracts_per_day.iter().enumerate() {
+        let extract_level = (index + 1) as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_investigator_extract_id(id))
+                .any(|l| l == extract_level)
+            {
+                unmet.push(format!(
+                    "a prepared extract targets extract level {extract_level}, not yet \
+                     accessible at investigator level {level}"
+                ));
+            }
+            continue;
+        };
+        let int_bonus = ability_bonus_spells(ability_modifiers.intelligence, i16::from(extract_level));
+        let total_slots = base_count + int_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_investigator_extract_id(id))
+            .filter(|l| *l == extract_level)
+            .count() as i16;
+        if consumed > total_slots {
+            unmet.push(format!(
+                "extract level {extract_level} over-prepared: {consumed} extracts prepared but \
+                 only {total_slots} slots available (base {base_count} + Intelligence bonus \
+                 {int_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-extract / daily-preparation state once
+/// `unmet_investigator_extract_conditions` reports an empty unmet list
+/// (deepening 2026-07-26, task #8): the recorded formula book contents,
+/// the daily preparation selection, the base/Intelligence-bonus/total
+/// extracts-per-day counts per accessible extract level, and the extract
+/// save DC. Mirrors `ground_arcanist_prepared_spellbook`'s own shape.
+fn ground_investigator_prepared_extracts(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let investigator_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == INVESTIGATOR_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = investigator_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = investigator_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.investigator.formula_book_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Investigator level {level} recorded formula book contents ({} extracts, \
+             AcquisitionMode::Known): {}. This grounds which extracts are recorded as real, \
+             chosen input; it does not verify against any corpus that a named extract genuinely \
+             exists or genuinely belongs to the level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.investigator.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Investigator level {level} daily preparation selection ({} extracts, \
+             AcquisitionMode::Prepared, each already verified recorded in the formula book \
+             above): {}. Every prepared extract is drawn from the recorded formula book, \
+             consuming its extract level's slot budget (one slot each -- Investigator has no \
+             opposed-school double-cost rule). It computes no extract-drinking execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let base_extracts_per_day = investigator_base_extracts_per_day(level);
+    for (index, base_count) in base_extracts_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let extract_level = (index + 1) as u8;
+        let int_bonus = ability_bonus_spells(ability_modifiers.intelligence, i16::from(extract_level));
+        let total = base_count + int_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.investigator.base_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Investigator level {level} base extracts per day at extract level \
+                 {extract_level}: {base_count}, read directly from the real Extracts Prepared \
+                 table (verified via aonprd.com, d20pfsrd.com's own Investigator page, and \
+                 d20pfsrd.com's own Alchemist page -- all three agree byte-for-byte)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.investigator.intelligence_bonus_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: int_bonus,
+            detail: format!(
+                "Investigator level {level} Intelligence bonus extracts per day at extract \
+                 level {extract_level}: {int_bonus} from Intelligence modifier {} (PF1 Core \
+                 Rulebook Table: Ability Modifiers and Bonus Spells)",
+                ability_modifiers.intelligence
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.investigator.total_extracts_per_day.extract_level_{extract_level}"
+            ),
+            value: total,
+            detail: format!(
+                "Investigator level {level} total extracts per day at extract level \
+                 {extract_level}: base {base_count} + Intelligence bonus {int_bonus} = {total} \
+                 (no specialist bonus slot -- Investigator has no arcane school)"
+            ),
+        });
+
+        let save_dc = investigator_extract_save_dc(extract_level, ability_modifiers.intelligence);
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.investigator.extract_save_dc.extract_level_{extract_level}"),
+            value: save_dc,
+            detail: format!(
+                "Investigator level {level} extract level {extract_level} save DC: \
+                 10 + {extract_level} + Intelligence modifier ({}) = {save_dc}",
+                ability_modifiers.intelligence
+            ),
+        });
+    }
+}
+
 /// Grounds Investigator's class features for `level` (v0.6 alpha swarm,
 /// risks item 8, Investigator full-build closure, 10th ACG/APG class-
 /// specific closure, no-spellcasting MVP). Called from
@@ -11043,6 +11308,7 @@ fn investigator_alchemy_creation_bonus(level: u8) -> i16 {
 /// spell list), Inspiration's use, and Investigator Talents (a chooser-
 /// list) as the genuinely still-missing pieces.
 fn ground_or_block_investigator_class_features(
+    input: &CharacterInput,
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
@@ -11141,6 +11407,21 @@ fn ground_or_block_investigator_class_features(
         ),
     });
 
+    let extract_unmet = unmet_investigator_extract_conditions(input, level, ability_modifiers);
+    if extract_unmet.is_empty() {
+        ground_investigator_prepared_extracts(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.investigator.prepared_extracts.unsupported".to_owned(),
+            message: format!(
+                "Investigator remains blocked on its prepared extract / daily preparation / \
+                 extract slot posture burden: {}",
+                extract_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+
     push_investigator_other_features_deferred_diagnostic(diagnostics);
 }
 
@@ -11148,6 +11429,17 @@ fn ground_or_block_investigator_class_features(
 /// `class_feature.acg.investigator.unsupported` for Investigator
 /// specifically (v0.6 alpha swarm, risks item 8, Investigator full-
 /// build closure): named ONLY the genuinely still-missing pieces.
+///
+/// **Updated (deepening 2026-07-26, task #8)**: this diagnostic no
+/// longer claims spellcasting is entirely ungrounded -- prepared extract
+/// validation is now real (`unmet_investigator_extract_conditions`/
+/// `ground_investigator_prepared_extracts`, reusing the shared
+/// `alchemist_spell_list` module), gated behind its own separate
+/// `class_spell.acg.investigator.prepared_extracts.unsupported`
+/// diagnostic (mirroring Arcanist's own
+/// `class_spell.acg.arcanist.prepared_spellbook.unsupported`). Pushed
+/// exactly once from the top-level Investigator branch, independent of
+/// the extract posture's own state.
 fn push_investigator_other_features_deferred_diagnostic(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -11156,18 +11448,16 @@ fn push_investigator_other_features_deferred_diagnostic(
         message: format!(
             "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, Trapfinding, Trap Sense, Inspiration's flat pool-size fact, Poison \
-             Resistance, and Alchemy: prepared extract spellcasting (reusing the Alchemist \
-             formula list -- no Alchemist spell-list mapping exists anywhere in this codebase \
-             yet, a genuinely new data-ingestion cost deferred to its own follow-on slice), \
-             Inspiration's actual spend (a free/two-use action on skill/ability/attack/save \
-             rolls, plus the free Knowledge/Linguistics/Spellcraft interaction), Investigator \
-             Talents (a chooser-list of real mechanical variety including the large Rogue \
-             Talent and Discovery sub-lists), Studied Combat, Studied Strike (both opponent-\
-             dependent, deferred pending an opponent-tracking pillar, ruled consistently with \
-             Slayer's own Studied Target), Keen Recollection, Poison Lore, Swift Alchemy, True \
-             Inspiration, and every other named class feature remain ungrounded anywhere in \
-             this codebase; no class-feature or spell execution is fabricated in this bounded \
-             chassis baseline"
+             Resistance, Alchemy, and (subject to its own real prepared-extract validation) \
+             spellcasting: Inspiration's actual spend (a free/two-use action on skill/ability/\
+             attack/save rolls, plus the free Knowledge/Linguistics/Spellcraft interaction), \
+             Investigator Talents (a chooser-list of real mechanical variety including the large \
+             Rogue Talent and Discovery sub-lists), Studied Combat, Studied Strike (both \
+             opponent-dependent, deferred pending an opponent-tracking pillar, ruled \
+             consistently with Slayer's own Studied Target), Keen Recollection, Poison Lore, \
+             Swift Alchemy, True Inspiration, and every other named class feature remain \
+             ungrounded anywhere in this codebase; no class-feature or spell execution is \
+             fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -11454,7 +11744,13 @@ fn compute_acg_class_chassis(
             diagnostics,
         );
     } else if class_id == AcgClassId::Investigator {
-        ground_or_block_investigator_class_features(level, ability_modifiers, explanations, diagnostics);
+        ground_or_block_investigator_class_features(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else if class_id == AcgClassId::Shaman {
         ground_or_block_shaman_class_features(input, level, ability_modifiers, explanations, diagnostics);
     } else {
@@ -36147,10 +36443,10 @@ mod swashbuckler_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod investigator_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
-        FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, INVESTIGATOR_CLASS_ID,
     };
-    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -36379,6 +36675,224 @@ mod investigator_dispatch_widening_safety_tests {
                 .any(|e| e.id.starts_with("class_feature.acg.investigator.")),
             "a non-Investigator character must never ground any Investigator explanation: {:?}",
             receipt.computation.explanations
+        );
+    }
+
+    /// A single-class Investigator with a real, valid prepared-extract
+    /// posture (a recorded and prepared extract from the real, shared
+    /// Alchemist formula list) grounds the extract posture for real, but
+    /// stays `Blocked` overall on `other_features_deferred` alone
+    /// (deepening 2026-07-26, task #8) -- mirroring Arcanist's own
+    /// "spellbook grounds for real, stays Blocked on the rest" shape.
+    ///
+    /// Level 1 base 1st-level extracts: 1 (fixture Intelligence 10, +0
+    /// modifier, so no Intelligence bonus extracts).
+    #[test]
+    fn single_class_investigator_with_a_real_prepared_extract_grounds_the_posture_and_stays_blocked_on_other_features_only()
+    {
+        let mut input = human_investigator_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Investigator stays Blocked on other_features_deferred alone, even with a real, \
+             valid prepared-extract posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.investigator.prepared_extracts.unsupported"),
+            "the prepared_extracts diagnostic must not fire once a real, valid posture is \
+             recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.investigator.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected other_features_deferred even with a valid extract posture: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let base_first_level = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_spell.acg.investigator.base_extracts_per_day.extract_level_1"
+            })
+            .expect("base 1st-level extracts per day must be grounded");
+        assert_eq!(base_first_level.value, 1, "level 1 base 1st-level extracts: 1: {:?}", base_first_level);
+
+        let save_dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.investigator.extract_save_dc.extract_level_1")
+            .expect("extract level 1 save DC must be grounded");
+        assert_eq!(save_dc.value, 11, "10 + 1 + 0 = 11: {:?}", save_dc);
+    }
+
+    /// An Investigator with no extracts recorded/prepared at all is a
+    /// genuine, honest "hasn't started casting yet" posture -- claim-
+    /// blocks on the dedicated prepared_extracts diagnostic, mirroring
+    /// Arcanist's own "must have a real spellbook" bar.
+    #[test]
+    fn single_class_investigator_with_zero_extracts_stays_blocked_on_the_prepared_extracts_diagnostic()
+    {
+        let input = human_investigator_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.investigator.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for a bare Investigator with no extracts: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A prepared extract that was never recorded in the formula book is
+    /// a genuine posture violation and must claim-block.
+    #[test]
+    fn single_class_investigator_with_an_unrecorded_prepared_extract_stays_blocked() {
+        let mut input = human_investigator_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.investigator.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for an unrecorded prepared extract: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An extract prepared at a spell level not yet accessible at the
+    /// character's own Investigator level is a genuine posture violation.
+    /// Level 1 Investigator has no 2nd-level extract access at all
+    /// (base_extracts_per_day returns None for extract level 2).
+    #[test]
+    fn single_class_investigator_with_an_inaccessible_extract_level_stays_blocked() {
+        let mut input = human_investigator_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Aid".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Aid".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.investigator.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for an inaccessible extract level: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Over-preparing a spell level beyond its real total slot budget is
+    /// a genuine posture violation. Level 1 has exactly 1 first-level
+    /// extract slot; preparing 2 different 1st-level extracts overflows it.
+    #[test]
+    fn single_class_investigator_over_prepared_at_an_extract_level_stays_blocked() {
+        let mut input = human_investigator_input(1);
+        for spell_id in ["Cure Light Wounds", "Shield"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Prepared,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.investigator.prepared_extracts.unsupported"
+                    && d.claim_blocking),
+            "expected the prepared_extracts diagnostic for an over-prepared extract level: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Investigator character carrying spoofed Investigator spell
+    /// selections must have them silently ignored, not applied -- the
+    /// class-ownership gate is by construction. Also proves Fighter's own
+    /// golden path is unaffected.
+    #[test]
+    fn non_investigator_characters_spoofed_extracts_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Investigator extract \
+             entry: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }

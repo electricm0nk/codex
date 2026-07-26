@@ -13,6 +13,7 @@
 //! and `ultimate_magic/um_classes.lst` respectively, books
 //! `decisions.md §1` explicitly excludes from SD-22.
 
+pub mod alchemist_spell_list;
 pub mod class_alchemist;
 pub mod class_cavalier;
 pub mod class_inquisitor;
