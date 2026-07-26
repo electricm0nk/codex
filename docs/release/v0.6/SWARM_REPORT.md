@@ -10,7 +10,7 @@ this report, not just SWARM_STATUS.md)
 
 | Agent | Status | Detail |
 |---|---|---|
-| backend | working | Warpriest's full-build scoping doc landed — applied the Arcanist lesson proactively (spell table diverges from Cleric's own past level 2, verified before it became a doc claim). Also caught a real correctness bug: Warpriest's own class-skill list genuinely includes Climb/Intimidate/Swim but `selected_skill_class_skill_bonus_applies` only recognizes Fighter/Rogue today — a false-negative mirror of the historical Wizard false-positive bug. Lead independently verified both findings and greenlit Destruction Blessing (MVP) + the skill-bonus widening fix. Building now |
+| backend | working | Warpriest's full build code-complete — lead independently verified the exact-match gate, all 8 Warpriest tests, the skill-bonus fix's regression tests (Fighter/Rogue/multiclass/Wizard/Arcanist all unaffected, Warpriest now correctly included), named_features_wired=2 confirmed correct. Full lib 451/451, coverage audit 3/3. Full workspace sweep running |
 | frontend | idle | Choice-picker UI-label update committed (`adf57cfb`) and lead-verified against the real HEAD — Sorcerer/Cleric/Druid all `full` with real, live-verified per-class `levelOptions` ([1,2]/[1,2,3]/[1]). Product-reachability gap now fully closed. Standing by |
 | qa | idle | Bard's 16-file known-spell wave landed and lead-verified 100% (cb372cb3); entire workspace green; Bloodrager's closure doesn't appear to need a dedicated wave (no shared diagnostic retired, only its own new one added) — no new wave queued |
 
