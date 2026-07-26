@@ -26048,33 +26048,50 @@ fn compute_selected_skill_modifiers(
         String::new()
     };
 
+    // v0.6 alpha swarm: the real, grounded feat-derived skill bonus from
+    // `feat_effects::skill_bonuses_from_feats` (currently Athletic's real
+    // +2 Climb/Swim, Persuasive's real +2 Intimidate, and Intimidating
+    // Prowess's real Strength-modifier-to-Intimidate, each stacking
+    // independently) -- the same "headless-accessible, no corpus needed"
+    // layering `compute_total_saves`'s own `feat_save_bonuses` already
+    // established for Great Fortitude/Iron Will/Lightning Reflexes.
+    let feat_skill_bonuses = crate::rules_core::feat_effects::skill_bonuses_from_feats(
+        &input.chosen.selected_feats,
+        ability_modifiers.strength,
+    );
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     let climb = rank
         + ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
-        + touch_of_good_skill_bonus;
+        + touch_of_good_skill_bonus
+        + feat_skill_bonuses.climb;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
-             {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = \
-             {climb}",
-            ability_modifiers.strength
+             {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
+             + feat bonus (+{}, Athletic if selected) = {climb}",
+            ability_modifiers.strength, feat_skill_bonuses.climb
         ),
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
-    let intimidate =
-        rank + ability_modifiers.charisma + intimidate_class_skill_bonus + touch_of_good_skill_bonus;
+    let intimidate = rank
+        + ability_modifiers.charisma
+        + intimidate_class_skill_bonus
+        + touch_of_good_skill_bonus
+        + feat_skill_bonuses.intimidate;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
             "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
-             {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} = {intimidate}",
-            ability_modifiers.charisma
+             {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} + feat bonus \
+             (+{}, Persuasive and/or Intimidating Prowess if selected) = {intimidate}",
+            ability_modifiers.charisma, feat_skill_bonuses.intimidate
         ),
     });
 
@@ -26083,15 +26100,16 @@ fn compute_selected_skill_modifiers(
         + ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty
-        + touch_of_good_skill_bonus;
+        + touch_of_good_skill_bonus
+        + feat_skill_bonuses.swim;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
-             {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} = \
-             {swim}",
-            ability_modifiers.strength
+             {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
+             + feat bonus (+{}, Athletic if selected) = {swim}",
+            ability_modifiers.strength, feat_skill_bonuses.swim
         ),
     });
 
@@ -26691,6 +26709,141 @@ mod save_boosting_feats_widen_total_saves_tests {
         assert_eq!(widened.fortitude, baseline.fortitude + 2);
         assert_eq!(widened.reflex, baseline.reflex + 2);
         assert_eq!(widened.will, baseline.will + 2);
+    }
+}
+
+/// v0.6 alpha swarm: proves `compute_selected_skill_modifiers` actually
+/// applies the real feat-derived skill bonus for Athletic/Persuasive/
+/// Intimidating Prowess, through the real `compute_pilot_base_chassis`
+/// pipeline (not a direct unit call on `feat_effects::skill_bonuses_from_feats`
+/// itself, which already has its own dedicated test module), against the
+/// real Fighter level-1 fixture -- the exact same consumer-wiring shape
+/// `save_boosting_feats_widen_total_saves_tests` already established for
+/// `compute_total_saves`.
+#[cfg(test)]
+mod skill_boosting_feats_widen_selected_skill_modifiers_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn load() -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(
+            result.diagnostics.is_empty(),
+            "fixture should load cleanly: {:?}",
+            result.diagnostics
+        );
+        result
+            .character_input
+            .expect("valid fixture should produce a character input record")
+    }
+
+    fn compute(input: &CharacterInput) -> PilotBaseChassisComputation {
+        compute_pilot_base_chassis(input)
+    }
+
+    #[test]
+    fn baseline_fighter_gets_no_feat_derived_skill_bonus() {
+        let input = load();
+        let computation = compute(&input);
+        // The fixed loadout carries none of the three skill feats -- this is
+        // the pre-widening baseline every other assertion below diffs
+        // against, so a regression that accidentally always adds the bonus
+        // would still be caught here.
+        let baseline_climb = computation.selected_skill_modifiers.climb;
+        let baseline_intimidate = computation.selected_skill_modifiers.intimidate;
+        let baseline_swim = computation.selected_skill_modifiers.swim;
+
+        let mut with_athletic = input.clone();
+        with_athletic.chosen.selected_feats.push("Athletic".to_owned());
+        let with_a = compute(&with_athletic);
+        assert_eq!(
+            with_a.selected_skill_modifiers.climb, baseline_climb + 2,
+            "Athletic's real +2 must land on Climb"
+        );
+        assert_eq!(
+            with_a.selected_skill_modifiers.swim, baseline_swim + 2,
+            "Athletic's real +2 must land on Swim"
+        );
+        assert_eq!(
+            with_a.selected_skill_modifiers.intimidate, baseline_intimidate,
+            "Athletic must not leak onto Intimidate"
+        );
+
+        let mut with_persuasive = input.clone();
+        with_persuasive.chosen.selected_feats.push("Persuasive".to_owned());
+        let with_p = compute(&with_persuasive);
+        assert_eq!(
+            with_p.selected_skill_modifiers.intimidate, baseline_intimidate + 2,
+            "Persuasive's real +2 must land on Intimidate"
+        );
+        assert_eq!(with_p.selected_skill_modifiers.climb, baseline_climb, "must not leak onto Climb");
+        assert_eq!(with_p.selected_skill_modifiers.swim, baseline_swim, "must not leak onto Swim");
+
+        let mut with_intimidating_prowess = input.clone();
+        with_intimidating_prowess.chosen.selected_feats.push("Intimidating Prowess".to_owned());
+        let with_ip = compute(&with_intimidating_prowess);
+        let strength_modifier = with_ip.ability_modifiers.strength;
+        assert_eq!(
+            with_ip.selected_skill_modifiers.intimidate, baseline_intimidate + strength_modifier,
+            "Intimidating Prowess adds the real (unclamped) Strength modifier to Intimidate"
+        );
+        assert_eq!(with_ip.selected_skill_modifiers.climb, baseline_climb, "must not leak onto Climb");
+        assert_eq!(with_ip.selected_skill_modifiers.swim, baseline_swim, "must not leak onto Swim");
+    }
+
+    #[test]
+    fn persuasive_and_intimidating_prowess_stack_together_on_intimidate() {
+        let mut input = load();
+        let baseline = compute(&input).selected_skill_modifiers;
+        input.chosen.selected_feats.push("Persuasive".to_owned());
+        input.chosen.selected_feats.push("Intimidating Prowess".to_owned());
+
+        let widened = compute(&input).selected_skill_modifiers;
+        let strength_modifier = compute(&input).ability_modifiers.strength;
+
+        assert_eq!(widened.intimidate, baseline.intimidate + 2 + strength_modifier);
+        assert_eq!(widened.climb, baseline.climb, "must not leak onto Climb");
+        assert_eq!(widened.swim, baseline.swim, "must not leak onto Swim");
+    }
+
+    #[test]
+    fn all_three_feats_stack_together_on_the_real_pipeline() {
+        let mut input = load();
+        let baseline = compute(&input).selected_skill_modifiers;
+        input.chosen.selected_feats.push("Athletic".to_owned());
+        input.chosen.selected_feats.push("Persuasive".to_owned());
+        input.chosen.selected_feats.push("Intimidating Prowess".to_owned());
+
+        let widened_computation = compute(&input);
+        let widened = widened_computation.selected_skill_modifiers;
+        let strength_modifier = widened_computation.ability_modifiers.strength;
+
+        assert_eq!(widened.climb, baseline.climb + 2);
+        assert_eq!(widened.swim, baseline.swim + 2);
+        assert_eq!(widened.intimidate, baseline.intimidate + 2 + strength_modifier);
+    }
+
+    #[test]
+    fn explanation_detail_names_the_real_feat_source() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Athletic".to_owned());
+        let computation = compute(&input);
+
+        let climb_detail = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("climb explanation should be grounded")
+            .detail
+            .clone();
+        assert!(
+            climb_detail.contains("Athletic"),
+            "climb explanation should name Athletic as the feat source: {climb_detail}"
+        );
     }
 }
 

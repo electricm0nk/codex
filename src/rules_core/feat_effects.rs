@@ -130,6 +130,81 @@ pub fn save_bonuses_from_feats(selected_feats: &[String]) -> SaveBonusesFromFeat
     }
 }
 
+/// The real PF1 Core Rulebook catalog keys for the three skill-boosting
+/// feats this engine grounds, verified against `feat_data/general.rs`
+/// (`Athletic`/`Persuasive`) and `feat_data/combat.rs`
+/// (`Intimidating Prowess`) exactly the same way `TOUGHNESS_FEAT_KEY` was
+/// (`FeatTableEntry.key`, passed through the real selection pipeline
+/// unmodified).
+const ATHLETIC_FEAT_KEY: &str = "Athletic";
+const PERSUASIVE_FEAT_KEY: &str = "Persuasive";
+const INTIMIDATING_PROWESS_FEAT_KEY: &str = "Intimidating Prowess";
+
+/// The real PF1 Core Rulebook benefit shared by Athletic and Persuasive: a
+/// flat +2 to each of two named skills ("You get a +2 bonus on Climb and
+/// Swim checks" / "...on Diplomacy and Intimidate checks"). Verified against
+/// each feat's own catalog record: Athletic carries
+/// `["SKILL","Climb","if(skillinfo(\"TOTALRANK\",\"Climb\")>=10,4,2)"]` (and
+/// the same on Swim), Persuasive the same shape on Diplomacy/Intimidate. The
+/// corpus's `if(TOTALRANK>=10,4,2)` conditional grants +4 only at 10+ ranks in
+/// that skill; the deterministic selected-skill posture pins skill rank at 1
+/// (`pilot_compute::SELECTED_SKILL_RANK`, and ranks never exceed character
+/// level), so `TOTALRANK>=10` is provably false for every character this crate
+/// reaches `Computed` for -- the value is +2, not a fabricated simplification,
+/// exactly the way `TOUGHNESS_HP_BONUS`'s own `max(3,TL)` resolves to a flat 3
+/// at supported levels. The +4 tier is deferred until the engine computes a
+/// character with 10+ ranks (well beyond current coverage).
+const TWO_SKILL_FEAT_BONUS: i16 = 2;
+
+/// One character's feat-derived bonus to each of the three skills the engine
+/// computes today (`pilot_compute::SelectedSkillModifiers`'s own
+/// Climb/Intimidate/Swim). Callers add each field to whatever base total they
+/// already have for that skill -- this struct only carries the feat-driven
+/// delta, not a full skill-modifier computation. Deliberately shaped to those
+/// exact three skills (not a general per-skill map) so every field is a value
+/// the engine actually consumes -- no unwired half-effects. Persuasive's real
+/// +2 Diplomacy half is intentionally absent: Diplomacy is not a computed
+/// skill, so grounding it here would be a bonus with no live consumer.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct SkillBonusesFromFeats {
+    pub climb: i16,
+    pub intimidate: i16,
+    pub swim: i16,
+}
+
+/// Sums the real, computed skill bonus from every grounded skill-boosting
+/// feat, across a character's `selected_feats`. Each field is `0` (not
+/// fabricated) when no feat targeting that skill is present.
+///
+/// `strength_modifier` is the character's real Strength ability modifier,
+/// consumed only by Intimidating Prowess (real CRB benefit: "Add your Strength
+/// modifier to Intimidate skill checks in addition to your Charisma modifier",
+/// corpus `["SKILL","Intimidate","STR"]`). It is threaded as a plain scalar,
+/// not as a `pilot_compute::AbilityModifiers`, so this module stays the same
+/// dependency-free leaf `save_bonuses_from_feats` is -- importing nothing from
+/// `pilot_compute.rs`; the caller already holds `ability_modifiers.strength`.
+/// Applied verbatim (no floor at 0): the corpus token adds the raw modifier,
+/// so a negative Strength modifier would reduce Intimidate, and clamping it
+/// would fabricate a value the corpus does not specify. Its Str 13 prerequisite
+/// makes a negative modifier a non-realistic posture regardless.
+pub fn skill_bonuses_from_feats(
+    selected_feats: &[String],
+    strength_modifier: i16,
+) -> SkillBonusesFromFeats {
+    let has = |key: &str| selected_feats.iter().any(|feat| feat == key);
+
+    let athletic = has(ATHLETIC_FEAT_KEY);
+    let persuasive_intimidate = if has(PERSUASIVE_FEAT_KEY) { TWO_SKILL_FEAT_BONUS } else { 0 };
+    let intimidating_prowess_intimidate =
+        if has(INTIMIDATING_PROWESS_FEAT_KEY) { strength_modifier } else { 0 };
+
+    SkillBonusesFromFeats {
+        climb: if athletic { TWO_SKILL_FEAT_BONUS } else { 0 },
+        intimidate: persuasive_intimidate + intimidating_prowess_intimidate,
+        swim: if athletic { TWO_SKILL_FEAT_BONUS } else { 0 },
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -235,5 +310,117 @@ mod save_bonuses_from_feats_tests {
             "Improved Lightning Reflexes".to_owned(),
         ];
         assert_eq!(save_bonuses_from_feats(&selected_feats), SaveBonusesFromFeats::default());
+    }
+}
+
+#[cfg(test)]
+mod skill_bonuses_from_feats_tests {
+    use super::*;
+
+    // A realistic positive Strength modifier for the Intimidating Prowess
+    // cases (its Str 13 prerequisite guarantees a non-negative modifier for
+    // any character that legally holds the feat). Only Intimidating Prowess
+    // reads this argument; the other two feats ignore it entirely.
+    const STR_MOD: i16 = 3;
+
+    #[test]
+    fn grants_no_bonus_when_no_skill_feat_is_selected() {
+        let selected_feats = vec!["Toughness".to_owned(), "Great Fortitude".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats::default()
+        );
+    }
+
+    #[test]
+    fn grants_no_bonus_for_an_empty_feat_list() {
+        assert_eq!(skill_bonuses_from_feats(&[], STR_MOD), SkillBonusesFromFeats::default());
+    }
+
+    #[test]
+    fn athletic_grants_the_real_flat_plus_two_to_climb_and_swim_only() {
+        let selected_feats = vec!["Athletic".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats { climb: 2, intimidate: 0, swim: 2 }
+        );
+    }
+
+    #[test]
+    fn persuasive_grants_the_real_flat_plus_two_to_intimidate_only() {
+        // Persuasive's real CRB effect also grants +2 Diplomacy, but Diplomacy
+        // is not one of the three skills the engine computes today, so this
+        // engine grounds only the Intimidate half -- the half that has a live
+        // consumer. The Diplomacy half is deferred, not fabricated.
+        let selected_feats = vec!["Persuasive".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats { climb: 0, intimidate: 2, swim: 0 }
+        );
+    }
+
+    #[test]
+    fn intimidating_prowess_adds_the_strength_modifier_to_intimidate_only() {
+        // Real CRB benefit: "Add your Strength modifier to Intimidate skill
+        // checks in addition to your Charisma modifier." Corpus token
+        // `BONUS:SKILL|Intimidate|STR` -- the raw Strength modifier, not a
+        // flat constant, which is why this function takes a strength_modifier
+        // argument at all.
+        let selected_feats = vec!["Intimidating Prowess".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats { climb: 0, intimidate: STR_MOD, swim: 0 }
+        );
+    }
+
+    #[test]
+    fn persuasive_and_intimidating_prowess_stack_on_intimidate() {
+        // Different real sources (Persuasive's flat +2 vs. Intimidating
+        // Prowess's Strength-modifier add), so PF1 stacks them on Intimidate.
+        let selected_feats = vec!["Persuasive".to_owned(), "Intimidating Prowess".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats { climb: 0, intimidate: 2 + STR_MOD, swim: 0 }
+        );
+    }
+
+    #[test]
+    fn all_three_stack_independently_when_all_selected() {
+        let selected_feats = vec![
+            "Athletic".to_owned(),
+            "Persuasive".to_owned(),
+            "Intimidating Prowess".to_owned(),
+        ];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats { climb: 2, intimidate: 2 + STR_MOD, swim: 2 }
+        );
+    }
+
+    #[test]
+    fn intimidating_prowess_faithfully_adds_a_negative_strength_modifier() {
+        // The corpus token `BONUS:SKILL|Intimidate|STR` is the raw modifier
+        // with no floor, so a negative Strength modifier reduces Intimidate.
+        // Not a realistic posture for a feat gated on Str 13, but pinning the
+        // verbatim-corpus behavior rather than silently clamping to 0 (which
+        // would fabricate a value the corpus does not specify).
+        let selected_feats = vec!["Intimidating Prowess".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, -1),
+            SkillBonusesFromFeats { climb: 0, intimidate: -1, swim: 0 }
+        );
+    }
+
+    #[test]
+    fn does_not_match_a_substring_or_prefix_of_a_feat_key() {
+        // Confirms the exact-string match, not a prefix/substring one: a
+        // synthetic "Athletic Steps" (which begins with the grounded "Athletic"
+        // key) must not trigger Athletic's bonus, and "Acrobatic" (a real,
+        // distinct CRB feat this engine does not ground) must not either.
+        let selected_feats = vec!["Athletic Steps".to_owned(), "Acrobatic".to_owned()];
+        assert_eq!(
+            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            SkillBonusesFromFeats::default()
+        );
     }
 }
