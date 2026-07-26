@@ -1449,7 +1449,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T20:00:01
-Latest commit on tranche/6: 23bd8845 docs(v0.6): correct Arcanist's reachability framing after backend's revert (64 seconds ago) (2026-07-25T19:58:57-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T19:56:56 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T19:56:39
+Last mechanical check: 2026-07-25T21:00:01
+Latest commit on tranche/6: 03bb35d3 v0.6 alpha swarm: ACG Warpriest full-class build (2 minutes ago) (2026-07-25T20:58:16-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T20:57:27 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T20:58:33
 <!-- AUTO-HEARTBEAT-END -->
