@@ -1549,7 +1549,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T17:40:02
-Latest commit on tranche/6: ebccddad docs(v0.6): Alchemist (task #4) and feat-effects (task #16) fully closed (1 second ago) (2026-07-26T17:40:01-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T17:36:15 frontend=2026-07-26T12:42:06 qa=2026-07-26T12:43:48 lead=2026-07-26T17:37:26
+Last mechanical check: 2026-07-26T17:50:12
+Latest commit on tranche/6: a24a6531 docs(v0.6): Warpriest (task #9) partial re-scope, greenlit and verified (89 seconds ago) (2026-07-26T17:48:43-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T17:48:24 frontend=2026-07-26T12:42:06 qa=2026-07-26T12:43:48 lead=2026-07-26T17:48:39
 <!-- AUTO-HEARTBEAT-END -->
