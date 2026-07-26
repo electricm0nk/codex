@@ -1705,6 +1705,25 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// grants the same four-value shape as Barbarian's own Rage (STR/CON
 /// morale bonus, Will-save morale bonus, AC penalty).
 const SKALD_CLASS_ID: &str = "class:skald";
+/// PF1 Advanced Class Guide Damage Reduction (`KEY:Skald ~ Damage
+/// Reduction`, deepening 2026-07-26, task #7): "At 9th level, a skald
+/// gains damage reduction... At 14th and 19th level this damage
+/// reduction rises by 1 point" -- verified directly against the raw
+/// corpus DESC text, the same real, standalone, level-gated flat-
+/// magnitude shape Barbarian's own `class_feature.barbarian.
+/// damage_reduction` already established (see
+/// `BARBARIAN_DAMAGE_REDUCTION_LEVEL`'s own doc comment): grounded as a
+/// standalone explanation record, never applied to any incoming-damage
+/// total, since no damage-resolution engine or incoming-damage total
+/// exists anywhere in this codebase. Unlike Barbarian's own DR, Skald's
+/// version also extends to all allies affected by his Raging Song ("The
+/// skald grants this DR to all allies affected by his raging song") --
+/// that ally-extension stays explicitly deferred, since this engine
+/// models neither allies nor any ally-targeting mechanism at all; only
+/// the skald's own self-DR is grounded here.
+const SKALD_DAMAGE_REDUCTION_LEVEL: u8 = 9;
+const SKALD_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 14;
+const SKALD_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 19;
 /// `ClassAbilityActivation.ability_id` for Skald Inspired Rage.
 const SKALD_INSPIRED_RAGE_ABILITY_ID: &str = "inspired_rage";
 /// PF1 Advanced Class Guide Inspired Rage: a flat -1 penalty to AC,
@@ -8465,6 +8484,7 @@ fn compute_apg_class_chassis(
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Inquisitor {
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
+        ground_inquisitor_flat_named_facts(input, level, explanations);
     } else if class_id == ApgClassId::Oracle {
         ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Witch {
@@ -8981,6 +9001,105 @@ fn active_inquisitor_purity_judgment_bonus(input: &CharacterInput) -> Option<(u8
     Some((inquisitor_level, inquisitor_purity_judgment_save_bonus(inquisitor_level)))
 }
 
+/// PF1 Advanced Player's Guide Monster Lore: "adds her Wisdom modifier
+/// on Knowledge skill checks in addition to her Intelligence modifier,
+/// when making skill checks to identify the abilities and weaknesses of
+/// creatures" -- verified directly against `apg_abilities_class.lst`'s
+/// own `BONUS:VAR|MonsterLoreBonus|WIS` (a flat competence-style bonus
+/// equal to the raw Wisdom modifier, no formula beyond that). Grounded
+/// as a standalone explanation record only (task #18, 2026-07-26,
+/// correcting an earlier over-strict "needs a live consumer" exclusion):
+/// this codebase's own established precedent (Bard's Bardic Knowledge,
+/// Slayer's Track/Trapfinding, Barbarian's Damage Reduction all already
+/// ground a standalone flat fact with zero live consumer) shows a
+/// consumer was never actually required, only a genuinely verified
+/// magnitude. No Knowledge-skill total exists anywhere in this codebase,
+/// so this grounds only the flat bonus value.
+fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
+    wisdom_modifier
+}
+
+/// PF1 Advanced Player's Guide Cunning Initiative: "adds her Wisdom
+/// modifier on initiative checks, in addition to her Dexterity modifier"
+/// -- verified directly against `apg_abilities_class.lst`'s own
+/// `BONUS:COMBAT|INITIATIVE|WIS`. Grounded as a standalone explanation
+/// record only (task #18, 2026-07-26), the same corrected shape as
+/// Monster Lore above: no Initiative total exists anywhere in this
+/// codebase (confirmed directly), so this grounds only the flat bonus
+/// value.
+fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
+    wisdom_modifier
+}
+
+/// PF1 Advanced Player's Guide Track: "adds half her level on Survival
+/// skill checks made to follow or identify tracks" -- verified directly
+/// against `apg_abilities_class.lst`'s own `BONUS:VAR|TrackLVL|
+/// InquisitorLVL` plus the shared cross-class `TrackBonus|
+/// max(TrackLVL/2,1)` definition (the real PF1 Track feature Ranger/
+/// Slayer also share; confirmed identical to Slayer's own
+/// `slayer_track_bonus` formula, kept as a separate Inquisitor-named
+/// copy rather than calling Slayer's function directly, the same
+/// "parallel copy over cross-class-function-reuse" discipline Skald's
+/// own spellcasting closure used for its base-spells-per-day table).
+/// Grounded as a standalone explanation record only (task #18,
+/// 2026-07-26): Survival is not among the three tracked skills either,
+/// so this grounds as a standalone flat record, the same shape Slayer's
+/// own Track uses.
+fn inquisitor_track_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Grounds Inquisitor's remaining flat, standalone named-feature facts
+/// (Monster Lore, Cunning Initiative, Track) that had incorrectly stayed
+/// deferred under an earlier "needs a live consumer" bar -- corrected
+/// (task #18, 2026-07-26) after re-checking this codebase's own already-
+/// shipped precedent. Called unconditionally alongside Judgment's own
+/// grounding, from the Inquisitor branch of `compute_apg_class_chassis`;
+/// never claim-blocks.
+fn ground_inquisitor_flat_named_facts(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let wisdom_modifier = ability_modifier(input.chosen.ability_scores.wisdom);
+
+    let monster_lore_bonus = inquisitor_monster_lore_bonus(wisdom_modifier);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.inquisitor.monster_lore_bonus".to_owned(),
+        value: monster_lore_bonus,
+        detail: format!(
+            "Inquisitor level {level} Monster Lore: adds her Wisdom modifier \
+             ({monster_lore_bonus:+}) on Knowledge skill checks made to identify the abilities \
+             and weaknesses of creatures, in addition to her Intelligence modifier. No \
+             Knowledge-skill total exists anywhere in this codebase, so this grounds only the \
+             flat bonus value -- not a full Knowledge-check resolution engine"
+        ),
+    });
+
+    let cunning_initiative_bonus = inquisitor_cunning_initiative_bonus(wisdom_modifier);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.inquisitor.cunning_initiative_bonus".to_owned(),
+        value: cunning_initiative_bonus,
+        detail: format!(
+            "Inquisitor level {level} Cunning Initiative: adds her Wisdom modifier \
+             ({cunning_initiative_bonus:+}) on initiative checks, in addition to her Dexterity \
+             modifier. No Initiative total exists anywhere in this codebase, so this grounds \
+             only the flat bonus value"
+        ),
+    });
+
+    let track_bonus = inquisitor_track_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.inquisitor.track_bonus".to_owned(),
+        value: track_bonus,
+        detail: format!(
+            "Inquisitor level {level} Track: a +{track_bonus} bonus on Survival checks made to \
+             follow or identify tracks (max(level/2, 1) = {track_bonus}). Survival is not among \
+             the three tracked skills either, so this grounds as a standalone flat record"
+        ),
+    });
+}
+
 /// PF1 Advanced Player's Guide Stern Gaze: "+X morale bonus on all
 /// Intimidate and Sense Motive checks" -- verified directly against
 /// `apg_abilities_class.lst`'s own `BONUS:VAR|SternGazeBonus|
@@ -9219,16 +9338,16 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
         id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INQUISITOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, the Justice/Protection/Purity/Smiting judgments, and Stern Gaze's \
-             Intimidate half: this APG class has no class-skill list, no spellcasting posture \
-             (Inquisitor casts divine spells and gets one domain, but the domain only ever \
-             grants spell-list access -- no domain power exists for Inquisitor per the corpus \
-             -- and no spells-known/per-day table has been independently verified or built, \
-             including Orisons), no remaining 5 judgment types (Destruction, Healing, Piercing, \
-             Resiliency, Resistance), and no other named class feature (Bane, Cunning \
-             Initiative, Discern Lies, Exploit Weakness, Monster Lore, Solo Tactics, Stalwart, \
-             Stern Gaze's Sense Motive half, Track) grounded anywhere in this codebase yet; no \
-             class-feature or spell execution is fabricated in this bounded chassis baseline"
+             chassis pillar, the Justice/Protection/Purity/Smiting judgments, Stern Gaze's \
+             Intimidate half, Monster Lore, Cunning Initiative, and Track: this APG class has no \
+             class-skill list, no spellcasting posture (Inquisitor casts divine spells and gets \
+             one domain, but the domain only ever grants spell-list access -- no domain power \
+             exists for Inquisitor per the corpus -- and no spells-known/per-day table has been \
+             independently verified or built, including Orisons), no remaining 5 judgment types \
+             (Destruction, Healing, Piercing, Resiliency, Resistance), and no other named class \
+             feature (Bane, Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's \
+             Sense Motive half) grounded anywhere in this codebase yet; no class-feature or \
+             spell execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -11169,6 +11288,8 @@ fn compute_acg_class_chassis(
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
+        ground_skald_damage_reduction(level, explanations);
+        ground_skald_bardic_knowledge(level, explanations);
         push_skald_other_features_deferred_diagnostic(diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
@@ -11418,15 +11539,115 @@ fn ground_or_block_skald_inspired_rage(
     }
 }
 
+/// Skald's own self-Damage Reduction magnitude at `level` (deepening
+/// 2026-07-26, task #7): 0 below level 9, 1 from level 9, 2 from level
+/// 14, 3 from level 19 -- verified directly against the raw corpus DESC
+/// text ("At 9th level, a skald gains damage reduction... At 14th and
+/// 19th level this damage reduction rises by 1 point"), the identical
+/// shape to Barbarian's own `barbarian_damage_reduction_amount`-style
+/// progression (see `BARBARIAN_DAMAGE_REDUCTION_LEVEL` and its sibling
+/// constants).
+fn skald_damage_reduction_amount(level: u8) -> i16 {
+    if level < SKALD_DAMAGE_REDUCTION_LEVEL {
+        0
+    } else if level < SKALD_DAMAGE_REDUCTION_TWO_LEVEL {
+        1
+    } else if level < SKALD_DAMAGE_REDUCTION_THREE_LEVEL {
+        2
+    } else {
+        3
+    }
+}
+
+/// Grounds Skald's own self-Damage Reduction as a standalone explanation
+/// record, mirroring Barbarian's own `class_feature.barbarian.
+/// damage_reduction` shape exactly (deepening 2026-07-26, task #7): a
+/// real, level-gated, flat-magnitude fact, never applied to any incoming-
+/// damage total (none exists anywhere in this codebase). Always grounds a
+/// record, including an honest value-0 "not yet gained" record below
+/// level 9, the same "ground the absence, don't omit it" discipline every
+/// level-gated fact this session uses. The DR's own ally-extension via
+/// Raging Song stays explicitly deferred -- this engine models no allies
+/// or ally-targeting mechanism at all -- so only the skald's own self-DR
+/// is grounded; this function never claim-blocks.
+fn ground_skald_damage_reduction(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    let damage_reduction_value = skald_damage_reduction_amount(level);
+    if damage_reduction_value == 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.damage_reduction".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Damage Reduction at skald level {level}: correctly absent at level \
+                 {level} by PF1 Advanced Class Guide level gate; the at-grant magnitude is named \
+                 but not computed. Damage Reduction is a 9th-level skald class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.damage_reduction".to_owned(),
+            value: damage_reduction_value,
+            detail: format!(
+                "Skald Damage Reduction granted at skald level {level} (PF1 Advanced Class \
+                 Guide, 9th-level skald class feature, rising by 1 point at 14th and 19th level \
+                 -- the level-{level} magnitude is {damage_reduction_value}/-): subtract \
+                 {damage_reduction_value} from the damage the skald takes each time she is dealt \
+                 damage from a weapon or a natural attack. This applies to the skald's own \
+                 damage only -- the same DR granted to allies affected by her Raging Song stays \
+                 deferred, since this codebase models no allies or ally-targeting mechanism; the \
+                 subtraction against an actual incoming-damage total is also not computed, since \
+                 no damage-resolution engine or incoming-damage total exists anywhere in this \
+                 codebase."
+            ),
+        });
+    }
+}
+
+/// Skald's own Bardic Knowledge magnitude at `level` (deepening
+/// 2026-07-26, task #7): "adds half his class level (minimum 1)... on
+/// all Knowledge skill checks, and may make all Knowledge skill checks
+/// untrained" -- verified directly against `acg_abilities_class.lst`'s
+/// own `BONUS:VAR|BardicKnowledgeSkillBonus|max(1,SkaldLVL/2)` (or
+/// equivalent DESC-derived formula), byte-identical to Bard's own
+/// already-shipped `bardic_knowledge_bonus` formula
+/// (`(level_value / 2).max(1)`). Kept as a separate Skald-named copy
+/// rather than calling Bard's function directly, the same "parallel
+/// copy over cross-class-function-reuse" discipline this closure's own
+/// base-spells-per-day table already used.
+fn skald_bardic_knowledge_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Grounds Skald's own Bardic Knowledge as a standalone explanation
+/// record, mirroring Bard's own `class_chassis.bard.bardic_knowledge`
+/// shape exactly (deepening 2026-07-26, task #7, correcting an earlier
+/// over-strict "needs a live consumer" exclusion -- see Inquisitor's own
+/// task #18 for the same correction applied first): no Knowledge-skill
+/// total exists anywhere in this codebase, so this grounds only the flat
+/// competence bonus value, naming honestly that it is not a full
+/// Knowledge-check resolution engine. Unconditional on class ownership
+/// and level alone; never claim-blocks.
+fn ground_skald_bardic_knowledge(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    let bardic_knowledge_bonus = skald_bardic_knowledge_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.skald.bardic_knowledge_bonus".to_owned(),
+        value: bardic_knowledge_bonus,
+        detail: format!(
+            "Skald level {level} Bardic Knowledge: a competence bonus on Knowledge skill checks \
+             equal to max(skald level / 2, 1) = {bardic_knowledge_bonus}, and lets the skald \
+             make any Knowledge skill check untrained. No Knowledge-skill total exists anywhere \
+             in this codebase, so this grounds only the flat bonus value -- not a full \
+             Knowledge-check resolution engine, mirroring Bard's own Bardic Knowledge"
+        ),
+    });
+}
+
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.acg.skald.unsupported` for Skald specifically (per the
 /// adversarial review's finding 2, updated for the spellcasting closure):
 /// named ONLY the genuinely still-missing pieces (Skald's own remaining
-/// named features beyond Inspired Rage and known-spell posture --
-/// Bardic Knowledge-analog, Iron Will, Rage Powers shared-list access,
-/// Spell Kenning, Versatile Performance, War Chant), unlike the retired
-/// diagnostic's blanket "no named class-feature computation... grounded
-/// anywhere" claim, which is now false for Skald.
+/// named features beyond Inspired Rage and known-spell posture), unlike
+/// the retired diagnostic's blanket "no named class-feature computation...
+/// grounded anywhere" claim, which is now false for Skald.
 ///
 /// **Updated (v0.6 alpha swarm, risks item 8, Skald spellcasting
 /// closure)**: this diagnostic no longer claims spellcasting is
@@ -11439,18 +11660,25 @@ fn ground_or_block_skald_inspired_rage(
 /// features remain completely unbuilt, so this diagnostic still
 /// claim-blocks unconditionally -- Skald does not reach `Computed` this
 /// closure either, confirmed directly rather than assumed by analogy to
-/// Bard. Pushed exactly once from the top-level Skald dispatch branch,
-/// independent of Inspired Rage's/spellcasting's own state.
+/// Bard.
+///
+/// **Updated again (deepening, 2026-07-26, task #7)**: Damage Reduction's
+/// self-only half and Bardic Knowledge are also no longer named as
+/// missing here -- both now genuinely wired (see
+/// `ground_skald_damage_reduction`/`ground_skald_bardic_knowledge`).
+/// Pushed exactly once from the top-level Skald dispatch branch,
+/// independent of any of these features' own state.
 fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Inspired Rage, and known-spell posture: this ACG class has no class-skill \
-             list and no other named class feature (Bardic Knowledge-analog, Iron Will, Rage \
-             Powers shared-list access, Spell Kenning, Versatile Performance, War Chant) \
-             grounded anywhere in this codebase yet; no class-feature execution is fabricated \
-             in this bounded chassis baseline"
+             pillar, Inspired Rage, known-spell posture, self-only Damage Reduction, and Bardic \
+             Knowledge: this ACG class has no class-skill list and no other named class feature \
+             (Lore Master, Rage Powers shared-list access, Spell Kenning, Versatile Performance, \
+             Well-Versed, Dirge of Doom, Song of Marching, Song of Strength, Song of the Fallen, \
+             and Damage Reduction's own ally-extension) grounded anywhere in this codebase yet; \
+             no class-feature execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -32488,6 +32716,131 @@ mod skald_dispatch_widening_safety_tests {
         // 10 + spell level 1 + Charisma modifier (-1) = 10.
         assert_eq!(dc.value, 10, "10 + 1 + (-1) = 10: {:?}", dc);
     }
+
+    /// Skald's own self-Damage Reduction (deepening 2026-07-26, task #7)
+    /// is honestly absent below level 9 -- a real PF1 level gate, not an
+    /// omission -- mirroring Barbarian's own "not yet gained" discipline
+    /// for its identically-shaped Damage Reduction feature.
+    #[test]
+    fn single_class_skald_damage_reduction_is_honestly_absent_below_level_9() {
+        let input = human_skald_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let dr = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.skald.damage_reduction")
+            .expect("expected the Damage Reduction record to be grounded even when absent");
+        assert_eq!(dr.value, 0, "level 1 Skald has no Damage Reduction yet: {:?}", dr);
+    }
+
+    /// Skald's own self-Damage Reduction progresses 1/9th, 2/14th, 3/19th,
+    /// unconditional on class ownership and level alone (no choice or
+    /// activation gate, unlike Inspired Rage), and never claim-blocks.
+    #[test]
+    fn single_class_skald_damage_reduction_progresses_at_the_real_level_gates() {
+        for (level, expected) in [(8, 0), (9, 1), (13, 1), (14, 2), (18, 2), (19, 3), (20, 3)] {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let dr = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.damage_reduction")
+                .unwrap_or_else(|| panic!("expected Damage Reduction grounded at level {level}"));
+            assert_eq!(dr.value, expected, "level {level} Damage Reduction: {:?}", dr);
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("damage_reduction") && d.claim_blocking),
+                "Damage Reduction must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The other_features_deferred diagnostic now acknowledges Damage
+    /// Reduction (self-only) as grounded in its own preamble, while still
+    /// naming the ally-extension as the genuinely still-missing half --
+    /// mirroring Brawler's own "acknowledges Cunning and Strike as
+    /// grounded" pattern.
+    #[test]
+    fn other_features_deferred_acknowledges_self_damage_reduction_as_grounded() {
+        let input = human_skald_input(9);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
+            .expect("expected the other_features_deferred diagnostic");
+        assert!(
+            deferred.message.contains("self-only Damage Reduction"),
+            "expected the preamble to acknowledge Damage Reduction as grounded: {}",
+            deferred.message
+        );
+        assert!(
+            deferred.message.contains("ally-extension"),
+            "expected the still-missing ally-extension to be named: {}",
+            deferred.message
+        );
+    }
+
+    /// Skald's own Bardic Knowledge (deepening 2026-07-26, task #7) is
+    /// grounded as a standalone flat competence bonus, unconditional on
+    /// class ownership and level alone, mirroring Bard's own Bardic
+    /// Knowledge and Inquisitor's own Monster Lore (task #18) -- both
+    /// already established that a real magnitude needs no live consumer.
+    #[test]
+    fn single_class_skald_gets_the_unconditional_bardic_knowledge_bonus() {
+        for (level, expected) in [(1, 1), (2, 1), (3, 1), (4, 2), (10, 5), (20, 10)] {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let bardic_knowledge = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.bardic_knowledge_bonus")
+                .unwrap_or_else(|| panic!("expected Bardic Knowledge grounded at level {level}"));
+            assert_eq!(
+                bardic_knowledge.value, expected,
+                "level {level} Bardic Knowledge: {:?}",
+                bardic_knowledge
+            );
+        }
+    }
+
+    /// The other_features_deferred diagnostic now also acknowledges
+    /// Bardic Knowledge as grounded, no longer naming it as missing.
+    #[test]
+    fn other_features_deferred_acknowledges_bardic_knowledge_as_grounded() {
+        let input = human_skald_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
+            .expect("expected the other_features_deferred diagnostic");
+        assert!(
+            deferred.message.contains("and Bardic Knowledge:"),
+            "expected the preamble to acknowledge Bardic Knowledge as grounded: {}",
+            deferred.message
+        );
+        assert!(
+            !deferred.message.contains("Bardic Knowledge-analog"),
+            "the stale 'still missing' Bardic Knowledge-analog phrasing must be gone: {}",
+            deferred.message
+        );
+    }
 }
 
 /// v0.6 alpha swarm, risks item 8, second APG/ACG closure (2026-07-25):
@@ -33348,6 +33701,84 @@ mod inquisitor_dispatch_widening_safety_tests {
         assert!(
             intimidate.detail.contains("Stern Gaze"),
             "expected Stern Gaze to be named in the Intimidate explanation: {intimidate:?}"
+        );
+    }
+
+    /// Monster Lore, Cunning Initiative, and Track (task #18, 2026-07-26)
+    /// are grounded as standalone flat records, unconditional the moment
+    /// Inquisitor levels are present -- no choice, no activation gate,
+    /// same shape as Stern Gaze, and independent of Judgment's own state.
+    /// Fixture: WIS 12 -> +1 modifier.
+    #[test]
+    fn single_class_inquisitor_gets_the_unconditional_flat_named_facts() {
+        let input = human_inquisitor_input(1);
+        let computation = super::compute_pilot_base_chassis(&input);
+
+        let monster_lore = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.monster_lore_bonus")
+            .expect("Monster Lore must be grounded");
+        assert_eq!(monster_lore.value, 1, "WIS modifier +1: {monster_lore:?}");
+
+        let cunning_initiative = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.cunning_initiative_bonus")
+            .expect("Cunning Initiative must be grounded");
+        assert_eq!(cunning_initiative.value, 1, "WIS modifier +1: {cunning_initiative:?}");
+
+        let track = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.track_bonus")
+            .expect("Track must be grounded");
+        assert_eq!(track.value, 1, "max(1/2, 1) = 1: {track:?}");
+    }
+
+    /// Track's own real level-scaling (max(level/2, 1)) matches Slayer's
+    /// identically-shaped formula at every level, proven directly rather
+    /// than assumed from the shared corpus formula alone.
+    #[test]
+    fn inquisitor_track_bonus_matches_the_real_max_level_half_one_formula() {
+        for (level, expected) in [(1, 1), (2, 1), (3, 1), (4, 2), (10, 5), (20, 10)] {
+            assert_eq!(
+                super::inquisitor_track_bonus(level),
+                expected,
+                "level {level} Track bonus"
+            );
+        }
+    }
+
+    /// These three flat facts never claim-block, regardless of Judgment's
+    /// own state -- proven against a not-judging posture (the cheapest
+    /// posture to construct) to isolate them from Judgment's own gating.
+    #[test]
+    fn flat_named_facts_never_claim_block_even_while_not_judging() {
+        let input = human_inquisitor_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for id in [
+            "class_feature.apg.inquisitor.monster_lore_bonus",
+            "class_feature.apg.inquisitor.cunning_initiative_bonus",
+            "class_feature.apg.inquisitor.track_bonus",
+        ] {
+            assert!(
+                receipt.computation.explanations.iter().any(|e| e.id == id),
+                "expected {id} to be grounded even while not judging: {:?}",
+                receipt.computation.explanations
+            );
+        }
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id.contains("monster_lore")
+                    || d.id.contains("cunning_initiative")
+                    || d.id.contains("track_bonus")),
+            "the three flat facts must never claim-block: {:?}",
+            receipt.computation.diagnostics
         );
     }
 

@@ -414,7 +414,22 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // sub-features are structurally independent, not facets of one
     // shared mechanism), why Swashbuckler and Investigator each count a
     // genuine 3 (same "structurally independent" reasoning as Slayer),
-    // and why Warpriest ALSO counts 2 (Blessings, Sacred Weapon), for a
+    // and why Skald ALSO counts a genuine 3 (Inspired Rage, Damage
+    // Reduction, Bardic Knowledge -- deepening 2026-07-26, task #7):
+    // Damage Reduction and Bardic Knowledge are each their own separate
+    // `KEY:Skald ~ ...` record with genuinely independent grounding
+    // logic, the same "structurally independent" bar Slayer/
+    // Swashbuckler/Investigator/Brawler already established. Both were
+    // initially excluded under an over-strict "needs a live consumer"
+    // bar, corrected after finding this codebase's own established
+    // precedent (Bard's Bardic Knowledge, Slayer's Track/Trapfinding,
+    // Barbarian's Damage Reduction) already tolerates a genuinely
+    // verified standalone flat fact with zero live consumer. Skald's
+    // known-spell posture does NOT add a fourth, per the same "shares
+    // the general spellcasting mechanism, not independently implemented"
+    // reasoning that already excluded Oracle's known-spell posture,
+    // Arcanist's Cantrips, and Warpriest's Orisons from their own counts.
+    // And why Warpriest counts 2 (Blessings, Sacred Weapon), for a
     // related but distinct reason: Warpriest's own
     // `KEY:Warpriest ~ ...` list has NO record at all for the general
     // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
@@ -433,9 +448,9 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // documents for Investigator's Discoveries), so it does not add a
     // separate count either.
     let named_features_wired = match class_id {
-        AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Hunter | AcgClassId::Shaman => 1,
+        AcgClassId::Bloodrager | AcgClassId::Hunter | AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
-        AcgClassId::Swashbuckler | AcgClassId::Investigator | AcgClassId::Brawler => 3,
+        AcgClassId::Swashbuckler | AcgClassId::Investigator | AcgClassId::Brawler | AcgClassId::Skald => 3,
         AcgClassId::Slayer => 4,
     };
 

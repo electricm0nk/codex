@@ -82,10 +82,20 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// re-verifying the original "opponent/effect-dependent" exclusion
 /// against the raw corpus and finding Protection/Purity/Smiting were
 /// mis-categorized), and Stern Gaze (a separate, top-level named feature)
-/// is also now genuinely wired. Inquisitor's `named_features_wired` rises
+/// is also now genuinely wired. Inquisitor's `named_features_wired` rose
 /// from 1 to 2 (Judgment slot + Stern Gaze slot -- Judgment's own 4
 /// sub-types stay one slot, the same "counts slots, not sub-options"
 /// convention Witch's own Hex count already established).
+///
+/// **Updated again (task #18, 2026-07-26):** Monster Lore, Cunning
+/// Initiative, and Track are now also genuinely wired, correcting an
+/// over-strict "needs a live consumer" bar this closure's own Judgment
+/// deepening had applied -- this codebase's own established precedent
+/// (Bard's Bardic Knowledge, Slayer's Track/Trapfinding, Barbarian's
+/// Damage Reduction all already ground a standalone flat fact with zero
+/// live consumer) shows a consumer was never actually required, only a
+/// genuinely verified magnitude. Inquisitor's `named_features_wired`
+/// rises again, from 2 to 5.
 #[test]
 fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_oracles_mystery_and_curse_and_witchs_ward_hex()
 {
@@ -117,7 +127,12 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
     for (class_id, feature_name, expected_wired) in [
         (ApgClassId::Cavalier, "Mount", 1),
         (ApgClassId::Alchemist, "Mutagen", 1),
-        (ApgClassId::Inquisitor, "Judgment (Justice/Protection/Purity/Smiting) + Stern Gaze", 2),
+        (
+            ApgClassId::Inquisitor,
+            "Judgment (Justice/Protection/Purity/Smiting) + Stern Gaze + Monster Lore + \
+             Cunning Initiative + Track",
+            5,
+        ),
         (ApgClassId::Oracle, "Mystery+Curse", 2),
         (ApgClassId::Witch, "Ward hex", 1),
     ] {

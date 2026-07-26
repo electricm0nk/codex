@@ -82,11 +82,26 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// prerequisites) and Brawler's Strike (a real level-gated DR-bypass
 /// progression, honestly inert below level 5) are now genuinely wired
 /// alongside AC Bonus, the same three-genuinely-independent-mechanisms
-/// reasoning as Swashbuckler/Investigator. Arcanist's and Warpriest's
-/// own `named_features_wired == 2` each (not 1, unlike Skald/Bloodrager/
+/// reasoning as Swashbuckler/Investigator. **Deepened again (Skald,
+/// 2026-07-26, task #7):** Skald's own count moved from 1 to 3 -- Damage
+/// Reduction (a real, level-gated, self-only flat magnitude, 1/9th level
+/// rising to 2/14th and 3/19th, mirroring Barbarian's own identically-
+/// shaped Damage Reduction) and Bardic Knowledge (`max(level/2,1)`,
+/// byte-identical to Bard's own already-shipped formula) are now
+/// genuinely wired alongside Inspired Rage. Both were initially excluded
+/// under an over-strict "needs a live consumer" bar, corrected after
+/// finding this codebase's own established precedent (Bard's Bardic
+/// Knowledge, Slayer's Track/Trapfinding, Barbarian's Damage Reduction)
+/// already tolerates a genuinely verified standalone flat fact with zero
+/// live consumer. The DR's own ally-extension via Raging Song stays
+/// deferred (this codebase models no allies), and known-spell posture
+/// (already landed in an earlier cycle) still does not add a count of
+/// its own, per the established spellcasting-sharing convention.
+/// Arcanist's and Warpriest's
+/// own `named_features_wired == 2` each (not 1, unlike Bloodrager/
 /// Hunter/Shaman) for related but distinct reasons, and Slayer's/
-/// Swashbuckler's/Investigator's/Brawler's own `== 4`/`== 3`/`== 3`/`==
-/// 3` for yet another reason -- see
+/// Swashbuckler's/Investigator's/Brawler's/Skald's own `== 4`/`== 3`/`==
+/// 3`/`== 3`/`== 3` for yet another reason -- see
 /// `AcgClassCoverage::named_features_wired`'s own doc comment in
 /// `rules_tables::acg::mod` for the full record: Arcanist's real
 /// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
@@ -148,7 +163,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
     }
 
     for (class_id, feature_name, expected_wired) in [
-        (AcgClassId::Skald, "Inspired Rage", 1),
+        (AcgClassId::Skald, "Inspired Rage + Damage Reduction + Bardic Knowledge", 3),
         (AcgClassId::Bloodrager, "Bloodrage", 1),
         (AcgClassId::Brawler, "AC Bonus + Brawler's Cunning + Brawler's Strike", 3),
         (AcgClassId::Hunter, "Animal Companion", 1),
