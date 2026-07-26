@@ -181,3 +181,23 @@ files updated and green. Desktop crate: 212/212 (unaffected, no
 frontend-facing change). Inquisitor stays `Blocked` on the new, narrower
 `other_features_deferred` diagnostic, same as Cavalier/Alchemist's own
 shape -- no `Computed` claim made for this class this slice.
+
+## Deepening (2026-07-26, task #3)
+
+The "other 7 judgment types" exclusion above was re-verified directly
+against the raw corpus rather than trusted as-is, and found wrong for
+three of them: Protection (Armor Class bonus) and Purity (all-saves
+bonus) are flat self-buffs with real live consumers already computed in
+this codebase (`baseline_armor_class`, `total_saves`), not opponent/
+effect-dependent at all -- the original grouping was a mistake, not a
+re-derivation of new facts. Smiting (weapons count as magic for DR
+bypass) is a flat, level-independent boolean fact grounded as a
+standalone explanation record, mirroring Brawler's Strike DR-bypass fact.
+All three now ground alongside Justice (4 of 8 judgment types); the
+remaining 5 (Destruction, Healing, Piercing, Resiliency, Resistance)
+genuinely still need engine state that doesn't exist. Stern Gaze (a
+separate, unconditional, non-choice-gated named feature) was also
+grounded onto Intimidate's total, Intimidate-half only. See
+`docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/apg_inquisitor_coverage.md`'s
+own update section and `docs/release/v0.6/risks-and-open-questions.md`
+item 41 for the full record. `named_features_wired` rises from 1 to 2.

@@ -178,21 +178,30 @@ pub struct ApgClassCoverage {
     /// `pilot_compute::ground_or_block_oracle_mystery`/
     /// `ground_or_block_oracle_curse`,
     /// `pilot_compute::ground_or_block_witch_class_features`) -- see
-    /// `class_coverage`'s own branches for each. Oracle counts 2
-    /// (Mystery slot + Curse slot), mirroring Warpriest's own 2-slot
-    /// count: Oracle's known-spell posture and Orisons are NOT counted
-    /// separately here, the same "shares the general spellcasting
-    /// mechanism, not independently implemented" reasoning that already
-    /// excluded Arcanist's Cantrips and Warpriest's Orisons from their
-    /// own counts (see `docs/release/v0.6/oracle-apg-full-build-scoping.md`).
-    /// Witch counts 1 (the Hex slot alone -- unlike Oracle's Mystery+Curse,
-    /// Witch has no second independent choice this slice grounds; the
-    /// Familiar and fresh own-list spellcasting are both deferred
-    /// entirely, not partially counted). Every other APG class remains
-    /// at 0: SD-22 Epic 3 deliberately scoped its ingest to the BAB/save
-    /// chassis only (see e.g. `class_alchemist.rs`'s own doc comment),
-    /// and no follow-on cycle has since ingested `apg_abilities_class.lst`'s
-    /// per-level feature blocks for any other APG class.
+    /// `class_coverage`'s own branches for each. Oracle and Inquisitor
+    /// both count 2, mirroring Warpriest's own 2-slot count: Oracle is
+    /// Mystery slot + Curse slot; Inquisitor is Judgment slot + Stern
+    /// Gaze slot (2026-07-26 deepening, task #3). Judgment stays ONE slot
+    /// even though it now grounds 4 of its 8 selectable sub-types
+    /// (Justice/Protection/Purity/Smiting) -- per this field's own "counts
+    /// slots, not each slot's selectable sub-options" convention (see
+    /// `named_features_expected`'s doc comment, the same reasoning that
+    /// keeps Witch's ~20 individual hexes from inflating its own count
+    /// past the single Hex slot). Stern Gaze is a genuinely separate,
+    /// top-level `KEY:Inquisitor ~ Stern Gaze` record, so it adds its own
+    /// slot rather than folding into Judgment's. Oracle's known-spell
+    /// posture and Orisons are NOT counted separately here, the same
+    /// "shares the general spellcasting mechanism, not independently
+    /// implemented" reasoning that already excluded Arcanist's Cantrips
+    /// and Warpriest's Orisons from their own counts (see
+    /// `docs/release/v0.6/oracle-apg-full-build-scoping.md`). Cavalier,
+    /// Alchemist, and Witch each count 1 (a single slot alone -- unlike
+    /// Oracle's/Inquisitor's own two independently-wired slots). Every
+    /// other APG class remains at 0: SD-22 Epic 3 deliberately scoped its
+    /// ingest to the BAB/save chassis only (see e.g. `class_alchemist.rs`'s
+    /// own doc comment), and no follow-on cycle has since ingested
+    /// `apg_abilities_class.lst`'s per-level feature blocks for any other
+    /// APG class.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -266,8 +275,8 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // Inquisitor Judgment / Oracle full-build closures): see this field's
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
-        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Witch => 1,
-        ApgClassId::Oracle => 2,
+        ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Witch => 1,
+        ApgClassId::Oracle | ApgClassId::Inquisitor => 2,
         _ => 0,
     };
 

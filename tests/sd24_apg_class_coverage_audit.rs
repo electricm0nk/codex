@@ -75,6 +75,17 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// dedicated `named_features_wired == 1` assertion (the Hex slot alone;
 /// unlike Oracle's Mystery+Curse, Witch has no second independent choice
 /// this slice grounds).
+///
+/// **Updated again (Inquisitor Judgment deepening, 2026-07-26, task #3):**
+/// Judgment now grounds 4 of its 8 selectable sub-types (Justice,
+/// Protection, Purity, Smiting -- a genuine scoping correction after
+/// re-verifying the original "opponent/effect-dependent" exclusion
+/// against the raw corpus and finding Protection/Purity/Smiting were
+/// mis-categorized), and Stern Gaze (a separate, top-level named feature)
+/// is also now genuinely wired. Inquisitor's `named_features_wired` rises
+/// from 1 to 2 (Judgment slot + Stern Gaze slot -- Judgment's own 4
+/// sub-types stay one slot, the same "counts slots, not sub-options"
+/// convention Witch's own Hex count already established).
 #[test]
 fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_oracles_mystery_and_curse_and_witchs_ward_hex()
 {
@@ -106,7 +117,7 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
     for (class_id, feature_name, expected_wired) in [
         (ApgClassId::Cavalier, "Mount", 1),
         (ApgClassId::Alchemist, "Mutagen", 1),
-        (ApgClassId::Inquisitor, "Justice judgment", 1),
+        (ApgClassId::Inquisitor, "Judgment (Justice/Protection/Purity/Smiting) + Stern Gaze", 2),
         (ApgClassId::Oracle, "Mystery+Curse", 2),
         (ApgClassId::Witch, "Ward hex", 1),
     ] {
