@@ -1445,7 +1445,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T18:35:01
-Latest commit on tranche/6: c1612fc6 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-25T18:30:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T18:28:49 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T18:26:28
+Last mechanical check: 2026-07-25T20:00:01
+Latest commit on tranche/6: 23bd8845 docs(v0.6): correct Arcanist's reachability framing after backend's revert (64 seconds ago) (2026-07-25T19:58:57-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T19:56:56 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T19:56:39
 <!-- AUTO-HEARTBEAT-END -->
