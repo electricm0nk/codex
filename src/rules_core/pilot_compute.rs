@@ -2027,7 +2027,9 @@ const SLAYER_CLASS_ID: &str = "class:slayer";
 /// `docs/release/v0.6/arcanist-metamagic-knowledge-exploit-scoping.md`
 /// for the full record.
 const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_knowledge";
-/// `Empower Spell` is the canonical, proven example this closure's own
+/// `Empower Spell` (namespaced as `metamagic:empower_spell` -- see this
+/// const's own value and `arcanist_metamagic_knowledge_feat_name`'s doc
+/// comment for why) is the canonical, proven example this closure's own
 /// tests exercise -- but unlike Destruction Blessing's own hardcoded
 /// single-value recognition (where every OTHER Blessing type genuinely
 /// lacks any built minor power to check), `ground_or_block_arcanist_metamagic_knowledge`
@@ -2040,7 +2042,102 @@ const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_
 /// artificially restricting recognition to only `Empower Spell` would be
 /// a narrower, less honest claim than what the reused module already
 /// proves for the whole category.
-const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "Empower Spell";
+///
+/// **Real bug found and fixed (2026-07-25), risks-and-open-questions.md
+/// item 23-family regression**: this value used to be the bare literal
+/// `"Empower Spell"` (zero colons), which the compute engine itself
+/// accepted fine but `saved_character::local_store::validate_character_input`
+/// genuinely rejects at save time -- every `selected_choices` entry's
+/// `selection_id` must carry at least one colon to round-trip through the
+/// fixture grammar. Frontend caught this via real live-testing (a fresh
+/// Human Arcanist 1 hit a raw save-time error, not a graceful `Blocked`
+/// diagnostic) before shipping the `CLASS_OPTIONS` entry. A naive rename
+/// to any colon-satisfying string would have silently broken
+/// `evaluate_metamagic_feat_prerequisites`'s own real catalog lookup
+/// (which matches directly against the literal feat name) -- caught
+/// before it shipped. The real fix is the translation layer below:
+/// `arcanist_metamagic_knowledge_feat_name` strips the `metamagic:`
+/// namespace and reconstructs the literal Title Case feat name generically
+/// (every real CRB Metamagic feat is a simple "Word Spell" phrase), so
+/// this constant is now the namespaced seed value, translated back to
+/// `"Empower Spell"` before ever reaching the feat catalog.
+const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
+
+/// Translates an `ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID` `selection_id`
+/// -- a `metamagic:<snake_case_slug>`-namespaced value satisfying
+/// `local_store.rs`'s save-layer colon-segment requirement -- into the
+/// real CRB Metamagic feat name `feat_prereqs::metamagic` expects (e.g.
+/// `metamagic:empower_spell` -> `Empower Spell`). Every real CRB
+/// Metamagic feat is a simple Title Case "Word Spell" phrase, so this is
+/// a generic, reversible slug transform, not a hardcoded per-feat lookup
+/// table -- it recognizes ANY real Metamagic feat named this way,
+/// mirroring this closure's own "don't restrict recognition to Empower
+/// Spell alone" design intent (see `EMPOWER_SPELL_METAMAGIC_SELECTION`'s
+/// own doc comment for the real save-time bug this fixes). Returns `None`
+/// when `selection_id` doesn't carry the `metamagic:` namespace prefix at
+/// all (a spoofed/foreign choice, not a translation failure).
+fn arcanist_metamagic_knowledge_feat_name(selection_id: &str) -> Option<String> {
+    let slug = selection_id.strip_prefix("metamagic:")?;
+    if slug.is_empty() {
+        return None;
+    }
+    Some(
+        slug.split('_')
+            .filter(|word| !word.is_empty())
+            .map(|word| {
+                let mut chars = word.chars();
+                match chars.next() {
+                    Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                    None => String::new(),
+                }
+            })
+            .collect::<Vec<_>>()
+            .join(" "),
+    )
+}
+
+/// v0.6 alpha swarm, risks item 8 (Oracle full-build closure, 8th ACG/APG
+/// class-specific closure): APG Oracle, verified directly against
+/// `apg_classes.lst`'s own `SPELLSTAT:CHA`/`MEMORIZE:NO` tokens -- a
+/// spontaneous caster like Sorcerer/Bard, NOT a prepared caster like
+/// Cleric/Wizard/Arcanist/Warpriest, so this closure mirrors
+/// `unmet_sorcerer_known_spell_conditions`/`sorcerer_spells_known_table`/
+/// `ground_sorcerer_known_spells`'s own shape, not Wizard's/Arcanist's/
+/// Warpriest's own simpler prepared-spellbook shape. `SPELLLIST:2|Cleric|
+/// Oracle` reuses Cleric's own spell-list content directly
+/// (`cleric_spell_list::cleric_spell_level`) for the shared portion; the
+/// Oracle-specific bonus-spell-list portion stays explicitly out of
+/// scope, named honestly. See
+/// `docs/release/v0.6/oracle-apg-full-build-scoping.md` for the full
+/// corpus verification and scope record.
+const ORACLE_CLASS_ID: &str = "class:oracle";
+/// Mirrors `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope
+/// discipline exactly: this slice verifies Oracle's own known-spells
+/// table only for levels 1-3.
+const ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// The choice set for which Mystery an Oracle selects at 1st level
+/// (mirrors `WARPRIEST_BLESSING_CHOICE_ID`'s own single choice-set shape).
+const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
+/// Life Mystery is the one canonical Mystery this closure grounds -- its
+/// own Healing Hands revelation is the cleanest flat, self-scoped value
+/// of the 10 real Mystery types checked.
+const LIFE_MYSTERY_SELECTION: &str = "mystery:life";
+/// The choice set for which Curse an Oracle selects at 1st level.
+const ORACLE_CURSE_CHOICE_ID: &str = "choice:oracle_curse";
+/// Clouded Vision is the one canonical Curse this closure grounds -- a
+/// genuinely self-contained, flat, no-target-creature restriction-plus-
+/// benefit pair, unlike Deaf/Haunted/Lame/Wasting.
+const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
+/// PF1 Advanced Player's Guide Life Mystery's Healing Hands revelation:
+/// "+4 bonus on Heal checks" -- verified directly against
+/// `apg_abilities_class.lst`'s own `BONUS:SKILL|Heal|4` tag. Flat,
+/// unconditional once the Mystery is chosen (not activation-gated).
+const ORACLE_HEALING_HANDS_HEAL_BONUS: i16 = 4;
+/// PF1 Advanced Player's Guide Clouded Vision Curse: "you cannot see
+/// anything beyond 30 feet" -- verified directly against
+/// `apg_abilities_class.lst`'s own `BONUS:VAR|OracleCloudedVisionRange|30`
+/// tag. Flat, unconditional once the Curse is chosen.
+const ORACLE_CLOUDED_VISION_RANGE_FEET: i16 = 30;
 
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
@@ -7624,6 +7721,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_cavalier_single_class(input)
         || is_supported_alchemist_single_class(input)
         || is_supported_inquisitor_single_class(input)
+        || is_supported_oracle_single_class(input)
         || is_supported_arcanist_single_class(input)
         || is_supported_warpriest_single_class(input)
         || is_supported_slayer_single_class(input)
@@ -7676,6 +7774,23 @@ fn is_supported_inquisitor_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     apg::class_chassis_resolve(ApgClassId::Inquisitor, class_level.level, RuleSetId::Apg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Oracle full-build closure): whether
+/// `input` is a single-class Oracle at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Oracle -- mirrors
+/// `is_supported_cavalier_single_class`/`is_supported_alchemist_single_class`/
+/// `is_supported_inquisitor_single_class` exactly, including the same
+/// exact-match discipline (`== Some(ApgClassId::Oracle)`, not a broad
+/// `.is_some()`).
+fn is_supported_oracle_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Oracle) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Oracle, class_level.level, RuleSetId::Apg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): whether `input`
@@ -8113,30 +8228,34 @@ fn compute_apg_class_chassis(
     });
 
     // v0.6 alpha swarm, risks item 8 (Cavalier Mount / Alchemist Mutagen /
-    // Inquisitor Judgment closures, first/second/third APG class-specific
-    // closures, spot-checked 2026-07-25): Cavalier, Alchemist, and
-    // Inquisitor are the three APG classes with a genuinely real class
-    // feature now (the Mount, unconditional on class ownership and level
-    // alone; Mutagen and Judgment, both choice- and activation-gated --
-    // see each one's own doc comment). The other 3 APG classes keep the
-    // exact original unconditional diagnostic unchanged. These branches
-    // are reached only for single-class Cavalier/Alchemist/Inquisitor
-    // (this function is only ever called from `compute_class_chassis`'s
-    // single-class-only section; `ApgClassId::from_class_id_str` is
-    // deliberately not registered with `multiclass_class_level_supported`,
-    // so a Cavalier-, Alchemist-, or Inquisitor-containing multiclass mix
-    // never reaches this function at all).
+    // Inquisitor Judgment / Oracle full-build closures, first through
+    // fourth APG class-specific closures, spot-checked 2026-07-25):
+    // Cavalier, Alchemist, Inquisitor, and Oracle are the four APG classes
+    // with a genuinely real class feature now (the Mount, unconditional on
+    // class ownership and level alone; Mutagen and Judgment, both choice-
+    // and activation-gated; Oracle's own known-spell posture plus Mystery/
+    // Curse choices -- see each one's own doc comment). The other 2 APG
+    // classes keep the exact original unconditional diagnostic unchanged.
+    // These branches are reached only for single-class Cavalier/Alchemist/
+    // Inquisitor/Oracle (this function is only ever called from
+    // `compute_class_chassis`'s single-class-only section;
+    // `ApgClassId::from_class_id_str` is deliberately not registered with
+    // `multiclass_class_level_supported`, so a Cavalier-, Alchemist-,
+    // Inquisitor-, or Oracle-containing multiclass mix never reaches this
+    // function at all).
     if class_id == ApgClassId::Cavalier {
         ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Inquisitor {
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
+    } else if class_id == ApgClassId::Oracle {
+        ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
         // named class features, no spellcasting (even for the casters
-        // among the 3 remaining).
+        // among the 2 remaining).
         diagnostics.push(ComputationDiagnostic {
             id: format!("class_feature.apg.{}.unsupported", class_id.name()),
             message: format!(
@@ -8729,6 +8848,298 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
     });
 }
 
+/// The PF1 Advanced Player's Guide Oracle Spells Known table's row, one
+/// entry per spell level 0-3 (index 0 is cantrips/orisons; `None` for an
+/// inaccessible "--" column). A literal table lookup transcribed directly
+/// from `apg_classes.lst`'s own `CAST:`/`KNOWN:` rows, bounded to levels
+/// 1-3 (mirrors `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-
+/// scope discipline). This is the cap on distinct spells KNOWN
+/// (permanent), the same shape as `sorcerer_spells_known_table` -- Oracle
+/// is a spontaneous caster (`MEMORIZE:NO`), not a prepared caster like
+/// Cleric/Wizard/Arcanist/Warpriest.
+fn oracle_spells_known_table(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(4), Some(2), None, None],
+        2 => [Some(5), Some(2), None, None],
+        3 => [Some(5), Some(3), None, None],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for Oracle's real known-spell
+/// posture, mirroring `unmet_sorcerer_known_spell_conditions`'s own shape
+/// exactly, substituting Oracle's own bounded 1-3 table and reusing
+/// `cleric_spell_list::cleric_spell_level` directly for the per-spell-id
+/// level lookup (`SPELLLIST:2|Cleric|Oracle` means the Cleric portion of
+/// Oracle's spell list is genuinely shared; the Oracle-specific bonus-
+/// spell-list portion stays explicitly out of scope, so a spell that is
+/// only on the Oracle-specific list is treated the same as any other
+/// off-list spell -- named honestly, not silently accepted). An empty
+/// list means the posture is fully valid; zero known spells is always
+/// valid, same reasoning as Sorcerer's own posture.
+fn unmet_oracle_known_spell_conditions(input: &CharacterInput, oracle_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if oracle_level > ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL {
+        unmet.push(format!(
+            "known-spell grounding is only supported for oracle levels \
+             1-{ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL}, got {oracle_level}"
+        ));
+        return unmet;
+    }
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == ORACLE_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let known_table = oracle_spells_known_table(oracle_level);
+
+    let mut known_per_level: [i16; 4] = [0; 4];
+    for spell_id in &known {
+        let Some(spell_level) = cleric_spell_list::cleric_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Core Rulebook cleric spell \
+                 list (Oracle's own bonus spell-list portion is explicitly out of scope)"
+            ));
+            continue;
+        };
+        if usize::from(spell_level) >= known_table.len() {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at oracle level {oracle_level}"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Oracle Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real known-spell posture once
+/// `unmet_oracle_known_spell_conditions` reports an empty unmet list,
+/// mirroring `ground_sorcerer_known_spells`'s own shape exactly.
+fn ground_oracle_known_spells(
+    input: &CharacterInput,
+    oracle_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == ORACLE_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.oracle.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Oracle level {oracle_level} known-spell selection ({} spells, \
+             AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
+             Core Rulebook cleric spell list (`cleric_spell_list::cleric_spell_level`, the \
+             shared portion of `SPELLLIST:2|Cleric|Oracle`) and the Oracle Spells Known \
+             table's own per-level cap for levels 1-3. Real PF1 Oracle rules have no daily \
+             preparation step at all (unlike Cleric/Wizard/Arcanist/Warpriest) -- an oracle's \
+             known spells are permanent once learned, cast spontaneously. This grounds the \
+             known-spell selection for real; it computes no spell save DC resolution against a \
+             target and no casting execution",
+            known.len(),
+            known.join(", ")
+        ),
+    });
+}
+
+/// Grounds Oracle's Mystery choice (v0.6 alpha swarm, risks item 8, Oracle
+/// full-build closure): recognizes `choice:oracle_mystery -> mystery:life`
+/// and, if present, grounds Life Mystery's own Healing Hands revelation
+/// (a flat +4 Heal check bonus, unconditional once chosen -- not
+/// activation-gated, unlike Destructive Attacks/Touch of Good). Heal isn't
+/// among the three skills `compute_selected_skill_modifiers` tracks, so
+/// this grounds as a standalone flat record, the same idiom as Slayer's
+/// own Trapfinding/Track. Mirrors Warpriest's own Blessing three-branch
+/// dispatch shape (`ground_or_block_warpriest_class_features`'s own
+/// blessing_selections handling).
+fn ground_or_block_oracle_mystery(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let mystery_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == ORACLE_MYSTERY_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    if mystery_selections.contains(&LIFE_MYSTERY_SELECTION) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.life_mystery.healing_hands".to_owned(),
+            value: ORACLE_HEALING_HANDS_HEAL_BONUS,
+            detail: format!(
+                "Oracle with the Life Mystery gets Healing Hands: a +{ORACLE_HEALING_HANDS_HEAL_BONUS} \
+                 bonus on Heal checks (PF1 Advanced Player's Guide, verified directly against \
+                 `apg_abilities_class.lst`'s own `BONUS:SKILL|Heal|4` tag). Grounds only the flat \
+                 magnitude -- Heal isn't among the three skills \
+                 `compute_selected_skill_modifiers` tracks, so no total integration exists; the \
+                 revelation's own \"treat two people at once\" clause is not modeled"
+            ),
+        });
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.mystery_revelations_beyond_life.unmodeled".to_owned(),
+            message: "Oracle Mystery revelation content beyond Life's own Healing Hands remains \
+                 unmodeled: the other 9 Mystery types (Battle, Bone, Flame, Heavens, Lore, \
+                 Nature, Stone, Waves, Winds) and their own revelations are not implemented. \
+                 This does not block an otherwise-valid Life-Mystery posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.mystery_powers.unsupported".to_owned(),
+            message: "Oracle remains blocked on its Mystery powers burden: no recognized Life \
+                 Mystery choice is present (only Life's own Healing Hands revelation is \
+                 genuinely grounded in this codebase), so no Oracle Mystery-power support is \
+                 claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+}
+
+/// Grounds Oracle's Curse choice (v0.6 alpha swarm, risks item 8, Oracle
+/// full-build closure): recognizes
+/// `choice:oracle_curse -> curse:clouded_vision` and, if present, grounds
+/// Clouded Vision's own flat 30-foot vision-range cap (unconditional once
+/// chosen). Mirrors `ground_or_block_oracle_mystery`'s own three-branch
+/// dispatch shape.
+fn ground_or_block_oracle_curse(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let curse_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == ORACLE_CURSE_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    if curse_selections.contains(&CLOUDED_VISION_CURSE_SELECTION) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.clouded_vision_curse.vision_range_cap".to_owned(),
+            value: ORACLE_CLOUDED_VISION_RANGE_FEET,
+            detail: format!(
+                "Oracle with the Clouded Vision Curse cannot see beyond \
+                 {ORACLE_CLOUDED_VISION_RANGE_FEET} feet (PF1 Advanced Player's Guide, verified \
+                 directly against `apg_abilities_class.lst`'s own \
+                 `BONUS:VAR|OracleCloudedVisionRange|30` tag), but sees as if under darkvision \
+                 within that range. Grounds only the flat vision-range magnitude -- this \
+                 headless engine computes no vision/darkvision total anywhere to integrate this \
+                 restriction-plus-benefit pair into"
+            ),
+        });
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.curses_beyond_clouded_vision.unmodeled".to_owned(),
+            message: "Oracle Curse content beyond Clouded Vision remains unmodeled: the other 4 \
+                 Curse types (Deaf, Haunted, Lame, Wasting) are not implemented. This does not \
+                 block an otherwise-valid Clouded-Vision posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.curse_powers.unsupported".to_owned(),
+            message: "Oracle remains blocked on its Curse powers burden: no recognized Clouded \
+                 Vision choice is present (only Clouded Vision's own vision-range cap is \
+                 genuinely grounded in this codebase), so no Oracle Curse-power support is \
+                 claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+}
+
+/// Top-level Oracle class-feature dispatch (v0.6 alpha swarm, risks item
+/// 8, Oracle full-build closure, 8th ACG/APG class-specific closure):
+/// grounds the real known-spell posture, the Mystery choice, and the
+/// Curse choice, then always pushes the narrower
+/// `other_features_deferred` diagnostic naming the genuinely still-
+/// missing pieces. Unlike Arcanist's own closure, this permanently stays
+/// claim-blocked (no MVP narrowing was found for Cure Wounds/Inflict
+/// Wounds/Tongues this slice) -- an honest outcome, matching Cavalier/
+/// Alchemist/Inquisitor/Warpriest/Slayer's own shape, not every closure
+/// this segment reaches `HeadlessReceiptStatus::Computed`.
+fn ground_or_block_oracle_class_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let known_spell_unmet = unmet_oracle_known_spell_conditions(input, level);
+    if known_spell_unmet.is_empty() {
+        ground_oracle_known_spells(input, level, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.apg.oracle.known_spells.unsupported".to_owned(),
+            message: format!(
+                "Oracle remains blocked on its known-spell posture burden: {}",
+                known_spell_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    ground_or_block_oracle_mystery(input, explanations, diagnostics);
+    ground_or_block_oracle_curse(input, explanations, diagnostics);
+
+    push_oracle_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.apg.oracle.unsupported` for Oracle specifically (v0.6
+/// alpha swarm, risks item 8, Oracle full-build closure): named ONLY the
+/// genuinely still-missing pieces. Pushed unconditionally regardless of
+/// the known-spell/Mystery/Curse postures' own states, mirroring
+/// Warpriest's/Arcanist's own diagnostic-honesty pattern -- this is the
+/// permanent claim-blocking gap for Oracle this slice.
+fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{ORACLE_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar, its known-spell posture, Life Mystery's own Healing Hands, and Clouded \
+             Vision Curse's own vision-range cap: the other 9 Mystery types and their own \
+             revelations, the other 4 Curse types, Oracle's own Mystery-granted bonus spell-list \
+             portion of `SPELLLIST:2|Cleric|Oracle`, spontaneous Cure Wounds/Inflict Wounds \
+             conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap), and Tongues \
+             remain ungrounded anywhere in this codebase; no class-feature or spell execution is \
+             fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// PF1 Advanced Class Guide Arcane Reservoir: "Each day, when preparing
 /// spells, your arcane reservoir fills... gaining a number of points
 /// equal to [3 + 1/2 arcanist level]." Verified directly against
@@ -9031,7 +9442,9 @@ fn ground_or_block_arcanist_class_features(
 /// Grounds or claim-blocks Arcanist's Metamagic Knowledge Exploit (v0.6
 /// alpha swarm, risks item 8, Arcanist Metamagic Knowledge Exploit
 /// closure). A recognized `choice:arcanist_metamagic_knowledge`
-/// selection naming `Empower Spell` -- validated for real via
+/// selection naming e.g. `metamagic:empower_spell` -- translated to the
+/// real feat name via `arcanist_metamagic_knowledge_feat_name`, then
+/// validated for real via
 /// `feat_prereqs::metamagic::evaluate_metamagic_feat_prerequisites`
 /// (genuine reuse of an already-built, already-tested module from an
 /// earlier, unrelated SD-20 Epic 3 cycle, not hand-rolled validation) --
@@ -9056,14 +9469,28 @@ fn ground_or_block_arcanist_metamagic_knowledge(
         return;
     };
 
-    let evaluation = evaluate_metamagic_feat_prerequisites(selection);
-    if !evaluation.is_eligible {
+    let Some(feat_name) = arcanist_metamagic_knowledge_feat_name(selection) else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.arcanist.metamagic_knowledge.feat_ineligible".to_owned(),
             message: format!(
                 "Arcanist's Metamagic Knowledge Exploit names '{selection}' via \
-                 {ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID}, but this is not a recognized, \
-                 eligible Metamagic feat: {}",
+                 {ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID}, but this is not a recognized \
+                 `metamagic:<feat_slug>`-namespaced selection (e.g. `metamagic:empower_spell`)"
+            ),
+            claim_blocking: true,
+        });
+        push_arcanist_exploits_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    let evaluation = evaluate_metamagic_feat_prerequisites(&feat_name);
+    if !evaluation.is_eligible {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.arcanist.metamagic_knowledge.feat_ineligible".to_owned(),
+            message: format!(
+                "Arcanist's Metamagic Knowledge Exploit names '{selection}' (translated to \
+                 '{feat_name}') via {ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID}, but this is not a \
+                 recognized, eligible Metamagic feat: {}",
                 evaluation.failing_prerequisites.join("; ")
             ),
             claim_blocking: true,
@@ -9072,13 +9499,14 @@ fn ground_or_block_arcanist_metamagic_knowledge(
         return;
     }
 
-    let effect = resolve_metamagic_feat_effect(selection)
+    let effect = resolve_metamagic_feat_effect(&feat_name)
         .expect("evaluate_metamagic_feat_prerequisites already confirmed eligibility");
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.arcanist.metamagic_knowledge.feat_granted".to_owned(),
         value: 0,
         detail: format!(
-            "Arcanist's Metamagic Knowledge Exploit grants '{}' as a bonus feat (validated via \
+            "Arcanist's Metamagic Knowledge Exploit grants '{}' as a bonus feat (selection \
+             '{selection}' translated to the real feat name, validated via \
              feat_prereqs::metamagic against the real CRB Metamagic feat catalog): {}",
             effect.feat_id, effect.description
         ),
@@ -26909,16 +27337,18 @@ mod apg_class_chassis_dispatch_tests {
     /// genuinely ungrounded, so this must never silently read as
     /// `Computed`.
     ///
-    /// Cavalier, Alchemist, and Inquisitor are carved out of this loop
-    /// (v0.6 alpha swarm, risks item 8, Cavalier Mount / Alchemist
-    /// Mutagen / Inquisitor Judgment closures, first/second/third APG
-    /// class-specific closures): each has its own generic
-    /// `class_feature.apg.<class>.unsupported` diagnostic retired and
-    /// replaced with a narrower one, since the Mount / Mutagen / Judgment
-    /// are now genuinely grounded -- see
+    /// Cavalier, Alchemist, Inquisitor, and Oracle are carved out of this
+    /// loop (v0.6 alpha swarm, risks item 8, Cavalier Mount / Alchemist
+    /// Mutagen / Inquisitor Judgment / Oracle full-build closures,
+    /// first/second/third/fourth APG class-specific closures): each has
+    /// its own generic `class_feature.apg.<class>.unsupported` diagnostic
+    /// retired and replaced with a narrower one, since the Mount / Mutagen
+    /// / Judgment / known-spell+Mystery+Curse posture are now genuinely
+    /// grounded -- see
     /// `cavalier_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `alchemist_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// / `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// / `oracle_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
     /// below for each class's own dedicated coverage.
     #[test]
     fn all_six_apg_classes_stay_blocked_with_the_real_unconditional_diagnostic() {
@@ -26926,6 +27356,7 @@ mod apg_class_chassis_dispatch_tests {
             if class_id == "class:cavalier"
                 || class_id == "class:alchemist"
                 || class_id == "class:inquisitor"
+                || class_id == "class:oracle"
             {
                 continue;
             }
@@ -27104,22 +27535,64 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Oracle-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap: the OLD generic `class_feature.apg.oracle.unsupported`
+    /// diagnostic must never appear for Oracle, while the NEW, narrower
+    /// `class_feature.apg.oracle.other_features_deferred.unsupported`
+    /// diagnostic always does -- Oracle stays permanently `Blocked` on
+    /// this diagnostic (unlike Cavalier/Alchemist/Inquisitor, no MVP
+    /// narrowing was found this slice), with the Mystery/Curse claim-
+    /// blocking diagnostics also firing for a bare Oracle.
+    #[test]
+    fn oracle_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = ranger_style_input("class:oracle", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle must stay Blocked on its other-features-deferred posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.unsupported"),
+            "the retired generic diagnostic must never appear for Oracle: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     /// The critical negative-leak test, mirroring the ACG-side one
-    /// exactly: the OTHER 3 APG classes must produce ZERO
+    /// exactly: the OTHER 2 APG classes must produce ZERO
     /// `defense.total_save.*`/`combat.baseline_*`/
     /// `skill.selected_modifier.*` explanations at level 1, even under
     /// the exact same satisfying posture that genuinely admits Cavalier,
-    /// Alchemist, and Inquisitor -- proving `is_supported_cavalier_single_class`,
-    /// `is_supported_alchemist_single_class`, and
-    /// `is_supported_inquisitor_single_class` are real exact matches, not
+    /// Alchemist, Inquisitor, and Oracle -- proving `is_supported_cavalier_single_class`,
+    /// `is_supported_alchemist_single_class`,
+    /// `is_supported_inquisitor_single_class`, and
+    /// `is_supported_oracle_single_class` are real exact matches, not
     /// broad `.is_some()` checks that would silently admit all 6 APG
     /// classes into real pillar computation.
     #[test]
-    fn the_other_three_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_two_apg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:cavalier"
                 || class_id == "class:alchemist"
                 || class_id == "class:inquisitor"
+                || class_id == "class:oracle"
             {
                 continue;
             }
@@ -27213,6 +27686,30 @@ mod apg_class_chassis_dispatch_tests {
                     .iter()
                     .any(|e| e.id.starts_with(expected_prefix)),
                 "expected at least one {expected_prefix}* explanation for Inquisitor: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// Oracle's own positive counterpart, mirroring Cavalier's/
+    /// Alchemist's/Inquisitor's exactly -- proves the gate genuinely
+    /// admits Oracle regardless of its own Mystery/Curse/known-spell
+    /// posture state.
+    #[test]
+    fn oracle_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = ranger_style_input("class:oracle", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Oracle: {:?}",
                 receipt.computation.explanations
             );
         }
@@ -30858,8 +31355,9 @@ mod arcanist_dispatch_widening_safety_tests {
 
     /// Proves the recognition is genuinely general, not hardcoded to
     /// `Empower Spell` alone: a different real, catalog-verified
-    /// Metamagic feat (`Silent Spell`) is equally recognized and clears
-    /// the same diagnostic.
+    /// Metamagic feat (`Silent Spell`, seeded via the same
+    /// `metamagic:<slug>` namespacing as `EMPOWER_SPELL_METAMAGIC_SELECTION`)
+    /// is equally recognized and clears the same diagnostic.
     #[test]
     fn single_class_arcanist_metamagic_knowledge_recognizes_other_real_metamagic_feats_too() {
         let mut input = human_arcanist_input(1);
@@ -30875,7 +31373,7 @@ mod arcanist_dispatch_widening_safety_tests {
         });
         input.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
-            selection_id: "Silent Spell".to_owned(),
+            selection_id: "metamagic:silent_spell".to_owned(),
         });
 
         let receipt = build_pilot_headless_receipt(&input);
@@ -30907,7 +31405,7 @@ mod arcanist_dispatch_widening_safety_tests {
         });
         input.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
-            selection_id: "Toughness".to_owned(),
+            selection_id: "metamagic:toughness".to_owned(),
         });
 
         let receipt = build_pilot_headless_receipt(&input);
@@ -30931,6 +31429,46 @@ mod arcanist_dispatch_widening_safety_tests {
                 .any(|d| d.id == "class_feature.acg.arcanist.exploits_deferred.unsupported"
                     && d.claim_blocking),
             "the original claim-blocking exploits_deferred diagnostic must remain: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A selection with no `metamagic:` namespace prefix at all (the same
+    /// shape as the pre-fix `"Empower Spell"` literal that broke
+    /// `local_store.rs`'s save-layer colon-segment requirement) must be
+    /// treated as unrecognized, not accidentally translated -- proves
+    /// `arcanist_metamagic_knowledge_feat_name`'s own `None`-on-missing-
+    /// prefix branch is exercised, not just its happy path.
+    #[test]
+    fn single_class_arcanist_with_a_non_namespaced_metamagic_knowledge_selection_stays_blocked() {
+        let mut input = human_arcanist_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ARCANIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
+            selection_id: "Empower Spell".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.arcanist.metamagic_knowledge.feat_ineligible"
+                    && d.claim_blocking),
+            "a non-namespaced selection must claim-block via feat_ineligible, not be silently \
+             translated: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -31631,6 +32169,380 @@ mod slayer_dispatch_widening_safety_tests {
                 .iter()
                 .any(|e| e.id.starts_with("class_feature.acg.slayer.")),
             "a non-Slayer character must never ground any Slayer explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Oracle full-build closure, 8th ACG/APG
+/// class-specific closure): tests the spontaneous known-spell posture and
+/// the Mystery/Curse choice dispatch, mirroring the established dispatch-
+/// widening test module shape.
+#[cfg(test)]
+mod oracle_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, CLOUDED_VISION_CURSE_SELECTION, FIGHTER_CLASS_ID,
+        LIFE_MYSTERY_SELECTION, ORACLE_CLASS_ID, ORACLE_CURSE_CHOICE_ID, ORACLE_MYSTERY_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, SelectedChoice, SpellSelection,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_oracle_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: ORACLE_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A bare single-class Human Oracle (no known spells, no Mystery, no
+    /// Curse) stays `Blocked` on all three claim-blocking diagnostics at
+    /// once -- zero known spells is itself a valid posture (mirrors
+    /// Sorcerer's own "zero known spells is always valid" reasoning), so
+    /// only the Mystery/Curse/other_features_deferred diagnostics fire,
+    /// never the retired generic one.
+    #[test]
+    fn single_class_oracle_bare_stays_blocked_on_mystery_curse_and_other_features() {
+        let input = human_oracle_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle must stay Blocked without a recognized Mystery/Curse choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.unsupported"),
+            "the retired generic diagnostic must never appear for Oracle: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.oracle.known_spells.unsupported"),
+            "zero known spells is itself a valid posture, mirroring Sorcerer's own reasoning: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.mystery_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the mystery_powers claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.curse_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the curse_powers claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Oracle with a real known spell (verified
+    /// against the real Cleric spell list) grounds the known-spell
+    /// posture for real and clears the known_spells diagnostic, but stays
+    /// `Blocked` on Mystery/Curse/other_features_deferred regardless.
+    #[test]
+    fn single_class_oracle_with_a_real_known_spell_grounds_it_and_stays_blocked_elsewhere() {
+        let mut input = human_oracle_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ORACLE_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.oracle.known_spells.unsupported"),
+            "the known_spells diagnostic must not fire once a real known spell is recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.oracle.known_spells")
+            .expect("known-spell count must be grounded");
+        assert_eq!(known.value, 1, "Oracle level 1 with one known spell: {:?}", known);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle still stays Blocked on Mystery/Curse/other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Oracle known spell not on the real Cleric spell list (the
+    /// shared portion of `SPELLLIST:2|Cleric|Oracle`) is a genuine
+    /// posture violation and must claim-block via known_spells.
+    #[test]
+    fn single_class_oracle_with_an_off_list_known_spell_stays_blocked_on_known_spells() {
+        let mut input = human_oracle_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Definitely Not A Real Spell".to_owned(),
+            source_class_id: ORACLE_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.oracle.known_spells.unsupported"
+                    && d.claim_blocking),
+            "expected the known_spells claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Oracle recording more known spells at a level than the Oracle
+    /// Spells Known table allows for that level is a genuine posture
+    /// violation and must claim-block via known_spells over-known.
+    #[test]
+    fn single_class_oracle_over_known_at_a_spell_level_stays_blocked_on_known_spells() {
+        let mut input = human_oracle_input(1);
+        // Level 1 cantrip cap is 4; record a 5th distinct cantrip.
+        for spell_id in ["Light", "Detect Magic", "Read Magic", "Resistance", "Stabilize"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ORACLE_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.oracle.known_spells.unsupported"
+                    && d.claim_blocking
+                    && d.message.contains("over-known")),
+            "expected the over-known known_spells claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Oracle with the Life Mystery recognized
+    /// grounds Healing Hands' flat +4 Heal bonus and clears the
+    /// mystery_powers diagnostic in favor of the non-blocking "other
+    /// Mysteries" note -- stays `Blocked` on Curse/other_features_deferred
+    /// regardless.
+    #[test]
+    fn single_class_oracle_with_life_mystery_grounds_healing_hands() {
+        let mut input = human_oracle_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.mystery_powers.unsupported"),
+            "mystery_powers must not fire once Life is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.apg.oracle.mystery_revelations_beyond_life.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking other-Mysteries note: {:?}",
+            receipt.computation.diagnostics
+        );
+        let healing_hands = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.life_mystery.healing_hands")
+            .expect("Healing Hands must be grounded once Life is recognized");
+        assert_eq!(healing_hands.value, 4, "Healing Hands is a flat +4 Heal bonus: {:?}", healing_hands);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle still stays Blocked on Curse/other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Oracle with the Clouded Vision Curse
+    /// recognized grounds the flat 30-foot vision-range cap and clears
+    /// the curse_powers diagnostic in favor of the non-blocking "other
+    /// Curses" note.
+    #[test]
+    fn single_class_oracle_with_clouded_vision_curse_grounds_the_vision_range_cap() {
+        let mut input = human_oracle_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.curse_powers.unsupported"),
+            "curse_powers must not fire once Clouded Vision is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.curses_beyond_clouded_vision.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking other-Curses note: {:?}",
+            receipt.computation.diagnostics
+        );
+        let vision_cap = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.clouded_vision_curse.vision_range_cap")
+            .expect("Clouded Vision's vision-range cap must be grounded once recognized");
+        assert_eq!(vision_cap.value, 30, "Clouded Vision caps vision at 30 feet: {:?}", vision_cap);
+    }
+
+    /// Even with a valid known-spell posture, a recognized Life Mystery,
+    /// AND a recognized Clouded Vision Curse all at once, Oracle still
+    /// stays permanently `Blocked` on other_features_deferred alone --
+    /// unlike Arcanist, no MVP narrowing was found for Cure Wounds/
+    /// Inflict Wounds/Tongues this slice, an honest outcome named up
+    /// front in the scoping doc.
+    #[test]
+    fn single_class_oracle_with_everything_recognized_still_stays_permanently_blocked() {
+        let mut input = human_oracle_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ORACLE_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle has no MVP narrowing for its other_features_deferred diagnostic this slice, \
+             so it must never reach Computed even with everything else recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected other_features_deferred to be the sole remaining claim-blocking gap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A non-Oracle character carrying spoofed Oracle choice/spell
+    /// entries must have them silently ignored -- the class-ownership
+    /// gate is by construction, not a bolt-on rejection. Also proves
+    /// Fighter's own golden path is unaffected.
+    #[test]
+    fn non_oracle_characters_spoofed_oracle_entries_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: ORACLE_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by stray Oracle entries: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.oracle.")
+                    || e.id.starts_with("class_spell.apg.oracle.")),
+            "a non-Oracle character must never ground any Oracle explanation: {:?}",
             receipt.computation.explanations
         );
     }

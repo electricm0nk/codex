@@ -133,7 +133,19 @@ const DRUID_CLASS_ID: &str = "class:druid";
 const ARCANIST_CLASS_ID: &str = "class:arcanist";
 const ARCANIST_STARTER_SPELL_ID: &str = "Light";
 const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_knowledge";
-const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "Empower Spell";
+/// **Real bug found and fixed (2026-07-25)**: this used to be the bare
+/// literal `"Empower Spell"` (zero colons), which live-testing before
+/// shipping the `characterHubModel.ts` `CLASS_OPTIONS` entry caught as a
+/// real save-time error -- `saved_character::local_store::validate_character_input`
+/// requires every `selected_choices` entry's `selection_id` to carry at
+/// least one colon to round-trip through the fixture grammar, and a real
+/// feat name has none. The compute engine (`pilot_compute.rs`) now
+/// expects this exact namespaced value: `ground_or_block_arcanist_metamagic_knowledge`
+/// translates it back to the literal `"Empower Spell"` via
+/// `arcanist_metamagic_knowledge_feat_name` before ever reaching the feat
+/// catalog, so this seed must stay in sync with that translation's own
+/// `metamagic:<snake_case_slug>` convention.
+const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
 
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation

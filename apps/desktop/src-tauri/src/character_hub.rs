@@ -3168,6 +3168,45 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// Real end-to-end regression test for the Arcanist Path A colon-
+    /// convention bug (2026-07-25): frontend's own live-testing found that
+    /// `compose_character_input`'s seeded `EMPOWER_SPELL_METAMAGIC_SELECTION`
+    /// used to be the bare literal `"Empower Spell"` (zero colons), which
+    /// `SavedCharacterStore::save`'s own `validate_character_input` call
+    /// genuinely rejects -- a real `Err` from this exact
+    /// `create_character_at_root` path, past the point where the compute
+    /// engine had already reached `Computed`. Backend's own milestone test
+    /// (`arcanist_level1_reaches_computed_from_compose_character_input_alone`
+    /// in `pf1_adapter.rs`) only exercises the in-memory `CharacterInput`
+    /// via `build_pilot_headless_receipt`, never this real save path, so it
+    /// could not have caught this. Proves the fix (a `metamagic:`-
+    /// namespaced seed, translated back to the literal feat name before the
+    /// catalog lookup) by asserting the real save call succeeds AND reaches
+    /// `Saved`, not just that it doesn't panic.
+    #[test]
+    fn create_character_at_root_saves_a_fresh_arcanist_without_a_colon_convention_error() {
+        let root = tempdir("create-character-arcanist-colon-convention-fix");
+        let request = request_for_class("race:human", "class:arcanist", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect(
+                "a fresh Human Arcanist 1 must save without error -- this call used to fail with \
+                 a colon-segment validation error on the seeded Metamagic Knowledge choice",
+            );
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "a fresh Human Arcanist 1 is expected to reach Computed via \
+                     compose_character_input's own Path A seeding: {diagnostics:?}"
+                )
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- purchase_equipment: atomic money-purchase coupling (risks item 9) -----
 
     /// Golden path: an affordable real item is added AND its real catalog

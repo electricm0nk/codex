@@ -61,13 +61,21 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// of the "stays 0" loop below and given their own dedicated assertions
 /// (`named_features_wired == 1` each), per this test's own documented
 /// update instruction. Every other APG class remains at 0, unchanged.
+///
+/// **Updated again (Oracle full-build closure, 2026-07-25):** Oracle's
+/// Mystery (Life/Healing Hands) and Curse (Clouded Vision) are also now
+/// genuinely wired -- carved out below with its own dedicated
+/// `named_features_wired == 2` assertion (Mystery slot + Curse slot; the
+/// known-spell posture and Orisons are not counted separately, the same
+/// "shares the general spellcasting mechanism" reasoning already applied
+/// to Arcanist's Cantrips and Warpriest's Orisons).
 #[test]
-fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_and_inquisitors_judgment()
+fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_and_oracles_mystery_and_curse()
 {
     for row in coverage_report() {
         if matches!(
             row.class_id,
-            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor
+            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Oracle
         ) {
             continue;
         }
@@ -85,14 +93,15 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         );
     }
 
-    for (class_id, feature_name) in [
-        (ApgClassId::Cavalier, "Mount"),
-        (ApgClassId::Alchemist, "Mutagen"),
-        (ApgClassId::Inquisitor, "Justice judgment"),
+    for (class_id, feature_name, expected_wired) in [
+        (ApgClassId::Cavalier, "Mount", 1),
+        (ApgClassId::Alchemist, "Mutagen", 1),
+        (ApgClassId::Inquisitor, "Justice judgment", 1),
+        (ApgClassId::Oracle, "Mystery+Curse", 2),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
-            row.named_features_wired, 1,
+            row.named_features_wired, expected_wired,
             "{class_id:?}'s {feature_name} is now genuinely wired -- update this assertion (and \
              the coverage-matrix artifact) if this count changes again"
         );
@@ -143,6 +152,8 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "class_feature.apg.alchemist.spellcasting_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Inquisitor {
             "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned()
+        } else if *class_id == ApgClassId::Oracle {
+            "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned()
         } else {
             format!("class_feature.apg.{}.unsupported", class_id.name())
         };
@@ -166,7 +177,7 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         );
         if matches!(
             *class_id,
-            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor
+            ApgClassId::Cavalier | ApgClassId::Alchemist | ApgClassId::Inquisitor | ApgClassId::Oracle
         ) {
             let retired_diagnostic_id = format!("class_feature.apg.{}.unsupported", class_id.name());
             assert!(
