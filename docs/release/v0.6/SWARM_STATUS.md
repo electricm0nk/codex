@@ -1475,7 +1475,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T23:40:02
-Latest commit on tranche/6: 72857cc2 docs(v0.6): Swashbuckler greenlit as 9th closure after third comparative pass (3 minutes ago) (2026-07-25T23:36:37-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T23:37:06 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:34:07
+Last mechanical check: 2026-07-26T00:00:02
+Latest commit on tranche/6: d267fe79 v0.6 alpha swarm: ACG Swashbuckler full-class build (ninth closure, corrects a mis-scoping) (2 minutes ago) (2026-07-25T23:58:11-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T23:58:46 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-25T23:58:57
 <!-- AUTO-HEARTBEAT-END -->
