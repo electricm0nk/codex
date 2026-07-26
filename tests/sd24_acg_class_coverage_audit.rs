@@ -61,34 +61,36 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// assertion (and the coverage-matrix artifact) rather than silently
 /// leaving the audit stale.
 ///
-/// **Updated (v0.6 alpha swarm, risks item 8, first through seventh
+/// **Updated (v0.6 alpha swarm, risks item 8, first through ninth
 /// APG/ACG class-specific closures, 2026-07-25):** exactly this canary
 /// fired -- Skald's Inspired Rage, Bloodrager's Bloodrage, Brawler's AC
 /// Bonus, Hunter's Animal Companion, Arcanist's Arcane Reservoir +
-/// Spells Prepared, Warpriest's Blessings + Sacred Weapon, and Slayer's
-/// Sneak Attack + Trap Sense + Trapfinding + Track are now genuinely
-/// wired. All seven are carved out of the "stays 0" loop below and given
-/// their own dedicated assertions, per this test's own documented update
+/// Spells Prepared, Warpriest's Blessings + Sacred Weapon, Slayer's
+/// Sneak Attack + Trap Sense + Trapfinding + Track, and Swashbuckler's
+/// Panache + Charmed Life + Nimble are now genuinely wired. All eight
+/// are carved out of the "stays 0" loop below and given their own
+/// dedicated assertions, per this test's own documented update
 /// instruction. Every other ACG class remains at 0, unchanged.
 /// Arcanist's and Warpriest's own `named_features_wired == 2` each (not
 /// 1, unlike Skald/Bloodrager/Brawler/Hunter) for related but distinct
-/// reasons, and Slayer's own `== 4` for yet another reason -- see
-/// `AcgClassCoverage::named_features_wired`'s own doc comment in
-/// `rules_tables::acg::mod` for the full record: Arcanist's real
-/// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
-/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
-/// `Cantrips` does NOT add a third (not separately implemented);
-/// Warpriest has NO general-spellcasting KEY record at all (only
-/// `Orisons`, also not separately implemented), so its own count is
-/// Blessings + Sacred Weapon, with Destruction Blessing's own
+/// reasons, and Slayer's/Swashbuckler's own `== 4`/`== 3` for yet
+/// another reason -- see `AcgClassCoverage::named_features_wired`'s own
+/// doc comment in `rules_tables::acg::mod` for the full record:
+/// Arcanist's real spellcasting build genuinely closes 1 more distinct
+/// `KEY:Arcanist ~ ...` record (`Spells Prepared`) beyond Arcane
+/// Reservoir, while `Cantrips` does NOT add a third (not separately
+/// implemented); Warpriest has NO general-spellcasting KEY record at
+/// all (only `Orisons`, also not separately implemented), so its own
+/// count is Blessings + Sacred Weapon, with Destruction Blessing's own
 /// Destructive Attacks folded into the single Blessings slot (a
 /// different corpus class-prefix, `KEY:Destruction Blessing ~ ...`, not
-/// `KEY:Warpriest ~ ...`); Slayer's own four sub-features are genuinely
-/// structurally independent (no shared table/mechanism links them the
-/// way Cantrips/Orisons shared their class's spellcasting table), so all
-/// four count honestly, not folded down.
+/// `KEY:Warpriest ~ ...`); Slayer's own four sub-features and
+/// Swashbuckler's own three sub-features are each genuinely
+/// structurally independent (no shared table/mechanism links any pair
+/// of them the way Cantrips/Orisons shared their class's spellcasting
+/// table), so each one counts honestly, not folded down.
 #[test]
-fn zero_named_class_features_are_wired_for_any_acg_class_except_the_seven_named_closures_landed_so_far()
+fn zero_named_class_features_are_wired_for_any_acg_class_except_the_eight_named_closures_landed_so_far()
 {
     for row in coverage_report() {
         if matches!(
@@ -100,6 +102,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_the_seven_named_
                 | AcgClassId::Arcanist
                 | AcgClassId::Warpriest
                 | AcgClassId::Slayer
+                | AcgClassId::Swashbuckler
         ) {
             continue;
         }
@@ -129,6 +132,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_the_seven_named_
             "Sneak Attack + Trap Sense + Trapfinding + Track",
             4,
         ),
+        (AcgClassId::Swashbuckler, "Panache + Charmed Life + Nimble", 3),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
@@ -262,6 +266,15 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                 // narrowed other_features_deferred one.
                 "class_feature.acg.slayer.other_features_deferred.unsupported".to_owned()
             }
+            AcgClassId::Swashbuckler => {
+                // v0.6 alpha swarm, risks item 8 (Swashbuckler full-build
+                // closure): Panache's max and Nimble's dodge bonus ground
+                // unconditionally, and this minimal level-1 fixture has
+                // not yet gained Charmed Life (granted at level 2), so
+                // the only diagnostic to check is the narrowed
+                // other_features_deferred one.
+                "class_feature.acg.swashbuckler.other_features_deferred.unsupported".to_owned()
+            }
             _ => format!("class_feature.acg.{}.unsupported", class_id.name()),
         };
         let unsupported = computation
@@ -291,6 +304,7 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                 | AcgClassId::Arcanist
                 | AcgClassId::Warpriest
                 | AcgClassId::Slayer
+                | AcgClassId::Swashbuckler
         ) {
             let retired_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
             assert!(

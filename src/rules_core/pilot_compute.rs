@@ -2139,6 +2139,34 @@ const ORACLE_HEALING_HANDS_HEAL_BONUS: i16 = 4;
 /// tag. Flat, unconditional once the Curse is chosen.
 const ORACLE_CLOUDED_VISION_RANGE_FEET: i16 = 30;
 
+/// v0.6 alpha swarm, risks item 8 (Swashbuckler full-build closure, 9th
+/// ACG/APG class-specific closure): APG Swashbuckler, verified directly
+/// against `acg_classes.lst`'s own confirmed non-caster status (no
+/// `SPELLSTAT` token at all) -- zero spellcasting scope, the same
+/// cheapest structural shape as Slayer. This closure was mis-scoped as
+/// "harder" in the second comparative pass (lumped in with Investigator/
+/// Shaman/Summoner/Witch's own real subsystem gaps) -- corrected in the
+/// third comparative pass after checking the real corpus directly rather
+/// than trusting the prior label. See
+/// `docs/release/v0.6/third-full-class-build-comparative-scoping.md` for
+/// the full corpus verification and scope record.
+const SWASHBUCKLER_CLASS_ID: &str = "class:swashbuckler";
+/// `ClassAbilityActivation.ability_id` for Charmed Life.
+const SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID: &str = "charmed_life";
+/// Charmed Life is granted starting at 2nd level (verified via a real
+/// web search, since `acg_abilities_class.lst`'s own Charmed Life record
+/// carries no `PRELEVEL`/level-gate token at all -- the corpus's
+/// `BONUS:VAR|SwashbucklerCharmedLifeTimes|((SwashbucklerLVL-2)/4)+3`
+/// formula alone doesn't reveal when the feature first applies): "at 2nd
+/// level... three times per day... at 6th level and every 4 levels
+/// thereafter, the number... increases by one." This resolves the open
+/// verification question from the scoping doc (whether the formula's
+/// negative-operand behavior at level 1 matters) by making it moot --
+/// level 1 never evaluates this formula at all, the feature simply isn't
+/// granted yet, mirroring `ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL`'s own
+/// "bound the scope, don't guess at the edge" discipline.
+const SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL: u8 = 2;
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7725,6 +7753,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_arcanist_single_class(input)
         || is_supported_warpriest_single_class(input)
         || is_supported_slayer_single_class(input)
+        || is_supported_swashbuckler_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7866,6 +7895,21 @@ fn is_supported_slayer_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Slayer, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Swashbuckler full-build closure):
+/// whether `input` is a single-class Swashbuckler at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Swashbuckler --
+/// mirrors the other seven ACG/APG exact-match gates exactly.
+fn is_supported_swashbuckler_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Swashbuckler) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Swashbuckler, class_level.level, RuleSetId::Acg)
+        .is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
@@ -10086,6 +10130,211 @@ fn ground_or_block_slayer_class_features(
     });
 }
 
+/// PF1 Advanced Class Guide Swashbuckler Panache: "a swashbuckler gains a
+/// number of panache points equal to her Charisma modifier (minimum 1)."
+/// **Sourced from the ability's own DESC text, not a literal `BONUS:VAR`
+/// token** -- confirmed directly that the base Swashbuckler's own
+/// `KEY:Swashbuckler ~ Panache` record in `acg_abilities_class.lst`
+/// defines no `Panache_Cap`/`PanachePoints` formula at all (only the
+/// Inspired Blade archetype variant and the Extra Panache feat set/adjust
+/// these variables). Cross-validated against the Inspired Blade
+/// archetype's own explicit `BONUS:VAR|Panache_Cap|MAX(1,CHA)+MAX(1,INT)`
+/// -- its own DESC says "unlike other swashbucklers... this ability
+/// alters the panache class feature," and the archetype's formula adding
+/// an Intelligence term ON TOP of a base `MAX(1,CHA)` confirms the base
+/// class's real formula is exactly `MAX(1,CHA)`, not a guess. A real,
+/// different evidentiary path than every other formula this session has
+/// grounded (all had a literal `BONUS:VAR` token) -- named honestly, not
+/// silently treated as equivalent-confidence.
+fn swashbuckler_panache_max(charisma_modifier: i16) -> i16 {
+    charisma_modifier.max(1)
+}
+
+/// PF1 Advanced Class Guide Swashbuckler Charmed Life uses per day:
+/// granted starting at 2nd level (see `SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL`'s
+/// own doc comment for the real-rule verification), `((SwashbucklerLVL-2)/4)+3`
+/// from there, verified directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|SwashbucklerCharmedLifeTimes|((SwashbucklerLVL-2)/4)+3`.
+/// Returns `None` below the grant level (the feature genuinely doesn't
+/// exist yet, not a zero-use edge case).
+fn swashbuckler_charmed_life_uses_per_day(level: u8) -> Option<i16> {
+    if level < SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL {
+        return None;
+    }
+    Some(((i16::from(level) - 2) / 4) + 3)
+}
+
+/// PF1 Advanced Class Guide Swashbuckler Nimble: `(SwashbucklerLVL+1)/4`
+/// dodge bonus to AC while wearing light or no armor, verified directly
+/// against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|SwashbucklerDodgeBonus|(SwashbucklerLVL+1)/4`. Grounds as a
+/// standalone flat record -- this codebase computes no player AC total
+/// anywhere (the same `risks-and-open-questions.md` item 1 architecture
+/// gap that already excluded Trapfinding/Track/Destructive Attacks from
+/// any total-integration).
+fn swashbuckler_nimble_dodge_bonus(level: u8) -> i16 {
+    (i16::from(level) + 1) / 4
+}
+
+/// Grounds Swashbuckler's class features for `level` (v0.6 alpha swarm,
+/// risks item 8, Swashbuckler full-build closure, 9th ACG/APG class-
+/// specific closure). Called from `compute_acg_class_chassis`'s
+/// Swashbuckler branch, gated only on Swashbuckler class-ownership.
+/// Panache's max and Nimble's dodge bonus are flat, always-on facts
+/// (grounded unconditionally, standalone); Charmed Life is activation-
+/// gated with a real per-day budget once granted (2nd level+), mirroring
+/// Barbarian's Rage / Inquisitor's Judgment two-check budget-enforcement
+/// shape -- but grounded within this one function rather than a separate
+/// `active_*_bonus` helper, since (like Warpriest's own Destructive
+/// Attacks) nothing else in this codebase consumes a save-total to
+/// integrate it into; a separate helper would be genuine dead code, the
+/// same mistake caught and reverted during the Warpriest closure.
+fn ground_or_block_swashbuckler_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let panache_max = swashbuckler_panache_max(ability_modifiers.charisma);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.swashbuckler.panache_max".to_owned(),
+        value: panache_max,
+        detail: format!(
+            "Swashbuckler level {level} Panache: max(1, Charisma modifier ({})) = {panache_max} \
+             points at the start of each day. Sourced from the ability's own DESC text (no \
+             literal BONUS:VAR token exists for the base class in this corpus checkout, cross-\
+             validated against the Inspired Blade archetype's own explicit MAX(1,CHA) base term \
+             -- see swashbuckler_panache_max's own doc comment). This grounds only the flat \
+             daily maximum; spending/regaining Panache on Deeds is not modeled",
+            ability_modifiers.charisma
+        ),
+    });
+
+    let nimble_dodge_bonus = swashbuckler_nimble_dodge_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.swashbuckler.nimble_dodge_bonus".to_owned(),
+        value: nimble_dodge_bonus,
+        detail: format!(
+            "Swashbuckler level {level} Nimble: a +{nimble_dodge_bonus} dodge bonus to AC while \
+             wearing light or no armor ((level+1)/4 = {nimble_dodge_bonus}). This codebase \
+             computes no player AC total anywhere to integrate this into; grounded as a \
+             standalone flat record"
+        ),
+    });
+
+    match swashbuckler_charmed_life_uses_per_day(level) {
+        None => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.swashbuckler.charmed_life_not_yet_gained".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Swashbuckler level {level} has not yet gained Charmed Life (granted \
+                     starting at level {SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL}): a genuinely \
+                     valid PF1 posture for a 1st-level Swashbuckler, not a gap"
+                ),
+            });
+        }
+        Some(uses_per_day) => {
+            let activation = input
+                .chosen
+                .class_ability_activations
+                .iter()
+                .find(|activation| activation.ability_id == SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID);
+            match activation {
+                None => {
+                    explanations.push(ComputationExplanation {
+                        id: "class_feature.acg.swashbuckler.charmed_life_not_active".to_owned(),
+                        value: 0,
+                        detail: format!(
+                            "Swashbuckler level {level} is not currently using Charmed Life (no \
+                             class_ability_activations entry for \
+                             \"{SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID}\"): a genuinely valid PF1 \
+                             posture -- not every save is one where a Swashbuckler chooses to \
+                             spend a use -- so no bonus is claimed. Charmed Life's own uses-per-\
+                             day budget ({uses_per_day}) is grounded regardless"
+                        ),
+                    });
+                }
+                Some(activation) => {
+                    if let Some(uses_consumed_today) = activation.rounds_consumed_today
+                        && i32::from(uses_consumed_today) > i32::from(uses_per_day)
+                    {
+                        diagnostics.push(ComputationDiagnostic {
+                            id: "class_feature.acg.swashbuckler.charmed_life_uses_exceeded"
+                                .to_owned(),
+                            message: format!(
+                                "Swashbuckler level {level} Charmed Life activation claims \
+                                 {uses_consumed_today} uses consumed today, exceeding the \
+                                 grounded uses-per-day budget of {uses_per_day} \
+                                 (((level-2)/4)+3): a genuine posture violation, so no save \
+                                 bonus is claimed for this input"
+                            ),
+                            claim_blocking: true,
+                        });
+                    } else if activation.active_state == ActiveState::EquippedActive {
+                        explanations.push(ComputationExplanation {
+                            id: "class_feature.acg.swashbuckler.charmed_life_active_bonus"
+                                .to_owned(),
+                            value: ability_modifiers.charisma,
+                            detail: format!(
+                                "Swashbuckler level {level} is actively spending a use of \
+                                 Charmed Life as an immediate action before a saving throw, \
+                                 adding her Charisma modifier ({}) to the result. This codebase \
+                                 computes no per-roll save resolution to integrate this into \
+                                 (unlike the flat base Fortitude/Reflex/Will totals, which have \
+                                 no 'immediate action before this specific roll' concept) -- \
+                                 grounded as a standalone record naming the magnitude only",
+                                ability_modifiers.charisma
+                            ),
+                        });
+                    } else {
+                        explanations.push(ComputationExplanation {
+                            id: "class_feature.acg.swashbuckler.charmed_life_not_active"
+                                .to_owned(),
+                            value: 0,
+                            detail: format!(
+                                "Swashbuckler level {level} has a Charmed Life activation entry \
+                                 but it is not active for this snapshot: a genuinely valid PF1 \
+                                 posture, so no bonus is claimed. Charmed Life's own uses-per-\
+                                 day budget ({uses_per_day}) is grounded regardless"
+                            ),
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    push_swashbuckler_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.swashbuckler.unsupported` for Swashbuckler
+/// specifically (v0.6 alpha swarm, risks item 8, Swashbuckler full-build
+/// closure): named ONLY the genuinely still-missing pieces. Pushed
+/// unconditionally regardless of Charmed Life's own active state,
+/// mirroring Warpriest's/Slayer's own diagnostic-honesty pattern.
+fn push_swashbuckler_other_features_deferred_diagnostic(
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.swashbuckler.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{SWASHBUCKLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+             chassis pillar, Panache's flat daily maximum, Nimble's dodge bonus, and Charmed \
+             Life: Deeds (a chooser-list of real mechanical variety naming what Panache is \
+             actually spent on -- Derring-Do, Dodging Panache, Menacing Swordplay, Precise \
+             Strike, and the rest -- named but not built), Swashbuckler Finesse (a feat-\
+             prerequisite substitution mechanic this codebase has no hook for), Bonus Feats, \
+             Swashbuckler Weapon Training/Mastery, Swashbuckler's Grace/Edge, and every other \
+             named class feature remain ungrounded anywhere in this codebase; no class-feature \
+             execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -10159,25 +10408,25 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first through seventh APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through eighth APG/ACG
     // closures, adversarially reviewed 2026-07-25 for the gate-widening
     // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest,
-    // and Slayer are the seven ACG classes with a genuinely real class
-    // feature now (Inspired Rage / Bloodrage / AC Bonus / Animal
-    // Companion / real prepared spellcasting + Arcane Reservoir / real
-    // prepared spellcasting + Blessings + Sacred Weapon / Sneak Attack
-    // dice + Trap Sense + Trapfinding + Track) -- the other 3 ACG
-    // classes, and every APG class except Cavalier/Alchemist/Inquisitor,
-    // keep the exact original unconditional diagnostic unchanged. These
-    // branches are reached only for single-class Skald/Bloodrager/
-    // Brawler/Hunter/Arcanist/Warpriest/Slayer (this function is only
-    // ever called from `compute_class_chassis`'s single-class-only
-    // section; `AcgClassId::from_class_id_str` is deliberately not
-    // registered with `multiclass_class_level_supported`, so any of
-    // these seven classes in a multiclass mix never reaches this
-    // function at all), so no separate gate-ordering/hoisting fix is
-    // needed the way CRB classes required once `table_class_id`
-    // recognized them generically.
+    // Slayer, and Swashbuckler are the eight ACG classes with a genuinely
+    // real class feature now (Inspired Rage / Bloodrage / AC Bonus /
+    // Animal Companion / real prepared spellcasting + Arcane Reservoir /
+    // real prepared spellcasting + Blessings + Sacred Weapon / Sneak
+    // Attack dice + Trap Sense + Trapfinding + Track / Panache + Charmed
+    // Life + Nimble) -- the other 2 ACG classes, and every APG class
+    // except Cavalier/Alchemist/Inquisitor/Oracle, keep the exact
+    // original unconditional diagnostic unchanged. These branches are
+    // reached only for single-class Skald/Bloodrager/Brawler/Hunter/
+    // Arcanist/Warpriest/Slayer/Swashbuckler (this function is only ever
+    // called from `compute_class_chassis`'s single-class-only section;
+    // `AcgClassId::from_class_id_str` is deliberately not registered with
+    // `multiclass_class_level_supported`, so any of these eight classes
+    // in a multiclass mix never reaches this function at all), so no
+    // separate gate-ordering/hoisting fix is needed the way CRB classes
+    // required once `table_class_id` recognized them generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
@@ -10206,6 +10455,14 @@ fn compute_acg_class_chassis(
         );
     } else if class_id == AcgClassId::Slayer {
         ground_or_block_slayer_class_features(level, explanations, diagnostics);
+    } else if class_id == AcgClassId::Swashbuckler {
+        ground_or_block_swashbuckler_class_features(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -24996,6 +25253,7 @@ pub(crate) fn selected_skill_class_skill_bonus_applies(input: &CharacterInput) -
             || class_level.class_id == ROGUE_CLASS_ID
             || class_level.class_id == WARPRIEST_CLASS_ID
             || class_level.class_id == SLAYER_CLASS_ID
+            || class_level.class_id == SWASHBUCKLER_CLASS_ID
     })
 }
 
@@ -26070,7 +26328,7 @@ mod wizard_spellbook_spell_id_resolution_tests {
 mod selected_skill_class_skill_bonus_tests {
     use super::{
         compute_pilot_base_chassis, ARCANIST_CLASS_ID, FIGHTER_CLASS_ID, ROGUE_CLASS_ID,
-        SLAYER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
+        SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -26168,6 +26426,26 @@ mod selected_skill_class_skill_bonus_tests {
     #[test]
     fn slayer_gets_the_class_skill_bonus_on_all_three_skills() {
         let input = with_class(SLAYER_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Swashbuckler's own real class-skill list
+    /// (`acg_abilities_class.lst`'s `KEY:Swashbuckler ~ Class Skills`:
+    /// Acrobatics, Bluff, Climb, Craft, Diplomacy, Escape Artist,
+    /// Intimidate, Knowledge (Local/Nobility), Perception, Perform,
+    /// Profession, Ride, Sense Motive, Sleight of Hand, Swim) genuinely
+    /// includes all three of Climb/Intimidate/Swim (v0.6 alpha swarm,
+    /// risks item 8, Swashbuckler full-build closure) -- the FOURTH class
+    /// needing this exact widening, same shape as Warpriest/Slayer.
+    /// Written first, per the lead's own established instruction, to
+    /// prove the bug exists before fixing it.
+    #[test]
+    fn swashbuckler_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(SWASHBUCKLER_CLASS_ID);
         let computation = compute_pilot_base_chassis(&input);
 
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
@@ -27868,6 +28146,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:arcanist"
                 || class_id == "class:warpriest"
                 || class_id == "class:slayer"
+                || class_id == "class:swashbuckler"
             {
                 continue;
             }
@@ -28286,28 +28565,79 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(sneak_attack.value, 0, "Slayer level 1 Sneak Attack dice: {:?}", sneak_attack);
     }
 
+    /// Swashbuckler-specific coverage for the retired-diagnostic/new-
+    /// diagnostic swap (v0.6 alpha swarm, risks item 8, Swashbuckler
+    /// full-build closure, ninth ACG/APG closure): the OLD generic
+    /// `class_feature.acg.swashbuckler.unsupported` diagnostic must never
+    /// appear, while the NEW, narrower `other_features_deferred`
+    /// diagnostic always does. Panache's max and Nimble's dodge bonus
+    /// ground unconditionally regardless (no choice or activation gate
+    /// for either).
+    #[test]
+    fn swashbuckler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:swashbuckler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Swashbuckler must stay Blocked on its other-features-deferred posture alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.swashbuckler.unsupported"),
+            "the retired generic diagnostic must never appear for Swashbuckler: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.acg.swashbuckler.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let panache = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.panache_max")
+            .expect("Panache max must ground unconditionally");
+        assert_eq!(panache.value, 1, "fixture Charisma 8 (-1 modifier): max(1,-1)=1: {:?}", panache);
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
-    /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, and Slayer):
-    /// the OTHER 3 ACG classes (every class other than Skald, Bloodrager,
-    /// Brawler, Hunter, Arcanist, Warpriest, and Slayer, the seven now
-    /// genuinely admitted) must produce ZERO `defense.total_save.*`/
-    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
-    /// level 1, even when built from the exact same Longsword/Chain
-    /// Shirt/Dodge/Weapon-Focus/skill-rank posture that genuinely
-    /// satisfies every non-class-recognition precondition those pillars
-    /// check -- proving `is_supported_skald_single_class`,
+    /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer, and
+    /// Swashbuckler): the OTHER 2 ACG classes (every class other than
+    /// Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer,
+    /// and Swashbuckler, the eight now genuinely admitted) must produce
+    /// ZERO `defense.total_save.*`/`combat.baseline_*`/
+    /// `skill.selected_modifier.*` explanations at level 1, even when
+    /// built from the exact same Longsword/Chain Shirt/Dodge/Weapon-
+    /// Focus/skill-rank posture that genuinely satisfies every non-class-
+    /// recognition precondition those pillars check -- proving
+    /// `is_supported_skald_single_class`,
     /// `is_supported_bloodrager_single_class`,
     /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
     /// `is_supported_arcanist_single_class`, `is_supported_warpriest_single_class`,
-    /// and `is_supported_slayer_single_class` are all real exact matches,
-    /// not broad `.is_some()` checks that would silently admit all 10 ACG
-    /// classes into real pillar computation. This is stronger than the
-    /// pre-existing "stays Blocked" assertion above, which does not by
-    /// itself rule out a silent pillar-output leak alongside an unrelated
-    /// claim-blocking diagnostic.
+    /// `is_supported_slayer_single_class`, and
+    /// `is_supported_swashbuckler_single_class` are all real exact
+    /// matches, not broad `.is_some()` checks that would silently admit
+    /// all 10 ACG classes into real pillar computation. This is stronger
+    /// than the pre-existing "stays Blocked" assertion above, which does
+    /// not by itself rule out a silent pillar-output leak alongside an
+    /// unrelated claim-blocking diagnostic.
     #[test]
-    fn the_other_three_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn the_other_two_acg_classes_produce_zero_pillar_explanations_despite_a_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
             if class_id == "class:skald"
                 || class_id == "class:bloodrager"
@@ -28316,6 +28646,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:arcanist"
                 || class_id == "class:warpriest"
                 || class_id == "class:slayer"
+                || class_id == "class:swashbuckler"
             {
                 continue;
             }
@@ -28535,6 +28866,41 @@ mod acg_class_chassis_dispatch_tests {
             climb.value, 6,
             "Slayer genuinely earns the class-skill bonus on Climb (real class-skill list \
              includes it): {:?}",
+            climb
+        );
+    }
+
+    /// Swashbuckler's own positive counterpart, mirroring Slayer's
+    /// exactly -- proves the gate genuinely admits Swashbuckler.
+    #[test]
+    fn swashbuckler_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:swashbuckler", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Swashbuckler: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Swashbuckler");
+        assert_eq!(
+            climb.value, 6,
+            "Swashbuckler genuinely earns the class-skill bonus on Climb (real class-skill \
+             list includes it): {:?}",
             climb
         );
     }
@@ -32543,6 +32909,221 @@ mod oracle_dispatch_widening_safety_tests {
                 .any(|e| e.id.starts_with("class_feature.apg.oracle.")
                     || e.id.starts_with("class_spell.apg.oracle.")),
             "a non-Oracle character must never ground any Oracle explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Swashbuckler full-build closure, 9th
+/// ACG/APG class-specific closure): tests Panache/Nimble's unconditional
+/// flat grounding and Charmed Life's level-gated, activation-gated,
+/// budget-enforced dispatch, mirroring the established dispatch-widening
+/// test module shape.
+#[cfg(test)]
+mod swashbuckler_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID,
+        SWASHBUCKLER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_swashbuckler_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SWASHBUCKLER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A single-class Human Swashbuckler at level 1 stays `Blocked` on
+    /// the new, narrower `other_features_deferred` diagnostic alone
+    /// (never the retired generic one), with Panache's daily max and
+    /// Nimble's dodge bonus grounded unconditionally, and Charmed Life
+    /// correctly recognized as not-yet-gained at level 1 (real PF1 rule:
+    /// granted starting level 2).
+    ///
+    /// Fixture Charisma 8 (-1 modifier): Panache max(1,-1)=1. Level 1
+    /// Nimble: (1+1)/4=0.
+    #[test]
+    fn single_class_swashbuckler_level1_stays_blocked_on_other_features_only_with_panache_and_nimble_grounded_and_charmed_life_not_yet_gained()
+    {
+        let input = human_swashbuckler_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Swashbuckler must stay Blocked on other-features-deferred alone: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.swashbuckler.unsupported"),
+            "the retired generic diagnostic must never appear for Swashbuckler: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.swashbuckler.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let panache = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.panache_max")
+            .expect("Panache max must ground unconditionally");
+        assert_eq!(panache.value, 1, "fixture Charisma 8 (-1 modifier): max(1,-1)=1: {:?}", panache);
+
+        let nimble = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.nimble_dodge_bonus")
+            .expect("Nimble dodge bonus must ground unconditionally");
+        assert_eq!(nimble.value, 0, "Swashbuckler level 1 Nimble: (1+1)/4=0: {:?}", nimble);
+
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_not_yet_gained"),
+            "expected the honest not-yet-gained recognition record at level 1: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A single-class Human Swashbuckler at level 2 (Charmed Life's real
+    /// grant level) who is not currently spending a use is a genuinely
+    /// valid PF1 posture -- grounds the honest "not active" record, with
+    /// the real uses-per-day budget grounded regardless.
+    ///
+    /// Level 2 Charmed Life uses/day: ((2-2)/4)+3 = 3.
+    #[test]
+    fn single_class_swashbuckler_level2_not_using_charmed_life_grounds_the_honest_not_active_record()
+    {
+        let input = human_swashbuckler_input(2);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_not_active")
+            .expect("expected the honest not-active recognition record");
+        assert_eq!(record.value, 0, "{:?}", record);
+    }
+
+    /// A single-class Human Swashbuckler at level 2, actively spending a
+    /// use of Charmed Life within budget, grounds the real Charisma
+    /// magnitude as a standalone record.
+    ///
+    /// Fixture Charisma 8 (-1 modifier).
+    #[test]
+    fn single_class_swashbuckler_level2_actively_using_charmed_life_in_budget_grounds_the_real_bonus()
+    {
+        let mut input = human_swashbuckler_input(2);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(2),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_active_bonus")
+            .expect("the active Charmed Life explanation must be grounded");
+        assert_eq!(bonus.value, -1, "fixture Charisma 8 (-1 modifier): {:?}", bonus);
+    }
+
+    /// A single-class Human Swashbuckler at level 2 claiming more Charmed
+    /// Life uses today than the real budget allows is a genuine posture
+    /// violation and must claim-block, mirroring Rage's/Judgment's own
+    /// genuinely-enforced over-budget check exactly.
+    #[test]
+    fn single_class_swashbuckler_level2_over_budget_charmed_life_stays_blocked_and_applies_no_bonus()
+    {
+        let mut input = human_swashbuckler_input(2);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(4),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.swashbuckler.charmed_life_uses_exceeded"
+                    && d.claim_blocking),
+            "expected the uses_exceeded claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_active_bonus"),
+            "no bonus should apply once the budget is exceeded: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A non-Swashbuckler character carrying a spoofed Charmed Life
+    /// activation must have it silently ignored -- the class-ownership
+    /// gate is by construction, not a bolt-on rejection. Also proves
+    /// Fighter's own golden path is unaffected.
+    #[test]
+    fn non_swashbuckler_characters_spoofed_charmed_life_entry_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SWASHBUCKLER_CHARMED_LIFE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Swashbuckler entry: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.swashbuckler.")),
+            "a non-Swashbuckler character must never ground any Swashbuckler explanation: {:?}",
             receipt.computation.explanations
         );
     }

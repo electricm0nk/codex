@@ -279,6 +279,14 @@ pub struct AcgClassCoverage {
     /// spellcasting table) -- an honest 4, not folded down for
     /// consistency's own sake where the underlying mechanisms are
     /// genuinely independent.
+    ///
+    /// Swashbuckler counts 3 (Panache, Charmed Life, Nimble), the same
+    /// "genuinely independent mechanisms" reasoning as Slayer: no shared
+    /// table or formula links any pair of the three (Panache is a flat
+    /// daily resource pool, Charmed Life is a level-gated, activation-
+    /// budgeted save bonus, Nimble is a flat AC dodge bonus) -- three
+    /// separate `KEY:Swashbuckler ~ ...` records, each with its own
+    /// separately-implemented formula.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
@@ -355,18 +363,20 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Warpriest => class_warpriest::MAX_SUPPORTED_LEVEL,
     };
 
-    // v0.6 alpha swarm, risks item 8 (first through seventh APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through ninth APG/ACG
     // class-specific closures): Skald's Inspired Rage, Bloodrager's
     // Bloodrage, Brawler's AC Bonus, Hunter's Animal Companion,
     // Arcanist's Arcane Reservoir + Spells Prepared, Warpriest's
-    // Blessings + Sacred Weapon, and Slayer's Sneak Attack + Trap Sense +
-    // Trapfinding + Track are the real, wired named class features among
-    // all ten ACG classes today -- see this field's own doc comment
-    // above for why Arcanist counts 2, not 1 (and why Cantrips does not
-    // add a third), why Slayer counts a genuine 4 (its four sub-features
-    // are structurally independent, not facets of one shared mechanism),
-    // and why Warpriest ALSO counts 2 (Blessings, Sacred
-    // Weapon), for a related but distinct reason: Warpriest's own
+    // Blessings + Sacred Weapon, Slayer's Sneak Attack + Trap Sense +
+    // Trapfinding + Track, and Swashbuckler's Panache + Charmed Life +
+    // Nimble are the real, wired named class features among all ten ACG
+    // classes today -- see this field's own doc comment above for why
+    // Arcanist counts 2, not 1 (and why Cantrips does not add a third),
+    // why Slayer counts a genuine 4 (its four sub-features are
+    // structurally independent, not facets of one shared mechanism), why
+    // Swashbuckler counts a genuine 3 (same "structurally independent"
+    // reasoning as Slayer), and why Warpriest ALSO counts 2 (Blessings,
+    // Sacred Weapon), for a related but distinct reason: Warpriest's own
     // `KEY:Warpriest ~ ...` list has NO record at all for the general
     // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
     // Prepared" record) -- only `Orisons` names the 0-level-specific
@@ -386,6 +396,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     let named_features_wired = match class_id {
         AcgClassId::Skald | AcgClassId::Bloodrager | AcgClassId::Brawler | AcgClassId::Hunter => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
+        AcgClassId::Swashbuckler => 3,
         AcgClassId::Slayer => 4,
         _ => 0,
     };
