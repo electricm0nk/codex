@@ -2216,6 +2216,36 @@ const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
 /// already hit).
 const WARD_HEX_SELECTION: &str = "hex:ward";
 
+/// v0.6 alpha swarm, risks item 8 (Shaman full-build closure, 12th
+/// ACG/APG class-specific closure): APG Shaman, verified directly
+/// against `acg_classes.lst`'s own `SPELLSTAT:WIS MEMORIZE:YES` tokens
+/// (a prepared, 9th-level divine caster, no `SPELLLIST:` reuse token --
+/// a fresh own-list caster, deferred entirely this slice). This
+/// closure's own MVP was corrected mid-scoping: the original comparative
+/// pass proposed Life Spirit's own Healer's Touch revelation, but direct
+/// verification of the real `ABILITY:...AUTOMATIC` grant line found it
+/// gated behind `PREVARGTEQ:ShamanSpiritGreater,1` (itself only set via
+/// `PRECLASS:1,Shaman=8`) -- genuinely a level 8+ feature, not
+/// immediately available the way Oracle's Healing Hands is. The lead
+/// independently confirmed this and greenlit the swap: Life Spirit's
+/// OTHER immediately-granted ability, Channel (a real Channel Positive
+/// Energy variant, `SERVESAS:ABILITY=Special Ability|Channel Positive
+/// Energy`), carries no such gate and grounds via the exact "flat uses-
+/// per-day + dice + DC" shape Cleric's own Channel Energy and
+/// Warpriest's Blessings already use. See
+/// `docs/release/v0.6/shaman-summoner-witch-comparative-scoping.md` for
+/// the full corpus verification and scope record.
+const SHAMAN_CLASS_ID: &str = "class:shaman";
+/// The choice set for which Spirit a Shaman selects at 1st level
+/// (mirrors `ORACLE_MYSTERY_CHOICE_ID`'s/`WITCH_HEX_CHOICE_ID`'s own
+/// single-selection shape).
+const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
+/// Life Spirit is the one canonical Spirit this closure grounds -- its
+/// own immediately-available Channel ability is the cleanest flat,
+/// self-scoped value of the 10 real Spirit types checked (the same 10
+/// primary spirits as Oracle's own 10 Mysteries).
+const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
+
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
 /// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
@@ -7805,6 +7835,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_swashbuckler_single_class(input)
         || is_supported_investigator_single_class(input)
         || is_supported_witch_single_class(input)
+        || is_supported_shaman_single_class(input)
 }
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
@@ -7976,6 +8007,20 @@ fn is_supported_investigator_single_class(input: &CharacterInput) -> bool {
     }
     acg::class_chassis_resolve(AcgClassId::Investigator, class_level.level, RuleSetId::Acg)
         .is_some()
+}
+
+/// v0.6 alpha swarm, risks item 8 (Shaman full-build closure): whether
+/// `input` is a single-class Shaman at a level within
+/// `acg::class_chassis_resolve`'s declared ceiling for Shaman -- mirrors
+/// the other nine ACG/APG exact-match gates exactly.
+fn is_supported_shaman_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if AcgClassId::from_class_id_str(&class_level.class_id) != Some(AcgClassId::Shaman) {
+        return false;
+    }
+    acg::class_chassis_resolve(AcgClassId::Shaman, class_level.level, RuleSetId::Acg).is_some()
 }
 
 /// v0.6 alpha swarm, risks item 8 (Witch full-build closure): whether
@@ -10672,6 +10717,147 @@ fn push_investigator_other_features_deferred_diagnostic(
     });
 }
 
+/// PF1 Advanced Class Guide Life Spirit's Channel ability's uses per
+/// day: `1+Charisma modifier`, verified directly against
+/// `acg_abilities_class.lst`'s own `BONUS:VAR|ShamanChannelTimes|1+CHA`.
+/// Floored at 0, mirroring Cleric's own `channel_energy_uses_per_day`
+/// precedent (the corpus tag itself carries no explicit floor function).
+fn shaman_channel_uses_per_day(charisma_modifier: i16) -> i16 {
+    (1 + charisma_modifier).max(0)
+}
+
+/// PF1 Advanced Class Guide Life Spirit's Channel ability's die count:
+/// `(ShamanLVL+1)/2` d6, verified directly against
+/// `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|ShamanChannelDice|(ShamanChannelLVL+1)/2` (where
+/// `ShamanChannelLVL` resolves to `ShamanSpiritLVL` resolves to
+/// `ShamanLVL`) and `BONUS:VAR|ShamanChannelDieSize|6`. Structurally
+/// identical to Cleric's own Channel Energy die-count formula
+/// (`ceil(level/2)`).
+fn shaman_channel_dice(level: u8) -> i16 {
+    (i16::from(level) + 1) / 2
+}
+
+/// PF1 Advanced Class Guide Life Spirit's Channel ability's save DC:
+/// `10+(ShamanLVL/2)+Charisma modifier`, verified directly against
+/// `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|ShamanChannelDC|10+(ShamanChannelLVL/2)+CHA`. Unlike
+/// Cleric's own Channel Energy (which this codebase deliberately does
+/// not ground a DC for), Shaman's own corpus record genuinely carries
+/// one, so it is grounded here, mirroring Warpriest's own Blessing DC
+/// precedent.
+fn shaman_channel_dc(level: u8, charisma_modifier: i16) -> i16 {
+    10 + i16::from(level) / 2 + charisma_modifier
+}
+
+/// Grounds or claim-blocks Shaman's Spirit choice (v0.6 alpha swarm,
+/// risks item 8, Shaman full-build closure, 12th ACG/APG class-specific
+/// closure). A recognized `choice:shaman_spirit` selection naming
+/// `spirit:life` grounds Life Spirit's own immediately-available Channel
+/// ability (flat uses-per-day, dice, and DC facts, no activation gate --
+/// the same "flat, no gate" shape as Cleric's Channel Energy/Warpriest's
+/// Blessings) and replaces the claim-blocking spirit-powers diagnostic
+/// with a non-blocking note naming the other 9 primary spirits as still
+/// deferred, mirroring Oracle's own Mystery/Curse and Witch's own Hex
+/// three-branch dispatch shape. An unrecognized or missing choice keeps
+/// a claim-blocking `spirit_powers.unsupported` diagnostic.
+fn ground_or_block_shaman_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let spirit_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    if spirit_selections.contains(&LIFE_SPIRIT_SELECTION) {
+        let uses_per_day = shaman_channel_uses_per_day(ability_modifiers.charisma);
+        let dice = shaman_channel_dice(level);
+        let dc = shaman_channel_dc(level, ability_modifiers.charisma);
+
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.life_spirit.channel_uses_per_day".to_owned(),
+            value: uses_per_day,
+            detail: format!(
+                "Shaman level {level} with Life Spirit's Channel: usable max(1 + Charisma \
+                 modifier ({}), 0) = {uses_per_day} times per day",
+                ability_modifiers.charisma
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.life_spirit.channel_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Shaman level {level} with Life Spirit's Channel: (level+1)/2 = {dice}d6 \
+                 positive energy damage/healing. Grounds only the flat die count; it computes \
+                 no channel-energy burst damage or healing resolution"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.life_spirit.channel_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Shaman level {level} with Life Spirit's Channel: save DC 10 + (level/2) + \
+                 Charisma modifier ({}) = {dc}",
+                ability_modifiers.charisma
+            ),
+        });
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.shaman.spirit_powers_beyond_life.unmodeled".to_owned(),
+            message: "Shaman Spirit power content beyond Life's own Channel remains unmodeled: \
+                 the other 9 primary spirits (Battle, Bones, Flame, Heavens, Lore, Nature, \
+                 Stone, Waves, Wind) and their own granted abilities are not implemented, and \
+                 Life Spirit's own higher-tier abilities (Healer's Touch, gated to level 8+; \
+                 Quick Healing; Manifestation) are not implemented either. This does not block \
+                 an otherwise-valid Life-Spirit posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.shaman.spirit_powers.unsupported".to_owned(),
+            message: "Shaman remains blocked on its Spirit powers burden: no recognized Life \
+                 Spirit choice is present (only Life's own immediately-available Channel \
+                 ability is genuinely grounded in this codebase), so no Shaman Spirit-power \
+                 support is claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+
+    push_shaman_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Pushes the new, narrower diagnostic replacing
+/// `class_feature.acg.shaman.unsupported` for Shaman specifically (v0.6
+/// alpha swarm, risks item 8, Shaman full-build closure): named ONLY the
+/// genuinely still-missing pieces. Pushed unconditionally regardless of
+/// the Spirit posture's own state, mirroring Oracle's/Witch's own
+/// diagnostic-honesty pattern -- this is the permanent claim-blocking
+/// gap for Shaman this slice.
+fn push_shaman_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned(),
+        message: format!(
+            "{SHAMAN_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+             pillar and Life Spirit's own Channel ability: fresh own-list spellcasting (no \
+             `SPELLLIST:` reuse token exists for Shaman, a genuinely new data-ingestion cost), \
+             Spirit Animal (an unbuilt Familiar subsystem, mechanically distinct from the \
+             already-built Animal Companion Wolf stat block), Spirit Magic, Orisons, \
+             Manifestation (a capstone ability), the other 9 primary spirits, and the large \
+             Hex/Spirit Hex chooser-list remain ungrounded anywhere in this codebase; no \
+             class-feature or spell execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
@@ -10745,26 +10931,27 @@ fn compute_acg_class_chassis(
         ),
     });
 
-    // v0.6 alpha swarm, risks item 8 (first through ninth APG/ACG
+    // v0.6 alpha swarm, risks item 8 (first through tenth APG/ACG
     // closures, adversarially reviewed 2026-07-25 for the gate-widening
     // piece): Skald, Bloodrager, Brawler, Hunter, Arcanist, Warpriest,
-    // Slayer, Swashbuckler, and Investigator are the nine ACG classes
-    // with a genuinely real class feature now (Inspired Rage / Bloodrage
-    // / AC Bonus / Animal Companion / real prepared spellcasting + Arcane
-    // Reservoir / real prepared spellcasting + Blessings + Sacred Weapon
-    // / Sneak Attack dice + Trap Sense + Trapfinding + Track / Panache +
-    // Charmed Life + Nimble / Trapfinding + Trap Sense + Inspiration
-    // pool-size) -- the other 1 ACG class, and every APG class except
-    // Cavalier/Alchemist/Inquisitor/Oracle, keep the exact original
-    // unconditional diagnostic unchanged. These branches are reached
-    // only for single-class Skald/Bloodrager/Brawler/Hunter/Arcanist/
-    // Warpriest/Slayer/Swashbuckler/Investigator (this function is only
-    // ever called from `compute_class_chassis`'s single-class-only
-    // section; `AcgClassId::from_class_id_str` is deliberately not
-    // registered with `multiclass_class_level_supported`, so any of
-    // these nine classes in a multiclass mix never reaches this function
-    // at all), so no separate gate-ordering/hoisting fix is needed the
-    // way CRB classes required once `table_class_id` recognized them
+    // Slayer, Swashbuckler, Investigator, and Shaman are the ten ACG
+    // classes with a genuinely real class feature now (Inspired Rage /
+    // Bloodrage / AC Bonus / Animal Companion / real prepared
+    // spellcasting + Arcane Reservoir / real prepared spellcasting +
+    // Blessings + Sacred Weapon / Sneak Attack dice + Trap Sense +
+    // Trapfinding + Track / Panache + Charmed Life + Nimble /
+    // Trapfinding + Trap Sense + Inspiration pool-size / Life Spirit's
+    // Channel) -- every APG class except Cavalier/Alchemist/Inquisitor/
+    // Oracle/Witch keeps the exact original unconditional diagnostic
+    // unchanged. These branches are reached only for single-class
+    // Skald/Bloodrager/Brawler/Hunter/Arcanist/Warpriest/Slayer/
+    // Swashbuckler/Investigator/Shaman (this function is only ever
+    // called from `compute_class_chassis`'s single-class-only section;
+    // `AcgClassId::from_class_id_str` is deliberately not registered
+    // with `multiclass_class_level_supported`, so any of these ten
+    // classes in a multiclass mix never reaches this function at all),
+    // so no separate gate-ordering/hoisting fix is needed the way CRB
+    // classes required once `table_class_id` recognized them
     // generically.
     if class_id == AcgClassId::Skald {
         ground_or_block_skald_inspired_rage(input, level, ability_modifiers, explanations, diagnostics);
@@ -10804,6 +10991,8 @@ fn compute_acg_class_chassis(
         );
     } else if class_id == AcgClassId::Investigator {
         ground_or_block_investigator_class_features(level, ability_modifiers, explanations, diagnostics);
+    } else if class_id == AcgClassId::Shaman {
+        ground_or_block_shaman_class_features(input, level, ability_modifiers, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other ACG class yet -- no class-skill list, no
@@ -28721,6 +28910,7 @@ mod acg_class_chassis_dispatch_tests {
                 || class_id == "class:slayer"
                 || class_id == "class:swashbuckler"
                 || class_id == "class:investigator"
+                || class_id == "class:shaman"
             {
                 continue;
             }
@@ -29241,42 +29431,83 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
+    /// Shaman-specific coverage for the retired-diagnostic/new-diagnostic
+    /// swap (v0.6 alpha swarm, risks item 8, Shaman full-build closure,
+    /// twelfth ACG/APG closure): the OLD generic
+    /// `class_feature.acg.shaman.unsupported` diagnostic must never
+    /// appear, while the NEW, narrower `other_features_deferred`
+    /// diagnostic always does. A bare Shaman (no Spirit choice) also
+    /// stays claim-blocked on `spirit_powers.unsupported`.
+    #[test]
+    fn shaman_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+        let input = acg_style_input("class:shaman", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Shaman must stay Blocked on its other-features-deferred posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.unsupported"),
+            "the retired generic diagnostic must never appear for Shaman: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
     /// The critical negative-leak test (adversarial review finding 1,
     /// flagged by the lead as the one to verify most carefully, reapplied
     /// for Bloodrager, Brawler, Hunter, Arcanist, Warpriest, Slayer,
-    /// Swashbuckler, and Investigator): the OTHER 1 ACG class (every
-    /// class other than Skald, Bloodrager, Brawler, Hunter, Arcanist,
-    /// Warpriest, Slayer, Swashbuckler, and Investigator, the nine now
-    /// genuinely admitted) must produce ZERO `defense.total_save.*`/
-    /// `combat.baseline_*`/`skill.selected_modifier.*` explanations at
-    /// level 1, even when built from the exact same Longsword/Chain
-    /// Shirt/Dodge/Weapon-Focus/skill-rank posture that genuinely
-    /// satisfies every non-class-recognition precondition those pillars
-    /// check -- proving `is_supported_skald_single_class`,
-    /// `is_supported_bloodrager_single_class`,
-    /// `is_supported_brawler_single_class`, `is_supported_hunter_single_class`,
-    /// `is_supported_arcanist_single_class`, `is_supported_warpriest_single_class`,
-    /// `is_supported_slayer_single_class`,
-    /// `is_supported_swashbuckler_single_class`, and
-    /// `is_supported_investigator_single_class` are all real exact
-    /// matches, not broad `.is_some()` checks that would silently admit
-    /// all 10 ACG classes into real pillar computation. This is stronger
-    /// than the pre-existing "stays Blocked" assertion above, which does
-    /// not by itself rule out a silent pillar-output leak alongside an
-    /// unrelated claim-blocking diagnostic.
+    /// Swashbuckler, Investigator, and now Shaman): with Shaman's own
+    /// closure, all ten real ACG classes are genuinely admitted by their
+    /// own exact-match gate now -- there is no "other" ACG class left to
+    /// prove a leak against. The loop below is a deliberate, self-
+    /// documenting no-op (asserted explicitly, not left as a silently
+    /// vacuous body): every entry in `EXPECTED_LEVEL_1` is carved out,
+    /// proving this test's own historical purpose (catching a broad
+    /// `.is_some()` gate that would silently admit a sibling class) is
+    /// now fully covered by each class's own dedicated positive-
+    /// counterpart test instead, not abandoned.
     #[test]
-    fn the_other_one_acg_class_produces_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn all_ten_acg_classes_are_now_genuinely_admitted_no_leak_target_remains() {
+        let carved_out = |class_id: &str| {
+            matches!(
+                class_id,
+                "class:skald"
+                    | "class:bloodrager"
+                    | "class:brawler"
+                    | "class:hunter"
+                    | "class:arcanist"
+                    | "class:warpriest"
+                    | "class:slayer"
+                    | "class:swashbuckler"
+                    | "class:investigator"
+                    | "class:shaman"
+            )
+        };
+        assert!(
+            EXPECTED_LEVEL_1.iter().all(|(class_id, ..)| carved_out(class_id)),
+            "every one of the ten real ACG classes must now be carved out -- if this fails, a \
+             new ACG class was added to EXPECTED_LEVEL_1 without its own leak-test coverage"
+        );
+
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:skald"
-                || class_id == "class:bloodrager"
-                || class_id == "class:brawler"
-                || class_id == "class:hunter"
-                || class_id == "class:arcanist"
-                || class_id == "class:warpriest"
-                || class_id == "class:slayer"
-                || class_id == "class:swashbuckler"
-                || class_id == "class:investigator"
-            {
+            if carved_out(class_id) {
                 continue;
             }
 
@@ -29582,6 +29813,45 @@ mod acg_class_chassis_dispatch_tests {
             "Investigator does NOT earn the class-skill bonus on Swim (real class-skill list \
              excludes it, the first partial match on the roster): {:?}",
             swim
+        );
+    }
+
+    /// Shaman's own positive counterpart, mirroring Investigator's/
+    /// Swashbuckler's/Slayer's exactly -- proves the gate genuinely
+    /// admits Shaman. Shaman's own real class-skill list excludes all
+    /// three of Climb/Intimidate/Swim (verified directly), the same
+    /// "none of three" shape as Wizard/Arcanist/Oracle -- no class-
+    /// skill-bonus bug to fix here.
+    #[test]
+    fn shaman_alone_produces_real_pillar_explanations_under_the_satisfying_posture() {
+        let input = acg_style_input("class:shaman", 1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        for expected_prefix in
+            ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+        {
+            assert!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.starts_with(expected_prefix)),
+                "expected at least one {expected_prefix}* explanation for Shaman: {:?}",
+                receipt.computation.explanations
+            );
+        }
+
+        let climb = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "skill.selected_modifier.climb")
+            .expect("Climb must be grounded for Shaman");
+        assert_eq!(
+            climb.value, 3,
+            "Shaman does NOT earn the class-skill bonus on Climb (real class-skill list \
+             excludes all three tracked skills): {:?}",
+            climb
         );
     }
 
@@ -34197,6 +34467,215 @@ mod investigator_dispatch_widening_safety_tests {
                 .iter()
                 .any(|e| e.id.starts_with("class_feature.acg.investigator.")),
             "a non-Investigator character must never ground any Investigator explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+}
+
+/// v0.6 alpha swarm, risks item 8 (Shaman full-build closure, 12th
+/// ACG/APG class-specific closure): tests the Life Spirit choice
+/// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
+/// established dispatch-widening test module shape.
+#[cfg(test)]
+mod shaman_dispatch_widening_safety_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+        FIGHTER_CLASS_ID, LIFE_SPIRIT_SELECTION, SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_shaman_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SHAMAN_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A bare single-class Human Shaman (no Spirit choice) stays
+    /// `Blocked` on both the spirit_powers diagnostic and
+    /// other_features_deferred, never the retired generic diagnostic.
+    #[test]
+    fn single_class_shaman_bare_stays_blocked_on_spirit_powers_and_other_features() {
+        let input = human_shaman_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Shaman must stay Blocked without a recognized Spirit choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.unsupported"),
+            "the retired generic diagnostic must never appear for Shaman: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.spirit_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the spirit_powers claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "expected the other_features_deferred diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Shaman with Life Spirit recognized grounds
+    /// Channel's real uses-per-day/dice/DC facts and clears the
+    /// spirit_powers diagnostic in favor of the non-blocking "other
+    /// spirits" note -- stays `Blocked` on other_features_deferred
+    /// regardless.
+    ///
+    /// Fixture Charisma 8 (-1 modifier). Level 1: uses/day max(1-1,0)=0,
+    /// dice (1+1)/2=1, DC 10+0-1=9.
+    #[test]
+    fn single_class_shaman_with_life_spirit_grounds_channels_real_facts() {
+        let mut input = human_shaman_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.spirit_powers.unsupported"),
+            "spirit_powers must not fire once Life Spirit is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.spirit_powers_beyond_life.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking other-spirits note: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.life_spirit.channel_uses_per_day")
+            .expect("Channel uses-per-day must be grounded once recognized");
+        assert_eq!(
+            uses_per_day.value, 0,
+            "fixture Charisma 8 (-1 modifier): max(1-1,0)=0: {:?}",
+            uses_per_day
+        );
+
+        let dice = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.life_spirit.channel_dice")
+            .expect("Channel dice must be grounded once recognized");
+        assert_eq!(dice.value, 1, "Shaman level 1 Channel dice: (1+1)/2=1: {:?}", dice);
+
+        let dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.life_spirit.channel_dc")
+            .expect("Channel DC must be grounded once recognized");
+        assert_eq!(dc.value, 9, "Shaman level 1 Channel DC: 10+0-1=9: {:?}", dc);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Shaman still stays Blocked on other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Channel's dice/DC progression at a higher level, verified against
+    /// the PCGen corpus formula directly (not merely trusting the
+    /// level-1 case above): level 5 dice (5+1)/2=3, DC 10+2-1=11.
+    #[test]
+    fn shaman_channel_dice_and_dc_match_the_corpus_formula_at_a_higher_level() {
+        let mut input = human_shaman_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let dice = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.life_spirit.channel_dice")
+            .expect("Channel dice must be grounded");
+        assert_eq!(dice.value, 3, "level 5 Channel dice: (5+1)/2=3: {:?}", dice);
+
+        let dc = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.life_spirit.channel_dc")
+            .expect("Channel DC must be grounded");
+        assert_eq!(dc.value, 11, "level 5 Channel DC: 10+2-1=11: {:?}", dc);
+    }
+
+    /// A non-Shaman character carrying a spoofed Life Spirit choice must
+    /// have it silently ignored -- the class-ownership gate is by
+    /// construction, not a bolt-on rejection. Also proves Fighter's own
+    /// golden path is unaffected.
+    #[test]
+    fn non_shaman_characters_spoofed_life_spirit_choice_is_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's own golden path must be unaffected by a stray Shaman choice: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.shaman.")),
+            "a non-Shaman character must never ground any Shaman explanation: {:?}",
             receipt.computation.explanations
         );
     }

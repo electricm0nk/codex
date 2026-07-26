@@ -61,29 +61,32 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// assertion (and the coverage-matrix artifact) rather than silently
 /// leaving the audit stale.
 ///
-/// **Updated (v0.6 alpha swarm, risks item 8, first through tenth
+/// **Updated (v0.6 alpha swarm, risks item 8, first through twelfth
 /// APG/ACG class-specific closures, 2026-07-25/26):** exactly this
 /// canary fired -- Skald's Inspired Rage, Bloodrager's Bloodrage,
 /// Brawler's AC Bonus, Hunter's Animal Companion, Arcanist's Arcane
 /// Reservoir + Spells Prepared, Warpriest's Blessings + Sacred Weapon,
 /// Slayer's Sneak Attack + Trap Sense + Trapfinding + Track,
-/// Swashbuckler's Panache + Charmed Life + Nimble, and Investigator's
-/// Trapfinding + Trap Sense + Inspiration pool-size are now genuinely
-/// wired. All nine are carved out of the "stays 0" loop below and given
-/// their own dedicated assertions, per this test's own documented
-/// update instruction. Every other ACG class remains at 0, unchanged.
-/// Arcanist's and Warpriest's own `named_features_wired == 2` each (not
-/// 1, unlike Skald/Bloodrager/Brawler/Hunter) for related but distinct
-/// reasons, and Slayer's/Swashbuckler's/Investigator's own `== 4`/`==
-/// 3`/`== 3` for yet another reason -- see
-/// `AcgClassCoverage::named_features_wired`'s own doc comment in
-/// `rules_tables::acg::mod` for the full record: Arcanist's real
-/// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
-/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
-/// `Cantrips` does NOT add a third (not separately implemented);
-/// Warpriest has NO general-spellcasting KEY record at all (only
-/// `Orisons`, also not separately implemented), so its own count is
-/// Blessings + Sacred Weapon, with Destruction Blessing's own
+/// Swashbuckler's Panache + Charmed Life + Nimble, Investigator's
+/// Trapfinding + Trap Sense + Inspiration pool-size, and Shaman's Life
+/// Spirit Channel are now genuinely wired. **With Shaman's own closure,
+/// every real ACG class now has at least one named feature wired** --
+/// the "stays 0" loop below is now a deliberate no-op, asserted
+/// explicitly rather than left silently vacuous (mirrors
+/// `pilot_compute.rs`'s own
+/// `all_ten_acg_classes_are_now_genuinely_admitted_no_leak_target_remains`
+/// milestone test). Arcanist's and Warpriest's own
+/// `named_features_wired == 2` each (not 1, unlike Skald/Bloodrager/
+/// Brawler/Hunter/Shaman) for related but distinct reasons, and
+/// Slayer's/Swashbuckler's/Investigator's own `== 4`/`== 3`/`== 3` for
+/// yet another reason -- see `AcgClassCoverage::named_features_wired`'s
+/// own doc comment in `rules_tables::acg::mod` for the full record:
+/// Arcanist's real spellcasting build genuinely closes 1 more distinct
+/// `KEY:Arcanist ~ ...` record (`Spells Prepared`) beyond Arcane
+/// Reservoir, while `Cantrips` does NOT add a third (not separately
+/// implemented); Warpriest has NO general-spellcasting KEY record at
+/// all (only `Orisons`, also not separately implemented), so its own
+/// count is Blessings + Sacred Weapon, with Destruction Blessing's own
 /// Destructive Attacks folded into the single Blessings slot (a
 /// different corpus class-prefix, `KEY:Destruction Blessing ~ ...`, not
 /// `KEY:Warpriest ~ ...`); Slayer's own four sub-features,
@@ -93,9 +96,13 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// shared their class's spellcasting table), so each one counts
 /// honestly, not folded down. Investigator's own prepared extract
 /// spellcasting (the Alchemist formula list) is explicitly deferred to
-/// its own follow-on slice, so it does not add a fourth count.
+/// its own follow-on slice, so it does not add a fourth count. Shaman
+/// counts 1 (the Spirit slot alone) -- its own fresh own-list
+/// spellcasting and Life Spirit's own higher-tier abilities (Healer's
+/// Touch, genuinely gated to level 8+, not immediately available) both
+/// stay deferred, so it does not add a second count either.
 #[test]
-fn zero_named_class_features_are_wired_for_any_acg_class_except_the_nine_named_closures_landed_so_far()
+fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that_shamans_own_closure_landed()
 {
     for row in coverage_report() {
         if matches!(
@@ -109,6 +116,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_the_nine_named_c
                 | AcgClassId::Slayer
                 | AcgClassId::Swashbuckler
                 | AcgClassId::Investigator
+                | AcgClassId::Shaman
         ) {
             continue;
         }
@@ -144,6 +152,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_the_nine_named_c
             "Trapfinding + Trap Sense + Inspiration pool-size",
             3,
         ),
+        (AcgClassId::Shaman, "Life Spirit Channel", 1),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
@@ -295,7 +304,18 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                 // to check is the narrowed other_features_deferred one.
                 "class_feature.acg.investigator.other_features_deferred.unsupported".to_owned()
             }
-            _ => format!("class_feature.acg.{}.unsupported", class_id.name()),
+            AcgClassId::Shaman => {
+                // v0.6 alpha swarm, risks item 8 (Shaman full-build
+                // closure): a bare, minimal-input Shaman (no Spirit
+                // choice) trips BOTH the new spirit_powers diagnostic
+                // and the always-pushed other_features_deferred one --
+                // checking for other_features_deferred here is
+                // sufficient to prove the retired generic diagnostic is
+                // gone; the dedicated pilot_compute.rs test module
+                // separately proves spirit_powers is retired too once
+                // Life Spirit is recognized.
+                "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned()
+            }
         };
         let unsupported = computation
             .diagnostics
@@ -326,6 +346,7 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                 | AcgClassId::Slayer
                 | AcgClassId::Swashbuckler
                 | AcgClassId::Investigator
+                | AcgClassId::Shaman
         ) {
             let retired_diagnostic_id = format!("class_feature.acg.{}.unsupported", class_id.name());
             assert!(
