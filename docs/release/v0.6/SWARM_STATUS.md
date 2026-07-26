@@ -1541,7 +1541,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T14:55:02
-Latest commit on tranche/6: 0e7f710e docs(v0.6): Hunter closure (task #2) reconciled, Focus-feat design ratified (55 seconds ago) (2026-07-26T14:54:07-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T14:55:01 frontend=2026-07-26T12:42:06 qa=2026-07-26T12:43:48 lead=2026-07-26T14:53:32
+Last mechanical check: 2026-07-26T15:35:01
+Latest commit on tranche/6: d3bbbada docs(v0.6): Investigator pre-slice (task #8) verified, scout's doc corrected (5 minutes ago) (2026-07-26T15:30:28-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T15:27:45 frontend=2026-07-26T12:42:06 qa=2026-07-26T12:43:48 lead=2026-07-26T15:31:44
 <!-- AUTO-HEARTBEAT-END -->
