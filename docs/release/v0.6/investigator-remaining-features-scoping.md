@@ -28,10 +28,18 @@ spellcasting (#4). Unchanged by the corrected bar.
 
 ### Poison Resistance — groundable standalone (situational-save magnitude)
 
-- Corpus: `BONUS:VAR|InvestigatorPoisonResistanceBonus|2` gated by
-  `PREVARGTEQ:InvestigatorPoisonLVL,1/2/3…` — a +2-per-tier bonus on saves
-  vs poison (PF1 Investigator Poison Resistance: +2/+4/+6/+8 scaling,
-  immunity at 20th).
+- Corpus (re-derived directly, correcting an earlier secondary-source
+  slip in this doc): `BONUS:VAR|InvestigatorPoisonResistanceBonus|2` adds
+  +2 per `InvestigatorPoisonLVL` step, and `InvestigatorPoisonLVL` itself
+  increments at `PREVARGTEQ:InvestigatorLVL,2/5/8`, with the level-10 gate
+  (`PREVARGTEQ:InvestigatorLVL,10`, `Investigator_CF_PoisonImmunity`)
+  flipping to **full "Immunity to Poison"**. So the real progression is:
+  **None below level 2, +2 (levels 2–4), +4 (5–7), +6 (8–9), immunity at
+  10+** — a bonus on saves vs poison. **There is no +8 tier, and immunity
+  arrives at level 10, not 20** (an earlier draft of this doc mis-stated
+  "+2/+4/+6/+8, immunity at 20th" from secondary-source memory; corrected
+  here after a direct corpus re-derivation — the exact failure mode the
+  corpus-first discipline exists to catch).
 - A situational-save standalone magnitude — **the exact shape as Bard
   Well-Versed and Inquisitor's grounded Purity judgment**. Grounds cleanly
   under the corrected bar as `class_feature.acg.investigator.poison_resistance`,
