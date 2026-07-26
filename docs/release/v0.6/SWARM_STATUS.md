@@ -1463,7 +1463,7 @@ No new commits since fca4e64e. All three pings are routine check-ins, not correc
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-25T21:05:01
-Latest commit on tranche/6: 7466a290 docs(v0.6): Warpriest closure re-verified against committed HEAD, docs reconciled (2 minutes ago) (2026-07-25T21:03:14-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-25T21:03:53 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T20:58:33
+Last mechanical check: 2026-07-25T22:30:02
+Latest commit on tranche/6: f64534d8 docs(v0.6): MILESTONE -- Arcanist reaches Computed, docs reconciled (56 seconds ago) (2026-07-25T22:29:06-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-25T22:29:21 frontend=2026-07-25T18:02:41 qa=2026-07-25T12:03:53 lead=2026-07-25T22:26:01
 <!-- AUTO-HEARTBEAT-END -->
