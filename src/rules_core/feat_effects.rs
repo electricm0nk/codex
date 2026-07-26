@@ -33,6 +33,8 @@
 //! chosen-target mechanism exists for a catalog-picked feat). Left for a
 //! future slice, not guessed at here.
 
+use crate::rules_core::character_input::SelectedChoice;
+
 /// The real PF1 Core Rulebook feat catalog's key for Toughness
 /// (`rules_tables::crb::feat_data::general`'s own
 /// `FeatTableEntry { key: "Toughness", ... }` record) -- NOT a synthetic
@@ -274,6 +276,68 @@ pub fn standalone_skill_facts_from_feats(selected_feats: &[String]) -> Vec<Stand
         .iter()
         .filter(|fact| selected_feats.iter().any(|feat| feat == fact.feat_key))
         .copied()
+        .collect()
+}
+
+/// Skill Focus's real catalog key (`feat_data/general.rs`), and the Mechanism-B
+/// contract for recording its player-chosen skill target: a
+/// `SelectedChoice { choice_set_id: "choice:skill_focus_target",
+/// selection_id: "skill:<Skill Name>" }` on `chosen.selected_choices`. Chosen
+/// over a compound `selected_feats` key ("Skill Focus:skill:X") deliberately:
+/// every real `selected_feats` reader (`feat_prereqs`, `pilot_compute_corpus`,
+/// this module) matches the plain catalog key by exact equality, so a compound
+/// string would silently break any prerequisite lookup requiring plain
+/// "Skill Focus". Keeping the target in `selected_choices` leaves `selected_feats`
+/// untouched. The `"skill:"` prefix mirrors the codebase's existing
+/// `selection_id` conventions (`"school:evocation"`, `"feat:dodge"`); skill
+/// names carry spaces but never colons, so a single prefix strip recovers the
+/// full name.
+const SKILL_FOCUS_FEAT_KEY: &str = "Skill Focus";
+const SKILL_FOCUS_TARGET_CHOICE_SET: &str = "choice:skill_focus_target";
+const SKILL_FOCUS_SKILL_SELECTION_PREFIX: &str = "skill:";
+
+/// Skill Focus's real PF1 Core Rulebook benefit: a flat +3 to one chosen skill
+/// ("+3 bonus on all checks with that skill; if you have 10 or more ranks..., it
+/// increases to +6"). Verified against the feat's own catalog record
+/// (`["SKILL","%LIST","3","TYPE=SkillFocus"]`). Provably +3 for every character
+/// this engine represents (skill ranks never reach 10), the same floor
+/// reasoning `TWO_SKILL_FEAT_BONUS` documents; the +6 tier is deferred, not
+/// fabricated.
+const SKILL_FOCUS_BONUS: i16 = 3;
+
+/// One grounded Skill Focus fact: the real +3 applied to a specific,
+/// player-chosen skill. Unlike [`StandaloneSkillFeatFact`] (whose `skill_name`
+/// is a compile-time `&'static str` from a fixed table), the target here is a
+/// runtime player pick, so `skill_name` is an owned `String`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SkillFocusFact {
+    /// The chosen skill, verbatim from the `"skill:<name>"` selection.
+    pub skill_name: String,
+    /// Always [`SKILL_FOCUS_BONUS`] (+3) at levels this engine represents.
+    pub bonus: i16,
+}
+
+/// Grounds Skill Focus's real +3 as a standalone fact for each explicitly
+/// chosen skill target -- but **only** when Skill Focus is actually in
+/// `selected_feats` AND a matching `choice:skill_focus_target -> skill:<name>`
+/// is present in `selected_choices`. Grounds nothing (never a fabricated
+/// canonical skill) when the feat is present without a target choice, when a
+/// target choice is orphaned without the feat, or when a choice is malformed /
+/// from a different choice set. Repeatable: one fact per valid target choice,
+/// in input order.
+pub fn skill_focus_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<SkillFocusFact> {
+    if !selected_feats.iter().any(|feat| feat == SKILL_FOCUS_FEAT_KEY) {
+        return Vec::new();
+    }
+    selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == SKILL_FOCUS_TARGET_CHOICE_SET)
+        .filter_map(|choice| choice.selection_id.strip_prefix(SKILL_FOCUS_SKILL_SELECTION_PREFIX))
+        .filter(|skill_name| !skill_name.is_empty())
+        .map(|skill_name| SkillFocusFact { skill_name: skill_name.to_owned(), bonus: SKILL_FOCUS_BONUS })
         .collect()
 }
 
@@ -598,5 +662,105 @@ mod standalone_skill_facts_from_feats_tests {
         // grounded "Acrobatic" key; it must not trigger Acrobatic's facts.
         let selected_feats = vec!["Acrobatic Steps".to_owned()];
         assert!(standalone_skill_facts_from_feats(&selected_feats).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod skill_focus_facts_from_choices_tests {
+    use super::*;
+
+    fn choice(set: &str, sel: &str) -> SelectedChoice {
+        SelectedChoice { choice_set_id: set.to_owned(), selection_id: sel.to_owned() }
+    }
+
+    fn target(skill: &str) -> SelectedChoice {
+        choice("choice:skill_focus_target", &format!("skill:{skill}"))
+    }
+
+    fn fact(skill: &str) -> SkillFocusFact {
+        SkillFocusFact { skill_name: skill.to_owned(), bonus: 3 }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(skill_focus_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_skill_focus_is_selected_but_no_target_choice_is_present() {
+        // The load-bearing no-fabrication case: Skill Focus with no explicit
+        // target choice grounds NOTHING (no silently-seeded canonical skill).
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        assert!(skill_focus_facts_from_choices(&selected_feats, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphan_target_choice_without_the_feat() {
+        // A target choice with no Skill Focus in selected_feats is an orphan --
+        // ground nothing rather than fabricate a bonus for an unpicked feat.
+        let choices = vec![target("Stealth")];
+        assert!(skill_focus_facts_from_choices(&[], &choices).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_chosen_skill_when_feat_and_explicit_choice_are_both_present() {
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![target("Stealth")];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Stealth")]
+        );
+    }
+
+    #[test]
+    fn grounds_a_multi_word_skill_name_verbatim() {
+        // Skill names carry spaces ("Sleight of Hand") but never colons, so the
+        // "skill:" prefix strip recovers the full name intact.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![target("Sleight of Hand")];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Sleight of Hand")]
+        );
+    }
+
+    #[test]
+    fn grounds_one_fact_per_target_when_skill_focus_is_taken_more_than_once() {
+        // Skill Focus is legally repeatable (once per skill); each explicit
+        // target choice grounds its own +3 fact, in input order.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![target("Stealth"), target("Perception")];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Stealth"), fact("Perception")]
+        );
+    }
+
+    #[test]
+    fn ignores_a_choice_from_a_different_choice_set() {
+        // A Wizard school-specialization choice is not a Skill Focus target.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices =
+            vec![choice("choice:wizard_school_specialization", "school:evocation")];
+        assert!(skill_focus_facts_from_choices(&selected_feats, &choices).is_empty());
+    }
+
+    #[test]
+    fn ignores_a_target_choice_whose_selection_lacks_the_skill_prefix() {
+        // A selection_id that isn't a "skill:<name>" is not a valid skill
+        // target -- don't fabricate a fact from a malformed/wrong-kind value.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![
+            choice("choice:skill_focus_target", "Stealth"),
+            choice("choice:skill_focus_target", "school:evocation"),
+        ];
+        assert!(skill_focus_facts_from_choices(&selected_feats, &choices).is_empty());
+    }
+
+    #[test]
+    fn ignores_an_empty_skill_name_after_the_prefix() {
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![choice("choice:skill_focus_target", "skill:")];
+        assert!(skill_focus_facts_from_choices(&selected_feats, &choices).is_empty());
     }
 }
