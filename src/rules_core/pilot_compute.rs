@@ -10984,6 +10984,53 @@ fn investigator_inspiration_pool_size(level: u8, intelligence_modifier: i16) -> 
     (i16::from(level) / 2 + intelligence_modifier).max(1)
 }
 
+/// PF1 Advanced Class Guide Investigator Poison Resistance's numeric
+/// bonus tier (deepening 2026-07-26, task #8), verified directly against
+/// `acg_abilities_class.lst`'s own internal `InvestigatorPoisonLVL`
+/// tier-gating tokens rather than assumed from a general "poison
+/// resistance progression" pattern: `None` below level 2 (not yet
+/// gained), `Some(2)` from level 2, `Some(4)` from level 5, `Some(6)`
+/// from level 8. **Correction to the scoping doc's own claim** ("+2/+4/
+/// +6/+8 scaling, immunity at 20th"): the raw corpus has no level-20
+/// tier and no +8 step at all -- the real progression tops out at +6
+/// (level 8-9), then converts to full immunity at level 10 (see
+/// `investigator_is_poison_immune`), not a fourth numeric tier. Poison
+/// Lore and Poison Resistance both begin at 2nd level per the corpus's
+/// own `PREVARGTEQ:InvestigatorLVL,2` gate on the first tier.
+fn investigator_poison_resistance_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        None
+    } else if level < 5 {
+        Some(2)
+    } else if level < 8 {
+        Some(4)
+    } else {
+        Some(6)
+    }
+}
+
+/// Whether `level` has reached full poison immunity (deepening
+/// 2026-07-26, task #8), verified directly against the corpus's own
+/// `DESC:You are completely immune to poison.|PREVAREQ:
+/// InvestigatorPoisonLVL,4` gate, which resolves to Investigator level
+/// 10 (the fourth and final tier step). A qualitatively different fact
+/// from the numeric resistance bonus above, not a fourth scaling step.
+fn investigator_is_poison_immune(level: u8) -> bool {
+    level >= 10
+}
+
+/// PF1 Advanced Class Guide Investigator Alchemy: "you gain a
+/// competence bonus equal to [Investigator level] on the [Craft
+/// (alchemy)] skill check" -- verified directly against
+/// `acg_abilities_class.lst`'s own `BONUS:VAR|
+/// InvestigatorAlchemyCreationBonus|InvestigatorLVL` (deepening
+/// 2026-07-26, task #8). A flat competence bonus with no computed
+/// total (Craft (alchemy) is not among the skills this codebase
+/// computes), the same shape as Bard's own Bardic Knowledge.
+fn investigator_alchemy_creation_bonus(level: u8) -> i16 {
+    i16::from(level)
+}
+
 /// Grounds Investigator's class features for `level` (v0.6 alpha swarm,
 /// risks item 8, Investigator full-build closure, 10th ACG/APG class-
 /// specific closure, no-spellcasting MVP). Called from
@@ -11044,6 +11091,56 @@ fn ground_or_block_investigator_class_features(
         ),
     });
 
+    match investigator_poison_resistance_bonus(level) {
+        None => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.investigator.poison_resistance_bonus".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Investigator level {level} Poison Resistance: correctly absent below level \
+                     2 by PF1 Advanced Class Guide level gate; the at-grant magnitude is named \
+                     but not computed"
+                ),
+            });
+        }
+        Some(bonus) if investigator_is_poison_immune(level) => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.investigator.poison_resistance_bonus".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Investigator level {level} is fully immune to poison (PF1 Advanced Class \
+                     Guide, granted at level 10): a qualitatively different fact from the \
+                     numeric resistance bonus (which topped out at +{bonus} at level 8-9), not a \
+                     fourth scaling tier, so no numeric bonus value applies here"
+                ),
+            });
+        }
+        Some(bonus) => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.investigator.poison_resistance_bonus".to_owned(),
+                value: bonus,
+                detail: format!(
+                    "Investigator level {level} Poison Resistance: a +{bonus} bonus on all \
+                     saving throws against poison (2 at level 2, 4 at level 5, 6 at level 8, \
+                     immune at level 10). No poison-save total exists anywhere in this \
+                     codebase, so this grounds only the flat bonus value"
+                ),
+            });
+        }
+    }
+
+    let alchemy_bonus = investigator_alchemy_creation_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.alchemy_bonus".to_owned(),
+        value: alchemy_bonus,
+        detail: format!(
+            "Investigator level {level} Alchemy: a +{alchemy_bonus} competence bonus on Craft \
+             (alchemy) checks to create mundane alchemical items (equal to Investigator level). \
+             No Craft (alchemy) total exists anywhere in this codebase, so this grounds only \
+             the flat bonus value, mirroring Bard's own Bardic Knowledge"
+        ),
+    });
+
     push_investigator_other_features_deferred_diagnostic(diagnostics);
 }
 
@@ -11058,17 +11155,19 @@ fn push_investigator_other_features_deferred_diagnostic(
         id: "class_feature.acg.investigator.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Trapfinding, Trap Sense, and Inspiration's flat pool-size fact: \
-             prepared extract spellcasting (reusing the Alchemist formula list -- no Alchemist \
-             spell-list mapping exists anywhere in this codebase yet, a genuinely new data-\
-             ingestion cost deferred to its own follow-on slice), Inspiration's actual spend (a \
-             free/two-use action on skill/ability/attack/save rolls, plus the free Knowledge/\
-             Linguistics/Spellcraft interaction), Investigator Talents (a chooser-list of real \
-             mechanical variety including the large Rogue Talent and Discovery sub-lists), \
-             Alchemy, Studied Combat, Studied Strike, Keen Recollection, Poison Lore/\
-             Resistance, Swift Alchemy, True Inspiration, and every other named class feature \
-             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
-             is fabricated in this bounded chassis baseline"
+             chassis pillar, Trapfinding, Trap Sense, Inspiration's flat pool-size fact, Poison \
+             Resistance, and Alchemy: prepared extract spellcasting (reusing the Alchemist \
+             formula list -- no Alchemist spell-list mapping exists anywhere in this codebase \
+             yet, a genuinely new data-ingestion cost deferred to its own follow-on slice), \
+             Inspiration's actual spend (a free/two-use action on skill/ability/attack/save \
+             rolls, plus the free Knowledge/Linguistics/Spellcraft interaction), Investigator \
+             Talents (a chooser-list of real mechanical variety including the large Rogue \
+             Talent and Discovery sub-lists), Studied Combat, Studied Strike (both opponent-\
+             dependent, deferred pending an opponent-tracking pillar, ruled consistently with \
+             Slayer's own Studied Target), Keen Recollection, Poison Lore, Swift Alchemy, True \
+             Inspiration, and every other named class feature remain ungrounded anywhere in \
+             this codebase; no class-feature or spell execution is fabricated in this bounded \
+             chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -36142,6 +36241,26 @@ mod investigator_dispatch_widening_safety_tests {
              10, +0 modifier): {:?}",
             inspiration
         );
+
+        let poison_resistance = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.poison_resistance_bonus")
+            .expect("Poison Resistance must ground unconditionally, even when absent");
+        assert_eq!(
+            poison_resistance.value, 0,
+            "level 1 Poison Resistance is honestly absent below the real level-2 gate: {:?}",
+            poison_resistance
+        );
+
+        let alchemy = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.alchemy_bonus")
+            .expect("Alchemy must ground unconditionally");
+        assert_eq!(alchemy.value, 1, "level 1 Alchemy: equal to Investigator level = 1: {:?}", alchemy);
     }
 
     /// Investigator's Trapfinding/Trap Sense/Inspiration progression at a
@@ -36183,6 +36302,55 @@ mod investigator_dispatch_widening_safety_tests {
              modifier): {:?}",
             inspiration
         );
+
+        let alchemy = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.investigator.alchemy_bonus")
+            .expect("Alchemy must ground unconditionally");
+        assert_eq!(alchemy.value, 6, "level 6 Alchemy: equal to Investigator level = 6: {:?}", alchemy);
+    }
+
+    /// Poison Resistance's real tier progression (deepening 2026-07-26,
+    /// task #8): honestly absent below level 2, +2/+4/+6 at levels 2/5/8,
+    /// then converts to full immunity (value 0, a qualitatively different
+    /// fact, not a fourth numeric tier) at level 10 -- a genuine
+    /// correction to the scoping doc's own "+2/+4/+6/+8, immune at 20th"
+    /// claim, verified directly against the raw corpus tier-gating tokens.
+    #[test]
+    fn investigator_poison_resistance_matches_the_real_corpus_tiers_not_the_scoping_docs_claim() {
+        for (level, expected_value, expected_substring) in [
+            (1, 0, "correctly absent"),
+            (2, 2, "a +2 bonus"),
+            (4, 2, "a +2 bonus"),
+            (5, 4, "a +4 bonus"),
+            (7, 4, "a +4 bonus"),
+            (8, 6, "a +6 bonus"),
+            (9, 6, "a +6 bonus"),
+            (10, 0, "fully immune"),
+            (15, 0, "fully immune"),
+        ] {
+            let input = human_investigator_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let poison_resistance = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.investigator.poison_resistance_bonus")
+                .unwrap_or_else(|| panic!("expected Poison Resistance grounded at level {level}"));
+            assert_eq!(
+                poison_resistance.value, expected_value,
+                "level {level} Poison Resistance: {:?}",
+                poison_resistance
+            );
+            assert!(
+                poison_resistance.detail.contains(expected_substring),
+                "level {level} detail should mention '{expected_substring}': {}",
+                poison_resistance.detail
+            );
+        }
     }
 
     /// A non-Investigator character carrying no Investigator entries at

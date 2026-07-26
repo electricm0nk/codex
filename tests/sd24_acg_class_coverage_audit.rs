@@ -105,11 +105,24 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// genuinely wired alongside Animal Companion. Hunter's own deferred
 /// known-spell posture would not add a fourth even once built, per the
 /// same spellcasting-sharing convention.
+///
+/// **Deepened again (Investigator, 2026-07-26, task #8):** Investigator's
+/// own count moved from 3 to 5 -- Poison Resistance (a situational-save
+/// standalone magnitude, `+2`/`+4`/`+6` at levels 2/5/8, converting to
+/// full immunity at level 10 -- a genuine correction to the original
+/// scoping doc's own "+2/+4/+6/+8, immune at 20th" claim, verified
+/// directly against the raw corpus's own tier-gating tokens) and Alchemy
+/// (a flat `+level` Craft (alchemy) competence bonus, mirroring Bard's
+/// own Bardic Knowledge) are now genuinely wired alongside Trapfinding/
+/// Trap Sense/Inspiration's pool-size. Studied Combat/Studied Strike stay
+/// deferred as opponent-dependent, ruled consistently with Slayer's own
+/// Studied Target pending an opponent-tracking pillar (task #13).
 /// Arcanist's and Warpriest's
 /// own `named_features_wired == 2` each (not 1, unlike Bloodrager/
 /// Shaman) for related but distinct reasons, and Slayer's/
-/// Swashbuckler's/Investigator's/Brawler's/Skald's/Hunter's own `== 4`/`==
-/// 3`/`== 3`/`== 3`/`== 3`/`== 3` for yet another reason -- see
+/// Swashbuckler's/Brawler's/Skald's/Hunter's own `== 4`/`== 3`/`== 3`/`==
+/// 3`/`== 3` (Investigator's own `== 5` covered above) for yet another
+/// reason -- see
 /// `AcgClassCoverage::named_features_wired`'s own doc comment in
 /// `rules_tables::acg::mod` for the full record: Arcanist's real
 /// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
@@ -189,8 +202,8 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         (AcgClassId::Swashbuckler, "Panache + Charmed Life + Nimble", 3),
         (
             AcgClassId::Investigator,
-            "Trapfinding + Trap Sense + Inspiration pool-size",
-            3,
+            "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy",
+            5,
         ),
         (AcgClassId::Shaman, "Life Spirit Channel", 1),
     ] {

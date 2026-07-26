@@ -412,9 +412,18 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // comment above for why Arcanist counts 2, not 1 (and why Cantrips
     // does not add a third), why Slayer counts a genuine 4 (its four
     // sub-features are structurally independent, not facets of one
-    // shared mechanism), why Swashbuckler and Investigator each count a
-    // genuine 3 (same "structurally independent" reasoning as Slayer),
-    // and why Skald ALSO counts a genuine 3 (Inspired Rage, Damage
+    // shared mechanism), why Swashbuckler counts a genuine 3 (same
+    // "structurally independent" reasoning as Slayer), why Investigator
+    // counts a genuine 5 (deepening 2026-07-26, task #8: Poison
+    // Resistance and Alchemy are each their own separate
+    // `KEY:Investigator ~ ...` record with genuinely independent
+    // grounding logic, added on top of Trapfinding/Trap Sense/
+    // Inspiration's own already-landed 3 -- both were originally
+    // excluded under the same over-strict "needs a live consumer" bar
+    // Skald's/Hunter's own missed wins corrected; Studied Combat/Studied
+    // Strike stay deferred as opponent-dependent, ruled consistently
+    // with Slayer's own Studied Target pending an opponent-tracking
+    // pillar), and why Skald ALSO counts a genuine 3 (Inspired Rage, Damage
     // Reduction, Bardic Knowledge -- deepening 2026-07-26, task #7):
     // Damage Reduction and Bardic Knowledge are each their own separate
     // `KEY:Skald ~ ...` record with genuinely independent grounding
@@ -458,12 +467,9 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     let named_features_wired = match class_id {
         AcgClassId::Bloodrager | AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
-        AcgClassId::Swashbuckler
-        | AcgClassId::Investigator
-        | AcgClassId::Brawler
-        | AcgClassId::Skald
-        | AcgClassId::Hunter => 3,
+        AcgClassId::Swashbuckler | AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
+        AcgClassId::Investigator => 5,
     };
 
     AcgClassCoverage {
