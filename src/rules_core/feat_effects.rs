@@ -205,6 +205,78 @@ pub fn skill_bonuses_from_feats(
     }
 }
 
+/// One real, corpus-verified skill bonus a feat grants to a skill the engine
+/// does **not** compute a total for today, grounded as a standalone fact
+/// rather than deferred -- mirroring the codebase's established
+/// standalone-explanation-record idiom (Track's Survival bonus, Bardic
+/// Knowledge, Slayer's/Inquisitor's flat class-feature magnitudes: a real,
+/// verified value recorded as its own fact, with integration into a running
+/// total treated as a bonus, not a requirement). `feat_effects.rs` (a
+/// dependency-free leaf) owns only the verified magnitude data; a caller in the
+/// compute layer turns each fact into a `ComputationExplanation` record,
+/// explicitly labeled as not wired into any skill total, exactly the way
+/// `skill_bonuses_from_feats`'s three computed skills are consumed by
+/// `compute_selected_skill_modifiers`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct StandaloneSkillFeatFact {
+    /// The real catalog `key` string, keyed on exactly (no substring/prefix
+    /// match), the same way every other feat in this module is.
+    pub feat_key: &'static str,
+    /// The skill the feat boosts, verbatim from the corpus `BONUS:SKILL|<skill>`
+    /// token (`feat_data/general.rs`).
+    pub skill_name: &'static str,
+    /// The flat bonus magnitude. `TWO_SKILL_FEAT_BONUS` (+2) for every fact
+    /// here: each source feat's corpus token is
+    /// `if(skillinfo("TOTALRANK",<skill>)>=10,4,2)`, whose +4 tier requires 10+
+    /// ranks in the skill -- unreachable for any character this engine
+    /// represents, exactly the provable-floor reasoning `TWO_SKILL_FEAT_BONUS`
+    /// already documents. The +4 tier is deferred, not fabricated here.
+    pub bonus: i16,
+}
+
+/// Every standalone two-skill General-feat fact this engine grounds, in the
+/// corpus source order of `feat_data/general.rs` (auditable against that file
+/// top-to-bottom). Covers the boosted skill(s) of each two-skill feat that the
+/// engine does **not** already compute a total for: the eight feats whose
+/// *both* skills are uncomputed (Acrobatic, Alertness, Animal Affinity,
+/// Deceitful, Deft Hands, Magical Aptitude, Self-Sufficient, Stealthy) plus
+/// Persuasive's Diplomacy half (its Intimidate half is a computed skill,
+/// grounded by `skill_bonuses_from_feats`). Athletic is absent entirely: both
+/// its skills (Climb, Swim) are computed, so it has no standalone remainder.
+const STANDALONE_TWO_SKILL_FACTS: &[StandaloneSkillFeatFact] = &[
+    StandaloneSkillFeatFact { feat_key: "Acrobatic", skill_name: "Acrobatics", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Acrobatic", skill_name: "Fly", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Alertness", skill_name: "Perception", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Alertness", skill_name: "Sense Motive", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Animal Affinity", skill_name: "Handle Animal", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Animal Affinity", skill_name: "Ride", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Deceitful", skill_name: "Bluff", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Deceitful", skill_name: "Disguise", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Deft Hands", skill_name: "Disable Device", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Deft Hands", skill_name: "Sleight of Hand", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Magical Aptitude", skill_name: "Spellcraft", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Magical Aptitude", skill_name: "Use Magic Device", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Persuasive", skill_name: "Diplomacy", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Self-Sufficient", skill_name: "Heal", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Self-Sufficient", skill_name: "Survival", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Stealthy", skill_name: "Escape Artist", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Stealthy", skill_name: "Stealth", bonus: TWO_SKILL_FEAT_BONUS },
+];
+
+/// Every grounded standalone skill-feat fact for the feats actually present in
+/// `selected_feats`, in the stable corpus order of `STANDALONE_TWO_SKILL_FACTS`.
+/// Returns an empty vec (not fabricated facts) when none of the grounding feats
+/// is selected. Keyed on the exact catalog `key` string, so a longer feat whose
+/// name merely begins with a grounded key (e.g. "Acrobatic Steps") never
+/// matches.
+pub fn standalone_skill_facts_from_feats(selected_feats: &[String]) -> Vec<StandaloneSkillFeatFact> {
+    STANDALONE_TWO_SKILL_FACTS
+        .iter()
+        .filter(|fact| selected_feats.iter().any(|feat| feat == fact.feat_key))
+        .copied()
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -422,5 +494,109 @@ mod skill_bonuses_from_feats_tests {
             skill_bonuses_from_feats(&selected_feats, STR_MOD),
             SkillBonusesFromFeats::default()
         );
+    }
+}
+
+#[cfg(test)]
+mod standalone_skill_facts_from_feats_tests {
+    use super::*;
+
+    fn fact(feat_key: &'static str, skill_name: &'static str) -> StandaloneSkillFeatFact {
+        StandaloneSkillFeatFact { feat_key, skill_name, bonus: 2 }
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_empty_feat_list() {
+        assert!(standalone_skill_facts_from_feats(&[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_no_grounded_feat_is_selected() {
+        let selected_feats = vec!["Toughness".to_owned(), "Great Fortitude".to_owned()];
+        assert!(standalone_skill_facts_from_feats(&selected_feats).is_empty());
+    }
+
+    #[test]
+    fn acrobatic_grounds_its_two_uncomputed_skills() {
+        let selected_feats = vec!["Acrobatic".to_owned()];
+        assert_eq!(
+            standalone_skill_facts_from_feats(&selected_feats),
+            vec![fact("Acrobatic", "Acrobatics"), fact("Acrobatic", "Fly")]
+        );
+    }
+
+    #[test]
+    fn deceitful_grounds_bluff_and_disguise() {
+        let selected_feats = vec!["Deceitful".to_owned()];
+        assert_eq!(
+            standalone_skill_facts_from_feats(&selected_feats),
+            vec![fact("Deceitful", "Bluff"), fact("Deceitful", "Disguise")]
+        );
+    }
+
+    #[test]
+    fn persuasive_grounds_only_its_diplomacy_half_here_not_intimidate() {
+        // Persuasive's Intimidate half is a *computed* skill, grounded by
+        // `skill_bonuses_from_feats`. Only its Diplomacy half (an uncomputed
+        // skill) is a standalone fact -- the two functions partition
+        // Persuasive's real +2/+2 effect cleanly, with no skill double-counted.
+        let selected_feats = vec!["Persuasive".to_owned()];
+        assert_eq!(
+            standalone_skill_facts_from_feats(&selected_feats),
+            vec![fact("Persuasive", "Diplomacy")]
+        );
+    }
+
+    #[test]
+    fn athletic_grounds_no_standalone_fact_because_both_its_skills_are_computed() {
+        // Athletic's Climb and Swim are both computed skills, fully grounded by
+        // `skill_bonuses_from_feats`; it contributes nothing here.
+        let selected_feats = vec!["Athletic".to_owned()];
+        assert!(standalone_skill_facts_from_feats(&selected_feats).is_empty());
+    }
+
+    #[test]
+    fn every_grounded_feat_produces_its_exact_verified_facts_in_corpus_order() {
+        let selected_feats = vec![
+            "Acrobatic".to_owned(),
+            "Alertness".to_owned(),
+            "Animal Affinity".to_owned(),
+            "Deceitful".to_owned(),
+            "Deft Hands".to_owned(),
+            "Magical Aptitude".to_owned(),
+            "Persuasive".to_owned(),
+            "Self-Sufficient".to_owned(),
+            "Stealthy".to_owned(),
+        ];
+        assert_eq!(
+            standalone_skill_facts_from_feats(&selected_feats),
+            vec![
+                fact("Acrobatic", "Acrobatics"),
+                fact("Acrobatic", "Fly"),
+                fact("Alertness", "Perception"),
+                fact("Alertness", "Sense Motive"),
+                fact("Animal Affinity", "Handle Animal"),
+                fact("Animal Affinity", "Ride"),
+                fact("Deceitful", "Bluff"),
+                fact("Deceitful", "Disguise"),
+                fact("Deft Hands", "Disable Device"),
+                fact("Deft Hands", "Sleight of Hand"),
+                fact("Magical Aptitude", "Spellcraft"),
+                fact("Magical Aptitude", "Use Magic Device"),
+                fact("Persuasive", "Diplomacy"),
+                fact("Self-Sufficient", "Heal"),
+                fact("Self-Sufficient", "Survival"),
+                fact("Stealthy", "Escape Artist"),
+                fact("Stealthy", "Stealth"),
+            ]
+        );
+    }
+
+    #[test]
+    fn does_not_match_a_substring_or_prefix_of_a_feat_key() {
+        // "Acrobatic Steps" is a real, distinct CRB feat that begins with the
+        // grounded "Acrobatic" key; it must not trigger Acrobatic's facts.
+        let selected_feats = vec!["Acrobatic Steps".to_owned()];
+        assert!(standalone_skill_facts_from_feats(&selected_feats).is_empty());
     }
 }

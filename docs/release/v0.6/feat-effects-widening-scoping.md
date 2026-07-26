@@ -104,12 +104,24 @@ levels). The `+4` tier is deferred until the engine computes characters with
 
 ## What stays explicitly deferred, named honestly
 
-- **The other 8 two-skill General feats** (Acrobatic, Alertness, Animal
-  Affinity, Deceitful, Deft Hands, Magical Aptitude, Self-Sufficient, Stealthy)
-  — identical real +2/+4 shape, but every one targets skills the engine does
-  **not** compute (Perception, Fly, Bluff, Disguise, Spellcraft, Heal, Stealth,
-  etc.). Wiring them would be unwired no-ops. They become groundable the moment
-  those skills join the computed surface — not before.
+- ~~**The other 8 two-skill General feats**~~ **— NO LONGER DEFERRED (grounded
+  as standalone facts, 2026-07-26).** The original "wiring them would be unwired
+  no-ops, defer until their skills are computed" reasoning was **overturned by a
+  methodology correction** (scout + lead, verified against 31+ shipped
+  instances): the codebase's dominant bar is that a feature grounds fine as a
+  *standalone explanation record* the moment its magnitude is real/verified/
+  non-fabricated — integration into a running total is a bonus, not a
+  requirement (precedent: Track's Survival bonus, Bardic Knowledge, Slayer's/
+  Inquisitor's flat class-feature magnitudes). Under that bar, all eight
+  (Acrobatic, Alertness, Animal Affinity, Deceitful, Deft Hands, Magical
+  Aptitude, Self-Sufficient, Stealthy) plus **Persuasive's previously-deferred
+  Diplomacy half** are now grounded: `feat_effects::standalone_skill_facts_from_feats`
+  returns their real +2 magnitudes as `StandaloneSkillFeatFact`s (17 facts, one
+  per boosted uncomputed skill, corpus-verified against `general.rs`). Same
+  producer/consumer split as `skill_bonuses_from_feats`: `feat_effects.rs` owns
+  the verified data; the compute layer surfaces each as a standalone
+  `ComputationExplanation` labeled "not wired into any skill total". Athletic is
+  absent (both its skills are computed, no standalone remainder).
 - **Skill Focus** (`general.rs:55`, `["SKILL","%LIST","3",...]`) — `%LIST` is a
   player-chosen skill target with no slot in `selected_feats`; the same gap
   `feat_effects.rs:26-34` already documents. Deferred.
