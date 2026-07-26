@@ -1511,7 +1511,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T12:40:03
-Latest commit on tranche/6: 3bf64db6 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-26T12:35:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T12:20:46 frontend=2026-07-25T22:55:27 qa=2026-07-25T12:03:53 lead=2026-07-26T12:20:50
+Last mechanical check: 2026-07-26T12:45:01
+Latest commit on tranche/6: 622ddeb7 docs(v0.6): dashboard open_question field populated for every blocked class (3 minutes ago) (2026-07-26T12:41:33-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T12:20:46 frontend=2026-07-26T12:42:06 qa=2026-07-26T12:43:48 lead=2026-07-26T12:43:54
 <!-- AUTO-HEARTBEAT-END -->
