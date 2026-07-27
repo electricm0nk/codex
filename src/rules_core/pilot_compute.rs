@@ -21231,7 +21231,8 @@ fn ground_ranger_prepared_spells(
         detail: format!(
             "Ranger level {ranger_level} daily preparation selection ({} spells, \
              AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
-             PF1 Core Rulebook ranger spell list (`ranger_spell_list::RANGER_SPELL_LIST`), the \
+             PF1 ranger spell list (`ranger_spell_list::RANGER_SPELL_LIST`, all ingested \
+             books), the \
              ranger's own spell-level access ceiling, and the per-level slot budget (base table \
              count + Wisdom bonus). Real PF1 Ranger rules have no personal 'recorded spellbook' \
              step (unlike Wizard) -- a ranger prepares directly from the full ranger spell list \
