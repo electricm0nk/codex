@@ -118,12 +118,39 @@ Swashbuckler-shaped gap here — build with these gates directly.**
 
 ## Other build-time hazards
 
-1. **Aspect writes eidolon-named variables onto the *summoner*.**
-   `EidMaxAttacks`, `EidArms`, `EidLegs` are set by the Aspect records on
-   the master, and they are the *same variable names* the eidolon's own
-   chassis uses. If the implementation shares those between master and
-   companion, taking an Aspect would silently corrupt the eidolon's own
-   max-attacks. Real namespace collision with already-shipped code.
+1. **RESOLVED — the `EidMaxAttacks` "collision" is not one, and the fix is
+   *not* to add Aspect's value to the eidolon's.** I flagged this as a
+   namespace risk; checked against both the corpus and the shipped code, it
+   dissolves. The two are **different formulas belonging to different
+   creatures**:
+
+   | | source record | formula | level source |
+   |---|---|---|---|
+   | **Eidolon** | `Eidolon Companion Progression ~ Standard` | `3 + (>=4) + (>=9) + (>=14) + (>=19)` | `MasterLevel` |
+   | **Aspect** | `Summoner ~ Aspect` | `5 + (>=14)` | `PRECLASS:1,Summoner` |
+   | **Greater Aspect** | `Summoner ~ Greater Aspect` | `6 + (>=19)` | `PRECLASS:1,Summoner` |
+
+   Different base (3 vs 5/6), different gate structure, different level
+   source. Aspect applies evolutions **to the summoner's own body** ("add
+   evolutions to yourself"), so its `EidMaxAttacks`/`EidArms`/`EidLegs` are
+   the *summoner's* anatomy budget for self-applied evolutions — PCGen holds
+   master and companion in separate scopes, so one name legitimately carries
+   two values that never meet.
+
+   **Semantic cross-check that settles it:** Aspect makes the eidolon
+   *weaker* (it diverts points out of the eidolon's pool). Any reading where
+   it raises the eidolon's attack capacity from 3 to 8 is backwards.
+
+   **So Slice B must not touch `eidolon_max_natural_attacks` at all** — not
+   replace it, not add to it, and no parallel variable that could drift.
+   Aspect introduces a separate summoner-side capacity. The shipped
+   `eidolon_max_natural_attacks(level) = 3 + [4,9,14,19]` gates is correct
+   as-is and matches its corpus source exactly.
+
+   **The one genuine coupling to the eidolon is the pool deduction**
+   (`FOLLOWER:EidolonAspect=1/2/3 → BONUS:ABILITYPOOL|Eidolon Evolution|-1`
+   each), which must reduce the eidolon's already-grounded `evolution_pool`.
+   That is the only place the two features meet.
 2. **Aspect's pool deduction must now fire.** My Eidolon doc flagged
    "make sure the deduction doesn't fire while Aspect is deferred." With
    Aspect in scope the inverse applies: the eidolon's already-grounded
@@ -166,7 +193,12 @@ stops being the roster's thinnest class.
 2. **Slice A and B together, or A first?** RULED: A first. Clean,
    self-contained, fully unblocked. B (Aspect) waits on the namespace
    question below being confirmed against shipped code.
-3. **`EidMaxAttacks` collision** — not yet confirmed against the shipped
-   `ground_summoner_eidolon` implementation; whoever builds Slice B should
-   check this directly before assuming either way, same discipline as
-   everything else in this doc.
+3. **`EidMaxAttacks` collision** — **RESOLVED, see hazard 1.** Checked
+   against both the corpus and the shipped code: it is not a collision. The
+   eidolon's `3 + [4,9,14,19]` (on `MasterLevel`) and Aspect's `5 + (>=14)` /
+   `6 + (>=19)` (on the summoner's own class level) are different formulas
+   for **different creatures**, sharing one PCGen variable name across
+   separate scopes. Slice B must leave `eidolon_max_natural_attacks`
+   untouched — no replacement, no addition, no parallel variable — and add a
+   summoner-side capacity instead. The only genuine coupling between Aspect
+   and the eidolon is the evolution-pool deduction.
