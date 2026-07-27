@@ -12,14 +12,24 @@
 
 ## #11 Witch — STALE. "Build spellcasting (own list)" understates nothing; it overstates the cost.
 
-Witch's spell list is **249 unique records** (212 `.MOD` grafts + 37 new),
-spell levels 0-9. **All 249 are already present in this repo's ingested
+Witch's spell list is **324 unique records** (212 `.MOD` grafts + 112 new),
+spell levels 0-9. **All 324 are already present in this repo's ingested
 corpus — zero missing.** That is better coverage than any list checked this
 segment (Bloodrager was 110 of 183).
 
+> **Count corrected 2026-07-27 (was 249).** My first pass tested
+> `"Witch=" in line`, which misses every comma-grouped class list where
+> Witch is not the element immediately before the `=` — e.g.
+> `CLASSES:Witch,Wizard=3`. That dropped 75 records (~30%). The lead's own
+> independent count (252) was closer but low for the same reason. The
+> figures here come from a real `CLASSES:` parse: split on `|`, `rpartition`
+> each group on `=`, then test membership in the comma-separated name list.
+> **The conclusion was unaffected — zero missing either way — but a right
+> conclusion does not excuse wrong specifics.**
+
 So there is no ingestion cost at all. The real work is a `witch_spell_list.rs`
 module mapping already-ingested spells to Witch levels — structurally
-identical to `alchemist_spell_list.rs` (104 records), just ~2.4× the rows.
+identical to `alchemist_spell_list.rs` (104 records), just ~3.1× the rows.
 The standing "no reusable spell list exists for Witch" note is *true but
 misleading*: it means no other class's built list can be borrowed, not that
 the spells need ingesting.
@@ -36,10 +46,11 @@ follow it rather than needing a design pass from scratch.
 
 ## #12 Shaman — STALE, same shape as Witch.
 
-**281 records** (268 `.MOD` grafts + 13 new), levels 0-9, **259 of 281
-already ingested, 22 missing** (92% coverage — better than Bloodrager's
+**304 unique records** (267 `.MOD` grafts + 37 new), levels 0-9, **283 of
+304 already ingested, 21 missing** (93% coverage — better than Bloodrager's
 60%, which was already ruled acceptable). `HD:8`, `SPELLSTAT:WIS`,
-`MEMORIZE:YES` (prepared).
+`MEMORIZE:YES` (prepared). *(Count corrected from 281 by the same
+comma-group parse fix noted under #11; conclusion unchanged.)*
 
 "Build fresh spellcasting" implies from-scratch ingestion. It is the same
 already-ingested-spells / build-the-list-module job as Witch, with the 22
@@ -111,8 +122,8 @@ five whose framing survives contact with the corpus unchanged.
 
 | task | verdict | what it actually is |
 |---|---|---|
-| #11 Witch | stale | build a spell-list module from 249 already-ingested spells (`alchemist_spell_list.rs` shape); Familiar still deferred |
-| #12 Shaman | stale | same, 281 records / 259 reachable; Familiar still deferred |
+| #11 Witch | stale | build a spell-list module from **324** already-ingested spells (`alchemist_spell_list.rs` shape), 100% reachable; Familiar still deferred |
+| #12 Shaman | stale | same, **304** records / **283** reachable (93%); Familiar still deferred |
 | #13 Slayer | partly stale | split it — Slayer Talents is narrowable now; Studied Target correctly stays deferred |
 | #14 Swashbuckler | stale | Finesse's prereq-substitution is a direct reuse of built Brawler's Cunning code; Deeds is an independent chooser |
 | #15 Monk | correct | genuinely blocked, no change |
