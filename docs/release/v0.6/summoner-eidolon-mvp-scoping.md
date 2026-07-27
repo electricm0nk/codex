@@ -22,10 +22,13 @@ Three forms exist (`apg_abilities_companion.lst:61-63`). Verified in full:
 | Good saves | Fort, Will | **Fort, Reflex** | Will, Reflex |
 | Automatic evolutions | Arms, Clawed Hands, Legs | **Bite, Legs, Legs** | Bite, Climb, Reach (Bite), Tail, Tail Slap |
 
-**Quadruped is the right pick**: it is the closest structural analogue to
-the already-grounded Wolf companion (a bite attack, four legs, good
-Fort+Reflex), and it carries the fewest automatic evolutions — three, two of
-which are the same record.
+**Quadruped is the right pick — confirmed by the lead, on a better reason
+than my own.** My original argument was the Wolf analogue (bite, four legs,
+good Fort+Reflex), which is weakened by the reuse finding below. The
+load-bearing reason is independent of any reuse argument: **Quadruped has
+only 2 *distinct* evolution types** (Bite, Legs×2), against Biped's 3
+(Arms, Clawed Hands, Legs) and Serpentine's 5 (Bite, Climb, Reach, Tail,
+Tail Slap). Smallest distinct-type surface to model.
 
 ## The whole stat block is corpus-derivable — every formula verified
 
@@ -69,6 +72,13 @@ expenditure mechanic is not modelled.
 That yields a real, non-fabricated Eidolon: HD, full BAB, form-derived
 saves, ability scores, natural armor, speed, max attacks, skill points, and
 one 1d6 bite — all corpus-derived, nothing invented, no stub.
+
+**Depth, ruled by the lead: go as far as the Wolf closure did.** Not just
+chassis and pool — also HP/HD, the full attack bonus, and the 1d6 bite
+damage. Every formula those need is already independently verified above
+(full BAB, the natural-armor progression, the bite die), and stopping short
+of what the Wolf's own precedent covers would make this MVP thinner than
+the closure it is explicitly modelled against, for no real reason.
 
 ## The reuse is thinner than the Hunter-Wolf framing implies
 
@@ -140,21 +150,16 @@ alongside the Eidolon slot. This does not reach Computed, and it should not
 be described as "the Eidolon subsystem built" — it is one canonical form's
 chassis, honestly bounded.
 
-## Open questions for the lead
+## Open questions — all three resolved by the lead
 
-1. **Is "evolution points unspent" an honest posture, or an incomplete
-   character?** Unlike "not currently raging" (a genuinely valid PF1
-   posture), RAW expects the points to be allocated. My read is that this is
-   the Wizard-unchosen-spells shape — ground the real facts, keep a
-   claim-blocking `evolutions_deferred` diagnostic, and let Summoner stay
-   Blocked (which is the expected outcome regardless). Worth confirming
-   rather than assuming, since it decides whether the MVP is honest.
-2. **Quadruped vs Biped as the canonical form.** I picked Quadruped for the
-   Wolf-analogue reuse and the smaller automatic-evolution set. Biped is
-   arguably the more iconic summoner eidolon, if you'd rather optimize for
-   recognizability over structural proximity.
-3. **How far into the stat block should the MVP go?** The Wolf grounds HP,
-   attack bonus, and damage as well as the chassis. The Eidolon can too —
-   the 1d6 bite die and full-BAB math are both verified — but that is
-   meaningfully more surface than grounding the chassis and pool alone. Your
-   call on where the bound sits.
+1. **"Evolution points unspent" is the Wizard-unchosen-spells shape.**
+   Ground the real facts (chassis + pool size), keep a **claim-blocking**
+   `evolutions_deferred` diagnostic, Summoner stays Blocked. This was the
+   question that decided whether the MVP is honest rather than a stub;
+   confirmed rather than assumed.
+2. **Quadruped confirmed as canonical** — on the distinct-evolution-type
+   count (2 vs 3 vs 5), not the weakened Wolf-analogue argument. See above.
+3. **Depth: match the Wolf closure** — chassis, pool, HP/HD, full attack
+   bonus, and the 1d6 bite damage. Folded into the MVP section above.
+
+Nothing further is blocking a build brief.
