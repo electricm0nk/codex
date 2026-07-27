@@ -1567,7 +1567,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-26T20:50:02
-Latest commit on tranche/6: 19ca4ae6 feat(rules): ground 17 CRB feats found by the corrected-bar re-sweep (23 seconds ago) (2026-07-26T20:49:39-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T20:36:31 frontend=unknown qa=unknown lead=2026-07-26T20:37:52
+Last mechanical check: 2026-07-26T21:20:02
+Latest commit on tranche/6: 9a3285c4 docs(v0.6): Oracle deepening (task #10) closed, backend moving to Category B feat-effects (29 seconds ago) (2026-07-26T21:19:33-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-26T21:19:50 frontend=unknown qa=unknown lead=2026-07-26T21:18:18
 <!-- AUTO-HEARTBEAT-END -->
