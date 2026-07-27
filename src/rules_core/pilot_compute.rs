@@ -11729,6 +11729,18 @@ fn witch_spell_level_requires_familiar_storage(spell_level: u8) -> bool {
 /// `witch_spell_level_requires_familiar_storage`: cantrips are
 /// automatically known and need no stored record.
 ///
+/// **No familiar stat block is needed for any of this**, and that is the
+/// load-bearing insight rather than a convenience: this repo's Wizard
+/// "spellbook" was never a modeled object either -- it is just
+/// `spells_selected` filtered by `AcquisitionMode`. So "the familiar
+/// stores the spells" (which is what `KEY:Witch ~ Familiar`'s own DESC
+/// says) is representable with exactly the machinery already present,
+/// and the Familiar subsystem's Tier 2 is NOT a prerequisite. Witch is a
+/// hybrid of two shapes this codebase already has -- Cleric-shaped at
+/// level 0, Wizard-shaped at levels 1-9 -- not a third mechanism.
+/// Design: scout's `witch-spellcasting-shape-design.md`; ruling: team
+/// lead, `risks-and-open-questions.md` item 57.
+///
 /// Deliberately NOT modeled here (and still named in the deferred
 /// diagnostic): losing access when the familiar is dead or absent, and
 /// the familiar's own creature stat block (the Familiar subsystem's
@@ -11838,13 +11850,19 @@ fn ground_witch_prepared_spells(
         id: "class_spell.apg.witch.familiar_stored_spells".to_owned(),
         value: stored_count as i16,
         detail: format!(
-            "Witch level {witch_level} spells stored in her familiar ({stored_count} spells, \
-             AcquisitionMode::Known). Unlike Cleric/Druid/Shaman -- whose class lines carry the \
-             full `KNOWNSPELLS:LEVEL=0|...|LEVEL=9` ladder and who therefore know every level \
-             automatically -- the Witch's own line carries `KNOWNSPELLS:LEVEL=0` alone, so only \
-             cantrips are known automatically and every higher-level spell must be stored in \
-             the familiar first. This grounds the store's contents; it does not model the \
-             familiar going missing"
+            "Witch level {witch_level} spells stored in her familiar ({stored_count} spells). \
+             MODELING CHOICE, stated rather than implied: this engine represents the familiar's \
+             stored spells as `AcquisitionMode::Known` entries in `spells_selected`. The corpus \
+             does NOT encode that mapping -- it is the same representation this codebase already \
+             uses for a Wizard's spellbook and an Alchemist's formula book, neither of which is \
+             a modeled object either. What IS corpus-encoded is the requirement itself: unlike \
+             Cleric/Druid/Shaman, whose class lines carry the full \
+             `KNOWNSPELLS:LEVEL=0|...|LEVEL=9` ladder and who therefore know every level \
+             automatically, the Witch's own line carries `KNOWNSPELLS:LEVEL=0` alone, so only \
+             cantrips are known automatically and every higher-level spell must be recorded \
+             first -- which `KEY:Witch ~ Familiar`'s own DESC attributes to the familiar. This \
+             grounds the store's contents; it does not model the familiar being lost or slain, \
+             and no familiar creature stat block is required for any of it"
         ),
     });
 
