@@ -8863,6 +8863,8 @@ fn compute_apg_class_chassis(
         ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Witch {
         ground_or_block_witch_class_features(input, level, explanations, diagnostics);
+    } else if class_id == ApgClassId::Summoner {
+        ground_summoner_eidolon(level, explanations, diagnostics);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
@@ -11208,6 +11210,229 @@ fn witch_ward_bonus(level: u8) -> i16 {
     bonus
 }
 
+/// PF1 Advanced Player's Guide Summoner.
+const SUMMONER_CLASS_ID: &str = "class:summoner";
+/// The Eidolon's own hit die (`HD:10` on `CLASS:Eidolon`,
+/// `apg_classes.lst`) -- notably larger than the Wolf companion's.
+const EIDOLON_HIT_DIE: u8 = 10;
+/// The Eidolon base race's racial natural-armor bonus
+/// (`BONUS:VAR|AC_Natural_Armor|2`, `apg_races_companion.lst`), which the
+/// level-driven progression stacks on top of.
+const EIDOLON_RACIAL_NATURAL_ARMOR: i16 = 2;
+/// The Eidolon base race's own land speed (`MOVE:Walk,20`).
+const EIDOLON_BASE_WALK_SPEED: i16 = 20;
+/// Each `Evolution ~ Legs` grants `BONUS:MOVEADD|TYPE.Walk|10`. The
+/// canonical Quadruped is granted Legs TWICE, automatically.
+const EIDOLON_SPEED_PER_LEGS_EVOLUTION: i16 = 10;
+const QUADRUPED_LEGS_EVOLUTIONS: i16 = 2;
+/// The Bite evolution's damage die (`NATURALATTACKS:1 Bite,...,*1,1d6`).
+/// Form-restricted: its `TYPE:` carries
+/// `EvolutionQuadruped.EvolutionSerpentine`, so a Biped Eidolon does NOT
+/// get it -- do not generalize this to the other base forms.
+const EIDOLON_BITE_DAMAGE_DIE: i16 = 6;
+/// Quadruped's own ability-score bonuses
+/// (`BONUS:STAT|STR|4|TYPE=Race`, `BONUS:STAT|DEX|4|TYPE=Race`).
+const QUADRUPED_STRENGTH_BONUS: i16 = 4;
+const QUADRUPED_DEXTERITY_BONUS: i16 = 4;
+
+/// The Eidolon's evolution-point pool for a Summoner of `level`,
+/// transcribed from `apg_abilities_companion.lst`'s own
+/// `BONUS:VAR|EidolonEvolution|3+(SummonerLVL>=2)+...` -- a base 3 plus
+/// one point at most levels and TWO at 4/9/14/19.
+///
+/// Two corpus terms are deliberately excluded, both verified vacuous
+/// here: `mastervar("EidolonEvolution")` mirrors this same value from
+/// the master onto the companion (computing both would double-count),
+/// and `EidolonFavoredClassBonusEvolutionPointsEveryFour/4` requires a
+/// favored-class-bonus selection mechanism this engine does not model at
+/// all -- the same provably-vacuous shape as Alchemist's Gnome-only
+/// `BonusBombCount`.
+///
+/// This is the pool SIZE only. Spending is not modelled, which is why
+/// Summoner stays claim-blocked.
+fn eidolon_evolution_pool(level: u8) -> i16 {
+    let level = i16::from(level);
+    let at_least = |n: i16| i16::from(level >= n);
+    3 + at_least(2)
+        + at_least(3)
+        + 2 * at_least(4)
+        + at_least(5)
+        + at_least(6)
+        + at_least(7)
+        + at_least(8)
+        + 2 * at_least(9)
+        + at_least(10)
+        + at_least(11)
+        + at_least(12)
+        + at_least(13)
+        + 2 * at_least(14)
+        + at_least(15)
+        + at_least(16)
+        + at_least(17)
+        + at_least(18)
+        + 2 * at_least(19)
+        + at_least(20)
+}
+
+/// The Eidolon's level-driven natural-armor bonus: `+2` at each of eight
+/// master-level gates (2/5/7/10/12/15/17/20), verified against
+/// `BONUS:VAR|EidolonNaturalArmorBonus|if(MasterLevel>=2,2,0)+...`.
+/// Stacks on top of the racial `EIDOLON_RACIAL_NATURAL_ARMOR`.
+fn eidolon_natural_armor_bonus(level: u8) -> i16 {
+    let level = i16::from(level);
+    [2, 5, 7, 10, 12, 15, 17, 20]
+        .iter()
+        .map(|gate| 2 * i16::from(level >= *gate))
+        .sum()
+}
+
+/// The Eidolon's maximum number of natural attacks:
+/// `3+(MasterLevel>=4)+(>=9)+(>=14)+(>=19)` -> 3/4/5/6/7.
+fn eidolon_max_natural_attacks(level: u8) -> i16 {
+    let level = i16::from(level);
+    3 + [4, 9, 14, 19].iter().map(|gate| i16::from(level >= *gate)).sum::<i16>()
+}
+
+/// The Eidolon's base attack bonus: FULL, not three-quarters
+/// (`BONUS:COMBAT|BASEAB|classlevel(...)` on `CLASS:Eidolon`).
+///
+/// This is the single sharpest reason `ground_wolf_companion_stat_block`
+/// could not be reused: the Wolf is a 3/4-BAB, fixed-2-HD creature whose
+/// own helper carries `debug_assert_eq!(companion_level, 1)`, while an
+/// Eidolon needs full BAB across all 20 levels by construction. Right
+/// idiom, wrong function -- the same category as Shaman's Spirit Animal
+/// turning out to be a Familiar rather than an Animal Companion.
+fn eidolon_base_attack_bonus(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Grounds the canonical Quadruped Eidolon's corpus-derived stat block
+/// and its evolution-point pool (task #17, 2026-07-27), then
+/// claim-blocks on the unspent evolutions.
+///
+/// Quadruped is the canonical base form because it has the smallest
+/// distinct-evolution-type surface of the three (Bite + Legs, versus
+/// Biped's three types and Serpentine's five), not because of any
+/// resemblance to the Wolf companion.
+///
+/// Every base-form evolution is granted `ABILITY:Eidolon Evolution|
+/// AUTOMATIC|...`, so this whole stat block is determined with ZERO
+/// player evolution choices -- nothing here is a silently-seeded pick.
+/// The `COST:2` on `Evolution ~ Legs` does NOT draw against the pool for
+/// these automatic grants; charging it would spend 4 points from a
+/// 3-point level-1 pool and yield an impossible negative.
+fn ground_summoner_eidolon(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let pool = eidolon_evolution_pool(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.evolution_pool".to_owned(),
+        value: pool,
+        detail: format!(
+            "Summoner level {level} Eidolon evolution pool: {pool} evolution points. Grounds the \
+             pool SIZE only -- which evolutions are bought is not modelled, the same split \
+             already used for Warpriest's Fervor pool and Cavalier's Challenge uses per day. The \
+             canonical Quadruped's own evolutions (Bite, Legs, Legs) are granted AUTOMATIC by \
+             the corpus and draw nothing from this pool"
+        ),
+    });
+
+    let bab = eidolon_base_attack_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.base_attack_bonus".to_owned(),
+        value: bab,
+        detail: format!(
+            "Quadruped Eidolon base attack bonus: +{bab}, FULL progression (equal to the \
+             summoner's own level), not the three-quarters an animal companion gets. The Eidolon \
+             also uses a d{EIDOLON_HIT_DIE} hit die and takes its hit dice from the summoner's \
+             level, so it is a genuinely different creature chassis from this codebase's Wolf \
+             companion rather than a reuse of it"
+        ),
+    });
+
+    let natural_armor = eidolon_natural_armor_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.natural_armor_bonus".to_owned(),
+        value: natural_armor,
+        detail: format!(
+            "Quadruped Eidolon level-driven natural armor bonus: +{natural_armor} (+2 at each of \
+             summoner levels 2, 5, 7, 10, 12, 15, 17, and 20). The Eidolon base race carries a \
+             further racial +{EIDOLON_RACIAL_NATURAL_ARMOR} natural armor that stacks on top, so \
+             the creature's total natural armor is +{}. Grounded standalone: this engine computes \
+             no armor-class total for a companion creature",
+            natural_armor + EIDOLON_RACIAL_NATURAL_ARMOR
+        ),
+    });
+
+    let max_attacks = eidolon_max_natural_attacks(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.max_natural_attacks".to_owned(),
+        value: max_attacks,
+        detail: format!(
+            "Quadruped Eidolon maximum natural attacks: {max_attacks} (3, rising by one at \
+             summoner levels 4, 9, 14, and 19). A ceiling on how many natural attacks its \
+             evolutions may grant, not a count of attacks it currently has"
+        ),
+    });
+
+    let speed = EIDOLON_BASE_WALK_SPEED
+        + EIDOLON_SPEED_PER_LEGS_EVOLUTION * QUADRUPED_LEGS_EVOLUTIONS;
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.base_land_speed".to_owned(),
+        value: speed,
+        detail: format!(
+            "Quadruped Eidolon base land speed: {speed} feet -- the Eidolon race's own \
+             {EIDOLON_BASE_WALK_SPEED} feet plus {EIDOLON_SPEED_PER_LEGS_EVOLUTION} feet for \
+             each of the {QUADRUPED_LEGS_EVOLUTIONS} Legs evolutions Quadruped is granted \
+             automatically, matching the published Quadruped speed"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.bite_damage_die".to_owned(),
+        value: EIDOLON_BITE_DAMAGE_DIE,
+        detail: format!(
+            "Quadruped Eidolon Bite: 1d{EIDOLON_BITE_DAMAGE_DIE}, a primary natural attack. The \
+             Bite evolution is form-restricted (its corpus TYPE names Quadruped and Serpentine \
+             only), so a Biped Eidolon does not get it -- this magnitude must not be generalized \
+             to the other base forms"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.quadruped_ability_bonuses".to_owned(),
+        value: QUADRUPED_STRENGTH_BONUS,
+        detail: format!(
+            "Quadruped Eidolon ability-score bonuses: +{QUADRUPED_STRENGTH_BONUS} Strength and \
+             +{QUADRUPED_DEXTERITY_BONUS} Dexterity from the base form, on top of the Eidolon \
+             race's own +2 Constitution and -4 Intelligence. The bonuses are grounded rather \
+             than absolute scores, because the creature's starting scores are not stated as \
+             corpus constants and inventing them would be fabrication. Good saves are Fortitude \
+             and Reflex for THIS form specifically -- Biped gets Fortitude and Will, Serpentine \
+             Will and Reflex, so the pattern must not be hardcoded"
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported".to_owned(),
+        message: format!(
+            "{SUMMONER_CLASS_ID} remains blocked on its Eidolon's unspent evolution points: this \
+             slice grounds the canonical Quadruped's fixed stat block and the pool SIZE, but the \
+             full evolution point-buy economy (104 real evolution records with costs 1-4 and \
+             their own base-form and level prerequisites) is not modelled, so which evolutions a \
+             given Eidolon actually bought is unknown. The other two base forms (Biped, \
+             Serpentine), Aspect and Greater Aspect, Life Link, Bond Senses, Shield Ally and \
+             Greater Shield Ally, Maker's Call, Transposition, Twin Eidolon, the Summon Monster \
+             spell-like ability, and Summoner's own spontaneous Charisma spellcasting all remain \
+             ungrounded; no evolution spending or class-feature execution is fabricated here"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// claim-blocking `hex_powers.unsupported` diagnostic.
 /// Grounds or claim-blocks Witch's Hex choice (v0.6 alpha swarm, risks
 /// item 8, Witch full-build closure, 11th ACG/APG class-specific
 /// closure). A recognized `choice:witch_hex` selection naming
@@ -11216,7 +11441,6 @@ fn witch_ward_bonus(level: u8) -> i16 {
 /// naming the other ~18 hexes as still deferred, mirroring Oracle's own
 /// Mystery/Curse three-branch dispatch shape (and Warpriest's Blessing
 /// shape before that). An unrecognized or missing choice keeps a
-/// claim-blocking `hex_powers.unsupported` diagnostic.
 fn ground_or_block_witch_class_features(
     input: &CharacterInput,
     level: u8,
@@ -32252,6 +32476,14 @@ mod apg_class_chassis_dispatch_tests {
                 || class_id == "class:inquisitor"
                 || class_id == "class:oracle"
                 || class_id == "class:witch"
+                // v0.6 alpha swarm, task #17 (2026-07-27): Summoner's
+                // generic diagnostic is retired too -- the canonical
+                // Quadruped Eidolon's stat block and evolution-pool size
+                // are now grounded, so its remaining claim-blocking
+                // diagnostic is the narrower
+                // `eidolon.evolutions_deferred.unsupported`, covered by
+                // `summoner_eidolon_tests` below.
+                || class_id == "class:summoner"
             {
                 continue;
             }
@@ -42762,3 +42994,153 @@ mod swashbuckler_finesse_tests {
     }
 }
 
+
+/// v0.6 alpha swarm, task #17 (Summoner bounded Eidolon MVP,
+/// 2026-07-27): the canonical Quadruped Eidolon's corpus-derived stat
+/// block, plus the evolution-point pool whose spending stays deferred.
+#[cfg(test)]
+mod summoner_eidolon_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        SUMMONER_CLASS_ID};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn summoner(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SUMMONER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// The evolution-point pool, re-derived level by level from the
+    /// corpus formula's own `>=` terms rather than copied from the
+    /// published table.
+    #[test]
+    fn evolution_pool_matches_the_corpus_formula_at_every_level() {
+        let expected = [
+            3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26,
+        ];
+        for (index, want) in expected.iter().enumerate() {
+            let level = (index + 1) as u8;
+            assert_eq!(
+                super::eidolon_evolution_pool(level),
+                *want,
+                "summoner level {level} evolution points"
+            );
+        }
+    }
+
+    /// Natural armor steps +2 at eight specific master levels.
+    #[test]
+    fn eidolon_natural_armor_steps_at_its_eight_corpus_gates() {
+        for (level, want) in [
+            (1u8, 0i16),
+            (2, 2),
+            (4, 2),
+            (5, 4),
+            (7, 6),
+            (10, 8),
+            (12, 10),
+            (15, 12),
+            (17, 14),
+            (20, 16),
+        ] {
+            assert_eq!(
+                super::eidolon_natural_armor_bonus(level),
+                want,
+                "level {level} natural armor bonus (on top of the racial +2)"
+            );
+        }
+    }
+
+    /// Max natural attacks: 3, then +1 at 4/9/14/19.
+    #[test]
+    fn eidolon_max_natural_attacks_steps_at_four_nine_fourteen_nineteen() {
+        for (level, want) in
+            [(1u8, 3i16), (3, 3), (4, 4), (8, 4), (9, 5), (13, 5), (14, 6), (18, 6), (19, 7), (20, 7)]
+        {
+            assert_eq!(super::eidolon_max_natural_attacks(level), want, "level {level}");
+        }
+    }
+
+    /// The Eidolon has FULL base attack bonus (`classlevel`), unlike the
+    /// Wolf companion's 3/4 -- the single most important reason the Wolf
+    /// function could not be reused.
+    #[test]
+    fn eidolon_base_attack_bonus_is_full_not_three_quarters() {
+        for level in [1u8, 5, 11, 20] {
+            assert_eq!(
+                super::eidolon_base_attack_bonus(level),
+                i16::from(level),
+                "level {level}: full BAB"
+            );
+        }
+    }
+
+    /// A level-1 Quadruped Eidolon's whole stat block grounds, and the
+    /// pool is reported without pretending any of it is spent.
+    #[test]
+    fn a_level_one_quadruped_eidolon_grounds_its_real_stat_block() {
+        let input = summoner(1);
+        for (id, want) in [
+            ("class_feature.apg.summoner.eidolon.evolution_pool", 3),
+            ("class_feature.apg.summoner.eidolon.base_attack_bonus", 1),
+            ("class_feature.apg.summoner.eidolon.natural_armor_bonus", 0),
+            ("class_feature.apg.summoner.eidolon.max_natural_attacks", 3),
+            ("class_feature.apg.summoner.eidolon.base_land_speed", 40),
+            ("class_feature.apg.summoner.eidolon.bite_damage_die", 6),
+        ] {
+            assert_eq!(value(&input, id), Some(want), "{id}");
+        }
+    }
+
+    /// Summoner stays Blocked on unspent evolutions -- the MVP grounds
+    /// the pool SIZE, never its expenditure.
+    #[test]
+    fn summoner_stays_blocked_on_unspent_evolutions_at_every_level() {
+        for level in [1u8, 10, 20] {
+            let receipt = build_pilot_headless_receipt(&summoner(level));
+            assert_eq!(
+                receipt.status,
+                super::HeadlessReceiptStatus::Blocked,
+                "level {level} Summoner must stay Blocked"
+            );
+            assert!(
+                receipt.computation.diagnostics.iter().any(|d| {
+                    d.id == "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported"
+                        && d.claim_blocking
+                }),
+                "level {level} must carry the claim-blocking evolutions_deferred diagnostic: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The Eidolon's records never leak onto a non-Summoner.
+    #[test]
+    fn eidolon_records_never_ground_for_a_non_summoner() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let fighter = result.character_input.expect("valid fixture");
+        assert!(
+            !build_pilot_headless_receipt(&fighter)
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("eidolon")),
+            "a Fighter must ground no Eidolon record"
+        );
+    }
+}

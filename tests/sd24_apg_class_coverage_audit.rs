@@ -119,6 +119,7 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
                 | ApgClassId::Inquisitor
                 | ApgClassId::Oracle
                 | ApgClassId::Witch
+                | ApgClassId::Summoner
         ) {
             continue;
         }
@@ -213,6 +214,15 @@ fn apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
             "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned()
         } else if *class_id == ApgClassId::Witch {
             "class_feature.apg.witch.other_features_deferred.unsupported".to_owned()
+        } else if *class_id == ApgClassId::Summoner {
+            // v0.6 alpha swarm, task #17 (bounded Eidolon MVP,
+            // 2026-07-27): Summoner's generic diagnostic is retired. The
+            // canonical Quadruped Eidolon's stat block and its
+            // evolution-point pool size are now genuinely grounded, so
+            // the remaining claim-blocking diagnostic names the real gap
+            // -- the unspent evolution points and the deferred
+            // point-buy economy.
+            "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported".to_owned()
         } else {
             format!("class_feature.apg.{}.unsupported", class_id.name())
         };
