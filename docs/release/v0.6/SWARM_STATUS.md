@@ -1641,7 +1641,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T15:00:01
-Latest commit on tranche/6: dc945830 docs(v0.6): dispatch backend to #11 (Witch spellcasting consumer) (56 seconds ago) (2026-07-27T14:59:05-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T14:58:34 frontend=unknown qa=unknown lead=2026-07-27T14:53:11
+Last mechanical check: 2026-07-27T15:15:05
+Latest commit on tranche/6: 7175898d feat(v0.6): Witch spellcasting -- familiar-as-spell-store posture (task #11) (47 seconds ago) (2026-07-27T15:14:18-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T15:14:53 frontend=unknown qa=unknown lead=2026-07-27T15:14:45
 <!-- AUTO-HEARTBEAT-END -->
