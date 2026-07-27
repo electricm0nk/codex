@@ -2264,6 +2264,61 @@ const ORACLE_HEALING_HANDS_HEAL_BONUS: i16 = 4;
 /// `apg_abilities_class.lst`'s own `BONUS:VAR|OracleCloudedVisionRange|30`
 /// tag. Flat, unconditional once the Curse is chosen.
 const ORACLE_CLOUDED_VISION_RANGE_FEET: i16 = 30;
+/// The choice set naming WHICH revelation an Oracle actually took
+/// (deepening 2026-07-26, task #10).
+///
+/// Revelations are a BUDGETED pick -- `OracleMysteryLevel` grants exactly
+/// 1 at level 1, then +1 each at Oracle 3/7/11/15/19 -- so unlike
+/// Warpriest's Blessing minor powers (which are automatic once the
+/// blessing is chosen), gating a revelation on its Mystery alone would
+/// assert a capability the character may never have bought. A level-1
+/// Lore Oracle legally holds ONE revelation, so grounding both Sidestep
+/// Secret and Lore Keeper off `mystery:lore` would describe an illegal
+/// character.
+///
+/// This closure therefore requires an explicit
+/// `choice:oracle_revelation -> revelation:<slug>` alongside the Mystery
+/// pick, and grounds nothing when it is absent -- the same
+/// no-silent-seeding design already ratified for
+/// `choice:skill_focus_target`, reused here rather than reinvented.
+///
+/// **Known, deliberate inconsistency**: Life Mystery's own Healing Hands
+/// (shipped in the original Oracle closure) still grounds on the Mystery
+/// pick alone and is deliberately left that way -- retrofitting
+/// already-shipped behavior to this pattern is a separate consistency
+/// pass, not part of this deepening.
+const ORACLE_REVELATION_CHOICE_ID: &str = "choice:oracle_revelation";
+/// The four additional Mysteries this deepening recognizes, alongside
+/// the already-shipped `LIFE_MYSTERY_SELECTION`.
+const LORE_MYSTERY_SELECTION: &str = "mystery:lore";
+const NATURE_MYSTERY_SELECTION: &str = "mystery:nature";
+const BONE_MYSTERY_SELECTION: &str = "mystery:bone";
+const FLAME_MYSTERY_SELECTION: &str = "mystery:flame";
+/// The six Tier-1 revelations this deepening grounds.
+const ORACLE_CHANNEL_REVELATION: &str = "revelation:channel";
+const ORACLE_SIDESTEP_SECRET_REVELATION: &str = "revelation:sidestep_secret";
+const ORACLE_NATURES_WHISPERS_REVELATION: &str = "revelation:natures_whispers";
+const ORACLE_LORE_KEEPER_REVELATION: &str = "revelation:lore_keeper";
+const ORACLE_NEAR_DEATH_REVELATION: &str = "revelation:near_death";
+const ORACLE_CINDER_DANCE_REVELATION: &str = "revelation:cinder_dance";
+/// Life Mystery's Channel: `BONUS:VAR|OracleChannelDieSize|6`.
+const ORACLE_CHANNEL_DIE_SIZE: i16 = 6;
+/// Bone Mystery's Near Death: base `BONUS:VAR|OracleNearDeathSaveBonus|2`
+/// plus a second `|2|PRECLASS:1,Oracle=11`, so +2 below Oracle 11 and +4
+/// from 11 on.
+const ORACLE_NEAR_DEATH_BASE_SAVE_BONUS: i16 = 2;
+const ORACLE_NEAR_DEATH_UPGRADE_LEVEL: u8 = 11;
+/// Flame Mystery's Cinder Dance: `BONUS:MOVEADD|TYPE.WALK|10`.
+const ORACLE_CINDER_DANCE_SPEED_BONUS: i16 = 10;
+/// Lore Mystery's Lore Keeper names exactly 10 Knowledge skills in its
+/// own `BONUS:SKILL|...` token.
+const ORACLE_LORE_KEEPER_KNOWLEDGE_SKILL_COUNT: i16 = 10;
+/// Deaf Curse's `BONUS:SITUATION|Perception=Opposed|-4`. Grounds per the
+/// lead's explicit ruling (2026-07-27): a flat modifier applying to your
+/// OWN roll clears the corrected bar even when the check is opposed --
+/// the Studied-Target line is about needing a persistent tracked
+/// relationship with a specific opponent, not about opposition per se.
+const ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY: i16 = -4;
 /// The three additional Curse types this deepening grounds (2026-07-26,
 /// task #10). An Oracle selects exactly ONE curse, so these are mutually
 /// exclusive with each other and with Clouded Vision -- no revelation-
@@ -10062,24 +10117,170 @@ fn ground_or_block_oracle_mystery(
         });
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.mystery_revelations_beyond_life.unmodeled".to_owned(),
-            message: "Oracle Mystery revelation content beyond Life's own Healing Hands remains \
-                 unmodeled: the other 9 Mystery types (Battle, Bone, Flame, Heavens, Lore, \
-                 Nature, Stone, Waves, Winds) and their own revelations are not implemented. \
-                 This does not block an otherwise-valid Life-Mystery posture"
+            message: "Oracle Mystery revelation content beyond the grounded Tier-1 set remains \
+                 unmodeled. Grounded: Life's Healing Hands and Channel, Lore's Sidestep Secret \
+                 and Lore Keeper, Nature's Nature's Whispers, Bone's Near Death, and Flame's \
+                 Cinder Dance -- each (except the already-shipped Healing Hands) requiring an \
+                 explicit `choice:oracle_revelation` pick, since revelations are a budgeted \
+                 selection rather than an automatic grant. Not implemented: every other \
+                 revelation across the 10 Mysteries, including the ally-dependent, \
+                 environment-dependent, and opponent-state-dependent ones (which need engine \
+                 state this codebase does not have), the summon-subsystem ones, and the 34 of \
+                 100 revelation records that carry no numeric token at all -- a genuine no-op, \
+                 not a transcription backlog. This does not block an otherwise-valid Mystery \
+                 posture"
                 .to_owned(),
             claim_blocking: false,
         });
-    } else {
+    } else if !mystery_selections.iter().any(|selection| {
+        matches!(
+            *selection,
+            LORE_MYSTERY_SELECTION
+                | NATURE_MYSTERY_SELECTION
+                | BONE_MYSTERY_SELECTION
+                | FLAME_MYSTERY_SELECTION
+        )
+    }) {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.mystery_powers.unsupported".to_owned(),
-            message: "Oracle remains blocked on its Mystery powers burden: no recognized Life \
-                 Mystery choice is present (only Life's own Healing Hands revelation is \
-                 genuinely grounded in this codebase), so no Oracle Mystery-power support is \
-                 claimed"
+            message: "Oracle remains blocked on its Mystery powers burden: no recognized Mystery \
+                 choice is present (only Life, Lore, Nature, Bone, and Flame have any grounded \
+                 revelation in this codebase), so no Oracle Mystery-power support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
     }
+}
+
+/// Whether this character is an Oracle who took `mystery` AND explicitly
+/// recorded `revelation` (deepening 2026-07-26, task #10). Returns the
+/// Oracle level when both hold. Class-ownership-gated, so a spoofed
+/// choice on a non-Oracle can never ground anything.
+///
+/// Requiring the explicit revelation pick is the whole point of the
+/// gate -- see `ORACLE_REVELATION_CHOICE_ID` for why a Mystery-only gate
+/// would describe an illegal character.
+fn oracle_level_with_revelation(
+    input: &CharacterInput,
+    mystery: &str,
+    revelation: &str,
+) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    let has = |choice_set_id: &str, selection: &str| {
+        input
+            .chosen
+            .selected_choices
+            .iter()
+            .any(|c| c.choice_set_id == choice_set_id && c.selection_id == selection)
+    };
+    if !has(ORACLE_MYSTERY_CHOICE_ID, mystery) {
+        return None;
+    }
+    if !has(ORACLE_REVELATION_CHOICE_ID, revelation) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// The stat-substitution idiom shared by Sidestep Secret
+/// (`max(CHA,DEX)-DEX`), Nature's Whispers (`max(DEX,CHA)-DEX`), and Lore
+/// Keeper (`max(CHA,INT)-INT`): the DELTA that raises a value already
+/// computed from `base_modifier` up to `substitute_modifier` when the
+/// substitute is higher, and 0 otherwise.
+///
+/// Returned as a delta rather than a replacement precisely because every
+/// consumer here already adds the base modifier itself -- adding this on
+/// top yields `max(substitute, base)` exactly, with no double-count.
+/// Genuinely 0 whenever the substitute stat is not higher, which is an
+/// honest and common outcome, not a failure.
+fn oracle_stat_substitution_delta(substitute_modifier: i16, base_modifier: i16) -> i16 {
+    substitute_modifier.max(base_modifier) - base_modifier
+}
+
+/// Life Mystery's Channel uses per day: `BONUS:VAR|OracleChannelTimes|
+/// 1+CHA`. Note this is Oracle's OWN formula and is deliberately kept
+/// separate from `shaman_channel_uses_per_day` per the established
+/// parallel-copy discipline, even though the corpus declares
+/// `SERVESAS:ABILITY=...|Cleric ~ Channel Energy`.
+fn oracle_channel_uses_per_day(charisma_modifier: i16) -> i16 {
+    1 + charisma_modifier
+}
+
+/// Life Mystery's Channel dice: `BONUS:VAR|OracleChannelDice|
+/// (OracleChannelLVL+1)/2`, where `OracleChannelLVL = classlevel("Oracle")`.
+fn oracle_channel_dice(oracle_level: u8) -> i16 {
+    (i16::from(oracle_level) + 1) / 2
+}
+
+/// Life Mystery's Channel save DC: `BONUS:VAR|OracleChannelDC|
+/// 10+(OracleChannelLVL/2)+CHA`.
+fn oracle_channel_dc(oracle_level: u8, charisma_modifier: i16) -> i16 {
+    10 + i16::from(oracle_level) / 2 + charisma_modifier
+}
+
+/// Bone Mystery's Near Death insight bonus on saves against disease,
+/// mind-affecting effects, and poison: `+2`, rising to `+4` from Oracle
+/// level 11 (the corpus stacks a second `BONUS:VAR|
+/// OracleNearDeathSaveBonus|2|PRECLASS:1,Oracle=11` on the base one).
+///
+/// Deliberately NOT folded into `compute_total_saves`: it applies only
+/// against three specific effect categories, and this engine models no
+/// per-category save facet, so adding it to the flat save totals would
+/// overstate it as an unconditional bonus.
+fn oracle_near_death_save_bonus(oracle_level: u8) -> i16 {
+    if oracle_level >= ORACLE_NEAR_DEATH_UPGRADE_LEVEL {
+        ORACLE_NEAR_DEATH_BASE_SAVE_BONUS * 2
+    } else {
+        ORACLE_NEAR_DEATH_BASE_SAVE_BONUS
+    }
+}
+
+/// Lore Mystery's Sidestep Secret Reflex delta, ready to layer into
+/// `compute_total_saves` (deepening 2026-07-26, task #10, integration
+/// ratified by the lead): `BONUS:SAVE|Reflex|max(CHA,DEX)-DEX`.
+///
+/// Always-on with no activation and no per-day budget, so unlike
+/// Warpriest's Strength Surge there is no enforcement to fake by
+/// integrating it -- it belongs in the real total. `None` for every
+/// non-Oracle or Oracle who did not take this revelation.
+fn active_oracle_sidestep_secret_reflex_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<i16> {
+    oracle_level_with_revelation(
+        input,
+        LORE_MYSTERY_SELECTION,
+        ORACLE_SIDESTEP_SECRET_REVELATION,
+    )?;
+    Some(oracle_stat_substitution_delta(
+        ability_modifiers.charisma,
+        ability_modifiers.dexterity,
+    ))
+}
+
+/// Nature Mystery's Nature's Whispers Armor Class delta, ready to layer
+/// into `compute_combat_baseline` (deepening 2026-07-26, task #10,
+/// integration ratified by the lead):
+/// `BONUS:COMBAT|AC|(max(DEX,CHA)-DEX)|Type=Ability`. Same always-on,
+/// no-budget shape as Sidestep Secret.
+fn active_oracle_natures_whispers_ac_bonus(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<i16> {
+    oracle_level_with_revelation(
+        input,
+        NATURE_MYSTERY_SELECTION,
+        ORACLE_NATURES_WHISPERS_REVELATION,
+    )?;
+    Some(oracle_stat_substitution_delta(
+        ability_modifiers.charisma,
+        ability_modifiers.dexterity,
+    ))
 }
 
 /// Oracle's curse level: `OracleCurseLVL = OracleLVL+((TL-OracleLVL)/2)`
@@ -10174,6 +10375,174 @@ fn oracle_deaf_perception_bonus(curse_level: i16) -> Option<i16> {
 /// cancellation as an explicit explanation record instead.
 fn oracle_wasting_intimidate_net_effect() -> i16 {
     ORACLE_WASTING_CHARISMA_SKILL_PENALTY + ORACLE_WASTING_INTIMIDATE_OFFSET
+}
+
+/// Grounds the six Tier-1 Mystery revelations (deepening 2026-07-26,
+/// task #10), each gated on BOTH its Mystery and an explicit
+/// `choice:oracle_revelation` pick -- see `ORACLE_REVELATION_CHOICE_ID`
+/// for why the Mystery alone is not enough. Grounds nothing at all when
+/// no recognized revelation is recorded, and never claim-blocks on its
+/// own (Oracle's permanent block comes from
+/// `push_oracle_other_features_deferred_diagnostic`).
+///
+/// Two of the six also layer into REAL computed totals rather than
+/// grounding standalone -- Sidestep Secret into the Reflex save and
+/// Nature's Whispers into baseline Armor Class -- via
+/// `active_oracle_sidestep_secret_reflex_bonus` /
+/// `active_oracle_natures_whispers_ac_bonus` at those totals' own sites.
+/// The records pushed here explain the magnitude; the totals apply it.
+fn ground_oracle_tier_one_revelations(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let ability_modifiers = AbilityModifiers {
+        strength: ability_modifier(input.chosen.ability_scores.strength),
+        dexterity: ability_modifier(input.chosen.ability_scores.dexterity),
+        constitution: ability_modifier(input.chosen.ability_scores.constitution),
+        intelligence: ability_modifier(input.chosen.ability_scores.intelligence),
+        wisdom: ability_modifier(input.chosen.ability_scores.wisdom),
+        charisma: ability_modifier(input.chosen.ability_scores.charisma),
+    };
+    let ability_modifiers = &ability_modifiers;
+    let charisma = ability_modifiers.charisma;
+
+    if let Some(oracle_level) =
+        oracle_level_with_revelation(input, LIFE_MYSTERY_SELECTION, ORACLE_CHANNEL_REVELATION)
+    {
+        let uses = oracle_channel_uses_per_day(charisma);
+        let dice = oracle_channel_dice(oracle_level);
+        let dc = oracle_channel_dc(oracle_level, charisma);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.life_mystery.channel_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Oracle level {oracle_level} Life Mystery Channel uses per day: 1 + Charisma \
+                 modifier ({charisma:+}) = {uses}. A flat daily pool -- no per-use consumption is \
+                 tracked here. The corpus declares this ability `SERVESAS` Cleric's own Channel \
+                 Energy, but the formula is transcribed from Oracle's own record rather than \
+                 shared with Shaman's structurally-identical Channel, per the established \
+                 parallel-copy discipline"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.life_mystery.channel_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Oracle level {oracle_level} Life Mystery Channel heals \
+                 {dice}d{ORACLE_CHANNEL_DIE_SIZE} ((level + 1)/2 = {dice} dice, die size \
+                 {ORACLE_CHANNEL_DIE_SIZE}). This engine computes no healing total anywhere, so \
+                 this grounds as a standalone magnitude"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.life_mystery.channel_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Oracle level {oracle_level} Life Mystery Channel save DC: 10 + level/2 + \
+                 Charisma modifier ({charisma:+}) = {dc}"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) = oracle_level_with_revelation(
+        input,
+        LORE_MYSTERY_SELECTION,
+        ORACLE_SIDESTEP_SECRET_REVELATION,
+    ) {
+        let delta = oracle_stat_substitution_delta(charisma, ability_modifiers.dexterity);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.lore_mystery.sidestep_secret_reflex_bonus".to_owned(),
+            value: delta,
+            detail: format!(
+                "Oracle level {oracle_level} Lore Mystery Sidestep Secret adds \
+                 max(Charisma, Dexterity) - Dexterity = max({charisma:+}, {:+}) - {:+} = \
+                 {delta:+} to the Reflex save, letting Charisma stand in for Dexterity when it \
+                 is higher. This is genuinely {delta:+} for this character. Unlike most Oracle \
+                 facts this one is INTEGRATED: it is folded into the real \
+                 `defense.total_save.reflex` total, since it is always on with no activation and \
+                 no per-day budget to fake",
+                ability_modifiers.dexterity, ability_modifiers.dexterity
+            ),
+        });
+    }
+
+    if let Some(oracle_level) = oracle_level_with_revelation(
+        input,
+        NATURE_MYSTERY_SELECTION,
+        ORACLE_NATURES_WHISPERS_REVELATION,
+    ) {
+        let delta = oracle_stat_substitution_delta(charisma, ability_modifiers.dexterity);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.nature_mystery.natures_whispers_ac_bonus".to_owned(),
+            value: delta,
+            detail: format!(
+                "Oracle level {oracle_level} Nature Mystery Nature's Whispers adds \
+                 max(Dexterity, Charisma) - Dexterity = {delta:+} to Armor Class, letting \
+                 Charisma stand in for Dexterity when it is higher. INTEGRATED into the real \
+                 `defense.baseline_armor_class` total (the same total Inquisitor's Protection \
+                 judgment already lands on). The corpus applies it as an untyped ability bonus \
+                 on top of the Dexterity contribution, so where the worn armor's maximum \
+                 Dexterity bonus caps that contribution the two interact exactly as the raw \
+                 tokens do. The revelation's parallel `BONUS:VAR|CMD` half is not integrated -- \
+                 this engine computes no Combat Maneuver Defense total"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) =
+        oracle_level_with_revelation(input, LORE_MYSTERY_SELECTION, ORACLE_LORE_KEEPER_REVELATION)
+    {
+        let delta = oracle_stat_substitution_delta(charisma, ability_modifiers.intelligence);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.lore_mystery.lore_keeper_knowledge_bonus".to_owned(),
+            value: delta,
+            detail: format!(
+                "Oracle level {oracle_level} Lore Mystery Lore Keeper adds \
+                 max(Charisma, Intelligence) - Intelligence = {delta:+} to all \
+                 {ORACLE_LORE_KEEPER_KNOWLEDGE_SKILL_COUNT} Knowledge skills named in its own \
+                 corpus token, letting Charisma stand in for Intelligence when it is higher. No \
+                 Knowledge skill is among the three skills this engine computes, so this grounds \
+                 as a standalone flat magnitude, the same shape as Bard's Bardic Knowledge"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) =
+        oracle_level_with_revelation(input, BONE_MYSTERY_SELECTION, ORACLE_NEAR_DEATH_REVELATION)
+    {
+        let bonus = oracle_near_death_save_bonus(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.bone_mystery.near_death_save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Oracle level {oracle_level} Bone Mystery Near Death grants a +{bonus} insight \
+                 bonus on saving throws against disease, mind-affecting effects, and poison \
+                 (+2, rising to +4 from Oracle level {ORACLE_NEAR_DEATH_UPGRADE_LEVEL}). \
+                 Deliberately NOT folded into the real save totals: it applies only against \
+                 those three effect categories, and this engine models no per-category save \
+                 facet, so adding it to the flat totals would overstate it as unconditional"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) =
+        oracle_level_with_revelation(input, FLAME_MYSTERY_SELECTION, ORACLE_CINDER_DANCE_REVELATION)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.flame_mystery.cinder_dance_speed_bonus".to_owned(),
+            value: ORACLE_CINDER_DANCE_SPEED_BONUS,
+            detail: format!(
+                "Oracle level {oracle_level} Flame Mystery Cinder Dance increases base land speed \
+                 by {ORACLE_CINDER_DANCE_SPEED_BONUS} feet (`BONUS:MOVEADD|TYPE.WALK|10`), always \
+                 on with no level gate -- the exact mirror of the Lame Curse's own reduction. \
+                 This engine computes no movement total, so it grounds standalone. The corpus \
+                 record carries `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`, making \
+                 this revelation mutually exclusive with the Lame Curse; the bonus feats it also \
+                 grants at Oracle 5 and 10 (Nimble Moves, Acrobatic Steps) carry no magnitude and \
+                 are not modelled"
+            ),
+        });
+    }
 }
 
 /// Grounds Oracle's Curse choice (v0.6 alpha swarm, risks item 8, Oracle
@@ -10365,6 +10734,19 @@ fn ground_oracle_deaf_curse(
              a standalone flat magnitude, the same shape as Inquisitor's own Cunning Initiative"
         ),
     });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.oracle.deaf_curse.opposed_perception_penalty".to_owned(),
+        value: ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY,
+        detail: format!(
+            "Oracle with the Deaf Curse takes a {ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY} penalty \
+             on OPPOSED Perception checks (`BONUS:SITUATION|Perception=Opposed|-4`), at every \
+             curse level. Grounds despite being situational: the magnitude is fixed and applies \
+             to this character's own roll, needing nothing known about the opposing creature -- \
+             unlike a Studied-Target-style bonus, which requires a persistent tracked \
+             relationship with a specific opponent that this engine models nowhere. Perception \
+             is not among the three skills this engine computes, so this grounds standalone"
+        ),
+    });
     match oracle_deaf_perception_bonus(curse_level) {
         Some(bonus) => explanations.push(ComputationExplanation {
             id: "class_feature.apg.oracle.deaf_curse.perception_bonus".to_owned(),
@@ -10423,7 +10805,36 @@ fn ground_or_block_oracle_class_features(
     }
 
     ground_or_block_oracle_mystery(input, explanations, diagnostics);
+    ground_oracle_tier_one_revelations(input, explanations);
     ground_or_block_oracle_curse(input, level, explanations, diagnostics);
+
+    // The Cinder Dance revelation's own corpus record carries
+    // `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`, so a
+    // character holding both it and the Lame Curse is genuinely illegal
+    // in PF1 -- named honestly rather than silently computing the two
+    // opposing speed magnitudes as if they cancelled.
+    let has_choice = |choice_set_id: &str, selection: &str| {
+        input
+            .chosen
+            .selected_choices
+            .iter()
+            .any(|c| c.choice_set_id == choice_set_id && c.selection_id == selection)
+    };
+    if has_choice(ORACLE_CURSE_CHOICE_ID, LAME_CURSE_SELECTION)
+        && has_choice(ORACLE_REVELATION_CHOICE_ID, ORACLE_CINDER_DANCE_REVELATION)
+    {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.cinder_dance_lame_mutually_exclusive".to_owned(),
+            message: "This character holds both the Lame Curse and the Cinder Dance revelation, \
+                 which the corpus makes mutually exclusive (Cinder Dance carries \
+                 `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`). Both speed magnitudes \
+                 are reported as the records themselves state them; they are NOT netted against \
+                 each other, because this combination cannot legally exist rather than resolving \
+                 to some combined speed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
 
     push_oracle_other_features_deferred_diagnostic(diagnostics);
 }
@@ -27889,6 +28300,16 @@ fn compute_total_saves(
     let purity_judgment_save_bonus = active_inquisitor_purity_judgment_bonus(input)
         .map(|(_, bonus)| bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8 (Oracle revelation deepening,
+    // 2026-07-26, task #10): Lore Mystery's Sidestep Secret lets Charisma
+    // stand in for Dexterity on Reflex saves. Integrated rather than
+    // grounded standalone because it is always on with no activation and
+    // no per-day budget -- class-ownership-gated AND explicit-revelation-
+    // gated by `active_oracle_sidestep_secret_reflex_bonus` construction,
+    // 0 for every non-Oracle and for any Oracle who did not take it.
+    // Applies to REFLEX ONLY, unlike the all-three-saves bonuses above.
+    let sidestep_secret_reflex_bonus =
+        active_oracle_sidestep_secret_reflex_bonus(input, ability_modifiers).unwrap_or(0);
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
@@ -27899,7 +28320,8 @@ fn compute_total_saves(
             + ability_modifiers.dexterity
             + feat_save_bonuses.reflex
             + touch_of_good_save_bonus
-            + purity_judgment_save_bonus,
+            + purity_judgment_save_bonus
+            + sidestep_secret_reflex_bonus,
         will: base_saves.will
             + ability_modifiers.wisdom
             + feat_save_bonuses.will
@@ -27930,7 +28352,9 @@ fn compute_total_saves(
             "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) + \
              feat bonus (+{}, Lightning Reflexes if selected) + Cleric Touch of Good sacred bonus \
              (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only \
-             while actively, validly judging Purity) = {}",
+             while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-\
+             Dexterity substitution (+{sidestep_secret_reflex_bonus}, only for a Lore-Mystery \
+             Oracle who took that revelation) = {}",
             base_saves.reflex, ability_modifiers.dexterity, feat_save_bonuses.reflex,
             touch_of_good_save_bonus, purity_judgment_save_bonus, total_saves.reflex
         ),
@@ -28555,6 +28979,18 @@ fn compute_combat_baseline(
     let protection_judgment_ac_bonus = active_inquisitor_protection_judgment_bonus(input)
         .map(|(_, bonus)| bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item 8 (Oracle revelation deepening,
+    // 2026-07-26, task #10): Nature Mystery's Nature's Whispers lets
+    // Charisma stand in for Dexterity on Armor Class. Integrated rather
+    // than grounded standalone because it is always on with no activation
+    // and no per-day budget -- class-ownership-gated AND explicit-
+    // revelation-gated by `active_oracle_natures_whispers_ac_bonus`
+    // construction, 0 for every non-Oracle and for any Oracle who did not
+    // take it. Applied as the corpus applies it: an untyped ability bonus
+    // layered on top of `dexterity_contribution` (which the worn armor's
+    // MAXDEX may have capped), not a replacement for it.
+    let natures_whispers_ac_bonus =
+        active_oracle_natures_whispers_ac_bonus(input, ability_modifiers).unwrap_or(0);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -28564,7 +29000,8 @@ fn compute_combat_baseline(
         + bloodrage_armor_class_penalty
         + brawler_ac_bonus_value
         + alchemist_mutagen_ac_bonus_value
-        + protection_judgment_ac_bonus;
+        + protection_judgment_ac_bonus
+        + natures_whispers_ac_bonus;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -28579,7 +29016,9 @@ fn compute_combat_baseline(
              wearing light or no armor) + Alchemist Mutagen natural armor bonus \
              (+{alchemist_mutagen_ac_bonus_value}, only while actively, validly mutated) + \
              Inquisitor Protection judgment sacred/profane bonus (+{protection_judgment_ac_bonus}, \
-             only while actively, validly judging Protection); shield \
+             only while actively, validly judging Protection) + Oracle Nature's Whispers \
+             Charisma-for-Dexterity substitution (+{natures_whispers_ac_bonus}, only for a \
+             Nature-Mystery Oracle who took that revelation); shield \
              is absent (+0) = {armor_class}"
         ),
     });
@@ -37570,9 +38009,13 @@ mod slayer_dispatch_widening_safety_tests {
 mod oracle_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, CLOUDED_VISION_CURSE_SELECTION, DEAF_CURSE_SELECTION,
-        FIGHTER_CLASS_ID, LAME_CURSE_SELECTION, LIFE_MYSTERY_SELECTION, ORACLE_CLASS_ID,
-        ORACLE_CURSE_CHOICE_ID, ORACLE_MYSTERY_CHOICE_ID, WASTING_CURSE_SELECTION,
+        HeadlessReceiptStatus, BONE_MYSTERY_SELECTION, CLOUDED_VISION_CURSE_SELECTION,
+        DEAF_CURSE_SELECTION, FIGHTER_CLASS_ID, FLAME_MYSTERY_SELECTION, LAME_CURSE_SELECTION,
+        LIFE_MYSTERY_SELECTION, LORE_MYSTERY_SELECTION, NATURE_MYSTERY_SELECTION,
+        ORACLE_CHANNEL_REVELATION, ORACLE_CINDER_DANCE_REVELATION, ORACLE_CLASS_ID,
+        ORACLE_CURSE_CHOICE_ID, ORACLE_LORE_KEEPER_REVELATION, ORACLE_MYSTERY_CHOICE_ID,
+        ORACLE_NATURES_WHISPERS_REVELATION, ORACLE_NEAR_DEATH_REVELATION,
+        ORACLE_REVELATION_CHOICE_ID, ORACLE_SIDESTEP_SECRET_REVELATION, WASTING_CURSE_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, SelectedChoice, SpellSelection,
@@ -38162,6 +38605,474 @@ mod oracle_dispatch_widening_safety_tests {
                 .any(|e| e.id.starts_with("class_feature.apg.oracle.")),
             "a Fighter must never ground an Oracle curse: {:?}",
             receipt.computation.explanations
+        );
+    }
+
+    /// Builds an Oracle who took `mystery` and explicitly recorded
+    /// `revelation`, with Charisma raised to 18 (+4) so the
+    /// stat-substitution revelations produce a non-trivial delta -- the
+    /// stock fixture's Charisma 8 (-1) makes every substitution a
+    /// genuine but uninformative 0.
+    fn oracle_with_revelation(level: u8, mystery: &str, revelation: &str) -> CharacterInput {
+        let mut input = human_oracle_input(level);
+        input.chosen.ability_scores.charisma = 18;
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: mystery.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+            selection_id: revelation.to_owned(),
+        });
+        input
+    }
+
+    /// The load-bearing property of the ratified option-(B) design: a
+    /// Mystery pick ALONE grounds no revelation. Revelations are a
+    /// budgeted selection (1 at level 1), so grounding them off the
+    /// Mystery would describe an illegal character.
+    #[test]
+    fn a_mystery_pick_alone_grounds_no_tier_one_revelation() {
+        for (mystery, id_fragment) in [
+            (LORE_MYSTERY_SELECTION, "sidestep_secret"),
+            (LORE_MYSTERY_SELECTION, "lore_keeper"),
+            (NATURE_MYSTERY_SELECTION, "natures_whispers"),
+            (BONE_MYSTERY_SELECTION, "near_death"),
+            (FLAME_MYSTERY_SELECTION, "cinder_dance"),
+            (LIFE_MYSTERY_SELECTION, "channel_uses_per_day"),
+        ] {
+            let mut input = human_oracle_input(1);
+            input.chosen.ability_scores.charisma = 18;
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+                selection_id: mystery.to_owned(),
+            });
+            let receipt = build_pilot_headless_receipt(&input);
+            assert!(
+                !receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.contains(id_fragment)),
+                "{mystery} alone must not ground {id_fragment} without an explicit revelation \
+                 pick: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// A revelation pick without its own Mystery grounds nothing either --
+    /// the gate is a genuine conjunction, not an either/or.
+    #[test]
+    fn a_revelation_pick_without_its_mystery_grounds_nothing() {
+        let input = oracle_with_revelation(
+            1,
+            BONE_MYSTERY_SELECTION,
+            ORACLE_SIDESTEP_SECRET_REVELATION,
+        );
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("sidestep_secret")),
+            "Sidestep Secret needs the LORE mystery, not merely any mystery: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// The stat-substitution idiom shared by Sidestep Secret, Nature's
+    /// Whispers, and Lore Keeper. Returned as a DELTA on top of the base
+    /// modifier, so that a consumer which already added the base ends up
+    /// at exactly `max(substitute, base)` with no double-count.
+    #[test]
+    fn oracle_stat_substitution_is_a_delta_that_never_double_counts() {
+        for (substitute, base) in
+            [(4, 2), (2, 4), (0, 0), (-1, 2), (5, -1), (3, 3), (-2, -4), (-4, -2)]
+        {
+            let delta = super::oracle_stat_substitution_delta(substitute, base);
+            assert_eq!(
+                base + delta,
+                substitute.max(base),
+                "base {base} + delta {delta} must equal max({substitute}, {base})"
+            );
+            assert!(delta >= 0, "the substitution never lowers a value: {delta}");
+        }
+    }
+
+    /// Sidestep Secret is INTEGRATED into the real Reflex total, not
+    /// merely reported. Proven by differencing the same character with
+    /// and without the revelation, so the assertion cannot pass on a
+    /// standalone record alone.
+    #[test]
+    fn sidestep_secret_actually_raises_the_real_reflex_save_total() {
+        let reflex_total = |input: &CharacterInput| {
+            build_pilot_headless_receipt(input)
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "defense.total_save.reflex")
+                .map(|e| e.value)
+        };
+
+        let mut baseline = human_oracle_input(1);
+        baseline.chosen.ability_scores.charisma = 18;
+        let without = reflex_total(&baseline).expect("Reflex total must be computed for an Oracle");
+
+        let with = reflex_total(&oracle_with_revelation(
+            1,
+            LORE_MYSTERY_SELECTION,
+            ORACLE_SIDESTEP_SECRET_REVELATION,
+        ))
+        .expect("Reflex total must still be computed");
+
+        // Fixture DEX 14 (+2), Charisma raised to 18 (+4): delta = 4-2 = 2.
+        assert_eq!(
+            with - without,
+            2,
+            "Sidestep Secret must raise the REAL Reflex total by max(CHA,DEX)-DEX = 2"
+        );
+    }
+
+    /// Nature's Whispers is likewise integrated into the real Armor Class
+    /// total, differenced the same way.
+    #[test]
+    fn natures_whispers_actually_raises_the_real_armor_class_total() {
+        let armor_class = |input: &CharacterInput| {
+            build_pilot_headless_receipt(input)
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "defense.baseline_armor_class")
+                .map(|e| e.value)
+        };
+
+        let mut baseline = human_oracle_input(1);
+        baseline.chosen.ability_scores.charisma = 18;
+        let without = armor_class(&baseline).expect("AC must be computed for an Oracle");
+
+        let with = armor_class(&oracle_with_revelation(
+            1,
+            NATURE_MYSTERY_SELECTION,
+            ORACLE_NATURES_WHISPERS_REVELATION,
+        ))
+        .expect("AC must still be computed");
+
+        assert_eq!(
+            with - without,
+            2,
+            "Nature's Whispers must raise the REAL armor class by max(DEX,CHA)-DEX = 2"
+        );
+    }
+
+    /// Neither integrated revelation may move a total for a character who
+    /// did not take it -- the gate is what keeps every other class's
+    /// Reflex and AC totals untouched.
+    #[test]
+    fn integrated_revelations_never_move_totals_for_characters_without_them() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut fighter = result.character_input.expect("valid fixture");
+        fighter.chosen.ability_scores.charisma = 18;
+        let clean = build_pilot_headless_receipt(&fighter);
+        let clean_reflex = clean
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.reflex")
+            .map(|e| e.value);
+        let clean_ac = clean
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .map(|e| e.value);
+
+        // Same Fighter, now carrying spoofed Oracle mystery + revelation picks.
+        for (choice_set, selection) in [
+            (ORACLE_MYSTERY_CHOICE_ID, LORE_MYSTERY_SELECTION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_SIDESTEP_SECRET_REVELATION),
+            (ORACLE_MYSTERY_CHOICE_ID, NATURE_MYSTERY_SELECTION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_NATURES_WHISPERS_REVELATION),
+        ] {
+            fighter.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: choice_set.to_owned(),
+                selection_id: selection.to_owned(),
+            });
+        }
+        let spoofed = build_pilot_headless_receipt(&fighter);
+
+        assert_eq!(
+            spoofed
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "defense.total_save.reflex")
+                .map(|e| e.value),
+            clean_reflex,
+            "a Fighter's Reflex total must be untouched by spoofed Oracle revelation picks"
+        );
+        assert_eq!(
+            spoofed
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "defense.baseline_armor_class")
+                .map(|e| e.value),
+            clean_ac,
+            "a Fighter's armor class must be untouched by spoofed Oracle revelation picks"
+        );
+    }
+
+    /// Life Mystery's Channel: all three magnitudes at once. Charisma 18
+    /// (+4) at Oracle level 3 gives uses 1+4=5, dice (3+1)/2=2, DC
+    /// 10+1+4=15.
+    #[test]
+    fn life_mystery_channel_grounds_uses_dice_and_dc() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            3,
+            LIFE_MYSTERY_SELECTION,
+            ORACLE_CHANNEL_REVELATION,
+        ));
+        for (id, expected) in [
+            ("class_feature.apg.oracle.life_mystery.channel_uses_per_day", 5),
+            ("class_feature.apg.oracle.life_mystery.channel_dice", 2),
+            ("class_feature.apg.oracle.life_mystery.channel_dc", 15),
+        ] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must ground"));
+            assert_eq!(record.value, expected, "{id}: {record:?}");
+        }
+    }
+
+    /// Channel's dice and DC across the full level range, derived from
+    /// the corpus formulas rather than spot-checked at one level.
+    #[test]
+    fn oracle_channel_dice_and_dc_match_the_corpus_at_every_level() {
+        for (level, expected_dice) in
+            [(1, 1), (2, 1), (3, 2), (4, 2), (5, 3), (10, 5), (19, 10), (20, 10)]
+        {
+            assert_eq!(
+                super::oracle_channel_dice(level),
+                expected_dice,
+                "level {level} Channel dice: (level+1)/2"
+            );
+        }
+        for (level, charisma, expected_dc) in
+            [(1, 0, 10), (1, 4, 14), (2, 4, 15), (20, 4, 24), (20, -1, 19)]
+        {
+            assert_eq!(super::oracle_channel_dc(level, charisma), expected_dc);
+        }
+        assert_eq!(super::oracle_channel_uses_per_day(4), 5);
+        assert_eq!(super::oracle_channel_uses_per_day(-1), 0);
+    }
+
+    /// Near Death steps from +2 to +4 at Oracle level 11 exactly, because
+    /// the corpus stacks a second `+2` behind `PRECLASS:1,Oracle=11`.
+    #[test]
+    fn near_death_save_bonus_steps_up_at_oracle_level_eleven() {
+        for level in 1..=10u8 {
+            assert_eq!(super::oracle_near_death_save_bonus(level), 2, "level {level}");
+        }
+        for level in 11..=20u8 {
+            assert_eq!(super::oracle_near_death_save_bonus(level), 4, "level {level}");
+        }
+
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            11,
+            BONE_MYSTERY_SELECTION,
+            ORACLE_NEAR_DEATH_REVELATION,
+        ));
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.bone_mystery.near_death_save_bonus")
+            .expect("Near Death must ground");
+        assert_eq!(record.value, 4, "{record:?}");
+    }
+
+    /// Near Death must NOT be folded into the flat save totals: it only
+    /// applies against disease, mind-affecting effects, and poison, and
+    /// this engine models no per-category save facet.
+    #[test]
+    fn near_death_does_not_inflate_the_flat_save_totals() {
+        let saves = |input: &CharacterInput| {
+            let receipt = build_pilot_headless_receipt(input);
+            ["fortitude", "reflex", "will"]
+                .iter()
+                .filter_map(|s| {
+                    receipt
+                        .computation
+                        .explanations
+                        .iter()
+                        .find(|e| e.id == format!("defense.total_save.{s}"))
+                        .map(|e| e.value)
+                })
+                .collect::<Vec<_>>()
+        };
+        let mut baseline = human_oracle_input(11);
+        baseline.chosen.ability_scores.charisma = 18;
+
+        assert_eq!(
+            saves(&oracle_with_revelation(
+                11,
+                BONE_MYSTERY_SELECTION,
+                ORACLE_NEAR_DEATH_REVELATION
+            )),
+            saves(&baseline),
+            "Near Death is category-restricted and must not move any flat save total"
+        );
+    }
+
+    /// Lore Keeper and Cinder Dance, the two remaining standalone
+    /// revelations.
+    #[test]
+    fn lore_keeper_and_cinder_dance_ground_their_real_magnitudes() {
+        let lore = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            LORE_MYSTERY_SELECTION,
+            ORACLE_LORE_KEEPER_REVELATION,
+        ));
+        let keeper = lore
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.lore_mystery.lore_keeper_knowledge_bonus")
+            .expect("Lore Keeper must ground");
+        // Fixture INT 10 (+0), Charisma raised to 18 (+4): delta = 4-0 = 4.
+        assert_eq!(keeper.value, 4, "max(CHA,INT)-INT = 4: {keeper:?}");
+
+        let flame = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            FLAME_MYSTERY_SELECTION,
+            ORACLE_CINDER_DANCE_REVELATION,
+        ));
+        let cinder = flame
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.flame_mystery.cinder_dance_speed_bonus")
+            .expect("Cinder Dance must ground");
+        assert_eq!(cinder.value, 10, "flat +10 ft base land speed: {cinder:?}");
+    }
+
+    /// Cinder Dance and the Lame Curse are mutually exclusive in the
+    /// corpus. Holding both is an illegal character, so it is named as a
+    /// claim-blocking diagnostic rather than silently netted to +0 feet.
+    #[test]
+    fn cinder_dance_with_the_lame_curse_is_named_as_mutually_exclusive() {
+        let mut input = oracle_with_revelation(
+            1,
+            FLAME_MYSTERY_SELECTION,
+            ORACLE_CINDER_DANCE_REVELATION,
+        );
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: LAME_CURSE_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.apg.oracle.cinder_dance_lame_mutually_exclusive"
+                    && d.claim_blocking),
+            "the illegal combination must be named: {:?}",
+            receipt.computation.diagnostics
+        );
+        // Both magnitudes stay as their own records; neither is netted away.
+        assert_eq!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id
+                    == "class_feature.apg.oracle.flame_mystery.cinder_dance_speed_bonus")
+                .map(|e| e.value),
+            Some(10)
+        );
+        assert_eq!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.apg.oracle.lame_curse.base_land_speed_penalty")
+                .map(|e| e.value),
+            Some(10)
+        );
+    }
+
+    /// Deaf's opposed-Perception penalty grounds at every curse level per
+    /// the lead's explicit ruling (2026-07-27): a flat modifier on your
+    /// own roll clears the bar even when the check is opposed.
+    #[test]
+    fn deaf_curse_grounds_the_opposed_perception_penalty_at_every_level() {
+        for level in [1u8, 5, 10, 15] {
+            let receipt =
+                build_pilot_headless_receipt(&oracle_with_curse(level, DEAF_CURSE_SELECTION));
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| {
+                    e.id == "class_feature.apg.oracle.deaf_curse.opposed_perception_penalty"
+                })
+                .unwrap_or_else(|| panic!("opposed-Perception penalty must ground at level {level}"));
+            assert_eq!(record.value, -4, "flat at every curse level: {record:?}");
+        }
+    }
+
+    /// Oracle stays permanently Blocked no matter how much of the Tier-1
+    /// set is grounded -- the closure grows `named_features_wired`, it
+    /// does not move Oracle toward Computed.
+    #[test]
+    fn oracle_stays_permanently_blocked_with_every_tier_one_revelation_recognized() {
+        let mut input = human_oracle_input(11);
+        input.chosen.ability_scores.charisma = 18;
+        for (choice_set, selection) in [
+            (ORACLE_MYSTERY_CHOICE_ID, LIFE_MYSTERY_SELECTION),
+            (ORACLE_MYSTERY_CHOICE_ID, LORE_MYSTERY_SELECTION),
+            (ORACLE_MYSTERY_CHOICE_ID, NATURE_MYSTERY_SELECTION),
+            (ORACLE_MYSTERY_CHOICE_ID, BONE_MYSTERY_SELECTION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_CHANNEL_REVELATION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_SIDESTEP_SECRET_REVELATION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_NATURES_WHISPERS_REVELATION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_LORE_KEEPER_REVELATION),
+            (ORACLE_REVELATION_CHOICE_ID, ORACLE_NEAR_DEATH_REVELATION),
+        ] {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: choice_set.to_owned(),
+                selection_id: selection.to_owned(),
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Oracle is permanently Blocked by design: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id
+                    == "class_feature.apg.oracle.other_features_deferred.unsupported"
+                    && d.claim_blocking),
+            "the permanent deferred diagnostic must still fire: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }
