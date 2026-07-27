@@ -20464,7 +20464,13 @@ const EXTRA_ROUNDS_PER_DAY: i16 = 6;
 /// Extra Ki grants 2 ki points; Extra Lay On Hands grants 2 uses/day.
 const EXTRA_POINTS_PER_DAY: i16 = 2;
 
-/// `bonus` when `feat_key` is among `selected_feats`, else 0.
+/// `bonus` multiplied by how many times `feat_key` appears in
+/// `selected_feats`.
+///
+/// COUNTS occurrences rather than testing presence, because all four
+/// feats are `STACK:YES MULT:YES` in the corpus -- genuinely repeatable,
+/// with each instance stacking. A Barbarian who took Extra Rage twice has
+/// 12 extra rounds per day, not 6.
 ///
 /// Folded into each resource's own shared formula rather than applied at
 /// the display site, deliberately: Rage's and Bardic Performance's
@@ -20474,15 +20480,17 @@ const EXTRA_POINTS_PER_DAY: i16 = 2;
 /// judging them over the un-widened one. Putting it inside the formula
 /// makes all consumers agree by construction.
 ///
-/// No class-ownership gate is needed here: each formula is only ever
-/// evaluated for the class that owns that resource, and the feat's own
-/// PF1 prerequisite is the base class feature.
+/// No explicit class-ownership gate is needed here, and that is PROVEN
+/// rather than assumed (`extra_feats_never_ground_for_a_character_lacking_
+/// the_underlying_class_feature` and
+/// `extra_feats_do_not_grant_a_resource_before_its_own_class_level_gate`):
+/// each formula is only reached inside its own class's chassis seam,
+/// which already returns early for the wrong class and below the
+/// resource's own level gate. The feat widens a pool the character has
+/// already earned; it never conjures one.
 fn extra_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
-    if selected_feats.iter().any(|feat| feat == feat_key) {
-        bonus
-    } else {
-        0
-    }
+    let taken = selected_feats.iter().filter(|feat| *feat == feat_key).count();
+    bonus.saturating_mul(i16::try_from(taken).unwrap_or(i16::MAX))
 }
 
 /// Barbarian's Rage rounds-per-day budget: 4 + Constitution modifier + 2 *
@@ -41045,6 +41053,105 @@ mod extra_resource_feat_tests {
                 );
             }
         }
+    }
+
+    /// All four feats are `STACK:YES MULT:YES` in the corpus -- genuinely
+    /// repeatable, with each instance stacking. Taking Extra Rage twice
+    /// grants 12 rounds, not 6, so the bonus must COUNT occurrences in
+    /// `selected_feats` rather than merely test for presence.
+    ///
+    /// Missed on the first pass (2026-07-27) because the corpus record
+    /// was read through a `grep -E "^(BONUS|PRE)"` filter that discarded
+    /// the `STACK:`/`MULT:` lines entirely -- a filter chosen around the
+    /// fields expected to matter, which hid one that did.
+    #[test]
+    fn repeated_extra_feats_stack_because_all_four_are_stack_yes_mult_yes() {
+        let cases = [
+            ("class:barbarian", 1u8, "Extra Rage", "class_chassis.barbarian.rage_rounds_per_day", 6),
+            (
+                "class:bard",
+                1,
+                "Extra Performance",
+                "class_chassis.bard.bardic_performance_rounds_per_day",
+                6,
+            ),
+            ("class:monk", 4, "Extra Ki", "class_chassis.monk.ki_pool_size", 2),
+            (
+                "class:paladin",
+                2,
+                "Extra Lay On Hands",
+                "class_chassis.paladin.lay_on_hands_uses_per_day",
+                2,
+            ),
+        ];
+
+        for (class_id, level, feat, total_id, per_instance) in cases {
+            let base = character(class_id, level);
+            let baseline = explanation_value(&base, total_id).expect("total must compute");
+
+            for instances in 1..=3i16 {
+                let mut input = base.clone();
+                for _ in 0..instances {
+                    input.chosen.selected_feats.push(feat.to_owned());
+                }
+                let raised = explanation_value(&input, total_id).expect("total must compute");
+                assert_eq!(
+                    raised - baseline,
+                    per_instance * instances,
+                    "{feat} taken {instances}x must grant {per_instance} each ({class_id})"
+                );
+            }
+        }
+    }
+
+    /// Each feat carries `PREABILITY:1,CATEGORY=Special Ability,TYPE.<X>`
+    /// -- it requires the underlying class feature. A character without
+    /// that class must never have the feat grounded against some other
+    /// class's total, and must not gain the resource record at all.
+    #[test]
+    fn extra_feats_never_ground_for_a_character_lacking_the_underlying_class_feature() {
+        let totals = [
+            "class_chassis.barbarian.rage_rounds_per_day",
+            "class_chassis.bard.bardic_performance_rounds_per_day",
+            "class_chassis.monk.ki_pool_size",
+            "class_chassis.paladin.lay_on_hands_uses_per_day",
+        ];
+        let mut fighter = character("class:fighter", 1);
+        for feat in ["Extra Rage", "Extra Performance", "Extra Ki", "Extra Lay On Hands"] {
+            fighter.chosen.selected_feats.push(feat.to_owned());
+        }
+
+        let receipt = build_pilot_headless_receipt(&fighter);
+        for total_id in totals {
+            assert!(
+                !receipt.computation.explanations.iter().any(|e| e.id == total_id),
+                "a Fighter holding every Extra feat must not gain {total_id}: {:?}",
+                receipt.computation.explanations.iter().map(|e| &e.id).collect::<Vec<_>>()
+            );
+        }
+    }
+
+    /// A Monk below the Ki Pool's own 4th-level gate, and a Paladin below
+    /// Lay On Hands' 2nd-level gate, must not gain the resource from the
+    /// feat alone -- the feat widens an existing pool, it does not create
+    /// one the character has not yet earned.
+    #[test]
+    fn extra_feats_do_not_grant_a_resource_before_its_own_class_level_gate() {
+        let mut monk = character("class:monk", 1);
+        monk.chosen.selected_feats.push("Extra Ki".to_owned());
+        let ki = explanation_value(&monk, "class_chassis.monk.ki_pool_size");
+        assert!(
+            ki.is_none() || ki == Some(0),
+            "a level-1 Monk has no ki pool for Extra Ki to widen, got {ki:?}"
+        );
+
+        let mut paladin = character("class:paladin", 1);
+        paladin.chosen.selected_feats.push("Extra Lay On Hands".to_owned());
+        let loh = explanation_value(&paladin, "class_chassis.paladin.lay_on_hands_uses_per_day");
+        assert!(
+            loh.is_none() || loh == Some(0),
+            "a level-1 Paladin has no lay on hands for the feat to widen, got {loh:?}"
+        );
     }
 
     /// The load-bearing consistency check. Rage's and Bardic
