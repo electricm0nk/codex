@@ -1,5 +1,5 @@
-//! PF1 Advanced Player's Guide Alchemist formula spell list (deepening
-//! 2026-07-26, task #8: Investigator spellcasting subsystem).
+//! PF1 Alchemist formula spell list (deepening 2026-07-26, task #8:
+//! Investigator spellcasting subsystem).
 //!
 //! Real PF1 rule text (`acg_abilities_class.lst`'s own Investigator
 //! Alchemy DESC): "An investigator uses the alchemist formula list
@@ -9,21 +9,13 @@
 //! is the shared list both Investigator's (this closure) and Alchemist's
 //! own (task #4, not built here) spellcasting can consume.
 //!
-//! Source: every real record in `apg_spells.lst` whose `CLASSES:` token
-//! names Alchemist in any pipe-separated group, extracted via a direct
-//! parse of the raw corpus file (not hand-transcribed) -- **121 total**.
-//! Two shapes exist in the corpus:
+//! Source: every real record whose `CLASSES:` token names Alchemist in
+//! any pipe-separated group, extracted via a direct parse of the raw
+//! corpus files (not hand-transcribed) -- **147 total**. Two shapes exist
+//! in the corpus:
 //!
-//! - 30 genuinely new Alchemist-only spells named directly on their own
-//!   line (Absorbing Touch, Alchemical Allocation, Amplify Elixir, Ant
-//!   Haul, Bloodhound, Bomber's Eye, Crafter's Fortune, Delayed
-//!   Consumption, Detonate, Draconic Reservoir, Dragon's Breath,
-//!   Elemental Aura, Elemental Touch, Elude Time, Fire Breath, Fluid
-//!   Form, Heroic Fortune, Keen Senses, Negate Aroma, Perceive Cues,
-//!   Planar Adaptation, Resurgent Transformation, Seek Thoughts, Stone
-//!   Fist, Thorn Body, Touch of the Sea, Transmute Potion to Poison,
-//!   Twin Form, Universal Formula, Vomit Swarm).
-//! - 91 `.MOD` records that graft `Alchemist=N` onto an existing Core
+//! - 56 genuinely new Alchemist spells named directly on their own line.
+//! - 91 `.MOD` records that graft Alchemist onto an existing Core
 //!   Rulebook spell's `CLASSES:` token (e.g. `Cure Light Wounds.MOD`).
 //!   The real spell name is the base name with `.MOD` stripped; the
 //!   level here is read directly off that same `.MOD` line's own
@@ -32,42 +24,39 @@
 //!   which this `(name, level)`-only shape doesn't carry, mirroring
 //!   `CLERIC_SPELL_LIST`/`BARD_SPELL_LIST`'s own minimal shape).
 //!
-//! Deliberately scoped to `apg_spells.lst` alone, not the wider PCGen
-//! corpus (Ultimate Magic/Combat/Wilderness/Intrigue/Horror Adventures
-//! also tag `Alchemist=N` on further spells) -- the real rule text's own
-//! citation of "Advanced Player's Guide" as the canonical source matches
-//! the same single-book-source discipline every other spell list in this
-//! codebase already uses (Wizard/Cleric/Bard/Druid/Ranger are all
-//! CRB-only, not aggregated across every later splatbook that later
-//! added more spells to their lists).
+//! **Widened 2026-07-27 (task #32) from APG-only to all ingested books.**
+//! Per-file: **121 from `apg_spells.lst` + 26 from `acg_spells.lst` =
+//! 147**, all names distinct; `cr_spells.lst` names Alchemist zero times
+//! (the class postdates the CRB). All 26 ACG additions are non-`.MOD` new
+//! spells.
 //!
-//! **Open scope question, deliberately NOT decided here.** That
-//! single-book claim was true when written but is no longer: as of task
-//! #23 `WITCH_SPELL_LIST` spans two books (250 APG + 74 ACG). Parsing
-//! `acg_spells.lst` for Alchemist yields a further **26** records, all
-//! non-`.MOD` new ACG spells, from a book this repo does ingest -- the
-//! same shape as Witch's 74. So either Witch over-includes or the other
-//! seven lists under-include, and the answer changes CRB lists too
-//! (Cleric/Druid/Bard/etc. also gain APG/ACG additions). That is a
-//! repo-wide policy call for the swarm lead, not a parsing bug, so this
-//! list stays APG-only pending that ruling. See
-//! `docs/release/v0.6/investigator-alchemist-spell-list-scoping.md` for
-//! the original extraction record; its level breakdown predates the
-//! correction below and is superseded by the figures here.
+//! The superseded rationale is worth recording, since this module argued
+//! its own scope explicitly: it previously cited the rule text's own
+//! "Advanced Player's Guide" citation plus a "single-book-source
+//! discipline every other spell list already uses." That discipline was
+//! real when written but was never a deliberate design -- it was an
+//! artifact of each list having been generated from one file. PF1 does
+//! not scope a class's spell list by sourcebook, and all eight lists now
+//! span every ingested book. Ruling: team lead, 2026-07-27
+//! (`risks-and-open-questions.md` item 53; this module's own open
+//! question was what surfaced it).
 //!
-//! Level breakdown, re-derived: **20 / 30 / 23 / 18 / 15 / 15** across
-//! extract levels 1-6, summing to 121. Per-file ceiling check:
-//! `grep -c Alchemist apg_spells.lst` is 122, so 121 is plausible and
-//! not over-counted.
+//! Level breakdown, re-derived: **28 / 36 / 29 / 23 / 15 / 16** across
+//! extract levels 1-6, summing to 147. Per-file ceiling check:
+//! `grep -c Alchemist` returns 0 / 122 / 26; the single APG line above
+//! the parse is the `# Alchemist Spells` section-header comment, which
+//! carries no `CLASSES:` token at all -- not a dropped record.
 //!
-//! **Corpus reachability: all 121 resolve** against this repo's own
+//! **Corpus reachability: all 147 resolve** against this repo's own
 //! ingested `data/corpus/` spell records (1,075 keys) -- unlike
 //! `BLOODRAGER_SPELL_LIST`, this list has no unreachable entries.
 //!
-//! Regenerate by parsing `apg_spells.lst`'s `CLASSES:` token -- split the
-//! body on `|`, `rpartition` each group on `=`, then membership-test the
-//! comma-separated name list -- and strip a trailing `.MOD` from the
-//! record's own name column. Never substring-match `Alchemist=`.
+//! Regenerate by parsing the `CLASSES:` token in `apg_spells.lst` and
+//! `acg_spells.lst` -- split the body on `|`, `rpartition` each group on
+//! `=`, strip any trailing `[...]` gate from the level, then
+//! membership-test the comma-separated name list -- and strip a trailing
+//! `.MOD` from the record's own name column. Never substring-match
+//! `Alchemist=`.
 
 /// (spell key, Alchemist-specific extract level 1-6). A real Investigator
 /// (or, in a future closure, Alchemist) may only know/prepare an extract
@@ -85,23 +74,34 @@
 /// parse. Same bug class as the Witch/Bloodrager fix in `0ca6fd89`.
 pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Absorbing Touch", 3),
+    ("Adhesive Blood", 2),
+    ("Adhesive Spittle", 1),
+    ("Adjustable Disguise", 3),
+    ("Adjustable Polymorph", 4),
     ("Aid", 2),
+    ("Air Step", 2),
     ("Air Walk", 4),
     ("Alchemical Allocation", 2),
     ("Alter Self", 2),
     ("Amplify Elixir", 3),
     ("Analyze Dweomer", 6),
+    ("Anchored Step", 3),
     ("Ant Haul", 1),
     ("Arcane Eye", 4),
     ("Arcane Sight", 3),
+    ("Aura Sight", 3),
     ("Barkskin", 2),
     ("Bear's Endurance", 2),
     ("Beast Shape I", 3),
     ("Beast Shape II", 4),
     ("Beast Shape III", 5),
     ("Beast Shape IV", 6),
+    ("Blood Armor", 2),
+    ("Blood Sentinel", 3),
     ("Bloodhound", 3),
     ("Blur", 2),
+    ("Blurred Movement", 1),
+    ("Body Capacitance", 1),
     ("Bomber's Eye", 1),
     ("Bull's Strength", 2),
     ("Cat's Grace", 2),
@@ -120,6 +120,7 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Detect Thoughts", 2),
     ("Detect Undead", 1),
     ("Detonate", 4),
+    ("Disable Construct", 3),
     ("Discern Lies", 4),
     ("Disguise Self", 1),
     ("Displacement", 3),
@@ -133,15 +134,19 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Elemental Body III", 6),
     ("Elemental Touch", 2),
     ("Elude Time", 5),
+    ("Enchantment Foil", 4),
     ("Endure Elements", 1),
     ("Enlarge Person", 1),
     ("Expeditious Retreat", 1),
+    ("Extreme Flexibility", 2),
     ("Eyebite", 6),
+    ("Eyes of the Void", 4),
     ("False Life", 2),
     ("Fire Breath", 2),
     ("Fire Shield", 4),
     ("Fluid Form", 4),
     ("Fly", 3),
+    ("Focused Scrutiny", 2),
     ("Form of the Dragon I", 6),
     ("Fox's Cunning", 2),
     ("Freedom of Movement", 4),
@@ -149,16 +154,22 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Giant Form I", 6),
     ("Haste", 3),
     ("Heal", 6),
+    ("Heightened Awareness", 1),
     ("Heroic Fortune", 2),
     ("Heroism", 3),
     ("Identify", 1),
+    ("Investigative Mind", 2),
     ("Invisibility", 2),
     ("Invisibility (Greater)", 4),
+    ("Invisibility Alarm", 1),
     ("Jump", 1),
     ("Keen Senses", 1),
     ("Levitate", 2),
+    ("Long Arm", 1),
     ("Magic Jar", 5),
     ("Mislead", 6),
+    ("Monkey Fish", 1),
+    ("Nauseating Trail", 3),
     ("Negate Aroma", 1),
     ("Neutralize Poison", 4),
     ("Nightmare", 5),
@@ -166,6 +177,8 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Overland Flight", 5),
     ("Owl's Wisdom", 2),
     ("Perceive Cues", 2),
+    ("Persistent Vigor", 4),
+    ("Phantom Blood", 1),
     ("Planar Adaptation", 5),
     ("Plant Shape I", 5),
     ("Plant Shape II", 6),
@@ -186,6 +199,7 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("Sending", 5),
     ("Shadow Walk", 6),
     ("Shield", 1),
+    ("Sonic Form", 6),
     ("Spell Immunity", 4),
     ("Spell Resistance", 5),
     ("Spider Climb", 2),
@@ -200,6 +214,7 @@ pub const ALCHEMIST_SPELL_LIST: &[(&str, u8)] = &[
     ("True Seeing", 6),
     ("True Strike", 1),
     ("Twin Form", 6),
+    ("Unbearable Brightness", 4),
     ("Undetectable Alignment", 2),
     ("Universal Formula", 4),
     ("Vomit Swarm", 2),
@@ -223,8 +238,8 @@ mod tests {
     use super::{alchemist_spell_level, ALCHEMIST_SPELL_LIST};
 
     #[test]
-    fn contains_exactly_121_records_matching_the_raw_corpus_token_count() {
-        assert_eq!(ALCHEMIST_SPELL_LIST.len(), 121);
+    fn contains_exactly_147_records_matching_the_raw_corpus_token_count() {
+        assert_eq!(ALCHEMIST_SPELL_LIST.len(), 147);
     }
 
     #[test]
@@ -233,7 +248,7 @@ mod tests {
         for (_, level) in ALCHEMIST_SPELL_LIST {
             counts[*level as usize] += 1;
         }
-        assert_eq!(counts, [0, 20, 30, 23, 18, 15, 15]);
+        assert_eq!(counts, [0, 28, 36, 29, 23, 15, 16]);
     }
 
     #[test]
@@ -274,6 +289,20 @@ mod tests {
         assert_eq!(alchemist_spell_level("Ant Haul"), Some(1));
         assert_eq!(alchemist_spell_level("Vomit Swarm"), Some(2));
         assert_eq!(alchemist_spell_level("Stone Fist"), Some(1));
+    }
+
+    /// Guards the ACG half added by the book-scope widening (task #32).
+    /// All three name Alchemist FIRST in their comma group, so their raw
+    /// lines carry no `Alchemist=` substring at all:
+    /// `Adhesive Blood` and `Blood Armor` are
+    /// `CLASSES:Alchemist,Bloodrager,Sorcerer,Witch,Wizard=2`, and
+    /// `Long Arm` is
+    /// `CLASSES:Alchemist,Bloodrager,Magus,Sorcerer,Witch,Wizard=1`.
+    #[test]
+    fn acg_book_extracts_are_present() {
+        assert_eq!(alchemist_spell_level("Adhesive Blood"), Some(2));
+        assert_eq!(alchemist_spell_level("Blood Armor"), Some(2));
+        assert_eq!(alchemist_spell_level("Long Arm"), Some(1));
     }
 
     #[test]
