@@ -1,0 +1,290 @@
+//! ACG Bloodrager spell list — one `(spell name, Bloodrager spell level)`
+//! entry per real corpus record.
+//!
+//! Source: PCGen `advanced_class_guide/acg_spells.lst`, every record whose
+//! `CLASSES:` token names `Bloodrager=N` in any pipe-separated group.
+//! Independently re-derived for task #1 (2026-07-27): **183 records, of
+//! which 183 (all of them) are `.MOD` grafts onto an existing spell** —
+//! there is NO from-scratch ingestion cost here at all, unlike the
+//! Alchemist list (13 new + 91 grafts). The real spell name is the base
+//! name with `.MOD` stripped, and the level is read directly off that
+//! same line's own `CLASSES:` token.
+//!
+//! Level breakdown, verified: **47 / 44 / 51 / 41** across spell levels
+//! 1-4, summing to 183.
+//!
+//! **Bloodrager's list stops at 4th level.** The class block never
+//! carries more than five `CAST:`/`KNOWN:` columns, and the leading one
+//! is a genuine zero at every row — bloodragers get no 0-level spells at
+//! all. That leading zero is NOT Oracle's `CAST:0,3` "orisons at will,
+//! no daily cap" sentinel; reading it that way would fabricate at-will
+//! cantrips this class never gets.
+//!
+//! **Corpus reachability, stated plainly rather than implied away:
+//! 110 of these 183 spells resolve against this repo's own ingested
+//! `data/corpus/` spell records (1,075 keys); 73 do not.** The missing
+//! base records live in `ultimate_magic`, `ultimate_combat`, and
+//! `advanced_race_guide` — three books this repo does not ingest. Per
+//! spell level the resolved counts are 28 / 28 / 29 / 25. This list
+//! deliberately carries all 183 entries, because all 183 are genuinely on
+//! Bloodrager's real PF1 spell list; the 73 unreachable ones surface
+//! through the existing unresolved-selection idiom rather than being
+//! silently dropped from the class's list. Ruling on accepting that gap:
+//! team lead, 2026-07-27.
+//!
+//! Deliberately scoped to `acg_spells.lst` alone, matching the
+//! single-book-source discipline every other spell list here already
+//! uses. A tree-wide count returns 220, which sweeps in `monster_codex`,
+//! `inner_sea_races`, `adventurers_guide`, and `aquatic_adventures` —
+//! four books this repo does not ingest. That measurement-shape error is
+//! the same one behind the stale "201 records" figure this task carried.
+//!
+//! Bloodline bonus spells (10 bloodlines x 4 each, first granted at
+//! bloodline progression level 7) and archetype-only grants (e.g.
+//! Greenrager's Summoning Rager) are deliberately NOT in this list: they
+//! are `SPELLKNOWN:CLASS|Bloodrager=` grants layered on top of the class
+//! list, not members of it.
+
+/// Every `(spell name, Bloodrager spell level)` pair on the real ACG
+/// Bloodrager spell list, sorted by name.
+pub const BLOODRAGER_SPELL_LIST: &[(&str, u8)] = &[
+    ("Ablative Barrier", 2),
+    ("Absorbing Inhalation", 4),
+    ("Acid Arrow", 2),
+    ("Animal Aspect", 2),
+    ("Animal Aspect (Greater)", 3),
+    ("Aqueous Orb", 3),
+    ("Ball Lightning", 4),
+    ("Bear's Endurance", 2),
+    ("Beast Shape I", 3),
+    ("Beast Shape II", 4),
+    ("Bestow Curse", 4),
+    ("Black Tentacles", 4),
+    ("Blindness/Deafness", 2),
+    ("Blood Biography", 3),
+    ("Blood Blaze", 2),
+    ("Blood Scent", 3),
+    ("Boiling Blood", 2),
+    ("Break", 1),
+    ("Brow Gasher", 2),
+    ("Bull's Strength", 2),
+    ("Bullet Shield", 2),
+    ("Burning Gaze", 2),
+    ("Burning Hands", 1),
+    ("Burrow", 3),
+    ("Burst of Speed", 3),
+    ("Calcific Touch", 4),
+    ("Cat's Grace", 2),
+    ("Cause Fear", 1),
+    ("Certain Grip", 2),
+    ("Chain of Perdition", 3),
+    ("Chill Touch", 1),
+    ("Cloak of Winds", 3),
+    ("Color Spray", 1),
+    ("Confusion", 4),
+    ("Contagion", 4),
+    ("Corrosive Touch", 1),
+    ("Countless Eyes", 3),
+    ("Crushing Despair", 4),
+    ("Daze Monster", 2),
+    ("Death From Below", 2),
+    ("Defensive Shock", 2),
+    ("Delay Pain", 2),
+    ("Detonate", 4),
+    ("Disfiguring Touch", 2),
+    ("Draconic Reservoir", 3),
+    ("Dragon's Breath", 4),
+    ("Dust of Twilight", 2),
+    ("Eagle's Splendor", 2),
+    ("Ear-Piercing Scream", 1),
+    ("Earth Glide", 4),
+    ("Elemental Aura", 3),
+    ("Elemental Body I", 4),
+    ("Elemental Touch", 2),
+    ("Endure Elements", 1),
+    ("Enervation", 4),
+    ("Enlarge Person", 1),
+    ("Enlarge Person (Mass)", 4),
+    ("Eruptive Pustules", 3),
+    ("Excruciating Deformation", 3),
+    ("Expeditious Retreat", 1),
+    ("Extreme Flexibility", 2),
+    ("False Life", 2),
+    ("False Life (Greater)", 4),
+    ("Fear", 4),
+    ("Feather Fall", 1),
+    ("Fire Breath", 2),
+    ("Fire Shield", 4),
+    ("Fire Trail", 3),
+    ("Fireball", 3),
+    ("Firefall", 4),
+    ("Firestream", 3),
+    ("Flame Arrow", 3),
+    ("Flaming Sphere", 2),
+    ("Flare Burst", 1),
+    ("Fly", 3),
+    ("Force Hook Charge", 3),
+    ("Force Punch", 3),
+    ("Frigid Touch", 2),
+    ("Frostbite", 1),
+    ("Ghost Wolf", 4),
+    ("Ghoul Touch", 2),
+    ("Glitterdust", 2),
+    ("Gloomblind Bolts", 3),
+    ("Gust of Wind", 2),
+    ("Gusting Sphere", 2),
+    ("Haste", 3),
+    ("Hellmouth Lash", 4),
+    ("Heroism", 3),
+    ("Hold Person", 3),
+    ("Hostile Levitation", 3),
+    ("Howling Agony", 3),
+    ("Hydraulic Push", 1),
+    ("Hydraulic Torrent", 3),
+    ("Ice Storm", 4),
+    ("Icicle Dagger", 1),
+    ("Imbue With Elemental Might", 2),
+    ("Jump", 1),
+    ("Keen Edge", 3),
+    ("Lightning Bolt", 3),
+    ("Locate Weakness", 3),
+    ("Mage Armor", 1),
+    ("Magic Missile", 1),
+    ("Magic Weapon", 1),
+    ("Magic Weapon (Greater)", 3),
+    ("Marid's Mastery", 1),
+    ("Mirror Image", 2),
+    ("Mirror Strike", 1),
+    ("Monstrous Physique I", 3),
+    ("Monstrous Physique II", 4),
+    ("Moonstruck", 4),
+    ("Mount", 1),
+    ("Mudball", 1),
+    ("Pain Strike", 3),
+    ("Paragon Surge", 3),
+    ("Pellet Blast", 4),
+    ("Phantasmal Killer", 4),
+    ("Phantom Steed", 3),
+    ("Protection from Arrows", 2),
+    ("Protection from Chaos", 1),
+    ("Protection from Energy", 3),
+    ("Protection from Evil", 1),
+    ("Protection from Good", 1),
+    ("Protection from Law", 1),
+    ("Pyrotechnics", 2),
+    ("Rage", 3),
+    ("Raging Rubble", 3),
+    ("Ray of Enfeeblement", 1),
+    ("Ray of Exhaustion", 3),
+    ("Ray of Sickening", 1),
+    ("Reduce Person", 1),
+    ("Reduce Person (Mass)", 4),
+    ("Resinous Skin", 3),
+    ("Resist Energy", 2),
+    ("Returning Weapon", 1),
+    ("Ride the Waves", 4),
+    ("River of Wind", 4),
+    ("Scorching Ray", 2),
+    ("See Invisibility", 2),
+    ("Shadow Weapon", 1),
+    ("Shatter", 2),
+    ("Shield", 1),
+    ("Shock Shield", 1),
+    ("Shocking Grasp", 1),
+    ("Shocking Image", 4),
+    ("Shout", 4),
+    ("Sleet Storm", 3),
+    ("Slipstream", 2),
+    ("Slow", 3),
+    ("Spider Climb", 2),
+    ("Steal Breath", 2),
+    ("Stinking Cloud", 3),
+    ("Stone Call", 2),
+    ("Stone Fist", 1),
+    ("Stone Shield", 1),
+    ("Stoneskin", 4),
+    ("Strong Wings", 1),
+    ("Telekinetic Charge", 4),
+    ("Touch of Combustion", 1),
+    ("Touch of Gracelessness", 1),
+    ("Touch of Idiocy", 2),
+    ("Touch of Slime", 4),
+    ("Touch of the Sea", 1),
+    ("True Strike", 1),
+    ("Twilight Knife", 3),
+    ("Undead Anatomy I", 3),
+    ("Unerring Weapon", 1),
+    ("Unshakable Chill", 2),
+    ("Vampiric Touch", 3),
+    ("Vermin Shape I", 4),
+    ("Versatile Weapon", 3),
+    ("Vision of Hell", 3),
+    ("Vitriolic Mist", 4),
+    ("Volcanic Storm", 4),
+    ("Wall of Fire", 4),
+    ("Wall of Ice", 4),
+    ("Wall of Sound", 4),
+    ("Warding Weapon", 1),
+    ("Water Breathing", 3),
+    ("Web Bolt", 1),
+    ("Wind Wall", 3),
+    ("Windy Escape", 1),
+    ("Winter Feathers", 1),
+    ("Wreath of Blades", 4),
+];
+
+/// The Bloodrager spell level for `spell_key`, or `None` when the spell
+/// is not on Bloodrager's list at all. Mirrors
+/// `alchemist_spell_list::alchemist_spell_level`'s own shape exactly.
+pub fn bloodrager_spell_level(spell_key: &str) -> Option<u8> {
+    BLOODRAGER_SPELL_LIST
+        .iter()
+        .find(|(key, _)| *key == spell_key)
+        .map(|(_, level)| *level)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_list_matches_the_verified_corpus_extraction() {
+        assert_eq!(BLOODRAGER_SPELL_LIST.len(), 183, "183 real CLASSES:Bloodrager= records");
+        for level in 1..=4u8 {
+            let count = BLOODRAGER_SPELL_LIST.iter().filter(|(_, l)| *l == level).count();
+            let expected = match level {
+                1 => 47,
+                2 => 44,
+                3 => 51,
+                _ => 41,
+            };
+            assert_eq!(count, expected, "spell level {level} count");
+        }
+    }
+
+    #[test]
+    fn no_spell_exceeds_bloodragers_fourth_level_ceiling() {
+        for (name, level) in BLOODRAGER_SPELL_LIST {
+            assert!(
+                (1..=4).contains(level),
+                "{name} at level {level}: Bloodrager tops out at 4th-level spells"
+            );
+        }
+    }
+
+    #[test]
+    fn the_list_has_no_duplicate_entries() {
+        let mut names: Vec<&str> = BLOODRAGER_SPELL_LIST.iter().map(|(n, _)| *n).collect();
+        names.sort_unstable();
+        let before = names.len();
+        names.dedup();
+        assert_eq!(names.len(), before, "no spell may appear twice");
+    }
+
+    #[test]
+    fn lookup_resolves_a_real_entry_and_rejects_an_off_list_one() {
+        assert_eq!(bloodrager_spell_level("Shield"), Some(1));
+        assert_eq!(bloodrager_spell_level("Wish"), None, "9th-level spells are off this list");
+        assert_eq!(bloodrager_spell_level(""), None);
+    }
+}

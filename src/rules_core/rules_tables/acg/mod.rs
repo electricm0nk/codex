@@ -28,6 +28,7 @@
 //! mirroring APG's criterion 9) lands this cycle as `spell_list.rs` and
 //! `equipment_tables.rs` — Epic 4 (ACG) is now fully complete.
 
+pub mod bloodrager_spell_list;
 pub mod class_arcanist;
 pub mod class_bloodrager;
 pub mod class_brawler;
