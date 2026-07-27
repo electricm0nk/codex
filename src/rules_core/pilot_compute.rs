@@ -25392,8 +25392,7 @@ fn unmet_sorcerer_known_spell_conditions(input: &CharacterInput, sorcerer_level:
     for spell_id in &known {
         let Some(spell_level) = sorcerer_spell_list::sorcerer_spell_level(spell_id) else {
             unmet.push(format!(
-                "known spell '{spell_id}' is not on the real PF1 Core Rulebook sorcerer spell \
-                 list"
+                "known spell '{spell_id}' is not on the real PF1 sorcerer spell list"
             ));
             continue;
         };
@@ -25450,7 +25449,8 @@ fn ground_sorcerer_known_spells(
         detail: format!(
             "Sorcerer level {sorcerer_level} known-spell selection ({} spells, \
              AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
-             Core Rulebook sorcerer spell list (`sorcerer_spell_list::SORCERER_SPELL_LIST`), the \
+             sorcerer spell list (`sorcerer_spell_list::SORCERER_SPELL_LIST`, all ingested \
+             books), the \
              sorcerer's own spell-level access ceiling, and the Sorcerer Spells Known table's \
              own per-level cap. Real PF1 Sorcerer rules have no daily preparation step at all \
              (unlike Ranger/Paladin) -- a sorcerer's known spells are permanent once learned, \
