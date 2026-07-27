@@ -54,6 +54,25 @@ least one non-trivial factual claim directly against the corpus or code
 rather than the chat message describing it. Clean up the worktree
 (`git worktree remove <path> --force`) when done.
 
+**`apps/desktop/src-tauri` is a separate Cargo project, not a workspace
+member.** The root `Cargo.toml` has no `[workspace]` section at all — `cargo
+test` / `cargo clippy` from the repo root never touches the desktop crate,
+no matter how it's invoked (`--workspace` doesn't help; there is no
+workspace). A "full lib suite" or "full workspace sweep" claim covers the
+root crate only. If the commit touches anything under `apps/desktop/`
+(check `git show --stat`), it needs its own separate build/test run:
+
+```bash
+cd apps/desktop && cargo test --manifest-path src-tauri/Cargo.toml
+```
+
+This bit for real: a `pub(crate)` visibility mismatch broke the desktop
+build while the root sweep reported clean the entire time, because the
+root sweep was structurally incapable of seeing it. The failure is silent
+in exactly the direction that looks like success — treat "did this commit
+touch `apps/desktop/`" as a standing branch in step 1, not a special case
+you remember to check sometimes.
+
 ### 2. Update `SWARM_REPORT.md`'s Agent Status table
 
 One row per agent, near the top of the file. Update the `Status` column
@@ -200,6 +219,12 @@ order before assuming the underlying work is actually stuck:
 
 ## Gotchas
 
+- **`apps/desktop/src-tauri` is a separate Cargo project with zero workspace
+  linkage to the root.** A root "full workspace sweep clean" claim never
+  covered it, no exceptions — check `git show --stat` for anything under
+  `apps/desktop/` and run its own `cargo test --manifest-path
+  apps/desktop/src-tauri/Cargo.toml` if so. A real desktop-crate build
+  failure hid behind an all-clean root sweep for this exact reason.
 - **Two tables in `SWARM_REPORT.md`, not one.** The Agent Status table (who's
   doing what) and the per-class detail table (what's true about each class)
   are different sections. The dashboard producer treats the per-class table
