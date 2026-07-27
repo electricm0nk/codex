@@ -367,6 +367,16 @@ fn paladin_level20_aura_of_righteousness_carries_over() {
         "Aura of Righteousness must still claim to be granted at level 20: {}",
         aura.detail
     );
+
+    // The DR clause's real magnitude carries over too. PF1 gives Paladin a
+    // flat DR 5/evil with no further progression, so 20 must read the same 5
+    // as 17 -- pinned here so a future tiering change cannot silently drift it.
+    let dr = explanation(&computation, "class_chassis.paladin.damage_reduction");
+    assert_eq!(
+        dr.value, 5,
+        "Paladin DR stays a flat 5/evil at level 20 -- PF1 grants no further tier: {}",
+        dr.detail
+    );
 }
 
 // ----- Holy Champion is newly granted at level 20 -----

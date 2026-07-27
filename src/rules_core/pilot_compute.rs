@@ -16139,6 +16139,75 @@ fn active_bloodrager_bloodrage_bonus(
 /// narrower `class_feature.acg.bloodrager.spellcasting_deferred.unsupported`
 /// diagnostic pushed unconditionally below, mirroring Skald's own
 /// diagnostic-honesty fix.
+/// Bloodrager's own Damage Reduction magnitude: `(BloodragerDRLVL-4)/3`
+/// where `BloodragerDRLVL` resolves to `BloodragerLVL` -- verified
+/// directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|BloodragerDR|(BloodragerDRLVL-4)/3` and `DR:BloodragerDR/-`.
+/// DR 1/- at 7th, 2/- at 10th, 3/- at 13th, 4/- at 16th, 5/- at 19th.
+///
+/// **The level gate is implicit in the integer division, not a `PRE`
+/// token.** Unlike the Monk features grounded in task #36 -- whose grant
+/// lines each carry an explicit `PREVARGTEQ:Monk_CFP_Level,N` -- this
+/// grant line carries only the archetype-suppression flag
+/// (`PREVAREQ:Bloodrager_CF_DamageReduction,0`, provably vacuous here).
+/// The 7th-level gate the DESC states is produced solely by the formula
+/// reaching 1 at level 7. A builder looking for a gate token would find
+/// none and could wrongly conclude the feature is ungated.
+///
+/// Clamped at 0 for a real reason, not defensively: the raw expression
+/// goes NEGATIVE below level 4 (at level 1, `(1-4)/3` is -1 under Rust's
+/// truncating division), and a negative DR would be a fabricated value
+/// rather than an absent one.
+fn bloodrager_damage_reduction_amount(level: u8) -> i16 {
+    ((i16::from(level) - 4) / 3).max(0)
+}
+
+/// Grounds Bloodrager's own Damage Reduction, mirroring
+/// `ground_skald_damage_reduction`/`class_feature.barbarian.damage_reduction`
+/// exactly: a real, level-gated, flat-magnitude fact never applied to any
+/// incoming-damage total (none exists anywhere in this codebase). Grounds
+/// BOTH branches, including an honest value-0 "not yet gained" record
+/// below level 7 -- the same "ground the absence, don't omit it"
+/// discipline the sibling DR facts use.
+///
+/// Passive, so it is grounded regardless of whether the bloodrager is
+/// currently bloodraging: unlike the Bloodrage bonuses, the corpus record
+/// carries no activation condition at all.
+fn ground_bloodrager_damage_reduction(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    let damage_reduction_value = bloodrager_damage_reduction_amount(level);
+    if damage_reduction_value == 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.damage_reduction".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bloodrager Damage Reduction at bloodrager level {level}: correctly absent at \
+                 level {level} by PF1 Advanced Class Guide level gate; the at-grant magnitude \
+                 is named but not computed. Damage Reduction is a 7th-level bloodrager class \
+                 feature. Note the corpus expresses that gate purely through its own formula \
+                 ((BloodragerLVL-4)/3, which first reaches 1 at level 7) -- the grant line \
+                 carries no level PRE token at all"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.damage_reduction".to_owned(),
+            value: damage_reduction_value,
+            detail: format!(
+                "Bloodrager Damage Reduction granted at bloodrager level {level} (PF1 Advanced \
+                 Class Guide, 7th-level bloodrager class feature rising by 1 every three levels \
+                 -- corpus DR:BloodragerDR/- with BloodragerDR = (BloodragerLVL-4)/3, so the \
+                 level-{level} magnitude is {damage_reduction_value}/-): subtract \
+                 {damage_reduction_value} from the damage the bloodrager takes each time he is \
+                 dealt damage from a weapon or a natural attack. The DR is bypassed by nothing \
+                 (\"/-\"), unlike Paladin's own DR 5/evil. This is passive and applies whether \
+                 or not he is bloodraging. The subtraction against an actual incoming-damage \
+                 total is not computed: no damage-resolution engine or incoming-damage total \
+                 exists anywhere in this codebase"
+            ),
+        });
+    }
+}
+
 fn ground_or_block_bloodrager_bloodrage(
     input: &CharacterInput,
     bloodrager_level: u8,
@@ -16146,6 +16215,10 @@ fn ground_or_block_bloodrager_bloodrage(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    // Passive and activation-independent, so it is grounded before the
+    // bloodraging branch splits -- both branches must carry it.
+    ground_bloodrager_damage_reduction(bloodrager_level, explanations);
+
     let Some(activation) = input
         .chosen
         .class_ability_activations
@@ -43372,6 +43445,99 @@ mod investigator_dispatch_widening_safety_tests {
 /// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
 /// established dispatch-widening test module shape.
 /// The nine non-Life Spirits' base abilities (task #12, stage 3).
+#[cfg(test)]
+mod bloodrager_damage_reduction_tests {
+    use super::{
+        bloodrager_damage_reduction_amount, build_pilot_headless_receipt, CharacterClassLevel,
+        CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn bloodrager(level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: "class:bloodrager".to_owned(), level }];
+        input
+    }
+
+    fn dr_record(level: u8) -> Option<i16> {
+        build_pilot_headless_receipt(&bloodrager(level))
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.bloodrager.damage_reduction")
+            .map(|e| e.value)
+    }
+
+    /// DR 1/- at 7th, +1 every three levels thereafter.
+    #[test]
+    fn the_magnitude_matches_the_corpus_formula() {
+        assert_eq!(bloodrager_damage_reduction_amount(7), 1);
+        assert_eq!(bloodrager_damage_reduction_amount(9), 1);
+        assert_eq!(bloodrager_damage_reduction_amount(10), 2);
+        assert_eq!(bloodrager_damage_reduction_amount(13), 3);
+        assert_eq!(bloodrager_damage_reduction_amount(16), 4);
+        assert_eq!(bloodrager_damage_reduction_amount(19), 5);
+        assert_eq!(bloodrager_damage_reduction_amount(20), 5);
+    }
+
+    /// The gate is implicit in the integer division -- the formula simply
+    /// has not reached 1 yet. Level 6 is the last absent level.
+    #[test]
+    fn the_gate_is_produced_by_the_formula_not_a_pre_token() {
+        for level in 1..=6 {
+            assert_eq!(
+                bloodrager_damage_reduction_amount(level),
+                0,
+                "level {level} must have no DR"
+            );
+        }
+        assert_eq!(bloodrager_damage_reduction_amount(7), 1, "first granted at 7");
+    }
+
+    /// The clamp is load-bearing, not defensive: the raw expression is
+    /// NEGATIVE below level 4 under truncating division, and a negative
+    /// DR would be a fabricated value rather than an absent one.
+    #[test]
+    fn the_clamp_prevents_a_negative_damage_reduction() {
+        assert_eq!((i16::from(1u8) - 4) / 3, -1, "raw expression really does go negative");
+        assert_eq!(bloodrager_damage_reduction_amount(1), 0);
+        assert_eq!(bloodrager_damage_reduction_amount(3), 0);
+    }
+
+    /// Both branches ground a record -- "ground the absence, don't omit
+    /// it", matching Skald's and Barbarian's own DR facts.
+    #[test]
+    fn both_branches_ground_a_record_through_the_live_dispatch() {
+        assert_eq!(dr_record(6), Some(0), "the absence must be grounded, not omitted");
+        assert_eq!(dr_record(7), Some(1));
+        assert_eq!(dr_record(20), Some(5));
+    }
+
+    /// Passive: the corpus record carries no activation condition, so it
+    /// grounds whether or not the bloodrager is bloodraging. The fixture
+    /// carries no bloodrage activation, which is the not-raging branch.
+    #[test]
+    fn it_grounds_on_the_not_raging_branch_too() {
+        let receipt = build_pilot_headless_receipt(&bloodrager(7));
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.bloodrager.bloodrage_execution.not_raging"),
+            "fixture must exercise the not-raging branch"
+        );
+        assert_eq!(dr_record(7), Some(1), "DR must ground on that branch anyway");
+    }
+}
+
 #[cfg(test)]
 mod monk_task36_feature_tests {
     use super::{
