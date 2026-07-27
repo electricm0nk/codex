@@ -1,20 +1,26 @@
 //! APG/ACG Witch spell list — one `(spell name, Witch spell level)`
 //! entry per real corpus record.
 //!
-//! Source: every record whose `CLASSES:` token names `Witch` in any of
+//! Source: every record whose `CLASSES:` token names Witch in any of
 //! its comma-separated class groups, across the books this repo ingests:
-//! `apg_spells.lst` (250) and `acg_spells.lst` (74). **324 unique
+//! `apg_spells.lst` (252) and `acg_spells.lst` (74). **326 unique
 //! spells**, levels 0-9, split
-//! **16 / 37 / 58 / 47 / 43 / 31 / 29 / 25 / 23 / 15**.
+//! **16 / 37 / 58 / 49 / 43 / 31 / 29 / 25 / 23 / 15**.
+//! `cr_spells.lst` names Witch zero times (the class postdates the CRB).
 //!
-//! **Corpus reachability: 324 of 324.** Every entry resolves against
+//! **Corpus reachability: 326 of 326.** Every entry resolves against
 //! this repo's ingested `data/corpus/` spell records.
 //!
-//! # Parsing `CLASSES:` correctly — the bug this module shipped once
+//! Per-file ceiling check: `grep -c Witch` returns 253 / 74. The single
+//! APG line above the parse is the `###Block: Witch Spells` section
+//! header, not a record.
 //!
-//! A `CLASSES:` token is pipe-separated groups, each
-//! `Name1,Name2,...=Level`. The level belongs to the WHOLE comma group,
-//! so a class named anywhere but last is **not** followed by `=`:
+//! # Parsing `CLASSES:` correctly — TWO bugs this module shipped
+//!
+//! **Bug 1: substring-matching the class name.** A `CLASSES:` token is
+//! pipe-separated groups, each `Name1,Name2,...=Level`. The level belongs
+//! to the WHOLE comma group, so a class named anywhere but last is
+//! **not** followed by `=`:
 //!
 //! ```text
 //! CLASSES:Alchemist,Bloodrager,Sorcerer,Witch,Wizard=2
@@ -29,16 +35,38 @@
 //!
 //! Always split the token into groups, split each group's names on
 //! commas, and MEMBERSHIP-TEST the class name. Never substring-match
-//! `<Class>=`. This same bug shape has now been hit three times on this
-//! one class, so it is worth treating as the default hazard when reading
-//! `CLASSES:` for any class that commonly shares spells.
+//! `<Class>=`.
 //!
-//! The inherited "324-spell" figure in this task was therefore CORRECT
-//! all along. An earlier revision of this file claimed it "does not
-//! reproduce" and recorded it as a fourth stale cross-book count; that
-//! claim was wrong and was produced by the parsing bug above, not by the
-//! source. Scout and the team lead had both independently derived 324
-//! before this module was first written.
+//! **Bug 2: letting a level parse throw.** A level may carry a trailing
+//! bracketed prereq:
+//!
+//! ```text
+//! CLASSES:Sorcerer,Witch,Wizard=3[PREVAREQ:Heroic,1]
+//! ```
+//!
+//! An `int("3[PREVAREQ:Heroic,1]")` raises, and a parser that swallows
+//! that with `except: continue` discards the entire record **silently**
+//! — the same invisible-omission shape as bug 1, not a visibly wrong
+//! answer. That cost this module `Malediction` and `Unravel Destiny`.
+//! Strip a trailing `[...]` from the level; never let the cast throw a
+//! record away. Both spells are on the list per the lead's ruling
+//! (`risks-and-open-questions.md` item 54): the Hero Points gate is a
+//! condition on casting, not on list membership.
+//!
+//! # Count history, recorded honestly
+//!
+//! This class's count was wrong three times, in both directions:
+//! **249** (bug 1, shipped), then **324** (bug 1 fixed, bug 2 still
+//! live, shipped), now **326**. An earlier revision of this file
+//! asserted that the inherited "324" figure was "CORRECT all along" and
+//! that a prior 326 re-derivation had been an overcount. **That was
+//! backwards.** The team lead's original 326 was right; the 324 that
+//! replaced it was this module's second bug, and the confident
+//! correction of a verified number was itself the error. Recorded here
+//! rather than quietly overwritten, because the recurring lesson is not
+//! about `CLASSES:` at all — it is that a silent parser failure reads as
+//! a clean result, and that disagreeing counts should be reconciled
+//! record-by-record before deciding whose is stale.
 //!
 //! Unlike Bloodrager, Witch genuinely HAS cantrips: 16 records at level
 //! 0, a real 0-level spell list rather than the always-zero sentinel
@@ -219,6 +247,7 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Mage Armor", 1),
     ("Magic Jar", 5),
     ("Major Creation", 5),
+    ("Malediction", 3),
     ("Mark of Justice", 5),
     ("Mask Dweomer", 1),
     ("Maze", 8),
@@ -354,6 +383,7 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Twilight Knife", 3),
     ("Unbearable Brightness", 4),
     ("Unliving Rage", 3),
+    ("Unravel Destiny", 3),
     ("Unseen Servant", 1),
     ("Unwilling Shield", 6),
     ("Vampiric Touch", 3),
@@ -388,8 +418,8 @@ mod tests {
 
     #[test]
     fn the_list_matches_the_verified_corpus_extraction() {
-        assert_eq!(WITCH_SPELL_LIST.len(), 324, "324 real Witch spell records");
-        let expected = [16, 37, 58, 47, 43, 31, 29, 25, 23, 15];
+        assert_eq!(WITCH_SPELL_LIST.len(), 326, "326 real Witch spell records");
+        let expected = [16, 37, 58, 49, 43, 31, 29, 25, 23, 15];
         for (level, want) in expected.iter().enumerate() {
             let count = WITCH_SPELL_LIST
                 .iter()
@@ -397,6 +427,20 @@ mod tests {
                 .count();
             assert_eq!(count, *want, "spell level {level} count");
         }
+    }
+
+    /// Regression guard for the SECOND parsing bug this module shipped
+    /// (task #33): a level may carry a trailing bracketed prereq, and an
+    /// `int(level)` that throws on it silently discards the whole record.
+    /// Both of these are `=3[PREVAREQ:Heroic,1]` (the APG Hero Points
+    /// optional rule) -- `CLASSES:Sorcerer,Witch,Wizard=3[...]` and
+    /// `CLASSES:Cleric,Sorcerer,Witch,Wizard=3[...]`. They are on the
+    /// list per item 54: the gate is a condition on casting, not on list
+    /// membership.
+    #[test]
+    fn optional_rule_gated_spells_are_on_the_list() {
+        assert_eq!(witch_spell_level("Malediction"), Some(3));
+        assert_eq!(witch_spell_level("Unravel Destiny"), Some(3));
     }
 
     /// Regression guard for the mid-list `CLASSES:` parsing bug that
