@@ -1,40 +1,64 @@
-//! APG Witch spell list — one `(spell name, Witch spell level)` entry per
-//! real corpus record.
+//! APG/ACG Witch spell list — one `(spell name, Witch spell level)`
+//! entry per real corpus record.
 //!
-//! Source: every record whose `CLASSES:` token names `Witch=N` across the
-//! books this repo actually ingests — `advanced_players_guide` (235) and
-//! `advanced_class_guide` (14). Independently re-derived for task #23
-//! (2026-07-27): **249 records, spell levels 0-9**, split
-//! **15 / 26 / 36 / 31 / 31 / 27 / 24 / 24 / 21 / 14**. No duplicate
-//! spell names.
+//! Source: every record whose `CLASSES:` token names `Witch` in any of
+//! its comma-separated class groups, across the books this repo ingests:
+//! `apg_spells.lst` (250) and `acg_spells.lst` (74). **324 unique
+//! spells**, levels 0-9, split
+//! **16 / 37 / 58 / 47 / 43 / 31 / 29 / 25 / 23 / 15**.
 //!
-//! **Corpus reachability: 249 of 249.** Every entry resolves against this
-//! repo's own ingested `data/corpus/` spell records — unlike Bloodrager's
-//! list, where 73 of 183 had no base record here. Nothing needs routing
-//! through the unresolved-selection idiom.
+//! **Corpus reachability: 324 of 324.** Every entry resolves against
+//! this repo's ingested `data/corpus/` spell records.
 //!
-//! **The task's inherited "324-spell" figure does not reproduce.** A
-//! tree-wide count returns 799 (sweeping in Ultimate Magic/Combat/
-//! Intrigue/Wilderness, Occult Adventures, Monster Codex, a third-party
-//! book, and a PFS scenario file — none ingested here); the
-//! ingested-book count is 249. 324 matches neither, so it is recorded as
-//! superseded rather than reconciled. This is the fourth stale
-//! cross-book count found this segment, after Bloodrager's 201→183,
-//! Oracle's "4 Curses"→5, and Cavalier's "26 Orders"→6 — inherited
-//! corpus counts are worth treating as unverified until re-derived.
+//! # Parsing `CLASSES:` correctly — the bug this module shipped once
 //!
-//! Unlike Bloodrager, Witch genuinely HAS cantrips: 15 records at
-//! `Witch=0`, which is a real 0-level spell list rather than the
-//! always-zero sentinel column Bloodrager's `CAST:0,1` carries.
+//! A `CLASSES:` token is pipe-separated groups, each
+//! `Name1,Name2,...=Level`. The level belongs to the WHOLE comma group,
+//! so a class named anywhere but last is **not** followed by `=`:
 //!
-//! Scoped to the ingested books deliberately, matching the
-//! single-source discipline every other spell list here already uses.
+//! ```text
+//! CLASSES:Alchemist,Bloodrager,Sorcerer,Witch,Wizard=2
+//! ```
+//!
+//! Here Witch is a 2nd-level spell, but the substring `Witch=` does not
+//! occur anywhere in the line. The first version of this module was
+//! generated with a `CLASSES:.*Witch=` grep and therefore captured only
+//! spells where Witch happened to be the LAST class in its group —
+//! silently dropping 60 genuine ACG spells and 15 APG ones, while
+//! reporting 100% reachability on the incomplete set it did find.
+//!
+//! Always split the token into groups, split each group's names on
+//! commas, and MEMBERSHIP-TEST the class name. Never substring-match
+//! `<Class>=`. This same bug shape has now been hit three times on this
+//! one class, so it is worth treating as the default hazard when reading
+//! `CLASSES:` for any class that commonly shares spells.
+//!
+//! The inherited "324-spell" figure in this task was therefore CORRECT
+//! all along. An earlier revision of this file claimed it "does not
+//! reproduce" and recorded it as a fourth stale cross-book count; that
+//! claim was wrong and was produced by the parsing bug above, not by the
+//! source. Scout and the team lead had both independently derived 324
+//! before this module was first written.
+//!
+//! Unlike Bloodrager, Witch genuinely HAS cantrips: 16 records at level
+//! 0, a real 0-level spell list rather than the always-zero sentinel
+//! column Bloodrager's `CAST:0,1` carries.
 
 /// Every `(spell name, Witch spell level)` pair on the real APG/ACG
 /// Witch spell list, sorted by name.
 pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
+    ("Adhesive Blood", 2),
+    ("Adhesive Spittle", 1),
+    ("Adjustable Disguise", 3),
+    ("Adjustable Polymorph", 4),
+    ("Aggressive Thundercloud", 2),
+    ("Aggressive Thundercloud (Greater)", 4),
+    ("Air Geyser", 3),
+    ("Air Step", 2),
+    ("Alter Musical Instrument", 1),
     ("Alter Self", 2),
     ("Analyze Dweomer", 6),
+    ("Anchored Step", 3),
     ("Animal Purpose Training", 1),
     ("Animate Objects", 6),
     ("Anonymous Interaction", 2),
@@ -46,8 +70,11 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Arcane Sight (Greater)", 7),
     ("Astral Projection", 9),
     ("Augury", 2),
+    ("Aura Sight", 3),
     ("Baleful Polymorph", 5),
     ("Banish Seeming", 5),
+    ("Banshee Blast", 6),
+    ("Barrow Haze", 3),
     ("Beastspeak", 2),
     ("Beguiling Gift", 1),
     ("Bestow Curse", 3),
@@ -55,7 +82,11 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Bleed", 0),
     ("Blight", 5),
     ("Blindness/Deafness", 2),
+    ("Blood Armor", 2),
     ("Break Enchantment", 5),
+    ("Bullet Ward", 2),
+    ("Buoyancy", 2),
+    ("Burning Gaze", 2),
     ("Burning Hands", 1),
     ("Cause Fear", 1),
     ("Chain Lightning", 7),
@@ -65,14 +96,17 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Chill Touch", 1),
     ("Clairaudience/Clairvoyance", 3),
     ("Climbing Beanstalk", 2),
+    ("Cloak of Dreams", 6),
     ("Clone", 8),
     ("Cloudkill", 5),
     ("Command", 1),
+    ("Companion Life Link", 2),
     ("Comprehend Languages", 1),
     ("Cone of Cold", 6),
     ("Confusion", 4),
     ("Contact Other Plane", 5),
     ("Control Weather", 7),
+    ("Crimson Confession", 2),
     ("Crushing Despair", 4),
     ("Cup of Dust", 3),
     ("Cure Critical Wounds", 5),
@@ -83,6 +117,8 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Cure Moderate Wounds (Mass)", 7),
     ("Cure Serious Wounds", 4),
     ("Cure Serious Wounds (Mass)", 8),
+    ("Curse of Burning Sleep", 4),
+    ("Dancing Lantern", 1),
     ("Dancing Lights", 0),
     ("Daze", 0),
     ("Daze Monster", 2),
@@ -98,23 +134,31 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Detect Secret Doors", 1),
     ("Detect Thoughts", 2),
     ("Dimension Door", 4),
+    ("Dimensional Bounce", 7),
+    ("Disable Construct", 3),
     ("Discern Lies", 4),
     ("Discern Location", 8),
+    ("Discern Next of Kin", 1),
+    ("Disguise Weapon", 1),
     ("Dispel Magic", 3),
     ("Dispel Magic (Greater)", 6),
     ("Divination", 4),
     ("Dominate Monster", 9),
     ("Dominate Person", 5),
     ("Elemental Swarm", 9),
+    ("Enchantment Foil", 4),
     ("Enervation", 4),
     ("Enlarge Person", 1),
     ("Enthrall", 2),
+    ("Euphoric Cloud", 2),
+    ("Extreme Flexibility", 2),
     ("Eyebite", 6),
     ("Fairy Ring Retreat", 7),
     ("False Life", 2),
     ("Familiar Double", 7),
     ("Fear", 4),
     ("Feast of Ashes", 2),
+    ("Feast on Fear", 5),
     ("Feeblemind", 5),
     ("Fester", 2),
     ("Fester (Mass)", 6),
@@ -126,7 +170,9 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Foresight", 9),
     ("Geas (Lesser)", 4),
     ("Geas/Quest", 6),
+    ("Gentle Breeze", 1),
     ("Gentle Repose", 2),
+    ("Glide", 2),
     ("Glitterdust", 2),
     ("Glyph of Warding", 3),
     ("Guards and Wards", 6),
@@ -134,6 +180,7 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Guiding Star", 3),
     ("Harm", 7),
     ("Heal", 7),
+    ("Heart of the Metal", 3),
     ("Heroism", 3),
     ("Heroism (Greater)", 6),
     ("Hex Glyph", 3),
@@ -159,37 +206,52 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Inflict Serious Wounds (Mass)", 8),
     ("Insanity", 7),
     ("Instant Summons", 7),
+    ("Investigative Mind", 2),
     ("Irresistible Dance", 8),
     ("Legend Lore", 6),
     ("Levitate", 2),
+    ("Life Pact", 2),
     ("Light", 0),
     ("Lightning Bolt", 3),
     ("Locate Creature", 4),
     ("Locate Object", 3),
+    ("Long Arm", 1),
     ("Mage Armor", 1),
     ("Magic Jar", 5),
     ("Major Creation", 5),
     ("Mark of Justice", 5),
     ("Mask Dweomer", 1),
     ("Maze", 8),
+    ("Memorize Page", 1),
     ("Mending", 0),
     ("Message", 0),
     ("Mind Blank", 8),
     ("Mind Fog", 5),
+    ("Mindlocked Messenger", 3),
     ("Minor Creation", 4),
+    ("Mirror Hideaway", 2),
+    ("Mirror Polish", 1),
+    ("Mirror Transport", 4),
+    ("Molten Orb", 2),
     ("Moment of Prescience", 8),
+    ("Moonstruck", 4),
     ("Mount", 1),
     ("Nature's Exile", 3),
     ("Nauseating Dart", 1),
+    ("Nauseating Trail", 3),
     ("Neutralize Poison", 4),
     ("Obscuring Mist", 1),
     ("Overland Flight", 5),
+    ("Pain Strike", 3),
+    ("Pain Strike (Mass)", 5),
     ("Perceive Cues", 2),
     ("Persistent Vigor", 4),
     ("Phantasmal Killer", 4),
     ("Phase Door", 7),
+    ("Pierce Disguise", 3),
     ("Plane Shift", 7),
     ("Poison", 4),
+    ("Polymorph Familiar", 3),
     ("Power Word Blind", 7),
     ("Power Word Kill", 9),
     ("Power Word Stun", 8),
@@ -212,6 +274,7 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Resistance", 0),
     ("Rest Eternal", 5),
     ("Resurrection", 8),
+    ("River Whip", 2),
     ("Scare", 2),
     ("Screech", 3),
     ("Scrying", 4),
@@ -219,24 +282,36 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Secret Chest", 5),
     ("Secure Shelter", 4),
     ("See Invisibility", 2),
+    ("Seek Thoughts", 3),
     ("Sepia Snake Sigil", 3),
     ("Severed Fate", 2),
     ("Share Senses", 3),
+    ("Silent Table", 2),
+    ("Silver Darts", 3),
     ("Slay Living", 6),
     ("Sleep", 1),
     ("Sleepwalk", 4),
     ("Sleet Storm", 3),
     ("Solid Fog", 4),
     ("Soul Bind", 9),
+    ("Spark", 0),
     ("Speak with Dead", 3),
     ("Speak with Haunt", 4),
     ("Spectral Hand", 2),
+    ("Spellcrash", 6),
+    ("Spellcrash (Greater)", 8),
+    ("Spellcrash (Lesser)", 4),
     ("Spite", 4),
     ("Stabilize", 0),
     ("Status", 2),
     ("Stinking Cloud", 3),
+    ("Stone Discus", 2),
     ("Stone to Flesh", 6),
     ("Storm of Vengeance", 9),
+    ("Stormbolts", 8),
+    ("Stricken Heart", 2),
+    ("Suffocation", 5),
+    ("Suffocation (Mass)", 9),
     ("Suggestion", 3),
     ("Suggestion (Mass)", 6),
     ("Summon Monster I", 1),
@@ -249,10 +324,12 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Summon Monster VII", 7),
     ("Summon Monster VIII", 8),
     ("Summon Swarm", 2),
+    ("Sundering Shards", 1),
     ("Swarm Skin", 6),
     ("Symbol of Death", 8),
     ("Symbol of Fear", 6),
     ("Symbol of Insanity", 8),
+    ("Symbol of Laughter", 4),
     ("Symbol of Pain", 5),
     ("Symbol of Persuasion", 6),
     ("Symbol of Sleep", 5),
@@ -271,22 +348,33 @@ pub const WITCH_SPELL_LIST: &[(&str, u8)] = &[
     ("Touch of Idiocy", 2),
     ("Transformation", 6),
     ("Trap the Soul", 8),
+    ("Triggered Suggestion", 4),
     ("True Seeing", 6),
+    ("Twilight Haze", 2),
+    ("Twilight Knife", 3),
+    ("Unbearable Brightness", 4),
+    ("Unliving Rage", 3),
     ("Unseen Servant", 1),
+    ("Unwilling Shield", 6),
     ("Vampiric Touch", 3),
     ("Vision", 7),
     ("Vomit Swarm", 2),
     ("Wail of the Banshee", 9),
+    ("Wall of Blindness/Deafness", 4),
+    ("Wandering Star Motes", 4),
     ("Water Walk", 3),
+    ("Wave Shield", 1),
     ("Waves of Exhaustion", 7),
     ("Waves of Fatigue", 5),
     ("Web", 2),
+    ("Whip of Ants", 6),
+    ("Whip of Centipedes", 5),
+    ("Whip of Spiders", 2),
     ("Zone of Truth", 2),
 ];
 
 /// The Witch spell level for `spell_key`, or `None` when the spell is
-/// not on the Witch list at all. Mirrors
-/// `alchemist_spell_list::alchemist_spell_level`'s own shape.
+/// not on the Witch list at all.
 pub fn witch_spell_level(spell_key: &str) -> Option<u8> {
     WITCH_SPELL_LIST
         .iter()
@@ -300,8 +388,8 @@ mod tests {
 
     #[test]
     fn the_list_matches_the_verified_corpus_extraction() {
-        assert_eq!(WITCH_SPELL_LIST.len(), 249, "249 real CLASSES:Witch= records");
-        let expected = [15, 26, 36, 31, 31, 27, 24, 24, 21, 14];
+        assert_eq!(WITCH_SPELL_LIST.len(), 324, "324 real Witch spell records");
+        let expected = [16, 37, 58, 47, 43, 31, 29, 25, 23, 15];
         for (level, want) in expected.iter().enumerate() {
             let count = WITCH_SPELL_LIST
                 .iter()
@@ -311,19 +399,35 @@ mod tests {
         }
     }
 
-    /// Witch is a full 0-9 caster WITH real cantrips -- 15 of them --
-    /// unlike Bloodrager, whose leading zero column is a sentinel and
-    /// whose list stops at 4th level.
+    /// Regression guard for the mid-list `CLASSES:` parsing bug that
+    /// dropped 60 ACG spells from this module's first revision. Each of
+    /// these is tagged for Witch in a comma group where Witch is NOT
+    /// last, so the substring `Witch=` never appears on its line -- a
+    /// `CLASSES:.*Witch=` grep finds none of them.
+    #[test]
+    fn spells_tagged_mid_list_in_their_classes_group_are_present() {
+        for (name, level) in [
+            ("Adhesive Blood", 2),
+            ("Adjustable Polymorph", 4),
+            ("Aggressive Thundercloud", 2),
+        ] {
+            assert_eq!(
+                witch_spell_level(name),
+                Some(level),
+                "{name} is tagged Witch mid-group and must not be dropped"
+            );
+        }
+    }
+
+    /// Witch is a full 0-9 caster WITH real cantrips, unlike Bloodrager
+    /// whose leading zero is a sentinel and whose list stops at 4th.
     #[test]
     fn witch_is_a_full_nine_level_caster_with_real_cantrips() {
         for (name, level) in WITCH_SPELL_LIST {
             assert!(*level <= 9, "{name} at level {level}: 9 is the ceiling");
         }
-        assert!(
-            WITCH_SPELL_LIST.iter().any(|(_, l)| *l == 0),
-            "Witch genuinely has 0-level spells"
-        );
-        assert!(WITCH_SPELL_LIST.iter().any(|(_, l)| *l == 9), "and 9th-level spells");
+        assert!(WITCH_SPELL_LIST.iter().any(|(_, l)| *l == 0));
+        assert!(WITCH_SPELL_LIST.iter().any(|(_, l)| *l == 9));
     }
 
     #[test]
