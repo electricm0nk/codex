@@ -8,7 +8,7 @@
 |-----------|-------|------|--------|---------|-----------|-------|
 | 1.1 | `identifier-audit` | E1 | complete | 2026-07-27T19:59Z | 2026-07-27T20:04Z | Full-tree scan (not diff-scoped — see receipt); 0 genuine bundle-tagged code identifiers. Matches SD-26's own E1.1 precedent |
 | 2.0 | `label-resolution` | E2 | complete | 2026-07-27T20:10Z | 2026-07-27T20:16Z | Operator chose `"SD-27"`. All 21 stubs + registry + v0.6 risks doc resolved |
-| 2.0.5 | `shape-b-license-stripping-preflight` | E2 | pending | — | — | Schema bump + per-book `LICENSE.json` + PI-blacklist + redaction policy. Gates 2.0.6+ |
+| 2.0.5 | `shape-b-license-stripping-preflight` | E2 | complete | 2026-07-27T20:20Z | 2026-07-27T20:28Z | src/rules_core/shape_b_v1.rs + docs/governance/ogl-pi-blacklist.md (draft) + dual-audit test, all independently re-verified. Gates 2.0.6+ |
 | 2.0.6 | `crb-license-retrofit` | E2 | pending | — | — | Retro-fit CRB records with license field + PI redaction |
 | 2.0.7 | `apg-license-retrofit` | E2 | pending | — | — | Retro-fit APG records |
 | 2.0.8 | `acg-license-retrofit` | E2 | pending | — | — | Retro-fit ACG records |
@@ -33,6 +33,10 @@
   `artifacts/epic_1/identifier-audit-cycle_receipt.md`.
 - **2.0 label-resolution** (2026-07-27T20:16Z) — operator chose `"SD-27"`; all 21 stubs + registry + the
   v0.6 risks doc reconciled. Receipt: `artifacts/epic_2/label-resolution-cycle_receipt.md`.
+- **2.0.5 shape-b-license-stripping-preflight** (2026-07-27T20:28Z) — Shape B v1 schema (additive over
+  v0, proven against the real on-disk corpus) + PI-blacklist draft + dual-audit test, 10/10 new tests
+  passing (independently re-verified by the orchestrator). Receipt:
+  `artifacts/epic_2/2.0.5-shape-b-license-stripping-preflight-cycle_receipt.md`.
 
 ## DISCOVERED
 
@@ -64,3 +68,4 @@ manifest is authoritative for status, this table for narrative.
 |-------|--------------|
 | 1.1 identifier-audit | `artifacts/epic_1/identifier-audit-cycle_receipt.md` |
 | 2.0 label-resolution | `artifacts/epic_2/label-resolution-cycle_receipt.md` |
+| 2.0.5 shape-b-license-stripping-preflight | `artifacts/epic_2/2.0.5-shape-b-license-stripping-preflight-cycle_receipt.md` |
