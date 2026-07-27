@@ -253,23 +253,34 @@ pub struct AcgClassCoverage {
     /// with genuine, SEPARATELY-implemented backing logic" methodology
     /// consistent across classes rather than letting it drift per-class.
     ///
-    /// Warpriest ALSO counts 2 (Blessings, Sacred Weapon), for a related
-    /// but distinct reason: Warpriest's own `KEY:Warpriest ~ ...` list
-    /// has NO record at all for the general prepared-spellcasting
-    /// mechanism (unlike Arcanist's own "Spells Prepared") -- only
-    /// `Orisons` names the 0-level-specific sub-rule, and this closure's
-    /// own build does not separately implement Orisons' own
-    /// distinguishing "known at will, no preparation needed" content (it
-    /// grounds level 0 via the exact same unified per-spell-level table
-    /// as levels 1-3), so spellcasting does not add a count here either,
-    /// the same "not separately implemented" reasoning that already
-    /// excluded Arcanist's own Cantrips. Destruction Blessing's own
-    /// Destructive Attacks is tagged `KEY:Destruction Blessing ~ ...` in
-    /// the corpus -- a DIFFERENT class prefix, not `KEY:Warpriest ~ ...`
-    /// -- so it is a sub-selectable-list entry under the single
-    /// `Blessings` feature slot (the same "floor, not ceiling" sub-list
-    /// exclusion `named_features_expected`'s own doc comment already
-    /// documents for Investigator's Discoveries), not a separate count.
+    /// Warpriest counts 5 (Blessings, Sacred Weapon, Fervor, Channel
+    /// Energy, Sacred Armor). The original closure landed the first two;
+    /// the partial re-scope (deepening 2026-07-26, task #9) added the
+    /// other three, each a real, distinct `KEY:Warpriest ~ ...` record
+    /// with its own separately-implemented formula -- the same
+    /// "structurally independent mechanisms" bar Slayer/Swashbuckler/
+    /// Investigator already established. Channel Energy earns its own
+    /// count on the strength of its own `WarpriestChannelEnergyDC`
+    /// formula, even though it borrows Fervor's dice for its magnitude.
+    ///
+    /// Two exclusions, both deliberate. Warpriest's own
+    /// `KEY:Warpriest ~ ...` list has NO record at all for the general
+    /// prepared-spellcasting mechanism (unlike Arcanist's own "Spells
+    /// Prepared") -- only `Orisons` names the 0-level-specific sub-rule,
+    /// and this closure's own build does not separately implement
+    /// Orisons' own distinguishing "known at will, no preparation
+    /// needed" content (it grounds level 0 via the exact same unified
+    /// per-spell-level table as levels 1-3), so spellcasting does not add
+    /// a count, the same "not separately implemented" reasoning that
+    /// already excluded Arcanist's own Cantrips. And Destruction
+    /// Blessing's own Destructive Attacks and Strength Blessing's own
+    /// Strength Surge are tagged `KEY:Destruction Blessing ~ ...` /
+    /// `KEY:Strength Blessing ~ ...` in the corpus -- a DIFFERENT class
+    /// prefix, not `KEY:Warpriest ~ ...` -- so both are
+    /// sub-selectable-list entries under the single `Blessings` feature
+    /// slot (the same "floor, not ceiling" sub-list exclusion
+    /// `named_features_expected`'s own doc comment already documents for
+    /// Investigator's Discoveries), not separate counts.
     ///
     /// Slayer counts 4 (Sneak Attack, Trap Sense, Trapfinding, Track) --
     /// genuinely different from Arcanist's/Warpriest's own 2, because all
@@ -446,30 +457,26 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // activation-gated choice-recognition shape Judgment/Mutagen already
     // proved; Hunter's own known-spell posture (still deferred) would not
     // add a fourth even if built, per the same spellcasting-sharing
-    // convention. And why Warpriest counts 2 (Blessings, Sacred Weapon),
-    // for a related but distinct reason: Warpriest's own
-    // `KEY:Warpriest ~ ...` list has NO record at all for the general
-    // prepared-spellcasting mechanic (unlike Arcanist's own "Spells
-    // Prepared" record) -- only `Orisons` names the 0-level-specific
-    // sub-rule, and this closure's own build does not separately
-    // implement Orisons' own distinguishing "known at will, no
-    // preparation needed" content (it grounds level 0 via the exact same
-    // unified per-spell-level table as levels 1-3), the same "not
-    // separately implemented" reasoning that already excluded Cantrips
-    // from Arcanist's count. Destruction Blessing's own Destructive
-    // Attacks is tagged `KEY:Destruction Blessing ~ ...` in the corpus,
-    // a DIFFERENT class prefix, not `KEY:Warpriest ~ ...` -- it is a
-    // sub-selectable-list entry under the single `Blessings` feature
-    // slot (the same "floor, not ceiling" sub-list exclusion this
-    // struct's own `named_features_expected` doc comment already
-    // documents for Investigator's Discoveries), so it does not add a
-    // separate count either.
+    // convention. And why Warpriest counts a genuine 5 (Blessings,
+    // Sacred Weapon, Fervor, Channel Energy, Sacred Armor -- partial
+    // re-scope 2026-07-26, task #9): the last three are each their own
+    // `KEY:Warpriest ~ ...` record with its own separately-implemented
+    // formula. See this field's own doc comment above for the two
+    // deliberate exclusions -- Warpriest's spellcasting (no
+    // general-mechanism record exists; only the 0-level-specific
+    // `Orisons`, whose distinguishing content is not separately
+    // implemented, the same reasoning that excluded Arcanist's Cantrips)
+    // and both grounded Blessing minor powers (Destructive Attacks and
+    // Strength Surge are tagged with a DIFFERENT class prefix,
+    // `KEY:Destruction Blessing ~ ...` / `KEY:Strength Blessing ~ ...`,
+    // making them sub-selectable-list entries under the single
+    // `Blessings` slot).
     let named_features_wired = match class_id {
         AcgClassId::Bloodrager | AcgClassId::Shaman => 1,
-        AcgClassId::Arcanist | AcgClassId::Warpriest => 2,
+        AcgClassId::Arcanist => 2,
         AcgClassId::Swashbuckler | AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
-        AcgClassId::Investigator => 5,
+        AcgClassId::Investigator | AcgClassId::Warpriest => 5,
     };
 
     AcgClassCoverage {

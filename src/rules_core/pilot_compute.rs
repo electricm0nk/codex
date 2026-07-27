@@ -2073,6 +2073,28 @@ const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
 /// `ClassAbilityActivation.ability_id` for Destruction Blessing's own
 /// Destructive Attacks minor power.
 const WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID: &str = "destructive_attacks";
+/// Strength Blessing is the second canonical Blessing this partial
+/// re-scope grounds (deepening 2026-07-26, task #9). Chosen over the
+/// other 18 because its minor power, Strength Surge, is the only one
+/// that is BOTH a flat-magnitude self-buff AND natively self-targeted
+/// ("As a swift action you can focus your own strength" -- verified
+/// directly against `acg_abilities_class.lst`'s own
+/// `KEY:Strength Blessing ~ Strength Surge` DESC), so unlike Destructive
+/// Attacks it needs no "self-application only" narrowing at all.
+const STRENGTH_BLESSING_SELECTION: &str = "blessing:strength";
+/// `ClassAbilityActivation.ability_id` for Strength Blessing's own
+/// Strength Surge minor power.
+const WARPRIEST_STRENGTH_SURGE_ABILITY_ID: &str = "strength_surge";
+/// Warpriest level at which Fervor is granted (`acg_classes.lst`'s own
+/// per-level grant row: `2 ABILITY:Warpriest Class Feature|AUTOMATIC|
+/// Warpriest ~ Fervor`).
+const WARPRIEST_FERVOR_LEVEL: u8 = 2;
+/// Warpriest level at which Channel Energy is granted (`acg_classes.lst`:
+/// `4 ABILITY:...|Warpriest ~ Channel Energy`).
+const WARPRIEST_CHANNEL_ENERGY_LEVEL: u8 = 4;
+/// Warpriest level at which Sacred Armor is granted (`acg_classes.lst`:
+/// `7 ABILITY:...|Warpriest ~ Sacred Armor`).
+const WARPRIEST_SACRED_ARMOR_LEVEL: u8 = 7;
 
 /// v0.6 alpha swarm, risks item 8 (Slayer full-build closure, seventh
 /// ACG/APG class-specific closure): APG/ACG Slayer, verified directly
@@ -10922,6 +10944,102 @@ fn warpriest_sacred_weapon_base_dice(level: u8) -> (i16, i16) {
     (dice_count, dice_size)
 }
 
+/// Warpriest Fervor's uses-per-day pool (deepening 2026-07-26, task #9),
+/// re-derived directly against `acg_abilities_class.lst`'s own
+/// `KEY:Warpriest ~ Fervor` record: `BONUS:VAR|WarpriestFervorUses|
+/// WarpriestLVL/2+WIS`. `None` below level 2, the record's own grant
+/// level (`acg_classes.lst`'s per-level row `2 ABILITY:...|Warpriest ~
+/// Fervor`), mirroring Alchemist's/Investigator's own Poison Resistance
+/// level-gate shape.
+///
+/// The corpus also carries `Warpriest Extra Channel`
+/// (`BONUS:VAR|WarpriestFervorUses|2`), a feat-sourced second
+/// contribution -- deliberately excluded here, not overlooked: it is a
+/// feat effect, not a class-feature magnitude, and lives in featmate's
+/// own `feat_effects.rs` lane rather than this class-dispatch one.
+fn warpriest_fervor_uses_per_day(level: u8, wisdom_modifier: i16) -> Option<i16> {
+    if level < WARPRIEST_FERVOR_LEVEL {
+        return None;
+    }
+    Some(i16::from(level) / 2 + wisdom_modifier)
+}
+
+/// Warpriest Fervor's swift-action self-heal magnitude in d6 (deepening
+/// 2026-07-26, task #9), re-derived directly against the same
+/// `KEY:Warpriest ~ Fervor` record: `BONUS:VAR|WarpriestFervorDice|
+/// 1+max(0,min(20,WarpriestLVL)-2)/3`. Note the `/3` sits OUTSIDE the
+/// `max(0,...)` here -- the opposite nesting from Sacred Armor's own
+/// enhancement formula below, transcribed per-record rather than carried
+/// across by assumption (the Sacred Weapon sibling-branch lesson).
+/// Yields 1d6 at level 2, +1d6 per 3 levels after: 1/2/3/4/5/6/7 at
+/// levels 2/5/8/11/14/17/20.
+fn warpriest_fervor_heal_dice(level: u8) -> Option<i16> {
+    if level < WARPRIEST_FERVOR_LEVEL {
+        return None;
+    }
+    Some(1 + 0.max(20.min(i16::from(level)) - 2) / 3)
+}
+
+/// Warpriest Channel Energy's save DC (deepening 2026-07-26, task #9),
+/// re-derived directly against `acg_abilities_class.lst`'s own
+/// `KEY:Warpriest ~ Channel Energy` record:
+/// `BONUS:VAR|WarpriestChannelEnergyDC|10+WarpriestLVL/2+WIS`. `None`
+/// below level 4, the record's own grant level.
+///
+/// **Real corpus discrepancy, resolved deliberately**: the separate
+/// `KEY:Warpriest ~ Channel Positive Energy`/`Channel Negative Energy`
+/// display records carry `10+(TL/2)+CHA` in their own DESC substitution
+/// args -- a different stat (Charisma, the Cleric idiom) and a different
+/// level term (total level). This transcribes the `BONUS:VAR` on the
+/// real Channel Energy record itself, which is the authoritative
+/// computed token and matches Warpriest's own WIS-keyed casting stat;
+/// the display records' CHA is a copy-paste artifact of the Cleric
+/// original, not Warpriest's real rule.
+fn warpriest_channel_energy_dc(level: u8, wisdom_modifier: i16) -> Option<i16> {
+    if level < WARPRIEST_CHANNEL_ENERGY_LEVEL {
+        return None;
+    }
+    Some(10 + i16::from(level) / 2 + wisdom_modifier)
+}
+
+/// Warpriest Sacred Armor's armor enhancement bonus (deepening
+/// 2026-07-26, task #9), re-derived directly against
+/// `acg_abilities_class.lst`'s own `KEY:Warpriest ~ Sacred Armor`
+/// record: `BONUS:VAR|WarpriestSacredArmorEnhancement|
+/// 1+max(0,(min(20,WarpriestLVL)-7)/3)`. Here the `/3` sits INSIDE the
+/// `max(0,...)`, unlike Fervor's own dice formula above. Yields +1 at
+/// level 7, +1 per 3 levels after, capping at +5 at level 19-20 --
+/// matching the record's own DESC ceiling ("to a maximum of +5").
+fn warpriest_sacred_armor_enhancement(level: u8) -> Option<i16> {
+    if level < WARPRIEST_SACRED_ARMOR_LEVEL {
+        return None;
+    }
+    Some(1 + 0.max((20.min(i16::from(level)) - 7) / 3))
+}
+
+/// Warpriest Sacred Armor's uses-per-day pool, in 1-minute increments
+/// (deepening 2026-07-26, task #9), re-derived directly against the same
+/// record: `BONUS:VAR|WarpriestSacredArmorUses|WarpriestLVL`.
+fn warpriest_sacred_armor_uses_per_day(level: u8) -> Option<i16> {
+    if level < WARPRIEST_SACRED_ARMOR_LEVEL {
+        return None;
+    }
+    Some(i16::from(level))
+}
+
+/// Strength Blessing's own Minor power, Strength Surge: "an enhancement
+/// bonus equal to [max(1, level/2)] on melee attack rolls, combat
+/// maneuver checks that rely on Strength, Strength-based skills, and
+/// Strength checks for 1 round" (deepening 2026-07-26, task #9),
+/// verified directly against `acg_abilities_class.lst`'s own
+/// `KEY:Strength Blessing ~ Strength Surge` DESC and its
+/// `max(1,WarpriestLVL/2)` substitution arg -- byte-identical to
+/// Destructive Attacks' own formula, and granted at the identical gate
+/// (`PREVARGTEQ:WarpriestBlessingLVL,WarpriestMinorBlessingGrantedLVL`).
+fn warpriest_strength_surge_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
 /// Grounds Warpriest's class features for `level` (v0.6 alpha swarm,
 /// risks item 8, Warpriest full-build closure). Called from
 /// `compute_acg_class_chassis`'s Warpriest branch, gated only on
@@ -10977,6 +11095,8 @@ fn ground_or_block_warpriest_class_features(
         ),
     });
 
+    ground_warpriest_fervor_channel_and_sacred_armor(level, ability_modifiers, explanations);
+
     let blessing_selections: Vec<&str> = input
         .chosen
         .selected_choices
@@ -10984,6 +11104,9 @@ fn ground_or_block_warpriest_class_features(
         .filter(|c| c.choice_set_id == WARPRIEST_BLESSING_CHOICE_ID)
         .map(|c| c.selection_id.as_str())
         .collect();
+    if blessing_selections.contains(&STRENGTH_BLESSING_SELECTION) {
+        ground_warpriest_strength_surge(input, level, explanations);
+    }
     if blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION) {
         let destructive_attacks_bonus = warpriest_destructive_attacks_bonus(level);
         let activation = input
@@ -11027,13 +11150,21 @@ fn ground_or_block_warpriest_class_features(
                 });
             }
         }
+    }
+    if blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION)
+        || blessing_selections.contains(&STRENGTH_BLESSING_SELECTION)
+    {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled".to_owned(),
             message: "Warpriest Blessing minor/major power content beyond Destruction's own \
-                 Destructive Attacks remains unmodeled: which specific power the OTHER chosen \
-                 Blessing type grants (minor at 1st level, major at a later level) is not \
-                 implemented for any of the other ~19 Blessing types. This does not block an \
-                 otherwise-valid Destruction-Blessing posture"
+                 Destructive Attacks and Strength's own Strength Surge remains unmodeled: which \
+                 specific power the OTHER chosen Blessing type grants (minor at 1st level, major \
+                 at a later level) is not implemented for any of the other 18 Blessing types. \
+                 About 15 of those remaining powers are touch-weapon \"Strike\" or summon \
+                 \"Companion\" abilities, which need a weapon-enhancement activation surface and \
+                 a summon subsystem this engine lacks entirely -- a genuine architecture gap, not \
+                 a transcription backlog. This does not block an otherwise-valid \
+                 Destruction-Blessing or Strength-Blessing posture"
                 .to_owned(),
             claim_blocking: false,
         });
@@ -11041,9 +11172,10 @@ fn ground_or_block_warpriest_class_features(
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.warpriest.blessing_powers.unsupported".to_owned(),
             message: "Warpriest remains blocked on its Blessing powers burden: no recognized \
-                 Destruction Blessing choice is present (only Destruction's own Destructive \
-                 Attacks minor power is genuinely grounded in this codebase), so no Warpriest \
-                 Blessing-power support is claimed"
+                 Destruction or Strength Blessing choice is present (only Destruction's own \
+                 Destructive Attacks and Strength's own Strength Surge minor powers are \
+                 genuinely grounded in this codebase), so no Warpriest Blessing-power support is \
+                 claimed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -11067,6 +11199,175 @@ fn ground_or_block_warpriest_class_features(
     push_warpriest_other_features_deferred_diagnostic(diagnostics);
 }
 
+/// Grounds Warpriest's Fervor, Channel Energy DC, and Sacred Armor as
+/// standalone explanation records (deepening 2026-07-26, task #9). All
+/// five magnitudes are flat, always-on class-feature facts once their
+/// own level gate is met, so this never claim-blocks -- the same
+/// unconditional shape `ground_alchemist_bomb_and_poison_resistance`
+/// already established. Below each gate, the feature is named with an
+/// honest "correctly absent" record rather than silently omitted,
+/// mirroring Alchemist's own Poison Resistance precedent.
+///
+/// None of the five is integrated into a computed total: this engine has
+/// no healing/hit-point-recovery total, no channel-resolution pillar, and
+/// no player armor-class enhancement pillar. They ground standalone under
+/// the corrected canonical bar (a genuine, verifiable magnitude, honestly
+/// labelled as not-integrated), the same bar Bard's Bardic Knowledge and
+/// Slayer's Track already ship under.
+fn ground_warpriest_fervor_channel_and_sacred_armor(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let wisdom = ability_modifiers.wisdom;
+    match warpriest_fervor_uses_per_day(level, wisdom) {
+        Some(uses) => explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.fervor_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Warpriest level {level} Fervor uses per day: level/2 + Wisdom modifier \
+                 ({wisdom:+}) = {uses}. A flat daily pool -- no per-use consumption is tracked \
+                 here, the same shape as Blessings' own uses-per-day. The Extra Channel feat \
+                 adds 2 more in the real PF1 rules; that is a feat effect, not a class-feature \
+                 magnitude, and is not folded in here"
+            ),
+        }),
+        None => explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.fervor_uses_per_day".to_owned(),
+            value: 0,
+            detail: format!(
+                "Warpriest level {level} Fervor: correctly absent below level \
+                 {WARPRIEST_FERVOR_LEVEL} by PF1 Advanced Class Guide level gate; the at-grant \
+                 magnitude is named but not computed"
+            ),
+        }),
+    }
+    if let Some(dice) = warpriest_fervor_heal_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.fervor_heal_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Warpriest level {level} Fervor heal/harm magnitude: {dice}d6 \
+                 (1 + max(0, min(20, level) - 2)/3 = {dice}) -- 1d6 at level 2, +1d6 per 3 \
+                 levels after. Channel Energy deals or heals this same amount (its own record \
+                 defers to Fervor's dice rather than defining its own). This engine computes no \
+                 healing or hit-point-recovery total anywhere, so this grounds as a standalone \
+                 flat magnitude only"
+            ),
+        });
+    }
+    if let Some(dc) = warpriest_channel_energy_dc(level, wisdom) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.channel_energy_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Warpriest level {level} Channel Energy save DC: 10 + level/2 + Wisdom modifier \
+                 ({wisdom:+}) = {dc}. Keyed on Wisdom, Warpriest's own casting stat, per the \
+                 authoritative BONUS:VAR on the Channel Energy record itself; the class's \
+                 separate positive/negative display records carry a Charisma-keyed variant \
+                 inherited from the Cleric original, which is not Warpriest's real rule. The \
+                 resource routing (a channel expends two Fervor uses) is not modelled -- only \
+                 the DC and the shared Fervor dice are grounded"
+            ),
+        });
+    }
+    match warpriest_sacred_armor_enhancement(level) {
+        Some(enhancement) => {
+            let uses = warpriest_sacred_armor_uses_per_day(level)
+                .expect("Sacred Armor uses share the enhancement's own level gate");
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.warpriest.sacred_armor_enhancement".to_owned(),
+                value: enhancement,
+                detail: format!(
+                    "Warpriest level {level} Sacred Armor enhancement bonus: \
+                     +{enhancement} (1 + max(0, (min(20, level) - 7)/3)) -- +1 at level 7, +1 \
+                     per 3 levels after, capping at +5. This engine computes no player \
+                     armor-class total that an armor enhancement bonus could layer onto, and the \
+                     swift-action activation and the menu of armor special abilities it can buy \
+                     instead are not modelled, so this grounds as a standalone flat magnitude"
+                ),
+            });
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.warpriest.sacred_armor_uses_per_day".to_owned(),
+                value: uses,
+                detail: format!(
+                    "Warpriest level {level} Sacred Armor uses per day: level = {uses} minutes, \
+                     spendable in 1-minute increments. A flat daily pool -- no per-use \
+                     consumption is tracked here"
+                ),
+            });
+        }
+        None => explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.sacred_armor_enhancement".to_owned(),
+            value: 0,
+            detail: format!(
+                "Warpriest level {level} Sacred Armor: correctly absent below level \
+                 {WARPRIEST_SACRED_ARMOR_LEVEL} by PF1 Advanced Class Guide level gate; the \
+                 at-grant magnitude is named but not computed"
+            ),
+        }),
+    }
+}
+
+/// Grounds Strength Blessing's own Strength Surge minor power (deepening
+/// 2026-07-26, task #9), gated on a recognized Strength Blessing choice
+/// plus a real activation -- the same three-branch shape
+/// `ground_or_block_warpriest_class_features` already uses for
+/// Destructive Attacks.
+///
+/// Unlike Destructive Attacks, Strength Surge needs no
+/// "self-application only" narrowing: the corpus DESC targets the
+/// Warpriest natively ("you can focus your own strength"). The bonus is
+/// still grounded standalone rather than folded into this engine's real
+/// attack-bonus total, because it is a 1-round, swift-action buy against
+/// the Blessings daily pool and this closure tracks no per-use
+/// consumption -- integrating it into a total without also enforcing that
+/// budget would overstate what is actually verified, the same line
+/// Charmed Life's own two-spot budget enforcement already drew.
+fn ground_warpriest_strength_surge(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let bonus = warpriest_strength_surge_bonus(level);
+    let active = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == WARPRIEST_STRENGTH_SURGE_ABILITY_ID)
+        .map(|activation| activation.active_state)
+        == Some(ActiveState::EquippedActive);
+    if active {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.strength_blessing.strength_surge_active".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Warpriest level {level} is actively using Strength Surge on herself (PF1 \
+                 Advanced Class Guide Strength Blessing: as a swift action, focus your own \
+                 strength, gaining a +{bonus} enhancement bonus on melee attack rolls, \
+                 Strength-based combat maneuver checks, Strength-based skills, and Strength \
+                 checks for 1 round). Natively self-targeted, so no self-application narrowing \
+                 is needed. Grounds only the flat magnitude: it is a 1-round buy against the \
+                 Blessings daily pool, and this closure tracks no per-use consumption, so \
+                 folding it into this engine's attack-bonus total would claim an enforcement \
+                 that does not exist"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.strength_blessing.strength_surge_not_active"
+                .to_owned(),
+            value: 0,
+            detail: format!(
+                "Warpriest level {level} is not currently using Strength Surge (no active \
+                 class_ability_activations entry for \"{WARPRIEST_STRENGTH_SURGE_ABILITY_ID}\"): \
+                 a genuinely valid PF1 posture -- a 1-round swift-action power is not up at \
+                 every moment -- so no enhancement bonus is claimed"
+            ),
+        });
+    }
+}
+
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.acg.warpriest.unsupported` for Warpriest specifically
 /// (v0.6 alpha swarm, risks item 8, Warpriest full-build closure): named
@@ -11077,12 +11378,16 @@ fn push_warpriest_other_features_deferred_diagnostic(diagnostics: &mut Vec<Compu
         message: format!(
             "{WARPRIEST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, Blessings' flat uses-per-day/DC, Sacred Weapon's base damage die, \
-             and prepared spellbook: 19 of the 20 Blessing types (only Destruction's own \
-             Destructive Attacks is grounded), Sacred Weapon's active weapon-enhancement \
-             mechanic, Fervor, Channel Energy, Sacred Armor, Aspect of War, Spontaneous \
-             Casting, Aura, Focus Weapon, and Bonus Languages remain ungrounded anywhere in \
-             this codebase; no class-feature execution is fabricated in this bounded chassis \
-             baseline"
+             Fervor's pool and heal dice, Channel Energy's save DC, Sacred Armor's enhancement \
+             and pool, and prepared spellbook: 18 of the 20 Blessing types (only Destruction's \
+             own Destructive Attacks and Strength's own Strength Surge are grounded), Sacred \
+             Weapon's active weapon-enhancement mechanic, Aspect of War, Spontaneous Casting, \
+             Aura, Focus Weapon, and Bonus Languages remain ungrounded anywhere in this \
+             codebase. Sacred Weapon's active enhancement and roughly 15 of the remaining \
+             Blessing powers are blocked on the same real, missing architecture -- a \
+             weapon-enhancement activation surface and a summon subsystem -- not on \
+             transcription effort; no class-feature execution is fabricated in this bounded \
+             chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -36152,7 +36457,10 @@ mod warpriest_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
         CharacterInput, HeadlessReceiptStatus, DESTRUCTION_BLESSING_SELECTION, FIGHTER_CLASS_ID,
-        WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID, WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID,
+        STRENGTH_BLESSING_SELECTION, WARPRIEST_BLESSING_CHOICE_ID,
+        WARPRIEST_CHANNEL_ENERGY_LEVEL, WARPRIEST_CLASS_ID,
+        WARPRIEST_DESTRUCTIVE_ATTACKS_ABILITY_ID, WARPRIEST_FERVOR_LEVEL,
+        WARPRIEST_SACRED_ARMOR_LEVEL, WARPRIEST_STRENGTH_SURGE_ABILITY_ID,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
@@ -36472,6 +36780,344 @@ mod warpriest_dispatch_widening_safety_tests {
                 "level {level} Sacred Weapon dice size: {expected_dice_size}"
             );
         }
+    }
+
+    /// Fervor's own two magnitudes across the full 1-20 level range,
+    /// re-derived independently from the PF1 Advanced Class Guide's own
+    /// prose ("1d6 at 2nd level, plus 1d6 for every three warpriest
+    /// levels beyond 2nd") rather than replayed from the corpus formula
+    /// this code transcribes -- the Sacred Weapon lesson applied: a
+    /// formula and its own restatement agreeing proves nothing.
+    #[test]
+    fn warpriest_fervor_magnitudes_match_the_real_corpus_record_at_every_level() {
+        for level in 1..WARPRIEST_FERVOR_LEVEL {
+            assert_eq!(
+                super::warpriest_fervor_uses_per_day(level, 1),
+                None,
+                "level {level} is below Fervor's own grant level, so no pool exists"
+            );
+            assert_eq!(super::warpriest_fervor_heal_dice(level), None);
+        }
+        // (level, expected heal dice) -- every step boundary plus both
+        // sides of each, independently derived from the published
+        // progression, not from the formula.
+        for (level, expected_dice) in [
+            (2, 1),
+            (3, 1),
+            (4, 1),
+            (5, 2),
+            (7, 2),
+            (8, 3),
+            (10, 3),
+            (11, 4),
+            (13, 4),
+            (14, 5),
+            (16, 5),
+            (17, 6),
+            (19, 6),
+            (20, 7),
+        ] {
+            assert_eq!(
+                super::warpriest_fervor_heal_dice(level),
+                Some(expected_dice),
+                "level {level} Fervor heal dice: {expected_dice}d6"
+            );
+        }
+        for (level, wisdom, expected_uses) in
+            [(2, 1, 2), (2, 0, 1), (5, 1, 3), (5, 3, 5), (20, 1, 11), (20, -1, 9)]
+        {
+            assert_eq!(
+                super::warpriest_fervor_uses_per_day(level, wisdom),
+                Some(expected_uses),
+                "level {level} Fervor uses at Wisdom modifier {wisdom:+}: level/2 + WIS"
+            );
+        }
+    }
+
+    /// Sacred Armor's enhancement bonus across the full level range,
+    /// independently derived from the published progression (+1 at 7th,
+    /// +1 per three levels after, maximum +5) rather than from the
+    /// corpus formula. Note the formula's `max(0, .../3)` nests the
+    /// division INSIDE the max, the opposite of Fervor's own dice
+    /// formula -- this test pins the real per-level values so a future
+    /// transcription cannot quietly swap the two nestings.
+    #[test]
+    fn warpriest_sacred_armor_magnitudes_match_the_real_corpus_record_at_every_level() {
+        for level in 1..WARPRIEST_SACRED_ARMOR_LEVEL {
+            assert_eq!(
+                super::warpriest_sacred_armor_enhancement(level),
+                None,
+                "level {level} is below Sacred Armor's own grant level"
+            );
+            assert_eq!(super::warpriest_sacred_armor_uses_per_day(level), None);
+        }
+        for (level, expected_enhancement) in [
+            (7, 1),
+            (8, 1),
+            (9, 1),
+            (10, 2),
+            (12, 2),
+            (13, 3),
+            (15, 3),
+            (16, 4),
+            (18, 4),
+            (19, 5),
+            (20, 5),
+        ] {
+            assert_eq!(
+                super::warpriest_sacred_armor_enhancement(level),
+                Some(expected_enhancement),
+                "level {level} Sacred Armor enhancement: +{expected_enhancement}"
+            );
+            assert_eq!(
+                super::warpriest_sacred_armor_uses_per_day(level),
+                Some(i16::from(level)),
+                "level {level} Sacred Armor uses per day equal the warpriest level"
+            );
+        }
+        assert_eq!(
+            super::warpriest_sacred_armor_enhancement(20),
+            Some(5),
+            "the record's own DESC caps the enhancement at +5; the formula must not exceed it"
+        );
+    }
+
+    /// Channel Energy's save DC is keyed on Wisdom (the authoritative
+    /// `BONUS:VAR` on the Channel Energy record itself), not the
+    /// Charisma the class's separate positive/negative display records
+    /// inherited from the Cleric original.
+    #[test]
+    fn warpriest_channel_energy_dc_matches_the_real_corpus_record_at_every_level() {
+        for level in 1..WARPRIEST_CHANNEL_ENERGY_LEVEL {
+            assert_eq!(
+                super::warpriest_channel_energy_dc(level, 1),
+                None,
+                "level {level} is below Channel Energy's own grant level"
+            );
+        }
+        for (level, wisdom, expected_dc) in
+            [(4, 1, 13), (4, 0, 12), (5, 1, 13), (6, 1, 14), (20, 1, 21), (20, 5, 25)]
+        {
+            assert_eq!(
+                super::warpriest_channel_energy_dc(level, wisdom),
+                Some(expected_dc),
+                "level {level} Channel Energy DC at Wisdom modifier {wisdom:+}: 10 + level/2 + WIS"
+            );
+        }
+    }
+
+    /// Strength Surge's magnitude is byte-identical to Destructive
+    /// Attacks' own `max(1,WarpriestLVL/2)`, including the minimum-1
+    /// floor at level 1.
+    #[test]
+    fn warpriest_strength_surge_bonus_matches_destructive_attacks_at_every_level() {
+        for level in 1..=20u8 {
+            assert_eq!(
+                super::warpriest_strength_surge_bonus(level),
+                super::warpriest_destructive_attacks_bonus(level),
+                "level {level}: both minor powers share the same corpus formula"
+            );
+        }
+        for (level, expected) in [(1, 1), (2, 1), (3, 1), (4, 2), (20, 10)] {
+            assert_eq!(
+                super::warpriest_strength_surge_bonus(level),
+                expected,
+                "level {level} Strength Surge: max(1, level/2) = {expected}"
+            );
+        }
+    }
+
+    /// End-to-end through the real pipeline: a level-1 Warpriest is
+    /// below every one of the three new features' grant levels, so each
+    /// is named with an honest "correctly absent" record rather than
+    /// silently omitted, and none of them claim-blocks.
+    #[test]
+    fn level_1_warpriest_names_fervor_and_sacred_armor_as_correctly_absent() {
+        let receipt = build_pilot_headless_receipt(&human_warpriest_input(1));
+
+        for id in [
+            "class_feature.acg.warpriest.fervor_uses_per_day",
+            "class_feature.acg.warpriest.sacred_armor_enhancement",
+        ] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must be named even below its grant level"));
+            assert_eq!(record.value, 0, "{id} must claim no magnitude below its gate: {record:?}");
+            assert!(
+                record.detail.contains("correctly absent"),
+                "{id} must say why it is absent: {record:?}"
+            );
+        }
+        for id in [
+            "class_feature.acg.warpriest.fervor_heal_dice",
+            "class_feature.acg.warpriest.channel_energy_dc",
+            "class_feature.acg.warpriest.sacred_armor_uses_per_day",
+        ] {
+            assert!(
+                !receipt.computation.explanations.iter().any(|e| e.id == id),
+                "{id} must not be grounded at all below its own grant level"
+            );
+        }
+    }
+
+    /// End-to-end through the real pipeline at level 7, the first level
+    /// at which all three new features are simultaneously live. Fixture
+    /// Wisdom is 12 (+1 modifier).
+    #[test]
+    fn level_7_warpriest_grounds_fervor_channel_energy_and_sacred_armor() {
+        let receipt = build_pilot_headless_receipt(&human_warpriest_input(7));
+
+        for (id, expected) in [
+            // 7/2 + 1 = 4
+            ("class_feature.acg.warpriest.fervor_uses_per_day", 4),
+            // 1 + max(0, 7-2)/3 = 1 + 1 = 2
+            ("class_feature.acg.warpriest.fervor_heal_dice", 2),
+            // 10 + 7/2 + 1 = 14
+            ("class_feature.acg.warpriest.channel_energy_dc", 14),
+            // 1 + max(0, (7-7)/3) = 1
+            ("class_feature.acg.warpriest.sacred_armor_enhancement", 1),
+            ("class_feature.acg.warpriest.sacred_armor_uses_per_day", 7),
+        ] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must ground at level 7"));
+            assert_eq!(record.value, expected, "{id} at level 7: {record:?}");
+        }
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id.contains("fervor")
+                    || d.id.contains("channel_energy")
+                    || d.id.contains("sacred_armor")),
+            "none of the three new features may introduce a diagnostic of its own: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
+                    && (d.message.contains("Fervor,")
+                        || d.message.contains("Channel Energy,")
+                        || d.message.contains("Sacred Armor,")))
+            ,
+            "the deferred diagnostic must no longer list the three features this slice grounded: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Warpriest whose ONLY recognized Blessing is Strength must no
+    /// longer hit the blessing-powers claim-blocking diagnostic -- the
+    /// gate now admits either canonical Blessing, not Destruction alone.
+    #[test]
+    fn single_class_warpriest_with_strength_blessing_alone_clears_the_blessing_powers_block() {
+        let mut input = human_warpriest_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: STRENGTH_BLESSING_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_powers.unsupported"),
+            "a recognized Strength Blessing must clear the blessing-powers block: {:?}",
+            receipt.computation.diagnostics
+        );
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.acg.warpriest.strength_blessing.strength_surge_not_active"
+            })
+            .expect("the honest not-active recognition record must ground");
+        assert_eq!(record.value, 0, "no bonus may be claimed while inactive: {record:?}");
+    }
+
+    /// A Warpriest actively using Strength Surge grounds the real flat
+    /// magnitude. Level 4 is used deliberately: `max(1, 4/2) = 2`
+    /// distinguishes the real formula from the minimum-1 floor that
+    /// level 1 alone would not.
+    #[test]
+    fn single_class_warpriest_actively_using_strength_surge_grounds_the_real_bonus() {
+        let mut input = human_warpriest_input(4);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: STRENGTH_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: WARPRIEST_STRENGTH_SURGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.strength_blessing.strength_surge_active")
+            .expect("an active Strength Surge must ground its real bonus");
+        assert_eq!(record.value, 2, "level 4 Strength Surge: max(1, 4/2) = 2: {record:?}");
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id
+                    == "class_feature.acg.warpriest.strength_blessing.strength_surge_not_active"),
+            "the active and not-active records are mutually exclusive: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A non-Warpriest carrying a spoofed Strength Blessing choice and
+    /// activation must ground nothing -- the same dispatch-safety proof
+    /// the Destruction Blessing entries already carry.
+    #[test]
+    fn non_warpriest_characters_spoofed_strength_surge_entries_are_ignored() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: STRENGTH_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: WARPRIEST_STRENGTH_SURGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.warpriest.")),
+            "a non-Warpriest must never ground any Warpriest explanation: {:?}",
+            receipt.computation.explanations
+        );
     }
 }
 

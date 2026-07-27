@@ -117,9 +117,12 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// Trap Sense/Inspiration's pool-size. Studied Combat/Studied Strike stay
 /// deferred as opponent-dependent, ruled consistently with Slayer's own
 /// Studied Target pending an opponent-tracking pillar (task #13).
-/// Arcanist's and Warpriest's
-/// own `named_features_wired == 2` each (not 1, unlike Bloodrager/
-/// Shaman) for related but distinct reasons, and Slayer's/
+/// Warpriest's own partial re-scope (2026-07-26, task #9) adds Fervor,
+/// Channel Energy, and Sacred Armor -- three more distinct
+/// `KEY:Warpriest ~ ...` records, each with its own separately-
+/// implemented formula -- taking its own count from 2 to 5. Arcanist's
+/// own `named_features_wired == 2` (not 1, unlike Bloodrager/
+/// Shaman), and Slayer's/
 /// Swashbuckler's/Brawler's/Skald's/Hunter's own `== 4`/`== 3`/`== 3`/`==
 /// 3`/`== 3` (Investigator's own `== 5` covered above) for yet another
 /// reason -- see
@@ -129,11 +132,13 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
 /// `Cantrips` does NOT add a third (not separately implemented);
 /// Warpriest has NO general-spellcasting KEY record at all (only
-/// `Orisons`, also not separately implemented), so its own count is
-/// Blessings + Sacred Weapon, with Destruction Blessing's own
-/// Destructive Attacks folded into the single Blessings slot (a
-/// different corpus class-prefix, `KEY:Destruction Blessing ~ ...`, not
-/// `KEY:Warpriest ~ ...`); Slayer's own four sub-features,
+/// `Orisons`, also not separately implemented), so its own count stays
+/// at its five real feature records, with BOTH grounded Blessing minor
+/// powers -- Destruction's Destructive Attacks and Strength's Strength
+/// Surge -- folded into the single Blessings slot (a different corpus
+/// class-prefix, `KEY:Destruction Blessing ~ ...` /
+/// `KEY:Strength Blessing ~ ...`, not `KEY:Warpriest ~ ...`); Slayer's
+/// own four sub-features,
 /// Swashbuckler's own three sub-features, Investigator's own three
 /// sub-features, and Brawler's own three sub-features are each
 /// genuinely structurally independent (no shared table/mechanism links
@@ -193,7 +198,11 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
             3,
         ),
         (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared", 2),
-        (AcgClassId::Warpriest, "Blessings + Sacred Weapon", 2),
+        (
+            AcgClassId::Warpriest,
+            "Blessings + Sacred Weapon + Fervor + Channel Energy + Sacred Armor",
+            5,
+        ),
         (
             AcgClassId::Slayer,
             "Sneak Attack + Trap Sense + Trapfinding + Track",
