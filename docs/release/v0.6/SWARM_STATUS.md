@@ -1597,6 +1597,8 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 **Swarm resumed on this basis.** Scout now scoping Monk's Deflect Arrows opponent-interaction engine and Slayer's Studied Target opponent-tracking pillar -- the two genuine architecture gaps left in the roster (Witch/Shaman's Familiar subsystem queued right behind, same category). These jump the queue over cheaper bounded work the moment they're scoped. Backend finishing Brawler in the meantime (already fully scoped, no reason to sit idle) but pivots the instant an architecture doc lands. Featmate holding -- feat-effects producer side is complete, current push is class-architecture work outside their lane.
 
+**Update (2026-07-27, ~09:45 ET): Brawler (#5) closed, then Tier 0 landed (`3f44acdd`), both lead-verified.** Brawler's remaining six features grounded (`named_features_wired` 3->9). Tier 0 confirmed scout's design doc exactly right -- no new architecture needed: Slayer's Studied Target (new, 4->5), Investigator's Studied Combat/Strike/Studied Defense (deepening of already-closed #8, 6->8), Cavalier's Challenge damage (deepening of already-closed #6). A dedicated test proves Cavalier's two Challenge scopes (damage-vs-target, AC-penalty-except-target) can't be conflated. Lib **754/754**, both audits 3/3, clippy baseline. Backend finishing Slayer Talents, then holding for scout's Witch/Shaman Familiar scoping -- the last real blocker-shaped item in the roster under the reversed priority.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-27T07:30:01
