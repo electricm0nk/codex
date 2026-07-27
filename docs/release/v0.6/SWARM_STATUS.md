@@ -1681,7 +1681,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T17:50:02
-Latest commit on tranche/6: d7eec49f feat(rules): ground Summoner Slice A -- five flat, self-scoped class features (3 minutes ago) (2026-07-27T17:47:24-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T17:47:46 frontend=unknown qa=unknown lead=2026-07-27T17:49:51
+Last mechanical check: 2026-07-27T18:30:02
+Latest commit on tranche/6: 834760a7 docs(v0.6): greenlight Hunter spellcasting scoping (task #43), rule on take-the-lower, dispatch build + next scoping (62 seconds ago) (2026-07-27T18:29:00-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T18:28:56 frontend=unknown qa=unknown lead=2026-07-27T18:29:56
 <!-- AUTO-HEARTBEAT-END -->
