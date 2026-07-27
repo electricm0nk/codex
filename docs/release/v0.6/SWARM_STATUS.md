@@ -1617,7 +1617,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T11:50:02
-Latest commit on tranche/6: f10d5841 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-27T11:45:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T11:41:51 frontend=unknown qa=unknown lead=2026-07-27T11:43:02
+Last mechanical check: 2026-07-27T12:25:03
+Latest commit on tranche/6: b6ef5d6b fix(v0.6): widen Ranger spell list to all ingested books, 51 -> 114 (task #26) (2 minutes ago) (2026-07-27T12:22:54-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T12:23:24 frontend=unknown qa=unknown lead=2026-07-27T12:23:21
 <!-- AUTO-HEARTBEAT-END -->
