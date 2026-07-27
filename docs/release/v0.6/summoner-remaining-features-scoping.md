@@ -20,7 +20,7 @@ re-verified by the lead:
 | Maker's Call | `MakersCallTimes = (classlevel("Summoner")-2)/4` | uses/day |
 | Merge Forms | `MergeFormsRounds = classlevel("Summoner")` | rounds/day |
 | Twin Eidolon | `TwinEidolonMinutes = classlevel("Summoner")` | minutes/day |
-| Summon Monster | duration `= classlevel("Summoner")`; uses `= CHA+3`; spell level `= min(9,(classlevel+1)/2)` | rounds / per-day / level |
+| Summon Monster | duration `= classlevel("Summoner")`; uses `= CHA+3`; spell level `= min(9,(classlevel+1)/2)` | **minutes** / per-day / level |
 
 **None reads any property of the eidolon.** Each is the
 Fervor/Panache/Challenge-uses shape this codebase has grounded a dozen
