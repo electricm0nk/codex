@@ -1567,7 +1567,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T06:50:02
-Latest commit on tranche/6: e0c5b531 docs(v0.6): operator lifts new-class-work pause, scout scoping Bloodrager (task #1) (3 minutes ago) (2026-07-27T06:47:12-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-26T21:32:41 frontend=unknown qa=unknown lead=2026-07-26T21:42:58
+Last mechanical check: 2026-07-27T07:30:01
+Latest commit on tranche/6: aa58a652 docs(v0.6): Brawler greenlit, scout idle; compress agent-status row (3 minutes ago) (2026-07-27T07:27:05-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T07:28:19 frontend=unknown qa=unknown lead=2026-07-27T07:27:44
 <!-- AUTO-HEARTBEAT-END -->
