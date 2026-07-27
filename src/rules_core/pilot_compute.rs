@@ -10412,8 +10412,8 @@ fn unmet_oracle_known_spell_conditions(input: &CharacterInput, oracle_level: u8)
     for spell_id in &known {
         let Some(spell_level) = cleric_spell_list::cleric_spell_level(spell_id) else {
             unmet.push(format!(
-                "known spell '{spell_id}' is not on the real PF1 Core Rulebook cleric spell \
-                 list (Oracle's own bonus spell-list portion is explicitly out of scope)"
+                "known spell '{spell_id}' is not on the real PF1 cleric spell list \
+                 (Oracle's own bonus spell-list portion is explicitly out of scope)"
             ));
             continue;
         };
@@ -10465,7 +10465,7 @@ fn ground_oracle_known_spells(
         detail: format!(
             "Oracle level {oracle_level} known-spell selection ({} spells, \
              AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
-             Core Rulebook cleric spell list (`cleric_spell_list::cleric_spell_level`, the \
+             cleric spell list (`cleric_spell_list::cleric_spell_level`, all ingested books, the \
              shared portion of `SPELLLIST:2|Cleric|Oracle`) and the Oracle Spells Known \
              table's own per-level cap for levels 1-3. Real PF1 Oracle rules have no daily \
              preparation step at all (unlike Cleric/Wizard/Arcanist/Warpriest) -- an oracle's \
@@ -27494,8 +27494,7 @@ fn unmet_cleric_prepared_spell_conditions(
     for spell_id in &prepared {
         let Some(spell_level) = cleric_spell_list::cleric_spell_level(spell_id) else {
             unmet.push(format!(
-                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook general \
-                 cleric spell list"
+                "prepared spell '{spell_id}' is not on the real PF1 general cleric spell list"
             ));
             continue;
         };
@@ -27551,7 +27550,8 @@ fn ground_cleric_prepared_spells(
         detail: format!(
             "Cleric level {cleric_level} daily preparation selection ({} spells, \
              AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
-             PF1 Core Rulebook general cleric spell list (`cleric_spell_list::CLERIC_SPELL_LIST`), \
+             PF1 general cleric spell list (`cleric_spell_list::CLERIC_SPELL_LIST`, all \
+             ingested books), \
              the cleric's own spell-level access ceiling, and the per-level slot budget (base \
              table count + Wisdom bonus, excluding the separate domain spell slot). This grounds \
              the prepared-spell selection for real; it computes no spell save DC resolution \
