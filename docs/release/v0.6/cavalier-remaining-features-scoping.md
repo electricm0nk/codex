@@ -39,11 +39,18 @@ remain.
   Grounds.
 - **A flat `-2` Armor Class penalty on the cavalier himself** while a
   challenge is active ("The cavalier takes a -2 penalty to his Armor Class,
-  except against attacks made by the target of his challenge"). This is the
-  standout: a flat, self-applied, activation-gated penalty with **exact
-  in-repo precedent** — `BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY` is
-  already grounded and already applied to the baseline Armor Class the same
-  way. Grounds.
+  except against attacks made by the target of his challenge"). A flat,
+  self-applied, activation-gated penalty — the *mechanic* is the same shape
+  as Bloodrage's own already-grounded `-2`, which gives a clear
+  implementation model. **Evidentiary correction (lead, on review of my own
+  first draft): this is DESC-text only.** The Challenge record carries no
+  `BONUS:COMBAT|AC` token anywhere, unlike Bloodrage's real
+  `BONUS:VAR|BloodrageACPenalty|-2` + `TEMPBONUS`. So it is the weaker
+  Panache-shaped evidentiary path — still groundable, but it must be named
+  as DESC-sourced rather than claimed token-identical to Bloodrage. My first
+  draft called it "exact in-repo precedent," which conflated *the mechanic
+  matching* with *the corpus evidence being equally strong*. Grounds, with
+  that caveat stated.
 - `BONUS:VAR|CavalierChallengeLVL|CavalierLVL` — `+level` extra melee damage
   **against the target of the challenge**. This is precisely the
   persistent-tracked-relationship-with-a-specific-opponent shape ruled
@@ -123,7 +130,17 @@ groundable for Oracle's Deaf. Plus its two class skills (Knowledge
 ## Build-time hazards
 
 1. **The 6-vs-29 Order count** — scope every Order lookup to APG.
-2. **One formula, six different meanings.** `OrderChallengeBonus` is
+2. **A decoy sibling variable — read this before touching Challenge.**
+   (Found by the lead on review; my own draft cited the right variable but
+   never flagged the wrong one.) Two similarly-named, numerically *different*
+   variables exist: `OrderChallengeBonus` = `CavalierLVL/4`, defined on each
+   Order record and genuinely consumed by all six; and
+   `CavalierOrderChallengeBonus` = `(CavalierLVL+3)/4`, defined once on the
+   base `Cavalier ~ Challenge` record and **never referenced anywhere**.
+   The decoy sits on the natural entry point — anyone reading the Challenge
+   record first finds it before the real one. Same near-miss shape as the
+   Sacred Weapon divisor. Use `OrderChallengeBonus`.
+3. **One formula, six different meanings.** `OrderChallengeBonus` is
    `CavalierLVL/4` on all six order records, but each order attaches its own
    `Cavalier ~ Challenge.MOD` giving `1+OrderChallengeBonus` a *completely
    different* referent: Cockatrice = melee damage, Dragon = **allies'**
@@ -131,23 +148,23 @@ groundable for Oracle's Deaf. Plus its two class skills (Knowledge
    saving throws, Sword = attack rolls while mounted. Do not ground "the
    order challenge bonus" generically — the number is shared, the semantics
    are not, and five of the six are opponent- or ally-conditioned anyway.
-3. **Banner's base value is in the `DESC:` parameters, not the `BONUS:VAR`.**
+4. **Banner's base value is in the `DESC:` parameters, not the `BONUS:VAR`.**
    `CavalierBannerBonus` is `(CavalierLVL-5)/5`, which is **0 at level 5** —
    the real values are `2+CavalierBannerBonus` and `1+CavalierBannerBonus`,
    supplied as DESC params. Reading only the `BONUS:VAR` yields +0/+0 at
    5th level instead of +2/+1. Exactly the partial-read shape that produced
    the Sacred Weapon dice-count bug. (Moot if Banner stays deferred as
    ally-scoped, but worth recording so it is not re-derived wrong later.)
-4. **`Cavalier ~ Bonus Feat` carries three `.MOD` records** each subtracting
+5. **`Cavalier ~ Bonus Feat` carries three `.MOD` records** each subtracting
    1 from the pool for a specific archetype
    (`TYPE.CavalierCavaliersBonusFeat6/12/18`). Confirm they are provably
    vacuous in this repo's ingested data before grounding the raw
    `CavalierLVL/6`, the same check that cleared Alchemist's Gnome-only and
    Ultimate-Magic-gated Bomb terms.
-5. **Expert Trainer and Cavalier's Charge are DESC-only** — no `BONUS`
+6. **Expert Trainer and Cavalier's Charge are DESC-only** — no `BONUS`
    token at all. Weaker evidentiary path; verify against RAW as a second
    source, as Swashbuckler's Panache did.
-6. **`ALLOWBASECLASS:NO`** sits on Cavalier's class line — an unusual token
+7. **`ALLOWBASECLASS:NO`** sits on Cavalier's class line — an unusual token
    not present on the other APG/ACG classes closed so far. Worth a look
    before assuming the chassis dispatch behaves identically.
 
