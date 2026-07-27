@@ -12583,6 +12583,166 @@ fn swashbuckler_nimble_dodge_bonus(level: u8) -> i16 {
     (i16::from(level) + 1) / 4
 }
 
+/// Whether a Swashbuckler of `level` has reached deed `tier`.
+///
+/// **Deliberate, ruled deviation from the corpus's literal gate**
+/// (task #14, 2026-07-27; lead ruling recorded as
+/// `risks-and-open-questions.md` item 50).
+///
+/// Every deed tier gates on `PREVARGTEQ:SwashbucklerDeedQualifyLVL,N`,
+/// but that variable is `DEFINE:...|0` and has exactly ONE setter in the
+/// entire PCGen tree: `BONUS:VAR|SwashbucklerDeedQualifyLVL|MagusLVL|
+/// TYPE=Base`, on the Magus archetype that borrows deeds. It is never
+/// set from `SwashbucklerLVL`. Implemented literally, a pure
+/// single-class Swashbuckler would have ZERO deeds at every level.
+///
+/// This substitutes `SwashbucklerLVL` as the level source. That is a
+/// transcription fix rather than a fabrication, and narrowly so: the
+/// corpus itself already states the correct driver in a sibling variable
+/// on the same records -- `BONUS:VAR|SwashbucklerDeedsLVL|SwashbucklerLVL`,
+/// which every deed FORMULA correctly uses. Only the wiring between two
+/// corpus-stated facts is missing. The tier thresholds (1/3/7/11/15/19)
+/// are read directly from the corpus's own gates and match RAW.
+///
+/// A future case where the corpus does NOT already encode the right
+/// answer elsewhere would need its own ruling; it cannot appeal to this
+/// one.
+fn swashbuckler_deed_tier_reached(level: u8, tier: u8) -> bool {
+    level >= tier
+}
+
+/// Derring-Do's uses per day: `BONUS:VAR|DerringDoTimes|DEX` -- the
+/// Dexterity MODIFIER, not the score. Tier 1.
+fn swashbuckler_derring_do_uses(dexterity_modifier: i16) -> i16 {
+    dexterity_modifier
+}
+
+/// Dodging Panache's dodge bonus to Armor Class:
+/// `BONUS:VAR|DodgingPanacheBonus|CHA`. Tier 1.
+///
+/// Reported verbatim even when negative: a low-Charisma swashbuckler
+/// genuinely gets a negative value from this formula, and the honest
+/// reading is to say so rather than silently clamp to 0.
+fn swashbuckler_dodging_panache_bonus(charisma_modifier: i16) -> i16 {
+    charisma_modifier
+}
+
+/// Precise Strike's bonus weapon damage: `SwashbucklerDeedsLVL`, doubled
+/// on a critical hit (`2*SwashbucklerDeedsLVL`). Tier 3. The
+/// weapon-damage idiom already used by Bomb and Sacred Weapon.
+fn swashbuckler_precise_strike_damage(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Bleeding Wound's bleed damage: `BONUS:VAR|BleedingWoundDamage|DEX`.
+/// Tier 11.
+fn swashbuckler_bleeding_wound_damage(dexterity_modifier: i16) -> i16 {
+    dexterity_modifier
+}
+
+/// The save DC shared byte-identically by Deadly Stab and Stunning Stab:
+/// `SwashbucklerDeedsLVL/2 + 10 + DEX`. Both are tier 19, and both use
+/// this one formula -- two records, one mechanism.
+fn swashbuckler_stab_save_dc(level: u8, dexterity_modifier: i16) -> i16 {
+    i16::from(level) / 2 + 10 + dexterity_modifier
+}
+
+/// Grounds the six Swashbuckler deeds that carry real magnitudes
+/// (task #14, 2026-07-27), each at its own corpus tier. The other 15
+/// deeds carry no `BONUS`/`DEFINE` token of any kind and are genuine
+/// no-ops in the Nature Training sense, not a transcription backlog.
+fn ground_swashbuckler_deeds(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let dexterity = ability_modifiers.dexterity;
+    let charisma = ability_modifiers.charisma;
+
+    if swashbuckler_deed_tier_reached(level, 1) {
+        let uses = swashbuckler_derring_do_uses(dexterity);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.derring_do_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Swashbuckler level {level} Derring-Do (deed tier 1): usable {uses} times per \
+                 day, equal to the Dexterity modifier ({dexterity:+}). A flat daily pool -- the \
+                 deed's own \"roll d6 and add it, rerolling on a 6\" resolution is not modelled"
+            ),
+        });
+        let dodge = swashbuckler_dodging_panache_bonus(charisma);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.dodging_panache_dodge_bonus".to_owned(),
+            value: dodge,
+            detail: format!(
+                "Swashbuckler level {level} Dodging Panache (deed tier 1): a {dodge:+} dodge \
+                 bonus to Armor Class against one attack, equal to the Charisma modifier \
+                 ({charisma:+}). Grounds standalone rather than integrating into the armor-class \
+                 total: it applies against a single triggering attack the engine cannot \
+                 identify, unlike Nature's Whispers which is always on. Reported verbatim even \
+                 when negative, which is what the corpus formula genuinely yields at low \
+                 Charisma"
+            ),
+        });
+    }
+
+    if swashbuckler_deed_tier_reached(level, 3) {
+        let damage = swashbuckler_precise_strike_damage(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.precise_strike_damage".to_owned(),
+            value: damage,
+            detail: format!(
+                "Swashbuckler level {level} Precise Strike (deed tier 3): +{damage} bonus damage \
+                 with a light or one-handed piercing melee weapon, equal to swashbuckler level. \
+                 The same weapon-damage idiom as Alchemist's Bomb and Warpriest's Sacred Weapon, \
+                 grounded standalone because this engine computes no weapon-damage total"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.precise_strike_critical_damage".to_owned(),
+            value: 2 * damage,
+            detail: format!(
+                "Swashbuckler level {level} Precise Strike on a critical hit: {} bonus damage \
+                 (2 x level), its own separate corpus variable rather than a derived doubling",
+                2 * damage
+            ),
+        });
+    }
+
+    if swashbuckler_deed_tier_reached(level, 11) {
+        let bleed = swashbuckler_bleeding_wound_damage(dexterity);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.bleeding_wound_damage".to_owned(),
+            value: bleed,
+            detail: format!(
+                "Swashbuckler level {level} Bleeding Wound (deed tier 11): {bleed} bleed damage \
+                 per round, equal to the Dexterity modifier ({dexterity:+}). This engine models \
+                 no round-tick damage state, so the magnitude grounds standalone"
+            ),
+        });
+    }
+
+    if swashbuckler_deed_tier_reached(level, 19) {
+        let dc = swashbuckler_stab_save_dc(level, dexterity);
+        for (id, name) in [
+            ("class_feature.acg.swashbuckler.deadly_stab_dc", "Deadly Stab"),
+            ("class_feature.acg.swashbuckler.stunning_stab_dc", "Stunning Stab"),
+        ] {
+            explanations.push(ComputationExplanation {
+                id: id.to_owned(),
+                value: dc,
+                detail: format!(
+                    "Swashbuckler level {level} {name} (deed tier 19): Fortitude save DC {dc} \
+                     (level/2 + 10 + Dexterity modifier {dexterity:+}). Deadly Stab and Stunning \
+                     Stab carry byte-identical DC formulas in the corpus -- two records, one \
+                     mechanism"
+                ),
+            });
+        }
+    }
+}
+
+/// same mistake caught and reverted during the Warpriest closure.
 /// Grounds Swashbuckler's class features for `level` (v0.6 alpha swarm,
 /// risks item 8, Swashbuckler full-build closure, 9th ACG/APG class-
 /// specific closure). Called from `compute_acg_class_chassis`'s
@@ -12595,7 +12755,6 @@ fn swashbuckler_nimble_dodge_bonus(level: u8) -> i16 {
 /// `active_*_bonus` helper, since (like Warpriest's own Destructive
 /// Attacks) nothing else in this codebase consumes a save-total to
 /// integrate it into; a separate helper would be genuine dead code, the
-/// same mistake caught and reverted during the Warpriest closure.
 fn ground_or_block_swashbuckler_class_features(
     input: &CharacterInput,
     level: u8,
@@ -12651,6 +12810,8 @@ fn ground_or_block_swashbuckler_class_features(
              treatment already ruled for Brawler's Martial Training"
         ),
     });
+
+    ground_swashbuckler_deeds(level, ability_modifiers, explanations);
 
     let panache_max = swashbuckler_panache_max(ability_modifiers.charisma);
     explanations.push(ComputationExplanation {
@@ -42482,4 +42643,122 @@ mod swashbuckler_finesse_tests {
             assert_eq!(value(&fighter, id), None, "{id} must not ground for a Fighter");
         }
     }
+
+    /// The six deeds carrying real magnitudes, each at its own corpus
+    /// tier. Tier gating uses `SwashbucklerLVL` rather than the corpus's
+    /// own `SwashbucklerDeedQualifyLVL`, which is never populated for
+    /// this class -- see `swashbuckler_deed_tier_reached` for the full
+    /// reasoning and the lead's ruling.
+    #[test]
+    fn deed_tiers_gate_on_swashbuckler_level_because_the_corpus_gate_is_unpopulated() {
+        for (tier, first_level) in [(1u8, 1u8), (3, 3), (7, 7), (11, 11), (15, 15), (19, 19)] {
+            assert!(
+                !super::swashbuckler_deed_tier_reached(first_level - 1, tier)
+                    || first_level == 1,
+                "tier {tier} must not be reached below level {first_level}"
+            );
+            assert!(
+                super::swashbuckler_deed_tier_reached(first_level, tier),
+                "tier {tier} is reached at level {first_level}"
+            );
+            assert!(super::swashbuckler_deed_tier_reached(20, tier), "tier {tier} at level 20");
+        }
+    }
+
+    /// Tier-1 deeds: Derring-Do's uses equal the Dexterity MODIFIER and
+    /// Dodging Panache's dodge bonus equals the Charisma modifier. The
+    /// fixture's Charisma 8 gives a genuinely negative -1, which is
+    /// reported honestly rather than floored.
+    #[test]
+    fn tier_one_deeds_ground_their_real_ability_derived_magnitudes() {
+        let receipt = build_pilot_headless_receipt(&swashbuckler(1));
+        let find = |id: &str| {
+            receipt.computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+        };
+        // Fixture DEX 14 -> +2, CHA 8 -> -1.
+        assert_eq!(find("class_feature.acg.swashbuckler.derring_do_uses_per_day"), Some(2));
+        assert_eq!(find("class_feature.acg.swashbuckler.dodging_panache_dodge_bonus"), Some(-1));
+    }
+
+    /// Precise Strike is a weapon-damage magnitude equal to swashbuckler
+    /// level, doubled on a critical -- the Bomb/Sacred-Weapon idiom.
+    /// Tier 3, so absent at levels 1-2.
+    #[test]
+    fn precise_strike_grounds_from_tier_three_and_doubles_on_a_critical() {
+        for level in [1u8, 2] {
+            let receipt = build_pilot_headless_receipt(&swashbuckler(level));
+            assert!(
+                !receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.contains("precise_strike")),
+                "level {level} is below Precise Strike's tier"
+            );
+        }
+        for level in [3u8, 10, 20] {
+            let receipt = build_pilot_headless_receipt(&swashbuckler(level));
+            let find = |id: &str| {
+                receipt.computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+            };
+            assert_eq!(
+                find("class_feature.acg.swashbuckler.precise_strike_damage"),
+                Some(i16::from(level))
+            );
+            assert_eq!(
+                find("class_feature.acg.swashbuckler.precise_strike_critical_damage"),
+                Some(2 * i16::from(level))
+            );
+        }
+    }
+
+    /// The two tier-19 stab DCs share a byte-identical formula
+    /// (`level/2 + 10 + DEX`), and Bleeding Wound arrives at tier 11.
+    #[test]
+    fn high_tier_deeds_ground_at_their_own_gates() {
+        let mid = build_pilot_headless_receipt(&swashbuckler(11));
+        assert_eq!(
+            mid.computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.swashbuckler.bleeding_wound_damage")
+                .map(|e| e.value),
+            Some(2),
+            "Bleeding Wound bleeds the Dexterity modifier"
+        );
+        assert!(
+            !mid.computation.explanations.iter().any(|e| e.id.contains("stab")),
+            "the stab deeds are tier 19, not 11"
+        );
+
+        let top = build_pilot_headless_receipt(&swashbuckler(19));
+        // 19/2 + 10 + 2 = 9 + 12 = 21.
+        for id in [
+            "class_feature.acg.swashbuckler.deadly_stab_dc",
+            "class_feature.acg.swashbuckler.stunning_stab_dc",
+        ] {
+            assert_eq!(
+                top.computation.explanations.iter().find(|e| e.id == id).map(|e| e.value),
+                Some(21),
+                "{id}: level/2 + 10 + DEX"
+            );
+        }
+        assert_eq!(super::swashbuckler_stab_save_dc(19, 2), 21);
+        assert_eq!(super::swashbuckler_stab_save_dc(20, 0), 20);
+    }
+
+    /// No deed leaks onto a non-Swashbuckler.
+    #[test]
+    fn deeds_never_ground_for_a_non_swashbuckler() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let fighter = result.character_input.expect("valid fixture");
+        let receipt = build_pilot_headless_receipt(&fighter);
+        for fragment in ["derring_do", "dodging_panache", "precise_strike", "bleeding_wound", "stab"] {
+            assert!(
+                !receipt.computation.explanations.iter().any(|e| e.id.contains(fragment)),
+                "a Fighter must not ground {fragment}"
+            );
+        }
+    }
 }
+
