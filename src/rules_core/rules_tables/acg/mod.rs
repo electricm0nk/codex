@@ -225,12 +225,22 @@ pub struct AcgClassCoverage {
     /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`,
     /// `pilot_compute::ground_or_block_warpriest_class_features`,
     /// `pilot_compute::ground_or_block_slayer_class_features`)
-    /// -- see `class_coverage`'s own branches for each. Every other ACG
-    /// class remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
-    /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
-    /// comment), and no follow-on cycle has since ingested
-    /// `acg_abilities_class.lst`'s per-level feature blocks for any other
-    /// ACG class.
+    /// -- see `class_coverage`'s own branches for each.
+    ///
+    /// The full current roster, all ten ACG classes, none at 0:
+    /// **Arcanist 2**, **Bloodrager 2**, **Shaman 2**, **Hunter 3**,
+    /// **Skald 3**, **Warpriest 5**, **Slayer 6**, **Investigator 8**,
+    /// **Brawler 9**, **Swashbuckler 12**.
+    ///
+    /// This paragraph previously ended "Every other ACG class remains at
+    /// 0", describing the SD-22 Epic 4 state where the ingest was scoped
+    /// to the BAB/save chassis only. That is no longer true of any ACG
+    /// class -- the per-class closures ingested
+    /// `acg_abilities_class.lst`'s feature blocks for all ten. Corrected
+    /// 2026-07-27, the same sweep that caught the identical stale
+    /// sentence in `apg/mod.rs`: a count change has to sweep the prose
+    /// derived from the old counts, and no test asserts a doc comment,
+    /// so this is the one place these numbers can rot silently.
     ///
     /// Arcanist counts 2, not 1, unlike every prior closure this session:
     /// Arcane Reservoir AND Spells Prepared

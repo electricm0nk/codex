@@ -240,19 +240,28 @@ pub struct ApgClassCoverage {
     /// independently implemented" reasoning that already excluded
     /// Arcanist's Cantrips and Warpriest's Orisons from their own counts
     /// (see `docs/release/v0.6/oracle-apg-full-build-scoping.md`).
-    /// Summoner counts 1 (its Eidolon slot alone). Witch counts 2: the
-    /// Hex slot -- all 27 hexes fold into it, being mutually-exclusive
-    /// picks of one chooser rather than independent features -- plus
-    /// Familiar, which is a genuinely separate feature landing a real
-    /// magnitude on the computed max-HP total. That familiar bump was
-    /// owed from the familiar closure (`8e47479a`) and landed for Shaman
-    /// first, so for a while the two classes counted one shared
+    /// The full current roster, all six APG classes, none at 0:
+    /// **Summoner 1** (Eidolon slot), **Witch 2**, **Alchemist 3**,
+    /// **Oracle 5**, **Inquisitor 5**, **Cavalier 6**.
+    ///
+    /// Witch's 2 is the Hex slot -- all 27 hexes fold into it, being
+    /// mutually-exclusive picks of one chooser rather than independent
+    /// features -- plus Familiar, a genuinely separate feature landing a
+    /// real magnitude on the computed max-HP total. That familiar bump
+    /// was owed from the familiar closure (`8e47479a`) and landed for
+    /// Shaman first, so for a while the two classes counted one shared
     /// implementation differently; corrected 2026-07-27.
-    /// Every other APG class remains at 0: SD-22 Epic 3 deliberately
-    /// scoped its ingest to the BAB/save chassis only (see e.g.
-    /// `class_alchemist.rs`'s own doc comment), and no follow-on cycle has
-    /// since ingested `apg_abilities_class.lst`'s per-level feature blocks
-    /// for any other APG class.
+    ///
+    /// This paragraph previously read "Cavalier, Alchemist, and Witch
+    /// each count 1 ... every other APG class remains at 0", describing
+    /// the SD-22 Epic 3 state where the ingest was scoped to the
+    /// BAB/save chassis only. Every clause of that is now false --
+    /// Alchemist and Cavalier had already grown past 1, and Oracle and
+    /// Inquisitor past 0, before Witch's own correction touched it.
+    /// Corrected 2026-07-27 alongside the Witch bump, since a count
+    /// change has to sweep the prose derived from the old counts too --
+    /// no test asserts a doc comment, so this is the one place these
+    /// numbers can rot silently.
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
