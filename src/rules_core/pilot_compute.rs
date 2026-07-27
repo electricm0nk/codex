@@ -8941,6 +8941,7 @@ fn compute_apg_class_chassis(
         ground_or_block_witch_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Summoner {
         ground_summoner_eidolon(level, explanations, diagnostics);
+        ground_summoner_slice_a_features(input, level, explanations);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
         // grounded for any other APG class yet -- no class-skill list, no
@@ -11395,6 +11396,195 @@ fn eidolon_max_natural_attacks(level: u8) -> i16 {
 /// turning out to be a Familiar rather than an Animal Companion.
 fn eidolon_base_attack_bonus(level: u8) -> i16 {
     i16::from(level)
+}
+
+/// Slice A grant levels, read directly off the `.MOD` grant lines attached to
+/// `Summoner ~ Standard Class` in `apg_abilities_class.lst` (each carrying a
+/// real `PREVARGTEQ:Summoner_CFP_Level,<N>`), NOT off the features' own
+/// `KEY:Summoner ~ <Feature>` records, which carry no `PRE` gate at all.
+///
+/// The distinction matters: every one of these formulas evaluates to a
+/// plausible non-zero at level 1, so building them ungated would ship real
+/// numbers for features the character does not yet have -- the same failure
+/// shape as a formula that evaluates fine for an ability that does not exist.
+/// `Summoner_CFP_Level` is a live proxy for the real class level
+/// (`BONUS:VAR|Summoner_CFP_Level|classlevel("Summoner")`), not a dead
+/// variable.
+const SUMMONER_SUMMON_MONSTER_LEVEL: u8 = 1;
+const SUMMONER_BOND_SENSES_LEVEL: u8 = 2;
+const SUMMONER_MAKERS_CALL_LEVEL: u8 = 6;
+const SUMMONER_MERGE_FORMS_LEVEL: u8 = 16;
+const SUMMONER_TWIN_EIDOLON_LEVEL: u8 = 20;
+
+/// Bond Senses: `BONUS:VAR|BondSensesRounds|classlevel("Summoner")` --
+/// rounds per day the summoner may share the eidolon's senses.
+fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Maker's Call: `BONUS:VAR|MakersCallTimes|((classlevel("Summoner")-2)/4)`
+/// -- 1/day at 6th, +1 every four levels after (6->1, 10->2, 14->3, 18->4).
+/// The formula is self-gating (it is 0 below 6th), and its first non-zero
+/// value lands exactly on the independently-confirmed grant level.
+fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
+    (i16::from(level) - 2) / 4
+}
+
+/// Merge Forms: `BONUS:VAR|MergeFormsRounds|classlevel("Summoner")`.
+fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Twin Eidolon: `BONUS:VAR|TwinEidolonMinutes|classlevel("Summoner")`.
+fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Summon Monster's duration: `BONUS:VAR|SummonMonsterDuration|
+/// classlevel("Summoner")`, in **minutes**. The unit is not in the token --
+/// it comes from the record's own `DESC`, which states it outright: "the
+/// creatures remain for %3 **minutes** (instead of %3 rounds)", where `%3`
+/// is this variable. Worth pinning, because the summoned-creature default
+/// really is rounds and this ability's whole point is upgrading that unit.
+fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Summon Monster's uses per day: `BONUS:VAR|SummonMonsterTimes|CHA+3`.
+/// Applied verbatim with no floor at 0 -- the corpus adds the raw modifier,
+/// the same treatment every other ability-derived quantity in this file
+/// gets. A Charisma penalty genuinely reduces the count.
+fn summoner_summon_monster_uses_per_day(charisma_modifier: i16) -> i16 {
+    charisma_modifier + 3
+}
+
+/// Summon Monster's accessible spell level: `BONUS:VAR|SummonMonsterLVL|
+/// min(9,(classlevel("Summoner")+1)/2)` -- I at 1st through IX at 17th, and
+/// the `min(9, ...)` genuinely binds, since `(20+1)/2` is 10 at the capstone.
+fn summoner_summon_monster_spell_level(level: u8) -> i16 {
+    ((i16::from(level) + 1) / 2).min(9)
+}
+
+/// Grounds Summoner's five flat, self-scoped class-feature pools (Slice A).
+///
+/// Each is the Fervor/Panache/Challenge-uses shape this codebase has grounded
+/// repeatedly: a verified, level-derived magnitude whose *effect* is not
+/// modelled but whose *quantity* is a real fact. None of them reads any
+/// property of the eidolon's stat block, which is why they are separable from
+/// the evolution economy that keeps Summoner blocked.
+///
+/// Summon Monster splits the same way Bomb does -- its duration, uses per day
+/// and accessible spell level are grounded; the actual summoning (creature
+/// selection, stat blocks, the eidolon-unsummoned precondition) is not
+/// modelled anywhere and is deliberately left ungrounded rather than faked.
+///
+/// Deliberately does NOT touch Aspect/Greater Aspect: those divert points out
+/// of the eidolon's own evolution pool, making them a chooser over a shared
+/// resource rather than an independent fact.
+fn ground_summoner_slice_a_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level >= SUMMONER_SUMMON_MONSTER_LEVEL {
+        let charisma_modifier = ability_modifier(input.chosen.ability_scores.charisma);
+        let duration = summoner_summon_monster_duration_minutes(level);
+        let uses = summoner_summon_monster_uses_per_day(charisma_modifier);
+        let spell_level = summoner_summon_monster_spell_level(level);
+
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.summon_monster_duration_minutes".to_owned(),
+            value: duration,
+            detail: format!(
+                "Summoner level {level} Summon Monster spell-like ability: summoned creatures \
+                 remain {duration} minutes (corpus `SummonMonsterDuration = \
+                 classlevel(\"Summoner\")`; the record's own DESC states the unit outright -- \
+                 \"remain for {duration} minutes (instead of {duration} rounds)\"). Grounds the \
+                 duration only: no summoning, creature selection, or stat block is modelled \
+                 anywhere in this codebase, and none is fabricated here"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.summon_monster_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Summoner Summon Monster uses per day: {uses} (corpus `SummonMonsterTimes = \
+                 CHA+3`, with this character's Charisma modifier {charisma_modifier:+} applied \
+                 verbatim and not floored). Grounds the per-day budget only; the ability's real \
+                 precondition (usable only while the eidolon is not summoned) is not modelled"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.summon_monster_spell_level".to_owned(),
+            value: spell_level,
+            detail: format!(
+                "Summoner level {level} Summon Monster accessible spell level: {spell_level} \
+                 (corpus `min(9,(classlevel(\"Summoner\")+1)/2)` -- summon monster I at 1st \
+                 through IX at 17th; the min genuinely binds, since (20+1)/2 would otherwise \
+                 reach 10 at the capstone). Grounds which summon monster spell level is \
+                 reachable, not its contents"
+            ),
+        });
+    }
+
+    if level >= SUMMONER_BOND_SENSES_LEVEL {
+        let rounds = summoner_bond_senses_rounds_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.bond_senses_rounds_per_day".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Summoner level {level} Bond Senses: {rounds} rounds per day of shared eidolon \
+                 senses (corpus `BondSensesRounds = classlevel(\"Summoner\")`, granted at \
+                 summoner level {SUMMONER_BOND_SENSES_LEVEL}). Grounds the daily round budget \
+                 only -- no sense-sharing, perception, or action-economy engine exists here"
+            ),
+        });
+    }
+
+    if level >= SUMMONER_MAKERS_CALL_LEVEL {
+        let uses = summoner_makers_call_uses_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.makers_call_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Summoner level {level} Maker's Call: {uses} uses per day (corpus \
+                 `MakersCallTimes = (classlevel(\"Summoner\")-2)/4`, granted at summoner level \
+                 {SUMMONER_MAKERS_CALL_LEVEL} -- 1/day at 6th, one more every four levels \
+                 after). Grounds the per-day budget only; the teleport-the-eidolon-to-your-side \
+                 effect is not modelled"
+            ),
+        });
+    }
+
+    if level >= SUMMONER_MERGE_FORMS_LEVEL {
+        let rounds = summoner_merge_forms_rounds_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.merge_forms_rounds_per_day".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Summoner level {level} Merge Forms: {rounds} rounds per day merged with the \
+                 eidolon (corpus `MergeFormsRounds = classlevel(\"Summoner\")`, granted at \
+                 summoner level {SUMMONER_MERGE_FORMS_LEVEL}). Grounds the daily round budget \
+                 only -- the merged-form state itself (shared hit points, suppressed actions) \
+                 is not modelled"
+            ),
+        });
+    }
+
+    if level >= SUMMONER_TWIN_EIDOLON_LEVEL {
+        let minutes = summoner_twin_eidolon_minutes_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.summoner.twin_eidolon_minutes_per_day".to_owned(),
+            value: minutes,
+            detail: format!(
+                "Summoner level {level} Twin Eidolon: {minutes} minutes per day assuming the \
+                 eidolon's shape (corpus `TwinEidolonMinutes = classlevel(\"Summoner\")`, \
+                 granted at the summoner level {SUMMONER_TWIN_EIDOLON_LEVEL} capstone). Grounds \
+                 the daily minute budget only -- copying the eidolon's evolutions and ability \
+                 scores would require the evolution economy this class stays blocked on"
+            ),
+        });
+    }
 }
 
 /// Grounds the canonical Quadruped Eidolon's corpus-derived stat block
@@ -45315,6 +45505,91 @@ mod summoner_eidolon_tests {
                 .any(|e| e.id.contains("eidolon")),
             "a Fighter must ground no Eidolon record"
         );
+    }
+
+    // ---- Slice A: the five flat, self-scoped Summoner class features ----
+    // Every gate and formula below was re-derived directly from
+    // `apg_abilities_class.lst` rather than taken from the scoping doc.
+
+    /// Bond Senses: `BONUS:VAR|BondSensesRounds|classlevel("Summoner")`,
+    /// gated `PREVARGTEQ:Summoner_CFP_Level,2`.
+    #[test]
+    fn bond_senses_grounds_rounds_per_day_from_its_gate_onward() {
+        let id = "class_feature.apg.summoner.bond_senses_rounds_per_day";
+        assert_eq!(value(&summoner(1), id), None, "absent below the level-2 gate");
+        assert_eq!(value(&summoner(2), id), Some(2));
+        assert_eq!(value(&summoner(20), id), Some(20));
+    }
+
+    /// Maker's Call: `BONUS:VAR|MakersCallTimes|((classlevel("Summoner")-2)/4)`,
+    /// gated at level 6 -- 1/day at 6th, +1 every 4 levels after.
+    #[test]
+    fn makers_call_uses_per_day_match_the_corpus_formula() {
+        let id = "class_feature.apg.summoner.makers_call_uses_per_day";
+        assert_eq!(value(&summoner(5), id), None, "absent below the level-6 gate");
+        for (level, want) in [(6u8, 1i16), (9, 1), (10, 2), (14, 3), (18, 4), (20, 4)] {
+            assert_eq!(value(&summoner(level), id), Some(want), "summoner level {level}");
+        }
+    }
+
+    /// Merge Forms: `BONUS:VAR|MergeFormsRounds|classlevel("Summoner")`,
+    /// gated at level 16.
+    #[test]
+    fn merge_forms_grounds_rounds_per_day_from_level_sixteen() {
+        let id = "class_feature.apg.summoner.merge_forms_rounds_per_day";
+        assert_eq!(value(&summoner(15), id), None, "absent below the level-16 gate");
+        assert_eq!(value(&summoner(16), id), Some(16));
+        assert_eq!(value(&summoner(20), id), Some(20));
+    }
+
+    /// Twin Eidolon: `BONUS:VAR|TwinEidolonMinutes|classlevel("Summoner")`,
+    /// gated at the level-20 capstone.
+    #[test]
+    fn twin_eidolon_grounds_minutes_per_day_only_at_level_twenty() {
+        let id = "class_feature.apg.summoner.twin_eidolon_minutes_per_day";
+        assert_eq!(value(&summoner(19), id), None, "absent below the level-20 gate");
+        assert_eq!(value(&summoner(20), id), Some(20));
+    }
+
+    /// Summon Monster's three grounded facets, all from level 1:
+    /// duration `classlevel`, uses `CHA+3`, spell level
+    /// `min(9,(classlevel+1)/2)`. The fixture's Charisma 8 is a -1
+    /// modifier, so uses = -1 + 3 = 2 at every level.
+    #[test]
+    fn summon_monster_grounds_duration_uses_and_spell_level() {
+        let duration = "class_feature.apg.summoner.summon_monster_duration_minutes";
+        let uses = "class_feature.apg.summoner.summon_monster_uses_per_day";
+        let spell_level = "class_feature.apg.summoner.summon_monster_spell_level";
+
+        assert_eq!(value(&summoner(1), duration), Some(1));
+        assert_eq!(value(&summoner(1), uses), Some(2));
+        assert_eq!(value(&summoner(1), spell_level), Some(1));
+
+        assert_eq!(value(&summoner(11), duration), Some(11));
+        assert_eq!(value(&summoner(11), spell_level), Some(6));
+    }
+
+    /// The spell-level term is `min(9, ...)` -- it genuinely caps rather
+    /// than running to 10 at the level-20 capstone.
+    #[test]
+    fn summon_monster_spell_level_caps_at_nine() {
+        let id = "class_feature.apg.summoner.summon_monster_spell_level";
+        assert_eq!(value(&summoner(17), id), Some(9));
+        assert_eq!(value(&summoner(20), id), Some(9), "(20+1)/2 = 10, capped to 9");
+    }
+
+    /// Slice A grounds real magnitudes but must NOT unblock Summoner --
+    /// the unspent-evolutions blocker is untouched and still claim-blocking.
+    #[test]
+    fn slice_a_leaves_summoner_blocked_on_unspent_evolutions() {
+        for level in [2u8, 6, 16, 20] {
+            let receipt = build_pilot_headless_receipt(&summoner(level));
+            assert_eq!(
+                receipt.status,
+                super::HeadlessReceiptStatus::Blocked,
+                "level {level} Summoner must stay Blocked"
+            );
+        }
     }
 }
 
