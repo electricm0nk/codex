@@ -2605,6 +2605,17 @@ const FAMILIAR_TOAD_SELECTION: &str = "familiar:toad";
 /// targeted, the same "opponent-dependent" wall Slayer's Studied Target
 /// already hit).
 const WARD_HEX_SELECTION: &str = "hex:ward";
+/// The two hexes carrying a magnitude distinct from the shared hex save
+/// DC (task #11, 2026-07-27). Every other one of the 27 hex records --
+/// minor, major and grand -- carries only `WitchHexDC_<Name>|WitchHexDC`,
+/// a per-hex ALIAS of one shared variable, so they are facets of a
+/// single DC mechanism rather than 27 separate magnitudes.
+const CAULDRON_HEX_SELECTION: &str = "hex:cauldron";
+const FLIGHT_HEX_SELECTION: &str = "hex:flight";
+/// Cauldron's `BONUS:SKILL|Craft (Alchemy)|4|TYPE=Insight`.
+const WITCH_CAULDRON_CRAFT_ALCHEMY_BONUS: i16 = 4;
+/// Flight's `BONUS:SKILL|Swim|4|TYPE=Racial`.
+const WITCH_FLIGHT_SWIM_BONUS: i16 = 4;
 
 /// v0.6 alpha swarm, risks item 8 (Shaman full-build closure, 12th
 /// ACG/APG class-specific closure): APG Shaman, verified directly
@@ -11573,6 +11584,56 @@ fn ground_familiar_master_benefit(
     });
 }
 
+/// The Witch's hex save DC: `10 + WitchHexStat + (WitchHexAbilityLVL/2)`,
+/// where the corpus sets `WitchHexStat = INT` and
+/// `WitchHexAbilityLVL = WitchLVL` (task #11, 2026-07-27).
+///
+/// **One formula covers every hex.** All 27 hex records -- 14 minor, 8
+/// major, 5 grand -- carry only `BONUS:VAR|WitchHexDC_<Name>|WitchHexDC`,
+/// a per-hex alias of this single variable. That makes them facets of
+/// one DC mechanism, not 27 magnitudes, which is why grounding the DC
+/// once covers the whole hex list rather than needing a canonical pick.
+///
+/// The corpus also carries `+2` variants gated on the
+/// `Ability Focus (Witch Hex)` feat and per-hex Ability Focus feats.
+/// Those are feat-conditional rather than class-derived and are not
+/// folded in here; a character who takes one would need that feat
+/// recognised, which this closure does not do.
+fn witch_hex_save_dc(level: u8, intelligence_modifier: i16) -> i16 {
+    10 + intelligence_modifier + i16::from(level) / 2
+}
+
+/// Whether this Witch took the named hex. Class-ownership-gated, and
+/// requires an explicit recorded pick -- a hex chooser's entire value IS
+/// which hex was taken, the same no-silent-seeding line ratified for
+/// Skill Focus.
+fn witch_has_hex(input: &CharacterInput, hex: &str) -> bool {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .any(|class_level| class_level.class_id == WITCH_CLASS_ID)
+        && input
+            .chosen
+            .selected_choices
+            .iter()
+            .any(|c| c.choice_set_id == WITCH_HEX_CHOICE_ID && c.selection_id == hex)
+}
+
+/// The Flight hex's contribution to its Witch's computed Swim total.
+///
+/// Flight is the standout of the 27 hexes: `BONUS:SKILL|Swim|4` lands on
+/// a skill this engine actually computes, so it integrates into the real
+/// total rather than grounding as another standalone record. Returns 0
+/// for every non-Witch and every Witch who did not take it.
+fn witch_flight_hex_swim_bonus(input: &CharacterInput) -> i16 {
+    if witch_has_hex(input, FLIGHT_HEX_SELECTION) {
+        WITCH_FLIGHT_SWIM_BONUS
+    } else {
+        0
+    }
+}
+
 /// shape before that). An unrecognized or missing choice keeps a
 fn ground_or_block_witch_class_features(
     input: &CharacterInput,
@@ -11581,6 +11642,48 @@ fn ground_or_block_witch_class_features(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     ground_familiar_master_benefit(input, level, explanations);
+
+    let hex_dc = witch_hex_save_dc(level, ability_modifier(input.chosen.ability_scores.intelligence));
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.witch.hex_save_dc".to_owned(),
+        value: hex_dc,
+        detail: format!(
+            "Witch level {level} hex save DC: 10 + Intelligence modifier + level/2 = {hex_dc}. \
+             ONE formula covers every hex -- all 27 records (14 minor, 8 major, 5 grand) carry \
+             only a per-hex alias of this single shared variable, so they are facets of one DC \
+             mechanism rather than 27 separate magnitudes. The corpus's +2 Ability Focus \
+             variants are feat-conditional rather than class-derived and are not folded in"
+        ),
+    });
+
+    if witch_has_hex(input, CAULDRON_HEX_SELECTION) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.witch.cauldron_hex.craft_alchemy_bonus".to_owned(),
+            value: WITCH_CAULDRON_CRAFT_ALCHEMY_BONUS,
+            detail: format!(
+                "Witch level {level} took the Cauldron hex: a \
+                 +{WITCH_CAULDRON_CRAFT_ALCHEMY_BONUS} insight bonus on Craft (Alchemy) checks. \
+                 Craft is not among the three skills this engine computes, so this grounds \
+                 standalone. Cauldron and Flight are the only two hexes carrying a magnitude \
+                 distinct from the shared hex DC"
+            ),
+        });
+    }
+
+    if witch_has_hex(input, FLIGHT_HEX_SELECTION) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.witch.flight_hex.swim_bonus".to_owned(),
+            value: WITCH_FLIGHT_SWIM_BONUS,
+            detail: format!(
+                "Witch level {level} took the Flight hex: a +{WITCH_FLIGHT_SWIM_BONUS} bonus on \
+                 Swim checks. INTEGRATED into the real `skill.selected_modifier.swim` total -- \
+                 Swim is one of the three skills this engine actually computes, making Flight \
+                 the only one of the 27 hexes whose magnitude reaches a live total. The hex's \
+                 own later-level flight benefits (feather fall, levitate, fly) are spell-effect \
+                 wrappers with no independent magnitude and are not grounded"
+            ),
+        });
+    }
 
     let hex_selections: Vec<&str> = input
         .chosen
@@ -30273,19 +30376,26 @@ fn compute_selected_skill_modifiers(
     });
 
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
+    // v0.6 alpha swarm task #11 (2026-07-27): the Witch's Flight hex adds
+    // a real +4 here -- the only one of the 27 hex records whose magnitude
+    // lands on a total this engine computes. Class-ownership-gated and
+    // explicit-choice-gated by construction, 0 for everyone else.
+    let flight_hex_swim_bonus = witch_flight_hex_swim_bonus(input);
     let swim = rank
         + ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty
         + touch_of_good_skill_bonus
-        + feat_skill_bonuses.swim;
+        + feat_skill_bonuses.swim
+        + flight_hex_swim_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
-             + feat bonus (+{}, Athletic if selected) = {swim}",
+             + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
+             (+{flight_hex_swim_bonus}) = {swim}",
             ability_modifiers.strength, feat_skill_bonuses.swim
         ),
     });
@@ -44235,6 +44345,77 @@ mod opponent_conditioned_tier_zero_tests {
     }
 
 
+
+
+    /// The shared Witch hex save DC: `10 + INT + WitchLVL/2`. Every one
+    /// of the 27 hex records aliases this single variable
+    /// (`WitchHexDC_<Name>|WitchHexDC`), so it is ONE mechanism, not 27.
+    #[test]
+    fn the_witch_hex_save_dc_is_one_shared_formula_across_every_hex() {
+        for (level, intelligence, want) in
+            [(1u8, 0i16, 10i16), (1, 4, 14), (2, 4, 15), (10, 4, 19), (20, 5, 25)]
+        {
+            assert_eq!(super::witch_hex_save_dc(level, intelligence), want, "level {level}");
+        }
+        // Fixture INT 10 -> modifier 0; level 6 -> 10 + 0 + 3 = 13.
+        assert_eq!(value(&character("class:witch", 6), "class_feature.apg.witch.hex_save_dc"), Some(13));
+    }
+
+    /// Cauldron and Flight are the only two hexes carrying a magnitude
+    /// distinct from the shared DC. Each needs an explicit pick.
+    #[test]
+    fn cauldron_and_flight_ground_their_own_distinct_magnitudes_when_chosen() {
+        let bare = character("class:witch", 6);
+        assert_eq!(value(&bare, "class_feature.apg.witch.cauldron_hex.craft_alchemy_bonus"), None);
+
+        let mut cauldron = bare.clone();
+        cauldron.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: super::CAULDRON_HEX_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&cauldron, "class_feature.apg.witch.cauldron_hex.craft_alchemy_bonus"),
+            Some(4)
+        );
+    }
+
+    /// Flight's `+4 Swim` is the standout: Swim IS one of the three
+    /// skills this engine computes, so it INTEGRATES into the real
+    /// total. Proven by differencing the same character with and without
+    /// the hex, so the assertion cannot pass on a standalone record.
+    #[test]
+    fn the_flight_hex_actually_raises_the_real_computed_swim_total() {
+        let without = character("class:witch", 6);
+        let base = value(&without, "skill.selected_modifier.swim")
+            .expect("swim modifier must be computed for a Witch");
+
+        let mut with = without.clone();
+        with.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: super::FLIGHT_HEX_SELECTION.to_owned(),
+        });
+        let raised = value(&with, "skill.selected_modifier.swim").expect("still computed");
+
+        assert_eq!(raised - base, 4, "the Flight hex is worth 4 real Swim");
+    }
+
+    /// Neither hex leaks onto a non-Witch, and Flight must not move a
+    /// non-Witch's Swim total.
+    #[test]
+    fn the_hexes_never_apply_to_a_non_witch() {
+        let mut fighter = character("class:fighter", 6);
+        let clean_swim = value(&fighter, "skill.selected_modifier.swim");
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: super::FLIGHT_HEX_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&fighter, "skill.selected_modifier.swim"),
+            clean_swim,
+            "a Fighter's Swim must be untouched by a spoofed Witch hex"
+        );
+        assert_eq!(value(&fighter, "class_feature.apg.witch.hex_save_dc"), None);
+    }
 
     /// The familiar's master benefit grounds only on an explicit species
     /// pick, and only for a class that actually gets a familiar.
