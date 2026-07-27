@@ -8,28 +8,40 @@
 > variable is an *expression*, not a reference. And no, the domain choice
 > needs no canonical pick; per-power grounding proceeds independently.**
 
-## Finding 1 — Domains reach **five** classes, not three
+## Finding 1 — Domains reach **three** base classes
 
-`BONUS:VAR|DomainLVL|…` is fed by **six paths**:
+> **CORRECTED (lead, pre-dispatch).** This section originally claimed
+> **five** classes. That was wrong, and the error was mine: I credited
+> `HunterLVL-2` and `PaladinLVL`/`PaladinLVL-3` without checking whether
+> those records are base-class or archetype. They are **archetype-only** —
+> `HunterLVL-2` is `KEY:Divine Hunter ~ Domain` (typed `ArchetypeAbility`),
+> and the two Paladin paths are Temple Champion and Sacred Servant. This
+> repo does not credit archetype records as base-class coverage (same
+> exclusion already applied to Bloodrager's Primalist and Fighter's Viking
+> rage power). **A build targeting Hunter or Paladin would have wired paths
+> this engine cannot reach.**
+
+`BONUS:VAR|DomainLVL|…` is fed by six paths, of which **three are base
+class**:
 
 ```
-ClericLVL      DruidLVL       InquisitorLVL
-HunterLVL-2    PaladinLVL     PaladinLVL-3
+BASE:       ClericLVL   DruidLVL   InquisitorLVL
+ARCHETYPE:  HunterLVL-2 (Divine Hunter)   PaladinLVL / PaladinLVL-3
+            (Temple Champion / Sacred Servant)
 ```
 
-So the family covers **Cleric, Druid, Inquisitor, Hunter and Paladin** —
-more leverage than the brief assumed, and more than any other family
-surveyed.
+So the family covers **Cleric, Druid and Inquisitor** — matching the
+original #62 triage count, which was right before I inflated it here.
 
-**But note the offsets.** Hunter is `HunterLVL-2`; one Paladin path is
-`PaladinLVL-3`. **The level source is per-class arithmetic, not a plain
-class-level reference.** A generalization that simply swaps which class's
-level it reads would be silently wrong for Hunter and for one Paladin path —
-computing a domain power two or three levels too strong.
+**The offsets belong to the archetype paths only**, so the base-class
+generalization is a plain class-level read with no offset table required —
+i.e. the brief's "straightforward parameterization" reading was correct
+after all, for the three classes that actually count.
 
-That is the precise answer to the brief's open question: **not a
-straightforward parameterization.** Close to one, but with a per-class
-offset table that has to exist.
+**Standing check this produced:** whenever a new class appears in a
+shared-variable setter list, verify its record is base-class before
+crediting it. This has now cut both ways in one session — correctly caught
+for Bloodrager/Fighter, missed here.
 
 ## Finding 2 — the generalization has three coupling points, and one is already done
 
@@ -92,9 +104,10 @@ an automatic package and the bloodline pick *is* the unit of work.
 
 ## Build-time hazards
 
-1. **Per-class level offsets** (Hunter −2, Paladin −3) — the single most
-   likely thing to get silently wrong, since five of six paths are plain and
-   two are not.
+1. ~~Per-class level offsets~~ — **withdrawn.** The offsets belong to
+   archetype paths (Divine Hunter, Sacred Servant), which are out of scope;
+   the three base classes all read their plain class level. See Finding 1's
+   correction.
 2. **Three key formats coexist in the domain namespace**:
    `<Name> Domain`, `<Name> Domain ~ <Power>`, and `Domain Power ~ <Power>`.
    A sweep matching only one shape sees a partial family.
@@ -115,10 +128,10 @@ accept per-class domain choice-set ids, and emit under a shared
 `class_feature.domain.*` namespace on the familiar precedent.
 
 **Expected payoff:** one build extends an existing, working Cleric feature to
-**four more classes** (Druid, Inquisitor, Hunter, Paladin) — the largest
-multi-class credit available anywhere on the roster, and it leaves the
-remaining 32 domains cleanly deferred behind the catch-all that already
-exists.
+**two more classes** (Druid and Inquisitor) — still the largest multi-class
+credit available on the roster, and it leaves the remaining 32 domains
+cleanly deferred behind the catch-all that already exists. *(Corrected from
+"four more classes"; Hunter and Paladin are archetype-only — see Finding 1.)*
 
 ## Open question
 
