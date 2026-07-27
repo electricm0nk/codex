@@ -241,8 +241,20 @@ pub struct ApgClassCoverage {
     /// Arcanist's Cantrips and Warpriest's Orisons from their own counts
     /// (see `docs/release/v0.6/oracle-apg-full-build-scoping.md`).
     /// The full current roster, all six APG classes, none at 0:
-    /// **Summoner 1** (Eidolon slot), **Witch 2**, **Alchemist 3**,
-    /// **Oracle 5**, **Inquisitor 5**, **Cavalier 6**.
+    /// **Witch 2**, **Alchemist 3**, **Oracle 5**, **Inquisitor 5**,
+    /// **Cavalier 6**, **Summoner 6**.
+    ///
+    /// Summoner rose from 1 to 6 when Slice A landed (`d7eec49f`): the
+    /// Eidolon slot plus Bond Senses, Maker's Call, Merge Forms, Twin
+    /// Eidolon, and Summon Monster (whose duration, uses/day and
+    /// accessible spell level are three facets of one slot, per the
+    /// Cleric-Channel-Energy convention). The bump did not ship with that
+    /// commit; it is corrected here. Worth noting *why* it went unnoticed:
+    /// Summoner sits in the coverage audit's zero-canary **skip** list
+    /// while having no row in that test's explicit expected-count table,
+    /// so nothing asserted its value at all. A row was added alongside
+    /// this correction -- the stale number was the symptom, the missing
+    /// assertion was the cause.
     ///
     /// Witch's 2 is the Hex slot -- all 27 hexes fold into it, being
     /// mutually-exclusive picks of one chooser rather than independent
@@ -336,9 +348,14 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
         // Witch counts 2: the Hex slot (all 27 hexes fold into it as
-        // mutually-exclusive picks of one chooser) + Familiar. Summoner
-        // stays at 1 (its Eidolon slot); it has no familiar.
-        ApgClassId::Summoner => 1,
+        // mutually-exclusive picks of one chooser) + Familiar; it has no
+        // Eidolon. Summoner counts 6: its Eidolon slot plus Slice A's five
+        // (`d7eec49f`) -- Bond Senses, Maker's Call, Merge Forms, Twin
+        // Eidolon, and Summon Monster, whose three facets (duration,
+        // uses/day, accessible spell level) count as ONE slot per the
+        // Cleric-Channel-Energy "one record, several parameters"
+        // convention that already governs Alchemist's Bomb.
+        ApgClassId::Summoner => 6,
         ApgClassId::Witch => 2,
         ApgClassId::Alchemist => 3,
         ApgClassId::Oracle | ApgClassId::Inquisitor => 5,

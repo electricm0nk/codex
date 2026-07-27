@@ -160,6 +160,21 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         // landed for Shaman before Witch, leaving the two classes counting
         // one shared implementation differently until this corrected it.
         (ApgClassId::Witch, "Hex slot + Familiar", 2),
+        // Eidolon slot + Slice A's five (d7eec49f). Summon Monster's three
+        // facets (duration, uses/day, accessible spell level) count as ONE
+        // slot, per the Cleric-Channel-Energy "one record, several
+        // parameters" convention that already governs Alchemist's Bomb.
+        //
+        // Summoner was previously asserted by NOTHING: it sits in the
+        // zero-canary's skip list above while being absent from this table,
+        // so its count could drift to any value without a single test
+        // failing. That is how it stayed at 1 through Slice A. Adding the
+        // row is the real fix here -- the number was only the symptom.
+        (
+            ApgClassId::Summoner,
+            "Eidolon + Bond Senses + Maker's Call + Merge Forms + Twin Eidolon + Summon Monster",
+            6,
+        ),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
