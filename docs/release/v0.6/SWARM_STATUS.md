@@ -1705,6 +1705,10 @@ Five remaining flat magnitudes confirmed real and groundable (Well-Versed matchi
 
 Greenlit the proposed two-commit sequencing: fix the three formulas first (provably inert at the current cap, so genuinely safe as its own commit), then widen the cap and ground all 7 features together — never exposes a wrong value in between. Featmate building now. Filed a tiny follow-up (#52) for a stale explanation-text contradiction found incidentally, not folded into #49.
 
+**Update (2026-07-27, ~19:30 ET): task #42 (Bloodrager) closed and lead-verified — 849/849, both audits 3/3, three real corrections found by re-deriving from the corpus instead of the brief.** The six remaining features' real gates live on the class table's own per-level grant rows, not the `.MOD` lines (which carry only archetype-suppression flags — reading those alone would suggest everything's ungated). Greater/Mighty Bloodrage's magnitudes already existed in the shipped tier function; the actual gap was a missing named record at each gate for non-raging characters, closed by reuse rather than a double-build. Uncanny Dodge's magnitude lives on a separate internal tracker record, with Improved Uncanny Dodge as a second +1 to the same counter. Bloodrager stops being the roster's thinnest class, `named_features_wired` 2→9.
+
+**Also: task #51's round-2 roster survey closed — single-class scoping is essentially exhausted, real remaining gap is a shared chooser family.** Scout applied every corrected-methodology check this session established and found a genuine fifth id prefix (`ability_modifier.<class>.*`, lead-confirmed real, another consumer-integration category). Rage Powers (Barbarian + Skald, 60 records, zero magnitudes anywhere, both grant-rate tokens confirmed) is the clear highest-leverage pick — one build credits two classes, closes Barbarian's largest remaining hole. Dispatched as task #53.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-27T18:30:02
