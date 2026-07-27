@@ -585,6 +585,165 @@ pub fn spell_focus_facts_from_choices(
     facts
 }
 
+/// Weapon Focus / Greater Weapon Focus, recognised across **both** id spaces
+/// this codebase uses for them.
+///
+/// Unlike Skill Focus and Spell Focus, Weapon Focus already existed here before
+/// this module: the fixed creation-time loadout records it in `selected_feats`
+/// under the **synthetic** id `feat:weapon_focus` (never the catalog key), and
+/// expresses its target as a **compound selection** inside the Fighter
+/// bonus-feat choice slot (`choice:fighter_bonus_feat ->
+/// feat:weapon_focus:weapon:longsword`). Recognising only the catalog key and a
+/// clean new choice set would leave the real shipped Fighter loadout grounding
+/// nothing -- the same "misses exactly the characters it matters most for"
+/// failure as Ranger's automatic Endurance. So presence is accepted from either
+/// id, and targets from either source, deduplicated by weapon.
+const WEAPON_FOCUS_FEAT_KEY: &str = "Weapon Focus";
+const WEAPON_FOCUS_SYNTHETIC_FEAT_ID: &str = "feat:weapon_focus";
+const GREATER_WEAPON_FOCUS_FEAT_KEY: &str = "Greater Weapon Focus";
+const GREATER_WEAPON_FOCUS_SYNTHETIC_FEAT_ID: &str = "feat:greater_weapon_focus";
+const WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:weapon_focus_target";
+const GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:greater_weapon_focus_target";
+const FIGHTER_BONUS_FEAT_CHOICE_SET: &str = "choice:fighter_bonus_feat";
+const WEAPON_SELECTION_PREFIX: &str = "weapon:";
+const LEGACY_WEAPON_FOCUS_COMPOUND_PREFIX: &str = "feat:weapon_focus:weapon:";
+
+/// Weapon Focus's and Greater Weapon Focus's real attack bonuses: `+1` **each**,
+/// genuinely cumulative to `+2`.
+///
+/// Both feats' `BONUS:` tokens name a *variable* rather than a number
+/// (`BONUS:WEAPONPROF=%LIST|TOHIT|WeaponFocusToHit` and `...|
+/// GreaterWeaponFocusToHit`), so the magnitude had to be resolved rather than
+/// read off. Both variables are defined to `0` on the feats themselves and
+/// unconditionally raised to `1` by a single global `CATEGORY=Internal|
+/// Default.MOD` record carrying `BONUS:VAR|WeaponFocusToHit|1|TYPE=Base` and
+/// `BONUS:VAR|GreaterWeaponFocusToHit|1|TYPE=Base`, with no `PRE` gating.
+/// Both `BENEFIT:` texts agree ("+1 bonus on ... attack rolls", and Greater's
+/// "This bonus stacks with other bonuses on attack rolls, including those from
+/// Weapon Focus").
+///
+/// **This is the opposite encoding from Spell Focus, and the difference is a
+/// real trap.** Spell Focus and Greater Spell Focus share one bonus *type*
+/// (`TYPE=SpellFocus`), so PCGen takes the highest and Greater's token `2` is a
+/// TOTAL. Weapon Focus and Greater Weapon Focus write to two *separate
+/// variables*, each worth 1, applied by two separate tokens -- so they genuinely
+/// ADD. Reusing the Spell Focus take-highest shape here would yield
+/// `max(1, 1) = 1` and understate the real bonus by a full point. Two feat
+/// families that look identical on the surface encode stacking oppositely.
+const WEAPON_FOCUS_ATTACK_BONUS: i16 = 1;
+const GREATER_WEAPON_FOCUS_ATTACK_BONUS: i16 = 1;
+
+/// One grounded Weapon Focus fact: the real attack-roll bonus applied to one
+/// specific, player-chosen weapon.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct WeaponFocusFact {
+    /// The chosen weapon, verbatim from whichever selection named it.
+    pub weapon_name: String,
+    /// `+1` from either feat alone, `+2` when both name this weapon.
+    pub attack_bonus: i16,
+}
+
+/// Every `<prefix><name>` target named by a given choice set, in input order,
+/// skipping malformed and empty selections.
+fn chosen_targets<'a>(
+    selected_choices: &'a [SelectedChoice],
+    choice_set_id: &str,
+    selection_prefix: &str,
+) -> Vec<&'a str> {
+    selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == choice_set_id)
+        .filter_map(|choice| choice.selection_id.strip_prefix(selection_prefix))
+        .filter(|name| !name.is_empty())
+        .collect()
+}
+
+/// First-seen order, case-insensitive deduplication -- matching the consumer's
+/// lowercased explanation id, so case variants never emit two records under one
+/// id.
+fn dedup_targets<'a>(names: Vec<&'a str>) -> Vec<&'a str> {
+    let mut kept: Vec<&'a str> = Vec::new();
+    for name in names {
+        if !kept.iter().any(|seen| seen.to_lowercase() == name.to_lowercase()) {
+            kept.push(name);
+        }
+    }
+    kept
+}
+
+/// Grounds Weapon Focus's real attack bonus per explicitly chosen weapon,
+/// recognising both the catalog and synthetic feat ids and both the new and
+/// pre-existing target representations (see [`WEAPON_FOCUS_FEAT_KEY`]).
+///
+/// Grounds nothing when the feat is held with no target, or a target is orphaned
+/// with no feat -- the same no-silent-seeding contract as Skill Focus and Spell
+/// Focus. One fact per distinct weapon, first-seen order, compared
+/// case-insensitively; neither feat stacks on a single weapon (Weapon Focus is
+/// `MULT:YES` with no `STACK` token, which PCGen treats as no-stack, and Greater
+/// Weapon Focus is explicitly `STACK:NO`).
+///
+/// Greater Weapon Focus **adds** its own `+1` to a weapon already focused, and
+/// grounds its own unambiguous `+1` even for a weapon with no base Weapon Focus.
+/// That last part deliberately differs from [`spell_focus_facts_from_choices`],
+/// which grounds nothing for a Greater-without-base school. The ratified
+/// distinguishing axis is **ambiguity, not prerequisites**: Greater Weapon
+/// Focus's magnitude is its own separate variable worth exactly 1 under any
+/// reading, so reporting it asserts nothing uncertain, whereas Greater Spell
+/// Focus's value in isolation was genuinely ambiguous between RAW's `+1` and its
+/// token's `2`.
+///
+/// This function only reads `selected_feats`/`selected_choices`; it does not
+/// touch the fixed-loadout posture gate that separately requires the exact
+/// `feat:weapon_focus:weapon:longsword` selection.
+pub fn weapon_focus_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<WeaponFocusFact> {
+    let holds = |catalog_key: &str, synthetic_id: &str| {
+        selected_feats.iter().any(|feat| feat == catalog_key || feat == synthetic_id)
+    };
+
+    let mut facts: Vec<WeaponFocusFact> = Vec::new();
+
+    if holds(WEAPON_FOCUS_FEAT_KEY, WEAPON_FOCUS_SYNTHETIC_FEAT_ID) {
+        let mut targets =
+            chosen_targets(selected_choices, WEAPON_FOCUS_TARGET_CHOICE_SET, WEAPON_SELECTION_PREFIX);
+        targets.extend(chosen_targets(
+            selected_choices,
+            FIGHTER_BONUS_FEAT_CHOICE_SET,
+            LEGACY_WEAPON_FOCUS_COMPOUND_PREFIX,
+        ));
+        for weapon in dedup_targets(targets) {
+            facts.push(WeaponFocusFact {
+                weapon_name: weapon.to_owned(),
+                attack_bonus: WEAPON_FOCUS_ATTACK_BONUS,
+            });
+        }
+    }
+
+    if holds(GREATER_WEAPON_FOCUS_FEAT_KEY, GREATER_WEAPON_FOCUS_SYNTHETIC_FEAT_ID) {
+        let targets = chosen_targets(
+            selected_choices,
+            GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        );
+        for weapon in dedup_targets(targets) {
+            match facts
+                .iter_mut()
+                .find(|fact| fact.weapon_name.to_lowercase() == weapon.to_lowercase())
+            {
+                Some(fact) => fact.attack_bonus += GREATER_WEAPON_FOCUS_ATTACK_BONUS,
+                None => facts.push(WeaponFocusFact {
+                    weapon_name: weapon.to_owned(),
+                    attack_bonus: GREATER_WEAPON_FOCUS_ATTACK_BONUS,
+                }),
+            }
+        }
+    }
+
+    facts
+}
+
 /// One real, corpus-verified combat-maneuver bonus granted by one feat.
 ///
 /// The PF1 Core Rulebook carries twelve of these in two uniform families:
@@ -1791,5 +1950,173 @@ mod spell_focus_facts_from_choices_tests {
             choice("choice:spell_focus_target", "school:"),
         ];
         assert!(spell_focus_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod weapon_focus_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(weapon: &str) -> SelectedChoice {
+        choice("choice:weapon_focus_target", &format!("weapon:{weapon}"))
+    }
+
+    fn greater_target(weapon: &str) -> SelectedChoice {
+        choice("choice:greater_weapon_focus_target", &format!("weapon:{weapon}"))
+    }
+
+    /// The pre-existing fixed-loadout representation: the target rides inside the
+    /// Fighter bonus-feat choice as a compound selection id.
+    fn legacy(weapon: &str) -> SelectedChoice {
+        choice("choice:fighter_bonus_feat", &format!("feat:weapon_focus:weapon:{weapon}"))
+    }
+
+    fn fact(weapon: &str, attack_bonus: i16) -> WeaponFocusFact {
+        WeaponFocusFact { weapon_name: weapon.to_owned(), attack_bonus }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(weapon_focus_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        let selected = feats(&["Weapon Focus"]);
+        assert!(weapon_focus_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphan_target_without_the_feat() {
+        assert!(weapon_focus_facts_from_choices(&[], &[target("longsword")]).is_empty());
+        assert!(weapon_focus_facts_from_choices(&[], &[legacy("longsword")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_plus_one_from_the_catalog_key_and_new_choice_set() {
+        let selected = feats(&["Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[target("greataxe")]),
+            vec![fact("greataxe", 1)]
+        );
+    }
+
+    #[test]
+    fn grounds_the_shipped_fighter_loadout_via_the_synthetic_id_and_legacy_compound() {
+        // The whole reason for unioning both id spaces: the real shipped Fighter
+        // fixture carries the SYNTHETIC feat id in selected_feats and expresses
+        // its target as a compound selection inside choice:fighter_bonus_feat.
+        // Keying only on the catalog key would ground nothing for it.
+        let selected = feats(&["feat:weapon_focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[legacy("longsword")]),
+            vec![fact("longsword", 1)]
+        );
+    }
+
+    #[test]
+    fn the_legacy_compound_is_parsed_generically_not_hardcoded_to_longsword() {
+        let selected = feats(&["feat:weapon_focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[legacy("warhammer")]),
+            vec![fact("warhammer", 1)]
+        );
+    }
+
+    #[test]
+    fn both_representations_of_one_weapon_ground_a_single_fact() {
+        // A character described both ways must not be double-counted to +2.
+        let selected = feats(&["Weapon Focus", "feat:weapon_focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[target("longsword"), legacy("longsword")]),
+            vec![fact("longsword", 1)]
+        );
+    }
+
+    #[test]
+    fn greater_weapon_focus_adds_a_second_plus_one_rather_than_capping_at_a_total() {
+        // THE case that differs from Spell Focus. Weapon Focus and Greater Weapon
+        // Focus write to two SEPARATE corpus variables (WeaponFocusToHit and
+        // GreaterWeaponFocusToHit), each unconditionally 1, so they genuinely ADD
+        // to +2. Reusing Spell Focus's take-highest shape here would yield
+        // max(1,1) = 1 and understate the real bonus by 1.
+        let selected = feats(&["Weapon Focus", "Greater Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(
+                &selected,
+                &[target("longsword"), greater_target("longsword")]
+            ),
+            vec![fact("longsword", 2)]
+        );
+    }
+
+    #[test]
+    fn greater_weapon_focus_alone_grounds_its_own_unambiguous_plus_one() {
+        // Deliberately UNLIKE Greater Spell Focus, which grounds nothing without
+        // its base feat. The ratified distinguishing axis is ambiguity, not
+        // prerequisites: Greater Weapon Focus's own magnitude is its own variable
+        // worth exactly 1 under any reading, so reporting it asserts nothing
+        // uncertain. Greater Spell Focus's was genuinely ambiguous in isolation.
+        let selected = feats(&["Greater Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[greater_target("rapier")]),
+            vec![fact("rapier", 1)]
+        );
+    }
+
+    #[test]
+    fn grounds_one_fact_per_distinct_weapon_in_first_seen_order() {
+        let selected = feats(&["Weapon Focus", "Greater Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(
+                &selected,
+                &[target("longsword"), target("dagger"), greater_target("longsword")]
+            ),
+            vec![fact("longsword", 2), fact("dagger", 1)]
+        );
+    }
+
+    #[test]
+    fn the_same_weapon_targeted_twice_does_not_stack() {
+        // Weapon Focus carries MULT:YES with no STACK token (PCGen defaults to
+        // no-stack), so it is repeatable across weapons but never on one weapon.
+        let selected = feats(&["Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[target("longsword"), target("longsword")]),
+            vec![fact("longsword", 1)]
+        );
+    }
+
+    #[test]
+    fn treats_case_variants_of_one_weapon_as_the_same_target() {
+        let selected = feats(&["Weapon Focus"]);
+        assert_eq!(
+            weapon_focus_facts_from_choices(&selected, &[target("Longsword"), target("longsword")]),
+            vec![fact("Longsword", 1)]
+        );
+    }
+
+    #[test]
+    fn ignores_unrelated_choices_and_malformed_selections() {
+        let selected = feats(&["Weapon Focus"]);
+        let choices = vec![
+            // A Fighter bonus-feat slot holding something that is not Weapon Focus.
+            choice("choice:fighter_bonus_feat", "feat:power_attack"),
+            choice("choice:wizard_school_specialization", "school:evocation"),
+            choice("choice:weapon_focus_target", "longsword"),
+            choice("choice:weapon_focus_target", "weapon:"),
+        ];
+        assert!(weapon_focus_facts_from_choices(&selected, &choices).is_empty());
     }
 }
