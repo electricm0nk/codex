@@ -4432,6 +4432,17 @@ fn effective_character_feats(input: &CharacterInput) -> Vec<String> {
 // Wholeness of Body / High Jump precedent exactly — no record is
 // fabricated for it.
 const MAX_SUPPORTED_MONK_LEVEL: u8 = 12;
+
+/// Perfect Self's grant level and DR magnitude, read directly off
+/// `cr_abilities_class.lst` (`AUTOMATIC|Monk ~ Perfect Self` gated
+/// `PREVARGTEQ:Monk_CFP_Level,20`; the record's own `DR:10/Chaotic` token,
+/// corroborated by its DESC: "Additionally gain Damage Reduction 10/Chaotic").
+///
+/// Note the gate is ABOVE [`MAX_SUPPORTED_MONK_LEVEL`], so this DR is verified
+/// but not currently reachable -- see the grounding site for why it is recorded
+/// in absence form rather than given an unreachable granting branch.
+const MONK_PERFECT_SELF_LEVEL: u8 = 20;
+const MONK_PERFECT_SELF_DAMAGE_REDUCTION: i16 = 10;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -24198,6 +24209,40 @@ fn explain_monk_level1_chassis(
                  This is a bounded grant-only identity record only (value 0, non-fabricated): no \
                  poison-resolution engine exists anywhere in this codebase to apply the immunity \
                  to."
+            ),
+        });
+    }
+
+    // Task #41: Perfect Self's DR clause. Its level-20 gate sits ABOVE
+    // MAX_SUPPORTED_MONK_LEVEL (12), so every level this function can be
+    // reached at is below the gate and only the absence form can occur --
+    // `supported_monk_level` returns None above 12 and this function
+    // early-returns on that. A granting `else` branch is deliberately NOT
+    // written: it would be provably unreachable code rather than a feature.
+    //
+    // Grounded in absence form rather than omitted so the verified magnitude
+    // and its gate stay visible in the receipt instead of living only in a
+    // scoping doc -- the same absence-then-grant idiom Diamond Body above and
+    // Paladin's own DR already use. When MAX_SUPPORTED_MONK_LEVEL widens (its
+    // own decision -- it would newly admit Abundant Step, Diamond Soul,
+    // Quivering Palm, Tongue of the Sun and Moon, Empty Body and Timeless
+    // Body too), the grant branch becomes reachable and gets added then.
+    if level < MONK_PERFECT_SELF_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.perfect_self_damage_reduction".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Perfect Self damage reduction at monk level {level}: correctly absent by \
+                 PF1 Core Rulebook level gate. Perfect Self is a {MONK_PERFECT_SELF_LEVEL}th-level \
+                 monk class feature granting DR \
+                 {MONK_PERFECT_SELF_DAMAGE_REDUCTION}/chaotic (corpus `DR:10/Chaotic`, verified \
+                 against cr_abilities_class.lst). Its gate sits above this codebase's own \
+                 MAX_SUPPORTED_MONK_LEVEL of {MAX_SUPPORTED_MONK_LEVEL}, so no monk this engine \
+                 can currently compose reaches it -- the magnitude is verified and named here, \
+                 not fabricated as though granted. Perfect Self's other clause (the monk is \
+                 treated as an Outsider for spells and magical effects) carries no magnitude and \
+                 needs a creature-type engine that does not exist here, so it stays deferred \
+                 regardless of level"
             ),
         });
     }

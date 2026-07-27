@@ -393,3 +393,60 @@ fn matrix_monk_row_names_level_12_widening() {
         "monk partial note must name the level-12 widening: {note}"
     );
 }
+
+// ----- Perfect Self's DR is correctly absent at every supported level -----
+
+/// Perfect Self grants `DR:10/Chaotic` at monk level 20 (corpus-verified
+/// against `cr_abilities_class.lst`). Level 20 sits above
+/// `MAX_SUPPORTED_MONK_LEVEL = 12`, so **no supported monk can reach it**.
+///
+/// Rather than add a `level >= 20` branch -- which would be provably dead
+/// code, since `supported_monk_level` returns `None` above 12 and
+/// `explain_monk_level1_chassis` early-returns on that -- the record is
+/// grounded in its level-gate ABSENCE form at every supported level, naming
+/// the real magnitude and gate it is absent by. That keeps the fact visible
+/// in the receipt and honest at value 0, and mirrors the same
+/// absence-then-grant idiom Paladin's own DR and Monk's Diamond Body use.
+///
+/// When `MAX_SUPPORTED_MONK_LEVEL` is widened (its own separate decision --
+/// it would also newly admit Abundant Step, Diamond Soul, Quivering Palm,
+/// Tongue of the Sun and Moon, Empty Body and Timeless Body), the granting
+/// branch becomes reachable and gets added then.
+#[test]
+fn monk_perfect_self_damage_reduction_is_a_correct_level_gate_absence_at_level_12() {
+    let input = load(MONK_LEVEL12_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let dr = explanation(&computation, "class_chassis.monk.perfect_self_damage_reduction");
+    assert_eq!(
+        dr.value, 0,
+        "Perfect Self's DR must be a correct level-gate absence at level 12, never a \
+         fabricated 10: {}",
+        dr.detail
+    );
+    assert!(
+        dr.detail.contains("10") && dr.detail.to_lowercase().contains("chaotic"),
+        "the absence record must still name the real DR 10/chaotic magnitude it is absent \
+         by: {}",
+        dr.detail
+    );
+    assert!(
+        dr.detail.contains("20"),
+        "the absence record must name the level-20 gate: {}",
+        dr.detail
+    );
+}
+
+/// A Fighter must ground no Monk Perfect Self record at all.
+#[test]
+fn a_fighter_grounds_no_monk_perfect_self_record() {
+    let input = load(FIGHTER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id == "class_chassis.monk.perfect_self_damage_reduction"),
+        "a Fighter must ground no Monk Perfect Self DR record"
+    );
+}
