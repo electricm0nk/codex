@@ -357,8 +357,9 @@ fn ranger_levels_2_through_10_reach_computed_with_a_valid_spell_posture() {
 
 #[test]
 fn ranger_levels_2_through_10_stay_blocked_with_a_genuine_spell_posture_violation() {
-    // "Magic Missile" is never on the real PF1 Core Rulebook ranger spell
-    // list (`rules_tables::crb::ranger_spell_list`) at any level, so it is a
+    // "Magic Missile" is never on the real PF1 ranger spell list
+    // (`rules_tables::crb::ranger_spell_list`, all ingested books) at any
+    // level, so it is a
     // genuine off-list violation uniformly across the whole 2..10 range --
     // unlike a specific spell level, whose accessibility shifts as the
     // ranger's own access ceiling grows through this range.

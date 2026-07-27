@@ -21171,8 +21171,7 @@ fn unmet_ranger_prepared_spell_conditions(
     for spell_id in &prepared {
         let Some(spell_level) = ranger_spell_list::ranger_spell_level(spell_id) else {
             unmet.push(format!(
-                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook ranger spell \
-                 list"
+                "prepared spell '{spell_id}' is not on the real PF1 ranger spell list"
             ));
             continue;
         };
@@ -32768,7 +32767,7 @@ mod ranger_dispatch_widening_safety_tests {
     }
 
     /// A single-class Ranger preparing a spell that is not on the real PF1
-    /// Core Rulebook ranger spell list at all must also stay `Blocked`.
+    /// ranger spell list at all must also stay `Blocked`.
     #[test]
     fn single_class_ranger_with_an_off_list_prepared_spell_stays_blocked() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
