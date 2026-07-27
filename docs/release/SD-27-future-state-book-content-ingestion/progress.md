@@ -6,7 +6,7 @@
 
 | Criterion | Cycle | Epic | Status | Started | Completed | Notes |
 |-----------|-------|------|--------|---------|-----------|-------|
-| 1.1 | `identifier-audit` | E1 | pending | — | — | Defensive scope |
+| 1.1 | `identifier-audit` | E1 | complete | 2026-07-27T19:59Z | 2026-07-27T20:04Z | Full-tree scan (not diff-scoped — see receipt); 0 genuine bundle-tagged code identifiers. Matches SD-26's own E1.1 precedent |
 | 2.0 | `label-resolution` | E2 | pending | — | — | Per-cycle blocking decision |
 | 2.0.5 | `shape-b-license-stripping-preflight` | E2 | pending | — | — | Schema bump + per-book `LICENSE.json` + PI-blacklist + redaction policy. Gates 2.0.6+ |
 | 2.0.6 | `crb-license-retrofit` | E2 | pending | — | — | Retro-fit CRB records with license field + PI redaction |
@@ -29,7 +29,8 @@
 
 ## DONE
 
-- (none yet)
+- **1.1 identifier-audit** (2026-07-27T20:04Z) — full-tree code-identifier scan clean, 0 hits. Receipt:
+  `artifacts/epic_1/identifier-audit-cycle_receipt.md`.
 
 ## DISCOVERED
 
@@ -59,4 +60,4 @@ manifest is authoritative for status, this table for narrative.
 
 | Cycle | Receipt path |
 |-------|--------------|
-| (none yet) | — |
+| 1.1 identifier-audit | `artifacts/epic_1/identifier-audit-cycle_receipt.md` |
