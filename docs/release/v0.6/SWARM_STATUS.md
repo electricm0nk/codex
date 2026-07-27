@@ -1649,7 +1649,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T17:10:01
-Latest commit on tranche/6: b5603866 docs(v0.6): sync #34 scoping result -- two-skill gap empty, Master Craftsman found (risks item 59) (4 minutes ago) (2026-07-27T17:05:51-04:00)
+Last mechanical check: 2026-07-27T17:15:02
+Latest commit on tranche/6: 0f9509a3 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-27T17:10:01-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-27T17:06:25 frontend=unknown qa=unknown lead=2026-07-27T17:06:45
 <!-- AUTO-HEARTBEAT-END -->
