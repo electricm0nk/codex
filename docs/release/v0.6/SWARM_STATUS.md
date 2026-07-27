@@ -1649,7 +1649,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T16:05:02
-Latest commit on tranche/6: 1101a7ad test(v0.6): guard the one real shared-mechanism counting hazard (2 minutes ago) (2026-07-27T16:02:59-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T16:03:24 frontend=unknown qa=unknown lead=2026-07-27T16:03:57
+Last mechanical check: 2026-07-27T16:10:02
+Latest commit on tranche/6: 3a2858f6 docs(v0.6): sync guard-test closure -- familiar-count consistency thread complete (3 minutes ago) (2026-07-27T16:06:34-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T16:06:45 frontend=unknown qa=unknown lead=2026-07-27T16:07:19
 <!-- AUTO-HEARTBEAT-END -->
