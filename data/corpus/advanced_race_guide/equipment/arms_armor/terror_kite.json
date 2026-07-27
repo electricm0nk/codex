@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Terror Kite",
+    "category": "arms_armor",
+    "name": "Terror Kite",
+    "cost_gp": 20.0,
+    "weight_lbs": null,
+    "description": "Participants in a kite battle make alternating sunder combat maneuvers against each other's kites; each successful maneuver allows a competitor to roll 1d6 points of damage against the opponent's kite. When a kite reaches 0 hit points, it is broken or its string is cut, and its player loses the match. In some matches, points are awarded for touching the kite's top to the opponent's string, with the winner being the first to reach a set point total."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 45,
+    "record_key": "Terror Kite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

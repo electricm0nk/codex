@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Helmet (Dwarven Boulder)",
+    "category": "arms_armor",
+    "name": "Helmet (Dwarven Boulder)",
+    "cost_gp": 20.0,
+    "weight_lbs": 10.0,
+    "description": "This heavy, reinforced helmet can be used to make melee attacks. The wearer may also use the helmet when attempting bull rush maneuvers, granting a +2 circumstance bonus on the check, but after completing the maneuver (whether successful or not), the wearer is staggered until the end of his next turn. In addition, the helmet grants a +2 circumstance bonus to the wearer's AC against critical hit confirmation rolls. A dwarven boulder helmet adds 20%% to the wearer's arcane spell failure chance. It occupies the head slot and is made of metal, not stone, meaning that it can be crafted from unusual materials as a metal weapon. A dwarven boulder helmet can be enchanted as a weapon (not as armor, despite providing some protection)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 15,
+    "record_key": "Helmet (Dwarven Boulder)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

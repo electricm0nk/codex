@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Fetters",
+    "category": "general",
+    "name": "Fetters",
+    "cost_gp": 15.0,
+    "weight_lbs": 2.0,
+    "description": "A creature in fetters is entangled and can only move at half speed. In addition, a fettered creature must succeed at a DC 15 Acrobatics check to move more than its (reduced) speed in a round. If it fails the check by 5 or more, the creature falls prone."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 36,
+    "record_key": "Fetters"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

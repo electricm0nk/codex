@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Ring of Craft Magic",
+    "category": "magic_items",
+    "name": "Ring of Craft Magic",
+    "cost_gp": 12000.0,
+    "weight_lbs": 1.0,
+    "description": "The wearer of this ring may make a Craft check in place of a Spellcraft check to identify an item that could be created with the Craft skill. The wearer may also expend a spell slot or prepared spell to gain an enhancement bonus equal to the level of the expended spell on a single Craft or Profession check (regardless of the amount of time needed to make the check)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 71,
+    "record_key": "Ring of Craft Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

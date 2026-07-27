@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "data": {
+    "key": "Signature Skill",
+    "category": "General",
+    "name": "Signature Skill",
+    "description": "Your ability with a particular skill is the stuff of legends, and you can do things with that skill that others cannot.",
+    "source_page": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 32,
+    "record_key": "Signature Skill"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

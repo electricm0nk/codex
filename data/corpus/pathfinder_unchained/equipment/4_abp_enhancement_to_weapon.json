@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "data": {
+    "key": "Special Ability ~ ABP +4 ~ Weapon",
+    "category": "equipmods",
+    "name": "+4 ABP (Enhancement to Weapon)",
+    "equip_type": "Weapon",
+    "plus": 4,
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Add to a currently magical equipment to remove enhancement bonus and cost for ABP system."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b",
+    "line": 8,
+    "record_key": "Special Ability ~ ABP +4 ~ Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Daredevil Softpaws",
+    "category": "magic_items",
+    "name": "Daredevil Softpaws",
+    "cost_gp": 1400.0,
+    "weight_lbs": 1.0,
+    "description": "As a free action, the wearer can click her heels together to grant herself a +5 competence bonus on Acrobatics checks made to move through threatened squares or to move through an enemy's space without provoking attacks of opportunity for up to 10 rounds per day. The rounds need not be consecutive. Furthermore, anytime the wearer of the boots successfully moves though the space of an enemy without provoking an attack of opportunity, she gains a +2 bonus on attack rolls against that enemy until the end of her turn."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 36,
+    "record_key": "Daredevil Softpaws"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

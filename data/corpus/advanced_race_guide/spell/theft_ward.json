@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Theft Ward",
+    "school": "Abjuration",
+    "level": 1,
+    "description": "You ward a single object in your possession against theft. You gain a +10 bonus on Perception checks to notice someone trying to take the object from you."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 155,
+    "record_key": "Theft Ward"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

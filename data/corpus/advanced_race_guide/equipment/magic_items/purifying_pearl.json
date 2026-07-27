@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Purifying Pearl",
+    "category": "magic_items",
+    "name": "Purifying Pearl",
+    "cost_gp": 19000.0,
+    "weight_lbs": null,
+    "description": "Up to 10 cubic feet of food or drink per day is affected as if a purify food and drink spell had been cast. If placed in the mouth of a creature, the pearl acts as a neutralize poison spell cast on that creature (caster level 10th)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 68,
+    "record_key": "Purifying Pearl"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

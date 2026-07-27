@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Material ~ Wyroot / 2 Life Points",
+    "category": "equipmods",
+    "name": "Wyroot(2 Life Points)",
+    "cost_gp": 2000.0,
+    "weight_lbs": null,
+    "description": "On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 2 life points.  Unspent life points dissipate at dusk."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 11,
+    "record_key": "Material ~ Wyroot / 2 Life Points"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

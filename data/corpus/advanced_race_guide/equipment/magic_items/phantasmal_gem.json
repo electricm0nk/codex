@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Phantasmal Gem",
+    "category": "magic_items",
+    "name": "Phantasmal Gem",
+    "cost_gp": 4000.0,
+    "weight_lbs": 1.0,
+    "description": "If a spellcaster holding the phantasmal gem casts an illusion spell with a duration of concentration (or concentration + a number of rounds), the illusion lasts up to an additional 10 rounds after the spellcaster ceases concentrating on it. The spellcaster may end the illusion early as a swift action. The phantasmal gem can be used multiple times in a day, but cannot grant more than a total of 10 additional rounds of illusion spells per day. A gnome using a phantasmal gem can recharge it by expending uses of spell-like abilities gained through the gnome magic racial trait. Each spell-like ability expended as a standard action recharges 1 round of duration to the phantasmal gem (up to a maximum of 10 rounds)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 66,
+    "record_key": "Phantasmal Gem"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

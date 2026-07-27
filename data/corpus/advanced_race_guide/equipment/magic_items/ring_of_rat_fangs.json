@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Ring of Rat Fangs",
+    "category": "magic_items",
+    "name": "Ring of Rat Fangs",
+    "cost_gp": 5000.0,
+    "weight_lbs": null,
+    "description": "Wearer gains bite attack"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 73,
+    "record_key": "Ring of Rat Fangs"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

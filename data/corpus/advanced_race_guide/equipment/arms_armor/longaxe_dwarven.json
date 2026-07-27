@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Longaxe (Dwarven)",
+    "category": "arms_armor",
+    "name": "Longaxe (Dwarven)",
+    "cost_gp": 50.0,
+    "weight_lbs": 14.0,
+    "description": "These ornate and heavy blades are mounted atop a long, steel-shod haft for greater reach. They are rare among cave-dwelling dwarves but common in mountain dwarf clans that commonly feud with giants."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 30,
+    "record_key": "Longaxe (Dwarven)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

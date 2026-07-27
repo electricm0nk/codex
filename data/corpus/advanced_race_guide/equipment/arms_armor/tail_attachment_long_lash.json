@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Tail Attachment (Long Lash)",
+    "category": "arms_armor",
+    "name": "Tail Attachment (Long Lash)",
+    "cost_gp": 15.0,
+    "weight_lbs": 1.0,
+    "description": "This slender cord has tiny bits of glass and stone embedded in its length."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 38,
+    "record_key": "Tail Attachment (Long Lash)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

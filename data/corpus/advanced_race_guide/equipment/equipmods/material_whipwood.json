@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Material ~ Whipwood",
+    "category": "equipmods",
+    "name": "Whipwood",
+    "cost_gp": 500.0,
+    "weight_lbs": null,
+    "description": "+5 Weapon's HP"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 38,
+    "record_key": "Material ~ Whipwood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

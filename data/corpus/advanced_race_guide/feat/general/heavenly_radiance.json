@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Heavenly Radiance",
+    "category": "general",
+    "name": "Heavenly Radiance",
+    "description": "Your heavenly light can be used in a variety of ways.",
+    "effect": [
+      [
+        "ABILITYPOOL",
+        "Heavenly Radiance Option",
+        "1"
+      ],
+      [
+        "VAR",
+        "RacialSLA_Daylight_Times",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 210,
+    "record_key": "Heavenly Radiance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Special Quality ~ Purifier Celestial Armor ~ Archetype",
+    "category": "equipmods",
+    "name": "Purifier Celestial",
+    "cost_gp": 0.0,
+    "weight_lbs": null,
+    "description": "No benefit.; The purifier's armor takes on a golden or silvery sheen and becomes light as a feather."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 16,
+    "record_key": "Special Quality ~ Purifier Celestial Armor ~ Archetype"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

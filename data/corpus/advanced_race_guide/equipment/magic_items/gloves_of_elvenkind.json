@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Gloves of Elvenkind",
+    "category": "magic_items",
+    "name": "Gloves of Elvenkind",
+    "cost_gp": 7500.0,
+    "weight_lbs": null,
+    "description": "Grant a +5 competence bonus on Spellcraft checks and concentration checks made to cast a spell defensively."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 44,
+    "record_key": "Gloves of Elvenkind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

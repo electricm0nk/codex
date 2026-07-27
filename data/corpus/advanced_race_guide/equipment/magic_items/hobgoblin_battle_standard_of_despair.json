@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Hobgoblin Battle Standard of Despair",
+    "category": "magic_items",
+    "name": "Hobgoblin Battle Standard of Despair",
+    "cost_gp": 50000.0,
+    "weight_lbs": 3.0,
+    "description": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner.Enemies are sickened while within 60 feet of the banner. Any enemy that sustains a critical hit while sickened because of the standard must succeed at a Will saving throw (DC 15) or become dazed for 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 47,
+    "record_key": "Hobgoblin Battle Standard of Despair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

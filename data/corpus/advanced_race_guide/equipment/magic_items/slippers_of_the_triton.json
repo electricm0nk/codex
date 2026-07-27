@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Slippers of the Triton",
+    "category": "magic_items",
+    "name": "Slippers of the Triton",
+    "cost_gp": 56000.0,
+    "weight_lbs": 1.0,
+    "description": "Grant water breathing, swim speed of 30 ft or +10 foot enhancement if wearer already has a swim speed."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 82,
+    "record_key": "Slippers of the Triton"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Whip (Training)",
+    "category": "general",
+    "name": "Whip (Training)",
+    "cost_gp": 5.0,
+    "weight_lbs": 2.0,
+    "description": "When using the whip to demoralize a trained animal, the wielder may choose to fascinate the animal rather than causing it to become shaken for the same duration as the shaken condition, but the fascinate effect ends if line of sight between the wielder and the animal is broken."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 84,
+    "record_key": "Whip (Training)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

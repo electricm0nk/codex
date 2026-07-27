@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Meridian Belt",
+    "category": "magic_items",
+    "name": "Meridian Belt",
+    "cost_gp": 1000.0,
+    "weight_lbs": 1.0,
+    "description": "Allows a creature to wear a magic ring on each foot in addition to the ring on each hand, though only two rings function at any given time."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 64,
+    "record_key": "Meridian Belt"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

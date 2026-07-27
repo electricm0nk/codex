@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Shackles of Durance Vile",
+    "category": "magic_items",
+    "name": "Shackles of Durance Vile",
+    "cost_gp": 16200.0,
+    "weight_lbs": 2.0,
+    "description": "When attached to a humanoid creature as their command word is spoken, they affect their prisoner with a dominate person spell, except that if the prisoner fails its saving throw, the effect lasts for as long as the shackles are attached."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 79,
+    "record_key": "Shackles of Durance Vile"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

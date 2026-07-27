@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Horseshoes of Crushing Blows +4",
+    "category": "magic_items",
+    "name": "Horseshoes of Crushing Blows +4",
+    "cost_gp": 64000.0,
+    "weight_lbs": 4.0,
+    "description": "Grant an enhancement bonus to hoof attacks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 53,
+    "record_key": "Horseshoes of Crushing Blows +4"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

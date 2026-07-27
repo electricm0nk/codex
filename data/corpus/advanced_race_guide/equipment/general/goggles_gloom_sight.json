@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Goggles (Gloom Sight)",
+    "category": "general",
+    "name": "Goggles (Gloom Sight)",
+    "cost_gp": 200.0,
+    "weight_lbs": null,
+    "description": "Gloom sight goggles interact with the unique eyes of fetchlings in such a way that when the goggles are worn over both eyes, they expand the range of a fetchling's darkvision to 90 feet, but the fetchling also gains the light sensitivity weakness."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 45,
+    "record_key": "Goggles (Gloom Sight)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

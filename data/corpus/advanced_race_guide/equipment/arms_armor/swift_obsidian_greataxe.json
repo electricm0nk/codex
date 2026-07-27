@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Swift Obsidian Greataxe",
+    "category": "arms_armor",
+    "name": "Swift Obsidian Greataxe",
+    "cost_gp": 11320.0,
+    "weight_lbs": 12.0,
+    "description": "When the wielder charges an enemy, he receives a +10 foot enhancement bonus to his speed that round. Once per day, he can command the axe to grant all allies within 30 feet a +10 foot enhancement bonus to base speed for 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 32,
+    "record_key": "Swift Obsidian Greataxe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

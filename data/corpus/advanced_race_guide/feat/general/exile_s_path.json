@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Exile's Path",
+    "category": "general",
+    "name": "Exile's Path",
+    "description": "A lifetime spent shunned by others and eschewing your heritage makes you resistant to efforts to pry inside of your mind.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 51,
+    "record_key": "Exile's Path"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

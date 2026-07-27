@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Crown of Conquest",
+    "category": "magic_items",
+    "name": "Crown of Conquest",
+    "cost_gp": 24600.0,
+    "weight_lbs": 3.0,
+    "description": "Whenever a critical hit is confirmed, the crown creates a prayer effect centered on the crown's wearer (caster level 5th).; Any follower or cohort of the wearer gains a +1 bonus on attack rolls and saving throws against fear effects while within line of sight of the wearer."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 34,
+    "record_key": "Crown of Conquest"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Gauntlets of Skill at Arms",
+    "category": "magic_items",
+    "name": "Gauntlets of Skill at Arms",
+    "cost_gp": 30302.0,
+    "weight_lbs": 1.0,
+    "description": "The guantlets enable the wearer to use any traditional elven weapon as if he were proficient in its use. If he uses such a weapon and is already proficient with it, he gains a +1 competence bonus on attack and damage rolls."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 43,
+    "record_key": "Gauntlets of Skill at Arms"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

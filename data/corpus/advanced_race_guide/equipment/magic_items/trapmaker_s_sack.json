@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Trapmaker's Sack",
+    "category": "magic_items",
+    "name": "Trapmaker's Sack",
+    "cost_gp": 20000.0,
+    "weight_lbs": 2.0,
+    "description": "Once per day as a full-round action, the bearer can command the sack to create any mechanical trap of CR 4 or less, which appears at a designated spot within 50 feet. The bearer must make a Craft (Traps) check with a DC equal to the normal DC for creating the trap."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 89,
+    "record_key": "Trapmaker's Sack"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

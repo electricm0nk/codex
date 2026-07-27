@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Corset of the Vishkanya",
+    "category": "magic_items",
+    "name": "Corset of the Vishkanya",
+    "cost_gp": 3000.0,
+    "weight_lbs": 1.0,
+    "description": "The wearer can compress herself to fit through tight spaces as though affected by a Squeeze spell for up to 10 rounds per day. While using the corset's magic, she gains a +5 bonus on Escape Artist checks."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 33,
+    "record_key": "Corset of the Vishkanya"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

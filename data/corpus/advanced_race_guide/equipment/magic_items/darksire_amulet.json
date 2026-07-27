@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Darksire Amulet",
+    "category": "magic_items",
+    "name": "Darksire Amulet",
+    "cost_gp": 9000.0,
+    "weight_lbs": 1.0,
+    "description": "When worn by a tiefling with cold, electricity, or fire resistance, increases that resistance by 5. Provides a +4 insight bonus on Diplomacy skill checks made to influence evil outsiders."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 37,
+    "record_key": "Darksire Amulet"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

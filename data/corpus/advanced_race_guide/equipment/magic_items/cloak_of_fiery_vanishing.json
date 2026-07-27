@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Cloak of Fiery Vanishing",
+    "category": "magic_items",
+    "name": "Cloak of Fiery Vanishing",
+    "cost_gp": 2600.0,
+    "weight_lbs": 1.0,
+    "description": "Once per day, when subject to an effect that deals fire damage, the wearer can spend an immediate action while obscured by the flames to become invisible, leaving behind an illusory pile of ashes and bones, as if he had been slain by the fire effect."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 29,
+    "record_key": "Cloak of Fiery Vanishing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

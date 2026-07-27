@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Material ~ Darkleaf Cloth ~ Item",
+    "category": "equipmods",
+    "name": "Darkleaf Cloth",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 8,
+    "record_key": "Material ~ Darkleaf Cloth ~ Item"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

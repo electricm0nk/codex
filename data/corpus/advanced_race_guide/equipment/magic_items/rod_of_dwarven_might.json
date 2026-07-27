@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Rod of Dwarven Might",
+    "category": "magic_items",
+    "name": "Rod of Dwarven Might",
+    "cost_gp": 80000.0,
+    "weight_lbs": 10.0,
+    "description": "Increases all AC, attack roll, CMD, CMB, and saving throw bonuses from a dwarf's racial traits by +1. The rod shares the mundane powers of a rod of lordly might, but its magical weapon forms are tailored to dwarven preferences."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 76,
+    "record_key": "Rod of Dwarven Might"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

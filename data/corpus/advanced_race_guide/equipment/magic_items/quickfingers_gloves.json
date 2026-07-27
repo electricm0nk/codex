@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Quickfingers Gloves",
+    "category": "magic_items",
+    "name": "Quickfingers Gloves",
+    "cost_gp": 2500.0,
+    "weight_lbs": null,
+    "description": "A wearer of these gloves with at least 1 rank in Sleight of Hand can perform such a check as a move action by taking a -10 penalty on the check rather than the normal -20."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 69,
+    "record_key": "Quickfingers Gloves"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

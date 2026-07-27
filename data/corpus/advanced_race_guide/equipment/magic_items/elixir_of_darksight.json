@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Elixir of Darksight",
+    "category": "magic_items",
+    "name": "Elixir of Darksight",
+    "cost_gp": 1200.0,
+    "weight_lbs": null,
+    "description": "Enables user to see through Deeper Darkness when using Darkvision"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 38,
+    "record_key": "Elixir of Darksight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

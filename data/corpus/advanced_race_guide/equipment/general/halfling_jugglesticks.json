@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Halfling Jugglesticks",
+    "category": "general",
+    "name": "Halfling Jugglesticks",
+    "cost_gp": 25.0,
+    "weight_lbs": 1.0,
+    "description": "Halflings can use these four colored sticks to gain +2 circumstance bonus on Perform (Comedy) checks"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 47,
+    "record_key": "Halfling Jugglesticks"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

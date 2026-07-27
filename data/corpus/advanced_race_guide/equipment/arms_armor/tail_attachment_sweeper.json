@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Tail Attachment (Sweeper)",
+    "category": "arms_armor",
+    "name": "Tail Attachment (Sweeper)",
+    "cost_gp": 7.0,
+    "weight_lbs": 3.0,
+    "description": "When properly used, this sharply curved piece of metal can knock opponents off their feet. Unlike most trip weapons, you cannot drop it if you are tripped during your own trip attempt."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 42,
+    "record_key": "Tail Attachment (Sweeper)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

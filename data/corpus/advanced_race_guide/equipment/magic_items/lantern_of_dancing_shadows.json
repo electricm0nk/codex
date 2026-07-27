@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Lantern of Dancing Shadows",
+    "category": "magic_items",
+    "name": "Lantern of Dancing Shadows",
+    "cost_gp": 41000.0,
+    "weight_lbs": 2.0,
+    "description": "causes the illumination level in a 30-foot radius to move one step toward dim light, from bright light to normal light, from normal light to dim light, or from darkness to dim light. Shadow Conjuration once per day, Ghostbane Dirge once per day."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 60,
+    "record_key": "Lantern of Dancing Shadows"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

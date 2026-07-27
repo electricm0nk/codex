@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Tengu Drinking Jug",
+    "category": "magic_items",
+    "name": "Tengu Drinking Jug",
+    "cost_gp": 1000.0,
+    "weight_lbs": 2.0,
+    "description": "Any liquid placed within the jug becomes safe to drink, as though affected by Purify Food and Drink. Three times per day, the bearer can command the jug to alter the temperature of its contents  anywhere from ice cold to boiling hot. Once per day, the bearer can command water placed into the jug to transform into plum liquor, sake, or tea. Holds up to 1 gallon."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 88,
+    "record_key": "Tengu Drinking Jug"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

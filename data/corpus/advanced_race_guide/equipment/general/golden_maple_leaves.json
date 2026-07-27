@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Golden Maple Leaves",
+    "category": "general",
+    "name": "Golden Maple Leaves",
+    "cost_gp": 50.0,
+    "weight_lbs": 0.5,
+    "description": "Can be ground into a fine powder, requiring a DC 15 Knowledge (nature) or Profession (herbalist) check. When used in conjunction with the Craft (alchemy) skill, reduce the Craft DC by 5 and add +1 to the DC of any save required by the alchemical item. 1 leaf Augments crafting of 3 alchemical items."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 46,
+    "record_key": "Golden Maple Leaves"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

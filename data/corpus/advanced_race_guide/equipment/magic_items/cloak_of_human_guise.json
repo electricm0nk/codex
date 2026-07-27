@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Cloak of Human Guise",
+    "category": "magic_items",
+    "name": "Cloak of Human Guise",
+    "cost_gp": 900.0,
+    "weight_lbs": 1.0,
+    "description": "Only affects half-humans.  Alters the wearer's appearance similarly to a hat of disguise, but only to the extent that it conceals or alters the wearer's non-human physical traits so the creature appears fully human."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 30,
+    "record_key": "Cloak of Human Guise"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

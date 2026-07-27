@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Shadow Stencil Set",
+    "category": "general",
+    "name": "Shadow Stencil Set",
+    "cost_gp": 30.0,
+    "weight_lbs": 2.0,
+    "description": "If used to aid in the creation of any type of shadow spell or effect (including shadow puppet bardic performances), a wayang adds a +1 competence bonus to her saving throw DC."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 63,
+    "record_key": "Shadow Stencil Set"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

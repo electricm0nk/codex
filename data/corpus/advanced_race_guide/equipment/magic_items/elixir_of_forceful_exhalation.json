@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Elixir of Forceful Exhalation",
+    "category": "magic_items",
+    "name": "Elixir of Forceful Exhalation",
+    "cost_gp": 900.0,
+    "weight_lbs": 1.0,
+    "description": "The drinker can exhale up to three 15-foot-long Gusts of Wind (as the spell), after which the skill bonuses end."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 39,
+    "record_key": "Elixir of Forceful Exhalation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

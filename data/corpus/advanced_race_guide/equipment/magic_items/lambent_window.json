@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Lambent Window",
+    "category": "magic_items",
+    "name": "Lambent Window",
+    "cost_gp": 20000.0,
+    "weight_lbs": 2.0,
+    "description": "When a creature spends at least 1 minute staring into its reflection, If on the Material Plane, shows the corresponding location on the Shadow Plane, along with any creatures at that location. Likewise, when used on the Shadow Plane, shows the corresponding location on the Material Plane. This effect can be used for up to 10 minutes per day, which need not be consecutive."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 59,
+    "record_key": "Lambent Window"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

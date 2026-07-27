@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Improved Drow Nobility",
+    "category": "general",
+    "name": "Improved Drow Nobility",
+    "description": "Your magical heritage is more potent than that of your peers, as demonstrated by your superior spell-like abilities.",
+    "effect": [
+      [
+        "VAR",
+        "Drow_Replace_SLADarkness",
+        "1",
+        "TYPE=Boolean"
+      ],
+      [
+        "VAR",
+        "RacialSLA_DancingLights_Times,RacialSLA_DeeperDarkness_Times,RacialSLA_FaerieFire_Times,RacialSLA_FeatherFall_Times,RacialSLA_Levitate_Times",
+        "2",
+        "TYPE=Base"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 273,
+    "record_key": "Improved Drow Nobility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

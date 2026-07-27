@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Brooch of Blending",
+    "category": "magic_items",
+    "name": "Brooch of Blending",
+    "cost_gp": 2000.0,
+    "weight_lbs": null,
+    "description": "As a standard action the wearer can transform his features to appear either entirely elven or entirely human. Grants a +20 circumstance bonus on Disguise checks to appear as a member of the selected race. Those who know him recognize him without a Perception check. This change does not radiate magic and cannot be seen with detect magic, although true seeing does reveal the alteration. This item only functions for half-elves."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 24,
+    "record_key": "Brooch of Blending"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

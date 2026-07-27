@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Heartstake Bolts (5)",
+    "category": "arms_armor",
+    "name": "Heartstake Bolts (5)",
+    "cost_gp": 100.0,
+    "weight_lbs": 3.0,
+    "description": "A vampire struck with a heartstake bolt takes the normal damage but must also succeed at a DC 20 Fortitude saving throw or fall to the ground helpless for 1 round."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 10,
+    "record_key": "Heartstake Bolts (5)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -2,6 +2,9 @@
   "book_id": "pathfinder_unchained",
   "book_name": "Pathfinder Unchained",
   "planned_resolution_bundle": "SD-27",
-  "content_kind_counts": null,
+  "content_kind_counts": {
+    "feat": 17,
+    "equipment": 42
+  },
   "registered_at": "2026-07-23T02:54:05Z"
 }

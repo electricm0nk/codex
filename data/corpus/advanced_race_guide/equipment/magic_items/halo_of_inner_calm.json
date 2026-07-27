@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Halo of Inner Calm",
+    "category": "magic_items",
+    "name": "Halo of Inner Calm",
+    "cost_gp": 16000.0,
+    "weight_lbs": 1.0,
+    "description": "Grants the wearer a +4 resistance bonus on saving throws against all spells with the emotion descriptor. When worn by a tiefling of a good alignment, it provides spell resistance 13 against spells with the evil descriptor and a +2 sacred bonus on saving throws."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 45,
+    "record_key": "Halo of Inner Calm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

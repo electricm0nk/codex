@@ -14,12 +14,12 @@
 | 2.0.8 | `acg-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 423 records classified (422 OGL, 1 PI-REDACTED — flagged for operator review) |
 | 2.0.9 | `beastiary-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 45 records classified (45 OGL, 0 redacted) |
 | 2.0.10 | `all-23-books-license-conformance-verify` | E2 | complete | 2026-07-27T21:00Z | 2026-07-27T21:05Z | 23/23 books accounted for, 0 defects (4 corpus-conformant + 19 honest stub gaps). Gates 2.1+ cleared |
-| 2.1 | `advanced_race_guide_pre_build` | E2 | pending | — | — | Tier-1; pre-build shape B v1 cache from LST corpus (23 `.lst` files). Operator-gated: failure → operator picks next action |
-| 2.1' | `advanced_race_guide_verify` | E2 | pending | — | — | Tier-1; verify pre-built cache against dual-audit gate |
-| 3.1 | `advanced_race_guide_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache |
-| 2.2 | `pathfinder_unchained_pre_build` | E2 | pending | — | — | Tier-1; pre-build shape B v1 cache from LST corpus (11 `.lst` files). Operator-gated |
-| 2.2' | `pathfinder_unchained_verify` | E2 | pending | — | — | Tier-1; verify pre-built cache against dual-audit gate |
-| 3.2 | `pathfinder_unchained_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache |
+| 2.1 | `advanced_race_guide_pre_build` | E2 | complete | 2026-07-27T21:03Z | 2026-07-27T21:31Z | 479 records (92 spell + 200 equipment + 187 feat), all OGL, 0 redacted. Racial/ability-formula content out of scope (no precedent for any book) |
+| 2.1' | `advanced_race_guide_verify` | E2 | complete | 2026-07-27T21:31Z | 2026-07-27T21:38Z | Independently re-verified 3x (subagent + orchestrator); sha256/line citations confirmed real |
+| 3.1 | `advanced_race_guide_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache — out of confirmed run scope |
+| 2.2 | `pathfinder_unchained_pre_build` | E2 | complete | 2026-07-27T21:03Z | 2026-07-27T21:26Z | 59 records (17 feat + 42 equipment), all OGL, 0 redacted. Book adds no new spells (honest absence) |
+| 2.2' | `pathfinder_unchained_verify` | E2 | complete | 2026-07-27T21:26Z | 2026-07-27T21:32Z | Independently re-verified 3x; sha256/line citations confirmed real |
+| 3.2 | `pathfinder_unchained_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache — out of confirmed run scope |
 | (deferred) | — | E3 | — | — | — | **17 deferred future-state books** (Adventurer's Guide, B2-B6, Bonus Bestiary, Horror Adventures, Monster Codex, Mythic Adventures, Occult Adventures, the 6 Tier-2 Ultimate books) are operator-gated on SD-27 closing cleanly. Beginner Box and Core Essentials removed from scope per operator directive 2026-07-27 (redundant to other tomes; will not be brought in). Deferred to SD-28+. The pre-build cycle pattern from E2.1-2.2 is templated and reusable. |
 | 4.1-4.5 | (closure) | E4 | pending | — | — | Standard closure epilogue |
 
@@ -38,6 +38,29 @@
   passing (independently re-verified by the orchestrator). Receipt:
   `artifacts/epic_2/2.0.5-shape-b-license-stripping-preflight-cycle_receipt.md`.
 
+- **2.0.6-2.0.9 in-scope book license retrofit** (2026-07-27T20:44Z) — all 4 in-scope books
+  retro-fitted in parallel (4,435 total records: 3,326 CRB + 641 APG + 423 ACG + 45 Bestiary; 1 real
+  redaction, in ACG). Fixed a shared-test-file staleness (Audit 1's pre-retrofit `license==None`
+  assumption) and a real regression in SD-26's own `tests/sd26_cache_core_rulebook.rs` (broke on the
+  new `LICENSE.json`), both applied once by the orchestrator after collecting all 4 parallel agents'
+  results. `cargo test --workspace --locked`: 4,802 passed / 3 pre-existing environment-dependent
+  failures, zero regressions. Receipts: `artifacts/epic_2/2.0.{6,7,8,9}-*-license-retrofit-cycle_receipt.md`.
+- **2.0.10 all-23-books-license-conformance-verify** (2026-07-27T21:05Z) — 23/23 books accounted
+  for, 0 defects. Gates E2.1+ cleared. Receipt:
+  `artifacts/epic_2/2.0.10-all-23-books-license-conformance-verify-cycle_receipt.md`.
+- **2.1/2.1' + 2.2/2.2' per-book pre-build + verify** (2026-07-27T21:38Z) — real Rust codegen from raw
+  LST source for both in-scope future-state books: ARG (479 records: 92 spell + 200 equipment + 187
+  feat) + PU (59 records: 17 feat + 42 equipment, no new spells). Both books' agents ran concurrently
+  in the same shared working directory (no worktree isolation) and hit a real, self-corrected
+  file-touch-partition collision on `src/rules_core/rules_tables/mod.rs` — recorded as a real
+  coordination risk for future concurrent per-book batches, not swept under the rug. Independently
+  re-verified by the orchestrator a third time beyond each book's own subagent pre-build+verify pair:
+  direct sha256/line-citation spot-checks against the real LST source, full `git status` scope audit,
+  full workspace test suite (4,817 passed / 3 pre-existing failures, zero regressions). Both books'
+  registry entries (#0003, #0017) updated to `"Resolved"`. Live reporting dashboard updated for real
+  (`sd27_book_pre_build`: 4/6 complete, parity correctly still pending — out of this run's confirmed
+  scope). Receipts: `artifacts/epic_2/{advanced_race_guide,pathfinder_unchained}_{pre_build,verify}-cycle_receipt.md`.
+
 ## DISCOVERED
 
 - (none yet)
@@ -46,20 +69,10 @@
 
 - ~~**Tier-1 launch-gate dependency:** SD-26's closure PR has not yet landed.~~ **CLEARED 2026-07-27** (corrected same day — an earlier note here said PR #339; that was backwards). SD-26 merged via **PR #338** — `62e7b617` is a confirmed ancestor of `origin/develop`, and the SD-26 package + `src/bin/sd26_gen_core_rulebook_cache.rs` are both present there. PR #339 is a separate, later CG-03 bugfix, unrelated to SD-26 closure. Caveat: SD-26's own `progress.md` on develop still shows its terminal `6.5` row as "awaiting operator merge" — stale paper-trail, not evidence the merge didn't happen. Per `decisions.md §7` + `loop-instruction.md §2` item 1.
 - ~~**Bundle label discrepancy:** `SD-27` vs. `SD-27+ (unscheduled)` — operator's lever pull at cycle 2.0.~~ **CLEARED 2026-07-27.** Operator chose `"SD-27"`; resolved across all 21 stubs + registry + SD-26's `decisions.md:102` (already correct) + v0.6's risks doc. Per `decisions.md §2` + `artifacts/epic_2/label-resolution-cycle_receipt.md`.
-- **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`.
-- **v0.6 in-progress overlap:** v0.6 is actively working class/race breadth (Fighter/Wizard/Rogue + 8 remaining CRB classes). SD-27's partition restricts SD-27 cycles to the per-book content paths. Per `scope-draft.md §4`.
-
-- **2.0.6-2.0.9 in-scope book license retrofit** (2026-07-27T20:44Z) — all 4 in-scope books
-  retro-fitted in parallel (4,435 total records: 3,326 CRB + 641 APG + 423 ACG + 45 Bestiary; 1 real
-  redaction, in ACG). Fixed a shared-test-file staleness (Audit 1's pre-retrofit `license==None`
-  assumption) and a real regression in SD-26's own `tests/sd26_cache_core_rulebook.rs` (broke on the
-  new `LICENSE.json`), both applied once by the orchestrator after collecting all 4 parallel agents'
-  results. `cargo test --workspace --locked`: 4,802 passed / 3 pre-existing environment-dependent
-  failures, zero regressions. Receipts: `artifacts/epic_2/2.0.{6,7,8,9}-*-license-retrofit-cycle_receipt.md`.
-
-- **2.0.10 all-23-books-license-conformance-verify** (2026-07-27T21:05Z) — 23/23 books accounted
-  for, 0 defects. Gates E2.1+ cleared. Receipt:
-  `artifacts/epic_2/2.0.10-all-23-books-license-conformance-verify-cycle_receipt.md`.
+- **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`. Not exercised this run — parity (E3.x) is out of the confirmed scope ("through both books' pre-build").
+- **v0.6 in-progress overlap:** v0.6 is actively working class/race breadth (Fighter/Wizard/Rogue + 8 remaining CRB classes). SD-27's partition restricts SD-27 cycles to the per-book content paths. Per `scope-draft.md §4`. Confirmed no collision occurred during this run (checked `origin/tranche/6` before dispatching the retrofit cycles).
+- **NEW — concurrent per-book cycles share one working directory, not isolated worktrees.** `loop-instruction.md §8`'s "Worktree isolation... not needed" note (inherited from `decisions.md §8`) did not anticipate two per-book cycles both needing the same shared file (`src/rules_core/rules_tables/mod.rs`, not currently allow-listed by the partition at all). This run hit and self-corrected a real collision; it should not be relied on to self-correct every time. Recommend either `isolation: 'worktree'` for future concurrent per-book batches, or extending the partition to allow-list `rules_tables/mod.rs` under a serial-on-shared-file rule (matching how the registry file and `data/stubs/` are already handled).
+- **`src/rules_core/rules_tables/{advanced_race_guide,pathfinder_unchained}/` are not wired into `codex`'s public module tree.** Both modules are reachable only via `#[path]` inclusion inside `src/bin/sd27_gen_book_cache.rs`, not `codex::rules_core::rules_tables::*` — a direct consequence of the partition not allow-listing `rules_tables/mod.rs` (see above). A future cycle with authority to touch that file should register them properly, especially before any `pilot_compute.rs` integration is attempted for these 2 books.
 
 ## Reporting manifest
 
@@ -86,3 +99,7 @@ manifest is authoritative for status, this table for narrative.
 | 2.0.8 acg-license-retrofit | `artifacts/epic_2/2.0.8-acg-license-retrofit-cycle_receipt.md` |
 | 2.0.9 beastiary-license-retrofit | `artifacts/epic_2/2.0.9-beastiary-license-retrofit-cycle_receipt.md` |
 | 2.0.10 all-23-books-license-conformance-verify | `artifacts/epic_2/2.0.10-all-23-books-license-conformance-verify-cycle_receipt.md` |
+| 2.1 advanced_race_guide_pre_build | `artifacts/epic_2/advanced_race_guide_pre_build-cycle_receipt.md` |
+| 2.1' advanced_race_guide_verify | `artifacts/epic_2/advanced_race_guide_verify-cycle_receipt.md` |
+| 2.2 pathfinder_unchained_pre_build | `artifacts/epic_2/pathfinder_unchained_pre_build-cycle_receipt.md` |
+| 2.2' pathfinder_unchained_verify | `artifacts/epic_2/pathfinder_unchained_verify-cycle_receipt.md` |

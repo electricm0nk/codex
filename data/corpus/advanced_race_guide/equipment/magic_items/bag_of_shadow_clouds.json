@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Bag of Shadow Clouds",
+    "category": "magic_items",
+    "name": "Bag of Shadow Clouds",
+    "cost_gp": 30240.0,
+    "weight_lbs": 1.0,
+    "description": "Three times per day, as a move action, the bearer can reach within the bag and pull out 1d4 semi-solid shards of shadow. The bag's bearer can use each shard of shadow as a thrown weapon targeting a single 5-foot square. When it hits, it acts as a Darkness spell, but only affecting one 5-foot square"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 16,
+    "record_key": "Bag of Shadow Clouds"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

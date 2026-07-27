@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Gloom Blade",
+    "category": "arms_armor",
+    "name": "Gloom Blade",
+    "cost_gp": 8810.0,
+    "weight_lbs": 2.0,
+    "description": "acts as a +1 short sword when in dim light. In darkness, it acts as +2 short sword. When surrounded by supernatural darkness, such as in an area of deeper darkness, it acts a +2 short sword and bestows the benefit of the Blind-Fight feat to its wielder."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 35,
+    "record_key": "Gloom Blade"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

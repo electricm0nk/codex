@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Shawl of Life-Keeping",
+    "category": "magic_items",
+    "name": "Shawl of Life-Keeping",
+    "cost_gp": 1000.0,
+    "weight_lbs": null,
+    "description": "Stores up to 10 of the wearer's hp.  If wearer's hp is reduced to -1 or lower, immediately heals the wearer."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 81,
+    "record_key": "Shawl of Life-Keeping"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

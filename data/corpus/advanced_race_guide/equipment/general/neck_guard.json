@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Neck Guard",
+    "category": "general",
+    "name": "Neck Guard",
+    "cost_gp": 10.0,
+    "weight_lbs": 0.25,
+    "description": "Provides a +1 armor bonus to AC against vampire bites or similar attacks that specifically target the wearer's throat. Provides no additional bonus when worn with heavy armor."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 55,
+    "record_key": "Neck Guard"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

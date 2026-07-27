@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Book of Marvelous Recipes",
+    "category": "magic_items",
+    "name": "Book of Marvelous Recipes",
+    "cost_gp": 28800.0,
+    "weight_lbs": 3.0,
+    "description": "Allows reader to use the Profession (cook) skill untrained, or grants a +4 competence bonus if trained. Once per day, Heroes' Feast (caster level 11th)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 21,
+    "record_key": "Book of Marvelous Recipes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

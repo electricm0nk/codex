@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Symbol of Unholy Command",
+    "category": "magic_items",
+    "name": "Symbol of Unholy Command",
+    "cost_gp": 8000.0,
+    "weight_lbs": 1.0,
+    "description": "When the wielder uses this unholy symbol as a focus for the Command Undead feat, he gains a +1 profane bonus to the DC of that feat. Good creatures of 5 Hit Dice or less that attempt to touch the symbol must make a DC 15 Will save or be shaken for 1 round. Deliberate use of a symbol of unholy command is an evil act."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
+    "line": 87,
+    "record_key": "Symbol of Unholy Command"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

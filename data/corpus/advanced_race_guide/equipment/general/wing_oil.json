@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Wing Oil",
+    "category": "general",
+    "name": "Wing Oil",
+    "cost_gp": 1.0,
+    "weight_lbs": null,
+    "description": "Gives a feathered creature a +1 bonus on all saving throws to resist the effects of cold weather. Its effects last 24 hours."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 86,
+    "record_key": "Wing Oil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

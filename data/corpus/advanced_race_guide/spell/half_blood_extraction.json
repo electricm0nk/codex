@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Half-Blood Extraction",
+    "school": "Transmutation",
+    "level": 5,
+    "description": "You transform the target half-orc into a full-blooded orc. The target loses all of its half-orc racial traits and gains the orc racial traits."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 41,
+    "record_key": "Half-Blood Extraction"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

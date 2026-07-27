@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Elysian Shield",
+    "category": "arms_armor",
+    "name": "Elysian Shield",
+    "cost_gp": 52620.0,
+    "weight_lbs": 45.0,
+    "description": "The wielder is immune to the create spawn ability of undead, and once per day as an immediate action can negate a single energy drain, ability drain, or ability damage attack by an undead creature. In addition, once per day as a standard action, the wielder can release a wave of positive energy that panics undead, as the Turn Undead feat (DC 20 Will negates)."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
+    "line": 23,
+    "record_key": "Elysian Shield"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

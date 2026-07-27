@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Sheriff's Whistle",
+    "category": "general",
+    "name": "Sheriff's Whistle",
+    "cost_gp": 1.0,
+    "weight_lbs": null,
+    "description": "Gives off a piercing shriek that can easily be heard up to 1,000 feet away. Can only be heard by badgers, dogs, and gnomes."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
+    "line": 65,
+    "record_key": "Sheriff's Whistle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

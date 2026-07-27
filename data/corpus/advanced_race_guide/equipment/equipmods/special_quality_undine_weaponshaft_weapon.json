@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Special Quality ~ Undine Weaponshaft ~ Weapon",
+    "category": "equipmods",
+    "name": "Undine Weaponshaft",
+    "cost_gp": 300.0,
+    "weight_lbs": null,
+    "description": "As a full-round action, an undine can make a single melee attack with the weapon and use her hydraulic push spell-like ability against the target of that melee attack."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 34,
+    "record_key": "Special Quality ~ Undine Weaponshaft ~ Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,23 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Special Ability ~ Cruel ~ Weapon",
+    "category": "equipmods",
+    "name": "Cruel",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "When the wielder strikes a creature that is frightened, shaken, or panicked, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
+    "line": 20,
+    "record_key": "Special Ability ~ Cruel ~ Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
