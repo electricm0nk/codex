@@ -155,7 +155,11 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
             "Mystery + Clouded Vision + Lame + Wasting + Deaf curses",
             5,
         ),
-        (ApgClassId::Witch, "Ward hex", 1),
+        // Hex slot (all 27 hexes fold into one chooser) + Familiar. The
+        // familiar bump was owed from the familiar closure (8e47479a) and
+        // landed for Shaman before Witch, leaving the two classes counting
+        // one shared implementation differently until this corrected it.
+        (ApgClassId::Witch, "Hex slot + Familiar", 2),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(

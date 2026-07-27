@@ -240,7 +240,14 @@ pub struct ApgClassCoverage {
     /// independently implemented" reasoning that already excluded
     /// Arcanist's Cantrips and Warpriest's Orisons from their own counts
     /// (see `docs/release/v0.6/oracle-apg-full-build-scoping.md`).
-    /// Cavalier, Alchemist, and Witch each count 1 (a single slot alone).
+    /// Summoner counts 1 (its Eidolon slot alone). Witch counts 2: the
+    /// Hex slot -- all 27 hexes fold into it, being mutually-exclusive
+    /// picks of one chooser rather than independent features -- plus
+    /// Familiar, which is a genuinely separate feature landing a real
+    /// magnitude on the computed max-HP total. That familiar bump was
+    /// owed from the familiar closure (`8e47479a`) and landed for Shaman
+    /// first, so for a while the two classes counted one shared
+    /// implementation differently; corrected 2026-07-27.
     /// Every other APG class remains at 0: SD-22 Epic 3 deliberately
     /// scoped its ingest to the BAB/save chassis only (see e.g.
     /// `class_alchemist.rs`'s own doc comment), and no follow-on cycle has
@@ -319,7 +326,11 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // Inquisitor Judgment / Oracle full-build closures): see this field's
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
-        ApgClassId::Witch | ApgClassId::Summoner => 1,
+        // Witch counts 2: the Hex slot (all 27 hexes fold into it as
+        // mutually-exclusive picks of one chooser) + Familiar. Summoner
+        // stays at 1 (its Eidolon slot); it has no familiar.
+        ApgClassId::Summoner => 1,
+        ApgClassId::Witch => 2,
         ApgClassId::Alchemist => 3,
         ApgClassId::Oracle | ApgClassId::Inquisitor => 5,
         ApgClassId::Cavalier => 6,
