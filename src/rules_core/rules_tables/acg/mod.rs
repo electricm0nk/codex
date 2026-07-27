@@ -546,7 +546,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
         AcgClassId::Skald | AcgClassId::Hunter => 3,
-        AcgClassId::Slayer => 5,
+        AcgClassId::Slayer => 6,
         AcgClassId::Warpriest => 5,
         AcgClassId::Investigator => 8,
         AcgClassId::Brawler => 9,

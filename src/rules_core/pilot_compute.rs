@@ -2257,6 +2257,21 @@ const WARPRIEST_SACRED_ARMOR_LEVEL: u8 = 7;
 /// again. See `docs/release/v0.6/second-full-class-build-comparative-scoping.md`
 /// for the full corpus verification and scope record.
 const SLAYER_CLASS_ID: &str = "class:slayer";
+/// The choice set naming which Slayer Talent was taken. Talents are a
+/// chooser whose entire value IS the choice, so this follows the
+/// ratified no-silent-seeding design: ground a talent only when it is
+/// explicitly recorded, never seed a canonical one.
+const SLAYER_TALENT_CHOICE_ID: &str = "choice:slayer_talent";
+/// Foil Scrutiny is the one canonical talent this closure grounds,
+/// narrowed the same way Order of the Sword and Animal Focus's Bull
+/// were. Chosen because its `BONUS:SKILL|Bluff,Disguise|2` is the
+/// cleanest flat, self-scoped magnitude among the 41 talent records --
+/// most of the rest grant other abilities by reference (Combat Style,
+/// Combat Trick, Weapon Training) rather than carrying a magnitude.
+const SLAYER_TALENT_FOIL_SCRUTINY_SELECTION: &str = "talent:foil_scrutiny";
+/// Foil Scrutiny's bonus on Bluff and Disguise checks made to avoid
+/// notice.
+const SLAYER_FOIL_SCRUTINY_BONUS: i16 = 2;
 
 /// v0.6 alpha swarm, risks item 8 (Arcanist Metamagic Knowledge Exploit
 /// closure, follow-on to the Arcanist full-build closure): of Arcanist's
@@ -12729,6 +12744,19 @@ fn slayer_track_bonus(level: u8) -> i16 {
 /// `other_features_deferred` diagnostic naming Studied Target
 /// (opponent-dependent) and Slayer Talents (a chooser-list) as the
 /// genuinely still-missing pieces.
+/// Slayer's talent count: `SlayerTalentLVL/2`, where
+/// `SlayerTalentLVL = SlayerLVL` -- one talent at 2nd level, ten by
+/// 20th.
+///
+/// Ten `-1` deductions against this pool exist in the corpus, each gated
+/// on a `Slayer_CF_TalentN` flag. Every setter is a Slayer ARCHETYPE
+/// `.MOD` record (Bounty Hunter, Cleaner, Cutthroat, and others), and
+/// this repo ingests only the base `slayer.json` -- provably vacuous,
+/// the same check that cleared Brawler's seven and Cavalier's three.
+fn slayer_talent_count(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
 /// Slayer's Studied Target insight bonus: `SlayerLVL/5 + 1` on attack
 /// and damage rolls (and several skills) against the studied target.
 ///
@@ -12750,10 +12778,45 @@ fn slayer_studied_target_count(level: u8) -> i16 {
 }
 
 fn ground_or_block_slayer_class_features(
+    input: &CharacterInput,
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let talent_count = slayer_talent_count(level);
+    if talent_count > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.talent_count".to_owned(),
+            value: talent_count,
+            detail: format!(
+                "Slayer level {level} has {talent_count} Slayer Talent(s) (level/2, first at 2nd \
+                 level). Grounds the COUNT only -- which talents were taken is a chooser over 41 \
+                 records, and a talent chooser's entire value is which talent was picked, so \
+                 none is seeded. Ten archetype-gated deductions against this pool are provably \
+                 vacuous here: every setter is a Slayer archetype record and this repo ingests \
+                 only the base class"
+            ),
+        });
+
+        if input.chosen.selected_choices.iter().any(|c| {
+            c.choice_set_id == SLAYER_TALENT_CHOICE_ID
+                && c.selection_id == SLAYER_TALENT_FOIL_SCRUTINY_SELECTION
+        }) {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.acg.slayer.talent.foil_scrutiny_bonus".to_owned(),
+                value: SLAYER_FOIL_SCRUTINY_BONUS,
+                detail: format!(
+                    "Slayer level {level} took the Foil Scrutiny talent: a \
+                     +{SLAYER_FOIL_SCRUTINY_BONUS} bonus on Bluff and Disguise checks made to \
+                     avoid notice. The one canonical talent grounded here, narrowed the same way \
+                     Order of the Sword was; it requires an explicit recorded pick and is never \
+                     seeded. Neither Bluff nor Disguise is among the three skills this engine \
+                     computes, so this grounds standalone"
+                ),
+            });
+        }
+    }
+
     let studied_bonus = slayer_studied_target_bonus(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.slayer.studied_target_bonus".to_owned(),
@@ -14150,7 +14213,7 @@ fn compute_acg_class_chassis(
             diagnostics,
         );
     } else if class_id == AcgClassId::Slayer {
-        ground_or_block_slayer_class_features(level, explanations, diagnostics);
+        ground_or_block_slayer_class_features(input, level, explanations, diagnostics);
     } else if class_id == AcgClassId::Swashbuckler {
         ground_or_block_swashbuckler_class_features(
             input,
@@ -44083,6 +44146,71 @@ mod opponent_conditioned_tier_zero_tests {
         }
         assert_eq!(value(&character(SLAYER_CLASS_ID, 5), "class_feature.acg.slayer.studied_target_bonus"), Some(2));
         assert_eq!(value(&character(SLAYER_CLASS_ID, 7), "class_feature.acg.slayer.studied_target_count"), Some(2));
+    }
+
+
+    /// Slayer's talent count: `SlayerLVL/2` -- one at 2nd, ten by 20th.
+    ///
+    /// Ten `-1` deductions against this pool exist in the corpus, each
+    /// gated on a `Slayer_CF_TalentN` flag whose only setters are Slayer
+    /// ARCHETYPE `.MOD` records (Bounty Hunter, Cleaner, Cutthroat, and
+    /// others). This repo ingests only the base `slayer.json`, so all
+    /// ten are provably vacuous -- the same check that cleared Brawler's
+    /// seven and Cavalier's three.
+    #[test]
+    fn slayer_talent_count_matches_the_corpus_and_ignores_archetype_deductions() {
+        for (level, want) in [(1u8, 0i16), (2, 1), (3, 1), (4, 2), (10, 5), (19, 9), (20, 10)] {
+            assert_eq!(super::slayer_talent_count(level), want, "level {level}");
+        }
+        assert_eq!(
+            value(&character(SLAYER_CLASS_ID, 1), "class_feature.acg.slayer.talent_count"),
+            None,
+            "a level-1 Slayer has no talents yet"
+        );
+        assert_eq!(
+            value(&character(SLAYER_CLASS_ID, 6), "class_feature.acg.slayer.talent_count"),
+            Some(3)
+        );
+    }
+
+    /// Foil Scrutiny is the one canonical talent grounded, narrowed the
+    /// same way Order of the Sword and Animal Focus's Bull were. It
+    /// requires an explicit recorded pick: a talent chooser's entire
+    /// value IS which talent was taken, so seeding one would assert a
+    /// specific checkable falsehood, per the ratified Skill Focus line.
+    #[test]
+    fn foil_scrutiny_grounds_only_when_explicitly_chosen() {
+        let bare = character(SLAYER_CLASS_ID, 6);
+        assert_eq!(
+            value(&bare, "class_feature.acg.slayer.talent.foil_scrutiny_bonus"),
+            None,
+            "no talent is seeded"
+        );
+
+        let mut chosen = bare.clone();
+        chosen.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: super::SLAYER_TALENT_FOIL_SCRUTINY_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&chosen, "class_feature.acg.slayer.talent.foil_scrutiny_bonus"),
+            Some(2)
+        );
+    }
+
+    /// A talent cannot be held before any talent exists to spend.
+    #[test]
+    fn a_talent_choice_grounds_nothing_before_the_first_talent_is_gained() {
+        let mut too_early = character(SLAYER_CLASS_ID, 1);
+        too_early.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::SLAYER_TALENT_CHOICE_ID.to_owned(),
+            selection_id: super::SLAYER_TALENT_FOIL_SCRUTINY_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&too_early, "class_feature.acg.slayer.talent.foil_scrutiny_bonus"),
+            None,
+            "a level-1 Slayer has no talent slot to have spent"
+        );
     }
 
     /// Studied Combat's insight bonus is `InvestigatorLVL/2`, and its

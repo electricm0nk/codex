@@ -210,8 +210,8 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         ),
         (
             AcgClassId::Slayer,
-            "Sneak Attack + Trap Sense + Trapfinding + Track + Studied Target",
-            5,
+            "Sneak Attack + Trap Sense + Trapfinding + Track + Studied Target + Talents",
+            6,
         ),
         (
             AcgClassId::Swashbuckler,
