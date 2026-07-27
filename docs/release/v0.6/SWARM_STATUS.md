@@ -1653,7 +1653,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T17:20:01
-Latest commit on tranche/6: 6178e1bc feat(rules): ground Master Craftsman's +2 on a chosen Craft/Profession skill (41 seconds ago) (2026-07-27T17:19:20-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T17:16:04 frontend=unknown qa=unknown lead=2026-07-27T17:19:52
+Last mechanical check: 2026-07-27T17:25:01
+Latest commit on tranche/6: 90889432 docs(v0.6): sync Master Craftsman (6178e1bc) and the Monk/Paladin methodology gap (60 seconds ago) (2026-07-27T17:24:01-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T17:24:26 frontend=unknown qa=unknown lead=2026-07-27T17:22:00
 <!-- AUTO-HEARTBEAT-END -->
