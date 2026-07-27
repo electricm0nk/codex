@@ -1,6 +1,15 @@
 # SD-27 — Release Notes
 
-> **Generated at Epic 4.3 (release-notes cycle).** This file is the canonical 7-section release-notes template, populated at closure.
+> **UNPOPULATED TEMPLATE.** This file is the canonical 7-section release-notes shape; every section
+> below is a placeholder. It is written by the **E4.3** cycle at closure, not before — do not cite it as
+> a source of bundle facts until then. Acceptance: `grep -c 'written at E4.3' release-notes.md` → 0.
+>
+> **In-scope books for the §2 resolution table:** Advanced Race Guide + Pathfinder Unchained.
+> Adventurer's Guide is **not** SD-27's — it is routed to SD-30.
+>
+> Bundle facts live in `README.md` (overview), `scope-draft.md` (committed scope), `decisions.md`
+> (decision record) and `progress.md` (live state). The authoritative per-cycle status is the reporting
+> manifest — `python3 scripts/sd27-workflow.py status`.
 
 ## 1. Summary
 
@@ -8,7 +17,7 @@
 
 ## 2. User-Visible Changes
 
-[Per-book resolution table — written at E4.3.]
+[Per-book resolution table (ARG, PU) — written at E4.3.]
 
 ## 3. Defects Fixed
 

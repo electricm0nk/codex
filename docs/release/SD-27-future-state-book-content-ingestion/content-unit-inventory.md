@@ -9,15 +9,16 @@
 | Book | Path on disk | Source LST path | In-scope for SD-27? |
 |---|---|---|---|
 | advanced_race_guide | `data/corpus/advanced_race_guide/{class,spell,equipment,feat,race,archetype,bestiary,...}/*.json` | `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_race_guide/*.lst` | **YES** — E2.1 (pre-build) + E2.1' (verify) |
-| adventurers_guide | `data/corpus/adventurers_guide/{class,spell,equipment,feat,race,archetype,bestiary,...}/*.json` | `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/adventurers_guide/*.lst` | **YES** — E2.2 (pre-build) + E2.2' (verify) |
+| adventurers_guide | (not created in SD-27) | `$PCGEN_DATA_ROOT/adventurers_guide/*.lst` | **NO** — deferred; the operator's dashboard routes it to SD-30 |
 | beginner_box | (not created) | `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/beginner_box/*.lst` | **NO** — removed from scope per operator directive 2026-07-27 |
 | bestiary_2..6 | (not created in SD-27) | per-book LST corpus | NO — deferred to SD-28+ |
 | bonus_bestiary | (not created) | per-book LST corpus | NO — deferred to SD-28+ |
 | core_essentials | (not created) | `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/*.lst` | **NO** — removed from scope per operator directive 2026-07-27 |
-| horror_adventures, monster_codex, mythic_adventures, occult_adventures, pathfinder_unchained | (not created in SD-27) | per-book LST corpus | NO — deferred to SD-28+ |
+| pathfinder_unchained | `data/corpus/pathfinder_unchained/{class,spell,equipment,feat,race,archetype,...}/*.json` | `$PCGEN_DATA_ROOT/pathfinder_unchained/*.lst` (11 files) | **YES** — E2.2 (pre-build) + E2.2' (verify) |
+| horror_adventures, monster_codex, mythic_adventures, occult_adventures | (not created in SD-27) | per-book LST corpus | NO — deferred to SD-28+ |
 | the 6 Tier-2 Ultimate books (ultimate_campaign, ultimate_combat, ultimate_equipment, ultimate_intrigue, ultimate_magic, ultimate_wilderness) | (not created in SD-27) | per-book LST corpus | NO — deferred to SD-28+ |
 
-**Total books in SD-27's JSON cache payload: 2** (advanced_race_guide, adventurers_guide).
+**Total books in SD-27's JSON cache payload: 2** (advanced_race_guide, pathfinder_unchained) — matching the operator's `SD-27 (ARG + PU)` dashboard workchannel.
 **Total future-state books removed or deferred: 19** (2 removed from scope, 17 deferred).
 
 ### 1.2 Required fields per JSON file (Shape B v1 schema, per `decisions.md §7`, extended per cycle 2.0.5)
@@ -53,7 +54,7 @@ Per-book cycle inventories the source LST and populates whichever content kinds 
 
 ### 1.4 In-scope book content ceilings (per SD-26 `decisions.md §11.4` precedent)
 
-For SD-27's per-book cycles, the per-field completion ceiling follows SD-26's precedent. The 4 in-scope books (CRB, APG, ACG, Bestiary 1) have known ceilings; the 2 in-scope future-state books (ARG, AG) have unknown ceilings until the E3.x parity cycle re-verifies against the corpus directly.
+For SD-27's per-book cycles, the per-field completion ceiling follows SD-26's precedent. The 4 in-scope books (CRB, APG, ACG, Bestiary 1) have known ceilings; the 2 in-scope future-state books (ARG, PU) have unknown ceilings until the E3.x parity cycle re-verifies against the corpus directly.
 
 | Book (per SD-26's measured ceiling) | Real completion ceiling (per SD-26 E4) |
 |---|---|
@@ -73,7 +74,7 @@ For ARG + AG: the per-cycle assertion is "match rate at the time of cycle close,
 | Per-book stub manifest | `data/stubs/<book_id>.json` | `{book_id, book_name, planned_resolution_bundle, content_kind_counts, registered_at, resolved_at, resolved_by, bundle_of_record, cycle_receipt}` |
 | Stubs Registry entry | `docs/governance/wired-integration-stubs-registry.md` | `book_stub` kind (existing since SD-26 E4.1) |
 
-For the 2 in-scope future-state books (ARG, AG), the cycle updates the stub manifest's `content_kind_counts` from `null` to a real number map and flips the registry entry's `Status` from "Registered stub" to "Resolved" with `resolved_at: <ISO-8601>`, `resolved_by: claude-code`, `bundle_of_record: SD-27`, `cycle_receipt: artifacts/epic_2/<book>_cache-cycle_receipt.md`.
+For the 2 in-scope future-state books (ARG, PU), the cycle updates the stub manifest's `content_kind_counts` from `null` to a real number map and flips the registry entry's `Status` from "Registered stub" to "Resolved" with `resolved_at: <ISO-8601>`, `resolved_by: claude-code`, `bundle_of_record: SD-27`, `cycle_receipt: artifacts/epic_2/<book>_pre_build-cycle_receipt.md`.
 
 For the 17 deferred future-state books, the stub manifests stay at `content_kind_counts: null` until SD-28+ lands.
 
@@ -83,7 +84,7 @@ For the 2 removed-from-scope books (Beginner Box, Core Essentials), their regist
 
 advanced_race_guide, adventurers_guide, bestiary_2, bestiary_3, bestiary_4, bestiary_5, bestiary_6, bonus_bestiary, horror_adventures, monster_codex, mythic_adventures, occult_adventures, pathfinder_unchained, ultimate_campaign, ultimate_combat, ultimate_equipment, ultimate_intrigue, ultimate_magic, ultimate_wilderness.
 
-**2 in scope for SD-27's closure update (E4.x):** advanced_race_guide, adventurers_guide.
+**2 in scope for SD-27's closure update (E4.x):** advanced_race_guide, pathfinder_unchained.
 **17 deferred to SD-28+:** the remaining 17.
 **2 removed from scope:** beginner_box, core_essentials (per operator directive 2026-07-27).
 
@@ -106,7 +107,7 @@ After the 2 removals (registry slots #0005 and #0012), the surviving 19 registry
 
 Per-book fixture authoring (E3.x) for the 2 in-scope future-state books:
 - E3.1: `pf_advanced_race_guide_human_<class>_level1_golden.pcg`
-- E3.2: `pf_adventurers_guide_human_<class>_level1_golden.pcg`
+- E3.2: `pf_pathfinder_unchained_human_<class>_level1_golden.pcg`
 
 ### 3.2 Comparator output (per-book parity baseline)
 
