@@ -22,8 +22,18 @@
 //! distinguish), plus `Witch` (added by SD-22 Epic 3's Witch ingest
 //! cycle, the sixth and last real APG class — the real `CLASS:Witch`
 //! line carries `SPELLSTAT:INT` with no `MEMORIZE:NO` and no
-//! `SPELLBOOK:YES` token, the same absent-signals prepared-casting
-//! shape as Cleric/Druid), plus `Arcanist` (added by SD-22 Epic 4's
+//! `SPELLBOOK:YES` token -- prepared, but NOT the same shape as
+//! Cleric/Druid. Corrected 2026-07-27 (task #11): reasoning from the
+//! absent tokens alone found the right family and missed the
+//! distinguishing PRESENT one. Cleric and Druid carry the full
+//! `KNOWNSPELLS:LEVEL=0|LEVEL=1|...|LEVEL=9` ladder and know every
+//! spell level automatically; the Witch line carries
+//! `KNOWNSPELLS:LEVEL=0` **alone**, so only cantrips are known
+//! automatically and every higher-level spell is stored in her familiar
+//! -- a third caster shape, neither Cleric's nor Wizard's
+//! `SPELLBOOK:YES`. `pilot_compute.rs`'s
+//! `witch_spell_level_requires_familiar_storage` models exactly that
+//! token), plus `Arcanist` (added by SD-22 Epic 4's
 //! Arcanist ingest cycle, the first real ACG class — the real
 //! `CLASS:Arcanist` line in `acg_classes.lst` carries
 //! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same spellbook-prepared

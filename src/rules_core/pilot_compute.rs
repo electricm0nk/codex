@@ -123,6 +123,7 @@ use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::acg::shaman_spell_list;
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
+use super::rules_tables::apg::witch_spell_list;
 use crate::rules_core::durability::FamiliarSpecies;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
@@ -11654,6 +11655,233 @@ fn witch_flight_hex_swim_bonus(input: &CharacterInput) -> i16 {
 }
 
 /// shape before that). An unrecognized or missing choice keeps a
+/// The APG Witch class table's BASE spells-per-day row, one entry per
+/// spell level 0-9 (`None` for an inaccessible "—" column; index 0 is
+/// cantrips). Transcribed from `apg_classes.lst`'s own 20 `CAST:` rows,
+/// which are **byte-identical to Cleric's across all 20 levels** --
+/// verified by direct diff, including the level-11 row where Shaman
+/// alone diverges (risks item 56).
+fn witch_base_spells_per_day_table(level: u8) -> [Option<i16>; 10] {
+    // Identical progression to Cleric's own corpus rows; see
+    // `cleric_base_spells_per_day_table` for the row-by-row citation.
+    cleric_base_spells_per_day_table(level)
+}
+
+/// Witch's highest accessible spell level, derived from the slot table
+/// itself so the ceiling and the budget cannot drift apart (same
+/// single-source-of-truth shape as `shaman_spell_level_access`).
+fn witch_spell_level_access(level: u8) -> i16 {
+    witch_base_spells_per_day_table(level)
+        .iter()
+        .rposition(Option::is_some)
+        .map_or(0, |index| index as i16)
+}
+
+/// The real per-day slot budget per spell level 0-9 (base + Intelligence
+/// bonus spells). Cantrips take no bonus, matching every other prepared
+/// caster here.
+fn witch_total_spells_per_day(level: u8, intelligence_modifier: i16) -> [Option<i16>; 10] {
+    let base = witch_base_spells_per_day_table(level);
+    let mut total = [None; 10];
+    for (spell_level, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus = if spell_level == 0 {
+            0
+        } else {
+            ability_bonus_spells(intelligence_modifier, spell_level as i16)
+        };
+        total[spell_level] = Some(base_count + bonus);
+    }
+    total
+}
+
+/// Whether a Witch spell level must be backed by a spell stored in the
+/// familiar before it can be prepared.
+///
+/// **This is the token that makes Witch a third caster shape**, not a
+/// Cleric variant. Compare the real class lines:
+///
+/// ```text
+/// Cleric  SPELLSTAT:WIS  KNOWNSPELLS:LEVEL=0|LEVEL=1|...|LEVEL=9
+/// Wizard  SPELLSTAT:INT  SPELLBOOK:YES
+/// Witch   SPELLSTAT:INT  KNOWNSPELLS:LEVEL=0
+/// ```
+///
+/// Cleric/Druid/Shaman automatically know every level and prepare
+/// straight off the class list. Wizard is spellbook-gated. Witch
+/// automatically knows **only cantrips** -- everything above level 0
+/// lives in her familiar, exactly as PF1 RAW describes. So level 0 needs
+/// no stored record and every higher level does.
+fn witch_spell_level_requires_familiar_storage(spell_level: u8) -> bool {
+    spell_level > 0
+}
+
+/// Return the list of unmet conditions for Witch's real prepared-spell
+/// posture.
+///
+/// Structurally this is Alchemist's/Investigator's two-step
+/// `Known`-backs-`Prepared` shape rather than Cleric's one-step, because
+/// the Witch genuinely has a spell STORE: her familiar. `Known` models
+/// spells stored in the familiar; `Prepared` models today's preparation
+/// drawn from it. The one real deviation from the Alchemist shape is
+/// `witch_spell_level_requires_familiar_storage`: cantrips are
+/// automatically known and need no stored record.
+///
+/// Deliberately NOT modeled here (and still named in the deferred
+/// diagnostic): losing access when the familiar is dead or absent, and
+/// the familiar's own creature stat block (the Familiar subsystem's
+/// Tier 2). This grounds which spells a Witch may prepare and how many;
+/// it does not simulate the familiar as an object that can go missing.
+fn unmet_witch_prepared_spell_conditions(
+    input: &CharacterInput,
+    witch_level: u8,
+    intelligence_modifier: i16,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let witch_spells = |mode: AcquisitionMode| -> Vec<&str> {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(|s| s.source_class_id == WITCH_CLASS_ID && s.acquisition_mode == mode)
+            .map(|s| s.spell_id.as_str())
+            .collect()
+    };
+    let stored = witch_spells(AcquisitionMode::Known);
+    let prepared = witch_spells(AcquisitionMode::Prepared);
+
+    let access_ceiling = witch_spell_level_access(witch_level);
+    let total_per_day = witch_total_spells_per_day(witch_level, intelligence_modifier);
+
+    for spell_id in &stored {
+        if witch_spell_list::witch_spell_level(spell_id).is_none() {
+            unmet.push(format!(
+                "spell '{spell_id}' stored in the familiar is not on the real PF1 witch spell \
+                 list"
+            ));
+        }
+    }
+
+    let mut consumed_per_level: [i16; 10] = [0; 10];
+    for spell_id in &prepared {
+        let Some(spell_level) = witch_spell_list::witch_spell_level(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 witch spell list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at witch level {witch_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        if witch_spell_level_requires_familiar_storage(spell_level)
+            && !stored.contains(spell_id)
+        {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' (level {spell_level}) is not stored in the \
+                 witch's familiar -- only cantrips are known automatically"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (spell_level, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let total_slots = total_per_day[spell_level].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base + Intelligence bonus)"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground Witch's real prepared-spell posture once
+/// `unmet_witch_prepared_spell_conditions` reports an empty unmet list.
+fn ground_witch_prepared_spells(
+    input: &CharacterInput,
+    witch_level: u8,
+    intelligence_modifier: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == WITCH_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let stored_count = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == WITCH_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .count();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.witch.familiar_stored_spells".to_owned(),
+        value: stored_count as i16,
+        detail: format!(
+            "Witch level {witch_level} spells stored in her familiar ({stored_count} spells, \
+             AcquisitionMode::Known). Unlike Cleric/Druid/Shaman -- whose class lines carry the \
+             full `KNOWNSPELLS:LEVEL=0|...|LEVEL=9` ladder and who therefore know every level \
+             automatically -- the Witch's own line carries `KNOWNSPELLS:LEVEL=0` alone, so only \
+             cantrips are known automatically and every higher-level spell must be stored in \
+             the familiar first. This grounds the store's contents; it does not model the \
+             familiar going missing"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.witch.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Witch level {witch_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 witch spell list (`witch_spell_list::WITCH_SPELL_LIST`, 326 records across the \
+             ingested books), the witch's own spell-level access ceiling, the per-level slot \
+             budget (base + Intelligence bonus), and -- for every spell above cantrip level -- \
+             that it is actually stored in her familiar. This grounds the prepared-spell \
+             selection for real; it computes no spell save DC resolution against a target and \
+             no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let total_per_day = witch_total_spells_per_day(witch_level, intelligence_modifier);
+    for (spell_level, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.apg.witch.total_spells_per_day.spell_level_{spell_level}"),
+            value: *total,
+            detail: format!(
+                "Witch level {witch_level} total spells per day at spell level {spell_level}: \
+                 {total} (base table count + Intelligence bonus; cantrips take no bonus). The \
+                 witch's own `CAST:` rows are byte-identical to Cleric's across all 20 levels"
+            ),
+        });
+    }
+}
+
 fn ground_or_block_witch_class_features(
     input: &CharacterInput,
     level: u8,
@@ -11661,6 +11889,22 @@ fn ground_or_block_witch_class_features(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     ground_familiar_master_benefit(input, level, explanations);
+
+    let intelligence_modifier = ability_modifier(input.chosen.ability_scores.intelligence);
+    let unmet_spells =
+        unmet_witch_prepared_spell_conditions(input, level, intelligence_modifier);
+    if unmet_spells.is_empty() {
+        ground_witch_prepared_spells(input, level, intelligence_modifier, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.apg.witch.prepared_spells.unsupported".to_owned(),
+            message: format!(
+                "{WITCH_CLASS_ID} prepared-spell posture is not satisfied: {}",
+                unmet_spells.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
 
     let hex_dc = witch_hex_save_dc(level, ability_modifier(input.chosen.ability_scores.intelligence));
     explanations.push(ComputationExplanation {
@@ -41682,11 +41926,112 @@ mod witch_dispatch_widening_safety_tests {
         build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
         FIGHTER_CLASS_ID, WARD_HEX_SELECTION, WITCH_CLASS_ID, WITCH_HEX_CHOICE_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, AcquisitionMode, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     );
+
+    fn witch_spell(spell_id: &str, mode: AcquisitionMode) -> SpellSelection {
+        SpellSelection {
+            spell_id: spell_id.to_owned(),
+            source_class_id: WITCH_CLASS_ID.to_owned(),
+            acquisition_mode: mode,
+        }
+    }
+
+    /// The defining Witch mechanic: a spell above cantrip level must be
+    /// stored in her familiar before it can be prepared. This is what
+    /// separates her from Cleric/Druid/Shaman, whose class lines carry
+    /// the full `KNOWNSPELLS:LEVEL=0|...|LEVEL=9` ladder while hers
+    /// carries `KNOWNSPELLS:LEVEL=0` alone.
+    #[test]
+    fn a_levelled_spell_not_stored_in_the_familiar_cannot_be_prepared() {
+        let mut input = human_witch_input(3);
+        // Prepared but never stored.
+        input.chosen.spells_selected.push(witch_spell("Ray of Enfeeblement", AcquisitionMode::Prepared));
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.witch.prepared_spells.unsupported"
+                    && d.claim_blocking
+                    && d.message.contains("not stored in the witch's familiar")),
+            "preparing an unstored levelled spell must claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The same spell, once stored, prepares cleanly -- proving the gate
+    /// is the storage requirement itself and not something incidental.
+    #[test]
+    fn the_same_spell_prepares_once_it_is_stored_in_the_familiar() {
+        let mut input = human_witch_input(3);
+        input.chosen.spells_selected.push(witch_spell("Ray of Enfeeblement", AcquisitionMode::Known));
+        input.chosen.spells_selected.push(witch_spell("Ray of Enfeeblement", AcquisitionMode::Prepared));
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.witch.prepared_spells.unsupported"),
+            "a stored spell must prepare cleanly: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_spell.apg.witch.familiar_stored_spells"),
+            "the familiar's store must be grounded"
+        );
+    }
+
+    /// Cantrips are the documented exception: `KNOWNSPELLS:LEVEL=0` means
+    /// level-0 spells are known automatically and need no stored record.
+    #[test]
+    fn a_cantrip_needs_no_familiar_storage() {
+        let mut input = human_witch_input(1);
+        input.chosen.spells_selected.push(witch_spell("Guidance", AcquisitionMode::Prepared));
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.witch.prepared_spells.unsupported"),
+            "a cantrip must prepare without being stored: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A spell stored in the familiar must still be a real witch spell.
+    #[test]
+    fn a_non_witch_spell_cannot_be_stored_in_the_familiar() {
+        let mut input = human_witch_input(3);
+        input.chosen.spells_selected.push(witch_spell("Magic Missile", AcquisitionMode::Known));
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.witch.prepared_spells.unsupported"
+                    && d.message.contains("is not on the real PF1 witch spell list")),
+            "an off-list spell must not be storable: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
 
     fn human_witch_input(level: u8) -> CharacterInput {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
