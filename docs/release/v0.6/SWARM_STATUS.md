@@ -1713,6 +1713,10 @@ Greenlit the proposed two-commit sequencing: fix the three formulas first (prova
 
 **Ruled to ground both Raging Climber and Raging Swimmer, not just one** — confirmed an exact structural twin (same formula, same gate, targets Swim instead of Climb, also one of the three tracked computed skills). Deliberately deviates from the strict one-canonical-pick-per-chooser precedent, recorded explicitly (risks item 72): that precedent bounds design complexity, not entry count, and a zero-risk exact twin doesn't reopen the complexity question. Dispatched as task #54 to backend (after #46), sequenced alongside #50. Scout moved to task #55, scoping the runner-up (Arcanist's Exploits, 46 records, 1 grounded).
 
+**Update (2026-07-27, ~19:45 ET): task #46 (Monk gate-absence convention) and task #55 (Arcanist Exploits scoping) both landed and lead-verified.** #46 (`03bb0f8f`): 849/849, both audits, diff confirmed matching the commit message — all four #36 Monk features now emit a value-0 absence record below their gate, and the gate test now asserts strictly-positive rather than merely `is_some`, closing a real gap where an absence record could have masked a future regression.
+
+**#55 confirms the class-specific-constraint pattern from Skald's rage powers (item 72) repeats a third time**: 36 of Arcanist's 46 Exploits cost Arcane Reservoir points, lead-confirmed via DESC search — "purely passive" is the exception in this family, not the default, and it had to be checked rather than assumed. Ruled Familiar as the canonical pick over the safer-but-duller Item Crafting: the machinery already exists and is genuinely class-agnostic (`ground_familiar_master_benefit`, namespaced `familiar.` from the start), lands on the computed max-HP total, and extends the familiar thread already serving Witch and Shaman to a third class. Dispatched as task #56. Scout moved to task #57, scoping the next shared family (Rogue Talents, Rogue + Investigator).
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-27T19:00:02
