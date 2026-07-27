@@ -16215,7 +16215,13 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         // At or above the level-2 gate, lay on hands and divine grace are
         // grounded for real: bounded, flat numeric formulas with no
         // execution engine behind them.
-        let lay_on_hands_uses_per_day = paladin_level / 2 + charisma_modifier;
+        let extra_lay_on_hands_bonus = extra_resource_feat_bonus(
+            &input.chosen.selected_feats,
+            EXTRA_LAY_ON_HANDS_FEAT_KEY,
+            EXTRA_POINTS_PER_DAY,
+        );
+        let lay_on_hands_uses_per_day =
+            paladin_level / 2 + charisma_modifier + extra_lay_on_hands_bonus;
         let lay_on_hands_heal_dice = paladin_level / 2;
         let divine_grace_save_bonus = charisma_modifier.max(0);
 
@@ -16225,7 +16231,8 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
             detail: format!(
                 "Paladin lay on hands uses per day at paladin level {level} (PF1 Core Rulebook, \
                  2nd-level paladin feature): 1/2 paladin level + Charisma modifier = \
-                 {paladin_level} / 2 + {charisma_modifier} = {lay_on_hands_uses_per_day}. This \
+                 {paladin_level} / 2 + {charisma_modifier} + Extra Lay On Hands feat \
+                 (+{extra_lay_on_hands_bonus}) = {lay_on_hands_uses_per_day}. This \
                  grounds only the flat per-day resource count; it computes no \
                  healing-resolution execution engine and no per-use consumption tracking"
             ),
@@ -20036,7 +20043,7 @@ fn explain_barbarian_level1_chassis(
     // +3, 7 rounds at level 1, 9 rounds at level 2) never hits this branch, but the
     // public compute seam accepts any Human Barbarian input.
     let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
-    let rage_rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, level);
+    let rage_rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, level, &input.chosen.selected_feats);
     if rage_rounds_per_day > 0 {
         explanations.push(ComputationExplanation {
             id: "class_chassis.barbarian.rage_rounds_per_day".to_owned(),
@@ -20437,6 +20444,47 @@ fn explain_barbarian_level1_chassis(
     // not stay a flat unconditional diagnostic at this position.
 }
 
+/// The four "Extra <resource>" General feats (task #19, 2026-07-27).
+/// Each is prerequisite-gated on already having the base resource
+/// (`PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage` and friends) and
+/// adds a flat amount to a per-day total this engine already computes --
+/// no new mechanism, no new choice gate.
+///
+/// Magnitudes verified twice and in agreement: this repo's own
+/// `feat_data/general.rs` catalog entries and the raw PCGen
+/// `cr_feats.lst` records (`BONUS:VAR|RageDuration|6`,
+/// `BONUS:VAR|BardicPerformanceDuration|6`, `BONUS:VAR|KiPoints|2`,
+/// `BONUS:VAR|LayOnHandsTimes|2`).
+const EXTRA_RAGE_FEAT_KEY: &str = "Extra Rage";
+const EXTRA_PERFORMANCE_FEAT_KEY: &str = "Extra Performance";
+const EXTRA_KI_FEAT_KEY: &str = "Extra Ki";
+const EXTRA_LAY_ON_HANDS_FEAT_KEY: &str = "Extra Lay On Hands";
+/// Extra Rage and Extra Performance both grant 6 additional rounds/day.
+const EXTRA_ROUNDS_PER_DAY: i16 = 6;
+/// Extra Ki grants 2 ki points; Extra Lay On Hands grants 2 uses/day.
+const EXTRA_POINTS_PER_DAY: i16 = 2;
+
+/// `bonus` when `feat_key` is among `selected_feats`, else 0.
+///
+/// Folded into each resource's own shared formula rather than applied at
+/// the display site, deliberately: Rage's and Bardic Performance's
+/// per-day budgets are each read in three places (the displayed total
+/// plus two activation-budget checks), and applying the bonus at only
+/// one of them would show a character a widened budget while still
+/// judging them over the un-widened one. Putting it inside the formula
+/// makes all consumers agree by construction.
+///
+/// No class-ownership gate is needed here: each formula is only ever
+/// evaluated for the class that owns that resource, and the feat's own
+/// PF1 prerequisite is the base class feature.
+fn extra_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
+    if selected_feats.iter().any(|feat| feat == feat_key) {
+        bonus
+    } else {
+        0
+    }
+}
+
 /// Barbarian's Rage rounds-per-day budget: 4 + Constitution modifier + 2 *
 /// (level - 1) (PF1 Core Rulebook Rage: "4 + her Constitution modifier ...
 /// at each level after 1st, she can rage for 2 additional rounds"). Pure
@@ -20445,8 +20493,10 @@ fn explain_barbarian_level1_chassis(
 /// real rage-execution validation (`ground_or_block_barbarian_rage`,
 /// `active_barbarian_rage_bonus`) call the identical formula rather than
 /// either duplicating it or parsing it back out of explanation text.
-fn barbarian_rage_rounds_per_day(constitution_modifier: i16, level: u8) -> i16 {
-    4 + constitution_modifier + 2 * (i16::from(level) - 1)
+fn barbarian_rage_rounds_per_day(constitution_modifier: i16, level: u8, selected_feats: &[String]) -> i16 {
+    4 + constitution_modifier
+        + 2 * (i16::from(level) - 1)
+        + extra_resource_feat_bonus(selected_feats, EXTRA_RAGE_FEAT_KEY, EXTRA_ROUNDS_PER_DAY)
 }
 
 /// Barbarian's Rage magnitude tier: (Strength morale bonus, Constitution
@@ -20507,7 +20557,7 @@ fn active_barbarian_rage_bonus(
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
-        let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level);
+        let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level, &input.chosen.selected_feats);
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
             return None;
         }
@@ -20572,7 +20622,7 @@ fn ground_or_block_barbarian_rage(
     };
 
     let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
-    let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level);
+    let rounds_per_day = barbarian_rage_rounds_per_day(constitution_modifier, barbarian_level, &input.chosen.selected_feats);
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
@@ -21159,14 +21209,20 @@ fn explain_monk_level1_chassis(
             ),
         });
     } else {
-        let ki_pool_size = level_value / 2 + ability_modifiers.wisdom;
+        let extra_ki_bonus = extra_resource_feat_bonus(
+            &input.chosen.selected_feats,
+            EXTRA_KI_FEAT_KEY,
+            EXTRA_POINTS_PER_DAY,
+        );
+        let ki_pool_size = level_value / 2 + ability_modifiers.wisdom + extra_ki_bonus;
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.ki_pool_size".to_owned(),
             value: ki_pool_size,
             detail: format!(
                 "Monk ki pool granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
                  class feature): \"the number of points in a monk's ki pool is equal to 1/2 his \
-                 monk level + his Wisdom modifier\" = {level_value} / 2 + {} = {ki_pool_size}. \
+                 monk level + his Wisdom modifier\" = {level_value} / 2 + {} + Extra Ki feat \
+                 (+{extra_ki_bonus}) = {ki_pool_size}. \
                  This grounds only the flat pool-size number; it computes no ki-point \
                  consumption tracking, no action-economy engine, and no application of any ki \
                  power (the extra attack, the +4 AC dodge bonus, or the +20-ft. speed bonus \
@@ -27068,10 +27124,21 @@ fn explain_bard_level1_spell_baseline(
     // progression), so the formula widens to
     // 4 + Charisma modifier + 2 * (level - 1), floored at 0 mirroring the Cleric
     // channel-energy uses-per-day floor.
-    let bardic_performance_rounds_per_day = (4
-        + ability_modifiers.charisma
-        + BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL * (level_value - 1))
-        .max(0);
+    // Routed through the shared formula rather than recomputed inline
+    // (task #19, 2026-07-27): this displayed total and the two
+    // activation-budget checks in `active_bard_inspire_courage_attack_bonus`
+    // / `ground_or_block_bard_bardic_performance` must not be able to
+    // disagree about the Extra Performance feat's 6 extra rounds.
+    let bardic_performance_rounds_per_day = bard_bardic_performance_rounds_per_day(
+        ability_modifiers.charisma,
+        level,
+        &input.chosen.selected_feats,
+    );
+    let extra_performance_bonus = extra_resource_feat_bonus(
+        &input.chosen.selected_feats,
+        EXTRA_PERFORMANCE_FEAT_KEY,
+        EXTRA_ROUNDS_PER_DAY,
+    );
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.bardic_performance_rounds_per_day".to_owned(),
         value: bardic_performance_rounds_per_day,
@@ -27079,7 +27146,8 @@ fn explain_bard_level1_spell_baseline(
             "Bard Bardic Performance rounds per day at bard level {level} (PF1 Core Rulebook \
              Bardic Performance): 4 + Charisma modifier at level 1, plus 2 additional rounds \
              per day at each level after 1st, floored at 0. At Charisma modifier {} this is \
-             max(4 + {} + {BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL} * ({level} - 1), 0) = \
+             max(4 + {} + {BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL} * ({level} - 1), 0) \
+             + Extra Performance feat (+{extra_performance_bonus}) = \
              {bardic_performance_rounds_per_day}. This grounds only the flat daily round \
              budget; no round tracking or consumption, no start/maintain action economy, and \
              no per-performance execution is computed",
@@ -28022,10 +28090,19 @@ fn ground_or_block_bard_known_spells(
 /// `active_bard_inspire_courage_attack_bonus`) call the identical formula
 /// rather than either duplicating it or parsing it back out of explanation
 /// text.
-fn bard_bardic_performance_rounds_per_day(charisma_modifier: i16, level: u8) -> i16 {
+fn bard_bardic_performance_rounds_per_day(
+    charisma_modifier: i16,
+    level: u8,
+    selected_feats: &[String],
+) -> i16 {
     (4 + charisma_modifier
         + BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL * (i16::from(level) - 1))
-        .max(0)
+    .max(0)
+        + extra_resource_feat_bonus(
+            selected_feats,
+            EXTRA_PERFORMANCE_FEAT_KEY,
+            EXTRA_ROUNDS_PER_DAY,
+        )
 }
 
 /// Bard's Inspire Courage magnitude tier, rising from +1 at level 1 to +2
@@ -28087,7 +28164,7 @@ fn active_bard_inspire_courage_attack_bonus(
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
-        let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level);
+        let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level, &input.chosen.selected_feats);
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
             return None;
         }
@@ -28163,7 +28240,7 @@ fn ground_or_block_bard_bardic_performance(
     };
 
     let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
-    let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level);
+    let rounds_per_day = bard_bardic_performance_rounds_per_day(charisma_modifier, bard_level, &input.chosen.selected_feats);
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
@@ -40831,5 +40908,208 @@ mod monk_bonus_feat_remaining_three_closure_tests {
             })
             .expect("expected the real improved_grapple_bonus record");
         assert_eq!(bonus.value, 2, "flat +2 CMB/CMD-grapple bonus magnitude: {:?}", bonus);
+    }
+}
+
+/// v0.6 alpha swarm, task #19 (feat-effects Category B): the four
+/// "Extra <resource>" General feats each add a flat amount to a per-day
+/// resource total that this engine ALREADY computes, rather than
+/// introducing a new mechanism.
+///
+/// Every magnitude was verified twice before these tests were written --
+/// against this repo's own `feat_data/general.rs` catalog and against the
+/// raw PCGen `cr_feats.lst` record -- and they agree:
+/// `BONUS:VAR|RageDuration|6`, `BONUS:VAR|BardicPerformanceDuration|6`,
+/// `BONUS:VAR|KiPoints|2`, `BONUS:VAR|LayOnHandsTimes|2`.
+///
+/// Each test differences the SAME character with and without the feat, so
+/// no assertion can pass on a coincidental absolute value, and each
+/// checks that sibling resources are untouched.
+#[cfg(test)]
+mod extra_resource_feat_tests {
+    use super::{ActiveState, build_pilot_headless_receipt, CharacterClassLevel, CharacterInput};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture must load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Drives one Extra-<resource> feat end to end: the same character
+    /// with and without the feat, asserting the named total rises by
+    /// exactly the corpus magnitude.
+    fn assert_feat_adds(class_id: &str, level: u8, feat: &str, total_id: &str, expected: i16) {
+        let without = character(class_id, level);
+        let base = explanation_value(&without, total_id)
+            .unwrap_or_else(|| panic!("{total_id} must be computed for a bare {class_id}"));
+
+        let mut with = without.clone();
+        with.chosen.selected_feats.push(feat.to_owned());
+        let raised = explanation_value(&with, total_id)
+            .unwrap_or_else(|| panic!("{total_id} must still be computed with {feat}"));
+
+        assert_eq!(
+            raised - base,
+            expected,
+            "{feat} must raise {total_id} by exactly {expected} (base {base}, with feat {raised})"
+        );
+    }
+
+    #[test]
+    fn extra_rage_adds_six_rounds_to_the_real_rage_total() {
+        assert_feat_adds(
+            "class:barbarian",
+            1,
+            "Extra Rage",
+            "class_chassis.barbarian.rage_rounds_per_day",
+            6,
+        );
+    }
+
+    #[test]
+    fn extra_performance_adds_six_rounds_to_the_real_bardic_performance_total() {
+        assert_feat_adds(
+            "class:bard",
+            1,
+            "Extra Performance",
+            "class_chassis.bard.bardic_performance_rounds_per_day",
+            6,
+        );
+    }
+
+    #[test]
+    fn extra_ki_adds_two_points_to_the_real_ki_pool_total() {
+        // Monk's Ki Pool is a 4th-level class feature.
+        assert_feat_adds("class:monk", 4, "Extra Ki", "class_chassis.monk.ki_pool_size", 2);
+    }
+
+    #[test]
+    fn extra_lay_on_hands_adds_two_uses_to_the_real_lay_on_hands_total() {
+        // Paladin's Lay On Hands is a 2nd-level class feature.
+        assert_feat_adds(
+            "class:paladin",
+            2,
+            "Extra Lay On Hands",
+            "class_chassis.paladin.lay_on_hands_uses_per_day",
+            2,
+        );
+    }
+
+    /// None of the four may leak onto a resource it does not name. Each
+    /// feat is applied to a character who owns a DIFFERENT resource, and
+    /// that resource must not move.
+    #[test]
+    fn each_extra_feat_leaves_every_sibling_resource_untouched() {
+        let cases = [
+            ("class:barbarian", 1u8, "class_chassis.barbarian.rage_rounds_per_day"),
+            ("class:bard", 1, "class_chassis.bard.bardic_performance_rounds_per_day"),
+            ("class:monk", 4, "class_chassis.monk.ki_pool_size"),
+            ("class:paladin", 2, "class_chassis.paladin.lay_on_hands_uses_per_day"),
+        ];
+        let feats = ["Extra Rage", "Extra Performance", "Extra Ki", "Extra Lay On Hands"];
+
+        for (index, (class_id, level, total_id)) in cases.iter().enumerate() {
+            let baseline = character(class_id, *level);
+            let base = explanation_value(&baseline, total_id)
+                .unwrap_or_else(|| panic!("{total_id} must be computed"));
+
+            for (feat_index, feat) in feats.iter().enumerate() {
+                if feat_index == index {
+                    continue;
+                }
+                let mut other = baseline.clone();
+                other.chosen.selected_feats.push((*feat).to_owned());
+                assert_eq!(
+                    explanation_value(&other, total_id),
+                    Some(base),
+                    "{feat} must not move {total_id}"
+                );
+            }
+        }
+    }
+
+    /// The load-bearing consistency check. Rage's and Bardic
+    /// Performance's per-day budgets are read in THREE separate places
+    /// each (the displayed total plus two activation-budget checks), so
+    /// raising only the displayed total would let a character be shown 13
+    /// rounds while still being judged over budget at 8 -- the same
+    /// two-spot divergence the Rage/Charmed Life budget work already hit
+    /// once.
+    ///
+    /// A Barbarian with Extra Rage who has consumed more than the BASE
+    /// budget but no more than the EXTENDED one must still be validly
+    /// raging, which is only true if the budget check sees the feat too.
+    #[test]
+    fn extra_rage_widens_the_activation_budget_not_merely_the_displayed_total() {
+        let mut input = character("class:barbarian", 1);
+        input.chosen.selected_feats.push("Extra Rage".to_owned());
+        // Fixture Constitution 14 (+2): base budget is 4 + 2 = 6 rounds,
+        // extended to 12 by Extra Rage. 9 is over base, within extended.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: "rage".to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(9),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let over_budget = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.contains("rounds_exceeded") || d.id.contains("budget"));
+
+        assert!(
+            !over_budget,
+            "9 rounds is within the Extra-Rage-extended budget; the activation check must see \
+             the feat, not just the displayed total: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Same three-spot property for Bardic Performance, whose displayed
+    /// total is computed INLINE while its two budget checks call the
+    /// shared formula -- the likeliest place for the two to drift apart.
+    #[test]
+    fn extra_performance_widens_the_activation_budget_not_merely_the_displayed_total() {
+        let mut input = character("class:bard", 1);
+        input.chosen.selected_feats.push("Extra Performance".to_owned());
+        // Fixture Charisma 8 (-1): base budget is 4 + (-1) = 3 rounds,
+        // extended to 9. 5 is over base, within extended.
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: "bardic_performance".to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(5),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id.contains("rounds_exceeded")),
+            "5 rounds is within the Extra-Performance-extended budget; the activation check must \
+             see the feat: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 }
