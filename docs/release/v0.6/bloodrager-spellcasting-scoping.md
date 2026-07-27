@@ -36,6 +36,16 @@ and it needs no spell list at all.
 
 ## The spell list is far smaller than the "201 records" tag implied
 
+> **Corrected 2026-07-27 (was 183, "100% grafts").** This section's own
+> `CLASSES:Bloodrager=` substring grep only matches when Bloodrager is last
+> in its comma group — the same bug later found and fixed on Witch (task
+> #23). Real count is **200**: 183 `.MOD` grafts (as found here) **plus 17
+> genuinely new, non-`.MOD` ACG spells** the substring grep couldn't see —
+> so "100% grafts, no from-scratch ingestion cost" was wrong; there is a
+> small new-content cost after all. Levels 1-4 stand corrected too:
+> 55/49/54/42, not 47/44/51/41. See task #1's later correction (`0ca6fd89`)
+> and `risks-and-open-questions.md` item 53.
+
 Re-derived directly from `acg_spells.lst`:
 
 | measure | real value |
@@ -56,6 +66,12 @@ measurement-shape error as the Alchemist Ultimate-Magic hazard and the
 ACG spell-list module's own corrected "145 → 144".
 
 ## But 40% of the list is unreachable in this repo's corpus
+
+> **Corrected 2026-07-27**: against the true 200-entry list, 127 resolve
+> and 73 remain unreachable (~36%, not 40%) — the 17 spells this doc
+> missed were separately confirmed all corpus-reachable when the count was
+> fixed, so the *unreachable* set itself (73) didn't change, only the
+> denominator did. Per-level ACG counts corrected above to 55/49/54/42.
 
 Matching all 183 names against the 1,075 spell keys actually ingested
 under `data/corpus/`:

@@ -3,8 +3,10 @@
 > Directed by the lead: Alchemist was assessed "not cheap" back when the
 > Alchemist formula-list ingestion itself was the blocker (no list existed).
 > Investigator (#8) has since built the shared `alchemist_spell_list`
-> module (the 104 real `Alchemist=N` records), so that specific cost is
-> gone. Re-scope Alchemist fresh against current state, not the old
+> module (the 104 real `Alchemist=N` records — **corrected 2026-07-27 to
+> the true 121**, task #24 `5f9f23aa`; the original figure missed every
+> spell where Alchemist wasn't last in its `CLASSES:` comma group), so that
+> specific cost is gone. Re-scope Alchemist fresh against current state, not the old
 > assumption: (1) confirm its real casting shape and whether spellcasting
 > is now a big lift or just a validation function reusing the shared list,
 > (2) check each remaining feature against the corrected standalone-

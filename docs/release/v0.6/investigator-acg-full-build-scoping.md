@@ -179,7 +179,12 @@
   (`push_alchemist_spellcasting_deferred_diagnostic`,
   `pilot_compute.rs:8585`), so no Alchemist list was ever built.
 - The **raw source exists**: `apg_spells.lst` has **104 records** carrying
-  an `Alchemist=N` class token (extracts, levels 1–6). So an
+  an `Alchemist=N` class token (extracts, levels 1–6) — **corrected
+  2026-07-27: the true count is 121**, this figure undercounted every
+  spell where Alchemist wasn't the last name in its `CLASSES:` comma
+  group; see task #24 (`5f9f23aa`). The two further "~104-record" mentions
+  below (decision framing, not a re-derivation) share the same correction.
+  So an
   `alchemist_spell_list.rs` (the `(&str, u8)` mapping shape of
   `cleric_spell_list.rs`) is buildable via the same one-off-ingestion
   discipline that produced the CRB lists — parsing each `CLASSES:...

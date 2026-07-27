@@ -9,6 +9,13 @@
 
 ## The spell list — 104 records, corpus-native, no external lookup needed
 
+> **Count corrected 2026-07-27 (was 104).** The `Alchemist=N` grep this doc
+> and the shipped module both used only matches when Alchemist is the LAST
+> name in its `CLASSES:` comma group — the same bug found and fixed on
+> Witch/Bloodrager (task #23/#24). Real count is **121** (30 new + 91
+> `.MOD` grafts, not 13 new), levels 20/30/23/18/15/15. See task #24
+> (`5f9f23aa`) and `risks-and-open-questions.md` item 53.
+
 Extracted directly from `apg_spells.lst` (not hand-transcribed — verified
 via a Python pass over the raw file, cross-checked against the file's own
 per-level `Alchemist=N` token count):

@@ -18,7 +18,10 @@
 Confirmed still accurate from the earlier Investigator scoping: closing
 spellcasting means building the shared **Alchemist formula spell-list** — a
 new `alchemist_spell_list.rs` `(&str, u8)` mapping ingested from the **104
-real `Alchemist=N` records** in `apg_spells.lst` — then wiring
+real `Alchemist=N` records** in `apg_spells.lst` (**corrected 2026-07-27:
+the real count is 121** — a `CLASSES:.*Alchemist=` substring grep misses
+any spell where Alchemist isn't last in its comma group; see task #24,
+`5f9f23aa`) — then wiring
 Investigator's prepared-caster validation (`SPELLSTAT:INT MEMORIZE:YES
 SPELLBOOK:YES`, reusing the Wizard/Arcanist prepared shape). ~Warpriest-
 sized, and high-leverage: the list also unblocks Alchemist's own deferred
