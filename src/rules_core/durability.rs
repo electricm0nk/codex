@@ -231,3 +231,102 @@ mod tests {
         assert_eq!(classify_durability(-20, 0, 14), DurabilityStatus::Dead);
     }
 }
+
+/// v0.6 alpha swarm, task #11 Tier 0 (2026-07-27): the familiar's master
+/// benefit, which is a flat bonus on the MASTER and reads nothing from
+/// the familiar creature's own stat block.
+/// The canonical familiar species a spellcaster may bond with (v0.6
+/// alpha swarm, task #11 Tier 0, 2026-07-27).
+///
+/// Only the four whose master benefit lands on a total this engine
+/// actually computes are represented. The other seven standard familiars
+/// (Bat, Cat, Hawk, Monkey, Owl, Raven, Viper) grant flat skill bonuses
+/// on skills this engine does not compute, so they would ground as
+/// standalone facts rather than reaching a total, and are deferred with
+/// the rest of the chooser.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum FamiliarSpecies {
+    /// `BONUS:HP|CURRENTMAX|FamiliarGrantedBonus_3` -- the canonical pick.
+    Toad,
+    /// `BONUS:SAVE|Fortitude|FamiliarGrantedBonus_2`.
+    Rat,
+    /// `BONUS:SAVE|Reflex|FamiliarGrantedBonus_2`.
+    Weasel,
+    /// `BONUS:SKILL|Climb|FamiliarGrantedBonus_3`.
+    Lizard,
+}
+
+/// The Toad familiar's flat bonus to its master's maximum hit points.
+///
+/// Verified against `core_essentials/ce_abilities_familiar_cr.lst`'s own
+/// `Familiar Granted Bonus (Toad)` record, whose
+/// `BONUS:HP|CURRENTMAX|FamiliarGrantedBonus_3` resolves through
+/// `BONUS:VAR|FamiliarGrantedBonus_3|3` in that same file.
+///
+/// **Provenance is not a reachability problem, despite appearances.**
+/// These records live under `core_essentials/`, which is not one of the
+/// four books this repo ingests -- easy to mistake for the
+/// Bloodrager-style unreachable-content case. The file itself declares
+/// `SOURCELONG:Core Rulebook` / `SOURCESHORT:CR`, and `core_essentials`
+/// is PCGen's own ORGANISATIONAL directory rather than a rulebook. These
+/// are Core Rulebook rules.
+///
+/// **The negative setters are provably vacuous here.** The tree also
+/// carries `FamiliarGrantedBonus_N|-1/-2/-3/-4` lines, some gated on
+/// `PREVAREQ:FamiliarBondFeatActive,1`, which would cancel the bonus.
+/// Every one lives in `player_companion/familiar_folio` or
+/// `horror_adventures`, neither ingested here -- verified by tracing all
+/// twelve setters to their files, the same check that cleared
+/// Alchemist's Ultimate-Magic Bomb override. Re-verify if the ingested
+/// book set ever widens.
+const FAMILIAR_TOAD_MAX_HP_BONUS: i16 = 3;
+
+/// The familiar's flat contribution to its master's maximum hit points.
+///
+/// Returns 0 for a character with no familiar and for every species
+/// whose master benefit lands somewhere other than hit points. Kept in
+/// this module because `durability.rs` owns hit points, and applied as a
+/// per-character add-on at the same consumer that already layers
+/// Toughness's feat bonus -- not folded into `compute_max_hp`, which
+/// owns only the class hit-die table.
+pub fn familiar_master_hp_bonus(species: Option<FamiliarSpecies>) -> i16 {
+    match species {
+        Some(FamiliarSpecies::Toad) => FAMILIAR_TOAD_MAX_HP_BONUS,
+        _ => 0,
+    }
+}
+
+#[cfg(test)]
+mod familiar_master_bonus_tests {
+    use super::*;
+
+    #[test]
+    fn a_toad_familiar_grants_its_master_three_max_hit_points() {
+        assert_eq!(familiar_master_hp_bonus(Some(FamiliarSpecies::Toad)), 3);
+    }
+
+    /// Every other canonical familiar's benefit lands somewhere other
+    /// than hit points, so the HP bonus must be 0 for them -- and 0 for
+    /// a character with no familiar at all.
+    #[test]
+    fn only_the_toad_contributes_to_hit_points() {
+        assert_eq!(familiar_master_hp_bonus(None), 0);
+        for species in [FamiliarSpecies::Rat, FamiliarSpecies::Weasel, FamiliarSpecies::Lizard] {
+            assert_eq!(familiar_master_hp_bonus(Some(species)), 0, "{species:?} is not an HP familiar");
+        }
+    }
+
+    /// The whole point of picking Toad as canonical: its bonus reaches
+    /// the REAL computed max-HP total, not just an explanation record.
+    /// Differenced against the same build without a familiar.
+    #[test]
+    fn the_toad_bonus_actually_raises_a_real_computed_max_hp_total() {
+        let levels = [CharacterClassLevel {
+            class_id: "class:fighter".to_owned(),
+            level: 1,
+        }];
+        let base = compute_max_hp(&levels, 2).expect("fighter max hp");
+        let with_toad = base + familiar_master_hp_bonus(Some(FamiliarSpecies::Toad));
+        assert_eq!(with_toad - base, 3, "a Toad familiar is worth 3 real hit points");
+    }
+}

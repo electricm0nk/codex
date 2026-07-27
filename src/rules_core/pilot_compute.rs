@@ -122,6 +122,7 @@ use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, reso
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
+use crate::rules_core::durability::FamiliarSpecies;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::bard_spell_list;
@@ -2589,6 +2590,14 @@ const WITCH_CLASS_ID: &str = "class:witch";
 /// The choice set for which Hex a Witch selects at 1st level (mirrors
 /// `ORACLE_MYSTERY_CHOICE_ID`'s own single-selection shape).
 const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
+/// The choice set naming which familiar species a spellcaster bonded
+/// with (task #11 Tier 0, 2026-07-27). Shared by Witch and Shaman: both
+/// corpus records delegate to the same `Standard Familiar List`, so this
+/// closure follows the corpus rather than RAW's spirit-linked reading
+/// (lead ruling), and one implementation closes the familiar slot for
+/// both classes.
+const FAMILIAR_CHOICE_ID: &str = "choice:familiar_species";
+const FAMILIAR_TOAD_SELECTION: &str = "familiar:toad";
 /// Ward is the one canonical Hex this closure grounds -- the cleanest of
 /// the ~19 base hexes checked: a flat, self-scoped deflection/resistance
 /// bonus with no opponent/save-DC interaction (most other hexes --
@@ -11491,6 +11500,79 @@ fn ground_summoner_eidolon(
 /// the claim-blocking hex-powers diagnostic with a non-blocking note
 /// naming the other ~18 hexes as still deferred, mirroring Oracle's own
 /// Mystery/Curse three-branch dispatch shape (and Warpriest's Blessing
+/// Resolves the character's bonded familiar species from an explicit
+/// recorded choice (task #11 Tier 0, 2026-07-27).
+///
+/// Class-ownership-gated to Witch and Shaman, the two classes whose
+/// corpus records set `FamiliarMasterLVL` and delegate to the shared
+/// `Standard Familiar List`. Requires an explicit pick and seeds
+/// nothing: a familiar chooser's entire value IS which species was
+/// bonded, the same no-silent-seeding line ratified for Skill Focus.
+///
+/// Toad is the one canonical species recognised, chosen because its
+/// master benefit is the only one landing on max hit points -- the most
+/// load-bearing total in the app -- making this a genuine integration
+/// rather than another standalone record.
+fn bonded_familiar_species(input: &CharacterInput) -> Option<FamiliarSpecies> {
+    let owns_familiar_class = input.chosen.class_levels.iter().any(|class_level| {
+        class_level.class_id == WITCH_CLASS_ID || class_level.class_id == SHAMAN_CLASS_ID
+    });
+    if !owns_familiar_class {
+        return None;
+    }
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .any(|c| {
+            c.choice_set_id == FAMILIAR_CHOICE_ID && c.selection_id == FAMILIAR_TOAD_SELECTION
+        })
+        .then_some(FamiliarSpecies::Toad)
+}
+
+/// The familiar's flat hit-point contribution for this character, ready
+/// to layer onto a real max-HP total at its consumer.
+pub fn character_familiar_hp_bonus(input: &CharacterInput) -> i16 {
+    crate::rules_core::durability::familiar_master_hp_bonus(bonded_familiar_species(input))
+}
+
+/// Grounds the familiar's master benefit (task #11 Tier 0, 2026-07-27).
+///
+/// The design pass's own first-look prediction was that a familiar would
+/// need a Tier-2 creature-stat-block pillar, on the reasoning that a
+/// familiar has its own stat block so its properties are genuine inputs.
+/// For the part that reaches the character sheet that is false: the
+/// master benefit is a flat magnitude on the MASTER that reads nothing
+/// from the familiar creature at all. The creature's own stat block is
+/// genuinely Tier-2-shaped, and stays deferred with the Eidolon MVP
+/// recorded as its template.
+fn ground_familiar_master_benefit(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(species) = bonded_familiar_species(input) else {
+        return;
+    };
+    let hp_bonus = crate::rules_core::durability::familiar_master_hp_bonus(Some(species));
+    explanations.push(ComputationExplanation {
+        id: "class_feature.familiar.master_hit_point_bonus".to_owned(),
+        value: hp_bonus,
+        detail: format!(
+            "Bonded Toad familiar: its master gains +{hp_bonus} maximum hit points \
+             (`BONUS:HP|CURRENTMAX|FamiliarGrantedBonus_3`). INTEGRATED into the real computed \
+             max-HP total rather than grounded as a standalone record -- it is layered on as a \
+             per-character add-on at the same consumer that already applies Toughness's feat \
+             bonus, not folded into the class hit-die table. The familiar's own creature stat \
+             block (its hit dice, saves, skills and Intelligence, all scaling off master level \
+             {level}) is deferred. The corpus states the benefit applies only while master and \
+             familiar are within a mile of each other; the cancelling setters for that condition \
+             live in books this repo does not ingest, so within this scope the bonus is \
+             unconditional"
+        ),
+    });
+}
+
 /// shape before that). An unrecognized or missing choice keeps a
 fn ground_or_block_witch_class_features(
     input: &CharacterInput,
@@ -11498,6 +11580,8 @@ fn ground_or_block_witch_class_features(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    ground_familiar_master_benefit(input, level, explanations);
+
     let hex_selections: Vec<&str> = input
         .chosen
         .selected_choices
@@ -13993,6 +14077,8 @@ fn ground_or_block_shaman_class_features(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    ground_familiar_master_benefit(input, level, explanations);
+
     let spirit_selections: Vec<&str> = input
         .chosen
         .selected_choices
@@ -44148,6 +44234,69 @@ mod opponent_conditioned_tier_zero_tests {
         assert_eq!(value(&character(SLAYER_CLASS_ID, 7), "class_feature.acg.slayer.studied_target_count"), Some(2));
     }
 
+
+
+    /// The familiar's master benefit grounds only on an explicit species
+    /// pick, and only for a class that actually gets a familiar.
+    #[test]
+    fn the_familiar_benefit_needs_both_a_familiar_class_and_an_explicit_pick() {
+        let mut witch = character("class:witch", 5);
+        assert_eq!(
+            value(&witch, "class_feature.familiar.master_hit_point_bonus"),
+            None,
+            "no familiar is seeded"
+        );
+        witch.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+            selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+        });
+        assert_eq!(value(&witch, "class_feature.familiar.master_hit_point_bonus"), Some(3));
+
+        // Same pick on a class with no familiar grounds nothing.
+        let mut fighter = character("class:fighter", 5);
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+            selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+        });
+        assert_eq!(value(&fighter, "class_feature.familiar.master_hit_point_bonus"), None);
+    }
+
+    /// One implementation closes the familiar slot for BOTH classes --
+    /// the corpus routes Shaman's Spirit Animal through the same
+    /// `Standard Familiar List` as Witch's Familiar (corpus-first, per
+    /// the lead's ruling on the RAW-vs-corpus divergence).
+    #[test]
+    fn shaman_and_witch_share_one_familiar_implementation() {
+        for class_id in ["class:witch", "class:shaman"] {
+            let mut input = character(class_id, 5);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+                selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+            });
+            assert_eq!(
+                value(&input, "class_feature.familiar.master_hit_point_bonus"),
+                Some(3),
+                "{class_id} must get the same familiar benefit"
+            );
+            assert_eq!(super::character_familiar_hp_bonus(&input), 3, "{class_id} HP bonus");
+        }
+    }
+
+    /// The bonus reaching a real max-HP total is the whole reason Toad
+    /// was picked as canonical, so the consumer-facing helper is
+    /// differenced directly rather than trusted via the record.
+    #[test]
+    fn the_consumer_helper_reports_zero_without_a_familiar_and_three_with_one() {
+        let bare = character("class:witch", 5);
+        assert_eq!(super::character_familiar_hp_bonus(&bare), 0);
+
+        let mut bonded = bare.clone();
+        bonded.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+            selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+        });
+        assert_eq!(super::character_familiar_hp_bonus(&bonded) - super::character_familiar_hp_bonus(&bare), 3);
+    }
 
     /// Slayer's talent count: `SlayerLVL/2` -- one at 2nd, ten by 20th.
     ///

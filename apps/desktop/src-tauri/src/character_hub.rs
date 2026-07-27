@@ -1862,8 +1862,16 @@ fn load_character_durability_at_root(root: &Path) -> Result<CharacterDurabilityD
     // of the class/Constitution-derived base, not folded into
     // compute_max_hp itself -- feat effects are a per-character add-on, not
     // part of the class hit-die table durability.rs owns.
+    // v0.6 alpha swarm task #11 Tier 0 (2026-07-27): a bonded Toad
+    // familiar's real +3 maximum hit points layers on here too, the same
+    // per-character add-on shape as the feat bonus above -- deliberately
+    // not folded into compute_max_hp, which owns only the class hit-die
+    // table.
     let max_hp = base_max_hp
-        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats);
+        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats)
+        + codex::rules_core::pilot_compute::character_familiar_hp_bonus(
+            &envelope.character_input,
+        );
 
     let path = root.join(HP_FILE_NAME);
     let stored: StoredHp = if path.exists() {
