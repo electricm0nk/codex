@@ -210,8 +210,8 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         ),
         (
             AcgClassId::Slayer,
-            "Sneak Attack + Trap Sense + Trapfinding + Track",
-            4,
+            "Sneak Attack + Trap Sense + Trapfinding + Track + Studied Target",
+            5,
         ),
         (
             AcgClassId::Swashbuckler,
@@ -221,8 +221,9 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         ),
         (
             AcgClassId::Investigator,
-            "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy",
-            5,
+            "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy \
+             + spellcasting + Studied Combat + Studied Strike",
+            8,
         ),
         (AcgClassId::Shaman, "Life Spirit Channel", 1),
     ] {

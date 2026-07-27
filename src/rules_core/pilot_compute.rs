@@ -2542,6 +2542,18 @@ const SWASHBUCKLER_CHARMED_LIFE_MIN_LEVEL: u8 = 2;
 /// comment). See `docs/release/v0.6/investigator-acg-full-build-scoping.md`
 /// for the full corpus verification and scope record.
 const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
+/// Studied Defense is an Investigator TALENT gated
+/// `PREVARGTEQ:InvestigatorTalentLVL,9`. That variable IS properly set
+/// (`BONUS:VAR|InvestigatorTalentLVL|InvestigatorLVL`) -- checked
+/// tree-wide rather than assumed by analogy to Swashbuckler's deed gate,
+/// which superficially resembles it but genuinely is never set.
+const INVESTIGATOR_STUDIED_DEFENSE_LEVEL: u8 = 9;
+/// Studied Defense redirects Studied Combat's SAME insight bonus from
+/// attack rolls to Armor Class. One magnitude, two destinations, chosen
+/// by the player -- so it takes an explicit recorded choice under the
+/// ratified Skill Focus precedent, never a canonical default.
+const INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID: &str = "choice:investigator_studied_defense";
+const INVESTIGATOR_STUDIED_DEFENSE_SELECTION: &str = "studied_defense:armor_class";
 
 /// v0.6 alpha swarm, risks item 8 (Witch full-build closure, 11th
 /// ACG/APG class-specific closure): APG Witch, verified directly against
@@ -8953,6 +8965,21 @@ fn ground_cavalier_named_features(
         ),
     });
 
+    if active_cavalier_challenge_armor_class_penalty(input).is_some() {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.challenge_damage_bonus".to_owned(),
+            value: i16::from(level),
+            detail: format!(
+                "Cavalier level {level} Challenge: +{level} extra damage on attacks made AGAINST \
+                 THE TARGET of the challenge (`BONUS:VAR|CavalierChallengeLVL|CavalierLVL`). \
+                 Grounds standalone -- the formula reads only the cavalier's own level, nothing \
+                 about the opponent. Note this scope is the INVERSE of the challenge's Armor \
+                 Class penalty, which applies against everyone EXCEPT that target; the two must \
+                 not be conflated"
+            ),
+        });
+    }
+
     match active_cavalier_challenge_armor_class_penalty(input) {
         Some(penalty) => explanations.push(ComputationExplanation {
             id: "class_feature.apg.cavalier.challenge_armor_class_penalty".to_owned(),
@@ -12702,11 +12729,55 @@ fn slayer_track_bonus(level: u8) -> i16 {
 /// `other_features_deferred` diagnostic naming Studied Target
 /// (opponent-dependent) and Slayer Talents (a chooser-list) as the
 /// genuinely still-missing pieces.
+/// Slayer's Studied Target insight bonus: `SlayerLVL/5 + 1` on attack
+/// and damage rolls (and several skills) against the studied target.
+///
+/// Grounds standalone despite being target-conditioned. The formula
+/// reads only the slayer's own level -- nothing about the opponent --
+/// and the decisive precedent is this class's OWN Sneak Attack dice,
+/// already grounded standalone though it is flanking-conditional.
+/// (Lead ruling, risks item 52, reversing the earlier
+/// opponent-dependent-defers line.)
+fn slayer_studied_target_bonus(level: u8) -> i16 {
+    i16::from(level) / 5 + 1
+}
+
+/// How many targets a Slayer may have studied at once:
+/// `(SlayerLVL>0)+(SlayerLVL>6)` -- one from 1st level, two from 7th.
+fn slayer_studied_target_count(level: u8) -> i16 {
+    let level = i16::from(level);
+    [0, 6].iter().map(|gate| i16::from(level > *gate)).sum()
+}
+
 fn ground_or_block_slayer_class_features(
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let studied_bonus = slayer_studied_target_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.studied_target_bonus".to_owned(),
+        value: studied_bonus,
+        detail: format!(
+            "Slayer level {level} Studied Target: a +{studied_bonus} insight bonus (level/5 + 1) \
+             on attack and damage rolls against a target he has studied, and on Bluff, \
+             Knowledge, Perception, Sense Motive, and Survival checks about it. Grounds \
+             standalone: the formula reads only the slayer's own level, nothing about the \
+             opponent, and this class's own Sneak Attack dice is already grounded the same way \
+             despite being flanking-conditional. Which creature is studied is not modelled"
+        ),
+    });
+    let studied_count = slayer_studied_target_count(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.slayer.studied_target_count".to_owned(),
+        value: studied_count,
+        detail: format!(
+            "Slayer level {level} may have {studied_count} target(s) studied at once \
+             ((level>0)+(level>6) -- one from 1st level, a second from 7th). A flat capacity \
+             fact; no target identity or per-target state is tracked"
+        ),
+    });
+
     let sneak_attack_dice = slayer_sneak_attack_dice(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.slayer.sneak_attack_dice".to_owned(),
@@ -13552,6 +13623,44 @@ fn ground_investigator_prepared_extracts(
 /// (deferred to its own follow-on slice pending an Alchemist formula
 /// spell list), Inspiration's use, and Investigator Talents (a chooser-
 /// list) as the genuinely still-missing pieces.
+/// Investigator's Studied Combat insight bonus: `InvestigatorLVL/2`, on
+/// attack and damage rolls against the studied creature. Same
+/// own-level-only shape as Slayer's Studied Target.
+fn investigator_studied_combat_bonus(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// Studied Combat's duration in rounds: `max(1, INT)`.
+///
+/// Grounded as a FACT but explicitly NOT enforced -- this engine has no
+/// round clock, the same honest gap already named for Bloodrage's
+/// post-rage fatigue.
+fn investigator_studied_combat_duration(intelligence_modifier: i16) -> i16 {
+    intelligence_modifier.max(1)
+}
+
+/// Studied Strike's damage dice: `min(9, (InvestigatorLVL-2)/2)` d6.
+/// Genuinely 0 below 4th level, reaching 9d6 at 20th.
+///
+/// **The `clamp(0, 9)` is inert across the whole real level range** and
+/// is kept only for fidelity to the corpus token. `(20-2)/2` is exactly
+/// 9, so the upper bound never binds; and Rust's truncating division
+/// makes `(1-2)/2` evaluate to 0 rather than -1, so the lower bound
+/// never binds either. Removing the clamp changes no value an
+/// Investigator can reach, which means a test cannot distinguish the
+/// clamped from the unclamped form.
+///
+/// This is the SECOND instance of this shape in as many closures --
+/// Brawler's Flurry `min(...,3)` cap is the same -- so it is worth
+/// recognising as a pattern: PF1 formulas routinely carry defensive
+/// bounds that the class's own 1-20 range never reaches. Transcribe
+/// them, but do not mistake a test that exercises the bounded values for
+/// coverage OF the bound.
+fn investigator_studied_strike_dice(level: u8) -> i16 {
+    let raw = (i16::from(level) - 2) / 2;
+    raw.clamp(0, 9)
+}
+
 fn ground_or_block_investigator_class_features(
     input: &CharacterInput,
     level: u8,
@@ -13559,6 +13668,68 @@ fn ground_or_block_investigator_class_features(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let studied_combat = investigator_studied_combat_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.studied_combat_bonus".to_owned(),
+        value: studied_combat,
+        detail: format!(
+            "Investigator level {level} Studied Combat: a +{studied_combat} insight bonus \
+             (level/2) on attack and damage rolls against the creature he is studying. Grounds \
+             standalone -- the formula reads only the investigator's own level, nothing about \
+             the opponent, the same basis on which Slayer's Sneak Attack dice already grounds \
+             despite being flanking-conditional. Which creature is studied is not modelled"
+        ),
+    });
+    let duration = investigator_studied_combat_duration(ability_modifiers.intelligence);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.investigator.studied_combat_duration".to_owned(),
+        value: duration,
+        detail: format!(
+            "Investigator level {level} Studied Combat lasts {duration} round(s) (max(1, \
+             Intelligence modifier {})). This duration is grounded as a fact but is NOT \
+             enforced: this engine has no round clock, so nothing expires it -- named honestly \
+             rather than silently modelled, the same idiom already used for Bloodrage's \
+             post-rage fatigue",
+            ability_modifiers.intelligence
+        ),
+    });
+
+    let strike_dice = investigator_studied_strike_dice(level);
+    if strike_dice > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.investigator.studied_strike_dice".to_owned(),
+            value: strike_dice,
+            detail: format!(
+                "Investigator level {level} Studied Strike: {strike_dice}d6 extra damage \
+                 (min(9, (level - 2)/2), so it genuinely does not exist below 4th level and caps \
+                 at 9d6). A weapon-damage magnitude, the same idiom as Alchemist's Bomb and \
+                 Swashbuckler's Precise Strike"
+            ),
+        });
+    }
+
+    if level >= INVESTIGATOR_STUDIED_DEFENSE_LEVEL
+        && input.chosen.selected_choices.iter().any(|c| {
+            c.choice_set_id == INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID
+                && c.selection_id == INVESTIGATOR_STUDIED_DEFENSE_SELECTION
+        })
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.investigator.studied_defense_ac_bonus".to_owned(),
+            value: studied_combat,
+            detail: format!(
+                "Investigator level {level} Studied Defense: the SAME +{studied_combat} insight \
+                 bonus is applied to Armor Class against the studied target instead of to attack \
+                 rolls against it. One magnitude, two destinations, chosen by the player -- so it \
+                 requires an explicit recorded choice and is never seeded, the same \
+                 no-silent-seeding design ratified for Skill Focus. The damage half of Studied \
+                 Combat is unaffected either way. Gated at investigator level \
+                 {INVESTIGATOR_STUDIED_DEFENSE_LEVEL} by the talent's own \
+                 `PREVARGTEQ:InvestigatorTalentLVL,9`"
+            ),
+        });
+    }
+
     let trapfinding_bonus = investigator_trapfinding_bonus(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.investigator.trapfinding_bonus".to_owned(),
@@ -43861,5 +44032,188 @@ mod brawler_remaining_feature_tests {
                 "a Fighter must not ground brawler.{frag}"
             );
         }
+    }
+}
+
+/// v0.6 alpha swarm, Tier 0 of the opponent-interaction architecture
+/// work (2026-07-27, risks item 52): the four target-conditioned
+/// features whose formulas turn out to read only the character's OWN
+/// level, needing no opponent-tracking pillar at all.
+#[cfg(test)]
+mod opponent_conditioned_tier_zero_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        ActiveState, CAVALIER_CHALLENGE_ABILITY_ID, CAVALIER_CLASS_ID, INVESTIGATOR_CLASS_ID,
+        INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID, INVESTIGATOR_STUDIED_DEFENSE_SELECTION,
+        SLAYER_CLASS_ID};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Studied Target: `SlayerLVL/5 + 1`, and the simultaneous-target
+    /// count `(L>0)+(L>6)` -- one target from 1st, two from 7th.
+    #[test]
+    fn slayer_studied_target_bonus_and_target_count_match_the_corpus() {
+        for (level, want) in [(1u8, 1i16), (4, 1), (5, 2), (9, 2), (10, 3), (20, 5)] {
+            assert_eq!(super::slayer_studied_target_bonus(level), want, "level {level}");
+        }
+        for (level, want) in [(1u8, 1i16), (6, 1), (7, 2), (20, 2)] {
+            assert_eq!(super::slayer_studied_target_count(level), want, "level {level}");
+        }
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 5), "class_feature.acg.slayer.studied_target_bonus"), Some(2));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 7), "class_feature.acg.slayer.studied_target_count"), Some(2));
+    }
+
+    /// Studied Combat's insight bonus is `InvestigatorLVL/2`, and its
+    /// duration `max(1, INT)` rounds grounds as a fact but is explicitly
+    /// UNENFORCED -- this engine has no round clock.
+    #[test]
+    fn investigator_studied_combat_grounds_its_bonus_and_an_unenforced_duration() {
+        for (level, want) in [(1u8, 0i16), (2, 1), (7, 3), (20, 10)] {
+            assert_eq!(super::investigator_studied_combat_bonus(level), want, "level {level}");
+        }
+        // Fixture INT 10 -> modifier 0 -> duration max(1, 0) = 1.
+        assert_eq!(super::investigator_studied_combat_duration(0), 1);
+        assert_eq!(super::investigator_studied_combat_duration(4), 4);
+
+        let input = character(INVESTIGATOR_CLASS_ID, 6);
+        assert_eq!(value(&input, "class_feature.acg.investigator.studied_combat_bonus"), Some(3));
+        let duration = build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == "class_feature.acg.investigator.studied_combat_duration")
+            .expect("duration must ground");
+        assert!(
+            duration.detail.to_lowercase().contains("not enforced"),
+            "the duration must be named as unenforced: {duration:?}"
+        );
+    }
+
+    /// Studied Strike: `min(9, (level-2)/2)` d6, genuinely absent below
+    /// 4th and reaching 9d6 at 20th.
+    ///
+    /// Note the corpus clamp is NOT meaningfully covered here and cannot
+    /// be: `(20-2)/2` is already exactly 9 and Rust's truncating
+    /// division keeps the low end at 0, so neither bound ever binds.
+    /// Asserting the reachable values is the most this test can honestly
+    /// do -- the same limit as Brawler's Flurry cap.
+    #[test]
+    fn investigator_studied_strike_dice_cap_at_nine_and_start_at_fourth() {
+        for level in 1..4u8 {
+            assert_eq!(super::investigator_studied_strike_dice(level), 0, "level {level}");
+        }
+        for (level, want) in [(4u8, 1i16), (6, 2), (12, 5), (19, 8), (20, 9)] {
+            assert_eq!(super::investigator_studied_strike_dice(level), want, "level {level}");
+        }
+        assert_eq!(value(&character(INVESTIGATOR_CLASS_ID, 1), "class_feature.acg.investigator.studied_strike_dice"), None);
+        assert_eq!(value(&character(INVESTIGATOR_CLASS_ID, 6), "class_feature.acg.investigator.studied_strike_dice"), Some(2));
+    }
+
+    /// Studied Defense is a mechanism-B explicit choice: it redirects
+    /// the SAME magnitude from attack rolls to AC. One magnitude, two
+    /// destinations, player's pick -- never a silently seeded default.
+    #[test]
+    fn studied_defense_redirects_the_bonus_only_when_explicitly_chosen() {
+        let without = character(INVESTIGATOR_CLASS_ID, 10);
+        assert_eq!(
+            value(&without, "class_feature.acg.investigator.studied_defense_ac_bonus"),
+            None,
+            "nothing is seeded without an explicit choice"
+        );
+
+        let mut with = without.clone();
+        with.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID.to_owned(),
+            selection_id: INVESTIGATOR_STUDIED_DEFENSE_SELECTION.to_owned(),
+        });
+        // Level 10 -> bonus 5, redirected to AC.
+        assert_eq!(value(&with, "class_feature.acg.investigator.studied_defense_ac_bonus"), Some(5));
+    }
+
+    /// The talent gate is real: Studied Defense requires
+    /// `InvestigatorTalentLVL >= 9`, and that variable IS properly set
+    /// from `InvestigatorLVL` (unlike Swashbuckler's deed gate, which is
+    /// never set -- checked tree-wide rather than assumed by analogy).
+    #[test]
+    fn studied_defense_respects_its_ninth_level_talent_gate() {
+        let mut early = character(INVESTIGATOR_CLASS_ID, 8);
+        early.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID.to_owned(),
+            selection_id: INVESTIGATOR_STUDIED_DEFENSE_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&early, "class_feature.acg.investigator.studied_defense_ac_bonus"),
+            None,
+            "the talent is not available below investigator level 9"
+        );
+    }
+
+    /// Cavalier's Challenge grants `+CavalierLVL` damage against the
+    /// challenge target, and it applies only while actually challenging.
+    #[test]
+    fn cavalier_challenge_damage_grounds_only_while_challenging() {
+        let idle = character(CAVALIER_CLASS_ID, 1);
+        assert_eq!(value(&idle, "class_feature.apg.cavalier.challenge_damage_bonus"), None);
+
+        let mut challenging = idle.clone();
+        challenging.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CAVALIER_CHALLENGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+        assert_eq!(
+            value(&challenging, "class_feature.apg.cavalier.challenge_damage_bonus"),
+            Some(1)
+        );
+    }
+
+    /// The two Challenge scopes are INVERSE and must not be conflated:
+    /// the damage bonus applies ONLY against the challenge target, while
+    /// the -2 AC penalty applies against everyone EXCEPT that target.
+    #[test]
+    fn the_two_challenge_scopes_are_described_as_inverses_not_conflated() {
+        let mut challenging = character(CAVALIER_CLASS_ID, 1);
+        challenging.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CAVALIER_CHALLENGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+        let receipt = build_pilot_headless_receipt(&challenging);
+        let find = |id: &str| {
+            receipt.computation.explanations.iter().find(|e| e.id == id).cloned()
+        };
+        let damage = find("class_feature.apg.cavalier.challenge_damage_bonus").expect("damage");
+        let penalty =
+            find("class_feature.apg.cavalier.challenge_armor_class_penalty").expect("penalty");
+        assert!(
+            damage.detail.to_lowercase().contains("against the target"),
+            "damage is scoped TO the target: {damage:?}"
+        );
+        assert!(
+            penalty.detail.to_lowercase().contains("except against"),
+            "the AC penalty is scoped to everyone EXCEPT the target: {penalty:?}"
+        );
     }
 }
