@@ -6170,6 +6170,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // effects, not class-specific, so they ground for every character
     // regardless of chassis support.
     ground_standalone_feat_skill_facts(input, &mut explanations);
+    ground_orphan_feat_facts(input, &mut explanations);
 
     explain_fighter_class_features(input, &mut explanations);
 
@@ -16447,7 +16448,15 @@ fn explain_fighter_level1_hit_points(
     }
 
     let constitution_modifier = ability_modifiers.constitution;
-    let hit_points = FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS + constitution_modifier;
+    // v0.6 alpha swarm, task #22 (2026-07-27): Toughness is the ONE
+    // orphan feat_effects producer with a real computed total to land
+    // on, and this record's own doc text already named "Toughness / feat
+    // hit-point interplay" as its documented gap. Reads effective feats
+    // so a class-granted Toughness would count too.
+    let toughness_hit_points =
+        crate::rules_core::feat_effects::hp_bonus_from_feats(&effective_character_feats(input));
+    let hit_points =
+        FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS + constitution_modifier + toughness_hit_points;
     explanations.push(ComputationExplanation {
         id: "class_chassis.fighter.level_1_hit_points".to_owned(),
         value: hit_points,
@@ -16456,9 +16465,9 @@ fn explain_fighter_level1_hit_points(
              ({FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS}) + Constitution modifier \
              ({constitution_modifier:+}) = {hit_points}. This is a standalone grounded \
              record wired into no view-model total. Still unproven and out of scope: the \
-             favored-class +1 hp / +1 skill-rank choice (no input surface exists for it), \
-             hit points at levels 2+ (no average/rolled hit-die policy is grounded), and \
-             Toughness / feat hit-point interplay"
+             favored-class +1 hp / +1 skill-rank choice (no input surface exists for it) and \
+             hit points at levels 2+ (no average/rolled hit-die policy is grounded). Toughness \
+             now contributes its real +{toughness_hit_points} here"
         ),
     });
 }
@@ -29757,6 +29766,159 @@ fn compute_selected_skill_modifiers(
 /// Barbarian's Damage Reduction, Inquisitor's Smiting). Unconditional on
 /// class ownership or posture -- these are general feat effects, not
 /// class-specific, so every character's `selected_feats`/
+/// Grounds the `feat_effects` producers that target dimensions this
+/// engine computes NOWHERE (task #22, 2026-07-27): initiative,
+/// non-skill checks, combat maneuvers, unarmed strikes, and movement.
+///
+/// These eight producers were built, tested, and consumed by nothing --
+/// correct code that never ran. Seven of them ground standalone here
+/// under the corrected bar (a genuine, verifiable magnitude, honestly
+/// labelled as not-integrated); the eighth, Toughness, has a real total
+/// and is wired into the Fighter hit-point record instead.
+///
+/// Reads EFFECTIVE feats, so a Monk's automatically-granted Stunning
+/// Fist and a Ranger's granted Endurance reach these producers even
+/// though neither ever appears in `selected_feats`.
+fn ground_orphan_feat_facts(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::feat_effects;
+    let feats = effective_character_feats(input);
+
+    let initiative = feat_effects::initiative_bonus_from_feats(&feats);
+    if initiative != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.initiative_bonus".to_owned(),
+            value: initiative,
+            detail: format!(
+                "Improved Initiative grants a +{initiative} bonus on initiative checks. This \
+                 engine computes no initiative total anywhere, so this grounds as a standalone \
+                 flat record -- the same shape as Inquisitor's own Cunning Initiative and \
+                 Oracle's Deaf-curse initiative penalty"
+            ),
+        });
+    }
+
+    let endurance = feat_effects::endurance_check_bonus_from_feats(&feats);
+    if endurance != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.endurance_check_bonus".to_owned(),
+            value: endurance,
+            detail: format!(
+                "Endurance grants a +{endurance} bonus on checks to resist nonlethal damage, \
+                 hunger, thirst, exhaustion, and suffocation. None of those checks is computed \
+                 anywhere here, so this grounds standalone. A Ranger receives this feat \
+                 automatically at 3rd level and never selects it, which is why it is read from \
+                 the effective feat set rather than the chosen one"
+            ),
+        });
+    }
+
+    let speed = feat_effects::base_speed_bonus_from_feats(&feats);
+    if speed != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.base_speed_bonus".to_owned(),
+            value: speed,
+            detail: format!(
+                "Fleet increases base land speed by {speed} feet. Fleet is `STACK:YES MULT:YES`, \
+                 so repeated picks genuinely stack and the producer counts occurrences rather \
+                 than testing presence. This engine computes no movement total, so it grounds \
+                 standalone"
+            ),
+        });
+    }
+
+    let terrain = feat_effects::difficult_terrain_feet_from_feats(&feats);
+    if terrain != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.difficult_terrain_feet".to_owned(),
+            value: terrain,
+            detail: format!(
+                "Nimble Moves lets the character move {terrain} feet through difficult terrain \
+                 each round as though it were normal terrain. No movement or terrain state \
+                 exists in this engine, so this grounds standalone"
+            ),
+        });
+    }
+
+    for bonus in feat_effects::combat_maneuver_bonuses_from_feats(&feats) {
+        let slug = bonus.maneuver.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.standalone.combat_maneuver.{slug}.cmb"),
+            value: bonus.cmb_bonus,
+            detail: format!(
+                "{} grants a +{} bonus on {} combat maneuver checks. This engine computes no \
+                 combat maneuver bonus total, so this grounds standalone",
+                bonus.feat_key, bonus.cmb_bonus, bonus.maneuver
+            ),
+        });
+        if bonus.cmd_bonus != 0 {
+            explanations.push(ComputationExplanation {
+                id: format!("feat.standalone.combat_maneuver.{slug}.cmd"),
+                value: bonus.cmd_bonus,
+                detail: format!(
+                    "{} also grants a +{} bonus to Combat Maneuver Defense against {}. The six \
+                     Greater variants carry no CMD term at all in the corpus, so only the \
+                     Improved feats produce this record",
+                    bonus.feat_key, bonus.cmd_bonus, bonus.maneuver
+                ),
+            });
+        }
+    }
+
+    let total_level: u8 = input.chosen.class_levels.iter().map(|c| c.level).sum();
+    let monk_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|c| c.class_id == MONK_CLASS_ID)
+        .map(|c| c.level)
+        .unwrap_or(0);
+    let wisdom = ability_modifier(input.chosen.ability_scores.wisdom);
+    if let Some(facts) =
+        feat_effects::stunning_fist_facts_from_feats(&feats, total_level, monk_level, wisdom)
+    {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.stunning_fist.save_dc".to_owned(),
+            value: facts.save_dc,
+            detail: format!(
+                "Stunning Fist save DC: {} (10 + half total level + Wisdom modifier \
+                 ({wisdom:+})). A Monk is GRANTED this feat at 1st level and never selects it, \
+                 so it is read from the effective feat set. No unarmed-strike or \
+                 condition-resolution engine exists here, so this grounds standalone",
+                facts.save_dc
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.stunning_fist.uses_per_day".to_owned(),
+            value: facts.uses_per_day,
+            detail: format!(
+                "Stunning Fist uses per day: {} (monk level, plus one per four non-monk levels). \
+                 A flat daily pool -- no per-use consumption is tracked",
+                facts.uses_per_day
+            ),
+        });
+    }
+
+    for fact in feat_effects::spell_focus_facts_from_choices(&feats, &input.chosen.selected_choices)
+    {
+        let slug = fact.school_name.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.standalone.spell_focus.{slug}"),
+            value: fact.dc_bonus,
+            detail: format!(
+                "Spell Focus ({}) raises the save DC of that school's spells by +{}. \
+                 Deliberately NOT folded into this codebase's spell-save-DC records: those are \
+                 keyed by spell LEVEL while Spell Focus is keyed by SCHOOL, so integrating would \
+                 require inventing a level-to-school mapping that the records do not carry. \
+                 Grounds standalone instead",
+                fact.school_name, fact.dc_bonus
+            ),
+        });
+    }
+}
+
 /// `selected_choices` is scanned regardless of chassis support.
 fn ground_standalone_feat_skill_facts(
     input: &CharacterInput,
@@ -43142,5 +43304,118 @@ mod summoner_eidolon_tests {
                 .any(|e| e.id.contains("eidolon")),
             "a Fighter must ground no Eidolon record"
         );
+    }
+}
+
+/// v0.6 alpha swarm, task #22 (2026-07-27): the eight `feat_effects`
+/// producers that were built, tested, and consumed by nothing.
+///
+/// Only ONE has a real computed total to land on -- Toughness, whose
+/// hit-point bonus goes into the Fighter level-1 hit-point record that
+/// already named "Toughness / feat hit-point interplay" as its own
+/// documented gap. The other seven target dimensions this engine
+/// computes nowhere (initiative, non-skill checks, combat maneuvers,
+/// unarmed strikes, movement), so they ground as standalone records
+/// under the corrected bar rather than being left inert.
+#[cfg(test)]
+mod orphan_feat_producer_consumer_tests {
+    use super::{build_pilot_headless_receipt, CharacterInput};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn fighter() -> CharacterInput {
+        load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture")
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Toughness is the one orphan with a real total. Proven by
+    /// differencing the same character with and without it, so the
+    /// assertion cannot pass on a standalone record alone.
+    #[test]
+    fn toughness_actually_raises_the_real_fighter_hit_point_total() {
+        let without = value(&fighter(), "class_chassis.fighter.level_1_hit_points")
+            .expect("fighter level-1 hit points must be computed");
+
+        let mut with = fighter();
+        with.chosen.selected_feats.push("Toughness".to_owned());
+        let raised = value(&with, "class_chassis.fighter.level_1_hit_points")
+            .expect("hit points must still be computed");
+
+        assert_eq!(raised - without, 3, "Toughness grants +3 hit points at low level");
+    }
+
+    /// The seven producers with no total to land on must still be
+    /// consumed -- grounded as standalone records rather than left
+    /// inert. Each keys on a feat the fixture does not have, so absence
+    /// is the baseline.
+    #[test]
+    fn the_seven_totalless_producers_ground_standalone_records_when_their_feat_is_present() {
+        for (feat, id, want) in [
+            ("Improved Initiative", "feat.standalone.initiative_bonus", 4),
+            ("Endurance", "feat.standalone.endurance_check_bonus", 4),
+            ("Fleet", "feat.standalone.base_speed_bonus", 5),
+            ("Nimble Moves", "feat.standalone.difficult_terrain_feet", 5),
+        ] {
+            let mut input = fighter();
+            assert_eq!(value(&input, id), None, "{id} must be absent without {feat}");
+            input.chosen.selected_feats.push(feat.to_owned());
+            assert_eq!(value(&input, id), Some(want), "{feat} -> {id}");
+        }
+    }
+
+    /// Improved Bull Rush grounds both its CMB and CMD halves; the
+    /// Greater variants genuinely carry no CMD term.
+    #[test]
+    fn combat_maneuver_feats_ground_their_cmb_and_cmd_halves() {
+        let mut input = fighter();
+        input.chosen.selected_feats.push("Improved Bull Rush".to_owned());
+        assert_eq!(value(&input, "feat.standalone.combat_maneuver.bull_rush.cmb"), Some(2));
+        assert_eq!(value(&input, "feat.standalone.combat_maneuver.bull_rush.cmd"), Some(2));
+    }
+
+    /// Stunning Fist reaches its producer through the class-granted feat
+    /// path -- a Monk never has it in `selected_feats`.
+    #[test]
+    fn a_monk_grounds_stunning_fist_without_ever_selecting_the_feat() {
+        let mut monk = fighter();
+        monk.chosen.class_levels =
+            vec![super::CharacterClassLevel { class_id: "class:monk".to_owned(), level: 4 }];
+        assert!(
+            !monk.chosen.selected_feats.iter().any(|f| f == "Stunning Fist"),
+            "the Monk must not have selected it -- the grant is what is under test"
+        );
+        // Fixture Wisdom 12 (+1): DC = 10 + 4/2 + 1 = 13.
+        assert_eq!(value(&monk, "feat.standalone.stunning_fist.save_dc"), Some(13));
+        assert_eq!(value(&monk, "feat.standalone.stunning_fist.uses_per_day"), Some(4));
+    }
+
+    /// Spell Focus grounds per chosen school. It is NOT integrated into
+    /// the per-spell-level save-DC records: those are keyed by spell
+    /// level while Spell Focus is keyed by school, so there is no
+    /// matching total to layer it onto without inventing a mapping.
+    #[test]
+    fn spell_focus_grounds_per_school_and_is_not_folded_into_level_keyed_dcs() {
+        let mut input = fighter();
+        input.chosen.selected_feats.push("Spell Focus".to_owned());
+        input.chosen.selected_choices.push(
+            crate::rules_core::character_input::SelectedChoice {
+                choice_set_id: "choice:spell_focus_target".to_owned(),
+                selection_id: "school:evocation".to_owned(),
+            },
+        );
+        assert_eq!(value(&input, "feat.standalone.spell_focus.evocation"), Some(1));
     }
 }
