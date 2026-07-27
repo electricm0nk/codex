@@ -2,13 +2,14 @@
 //! entry per real corpus record.
 //!
 //! Source: PCGen `advanced_class_guide/acg_spells.lst`, every record whose
-//! `CLASSES:` token names `Bloodrager=N` in any pipe-separated group.
-//! Independently re-derived for task #1 (2026-07-27): **183 records, of
-//! which 183 (all of them) are `.MOD` grafts onto an existing spell** —
-//! there is NO from-scratch ingestion cost here at all, unlike the
-//! Alchemist list (13 new + 91 grafts). The real spell name is the base
-//! name with `.MOD` stripped, and the level is read directly off that
-//! same line's own `CLASSES:` token.
+//! `CLASSES:` token names Bloodrager in any pipe-separated group.
+//! Independently re-derived for task #1 and corrected under task #24
+//! (2026-07-27): **200 records — 183 `.MOD` grafts onto an existing
+//! spell, plus 17 non-`.MOD` new ACG spells.** The real spell name is
+//! the base name with `.MOD` stripped, and the level is read directly
+//! off that same line's own `CLASSES:` token. Per-file ceiling check:
+//! `grep -c Bloodrager acg_spells.lst` is 202 against 201 matched lines
+//! (200 unique names), so the parse is not over-counted.
 //!
 //! Level breakdown, verified: **55 / 49 / 54 / 42** across spell levels
 //! 1-4, summing to 200.
@@ -20,13 +21,13 @@
 //! no daily cap" sentinel; reading it that way would fabricate at-will
 //! cantrips this class never gets.
 //!
-//! **Corpus reachability, stated plainly rather than implied away:
-//! some of these 200 spells resolve against this repo's own ingested
+//! **Corpus reachability, stated plainly rather than implied away: 127
+//! of these 200 spells resolve against this repo's own ingested
 //! `data/corpus/` spell records (1,075 keys); 73 do not.** The missing
 //! base records live in `ultimate_magic`, `ultimate_combat`, and
 //! `advanced_race_guide` — three books this repo does not ingest. Per
-//! spell level the resolved counts are 28 / 28 / 29 / 25. This list
-//! deliberately carries all 183 entries, because all 183 are genuinely on
+//! spell level the resolved counts are 36 / 33 / 32 / 26. This list
+//! deliberately carries all 200 entries, because all 200 are genuinely on
 //! Bloodrager's real PF1 spell list; the 73 unreachable ones surface
 //! through the existing unresolved-selection idiom rather than being
 //! silently dropped from the class's list. Ruling on accepting that gap:
