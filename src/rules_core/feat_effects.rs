@@ -465,6 +465,126 @@ pub fn endurance_check_bonus_from_feats(selected_feats: &[String]) -> i16 {
     }
 }
 
+/// Spell Focus / Greater Spell Focus catalog keys, and the Mechanism-B contract
+/// for recording their player-chosen school targets:
+/// `choice:spell_focus_target -> school:<name>` and
+/// `choice:greater_spell_focus_target -> school:<name>`. The `"school:"` prefix
+/// matches the convention already shipped for Wizard specialization
+/// (`choice:wizard_school_specialization -> school:evocation`).
+const SPELL_FOCUS_FEAT_KEY: &str = "Spell Focus";
+const GREATER_SPELL_FOCUS_FEAT_KEY: &str = "Greater Spell Focus";
+const SPELL_FOCUS_TARGET_CHOICE_SET: &str = "choice:spell_focus_target";
+const GREATER_SPELL_FOCUS_TARGET_CHOICE_SET: &str = "choice:greater_spell_focus_target";
+const SPELL_FOCUS_SCHOOL_SELECTION_PREFIX: &str = "school:";
+
+/// Spell Focus's real benefit: `+1` to the saving-throw DC of spells from the
+/// chosen school (`BONUS:DC|SCHOOL.%LIST|1|TYPE=SpellFocus`, `BENEFIT:` "Add +1
+/// to the Difficulty Class for all saving throws against spells from the school
+/// of magic you select"). Token and prose agree exactly.
+const SPELL_FOCUS_DC_BONUS: i16 = 1;
+
+/// Greater Spell Focus's real **total** with Spell Focus: `+2`.
+///
+/// This one needs care, because the corpus token and the printed rule look like
+/// they disagree. Greater Spell Focus carries
+/// `BONUS:DC|SCHOOL.%LIST|2|TYPE=SpellFocus` -- a bare `2` -- while its
+/// `BENEFIT:` prose reads "Add **+1** to the Difficulty Class ... This bonus
+/// stacks with the bonus from Spell Focus." Both are correct and describe the
+/// same outcome: PCGen takes the *highest* of same-typed bonuses, and both feats
+/// emit `TYPE=SpellFocus`, so holding Spell Focus (1) and Greater Spell Focus
+/// (2) resolves to `max(1, 2) = 2` -- which is exactly RAW's +1 stacked on +1.
+///
+/// The token is therefore a **total, not an increment**. Summing the two tokens
+/// would assert `+3`, a specific, checkable, wrong DC. This is the same class of
+/// trap as Extra Channel's `ABILITYPOOL|1` (deferred for contradicting its own
+/// "two additional times per day" prose) and is why every magnitude in this
+/// module is checked against `BENEFIT:` prose, not the `BONUS:` token alone.
+const GREATER_SPELL_FOCUS_DC_BONUS: i16 = 2;
+
+/// One grounded Spell Focus fact: the real saving-throw DC bonus applied to one
+/// specific, player-chosen school of magic.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SpellFocusFact {
+    /// The chosen school, verbatim from the `"school:<name>"` selection.
+    pub school_name: String,
+    /// [`SPELL_FOCUS_DC_BONUS`] (+1), raised to
+    /// [`GREATER_SPELL_FOCUS_DC_BONUS`] (+2) when Greater Spell Focus also
+    /// names this school.
+    pub dc_bonus: i16,
+}
+
+/// Every `school:<name>` target named by a given choice set, in input order,
+/// skipping malformed and empty selections.
+fn chosen_schools<'a>(selected_choices: &'a [SelectedChoice], choice_set_id: &str) -> Vec<&'a str> {
+    selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == choice_set_id)
+        .filter_map(|choice| choice.selection_id.strip_prefix(SPELL_FOCUS_SCHOOL_SELECTION_PREFIX))
+        .filter(|school| !school.is_empty())
+        .collect()
+}
+
+/// Grounds Spell Focus's real DC bonus per explicitly chosen school -- but
+/// **only** when Spell Focus is actually in `selected_feats` AND a matching
+/// `choice:spell_focus_target -> school:<name>` is present. Grounds nothing
+/// (never a fabricated canonical school) when either half is missing, exactly
+/// the no-silent-seeding contract ratified for Skill Focus: the entire value of
+/// a Focus feat IS which target the player chose.
+///
+/// One fact per distinct school, first-seen order, compared case-insensitively
+/// (both feats are `STACK:NO MULT:YES` -- repeatable across different schools,
+/// never stacking on the same one -- and the consumer lowercases the school name
+/// to build its explanation id, so case variants must not emit two records under
+/// one id).
+///
+/// Greater Spell Focus **raises an existing school's fact to `+2`** rather than
+/// adding a second record; see [`GREATER_SPELL_FOCUS_DC_BONUS`] for why that is
+/// a total rather than an increment. It deliberately grounds **nothing** for a
+/// school the character has no base Spell Focus in: that build cannot legally
+/// exist (`PREABILITY:1,CATEGORY=FEAT,Spell Focus`, and
+/// `CHOOSE:SCHOOLS|ABILITY=FEAT[Spell Focus]` restricts the target to a school
+/// already focused), and its magnitude in isolation is genuinely ambiguous
+/// between RAW's `+1` and the token's `2` -- so no checkable number is asserted
+/// for an impossible character. This differs from
+/// [`difficult_terrain_feet_from_feats`], which does honour Acrobatic Steps
+/// without its Nimble Moves prerequisite: there the magnitude is unambiguous
+/// either way, so reporting it is safe and prerequisite validation stays
+/// `feat_prereqs`' job. The distinction is ambiguity, not prerequisites.
+pub fn spell_focus_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<SpellFocusFact> {
+    if !selected_feats.iter().any(|feat| feat == SPELL_FOCUS_FEAT_KEY) {
+        return Vec::new();
+    }
+
+    let mut facts: Vec<SpellFocusFact> = Vec::new();
+    for school in chosen_schools(selected_choices, SPELL_FOCUS_TARGET_CHOICE_SET) {
+        let already_grounded = facts
+            .iter()
+            .any(|fact| fact.school_name.to_lowercase() == school.to_lowercase());
+        if !already_grounded {
+            facts.push(SpellFocusFact {
+                school_name: school.to_owned(),
+                dc_bonus: SPELL_FOCUS_DC_BONUS,
+            });
+        }
+    }
+
+    if selected_feats.iter().any(|feat| feat == GREATER_SPELL_FOCUS_FEAT_KEY) {
+        for school in chosen_schools(selected_choices, GREATER_SPELL_FOCUS_TARGET_CHOICE_SET) {
+            if let Some(fact) = facts
+                .iter_mut()
+                .find(|fact| fact.school_name.to_lowercase() == school.to_lowercase())
+            {
+                fact.dc_bonus = GREATER_SPELL_FOCUS_DC_BONUS;
+            }
+        }
+    }
+
+    facts
+}
+
 /// One real, corpus-verified combat-maneuver bonus granted by one feat.
 ///
 /// The PF1 Core Rulebook carries twelve of these in two uniform families:
@@ -1520,5 +1640,156 @@ mod movement_feat_tests {
         // than merely detected.
         let selected = feats(&["Fleet", "Fleet", "Fleet"]);
         assert_eq!(base_speed_bonus_from_feats(&selected), 15);
+    }
+}
+
+#[cfg(test)]
+mod spell_focus_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn base(school: &str) -> SelectedChoice {
+        choice("choice:spell_focus_target", &format!("school:{school}"))
+    }
+
+    fn greater(school: &str) -> SelectedChoice {
+        choice("choice:greater_spell_focus_target", &format!("school:{school}"))
+    }
+
+    fn fact(school: &str, dc_bonus: i16) -> SpellFocusFact {
+        SpellFocusFact { school_name: school.to_owned(), dc_bonus }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(spell_focus_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_selected_but_no_target_choice_is_present() {
+        // The same no-silent-seeding rule Skill Focus established: Spell Focus's
+        // entire value IS which school was chosen, so never fabricate one.
+        let selected = feats(&["Spell Focus"]);
+        assert!(spell_focus_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphan_target_choice_without_the_feat() {
+        assert!(spell_focus_facts_from_choices(&[], &[base("evocation")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_plus_one_for_an_explicitly_chosen_school() {
+        let selected = feats(&["Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("evocation")]),
+            vec![fact("evocation", 1)]
+        );
+    }
+
+    #[test]
+    fn grounds_one_fact_per_distinct_school_in_input_order() {
+        // Spell Focus is MULT:YES -- repeatable across different schools.
+        let selected = feats(&["Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("evocation"), base("necromancy")]),
+            vec![fact("evocation", 1), fact("necromancy", 1)]
+        );
+    }
+
+    #[test]
+    fn grounds_only_one_fact_when_the_same_school_is_targeted_twice() {
+        // STACK:NO, exactly like Skill Focus.
+        let selected = feats(&["Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("evocation"), base("evocation")]),
+            vec![fact("evocation", 1)]
+        );
+    }
+
+    #[test]
+    fn greater_spell_focus_raises_the_same_school_to_two_rather_than_adding_a_second_fact() {
+        // THE load-bearing case. Greater Spell Focus's corpus token is `2`, but
+        // its BENEFIT prose reads "+1 ... This bonus stacks with the bonus from
+        // Spell Focus" -- i.e. the token is the TOTAL of the same-TYPE=SpellFocus
+        // stack (PCGen takes the highest of same-typed bonuses), not an increment.
+        // Summing the two tokens would assert +3, which is wrong.
+        let selected = feats(&["Spell Focus", "Greater Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("evocation"), greater("evocation")]),
+            vec![fact("evocation", 2)]
+        );
+    }
+
+    #[test]
+    fn greater_spell_focus_grounds_nothing_for_a_school_without_the_base_feats_focus() {
+        // Greater Spell Focus's own corpus record requires it
+        // (PREABILITY:1,CATEGORY=FEAT,Spell Focus, and
+        // CHOOSE:SCHOOLS|ABILITY=FEAT[Spell Focus] restricts its target to a
+        // school you already have Spell Focus in), so this combination cannot
+        // legally exist. Its magnitude is also genuinely ambiguous in isolation
+        // -- RAW's "+1" vs the token's "2" -- so ground nothing rather than
+        // assert a checkable number for an impossible build.
+        let selected = feats(&["Spell Focus", "Greater Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(
+                &selected,
+                &[base("evocation"), greater("necromancy")]
+            ),
+            vec![fact("evocation", 1)]
+        );
+    }
+
+    #[test]
+    fn upgrades_only_the_greater_targeted_school_leaving_others_at_one() {
+        let selected = feats(&["Spell Focus", "Greater Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(
+                &selected,
+                &[base("evocation"), base("necromancy"), greater("evocation")]
+            ),
+            vec![fact("evocation", 2), fact("necromancy", 1)]
+        );
+    }
+
+    #[test]
+    fn a_greater_target_without_the_greater_feat_does_not_upgrade_anything() {
+        let selected = feats(&["Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("evocation"), greater("evocation")]),
+            vec![fact("evocation", 1)]
+        );
+    }
+
+    #[test]
+    fn treats_case_variants_of_one_school_as_the_same_target() {
+        // Same reasoning as Skill Focus: the consumer lowercases the school name
+        // to build its explanation id, so case variants must not emit two records.
+        let selected = feats(&["Spell Focus"]);
+        assert_eq!(
+            spell_focus_facts_from_choices(&selected, &[base("Evocation"), base("evocation")]),
+            vec![fact("Evocation", 1)]
+        );
+    }
+
+    #[test]
+    fn ignores_a_choice_from_a_different_choice_set_or_with_a_wrong_prefix() {
+        let selected = feats(&["Spell Focus"]);
+        let choices = vec![
+            choice("choice:wizard_school_specialization", "school:evocation"),
+            choice("choice:spell_focus_target", "evocation"),
+            choice("choice:spell_focus_target", "school:"),
+        ];
+        assert!(spell_focus_facts_from_choices(&selected, &choices).is_empty());
     }
 }
