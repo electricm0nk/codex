@@ -18526,8 +18526,7 @@ fn unmet_paladin_prepared_spell_conditions(
     for spell_id in &prepared {
         let Some(spell_level) = paladin_spell_list::paladin_spell_level(spell_id) else {
             unmet.push(format!(
-                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook paladin \
-                 spell list"
+                "prepared spell '{spell_id}' is not on the real PF1 paladin spell list"
             ));
             continue;
         };
@@ -18586,7 +18585,8 @@ fn ground_paladin_prepared_spells(
         detail: format!(
             "Paladin level {paladin_level} daily preparation selection ({} spells, \
              AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
-             PF1 Core Rulebook paladin spell list (`paladin_spell_list::PALADIN_SPELL_LIST`), \
+             PF1 paladin spell list (`paladin_spell_list::PALADIN_SPELL_LIST`, all ingested \
+             books), \
              the paladin's own spell-level access ceiling, and the per-level slot budget (base \
              table count + Charisma bonus). This grounds the prepared-spell selection for real; \
              it computes no spell save DC resolution against a target and no casting execution",
