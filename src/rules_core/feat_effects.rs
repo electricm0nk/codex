@@ -323,8 +323,18 @@ pub struct SkillFocusFact {
 /// is present in `selected_choices`. Grounds nothing (never a fabricated
 /// canonical skill) when the feat is present without a target choice, when a
 /// target choice is orphaned without the feat, or when a choice is malformed /
-/// from a different choice set. Repeatable: one fact per valid target choice,
-/// in input order.
+/// from a different choice set.
+///
+/// **One fact per distinct skill, in first-seen input order.** Skill Focus is
+/// `STACK:NO MULT:YES` in the corpus (verified directly against `cr_feats.lst`):
+/// it may be taken more than once, but only for a *different* skill each time --
+/// two instances naming the same skill do not stack, so the second grounds
+/// nothing rather than a second +3 record. Skill comparison is
+/// case-insensitive on purpose: the consumer derives its explanation id by
+/// lowercasing this name (`feat.skill_focus_bonus.<skill>`), so two case
+/// variants of one skill would otherwise emit two records under a single id --
+/// precisely the duplicate this dedup exists to prevent. The first spelling
+/// seen is the one kept verbatim.
 pub fn skill_focus_facts_from_choices(
     selected_feats: &[String],
     selected_choices: &[SelectedChoice],
@@ -332,13 +342,24 @@ pub fn skill_focus_facts_from_choices(
     if !selected_feats.iter().any(|feat| feat == SKILL_FOCUS_FEAT_KEY) {
         return Vec::new();
     }
-    selected_choices
+    let mut facts: Vec<SkillFocusFact> = Vec::new();
+    for skill_name in selected_choices
         .iter()
         .filter(|choice| choice.choice_set_id == SKILL_FOCUS_TARGET_CHOICE_SET)
         .filter_map(|choice| choice.selection_id.strip_prefix(SKILL_FOCUS_SKILL_SELECTION_PREFIX))
         .filter(|skill_name| !skill_name.is_empty())
-        .map(|skill_name| SkillFocusFact { skill_name: skill_name.to_owned(), bonus: SKILL_FOCUS_BONUS })
-        .collect()
+    {
+        let already_grounded = facts
+            .iter()
+            .any(|fact| fact.skill_name.to_lowercase() == skill_name.to_lowercase());
+        if !already_grounded {
+            facts.push(SkillFocusFact {
+                skill_name: skill_name.to_owned(),
+                bonus: SKILL_FOCUS_BONUS,
+            });
+        }
+    }
+    facts
 }
 
 /// Improved Initiative's real catalog key (`feat_data/combat.rs`), verified the
@@ -1026,6 +1047,52 @@ mod skill_focus_facts_from_choices_tests {
         let selected_feats = vec!["Skill Focus".to_owned()];
         let choices = vec![choice("choice:skill_focus_target", "skill:")];
         assert!(skill_focus_facts_from_choices(&selected_feats, &choices).is_empty());
+    }
+
+    #[test]
+    fn grounds_only_one_fact_when_the_same_skill_is_targeted_twice() {
+        // Skill Focus is STACK:NO MULT:YES in the corpus (verified directly
+        // against cr_feats.lst): repeatable across DIFFERENT skills, but two
+        // instances naming the same skill do not stack. Grounding two records
+        // would also collide on one explanation id downstream, since the
+        // consumer derives that id from the skill name.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![target("Stealth"), target("Stealth")];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Stealth")]
+        );
+    }
+
+    #[test]
+    fn treats_case_variants_of_one_skill_as_the_same_target() {
+        // The consumer lowercases the skill name to build its explanation id
+        // ("feat.skill_focus_bonus.stealth"), so "Stealth" and "stealth" would
+        // collide on that id -- exactly the duplicate-record symptom this dedup
+        // exists to prevent. The first spelling seen is the one kept.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![target("Stealth"), target("stealth")];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Stealth")]
+        );
+    }
+
+    #[test]
+    fn dedup_keeps_every_distinct_skill_and_preserves_input_order() {
+        // Guards the opposite failure: dedup must not over-collapse genuinely
+        // different targets, which is the whole point of MULT:YES.
+        let selected_feats = vec!["Skill Focus".to_owned()];
+        let choices = vec![
+            target("Perception"),
+            target("Stealth"),
+            target("Perception"),
+            target("Sleight of Hand"),
+        ];
+        assert_eq!(
+            skill_focus_facts_from_choices(&selected_feats, &choices),
+            vec![fact("Perception"), fact("Stealth"), fact("Sleight of Hand")]
+        );
     }
 }
 
