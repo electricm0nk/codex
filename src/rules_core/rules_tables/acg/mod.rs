@@ -576,7 +576,16 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // `Blessings` slot).
     let named_features_wired = match class_id {
         AcgClassId::Shaman => 2,
-        AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
+        AcgClassId::Arcanist => 2,
+        // Bloodrager rose 2 -> 9 with task #42: the existing Bloodrage and
+        // Spells slots plus Fast Movement, Uncanny Dodge, Improved Uncanny
+        // Dodge, Blood Sanctuary, Damage Reduction, Greater Bloodrage and
+        // Mighty Bloodrage. Uncanny Dodge and Improved Uncanny Dodge count
+        // separately -- distinct corpus features with their own grant rows
+        // and gates (2 and 5) -- even though the corpus expresses Improved
+        // as a second increment to one shared counter. Greater and Mighty
+        // likewise: identical tokens, separate records, separate gates.
+        AcgClassId::Bloodrager => 9,
         AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 6,
         AcgClassId::Warpriest => 5,

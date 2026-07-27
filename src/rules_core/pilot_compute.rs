@@ -16122,37 +16122,44 @@ fn active_bloodrager_bloodrage_bonus(
     let (strength_constitution_bonus, will_save_bonus) = bloodrager_bloodrage_tier(bloodrager_level);
     Some((bloodrager_level, strength_constitution_bonus, will_save_bonus))
 }
+/// Bloodrager Fast Movement: a flat `+10` ft to land speed
+/// (`BONUS:VAR|BloodrageMovementBonus|10`), granted on the class table's
+/// own level-1 row.
+///
+/// Flat, unlike Monk's own Fast Movement (`10*floor(MonkLVL/3)`, task
+/// #36) -- a third class sharing that feature name with a third
+/// magnitude, so none of the three is a magnitude precedent for another.
+/// Barbarian's is also flat +10.
+///
+/// Like Monk's, it is armor/encumbrance-conditional: the
+/// `BONUS:MOVEADD` carries `PREVARLT:ENCUMBERANCE,2` plus a no-heavy-armor
+/// clause. This engine models no encumbrance state, so the magnitude is
+/// grounded and the condition named.
+const BLOODRAGER_FAST_MOVEMENT_FEET: i16 = 10;
 
-/// Grounds or claim-blocks Bloodrager's Bloodrage execution engine for
-/// `bloodrager_level` (v0.6 alpha swarm, risks item 8, second APG/ACG
-/// closure). Called from `compute_acg_class_chassis`'s Bloodrager branch,
-/// gated only on Bloodrager class-ownership -- mirrors
-/// `ground_or_block_barbarian_rage`/`ground_or_block_skald_inspired_rage`
-/// structurally, including the same fatigue-not-modeled honesty note
-/// below `BARBARIAN_TIRELESS_RAGE_LEVEL` (Bloodrager's own Tireless
-/// Bloodrage fires at the identical 17th-level threshold, per the corpus).
-///
-/// Unlike Barbarian, this is Bloodrager's ONLY grounded class feature this
-/// slice -- spellcasting (Bloodrager casts from its own
-/// `SPELLLIST:1|Bloodrager`, not Bard's list) and every other
-/// named-but-unbuilt Bloodrager feature remain claim-blocked via the new,
-/// narrower `class_feature.acg.bloodrager.spellcasting_deferred.unsupported`
-/// diagnostic pushed unconditionally below, mirroring Skald's own
-/// diagnostic-honesty fix.
-/// Bloodrager's own Damage Reduction magnitude: `(BloodragerDRLVL-4)/3`
-/// where `BloodragerDRLVL` resolves to `BloodragerLVL` -- verified
-/// directly against `acg_abilities_class.lst`'s own
-/// `BONUS:VAR|BloodragerDR|(BloodragerDRLVL-4)/3` and `DR:BloodragerDR/-`.
-/// DR 1/- at 7th, 2/- at 10th, 3/- at 13th, 4/- at 16th, 5/- at 19th.
-///
-/// **The level gate is implicit in the integer division, not a `PRE`
-/// token.** Unlike the Monk features grounded in task #36 -- whose grant
-/// lines each carry an explicit `PREVARGTEQ:Monk_CFP_Level,N` -- this
-/// grant line carries only the archetype-suppression flag
-/// (`PREVAREQ:Bloodrager_CF_DamageReduction,0`, provably vacuous here).
-/// The 7th-level gate the DESC states is produced solely by the formula
-/// reaching 1 at level 7. A builder looking for a gate token would find
-/// none and could wrongly conclude the feature is ungated.
+/// Bloodrager Blood Sanctuary's flat save bonus against spells:
+/// `BONUS:VAR|BloodragerBloodSanctuaryBonus|2`, class-table level 3.
+const BLOODRAGER_BLOOD_SANCTUARY_BONUS: i16 = 2;
+
+/// Greater (11) and Mighty (20) Bloodrage are NOT new logic here: the
+/// shipped `bloodrager_bloodrage_tier` already returns the full
+/// progression (+4/+2 base, +6/+3 from 11, +8/+4 from 20), reusing
+/// Barbarian's own `GREATER_RAGE`/`MIGHTY_RAGE` level constants, whose
+/// gates are numerically identical for Bloodrager. What was missing was
+/// only a NAMED standalone record for each tier at its own gate -- the
+/// magnitudes were computed but reachable only through the active
+/// bloodraging path, so a non-raging bloodrager's receipt never mentioned
+/// them. These records reuse that same function rather than restating the
+/// progression, so the two cannot drift apart.
+/// **Two independent things produce the 7th-level gate, and it is worth
+/// knowing both.** The `.MOD` grant line carries only the
+/// archetype-suppression flag (`PREVAREQ:Bloodrager_CF_DamageReduction,0`,
+/// provably vacuous here) and no level `PRE` at all -- but the Bloodrager
+/// CLASS TABLE grants the ability on its own level-7 row, and the formula
+/// independently reaches 1 only at level 7. Corrected 2026-07-27 (task
+/// #42): an earlier revision of this comment said the gate was produced
+/// "solely by the formula", which overstated it by overlooking the class
+/// table's per-level grant row.
 ///
 /// Clamped at 0 for a real reason, not defensively: the raw expression
 /// goes NEGATIVE below level 4 (at level 1, `(1-4)/3` is -1 under Rust's
@@ -16160,6 +16167,115 @@ fn active_bloodrager_bloodrage_bonus(
 /// rather than an absent one.
 fn bloodrager_damage_reduction_amount(level: u8) -> i16 {
     ((i16::from(level) - 4) / 3).max(0)
+}
+
+
+/// Grounds Bloodrager's six remaining flat class features (task #42).
+/// Gates read off the Bloodrager CLASS TABLE's own per-level `ABILITY:`
+/// rows -- 1/2/3/5/11/20 -- NOT off the `.MOD` grant lines, which carry
+/// only archetype-suppression flags and no level `PRE` at all. That is
+/// the second grant mechanism in this corpus and the one that actually
+/// carries the gates here; looking only at the grant lines would suggest
+/// every one of these is ungated.
+///
+/// Every feature grounds BOTH branches -- a value-0 "correctly absent"
+/// record below its gate -- following the "ground the absence, don't omit
+/// it" discipline `ground_skald_damage_reduction` and Barbarian's own DR
+/// already use.
+fn ground_bloodrager_remaining_features(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let gated = |gate: u8, granted: i16| if level >= gate { granted } else { 0 };
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.fast_movement".to_owned(),
+        value: gated(1, BLOODRAGER_FAST_MOVEMENT_FEET),
+        detail: format!(
+            "Bloodrager Fast Movement at bloodrager level {level}: a flat \
+             +{BLOODRAGER_FAST_MOVEMENT_FEET} ft to land speed \
+             (BONUS:VAR|BloodrageMovementBonus|10), granted on the class table's own level-1 \
+             row. FLAT, unlike Monk's own Fast Movement (10*floor(MonkLVL/3), task #36) -- a \
+             third class sharing this feature name with a third magnitude, so none of the three \
+             is a magnitude precedent for another. Like Monk's, the corpus BONUS:MOVEADD is \
+             armor/encumbrance-conditional (PREVARLT:ENCUMBERANCE,2 plus a no-heavy-armor \
+             clause): this engine models no encumbrance state, so the magnitude is grounded and \
+             the condition named rather than applied"
+        ),
+    });
+
+    let uncanny_dodge_flanking_level = gated(2, i16::from(level));
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.uncanny_dodge_flanking_level".to_owned(),
+        value: uncanny_dodge_flanking_level,
+        detail: format!(
+            "Bloodrager Uncanny Dodge at bloodrager level {level}: the bloodrager cannot be \
+             caught flat-footed and keeps his Dexterity bonus to AC when flanked, and a rogue \
+             needs level {uncanny_dodge_flanking_level} or higher to flank him (corpus \
+             BONUS:VAR|UncannyDodgeFlankingLevel|BloodragerLVL, class table level 2). The \
+             magnitude lives on an INTERNAL 'Uncanny Dodge Tracker' record rather than the \
+             named feature's own record, which is why a KEY:Bloodrager ~ Uncanny Dodge lookup \
+             finds no tokens. Grounded as a scoped standalone fact: no flanking, flat-footed, \
+             or initiative-order engine exists in this codebase to apply it"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.blood_sanctuary".to_owned(),
+        value: gated(3, BLOODRAGER_BLOOD_SANCTUARY_BONUS),
+        detail: format!(
+            "Bloodrager Blood Sanctuary at bloodrager level {level}: a flat \
+             +{BLOODRAGER_BLOOD_SANCTUARY_BONUS} bonus on saving throws against spells he casts \
+             on himself, and against spells from creatures of his own bloodline (corpus \
+             BONUS:VAR|BloodragerBloodSanctuaryBonus|2, class table level 3). Grounded as a \
+             flat magnitude only: it is never applied to any save total, since the scope \
+             condition (whose spell, and whose bloodline) is not represented here"
+        ),
+    });
+
+    // The corpus adds a SECOND +1 to the same UncannyDodgeLVL var at
+    // level 5, so the tier count is 1 from level 2 and 2 from level 5.
+    let uncanny_dodge_tier = gated(2, 1) + gated(5, 1);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.improved_uncanny_dodge_tier".to_owned(),
+        value: uncanny_dodge_tier,
+        detail: format!(
+            "Bloodrager Uncanny Dodge tier at bloodrager level {level}: {uncanny_dodge_tier} \
+             (0 below level 2, 1 from level 2, 2 from level 5). The corpus expresses Improved \
+             Uncanny Dodge as a SECOND +1 to the same UncannyDodgeLVL variable \
+             (BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BloodragerLVL,5) rather than a distinct \
+             magnitude, so the two tiers are facets of one counter. At tier 2 the bloodrager \
+             can no longer be flanked except by a rogue of high enough level. No flanking \
+             engine exists here to apply either tier"
+        ),
+    });
+
+    let (bloodrage_ability_bonus, bloodrage_save_bonus) = bloodrager_bloodrage_tier(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.bloodrage_tier_ability_bonus".to_owned(),
+        value: bloodrage_ability_bonus,
+        detail: format!(
+            "Bloodrager Bloodrage morale bonus to Strength and Constitution at bloodrager \
+             level {level}: +{bloodrage_ability_bonus} (+4 base, +6 from Greater Bloodrage at \
+             level 11, +8 from Mighty Bloodrage at level 20). Greater and Mighty Bloodrage \
+             carry IDENTICAL corpus tokens \
+             and STACK rather than replace, which is why both records look the same: +4/+4 \
+             base, +6/+6 from 11, +8/+8 at 20, matching PF1's own published progression. This \
+             grounds the tier magnitude; whether the bloodrager is currently raging is handled \
+             by the Bloodrage execution records"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.bloodrage_tier_save_bonus".to_owned(),
+        value: bloodrage_save_bonus,
+        detail: format!(
+            "Bloodrager Bloodrage morale bonus to Will saves at bloodrager level {level}: +\
+             {bloodrage_save_bonus} (+2 base, +3 from level 11, +4 from level 20 -- the same \
+             stacking Greater/Mighty structure as the ability bonus above). Reuses the shipped \
+             bloodrager_bloodrage_tier, so this record and the active-bloodrage path cannot \
+             disagree"
+        ),
+    });
 }
 
 /// Grounds Bloodrager's own Damage Reduction, mirroring
@@ -16208,6 +16324,23 @@ fn ground_bloodrager_damage_reduction(level: u8, explanations: &mut Vec<Computat
     }
 }
 
+
+/// Grounds or claim-blocks Bloodrager's Bloodrage execution engine for
+/// `bloodrager_level` (v0.6 alpha swarm, risks item 8, second APG/ACG
+/// closure). Called from `compute_acg_class_chassis`'s Bloodrager branch,
+/// gated only on Bloodrager class-ownership -- mirrors
+/// `ground_or_block_barbarian_rage`/`ground_or_block_skald_inspired_rage`
+/// structurally, including the same fatigue-not-modeled honesty note
+/// below `BARBARIAN_TIRELESS_RAGE_LEVEL` (Bloodrager's own Tireless
+/// Bloodrage fires at the identical 17th-level threshold, per the corpus).
+///
+/// Unlike Barbarian, this is Bloodrager's ONLY grounded class feature this
+/// slice -- spellcasting (Bloodrager casts from its own
+/// `SPELLLIST:1|Bloodrager`, not Bard's list) and every other
+/// named-but-unbuilt Bloodrager feature remain claim-blocked via the new,
+/// narrower `class_feature.acg.bloodrager.spellcasting_deferred.unsupported`
+/// diagnostic pushed unconditionally below, mirroring Skald's own
+/// diagnostic-honesty fix.
 fn ground_or_block_bloodrager_bloodrage(
     input: &CharacterInput,
     bloodrager_level: u8,
@@ -16218,6 +16351,7 @@ fn ground_or_block_bloodrager_bloodrage(
     // Passive and activation-independent, so it is grounded before the
     // bloodraging branch splits -- both branches must carry it.
     ground_bloodrager_damage_reduction(bloodrager_level, explanations);
+    ground_bloodrager_remaining_features(bloodrager_level, explanations);
 
     let Some(activation) = input
         .chosen
@@ -43445,6 +43579,104 @@ mod investigator_dispatch_widening_safety_tests {
 /// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
 /// established dispatch-widening test module shape.
 /// The nine non-Life Spirits' base abilities (task #12, stage 3).
+#[cfg(test)]
+mod bloodrager_remaining_features_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn value(level: u8, id: &str) -> Option<i16> {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: "class:bloodrager".to_owned(), level }];
+        build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Gates come from the CLASS TABLE's per-level rows (1/2/3/5), not the
+    /// .MOD grant lines, which carry no level PRE at all.
+    #[test]
+    fn each_feature_appears_exactly_at_its_class_table_gate() {
+        for (id, gate, granted) in [
+            ("class_feature.acg.bloodrager.fast_movement", 1u8, 10i16),
+            ("class_feature.acg.bloodrager.uncanny_dodge_flanking_level", 2, 2),
+            ("class_feature.acg.bloodrager.blood_sanctuary", 3, 2),
+        ] {
+            if gate > 1 {
+                assert_eq!(value(gate - 1, id), Some(0), "{id} absence must be grounded");
+            }
+            assert_eq!(value(gate, id), Some(granted), "{id} at its gate");
+        }
+    }
+
+    /// Uncanny Dodge's magnitude tracks the bloodrager's own level.
+    #[test]
+    fn uncanny_dodge_flanking_level_tracks_class_level() {
+        assert_eq!(value(2, "class_feature.acg.bloodrager.uncanny_dodge_flanking_level"), Some(2));
+        assert_eq!(value(9, "class_feature.acg.bloodrager.uncanny_dodge_flanking_level"), Some(9));
+    }
+
+    /// Improved Uncanny Dodge is a SECOND +1 to the same counter, so the
+    /// tier is 0 / 1 / 2 across levels 1 / 2-4 / 5+.
+    #[test]
+    fn the_uncanny_dodge_tier_counter_steps_twice() {
+        let id = "class_feature.acg.bloodrager.improved_uncanny_dodge_tier";
+        assert_eq!(value(1, id), Some(0));
+        assert_eq!(value(2, id), Some(1));
+        assert_eq!(value(4, id), Some(1));
+        assert_eq!(value(5, id), Some(2));
+        assert_eq!(value(20, id), Some(2), "no third tier exists");
+    }
+
+    /// Greater/Mighty Bloodrage reuse the shipped bloodrager_bloodrage_tier,
+    /// so these records must match its progression exactly.
+    #[test]
+    fn the_bloodrage_tier_records_match_the_shipped_progression() {
+        let ability = "class_feature.acg.bloodrager.bloodrage_tier_ability_bonus";
+        let save = "class_feature.acg.bloodrager.bloodrage_tier_save_bonus";
+        assert_eq!((value(1, ability), value(1, save)), (Some(4), Some(2)));
+        assert_eq!((value(10, ability), value(10, save)), (Some(4), Some(2)));
+        assert_eq!((value(11, ability), value(11, save)), (Some(6), Some(3)), "Greater at 11");
+        assert_eq!((value(19, ability), value(19, save)), (Some(6), Some(3)));
+        assert_eq!((value(20, ability), value(20, save)), (Some(8), Some(4)), "Mighty at 20");
+    }
+
+    /// These ground for a NON-raging bloodrager too -- previously the tier
+    /// magnitudes were reachable only through the active bloodrage path,
+    /// so a non-raging receipt never named Greater/Mighty at all.
+    #[test]
+    fn the_tier_records_ground_without_an_active_bloodrage() {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: "class:bloodrager".to_owned(), level: 20 }];
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.bloodrager.bloodrage_execution.not_raging"),
+            "must be the not-raging branch"
+        );
+        assert_eq!(
+            value(20, "class_feature.acg.bloodrager.bloodrage_tier_ability_bonus"),
+            Some(8),
+            "Mighty Bloodrage must still be named"
+        );
+    }
+}
+
 #[cfg(test)]
 mod bloodrager_damage_reduction_tests {
     use super::{
