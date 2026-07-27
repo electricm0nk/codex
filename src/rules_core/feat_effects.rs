@@ -341,6 +341,270 @@ pub fn skill_focus_facts_from_choices(
         .collect()
 }
 
+/// Improved Initiative's real catalog key (`feat_data/combat.rs`), verified the
+/// same way every other key in this module is.
+const IMPROVED_INITIATIVE_FEAT_KEY: &str = "Improved Initiative";
+
+/// Improved Initiative's real PF1 Core Rulebook benefit: a flat +4 on initiative
+/// checks. Verified against BOTH the catalog record's own effect qualifiers
+/// (`["COMBAT", "INITIATIVE", "4"]`) and the raw PCGen corpus's authoritative
+/// `BENEFIT:` prose ("You get a +4 bonus on initiative checks") -- the two agree
+/// exactly. No level scaling, no chooser, no prerequisite, and no `STACK:YES`/
+/// `MULT:YES` (not repeatable), making this the single least-qualified numeric
+/// record in the 185-feat CRB catalog.
+const IMPROVED_INITIATIVE_BONUS: i16 = 4;
+
+/// Improved Initiative's real, computed initiative bonus for a character's
+/// `selected_feats`. Returns `0` (not a fabricated value) when the feat is
+/// absent. Grounds as a standalone fact: this codebase computes no integrated
+/// initiative total to layer onto, mirroring
+/// `inquisitor_cunning_initiative_bonus`'s own already-grounded standalone
+/// initiative record.
+pub fn initiative_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if selected_feats.iter().any(|feat| feat == IMPROVED_INITIATIVE_FEAT_KEY) {
+        IMPROVED_INITIATIVE_BONUS
+    } else {
+        0
+    }
+}
+
+/// Endurance's real catalog key (`feat_data/general.rs`).
+const ENDURANCE_FEAT_KEY: &str = "Endurance";
+
+/// Endurance's real PF1 Core Rulebook benefit: a flat +4 on a specific, named
+/// set of endurance-related checks and saves. Verified against the catalog
+/// record's effect qualifiers (`["VAR", "Feat_Endurance_SaveBonus", "4",
+/// "TYPE=Base"]`) and the raw corpus's `BENEFIT:` prose, which enumerates the
+/// exact scope: Swim checks to resist nonlethal damage from exhaustion;
+/// Constitution checks to continue running, to avoid nonlethal damage from a
+/// forced march, to hold your breath, and to avoid nonlethal damage from
+/// starvation or thirst; and Fortitude saves to avoid nonlethal damage from hot
+/// or cold environments and to resist damage from suffocation.
+///
+/// Grounded as a standalone fact rather than folded into any computed total,
+/// deliberately: the scope is a heterogeneous list of situational checks, none
+/// of which this codebase computes, and the bonus explicitly does NOT apply to
+/// Fortitude saves generally -- so layering it onto `compute_total_saves`'s
+/// Fortitude total the way `save_bonuses_from_feats` layers Great Fortitude's
+/// would be a real overstatement, not a simplification. This mirrors the
+/// already-grounded Poison Resistance idiom (a verified magnitude against one
+/// named hazard category, recorded as its own fact). The feat's separate
+/// "sleep in light or medium armor without becoming fatigued" clause carries no
+/// numeric token and is not grounded here.
+const ENDURANCE_CHECK_BONUS: i16 = 4;
+
+/// Endurance's real, computed bonus for a character's `selected_feats`. Returns
+/// `0` (not a fabricated value) when the feat is absent. Not repeatable (no
+/// `STACK:YES`/`MULT:YES` in the corpus), so a duplicated string stays +4.
+pub fn endurance_check_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if selected_feats.iter().any(|feat| feat == ENDURANCE_FEAT_KEY) {
+        ENDURANCE_CHECK_BONUS
+    } else {
+        0
+    }
+}
+
+/// One real, corpus-verified combat-maneuver bonus granted by one feat.
+///
+/// The PF1 Core Rulebook carries twelve of these in two uniform families:
+/// six `Improved <maneuver>` feats (corpus `BONUS:VAR|CMB_X,CMD_X|2` -- a single
+/// token granting BOTH an offensive and a defensive +2) and six
+/// `Greater <maneuver>` feats (corpus `BONUS:VAR|CMB_X|2` -- offensive only).
+/// Every one of the twelve carries the identical `+2` magnitude.
+///
+/// Grounded as standalone facts: this codebase computes no Combat Maneuver Bonus
+/// or Combat Maneuver Defense total to layer onto. The precedent is direct and
+/// double -- `MONK_IMPROVED_GRAPPLE_BONUS` already grounds exactly this `+2` from
+/// exactly this corpus token (for Improved Grapple, reached through Monk's own
+/// bonus-feat choice slot), and `DWARF_STABILITY_CMD_BONUS` already grounds a
+/// flat racial CMD-against-a-named-maneuver bonus the same way.
+///
+/// These pass the opponent-dependency bar in both halves: the `CMB` half is a
+/// bonus to the character's *own* maneuver check, conditioned on nothing; the
+/// `CMD` half is conditioned on the opponent's *action type* ("whenever an
+/// opponent tries to trip you"), which is a static defensive property of the
+/// character rather than a fact about a specific opponent the engine would have
+/// to evaluate -- exactly what Dwarf Stability already grounds.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CombatManeuverFeatBonus {
+    /// The real catalog `key` string, matched on exactly.
+    pub feat_key: &'static str,
+    /// The maneuver the bonus applies to, as it appears in the corpus variable
+    /// name (`CMB_BullRush` -> "Bull Rush").
+    pub maneuver: &'static str,
+    /// Bonus to the character's own combat maneuver check. `+2` for all twelve.
+    pub cmb_bonus: i16,
+    /// Bonus to Combat Maneuver Defense against that maneuver. `+2` for the six
+    /// `Improved` feats, `0` for the six `Greater` feats, whose corpus token
+    /// genuinely carries no `CMD_` term.
+    pub cmd_bonus: i16,
+}
+
+/// The flat magnitude shared by all twelve combat-maneuver feats, verified
+/// against each feat's own corpus record and its `BENEFIT:` prose ("+2 bonus on
+/// checks made to ... a foe", "+2 bonus to your Combat Maneuver Defense").
+const COMBAT_MANEUVER_FEAT_BONUS: i16 = 2;
+
+/// Every combat-maneuver feat this engine grounds, in the stable corpus source
+/// order of `feat_data/combat.rs` (auditable against that file top-to-bottom --
+/// all six `Greater` records precede all six `Improved` records there).
+///
+/// Improved Grapple is deliberately included even though Monk's bonus-feat path
+/// already grounds it: that path keys on a synthetic `feat:improved_grapple` id
+/// in `selected_choices`, whereas this producer keys on the real catalog string
+/// in `selected_feats`. A non-Monk who picks Improved Grapple from the real feat
+/// catalog gets nothing today -- this closes that gap. The two paths read
+/// different fields, so neither shadows nor double-counts the other.
+const COMBAT_MANEUVER_FEAT_BONUSES: &[CombatManeuverFeatBonus] = &[
+    CombatManeuverFeatBonus { feat_key: "Greater Bull Rush", maneuver: "Bull Rush", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Greater Disarm", maneuver: "Disarm", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Greater Grapple", maneuver: "Grapple", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Greater Overrun", maneuver: "Overrun", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Greater Sunder", maneuver: "Sunder", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Greater Trip", maneuver: "Trip", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: 0 },
+    CombatManeuverFeatBonus { feat_key: "Improved Bull Rush", maneuver: "Bull Rush", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+    CombatManeuverFeatBonus { feat_key: "Improved Disarm", maneuver: "Disarm", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+    CombatManeuverFeatBonus { feat_key: "Improved Grapple", maneuver: "Grapple", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+    CombatManeuverFeatBonus { feat_key: "Improved Overrun", maneuver: "Overrun", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+    CombatManeuverFeatBonus { feat_key: "Improved Sunder", maneuver: "Sunder", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+    CombatManeuverFeatBonus { feat_key: "Improved Trip", maneuver: "Trip", cmb_bonus: COMBAT_MANEUVER_FEAT_BONUS, cmd_bonus: COMBAT_MANEUVER_FEAT_BONUS },
+];
+
+/// Every grounded combat-maneuver bonus for the feats actually present in
+/// `selected_feats`, in the stable corpus order of
+/// [`COMBAT_MANEUVER_FEAT_BONUSES`]. Returns an empty vec (not fabricated
+/// bonuses) when none is selected. Keyed on the exact catalog `key` string, so a
+/// longer feat whose name merely begins with a grounded key never matches.
+///
+/// An `Improved` and its matching `Greater` feat ground as two separate facts
+/// rather than one superseding the other: every Greater feat's `BENEFIT:` prose
+/// states explicitly that its bonus "stacks with the bonus granted by
+/// Improved <maneuver>". No maneuver feat is repeatable (none carries
+/// `STACK:YES`/`MULT:YES`), so a duplicated string still grounds one fact.
+pub fn combat_maneuver_bonuses_from_feats(
+    selected_feats: &[String],
+) -> Vec<CombatManeuverFeatBonus> {
+    COMBAT_MANEUVER_FEAT_BONUSES
+        .iter()
+        .filter(|bonus| selected_feats.iter().any(|feat| feat == bonus.feat_key))
+        .copied()
+        .collect()
+}
+
+/// Stunning Fist's real catalog key (`feat_data/combat.rs`).
+const STUNNING_FIST_FEAT_KEY: &str = "Stunning Fist";
+
+/// Stunning Fist's two real, computed magnitudes: the Fortitude save DC a
+/// damaged foe must beat, and how many times per day the character may attempt
+/// it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct StunningFistFacts {
+    /// `10 + (total level / 2) + Wisdom modifier`.
+    pub save_dc: i16,
+    /// `monk level + floor((total level - monk level) / 4)`.
+    pub uses_per_day: i16,
+}
+
+/// Grounds Stunning Fist's real save DC and uses-per-day when the feat is in
+/// `selected_feats`; `None` (never fabricated values) when it is absent.
+///
+/// Both formulas are transcribed verbatim from the feat's own corpus record:
+/// `BONUS:VAR|StunningFistDC|10+(TL/2)+WIS` and
+/// `BONUS:VAR|StunningFistAttack|MonkLVL+floor((TL-MonkLVL)/4)`. The
+/// uses-per-day shape is the class-aware version of the `BENEFIT:` prose's
+/// "once per day for every four levels you have attained (but see Special)" --
+/// the Special clause is precisely the monk exception the `MonkLVL` term
+/// encodes, so a monk gets one use per monk level while every other level
+/// contributes at the quarter rate.
+///
+/// **Why this grounds despite the absence of a save-resolution engine.** Monk's
+/// own remaining-feats slice deferred Stunning Fist citing "no DC/save engine,"
+/// but that objection does not survive the corrected standalone-grounding bar:
+/// `monk_scorpion_style_dc` already grounds a save DC from the byte-identical
+/// formula `10+(TL/2)+WIS` under the same missing engine. A DC is a property of
+/// the character, not of any opponent -- what is missing is only the resolution
+/// of a save against it, which is exactly the "integration is a bonus, not a
+/// requirement" case the corrected bar covers.
+///
+/// `total_level` and `monk_level` are threaded as plain scalars, and
+/// `wisdom_modifier` applied verbatim with no floor at 0 (clamping would
+/// fabricate a value the corpus does not specify), keeping this module the same
+/// dependency-free leaf the rest of the file is. The level subtraction saturates
+/// so an inconsistent caller cannot panic.
+pub fn stunning_fist_facts_from_feats(
+    selected_feats: &[String],
+    total_level: u8,
+    monk_level: u8,
+    wisdom_modifier: i16,
+) -> Option<StunningFistFacts> {
+    if !selected_feats.iter().any(|feat| feat == STUNNING_FIST_FEAT_KEY) {
+        return None;
+    }
+    let non_monk_levels = total_level.saturating_sub(monk_level);
+    Some(StunningFistFacts {
+        save_dc: 10 + i16::from(total_level) / 2 + wisdom_modifier,
+        uses_per_day: i16::from(monk_level) + i16::from(non_monk_levels) / 4,
+    })
+}
+
+/// The real catalog keys for the three movement feats this engine grounds
+/// (`feat_data/general.rs`).
+const NIMBLE_MOVES_FEAT_KEY: &str = "Nimble Moves";
+const ACROBATIC_STEPS_FEAT_KEY: &str = "Acrobatic Steps";
+const FLEET_FEAT_KEY: &str = "Fleet";
+
+/// Feet of difficult terrain each feat lets the character cross as if it were
+/// normal terrain, each round. Verified against both feats' corpus records
+/// (`BONUS:VAR|Feat_NimbleMoves_Squares|5` and `|15` -- note both write the same
+/// variable, PCGen's own way of expressing that they add together) and against
+/// Acrobatic Steps' `BENEFIT:` prose, which states the combined total outright:
+/// "The effects of this feat stack with those provided by Nimble Moves (allowing
+/// you to move normally through a total of 20 feet of difficult terrain each
+/// round)."
+const NIMBLE_MOVES_DIFFICULT_TERRAIN_FEET: i16 = 5;
+const ACROBATIC_STEPS_DIFFICULT_TERRAIN_FEET: i16 = 15;
+
+/// Fleet's real base-speed increase: `BONUS:MOVEADD|TYPE.Walk|5`, with
+/// `BENEFIT:` prose "While you are wearing light or no armor, your base speed
+/// increases by 5 feet. You lose the benefits of this feat if you carry a medium
+/// or heavy load." The magnitude is unconditional; the armor/encumbrance
+/// qualifier is a posture condition for the consumer to state on the grounded
+/// record, not a reason to withhold a verified number.
+const FLEET_BASE_SPEED_FEET: i16 = 5;
+
+/// Total feet of difficult terrain a character's feats let them cross as normal
+/// terrain each round. Nimble Moves and Acrobatic Steps genuinely stack (see
+/// [`ACROBATIC_STEPS_DIFFICULT_TERRAIN_FEET`]); neither is repeatable, so each
+/// contributes at most once. Returns `0` when neither is selected.
+///
+/// Acrobatic Steps' real prerequisite is Nimble Moves, but prerequisite
+/// validation is `feat_prereqs`'s responsibility, not this module's -- this
+/// producer reports the corpus magnitude of whatever is actually selected rather
+/// than silently re-deriving legality.
+pub fn difficult_terrain_feet_from_feats(selected_feats: &[String]) -> i16 {
+    let has = |key: &str| selected_feats.iter().any(|feat| feat == key);
+    let mut feet = 0;
+    if has(NIMBLE_MOVES_FEAT_KEY) {
+        feet += NIMBLE_MOVES_DIFFICULT_TERRAIN_FEET;
+    }
+    if has(ACROBATIC_STEPS_FEAT_KEY) {
+        feet += ACROBATIC_STEPS_DIFFICULT_TERRAIN_FEET;
+    }
+    feet
+}
+
+/// Feet of base-speed increase from Fleet. Unlike every other feat this module
+/// grounds, Fleet carries `STACK:YES MULT:YES` in the corpus -- it is genuinely
+/// repeatable, and PF1 characters may take it more than once for a cumulative
+/// increase. Occurrences are therefore **counted**, not merely detected: two
+/// Fleet picks are a real +10 feet, and collapsing them to +5 would understate a
+/// verified magnitude just as surely as fabricating one would overstate it.
+/// Returns `0` when Fleet is absent.
+pub fn base_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    let picks = selected_feats.iter().filter(|feat| *feat == FLEET_FEAT_KEY).count();
+    i16::try_from(picks).unwrap_or(i16::MAX).saturating_mul(FLEET_BASE_SPEED_FEET)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -762,5 +1026,314 @@ mod skill_focus_facts_from_choices_tests {
         let selected_feats = vec!["Skill Focus".to_owned()];
         let choices = vec![choice("choice:skill_focus_target", "skill:")];
         assert!(skill_focus_facts_from_choices(&selected_feats, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod initiative_bonus_from_feats_tests {
+    use super::*;
+
+    #[test]
+    fn grants_no_bonus_for_an_empty_feat_list() {
+        assert_eq!(initiative_bonus_from_feats(&[]), 0);
+    }
+
+    #[test]
+    fn grants_no_bonus_when_improved_initiative_is_not_selected() {
+        let selected_feats = vec!["Toughness".to_owned(), "Dodge".to_owned()];
+        assert_eq!(initiative_bonus_from_feats(&selected_feats), 0);
+    }
+
+    #[test]
+    fn grants_the_real_flat_plus_four_when_improved_initiative_is_selected() {
+        let selected_feats = vec!["Toughness".to_owned(), "Improved Initiative".to_owned()];
+        assert_eq!(initiative_bonus_from_feats(&selected_feats), 4);
+    }
+
+    #[test]
+    fn does_not_match_a_partial_feat_name() {
+        // Exact catalog-key equality, the same discipline every other producer
+        // in this module uses -- no substring/prefix matching.
+        let selected_feats = vec!["Initiative".to_owned(), "Improved".to_owned()];
+        assert_eq!(initiative_bonus_from_feats(&selected_feats), 0);
+    }
+
+    #[test]
+    fn is_not_double_counted_if_the_same_feat_string_appears_twice() {
+        // Improved Initiative carries no STACK:YES/MULT:YES in the corpus --
+        // unlike Fleet, it is not repeatable, so a duplicated string stays +4.
+        let selected_feats =
+            vec!["Improved Initiative".to_owned(), "Improved Initiative".to_owned()];
+        assert_eq!(initiative_bonus_from_feats(&selected_feats), 4);
+    }
+}
+
+#[cfg(test)]
+mod endurance_check_bonus_from_feats_tests {
+    use super::*;
+
+    #[test]
+    fn grants_no_bonus_for_an_empty_feat_list() {
+        assert_eq!(endurance_check_bonus_from_feats(&[]), 0);
+    }
+
+    #[test]
+    fn grants_no_bonus_when_endurance_is_not_selected() {
+        let selected_feats = vec!["Diehard".to_owned(), "Toughness".to_owned()];
+        assert_eq!(endurance_check_bonus_from_feats(&selected_feats), 0);
+    }
+
+    #[test]
+    fn grants_the_real_flat_plus_four_when_endurance_is_selected() {
+        let selected_feats = vec!["Endurance".to_owned()];
+        assert_eq!(endurance_check_bonus_from_feats(&selected_feats), 4);
+    }
+
+    #[test]
+    fn is_not_double_counted_if_the_same_feat_string_appears_twice() {
+        // Endurance carries no STACK:YES/MULT:YES in the corpus -- not repeatable.
+        let selected_feats = vec!["Endurance".to_owned(), "Endurance".to_owned()];
+        assert_eq!(endurance_check_bonus_from_feats(&selected_feats), 4);
+    }
+}
+
+#[cfg(test)]
+mod combat_maneuver_bonuses_from_feats_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_empty_feat_list() {
+        assert!(combat_maneuver_bonuses_from_feats(&[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_no_maneuver_feat_is_selected() {
+        let selected = feats(&["Toughness", "Improved Initiative"]);
+        assert!(combat_maneuver_bonuses_from_feats(&selected).is_empty());
+    }
+
+    #[test]
+    fn an_improved_feat_grounds_both_the_offensive_and_defensive_halves() {
+        // Corpus: BONUS:VAR|CMB_Trip,CMD_Trip|2 -- one token, two dimensions.
+        let selected = feats(&["Improved Trip"]);
+        assert_eq!(
+            combat_maneuver_bonuses_from_feats(&selected),
+            vec![CombatManeuverFeatBonus {
+                feat_key: "Improved Trip",
+                maneuver: "Trip",
+                cmb_bonus: 2,
+                cmd_bonus: 2,
+            }]
+        );
+    }
+
+    #[test]
+    fn a_greater_feat_grounds_the_offensive_half_only() {
+        // Corpus: BONUS:VAR|CMB_Trip|2 -- no CMD term, unlike the Improved version.
+        let selected = feats(&["Greater Trip"]);
+        assert_eq!(
+            combat_maneuver_bonuses_from_feats(&selected),
+            vec![CombatManeuverFeatBonus {
+                feat_key: "Greater Trip",
+                maneuver: "Trip",
+                cmb_bonus: 2,
+                cmd_bonus: 0,
+            }]
+        );
+    }
+
+    #[test]
+    fn the_improved_and_greater_versions_ground_as_two_separate_stacking_facts() {
+        // The corpus BENEFIT for every Greater maneuver feat says explicitly that
+        // its bonus "stacks with the bonus granted by Improved <maneuver>", so
+        // both ground rather than one superseding the other.
+        let selected = feats(&["Improved Trip", "Greater Trip"]);
+        let grounded = combat_maneuver_bonuses_from_feats(&selected);
+        assert_eq!(grounded.len(), 2);
+        assert_eq!(grounded.iter().map(|b| b.cmb_bonus).sum::<i16>(), 4);
+        assert_eq!(grounded.iter().map(|b| b.cmd_bonus).sum::<i16>(), 2);
+    }
+
+    #[test]
+    fn grounds_all_twelve_maneuver_feats_in_corpus_order() {
+        let selected = feats(&[
+            "Improved Trip",
+            "Greater Trip",
+            "Improved Bull Rush",
+            "Greater Bull Rush",
+            "Improved Disarm",
+            "Greater Disarm",
+            "Improved Grapple",
+            "Greater Grapple",
+            "Improved Overrun",
+            "Greater Overrun",
+            "Improved Sunder",
+            "Greater Sunder",
+        ]);
+        let grounded = combat_maneuver_bonuses_from_feats(&selected);
+        assert_eq!(grounded.len(), 12);
+        // Emitted in the stable corpus source order of feat_data/combat.rs
+        // (all six Greater records precede all six Improved records there),
+        // NOT in the caller's selection order.
+        assert_eq!(
+            grounded.iter().map(|b| b.feat_key).collect::<Vec<_>>(),
+            vec![
+                "Greater Bull Rush",
+                "Greater Disarm",
+                "Greater Grapple",
+                "Greater Overrun",
+                "Greater Sunder",
+                "Greater Trip",
+                "Improved Bull Rush",
+                "Improved Disarm",
+                "Improved Grapple",
+                "Improved Overrun",
+                "Improved Sunder",
+                "Improved Trip",
+            ]
+        );
+        // Every one of the twelve carries the same verified +2 offensive magnitude.
+        assert!(grounded.iter().all(|b| b.cmb_bonus == 2));
+        // Exactly the six Improved records carry the defensive half.
+        assert_eq!(grounded.iter().filter(|b| b.cmd_bonus == 2).count(), 6);
+    }
+
+    #[test]
+    fn does_not_match_a_substring_or_prefix_of_a_feat_key() {
+        // "Improved Trip" must not be matched by a longer or shorter string.
+        let selected = feats(&["Trip", "Improved", "Improved Tripping"]);
+        assert!(combat_maneuver_bonuses_from_feats(&selected).is_empty());
+    }
+
+    #[test]
+    fn is_not_double_counted_if_the_same_feat_string_appears_twice() {
+        // No maneuver feat carries STACK:YES/MULT:YES -- none is repeatable.
+        let selected = feats(&["Improved Grapple", "Improved Grapple"]);
+        assert_eq!(combat_maneuver_bonuses_from_feats(&selected).len(), 1);
+    }
+}
+
+#[cfg(test)]
+mod stunning_fist_facts_from_feats_tests {
+    use super::*;
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_absent() {
+        assert_eq!(stunning_fist_facts_from_feats(&[], 1, 1, 2), None);
+    }
+
+    #[test]
+    fn grounds_a_level_one_monks_real_dc_and_uses_per_day() {
+        // DC = 10 + (TL/2) + WIS = 10 + 0 + 2 = 12.
+        // Uses = MonkLVL + floor((TL - MonkLVL)/4) = 1 + 0 = 1.
+        let selected = vec!["Stunning Fist".to_owned()];
+        assert_eq!(
+            stunning_fist_facts_from_feats(&selected, 1, 1, 2),
+            Some(StunningFistFacts { save_dc: 12, uses_per_day: 1 })
+        );
+    }
+
+    #[test]
+    fn a_non_monk_gets_the_real_once_per_four_levels_rate() {
+        // A Fighter (monk_level 0) at level 8 with WIS +1:
+        // DC = 10 + 4 + 1 = 15. Uses = 0 + floor(8/4) = 2, matching the corpus
+        // BENEFIT's "once per day for every four levels you have attained".
+        let selected = vec!["Stunning Fist".to_owned()];
+        assert_eq!(
+            stunning_fist_facts_from_feats(&selected, 8, 0, 1),
+            Some(StunningFistFacts { save_dc: 15, uses_per_day: 2 })
+        );
+    }
+
+    #[test]
+    fn a_multiclass_monk_adds_monk_levels_to_the_quarter_rate_of_the_rest() {
+        // Monk 5 / other 3 (TL 8), WIS +0: DC = 10 + 4 + 0 = 14.
+        // Uses = 5 + floor(3/4) = 5 + 0 = 5.
+        let selected = vec!["Stunning Fist".to_owned()];
+        assert_eq!(
+            stunning_fist_facts_from_feats(&selected, 8, 5, 0),
+            Some(StunningFistFacts { save_dc: 14, uses_per_day: 5 })
+        );
+    }
+
+    #[test]
+    fn applies_a_negative_wisdom_modifier_faithfully_to_the_dc() {
+        // The corpus formula adds WIS verbatim; clamping would fabricate a value
+        // the corpus does not specify, the same reasoning Intimidating Prowess
+        // already documents for a negative Strength modifier.
+        let selected = vec!["Stunning Fist".to_owned()];
+        assert_eq!(
+            stunning_fist_facts_from_feats(&selected, 1, 1, -1),
+            Some(StunningFistFacts { save_dc: 9, uses_per_day: 1 })
+        );
+    }
+
+    #[test]
+    fn does_not_underflow_when_monk_level_exceeds_total_level() {
+        // Not a reachable posture (monk levels are a subset of total levels), but
+        // the subtraction must not panic on an inconsistent caller.
+        let selected = vec!["Stunning Fist".to_owned()];
+        assert_eq!(
+            stunning_fist_facts_from_feats(&selected, 1, 5, 0),
+            Some(StunningFistFacts { save_dc: 10, uses_per_day: 5 })
+        );
+    }
+}
+
+#[cfg(test)]
+mod movement_feat_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    #[test]
+    fn grants_no_difficult_terrain_movement_for_an_empty_feat_list() {
+        assert_eq!(difficult_terrain_feet_from_feats(&[]), 0);
+    }
+
+    #[test]
+    fn nimble_moves_alone_grants_its_real_five_feet() {
+        assert_eq!(difficult_terrain_feet_from_feats(&feats(&["Nimble Moves"])), 5);
+    }
+
+    #[test]
+    fn acrobatic_steps_alone_grants_its_real_fifteen_feet() {
+        // Acrobatic Steps' real prerequisite is Nimble Moves, but prerequisite
+        // validation belongs to feat_prereqs, not this module -- this producer
+        // reports the corpus magnitude of whatever is actually selected.
+        assert_eq!(difficult_terrain_feet_from_feats(&feats(&["Acrobatic Steps"])), 15);
+    }
+
+    #[test]
+    fn nimble_moves_and_acrobatic_steps_stack_to_the_corpus_stated_twenty_feet() {
+        // The corpus BENEFIT for Acrobatic Steps states the total explicitly:
+        // "allowing you to move normally through a total of 20 feet".
+        let selected = feats(&["Nimble Moves", "Acrobatic Steps"]);
+        assert_eq!(difficult_terrain_feet_from_feats(&selected), 20);
+    }
+
+    #[test]
+    fn grants_no_speed_bonus_when_fleet_is_absent() {
+        assert_eq!(base_speed_bonus_from_feats(&feats(&["Nimble Moves"])), 0);
+    }
+
+    #[test]
+    fn fleet_grants_its_real_five_feet_of_base_speed() {
+        assert_eq!(base_speed_bonus_from_feats(&feats(&["Fleet"])), 5);
+    }
+
+    #[test]
+    fn fleet_stacks_with_itself_because_the_corpus_marks_it_repeatable() {
+        // Fleet carries STACK:YES MULT:YES -- unlike every other feat this module
+        // grounds, it is genuinely repeatable, so occurrences are COUNTED rather
+        // than merely detected.
+        let selected = feats(&["Fleet", "Fleet", "Fleet"]);
+        assert_eq!(base_speed_bonus_from_feats(&selected), 15);
     }
 }
