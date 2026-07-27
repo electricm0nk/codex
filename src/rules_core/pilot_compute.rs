@@ -24467,8 +24467,12 @@ fn explain_monk_level1_chassis(
                  because the PF1 Core Rulebook grants each to every monk automatically at level \
                  {MONK_BONUS_FEAT_GRANT_LEVEL} (\"the monk gains Stunning Fist as a bonus \
                  feat, even if he does not meet the prerequisites\"), separate from this \
-                 chosen bonus feat, and this \
-                 codebase does not ground those automatic grants either"
+                 chosen bonus feat. Improved Unarmed Strike's own mechanics stay ungrounded, \
+                 but Stunning Fist's do NOT: its save DC and uses-per-day are grounded \
+                 separately as feat.standalone.stunning_fist.save_dc / .uses_per_day, in this \
+                 same receipt. Corrected 2026-07-27 (task #52) -- this sentence previously \
+                 claimed the codebase grounds neither automatic grant, which contradicted two \
+                 records sitting directly above it"
             )
         } else {
             format!(
