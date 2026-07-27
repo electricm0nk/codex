@@ -1735,6 +1735,10 @@ Also credited backend's pre-build verification on task #54 (risks item 74): foun
 
 Everything else in #63 held up exactly: the three real classes all use their bare class level directly (no offset complexity among them — the two offset paths were both the archetype-only ones anyway), the three coupling points are confirmed at their exact locations (a clean formula, two hardcoded ids), no canonical domain pick is needed since the chooser already routes correctly, and the shared-namespace recommendation (matching the Familiar precedent) is adopted. Dispatched as task #64, correctly scoped to Cleric, Druid, and Inquisitor only.
 
+**Update (2026-07-27, ~20:30 ET): task #52 (Monk text fix) synced with backend's honest verification gap being closed, and task #65 (Wizard Arcane Schools) confirms genuine shared leverage with scout self-applying the #63 lesson.** #52 (`8ad1f054`): lead-verified 849/849 and all four Monk integration suites, matching backend's numbers; a full workspace sweep is running in the background to close the one gap backend flagged (their own sweep timed out, so they substituted targeted coverage and said so plainly rather than imply the usual standard).
+
+**#65: Schools are genuinely shared** (two base-class setters, `WizardLVL`/`ArcanistLvl`, both screened for archetype status *before* crediting this time — the #63 lesson applied in the direction it was meant to work). Scout also caught its own #62 triage numbers were inflated by archetype content (Savant, Arcanist wrapper records) before the lead had to — real base figure is 66/58, not the 177/96 originally reported. Flagged a real sequencing dependency before it could bite mid-build: Arcanist's half of this credit needs `School Understanding`, which #55 already deferred as a chooser-in-chooser. Filed as task #66, sequenced after Domains (#64) rather than competing with it — not urgently dispatched given the size of the queue.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-27T19:05:01
