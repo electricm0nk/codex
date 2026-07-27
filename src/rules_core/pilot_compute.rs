@@ -31413,6 +31413,33 @@ fn ground_standalone_feat_skill_facts(
             ),
         });
     }
+
+    for fact in crate::rules_core::feat_effects::master_craftsman_facts_from_choices(
+        &effective_character_feats(input),
+        &input.chosen.selected_choices,
+    ) {
+        let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.master_craftsman_bonus.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "Master Craftsman grants a +{} bonus on {} checks (the player-chosen Craft or \
+                 Profession target, recorded via choice:master_craftsman_target). This grounds \
+                 as a standalone flat record; Craft and Profession are not among the three \
+                 skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so \
+                 there is no total to layer it onto. The feat's own \
+                 PRESKILL:1,TYPE.Craft=5,TYPE.Profession=5 prerequisite is NOT asserted here -- \
+                 prerequisite validation is feat_prereqs' job, and this engine's deterministic \
+                 skill posture pins ranks at 1, so no character it currently composes could \
+                 legally hold the feat. That is a gap in what the engine represents, not a \
+                 reason to withhold a verified magnitude. Its second token \
+                 (MasterCraftsmanRanks, substituting skill ranks for caster level when \
+                 crafting magic items) stays ungrounded: this codebase models no item creation \
+                 to substitute into",
+                fact.bonus, fact.skill_name
+            ),
+        });
+    }
 }
 
 /// Return the list of unmet conditions for the exact deterministic selected-skill
@@ -32335,6 +32362,77 @@ mod standalone_feat_skill_facts_consumer_wiring_tests {
                 .explanations
                 .iter()
                 .any(|e| e.id == "feat.skill_focus_bonus.perception" && e.value == 3),
+            "{:?}",
+            computation.explanations
+        );
+    }
+
+    /// Master Craftsman's consumer wiring. Fourth chooser feat to reach a
+    /// real consumer, and the shape is Skill Focus's exactly: Craft and
+    /// Profession are not among the three skills
+    /// `compute_selected_skill_modifiers` tracks, so the `+2` grounds as
+    /// a standalone flat record with no total to layer onto.
+    #[test]
+    fn master_craftsman_grounds_its_chosen_craft_skill_as_a_standalone_fact() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Master Craftsman".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:master_craftsman_target".to_owned(),
+            selection_id: "skill:Craft (armor)".to_owned(),
+        });
+        let computation = compute(&input);
+
+        let fact = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "feat.master_craftsman_bonus.craft_(armor)")
+            .expect("expected the Craft (armor) Master Craftsman fact to be grounded");
+        assert_eq!(fact.value, 2, "{:?}", fact);
+    }
+
+    /// `STACK:NO MULT:YES` -- repeatable across different Craft/Profession
+    /// skills, never stacking on one.
+    #[test]
+    fn master_craftsman_grounds_one_fact_per_distinct_target() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Master Craftsman".to_owned());
+        for target in ["skill:Craft (armor)", "skill:Profession (siege engineer)"] {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:master_craftsman_target".to_owned(),
+                selection_id: target.to_owned(),
+            });
+        }
+        let computation = compute(&input);
+
+        assert!(
+            computation.explanations.iter().any(
+                |e| e.id == "feat.master_craftsman_bonus.craft_(armor)" && e.value == 2
+            ),
+            "{:?}",
+            computation.explanations
+        );
+        assert!(
+            computation.explanations.iter().any(|e| e.id
+                == "feat.master_craftsman_bonus.profession_(siege_engineer)"
+                && e.value == 2),
+            "{:?}",
+            computation.explanations
+        );
+    }
+
+    /// No-silent-seeding: the feat alone, with no recorded target, grounds
+    /// nothing rather than inventing a canonical Craft skill.
+    #[test]
+    fn master_craftsman_without_a_recorded_target_grounds_nothing() {
+        let mut input = load();
+        input.chosen.selected_feats.push("Master Craftsman".to_owned());
+        let computation = compute(&input);
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("feat.master_craftsman_bonus.")),
             "{:?}",
             computation.explanations
         );
