@@ -28372,8 +28372,7 @@ fn unmet_druid_prepared_spell_conditions(
     for spell_id in &prepared {
         let Some(spell_level) = druid_spell_list::druid_spell_level(spell_id) else {
             unmet.push(format!(
-                "prepared spell '{spell_id}' is not on the real PF1 Core Rulebook general \
-                 druid spell list"
+                "prepared spell '{spell_id}' is not on the real PF1 general druid spell list"
             ));
             continue;
         };
@@ -28428,7 +28427,8 @@ fn ground_druid_prepared_spells(
         detail: format!(
             "Druid level {druid_level} daily preparation selection ({} spells, \
              AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
-             PF1 Core Rulebook general druid spell list (`druid_spell_list::DRUID_SPELL_LIST`), \
+             PF1 general druid spell list (`druid_spell_list::DRUID_SPELL_LIST`, all \
+             ingested books), \
              the druid's own spell-level access ceiling, and the per-level slot budget (base \
              table count + Wisdom bonus, excluding any domain spell slot). This grounds the \
              prepared-spell selection for real; it computes no spell save DC resolution against \
