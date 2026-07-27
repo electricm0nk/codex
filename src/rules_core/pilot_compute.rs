@@ -1790,6 +1790,14 @@ const BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY: i16 = 2;
 /// `EquippedActive` unconditionally, so the value is grounded
 /// unconditionally on class ownership and level alone.
 const BRAWLER_CLASS_ID: &str = "class:brawler";
+/// Brawler grant levels, read from the ACG class table.
+const BRAWLER_BONUS_FEAT_LEVEL: u8 = 2;
+const BRAWLER_MANEUVER_TRAINING_LEVEL: u8 = 3;
+const BRAWLER_KNOCKOUT_LEVEL: u8 = 4;
+/// Brawler's Flurry self-applied attack penalty
+/// (`BONUS:VAR|BrawlersFlurryAttackPenalty|-2`) -- a real token, unlike
+/// Cavalier's DESC-only Challenge penalty.
+const BRAWLER_FLURRY_ATTACK_PENALTY: i16 = -2;
 
 /// v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure): ACG Hunter, a
 /// Druid+Ranger hybrid whose 1st-level Animal Companion is, per the PCGen
@@ -15184,6 +15192,225 @@ fn brawler_strike_progression_tier(level: u8) -> Option<i16> {
 /// rather than `spellcasting_deferred`, mirroring the same
 /// diagnostic-honesty discipline (retire the blanket "no named
 /// class-feature computation... grounded anywhere" claim, replace with a
+/// Brawler's Maneuver Training count (task #5, 2026-07-27):
+/// 1/2/3/4/5 at levels 3/7/11/15/19.
+///
+/// **Set by TWO stacking corpus lines, not one.** The visible line
+/// `(BrawlerLVL>2)+(BrawlerLVL>6)+(BrawlerLVL>10)+(BrawlerLVL>14)` tops
+/// out at 4; a separate `BONUS:VAR|BrawlerManeuverTraining|1|
+/// PREVARGT:BrawlerLVL,18` supplies the fifth. Reading only the first
+/// gives 4 at levels 19-20 -- the same partial-read shape as the Sacred
+/// Weapon divisor bug.
+///
+/// The corpus corroborates this directly: it carries the author's own
+/// comment on a rejected single-line variant noting it "never got
+/// BrawlerManeuverTraining up to 5".
+fn brawler_maneuver_training_count(level: u8) -> i16 {
+    let level = i16::from(level);
+    [2, 6, 10, 14, 18].iter().map(|gate| i16::from(level > *gate)).sum()
+}
+
+/// Knockout's stat bonus: `max(STR,DEX)` -- **bare tokens, so ability
+/// MODIFIERS**, not scores.
+///
+/// The corpus disambiguates deliberately and this must not be
+/// normalized: Brawler's Cunning writes `max(13,INTSCORE)`, an explicit
+/// SCORE token, which is why `brawler_cunning_effective_intelligence_score`
+/// correctly takes a score. Copying that idiom here would build a save
+/// DC out of raw ability scores and be wildly wrong.
+fn brawler_knockout_stat_bonus(strength_modifier: i16, dexterity_modifier: i16) -> i16 {
+    strength_modifier.max(dexterity_modifier)
+}
+
+/// Knockout's save DC: `(BrawlerLVL/2)+10+KnockoutStatBonus`.
+fn brawler_knockout_dc(level: u8, stat_bonus: i16) -> i16 {
+    i16::from(level) / 2 + 10 + stat_bonus
+}
+
+/// Knockout's uses per day: `(BrawlerLVL+2)/6`. Granted at 4th level
+/// (NOT 5th -- the class table says 4, and the formula yields exactly 1
+/// there, so the corpus is internally consistent).
+fn brawler_knockout_uses_per_day(level: u8) -> i16 {
+    (i16::from(level) + 2) / 6
+}
+
+/// Brawler's Flurry extra attacks: `min((level+6)/7,3)` -- 1/2/3.
+/// Granted 2nd level.
+///
+/// **The `min(...,3)` cap is provably vacuous across the real level
+/// range** and is transcribed only for fidelity to the corpus token:
+/// `(20+6)/7` is already exactly 3, so the inner term never exceeds the
+/// cap for any level 1-20. Recorded because a test cannot distinguish
+/// the capped from the uncapped formula here -- removing `.min(3)`
+/// changes no value a Brawler can actually reach, so its own coverage is
+/// honest-but-inert, the same category as Alchemist's Gnome-only Bomb
+/// term.
+fn brawler_flurry_extra_attacks(level: u8) -> i16 {
+    ((i16::from(level) + 6) / 7).min(3)
+}
+
+/// Brawler's bonus combat feats: `(1+BrawlerLVL)/3` -- feats at levels
+/// 2/5/8/11/14/17/20, seven by 20th.
+///
+/// Seven `-1` deductions against this pool exist in the corpus
+/// (`PREVARGTEQ:BrawlerLvl,2/5/8/11/14/17/20`), each gated on a
+/// `Brawler_CF_BonusFeatN` flag. Every one is provably vacuous here: the
+/// only setter anywhere is `Brawler Archetype ~ Wild Child.MOD`, and
+/// this repo's corpus ingests only the base `brawler.json` with no
+/// archetypes. Summing them blind would understate the pool at every
+/// level from 2 up.
+fn brawler_bonus_feat_count(level: u8) -> i16 {
+    (1 + i16::from(level)) / 3
+}
+
+/// Martial Flexibility's uses per day: `max(1,level/2)+3`. Granted 1st.
+///
+/// Only the POOL grounds. The ability itself -- gaining the benefit of a
+/// combat feat she does not possess -- is a chooser over the entire
+/// combat-feat list, and under the ratified Skill Focus precedent that
+/// half needs an explicit recorded choice rather than a silently seeded
+/// canonical feat.
+fn brawler_martial_flexibility_uses(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1) + 3
+}
+
+/// Grounds Brawler's six remaining real features (task #5, 2026-07-27),
+/// each at its own verified grant level.
+fn ground_brawler_remaining_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let flexibility = brawler_martial_flexibility_uses(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.brawler.martial_flexibility_uses_per_day".to_owned(),
+        value: flexibility,
+        detail: format!(
+            "Brawler level {level} Martial Flexibility: usable {flexibility} times per day \
+             (max(1, level/2) + 3). Only the pool grounds -- the ability gains the benefit of a \
+             combat feat she does not possess, a chooser over the whole combat-feat list, which \
+             needs an explicit recorded choice rather than a seeded canonical feat"
+        ),
+    });
+
+    for (id, label) in [
+        ("class_feature.acg.brawler.martial_training.fighter_level_equivalence", "fighter"),
+        ("class_feature.acg.brawler.martial_training.monk_level_equivalence", "monk"),
+        ("class_feature.acg.brawler.martial_training.monk_feat_qualify", "monk feat-qualifying"),
+    ] {
+        explanations.push(ComputationExplanation {
+            id: id.to_owned(),
+            value: i16::from(level),
+            detail: format!(
+                "Brawler level {level} Martial Training: brawler levels count as {label} level \
+                 {level} for the purpose of qualifying for feats. Grounds the level-equivalence \
+                 FACT; the feat_prereqs wiring stays deferred, the same treatment already ruled \
+                 for Swashbuckler's identical `FighterWeaponQualifyLVL` fact. Note Alchemist's \
+                 identically-named Martial Training is a genuine no-op with zero corpus tokens \
+                 -- same name, different class, opposite verdict"
+            ),
+        });
+    }
+
+    if level >= BRAWLER_BONUS_FEAT_LEVEL {
+        let feats = brawler_bonus_feat_count(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.bonus_feat_count".to_owned(),
+            value: feats,
+            detail: format!(
+                "Brawler level {level} bonus combat feats: {feats} ((1 + level)/3, granting one \
+                 at levels 2, 5, 8, 11, 14, 17, and 20). Seven `-1` deductions against this pool \
+                 exist in the corpus but every one is gated on a Brawler archetype flag whose \
+                 only setter is Wild Child, and this repo ingests no Brawler archetype -- \
+                 provably vacuous. Only the count grounds; which feats are chosen is not modelled"
+            ),
+        });
+
+        let extra_attacks = brawler_flurry_extra_attacks(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.flurry_extra_attacks".to_owned(),
+            value: extra_attacks,
+            detail: format!(
+                "Brawler level {level} Brawler's Flurry: {extra_attacks} extra attack(s) \
+                 (min((level + 6)/7, 3), capped at 3). This engine computes a melee attack total \
+                 only for its own fixed single-weapon posture, so the extra attacks ground as a \
+                 standalone count"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.flurry_attack_penalty".to_owned(),
+            value: BRAWLER_FLURRY_ATTACK_PENALTY,
+            detail: format!(
+                "Brawler level {level} Brawler's Flurry attack penalty: \
+                 {BRAWLER_FLURRY_ATTACK_PENALTY} on each attack while flurrying. Unlike \
+                 Cavalier's Challenge penalty this carries a real \
+                 `BONUS:VAR|BrawlersFlurryAttackPenalty|-2` token rather than being DESC-sourced. \
+                 Grounded standalone rather than applied to the attack total, because flurrying \
+                 is an action the character takes rather than a persistent state this engine \
+                 records"
+            ),
+        });
+    }
+
+    if level >= BRAWLER_MANEUVER_TRAINING_LEVEL {
+        let count = brawler_maneuver_training_count(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.maneuver_training_count".to_owned(),
+            value: count,
+            detail: format!(
+                "Brawler level {level} Maneuver Training: {count} maneuver(s) trained \
+                 (1/2/3/4/5 at levels 3/7/11/15/19). The fifth comes from a SECOND corpus line \
+                 (`1|PREVARGT:BrawlerLVL,18`) stacking on the visible \
+                 `(L>2)+(L>6)+(L>10)+(L>14)` one, which alone tops out at 4"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.maneuver_training.bull_rush_bonus".to_owned(),
+            value: count,
+            detail: format!(
+                "Brawler level {level} Maneuver Training on Bull Rush: +{count} to that combat \
+                 maneuver. Bull Rush is the one canonical maneuver grounded here, narrowed the \
+                 same way Hunter's Animal Focus narrowed to Bull; the other nine (Dirty Trick, \
+                 Disarm, Drag, Grapple, Overrun, Reposition, Steal, Sunder, Trip) are deferred. \
+                 As the FIRST pick it takes the undegraded count -- later picks degrade by -1 \
+                 each, which is not modelled and must not be assumed away if multiple picks are \
+                 ever added"
+            ),
+        });
+    }
+
+    if level >= BRAWLER_KNOCKOUT_LEVEL {
+        let stat_bonus = brawler_knockout_stat_bonus(
+            ability_modifier(input.chosen.ability_scores.strength),
+            ability_modifier(input.chosen.ability_scores.dexterity),
+        );
+        let uses = brawler_knockout_uses_per_day(level);
+        let dc = brawler_knockout_dc(level, stat_bonus);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.knockout_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Brawler level {level} Knockout: usable {uses} time(s) per day ((level + 2)/6). \
+                 Granted at 4th level, where the formula yields exactly 1"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.knockout_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Brawler level {level} Knockout save DC: {dc} (level/2 + 10 + the higher of the \
+                 Strength and Dexterity MODIFIERS, {stat_bonus:+}). The corpus writes \
+                 `max(STR,DEX)` with bare tokens -- modifiers -- deliberately distinct from \
+                 Brawler's Cunning's explicit `INTSCORE`; building this DC from raw scores would \
+                 be wildly wrong. The effect itself (the target falls unconscious on a failed \
+                 Fortitude save) is opponent-directed and stays deferred; the DC and the pool \
+                 are self-scoped and ground, the same split already accepted for Alchemist's \
+                 Bomb DC"
+            ),
+        });
+    }
+}
+
 /// narrower one naming only what's genuinely still missing).
 fn ground_brawler_ac_bonus_and_defer_the_rest(
     input: &CharacterInput,
@@ -15191,6 +15418,8 @@ fn ground_brawler_ac_bonus_and_defer_the_rest(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    ground_brawler_remaining_features(input, level, explanations);
+
     let ac_bonus = brawler_ac_bonus(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.brawler.ac_bonus".to_owned(),
@@ -43482,5 +43711,155 @@ mod orphan_feat_producer_consumer_tests {
             },
         );
         assert_eq!(value(&input, "feat.standalone.spell_focus.evocation"), Some(1));
+    }
+}
+
+/// v0.6 alpha swarm, task #5 (Brawler's six remaining real features,
+/// 2026-07-27).
+#[cfg(test)]
+mod brawler_remaining_feature_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        BRAWLER_CLASS_ID};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn brawler(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BRAWLER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Maneuver Training is set by TWO stacking corpus lines: the
+    /// `(L>2)+(L>6)+(L>10)+(L>14)` line tops out at 4, and a separate
+    /// `1|PREVARGT:BrawlerLVL,18` supplies the 5th. Reading only the
+    /// first gives 4 at levels 19-20 instead of 5.
+    ///
+    /// The corpus itself corroborates this: it carries the author's
+    /// comment on a rejected single-line variant saying it "never got
+    /// BrawlerManeuverTraining up to 5".
+    #[test]
+    fn maneuver_training_count_reaches_five_via_its_second_corpus_line() {
+        for (level, want) in [
+            (1u8, 0i16), (2, 0), (3, 1), (6, 1), (7, 2), (10, 2), (11, 3),
+            (14, 3), (15, 4), (18, 4), (19, 5), (20, 5),
+        ] {
+            assert_eq!(super::brawler_maneuver_training_count(level), want, "level {level}");
+        }
+    }
+
+    /// Knockout's stat bonus is `max(STR,DEX)` -- BARE tokens, i.e.
+    /// ability MODIFIERS, unlike Brawler's Cunning's explicit
+    /// `INTSCORE`. The corpus disambiguates deliberately, and a DC built
+    /// from scores instead of modifiers would be wildly wrong.
+    #[test]
+    fn knockout_uses_ability_modifiers_not_scores_unlike_brawlers_cunning() {
+        // Fixture STR 16 (+3), DEX 14 (+2) -> max modifier 3.
+        assert_eq!(super::brawler_knockout_stat_bonus(3, 2), 3);
+        assert_eq!(super::brawler_knockout_stat_bonus(-1, 4), 4);
+        // Level 4 DC: 4/2 + 10 + 3 = 15. A score-based read would give 26.
+        assert_eq!(super::brawler_knockout_dc(4, 3), 15);
+        assert_eq!(super::brawler_knockout_dc(20, 5), 25);
+        // Cunning still floors a SCORE at 13 -- the two must not converge.
+        assert_eq!(super::brawler_cunning_effective_intelligence_score(10), 13);
+    }
+
+    /// Knockout is granted at 4th, not 5th, and `(L+2)/6` yields exactly
+    /// 1 there -- the corpus is internally consistent.
+    #[test]
+    fn knockout_uses_per_day_matches_its_fourth_level_grant() {
+        for (level, want) in [(4u8, 1i16), (9, 1), (10, 2), (16, 3), (20, 3)] {
+            assert_eq!(super::brawler_knockout_uses_per_day(level), want, "level {level}");
+        }
+        assert_eq!(value(&brawler(1), "class_feature.acg.brawler.knockout_dc"), None);
+        assert_eq!(value(&brawler(4), "class_feature.acg.brawler.knockout_dc"), Some(15));
+    }
+
+    /// Flurry's extra attacks, and its self-applied attack penalty --
+    /// a real corpus token, unlike Cavalier's DESC-only one.
+    ///
+    /// Note the corpus `min(...,3)` cap is NOT meaningfully covered
+    /// here, and cannot be: `(20+6)/7` is already 3, so the cap never
+    /// binds for any reachable level. Asserting the values is the most
+    /// this test can honestly do.
+    #[test]
+    fn brawlers_flurry_extra_attacks_cap_at_three() {
+        for (level, want) in [(2u8, 1i16), (7, 1), (8, 2), (14, 2), (15, 3), (20, 3)] {
+            assert_eq!(super::brawler_flurry_extra_attacks(level), want, "level {level}");
+        }
+        assert_eq!(
+            value(&brawler(2), "class_feature.acg.brawler.flurry_attack_penalty"),
+            Some(-2)
+        );
+        assert_eq!(value(&brawler(1), "class_feature.acg.brawler.flurry_extra_attacks"), None);
+    }
+
+    /// Bonus Feats: `(1+level)/3`. Seven archetype `-1` deductions exist
+    /// in the corpus but are provably vacuous here -- their only setter
+    /// is the Wild Child archetype, and this repo ingests no Brawler
+    /// archetype at all.
+    #[test]
+    fn bonus_feat_count_ignores_the_seven_vacuous_archetype_deductions() {
+        for (level, want) in [(1u8, 0i16), (2, 1), (4, 1), (5, 2), (8, 3), (11, 4), (20, 7)] {
+            assert_eq!(super::brawler_bonus_feat_count(level), want, "level {level}");
+        }
+    }
+
+    /// Martial Flexibility's uses/day pool, granted 1st.
+    #[test]
+    fn martial_flexibility_pool_grounds_from_first_level() {
+        for (level, want) in [(1u8, 4i16), (2, 4), (4, 5), (10, 8), (20, 13)] {
+            assert_eq!(super::brawler_martial_flexibility_uses(level), want, "level {level}");
+        }
+        assert_eq!(
+            value(&brawler(1), "class_feature.acg.brawler.martial_flexibility_uses_per_day"),
+            Some(4)
+        );
+    }
+
+    /// Martial Training grounds three level-equivalence facts. Brawler's
+    /// feature shares a NAME with Alchemist's, which is a genuine no-op
+    /// with zero tokens -- same name, different class, opposite verdict.
+    #[test]
+    fn martial_training_grounds_its_three_level_equivalence_facts() {
+        for id in [
+            "class_feature.acg.brawler.martial_training.fighter_level_equivalence",
+            "class_feature.acg.brawler.martial_training.monk_level_equivalence",
+            "class_feature.acg.brawler.martial_training.monk_feat_qualify",
+        ] {
+            assert_eq!(value(&brawler(7), id), Some(7), "{id}");
+        }
+    }
+
+    /// Nothing leaks onto a non-Brawler.
+    #[test]
+    fn none_of_the_six_grounds_for_a_non_brawler() {
+        let fighter = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        for frag in ["knockout", "flurry", "martial_flexibility", "martial_training",
+            "maneuver_training", "bonus_feat_count"] {
+            assert!(
+                !build_pilot_headless_receipt(&fighter)
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.contains(&format!("brawler.{frag}"))),
+                "a Fighter must not ground brawler.{frag}"
+            );
+        }
     }
 }

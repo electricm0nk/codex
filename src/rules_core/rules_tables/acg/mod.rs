@@ -254,6 +254,24 @@ pub struct AcgClassCoverage {
     /// with genuine, SEPARATELY-implemented backing logic" methodology
     /// consistent across classes rather than letting it drift per-class.
     ///
+    /// Brawler counts 9 (AC Bonus, Brawler's Cunning, Brawler's Strike,
+    /// Martial Flexibility, Martial Training, Bonus Feats, Brawler's
+    /// Flurry, Maneuver Training, Knockout) after the remaining-features
+    /// closure (2026-07-27, task #5).
+    ///
+    /// The six new ones are INDEPENDENT and co-available -- a Brawler
+    /// has all of them once each is granted -- so each earns its own
+    /// slot under the variant-vs-independent test, the same shape as
+    /// Swashbuckler's deeds rather than Alchemist's mutually-exclusive
+    /// Mutagen variants.
+    ///
+    /// Within each, multiple corpus vars fold into one slot as facets of
+    /// a single mechanism: Knockout's DC and uses/day, Flurry's extra
+    /// attacks and attack penalty, and Martial Training's three
+    /// level-equivalence vars. Maneuver Training's canonical Bull Rush
+    /// bonus folds into Maneuver Training rather than counting, being a
+    /// sub-pick under it.
+    ///
     /// Swashbuckler counts 12 (Panache, Charmed Life, Nimble, Finesse,
     /// Weapon Training, Bonus Feats, and all SIX deeds carrying real
     /// magnitudes: Derring-Do, Dodging Panache, Precise Strike, Bleeding
@@ -527,9 +545,10 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     let named_features_wired = match class_id {
         AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
-        AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
+        AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
         AcgClassId::Investigator | AcgClassId::Warpriest => 5,
+        AcgClassId::Brawler => 9,
         AcgClassId::Swashbuckler => 12,
     };
 

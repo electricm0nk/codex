@@ -191,7 +191,12 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
     for (class_id, feature_name, expected_wired) in [
         (AcgClassId::Skald, "Inspired Rage + Damage Reduction + Bardic Knowledge", 3),
         (AcgClassId::Bloodrager, "Bloodrage + Spells (spells-per-day/known tables)", 2),
-        (AcgClassId::Brawler, "AC Bonus + Brawler's Cunning + Brawler's Strike", 3),
+        (
+            AcgClassId::Brawler,
+            "AC Bonus + Cunning + Strike + Martial Flexibility + Martial Training + Bonus Feats \
+             + Flurry + Maneuver Training + Knockout",
+            9,
+        ),
         (
             AcgClassId::Hunter,
             "Animal Companion + Wild Empathy + Animal Focus (Bull)",
