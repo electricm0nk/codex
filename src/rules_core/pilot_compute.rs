@@ -29594,7 +29594,7 @@ fn unmet_bard_known_spell_conditions(input: &CharacterInput, bard_level: u8) -> 
     for spell_id in &known {
         let Some(spell_level) = bard_spell_list::bard_spell_level(spell_id) else {
             unmet.push(format!(
-                "known spell '{spell_id}' is not on the real PF1 Core Rulebook bard spell list"
+                "known spell '{spell_id}' is not on the real PF1 bard spell list"
             ));
             continue;
         };
@@ -29652,8 +29652,9 @@ fn ground_bard_known_spells(
         value: known.len() as i16,
         detail: format!(
             "Bard level {bard_level} known-spell selection ({} spells, AcquisitionMode::Known): \
-             {}. Each known spell is verified against the real PF1 Core Rulebook bard spell list \
-             (`bard_spell_list::BARD_SPELL_LIST`), the bard's own spell-level access ceiling, and \
+             {}. Each known spell is verified against the real PF1 bard spell list \
+             (`bard_spell_list::BARD_SPELL_LIST`, all ingested books), the bard's own \
+             spell-level access ceiling, and \
              the Bard Spells Known table's own per-level cap. Real PF1 Bard rules have no daily \
              preparation step at all (like Sorcerer, unlike Ranger/Paladin/Cleric/Druid) -- a \
              bard's known spells are permanent once learned, cast spontaneously using the \
