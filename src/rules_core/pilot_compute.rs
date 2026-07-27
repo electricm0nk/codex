@@ -1851,6 +1851,129 @@ const HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID: &str = "animal_focus:bull";
 /// structure exactly, so the same exact-match gate-widening discipline
 /// applies unchanged.
 const CAVALIER_CLASS_ID: &str = "class:cavalier";
+/// `ClassAbilityActivation.ability_id` for Cavalier's Challenge.
+const CAVALIER_CHALLENGE_ABILITY_ID: &str = "challenge";
+/// Cavalier gains Expert Trainer at 4th level (APG class table).
+const CAVALIER_EXPERT_TRAINER_LEVEL: u8 = 4;
+/// The choice set for which Order a Cavalier swears at 1st level.
+const CAVALIER_ORDER_CHOICE_ID: &str = "choice:cavalier_order";
+/// Order of the Sword is the one canonical Order this closure grounds
+/// (task #6, 2026-07-27). Chosen over the other five because its own
+/// bonus is flat and self-scoped; five of the six orders' challenge
+/// riders are opponent- or ally-conditioned and stay deferred.
+const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
+/// Challenge's self-applied Armor Class penalty while a challenge is
+/// active.
+///
+/// **Evidentiary caveat, deliberately recorded rather than glossed**:
+/// unlike Bloodrage's own `-2`, which has a real
+/// `BONUS:VAR|BloodrageACPenalty|-2` token, Challenge's penalty exists
+/// ONLY in the record's `DESC:` prose ("The cavalier takes a -2 penalty
+/// to his Armor Class, except against attacks made by the target of his
+/// challenge"). Verified directly: `KEY:Cavalier ~ Challenge` carries no
+/// `BONUS:COMBAT` token of any kind. The mechanic matches Bloodrage's
+/// shape, but the corpus evidence is the weaker Panache-style path, and
+/// the two should not be conflated.
+///
+/// The "except against the target of his challenge" exception is NOT
+/// modelled -- that would need the same opponent-tracking this engine
+/// lacks -- so the penalty is applied unconditionally while challenging,
+/// which is the strictly more conservative reading.
+const CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY: i16 = -2;
+
+/// Cavalier's Challenge uses per day: `(CavalierLVL+2)/3`, verified
+/// directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`.
+fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
+    (i16::from(level) + 2) / 3
+}
+
+/// Cavalier's bonus COMBAT feat count: `CavalierLVL/6` (1 at 6th, 2 at
+/// 12th, 3 at 18th), verified against
+/// `BONUS:ABILITYPOOL|Cavalier Feat|CavalierLVL/6`.
+///
+/// Three `.MOD` records each subtract 1 from this pool
+/// (`TYPE.CavalierCavaliersBonusFeat6/12/18`), but every one is gated on
+/// a specific archetype, and this repo ingests no Cavalier archetype at
+/// all -- provably vacuous here, the same check that cleared Alchemist's
+/// Gnome-only and Ultimate-Magic-gated Bomb terms.
+fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
+    i16::from(level) / 6
+}
+
+/// Cavalier's teamwork feat count: Tactician at 1st, Greater Tactician
+/// at 9th, and Master Tactician at 17th each add
+/// `BONUS:ABILITYPOOL|Tactician Teamwork Feat|1`, so the count is 1/2/3.
+///
+/// Only the COUNT grounds. Each Tactician tier also grants the chosen
+/// feat to allies within 30 feet for a few rounds, which is ally-scoped
+/// and stays deferred, consistent with Skald's Raging Song.
+fn cavalier_teamwork_feat_count(level: u8) -> i16 {
+    let level = i16::from(level);
+    let mut count = 0;
+    if level >= 1 {
+        count += 1;
+    }
+    if level >= 9 {
+        count += 1;
+    }
+    if level >= 17 {
+        count += 1;
+    }
+    count
+}
+
+/// Expert Trainer's Handle Animal bonus when handling a mount:
+/// `CavalierLVL/2`, granted at 4th level.
+///
+/// **Evidentiary caveat**: this magnitude lives only in the record's
+/// `DESC:` substitution parameter (`|CavalierLVL/2`) -- there is no
+/// `BONUS:SKILL` token at all. Same weaker path as Panache and
+/// Challenge's AC penalty. Cross-checked against the published rule text
+/// ("a +1/2 his cavalier level bonus whenever he uses Handle Animal on
+/// an animal that serves as a mount"), which agrees.
+fn cavalier_expert_trainer_bonus(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// Order of the Sword's own order bonus: a competence bonus on Sense
+/// Motive checks made to oppose a Bluff check, equal to `1/2 cavalier
+/// level (minimum +1)`.
+///
+/// Grounds despite being an opposed check, per the ruling already made
+/// for Oracle's Deaf: a flat modifier applying to the character's OWN
+/// roll clears the bar; what does not is a bonus needing a persistent
+/// tracked relationship with a specific opponent.
+///
+/// **Evidentiary caveat**: DESC-sourced, like Expert Trainer.
+fn cavalier_order_of_the_sword_sense_motive_bonus(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Cavalier's Challenge Armor Class penalty when a challenge is actively
+/// declared (task #6, 2026-07-27). `None` for every non-Cavalier or
+/// not-currently-challenging character, so this is class-ownership-gated
+/// by construction, mirroring `active_bloodrager_bloodrage_bonus`.
+///
+/// Deliberately NOT budget-checked against
+/// `cavalier_challenge_uses_per_day`: a challenge lasts until the target
+/// dies or the encounter ends, so "rounds consumed today" has no
+/// meaning here the way it does for Rage or Bardic Performance. Naming
+/// that rather than inventing an enforcement the rules do not have.
+fn active_cavalier_challenge_armor_class_penalty(input: &CharacterInput) -> Option<i16> {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == CAVALIER_CLASS_ID)?;
+    let activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == CAVALIER_CHALLENGE_ABILITY_ID)?;
+    (activation.active_state == ActiveState::EquippedActive)
+        .then_some(CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY)
+}
 
 /// v0.6 alpha swarm, risks item 8 (Alchemist Mutagen closure, second APG
 /// class-specific closure): APG Alchemist's Mutagen, verified directly
@@ -8703,7 +8826,7 @@ fn compute_apg_class_chassis(
     // Inquisitor-, Oracle-, or Witch-containing multiclass mix never
     // reaches this function at all).
     if class_id == ApgClassId::Cavalier {
-        ground_cavalier_mount_and_defer_the_rest(level, explanations, diagnostics);
+        ground_cavalier_mount_and_defer_the_rest(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Alchemist {
         ground_or_block_alchemist_mutagen(input, level, explanations, diagnostics);
         let alchemist_intelligence_modifier =
@@ -8789,7 +8912,139 @@ fn compute_apg_class_chassis(
 /// diagnostic, replacing the generic `class_feature.apg.cavalier
 /// .unsupported` diagnostic for Cavalier specifically, mirroring
 /// Brawler's own diagnostic-honesty fix exactly.
+/// Grounds Cavalier's named class features (task #6, 2026-07-27):
+/// Challenge's uses-per-day pool and self-applied Armor Class penalty,
+/// Expert Trainer, the two feat counts, and Order of the Sword's own
+/// Sense Motive bonus when that Order is recorded.
+///
+/// Three of these five magnitudes are DESC-sourced rather than carried on
+/// a `BONUS:` token (Challenge's AC penalty, Expert Trainer, and Order of
+/// the Sword's bonus). That is the weaker Panache-shaped evidentiary
+/// path, named in each record's own detail text rather than presented as
+/// token-verified.
+fn ground_cavalier_named_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let challenge_uses = cavalier_challenge_uses_per_day(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.cavalier.challenge_uses_per_day".to_owned(),
+        value: challenge_uses,
+        detail: format!(
+            "Cavalier level {level} Challenge uses per day: (level + 2)/3 = {challenge_uses} \
+             (`BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`). A flat daily pool -- no \
+             per-use consumption is tracked. Challenge's own +{level} extra melee damage \
+             against the challenge TARGET is deliberately not grounded: it needs a persistent \
+             tracked relationship with a specific opponent, the same line already drawn for \
+             Slayer's Studied Target and Investigator's Studied Combat"
+        ),
+    });
+
+    match active_cavalier_challenge_armor_class_penalty(input) {
+        Some(penalty) => explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.challenge_armor_class_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Cavalier level {level} is actively challenging, taking a {penalty} penalty to \
+                 Armor Class. INTEGRATED into the real `defense.baseline_armor_class` total, the \
+                 same path Bloodrage's own -2 already uses. Two honest caveats: the magnitude is \
+                 DESC-sourced (the Challenge record carries no `BONUS:COMBAT` token at all, \
+                 unlike Bloodrage's real token), and the rule's \"except against attacks made by \
+                 the target of his challenge\" exception is NOT modelled, so the penalty applies \
+                 unconditionally here -- the strictly more conservative reading"
+            ),
+        }),
+        None => explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.challenge_not_active".to_owned(),
+            value: 0,
+            detail: format!(
+                "Cavalier level {level} is not currently challenging (no active \
+                 class_ability_activations entry for \"{CAVALIER_CHALLENGE_ABILITY_ID}\"): a \
+                 genuinely valid posture, so no Armor Class penalty is applied"
+            ),
+        }),
+    }
+
+    if level >= CAVALIER_EXPERT_TRAINER_LEVEL {
+        let bonus = cavalier_expert_trainer_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.expert_trainer_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Cavalier level {level} Expert Trainer: a +{bonus} bonus (level/2) on Handle \
+                 Animal checks made on an animal serving as a mount. Handle Animal is not among \
+                 the three skills this engine computes, so this grounds standalone, the same \
+                 shape as Bard's Bardic Knowledge. DESC-sourced -- the record carries no \
+                 `BONUS:SKILL` token -- and cross-checked against the published rule text, which \
+                 agrees"
+            ),
+        });
+    }
+
+    let bonus_feats = cavalier_bonus_combat_feat_count(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.cavalier.bonus_combat_feat_count".to_owned(),
+        value: bonus_feats,
+        detail: format!(
+            "Cavalier level {level} bonus combat feats: level/6 = {bonus_feats} (1 at 6th, 2 at \
+             12th, 3 at 18th). Three `.MOD` records each subtract 1 from this pool, but every \
+             one is gated on a specific Cavalier archetype and this repo ingests no Cavalier \
+             archetype at all -- provably vacuous here. Only the COUNT is grounded; which feats \
+             are chosen is not"
+        ),
+    });
+
+    let teamwork_feats = cavalier_teamwork_feat_count(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.cavalier.teamwork_feat_count".to_owned(),
+        value: teamwork_feats,
+        detail: format!(
+            "Cavalier level {level} teamwork feats from Tactician: {teamwork_feats} (Tactician at \
+             1st, Greater Tactician at 9th, Master Tactician at 17th, each adding one). Only the \
+             count grounds -- each tier also GRANTS the chosen feat to allies within 30 feet, \
+             which is ally-scoped and stays deferred, consistent with Skald's Raging Song"
+        ),
+    });
+
+    let order_selected = input
+        .chosen
+        .selected_choices
+        .iter()
+        .any(|c| c.choice_set_id == CAVALIER_ORDER_CHOICE_ID
+            && c.selection_id == ORDER_OF_THE_SWORD_SELECTION);
+    if order_selected {
+        let sense_motive = cavalier_order_of_the_sword_sense_motive_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.cavalier.order_of_the_sword.sense_motive_bonus".to_owned(),
+            value: sense_motive,
+            detail: format!(
+                "Cavalier level {level} with the Order of the Sword gains a +{sense_motive} \
+                 competence bonus (1/2 level, minimum +1) on Sense Motive checks made to oppose \
+                 a Bluff check. Grounds despite being an opposed check, per the ruling already \
+                 made for Oracle's Deaf: the magnitude is fixed and applies to this character's \
+                 own roll. Sense Motive is not among the three skills this engine computes, so \
+                 this grounds standalone. DESC-sourced. The Order's own challenge rider (attack \
+                 rolls while mounted) and its By My Honor save bonus are not grounded"
+            ),
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.cavalier.order_powers.unsupported".to_owned(),
+            message: "Cavalier remains blocked on its Order burden: no recognized Order of the \
+                 Sword choice is present (it is the one canonical Order grounded in this \
+                 codebase; the other five -- Cockatrice, Dragon, Lion, Shield, Star -- carry \
+                 challenge riders that are opponent- or ally-conditioned), so no Order support \
+                 is claimed"
+                .to_owned(),
+            claim_blocking: true,
+        });
+    }
+}
+
 fn ground_cavalier_mount_and_defer_the_rest(
+    input: &CharacterInput,
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
@@ -8801,6 +9056,7 @@ fn ground_cavalier_mount_and_defer_the_rest(
         explanations,
     );
     ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
+    ground_cavalier_named_features(input, level, explanations, diagnostics);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
         message: "Cavalier Mount advancement past companion level 1 (2 HD) is not grounded: \
@@ -8816,10 +9072,16 @@ fn ground_cavalier_mount_and_defer_the_rest(
         id: "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{CAVALIER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and the Mount: this APG class has no class-skill list and no other named \
-             class-feature computation (Challenge, Order, Tactician, Cavalier's Charge, and the \
-             rest) grounded anywhere in this codebase yet; no class-feature execution is \
-             fabricated in this bounded chassis baseline"
+             pillar, the Mount, its class-skill list, Challenge's uses-per-day and \
+             self-applied Armor Class penalty, Expert Trainer, the bonus-combat-feat and \
+             teamwork-feat counts, and Order of the Sword's own Sense Motive bonus: Banner and \
+             Greater Banner, the charge family (Cavalier's Charge, Mighty Charge, Supreme \
+             Charge), Challenge's own +level damage against its target, Demanding Challenge, \
+             the five non-Sword Orders and every order's challenge rider, and Order of the \
+             Sword's own By My Honor remain ungrounded. The charge family and every challenge \
+             rider are blocked on real missing engine state -- a charge action and a persistent \
+             opponent relationship -- not on transcription effort; no class-feature execution \
+             is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -28787,6 +29049,7 @@ pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> boo
             || class_level.class_id == INVESTIGATOR_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
+            || class_level.class_id == CAVALIER_CLASS_ID
     })
 }
 
@@ -28811,6 +29074,7 @@ pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -
             || class_level.class_id == WITCH_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
+            || class_level.class_id == CAVALIER_CLASS_ID
     })
 }
 
@@ -28831,6 +29095,7 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
+            || class_level.class_id == CAVALIER_CLASS_ID
     })
 }
 
@@ -29298,6 +29563,13 @@ fn compute_combat_baseline(
     // MAXDEX may have capped), not a replacement for it.
     let natures_whispers_ac_bonus =
         active_oracle_natures_whispers_ac_bonus(input, ability_modifiers).unwrap_or(0);
+    // v0.6 alpha swarm, task #6 (2026-07-27): Cavalier's Challenge
+    // applies a -2 penalty to the cavalier's OWN Armor Class while a
+    // challenge is active -- same self-applied shape as Bloodrage's,
+    // class-ownership-gated by construction. DESC-sourced magnitude; see
+    // CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY.
+    let challenge_armor_class_penalty =
+        active_cavalier_challenge_armor_class_penalty(input).unwrap_or(0);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -29308,7 +29580,8 @@ fn compute_combat_baseline(
         + brawler_ac_bonus_value
         + alchemist_mutagen_ac_bonus_value
         + protection_judgment_ac_bonus
-        + natures_whispers_ac_bonus;
+        + natures_whispers_ac_bonus
+        + challenge_armor_class_penalty;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -29325,7 +29598,8 @@ fn compute_combat_baseline(
              Inquisitor Protection judgment sacred/profane bonus (+{protection_judgment_ac_bonus}, \
              only while actively, validly judging Protection) + Oracle Nature's Whispers \
              Charisma-for-Dexterity substitution (+{natures_whispers_ac_bonus}, only for a \
-             Nature-Mystery Oracle who took that revelation); shield \
+             Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty \
+             ({challenge_armor_class_penalty}, only while actively challenging); shield \
              is absent (+0) = {armor_class}"
         ),
     });
@@ -41753,5 +42027,246 @@ mod class_granted_feat_tests {
             1,
             "Endurance must appear exactly once: {effective:?}"
         );
+    }
+}
+
+/// v0.6 alpha swarm, task #6 (Cavalier, 2026-07-27): the five named
+/// features this closure grounds, plus the decoy-variable guard.
+#[cfg(test)]
+mod cavalier_named_feature_tests {
+    use super::{
+        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+        CAVALIER_CHALLENGE_ABILITY_ID, CAVALIER_CLASS_ID, CAVALIER_ORDER_CHOICE_ID,
+        ORDER_OF_THE_SWORD_SELECTION,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn cavalier(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: CAVALIER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Challenge's uses/day is `(level+2)/3`, re-derived across the full
+    /// range from the corpus token rather than spot-checked.
+    #[test]
+    fn challenge_uses_per_day_matches_the_corpus_formula_at_every_level() {
+        for (level, expected) in
+            [(1u8, 1i16), (2, 1), (3, 1), (4, 2), (6, 2), (7, 3), (10, 4), (20, 7)]
+        {
+            assert_eq!(
+                super::cavalier_challenge_uses_per_day(level),
+                expected,
+                "level {level}: (level + 2)/3"
+            );
+        }
+    }
+
+    /// The decoy guard. Two similarly-named variables exist in the
+    /// corpus: the real `OrderChallengeBonus` (`CavalierLVL/4`, consumed
+    /// by all six Orders) and `CavalierOrderChallengeBonus`
+    /// (`(CavalierLVL+3)/4`), which is defined on the base Challenge
+    /// record -- the natural first place to look -- and referenced
+    /// NOWHERE. This closure grounds neither (every order challenge rider
+    /// is opponent- or ally-conditioned), so the guard is that no
+    /// Cavalier explanation ever carries the decoy's value shape.
+    #[test]
+    fn no_grounded_value_uses_the_never_consumed_decoy_formula() {
+        // At level 5 the two formulas diverge: real = 5/4 = 1,
+        // decoy = (5+3)/4 = 2. The pipeline check stays at level 1 for
+        // the companion-boundary reason noted above.
+        let receipt = build_pilot_headless_receipt(&cavalier(1));
+        let decoy = (5 + 3) / 4;
+        assert_eq!(decoy, 2, "the decoy really does differ from the real formula at level 5");
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("order_challenge")),
+            "no order-challenge-bonus record is grounded at all this closure: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// Challenge's -2 AC penalty applies only while actively
+    /// challenging, and lands on the REAL armor class total -- proven by
+    /// differencing the same character with and without the activation.
+    #[test]
+    fn an_active_challenge_lowers_the_real_armor_class_total_by_two() {
+        let idle = cavalier(1);
+        let without = value(&idle, "defense.baseline_armor_class").expect("AC computed");
+
+        let mut challenging = idle.clone();
+        challenging.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CAVALIER_CHALLENGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+        let with = value(&challenging, "defense.baseline_armor_class").expect("AC computed");
+
+        assert_eq!(with - without, -2, "an active challenge costs 2 AC");
+        assert_eq!(
+            value(&challenging, "class_feature.apg.cavalier.challenge_armor_class_penalty"),
+            Some(-2)
+        );
+        assert_eq!(
+            value(&idle, "class_feature.apg.cavalier.challenge_not_active"),
+            Some(0),
+            "an idle cavalier gets the honest not-active record instead"
+        );
+    }
+
+    /// A non-Cavalier carrying a spoofed challenge activation must not
+    /// lose armor class.
+    #[test]
+    fn a_spoofed_challenge_never_lowers_a_non_cavaliers_armor_class() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut fighter = result.character_input.expect("valid fixture");
+        let clean = value(&fighter, "defense.baseline_armor_class");
+        fighter.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: CAVALIER_CHALLENGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+        assert_eq!(
+            value(&fighter, "defense.baseline_armor_class"),
+            clean,
+            "a Fighter's AC is untouched by a spoofed Cavalier challenge"
+        );
+    }
+
+    /// Expert Trainer is a 4th-level feature and must not ground before
+    /// its own gate.
+    ///
+    /// Pipeline assertions stay at level 1: `ground_horse_companion_stat_block`
+    /// carries a pre-existing `debug_assert` that only companion level 1
+    /// is grounded, a documented boundary predating this closure (Hunter
+    /// hit the identical one). Higher levels are exercised through the
+    /// pure formula instead of expanding that unrelated limitation.
+    #[test]
+    fn expert_trainer_grounds_only_from_fourth_level() {
+        assert_eq!(
+            value(&cavalier(1), "class_feature.apg.cavalier.expert_trainer_bonus"),
+            None,
+            "a level-1 Cavalier has not gained Expert Trainer"
+        );
+        for (level, expected) in [(4u8, 2i16), (7, 3), (20, 10)] {
+            assert_eq!(
+                super::cavalier_expert_trainer_bonus(level),
+                expected,
+                "level {level} Expert Trainer: level/2"
+            );
+        }
+    }
+
+    /// Both feat counts, across their real step boundaries.
+    #[test]
+    fn the_two_feat_counts_step_at_their_real_levels() {
+        for (level, expected) in [(1u8, 0i16), (5, 0), (6, 1), (11, 1), (12, 2), (18, 3), (20, 3)] {
+            assert_eq!(
+                super::cavalier_bonus_combat_feat_count(level),
+                expected,
+                "level {level} bonus combat feats: level/6"
+            );
+        }
+        for (level, expected) in [(1u8, 1i16), (8, 1), (9, 2), (16, 2), (17, 3), (20, 3)] {
+            assert_eq!(
+                super::cavalier_teamwork_feat_count(level),
+                expected,
+                "level {level} teamwork feats: Tactician 1st / 9th / 17th"
+            );
+        }
+    }
+
+    /// Order of the Sword grounds only when explicitly chosen, and
+    /// clears the order-powers block when it is.
+    #[test]
+    fn order_of_the_sword_grounds_only_when_explicitly_recorded() {
+        let bare = build_pilot_headless_receipt(&cavalier(1));
+        assert!(
+            bare.computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.order_powers.unsupported"
+                    && d.claim_blocking),
+            "a Cavalier with no recorded Order stays blocked on it: {:?}",
+            bare.computation.diagnostics
+        );
+
+        let mut sworn = cavalier(1);
+        sworn.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
+            selection_id: ORDER_OF_THE_SWORD_SELECTION.to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&sworn);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.cavalier.order_powers.unsupported"),
+            "a recognized Order clears the block: {:?}",
+            receipt.computation.diagnostics
+        );
+        // 1/2 level, minimum +1: the floor is what applies at level 1.
+        assert_eq!(
+            value(&sworn, "class_feature.apg.cavalier.order_of_the_sword.sense_motive_bonus"),
+            Some(1)
+        );
+        for (level, expected) in [(1u8, 1i16), (2, 1), (4, 2), (11, 5), (20, 10)] {
+            assert_eq!(
+                super::cavalier_order_of_the_sword_sense_motive_bonus(level),
+                expected,
+                "level {level}: max(1, level/2)"
+            );
+        }
+    }
+
+    /// Cavalier's real CSKILL list includes all three tracked skills.
+    #[test]
+    fn cavalier_earns_the_class_skill_bonus_on_all_three_tracked_skills() {
+        let receipt = build_pilot_headless_receipt(&cavalier(1));
+        for skill in ["climb", "intimidate", "swim"] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == format!("skill.selected_modifier.{skill}"))
+                .unwrap_or_else(|| panic!("{skill} must be computed"));
+            assert!(
+                record.detail.contains("class-skill bonus (+3)"),
+                "{skill} is on Cavalier's real CSKILL list: {record:?}"
+            );
+        }
+    }
+
+    /// No Cavalier diagnostic may still assert the class has no
+    /// class-skill list -- it has one, and that text was false.
+    #[test]
+    fn no_cavalier_diagnostic_claims_the_class_has_no_class_skill_list() {
+        for diagnostic in &build_pilot_headless_receipt(&cavalier(1)).computation.diagnostics {
+            assert!(
+                !diagnostic.message.contains("no class-skill list"),
+                "Cavalier DOES have a class-skill list: {diagnostic:?}"
+            );
+        }
     }
 }

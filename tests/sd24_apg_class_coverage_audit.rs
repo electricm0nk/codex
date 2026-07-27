@@ -137,7 +137,11 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
     }
 
     for (class_id, feature_name, expected_wired) in [
-        (ApgClassId::Cavalier, "Mount", 1),
+        (
+            ApgClassId::Cavalier,
+            "Mount + Challenge + Expert Trainer + Bonus Feat + Tactician + Order",
+            6,
+        ),
         (ApgClassId::Alchemist, "Mutagen + Bomb + Poison Resistance", 3),
         (
             ApgClassId::Inquisitor,

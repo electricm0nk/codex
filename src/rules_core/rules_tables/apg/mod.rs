@@ -318,9 +318,10 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // Inquisitor Judgment / Oracle full-build closures): see this field's
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
-        ApgClassId::Cavalier | ApgClassId::Witch => 1,
+        ApgClassId::Witch => 1,
         ApgClassId::Alchemist => 3,
         ApgClassId::Oracle | ApgClassId::Inquisitor => 5,
+        ApgClassId::Cavalier => 6,
         _ => 0,
     };
 
