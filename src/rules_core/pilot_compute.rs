@@ -1751,6 +1751,13 @@ const SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY: i16 = 3;
 /// re-declared). Unlike Skald, Bloodrage is self-only by RAW with no
 /// exception-clause self-application inference needed.
 const BLOODRAGER_CLASS_ID: &str = "class:bloodrager";
+/// The first level at which a Bloodrager can cast at all (task #1,
+/// 2026-07-27). Verified directly against `acg_classes.lst`: the class
+/// block carries NO `CAST:`/`KNOWN:` row whatsoever below this level,
+/// and its caster-level token is independently gated
+/// `BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4`.
+/// A level 1-3 Bloodrager therefore has no spellcasting to be missing.
+const BLOODRAGER_FIRST_CASTING_LEVEL: u8 = 4;
 /// `ClassAbilityActivation.ability_id` for Bloodrager Bloodrage.
 const BLOODRAGER_BLOODRAGE_ABILITY_ID: &str = "bloodrage";
 /// PF1 Advanced Class Guide Bloodrage's Armor Class penalty: -2,
@@ -13982,7 +13989,9 @@ fn ground_or_block_bloodrager_bloodrage(
                  when an active, in-budget activation is present"
             ),
         });
-        push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+        push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+        ground_bloodrager_spell_tables(bloodrager_level, explanations);
         return;
     };
 
@@ -14003,7 +14012,9 @@ fn ground_or_block_bloodrager_bloodrage(
                 ),
                 claim_blocking: true,
             });
-            push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+            push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+        ground_bloodrager_spell_tables(bloodrager_level, explanations);
             return;
         }
     }
@@ -14061,7 +14072,9 @@ fn ground_or_block_bloodrager_bloodrage(
         }
     }
 
-    push_bloodrager_spellcasting_deferred_diagnostic(diagnostics);
+    push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+        ground_bloodrager_spell_tables(bloodrager_level, explanations);
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -14073,19 +14086,168 @@ fn ground_or_block_bloodrager_bloodrage(
 /// class-feature computation... grounded anywhere" claim, which is now
 /// false for Bloodrager. Pushed unconditionally regardless of Bloodrage's
 /// own raging state.
-fn push_bloodrager_spellcasting_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+fn push_bloodrager_spellcasting_deferred_diagnostic(
+    level: u8,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if level >= BLOODRAGER_FIRST_CASTING_LEVEL {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.bloodrager.spellcasting_deferred.unsupported".to_owned(),
+            message: format!(
+                "{BLOODRAGER_CLASS_ID} level {level} remains blocked on its spellcasting \
+                 posture: it casts from its own spell list (`SPELLLIST:1|Bloodrager`, no \
+                 borrowed list), and while its spells-per-day and spells-known tables are now \
+                 grounded, the spell list itself, Blood Casting, and Eschew Materials are not \
+                 built. Bloodline bonus spells (10 bloodlines x 4 spells, first granted at \
+                 bloodline progression level 7) and the Elemental bloodline's own element \
+                 sub-choice are deferred as well"
+            ),
+            claim_blocking: true,
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.bloodrager.spellcasting_absent_by_level_gate".to_owned(),
+            message: format!(
+                "{BLOODRAGER_CLASS_ID} level {level} has NO spellcasting to defer: the real \
+                 class block carries no `CAST:`/`KNOWN:` row at all below level \
+                 {BLOODRAGER_FIRST_CASTING_LEVEL}, and its caster-level token is itself gated \
+                 `PRECLASS:1,Bloodrager={BLOODRAGER_FIRST_CASTING_LEVEL}`. Correctly absent by \
+                 level gate rather than missing, so this does not block"
+            ),
+            claim_blocking: false,
+        });
+    }
+}
+
+/// Pushes Bloodrager's genuinely-still-missing class features (task #1,
+/// 2026-07-27), split out of the old single diagnostic so that the
+/// spellcasting half can be level-aware while this half stays
+/// unconditional.
+///
+/// The old message also asserted this class "has no class-skill list",
+/// which is FALSE: `acg_abilities_class.lst`'s own
+/// `KEY:Bloodrager ~ Class Skills` record lists 11 skills (Acrobatics,
+/// Climb, Craft, Handle Animal, Intimidate, Knowledge (Arcana),
+/// Perception, Ride, Spellcraft, Survival, Swim). ACG encodes class
+/// skills on a separate internal ability rather than a `CSKILL:` token
+/// on the class line -- a `CSKILL:`-shaped search finds nothing for ANY
+/// ACG class and would wrongly conclude the list is absent.
+fn push_bloodrager_other_features_deferred_diagnostic(
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.acg.bloodrager.spellcasting_deferred.unsupported".to_owned(),
+        id: "class_feature.acg.bloodrager.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{BLOODRAGER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar and Bloodrage: this ACG class has no class-skill list, no \
-             spellcasting posture (Bloodrager casts from its own spell list, but its \
-             spells-known/per-day table numbers have not yet been independently verified or \
-             built), and no other named class feature grounded anywhere in this codebase yet; \
-             no class-feature or spell execution is fabricated in this bounded chassis baseline"
+             chassis pillar, Bloodrage, its class-skill list, and its spells-per-day/\
+             spells-known tables: Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage \
+             Reduction, the Greater/Tireless/Mighty Bloodrage tiers, and the entire Bloodline \
+             slot remain ungrounded anywhere in this codebase; no class-feature execution is \
+             fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
+}
+
+/// Bloodrager's spells per day for `level`, indexed by spell level 1-4
+/// (task #1, 2026-07-27). `None` below level
+/// `BLOODRAGER_FIRST_CASTING_LEVEL`, where the real class block carries
+/// no `CAST:` row at all.
+///
+/// Transcribed directly from `acg_classes.lst`'s own per-level `CAST:`
+/// tokens -- these are literal table rows, not formulas, so unlike
+/// Oracle's or Arcanist's tables there is nothing to re-derive.
+///
+/// **The corpus rows carry a LEADING 0-level column that is a genuine
+/// zero at every one of the 17 rows** (`CAST:0,1` through
+/// `CAST:0,4,4,3,2`): Bloodragers get no 0-level spells at all, which is
+/// why `KNOWN:` also starts `0,2` and why the table tops out at 4th
+/// level. That column is deliberately NOT represented here. It is NOT
+/// Oracle's `CAST:0,3` sentinel, where the leading zero means "orisons
+/// known at will with no daily cap" -- carrying that reading across
+/// would fabricate at-will cantrips this class never gets.
+fn bloodrager_spells_per_day(level: u8) -> Option<[i16; 4]> {
+    let row: [i16; 4] = match level {
+        4..=6 => [1, 0, 0, 0],
+        7..=8 => [1, 1, 0, 0],
+        9 => [2, 1, 0, 0],
+        10..=11 => [2, 1, 1, 0],
+        12 => [2, 2, 1, 0],
+        13..=14 => [3, 2, 1, 1],
+        15 => [3, 2, 2, 1],
+        16 => [3, 3, 2, 1],
+        17 => [4, 3, 2, 1],
+        18 => [4, 3, 2, 2],
+        19 => [4, 3, 3, 2],
+        20 => [4, 4, 3, 2],
+        _ => return None,
+    };
+    Some(row)
+}
+
+/// Bloodrager's spells known for `level`, indexed by spell level 1-4
+/// (task #1, 2026-07-27). Same shape, source, and leading-zero caveat as
+/// `bloodrager_spells_per_day` -- transcribed from the class block's own
+/// `KNOWN:` tokens.
+fn bloodrager_spells_known(level: u8) -> Option<[i16; 4]> {
+    let row: [i16; 4] = match level {
+        4 => [2, 0, 0, 0],
+        5 => [3, 0, 0, 0],
+        6 => [4, 0, 0, 0],
+        7 => [4, 2, 0, 0],
+        8 => [4, 3, 0, 0],
+        9 => [5, 4, 0, 0],
+        10 => [5, 4, 2, 0],
+        11 => [5, 4, 3, 0],
+        12 => [6, 5, 4, 0],
+        13 => [6, 5, 4, 2],
+        14 => [6, 5, 4, 3],
+        15..=17 => [6, 6, 5, 4],
+        18..=20 => [6, 6, 6, 5],
+        _ => return None,
+    };
+    Some(row)
+}
+
+/// Grounds Bloodrager's spells-per-day and spells-known tables as
+/// standalone explanation records (task #1, 2026-07-27), one per spell
+/// level that the character actually has slots or known spells for.
+/// Grounds nothing below `BLOODRAGER_FIRST_CASTING_LEVEL`.
+fn ground_bloodrager_spell_tables(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let (Some(per_day), Some(known)) =
+        (bloodrager_spells_per_day(level), bloodrager_spells_known(level))
+    else {
+        return;
+    };
+    for (index, (slots, known_count)) in per_day.iter().zip(known.iter()).enumerate() {
+        let spell_level = index + 1;
+        if *slots == 0 && *known_count == 0 {
+            continue;
+        }
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.bloodrager.spells_per_day.spell_level_{spell_level}"),
+            value: *slots,
+            detail: format!(
+                "Bloodrager level {level} spells per day at spell level {spell_level}: {slots}, \
+                 read directly from the PF1 Advanced Class Guide Bloodrager class block's own \
+                 per-level CAST: token. Bloodragers gain no 0-level spells at any level, so no \
+                 cantrip row exists. Charisma bonus spells are not folded in here"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.acg.bloodrager.spells_known.spell_level_{spell_level}"),
+            value: *known_count,
+            detail: format!(
+                "Bloodrager level {level} spells known at spell level {spell_level}: \
+                 {known_count}, read directly from the class block's own KNOWN: token. Which \
+                 specific spells are known is not grounded -- Bloodrager's own 183-entry spell \
+                 list is not built in this slice"
+            ),
+        });
+    }
 }
 
 /// Applies Bloodrager Bloodrage's Strength/Constitution morale bonus to
@@ -28567,6 +28729,7 @@ pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> boo
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == INVESTIGATOR_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
+            || class_level.class_id == BLOODRAGER_CLASS_ID
     })
 }
 
@@ -28590,6 +28753,7 @@ pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -
             || class_level.class_id == INVESTIGATOR_CLASS_ID
             || class_level.class_id == WITCH_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
+            || class_level.class_id == BLOODRAGER_CLASS_ID
     })
 }
 
@@ -28609,6 +28773,7 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
             || class_level.class_id == SLAYER_CLASS_ID
             || class_level.class_id == SWASHBUCKLER_CLASS_ID
             || class_level.class_id == BRAWLER_CLASS_ID
+            || class_level.class_id == BLOODRAGER_CLASS_ID
     })
 }
 
@@ -32236,14 +32401,18 @@ mod acg_class_chassis_dispatch_tests {
             "the retired generic diagnostic must never appear for Bloodrager: {:?}",
             receipt.computation.diagnostics
         );
+        // Level 1 Bloodragers have NO spellcasting (task #1, 2026-07-27):
+        // the class block carries no CAST:/KNOWN: row below level 4, so
+        // the block at this level is other-features, not spellcasting.
         assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                .any(|d| d.id
+                    == "class_feature.acg.bloodrager.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            "expected the narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -35336,13 +35505,16 @@ mod bloodrager_dispatch_widening_safety_tests {
             "the retired generic diagnostic must never appear for Bloodrager: {:?}",
             receipt.computation.diagnostics
         );
+        // Level 1 Bloodragers have NO spellcasting (task #1, 2026-07-27):
+        // the class block carries no CAST:/KNOWN: row below level 4, so
+        // the block at this level is other-features, not spellcasting.
         assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
                 .any(|d| d.id
-                    == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                    == "class_feature.acg.bloodrager.other_features_deferred.unsupported"
                     && d.claim_blocking),
             "expected the new narrower spellcasting_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
@@ -35375,13 +35547,16 @@ mod bloodrager_dispatch_widening_safety_tests {
              {:?}",
             receipt.computation.diagnostics
         );
+        // Level 1 Bloodragers have NO spellcasting (task #1, 2026-07-27):
+        // the class block carries no CAST:/KNOWN: row below level 4, so
+        // the block at this level is other-features, not spellcasting.
         assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
                 .any(|d| d.id
-                    == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                    == "class_feature.acg.bloodrager.other_features_deferred.unsupported"
                     && d.claim_blocking),
             "expected the spellcasting_deferred diagnostic even while bloodraging: {:?}",
             receipt.computation.diagnostics
@@ -35494,6 +35669,177 @@ mod bloodrager_dispatch_widening_safety_tests {
             receipt.computation.ability_modifiers
         );
     }
+
+    /// Bloodrager has NO spellcasting below 4th level: `acg_classes.lst`
+    /// carries no `CAST:`/`KNOWN:` row at all for levels 1-3, and the
+    /// caster-level token itself is gated `PRECLASS:1,Bloodrager=4`.
+    /// Claim-blocking a level 1-3 Bloodrager for missing spellcasting
+    /// blocks it for a feature RAW says it does not yet have -- and
+    /// level 1 is exactly where every other ACG/APG class test in this
+    /// codebase is anchored.
+    #[test]
+    fn a_bloodrager_below_level_four_is_not_claim_blocked_for_missing_spellcasting() {
+        for level in 1..=3u8 {
+            let receipt = build_pilot_headless_receipt(&human_bloodrager_input(level));
+            assert!(
+                !receipt.computation.diagnostics.iter().any(|d| {
+                    d.id == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                        && d.claim_blocking
+                }),
+                "level {level} Bloodrager has no spellcasting to defer: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// From 4th level the spellcasting deferral is genuine again.
+    #[test]
+    fn a_bloodrager_at_level_four_or_above_is_still_blocked_on_real_spellcasting() {
+        for level in [4u8, 5, 20] {
+            let receipt = build_pilot_headless_receipt(&human_bloodrager_input(level));
+            assert!(
+                receipt.computation.diagnostics.iter().any(|d| {
+                    d.id == "class_feature.acg.bloodrager.spellcasting_deferred.unsupported"
+                        && d.claim_blocking
+                }),
+                "level {level} Bloodrager genuinely has spellcasting: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Bloodrager stays Blocked at EVERY level regardless -- the
+    /// level-awareness fix narrows why it is blocked, it does not move
+    /// the class toward Computed. Fast Movement, Uncanny Dodge, Blood
+    /// Sanctuary, Damage Reduction, the Greater/Tireless/Mighty tiers,
+    /// and the whole Bloodline slot remain unbuilt.
+    #[test]
+    fn bloodrager_stays_blocked_at_every_level_on_other_features() {
+        for level in [1u8, 3, 4, 20] {
+            let receipt = build_pilot_headless_receipt(&human_bloodrager_input(level));
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "level {level} Bloodrager must stay Blocked: {:?}",
+                receipt.computation.diagnostics
+            );
+            assert!(
+                receipt.computation.diagnostics.iter().any(|d| {
+                    d.id == "class_feature.acg.bloodrager.other_features_deferred.unsupported"
+                        && d.claim_blocking
+                }),
+                "level {level} must carry the other-features block: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The shipped diagnostic asserted Bloodrager "has no class-skill
+    /// list". It has one: `acg_abilities_class.lst`'s own
+    /// `KEY:Bloodrager ~ Class Skills` record lists 11 skills. That is
+    /// user-visible text asserting something untrue about the corpus.
+    #[test]
+    fn no_bloodrager_diagnostic_claims_the_class_has_no_class_skill_list() {
+        let receipt = build_pilot_headless_receipt(&human_bloodrager_input(1));
+        for diagnostic in &receipt.computation.diagnostics {
+            assert!(
+                !diagnostic.message.contains("no class-skill list"),
+                "Bloodrager DOES have a class-skill list (11 skills): {diagnostic:?}"
+            );
+        }
+    }
+
+    /// Bloodrager's real list includes all three of Climb, Intimidate,
+    /// and Swim -- the 7th instance of the class-skill-bonus widening,
+    /// same all-three shape as Warpriest/Slayer/Brawler.
+    #[test]
+    fn bloodrager_earns_the_class_skill_bonus_on_all_three_tracked_skills() {
+        let receipt = build_pilot_headless_receipt(&human_bloodrager_input(1));
+        for skill in ["climb", "intimidate", "swim"] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == format!("skill.selected_modifier.{skill}"))
+                .unwrap_or_else(|| panic!("{skill} modifier must be computed for a Bloodrager"));
+            assert!(
+                record.detail.contains("class-skill bonus (+3)"),
+                "{skill} is on Bloodrager's real 11-skill list: {record:?}"
+            );
+        }
+    }
+
+    /// The spells-per-day and spells-known tables, read straight off the
+    /// class block's own `CAST:`/`KNOWN:` tokens. Independently
+    /// re-transcribed here from the corpus rather than copied from the
+    /// implementation, and covering every level 4-20 boundary.
+    ///
+    /// The leading column is a genuine ZERO at every row -- Bloodragers
+    /// get no 0-level spells at all. That is NOT Oracle's "orisons at
+    /// will, no daily cap" sentinel; reading it that way would fabricate
+    /// at-will cantrips.
+    #[test]
+    fn bloodrager_spell_tables_match_the_real_class_block_at_every_level() {
+        for level in 1..4u8 {
+            assert_eq!(
+                super::bloodrager_spells_per_day(level),
+                None,
+                "level {level} has no CAST: row at all in the corpus"
+            );
+            assert_eq!(super::bloodrager_spells_known(level), None);
+        }
+
+        // (level, per-day 1st-4th, known 1st-4th) transcribed from
+        // acg_classes.lst's own rows; the always-zero 0-level column is
+        // deliberately not represented.
+        let rows: [(u8, [i16; 4], [i16; 4]); 17] = [
+            (4, [1, 0, 0, 0], [2, 0, 0, 0]),
+            (5, [1, 0, 0, 0], [3, 0, 0, 0]),
+            (6, [1, 0, 0, 0], [4, 0, 0, 0]),
+            (7, [1, 1, 0, 0], [4, 2, 0, 0]),
+            (8, [1, 1, 0, 0], [4, 3, 0, 0]),
+            (9, [2, 1, 0, 0], [5, 4, 0, 0]),
+            (10, [2, 1, 1, 0], [5, 4, 2, 0]),
+            (11, [2, 1, 1, 0], [5, 4, 3, 0]),
+            (12, [2, 2, 1, 0], [6, 5, 4, 0]),
+            (13, [3, 2, 1, 1], [6, 5, 4, 2]),
+            (14, [3, 2, 1, 1], [6, 5, 4, 3]),
+            (15, [3, 2, 2, 1], [6, 6, 5, 4]),
+            (16, [3, 3, 2, 1], [6, 6, 5, 4]),
+            (17, [4, 3, 2, 1], [6, 6, 5, 4]),
+            (18, [4, 3, 2, 2], [6, 6, 6, 5]),
+            (19, [4, 3, 3, 2], [6, 6, 6, 5]),
+            (20, [4, 4, 3, 2], [6, 6, 6, 5]),
+        ];
+        for (level, per_day, known) in rows {
+            assert_eq!(
+                super::bloodrager_spells_per_day(level),
+                Some(per_day),
+                "level {level} spells per day"
+            );
+            assert_eq!(
+                super::bloodrager_spells_known(level),
+                Some(known),
+                "level {level} spells known"
+            );
+        }
+    }
+
+    /// Bloodrager's max spell level is 4, never 9 -- the class block
+    /// never carries more than five columns.
+    #[test]
+    fn bloodrager_never_gains_a_spell_level_above_fourth() {
+        for level in 4..=20u8 {
+            let per_day = super::bloodrager_spells_per_day(level).expect("table row exists");
+            assert_eq!(per_day.len(), 4, "only spell levels 1-4 are ever represented");
+        }
+        // 4th-level slots first appear at character level 13.
+        for level in 4..13u8 {
+            assert_eq!(super::bloodrager_spells_per_day(level).unwrap()[3], 0);
+        }
+        assert_eq!(super::bloodrager_spells_per_day(13).unwrap()[3], 1);
+    }
+
 }
 
 /// v0.6 alpha swarm, risks item 8 (Hunter deepening, 2026-07-26, task

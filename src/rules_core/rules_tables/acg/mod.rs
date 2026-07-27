@@ -253,6 +253,28 @@ pub struct AcgClassCoverage {
     /// with genuine, SEPARATELY-implemented backing logic" methodology
     /// consistent across classes rather than letting it drift per-class.
     ///
+    /// Bloodrager counts 2 (Bloodrage + Spells), raised from 1 by the
+    /// spellcasting-blocker closure (2026-07-27, task #1).
+    /// `KEY:Bloodrager ~ Spells` is a real `CATEGORY:Special Ability`
+    /// class-feature record whose numeric content -- the spells-per-day
+    /// and spells-known tables -- is now genuinely implemented, so it
+    /// earns its own slot. This is a real difference from Warpriest,
+    /// whose own `KEY:Warpriest ~ ...` list has NO general-spellcasting
+    /// record at all (see below); the presence or absence of that record
+    /// is what decides it, not whether the class casts.
+    ///
+    /// Bloodrager's class-skill list does NOT add a third, even though
+    /// it too was grounded by that closure and `KEY:Bloodrager ~ Class
+    /// Skills` exists: that record is `CATEGORY:Internal`, a PCGen
+    /// encoding artifact for how ACG attaches class skills (there is no
+    /// `CSKILL:` token on any ACG class line), not a player-facing named
+    /// class feature. Warpriest carries the identical
+    /// `KEY:Warpriest ~ Class Skills` record and its own count of 5
+    /// excludes it, so excluding it here keeps the two consistent. The
+    /// scoping doc for task #1 suggested 3 by counting class skills;
+    /// this is a deliberate correction to that, on the established
+    /// precedent.
+    ///
     /// Warpriest counts 5 (Blessings, Sacred Weapon, Fervor, Channel
     /// Energy, Sacred Armor). The original closure landed the first two;
     /// the partial re-scope (deepening 2026-07-26, task #9) added the
@@ -472,8 +494,8 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // making them sub-selectable-list entries under the single
     // `Blessings` slot).
     let named_features_wired = match class_id {
-        AcgClassId::Bloodrager | AcgClassId::Shaman => 1,
-        AcgClassId::Arcanist => 2,
+        AcgClassId::Shaman => 1,
+        AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
         AcgClassId::Swashbuckler | AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
         AcgClassId::Investigator | AcgClassId::Warpriest => 5,

@@ -190,7 +190,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
 
     for (class_id, feature_name, expected_wired) in [
         (AcgClassId::Skald, "Inspired Rage + Damage Reduction + Bardic Knowledge", 3),
-        (AcgClassId::Bloodrager, "Bloodrage", 1),
+        (AcgClassId::Bloodrager, "Bloodrage + Spells (spells-per-day/known tables)", 2),
         (AcgClassId::Brawler, "AC Bonus + Brawler's Cunning + Brawler's Strike", 3),
         (
             AcgClassId::Hunter,
@@ -292,8 +292,21 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
         );
 
         let expected_diagnostic_id = match class_id {
-            AcgClassId::Bloodrager | AcgClassId::Hunter => {
+            AcgClassId::Hunter => {
                 format!("class_feature.acg.{}.spellcasting_deferred.unsupported", class_id.name())
+            }
+            AcgClassId::Bloodrager => {
+                // v0.6 alpha swarm, task #1 (Bloodrager spellcasting
+                // closure, 2026-07-27): Bloodrager's spellcasting
+                // diagnostic is now LEVEL-AWARE. This audit's fixture is
+                // level 1, and the real class block carries no
+                // `CAST:`/`KNOWN:` row below level 4 (its caster-level
+                // token is itself gated `PRECLASS:1,Bloodrager=4`), so a
+                // level-1 Bloodrager has no spellcasting to defer and is
+                // correctly NOT claim-blocked for it. The remaining
+                // claim-blocking diagnostic at this level is the
+                // narrowed other_features_deferred one.
+                "class_feature.acg.bloodrager.other_features_deferred.unsupported".to_owned()
             }
             AcgClassId::Brawler => {
                 "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned()
