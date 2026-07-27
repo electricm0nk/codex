@@ -24229,7 +24229,17 @@ fn explain_monk_level1_chassis(
     // level gates read directly off `cr_abilities_class.lst`'s own grant
     // lines (`PREVARGTEQ:Monk_CFP_Level,{3,3,5,7}`), all well under
     // MAX_SUPPORTED_MONK_LEVEL = 12.
-    if level >= MONK_FAST_MOVEMENT_LEVEL {
+    if level < MONK_FAST_MOVEMENT_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.fast_movement".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Fast Movement at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant magnitude is named but not computed. \
+                 Fast Movement is a 3rd-level monk class feature."
+            ),
+        });
+    } else {
         let feet = monk_fast_movement_bonus_feet(level);
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.fast_movement".to_owned(),
@@ -24250,7 +24260,17 @@ fn explain_monk_level1_chassis(
         });
     }
 
-    if level >= MONK_MANEUVER_TRAINING_LEVEL {
+    if level < MONK_MANEUVER_TRAINING_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.maneuver_training_cmb_bonus".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Maneuver Training at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant magnitude is named but not computed. \
+                 Maneuver Training is a 3rd-level monk class feature."
+            ),
+        });
+    } else {
         let cmb_bonus = monk_maneuver_training_cmb_bonus(level);
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.maneuver_training_cmb_bonus".to_owned(),
@@ -24268,7 +24288,17 @@ fn explain_monk_level1_chassis(
         });
     }
 
-    if level >= MONK_HIGH_JUMP_LEVEL {
+    if level < MONK_HIGH_JUMP_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.high_jump".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk High Jump at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant magnitude is named but not computed. \
+                 High Jump is a 5th-level monk class feature."
+            ),
+        });
+    } else {
         let jump_bonus = monk_high_jump_acrobatics_bonus(level);
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.high_jump".to_owned(),
@@ -24287,7 +24317,17 @@ fn explain_monk_level1_chassis(
         });
     }
 
-    if level >= MONK_WHOLENESS_OF_BODY_LEVEL {
+    if level < MONK_WHOLENESS_OF_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.wholeness_of_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Wholeness of Body at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant magnitude is named but not computed. \
+                 Wholeness of Body is a 7th-level monk class feature."
+            ),
+        });
+    } else {
         let healing = monk_wholeness_of_body_healing(level);
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.wholeness_of_body".to_owned(),
@@ -43843,8 +43883,18 @@ mod monk_task36_feature_tests {
             ("class_chassis.monk.high_jump", 5),
             ("class_chassis.monk.wholeness_of_body", 7),
         ] {
-            assert_eq!(value(gate - 1, id), None, "{id} must be absent at level {}", gate - 1);
-            assert!(value(gate, id).is_some(), "{id} must be granted at level {gate}");
+            assert_eq!(
+                value(gate - 1, id),
+                Some(0),
+                "{id} must ground a value-0 absence record at level {} -- \"ground the \
+                 absence, don't omit it\", matching Purity of Body directly above it and \
+                 Skald's/Barbarian's DR (task #46)",
+                gate - 1
+            );
+            assert!(
+                value(gate, id).unwrap_or(0) > 0,
+                "{id} must carry a real magnitude at level {gate}"
+            );
         }
     }
 
