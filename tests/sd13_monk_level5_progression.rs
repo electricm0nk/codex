@@ -354,20 +354,24 @@ fn monk_level4_purity_of_body_is_a_correct_level_gate_absence() {
 
 // ----- High Jump is deliberately NOT grounded (checked, confirmed not flat) -----
 
+/// High Jump IS grounded from task #36 onward. The earlier guard here
+/// asserted the OLD standalone-grounding bar, and was stale on two
+/// counts: it demanded an "Acrobatics-check-total engine" that the
+/// corrected bar (risks item 52) no longer requires for a standalone
+/// fact, and it cited the ki cost as blocking the whole ability when the
+/// corpus record's own DESC scopes the ki spend to a SEPARATE +20 clause.
+/// The flat +MonkLVL is unconditional; only the +20 boost stays deferred.
 #[test]
-fn monk_level5_does_not_fabricate_a_high_jump_record() {
+fn monk_level5_grounds_high_jump_as_a_flat_record() {
     let input = load(MONK_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.to_lowercase().contains("high_jump")),
-        "High Jump must not be fabricated as a flat record: it requires an Acrobatics-check-total \
-         engine and a ki-point-spending action, neither of which exists in this codebase: {:?}",
-        computation.explanations
-    );
+    let fact = computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "class_chassis.monk.high_jump")
+        .expect("High Jump must be grounded at monk level 5");
+    assert_eq!(fact.value, 5, "High Jump is a flat +MonkLVL: {:?}", fact);
 }
 
 // ----- The existing bonus-feat-mechanics diagnostic still fires at level 5 -----

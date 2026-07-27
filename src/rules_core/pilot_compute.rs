@@ -458,6 +458,13 @@ const PALADIN_AURA_OF_JUSTICE_LEVEL: u8 = 11;
 // codebase to apply this to.
 const PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL: u8 = 17;
 
+/// The DR clause of Aura of Righteousness: a flat `DR 5/evil`, verified
+/// against the feature's own corpus token `DR:5/Evil` and its `DESC` ("You
+/// gain DR 5/Evil and immunity to compulsion spells and spell-like
+/// abilities"). Flat at every level -- PF1 grants the paladin no further DR
+/// tier after 17th, unlike Barbarian's or Skald's own tiered DR.
+const PALADIN_AURA_OF_RIGHTEOUSNESS_DAMAGE_REDUCTION: i16 = 5;
+
 // Holy Champion is the 20th-level paladin capstone in the PF1 Core Rulebook
 // (verified independently against a raw HTML fetch of d20pfsrd.com's own
 // class table and description, and a raw HTML fetch of the Archives of
@@ -4472,6 +4479,22 @@ const MONK_IMPROVED_EVASION_LEVEL: u8 = 9;
 /// vs. enchantment spells and effects) matching the Fighter Bravery / Paladin
 /// Divine Grace / Rogue Trap Sense idiom exactly.
 const MONK_STILL_MIND_LEVEL: u8 = 3;
+
+/// The monk level at which Fast Movement and Maneuver Training are both
+/// granted, verified directly against `cr_abilities_class.lst`'s own
+/// grant lines (`ABILITY:Monk Class Feature|AUTOMATIC|Monk ~ Fast
+/// Movement|...|PREVARGTEQ:Monk_CFP_Level,3` and the identical shape for
+/// Maneuver Training). The `PREVAREQ:Monk_CF_FastMovement,0` half of each
+/// grant is an archetype-suppression flag: it `DEFINE`s to 0 and is only
+/// ever set by `PREFACT:1,ABILITIES,...=True` on archetype records this
+/// repo does not ingest, so it is provably vacuous here -- the same
+/// shape already confirmed on Cavalier, Brawler, Slayer and Shaman.
+const MONK_FAST_MOVEMENT_LEVEL: u8 = 3;
+const MONK_MANEUVER_TRAINING_LEVEL: u8 = 3;
+/// `PREVARGTEQ:Monk_CFP_Level,5` on High Jump's own grant line.
+const MONK_HIGH_JUMP_LEVEL: u8 = 5;
+/// `PREVARGTEQ:Monk_CFP_Level,7` on Wholeness of Body's own grant line.
+const MONK_WHOLENESS_OF_BODY_LEVEL: u8 = 7;
 /// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
 /// die steps up from 1d6 to 1d8 (4th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both give the Medium-monk
@@ -19005,12 +19028,17 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
-    // Aura of Righteousness: below the level-17 gate, this stays a correct
-    // PF1 Core Rulebook level-gate absence (value 0); at or above it (SD18
-    // level-17 widening), it transitions to a bounded GRANT-only identity
-    // record (mirroring the Aura of Justice / Aura of Faith idiom exactly).
-    // No damage-reduction-application engine and no compulsion-immunity-
-    // check engine exists anywhere in this codebase to apply this to.
+    // Aura of Righteousness: below the level-17 gate, both records below stay
+    // correct PF1 Core Rulebook level-gate absences (value 0); at or above it
+    // (SD18 level-17 widening), the aura stays a bounded GRANT-only identity
+    // record while its DR clause grounds a real magnitude of its own.
+    //
+    // The aura record deliberately stays value 0 even now: the feature has
+    // three clauses, and only one of them is grounded. Compulsion immunity
+    // needs a spell-effect-type engine, and the ally +4 morale bonus is an
+    // aura affecting OTHER creatures -- neither is modelled anywhere here.
+    // Folding DR's 5 into the aura's own value would claim the whole feature
+    // is computed when two thirds of it is not.
     if level < PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL {
         explanations.push(ComputationExplanation {
             id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
@@ -19021,6 +19049,15 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
                  not computed. Aura of Righteousness is a 17th-level paladin class feature."
             ),
         });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.damage_reduction".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Damage Reduction at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate. Paladin gains DR 5/evil as one clause \
+                 of Aura of Righteousness, a 17th-level class feature."
+            ),
+        });
     } else {
         explanations.push(ComputationExplanation {
             id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
@@ -19029,9 +19066,29 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
                 "Paladin Aura of Righteousness granted at paladin level {level} (PF1 Core \
                  Rulebook, 17th-level paladin class feature): \"At 17th level, a paladin \
                  gains DR 5/evil and immunity to compulsion spells and spell-like abilities.\" \
-                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
-                 no damage-reduction-application engine and no compulsion-immunity-check \
-                 engine exists anywhere in this codebase to apply this to."
+                 This stays a bounded grant-only identity record (value 0, non-fabricated) \
+                 because two of its three clauses remain ungrounded: compulsion immunity needs \
+                 a spell-effect-type engine, and the ally +4 morale bonus against fear and \
+                 compulsion applies to OTHER creatures within 10 feet, which this codebase \
+                 models nowhere. Its DR clause IS grounded, separately, as \
+                 class_chassis.paladin.damage_reduction."
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.damage_reduction".to_owned(),
+            value: PALADIN_AURA_OF_RIGHTEOUSNESS_DAMAGE_REDUCTION,
+            detail: format!(
+                "Paladin Damage Reduction granted at paladin level {level} (PF1 Core Rulebook, \
+                 the DR clause of the 17th-level Aura of Righteousness): DR \
+                 {PALADIN_AURA_OF_RIGHTEOUSNESS_DAMAGE_REDUCTION}/evil, verified against the \
+                 feature's own corpus token `DR:5/Evil`. Flat -- PF1 grants the paladin no \
+                 further DR tier at any later level, so this same value carries through 20. \
+                 Grounds the magnitude and its /evil bypass condition; no damage-reduction \
+                 APPLICATION engine exists here to subtract it from incoming damage, exactly \
+                 the way class_feature.barbarian.damage_reduction, \
+                 class_feature.acg.skald.damage_reduction and Fighter's Armor Mastery DR are \
+                 already grounded. A DR value is a property of the character, not of any \
+                 incoming attack"
             ),
         });
     }
@@ -23435,6 +23492,56 @@ fn monk_combat_reflexes_additional_attacks_of_opportunity(dexterity_modifier: i1
 /// own Monk level, standing in for total character level since no
 /// multiclass mix is admitted here. Pure function so the real grounding
 /// below shares one source of truth with any future consumer.
+/// Monk Fast Movement's enhancement bonus to land speed:
+/// `10*floor(MonkFastMovementLVL/3)` feet, where `MonkFastMovementLVL`
+/// resolves to `MonkLVL` -- verified directly against
+/// `cr_abilities_class.lst`'s own
+/// `BONUS:VAR|MonkFastMovementBonus|10*floor(MonkFastMovementLVL/3)`.
+/// +10 ft at levels 3-5, +20 at 6-8, +30 at 9-11, +40 at 12.
+///
+/// Unlike Barbarian's own Fast Movement (a flat +10 at every level), the
+/// monk's scales -- so the two are NOT the same magnitude despite sharing
+/// a feature name, and the Barbarian precedent is a shape precedent only.
+fn monk_fast_movement_bonus_feet(level: u8) -> i16 {
+    10 * (i16::from(level) / 3)
+}
+
+/// Monk Maneuver Training's CMB base-attack substitution:
+/// `CMB_BAB = ManeuverTrainingLVL - ManeuverTrainingBAB`, i.e.
+/// `MonkLVL - MonkLVL*3/4` -- verified against the corpus's own three
+/// tokens. This is the DELTA the corpus adds, not the resulting CMB: the
+/// monk's full level replaces his 3/4 base attack bonus for combat
+/// maneuvers only, so the corpus expresses it as the difference to add
+/// on top of the BAB already counted.
+///
+/// Integer division floors, matching PF1's own 3/4 BAB progression, so
+/// the delta is 1 at levels 3-4, 2 at 5-8, 3 at 9-12.
+fn monk_maneuver_training_cmb_bonus(level: u8) -> i16 {
+    let level = i16::from(level);
+    level - (level * 3 / 4)
+}
+
+/// Monk High Jump's flat bonus on Acrobatics checks made to jump:
+/// `HighJumpBonus = HighJumpLVL = MonkLVL` -- verified against
+/// `BONUS:SITUATION|Acrobatics=When Jumping|HighJumpBonus`.
+///
+/// **This flat bonus is unconditional.** The record's own DESC separates
+/// it from the ki-boost clause: "You can adds +%1 to all Acrobatics
+/// checks made to jump ... By spending 1 point from your ki pool as a
+/// swift action, you gain a +20 bonus". Only the +20 costs ki. An earlier
+/// deferral of this feature cited the ki cost as a blocker for the whole
+/// ability; that conflated the two clauses.
+fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Monk Wholeness of Body's self-heal magnitude: `WholenessOfBody =
+/// WholenessOfBodyLVL = MonkLVL` hit points, for 2 ki points -- verified
+/// against the corpus's own two `BONUS:VAR` tokens.
+fn monk_wholeness_of_body_healing(level: u8) -> i16 {
+    i16::from(level)
+}
+
 fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + wisdom_modifier
 }
@@ -23876,13 +23983,15 @@ fn explain_monk_level1_chassis(
     // naming the rule text — mirroring the Barbarian/Rogue Uncanny Dodge /
     // Monk Slow Fall grant-only idiom: no disease-resolution engine exists
     // anywhere in this codebase to apply the immunity to. High Jump, the
-    // level-5 class table's OTHER "Special" column entry, was checked and
-    // confirmed NOT flat this cycle (it requires wiring the monk's level
-    // into an Acrobatics-check total — no skill-check-total engine exists in
-    // this codebase — and spending a ki point, an action-economy/resource-
-    // consumption engine this codebase deliberately does not implement for
-    // the ki pool either), so it is deliberately left named-but-unproven; no
-    // record or diagnostic for it was fabricated.
+    // level-5 class table's OTHER "Special" column entry, is now grounded
+    // (task #36) -- see `monk_high_jump_acrobatics_bonus`. The earlier
+    // deferral here was stale on two counts: it required an
+    // "Acrobatics-check total" to wire into, which the corrected
+    // standalone-grounding bar (risks item 52) no longer demands, and it
+    // cited the ki cost as blocking the whole ability when the record's own
+    // DESC scopes the ki spend to a SEPARATE +20 clause. The flat +MonkLVL
+    // is unconditional; only the +20 boost costs ki, and only that half
+    // stays deferred.
     if level < MONK_PURITY_OF_BODY_LEVEL {
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.purity_of_body".to_owned(),
@@ -23903,9 +24012,86 @@ fn explain_monk_level1_chassis(
                  including supernatural and magical diseases.\" This is a bounded grant-only \
                  identity record only (value 0, non-fabricated): no disease-resolution engine \
                  exists anywhere in this codebase to apply the immunity to. High Jump, the \
-                 level-5 class table's other \"Special\" column entry, is checked and confirmed \
-                 not flat (it requires an Acrobatics-check-total engine and ki-point-spending \
-                 action, neither of which exists here) and is deliberately not grounded"
+                 level-5 class table's other \"Special\" column entry, is grounded separately \
+                 as class_chassis.monk.high_jump (task #36)"
+            ),
+        });
+    }
+
+    // Task #36: four real, in-range, corpus-verified Monk features. All four
+    // level gates read directly off `cr_abilities_class.lst`'s own grant
+    // lines (`PREVARGTEQ:Monk_CFP_Level,{3,3,5,7}`), all well under
+    // MAX_SUPPORTED_MONK_LEVEL = 12.
+    if level >= MONK_FAST_MOVEMENT_LEVEL {
+        let feet = monk_fast_movement_bonus_feet(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.fast_movement".to_owned(),
+            value: feet,
+            detail: format!(
+                "Monk Fast Movement at monk level {level}: a +{feet} ft enhancement bonus to \
+                 land speed (10*floor(MonkLVL/3), so +10 at levels 3-5, +20 at 6-8, +30 at \
+                 9-11, +40 at 12). Unlike Barbarian's own Fast Movement, which is a flat +10 \
+                 at every level, the monk's SCALES -- same feature name, different magnitude. \
+                 The corpus applies it as BONUS:MOVEADD|TYPE=Walk with TYPE=Enhancement, gated \
+                 on PREVAREQ:ENCUMBERANCE,0 and zero equipped armor: a monk in armor or under \
+                 a medium/heavy load loses it entirely. That condition is NOT enforced here -- \
+                 this engine models no encumbrance state -- so this grounds the magnitude a \
+                 qualifying monk gets, and the armor/load condition is named rather than \
+                 applied. Worth knowing the deterministic fixture wears a Chain Shirt, which \
+                 would suppress this bonus for a real character in that posture"
+            ),
+        });
+    }
+
+    if level >= MONK_MANEUVER_TRAINING_LEVEL {
+        let cmb_bonus = monk_maneuver_training_cmb_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.maneuver_training_cmb_bonus".to_owned(),
+            value: cmb_bonus,
+            detail: format!(
+                "Monk Maneuver Training at monk level {level}: +{cmb_bonus} to combat maneuver \
+                 bonus only (corpus CMB_BAB = MonkLVL - MonkLVL*3/4). A monk uses his full \
+                 monk level in place of his 3/4 base attack bonus when calculating CMB, so the \
+                 corpus expresses the feature as the DELTA to add on top of the BAB already \
+                 counted -- 1 at levels 3-4, 2 at 5-8, 3 at 9-12. This grounds that delta as a \
+                 standalone record; no Combat Maneuver Bonus total exists in this codebase to \
+                 add it into, the same reason Brawler's own Maneuver Training grounds \
+                 standalone"
+            ),
+        });
+    }
+
+    if level >= MONK_HIGH_JUMP_LEVEL {
+        let jump_bonus = monk_high_jump_acrobatics_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.high_jump".to_owned(),
+            value: jump_bonus,
+            detail: format!(
+                "Monk High Jump at monk level {level}: +{jump_bonus} on all Acrobatics checks \
+                 made to jump, vertical and horizontal (corpus BONUS:SITUATION|Acrobatics=When \
+                 Jumping|HighJumpBonus, where HighJumpBonus = MonkLVL). The monk also always \
+                 counts as having a running start. This flat bonus is UNCONDITIONAL -- the \
+                 record's own DESC scopes the ki cost to a separate clause (\"By spending 1 \
+                 point from your ki pool as a swift action, you gain a +20 bonus\"), and only \
+                 that +20 boost stays deferred. Grounded as a standalone record: Acrobatics is \
+                 not among the three skills compute_selected_skill_modifiers tracks \
+                 (Climb/Intimidate/Swim), so there is no check total to layer it onto"
+            ),
+        });
+    }
+
+    if level >= MONK_WHOLENESS_OF_BODY_LEVEL {
+        let healing = monk_wholeness_of_body_healing(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.wholeness_of_body".to_owned(),
+            value: healing,
+            detail: format!(
+                "Monk Wholeness of Body at monk level {level}: heals {healing} hit points of \
+                 damage as a standard action, for 2 points from the ki pool (corpus \
+                 WholenessOfBody = WholenessOfBodyLVL = MonkLVL). Grounded as a standalone \
+                 magnitude: this engine computes a maximum-hit-point total but tracks no \
+                 current damage to heal, and no ki-spending resource engine exists, so the \
+                 2-ki cost and the action are named rather than enforced"
             ),
         });
     }
@@ -43186,6 +43372,113 @@ mod investigator_dispatch_widening_safety_tests {
 /// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
 /// established dispatch-widening test module shape.
 /// The nine non-Life Spirits' base abilities (task #12, stage 3).
+#[cfg(test)]
+mod monk_task36_feature_tests {
+    use super::{
+        build_pilot_headless_receipt, monk_fast_movement_bonus_feet,
+        monk_high_jump_acrobatics_bonus, monk_maneuver_training_cmb_bonus,
+        monk_wholeness_of_body_healing, CharacterClassLevel, CharacterInput, MONK_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn monk(level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: MONK_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn value(level: u8, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(&monk(level))
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Scales, unlike Barbarian's flat +10 -- the whole reason the
+    /// Barbarian precedent is a shape precedent only.
+    #[test]
+    fn fast_movement_scales_every_three_levels() {
+        assert_eq!(monk_fast_movement_bonus_feet(3), 10);
+        assert_eq!(monk_fast_movement_bonus_feet(5), 10);
+        assert_eq!(monk_fast_movement_bonus_feet(6), 20);
+        assert_eq!(monk_fast_movement_bonus_feet(9), 30);
+        assert_eq!(monk_fast_movement_bonus_feet(12), 40);
+    }
+
+    /// The corpus token is the DELTA (MonkLVL - MonkLVL*3/4), not the
+    /// resulting CMB. Integer division floors.
+    #[test]
+    fn maneuver_training_is_the_delta_over_three_quarter_bab() {
+        assert_eq!(monk_maneuver_training_cmb_bonus(3), 1);
+        assert_eq!(monk_maneuver_training_cmb_bonus(4), 1);
+        assert_eq!(monk_maneuver_training_cmb_bonus(5), 2);
+        assert_eq!(monk_maneuver_training_cmb_bonus(8), 2);
+        assert_eq!(monk_maneuver_training_cmb_bonus(9), 3);
+        assert_eq!(monk_maneuver_training_cmb_bonus(12), 3);
+    }
+
+    #[test]
+    fn high_jump_and_wholeness_are_flat_monk_level() {
+        assert_eq!(monk_high_jump_acrobatics_bonus(5), 5);
+        assert_eq!(monk_high_jump_acrobatics_bonus(12), 12);
+        assert_eq!(monk_wholeness_of_body_healing(7), 7);
+        assert_eq!(monk_wholeness_of_body_healing(12), 12);
+    }
+
+    /// Every gate read off the corpus's own grant lines: 3/3/5/7. Each
+    /// feature must be absent one level below its gate and present at it,
+    /// through the real dispatch -- not just the pure formula.
+    #[test]
+    fn each_feature_appears_exactly_at_its_corpus_level_gate() {
+        for (id, gate) in [
+            ("class_chassis.monk.fast_movement", 3u8),
+            ("class_chassis.monk.maneuver_training_cmb_bonus", 3),
+            ("class_chassis.monk.high_jump", 5),
+            ("class_chassis.monk.wholeness_of_body", 7),
+        ] {
+            assert_eq!(value(gate - 1, id), None, "{id} must be absent at level {}", gate - 1);
+            assert!(value(gate, id).is_some(), "{id} must be granted at level {gate}");
+        }
+    }
+
+    /// The grounded values at each gate, through the real receipt.
+    #[test]
+    fn the_grounded_values_match_the_corpus_formulas_at_their_gates() {
+        assert_eq!(value(3, "class_chassis.monk.fast_movement"), Some(10));
+        assert_eq!(value(12, "class_chassis.monk.fast_movement"), Some(40));
+        assert_eq!(value(3, "class_chassis.monk.maneuver_training_cmb_bonus"), Some(1));
+        assert_eq!(value(12, "class_chassis.monk.maneuver_training_cmb_bonus"), Some(3));
+        assert_eq!(value(5, "class_chassis.monk.high_jump"), Some(5));
+        assert_eq!(value(7, "class_chassis.monk.wholeness_of_body"), Some(7));
+    }
+
+    /// High Jump's flat bonus is unconditional -- the ki cost belongs to a
+    /// separate +20 clause. The explanation must say so, since the earlier
+    /// deferral got this exact distinction wrong.
+    #[test]
+    fn high_jump_explanation_scopes_the_ki_cost_to_the_separate_boost() {
+        let receipt = build_pilot_headless_receipt(&monk(5));
+        let detail = &receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_chassis.monk.high_jump")
+            .expect("High Jump must be grounded at level 5")
+            .detail;
+        assert!(detail.contains("UNCONDITIONAL"), "{detail}");
+        assert!(detail.contains("+20"), "{detail}");
+    }
+}
+
 #[cfg(test)]
 mod shaman_spirit_tests {
     use super::{
