@@ -35,6 +35,46 @@
 
 use crate::rules_core::character_input::SelectedChoice;
 
+/// The complete set of feats a character actually possesses: everything the
+/// player chose (`selected_feats`) plus everything their class granted
+/// automatically.
+///
+/// **Why this exists.** Every producer in this module keys on the real catalog
+/// string in `selected_feats`, which is correct for player-chosen feats but
+/// silently misses feats a class hands out for free. Two such grants exist in
+/// this codebase today, and both hit producers already shipped here:
+/// - **Ranger gains Endurance automatically at 3rd level** ("A ranger gains
+///   Endurance as a bonus feat", `RANGER_ENDURANCE_LEVEL`) -- so
+///   [`endurance_check_bonus_from_feats`] would return `0` for every Ranger who
+///   genuinely has the feat.
+/// - **Monk gains Improved Unarmed Strike and Stunning Fist automatically at
+///   1st level** ("even if he does not meet the prerequisites") -- so
+///   [`stunning_fist_facts_from_feats`] would return `None` for the very
+///   characters the feat matters most for.
+///
+/// Neither grant is represented as data anywhere today; both live only as prose
+/// inside explanation strings, which is why the gap was invisible. Callers pass
+/// the granted keys in explicitly: this module stays a dependency-free leaf and
+/// never needs to know which class grants what at which level -- that knowledge
+/// stays in the compute layer that already owns the level gates.
+///
+/// **Ordering and duplicate semantics, both load-bearing.** `selected_feats` is
+/// passed through *verbatim*, duplicates included, because
+/// [`base_speed_bonus_from_feats`] counts repeated Fleet picks as a real
+/// cumulative bonus -- deduplicating the whole list would silently halve a
+/// genuine +10 base speed to +5. Granted feats are appended in the order given,
+/// and each is added only if not already present, so a Ranger who also picked
+/// Endurance from the catalog does not end up holding it twice.
+pub fn effective_feats(selected_feats: &[String], class_granted_feats: &[&str]) -> Vec<String> {
+    let mut feats = selected_feats.to_vec();
+    for granted in class_granted_feats {
+        if !feats.iter().any(|feat| feat == granted) {
+            feats.push((*granted).to_owned());
+        }
+    }
+    feats
+}
+
 /// The real PF1 Core Rulebook feat catalog's key for Toughness
 /// (`rules_tables::crb::feat_data::general`'s own
 /// `FeatTableEntry { key: "Toughness", ... }` record) -- NOT a synthetic
@@ -1092,6 +1132,84 @@ mod skill_focus_facts_from_choices_tests {
         assert_eq!(
             skill_focus_facts_from_choices(&selected_feats, &choices),
             vec![fact("Perception"), fact("Stealth"), fact("Sleight of Hand")]
+        );
+    }
+}
+
+#[cfg(test)]
+mod effective_feats_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    #[test]
+    fn is_empty_when_nothing_is_selected_or_granted() {
+        assert!(effective_feats(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn passes_selected_feats_through_unchanged_when_nothing_is_granted() {
+        let selected = feats(&["Toughness", "Improved Initiative"]);
+        assert_eq!(effective_feats(&selected, &[]), selected);
+    }
+
+    #[test]
+    fn appends_a_class_granted_feat_the_player_did_not_choose() {
+        // The whole point: a Ranger of level 3+ has Endurance automatically and a
+        // Monk has Stunning Fist automatically, neither via selected_feats.
+        let selected = feats(&["Toughness"]);
+        assert_eq!(
+            effective_feats(&selected, &["Endurance"]),
+            feats(&["Toughness", "Endurance"])
+        );
+    }
+
+    #[test]
+    fn does_not_duplicate_a_granted_feat_the_player_also_chose() {
+        // A Ranger who separately picked Endurance from the catalog must not end
+        // up holding it twice.
+        let selected = feats(&["Endurance", "Toughness"]);
+        assert_eq!(
+            effective_feats(&selected, &["Endurance"]),
+            feats(&["Endurance", "Toughness"])
+        );
+    }
+
+    #[test]
+    fn preserves_repeated_selections_of_a_genuinely_repeatable_feat() {
+        // Load-bearing: Fleet is STACK:YES MULT:YES and base_speed_bonus_from_feats
+        // COUNTS occurrences, so this must not collapse duplicates in
+        // selected_feats. Naively deduping the whole list would silently halve a
+        // real +10 base speed to +5.
+        let selected = feats(&["Fleet", "Fleet"]);
+        assert_eq!(effective_feats(&selected, &["Endurance"]), feats(&["Fleet", "Fleet", "Endurance"]));
+        assert_eq!(base_speed_bonus_from_feats(&effective_feats(&selected, &[])), 10);
+    }
+
+    #[test]
+    fn appends_several_granted_feats_in_the_order_given() {
+        // Monk grants both Improved Unarmed Strike and Stunning Fist at 1st level.
+        let selected = feats(&["Dodge"]);
+        assert_eq!(
+            effective_feats(&selected, &["Improved Unarmed Strike", "Stunning Fist"]),
+            feats(&["Dodge", "Improved Unarmed Strike", "Stunning Fist"])
+        );
+    }
+
+    #[test]
+    fn a_granted_feat_actually_reaches_the_producers_that_key_on_it() {
+        // End-to-end proof this closes the real defect: a Ranger who never chose
+        // Endurance still gets its verified +4, and a Monk who never chose
+        // Stunning Fist still gets its real DC/uses.
+        let ranger = effective_feats(&[], &["Endurance"]);
+        assert_eq!(endurance_check_bonus_from_feats(&ranger), 4);
+
+        let monk = effective_feats(&[], &["Stunning Fist"]);
+        assert_eq!(
+            stunning_fist_facts_from_feats(&monk, 1, 1, 2),
+            Some(StunningFistFacts { save_dc: 12, uses_per_day: 1 })
         );
     }
 }
