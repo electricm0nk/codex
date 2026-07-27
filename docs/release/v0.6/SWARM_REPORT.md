@@ -41,7 +41,7 @@ engine work lands.
 | Fighter | **Computed** | `full` — every race, levels 1-3 | pre-existing (SD-13/SD-18 era) |
 | Wizard | **Computed** | `full` — every race, level 1 | pre-existing |
 | Rogue | **Computed** | `full` — every race, level 1 | pre-existing |
-| Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25` |
+| Ranger | **Computed** | `full-except-human-level-1` — every race/level 1-5 except single-class Human at level 1 | `b7642d97` (spell posture), UI fix `3fd04f25`, spell-list book-scope fix `b6ef5d6b` (task #26, 51→114 — CRB parse was already correct, this was book scope only, not the CLASSES: substring bug; see risks item 53) |
 | Paladin | **Computed** | `full-except-human-level-1` — same shape as Ranger | `ee3c50ce` (spell posture), UI fix `3fd04f25` |
 | Barbarian | **Computed** | `full` -- unconditional, no race/level carve-out at all (never appears in the shared hybrid gate); real Rage execution engine (Strength/Constitution/Will/AC bonuses, over-budget blocking) | Rage engine + UI fix (`d020a5e8`), both lead-verified |
 | Sorcerer | **Computed** (levels 1-2 only; level 3+ still blocked on bonus spells/feats, a separate future slice) — **UI: `full`, `levelOptions: [1,2]`, live-verified** | known-spell posture, Arcane bloodline recognition, and Arcane Bond identity recognition all real; the bloodline-power diagnostic's remaining pieces are provably vacuous (metamagic-DC and cast-a-spell preconditions can never arise in this codebase) | `d6067603` (engine), `9bafe303` (UI reachability), `adf57cfb` (UI label), lead-verified 378/378 lib + 78/78 desktop against real `HeadlessReceiptStatus::Computed` |
