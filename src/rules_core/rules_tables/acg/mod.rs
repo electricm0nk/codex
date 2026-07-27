@@ -41,6 +41,7 @@ pub mod class_swashbuckler;
 pub mod class_warpriest;
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod shaman_spell_list;
 pub mod spell_list;
 
 use crate::rules_core::rules_tables::RuleSetId;
