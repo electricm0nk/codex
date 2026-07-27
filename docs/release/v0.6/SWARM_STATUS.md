@@ -1647,7 +1647,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T15:40:02
-Latest commit on tranche/6: 66b8aae9 fix(v0.6): count Witch's Familiar slot, 1 -> 2 (cross-class consistency) (3 minutes ago) (2026-07-27T15:36:59-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T15:37:25 frontend=unknown qa=unknown lead=2026-07-27T15:38:01
+Last mechanical check: 2026-07-27T15:45:01
+Latest commit on tranche/6: edcbe17e docs(v0.6): sync self-initiated Witch/Shaman consistency fix (66b8aae9) (4 minutes ago) (2026-07-27T15:41:28-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T15:44:53 frontend=unknown qa=unknown lead=2026-07-27T15:44:02
 <!-- AUTO-HEARTBEAT-END -->
