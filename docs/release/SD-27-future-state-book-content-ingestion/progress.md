@@ -13,7 +13,7 @@
 | 2.0.7 | `apg-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 641 records classified (641 OGL, 0 redacted) |
 | 2.0.8 | `acg-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 423 records classified (422 OGL, 1 PI-REDACTED — flagged for operator review) |
 | 2.0.9 | `beastiary-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 45 records classified (45 OGL, 0 redacted) |
-| 2.0.10 | `all-23-books-license-conformance-verify` | E2 | pending | — | — | Dual-audit gate across all 23 books (4 in-scope + 2 pre-built + 17 deferred stubs). Gates 2.1+ |
+| 2.0.10 | `all-23-books-license-conformance-verify` | E2 | complete | 2026-07-27T21:00Z | 2026-07-27T21:05Z | 23/23 books accounted for, 0 defects (4 corpus-conformant + 19 honest stub gaps). Gates 2.1+ cleared |
 | 2.1 | `advanced_race_guide_pre_build` | E2 | pending | — | — | Tier-1; pre-build shape B v1 cache from LST corpus (23 `.lst` files). Operator-gated: failure → operator picks next action |
 | 2.1' | `advanced_race_guide_verify` | E2 | pending | — | — | Tier-1; verify pre-built cache against dual-audit gate |
 | 3.1 | `advanced_race_guide_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache |
@@ -57,6 +57,10 @@
   results. `cargo test --workspace --locked`: 4,802 passed / 3 pre-existing environment-dependent
   failures, zero regressions. Receipts: `artifacts/epic_2/2.0.{6,7,8,9}-*-license-retrofit-cycle_receipt.md`.
 
+- **2.0.10 all-23-books-license-conformance-verify** (2026-07-27T21:05Z) — 23/23 books accounted
+  for, 0 defects. Gates E2.1+ cleared. Receipt:
+  `artifacts/epic_2/2.0.10-all-23-books-license-conformance-verify-cycle_receipt.md`.
+
 ## Reporting manifest
 
 The live cycle state is the reporting manifest `sd27_book_pre_build`, not this table — see
@@ -81,3 +85,4 @@ manifest is authoritative for status, this table for narrative.
 | 2.0.7 apg-license-retrofit | `artifacts/epic_2/2.0.7-apg-license-retrofit-cycle_receipt.md` |
 | 2.0.8 acg-license-retrofit | `artifacts/epic_2/2.0.8-acg-license-retrofit-cycle_receipt.md` |
 | 2.0.9 beastiary-license-retrofit | `artifacts/epic_2/2.0.9-beastiary-license-retrofit-cycle_receipt.md` |
+| 2.0.10 all-23-books-license-conformance-verify | `artifacts/epic_2/2.0.10-all-23-books-license-conformance-verify-cycle_receipt.md` |
