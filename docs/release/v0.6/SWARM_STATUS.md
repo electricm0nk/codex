@@ -1719,7 +1719,7 @@ Greenlit the proposed two-commit sequencing: fix the three formulas first (prova
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T19:00:02
-Latest commit on tranche/6: 03bb0f8f fix(v0.6): align Monk's gate-absence convention with its neighbours (task #46) (8 seconds ago) (2026-07-27T18:59:54-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T18:59:35 frontend=unknown qa=unknown lead=2026-07-27T18:57:47
+Last mechanical check: 2026-07-27T19:05:01
+Latest commit on tranche/6: 6303f1f6 docs(v0.6): greenlight Arcanist Exploits scoping (task #55), dispatch #56 (Familiar) + #57 (Rogue Talents) (22 seconds ago) (2026-07-27T19:04:39-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T19:02:42 frontend=unknown qa=unknown lead=2026-07-27T19:03:04
 <!-- AUTO-HEARTBEAT-END -->
