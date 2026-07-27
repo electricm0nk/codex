@@ -145,7 +145,11 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
              Cunning Initiative + Track",
             5,
         ),
-        (ApgClassId::Oracle, "Mystery+Curse", 2),
+        (
+            ApgClassId::Oracle,
+            "Mystery + Clouded Vision + Lame + Wasting + Deaf curses",
+            5,
+        ),
         (ApgClassId::Witch, "Ward hex", 1),
     ] {
         let row = class_coverage(class_id);

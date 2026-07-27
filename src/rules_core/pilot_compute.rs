@@ -2264,6 +2264,41 @@ const ORACLE_HEALING_HANDS_HEAL_BONUS: i16 = 4;
 /// `apg_abilities_class.lst`'s own `BONUS:VAR|OracleCloudedVisionRange|30`
 /// tag. Flat, unconditional once the Curse is chosen.
 const ORACLE_CLOUDED_VISION_RANGE_FEET: i16 = 30;
+/// The three additional Curse types this deepening grounds (2026-07-26,
+/// task #10). An Oracle selects exactly ONE curse, so these are mutually
+/// exclusive with each other and with Clouded Vision -- no revelation-
+/// budget question arises here, unlike the Mystery revelations.
+const LAME_CURSE_SELECTION: &str = "curse:lame";
+const WASTING_CURSE_SELECTION: &str = "curse:wasting";
+const DEAF_CURSE_SELECTION: &str = "curse:deaf";
+/// Curse-level thresholds at which every Oracle curse steps up
+/// (`PREVARGTEQ:OracleCurseLVL,5` / `,10` / `,15` across the `.MOD`
+/// records). Only the first two carry numeric magnitudes in the curses
+/// this deepening grounds; the 15 tier's content is non-numeric
+/// (tremorsense, immunities) and stays deferred.
+const ORACLE_CURSE_TIER_TWO_LEVEL: i16 = 5;
+const ORACLE_CURSE_TIER_THREE_LEVEL: i16 = 10;
+/// Wasting Curse's `BONUS:SKILL|STAT.CHA|-4` -- a penalty on ALL
+/// Charisma-based skill checks.
+const ORACLE_WASTING_CHARISMA_SKILL_PENALTY: i16 = -4;
+/// Wasting Curse's `BONUS:SKILL|Intimidate|4`, which exists solely to
+/// cancel the Charisma-skill penalty on Intimidate. See
+/// `oracle_wasting_intimidate_net_effect` for why this is NOT a `+4`.
+const ORACLE_WASTING_INTIMIDATE_OFFSET: i16 = 4;
+/// Deaf Curse's `BONUS:SKILL|Perception|3|PREVARGTEQ:OracleCurseLVL,5`.
+const ORACLE_DEAF_PERCEPTION_BONUS: i16 = 3;
+/// Deaf Curse's base `BONUS:VAR|OracleDeafInitPenalty|-4`, walked back
+/// toward zero by two `+2` `.MOD` steps -- see
+/// `oracle_deaf_initiative_penalty`.
+const ORACLE_DEAF_BASE_INITIATIVE_PENALTY: i16 = -4;
+const ORACLE_DEAF_INITIATIVE_PENALTY_STEP: i16 = 2;
+/// Lame Curse's speed penalty branches: `BONUS:VAR|OracleLameEffect|10|
+/// PREMOVE:1,Walk=30` and `|5|!PREMOVE:1,Walk=30`.
+const ORACLE_LAME_PENALTY_AT_THIRTY_FEET: i16 = 10;
+const ORACLE_LAME_PENALTY_BELOW_THIRTY_FEET: i16 = 5;
+/// The base land speed at which Lame's larger penalty branch applies
+/// (`PREMOVE:1,Walk=30`).
+const ORACLE_LAME_FULL_SPEED_FEET: i16 = 30;
 
 /// v0.6 alpha swarm, risks item 8 (Swashbuckler full-build closure, 9th
 /// ACG/APG class-specific closure): APG Swashbuckler, verified directly
@@ -10047,6 +10082,100 @@ fn ground_or_block_oracle_mystery(
     }
 }
 
+/// Oracle's curse level: `OracleCurseLVL = OracleLVL+((TL-OracleLVL)/2)`
+/// (deepening 2026-07-26, task #10), verified directly against
+/// `apg_abilities_globalvar.lst`. For a single-class Oracle this
+/// collapses to the Oracle level, but it is a HALF progression for a
+/// multiclass Oracle -- the non-Oracle half of total level contributes at
+/// half rate. Deliberately computed from both levels rather than
+/// hardcoded to the Oracle level, since this engine does support
+/// multiclass characters.
+fn oracle_curse_level(oracle_level: u8, total_character_level: u8) -> i16 {
+    let oracle_level = i16::from(oracle_level);
+    let total = i16::from(total_character_level);
+    oracle_level + (total - oracle_level) / 2
+}
+
+/// The character's base land speed in feet, read from the authoritative
+/// CRB race table's own `Speed` trait row (`GAIT:WALK|N`) rather than
+/// re-transcribed here. `None` for an unrecognized race id.
+fn base_land_speed_feet(race_id: &str) -> Option<i16> {
+    use crate::rules_core::rules_tables::crb::race_tables::{race_traits, RaceId};
+    let race = match race_id {
+        "race:human" => RaceId::Human,
+        "race:dwarf" => RaceId::Dwarf,
+        "race:elf" => RaceId::Elf,
+        "race:gnome" => RaceId::Gnome,
+        "race:half-elf" => RaceId::HalfElf,
+        "race:half-orc" => RaceId::HalfOrc,
+        "race:halfling" => RaceId::Halfling,
+        _ => return None,
+    };
+    race_traits()
+        .iter()
+        .find(|t| t.race_id == race && t.trait_name == "Speed")
+        .map(|t| t.value)
+}
+
+/// Lame Curse's base-land-speed reduction (deepening 2026-07-26, task
+/// #10), verified directly against `apg_abilities_class.lst`'s own
+/// `BONUS:VAR|OracleLameEffect|10|PREMOVE:1,Walk=30` /
+/// `|5|!PREMOVE:1,Walk=30` pair, applied via
+/// `BONUS:MOVEADD|TYPE.Walk|-OracleLameEffect`. Returned as a positive
+/// magnitude; it is a reduction.
+fn oracle_lame_speed_penalty(base_land_speed_feet: i16) -> i16 {
+    if base_land_speed_feet >= ORACLE_LAME_FULL_SPEED_FEET {
+        ORACLE_LAME_PENALTY_AT_THIRTY_FEET
+    } else {
+        ORACLE_LAME_PENALTY_BELOW_THIRTY_FEET
+    }
+}
+
+/// Deaf Curse's initiative penalty (deepening 2026-07-26, task #10),
+/// re-derived directly against the base record's own
+/// `BONUS:VAR|OracleDeafInitPenalty|-4` plus the two `.MOD` records'
+/// `|2|PREVARGTEQ:OracleCurseLVL,5` and `|2|PREVARGTEQ:OracleCurseLVL,10`
+/// steps, which ADD toward zero rather than deepening the penalty:
+/// **-4 at curse level 1-4, -2 at 5-9, 0 at 10+**. The level-15 `.MOD`
+/// record's own DESC ("do not receive any initiative penalty for being
+/// deaf") independently confirms the penalty has reached 0 by then.
+fn oracle_deaf_initiative_penalty(curse_level: i16) -> i16 {
+    let mut penalty = ORACLE_DEAF_BASE_INITIATIVE_PENALTY;
+    if curse_level >= ORACLE_CURSE_TIER_TWO_LEVEL {
+        penalty += ORACLE_DEAF_INITIATIVE_PENALTY_STEP;
+    }
+    if curse_level >= ORACLE_CURSE_TIER_THREE_LEVEL {
+        penalty += ORACLE_DEAF_INITIATIVE_PENALTY_STEP;
+    }
+    penalty
+}
+
+/// Deaf Curse's Perception competence bonus (deepening 2026-07-26, task
+/// #10): `BONUS:SKILL|Perception|3|PREVARGTEQ:OracleCurseLVL,5`. `None`
+/// below curse level 5 -- the bonus genuinely does not exist yet, rather
+/// than being zero.
+fn oracle_deaf_perception_bonus(curse_level: i16) -> Option<i16> {
+    (curse_level >= ORACLE_CURSE_TIER_TWO_LEVEL).then_some(ORACLE_DEAF_PERCEPTION_BONUS)
+}
+
+/// Wasting Curse's REAL net effect on Intimidate (deepening 2026-07-26,
+/// task #10). The corpus carries two tokens: `BONUS:SKILL|STAT.CHA|-4`
+/// (every Charisma-based skill) and `BONUS:SKILL|Intimidate|4`.
+/// Intimidate IS Charisma-based, so the `+4` exists purely to cancel the
+/// `-4` -- matching the published rule text exactly ("a -4 penalty on all
+/// Charisma-based skill checks EXCEPT Intimidate"). The net is therefore
+/// **zero, not +4**.
+///
+/// This matters more here than anywhere else in this closure: Intimidate
+/// is one of the three skills `compute_selected_skill_modifiers` actually
+/// computes, so reading the `+4` token in isolation would land a wrong
+/// number on a live total. Because the net is zero, this closure
+/// deliberately wires NOTHING into that total and grounds the
+/// cancellation as an explicit explanation record instead.
+fn oracle_wasting_intimidate_net_effect() -> i16 {
+    ORACLE_WASTING_CHARISMA_SKILL_PENALTY + ORACLE_WASTING_INTIMIDATE_OFFSET
+}
+
 /// Grounds Oracle's Curse choice (v0.6 alpha swarm, risks item 8, Oracle
 /// full-build closure): recognizes
 /// `choice:oracle_curse -> curse:clouded_vision` and, if present, grounds
@@ -10055,6 +10184,7 @@ fn ground_or_block_oracle_mystery(
 /// dispatch shape.
 fn ground_or_block_oracle_curse(
     input: &CharacterInput,
+    level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -10065,6 +10195,20 @@ fn ground_or_block_oracle_curse(
         .filter(|c| c.choice_set_id == ORACLE_CURSE_CHOICE_ID)
         .map(|c| c.selection_id.as_str())
         .collect();
+
+    let total_character_level: u8 =
+        input.chosen.class_levels.iter().map(|c| c.level).sum();
+    let curse_level = oracle_curse_level(level, total_character_level);
+
+    if curse_selections.contains(&LAME_CURSE_SELECTION) {
+        ground_oracle_lame_curse(input, curse_level, explanations, diagnostics);
+    }
+    if curse_selections.contains(&WASTING_CURSE_SELECTION) {
+        ground_oracle_wasting_curse(curse_level, explanations, diagnostics);
+    }
+    if curse_selections.contains(&DEAF_CURSE_SELECTION) {
+        ground_oracle_deaf_curse(curse_level, explanations, diagnostics);
+    }
 
     if curse_selections.contains(&CLOUDED_VISION_CURSE_SELECTION) {
         explanations.push(ComputationExplanation {
@@ -10080,24 +10224,171 @@ fn ground_or_block_oracle_curse(
                  restriction-plus-benefit pair into"
             ),
         });
+    }
+
+    let recognized_curse = curse_selections.iter().any(|selection| {
+        matches!(
+            *selection,
+            CLOUDED_VISION_CURSE_SELECTION
+                | LAME_CURSE_SELECTION
+                | WASTING_CURSE_SELECTION
+                | DEAF_CURSE_SELECTION
+        )
+    });
+    if recognized_curse {
         diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.apg.oracle.curses_beyond_clouded_vision.unmodeled".to_owned(),
-            message: "Oracle Curse content beyond Clouded Vision remains unmodeled: the other 4 \
-                 Curse types (Deaf, Haunted, Lame, Wasting) are not implemented. This does not \
-                 block an otherwise-valid Clouded-Vision posture"
+            id: "class_feature.apg.oracle.curses_beyond_grounded_set.unmodeled".to_owned(),
+            message: "Oracle Curse content beyond Clouded Vision, Lame, Wasting, and Deaf remains \
+                 unmodeled: Haunted (which carries no numeric token of any kind in the corpus -- \
+                 a genuine no-op, not a transcription gap) and Tongues (an 8-language chooser \
+                 whose only token is an ability-pool count) are not implemented, and the \
+                 non-numeric halves of the grounded curses (Lame's encumbrance/fatigue \
+                 immunities, Wasting's sickened/disease/nauseated immunities, Deaf's scent and \
+                 tremorsense) are named but not modelled. This does not block an otherwise-valid \
+                 curse posture"
                 .to_owned(),
             claim_blocking: false,
         });
     } else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.curse_powers.unsupported".to_owned(),
-            message: "Oracle remains blocked on its Curse powers burden: no recognized Clouded \
-                 Vision choice is present (only Clouded Vision's own vision-range cap is \
-                 genuinely grounded in this codebase), so no Oracle Curse-power support is \
-                 claimed"
+            message: "Oracle remains blocked on its Curse powers burden: no recognized Curse \
+                 choice is present (only Clouded Vision, Lame, Wasting, and Deaf are genuinely \
+                 grounded in this codebase), so no Oracle Curse-power support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
+    }
+}
+
+/// Grounds the Lame Curse (deepening 2026-07-26, task #10): a flat base-
+/// land-speed reduction whose magnitude depends on the character's own
+/// race speed. This engine computes no movement total anywhere, so the
+/// reduction grounds as a standalone magnitude alongside the resulting
+/// speed, both derived from the authoritative CRB race table rather than
+/// assumed to be 30 feet.
+fn ground_oracle_lame_curse(
+    input: &CharacterInput,
+    curse_level: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(base_speed) = base_land_speed_feet(&input.chosen.race_id) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.oracle.lame_curse.unknown_race_speed".to_owned(),
+            message: format!(
+                "Lame Curse's speed reduction depends on the character's own base land speed \
+                 (10 feet at a 30-foot base, 5 feet below that), but race \
+                 \"{}\" has no grounded Speed trait in this codebase's race table, so no \
+                 magnitude is claimed",
+                input.chosen.race_id
+            ),
+            claim_blocking: true,
+        });
+        return;
+    };
+    let penalty = oracle_lame_speed_penalty(base_speed);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.oracle.lame_curse.base_land_speed_penalty".to_owned(),
+        value: penalty,
+        detail: format!(
+            "Oracle with the Lame Curse has a permanently wounded leg, reducing base land speed \
+             by {penalty} feet (PF1 Advanced Player's Guide: 10 feet at a 30-foot base speed, \
+             5 feet for a slower race). This character's base land speed is {base_speed} feet, \
+             read from the CRB race table's own Speed trait, so the reduction is {penalty} feet, \
+             leaving {} feet. Grounds the flat magnitude only -- this engine computes no \
+             movement total to apply it to. The curse's own \"speed is never reduced by \
+             encumbrance\" clause (and, at curse level {ORACLE_CURSE_TIER_THREE_LEVEL}+, by \
+             armor) plus the fatigue immunities are non-numeric and are not modelled; this \
+             character's curse level is {curse_level}",
+            base_speed - penalty
+        ),
+    });
+}
+
+/// Grounds the Wasting Curse (deepening 2026-07-26, task #10). Its
+/// Charisma-skill penalty is real and flat, but its headline trap is the
+/// Intimidate cancellation -- see `oracle_wasting_intimidate_net_effect`.
+fn ground_oracle_wasting_curse(
+    curse_level: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.oracle.wasting_curse.charisma_skill_penalty".to_owned(),
+        value: ORACLE_WASTING_CHARISMA_SKILL_PENALTY,
+        detail: format!(
+            "Oracle with the Wasting Curse takes a {ORACLE_WASTING_CHARISMA_SKILL_PENALTY} \
+             penalty on all Charisma-based skill checks (PF1 Advanced Player's Guide, verified \
+             directly against `apg_abilities_class.lst`'s own `BONUS:SKILL|STAT.CHA|-4`), with \
+             Intimidate explicitly excepted. Of the three skills this engine actually computes, \
+             only Intimidate is Charisma-based -- and it is the excepted one -- so this penalty \
+             lands on no computed total and grounds standalone"
+        ),
+    });
+    let net = oracle_wasting_intimidate_net_effect();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.oracle.wasting_curse.intimidate_net_effect".to_owned(),
+        value: net,
+        detail: format!(
+            "Oracle with the Wasting Curse has a NET {net} effect on Intimidate, not \
+             +{ORACLE_WASTING_INTIMIDATE_OFFSET}. The corpus carries two tokens: \
+             `BONUS:SKILL|STAT.CHA|-4` (which hits Intimidate, a Charisma-based skill) and \
+             `BONUS:SKILL|Intimidate|4` (which exists solely to cancel it), matching the \
+             published rule \"a -4 penalty on all Charisma-based skill checks except \
+             Intimidate\". Grounded explicitly because Intimidate IS one of this engine's three \
+             computed skill totals: reading the +4 token alone would land a wrong number on a \
+             live total, so this closure deliberately wires nothing into that total. This \
+             character's curse level is {curse_level}; the sickened/disease/nauseated immunities \
+             at curse levels 5/10/15 are non-numeric and are not modelled"
+        ),
+    });
+}
+
+/// Grounds the Deaf Curse (deepening 2026-07-26, task #10): an initiative
+/// penalty that walks back toward zero as curse level rises, plus a flat
+/// Perception competence bonus from curse level 5.
+fn ground_oracle_deaf_curse(
+    curse_level: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let initiative_penalty = oracle_deaf_initiative_penalty(curse_level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.oracle.deaf_curse.initiative_penalty".to_owned(),
+        value: initiative_penalty,
+        detail: format!(
+            "Oracle with the Deaf Curse takes a {initiative_penalty} penalty on initiative \
+             checks at curse level {curse_level} (PF1 Advanced Player's Guide: -4 at curse \
+             levels 1-4, -2 at 5-9, and 0 from 10 on, as the two `.MOD` records each add +2 back \
+             toward zero). This engine computes no initiative total anywhere, so this grounds as \
+             a standalone flat magnitude, the same shape as Inquisitor's own Cunning Initiative"
+        ),
+    });
+    match oracle_deaf_perception_bonus(curse_level) {
+        Some(bonus) => explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.deaf_curse.perception_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Oracle with the Deaf Curse gains a +{bonus} competence bonus on Perception \
+                 checks that do not rely on hearing, from curse level \
+                 {ORACLE_CURSE_TIER_TWO_LEVEL} (`BONUS:SKILL|Perception|3|PREVARGTEQ:\
+                 OracleCurseLVL,5`). Perception is not among the three skills this engine \
+                 computes, so this grounds standalone. The curse's own automatic failure on \
+                 hearing-based Perception checks is a qualitative rule, not a magnitude, and is \
+                 not modelled"
+            ),
+        }),
+        None => explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.deaf_curse.perception_bonus".to_owned(),
+            value: 0,
+            detail: format!(
+                "Oracle with the Deaf Curse has no Perception bonus at curse level \
+                 {curse_level}: correctly absent below curse level \
+                 {ORACLE_CURSE_TIER_TWO_LEVEL} by the PF1 Advanced Player's Guide level gate; \
+                 the at-grant magnitude is named but not computed"
+            ),
+        }),
     }
 }
 
@@ -10132,7 +10423,7 @@ fn ground_or_block_oracle_class_features(
     }
 
     ground_or_block_oracle_mystery(input, explanations, diagnostics);
-    ground_or_block_oracle_curse(input, explanations, diagnostics);
+    ground_or_block_oracle_curse(input, level, explanations, diagnostics);
 
     push_oracle_other_features_deferred_diagnostic(diagnostics);
 }
@@ -10149,12 +10440,13 @@ fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
         id: "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{ORACLE_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, its known-spell posture, Life Mystery's own Healing Hands, and Clouded \
-             Vision Curse's own vision-range cap: the other 9 Mystery types and their own \
-             revelations, the other 4 Curse types, Oracle's own Mystery-granted bonus spell-list \
-             portion of `SPELLLIST:2|Cleric|Oracle`, spontaneous Cure Wounds/Inflict Wounds \
-             conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap), and Tongues \
-             remain ungrounded anywhere in this codebase; no class-feature or spell execution is \
+             pillar, its known-spell posture, Life Mystery's own Healing Hands, and the Clouded \
+             Vision, Lame, Wasting, and Deaf Curses: Haunted (a genuine no-op -- zero numeric \
+             tokens in the corpus), Tongues (an 8-language chooser with no magnitude), the \
+             remaining Mystery revelations, Oracle's own Mystery-granted bonus spell-list \
+             portion of `SPELLLIST:2|Cleric|Oracle`, and spontaneous Cure Wounds/Inflict Wounds \
+             conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap) remain \
+             ungrounded anywhere in this codebase; no class-feature or spell execution is \
              fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
@@ -37278,8 +37570,9 @@ mod slayer_dispatch_widening_safety_tests {
 mod oracle_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, CLOUDED_VISION_CURSE_SELECTION, FIGHTER_CLASS_ID,
-        LIFE_MYSTERY_SELECTION, ORACLE_CLASS_ID, ORACLE_CURSE_CHOICE_ID, ORACLE_MYSTERY_CHOICE_ID,
+        HeadlessReceiptStatus, CLOUDED_VISION_CURSE_SELECTION, DEAF_CURSE_SELECTION,
+        FIGHTER_CLASS_ID, LAME_CURSE_SELECTION, LIFE_MYSTERY_SELECTION, ORACLE_CLASS_ID,
+        ORACLE_CURSE_CHOICE_ID, ORACLE_MYSTERY_CHOICE_ID, WASTING_CURSE_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, SelectedChoice, SpellSelection,
@@ -37541,7 +37834,7 @@ mod oracle_dispatch_widening_safety_tests {
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.apg.oracle.curses_beyond_clouded_vision.unmodeled"
+                .any(|d| d.id == "class_feature.apg.oracle.curses_beyond_grounded_set.unmodeled"
                     && !d.claim_blocking),
             "expected the non-blocking other-Curses note: {:?}",
             receipt.computation.diagnostics
@@ -37639,6 +37932,235 @@ mod oracle_dispatch_widening_safety_tests {
                 .any(|e| e.id.starts_with("class_feature.apg.oracle.")
                     || e.id.starts_with("class_spell.apg.oracle.")),
             "a non-Oracle character must never ground any Oracle explanation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    fn oracle_with_curse(level: u8, curse: &str) -> CharacterInput {
+        let mut input = human_oracle_input(level);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: curse.to_owned(),
+        });
+        input
+    }
+
+    /// `OracleCurseLVL = OracleLVL + ((TL - OracleLVL)/2)` collapses to
+    /// the Oracle level for a single-class Oracle but is a genuine HALF
+    /// progression for a multiclass one. Pinned directly so a future
+    /// simplification to "just the Oracle level" cannot pass silently.
+    #[test]
+    fn oracle_curse_level_is_a_half_progression_for_the_non_oracle_half_of_total_level() {
+        for level in 1..=20u8 {
+            assert_eq!(
+                super::oracle_curse_level(level, level),
+                i16::from(level),
+                "single-class Oracle level {level}: curse level equals the Oracle level"
+            );
+        }
+        // A 4th-level Oracle / 6th-level something-else: 4 + (10-4)/2 = 7.
+        assert_eq!(super::oracle_curse_level(4, 10), 7);
+        // Odd remainder truncates: 4 + (9-4)/2 = 4 + 2 = 6.
+        assert_eq!(super::oracle_curse_level(4, 9), 6);
+        assert_eq!(super::oracle_curse_level(1, 20), 10);
+    }
+
+    /// Deaf's initiative penalty walks BACK toward zero as curse level
+    /// rises (-4 / -2 / 0), because both `.MOD` records add `+2`. Pinned
+    /// across the full range: a naive reading that treated the steps as
+    /// deepening the penalty would produce -4/-6/-8 and pass any
+    /// single-level spot-check at level 1.
+    #[test]
+    fn oracle_deaf_initiative_penalty_walks_back_toward_zero_at_every_curse_level() {
+        for curse_level in 1..=4 {
+            assert_eq!(super::oracle_deaf_initiative_penalty(curse_level), -4);
+        }
+        for curse_level in 5..=9 {
+            assert_eq!(super::oracle_deaf_initiative_penalty(curse_level), -2);
+        }
+        for curse_level in 10..=20 {
+            assert_eq!(
+                super::oracle_deaf_initiative_penalty(curse_level),
+                0,
+                "the level-15 .MOD record's own DESC confirms no initiative penalty remains"
+            );
+        }
+        for curse_level in 1..=4 {
+            assert_eq!(super::oracle_deaf_perception_bonus(curse_level), None);
+        }
+        for curse_level in 5..=20 {
+            assert_eq!(super::oracle_deaf_perception_bonus(curse_level), Some(3));
+        }
+    }
+
+    /// The headline trap: Wasting's net effect on Intimidate is ZERO,
+    /// not `+4`. Intimidate is a live computed total here, so this is the
+    /// one place in the closure where a misreading would ship a wrong
+    /// number.
+    #[test]
+    fn oracle_wasting_curse_nets_to_zero_on_intimidate_not_plus_four() {
+        assert_eq!(
+            super::oracle_wasting_intimidate_net_effect(),
+            0,
+            "BONUS:SKILL|STAT.CHA|-4 and BONUS:SKILL|Intimidate|4 cancel on Intimidate"
+        );
+
+        let receipt = build_pilot_headless_receipt(&oracle_with_curse(1, WASTING_CURSE_SELECTION));
+        let net = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.wasting_curse.intimidate_net_effect")
+            .expect("the net-effect record must be grounded explicitly");
+        assert_eq!(net.value, 0, "{net:?}");
+        let penalty = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.wasting_curse.charisma_skill_penalty")
+            .expect("the Charisma-skill penalty must be grounded");
+        assert_eq!(penalty.value, -4, "{penalty:?}");
+    }
+
+    /// Lame's magnitude is read from the character's own race speed, not
+    /// assumed to be 30 feet. The fixture race is Human (30 ft), so the
+    /// penalty is the larger 10-foot branch.
+    #[test]
+    fn oracle_lame_curse_derives_its_penalty_from_the_characters_real_base_land_speed() {
+        assert_eq!(super::oracle_lame_speed_penalty(30), 10);
+        assert_eq!(super::oracle_lame_speed_penalty(20), 5);
+        assert_eq!(super::base_land_speed_feet("race:human"), Some(30));
+        assert_eq!(super::base_land_speed_feet("race:dwarf"), Some(20));
+        assert_eq!(super::base_land_speed_feet("race:halfling"), Some(20));
+        assert_eq!(super::base_land_speed_feet("race:nonexistent"), None);
+
+        let receipt = build_pilot_headless_receipt(&oracle_with_curse(1, LAME_CURSE_SELECTION));
+        let penalty = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.lame_curse.base_land_speed_penalty")
+            .expect("Lame's speed penalty must be grounded");
+        assert_eq!(penalty.value, 10, "Human base speed 30 -> 10-foot branch: {penalty:?}");
+        assert!(
+            penalty.detail.contains("20 feet"),
+            "the record must name the resulting speed, not just the reduction: {penalty:?}"
+        );
+    }
+
+    /// Each of the three new curses clears the claim-blocking
+    /// `curse_powers.unsupported` diagnostic on its own, exactly as
+    /// Clouded Vision already does -- an Oracle picks one curse, so no
+    /// combination is required.
+    #[test]
+    fn each_newly_grounded_curse_alone_clears_the_curse_powers_block() {
+        for curse in [LAME_CURSE_SELECTION, WASTING_CURSE_SELECTION, DEAF_CURSE_SELECTION] {
+            let receipt = build_pilot_headless_receipt(&oracle_with_curse(1, curse));
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == "class_feature.apg.oracle.curse_powers.unsupported"),
+                "{curse} must clear the curse-powers block: {:?}",
+                receipt.computation.diagnostics
+            );
+            assert!(
+                receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id
+                        == "class_feature.apg.oracle.curses_beyond_grounded_set.unmodeled"
+                        && !d.claim_blocking),
+                "{curse} must still carry the non-blocking remainder note: {:?}",
+                receipt.computation.diagnostics
+            );
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "Oracle stays permanently Blocked regardless of curse: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// End-to-end at a curse level past both Deaf tiers: level 10 gives
+    /// initiative penalty 0 and the +3 Perception bonus simultaneously.
+    #[test]
+    fn level_10_deaf_oracle_grounds_zero_initiative_penalty_and_the_perception_bonus() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_curse(10, DEAF_CURSE_SELECTION));
+
+        let initiative = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.deaf_curse.initiative_penalty")
+            .expect("Deaf's initiative penalty must be grounded");
+        assert_eq!(initiative.value, 0, "curse level 10 has walked the penalty to 0: {initiative:?}");
+
+        let perception = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.deaf_curse.perception_bonus")
+            .expect("Deaf's Perception bonus must be grounded");
+        assert_eq!(perception.value, 3, "{perception:?}");
+    }
+
+    /// A level-1 Deaf Oracle is below the Perception tier, so that half
+    /// is named as correctly absent rather than silently omitted, while
+    /// the initiative penalty is at its full -4.
+    #[test]
+    fn level_1_deaf_oracle_names_the_perception_bonus_as_correctly_absent() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_curse(1, DEAF_CURSE_SELECTION));
+
+        let initiative = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.deaf_curse.initiative_penalty")
+            .expect("Deaf's initiative penalty must be grounded");
+        assert_eq!(initiative.value, -4, "{initiative:?}");
+
+        let perception = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.deaf_curse.perception_bonus")
+            .expect("the Perception half must still be named below its tier");
+        assert_eq!(perception.value, 0, "{perception:?}");
+        assert!(
+            perception.detail.contains("correctly absent"),
+            "it must say why it is absent: {perception:?}"
+        );
+    }
+
+    /// None of the three new curses may leak onto a non-Oracle, and none
+    /// may disturb the computed Intimidate total (Wasting's tokens cancel,
+    /// so nothing is wired into it at all).
+    #[test]
+    fn newly_grounded_curses_never_leak_onto_a_non_oracle_character() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level: 1 }];
+        for curse in [LAME_CURSE_SELECTION, WASTING_CURSE_SELECTION, DEAF_CURSE_SELECTION] {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+                selection_id: curse.to_owned(),
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.oracle.")),
+            "a Fighter must never ground an Oracle curse: {:?}",
             receipt.computation.explanations
         );
     }

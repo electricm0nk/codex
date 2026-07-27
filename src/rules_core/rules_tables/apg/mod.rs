@@ -179,9 +179,30 @@ pub struct ApgClassCoverage {
     /// `pilot_compute::ground_or_block_oracle_mystery`/
     /// `ground_or_block_oracle_curse`,
     /// `pilot_compute::ground_or_block_witch_class_features`) -- see
-    /// `class_coverage`'s own branches for each. Oracle counts 2
-    /// (Mystery slot + Curse slot), mirroring Warpriest's own 2-slot
-    /// count. Inquisitor counts 5 (Judgment slot + Stern Gaze slot +
+    /// `class_coverage`'s own branches for each. Oracle counts 5
+    /// (Mystery slot + Clouded Vision + Lame + Wasting + Deaf). It was 2
+    /// (Mystery slot + Curse slot) until the curse deepening
+    /// (2026-07-26, task #10) grounded three more curses.
+    ///
+    /// Each curse earns its own slot under the same corpus-prefix test
+    /// that governs every other class here: `KEY:Oracle ~ Lame`,
+    /// `KEY:Oracle ~ Wasting`, and `KEY:Oracle ~ Deaf` are top-level
+    /// `KEY:Oracle ~ ...` records with genuinely independent formulas (a
+    /// race-speed-dependent movement reduction, a Charisma-skill penalty
+    /// with an Intimidate cancellation, and a curse-level-tiered
+    /// initiative/Perception pair) -- the same reasoning that gave
+    /// Inquisitor's Stern Gaze/Monster Lore/Cunning Initiative/Track
+    /// their own slots, and Warpriest's Fervor/Channel Energy/Sacred
+    /// Armor theirs.
+    ///
+    /// Mystery REVELATIONS do not add slots, for the mirror-image
+    /// reason: they are keyed `KEY:Life Mystery ~ ...` /
+    /// `KEY:Lore Mystery ~ ...` in the corpus -- a DIFFERENT prefix, not
+    /// `KEY:Oracle ~ ...` -- making them sub-selectable-list entries
+    /// under the single Mystery slot, exactly as Warpriest's
+    /// `KEY:Destruction Blessing ~ ...` / `KEY:Strength Blessing ~ ...`
+    /// minor powers fold into its single Blessings slot and Witch's ~20
+    /// hexes fold into its single Hex slot. Inquisitor counts 5 (Judgment slot + Stern Gaze slot +
     /// Monster Lore + Cunning Initiative + Track, the latter three added
     /// 2026-07-26, task #18 -- see below). Judgment stays ONE slot even
     /// though it now grounds 4 of its 8 selectable sub-types (Justice/
@@ -298,9 +319,8 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
     // own doc comment above for the exact per-class counting reasoning.
     let named_features_wired = match class_id {
         ApgClassId::Cavalier | ApgClassId::Witch => 1,
-        ApgClassId::Oracle => 2,
         ApgClassId::Alchemist => 3,
-        ApgClassId::Inquisitor => 5,
+        ApgClassId::Oracle | ApgClassId::Inquisitor => 5,
         _ => 0,
     };
 
