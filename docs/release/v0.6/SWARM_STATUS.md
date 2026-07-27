@@ -1635,7 +1635,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T14:00:01
-Latest commit on tranche/6: 103b28f8 docs(v0.6): operator approves resuming new class work, dispatch Shaman (#12) (2 minutes ago) (2026-07-27T13:58:22-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T13:59:03 frontend=unknown qa=unknown lead=2026-07-27T13:43:31
+Last mechanical check: 2026-07-27T14:35:02
+Latest commit on tranche/6: 27e9814c feat(v0.6): Shaman prepared spellcasting (task #12, stage 2) (4 minutes ago) (2026-07-27T14:31:03-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T14:31:38 frontend=unknown qa=unknown lead=2026-07-27T14:31:30
 <!-- AUTO-HEARTBEAT-END -->
