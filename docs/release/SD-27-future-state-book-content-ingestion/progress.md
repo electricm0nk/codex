@@ -7,7 +7,7 @@
 | Criterion | Cycle | Epic | Status | Started | Completed | Notes |
 |-----------|-------|------|--------|---------|-----------|-------|
 | 1.1 | `identifier-audit` | E1 | complete | 2026-07-27T19:59Z | 2026-07-27T20:04Z | Full-tree scan (not diff-scoped — see receipt); 0 genuine bundle-tagged code identifiers. Matches SD-26's own E1.1 precedent |
-| 2.0 | `label-resolution` | E2 | pending | — | — | Per-cycle blocking decision |
+| 2.0 | `label-resolution` | E2 | complete | 2026-07-27T20:10Z | 2026-07-27T20:16Z | Operator chose `"SD-27"`. All 21 stubs + registry + v0.6 risks doc resolved |
 | 2.0.5 | `shape-b-license-stripping-preflight` | E2 | pending | — | — | Schema bump + per-book `LICENSE.json` + PI-blacklist + redaction policy. Gates 2.0.6+ |
 | 2.0.6 | `crb-license-retrofit` | E2 | pending | — | — | Retro-fit CRB records with license field + PI redaction |
 | 2.0.7 | `apg-license-retrofit` | E2 | pending | — | — | Retro-fit APG records |
@@ -31,6 +31,8 @@
 
 - **1.1 identifier-audit** (2026-07-27T20:04Z) — full-tree code-identifier scan clean, 0 hits. Receipt:
   `artifacts/epic_1/identifier-audit-cycle_receipt.md`.
+- **2.0 label-resolution** (2026-07-27T20:16Z) — operator chose `"SD-27"`; all 21 stubs + registry + the
+  v0.6 risks doc reconciled. Receipt: `artifacts/epic_2/label-resolution-cycle_receipt.md`.
 
 ## DISCOVERED
 
@@ -39,7 +41,7 @@
 ## Open blockers
 
 - ~~**Tier-1 launch-gate dependency:** SD-26's closure PR has not yet landed.~~ **CLEARED 2026-07-27** (corrected same day — an earlier note here said PR #339; that was backwards). SD-26 merged via **PR #338** — `62e7b617` is a confirmed ancestor of `origin/develop`, and the SD-26 package + `src/bin/sd26_gen_core_rulebook_cache.rs` are both present there. PR #339 is a separate, later CG-03 bugfix, unrelated to SD-26 closure. Caveat: SD-26's own `progress.md` on develop still shows its terminal `6.5` row as "awaiting operator merge" — stale paper-trail, not evidence the merge didn't happen. Per `decisions.md §7` + `loop-instruction.md §2` item 1.
-- **Bundle label discrepancy:** `SD-27` vs. `SD-27+ (unscheduled)` — operator's lever pull at cycle 2.0. Per `forward-scope-register.md §"Class 1.2"` + `decisions.md §2`.
+- ~~**Bundle label discrepancy:** `SD-27` vs. `SD-27+ (unscheduled)` — operator's lever pull at cycle 2.0.~~ **CLEARED 2026-07-27.** Operator chose `"SD-27"`; resolved across all 21 stubs + registry + SD-26's `decisions.md:102` (already correct) + v0.6's risks doc. Per `decisions.md §2` + `artifacts/epic_2/label-resolution-cycle_receipt.md`.
 - **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`.
 - **v0.6 in-progress overlap:** v0.6 is actively working class/race breadth (Fighter/Wizard/Rogue + 8 remaining CRB classes). SD-27's partition restricts SD-27 cycles to the per-book content paths. Per `scope-draft.md §4`.
 
@@ -61,3 +63,4 @@ manifest is authoritative for status, this table for narrative.
 | Cycle | Receipt path |
 |-------|--------------|
 | 1.1 identifier-audit | `artifacts/epic_1/identifier-audit-cycle_receipt.md` |
+| 2.0 label-resolution | `artifacts/epic_2/label-resolution-cycle_receipt.md` |
