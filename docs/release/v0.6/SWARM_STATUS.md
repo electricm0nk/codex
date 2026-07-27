@@ -1629,7 +1629,7 @@ Featmate is holding, not scoping new work, per the operator's "complete before s
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T13:30:01
-Latest commit on tranche/6: 058e36c3 fix(v0.6): widen Alchemist formula list to all ingested books, 121 -> 147 (task #32) (39 seconds ago) (2026-07-27T13:29:22-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T13:29:31 frontend=unknown qa=unknown lead=2026-07-27T13:22:15
+Last mechanical check: 2026-07-27T13:40:02
+Latest commit on tranche/6: e6d08004 fix(v0.6): close Witch bracket-prereq gap, 324 -> 326 (task #33) (3 minutes ago) (2026-07-27T13:36:54-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T13:37:49 frontend=unknown qa=unknown lead=2026-07-27T13:39:15
 <!-- AUTO-HEARTBEAT-END -->
