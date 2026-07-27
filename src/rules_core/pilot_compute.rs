@@ -12603,6 +12603,55 @@ fn ground_or_block_swashbuckler_class_features(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let finesse_effective_intelligence = effective_combat_feat_intelligence_score(
+        input.chosen.ability_scores.charisma,
+        input.chosen.ability_scores.intelligence,
+    );
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.swashbuckler.finesse_effective_intelligence_for_combat_feats"
+            .to_owned(),
+        value: finesse_effective_intelligence,
+        detail: format!(
+            "Swashbuckler Finesse: for the purpose of meeting combat-feat prerequisites, the \
+             swashbuckler uses her Charisma score in place of Intelligence when it is higher \
+             (`BONUS:VAR|CombatFeatIntRequirement|max(CHASCORE,INTSCORE)`). Real Charisma {} / \
+             Intelligence {} -> effective {finesse_effective_intelligence}. This writes the same \
+             corpus variable as Brawler's Cunning, which floors Intelligence at the constant 13 \
+             instead -- genuine shared-idiom reuse, with the operand differing per class. \
+             Grounds only the flat effective-score fact: this codebase's feat_prereqs modules do \
+             not check ability scores as a prerequisite type, so no feat-prerequisite resolution \
+             runs against it. Finesse's OTHER half (gaining Weapon Finesse's benefits with light \
+             or one-handed piercing weapons) carries no corpus token and needs real attack \
+             mechanics, so it stays deferred",
+            input.chosen.ability_scores.charisma, input.chosen.ability_scores.intelligence
+        ),
+    });
+
+    let weapon_training = swashbuckler_weapon_training_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.swashbuckler.weapon_training_bonus".to_owned(),
+        value: weapon_training,
+        detail: format!(
+            "Swashbuckler level {level} Weapon Training: +{weapon_training} on attack and damage \
+             rolls with light and one-handed piercing melee weapons ((level - 1)/4 -- +1 at 5th, \
+             +2 at 9th, +3 at 13th, +4 at 17th, and genuinely 0 below 5th). Grounds as a \
+             standalone magnitude: this engine computes a melee attack total only for its own \
+             fixed Longsword posture, which is not a light or piercing weapon, so there is no \
+             matching total to layer this onto"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.swashbuckler.fighter_level_equivalence_for_feats".to_owned(),
+        value: i16::from(level),
+        detail: format!(
+            "Swashbuckler level {level} counts as fighter level {level} for the purpose of \
+             qualifying for feats (`BONUS:VAR|FighterWeaponQualifyLVL|SwashbucklerLVL`). Grounds \
+             the level-equivalence fact only; the feat_prereqs wiring stays deferred, the same \
+             treatment already ruled for Brawler's Martial Training"
+        ),
+    });
+
     let panache_max = swashbuckler_panache_max(ability_modifiers.charisma);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.swashbuckler.panache_max".to_owned(),
@@ -14661,7 +14710,43 @@ fn active_brawler_ac_bonus(input: &CharacterInput) -> Option<i16> {
 /// Intelligence SCORE (not the derived ability modifier), since the real
 /// rule floors the score itself, not a modifier.
 fn brawler_cunning_effective_intelligence_score(intelligence_score: i16) -> i16 {
-    intelligence_score.max(13)
+    effective_combat_feat_intelligence_score(BRAWLER_CUNNING_INTELLIGENCE_FLOOR, intelligence_score)
+}
+
+/// The floor Brawler's Cunning raises a low Intelligence score to.
+const BRAWLER_CUNNING_INTELLIGENCE_FLOOR: i16 = 13;
+
+/// The shared `CombatFeatIntRequirement` idiom: the effective
+/// Intelligence score used when checking combat-feat prerequisites
+/// (task #14, 2026-07-27).
+///
+/// Two ACG classes write this same corpus variable with different
+/// operands, which is why this takes the substitute as a parameter
+/// rather than hardcoding either:
+/// - Brawler's Cunning: `max(13,INTSCORE)` -- a constant floor.
+/// - Swashbuckler Finesse: `max(CHASCORE,INTSCORE)` -- the higher of two
+///   real ability SCORES.
+///
+/// Genuine reuse at the variable and consumer level, but NOT a drop-in
+/// call: Brawler's existing single-operand signature could not express
+/// Finesse, so it was generalized rather than described as already
+/// satisfying it. Takes raw SCORES, not derived modifiers, because the
+/// real rules substitute the score itself.
+fn effective_combat_feat_intelligence_score(
+    substitute_score: i16,
+    intelligence_score: i16,
+) -> i16 {
+    intelligence_score.max(substitute_score)
+}
+
+/// Swashbuckler Weapon Training's attack/damage bonus with light and
+/// one-handed piercing melee weapons: `(level-1)/4` -- +1 at 5th, +2 at
+/// 9th, +3 at 13th, +4 at 17th, and genuinely 0 below 5th. Verified
+/// directly against `acg_abilities_class.lst`'s own
+/// `BONUS:VAR|SwashbucklerWeaponTrainingBonus|(SwashbucklerWeaponTrainingLVL-1)/4`,
+/// where `SwashbucklerWeaponTrainingLVL` is set from `SwashbucklerLVL`.
+fn swashbuckler_weapon_training_bonus(level: u8) -> i16 {
+    (i16::from(level) - 1) / 4
 }
 
 /// PF1 Advanced Class Guide Brawler's Strike progression tier:
@@ -42267,6 +42352,134 @@ mod cavalier_named_feature_tests {
                 !diagnostic.message.contains("no class-skill list"),
                 "Cavalier DOES have a class-skill list: {diagnostic:?}"
             );
+        }
+    }
+}
+
+/// v0.6 alpha swarm, task #14 (Swashbuckler, 2026-07-27): Finesse's
+/// prerequisite substitution, Weapon Training, and the Bonus Feats
+/// level-equivalence fact.
+#[cfg(test)]
+mod swashbuckler_finesse_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, SWASHBUCKLER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn swashbuckler(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SWASHBUCKLER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Finesse takes `max(CHASCORE, INTSCORE)` -- the max of two real
+    /// ability SCORES, unlike Brawler's Cunning which floors INT at the
+    /// constant 13. The shared helper must handle both without either
+    /// class borrowing the other's operand.
+    #[test]
+    fn finesse_substitutes_the_higher_of_charisma_and_intelligence_scores() {
+        for (charisma, intelligence, expected) in
+            [(18, 10, 18), (10, 18, 18), (7, 7, 7), (13, 13, 13), (20, 3, 20)]
+        {
+            assert_eq!(
+                super::effective_combat_feat_intelligence_score(charisma, intelligence),
+                expected,
+                "max(CHA {charisma}, INT {intelligence})"
+            );
+        }
+    }
+
+    /// Brawler's own Cunning must be unchanged by the generalization --
+    /// it floors at the constant 13, which is NOT what Finesse does.
+    #[test]
+    fn brawler_cunning_still_floors_intelligence_at_thirteen() {
+        for (intelligence, expected) in [(7, 13), (12, 13), (13, 13), (18, 18)] {
+            assert_eq!(
+                super::brawler_cunning_effective_intelligence_score(intelligence),
+                expected,
+                "Brawler floors INT {intelligence} at 13"
+            );
+        }
+    }
+
+    /// Finesse grounds unconditionally from level 1. Fixture CHA 8,
+    /// INT 10 -> max is 10.
+    #[test]
+    fn finesse_grounds_the_effective_score_from_first_level() {
+        assert_eq!(
+            value(
+                &swashbuckler(1),
+                "class_feature.acg.swashbuckler.finesse_effective_intelligence_for_combat_feats"
+            ),
+            Some(10),
+            "fixture CHA 8 / INT 10 -> effective 10"
+        );
+    }
+
+    /// Weapon Training is `(level-1)/4`: +1 at 5th, +2 at 9th, +3 at
+    /// 13th, +4 at 17th, and genuinely 0 below 5th.
+    #[test]
+    fn weapon_training_bonus_matches_the_corpus_formula_at_every_level() {
+        for (level, expected) in [
+            (1u8, 0i16),
+            (4, 0),
+            (5, 1),
+            (8, 1),
+            (9, 2),
+            (12, 2),
+            (13, 3),
+            (16, 3),
+            (17, 4),
+            (20, 4),
+        ] {
+            assert_eq!(
+                super::swashbuckler_weapon_training_bonus(level),
+                expected,
+                "level {level}: (level - 1)/4"
+            );
+        }
+    }
+
+    /// Swashbuckler levels count as fighter levels for feat
+    /// qualification -- the fact grounds, the prereq wiring stays
+    /// deferred (the Martial Training ruling).
+    #[test]
+    fn bonus_feats_ground_the_fighter_level_equivalence_fact() {
+        assert_eq!(
+            value(
+                &swashbuckler(1),
+                "class_feature.acg.swashbuckler.fighter_level_equivalence_for_feats"
+            ),
+            Some(1)
+        );
+    }
+
+    /// None of the three leaks onto a non-Swashbuckler.
+    #[test]
+    fn none_of_the_three_grounds_for_a_non_swashbuckler() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let fighter = result.character_input.expect("valid fixture");
+        for id in [
+            "class_feature.acg.swashbuckler.finesse_effective_intelligence_for_combat_feats",
+            "class_feature.acg.swashbuckler.weapon_training_bonus",
+            "class_feature.acg.swashbuckler.fighter_level_equivalence_for_feats",
+        ] {
+            assert_eq!(value(&fighter, id), None, "{id} must not ground for a Fighter");
         }
     }
 }

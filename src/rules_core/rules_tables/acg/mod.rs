@@ -497,9 +497,10 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     let named_features_wired = match class_id {
         AcgClassId::Shaman => 1,
         AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
-        AcgClassId::Swashbuckler | AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
+        AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
         AcgClassId::Investigator | AcgClassId::Warpriest => 5,
+        AcgClassId::Swashbuckler => 6,
     };
 
     AcgClassCoverage {

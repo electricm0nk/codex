@@ -208,7 +208,11 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
             "Sneak Attack + Trap Sense + Trapfinding + Track",
             4,
         ),
-        (AcgClassId::Swashbuckler, "Panache + Charmed Life + Nimble", 3),
+        (
+            AcgClassId::Swashbuckler,
+            "Panache + Charmed Life + Nimble + Finesse + Weapon Training + Bonus Feats",
+            6,
+        ),
         (
             AcgClassId::Investigator,
             "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy",
