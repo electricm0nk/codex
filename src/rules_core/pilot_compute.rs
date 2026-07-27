@@ -45698,6 +45698,83 @@ mod opponent_conditioned_tier_zero_tests {
         }
     }
 
+    /// Guard for the one shared-mechanism counting hazard this codebase
+    /// actually has (added 2026-07-27 after the sweep that followed
+    /// `66b8aae9`).
+    ///
+    /// The criterion the sweep produced: a `named_features_wired`
+    /// asymmetry is only possible when ONE feature-grounding helper is
+    /// shared by TWO classes that BOTH have coverage rows -- i.e. both
+    /// APG/ACG, since CRB has no coverage matrix at all. Exactly one
+    /// helper in the codebase meets that: `ground_familiar_master_benefit`,
+    /// shared by Witch and Shaman. It was genuinely wrong for a while
+    /// (Shaman credited the slot, Witch did not) and stayed invisible
+    /// because nothing compares the two rows.
+    ///
+    /// So this enumerates every APG and ACG class rather than checking
+    /// the two known ones: if a third class ever picks up the shared
+    /// `Standard Familiar List` -- a Spirit Summoner archetype, say --
+    /// it lands here as a failure, forcing a deliberate decision about
+    /// its own count instead of silently landing credited for one row
+    /// and not another.
+    #[test]
+    fn every_class_grounding_the_shared_familiar_benefit_credits_it_in_its_coverage_row() {
+        use crate::rules_core::rules_tables::{acg, apg};
+
+        let mut grounding: Vec<String> = Vec::new();
+        for id in apg::ApgClassId::ALL {
+            let class_id = format!("class:{}", id.name());
+            if grounds_familiar_benefit(&class_id) {
+                grounding.push(class_id);
+            }
+        }
+        for id in acg::AcgClassId::ALL {
+            let class_id = format!("class:{}", id.name());
+            if grounds_familiar_benefit(&class_id) {
+                grounding.push(class_id);
+            }
+        }
+        grounding.sort();
+
+        assert_eq!(
+            grounding,
+            vec!["class:shaman".to_string(), "class:witch".to_string()],
+            "a class started (or stopped) grounding the shared familiar benefit. Every class \
+             in this list must credit the familiar slot in its own named_features_wired entry \
+             -- decide that deliberately, then update this assertion"
+        );
+
+        // Both credit it: Witch = Hex slot + Familiar, Shaman = Spirit
+        // slot + Spirit Animal. Equal counts here are a coincidence of
+        // both having exactly one other slot, not a rule -- what matters
+        // is that neither is missing the familiar.
+        assert_eq!(
+            apg::class_coverage(apg::ApgClassId::Witch).named_features_wired,
+            2,
+            "Witch must credit Hex slot + Familiar"
+        );
+        assert_eq!(
+            acg::class_coverage(acg::AcgClassId::Shaman).named_features_wired,
+            2,
+            "Shaman must credit Spirit slot + Spirit Animal"
+        );
+    }
+
+    /// Whether a single-class character of `class_id` grounds the shared
+    /// familiar master benefit when a familiar is selected.
+    fn grounds_familiar_benefit(class_id: &str) -> bool {
+        // Level 1 deliberately: the familiar master benefit is a flat
+        // level-independent magnitude, and level 1 is the only level
+        // every class's own bounded slices agree is in scope (Hunter's
+        // and Cavalier's companion/mount paths assert on higher levels).
+        let mut input = character(class_id, 1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+            selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+        });
+        value(&input, "class_feature.familiar.master_hit_point_bonus").is_some()
+    }
+
     /// The bonus reaching a real max-HP total is the whole reason Toad
     /// was picked as canonical, so the consumer-facing helper is
     /// differenced directly rather than trusted via the record.
