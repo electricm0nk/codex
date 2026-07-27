@@ -4110,6 +4110,63 @@ const BARBARIAN_TIRELESS_RAGE_LEVEL: u8 = 17;
 // Mind at level 3, but no level-1 bonus feat mechanics execution, no ki pool, and no
 // level-4+ martial progression.
 const MONK_CLASS_ID: &str = "class:monk";
+
+/// Feats a class grants AUTOMATICALLY at a level gate, which therefore
+/// never appear in `selected_feats` because a player never picks them
+/// (v0.6 alpha swarm, task #20, 2026-07-27).
+///
+/// This is the missing half of `feat_effects::effective_feats`: that leaf
+/// unions chosen and granted feats, but deliberately does not know class
+/// or level gates, so the derivation lives here.
+///
+/// The three real grants, each verified directly against the corpus:
+/// - Monk, 1st level: `Improved Unarmed Strike`
+///   (`ABILITY:FEAT|AUTOMATIC|Improved Unarmed Strike` on
+///   `KEY:Monk ~ Unarmed Strike`) and `Stunning Fist`
+///   (`ABILITY:FEAT|VIRTUAL|Stunning Fist` on
+///   `KEY:Monk ~ Stunning Fist`) -- granted "even if he does not meet the
+///   prerequisites".
+/// - Ranger, 3rd level: `Endurance`
+///   (`ABILITY:FEAT|AUTOMATIC|Endurance|...|PREVARGTEQ:Ranger_CFP_Level,3`).
+///
+/// Returns catalog keys, matching the exact string form a player-picked
+/// feat carries in `selected_feats`, so producers cannot tell the two
+/// apart.
+///
+/// **Scope honesty**: these three are the grants that matter to the
+/// producers that exist today. Other classes grant further bonus feats
+/// (Fighter's own bonus-feat slots, Wizard's Scribe Scroll) but those are
+/// either player-chosen from a list -- so they DO reach `selected_feats`
+/// -- or have no producer keying on them.
+fn class_granted_feats(input: &CharacterInput) -> Vec<&'static str> {
+    let mut granted = Vec::new();
+    for class_level in &input.chosen.class_levels {
+        if class_level.class_id == MONK_CLASS_ID {
+            granted.push("Improved Unarmed Strike");
+            granted.push("Stunning Fist");
+        }
+        if class_level.class_id == RANGER_CLASS_ID
+            && class_level.level >= RANGER_ENDURANCE_LEVEL
+        {
+            granted.push("Endurance");
+        }
+    }
+    granted
+}
+
+/// The character's full feat set as every `feat_effects` producer should
+/// see it: everything the player chose, plus everything their classes
+/// granted automatically (task #20, 2026-07-27).
+///
+/// Chosen feats pass through VERBATIM including duplicates, because
+/// repeatable `STACK:YES MULT:YES` feats are counted by occurrence -- a
+/// whole-list dedup here would silently halve a real bonus.
+fn effective_character_feats(input: &CharacterInput) -> Vec<String> {
+    crate::rules_core::feat_effects::effective_feats(
+        &input.chosen.selected_feats,
+        &class_granted_feats(input),
+    )
+}
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
@@ -28507,7 +28564,7 @@ fn compute_total_saves(
     }
 
     let feat_save_bonuses =
-        crate::rules_core::feat_effects::save_bonuses_from_feats(&input.chosen.selected_feats);
+        crate::rules_core::feat_effects::save_bonuses_from_feats(&effective_character_feats(input));
     // v0.6 alpha swarm, risks item 8: Barbarian Rage's Will-save morale
     // bonus layers on here, the same shape as `feat_save_bonuses` --
     // class-ownership-gated by `active_barbarian_rage_bonus` construction,
@@ -28867,7 +28924,7 @@ fn compute_selected_skill_modifiers(
     // layering `compute_total_saves`'s own `feat_save_bonuses` already
     // established for Great Fortitude/Iron Will/Lightning Reflexes.
     let feat_skill_bonuses = crate::rules_core::feat_effects::skill_bonuses_from_feats(
-        &input.chosen.selected_feats,
+        &effective_character_feats(input),
         ability_modifiers.strength,
     );
 
@@ -28971,7 +29028,7 @@ fn ground_standalone_feat_skill_facts(
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     for fact in
-        crate::rules_core::feat_effects::standalone_skill_facts_from_feats(&input.chosen.selected_feats)
+        crate::rules_core::feat_effects::standalone_skill_facts_from_feats(&effective_character_feats(input))
     {
         let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
         explanations.push(ComputationExplanation {
@@ -28988,7 +29045,7 @@ fn ground_standalone_feat_skill_facts(
     }
 
     for fact in crate::rules_core::feat_effects::skill_focus_facts_from_choices(
-        &input.chosen.selected_feats,
+        &effective_character_feats(input),
         &input.chosen.selected_choices,
     ) {
         let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
@@ -41563,6 +41620,138 @@ mod extra_resource_feat_tests {
             "5 rounds is within the Extra-Performance-extended budget; the activation check must \
              see the feat: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm, task #20 (2026-07-27): class-granted feats must
+/// reach the `feat_effects` producers.
+///
+/// Three feats are granted automatically by class level and never appear
+/// in `selected_feats`, because a player never picks them: Monk's
+/// Improved Unarmed Strike and Stunning Fist at 1st level, and Ranger's
+/// Endurance at 3rd. Every producer keys on `selected_feats`, so those
+/// characters were invisible to every feat-presence check.
+#[cfg(test)]
+mod class_granted_feat_tests {
+    use super::{class_granted_feats, CharacterClassLevel, CharacterInput};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    /// Monk gains BOTH Improved Unarmed Strike and Stunning Fist at 1st
+    /// level ("even if he does not meet the prerequisites"), verified
+    /// against `cr_abilities_class.lst`'s own
+    /// `ABILITY:FEAT|AUTOMATIC|Improved Unarmed Strike` and
+    /// `ABILITY:FEAT|VIRTUAL|Stunning Fist`.
+    #[test]
+    fn a_monk_is_granted_improved_unarmed_strike_and_stunning_fist_from_first_level() {
+        for level in [1u8, 4, 20] {
+            let granted = class_granted_feats(&character("class:monk", level));
+            assert!(
+                granted.contains(&"Improved Unarmed Strike"),
+                "level {level} Monk must be granted Improved Unarmed Strike: {granted:?}"
+            );
+            assert!(
+                granted.contains(&"Stunning Fist"),
+                "level {level} Monk must be granted Stunning Fist: {granted:?}"
+            );
+        }
+    }
+
+    /// Ranger's Endurance is gated at 3rd level
+    /// (`PREVARGTEQ:Ranger_CFP_Level,3`), so a level 1-2 Ranger must NOT
+    /// be credited with it.
+    #[test]
+    fn a_ranger_is_granted_endurance_only_from_third_level() {
+        for level in [1u8, 2] {
+            let granted = class_granted_feats(&character("class:ranger", level));
+            assert!(
+                !granted.contains(&"Endurance"),
+                "level {level} Ranger has not gained Endurance yet: {granted:?}"
+            );
+        }
+        for level in [3u8, 5, 20] {
+            let granted = class_granted_feats(&character("class:ranger", level));
+            assert!(
+                granted.contains(&"Endurance"),
+                "level {level} Ranger genuinely has Endurance: {granted:?}"
+            );
+        }
+    }
+
+    /// No other class grants any of these, and a Fighter grants none.
+    #[test]
+    fn a_class_without_automatic_feat_grants_is_credited_with_none() {
+        for class_id in ["class:fighter", "class:wizard", "class:barbarian"] {
+            assert!(
+                class_granted_feats(&character(class_id, 20)).is_empty(),
+                "{class_id} grants no automatic feats in this codebase"
+            );
+        }
+    }
+
+    /// A multiclass Monk/Ranger gets both classes' grants, each at its
+    /// own level gate.
+    #[test]
+    fn a_multiclass_character_gets_each_classs_own_grants_at_its_own_gate() {
+        let mut input = character("class:monk", 1);
+        input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: "class:ranger".to_owned(),
+            level: 3,
+        });
+        let granted = class_granted_feats(&input);
+        assert!(granted.contains(&"Stunning Fist"));
+        assert!(granted.contains(&"Improved Unarmed Strike"));
+        assert!(granted.contains(&"Endurance"));
+    }
+
+    /// The granted feats genuinely reach the `feat_effects` producers
+    /// through `effective_feats` -- the whole point of the wiring. Proven
+    /// against the real union rather than the derivation alone.
+    #[test]
+    fn granted_feats_reach_the_producers_through_effective_feats() {
+        let input = character("class:ranger", 3);
+        let effective = crate::rules_core::feat_effects::effective_feats(
+            &input.chosen.selected_feats,
+            &class_granted_feats(&input),
+        );
+        assert!(
+            effective.iter().any(|f| f == "Endurance"),
+            "a level-3 Ranger's Endurance must be visible to every producer: {effective:?}"
+        );
+        assert!(
+            crate::rules_core::feat_effects::endurance_check_bonus_from_feats(&effective) > 0,
+            "the producer that keys on Endurance must now see it"
+        );
+    }
+
+    /// A Ranger who ALSO picked Endurance from the catalog must not hold
+    /// it twice -- `effective_feats` appends only when absent, and that
+    /// matters because other producers count duplicates for STACK:YES
+    /// feats.
+    #[test]
+    fn a_granted_feat_already_chosen_is_not_duplicated() {
+        let mut input = character("class:ranger", 3);
+        input.chosen.selected_feats.push("Endurance".to_owned());
+        let effective = crate::rules_core::feat_effects::effective_feats(
+            &input.chosen.selected_feats,
+            &class_granted_feats(&input),
+        );
+        assert_eq!(
+            effective.iter().filter(|f| *f == "Endurance").count(),
+            1,
+            "Endurance must appear exactly once: {effective:?}"
         );
     }
 }
