@@ -1741,7 +1741,7 @@ Everything else in #63 held up exactly: the three real classes all use their bar
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T19:05:01
-Latest commit on tranche/6: 6303f1f6 docs(v0.6): greenlight Arcanist Exploits scoping (task #55), dispatch #56 (Familiar) + #57 (Rogue Talents) (22 seconds ago) (2026-07-27T19:04:39-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T19:02:42 frontend=unknown qa=unknown lead=2026-07-27T19:03:04
+Last mechanical check: 2026-07-27T19:35:23
+Latest commit on tranche/6: 504cc611 docs(v0.6): dispatch scout to backlog pre-verification pass (task #67, scout's own proposal) (49 seconds ago) (2026-07-27T19:34:34-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T19:33:06 frontend=unknown qa=unknown lead=2026-07-27T19:34:16
 <!-- AUTO-HEARTBEAT-END -->
