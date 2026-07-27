@@ -120,6 +120,7 @@ use super::character_input::{
 };
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_tables::acg::{self, AcgClassId};
+use super::rules_tables::acg::shaman_spell_list;
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
 use crate::rules_core::durability::FamiliarSpecies;
@@ -14129,6 +14130,231 @@ fn push_investigator_other_features_deferred_diagnostic(
     });
 }
 
+/// The ACG Shaman class table's BASE spells-per-day row, one entry per
+/// spell level 0-9 (`None` for an inaccessible "—" column; index 0 is
+/// orisons). Transcribed directly from `acg_classes.lst`'s own 20 `CAST:`
+/// rows -- unlike Cleric's table (which needed an external citation
+/// because the corpus was not consulted at the time), this one IS
+/// corpus-derived, `CAST:3,1` at level 1 through
+/// `CAST:4,4,4,4,4,4,4,4,4,4` at 20.
+///
+/// **Level 11 is a deliberate, flagged corpus divergence.** Shaman's row
+/// is `4,4,4,3,3,2,1`; every other 9-level prepared caster in the entire
+/// PCGen tree -- Cleric, Druid, Wizard, and Witch -- carries
+/// `4,4,4,4,3,2,1` there, and Shaman's own rows at levels 10 and 12 are
+/// byte-identical to all four. Shaman is the ONLY class anywhere in the
+/// tree with this row, i.e. it gains its fourth 3rd-level slot one level
+/// later than every peer. That is either a real ACG rules quirk or a
+/// PCGen data typo; this table follows the corpus per the standing
+/// corpus-first rule, and `shaman_level_11_follows_the_corpus_not_the_peer_row`
+/// pins it so the choice is visible rather than silently baked in. It is
+/// a one-cell change if the ruling goes the other way.
+fn shaman_base_spells_per_day_table(level: u8) -> [Option<i16>; 10] {
+    match level {
+        1 => [Some(3), Some(1), None, None, None, None, None, None, None, None],
+        2 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(4), Some(2), Some(1), None, None, None, None, None, None, None],
+        4 => [Some(4), Some(3), Some(2), None, None, None, None, None, None, None],
+        5 => [Some(4), Some(3), Some(2), Some(1), None, None, None, None, None, None],
+        6 => [Some(4), Some(3), Some(3), Some(2), None, None, None, None, None, None],
+        7 => [Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None, None],
+        8 => [Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None, None],
+        9 => [Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        10 => [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None],
+        11 => [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), Some(1), None, None, None],
+        12 => [Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None],
+        13 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None]
+        }
+        14 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None]
+        }
+        15 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None]
+        }
+        16 => {
+            [Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None]
+        }
+        17 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2),
+            Some(1),
+        ],
+        18 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3),
+            Some(2),
+        ],
+        19 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3),
+            Some(3),
+        ],
+        20 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4),
+            Some(4),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
+    }
+}
+
+/// Shaman's highest accessible spell level at a given class level,
+/// **derived from `shaman_base_spells_per_day_table` itself** rather than
+/// duplicated as its own ladder of threshold constants (Cleric's shape).
+/// One source of truth means the ceiling and the slot budget cannot drift
+/// apart -- a real hazard, since those are two hand-maintained tables
+/// describing the same corpus rows.
+fn shaman_spell_level_access(level: u8) -> i16 {
+    shaman_base_spells_per_day_table(level)
+        .iter()
+        .rposition(Option::is_some)
+        .map_or(0, |index| index as i16)
+}
+
+/// The real per-day slot budget per spell level 0-9 (base table count +
+/// Wisdom bonus spells). Orisons take no bonus, matching Cleric/Druid.
+fn shaman_total_spells_per_day(level: u8, wisdom_modifier: i16) -> [Option<i16>; 10] {
+    let base = shaman_base_spells_per_day_table(level);
+    let mut total = [None; 10];
+    for (spell_level, base_count) in base.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let bonus = if spell_level == 0 {
+            0
+        } else {
+            ability_bonus_spells(wisdom_modifier, spell_level as i16)
+        };
+        total[spell_level] = Some(base_count + bonus);
+    }
+    total
+}
+
+/// Parses a Shaman spell's `spell_id` into its real Shaman-specific spell
+/// level by looking it up in `shaman_spell_list::SHAMAN_SPELL_LIST`.
+/// Shaman is the one class with no `SPELLLIST:` reuse token, so this
+/// consults its own freshly-ingested list rather than delegating.
+fn parse_shaman_spell_id(spell_id: &str) -> Option<u8> {
+    shaman_spell_list::shaman_spell_level(spell_id)
+}
+
+/// Return the list of unmet conditions for Shaman's real prepared-spell
+/// posture. Mirrors `unmet_cleric_prepared_spell_conditions` exactly --
+/// same Wisdom casting stat, same 0-9 full-caster range, same
+/// `MEMORIZE:YES` prepared shape (verified against `acg_classes.lst`'s own
+/// `SPELLSTAT:WIS MEMORIZE:YES`, with no `SPELLBOOK:YES`, so there is no
+/// separate recorded-spellbook step: a shaman prepares directly from the
+/// full shaman spell list each day, exactly as a cleric does).
+///
+/// An empty list means the posture is fully valid. Zero prepared spells is
+/// always valid, same reasoning as every other class in this family.
+fn unmet_shaman_prepared_spell_conditions(
+    input: &CharacterInput,
+    shaman_level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == SHAMAN_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let access_ceiling = shaman_spell_level_access(shaman_level);
+    let total_per_day = shaman_total_spells_per_day(shaman_level, ability_modifiers.wisdom);
+
+    let mut consumed_per_level: [i16; 10] = [0; 10];
+    for spell_id in &prepared {
+        let Some(spell_level) = parse_shaman_spell_id(spell_id) else {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not on the real PF1 shaman spell list"
+            ));
+            continue;
+        };
+        if spell_level > 0 && i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' targets spell level {spell_level}, not yet \
+                 accessible at shaman level {shaman_level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        consumed_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (spell_level, consumed) in consumed_per_level.iter().enumerate() {
+        if *consumed == 0 {
+            continue;
+        }
+        let total_slots = total_per_day[spell_level].unwrap_or(0);
+        if *consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
+                 {total_slots} slots available (base + Wisdom bonus)"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground Shaman's real prepared-spell posture once
+/// `unmet_shaman_prepared_spell_conditions` reports an empty unmet list.
+/// Mirrors `ground_cleric_prepared_spells` exactly.
+fn ground_shaman_prepared_spells(
+    input: &CharacterInput,
+    shaman_level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let prepared: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == SHAMAN_CLASS_ID && s.acquisition_mode == AcquisitionMode::Prepared
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.shaman.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Shaman level {shaman_level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared): {}. Each prepared spell is verified against the real \
+             PF1 shaman spell list (`shaman_spell_list::SHAMAN_SPELL_LIST`, the class's own \
+             freshly-ingested 304-record list -- Shaman carries no `SPELLLIST:` reuse token, so \
+             unlike Investigator or Oracle it shares no other class's list), the shaman's own \
+             spell-level access ceiling, and the per-level slot budget (base table count + \
+             Wisdom bonus). This grounds the prepared-spell selection for real; it computes no \
+             spell save DC resolution against a target and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
+    });
+
+    let total_per_day = shaman_total_spells_per_day(shaman_level, ability_modifiers.wisdom);
+    for (spell_level, total) in total_per_day.iter().enumerate() {
+        let Some(total) = total else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.acg.shaman.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *total,
+            detail: format!(
+                "Shaman level {shaman_level} total spells per day at spell level \
+                 {spell_level}: {total} (base table count from `acg_classes.lst`'s own `CAST:` \
+                 row + Wisdom bonus; orisons take no bonus). This is the real slot budget the \
+                 daily preparation selection above is validated against"
+            ),
+        });
+    }
+}
+
 /// PF1 Advanced Class Guide Life Spirit's Channel ability's uses per
 /// day: `1+Charisma modifier`, verified directly against
 /// `acg_abilities_class.lst`'s own `BONUS:VAR|ShamanChannelTimes|1+CHA`.
@@ -14181,6 +14407,20 @@ fn ground_or_block_shaman_class_features(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     ground_familiar_master_benefit(input, level, explanations);
+
+    let unmet_spells = unmet_shaman_prepared_spell_conditions(input, level, ability_modifiers);
+    if unmet_spells.is_empty() {
+        ground_shaman_prepared_spells(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.shaman.prepared_spells.unsupported".to_owned(),
+            message: format!(
+                "{SHAMAN_CLASS_ID} prepared-spell posture is not satisfied: {}",
+                unmet_spells.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
 
     let spirit_selections: Vec<&str> = input
         .chosen
@@ -14260,13 +14500,12 @@ fn push_shaman_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
         id: "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SHAMAN_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and Life Spirit's own Channel ability: fresh own-list spellcasting (no \
-             `SPELLLIST:` reuse token exists for Shaman, a genuinely new data-ingestion cost), \
-             Spirit Animal (an unbuilt Familiar subsystem, mechanically distinct from the \
-             already-built Animal Companion Wolf stat block), Spirit Magic, Orisons, \
-             Manifestation (a capstone ability), the other 9 primary spirits, and the large \
-             Hex/Spirit Hex chooser-list remain ungrounded anywhere in this codebase; no \
-             class-feature or spell execution is fabricated in this bounded chassis baseline"
+             pillar, its own prepared spellcasting, Spirit Animal's familiar master benefit, \
+             and Life Spirit's own Channel ability: Spirit Magic (the spirit-granted bonus \
+             spells layered on top of the class list), Manifestation (a capstone ability), the \
+             other 9 primary spirits, and the large Hex/Spirit Hex chooser-list remain \
+             ungrounded anywhere in this codebase; no class-feature or spell execution is \
+             fabricated here"
         ),
         claim_blocking: true,
     });
@@ -42019,13 +42258,128 @@ mod investigator_dispatch_widening_safety_tests {
 /// ACG/APG class-specific closure): tests the Life Spirit choice
 /// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
 /// established dispatch-widening test module shape.
+/// Shaman's own prepared-spellcasting surface (task #12): the
+/// corpus-transcribed slot table, the ceiling derived from it, and the
+/// Wisdom bonus-spell layering.
+#[cfg(test)]
+mod shaman_spellcasting_tests {
+    use super::{
+        shaman_base_spells_per_day_table, shaman_spell_level_access, shaman_total_spells_per_day,
+    };
+
+    /// Every row transcribed from `acg_classes.lst`'s own `CAST:` rows.
+    #[test]
+    fn the_base_table_matches_the_corpus_cast_rows() {
+        assert_eq!(
+            shaman_base_spells_per_day_table(1),
+            [Some(3), Some(1), None, None, None, None, None, None, None, None]
+        );
+        assert_eq!(
+            shaman_base_spells_per_day_table(20),
+            [
+                Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4),
+                Some(4)
+            ]
+        );
+        // Level 0 and out-of-range levels grant nothing at all.
+        assert_eq!(shaman_base_spells_per_day_table(0), [None; 10]);
+        assert_eq!(shaman_base_spells_per_day_table(21), [None; 10]);
+    }
+
+    /// **The flagged one-cell corpus divergence.** Shaman's level-11 row
+    /// is `4,4,4,3,3,2,1`. Cleric, Druid, Wizard and Witch -- every other
+    /// 9-level prepared caster in the PCGen tree -- all carry
+    /// `4,4,4,4,3,2,1` there, and Shaman's own rows at 10 and 12 are
+    /// byte-identical to theirs. Shaman is the ONLY class anywhere in the
+    /// tree with this row, so it gains its fourth 3rd-level slot one
+    /// level later than every peer.
+    ///
+    /// This test exists to make that choice visible rather than silently
+    /// baked in: it follows the corpus per the standing corpus-first
+    /// rule, and pins BOTH the value we use and the peer value we
+    /// deliberately did not use, so flipping it is a one-line change with
+    /// an obvious failure message.
+    #[test]
+    fn shaman_level_11_follows_the_corpus_not_the_peer_row() {
+        let shaman_row = shaman_base_spells_per_day_table(11);
+        let corpus_row =
+            [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), Some(1), None, None, None];
+        let peer_row =
+            [Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None];
+        assert_eq!(shaman_row, corpus_row, "must follow acg_classes.lst's own CAST row");
+        assert_ne!(
+            shaman_row, peer_row,
+            "if this now matches the Cleric/Druid/Wizard/Witch row, the corpus-vs-peer \
+             divergence was resolved in favour of the peers -- update this test deliberately"
+        );
+        // The rows on either side are unchanged, which is what makes the
+        // single-cell difference the whole of the divergence.
+        assert_eq!(
+            shaman_base_spells_per_day_table(10),
+            [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None]
+        );
+        assert_eq!(
+            shaman_base_spells_per_day_table(12),
+            [Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None]
+        );
+    }
+
+    /// The ceiling is derived from the table, so this also proves the two
+    /// cannot drift apart.
+    #[test]
+    fn spell_level_access_is_derived_from_the_table() {
+        assert_eq!(shaman_spell_level_access(1), 1);
+        assert_eq!(shaman_spell_level_access(3), 2);
+        assert_eq!(shaman_spell_level_access(5), 3);
+        assert_eq!(shaman_spell_level_access(7), 4);
+        assert_eq!(shaman_spell_level_access(9), 5);
+        assert_eq!(shaman_spell_level_access(11), 6);
+        assert_eq!(shaman_spell_level_access(13), 7);
+        assert_eq!(shaman_spell_level_access(15), 8);
+        assert_eq!(shaman_spell_level_access(17), 9);
+        assert_eq!(shaman_spell_level_access(20), 9);
+        // A non-caster level exposes no spell levels at all.
+        assert_eq!(shaman_spell_level_access(0), 0);
+    }
+
+    /// Wisdom bonus spells layer onto levels 1+, never onto orisons.
+    #[test]
+    fn wisdom_bonus_spells_apply_to_every_level_except_orisons() {
+        let none = shaman_total_spells_per_day(1, 0);
+        assert_eq!(none[0], Some(3));
+        assert_eq!(none[1], Some(1));
+
+        let wis_18 = shaman_total_spells_per_day(1, 4);
+        assert_eq!(wis_18[0], Some(3), "orisons never take a bonus spell");
+        assert_eq!(wis_18[1], Some(2), "1st level gains one bonus spell at +4 Wisdom");
+
+        // A negative modifier must not inflate the budget.
+        let wis_8 = shaman_total_spells_per_day(1, -1);
+        assert_eq!(wis_8[0], Some(3));
+        assert_eq!(wis_8[1], Some(1));
+    }
+
+    /// Inaccessible levels stay `None` rather than becoming `Some(0)` --
+    /// otherwise a high-Wisdom low-level shaman would appear to have
+    /// slots at spell levels the class table says are "—".
+    #[test]
+    fn inaccessible_spell_levels_stay_none_even_with_high_wisdom() {
+        let totals = shaman_total_spells_per_day(1, 5);
+        for (spell_level, total) in totals.iter().enumerate().skip(2) {
+            assert_eq!(*total, None, "spell level {spell_level} must be inaccessible at level 1");
+        }
+    }
+}
+
 #[cfg(test)]
 mod shaman_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
         FIGHTER_CLASS_ID, LIFE_SPIRIT_SELECTION, SHAMAN_CLASS_ID, SHAMAN_SPIRIT_CHOICE_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, AcquisitionMode, SelectedChoice, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -42038,6 +42392,72 @@ mod shaman_dispatch_widening_safety_tests {
         input.chosen.class_levels =
             vec![CharacterClassLevel { class_id: SHAMAN_CLASS_ID.to_owned(), level }];
         input
+    }
+
+    /// The spellcasting surface must be genuinely reachable through the
+    /// real dispatch, not just a pure function with tests. A real Shaman
+    /// preparing a real spell from the class's own list grounds it, and
+    /// the per-level slot budget lands alongside it.
+    #[test]
+    fn a_shaman_preparing_a_real_spell_grounds_it_through_the_live_dispatch() {
+        let mut input = human_shaman_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: SHAMAN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.shaman.prepared_spells.unsupported"),
+            "a real on-list spell must not trip the prepared-spell blocker: {:?}",
+            receipt.computation.diagnostics
+        );
+        let preparation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.shaman.daily_preparation")
+            .expect("daily preparation must be grounded");
+        assert_eq!(preparation.value, 1);
+        let orisons = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.shaman.total_spells_per_day.spell_level_0")
+            .expect("orison budget must be grounded");
+        assert_eq!(orisons.value, 3, "level 1 CAST:3,1 -- three orisons");
+    }
+
+    /// The converse: a spell that is not on Shaman's own list claim-blocks
+    /// rather than being silently accepted. Proves the list is actually
+    /// consulted, not merely present.
+    #[test]
+    fn a_shaman_preparing_an_off_list_spell_is_claim_blocked() {
+        let mut input = human_shaman_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: SHAMAN_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.shaman.prepared_spells.unsupported"
+                    && d.claim_blocking),
+            "an off-list spell must claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 
     /// A bare single-class Human Shaman (no Spirit choice) stays
