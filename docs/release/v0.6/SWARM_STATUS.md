@@ -1715,7 +1715,7 @@ Greenlit the proposed two-commit sequencing: fix the three formulas first (prova
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T18:30:02
-Latest commit on tranche/6: 834760a7 docs(v0.6): greenlight Hunter spellcasting scoping (task #43), rule on take-the-lower, dispatch build + next scoping (62 seconds ago) (2026-07-27T18:29:00-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-27T18:28:56 frontend=unknown qa=unknown lead=2026-07-27T18:29:56
+Last mechanical check: 2026-07-27T19:00:02
+Latest commit on tranche/6: 03bb0f8f fix(v0.6): align Monk's gate-absence convention with its neighbours (task #46) (8 seconds ago) (2026-07-27T18:59:54-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-27T18:59:35 frontend=unknown qa=unknown lead=2026-07-27T18:57:47
 <!-- AUTO-HEARTBEAT-END -->
