@@ -744,6 +744,77 @@ pub fn weapon_focus_facts_from_choices(
     facts
 }
 
+/// Master Craftsman's catalog key and its Mechanism-B target contract:
+/// `choice:master_craftsman_target -> skill:<name>`. Fourth use of the chooser
+/// pattern proven by Skill Focus, Spell Focus and Weapon Focus.
+const MASTER_CRAFTSMAN_FEAT_KEY: &str = "Master Craftsman";
+const MASTER_CRAFTSMAN_TARGET_CHOICE_SET: &str = "choice:master_craftsman_target";
+const MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX: &str = "skill:";
+
+/// Master Craftsman's real benefit: a flat `+2` on one chosen Craft or
+/// Profession skill. Token (`BONUS:SKILL|LIST|2`) and `BENEFIT:` prose ("You
+/// receive a +2 bonus on your chosen Craft or Profession skill") agree exactly
+/// -- no level scaling, no conditional tier.
+const MASTER_CRAFTSMAN_SKILL_BONUS: i16 = 2;
+
+/// One grounded Master Craftsman fact: the real `+2` on a specific,
+/// player-chosen Craft or Profession skill.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct MasterCraftsmanFact {
+    /// The chosen skill, verbatim from the `"skill:<name>"` selection.
+    pub skill_name: String,
+    /// Always [`MASTER_CRAFTSMAN_SKILL_BONUS`] (+2).
+    pub bonus: i16,
+}
+
+/// Grounds Master Craftsman's real `+2` per explicitly chosen Craft/Profession
+/// skill -- only when the feat is in `selected_feats` AND a matching
+/// `choice:master_craftsman_target -> skill:<name>` is present. Grounds nothing
+/// (never a fabricated canonical skill) when either half is missing, the same
+/// no-silent-seeding contract the other three chooser feats carry.
+///
+/// One fact per distinct skill, first-seen order, compared case-insensitively:
+/// the feat is `STACK:NO MULT:YES` (repeatable across different Craft/Profession
+/// skills, never stacking on one), and the consumer lowercases the skill name to
+/// build its explanation id.
+///
+/// **Two parts of this feat are deliberately not grounded here.**
+/// 1. Its second corpus token, `BONUS:VAR|MasterCraftsmanRanks|
+///    var("SKILLRANK=%LIST")`, makes ranks in the chosen skill stand in for
+///    caster level when crafting magic items. This codebase models no item
+///    creation at all (all eight `ItemCreation` feats carry no numeric token)
+///    and tracks no Craft/Profession ranks, so there is nothing to substitute
+///    into -- naming it rather than inventing a value.
+/// 2. Its `PRESKILL:1,TYPE.Craft=5,TYPE.Profession=5` prerequisite (5 ranks in
+///    the chosen skill) is not enforced here. Prerequisite validation is
+///    `feat_prereqs`' job, the same split already documented for Acrobatic
+///    Steps, and the `+2` magnitude is unambiguous regardless -- so reporting it
+///    asserts nothing uncertain. Worth knowing that the deterministic skill
+///    posture pins ranks at 1 (`pilot_compute::SELECTED_SKILL_RANK`), so no
+///    character this engine currently composes could legally hold this feat;
+///    that is a gap in what the engine can represent, not a reason to withhold a
+///    verified number.
+pub fn master_craftsman_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<MasterCraftsmanFact> {
+    if !selected_feats.iter().any(|feat| feat == MASTER_CRAFTSMAN_FEAT_KEY) {
+        return Vec::new();
+    }
+    let targets = chosen_targets(
+        selected_choices,
+        MASTER_CRAFTSMAN_TARGET_CHOICE_SET,
+        MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX,
+    );
+    dedup_targets(targets)
+        .into_iter()
+        .map(|skill_name| MasterCraftsmanFact {
+            skill_name: skill_name.to_owned(),
+            bonus: MASTER_CRAFTSMAN_SKILL_BONUS,
+        })
+        .collect()
+}
+
 /// One real, corpus-verified combat-maneuver bonus granted by one feat.
 ///
 /// The PF1 Core Rulebook carries twelve of these in two uniform families:
@@ -2118,5 +2189,117 @@ mod weapon_focus_facts_from_choices_tests {
             choice("choice:weapon_focus_target", "weapon:"),
         ];
         assert!(weapon_focus_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod master_craftsman_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(skill: &str) -> SelectedChoice {
+        choice("choice:master_craftsman_target", &format!("skill:{skill}"))
+    }
+
+    fn fact(skill: &str) -> MasterCraftsmanFact {
+        MasterCraftsmanFact { skill_name: skill.to_owned(), bonus: 2 }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(master_craftsman_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        // Same no-silent-seeding contract as every other chooser feat here: the
+        // value of Master Craftsman IS which Craft/Profession skill was picked.
+        let selected = feats(&["Master Craftsman"]);
+        assert!(master_craftsman_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphan_target_without_the_feat() {
+        assert!(master_craftsman_facts_from_choices(&[], &[target("Craft (armor)")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_flat_plus_two_for_an_explicitly_chosen_skill() {
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(&selected, &[target("Craft (armor)")]),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn preserves_a_parenthesised_skill_name_verbatim() {
+        // Craft and Profession skills carry parenthetical specialisations and can
+        // contain spaces; they never contain colons, so the single "skill:"
+        // prefix strip recovers the whole name intact.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(&selected, &[target("Profession (siege engineer)")]),
+            vec![fact("Profession (siege engineer)")]
+        );
+    }
+
+    #[test]
+    fn grounds_one_fact_per_distinct_skill_in_input_order() {
+        // MULT:YES -- repeatable across different Craft/Profession skills.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("Profession (sailor)")]
+            ),
+            vec![fact("Craft (armor)"), fact("Profession (sailor)")]
+        );
+    }
+
+    #[test]
+    fn grounds_only_one_fact_when_the_same_skill_is_chosen_twice() {
+        // STACK:NO -- never stacks on one skill, same contract as Skill Focus.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("Craft (armor)")]
+            ),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn treats_case_variants_of_one_skill_as_the_same_target() {
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("craft (armor)")]
+            ),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn ignores_a_choice_from_a_different_choice_set_or_with_a_wrong_prefix() {
+        let selected = feats(&["Master Craftsman"]);
+        let choices = vec![
+            choice("choice:skill_focus_target", "skill:Craft (armor)"),
+            choice("choice:master_craftsman_target", "Craft (armor)"),
+            choice("choice:master_craftsman_target", "skill:"),
+        ];
+        assert!(master_craftsman_facts_from_choices(&selected, &choices).is_empty());
     }
 }
