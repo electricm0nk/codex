@@ -1,13 +1,31 @@
-//! SD-27 Epic 2, cycle E2.0.5 dual-audit gate: proves Shape B v1
+//! SD-27 Epic 2 dual-audit gate: proves Shape B v1
 //! (`src/rules_core/shape_b_v1.rs`) is additive over v0
 //! (`src/rules_core/rules_tables/crb/json_cache.rs`) and that the
 //! license/pi_field/pi_marker fields serialize with the exact names and
 //! literal string values `decisions.md §17` specifies.
 //!
-//! This cycle does NOT modify any in-scope book's on-disk records (see
-//! `loop-instruction.md §3.2.5` Notes) -- this gate audits the *schema*,
-//! not book data. Per-book data retro-fits (E2.0.6+) get their own
-//! per-book dual-audit gates against this same shared schema.
+//! **Updated post-retrofit (cycles E2.0.6-2.0.9).** Originally authored in
+//! cycle E2.0.5, before any in-scope book had been retro-fitted, Audit 1
+//! asserted every on-disk record carried `license: None` -- the honest
+//! pre-retrofit state at the time. Now that all 4 in-scope books
+//! (core_rulebook, advanced_players_guide, advanced_class_guide,
+//! beastiary -- 4,435 records total) have been retro-fitted for real,
+//! that assertion is stale by construction: it would fail on every single
+//! record. Audit 1 below asserts the new, correct post-retrofit invariant
+//! instead -- every on-disk record has a *populated* license and passes
+//! `validate_license()` cleanly. The pre-retrofit "a v0-shaped record
+//! deserializes as v1 with fields defaulting to `None`" proof still
+//! exists and still matters (it's what a *future* book's pre-retrofit
+//! state must satisfy) -- that proof now lives as a synthetic-fixture
+//! unit test in `shape_b_v1.rs` itself
+//! (`v0_shaped_json_deserializes_as_v1_record_with_license_fields_defaulting_to_none`),
+//! since no real on-disk file is in that state anymore.
+//!
+//! The file walk also now excludes `LICENSE.json` -- each per-book retrofit
+//! cycle writes one under `data/corpus/<book>/`, and its shape (book /
+//! license_declaration / redaction_policy / ...) is deliberately not a
+//! `CorpusRecordV1`; it is book-level metadata, not a per-record cache
+//! entry, per `docs/governance/ogl-pi-blacklist.md §5`'s template.
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -28,7 +46,12 @@ fn json_files_under(dir: &Path) -> Vec<PathBuf> {
         let path = entry.path();
         if path.is_dir() {
             out.extend(json_files_under(&path));
-        } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
+        } else if path.extension().and_then(|e| e.to_str()) == Some("json")
+            && path.file_name().and_then(|n| n.to_str()) != Some("LICENSE.json")
+        {
+            // LICENSE.json is book-level metadata (docs/governance/ogl-pi-blacklist.md
+            // §5's template), not a per-record Shape B cache entry -- it does not
+            // conform to CorpusRecordV1 and is deliberately excluded from this walk.
             out.push(path);
         }
     }
@@ -37,34 +60,41 @@ fn json_files_under(dir: &Path) -> Vec<PathBuf> {
 
 /// Audit 1: every real, on-disk Shape B record across all 4 in-scope
 /// books deserializes as a Shape B v1 record (`serde_json::Value` for
-/// `data`, since this gate is schema-generic, not book-specific) -- the
-/// additive proof that a v0 record is also a valid v1 record.
+/// `data`, since this gate is schema-generic, not book-specific) *and*
+/// carries a populated, `validate_license()`-clean license annotation --
+/// the post-retrofit state every in-scope book's data must be in once its
+/// own E2.0.6-2.0.9 cycle has landed.
 #[test]
-fn every_on_disk_v0_record_is_also_a_valid_v1_record() {
+fn every_on_disk_record_is_a_valid_v1_record_with_populated_license() {
     let root = corpus_root();
     let files = json_files_under(&root);
     assert!(
         !files.is_empty(),
-        "expected real, non-empty Shape B v0 data under {root:?} to audit"
+        "expected real, non-empty Shape B v1 data under {root:?} to audit"
     );
 
     let mut audited = 0u32;
+    let mut ogl = 0u32;
+    let mut redacted = 0u32;
     for path in &files {
         let text = fs::read_to_string(path).unwrap_or_else(|e| panic!("failed to read {path:?}: {e}"));
         let record: CorpusRecordV1<serde_json::Value> = serde_json::from_str(&text)
-            .unwrap_or_else(|e| panic!("{path:?} is a real Shape B v0 record but failed to deserialize as v1: {e}"));
+            .unwrap_or_else(|e| panic!("{path:?} is a real Shape B record but failed to deserialize as v1: {e}"));
 
-        // Every v0 record on disk today predates the license-stripping
-        // retro-fit, so license classification is legitimately absent --
-        // additive means "still parses," not "already classified."
-        assert_eq!(
-            record.license, None,
-            "{path:?}: an un-retro-fitted v0 record should carry no license annotation yet"
-        );
-        assert_eq!(record.pi_field, None);
-        assert_eq!(record.pi_marker, None);
+        // Every in-scope book has been through its license-stripping
+        // retro-fit (E2.0.6-2.0.9) -- an on-disk record with no license
+        // annotation at this point is a real gap, not an expected state.
+        validate_license(&record).unwrap_or_else(|e| {
+            panic!("{path:?}: retro-fitted record must pass validate_license(), got: {e}")
+        });
 
-        // Sanity: the v0 fields themselves came through intact.
+        match record.license {
+            Some(License::Ogl) => ogl += 1,
+            Some(License::Pi) | Some(License::PiRedacted) => redacted += 1,
+            None => panic!("{path:?}: retro-fitted record must carry a populated license"),
+        }
+
+        // Sanity: the v0-inherited fields themselves came through intact.
         assert!(!record.ingested_at.is_empty(), "{path:?}: ingested_at must survive the v1 parse");
         assert!(record.data.is_object(), "{path:?}: data payload must survive the v1 parse");
 
@@ -73,7 +103,15 @@ fn every_on_disk_v0_record_is_also_a_valid_v1_record() {
 
     // Regression guard: this must actually audit the real corpus, not an
     // empty glob silently passing.
-    assert!(audited >= 3, "expected to audit at least 3 real on-disk records, found {audited}");
+    assert!(
+        audited >= 4000,
+        "expected to audit the full 4,435-record in-scope corpus, found only {audited}"
+    );
+    assert_eq!(
+        audited,
+        ogl + redacted,
+        "every audited record must be classified as either OGL or PI/PI-REDACTED"
+    );
 }
 
 /// Audit 2: the v1 type round-trips through serde (construct -> serialize

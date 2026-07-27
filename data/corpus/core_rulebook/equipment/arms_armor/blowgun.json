@@ -17,5 +17,8 @@
     "line": 319,
     "record_key": "Blowgun",
     "inherited_from_record_key": "Blowgun (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

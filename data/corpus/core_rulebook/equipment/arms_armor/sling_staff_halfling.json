@@ -17,5 +17,8 @@
     "line": 337,
     "record_key": "Sling Staff (Halfling)",
     "inherited_from_record_key": "Halfling Sling Staff (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

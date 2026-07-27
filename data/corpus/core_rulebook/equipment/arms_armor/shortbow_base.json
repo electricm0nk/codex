@@ -16,5 +16,8 @@
     "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
     "line": 308,
     "record_key": "Shortbow (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

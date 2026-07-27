@@ -17,5 +17,8 @@
     "line": 325,
     "record_key": "Longbow",
     "inherited_from_record_key": "Longbow (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

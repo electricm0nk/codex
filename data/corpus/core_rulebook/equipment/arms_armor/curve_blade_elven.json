@@ -17,5 +17,8 @@
     "line": 250,
     "record_key": "Curve Blade (Elven)",
     "inherited_from_record_key": "Elven Curve Blade (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

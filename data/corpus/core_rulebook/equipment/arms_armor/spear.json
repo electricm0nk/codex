@@ -17,5 +17,8 @@
     "line": 211,
     "record_key": "Spear",
     "inherited_from_record_key": "Spear (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

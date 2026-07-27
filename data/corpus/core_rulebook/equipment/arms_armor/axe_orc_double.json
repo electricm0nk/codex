@@ -17,5 +17,8 @@
     "line": 248,
     "record_key": "Axe (Orc Double)",
     "inherited_from_record_key": "Orc Double Axe (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

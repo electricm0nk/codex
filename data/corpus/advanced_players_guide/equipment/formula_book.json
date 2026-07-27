@@ -16,5 +16,8 @@
     "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd",
     "line": 97,
     "record_key": "Formula Book"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

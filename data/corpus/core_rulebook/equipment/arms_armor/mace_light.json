@@ -17,5 +17,8 @@
     "line": 203,
     "record_key": "Mace (Light)",
     "inherited_from_record_key": "Light Mace (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

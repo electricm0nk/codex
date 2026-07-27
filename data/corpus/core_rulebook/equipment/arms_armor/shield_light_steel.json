@@ -17,5 +17,8 @@
     "line": 118,
     "record_key": "Shield (Light/Steel)",
     "inherited_from_record_key": "Light Steel Shield (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

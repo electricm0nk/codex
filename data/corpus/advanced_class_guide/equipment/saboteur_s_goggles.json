@@ -16,5 +16,8 @@
     "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 411,
     "record_key": "Saboteur's Goggles"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

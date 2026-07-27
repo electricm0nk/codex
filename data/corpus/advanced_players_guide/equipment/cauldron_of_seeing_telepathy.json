@@ -16,5 +16,8 @@
     "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3",
     "line": 160,
     "record_key": "Cauldron of Seeing (Telepathy)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

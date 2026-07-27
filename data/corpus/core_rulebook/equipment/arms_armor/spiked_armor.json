@@ -17,5 +17,8 @@
     "line": 218,
     "record_key": "Spiked Armor",
     "inherited_from_record_key": "Spiked Armor (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

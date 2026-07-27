@@ -17,5 +17,8 @@
     "line": 233,
     "record_key": "Flail (Heavy)",
     "inherited_from_record_key": "Heavy Flail (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

@@ -17,5 +17,8 @@
     "line": 247,
     "record_key": "Whip",
     "inherited_from_record_key": "Whip (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

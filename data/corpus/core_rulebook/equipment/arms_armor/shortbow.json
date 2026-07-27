@@ -17,5 +17,8 @@
     "line": 328,
     "record_key": "Shortbow",
     "inherited_from_record_key": "Shortbow (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

@@ -1,0 +1,27 @@
+{
+  "book": "core_rulebook",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
+    "product_identity_source": "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section",
+    "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; core class/spell/equipment MECHANICS are Open Game Content."
+  },
+  "redaction_policy": {
+    "marker": "[redacted PI]",
+    "schema_preserving": true,
+    "pi_field_recorded": true,
+    "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+    "blacklist_version_reviewed": "2026-07-27"
+  },
+  "screening_method_note": "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the 20 canonical core Golarion deities named in docs/governance/ogl-pi-blacklist.md's operating cycle brief), plus a broader capitalized-word frequency sample taken across all 3326 records during authoring to surface any other clearly-named NPC or Golarion place proper noun. Zero matches were found in either pass for this book -- consistent with Paizo's own choice to keep the Core Rulebook's spell/equipment mechanical text setting-neutral. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~20 known names and does not prove the absence of PI beyond what that scan can see.",
+  "known_open_item": "A recurring cross-reference citation phrase, \"Pathfinder RPG Bestiary\" (a product-line-name citation appearing in several magic_items descriptions, e.g. efreeti_bottle, golem_manual_*), was found during sampling and deliberately NOT auto-redacted this pass -- it is a rules citation, not narrative PI content, and does not obviously fit the description-field PI bucket per docs/governance/ogl-pi-blacklist.md's own \"ask, don't guess\" instruction. Flagged here for operator review, not resolved.",
+  "redistribution_posture": "ogl-notice-attached",
+  "classified_at": "2026-07-27T20:39:28Z",
+  "classified_by_cycle": "E2.0.6",
+  "records_processed": 3326,
+  "records_redacted": 0,
+  "operator_sign_off": {
+    "signed_off": false,
+    "signed_off_at": null,
+    "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header."
+  }
+}

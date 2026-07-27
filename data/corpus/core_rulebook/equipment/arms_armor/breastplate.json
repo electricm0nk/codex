@@ -17,5 +17,8 @@
     "line": 57,
     "record_key": "Breastplate",
     "inherited_from_record_key": "Breastplate (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

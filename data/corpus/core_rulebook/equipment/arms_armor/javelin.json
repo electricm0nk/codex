@@ -17,5 +17,8 @@
     "line": 323,
     "record_key": "Javelin",
     "inherited_from_record_key": "Javelin (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

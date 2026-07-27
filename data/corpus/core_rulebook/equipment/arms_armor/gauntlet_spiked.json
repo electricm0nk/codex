@@ -17,5 +17,8 @@
     "line": 202,
     "record_key": "Gauntlet (Spiked)",
     "inherited_from_record_key": "Spiked Gauntlet (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

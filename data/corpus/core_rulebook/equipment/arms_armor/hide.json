@@ -17,5 +17,8 @@
     "line": 54,
     "record_key": "Hide",
     "inherited_from_record_key": "Hide Armor (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

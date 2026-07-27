@@ -17,5 +17,8 @@
     "line": 238,
     "record_key": "Ranseur",
     "inherited_from_record_key": "Ranseur (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

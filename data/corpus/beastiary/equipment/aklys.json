@@ -16,5 +16,8 @@
     "sha256": "18cb10e25d8e0773efe7717fdf90945a94470dce3f0ee9641bb78a23a1c348fe",
     "line": 12,
     "record_key": "Aklys"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

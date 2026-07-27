@@ -9,10 +9,10 @@
 | 1.1 | `identifier-audit` | E1 | complete | 2026-07-27T19:59Z | 2026-07-27T20:04Z | Full-tree scan (not diff-scoped — see receipt); 0 genuine bundle-tagged code identifiers. Matches SD-26's own E1.1 precedent |
 | 2.0 | `label-resolution` | E2 | complete | 2026-07-27T20:10Z | 2026-07-27T20:16Z | Operator chose `"SD-27"`. All 21 stubs + registry + v0.6 risks doc resolved |
 | 2.0.5 | `shape-b-license-stripping-preflight` | E2 | complete | 2026-07-27T20:20Z | 2026-07-27T20:28Z | src/rules_core/shape_b_v1.rs + docs/governance/ogl-pi-blacklist.md (draft) + dual-audit test, all independently re-verified. Gates 2.0.6+ |
-| 2.0.6 | `crb-license-retrofit` | E2 | pending | — | — | Retro-fit CRB records with license field + PI redaction |
-| 2.0.7 | `apg-license-retrofit` | E2 | pending | — | — | Retro-fit APG records |
-| 2.0.8 | `acg-license-retrofit` | E2 | pending | — | — | Retro-fit ACG records |
-| 2.0.9 | `beastiary-license-retrofit` | E2 | pending | — | — | Retro-fit Bestiary 1 records at `data/corpus/beastiary/` (no trailing digit) |
+| 2.0.6 | `crb-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 3,326 records classified (3,326 OGL, 0 redacted). Registry update N/A (no CRB entry exists) |
+| 2.0.7 | `apg-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 641 records classified (641 OGL, 0 redacted) |
+| 2.0.8 | `acg-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 423 records classified (422 OGL, 1 PI-REDACTED — flagged for operator review) |
+| 2.0.9 | `beastiary-license-retrofit` | E2 | complete | 2026-07-27T20:36Z | 2026-07-27T20:44Z | 45 records classified (45 OGL, 0 redacted) |
 | 2.0.10 | `all-23-books-license-conformance-verify` | E2 | pending | — | — | Dual-audit gate across all 23 books (4 in-scope + 2 pre-built + 17 deferred stubs). Gates 2.1+ |
 | 2.1 | `advanced_race_guide_pre_build` | E2 | pending | — | — | Tier-1; pre-build shape B v1 cache from LST corpus (23 `.lst` files). Operator-gated: failure → operator picks next action |
 | 2.1' | `advanced_race_guide_verify` | E2 | pending | — | — | Tier-1; verify pre-built cache against dual-audit gate |
@@ -49,6 +49,14 @@
 - **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`.
 - **v0.6 in-progress overlap:** v0.6 is actively working class/race breadth (Fighter/Wizard/Rogue + 8 remaining CRB classes). SD-27's partition restricts SD-27 cycles to the per-book content paths. Per `scope-draft.md §4`.
 
+- **2.0.6-2.0.9 in-scope book license retrofit** (2026-07-27T20:44Z) — all 4 in-scope books
+  retro-fitted in parallel (4,435 total records: 3,326 CRB + 641 APG + 423 ACG + 45 Bestiary; 1 real
+  redaction, in ACG). Fixed a shared-test-file staleness (Audit 1's pre-retrofit `license==None`
+  assumption) and a real regression in SD-26's own `tests/sd26_cache_core_rulebook.rs` (broke on the
+  new `LICENSE.json`), both applied once by the orchestrator after collecting all 4 parallel agents'
+  results. `cargo test --workspace --locked`: 4,802 passed / 3 pre-existing environment-dependent
+  failures, zero regressions. Receipts: `artifacts/epic_2/2.0.{6,7,8,9}-*-license-retrofit-cycle_receipt.md`.
+
 ## Reporting manifest
 
 The live cycle state is the reporting manifest `sd27_book_pre_build`, not this table — see
@@ -69,3 +77,7 @@ manifest is authoritative for status, this table for narrative.
 | 1.1 identifier-audit | `artifacts/epic_1/identifier-audit-cycle_receipt.md` |
 | 2.0 label-resolution | `artifacts/epic_2/label-resolution-cycle_receipt.md` |
 | 2.0.5 shape-b-license-stripping-preflight | `artifacts/epic_2/2.0.5-shape-b-license-stripping-preflight-cycle_receipt.md` |
+| 2.0.6 crb-license-retrofit | `artifacts/epic_2/2.0.6-crb-license-retrofit-cycle_receipt.md` |
+| 2.0.7 apg-license-retrofit | `artifacts/epic_2/2.0.7-apg-license-retrofit-cycle_receipt.md` |
+| 2.0.8 acg-license-retrofit | `artifacts/epic_2/2.0.8-acg-license-retrofit-cycle_receipt.md` |
+| 2.0.9 beastiary-license-retrofit | `artifacts/epic_2/2.0.9-beastiary-license-retrofit-cycle_receipt.md` |

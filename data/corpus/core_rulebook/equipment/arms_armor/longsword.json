@@ -17,5 +17,8 @@
     "line": 223,
     "record_key": "Longsword",
     "inherited_from_record_key": "Longsword (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

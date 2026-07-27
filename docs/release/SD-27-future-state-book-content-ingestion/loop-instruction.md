@@ -130,9 +130,13 @@ Outputs:
   - PI-tagged values redacted to `"[redacted PI]"` markers
   - `pi_field` and `pi_marker` populated for PI records
 - data/corpus/core_rulebook/LICENSE.json (the per-book license declaration)
-- docs/governance/wired-integration-stubs-registry.md — CRB's `book_stub` entry
-  updated with `license_status: "PI-stripped"` + `license_status_at: <ISO-8601>`
 - artifacts/epic_2/2.0.6-crb-license-retrofit-cycle_receipt.md
+
+**Corrected 2026-07-27 (found while executing this cycle for real):** the registry-entry-update output
+above described a `book_stub` entry for CRB that does not exist — `docs/governance/wired-integration-stubs-registry.md`
+only registers the 19 future-state books' stubs (`#0003`-`#0023`); the 4 in-scope books (CRB/APG/ACG/
+Bestiary 1) were ingested directly by SD-22/SD-26 and were never stub-registered. There is nothing to
+update in the registry for cycles 2.0.6-2.0.9. This step is a documented no-op, not a skipped step.
 
 Operations:
 1. Read data/corpus/core_rulebook/ records

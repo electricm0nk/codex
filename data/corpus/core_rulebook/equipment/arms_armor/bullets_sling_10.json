@@ -17,5 +17,8 @@
     "line": 26,
     "record_key": "Bullets (Sling/10)",
     "inherited_from_record_key": "Sling Bullet (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

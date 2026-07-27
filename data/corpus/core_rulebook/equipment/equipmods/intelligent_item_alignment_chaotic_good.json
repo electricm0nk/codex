@@ -16,5 +16,8 @@
     "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 408,
     "record_key": "Intelligent Item ~ Alignment / Chaotic Good"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }
