@@ -225,7 +225,11 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
              + spellcasting + Studied Combat + Studied Strike",
             8,
         ),
-        (AcgClassId::Shaman, "Life Spirit Channel", 1),
+        // The Spirit slot covers all ten spirits (mutually-exclusive
+        // variants of one choice, so they fold rather than each earning a
+        // slot -- Oracle's ten Mysteries precedent); Spirit Animal is a
+        // genuinely separate feature landing a real max-HP magnitude.
+        (AcgClassId::Shaman, "Spirit slot (all 10) + Spirit Animal", 2),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(

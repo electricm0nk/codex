@@ -382,17 +382,38 @@ pub struct AcgClassCoverage {
     /// deferred to its own follow-on slice, so it does not add a fourth
     /// count here.
     ///
-    /// Shaman counts 1 (Life Spirit's own Channel ability), the same
-    /// single-slot shape as Skald/Bloodrager/Hunter: the Spirit choice
-    /// itself is one slot, and Channel is the only immediately-available
-    /// power this closure grounds under it (Life Spirit's own higher-
-    /// tier Healer's Touch/Quick Healing/Manifestation abilities, the
-    /// other 9 primary spirits, Spirit Magic, Orisons, and fresh
-    /// own-list spellcasting all stay deferred). With Shaman's own
-    /// closure, all ten real ACG classes now have at least one genuinely
-    /// wired named feature -- the match below is exhaustive over
-    /// `AcgClassId`, not a wildcard fallback, since every real ACG class
-    /// has a real answer now.
+    /// Shaman counts 2 (the Spirit slot + Spirit Animal), raised from 1
+    /// by task #12.
+    ///
+    /// **The other 9 spirits do NOT each earn a slot**, even though all
+    /// ten are now genuinely grounded through their own
+    /// immediately-available base ability. A shaman selects exactly one
+    /// Spirit, so the ten are mutually-exclusive VARIANTS of a single
+    /// choice, not independent co-available features -- the same
+    /// reasoning that keeps Oracle's ten Mysteries at one "Mystery slot"
+    /// and Witch's ~20 hexes at one Hex slot. (Contrast Oracle's curses,
+    /// which DO each earn a slot: they are top-level `KEY:Oracle ~ ...`
+    /// records with independent formulas, whereas the spirits are
+    /// mechanism-namespaced `KEY:Shaman Spirit ~ ...` records.) Grounding
+    /// nine more variants widens what the one slot covers; it does not
+    /// add slots.
+    ///
+    /// **Spirit Animal earns the second slot** because it is a genuinely
+    /// separate class feature, not a variant of the Spirit choice: its
+    /// own `KEY:Shaman ~ Spirit Animal` record grants the shared Standard
+    /// Familiar List and lands a real magnitude on the computed max-HP
+    /// total. That bump was owed from the familiar closure (`8e47479a`)
+    /// and simply never landed.
+    ///
+    /// **Spellcasting is deliberately NOT counted**, matching the same
+    /// "not independently implemented" reasoning that already excludes
+    /// Arcanist's Cantrips and Warpriest's Orisons from their own counts.
+    ///
+    /// Still deferred and uncounted: each Spirit's three higher-tier
+    /// abilities (the `ShamanSpiritGreater`/`ShamanSpiritTrue`/
+    /// Manifestation tiers), Spirit Magic, and the Hex/Spirit Hex
+    /// chooser-list. The match below is exhaustive over `AcgClassId`, not
+    /// a wildcard fallback, since every real ACG class has a real answer.
     ///
     /// Brawler counts 3 (AC Bonus, Brawler's Cunning, Brawler's Strike),
     /// same "genuinely independent mechanisms" reasoning as Swashbuckler/
@@ -544,7 +565,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // making them sub-selectable-list entries under the single
     // `Blessings` slot).
     let named_features_wired = match class_id {
-        AcgClassId::Shaman => 1,
+        AcgClassId::Shaman => 2,
         AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
         AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 6,

@@ -2647,6 +2647,24 @@ const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
 /// self-scoped value of the 10 real Spirit types checked (the same 10
 /// primary spirits as Oracle's own 10 Mysteries).
 const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
+/// The other nine primary Spirits, each grounded through its own
+/// immediately-available (ungated) base ability -- see
+/// `ground_shaman_spirit_base_ability`. Verified uniform across the
+/// corpus: every one of the ten `KEY:Shaman Spirit ~ <Name>` records
+/// grants exactly four abilities, of which exactly ONE carries no
+/// `PREVARGTEQ` gate. The other three are gated at
+/// `ShamanSpiritGreater` (`PRECLASS:1,Shaman=8`), `ShamanSpiritTrue`
+/// (`PRECLASS:1,Shaman=16`), and `Shaman Manifestation` (the capstone),
+/// all of which stay deferred.
+const BATTLE_SPIRIT_SELECTION: &str = "spirit:battle";
+const BONES_SPIRIT_SELECTION: &str = "spirit:bones";
+const FLAME_SPIRIT_SELECTION: &str = "spirit:flame";
+const HEAVENS_SPIRIT_SELECTION: &str = "spirit:heavens";
+const LORE_SPIRIT_SELECTION: &str = "spirit:lore";
+const NATURE_SPIRIT_SELECTION: &str = "spirit:nature";
+const STONE_SPIRIT_SELECTION: &str = "spirit:stone";
+const WAVES_SPIRIT_SELECTION: &str = "spirit:waves";
+const WIND_SPIRIT_SELECTION: &str = "spirit:wind";
 
 /// The bard level at which 2nd-level bard spells first become available,
 /// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
@@ -14355,6 +14373,73 @@ fn ground_shaman_prepared_spells(
     }
 }
 
+/// The shared `3+CHA` per-day resource eight of the ten Spirits' base
+/// abilities use (`BONUS:VAR|Shaman<Ability>Times|3+CHA` on Touch of the
+/// Grave, Touch of Flame, Stardust, Monstrous Insight, Storm Burst, Touch
+/// of Acid, Wave Strike and Shocking Touch -- and, at higher tiers,
+/// Enemies' Bane and Paragon of Battle).
+///
+/// **Battle Spirit deliberately does NOT use this**, despite carrying the
+/// identical `3+CHA` formula: its variable is
+/// `ShamanBattleSpiritRounds`, and its own DESC reads "The shaman can use
+/// this ability %2 **rounds/day**" -- a duration pool, not a use count.
+/// Same arithmetic, different resource; flattening the two would mislabel
+/// it in the receipt a player reads.
+///
+/// Floored at 0, matching `shaman_channel_uses_per_day`'s own precedent.
+fn shaman_spirit_uses_per_day(charisma_modifier: i16) -> i16 {
+    (3 + charisma_modifier).max(0)
+}
+
+/// The shared `ShamanSpiritLVL/2` bonus-damage magnitude five Spirits'
+/// base abilities use: Bones' Touch of the Grave, Flame's Touch of Flame,
+/// Stone's Touch of Acid, Waves' Wave Strike, and Wind's Shocking Touch.
+/// One formula, five corpus records -- the same shared-mechanism shape as
+/// Witch's 27 hexes sharing a single save-DC variable.
+///
+/// `ShamanSpiritLVL` resolves to `ShamanLVL` for a single-class Shaman.
+/// It carries a second setter, `BONUS:VAR|ShamanSpiritLVL|SorcererLVL`,
+/// but that belongs to `KEY:Spirit Summoner ~ Spirit` -- a Summoner
+/// archetype this repo does not ingest -- so it is provably vacuous here,
+/// the same archetype-gated shape already confirmed on Cavalier, Brawler
+/// and Slayer.
+fn shaman_spirit_touch_bonus_damage(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// Battle Spirit's morale bonus on allies' attack and weapon damage
+/// rolls: `1+min(2,ShamanSpiritLVL/8)`, i.e. +1 at levels 1-7, +2 at
+/// 8-15, +3 at 16+. The `min(2,...)` is a real bound that DOES bind
+/// within 1-20, unlike the inert bounds documented on Brawler's Flurry.
+fn shaman_battle_spirit_bonus(level: u8) -> i16 {
+    1 + (i16::from(level) / 8).min(2)
+}
+
+/// Heavens' Stardust attack-roll/Perception penalty:
+/// `-1*(1+min(5,ShamanSpiritLVL/4))`, i.e. -1 at levels 1-3 down to -6 at
+/// 20. Returned as the real negative magnitude the corpus states, not an
+/// absolute value.
+fn shaman_stardust_penalty(level: u8) -> i16 {
+    -(1 + (i16::from(level) / 4).min(5))
+}
+
+/// Heavens' Stardust duration in rounds: `max(1,ShamanSpiritLVL/2)`. The
+/// `max(1,...)` genuinely binds at levels 1 only.
+fn shaman_stardust_duration_rounds(level: u8) -> i16 {
+    (i16::from(level) / 2).max(1)
+}
+
+/// Lore's Monstrous Insight bonus on the identifying Knowledge check:
+/// flat `ShamanSpiritLVL`.
+fn shaman_monstrous_insight_bonus(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Nature's Storm Burst duration in rounds: `1+ShamanSpiritLVL/4`.
+fn shaman_storm_burst_duration_rounds(level: u8) -> i16 {
+    1 + i16::from(level) / 4
+}
+
 /// PF1 Advanced Class Guide Life Spirit's Channel ability's uses per
 /// day: `1+Charisma modifier`, verified directly against
 /// `acg_abilities_class.lst`'s own `BONUS:VAR|ShamanChannelTimes|1+CHA`.
@@ -14473,19 +14558,210 @@ fn ground_or_block_shaman_class_features(
                 .to_owned(),
             claim_blocking: false,
         });
+    } else if ground_shaman_spirit_base_ability(
+        &spirit_selections,
+        level,
+        ability_modifiers,
+        explanations,
+    ) {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.shaman.spirit_powers_beyond_base.unmodeled".to_owned(),
+            message: "Only the selected Spirit's own immediately-available base ability is \
+                 grounded. Each Spirit's three higher-tier abilities stay deferred: the \
+                 `ShamanSpiritGreater` tier (PRECLASS:1,Shaman=8), the `ShamanSpiritTrue` tier \
+                 (PRECLASS:1,Shaman=16), and Manifestation (the capstone). This does not block \
+                 an otherwise-valid Spirit posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
     } else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.shaman.spirit_powers.unsupported".to_owned(),
-            message: "Shaman remains blocked on its Spirit powers burden: no recognized Life \
-                 Spirit choice is present (only Life's own immediately-available Channel \
-                 ability is genuinely grounded in this codebase), so no Shaman Spirit-power \
-                 support is claimed"
+            message: "Shaman remains blocked on its Spirit powers burden: no recognized Spirit \
+                 choice is present. All ten primary Spirits (Battle, Bones, Flame, Heavens, \
+                 Life, Lore, Nature, Stone, Waves, Wind) are recognized through their own \
+                 immediately-available base ability, so an unrecognized selection means no \
+                 Shaman Spirit-power support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
     }
 
     push_shaman_other_features_deferred_diagnostic(diagnostics);
+}
+
+/// Ground the immediately-available (ungated) base ability of whichever
+/// of the nine non-Life Spirits was selected, returning `true` if one was
+/// recognized.
+///
+/// Every Spirit grants exactly one ability with no `PREVARGTEQ` gate;
+/// those are the only ones grounded here. Each Spirit's other three
+/// abilities are gated at `ShamanSpiritGreater` (`PRECLASS:1,Shaman=8`),
+/// `ShamanSpiritTrue` (`PRECLASS:1,Shaman=16`) and `Shaman
+/// Manifestation`, and all stay deferred -- the same tiering already
+/// applied to Life's own Healer's Touch/Quick Healing/Manifestation.
+fn ground_shaman_spirit_base_ability(
+    spirit_selections: &[&str],
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) -> bool {
+    let charisma = ability_modifiers.charisma;
+    let uses = shaman_spirit_uses_per_day(charisma);
+
+    // The five Spirits whose base ability is a touch attack sharing one
+    // `ShamanSpiritLVL/2` bonus-damage formula and one `3+CHA` use pool.
+    let touch_family: [(&str, &str, &str); 5] = [
+        (BONES_SPIRIT_SELECTION, "bones", "Touch of the Grave (negative energy)"),
+        (FLAME_SPIRIT_SELECTION, "flame", "Touch of Flame (fire)"),
+        (STONE_SPIRIT_SELECTION, "stone", "Touch of Acid (acid)"),
+        (WAVES_SPIRIT_SELECTION, "waves", "Wave Strike (cold)"),
+        (WIND_SPIRIT_SELECTION, "wind", "Shocking Touch (electricity)"),
+    ];
+    for (selection, key, label) in touch_family {
+        if !spirit_selections.contains(&selection) {
+            continue;
+        }
+        let bonus_damage = shaman_spirit_touch_bonus_damage(level);
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.acg.shaman.{key}_spirit.touch_bonus_damage"),
+            value: bonus_damage,
+            detail: format!(
+                "Shaman level {level} with {} Spirit's {label}: the touch deals an extra \
+                 ShamanSpiritLVL/2 = {bonus_damage} points of damage. This grounds the \
+                 magnitude as a scoped standalone fact; no attack resolution against a target \
+                 is computed",
+                key_titlecase(key)
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.acg.shaman.{key}_spirit.touch_uses_per_day"),
+            value: uses,
+            detail: format!(
+                "Shaman level {level} with {} Spirit's {label}: usable max(3 + Charisma \
+                 modifier ({charisma}), 0) = {uses} times per day, the same 3+CHA pool eight of \
+                 the ten Spirits' base abilities share",
+                key_titlecase(key)
+            ),
+        });
+        return true;
+    }
+
+    if spirit_selections.contains(&BATTLE_SPIRIT_SELECTION) {
+        let bonus = shaman_battle_spirit_bonus(level);
+        let rounds = shaman_spirit_uses_per_day(charisma);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.battle_spirit.morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Shaman level {level} with Battle Spirit: allies within 30 feet (including the \
+                 shaman) gain a +{bonus} morale bonus on attack rolls and weapon damage rolls \
+                 (1+min(2,ShamanSpiritLVL/8)). The 30-foot radius and ally targeting are not \
+                 modeled; this grounds the bonus magnitude only"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.battle_spirit.rounds_per_day".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Shaman level {level} with Battle Spirit: usable max(3 + Charisma modifier \
+                 ({charisma}), 0) = {rounds} ROUNDS per day (not uses -- the corpus variable is \
+                 `ShamanBattleSpiritRounds` and the ability's own text reads \
+                 'rounds/day'). The rounds need not be consecutive; no round clock is enforced \
+                 by this engine"
+            ),
+        });
+        return true;
+    }
+
+    if spirit_selections.contains(&HEAVENS_SPIRIT_SELECTION) {
+        let penalty = shaman_stardust_penalty(level);
+        let duration = shaman_stardust_duration_rounds(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.heavens_spirit.stardust_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Shaman level {level} with Heavens Spirit's Stardust: the target takes a \
+                 {penalty} penalty on attack rolls and Perception checks \
+                 (-1*(1+min(5,ShamanSpiritLVL/4))), and cannot benefit from concealment. This \
+                 grounds the penalty magnitude as a scoped standalone fact; no opposed \
+                 resolution against a target is computed"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.heavens_spirit.stardust_duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Shaman level {level} with Heavens Spirit's Stardust: the effect lasts \
+                 max(1, ShamanSpiritLVL/2) = {duration} rounds. No round clock is enforced"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.heavens_spirit.stardust_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Shaman level {level} with Heavens Spirit's Stardust: usable max(3 + Charisma \
+                 modifier ({charisma}), 0) = {uses} times per day"
+            ),
+        });
+        return true;
+    }
+
+    if spirit_selections.contains(&LORE_SPIRIT_SELECTION) {
+        let bonus = shaman_monstrous_insight_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.lore_spirit.monstrous_insight_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Shaman level {level} with Lore Spirit's Monstrous Insight: +{bonus} bonus \
+                 (flat ShamanSpiritLVL) on the Knowledge check to identify a creature and its \
+                 abilities. This grounds the bonus magnitude; the identification check itself \
+                 is not resolved"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.lore_spirit.monstrous_insight_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Shaman level {level} with Lore Spirit's Monstrous Insight: usable max(3 + \
+                 Charisma modifier ({charisma}), 0) = {uses} times per day"
+            ),
+        });
+        return true;
+    }
+
+    if spirit_selections.contains(&NATURE_SPIRIT_SELECTION) {
+        let duration = shaman_storm_burst_duration_rounds(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.nature_spirit.storm_burst_duration_rounds".to_owned(),
+            value: duration,
+            detail: format!(
+                "Shaman level {level} with Nature Spirit's Storm Burst: the struck creature is \
+                 buffeted for 1+ShamanSpiritLVL/4 = {duration} rounds. This grounds the \
+                 duration magnitude; no attack resolution or round clock is computed"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.shaman.nature_spirit.storm_burst_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Shaman level {level} with Nature Spirit's Storm Burst: usable max(3 + Charisma \
+                 modifier ({charisma}), 0) = {uses} times per day"
+            ),
+        });
+        return true;
+    }
+
+    false
+}
+
+/// Title-cases a lowercase spirit key for prose use in explanation text.
+fn key_titlecase(key: &str) -> String {
+    let mut chars = key.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+        None => String::new(),
+    }
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -42258,6 +42534,74 @@ mod investigator_dispatch_widening_safety_tests {
 /// ACG/APG class-specific closure): tests the Life Spirit choice
 /// dispatch (Channel's flat uses-per-day/dice/DC facts), mirroring the
 /// established dispatch-widening test module shape.
+/// The nine non-Life Spirits' base abilities (task #12, stage 3).
+#[cfg(test)]
+mod shaman_spirit_tests {
+    use super::{
+        shaman_battle_spirit_bonus, shaman_monstrous_insight_bonus, shaman_spirit_touch_bonus_damage,
+        shaman_spirit_uses_per_day, shaman_stardust_duration_rounds, shaman_stardust_penalty,
+        shaman_storm_burst_duration_rounds,
+    };
+
+    /// The `min(2,...)` genuinely binds inside 1-20, unlike the inert
+    /// bounds documented on Brawler's Flurry -- so all three tiers are
+    /// reachable and worth pinning.
+    #[test]
+    fn battle_spirit_bonus_steps_at_8_and_16_and_then_caps() {
+        assert_eq!(shaman_battle_spirit_bonus(1), 1);
+        assert_eq!(shaman_battle_spirit_bonus(7), 1);
+        assert_eq!(shaman_battle_spirit_bonus(8), 2);
+        assert_eq!(shaman_battle_spirit_bonus(15), 2);
+        assert_eq!(shaman_battle_spirit_bonus(16), 3);
+        assert_eq!(shaman_battle_spirit_bonus(20), 3, "min(2,...) caps at +3");
+    }
+
+    /// Stardust's penalty is a real negative magnitude, and its
+    /// `min(5,...)` cap is reached at level 20 exactly.
+    #[test]
+    fn stardust_penalty_is_negative_and_caps_at_minus_six() {
+        assert_eq!(shaman_stardust_penalty(1), -1);
+        assert_eq!(shaman_stardust_penalty(3), -1);
+        assert_eq!(shaman_stardust_penalty(4), -2);
+        assert_eq!(shaman_stardust_penalty(20), -6);
+    }
+
+    /// The `max(1,...)` binds only at level 1.
+    #[test]
+    fn stardust_duration_floor_binds_only_at_level_one() {
+        assert_eq!(shaman_stardust_duration_rounds(1), 1, "max(1,0) floor binds");
+        assert_eq!(shaman_stardust_duration_rounds(2), 1);
+        assert_eq!(shaman_stardust_duration_rounds(4), 2);
+        assert_eq!(shaman_stardust_duration_rounds(20), 10);
+    }
+
+    #[test]
+    fn the_five_touch_spirits_share_one_bonus_damage_formula() {
+        assert_eq!(shaman_spirit_touch_bonus_damage(1), 0, "level/2 is 0 at level 1");
+        assert_eq!(shaman_spirit_touch_bonus_damage(2), 1);
+        assert_eq!(shaman_spirit_touch_bonus_damage(20), 10);
+    }
+
+    #[test]
+    fn monstrous_insight_and_storm_burst_match_their_corpus_formulas() {
+        assert_eq!(shaman_monstrous_insight_bonus(1), 1);
+        assert_eq!(shaman_monstrous_insight_bonus(20), 20);
+        assert_eq!(shaman_storm_burst_duration_rounds(1), 1);
+        assert_eq!(shaman_storm_burst_duration_rounds(4), 2);
+        assert_eq!(shaman_storm_burst_duration_rounds(20), 6);
+    }
+
+    /// Shared 3+CHA pool, floored at 0 so a punishing Charisma cannot
+    /// produce a negative resource.
+    #[test]
+    fn the_shared_uses_per_day_pool_is_floored_at_zero() {
+        assert_eq!(shaman_spirit_uses_per_day(0), 3);
+        assert_eq!(shaman_spirit_uses_per_day(4), 7);
+        assert_eq!(shaman_spirit_uses_per_day(-3), 0);
+        assert_eq!(shaman_spirit_uses_per_day(-9), 0, "floored, never negative");
+    }
+}
+
 /// Shaman's own prepared-spellcasting surface (task #12): the
 /// corpus-transcribed slot table, the ceiling derived from it, and the
 /// Wisdom bonus-spell layering.
@@ -42456,6 +42800,113 @@ mod shaman_dispatch_widening_safety_tests {
                 .any(|d| d.id == "class_spell.acg.shaman.prepared_spells.unsupported"
                     && d.claim_blocking),
             "an off-list spell must claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// All ten Spirits must be reachable through the real dispatch, each
+    /// grounding at least one explanation and clearing the claim-blocking
+    /// spirit_powers diagnostic. Enumerated rather than sampled, so a
+    /// Spirit wired into the constant list but missed in the dispatch
+    /// fails here.
+    #[test]
+    fn every_one_of_the_ten_spirits_is_recognized_through_the_live_dispatch() {
+        let spirits = [
+            "spirit:life",
+            "spirit:battle",
+            "spirit:bones",
+            "spirit:flame",
+            "spirit:heavens",
+            "spirit:lore",
+            "spirit:nature",
+            "spirit:stone",
+            "spirit:waves",
+            "spirit:wind",
+        ];
+        for spirit in spirits {
+            let mut input = human_shaman_input(8);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+                selection_id: spirit.to_owned(),
+            });
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == "class_feature.acg.shaman.spirit_powers.unsupported"),
+                "{spirit} must be recognized: {:?}",
+                receipt.computation.diagnostics
+            );
+            let grounded = receipt
+                .computation
+                .explanations
+                .iter()
+                .filter(|e| e.id.starts_with("class_feature.acg.shaman."))
+                .count();
+            assert!(grounded > 0, "{spirit} grounded no class-feature explanation");
+        }
+    }
+
+    /// Battle Spirit's 3+CHA pool is ROUNDS per day, not uses -- same
+    /// arithmetic as the other eight, different resource. The explanation
+    /// id must say so, because that is what a player reads.
+    #[test]
+    fn battle_spirit_reports_rounds_per_day_not_uses_per_day() {
+        let mut input = human_shaman_input(8);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: "spirit:battle".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.shaman.battle_spirit.rounds_per_day"),
+            "Battle Spirit must report a rounds_per_day fact"
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("battle_spirit.uses_per_day")),
+            "Battle Spirit must NOT be labelled uses_per_day -- its corpus variable is \
+             ShamanBattleSpiritRounds"
+        );
+        let bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.shaman.battle_spirit.morale_bonus")
+            .expect("morale bonus must be grounded");
+        assert_eq!(bonus.value, 2, "level 8 is the first +2 tier");
+    }
+
+    /// An unrecognized spirit id must still claim-block rather than
+    /// silently pass now that nine more selections are accepted.
+    #[test]
+    fn an_unrecognized_spirit_selection_still_claim_blocks() {
+        let mut input = human_shaman_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: "spirit:not_a_real_spirit".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.shaman.spirit_powers.unsupported"
+                    && d.claim_blocking),
+            "an unknown spirit must claim-block: {:?}",
             receipt.computation.diagnostics
         );
     }
