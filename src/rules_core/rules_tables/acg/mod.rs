@@ -254,6 +254,36 @@ pub struct AcgClassCoverage {
     /// with genuine, SEPARATELY-implemented backing logic" methodology
     /// consistent across classes rather than letting it drift per-class.
     ///
+    /// Swashbuckler counts 12 (Panache, Charmed Life, Nimble, Finesse,
+    /// Weapon Training, Bonus Feats, and all SIX deeds carrying real
+    /// magnitudes: Derring-Do, Dodging Panache, Precise Strike, Bleeding
+    /// Wound, Deadly Stab, Stunning Stab). Ruled by the lead 2026-07-27.
+    ///
+    /// **This ruling refines the counting rule itself, and the refinement
+    /// matters more than the number.** The corpus KEY prefix is a proxy,
+    /// not the actual test. The real question is VARIANT vs INDEPENDENT:
+    ///
+    /// - Alchemist's Mutagen stat-variants (`Alchemist ~ Mutagen Strength
+    ///   (First)` and siblings) are class-namespaced exactly like deeds,
+    ///   yet correctly fold into ONE Mutagen slot -- they are mutually
+    ///   exclusive answers to a single "which stat do I boost" choice,
+    ///   the same shape as Judgment's sub-types.
+    /// - Swashbuckler's deeds are the opposite: independent,
+    ///   simultaneously-available abilities with genuinely different
+    ///   effects (bleed damage / a death effect on a critical / a stun),
+    ///   ALL of which a qualified Swashbuckler has at once. That is Stern
+    ///   Gaze / Track / Monster Lore's shape, which counts separately.
+    ///
+    /// Deadly Stab and Stunning Stab sharing a byte-identical DC formula
+    /// is coincidental RAW design, NOT evidence of one mechanism. The
+    /// parent `KEY:Swashbuckler ~ Deeds` record adds no slot of its own:
+    /// it carries no magnitude, only the shared `SwashbucklerDeedsLVL`
+    /// tracking variable.
+    ///
+    /// So a same-prefix record folds when it is a mutually-exclusive
+    /// variant, and counts when it is an independent co-available
+    /// feature -- check the DESC text, not just the key.
+    ///
     /// Bloodrager counts 2 (Bloodrage + Spells), raised from 1 by the
     /// spellcasting-blocker closure (2026-07-27, task #1).
     /// `KEY:Bloodrager ~ Spells` is a real `CATEGORY:Special Ability`
@@ -500,7 +530,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Brawler | AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 4,
         AcgClassId::Investigator | AcgClassId::Warpriest => 5,
-        AcgClassId::Swashbuckler => 6,
+        AcgClassId::Swashbuckler => 12,
     };
 
     AcgClassCoverage {

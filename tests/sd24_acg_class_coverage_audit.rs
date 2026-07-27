@@ -210,8 +210,9 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         ),
         (
             AcgClassId::Swashbuckler,
-            "Panache + Charmed Life + Nimble + Finesse + Weapon Training + Bonus Feats",
-            6,
+            "Panache + Charmed Life + Nimble + Finesse + Weapon Training + Bonus Feats \
+             + 6 independent deeds",
+            12,
         ),
         (
             AcgClassId::Investigator,
