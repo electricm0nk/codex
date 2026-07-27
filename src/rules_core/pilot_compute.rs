@@ -29901,6 +29901,25 @@ fn ground_orphan_feat_facts(
         });
     }
 
+    for fact in
+        feat_effects::weapon_focus_facts_from_choices(&feats, &input.chosen.selected_choices)
+    {
+        let slug = fact.weapon_name.to_lowercase().replace(' ', "_");
+        explanations.push(ComputationExplanation {
+            id: format!("feat.standalone.weapon_focus.{slug}"),
+            value: fact.attack_bonus,
+            detail: format!(
+                "Weapon Focus ({}) grants a +{} bonus on attack rolls with that weapon (+2 when \
+                 Greater Weapon Focus names it too). Grounds standalone: this engine computes a \
+                 melee attack total only for its own fixed Longsword posture, so there is no \
+                 general per-weapon attack total to layer a player-chosen weapon's bonus onto. \
+                 Requires an explicit recorded weapon choice -- nothing is seeded, per the same \
+                 no-silent-seeding design as Skill Focus",
+                fact.weapon_name, fact.attack_bonus
+            ),
+        });
+    }
+
     for fact in feat_effects::spell_focus_facts_from_choices(&feats, &input.chosen.selected_choices)
     {
         let slug = fact.school_name.to_lowercase().replace(' ', "_");
@@ -43400,6 +43419,52 @@ mod orphan_feat_producer_consumer_tests {
         // Fixture Wisdom 12 (+1): DC = 10 + 4/2 + 1 = 13.
         assert_eq!(value(&monk, "feat.standalone.stunning_fist.save_dc"), Some(13));
         assert_eq!(value(&monk, "feat.standalone.stunning_fist.uses_per_day"), Some(4));
+    }
+
+    /// Weapon Focus was the LAST orphan -- missed by my own #22 sweep
+    /// because I re-used a producer inventory taken during #20 instead of
+    /// re-enumerating it, and `feat_effects.rs` gained producers in
+    /// between. Found by the lead cross-checking all 13 producers rather
+    /// than the 8 I had listed.
+    ///
+    /// Wiring it is a REAL behavior change rather than latent capability:
+    /// this repo's own deterministic Fighter fixture already carries
+    /// Weapon Focus (Longsword) through the legacy compound id
+    /// (`choice:fighter_bonus_feat -> feat:weapon_focus:weapon:longsword`),
+    /// which the producer deliberately accepts so the shipped loadout
+    /// grounds something. So the fixture Fighter gains a record it never
+    /// had before this commit.
+    #[test]
+    fn the_shipped_fighter_fixture_now_grounds_its_weapon_focus_longsword() {
+        assert_eq!(
+            value(&fighter(), "feat.standalone.weapon_focus.longsword"),
+            Some(1),
+            "the real fixture Fighter has Weapon Focus (Longsword) via the legacy compound id"
+        );
+    }
+
+    /// Greater Weapon Focus stacks with Weapon Focus on the same weapon
+    /// for a genuine +2, and the two sources are deduplicated to a
+    /// single record rather than emitting one each.
+    #[test]
+    fn greater_weapon_focus_stacks_to_two_on_the_same_weapon_without_duplicating() {
+        let mut input = fighter();
+        input.chosen.selected_feats.push("Greater Weapon Focus".to_owned());
+        input.chosen.selected_choices.push(
+            crate::rules_core::character_input::SelectedChoice {
+                choice_set_id: "choice:greater_weapon_focus_target".to_owned(),
+                selection_id: "weapon:longsword".to_owned(),
+            },
+        );
+        assert_eq!(value(&input, "feat.standalone.weapon_focus.longsword"), Some(2));
+
+        let count = build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| e.id == "feat.standalone.weapon_focus.longsword")
+            .count();
+        assert_eq!(count, 1, "the two sources must dedup into one record per weapon");
     }
 
     /// Spell Focus grounds per chosen school. It is NOT integrated into
