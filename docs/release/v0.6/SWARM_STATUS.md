@@ -1789,7 +1789,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-28T14:10:02
-Latest commit on tranche/6: 12972c3a chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-28T14:05:02-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-28T14:03:03 frontend=unknown qa=unknown lead=2026-07-28T14:04:13
+Last mechanical check: 2026-07-28T14:45:02
+Latest commit on tranche/6: 190f0c6f feat(v0.6): ingest CRB weapon stat blocks (task #72, stage 1) (58 seconds ago) (2026-07-28T14:44:04-04:00)
+Last inbox activity (mtime proxy): backend=2026-07-28T14:44:43 frontend=unknown qa=unknown lead=2026-07-28T14:44:32
 <!-- AUTO-HEARTBEAT-END -->
