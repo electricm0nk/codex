@@ -21,8 +21,45 @@ my own.
   a previously "corrected" prefix list. That sweep turned up two id prefixes
   absent from the last enumeration, which is exactly why the list is re-derived
   rather than recalled.
-- **Blocker side.** The authoritative statement of what is left for a class is
-  its own claim-blocking diagnostic in `pilot_compute.rs`, not any status doc.
+- **Blocker side.** ~~The authoritative statement of what is left for a class is
+  its own claim-blocking diagnostic in `pilot_compute.rs`, not any status doc.~~
+  **This was wrong and it invalidated the first version of this document's
+  ranking. See "Correction" below.** Blocker diagnostic prose has drifted
+  badly from shipped reality across most of the roster. What is left for a
+  class must be derived from the *code* — the grounding functions that actually
+  exist and are actually called — and cross-checked against the corpus. The
+  diagnostic text is now itself a defect surface, not a source of truth.
+
+## Correction (2026-07-28)
+
+The first version of this doc ranked the roster using each class's own
+claim-blocking diagnostic message as the statement of remaining scope. That was
+a methodological error, and team-lead caught the largest consequence of it.
+
+I asserted (item 3, my headline recommendation) that Slayer's Studied Target and
+Investigator's Studied Combat/Studied Strike were still deferred pending an
+opponent-tracking pillar and could be grounded today. **They were already
+grounded, with tests, in commit `3f44acdd` earlier the same day** — along with
+Investigator's Studied Defense and Cavalier's Challenge damage. That commit's own
+reasoning matches the re-derivation I did almost word for word. There was no work
+to do.
+
+Two things went wrong, and the second is worse than the first:
+
+1. I read the deferral claim out of the blocker message text — immediately after
+   proving, in item 2, that blocker message text can be stale. I applied that
+   skepticism to Bloodrager and not to Slayer/Investigator. Same failure shape as
+   the Cleric Domains archetype error: I verified the finding that looked
+   suspicious and skipped the one that looked good.
+2. **My own census already contained the contradiction.** The code-based census
+   in this document does not list Studied Target, Studied Combat or Studied
+   Strike as remaining for either class — because it matched them in the shipped
+   code. I had the disconfirming evidence in my own output and let the prose
+   override it.
+
+Re-auditing on the corrected basis turned up that the drift is systemic, not
+confined to those three features. See "Cross-cutting item 2" below, which now
+supersedes both the original items 2 and 3.
 
 ### The counting basis, stated plainly
 
@@ -82,9 +119,54 @@ of the 95 carry a magnitude. Read the mag-bearing column, not the denominator.
 
 ## Ranked punch-list
 
-Ranking is by *features unblocked per unit of build effort*, with a heavy
-penalty for items blocked on genuinely-missing architecture (those do not get
-cheaper by being scheduled earlier).
+**The tier narrative below is superseded in part.** It was written from blocker
+prose and is preserved for its per-class detail, but where a tier placement
+rested on a class being "unbuilt", cross-check the drift table above first —
+Brawler and Swashbuckler in particular were placed in Tier C on claims that turn
+out to be false. The corrected ranking basis is the code census immediately
+below.
+
+### Corrected basis: base-class magnitudes actually remaining
+
+Derived from code, not prose. "Remaining" = base-class magnitude-bearing corpus
+records with no corresponding grounding in `pilot_compute.rs`. The chooser
+families sit outside this column.
+
+| Class | mag-bearing | grounded | remaining |
+|---|---|---|---|
+| Inquisitor | 5 | 5 | **0** |
+| Brawler | 8 | 8 | **0** |
+| Skald | 9 | 9 | **0** |
+| Monk | 14 | 13 | **1** (a plumbing record, not a feature) |
+| Witch | 4 | 3 | 1 |
+| Cavalier | 8 | 6 | 2 |
+| Summoner | 9 | 7 | 2 |
+| Swashbuckler | 15 | 13 | 2 |
+| Shaman | 5 | 3 | 2 |
+| Warpriest | 9 | 7 | 2 |
+| Hunter | 8 | 5 | 3 |
+| Slayer | 8 | 4 | 4 |
+| Bloodrager | 9 | 5 | 4 |
+| Investigator | 16 | 10 | 6 |
+| Oracle | 18 | 11 | 7 |
+| Alchemist | 18 | 7 | 11 (9 of them Mutagen tiers = one mechanism) |
+
+The base-class magnitude layer is **essentially exhausted** for Inquisitor,
+Brawler, Skald and Monk, and nearly so for most of the rest. What genuinely
+remains across the roster is (a) the chooser families, (b) execution
+architecture, (c) the class-skill gap in cross-cutting item 1 — not more
+base-feature grounding.
+
+This is the honest answer to "why hasn't more reached Computed": it is not that
+the features aren't built. For several classes they largely are. The catch-all
+diagnostics have not moved to match.
+
+I am explicitly *not* concluding that any catch-all is retirable today —
+the chooser and execution items behind them are real. But the blocker prose can
+no longer be used to tell which is which, so per-class reconciliation
+(cross-cutting item 2) is now the prerequisite for any further ranking.
+
+Original ranking rationale follows, with the caveat above.
 
 ### Tier A — retirable catch-all, no architecture blocker
 
@@ -207,31 +289,42 @@ Bloodrager's ability record encodes its 11 skills only in `DESC:`. That is the
 weaker Panache-shaped evidentiary path. It is already shipped and I am not
 challenging it; it should just be known to be that, not a token.
 
-### 2. Bloodrager's blocker text is stale (same shape as #52)
+### 2. Blocker diagnostic prose has drifted from shipped reality, roster-wide
 
-`class_feature.acg.bloodrager.other_features_deferred.unsupported` states that
-"Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage Reduction, the
-Greater/Tireless/Mighty Bloodrage tiers … remain ungrounded". Task #42 grounded
-exactly those, and the shipped `named_features_wired = 9` comment in
-`rules_tables/acg/mod.rs` enumerates them by name. The crate contradicts itself
-in two places. Text-only fix, same shape as the Monk correction in #52.
+This supersedes the original items 2 and 3. It is the single largest obstacle to
+classes reaching Computed, and it is not a build problem — it is a
+truth-in-diagnostics problem.
 
-### 3. The opponent-interaction ruling has not been applied to the code
+Enumerating the grounding functions that actually exist and are actually called
+in `pilot_compute.rs`, then comparing against what each class's blocker claims
+"remains ungrounded":
 
-The standing ruling is that a magnitude grounds when the opponent is a *scope
-condition* and defers only when an opponent property is a *quantity input*.
-Verified directly against `acg_abilities_class.lst`:
+| Class | Blocker claims ungrounded | Actually shipped and called |
+|---|---|---|
+| Bloodrager | Fast Movement, Uncanny Dodge, Blood Sanctuary, DR, Greater/Mighty tiers | `ground_bloodrager_remaining_features`, `ground_bloodrager_damage_reduction` (task #42) |
+| Slayer | Studied Target | `slayer_studied_target_bonus`, `slayer_studied_target_count` (`3f44acdd`) |
+| Investigator | Studied Combat, Studied Strike | `investigator_studied_combat_bonus`/`_duration`, `investigator_studied_strike_dice` (`3f44acdd`) |
+| Cavalier | Challenge's own +level damage against its target | grounded in `3f44acdd` |
+| **Brawler** | Flurry, Knockout, Martial Flexibility, Martial Training, Bonus Feats, Maneuver Training | `brawler_flurry_extra_attacks`, `brawler_knockout_dc`/`_stat_bonus`/`_uses_per_day`, `brawler_martial_flexibility_uses`, `brawler_maneuver_training_count`, `brawler_bonus_feat_count` |
+| **Swashbuckler** | "Deeds … named but not built", Weapon Training/Mastery | `ground_swashbuckler_deeds` (called at 14186), `swashbuckler_derring_do_uses`, `_dodging_panache_bonus`, `_precise_strike_damage`, `_bleeding_wound_damage`, `_stab_save_dc`, `_weapon_training_bonus` |
+| Monk | bonus-feat options need "a feat engine that does not exist" | 4 of the 7 options grounded: Dodge, Improved Grapple, Scorpion Style, and `monk_combat_reflexes_additional_attacks_of_opportunity` |
+| Shaman | "the other 9 primary spirits … remain ungrounded" | `shaman_battle_spirit_bonus`, `_monstrous_insight_bonus`, `_stardust_duration_rounds`/`_penalty`, `_storm_burst_duration_rounds`, `_spirit_touch_bonus_damage` |
+| Oracle | "the remaining Mystery revelations" | `ground_oracle_tier_one_revelations`, `active_oracle_natures_whispers_ac_bonus`, `active_oracle_sidestep_secret_reflex_bonus` |
+| Witch | "the other ~18 base hexes … remain ungrounded" | `witch_flight_hex_swim_bonus` (called at 33242) |
 
-```
-BONUS:VAR|SlayerStudiedTargetBonus|SlayerStudiedTargetLVL/5+1
-BONUS:VAR|InvestigatorStudiedCombatBonus|InvestigatorLVL/2
-BONUS:VAR|InvestigatorStudiedCombatDuration|max(1,INT)
-BONUS:VAR|InvestigatorStudiedStrikeDice|min(9,(InvestigatorLVL-2)/2)
-```
+Brawler and Swashbuckler are the worst two: both are described by their own
+diagnostics as essentially unbuilt, and both have most of the named features
+shipped and wired. All call sites above were checked to be live, not dead code.
 
-Every term is the character's own level or INT. No opponent property appears in
-any formula. All three ground today. Both classes' shipped diagnostics still say
-otherwise. This is the highest features-per-effort item on the whole list.
+**This also corrects one of my own recommendations.** The Hexes scoping doc (#71)
+recommended Flight as the canonical Witch hex to build, and that recommendation
+was accepted and deferred on my advice. Flight is already built. The deferral
+decision was made on a premise that was false when I wrote it.
+
+The fix is per-class reconciliation of diagnostic text against shipped code —
+mechanical, text-only, no new grounding. It should precede any ranking decision,
+because until it is done nobody (including me) can read a class's blocker and
+know what is actually left.
 
 ### 4. Task #72 may already unblock Warpriest's Sacred Weapon
 
@@ -254,9 +347,25 @@ scheduled — if it does, Warpriest moves up several places.
 5. Monk to closure.
 6. Summoner, then Witch.
 
-The first three are small enough to bundle. Items 4–6 are the first realistic
-chances to actually retire a catch-all and put a new class on the Computed
-board, which is the thing the operator is asking about.
+**Revised order (2026-07-28), superseding the six items above:**
+
+1. **Cross-cutting 2 — reconcile blocker text against shipped code, all 16
+   classes.** Text-only, no new grounding, mechanical. This has to go first:
+   until it lands, no ranking of remaining work can be trusted, including this
+   document's. Start with Brawler and Swashbuckler — both are described by their
+   own diagnostics as unbuilt and are largely built.
+2. **Cross-cutting 1 — class-skill predicates for Monk/Inquisitor/Hunter/Skald.**
+   Verified corpus defect, one match arm per class per predicate.
+3. Re-rank once (1) lands and the diagnostics say something true, then take
+   whichever class's catch-all is genuinely closest to retirable.
+
+The former first item — ground Studied Target/Combat/Strike — is **withdrawn**;
+that work was already done in `3f44acdd`. Hunter/Monk/Summoner/Witch remain
+plausible closure candidates but their placement rested on blocker prose and
+should be re-derived after step 1.
+
+Neither remaining item should start against a red branch (a Barbarian/Skald
+regression from #54 is in flight).
 
 ## Caveats
 
