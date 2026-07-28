@@ -39,17 +39,58 @@ owning namespace.
 | Class | Base records | Unmentioned **and** ungrounded | Verdict |
 |---|---|---|---|
 | Sorcerer | 7 | 0 | **Clean** |
-| Barbarian | 13 | 1 | 1 gap |
+| Barbarian | 13 | 0 | **Clean** (corrected — see below) |
 | Bard | 9 | 1 | 1 gap |
 | Warpriest | 18 | 2 | 2 gaps |
 | Skald | 20 | 3 | 3 gaps |
 | Alchemist | 25 | 6 | 6 gaps |
 | Hunter | 21 | ~14 | **Worst — diagnostic covers a third of the class** |
 
-Six of seven classes have at least one genuinely-unbuilt feature that appears
-nowhere in their diagnostics. The trap is the norm, not the exception — but it
-is not uniform, so it has to be run per class rather than assumed either way
-(Sorcerer really is clean).
+Five of seven classes have at least one genuinely-unbuilt feature that appears
+nowhere in their diagnostics. The trap is common but not universal, so it has to
+be run per class rather than assumed either way.
+
+### Correction: absence-of-grep is a candidate, not a finding
+
+The first version of this table listed Barbarian's **Mighty Rage** as a gap on
+the strength of a zero-hit `grep`. **That was a false positive.** Mighty Rage is
+grounded — `barbarian_rage_tier` returns `(8, 8, 4, "Mighty Rage")` above
+`BARBARIAN_MIGHTY_RAGE_LEVEL`. The corpus record name does not map onto an id
+name, so a snake_case search finds nothing while the feature is fully built.
+Barbarian is clean.
+
+This is the same false-positive shape featmate hit on Bloodrager's
+Greater/Tireless/Mighty Bloodrage tiers, and it cuts the opposite way from the
+#76/#79 lesson. Both cautions apply at once:
+
+- **Don't trust a diagnostic's claim** that something is unbuilt (#76/#79).
+- **Don't trust a raw grep-for-absence** that something is unbuilt (this).
+
+### The three-way check every "gap" below now satisfies
+
+1. **snake_case search** (`mighty_rage`) — catches id/function names.
+2. **Literal-name search, case-insensitive** (`Mighty Rage`) — catches string
+   literals and tier labels, which is what the snake_case pass misses.
+3. **Owning-namespace resolution** — a hit only counts if it resolves to *that
+   class's* ids or functions. Skald's "Uncanny Dodge" returns 105 literal hits,
+   all of them Barbarian, Rogue or Bloodrager; Skald's own id and function sets
+   contain no Uncanny Dodge at all, so the gap is real.
+
+All remaining gaps below were re-verified against the owning class's full id and
+function set, not a name search. Two cases were checked specifically because
+they had a tier-mechanism shape that could have hidden a grounding, and both
+held: Alchemist's **Persistent Mutagen** (level 14, doubles duration) is a real
+gap because `alchemist_mutagen_duration_minutes` is a flat `level * 10` with no
+level-14 branch; and Hunter's Master Hunter / Swift Tracker / Woodland Stride
+resolve entirely to `class_feature.ranger.*` and `class_feature.druid.*`.
+
+### On enumerating from the file rather than memory
+
+This audit's corpus side was derived by parsing `KEY:<Class> ~ …` out of the
+`.lst` files directly, never from recall of what a class "should" have. That
+check passes as run — recording it because the failure mode (a name that passes
+a sniff test and fails the file check) is invisible in the output if you don't
+state the source.
 
 ---
 
@@ -60,15 +101,14 @@ Materials, Standard Bloodline and the Arcane bloodline ladder, plus the two
 plumbing records. Nothing unmentioned and ungrounded. Consistent with #79's
 finding that Sorcerer's diagnostic is the best-maintained one in the crate.
 
-### Barbarian — 1 gap: Mighty Rage
+### Barbarian — clean (corrected)
 
-`Greater Rage` **is** grounded, via the rage-tier mechanism (test
-`single_class_barbarian_at_greater_rage_level_applies_the_higher_tier`).
-`Mighty Rage` has **zero** references anywhere.
-
-This one is live rather than theoretical: `MAX_SUPPORTED_BARBARIAN_LEVEL = 20`,
-and Mighty Rage is the level-20 feature, so it is **reachable on a Computed
-class**. Not bounded away by a level cap.
+Originally reported as a Mighty Rage gap. **Withdrawn.** Both `Greater Rage` and
+`Mighty Rage` are grounded through the same tier mechanism —
+`barbarian_rage_tier` returns `(6, 6, 3, "Greater Rage")` and
+`(8, 8, 4, "Mighty Rage")` at their respective level gates. The zero-hit
+`grep` for `mighty_rage` reflected the naming convention, not the state of the
+code.
 
 ### Bard — 1 gap: Armored Casting
 
