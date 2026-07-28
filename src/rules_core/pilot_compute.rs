@@ -33021,6 +33021,29 @@ fn compute_total_saves(
 /// dedicated failing test
 /// (`brawler_gets_the_class_skill_bonus_on_all_three_skills`) written
 /// before this widening landed.
+///
+/// Monk, Inquisitor, Hunter, and Skald are a FOURTH batch of missing
+/// arms, independently re-verified by the lead and a scout teammate
+/// against the raw PCGen corpus: all four classes' real
+/// `KEY:<Class> ~ Class Skills` records (`KEY:Class Skills ~ Monk` for
+/// Monk specifically -- note the reversed key order) genuinely include
+/// Climb, Intimidate, AND Swim, the same clean all-three shape as
+/// Warpriest/Slayer/Swashbuckler/Brawler. Inquisitor, Hunter, and Skald
+/// are proven live end-to-end with dedicated failing-then-passing tests
+/// (`inquisitor_.../hunter_.../skald_gets_the_class_skill_bonus_on_all_three_skills`).
+/// Monk's arm is added for the same corpus-verified reason but is
+/// currently UNREACHABLE through `compute_selected_skill_modifiers`:
+/// `unmet_selected_skill_posture_conditions` gates on
+/// `has_supported_class_chassis`, which never calls the Monk-specific
+/// `supported_monk_level` the rest of this file's Monk chassis functions
+/// use -- a Monk character is claim-blocked (`class_chassis.unsupported`)
+/// before this predicate is ever reached, empirically confirmed against
+/// this file's own `with_class` test fixture. That gap is a separate,
+/// pre-existing gate omission outside this fix's bounded scope (widening
+/// `has_supported_class_chassis` touches base-attack/save/combat-baseline
+/// dispatch well beyond these three skill predicates) and should be
+/// tracked as its own follow-up so Monk's class-skill bonus can be
+/// exercised and verified the same way the other three now are.
 pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> bool {
     input.chosen.class_levels.iter().any(|class_level| {
         class_level.class_id == FIGHTER_CLASS_ID
@@ -33032,6 +33055,10 @@ pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> boo
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
             || class_level.class_id == CAVALIER_CLASS_ID
+            || class_level.class_id == MONK_CLASS_ID
+            || class_level.class_id == INQUISITOR_CLASS_ID
+            || class_level.class_id == HUNTER_CLASS_ID
+            || class_level.class_id == SKALD_CLASS_ID
     })
 }
 
@@ -33057,6 +33084,10 @@ pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
             || class_level.class_id == CAVALIER_CLASS_ID
+            || class_level.class_id == MONK_CLASS_ID
+            || class_level.class_id == INQUISITOR_CLASS_ID
+            || class_level.class_id == HUNTER_CLASS_ID
+            || class_level.class_id == SKALD_CLASS_ID
     })
 }
 
@@ -33078,6 +33109,10 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
             || class_level.class_id == BRAWLER_CLASS_ID
             || class_level.class_id == BLOODRAGER_CLASS_ID
             || class_level.class_id == CAVALIER_CLASS_ID
+            || class_level.class_id == MONK_CLASS_ID
+            || class_level.class_id == INQUISITOR_CLASS_ID
+            || class_level.class_id == HUNTER_CLASS_ID
+            || class_level.class_id == SKALD_CLASS_ID
     })
 }
 
@@ -34913,8 +34948,9 @@ mod wizard_spellbook_spell_id_resolution_tests {
 mod selected_skill_class_skill_bonus_tests {
     use super::{
         compute_pilot_base_chassis, ARCANIST_CLASS_ID, BRAWLER_CLASS_ID, FIGHTER_CLASS_ID,
-        INVESTIGATOR_CLASS_ID, ROGUE_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID,
-        WARPRIEST_CLASS_ID, WITCH_CLASS_ID, WIZARD_CLASS_ID,
+        HUNTER_CLASS_ID, INQUISITOR_CLASS_ID, INVESTIGATOR_CLASS_ID, ROGUE_CLASS_ID,
+        SKALD_CLASS_ID, SLAYER_CLASS_ID, SWASHBUCKLER_CLASS_ID, WARPRIEST_CLASS_ID,
+        WITCH_CLASS_ID, WIZARD_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 
@@ -35168,6 +35204,64 @@ mod selected_skill_class_skill_bonus_tests {
         let computation = compute_pilot_base_chassis(&input);
 
         assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+    }
+
+    /// Corpus gap found and independently re-verified by the lead and a
+    /// scout teammate against the raw PCGen corpus (v0.6 alpha swarm):
+    /// Inquisitor's real class-skill list (`apg_abilities_class.lst`'s
+    /// `KEY:Inquisitor ~ Class Skills`) genuinely includes Climb,
+    /// Intimidate, AND Swim, but none of the three
+    /// `selected_skill_*_is_class_skill` predicates had an Inquisitor arm
+    /// -- silently zero class-skill bonus for a real Inquisitor. Written
+    /// first, per the lead's own established instruction, to prove the
+    /// bug exists before fixing it. Intimidate's expected value already
+    /// carries Inquisitor's OWN unconditional Stern Gaze morale bonus
+    /// (`active_inquisitor_stern_gaze_bonus`, +1 at level 1) on top of the
+    /// class-skill bonus this fix adds -- the two are independent, both
+    /// genuinely apply, and must both show up in the same total: rank 1 +
+    /// CHA -1 + class-skill 3 + Stern Gaze 1 = 4.
+    #[test]
+    fn inquisitor_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(INQUISITOR_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 4);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Same corpus gap as Inquisitor above, independently re-verified
+    /// against Hunter's real class-skill list (`acg_abilities_class.lst`'s
+    /// `KEY:Hunter ~ Class Skills`), which also genuinely includes all
+    /// three of Climb/Intimidate/Swim. No other Hunter-specific bonus
+    /// touches any of these three totals in this engine (unlike
+    /// Inquisitor's Stern Gaze), so the expected values are the plain
+    /// Fighter/Rogue shape.
+    #[test]
+    fn hunter_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(HUNTER_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
+    }
+
+    /// Same corpus gap as Inquisitor/Hunter above, independently
+    /// re-verified against Skald's real class-skill list
+    /// (`acg_abilities_class.lst`'s `KEY:Skald ~ Class Skills`), which
+    /// also genuinely includes all three of Climb/Intimidate/Swim. This
+    /// fixture's character is not actively raging/singing, so Raging
+    /// Climber/Raging Swimmer's `active_rage_powers_level` term is 0 --
+    /// only the class-skill bonus this fix adds is exercised here.
+    #[test]
+    fn skald_gets_the_class_skill_bonus_on_all_three_skills() {
+        let input = with_class(SKALD_CLASS_ID);
+        let computation = compute_pilot_base_chassis(&input);
+
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.climb"), 6);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.intimidate"), 3);
+        assert_eq!(skill_value(&computation, "skill.selected_modifier.swim"), 6);
     }
 }
 
