@@ -1749,6 +1749,8 @@ Standing lesson recorded (risks item 83): a stranded teammate worktree under its
 
 Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (resets 9:40pm ET), backend wrapped up. Released back to pending rather than pushed onto anyone without room to do it safely. Everything else stays queued and untouched.
 
+**Update (2026-07-28, ~02:35 ET): operator directive — run all queued work.** All three named teammates are unavailable (backend wrapped, featmate on cooldown until 9:40pm ET, scout holding). Rather than wait, the lead dispatched 10 fresh isolated-worktree subagents to work the full backlog in parallel: #44 (Hunter spellcasting), #47 (Inquisitor spellcasting+Bane+Judgment), #49 (Monk cap widening, building on featmate's preserved WIP branch with explicit re-verification instructions), #50 (Skald comment fix + 5 features), #54 (Rage Powers), #56 (Arcanist Familiar), #58 (Rogue Talents Resiliency), #61 (Draconic Dragon Resistances), #64 (Cleric Domains generalization), #66 (Wizard Abjuration School). Each was briefed with this session's own already-verified corpus facts and explicitly told to spot-check rather than trust blindly, required to follow TDD, and told to commit locally without pushing. The lead will independently re-verify every result in its own isolated worktree before merging, same discipline as every prior commit this session regardless of who authored it.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-28T06:35:01
