@@ -1,0 +1,101 @@
+{
+  "case_id": "pf1-arg-human-fighter-level1",
+  "source_package_id": "pf1.advanced_race_guide",
+  "legacy_route": "headless Gradle run batch export via code/testsuite/base-xml.ftl",
+  "claim_tier_floor": "computed",
+  "dimensions": [
+    {
+      "id": "character.identity",
+      "value_string": "pf1-arg-human-fighter-level1",
+      "value_i16": null,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "combat.baseline_melee_attack_bonus",
+      "value_string": null,
+      "value_i16": 5,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "combat.base_attack_bonus",
+      "value_string": null,
+      "value_i16": 1,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "defense.baseline_armor_class",
+      "value_string": null,
+      "value_i16": 17,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "defense.total_save.fortitude",
+      "value_string": null,
+      "value_i16": 4,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "defense.total_save.reflex",
+      "value_string": null,
+      "value_i16": 2,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "defense.total_save.will",
+      "value_string": null,
+      "value_i16": 1,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "skill.selected_modifier.climb",
+      "value_string": null,
+      "value_i16": 6,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "skill.selected_modifier.intimidate",
+      "value_string": null,
+      "value_i16": 3,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "skill.selected_modifier.swim",
+      "value_string": null,
+      "value_i16": 6,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "encumbrance.carrying_capacity.light_max_lbs",
+      "value_string": null,
+      "value_i16": 100,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "encumbrance.carrying_capacity.medium_max_lbs",
+      "value_string": null,
+      "value_i16": 200,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "encumbrance.carrying_capacity.heavy_max_lbs",
+      "value_string": null,
+      "value_i16": 300,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "encumbrance.total_carried_weight_lbs",
+      "value_string": null,
+      "value_i16": 30,
+      "source_package_id": "pf1.advanced_race_guide"
+    },
+    {
+      "id": "durability.max_hp",
+      "value_string": null,
+      "value_i16": 12,
+      "source_package_id": "pf1.advanced_race_guide"
+    }
+  ],
+  "diagnostics": [
+    "missing or unparseable PCGen output field for dimension 'money.total_copper' (expected /character/misc/funds/fund as free text, e.g. '5 gp, 3 sp')"
+  ]
+}

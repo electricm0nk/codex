@@ -16,10 +16,10 @@
 | 2.0.10 | `all-23-books-license-conformance-verify` | E2 | complete | 2026-07-27T21:00Z | 2026-07-27T21:05Z | 23/23 books accounted for, 0 defects (4 corpus-conformant + 19 honest stub gaps). Gates 2.1+ cleared |
 | 2.1 | `advanced_race_guide_pre_build` | E2 | complete | 2026-07-27T21:03Z | 2026-07-27T21:31Z | 479 records (92 spell + 200 equipment + 187 feat), all OGL, 0 redacted. Racial/ability-formula content out of scope (no precedent for any book) |
 | 2.1' | `advanced_race_guide_verify` | E2 | complete | 2026-07-27T21:31Z | 2026-07-27T21:38Z | Independently re-verified 3x (subagent + orchestrator); sha256/line citations confirmed real |
-| 3.1 | `advanced_race_guide_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache — out of confirmed run scope |
+| 3.1 | `advanced_race_guide_parity` | E3 | complete | 2026-07-28T11:30Z | 2026-07-28T11:47Z | Real PCGen Gradle pipeline, BUILD SUCCESSFUL. 13/15 dimensions match. 1 inherited CG-03 mismatch + 1 NEW genuine finding (encumbrance.rs CRB-only weight lookup) |
 | 2.2 | `pathfinder_unchained_pre_build` | E2 | complete | 2026-07-27T21:03Z | 2026-07-27T21:26Z | 59 records (17 feat + 42 equipment), all OGL, 0 redacted. Book adds no new spells (honest absence) |
 | 2.2' | `pathfinder_unchained_verify` | E2 | complete | 2026-07-27T21:26Z | 2026-07-27T21:32Z | Independently re-verified 3x; sha256/line citations confirmed real |
-| 3.2 | `pathfinder_unchained_parity` | E3 | pending | — | — | Tier-1; PCGen parity baseline against pre-built cache — out of confirmed run scope |
+| 3.2 | `pathfinder_unchained_parity` | E3 | complete | 2026-07-28T11:30Z | 2026-07-28T11:47Z | Real PCGen Gradle pipeline, BUILD SUCCESSFUL. 14/15 dimensions match — only the inherited CG-03 mismatch (no ARG-style equipment-weight gap; PU's pilot exercised a feat, not a book-specific weighted item) |
 | (deferred) | — | E3 | — | — | — | **17 deferred future-state books** (Adventurer's Guide, B2-B6, Bonus Bestiary, Horror Adventures, Monster Codex, Mythic Adventures, Occult Adventures, the 6 Tier-2 Ultimate books) are operator-gated on SD-27 closing cleanly. Beginner Box and Core Essentials removed from scope per operator directive 2026-07-27 (redundant to other tomes; will not be brought in). Deferred to SD-28+. The pre-build cycle pattern from E2.1-2.2 is templated and reusable. |
 | 4.1-4.5 | (closure) | E4 | pending | — | — | Standard closure epilogue |
 
@@ -58,18 +58,43 @@
   direct sha256/line-citation spot-checks against the real LST source, full `git status` scope audit,
   full workspace test suite (4,817 passed / 3 pre-existing failures, zero regressions). Both books'
   registry entries (#0003, #0017) updated to `"Resolved"`. Live reporting dashboard updated for real
-  (`sd27_book_pre_build`: 4/6 complete, parity correctly still pending — out of this run's confirmed
-  scope). Receipts: `artifacts/epic_2/{advanced_race_guide,pathfinder_unchained}_{pre_build,verify}-cycle_receipt.md`.
+  (`sd27_book_pre_build`: 4/6 complete at that point). Receipts:
+  `artifacts/epic_2/{advanced_race_guide,pathfinder_unchained}_{pre_build,verify}-cycle_receipt.md`.
+- **3.1/3.2 per-book PCGen parity baseline** (2026-07-28T11:47Z) — real PCGen Gradle pipeline run for
+  both books (BUILD SUCCESSFUL both times), real `.pcg` fixtures hand-authored against the live PCGen
+  data schema, real `comparator::compare` output. ARG: 13/15 dimensions match (2 mismatches: the
+  inherited CG-03 baseline, plus a **new, genuine finding** — `src/rules_core/encumbrance.rs` resolves
+  equipment weight via the CRB-only compiled `equipment_tables()` static table, so real equipment from
+  other books resolves against the corpus correctly but its weight is silently dropped; root-caused,
+  documented, not fixed — outside this cycle's file partition). PU: 14/15 dimensions match (only the
+  inherited CG-03 mismatch; PU's pilot didn't trigger the encumbrance gap since it exercised a feat, not
+  a book-specific weighted item — cross-validates the ARG finding as real and book-content-dependent,
+  not a fluke). Independently re-verified by the orchestrator: re-ran both parity tests directly (exact
+  match to reported tables), confirmed the `encumbrance.rs` root cause by reading the actual import
+  statement, full workspace suite with `PCGEN_REPO_DIR` set (4,820 passed / 2 pre-existing failures —
+  `sd26_pcgen_runner` now genuinely passes with the real PCGen checkout wired in). Live dashboard: 6/6
+  items complete. Receipts: `artifacts/epic_3/{advanced_race_guide,pathfinder_unchained}_parity-cycle_receipt.md`.
 
 ## DISCOVERED
 
-- (none yet)
+- **`src/rules_core/encumbrance.rs` drops equipment weight for any non-CRB book's items.** Found by
+  cycle 3.1 (ARG parity): `compute_encumbrance` resolves an equipped item's corpus record via the
+  generic, book-agnostic `equipment_id_resolve` (works correctly across all books), but then looks up
+  that item's **weight** via `crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables()`
+  — a compiled-in, CRB-only static table (confirmed: `encumbrance.rs:32`'s only import). A real ARG item
+  (the Dogslicer) resolved correctly against the corpus but its weight silently fell into
+  `unresolved_item_ids` instead of being counted (PCGen: 30 lbs, Codex: 29 lbs). Cross-validated as real
+  and book-specific by cycle 3.2 (PU): PU's pilot, which didn't equip a non-CRB weighted item, shows no
+  such gap (29=29). **Not fixed** — `src/rules_core/encumbrance.rs` is outside both parity cycles'
+  file-touch partition. A future cycle needs authority to touch it; likely fix shape: resolve weight via
+  the same corpus-generic path `equipment_id_resolve` already uses, not the CRB-only static table. See
+  `artifacts/epic_3/advanced_race_guide_parity-cycle_receipt.md` for full root-cause detail.
 
 ## Open blockers
 
 - ~~**Tier-1 launch-gate dependency:** SD-26's closure PR has not yet landed.~~ **CLEARED 2026-07-27** (corrected same day — an earlier note here said PR #339; that was backwards). SD-26 merged via **PR #338** — `62e7b617` is a confirmed ancestor of `origin/develop`, and the SD-26 package + `src/bin/sd26_gen_core_rulebook_cache.rs` are both present there. PR #339 is a separate, later CG-03 bugfix, unrelated to SD-26 closure. Caveat: SD-26's own `progress.md` on develop still shows its terminal `6.5` row as "awaiting operator merge" — stale paper-trail, not evidence the merge didn't happen. Per `decisions.md §7` + `loop-instruction.md §2` item 1.
 - ~~**Bundle label discrepancy:** `SD-27` vs. `SD-27+ (unscheduled)` — operator's lever pull at cycle 2.0.~~ **CLEARED 2026-07-27.** Operator chose `"SD-27"`; resolved across all 21 stubs + registry + SD-26's `decisions.md:102` (already correct) + v0.6's risks doc. Per `decisions.md §2` + `artifacts/epic_2/label-resolution-cycle_receipt.md`.
-- **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`. Not exercised this run — parity (E3.x) is out of the confirmed scope ("through both books' pre-build").
+- **CG-03 inherited baseline:** SD-27's per-book parity baseline asserts "match rate at cycle close," not 9-of-9. Per `forward-scope-register.md §"Class 0.3"` + `decisions.md §10`. **Exercised for real this run** — both books' `combat.baseline_melee_attack_bonus` mismatch (PCGen 5 / Codex 6) reproduces the exact same root cause SD-26 already documented; inherited, not chased, per cycle design.
 - **v0.6 in-progress overlap:** v0.6 is actively working class/race breadth (Fighter/Wizard/Rogue + 8 remaining CRB classes). SD-27's partition restricts SD-27 cycles to the per-book content paths. Per `scope-draft.md §4`. Confirmed no collision occurred during this run (checked `origin/tranche/6` before dispatching the retrofit cycles).
 - **NEW — concurrent per-book cycles share one working directory, not isolated worktrees.** `loop-instruction.md §8`'s "Worktree isolation... not needed" note (inherited from `decisions.md §8`) did not anticipate two per-book cycles both needing the same shared file (`src/rules_core/rules_tables/mod.rs`, not currently allow-listed by the partition at all). This run hit and self-corrected a real collision; it should not be relied on to self-correct every time. Recommend either `isolation: 'worktree'` for future concurrent per-book batches, or extending the partition to allow-list `rules_tables/mod.rs` under a serial-on-shared-file rule (matching how the registry file and `data/stubs/` are already handled).
 - **`src/rules_core/rules_tables/{advanced_race_guide,pathfinder_unchained}/` are not wired into `codex`'s public module tree.** Both modules are reachable only via `#[path]` inclusion inside `src/bin/sd27_gen_book_cache.rs`, not `codex::rules_core::rules_tables::*` — a direct consequence of the partition not allow-listing `rules_tables/mod.rs` (see above). A future cycle with authority to touch that file should register them properly, especially before any `pilot_compute.rs` integration is attempted for these 2 books.
@@ -103,3 +128,5 @@ manifest is authoritative for status, this table for narrative.
 | 2.1' advanced_race_guide_verify | `artifacts/epic_2/advanced_race_guide_verify-cycle_receipt.md` |
 | 2.2 pathfinder_unchained_pre_build | `artifacts/epic_2/pathfinder_unchained_pre_build-cycle_receipt.md` |
 | 2.2' pathfinder_unchained_verify | `artifacts/epic_2/pathfinder_unchained_verify-cycle_receipt.md` |
+| 3.1 advanced_race_guide_parity | `artifacts/epic_3/advanced_race_guide_parity-cycle_receipt.md` |
+| 3.2 pathfinder_unchained_parity | `artifacts/epic_3/pathfinder_unchained_parity-cycle_receipt.md` |

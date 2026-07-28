@@ -26,6 +26,19 @@
 //! license_declaration / redaction_policy / ...) is deliberately not a
 //! `CorpusRecordV1`; it is book-level metadata, not a per-record cache
 //! entry, per `docs/governance/ogl-pi-blacklist.md §5`'s template.
+//!
+//! **Updated in cycle E3.1 (advanced_race_guide parity baseline).** The
+//! walk also now excludes any path under a `_parity/` directory. No book
+//! had a `_parity/` directory when this test was authored in E2.0.5 (the
+//! per-book parity-baseline cycles, `loop-instruction.md §3.4`, run after
+//! E2.0.5-2.0.10 and E2.1-2.2). `_parity/` holds `scripts/pcgen-normalize-output.py`'s
+//! oracle-comparison output shape (`case_id`/`source_package_id`/
+//! `legacy_route`/`claim_tier_floor`/`dimensions`/`diagnostics`) -- a
+//! different, non-`CorpusRecordV1` schema by design, the same way
+//! `LICENSE.json` is deliberately excluded above. E3.1 is the first cycle
+//! to populate a `_parity/` directory for real
+//! (`data/corpus/advanced_race_guide/_parity/pf_advanced_race_guide_human_fighter_level1.json`),
+//! which is what surfaced this pre-existing gap in the walk.
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -45,6 +58,13 @@ fn json_files_under(dir: &Path) -> Vec<PathBuf> {
     for entry in entries.flatten() {
         let path = entry.path();
         if path.is_dir() {
+            if path.file_name().and_then(|n| n.to_str()) == Some("_parity") {
+                // `_parity/` holds PCGen-normalized oracle-comparison output
+                // (loop-instruction.md §3.4's `pf_<book>_human_<class>_level1.json`),
+                // not Shape B v1 corpus records -- deliberately excluded, same
+                // rationale as the `LICENSE.json` exclusion below.
+                continue;
+            }
             out.extend(json_files_under(&path));
         } else if path.extension().and_then(|e| e.to_str()) == Some("json")
             && path.file_name().and_then(|n| n.to_str()) != Some("LICENSE.json")
