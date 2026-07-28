@@ -22,9 +22,9 @@
 | 3.2 | `pathfinder_unchained_parity` | E3 | complete | 2026-07-28T11:30Z | 2026-07-28T11:47Z | Real PCGen Gradle pipeline, BUILD SUCCESSFUL. 14/15 dimensions match — only the inherited CG-03 mismatch (no ARG-style equipment-weight gap; PU's pilot exercised a feat, not a book-specific weighted item) |
 | (deferred) | — | E3 | — | — | — | **17 deferred future-state books** (Adventurer's Guide, B2-B6, Bonus Bestiary, Horror Adventures, Monster Codex, Mythic Adventures, Occult Adventures, the 6 Tier-2 Ultimate books) are operator-gated on SD-27 closing cleanly. Beginner Box and Core Essentials removed from scope per operator directive 2026-07-27 (redundant to other tomes; will not be brought in). Deferred to SD-28+. The pre-build cycle pattern from E2.1-2.2 is templated and reusable. |
 | 4.1 | `final-criterion-scan` | E4 | complete | 2026-07-28T11:58Z | 2026-07-28T12:05Z | 14/14 pre-closure criteria complete across all 3 independent sources, 0 discrepancies |
-| 4.2 | `architecture-closure` | E4 | pending | — | — | Truth-up + graphify |
-| 4.3 | `release-notes` | E4 | pending | — | — | Populate the 7-section template |
-| 4.4 | `version-bump` | E4 | pending | — | — | 0.6.0 → 0.6.1 |
+| 4.2 | `architecture-closure` | E4 | complete | 2026-07-28T12:00Z | 2026-07-28T12:03Z | Truth-up: clean, no architecture impact. Graphify: genuine environment gap (no CLI installed), honestly reported not fabricated |
+| 4.3 | `release-notes` | E4 | complete | 2026-07-28T12:05Z | 2026-07-28T12:12Z | All 7 sections populated from receipt-backed facts, 0 placeholders |
+| 4.4 | `version-bump` | E4 | complete | 2026-07-28T12:15Z | 2026-07-28T12:22Z | 0.6.0 → 0.6.1 across all 5 anchors (4 primary + `src-tauri/Cargo.lock`'s own-package field, a newly-discovered 5th anchor). `cargo check --offline` clean |
 | 4.5 | `pr-merge` | E4 | — | — | — | **Not in this run's confirmed scope** — operator opens the PR |
 
 ## TODO
@@ -78,6 +78,18 @@
   statement, full workspace suite with `PCGEN_REPO_DIR` set (4,820 passed / 2 pre-existing failures —
   `sd26_pcgen_runner` now genuinely passes with the real PCGen checkout wired in). Live dashboard: 6/6
   items complete. Receipts: `artifacts/epic_3/{advanced_race_guide,pathfinder_unchained}_parity-cycle_receipt.md`.
+- **4.1-4.3 closure scan, architecture truth-up, release notes** (2026-07-28T12:12Z) — 14/14
+  pre-closure criteria confirmed across 3 independent sources; architecture truth-up clean (no
+  architecture-doc impact), graphify honestly reported as a real environment gap (CLI not
+  installed) rather than faked; all 7 release-notes sections populated from receipt-backed facts.
+  Receipts: `artifacts/epic_4/{final-criterion-scan,architecture-closure,release-notes}-cycle_receipt.md`.
+- **4.4 version-bump** (2026-07-28T12:22Z) — `0.6.0 → 0.6.1` across `apps/desktop/package.json`,
+  `package-lock.json` (both embedded version fields), `src-tauri/tauri.conf.json`,
+  `src-tauri/Cargo.toml`, and `src-tauri/Cargo.lock`'s own `codex-desktop` package entry — a 5th
+  anchor not listed anywhere in the bundle's authoring docs, discovered and fixed this cycle via
+  `cargo check --offline` (clean; only pre-existing, unrelated dead-code warnings).
+  `buildVersionTriple.test.ts`'s `startsWith('0.6.')` assertion remains satisfied. Receipt:
+  `artifacts/epic_4/version-bump-cycle_receipt.md`.
 
 ## DISCOVERED
 
@@ -93,6 +105,11 @@
   file-touch partition. A future cycle needs authority to touch it; likely fix shape: resolve weight via
   the same corpus-generic path `equipment_id_resolve` already uses, not the CRB-only static table. See
   `artifacts/epic_3/advanced_race_guide_parity-cycle_receipt.md` for full root-cause detail.
+- **`apps/desktop/src-tauri/Cargo.lock` is a 5th version anchor, not listed in any authoring doc.**
+  Found by cycle 4.4: bumping `src-tauri/Cargo.toml`'s version does not update `Cargo.lock`'s own
+  `codex-desktop` package entry — that requires a live `cargo` invocation (`cargo check --offline`
+  used here) to resync. Future version-bump cycles should check this file explicitly. See
+  `artifacts/epic_4/version-bump-cycle_receipt.md`.
 
 ## Open blockers
 
@@ -134,3 +151,7 @@ manifest is authoritative for status, this table for narrative.
 | 2.2' pathfinder_unchained_verify | `artifacts/epic_2/pathfinder_unchained_verify-cycle_receipt.md` |
 | 3.1 advanced_race_guide_parity | `artifacts/epic_3/advanced_race_guide_parity-cycle_receipt.md` |
 | 3.2 pathfinder_unchained_parity | `artifacts/epic_3/pathfinder_unchained_parity-cycle_receipt.md` |
+| 4.1 final-criterion-scan | `artifacts/epic_4/final-criterion-scan-cycle_receipt.md` |
+| 4.2 architecture-closure | `artifacts/epic_4/architecture-closure-cycle_receipt.md` |
+| 4.3 release-notes | `artifacts/epic_4/release-notes-cycle_receipt.md` |
+| 4.4 version-bump | `artifacts/epic_4/version-bump-cycle_receipt.md` |
