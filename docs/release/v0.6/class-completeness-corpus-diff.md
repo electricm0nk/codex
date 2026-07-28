@@ -41,7 +41,7 @@ owning namespace.
 | Sorcerer | 7 | 0 | **Clean** |
 | Barbarian | 13 | 0 | **Clean** (corrected — see below) |
 | Bard | 9 | 1 | 1 gap |
-| Warpriest | 18 | 2 | 2 gaps |
+| Warpriest | 18 | 1 | 1 gap (corrected — Orisons withdrawn) |
 | Skald | 20 | 3 | 3 gaps |
 | Alchemist | 25 | 6 | 6 gaps |
 | Hunter | 21 | ~14 | **Worst — diagnostic covers a third of the class** |
@@ -84,6 +84,30 @@ gap because `alchemist_mutagen_duration_minutes` is a flat `level * 10` with no
 level-14 branch; and Hunter's Master Hunter / Swift Tracker / Woodland Stride
 resolve entirely to `class_feature.ranger.*` and `class_feature.druid.*`.
 
+### Method postmortem: this doc needed three correction passes
+
+Worth recording plainly, because the pattern is the argument for changing the
+method rather than trying harder:
+
+1. **Mighty Rage** — a real grounding missed because the corpus name lives in
+   code as a capitalised string literal, not a snake_case id.
+2. **Orisons** — a real grounding missed because *no id contains the word at
+   all*; it is the level-0 entry of a format-constructed spells-per-day table.
+3. Both were false *gaps*; the Hunter/Ranger namespace collisions were the
+   mirror-image risk of false *coverage*.
+
+All three trace to the same root: this audit started from
+**"grep the feature name and see what comes back."** The structurally safer
+order, which #79 used and this pass did not, is **"enumerate the ids in the
+class's own namespace, then join against the corpus record list."** That removes
+false coverage entirely and reduces false gaps to one residual case — a feature
+whose id is table-constructed or shared, which you close by reading the
+constructing function rather than by grepping harder.
+
+Adopting that order for any future completeness pass. The remaining gaps in this
+doc were re-verified against both the shared-id set (30 ids with no class name
+in them) and the format-constructed id set (63), and none of them is covered.
+
 ### On enumerating from the file rather than memory
 
 This audit's corpus side was derived by parsing `KEY:<Class> ~ …` out of the
@@ -122,11 +146,26 @@ unmentioned by name, but Bard ships
 That is the honest way to handle a family you have not enumerated, and it is
 exactly what Hunter, Alchemist and Skald lack.
 
-### Warpriest — 2 gaps
+### Warpriest — 1 gap (corrected from 2)
 
-`Bonus Feats` and `Orisons` are both ungrounded and unmentioned (0 references).
-Note Inquisitor's diagnostic *does* name Orisons; Warpriest's does not, despite
-both classes having the record.
+`Bonus Feats` is ungrounded and unmentioned.
+
+**`Orisons` is withdrawn as a gap.** It is grounded, as the level-0 entry of the
+spells-per-day table: `warpriest_base_spells_per_day` returns `Some(3)` at
+index 0 for level 1 and `Some(4)` for levels 2-3, emitted as
+`class_spell.acg.warpriest.base_spells_per_day.spell_level_0` and asserted by an
+existing test. **No id anywhere contains the string "orisons"** — this is the
+residual failure mode of a name-based search, and the reason the id-set-first
+method is structurally safer.
+
+Honest qualification: what is grounded is the orison *slot count*. The
+never-expended semantics of the Orisons class feature are not modelled, so this
+is the established "pool size grounded, execution not" idiom rather than a
+complete feature. It is not, however, an unaccounted-for gap.
+
+Hunter's own `Orisons` record stays a genuine gap for now — Hunter has no
+spells-per-day table at all until task #44 lands, so nothing grounds its
+level-0 count.
 
 ### Skald — 3 gaps
 
