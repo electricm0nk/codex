@@ -8669,6 +8669,31 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_shaman_single_class(input)
 }
 
+/// Prose listing of every chassis `has_supported_class_chassis` accepts,
+/// kept directly beneath it for exactly one reason (task #82 fix,
+/// 2026-07-28): every widening of the OR-chain above has reliably updated
+/// this function's own doc comment (see the "SD-21 E6.26 widened...",
+/// "SD-21 E6b.1 widened..." comments this file carries at each downstream
+/// call site) while the user-facing diagnostic prose in
+/// `defense.total_save.unsupported` and `skill.selected_modifier.unsupported`
+/// (both places) kept hardcoding a stale "Fighter levels 1-N or Wizard
+/// levels 1-N" framing three widenings after this gate grew past those two
+/// classes -- misleading for any of the other 17 classes this gate now
+/// recognizes. Both diagnostics interpolate this function instead of
+/// hardcoding their own copy, so there is exactly one place left to update
+/// the NEXT time `has_supported_class_chassis` widens; keep this list in
+/// the same order and wording family as the OR-chain above so a reviewer
+/// can diff them side by side.
+pub(crate) fn supported_class_chassis_description() -> String {
+    format!(
+        "{FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL}, {WIZARD_CLASS_ID} levels \
+         1-{MAX_SUPPORTED_WIZARD_LEVEL}, a supported multiclass mix, a supported generic \
+         single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, \
+         Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, \
+         Investigator, Witch, or Shaman chassis"
+    )
+}
+
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure): whether
 /// `input` is a single-class Cavalier at a level within
 /// `apg::class_chassis_resolve`'s declared ceiling for Cavalier -- the
@@ -34326,10 +34351,10 @@ fn compute_total_saves(
         diagnostics.push(ComputationDiagnostic {
             id: "defense.total_save.unsupported".to_owned(),
             message: format!(
-                "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} \
-                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or {WIZARD_CLASS_ID} levels \
-                 1-{MAX_SUPPORTED_WIZARD_LEVEL} base saves; chosen class levels {:?} do not \
-                 provide them, so no total saves were computed",
+                "total saving throws are only computed from a grounded base-save chassis this \
+                 engine currently supports ({}); chosen class levels {:?} do not provide them, \
+                 so no total saves were computed",
+                supported_class_chassis_description(),
                 input.chosen.class_levels
             ),
             claim_blocking: true,
@@ -34682,8 +34707,9 @@ fn compute_selected_skill_modifiers(
             id: "skill.selected_modifier.unsupported".to_owned(),
             message: format!(
                 "selected skill modifiers are only computed for the exact GE-06 deterministic \
-                 Fighter level-1 Climb/Intimidate/Swim rank-1 posture with the grounded Chain Shirt \
-                 armor-check penalty; unmet conditions: {}",
+                 level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded {}) with the \
+                 grounded Chain Shirt armor-check penalty; unmet conditions: {}",
+                supported_class_chassis_description(),
                 unmet.join("; ")
             ),
             claim_blocking: true,
@@ -35135,8 +35161,8 @@ fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String
     // (`has_supported_class_chassis`), mirroring `unmet_combat_posture_conditions`.
     if !has_supported_class_chassis(input) {
         unmet.push(format!(
-            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or \
-             {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
+            "missing a supported chassis (needs one of: {})",
+            supported_class_chassis_description()
         ));
     }
 
@@ -35859,6 +35885,109 @@ mod multiclass_bab_save_stacking_generalization_tests {
              permanently-unconditional domain-powers burden, not silently computed: {:?}",
             computation.diagnostics
         );
+    }
+}
+
+/// Task #82: `defense.total_save.unsupported` and
+/// `skill.selected_modifier.unsupported` used to hardcode "only computed
+/// from the grounded Fighter levels 1-N or Wizard levels 1-N", even though
+/// `has_supported_class_chassis` had long since widened past those two
+/// classes to 19 predicates (Skald, Bloodrager, Brawler, Hunter, Cavalier,
+/// Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer,
+/// Swashbuckler, Investigator, Witch, Shaman, a supported multiclass mix,
+/// and a supported generic single class, on top of Fighter/Wizard). These
+/// tests prove both diagnostics -- including the second, inner hardcoded
+/// copy inside `unmet_selected_skill_posture_conditions` -- now compose
+/// their class-list prose from `supported_class_chassis_description`
+/// instead, through the real `compute_pilot_base_chassis` pipeline.
+#[cfg(test)]
+mod chassis_unsupported_diagnostics_name_the_real_gate_tests {
+    use super::{
+        compute_pilot_base_chassis, PilotBaseChassisComputation, FIGHTER_CLASS_ID,
+        MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL, WIZARD_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A single class id no `has_supported_class_chassis` predicate
+    /// recognizes (not Fighter, not Wizard, not any of the 17 other
+    /// single-class arms, and length 1 so the multiclass-mix arm cannot
+    /// match either) -- guarantees the gate is false regardless of which
+    /// classes are currently supported, so this test does not need its own
+    /// copy of that list to stay correct as the roster widens further.
+    fn unsupported_single_class_input() -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:not_a_recognized_chassis".to_owned();
+        input.chosen.class_levels[0].level = 1;
+        input
+    }
+
+    fn diagnostic_message<'a>(
+        computation: &'a PilotBaseChassisComputation,
+        id: &str,
+    ) -> &'a str {
+        computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == id)
+            .unwrap_or_else(|| panic!("expected diagnostic {id} to fire: {:?}", computation.diagnostics))
+            .message
+            .as_str()
+    }
+
+    #[test]
+    fn total_save_unsupported_does_not_claim_fighter_or_wizard_only() {
+        let input = unsupported_single_class_input();
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic_message(&computation, "defense.total_save.unsupported");
+
+        let stale_fighter_or_wizard_only_fragment = format!(
+            "only computed from the grounded {FIGHTER_CLASS_ID} levels \
+             1-{MAX_SUPPORTED_FIGHTER_LEVEL} or {WIZARD_CLASS_ID} levels \
+             1-{MAX_SUPPORTED_WIZARD_LEVEL} base saves"
+        );
+        assert!(
+            !message.contains(&stale_fighter_or_wizard_only_fragment),
+            "defense.total_save.unsupported must not hardcode a Fighter-or-Wizard-only \
+             framing now that has_supported_class_chassis accepts 19 predicates: {message}"
+        );
+        // The real current supported set must be named, not a stale pair.
+        for supported_class_name in ["Skald", "Bloodrager", "Cavalier", "Shaman", "Witch"] {
+            assert!(
+                message.contains(supported_class_name),
+                "defense.total_save.unsupported should name the real supported class list \
+                 (missing {supported_class_name}): {message}"
+            );
+        }
+    }
+
+    #[test]
+    fn selected_skill_modifier_unsupported_does_not_claim_fighter_only() {
+        let input = unsupported_single_class_input();
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic_message(&computation, "skill.selected_modifier.unsupported");
+
+        assert!(
+            !message.contains("Fighter level-1 Climb/Intimidate/Swim")
+                && !message.contains("missing supported class:fighter levels 1-"),
+            "skill.selected_modifier.unsupported must not hardcode a Fighter-only (or \
+             Fighter-or-Wizard-only) framing in either the outer message or the inner unmet \
+             string composed by unmet_selected_skill_posture_conditions: {message}"
+        );
+        for supported_class_name in ["Skald", "Bloodrager", "Cavalier", "Shaman", "Witch"] {
+            assert!(
+                message.contains(supported_class_name),
+                "skill.selected_modifier.unsupported should name the real supported class \
+                 list (missing {supported_class_name}): {message}"
+            );
+        }
     }
 }
 
