@@ -1753,7 +1753,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-28T07:25:54
-Latest commit on tranche/6: ff6aa2a0 chore(v0.6): auto-heartbeat refresh [skip lead-review] (6 minutes ago) (2026-07-28T07:20:10-04:00)
+Last mechanical check: 2026-07-28T07:30:45
+Latest commit on tranche/6: 0290ce1d feat(v0.6): ground Barbarian/Skald Raging Climber and Raging Swimmer rage powers (task #54) (3 minutes ago) (2026-07-28T07:27:17-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-27T22:34:17 frontend=unknown qa=unknown lead=2026-07-27T22:34:34
 <!-- AUTO-HEARTBEAT-END -->
