@@ -1663,6 +1663,18 @@ const SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 18;
 // power value is ever fabricated from this choice.
 const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
 const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
+const DRACONIC_BLOODLINE_SELECTION_ID: &str = "bloodline:draconic";
+
+/// PF1 Core Rulebook Draconic bloodline's 3rd-level "Dragon Resistances" power
+/// (corpus: cr_abilities_class.lst, KEY:Draconic Bloodline ~ Dragon Resistances,
+/// PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3).
+const SORCERER_DRACONIC_DRAGON_RESISTANCES_LEVEL: u8 = 3;
+const SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.draconic_bloodline.dragon_resistances.natural_armor_bonus";
+const SORCERER_DRACONIC_DRAGON_RESISTANCES_RESISTANCE_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.draconic_bloodline.dragon_resistances.resistance_bonus";
+const SORCERER_DRACONIC_DRAGON_RESISTANCES_ENERGY_TYPE_UNRESOLVED_DIAGNOSTIC_ID: &str =
+    "class_feature.sorcerer.draconic_bloodline.dragon_resistances.energy_type_unresolved";
 
 /// v0.6 alpha swarm, risks item 8 (Sorcerer Arcane bloodline closure): the
 /// Arcane bloodline's 1st-level power, Arcane Bond ("you gain an arcane
@@ -6525,6 +6537,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
         &mut diagnostics,
     );
+
+    // task #61, 2026-07-28: Draconic Bloodline Dragon Resistances' two flat
+    // magnitudes (natural armor bonus, energy resistance bonus). The natural armor
+    // bonus is ALSO wired into compute_combat_baseline's shared Armor Class total via
+    // apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline, called
+    // separately from within that function.
+    ground_sorcerer_draconic_bloodline_dragon_resistances(input, &mut explanations, &mut diagnostics);
 
     explain_wizard_level1_prepared_spell_baseline(
         input,
@@ -28628,6 +28647,231 @@ fn explain_sorcerer_level1_spell_baseline(
     // the redundant unconditional push that used to live here was removed.
 }
 
+/// PF1 Core Rulebook Draconic bloodline's 3rd-level "Dragon Resistances" power
+/// natural armor bonus magnitude, verified against the corpus source
+/// (cr_abilities_class.lst, KEY:Draconic Bloodline ~ Dragon Resistances):
+///
+///   BONUS:VAR|Sorcerer_DraconicDragonResistances_NaturalArmorBonus|
+///       min(floor((LVL-3)/6)+1,3)
+///   BONUS:VAR|Sorcerer_DraconicDragonResistances_NaturalArmorBonus|1|
+///       PREVARGTEQ:...,15
+///
+/// TWO separate corpus `BONUS:VAR` lines both feed the SAME
+/// `Sorcerer_DraconicDragonResistances_NaturalArmorBonus` variable, and PCGen
+/// accumulates same-named `BONUS:VAR` contributions additively -- a real, repeated
+/// corpus pattern, not a single-line override -- so the total returned here is the
+/// SUM of both lines: 1 at level 3, 2 at level 9, and 4 (the first line's value of 3,
+/// capped, PLUS the second line's additional +1) at level 15 and higher. Grounding
+/// only the first line would (incorrectly) cap the level-15+ total at 3.
+///
+/// Callers must only invoke this at `level >= SORCERER_DRACONIC_DRAGON_RESISTANCES_LEVEL`
+/// (3): `level - 3` is computed as a signed value and would floor incorrectly toward 0
+/// for a negative numerator below that gate.
+fn sorcerer_draconic_dragon_resistances_natural_armor_bonus(level: u8) -> i16 {
+    let level = i16::from(level);
+    let base = ((level - 3) / 6 + 1).min(3);
+    let level_15_bonus = i16::from(level >= 15);
+    base + level_15_bonus
+}
+
+/// PF1 Core Rulebook Draconic bloodline's 3rd-level "Dragon Resistances" power
+/// energy resistance bonus magnitude, verified against the corpus source
+/// (cr_abilities_class.lst, KEY:Draconic Bloodline ~ Dragon Resistances):
+///
+///   BONUS:VAR|Sorcerer_DraconicDragonResistances_ResistanceBonus|
+///       min(floor((LVL-3)/6)+1,2)*5
+///
+/// 5 at level 3, 10 at level 9 and higher. Same `level >= 3` precondition as
+/// `sorcerer_draconic_dragon_resistances_natural_armor_bonus`.
+fn sorcerer_draconic_dragon_resistances_energy_resistance_bonus(level: u8) -> i16 {
+    let level = i16::from(level);
+    ((level - 3) / 6 + 1).min(2) * 5
+}
+
+/// Whether `input` is a Sorcerer who has reached the Draconic Bloodline's 3rd-level
+/// "Dragon Resistances" power, and if so, its natural armor bonus magnitude, ready to
+/// layer into `compute_combat_baseline` (task #61, 2026-07-28). Mirrors
+/// `active_brawler_ac_bonus`/`active_oracle_natures_whispers_ac_bonus`'s exact
+/// class-ownership-gated-by-construction shape: no `class_ability_activations` check,
+/// since Dragon Resistances is a permanent (Ex) quality once granted, not an on/off
+/// activation -- gated instead by class ownership, the level-3 gate, AND (unlike
+/// Brawler, but like Oracle's own revelation gate) a recognized choice, since this
+/// power is specific to the Draconic bloodline and must never be fabricated for the
+/// Arcane bloodline or any other/absent bloodline selection. Uses
+/// `supported_sorcerer_level` (the same single-class, level-1..=20 gate every other
+/// Sorcerer pillar in this file already uses) rather than a bare `class_levels` scan,
+/// so this stays consistent with the sibling facts in
+/// `explain_sorcerer_level1_spell_baseline`. Deliberately does NOT gate on
+/// `HUMAN_RACE_ID`: unlike the older SD13-era `explain_sorcerer_level1_spell_baseline`
+/// pillars, this is a v0.6 alpha swarm addition and Dragon Resistances has no
+/// race-specific text in the PF1 corpus, so it is race-agnostic like every other
+/// `active_<class>_<ability>_bonus` function this session added (Brawler AC Bonus,
+/// Oracle Nature's Whispers, Alchemist Mutagen).
+fn active_sorcerer_draconic_dragon_resistances_natural_armor_bonus(
+    input: &CharacterInput,
+) -> Option<i16> {
+    let level = supported_sorcerer_level(input)?;
+    if choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID) != Some(DRACONIC_BLOODLINE_SELECTION_ID)
+    {
+        return None;
+    }
+    if level < SORCERER_DRACONIC_DRAGON_RESISTANCES_LEVEL {
+        return None;
+    }
+    Some(sorcerer_draconic_dragon_resistances_natural_armor_bonus(level))
+}
+
+/// Applies Draconic Bloodline Dragon Resistances' natural armor bonus to
+/// `base_armor_class` when `input` is a Draconic-bloodline Sorcerer at or above the
+/// power's level-3 gate (task #61, 2026-07-28). Mirrors
+/// `apply_brawler_ac_bonus_to_combat_baseline`'s exact shape: a small helper (rather
+/// than an inline `if active_<x>(...).is_some() { CONST } else { 0 }` ternary, since
+/// the magnitude here is level-dependent, not a single fixed value), called directly
+/// from `compute_combat_baseline`.
+fn apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline(
+    input: &CharacterInput,
+) -> i16 {
+    active_sorcerer_draconic_dragon_resistances_natural_armor_bonus(input).unwrap_or(0)
+}
+
+/// Grounds the Draconic Bloodline's 3rd-level "Dragon Resistances" power's two flat
+/// numeric magnitudes (task #61, 2026-07-28): a natural armor bonus to Armor Class and
+/// an energy resistance value, verified against the PF1 Core Rulebook corpus source
+/// (cr_abilities_class.lst, KEY:Draconic Bloodline ~ Dragon Resistances, gated
+/// PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3). See
+/// `sorcerer_draconic_dragon_resistances_natural_armor_bonus`'s own doc comment for why
+/// the natural armor total is the SUM of two separate corpus `BONUS:VAR` lines.
+///
+/// Both magnitudes are grounded as type-agnostic facts: the numbers are identical
+/// regardless of which energy type (acid/cold/electricity/fire) the Draconic
+/// bloodline's own dragon-type selection ultimately names, so this function
+/// deliberately never picks a canonical energy type -- that label is a separate,
+/// deferred corpus sub-choice (the same dragon-type selection that also gates the
+/// Bloodline Arcana / Claws / Breath Weapon / Power of Wyrms energy-type text), named
+/// explicitly by a non-claim-blocking diagnostic rather than silently implied.
+///
+/// Mirrors the Barbarian Trap Sense / Damage Reduction level-gate-absence idiom: below
+/// the level-3 gate (a Draconic-bloodline Sorcerer at level 1 or 2 -- the bloodline
+/// itself is chosen at level 1, well before Dragon Resistances is granted), both
+/// magnitudes are grounded as a correct level-gate absence (value 0); at or above
+/// level 3, both are grounded as bounded flat-magnitude records. The natural armor
+/// bonus record additionally documents its own integration into
+/// `compute_combat_baseline`'s `defense.baseline_armor_class` total via
+/// `apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline` (real
+/// integration, not standalone -- mirrors Brawler's own AC Bonus, which carries both a
+/// standalone flat-magnitude explanation record AND a live wire into the shared Armor
+/// Class total); the energy resistance bonus stays standalone only, since no
+/// energy-damage-resistance-resolution engine exists anywhere in this codebase to
+/// receive it (mirrors Alchemist's/Investigator's own standalone Poison Resistance
+/// bonus, never wired into any total).
+///
+/// Only recognized for the canonical deterministic Draconic bloodline selection
+/// (`choice:sorcerer_bloodline -> bloodline:draconic`), mirroring exactly how the
+/// Arcane bloodline's own class-skill grant is only recognized when the Arcane
+/// bloodline itself was the recognized selection: a character whose bloodline choice
+/// this seam does not recognize as Draconic (a different bloodline, or none at all)
+/// never gains a fabricated Draconic-specific grant. Deliberately race-agnostic (no
+/// `HUMAN_RACE_ID` gate) -- see `active_sorcerer_draconic_dragon_resistances_natural_armor_bonus`'s
+/// own doc comment for why.
+fn ground_sorcerer_draconic_bloodline_dragon_resistances(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(level) = supported_sorcerer_level(input) else {
+        return;
+    };
+    if choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID) != Some(DRACONIC_BLOODLINE_SELECTION_ID)
+    {
+        return;
+    }
+
+    if level < SORCERER_DRACONIC_DRAGON_RESISTANCES_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID.to_owned(),
+            value: 0,
+            detail: format!(
+                "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus at sorcerer \
+                 level {level}: correctly absent by PF1 Core Rulebook level gate (Dragon \
+                 Resistances is a 3rd-level Draconic bloodline power, corpus \
+                 PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3); the at-grant magnitude \
+                 is named but not computed."
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: SORCERER_DRACONIC_DRAGON_RESISTANCES_RESISTANCE_EXPLANATION_ID.to_owned(),
+            value: 0,
+            detail: format!(
+                "Sorcerer Draconic Bloodline Dragon Resistances energy resistance bonus at \
+                 sorcerer level {level}: correctly absent by PF1 Core Rulebook level gate \
+                 (3rd-level Draconic bloodline power); the at-grant magnitude is named but not \
+                 computed."
+            ),
+        });
+        diagnostics.push(ComputationDiagnostic {
+            id: SORCERER_DRACONIC_DRAGON_RESISTANCES_ENERGY_TYPE_UNRESOLVED_DIAGNOSTIC_ID
+                .to_owned(),
+            message: format!(
+                "Sorcerer Draconic Bloodline Dragon Resistances at sorcerer level {level}: both \
+                 magnitudes are correctly grounded as absent below the 3rd-level gate above; \
+                 WHICH energy type (acid, cold, electricity, or fire) the eventual grant would \
+                 apply against is a separate corpus sub-choice not resolved on this bounded \
+                 seam, so no specific energy type is claimed even once the gate is met."
+            ),
+            claim_blocking: false,
+        });
+        return;
+    }
+
+    let natural_armor_bonus = sorcerer_draconic_dragon_resistances_natural_armor_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID.to_owned(),
+        value: natural_armor_bonus,
+        detail: format!(
+            "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus at sorcerer \
+             level {level} (PF1 Core Rulebook, 3rd-level Draconic bloodline power, corpus \
+             KEY:Draconic Bloodline ~ Dragon Resistances): min(floor(({level}-3)/6)+1,3) PLUS an \
+             additional +1 at 15th level and higher (two separate corpus BONUS:VAR lines that \
+             accumulate additively into the same variable, not an override) = \
+             {natural_armor_bonus}. This grounds the magnitude as a type-agnostic fact (the \
+             number is identical regardless of which dragon type this power ultimately names); \
+             see apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline for its \
+             real integration into the shared defense.baseline_armor_class total (only when the \
+             shared GE-06 combat posture -- Longsword/Chain Shirt/Dodge/Weapon Focus/no shield --\
+             is also met)."
+        ),
+    });
+
+    let resistance_bonus = sorcerer_draconic_dragon_resistances_energy_resistance_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: SORCERER_DRACONIC_DRAGON_RESISTANCES_RESISTANCE_EXPLANATION_ID.to_owned(),
+        value: resistance_bonus,
+        detail: format!(
+            "Sorcerer Draconic Bloodline Dragon Resistances energy resistance bonus at sorcerer \
+             level {level} (PF1 Core Rulebook, 3rd-level Draconic bloodline power, corpus \
+             KEY:Draconic Bloodline ~ Dragon Resistances): min(floor(({level}-3)/6)+1,2)*5 = \
+             {resistance_bonus}. This grounds the magnitude only, as a type-agnostic fact (the \
+             number is identical regardless of which dragon type this power ultimately names): \
+             it is not wired into any energy-damage-reduction-resolution engine, since none \
+             exists anywhere in this codebase."
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: SORCERER_DRACONIC_DRAGON_RESISTANCES_ENERGY_TYPE_UNRESOLVED_DIAGNOSTIC_ID.to_owned(),
+        message: format!(
+            "Sorcerer Draconic Bloodline Dragon Resistances at sorcerer level {level}: both \
+             magnitudes (natural armor bonus and energy resistance bonus) are grounded above as \
+             type-agnostic facts, but WHICH energy type (acid, cold, electricity, or fire) the \
+             resistance and natural-armor grant apply against is a separate corpus sub-choice \
+             (the Draconic Bloodline's own dragon-type selection, which also gates the Bloodline \
+             Arcana / Claws / Breath Weapon / Power of Wyrms energy-type text) and is not \
+             resolved on this bounded seam; no specific energy type is claimed."
+        ),
+        claim_blocking: false,
+    });
+}
+
 /// The highest ACCESSIBLE sorcerer spell level (1st+) at the given sorcerer
 /// level -- cantrips (0th level) have no access gate at all, always
 /// available from level 1. Pure function, race-independent, mirrors
@@ -34708,6 +34952,15 @@ fn compute_combat_baseline(
     // CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY.
     let challenge_armor_class_penalty =
         active_cavalier_challenge_armor_class_penalty(input).unwrap_or(0);
+    // task #61, 2026-07-28: Sorcerer Draconic Bloodline Dragon Resistances' natural
+    // armor bonus applies here too -- class-ownership-gated by construction
+    // (`active_sorcerer_draconic_dragon_resistances_natural_armor_bonus`), 0 for
+    // every non-Sorcerer, non-Draconic-bloodline, or below-level-3 character. Like
+    // Brawler's own AC Bonus (and unlike the Rage-shaped penalties above), this is
+    // not activation-gated: it is always on once the level-3 gate and the recognized
+    // Draconic bloodline choice are both met, since it is a permanent (Ex) quality.
+    let draconic_dragon_resistances_natural_armor_bonus =
+        apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline(input);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -34719,7 +34972,8 @@ fn compute_combat_baseline(
         + alchemist_mutagen_ac_bonus_value
         + protection_judgment_ac_bonus
         + natures_whispers_ac_bonus
-        + challenge_armor_class_penalty;
+        + challenge_armor_class_penalty
+        + draconic_dragon_resistances_natural_armor_bonus;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -34737,7 +34991,10 @@ fn compute_combat_baseline(
              only while actively, validly judging Protection) + Oracle Nature's Whispers \
              Charisma-for-Dexterity substitution (+{natures_whispers_ac_bonus}, only for a \
              Nature-Mystery Oracle who took that revelation) + Cavalier Challenge penalty \
-             ({challenge_armor_class_penalty}, only while actively challenging); shield \
+             ({challenge_armor_class_penalty}, only while actively challenging) + Sorcerer \
+             Draconic Bloodline Dragon Resistances natural armor bonus \
+             (+{draconic_dragon_resistances_natural_armor_bonus}, only for a Draconic-bloodline \
+             Sorcerer at 3rd level or higher); shield \
              is absent (+0) = {armor_class}"
         ),
     });
@@ -43084,6 +43341,119 @@ mod alchemist_dispatch_widening_safety_tests {
             "Fighter's own golden path must be unaffected by a stray Alchemist extract entry: \
              {:?}",
             receipt.computation.diagnostics
+        );
+    }
+}
+
+/// task #61, 2026-07-28: Sorcerer Draconic Bloodline Dragon Resistances' natural
+/// armor bonus wiring into `compute_combat_baseline`'s shared Armor Class total.
+/// Mirrors `alchemist_dispatch_widening_safety_tests`'s `human_alchemist_input`-style
+/// fixture-swap helper and Brawler AC Bonus's own "class ownership + level, no
+/// activation" shape (task #61's Dragon Resistances additionally requires a
+/// recognized Draconic bloodline choice, since -- unlike Brawler's AC Bonus -- this
+/// power belongs to one specific bloodline, not the whole class).
+#[cfg(test)]
+mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
+    use super::{
+        build_pilot_headless_receipt, ARCANE_BLOODLINE_SELECTION_ID, CharacterClassLevel,
+        CharacterInput, DRACONIC_BLOODLINE_SELECTION_ID, SORCERER_BLOODLINE_CHOICE_ID,
+        SORCERER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{SelectedChoice, load_character_input_fixture};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn sorcerer_input(level: u8, bloodline_selection: &str) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: bloodline_selection.to_owned(),
+        });
+        input
+    }
+
+    fn baseline_armor_class(input: &CharacterInput) -> i16 {
+        let receipt = build_pilot_headless_receipt(input);
+        receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .unwrap_or_else(|| {
+                panic!(
+                    "baseline Armor Class must be grounded: {:?}",
+                    receipt.computation.diagnostics
+                )
+            })
+            .value
+    }
+
+    /// Base AC (10 + Chain Shirt 4 + DEX +2 + Dodge 1 = 17) + Dragon Resistances'
+    /// natural armor bonus at level 3 (+1) = 18 -- proves the magnitude is really
+    /// summed into `defense.baseline_armor_class`, not just named in a standalone
+    /// record.
+    #[test]
+    fn draconic_bloodline_sorcerer_level_3_adds_1_to_baseline_armor_class() {
+        let input = sorcerer_input(3, DRACONIC_BLOODLINE_SELECTION_ID);
+        assert_eq!(
+            baseline_armor_class(&input),
+            18,
+            "Dragon Resistances' natural armor bonus must be applied"
+        );
+    }
+
+    /// Level 9: Base AC 17 + Dragon Resistances' natural armor bonus (+2) = 19.
+    #[test]
+    fn draconic_bloodline_sorcerer_level_9_adds_2_to_baseline_armor_class() {
+        let input = sorcerer_input(9, DRACONIC_BLOODLINE_SELECTION_ID);
+        assert_eq!(
+            baseline_armor_class(&input),
+            19,
+            "Dragon Resistances' natural armor bonus must be applied"
+        );
+    }
+
+    /// Level 15 is the case that would be WRONG (17 + 3 = 20) if only the first of
+    /// the two additively-stacking corpus BONUS:VAR lines were wired in: Base AC 17 +
+    /// Dragon Resistances' natural armor bonus at level 15 (+4) = 21.
+    #[test]
+    fn draconic_bloodline_sorcerer_level_15_adds_4_to_baseline_armor_class() {
+        let input = sorcerer_input(15, DRACONIC_BLOODLINE_SELECTION_ID);
+        assert_eq!(
+            baseline_armor_class(&input),
+            21,
+            "Dragon Resistances' natural armor bonus must be applied, including the second, \
+             additively-stacking level-15+ BONUS:VAR line"
+        );
+    }
+
+    /// Below the level-3 gate, no natural armor bonus is added: Base AC stays 17.
+    #[test]
+    fn draconic_bloodline_sorcerer_level_1_adds_nothing_to_baseline_armor_class() {
+        let input = sorcerer_input(1, DRACONIC_BLOODLINE_SELECTION_ID);
+        assert_eq!(
+            baseline_armor_class(&input),
+            17,
+            "below the level-3 gate no natural armor bonus applies"
+        );
+    }
+
+    /// The Arcane bloodline's own Sorcerer never gains Dragon Resistances' natural
+    /// armor bonus -- proves the class-ownership-by-construction gate is genuinely
+    /// bloodline-specific, not merely class-specific.
+    #[test]
+    fn arcane_bloodline_sorcerer_adds_nothing_to_baseline_armor_class() {
+        let input = sorcerer_input(9, ARCANE_BLOODLINE_SELECTION_ID);
+        assert_eq!(
+            baseline_armor_class(&input),
+            17,
+            "the Arcane bloodline must never gain Dragon Resistances' natural armor bonus"
         );
     }
 }
