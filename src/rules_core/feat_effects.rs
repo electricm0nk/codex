@@ -744,6 +744,154 @@ pub fn weapon_focus_facts_from_choices(
     facts
 }
 
+/// Weapon Specialization's and Greater Weapon Specialization's catalog keys and
+/// their Mechanism-B target contracts, following the same shape as the two
+/// Focus feats above.
+///
+/// Neither carries a legacy compound-id form the way Weapon Focus does: the
+/// shipped Fighter fixture is level 1 and cannot hold either feat (see the
+/// qualify gates below), so there is no pre-existing loadout to stay compatible
+/// with and no reason to invent a second accepted representation.
+const WEAPON_SPECIALIZATION_FEAT_KEY: &str = "Weapon Specialization";
+const WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID: &str = "feat:weapon_specialization";
+const GREATER_WEAPON_SPECIALIZATION_FEAT_KEY: &str = "Greater Weapon Specialization";
+const GREATER_WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID: &str =
+    "feat:greater_weapon_specialization";
+const WEAPON_SPECIALIZATION_TARGET_CHOICE_SET: &str = "choice:weapon_specialization_target";
+const GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET: &str =
+    "choice:greater_weapon_specialization_target";
+
+/// Both Specialization feats' real bonuses: `+2` **each**, genuinely cumulative
+/// to `+4`, and applied to **damage rolls, not attack rolls**.
+///
+/// This is the single most important fact about this family and the easiest to
+/// get wrong. Both tokens are `BONUS:WEAPONPROF=%LIST|DAMAGE|2` -- the payload
+/// slot reads `DAMAGE` where the two Focus feats read `TOHIT`. Grouping all
+/// four "weapon feats" as attack-roll contributors, which their shared naming
+/// invites, would silently inflate every attack total by up to `+4`.
+///
+/// Unlike Weapon Focus, the magnitude here is a literal `2` in the token rather
+/// than a variable needing a trace, and both `BENEFIT:` texts agree ("+2 bonus
+/// on all damage rolls"). Greater's benefit text states the stacking outright:
+/// "This bonus to damage stacks with other damage roll bonuses, including any
+/// you gain from Weapon Specialization." Its `STACK:NO` constrains taking the
+/// *same feat* twice for one weapon, not its interaction with the base feat --
+/// the same distinction already resolved for Greater Weapon Focus.
+const WEAPON_SPECIALIZATION_DAMAGE_BONUS: i16 = 2;
+const GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS: i16 = 2;
+
+/// One grounded Specialization fact: the real damage-roll bonus applied to one
+/// specific, player-chosen weapon.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct WeaponSpecializationFact {
+    /// The chosen weapon, verbatim from whichever selection named it.
+    pub weapon_name: String,
+    /// `+2` from either feat alone, `+4` when both name this weapon.
+    pub damage_bonus: i16,
+}
+
+/// Grounds the Specialization family's real damage bonus per explicitly chosen
+/// weapon, mirroring [`weapon_focus_facts_from_choices`] exactly -- including
+/// grounding Greater alone, on the same ratified ambiguity-not-prerequisites
+/// axis (Greater's `+2` is unambiguous in isolation).
+///
+/// **Prerequisites are deliberately not enforced here.** Corpus gates these on
+/// Fighter levels via internal qualify variables (`PREVARGTEQ:WeapSpecQualify`
+/// / `GreatWeapSpecQualify`, set by hidden `FighterWeaponQualify` abilities at
+/// Fighter 4 and 12), plus feat chains through Weapon Focus. This producer
+/// grounds what is held and explicitly chosen, exactly as the Focus producer
+/// does; prerequisite validity is a separate concern from magnitude, and
+/// splitting that responsibility differently here would make two sibling
+/// producers behave inconsistently for no stated reason.
+pub fn weapon_specialization_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<WeaponSpecializationFact> {
+    let holds = |catalog_key: &str, synthetic_id: &str| {
+        selected_feats.iter().any(|feat| feat == catalog_key || feat == synthetic_id)
+    };
+
+    let mut facts: Vec<WeaponSpecializationFact> = Vec::new();
+
+    if holds(WEAPON_SPECIALIZATION_FEAT_KEY, WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID) {
+        let targets = chosen_targets(
+            selected_choices,
+            WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        );
+        for weapon in dedup_targets(targets) {
+            facts.push(WeaponSpecializationFact {
+                weapon_name: weapon.to_owned(),
+                damage_bonus: WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+            });
+        }
+    }
+
+    if holds(
+        GREATER_WEAPON_SPECIALIZATION_FEAT_KEY,
+        GREATER_WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID,
+    ) {
+        let targets = chosen_targets(
+            selected_choices,
+            GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        );
+        for weapon in dedup_targets(targets) {
+            match facts
+                .iter_mut()
+                .find(|fact| fact.weapon_name.to_lowercase() == weapon.to_lowercase())
+            {
+                Some(fact) => fact.damage_bonus += GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+                None => facts.push(WeaponSpecializationFact {
+                    weapon_name: weapon.to_owned(),
+                    damage_bonus: GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+                }),
+            }
+        }
+    }
+
+    facts
+}
+
+/// Improved Critical's catalog key and its Mechanism-B target contract.
+const IMPROVED_CRITICAL_FEAT_KEY: &str = "Improved Critical";
+const IMPROVED_CRITICAL_SYNTHETIC_FEAT_ID: &str = "feat:improved_critical";
+const IMPROVED_CRITICAL_TARGET_CHOICE_SET: &str = "choice:improved_critical_target";
+
+/// Every weapon explicitly named by an Improved Critical selection, deduplicated
+/// case-insensitively, in first-seen order.
+///
+/// **This returns targets rather than a magnitude, and the shape is the point.**
+/// Improved Critical's token is `BONUS:WEAPONPROF=%LIST|CRITRANGEDOUBLE|1|
+/// TYPE=NonStackingCrit` -- a *multiplier on the weapon's own threat range*,
+/// not a flat bonus. There is no single number to hand back: doubling means
+/// something different for every weapon (a Longsword's 19-20 becomes 17-20, a
+/// Battleaxe's 20 becomes 19-20), so only a consumer holding the weapon's stat
+/// block can apply it. Returning a `+1`-shaped fact here to match its siblings
+/// would be inventing a magnitude the corpus does not state.
+///
+/// `TYPE=NonStackingCrit` means it never compounds with another threat-range
+/// effect of the same type, so holding it is boolean per weapon -- hence a plain
+/// target list with no count.
+pub fn improved_critical_targets_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<String> {
+    let holds = selected_feats
+        .iter()
+        .any(|feat| feat == IMPROVED_CRITICAL_FEAT_KEY || feat == IMPROVED_CRITICAL_SYNTHETIC_FEAT_ID);
+    if !holds {
+        return Vec::new();
+    }
+
+    let targets = chosen_targets(
+        selected_choices,
+        IMPROVED_CRITICAL_TARGET_CHOICE_SET,
+        WEAPON_SELECTION_PREFIX,
+    );
+    dedup_targets(targets).into_iter().map(str::to_owned).collect()
+}
+
 /// Master Craftsman's catalog key and its Mechanism-B target contract:
 /// `choice:master_craftsman_target -> skill:<name>`. Fourth use of the chooser
 /// pattern proven by Skill Focus, Spell Focus and Weapon Focus.
@@ -2189,6 +2337,198 @@ mod weapon_focus_facts_from_choices_tests {
             choice("choice:weapon_focus_target", "weapon:"),
         ];
         assert!(weapon_focus_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod weapon_specialization_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(weapon: &str) -> SelectedChoice {
+        choice("choice:weapon_specialization_target", &format!("weapon:{weapon}"))
+    }
+
+    fn greater_target(weapon: &str) -> SelectedChoice {
+        choice("choice:greater_weapon_specialization_target", &format!("weapon:{weapon}"))
+    }
+
+    fn fact(weapon: &str, damage_bonus: i16) -> WeaponSpecializationFact {
+        WeaponSpecializationFact { weapon_name: weapon.to_owned(), damage_bonus }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(weapon_specialization_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert!(weapon_specialization_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphaned_target_with_no_feat() {
+        assert!(weapon_specialization_facts_from_choices(&[], &[target("longsword")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_damage_bonus_for_a_chosen_weapon() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[target("Longsword")]),
+            vec![fact("Longsword", 2)]
+        );
+    }
+
+    #[test]
+    fn accepts_the_synthetic_feat_id_as_well_as_the_catalog_key() {
+        let selected = feats(&["feat:weapon_specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[target("Rapier")]),
+            vec![fact("Rapier", 2)]
+        );
+    }
+
+    /// The corpus fact this family turns on: Greater ADDS to base rather than
+    /// replacing or taking-highest, per its own BENEFIT text.
+    #[test]
+    fn greater_stacks_additively_with_base_on_the_same_weapon() {
+        let selected = feats(&["Weapon Specialization", "Greater Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(
+                &selected,
+                &[target("Longsword"), greater_target("Longsword")]
+            ),
+            vec![fact("Longsword", 4)],
+            "+2 and +2 must total +4, not take-highest +2"
+        );
+    }
+
+    #[test]
+    fn greater_grounds_alone_on_its_own_unambiguous_bonus() {
+        let selected = feats(&["Greater Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[greater_target("Rapier")]),
+            vec![fact("Rapier", 2)]
+        );
+    }
+
+    #[test]
+    fn deduplicates_repeated_targets_case_insensitively() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(
+                &selected,
+                &[target("Longsword"), target("longsword")]
+            ),
+            vec![fact("Longsword", 2)],
+            "one weapon must not ground twice under one id"
+        );
+    }
+
+    /// Guards the mistake this whole family invites: a Focus target must never
+    /// be read as a Specialization target, and vice versa. If the choice-set
+    /// constants were ever crossed, the two feats' magnitudes would land on
+    /// each other's roll type.
+    #[test]
+    fn does_not_read_focus_targets_or_malformed_selections() {
+        let selected = feats(&["Weapon Specialization"]);
+        let choices = vec![
+            choice("choice:weapon_focus_target", "weapon:longsword"),
+            choice("choice:greater_weapon_focus_target", "weapon:longsword"),
+            choice("choice:weapon_specialization_target", "longsword"),
+            choice("choice:weapon_specialization_target", "weapon:"),
+        ];
+        assert!(weapon_specialization_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod improved_critical_targets_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(weapon: &str) -> SelectedChoice {
+        choice("choice:improved_critical_target", &format!("weapon:{weapon}"))
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(improved_critical_targets_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        let selected = feats(&["Improved Critical"]);
+        assert!(improved_critical_targets_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphaned_target_with_no_feat() {
+        assert!(improved_critical_targets_from_choices(&[], &[target("longsword")]).is_empty());
+    }
+
+    #[test]
+    fn returns_the_chosen_weapon_for_either_feat_id() {
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["Improved Critical"]),
+                &[target("Longsword")]
+            ),
+            vec!["Longsword".to_owned()]
+        );
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["feat:improved_critical"]),
+                &[target("Rapier")]
+            ),
+            vec!["Rapier".to_owned()]
+        );
+    }
+
+    #[test]
+    fn deduplicates_repeated_targets_case_insensitively() {
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["Improved Critical"]),
+                &[target("Longsword"), target("longsword")]
+            ),
+            vec!["Longsword".to_owned()],
+            "TYPE=NonStackingCrit -- holding it twice for one weapon is still once"
+        );
+    }
+
+    #[test]
+    fn ignores_unrelated_choices_and_malformed_selections() {
+        let selected = feats(&["Improved Critical"]);
+        let choices = vec![
+            choice("choice:weapon_focus_target", "weapon:longsword"),
+            choice("choice:improved_critical_target", "longsword"),
+            choice("choice:improved_critical_target", "weapon:"),
+        ];
+        assert!(improved_critical_targets_from_choices(&selected, &choices).is_empty());
     }
 }
 

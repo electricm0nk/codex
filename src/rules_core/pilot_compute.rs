@@ -6437,10 +6437,10 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
-    // Stage 2 (task #72): additive per-weapon totals, independent of the
+    // Stages 2-3 (task #72): additive per-weapon totals, independent of the
     // GE-06 posture gate above -- an unsupported baseline posture must not
     // suppress a weapon's own real attack total.
-    ground_per_weapon_attack_totals(
+    ground_per_weapon_combat_totals(
         input,
         &ability_modifiers,
         base_attack_bonus,
@@ -33515,10 +33515,12 @@ fn ground_orphan_feat_facts(
             value: fact.attack_bonus,
             detail: format!(
                 "Weapon Focus ({}) grants a +{} bonus on attack rolls with that weapon (+2 when \
-                 Greater Weapon Focus names it too). Grounds standalone: this engine computes a \
-                 melee attack total only for its own fixed Longsword posture, so there is no \
-                 general per-weapon attack total to layer a player-chosen weapon's bonus onto. \
-                 Requires an explicit recorded weapon choice -- nothing is seeded, per the same \
+                 Greater Weapon Focus names it too). This bonus is also carried inside \
+                 combat.weapon_attack_bonus.<weapon> whenever that weapon is equipped; this record \
+                 is the component fact, that one is the total, and the two agreeing is expected \
+                 rather than a double-count. It still grounds standalone, because the feat's bonus \
+                 is real whether or not the chosen weapon happens to be equipped. Requires an \
+                 explicit recorded weapon choice -- nothing is seeded, per the same \
                  no-silent-seeding design as Skill Focus",
                 fact.weapon_name, fact.attack_bonus
             ),
@@ -33705,8 +33707,9 @@ fn equipped_weapon_stat_block(item_id: &str) -> Option<&'static weapon_tables::W
         .find(|entry| normalize_weapon_identity(entry.key) == wanted)
 }
 
-/// Grounds a per-weapon attack total for every equipped weapon that
-/// resolves against the ingested CRB weapon table (task #72, stage 2).
+/// Grounds the per-weapon combat surfaces for every equipped weapon that
+/// resolves against the ingested CRB weapon table (task #72, stages 2-3):
+/// an attack total, the feat-granted damage bonus, and the threat range.
 ///
 /// **Additive by design.** This does NOT touch
 /// `combat.baseline_melee_attack_bonus`, which is a single-fixture GE-06
@@ -33715,19 +33718,45 @@ fn equipped_weapon_stat_block(item_id: &str) -> Option<&'static weapon_tables::W
 /// Generalising that one -- widening its posture gate and driving its
 /// hardcoded `WEAPON_FOCUS_TO_HIT_BONUS` off the real
 /// `choice:weapon_focus_target` chooser -- is genuinely separate surgery,
-/// deferred as its own task (#80). Until then the two coexist, and this
-/// is the surface the Focus feats will wire into.
+/// deferred as its own task (#80). Until then the two coexist.
 ///
-/// The arithmetic here is deliberately only base attack bonus + Strength:
-/// feat contributions are stage 3, and grounding them here would
-/// double-count against the feats' own records once those land.
-fn ground_per_weapon_attack_totals(
+/// **The five weapon feats do not all land on the same surface**, which
+/// their shared naming actively disguises. Corpus payload slots decide it:
+/// Weapon Focus and Greater Weapon Focus write `TOHIT` (attack), Weapon
+/// Specialization and Greater Weapon Specialization write `DAMAGE`, and
+/// Improved Critical writes `CRITRANGEDOUBLE` (a multiplier on the
+/// weapon's own threat range, not a flat bonus). Folding all five into the
+/// attack total -- the shape stage 3 was originally briefed as -- would
+/// have inflated every attack total by up to `+4` of damage bonus.
+///
+/// **Damage is grounded as the feat contribution only, not a damage
+/// total.** A real total would need the Strength-to-damage multiplier,
+/// which is 1x one-handed, 1.5x two-handed and 0.5x off-hand -- and how a
+/// weapon is being wielded is not recorded anywhere in
+/// `equipment_selections`. Emitting a "damage total" would mean inventing
+/// that wield state, so this grounds the flat feat bonus, which is real
+/// and complete on its own, and says plainly what it excludes.
+fn ground_per_weapon_combat_totals(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     base_attack_bonus: i16,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
+    use crate::rules_core::feat_effects;
+
     let strength_modifier = ability_modifiers.strength;
+    let feats = effective_character_feats(input);
+    let focus_facts =
+        feat_effects::weapon_focus_facts_from_choices(&feats, &input.chosen.selected_choices);
+    let specialization_facts = feat_effects::weapon_specialization_facts_from_choices(
+        &feats,
+        &input.chosen.selected_choices,
+    );
+    let improved_critical_targets = feat_effects::improved_critical_targets_from_choices(
+        &feats,
+        &input.chosen.selected_choices,
+    );
+
     let mut grounded: Vec<&str> = Vec::new();
 
     for selection in &input.chosen.equipment_selections {
@@ -33742,23 +33771,97 @@ fn ground_per_weapon_attack_totals(
         }
         grounded.push(weapon.key);
 
-        let attack_total = base_attack_bonus + strength_modifier;
         let slug = normalize_weapon_identity(weapon.key);
-        let threat_low = weapon_tables::weapon_critical_threat_low(weapon);
+        let names_this_weapon =
+            |name: &str| normalize_weapon_identity(name) == normalize_weapon_identity(weapon.key);
+
+        // Attack: base attack bonus + Strength + the two Focus feats, each
+        // counted exactly once. The producer has already summed Greater onto
+        // base, so this reads one resolved bonus per weapon rather than
+        // adding two facts together here.
+        let focus_bonus = focus_facts
+            .iter()
+            .find(|fact| names_this_weapon(&fact.weapon_name))
+            .map_or(0, |fact| fact.attack_bonus);
+        let attack_total = base_attack_bonus + strength_modifier + focus_bonus;
+        let focus_detail = if focus_bonus == 0 {
+            " No Weapon Focus or Greater Weapon Focus names this weapon, so no feat bonus applies to \
+             the attack roll."
+                .to_owned()
+        } else {
+            format!(
+                " Weapon Focus / Greater Weapon Focus name this weapon, adding {focus_bonus:+} to \
+                 the attack roll."
+            )
+        };
         explanations.push(ComputationExplanation {
             id: format!("combat.weapon_attack_bonus.{slug}"),
             value: attack_total,
             detail: format!(
-                "Attack bonus with the equipped {}: base attack bonus (+{base_attack_bonus}) + Strength \
-                 modifier ({strength_modifier:+}) = {attack_total}. The weapon's own corpus \
-                 stat block is {} damage, threat {}-20/x{} (CRITRANGE is a width, so the \
-                 threat range is 21-width..=20). This total carries NO feat contributions \
-                 yet -- Weapon Focus, Weapon Specialization, Greater Weapon Specialization \
-                 and Improved Critical wire into it in this task's next stage, and grounding \
-                 them here would double-count against their own records. Separate from \
-                 combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 \
-                 fixture total until task #80 generalises it",
-                weapon.key, weapon.damage_die, threat_low, weapon.critical_multiplier
+                "Attack bonus with the equipped {}: base attack bonus (+{base_attack_bonus}) + \
+                 Strength modifier ({strength_modifier:+}) + weapon feats ({focus_bonus:+}) = \
+                 {attack_total}.{focus_detail} Only the Focus feats reach this total -- the \
+                 Specialization feats are damage and Improved Critical is threat range, both \
+                 grounded separately. Separate from combat.baseline_melee_attack_bonus, which \
+                 stays a Longsword-specific GE-06 fixture total until task #80 generalises it",
+                weapon.key
+            ),
+        });
+
+        // Damage: the flat feat bonus only. Grounded even at zero, so a
+        // weapon with no Specialization reads as an explicit "correctly
+        // absent" rather than a missing record.
+        let damage_bonus = specialization_facts
+            .iter()
+            .find(|fact| names_this_weapon(&fact.weapon_name))
+            .map_or(0, |fact| fact.damage_bonus);
+        let damage_detail = if damage_bonus == 0 {
+            "No Weapon Specialization or Greater Weapon Specialization names this weapon, so no \
+             feat bonus applies to its damage rolls."
+                .to_owned()
+        } else {
+            format!(
+                "Weapon Specialization / Greater Weapon Specialization name this weapon, adding \
+                 {damage_bonus:+} to every damage roll with it."
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("combat.weapon_damage_bonus.{slug}"),
+            value: damage_bonus,
+            detail: format!(
+                "Feat damage bonus with the equipped {}: {damage_bonus:+}. {damage_detail} This is \
+                 the feat contribution alone, NOT a damage total: the weapon's own {} damage die \
+                 and the Strength-to-damage contribution are excluded, because Strength applies at \
+                 1x one-handed, 1.5x two-handed and 0.5x off-hand and this engine does not record \
+                 how a weapon is being wielded",
+                weapon.key, weapon.damage_die
+            ),
+        });
+
+        // Threat range: doubled width when Improved Critical names the weapon.
+        let base_width = weapon.critical_threat_range_width;
+        let improved = improved_critical_targets.iter().any(|name| names_this_weapon(name));
+        let effective_width = if improved { base_width * 2 } else { base_width };
+        let threat_low = 21_u8.saturating_sub(effective_width);
+        let improved_detail = if improved {
+            format!(
+                "Improved Critical names this weapon, doubling the threat range width from \
+                 {base_width} to {effective_width} (a doubled range widens the low end; the high \
+                 end is always 20)."
+            )
+        } else {
+            "Improved Critical does not name this weapon, so its threat range is the weapon's \
+             printed one."
+                .to_owned()
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("combat.weapon_threat_range_low.{slug}"),
+            value: i16::from(threat_low),
+            detail: format!(
+                "Critical threat range with the equipped {}: {threat_low}-20/x{}. {improved_detail} \
+                 The value grounded here is the LOW end of the range; the corpus stores CRITRANGE \
+                 as a width, so the range is 21-width..=20",
+                weapon.key, weapon.critical_multiplier
             ),
         });
     }
@@ -46051,6 +46154,7 @@ mod per_weapon_attack_total_tests {
         build_pilot_headless_receipt, equipped_weapon_stat_block, normalize_weapon_identity,
         CharacterInput,
     };
+    use crate::rules_core::character_input::SelectedChoice;
     use crate::rules_core::character_input::load_character_input_fixture;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -46104,8 +46208,9 @@ mod per_weapon_attack_total_tests {
         // chosen score 16 plus the Human +2 racial, applied BEFORE modifiers
         // are derived -- so the modifier is +4, not +3. Confirmed against the
         // fixture's own ability_modifier.strength record rather than fitted
-        // to the output. No feat contributions at this stage by design.
-        assert_eq!(record.value, 5, "BAB(+1) + STR(+4), no feats yet: {record:?}");
+        // to the output. The fixture carries Weapon Focus (Longsword), worth
+        // +1, wired in at stage 3.
+        assert_eq!(record.value, 6, "BAB(+1) + STR(+4) + Weapon Focus(+1): {record:?}");
     }
 
     /// Stage 2 is additive: the pre-existing GE-06 baseline total must be
@@ -46123,11 +46228,19 @@ mod per_weapon_attack_total_tests {
         );
     }
 
-    /// Feat contributions belong to stage 3. If they were folded in here
-    /// they would double-count against the feats' own records, so the
-    /// total must NOT include Weapon Focus even though the fixture has it.
+    /// Weapon Focus must be counted exactly once.
+    ///
+    /// This replaces a stage-2 guard that asserted `5` on the grounds that
+    /// "if this ever reads 6, stage 3 has double-counted". That reasoning
+    /// was wrong and worth recording: it conflated adding one magnitude
+    /// twice *inside a single total* (the real hazard, which reads 7) with
+    /// the same magnitude appearing both as its own component fact and
+    /// inside a total (`feat.standalone.weapon_focus.longsword` alongside
+    /// this record -- normal, and not double-counting at all). A guard
+    /// pinned to a stage's temporary posture has to be re-derived when the
+    /// stage lands, not carried forward on its original wording.
     #[test]
-    fn the_per_weapon_total_carries_no_feat_contributions_yet() {
+    fn the_per_weapon_total_counts_weapon_focus_exactly_once() {
         let receipt = build_pilot_headless_receipt(&fixture());
         let record = receipt
             .computation
@@ -46136,9 +46249,116 @@ mod per_weapon_attack_total_tests {
             .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
             .expect("present");
         assert_eq!(
-            record.value, 5,
-            "must be BAB(+1) + STR(+4) only; the fixture carries Weapon Focus (Longsword) and the GE-06 baseline total DOES add it, but this one deliberately does not yet -- if this ever reads 6, stage 3 has double-counted"
+            record.value, 6,
+            "must be BAB(+1) + STR(+4) + Weapon Focus(+1); 5 means the feat never wired in, 7 means it was added twice"
         );
+    }
+
+    /// The fixture holds no Specialization feat, so its damage bonus must be
+    /// grounded as an explicit zero rather than omitted -- the same
+    /// "ground the absence" convention as the level-gated class features.
+    #[test]
+    fn a_weapon_with_no_specialization_grounds_an_explicit_zero_damage_bonus() {
+        let receipt = build_pilot_headless_receipt(&fixture());
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_damage_bonus.longsword")
+            .expect("the damage bonus must be grounded even when no feat names the weapon");
+        assert_eq!(record.value, 0, "no Specialization feat is held: {record:?}");
+    }
+
+    /// Threat range comes from the weapon's own stat block, and the fixture
+    /// has no Improved Critical -- so the Longsword keeps its printed 19-20.
+    #[test]
+    fn the_threat_range_is_the_weapons_printed_one_without_improved_critical() {
+        let receipt = build_pilot_headless_receipt(&fixture());
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_threat_range_low.longsword")
+            .expect("the threat range must be grounded for an equipped weapon");
+        assert_eq!(record.value, 19, "Longsword is 19-20 (width 2) undoubled: {record:?}");
+    }
+
+    /// The Specialization feats write `DAMAGE`, not `TOHIT`. If their
+    /// magnitude ever leaked into the attack total this would catch it --
+    /// the single most consequential way to get this feat family wrong.
+    #[test]
+    fn specialization_damage_never_leaks_into_the_attack_total() {
+        let mut input = fixture();
+        input.chosen.selected_feats.push("Weapon Specialization".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:weapon_specialization_target".to_owned(),
+            selection_id: "weapon:Longsword".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanations = &receipt.computation.explanations;
+
+        let attack = explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
+            .expect("present");
+        assert_eq!(
+            attack.value, 6,
+            "adding Weapon Specialization must not move the attack total: {attack:?}"
+        );
+
+        let damage = explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_damage_bonus.longsword")
+            .expect("present");
+        assert_eq!(damage.value, 2, "the +2 must land on damage instead: {damage:?}");
+    }
+
+    /// Improved Critical doubles the width, so a Longsword's 19-20 (width 2)
+    /// becomes 17-20 (width 4). Asserting the low bound catches the
+    /// width-vs-low-bound confusion this pillar's stage 1 was built to
+    /// prevent: treating CRITRANGE as a low bound would give 18, not 17.
+    #[test]
+    fn improved_critical_doubles_the_threat_range_width() {
+        let mut input = fixture();
+        input.chosen.selected_feats.push("Improved Critical".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:improved_critical_target".to_owned(),
+            selection_id: "weapon:Longsword".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_threat_range_low.longsword")
+            .expect("present");
+        assert_eq!(
+            record.value, 17,
+            "width 2 doubled to 4 gives 17-20; 18 would mean the width was treated as a low bound"
+        );
+    }
+
+    /// No silent seeding: holding the feat without recording which weapon it
+    /// names must change nothing, exactly as for every other chooser feat.
+    #[test]
+    fn a_chooser_feat_with_no_recorded_target_changes_nothing() {
+        let mut input = fixture();
+        input.chosen.selected_feats.push("Improved Critical".to_owned());
+        input.chosen.selected_feats.push("Weapon Specialization".to_owned());
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanations = &receipt.computation.explanations;
+
+        let threat = explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_threat_range_low.longsword")
+            .expect("present");
+        assert_eq!(threat.value, 19, "untargeted Improved Critical must not widen anything");
+
+        let damage = explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_damage_bonus.longsword")
+            .expect("present");
+        assert_eq!(damage.value, 0, "untargeted Weapon Specialization must not add damage");
     }
 }
 
