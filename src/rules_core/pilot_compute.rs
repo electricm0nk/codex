@@ -17404,6 +17404,12 @@ fn ground_or_block_bloodrager_bloodrage(
         push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
         push_bloodrager_other_features_deferred_diagnostic(diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
+        ground_or_block_bloodrager_known_spells(
+            input,
+            bloodrager_level,
+            explanations,
+            diagnostics,
+        );
         return;
     };
 
@@ -17427,6 +17433,12 @@ fn ground_or_block_bloodrager_bloodrage(
             push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
         push_bloodrager_other_features_deferred_diagnostic(diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
+        ground_or_block_bloodrager_known_spells(
+            input,
+            bloodrager_level,
+            explanations,
+            diagnostics,
+        );
             return;
         }
     }
@@ -17487,6 +17499,12 @@ fn ground_or_block_bloodrager_bloodrage(
     push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
         push_bloodrager_other_features_deferred_diagnostic(diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
+        ground_or_block_bloodrager_known_spells(
+            input,
+            bloodrager_level,
+            explanations,
+            diagnostics,
+        );
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -17508,19 +17526,21 @@ fn push_bloodrager_spellcasting_deferred_diagnostic(
             message: format!(
                 "{BLOODRAGER_CLASS_ID} level {level} remains blocked on its spellcasting \
                  posture: it casts from its own spell list (`SPELLLIST:1|Bloodrager`, no \
-                 borrowed list), and its spells-per-day and spells-known tables are grounded. \
-                 The spell list itself IS built -- `acg::bloodrager_spell_list` carries all 200 \
-                 corpus-verified entries with its own tests -- but is NOT WIRED: \
-                 `bloodrager_spell_level` has no consumer anywhere in this codebase, so no \
-                 Bloodrager spell actually resolves and the class cannot validate a prepared or \
-                 known spell against its own list. That wiring, not the data, is the real \
-                 remaining gap (task #87). Bloodline bonus spells (10 bloodlines x 4 spells, \
-                 first granted at bloodline progression level 7) and the Elemental bloodline's \
-                 own element sub-choice are deferred as well. This message previously said the \
-                 spell list was \"not built\" and named Blood Casting and Eschew Materials \
-                 alongside it: the list has been built since task #1, and both features are \
-                 grounded as of task #83 -- built-but-unwired is a different claim from unbuilt, \
-                 and stating the weaker one hid a module that already exists"
+                 borrowed list), its spells-per-day and spells-known tables are grounded, and \
+                 as of task #87 its 200-entry `acg::bloodrager_spell_list` is genuinely WIRED \
+                 -- a recorded known-spell selection is now validated against that real list, \
+                 the access ceiling derived from the shipped Spells Known table, and that \
+                 table's own per-level caps, grounding \
+                 `class_spell.acg.bloodrager.known_spells` when the posture holds and \
+                 claim-blocking with the specific unmet reasons when it does not. What remains \
+                 genuinely unbuilt: the Bloodline bonus spells (10 bloodlines x 4 spells, first \
+                 granted at bloodline progression level 7) and the Elemental bloodline's own \
+                 element sub-choice -- both downstream of the Bloodline slot itself, which is \
+                 this class's other open blocker. No spell save DC resolution against a target \
+                 and no casting execution is claimed for any Bloodrager spell. This message has \
+                 twice described the spell list wrongly: it said \"not built\" when the list had \
+                 existed since task #1, then (task #83) \"built but NOT WIRED\", which was true \
+                 when written and stopped being true here"
             ),
             claim_blocking: true,
         });
@@ -17648,6 +17668,181 @@ fn bloodrager_spells_known(level: u8) -> Option<[i16; 4]> {
 /// standalone explanation records (task #1, 2026-07-27), one per spell
 /// level that the character actually has slots or known spells for.
 /// Grounds nothing below `BLOODRAGER_FIRST_CASTING_LEVEL`.
+/// The highest spell level a Bloodrager of `level` can know, or 0 for a
+/// non-caster (task #87).
+///
+/// **Derived from the shipped `bloodrager_spells_known` table rather than
+/// transcribed as a second table of its own.** Bard's own
+/// `bard_spell_level_access` is a hand-written ladder of level constants,
+/// and copying that shape here would create a second source of truth that
+/// can silently drift from the table it is supposed to describe. Deriving
+/// it makes drift impossible by construction.
+///
+/// **Bloodragers have NO 0-level spells**, so this table is indexed 1-4,
+/// not 0-4 like Bard's/Skald's. The `+ 1` converts a 0-based array index
+/// into a 1-based spell level; it is not an off-by-one.
+fn bloodrager_spell_level_access(level: u8) -> i16 {
+    bloodrager_spells_known(level).map_or(0, |known| {
+        known.iter().rposition(|count| *count > 0).map_or(0, |index| index as i16 + 1)
+    })
+}
+
+/// Reports every reason this character's Bloodrager known-spell posture is
+/// not yet valid (task #87), mirroring
+/// `unmet_skald_known_spell_conditions`'s own shape. An empty list means
+/// the posture is genuinely satisfiable and can be grounded for real.
+///
+/// This is the real consumer of `acg::bloodrager_spell_list`, which
+/// carried 200 corpus-verified entries with zero consumers before this.
+///
+/// Deliberately DIFFERENT from Skald's in one structural way: Skald/Bard
+/// index their known-spell arrays from spell level 0 because they get
+/// cantrips. Bloodragers never do, so spell level 0 is rejected outright
+/// rather than indexed, and every real level maps to `spell_level - 1`.
+/// Copying Skald's `known_per_level[spell_level]` verbatim would both
+/// shift every cap by one and silently admit a 0-level spell this class
+/// cannot have.
+fn unmet_bloodrager_known_spell_conditions(input: &CharacterInput, level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == BLOODRAGER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let Some(known_table) = bloodrager_spells_known(level) else {
+        if !known.is_empty() {
+            unmet.push(format!(
+                "{} known spell(s) recorded at bloodrager level {level}, which has no \
+                 spellcasting at all (Bloodragers first cast at level \
+                 {BLOODRAGER_FIRST_CASTING_LEVEL})",
+                known.len()
+            ));
+        }
+        return unmet;
+    };
+
+    let access_ceiling = bloodrager_spell_level_access(level);
+    let mut known_per_level = [0i16; 4];
+
+    for spell_id in &known {
+        let Some(spell_level) = acg::bloodrager_spell_list::bloodrager_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Bloodrager spell list \
+                 (`SPELLLIST:1|Bloodrager`, its own list rather than a borrowed one)"
+            ));
+            continue;
+        };
+        if spell_level == 0 {
+            unmet.push(format!(
+                "known spell '{spell_id}' is a 0-level spell; Bloodragers gain no 0-level \
+                 spells at any level"
+            ));
+            continue;
+        }
+        if i16::from(spell_level) > access_ceiling {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at bloodrager level {level} (access ceiling {access_ceiling})"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level) - 1] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index];
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {} over-known: {count} distinct spells known but only {cap} slots \
+                 available on the Bloodrager Spells Known table at level {level}",
+                index + 1
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Grounds the real known-spell posture, or claim-blocks it with the
+/// specific unmet reasons (task #87). Mirrors
+/// `ground_or_block_skald_known_spells`'s own two-branch shape.
+///
+/// Called from all three of `ground_or_block_bloodrager_bloodrage`'s exit
+/// paths (not-raging, invalid activation, and the active/rounds-exceeded
+/// tail) so the posture is evaluated identically regardless of bloodrage
+/// state -- which spells a bloodrager knows does not depend on whether he
+/// is currently raging.
+fn ground_or_block_bloodrager_known_spells(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if level < BLOODRAGER_FIRST_CASTING_LEVEL {
+        return;
+    }
+    let unmet = unmet_bloodrager_known_spell_conditions(input, level);
+    if unmet.is_empty() {
+        ground_bloodrager_known_spells(input, level, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported".to_owned(),
+            message: format!(
+                "{BLOODRAGER_CLASS_ID} known-spell posture is not satisfied: {}",
+                unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+}
+
+/// Grounds the real Bloodrager known-spell posture once
+/// `unmet_bloodrager_known_spell_conditions` reports an empty unmet list
+/// (task #87), mirroring `ground_skald_known_spells`.
+fn ground_bloodrager_known_spells(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == BLOODRAGER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.bloodrager.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Bloodrager level {level} known-spell selection ({} spells, \
+             AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
+             Bloodrager spell list (`acg::bloodrager_spell_list`, 200 corpus-verified entries \
+             extracted from its own `SPELLLIST:1|Bloodrager` token -- its own list, not a \
+             borrowed one), against the access ceiling derived from the shipped Spells Known \
+             table, and against that table's own per-level caps. Real PF1 Bloodrager rules have \
+             no daily preparation step (spontaneous) -- known spells are permanent once learned \
+             and cast using the already-grounded per-day slot totals. This grounds the \
+             known-spell SELECTION for real; it computes no spell save DC resolution against a \
+             target and no casting execution, and the Bloodline bonus spells remain deferred",
+            known.len(),
+            if known.is_empty() { "none".to_owned() } else { known.join(", ") }
+        ),
+    });
+}
+
 fn ground_bloodrager_spell_tables(
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
@@ -17677,9 +17872,13 @@ fn ground_bloodrager_spell_tables(
             value: *known_count,
             detail: format!(
                 "Bloodrager level {level} spells known at spell level {spell_level}: \
-                 {known_count}, read directly from the class block's own KNOWN: token. Which \
-                 specific spells are known is not grounded -- Bloodrager's own 183-entry spell \
-                 list is not built in this slice"
+                 {known_count}, read directly from the class block's own KNOWN: token. This is \
+                 the SLOT COUNT; which specific spells are known is grounded separately by \
+                 `class_spell.acg.bloodrager.known_spells`, validated against the real \
+                 200-entry `acg::bloodrager_spell_list` (task #87). This detail previously said \
+                 that list was \"not built\" and called it \"183-entry\": both were stale -- the \
+                 list has been built since task #1, and 183 was its pre-correction count from \
+                 before its own generation bug (short by 17) was fixed"
             ),
         });
     }
@@ -41142,11 +41341,13 @@ mod raging_climber_and_swimmer_tests {
 #[cfg(test)]
 mod bloodrager_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, BLOODRAGER_CLASS_ID, BLOODRAGER_BLOODRAGE_ABILITY_ID,
-        FIGHTER_CLASS_ID,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
+        CharacterInput, HeadlessReceiptStatus, BLOODRAGER_CLASS_ID,
+        BLOODRAGER_BLOODRAGE_ABILITY_ID, FIGHTER_CLASS_ID,
     };
-    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, ClassAbilityActivation, SpellSelection,
+    };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -41531,6 +41732,175 @@ mod bloodrager_dispatch_widening_safety_tests {
         assert_eq!(super::bloodrager_spells_per_day(13).unwrap()[3], 1);
     }
 
+    /// Task #87 wires the previously-orphaned
+    /// `acg::bloodrager_spell_list` (200 corpus-verified entries, zero
+    /// consumers before this) into a real known-spell validator, mirroring
+    /// Skald's own spontaneous three-part shape.
+    ///
+    /// A single-class Bloodrager at level 4 (spells known `[2, 0, 0, 0]`,
+    /// so a cap of two 1st-level spells and no access above 1st) knowing
+    /// exactly two real 1st-level Bloodrager spells is a genuinely valid
+    /// posture: the selection grounds and its own posture diagnostic must
+    /// not fire.
+    #[test]
+    fn bloodrager_with_a_valid_known_spell_posture_grounds_the_selection() {
+        let mut input = human_bloodrager_input(4);
+        for spell_id in ["Burning Hands", "Blade Lash"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: BLOODRAGER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported"),
+            "two real 1st-level spells is within bloodrager level 4's cap of 2: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.bloodrager.known_spells")
+            .expect("the known-spell posture must be grounded");
+        assert_eq!(known.value, 2, "expected 2 known spells grounded: {known:?}");
+    }
+
+    /// A spell that is genuinely NOT on Bloodrager's own list must trip
+    /// the posture. This is the assertion that actually proves the list is
+    /// wired: it can only pass if `bloodrager_spell_level` is consulted.
+    /// "Cure Light Wounds" is real PF1 content and is verifiably absent
+    /// from `BLOODRAGER_SPELL_LIST`.
+    #[test]
+    fn bloodrager_knowing_an_off_list_spell_trips_the_posture() {
+        let mut input = human_bloodrager_input(4);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: BLOODRAGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported"),
+            "an off-list spell must not be silently accepted: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Over-knowing the real per-level cap trips the posture: bloodrager
+    /// level 4 knows only two 1st-level spells.
+    #[test]
+    fn bloodrager_over_knowing_its_cap_trips_the_posture() {
+        let mut input = human_bloodrager_input(4);
+        for spell_id in ["Burning Hands", "Blade Lash", "Break"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: BLOODRAGER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported"),
+            "3 first-level spells over-knows level 4's cap of 2: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A real Bloodrager spell of a level the character cannot yet access
+    /// trips the posture. Acid Arrow is a real 2nd-level Bloodrager spell;
+    /// a level-4 bloodrager's access ceiling is 1st.
+    #[test]
+    fn bloodrager_knowing_above_its_access_ceiling_trips_the_posture() {
+        let mut input = human_bloodrager_input(4);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Acid Arrow".to_owned(),
+            source_class_id: BLOODRAGER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported"),
+            "a 2nd-level spell is not accessible at bloodrager level 4: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The access ceiling is DERIVED from the shipped spells-known table
+    /// rather than transcribed separately, so it cannot drift from its
+    /// own source. Bloodragers have NO 0-level spells, so the ceiling is
+    /// never 0 for a caster and the table is indexed 1-4, not 0-4 --
+    /// the off-by-one that copying Skald's own 0-indexed shape would
+    /// have introduced.
+    #[test]
+    fn the_access_ceiling_tracks_the_shipped_spells_known_table() {
+        for level in 4..=20u8 {
+            let known = super::bloodrager_spells_known(level).expect("table row exists");
+            let expected =
+                known.iter().rposition(|count| *count > 0).map_or(0, |index| index as i16 + 1);
+            assert_eq!(
+                super::bloodrager_spell_level_access(level),
+                expected,
+                "level {level}'s ceiling must be the highest spell level it can know"
+            );
+        }
+        assert_eq!(super::bloodrager_spell_level_access(4), 1, "level 4 reaches only 1st");
+        assert_eq!(super::bloodrager_spell_level_access(13), 4, "4th-level access begins at 13");
+    }
+
+    /// Anti-orphan regression guard (task #87). The spell list sat built
+    /// but with ZERO consumers from task #1 until #87, which is how a
+    /// diagnostic came to claim it was "not built" for that whole span --
+    /// nothing exercised it, so nothing contradicted the claim.
+    ///
+    /// This test fails if the validator ever stops consulting the real
+    /// list, which is the specific way that regression would recur: a
+    /// validator that accepted any spell id would still pass every
+    /// happy-path assertion above. Two spells that differ ONLY in whether
+    /// they are on Bloodrager's list must produce different postures.
+    #[test]
+    fn the_known_spell_validator_actually_consults_the_real_spell_list() {
+        let posture_holds = |spell_id: &str| {
+            let mut input = human_bloodrager_input(4);
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: BLOODRAGER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+            !build_pilot_headless_receipt(&input).computation.diagnostics.iter().any(|d| {
+                d.id == "class_spell.acg.bloodrager.spontaneous_known_and_per_day.unsupported"
+            })
+        };
+
+        assert!(
+            super::acg::bloodrager_spell_list::bloodrager_spell_level("Burning Hands").is_some(),
+            "fixture assumption: Burning Hands IS on the real list"
+        );
+        assert!(
+            super::acg::bloodrager_spell_list::bloodrager_spell_level("Cure Light Wounds")
+                .is_none(),
+            "fixture assumption: Cure Light Wounds is NOT on the real list"
+        );
+        assert!(posture_holds("Burning Hands"), "an on-list spell must be accepted");
+        assert!(
+            !posture_holds("Cure Light Wounds"),
+            "an off-list spell must be rejected -- if this passes, the validator is no longer \
+             consulting the real spell list and the module is effectively orphaned again"
+        );
+    }
 }
 
 /// v0.6 alpha swarm, risks item 8 (Hunter deepening, 2026-07-26, task
