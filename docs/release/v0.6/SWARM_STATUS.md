@@ -1753,7 +1753,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-28T07:10:06
-Latest commit on tranche/6: 5289857b docs(v0.6): sync task #56 closure (51c28a0b) + wrong-base-detection nuance (risks item 86 follow-up) (5 minutes ago) (2026-07-28T07:05:30-04:00)
+Last mechanical check: 2026-07-28T07:16:33
+Latest commit on tranche/6: 80465e31 chore(v0.6): auto-heartbeat refresh [skip lead-review] (6 minutes ago) (2026-07-28T07:10:09-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-27T22:34:17 frontend=unknown qa=unknown lead=2026-07-27T22:34:34
 <!-- AUTO-HEARTBEAT-END -->
