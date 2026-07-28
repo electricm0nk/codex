@@ -1745,6 +1745,10 @@ Also: the background workspace sweep started to close #52's own honest verificat
 
 Standing lesson recorded (risks item 83): a stranded teammate worktree under its own session's `/tmp` scratchpad is invisible to everyone else until someone finds it and commits it to a real, pushed branch. Worth checking `git worktree list` whenever a teammate goes silent or hits a session limit.
 
+**Update (2026-07-27, ~20:50 ET): backend correctly declined the #49 handoff rather than half-start it on low remaining context — ratifying the call, not overriding it.** Backend weighed the task's real shape (unverified branch, three commits needing independent re-derivation, a continue-vs-restart judgment call, then seven features plus a cap widening touching every Monk level gate) against its own remaining capacity and declined, naming the exact right failure mode to avoid: a half-verified widening stranded in the shared checkout is the same shape as the earlier #39-inside-#38 incident, just risking featmate's preserved work instead of its own. Left three real handoff notes before signing off — the two-branch gate-absence convention now used post-#46, #52's text correction being accurate, and the level-12 ceiling being referenced across four Monk progression test files beyond the constant itself — all folded into #49's description.
+
+Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (resets 9:40pm ET), backend wrapped up. Released back to pending rather than pushed onto anyone without room to do it safely. Everything else stays queued and untouched.
+
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
 Last mechanical check: 2026-07-27T22:30:02
