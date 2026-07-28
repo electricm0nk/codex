@@ -1783,7 +1783,7 @@ Task #50 (Skald) had two clean commits ready but conflicted against #54's later 
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-28T09:20:02
-Latest commit on tranche/6: 60a8ec8a docs(v0.6): sync task #49 closure -- Monk cap widened to 20, capstones grounded (2 minutes ago) (2026-07-28T09:18:16-04:00)
+Last mechanical check: 2026-07-28T09:25:02
+Latest commit on tranche/6: 36980d2f feat(v0.6): Skald Well-Versed + Spell Kenning + Lore Master + Versatile Performance + Rage Powers pool-size (task #50, part 2) (32 seconds ago) (2026-07-28T09:24:30-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-27T22:34:17 frontend=unknown qa=unknown lead=2026-07-27T22:34:34
 <!-- AUTO-HEARTBEAT-END -->
