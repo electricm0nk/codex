@@ -133,6 +133,7 @@ use super::rules_tables::crb::druid_spell_list;
 use super::rules_tables::crb::ranger_spell_list;
 use super::rules_tables::crb::sorcerer_spell_list;
 use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use super::rules_tables::crb::weapon_tables;
 use super::rules_tables::RuleSetId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
@@ -6434,6 +6435,16 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         base_attack_bonus,
         &mut explanations,
         &mut diagnostics,
+    );
+
+    // Stage 2 (task #72): additive per-weapon totals, independent of the
+    // GE-06 posture gate above -- an unsupported baseline posture must not
+    // suppress a weapon's own real attack total.
+    ground_per_weapon_attack_totals(
+        input,
+        &ability_modifiers,
+        base_attack_bonus,
+        &mut explanations,
     );
 
     let total_saves = compute_total_saves(
@@ -33651,6 +33662,96 @@ pub(crate) fn require_selected_skill_rank(
         ));
     }
 }
+/// Folds an equipment `item_id` (`"item:longsword"`) or a
+/// `weapon_tables` key (`"Longsword"`) down to one comparable identity:
+/// lowercase, alphanumeric only, with any `item:` prefix dropped.
+///
+/// **This is deliberately a SECOND instance of the same idea as the
+/// desktop app's `normalizeFeatIdentity`, not a shared helper**, and the
+/// reason is structural rather than an oversight: that one is TypeScript
+/// in `apps/desktop/src/characterHub/featsTabModel.ts`, folding feat
+/// identities for the sheet; this is Rust in `rules_core`, folding weapon
+/// identities for the engine. Different languages, different processes,
+/// no seam between them to share across. If a third instance ever appears
+/// *within* Rust, that one should be shared with this rather than added.
+fn normalize_weapon_identity(raw: &str) -> String {
+    let without_prefix = raw.strip_prefix("item:").unwrap_or(raw);
+    without_prefix
+        .chars()
+        .filter(|c| c.is_ascii_alphanumeric())
+        .map(|c| c.to_ascii_lowercase())
+        .collect()
+}
+
+/// Resolves an equipment `item_id` to its real corpus weapon stat block,
+/// or `None` when the item is not a weapon this engine has ingested
+/// (armor, gear, or a weapon outside the CRB table).
+fn equipped_weapon_stat_block(item_id: &str) -> Option<&'static weapon_tables::WeaponTableEntry> {
+    let wanted = normalize_weapon_identity(item_id);
+    weapon_tables::WEAPON_TABLE
+        .iter()
+        .find(|entry| normalize_weapon_identity(entry.key) == wanted)
+}
+
+/// Grounds a per-weapon attack total for every equipped weapon that
+/// resolves against the ingested CRB weapon table (task #72, stage 2).
+///
+/// **Additive by design.** This does NOT touch
+/// `combat.baseline_melee_attack_bonus`, which is a single-fixture GE-06
+/// special case hardcoded to the Longsword (its own detail string says
+/// so) and asserted against by a large number of existing suites.
+/// Generalising that one -- widening its posture gate and driving its
+/// hardcoded `WEAPON_FOCUS_TO_HIT_BONUS` off the real
+/// `choice:weapon_focus_target` chooser -- is genuinely separate surgery,
+/// deferred as its own task (#80). Until then the two coexist, and this
+/// is the surface the Focus feats will wire into.
+///
+/// The arithmetic here is deliberately only base attack bonus + Strength:
+/// feat contributions are stage 3, and grounding them here would
+/// double-count against the feats' own records once those land.
+fn ground_per_weapon_attack_totals(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    base_attack_bonus: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let strength_modifier = ability_modifiers.strength;
+    let mut grounded: Vec<&str> = Vec::new();
+
+    for selection in &input.chosen.equipment_selections {
+        if selection.active_state != ActiveState::EquippedActive {
+            continue;
+        }
+        let Some(weapon) = equipped_weapon_stat_block(&selection.item_id) else {
+            continue;
+        };
+        if grounded.contains(&weapon.key) {
+            continue;
+        }
+        grounded.push(weapon.key);
+
+        let attack_total = base_attack_bonus + strength_modifier;
+        let slug = normalize_weapon_identity(weapon.key);
+        let threat_low = weapon_tables::weapon_critical_threat_low(weapon);
+        explanations.push(ComputationExplanation {
+            id: format!("combat.weapon_attack_bonus.{slug}"),
+            value: attack_total,
+            detail: format!(
+                "Attack bonus with the equipped {}: base attack bonus (+{base_attack_bonus}) + Strength \
+                 modifier ({strength_modifier:+}) = {attack_total}. The weapon's own corpus \
+                 stat block is {} damage, threat {}-20/x{} (CRITRANGE is a width, so the \
+                 threat range is 21-width..=20). This total carries NO feat contributions \
+                 yet -- Weapon Focus, Weapon Specialization, Greater Weapon Specialization \
+                 and Improved Critical wire into it in this task's next stage, and grounding \
+                 them here would double-count against their own records. Separate from \
+                 combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 \
+                 fixture total until task #80 generalises it",
+                weapon.key, weapon.damage_die, threat_low, weapon.critical_multiplier
+            ),
+        });
+    }
+}
+
 
 /// Compute the deterministic baseline melee attack bonus and armor class, or
 /// block the claim if the input is not the exact supported pilot posture.
@@ -45928,6 +46029,103 @@ mod bloodrager_remaining_features_tests {
             value(20, "class_feature.acg.bloodrager.bloodrage_tier_ability_bonus"),
             Some(8),
             "Mighty Bloodrage must still be named"
+        );
+    }
+}
+
+#[cfg(test)]
+mod per_weapon_attack_total_tests {
+    use super::{
+        build_pilot_headless_receipt, equipped_weapon_stat_block, normalize_weapon_identity,
+        CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn fixture() -> CharacterInput {
+        load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture")
+    }
+
+    /// The join this stage exists to make: equipment ids are
+    /// `item:longsword`, the weapon table's keys are corpus display names
+    /// like `Longsword`. Both must fold to one identity.
+    #[test]
+    fn the_identity_fold_joins_equipment_ids_to_weapon_table_keys() {
+        assert_eq!(normalize_weapon_identity("item:longsword"), "longsword");
+        assert_eq!(normalize_weapon_identity("Longsword"), "longsword");
+        assert_eq!(
+            normalize_weapon_identity("item:longsword"),
+            normalize_weapon_identity("Longsword"),
+            "the two shapes must join"
+        );
+        // Punctuation and spacing differences fold away too.
+        assert_eq!(normalize_weapon_identity("Pick (Heavy)"), "pickheavy");
+    }
+
+    #[test]
+    fn equipment_ids_resolve_to_real_stat_blocks_and_non_weapons_do_not() {
+        let longsword = equipped_weapon_stat_block("item:longsword").expect("longsword resolves");
+        assert_eq!(longsword.key, "Longsword");
+        assert_eq!(longsword.damage_die, "1d8");
+        // Armor is equipment but not a weapon -- must not resolve.
+        assert!(equipped_weapon_stat_block("item:chain_shirt").is_none());
+        assert!(equipped_weapon_stat_block("item:not_a_real_item").is_none());
+    }
+
+    /// The deterministic fixture equips a Longsword, so a real per-weapon
+    /// total must appear through the live receipt.
+    #[test]
+    fn the_equipped_weapon_gets_a_real_attack_total() {
+        let receipt = build_pilot_headless_receipt(&fixture());
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
+            .expect("the equipped Longsword must ground a per-weapon attack total");
+        // Fighter level 1 BAB is +1; the fixture's Strength is 18 -- base
+        // chosen score 16 plus the Human +2 racial, applied BEFORE modifiers
+        // are derived -- so the modifier is +4, not +3. Confirmed against the
+        // fixture's own ability_modifier.strength record rather than fitted
+        // to the output. No feat contributions at this stage by design.
+        assert_eq!(record.value, 5, "BAB(+1) + STR(+4), no feats yet: {record:?}");
+    }
+
+    /// Stage 2 is additive: the pre-existing GE-06 baseline total must be
+    /// untouched and still present alongside the new record.
+    #[test]
+    fn the_existing_ge06_baseline_total_is_left_intact() {
+        let receipt = build_pilot_headless_receipt(&fixture());
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "combat.baseline_melee_attack_bonus"),
+            "the Longsword-specific baseline must survive this stage unchanged"
+        );
+    }
+
+    /// Feat contributions belong to stage 3. If they were folded in here
+    /// they would double-count against the feats' own records, so the
+    /// total must NOT include Weapon Focus even though the fixture has it.
+    #[test]
+    fn the_per_weapon_total_carries_no_feat_contributions_yet() {
+        let receipt = build_pilot_headless_receipt(&fixture());
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
+            .expect("present");
+        assert_eq!(
+            record.value, 5,
+            "must be BAB(+1) + STR(+4) only; the fixture carries Weapon Focus (Longsword) and the GE-06 baseline total DOES add it, but this one deliberately does not yet -- if this ever reads 6, stage 3 has double-counted"
         );
     }
 }
