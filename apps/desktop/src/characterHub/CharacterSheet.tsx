@@ -18,6 +18,7 @@ import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import { resolveSelectedFeatEntries } from './featsTabModel';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
   buildLevelEntries,
@@ -1038,8 +1039,50 @@ function ActionsTab(props: { levelEntries: LevelEntry[] }) {
  * Add Feat picker + the character's full persisted feat list, sourced from
  * `load_saved_character`'s `selectedFeats` field (backend commit `1509124`)
  * — real, complete, not just feats added this session.
+ *
+ * Each entry in `selectedFeats` is a raw internal selection string, not
+ * display text — and not even a single consistent shape: it may be the
+ * catalog's own human-readable `key` (e.g. `"Deflect Arrows"`, what the
+ * "Add Feat" picker itself pushes) or the rules engine's lowercase
+ * `feat:snake_case` selection token (e.g. `"feat:deflect_arrows"`, what
+ * character creation seeds and `pilot_compute.rs`'s gates match against —
+ * see `featsTabModel.ts`'s doc comment for the full trace). This tab loads
+ * the same real `listFeats` catalog the picker loads (unfiltered, once per
+ * mount) and resolves each selected feat to its catalog name + description
+ * via `resolveSelectedFeatEntries`. This is not cosmetic: some feats (e.g.
+ * Deflect Arrows — see `pilot_compute.rs` around line 24487) carry no
+ * numeric magnitude anywhere in the rules engine at all; the description
+ * text rendered here is their complete, correct mechanical representation.
+ * A selected feat that resolves to no catalog entry (a non-CRB feat, since
+ * today's catalog is CRB-only — see `feat_catalog.rs`'s own doc comment —
+ * or any other genuine mismatch) falls back to the raw string rather than
+ * being hidden or shown blank.
  */
 function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
+  const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    listFeats({ nameContains: null, category: null })
+      .then((response) => {
+        if (!cancelled) {
+          setCatalog(mapFeatCatalogEntries(response.entries));
+        }
+      })
+      .catch(() => {
+        // Falls back to the raw-string rendering below (via an empty
+        // catalog, so every feat resolves to `entry: null`) rather than
+        // an alarming error — the raw strings are still real, honest data.
+        if (!cancelled) {
+          setCatalog([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const resolvedFeats = resolveSelectedFeatEntries(props.selectedFeats, catalog ?? []);
+
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
@@ -1050,14 +1093,19 @@ function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
           Add Feat
         </button>
       </div>
-      {props.selectedFeats.length === 0 ? (
+      {resolvedFeats.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No feats selected yet.
         </p>
       ) : (
-        props.selectedFeats.map((featId, index) => (
-          <div key={`${featId}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{featId}</span>
+        resolvedFeats.map((row, index) => (
+          <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+            {row.entry ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>
+                {row.entry.detail}
+              </p>
+            ) : null}
           </div>
         ))
       )}
