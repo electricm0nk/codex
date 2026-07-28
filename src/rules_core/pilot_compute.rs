@@ -15531,6 +15531,88 @@ fn active_skald_inspired_rage_bonus(
     Some((skald_level, strength_constitution_bonus, will_save_bonus))
 }
 
+/// Grounds Raging Climber's and Raging Swimmer's shared `RagePowersLVL`
+/// magnitude as two explanation records (task #54, canonical-narrowing
+/// follow-on to #53's `rage-powers-canonical-narrowing-scoping.md`: a
+/// 60-record Rage Powers chooser family with zero magnitudes grounded
+/// before this pair). Called from both `ground_or_block_barbarian_rage`
+/// and `ground_or_block_skald_inspired_rage`, at each of their own
+/// "currently raging/singing or not" branch points, so the grounded
+/// records read the SAME activation truth the rage-execution engine
+/// itself already established rather than re-deriving it independently --
+/// they cannot disagree.
+///
+/// Corpus (verified directly against `cr_abilities_class.lst`, `KEY:Rage
+/// Power ~ Raging Climber` / `~ Raging Swimmer`):
+/// `BONUS:VAR|RagingClimberBonus|RagePowersLVL` /
+/// `BONUS:VAR|RagingSwimmerBonus|RagePowersLVL` (no arithmetic -- the
+/// magnitude IS the level) and
+/// `BONUS:SKILL|Climb|RagingClimberBonus|PREVAREQ:Raging,1` /
+/// `BONUS:SKILL|Swim|RagingSwimmerBonus|PREVAREQ:Raging,1`. Grounds BOTH
+/// branches ("ground the absence, don't omit it"): while actively raging/
+/// singing, the magnitude is `level` (= RagePowersLVL); while not, an
+/// honest value-0 "not currently benefiting" record -- unlike a
+/// level-gated feature, `PREVAREQ:Raging,1` makes the corpus bonus itself
+/// entirely conditional on the active-Raging state, not on level alone.
+///
+/// This is the canonical-narrowing representative of the wider Rage
+/// Powers family: it does NOT validate that the character actually
+/// selected Raging Climber or Raging Swimmer among their own limited
+/// rage-power slots -- that chooser-selection enforcement is the same
+/// still-open engine burden every one of the other 58 named-but-unmodeled
+/// rage powers in the family carries (see `BARBARIAN_RAGE_POWER_SLOTS`'s
+/// own open-ended, unvalidated selection recognitions, which record
+/// WHICH power string was picked but apply no power's effect). Applying
+/// this magnitude unconditionally to every actively-raging Barbarian/
+/// Skald is the deliberate canonical-narrowing simplification #53's own
+/// scoping doc recommends, not an oversight.
+fn ground_raging_climber_and_swimmer(
+    level: u8,
+    class_label: &str,
+    id_prefix: &str,
+    is_raging: bool,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let magnitude = if is_raging { i16::from(level) } else { 0 };
+
+    for (power_name, bonus_var, skill) in [
+        ("Raging Climber", "RagingClimberBonus", "Climb"),
+        ("Raging Swimmer", "RagingSwimmerBonus", "Swim"),
+    ] {
+        let slug = power_name.to_lowercase().replace(' ', "_");
+        let detail = if is_raging {
+            format!(
+                "{class_label} level {level} {power_name} (PF1 Core Rulebook rage power, \
+                 canonical-narrowing representative of the 60-record Rage Powers family, task \
+                 #54/#53): while raging, a +{magnitude} enhancement bonus to all {skill} skill \
+                 checks (corpus BONUS:VAR|{bonus_var}|RagePowersLVL, no arithmetic; \
+                 RagePowersLVL = {class_label}LVL directly). Gated on the same active-Raging \
+                 state as the rage-execution engine above (corpus \
+                 BONUS:SKILL|{skill}|{bonus_var}|PREVAREQ:Raging,1), integrated into the real \
+                 {skill} total in compute_selected_skill_modifiers. This grounds the magnitude \
+                 formula only, unconditionally for any actively raging {class_label} -- it does \
+                 not validate that {power_name} was actually chosen among the character's \
+                 limited rage-power slots (out of scope per #53's own canonical-narrowing \
+                 recommendation; see ground_raging_climber_and_swimmer's own doc comment)"
+            )
+        } else {
+            format!(
+                "{class_label} level {level} {power_name}: not currently raging, so no \
+                 enhancement bonus to {skill} is claimed (corpus \
+                 BONUS:SKILL|{skill}|{bonus_var}|PREVAREQ:Raging,1 is entirely conditional on \
+                 the active-Raging state, unlike a level-gated feature). Mirrors the \
+                 rage-execution engine's own \"not raging\" posture above -- a genuinely valid \
+                 PF1 state, not a claim-blocking one"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("{id_prefix}.{slug}"),
+            value: magnitude,
+            detail,
+        });
+    }
+}
+
 /// Grounds or claim-blocks Skald's Inspired Rage execution engine for
 /// `skald_level` (v0.6 alpha swarm, risks item 8, first APG/ACG closure).
 /// Called from `compute_acg_class_chassis`'s Skald branch, gated only on
@@ -15547,6 +15629,11 @@ fn active_skald_inspired_rage_bonus(
 /// state and is pushed exactly once from the top-level Skald dispatch
 /// branch, alongside `ground_or_block_skald_spellcasting`'s own call. See
 /// `push_skald_other_features_deferred_diagnostic`'s own doc comment.
+///
+/// Also grounds Raging Climber/Swimmer's shared RagePowersLVL magnitude
+/// (task #54) at each of the three branch points below, via
+/// `ground_raging_climber_and_swimmer` -- see that function's own doc
+/// comment.
 fn ground_or_block_skald_inspired_rage(
     input: &CharacterInput,
     skald_level: u8,
@@ -15572,6 +15659,13 @@ fn ground_or_block_skald_inspired_rage(
                  active, in-budget activation is present"
             ),
         });
+        ground_raging_climber_and_swimmer(
+            skald_level,
+            "Skald",
+            "class_feature.acg.skald",
+            false,
+            explanations,
+        );
         return;
     };
 
@@ -15620,6 +15714,13 @@ fn ground_or_block_skald_inspired_rage(
                      yourself\""
                 ),
             });
+            ground_raging_climber_and_swimmer(
+                skald_level,
+                "Skald",
+                "class_feature.acg.skald",
+                true,
+                explanations,
+            );
         }
         ActiveState::SelectedInactive | ActiveState::Absent => {
             explanations.push(ComputationExplanation {
@@ -15632,6 +15733,13 @@ fn ground_or_block_skald_inspired_rage(
                      penalty, or budget is claimed"
                 ),
             });
+            ground_raging_climber_and_swimmer(
+                skald_level,
+                "Skald",
+                "class_feature.acg.skald",
+                false,
+                explanations,
+            );
         }
     }
 }
@@ -15765,17 +15873,30 @@ fn ground_skald_bardic_knowledge(level: u8, explanations: &mut Vec<ComputationEx
 /// `ground_skald_damage_reduction`/`ground_skald_bardic_knowledge`).
 /// Pushed exactly once from the top-level Skald dispatch branch,
 /// independent of any of these features' own state.
+///
+/// **Updated again (task #54, 2026-07-28)**: Raging Climber's and Raging
+/// Swimmer's own self-use magnitude (while singing, landing on the real
+/// Climb/Swim totals) are also no longer named as missing here -- see
+/// `ground_raging_climber_and_swimmer`. This does NOT mean Skald's Rage
+/// Powers feature at large is grounded: the pool-count formula
+/// (`RagePowersLVL/3`) and the ally-granting "shared-list access" stay
+/// fully deferred, and 58 of the 60-record Rage Powers family remain
+/// entirely unmodeled -- only these two canonical-narrowing
+/// representatives' own magnitude is real.
 fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Inspired Rage, known-spell posture, self-only Damage Reduction, and Bardic \
-             Knowledge: this ACG class has no class-skill list and no other named class feature \
-             (Lore Master, Rage Powers shared-list access, Spell Kenning, Versatile Performance, \
-             Well-Versed, Dirge of Doom, Song of Marching, Song of Strength, Song of the Fallen, \
-             and Damage Reduction's own ally-extension) grounded anywhere in this codebase yet; \
-             no class-feature execution is fabricated in this bounded chassis baseline"
+             pillar, Inspired Rage, known-spell posture, self-only Damage Reduction, Bardic \
+             Knowledge, and Raging Climber/Raging Swimmer's own self-use magnitude (two of the \
+             60-record Rage Powers family, landing on the real Climb/Swim totals): this ACG \
+             class has no class-skill list and no other named class feature (Lore Master, the \
+             Rage Powers pool-count and ally-granting shared-list access plus the other 58 \
+             named-but-unmodeled rage powers, Spell Kenning, Versatile Performance, Well-Versed, \
+             Dirge of Doom, Song of Marching, Song of Strength, Song of the Fallen, and Damage \
+             Reduction's own ally-extension) grounded anywhere in this codebase yet; no \
+             class-feature execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -23482,6 +23603,13 @@ fn ground_or_block_barbarian_rage(
                  is present"
             ),
         });
+        ground_raging_climber_and_swimmer(
+            barbarian_level,
+            "Barbarian",
+            "class_feature.barbarian",
+            false,
+            explanations,
+        );
         return;
     };
 
@@ -23547,6 +23675,13 @@ fn ground_or_block_barbarian_rage(
                     claim_blocking: false,
                 });
             }
+            ground_raging_climber_and_swimmer(
+                barbarian_level,
+                "Barbarian",
+                "class_feature.barbarian",
+                true,
+                explanations,
+            );
         }
         ActiveState::SelectedInactive | ActiveState::Absent => {
             explanations.push(ComputationExplanation {
@@ -23559,6 +23694,13 @@ fn ground_or_block_barbarian_rage(
                      raging), so no rage bonus, penalty, or budget is claimed"
                 ),
             });
+            ground_raging_climber_and_swimmer(
+                barbarian_level,
+                "Barbarian",
+                "class_feature.barbarian",
+                false,
+                explanations,
+            );
         }
     }
 }
@@ -31648,6 +31790,29 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
     })
 }
 
+/// The `RagePowersLVL` magnitude Raging Climber/Raging Swimmer contribute
+/// to `compute_selected_skill_modifiers`'s Climb and Swim totals (task
+/// #54), or 0 when the character is not currently, validly raging/singing.
+/// Reuses `active_barbarian_rage_bonus`/`active_skald_inspired_rage_bonus`
+/// directly rather than re-deriving the rage/Inspired-Rage activation and
+/// rounds-budget check a third time, so this can never disagree with
+/// `ground_raging_climber_and_swimmer`'s own records (see that function's
+/// doc comment for the full corpus citation and the canonical-narrowing
+/// scope note). Barbarian is checked first, then Skald -- a character who
+/// somehow satisfies both (a Barbarian/Skald multiclass actively raging
+/// AND singing at once) is not summed; this mirrors every other
+/// class-exclusive rage-shaped bonus in this engine, none of which stacks
+/// two sources of the "same" rage magnitude.
+fn active_rage_powers_level(input: &CharacterInput, ability_modifiers: &AbilityModifiers) -> i16 {
+    if let Some((barbarian_level, ..)) = active_barbarian_rage_bonus(input, ability_modifiers) {
+        return i16::from(barbarian_level);
+    }
+    if let Some((skald_level, ..)) = active_skald_inspired_rage_bonus(input, ability_modifiers) {
+        return i16::from(skald_level);
+    }
+    0
+}
+
 fn compute_selected_skill_modifiers(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -31756,20 +31921,33 @@ fn compute_selected_skill_modifiers(
         String::new()
     };
 
+    // v0.6 alpha swarm task #54: Raging Climber's / Raging Swimmer's shared
+    // RagePowersLVL magnitude (see active_rage_powers_level's own doc
+    // comment) -- class-ownership- and Raging-state-gated by construction,
+    // 0 for every non-Barbarian, non-Skald, or not-currently-raging
+    // character.
+    let raging_climber_swimmer_bonus = active_rage_powers_level(input, ability_modifiers);
+    let raging_climber_swimmer_detail = if raging_climber_swimmer_bonus > 0 {
+        format!(" + Raging Climber/Raging Swimmer enhancement bonus ({raging_climber_swimmer_bonus:+}, while raging)")
+    } else {
+        String::new()
+    };
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     let climb = rank
         + ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
         + touch_of_good_skill_bonus
-        + feat_skill_bonuses.climb;
+        + feat_skill_bonuses.climb
+        + raging_climber_swimmer_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
-             + feat bonus (+{}, Athletic if selected) = {climb}",
+             + feat bonus (+{}, Athletic if selected){raging_climber_swimmer_detail} = {climb}",
             ability_modifiers.strength, feat_skill_bonuses.climb
         ),
     });
@@ -31805,7 +31983,8 @@ fn compute_selected_skill_modifiers(
         + armor_check_penalty
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.swim
-        + flight_hex_swim_bonus;
+        + flight_hex_swim_bonus
+        + raging_climber_swimmer_bonus;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
@@ -31813,7 +31992,7 @@ fn compute_selected_skill_modifiers(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
-             (+{flight_hex_swim_bonus}) = {swim}",
+             (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail} = {swim}",
             ability_modifiers.strength, feat_skill_bonuses.swim
         ),
     });
@@ -38591,7 +38770,7 @@ mod skald_dispatch_widening_safety_tests {
             .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
             .expect("expected the other_features_deferred diagnostic");
         assert!(
-            deferred.message.contains("and Bardic Knowledge:"),
+            deferred.message.contains("Bardic Knowledge, and Raging Climber"),
             "expected the preamble to acknowledge Bardic Knowledge as grounded: {}",
             deferred.message
         );
@@ -38600,6 +38779,231 @@ mod skald_dispatch_widening_safety_tests {
             "the stale 'still missing' Bardic Knowledge-analog phrasing must be gone: {}",
             deferred.message
         );
+    }
+
+    /// Task #54: Raging Climber/Raging Swimmer's own self-use magnitude is
+    /// now grounded and no longer named as missing, but the wider Rage
+    /// Powers feature (pool-count, ally-granting shared-list access, and
+    /// the other 58 named-but-unmodeled powers) genuinely stays deferred.
+    #[test]
+    fn other_features_deferred_acknowledges_raging_climber_and_swimmer_but_not_the_wider_rage_powers_feature()
+    {
+        let input = human_skald_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
+            .expect("expected the other_features_deferred diagnostic");
+        assert!(
+            deferred.message.contains("Raging Climber/Raging Swimmer's own self-use magnitude"),
+            "expected the preamble to acknowledge Raging Climber/Raging Swimmer as grounded: {}",
+            deferred.message
+        );
+        assert!(
+            deferred.message.contains("Rage Powers pool-count and ally-granting shared-list access")
+                && deferred.message.contains("58 named-but-unmodeled rage powers"),
+            "expected the wider Rage Powers feature to still be named as deferred: {}",
+            deferred.message
+        );
+    }
+}
+
+/// Task #54: Raging Climber and Raging Swimmer, the two-power canonical-
+/// narrowing follow-on to #53's `rage-powers-canonical-narrowing-scoping.md`
+/// (60-record Rage Powers chooser family, only these two grounded). Both
+/// are purely passive (`BONUS:VAR|RagingClimberBonus|RagePowersLVL` /
+/// `BONUS:VAR|RagingSwimmerBonus|RagePowersLVL`, no arithmetic) and gated
+/// on the corpus's own `PREVAREQ:Raging,1` -- reusing
+/// `active_barbarian_rage_bonus`/`active_skald_inspired_rage_bonus`
+/// exactly, so the grounded records cannot disagree with the already-
+/// shipped rage-execution engine. Shared by Barbarian (`RagePowersLVL` =
+/// `BarbarianLVL`) and Skald (`RagePowersLVL` = `SkaldLVL`); Bloodrager's
+/// own `RagePowersLVL` connection is archetype-only (`Bloodrager
+/// Archetype ~ Primalist`), never base Bloodrager, so it is not credited.
+#[cfg(test)]
+mod raging_climber_and_swimmer_tests {
+    use super::{
+        compute_pilot_base_chassis, ActiveState, CharacterClassLevel, CharacterInput,
+        ComputationExplanation, BARBARIAN_CLASS_ID, BARBARIAN_RAGE_ABILITY_ID, SKALD_CLASS_ID,
+        SKALD_INSPIRED_RAGE_ABILITY_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, ClassAbilityActivation};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_barbarian_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BARBARIAN_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn human_skald_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SKALD_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn explanation<'a>(explanations: &'a [ComputationExplanation], id: &str) -> &'a ComputationExplanation {
+        explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation record {id}, got: {explanations:?}"))
+    }
+
+    fn climb_and_swim(input: &CharacterInput) -> (i16, i16) {
+        let computation = compute_pilot_base_chassis(input);
+        let climb = explanation(&computation.explanations, "skill.selected_modifier.climb").value;
+        let swim = explanation(&computation.explanations, "skill.selected_modifier.swim").value;
+        (climb, swim)
+    }
+
+    #[test]
+    fn barbarian_not_raging_grounds_absence_and_no_skill_bonus() {
+        let input = human_barbarian_input(5);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let climber = explanation(&computation.explanations, "class_feature.barbarian.raging_climber");
+        assert_eq!(climber.value, 0, "no bonus while not raging: {climber:?}");
+        let swimmer = explanation(&computation.explanations, "class_feature.barbarian.raging_swimmer");
+        assert_eq!(swimmer.value, 0, "no bonus while not raging: {swimmer:?}");
+
+        // Baseline: rank 1 + Strength modifier (16+2 Human bonus = 18 -> +4)
+        // + no class-skill bonus (this engine's `selected_skill_climb_is_
+        // class_skill`/`swim` do not list Barbarian) + Chain Shirt ACP (-2,
+        // no Fighter armor training since this isn't a Fighter) + 0 feat
+        // bonus = 3.
+        let (climb, swim) = climb_and_swim(&input);
+        assert_eq!(climb, 3, "unraged Barbarian Climb total must carry no Raging Climber bonus");
+        assert_eq!(swim, 3, "unraged Barbarian Swim total must carry no Raging Swimmer bonus");
+    }
+
+    #[test]
+    fn barbarian_actively_raging_applies_rage_powers_level_to_climb_and_swim() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let climber = explanation(&computation.explanations, "class_feature.barbarian.raging_climber");
+        assert_eq!(climber.value, 5, "RagePowersLVL = BarbarianLVL = 5 while raging: {climber:?}");
+        let swimmer = explanation(&computation.explanations, "class_feature.barbarian.raging_swimmer");
+        assert_eq!(swimmer.value, 5, "RagePowersLVL = BarbarianLVL = 5 while raging: {swimmer:?}");
+
+        let (climb, swim) = climb_and_swim(&input);
+        // Baseline 3 (see the not-raging test) + RagePowersLVL 5 + the extra
+        // +2 Strength modifier Rage's own tier-4 Strength score bonus adds
+        // (18 -> 22, +4 -> +6 modifier) = 10. Proves the two bonuses
+        // genuinely stack through the shared Strength-modifier term rather
+        // than double-counting or clobbering each other.
+        assert_eq!(climb, 10, "Raging Climber's +5 enhancement bonus must land on the real Climb total");
+        assert_eq!(swim, 10, "Raging Swimmer's +5 enhancement bonus must land on the real Swim total");
+    }
+
+    #[test]
+    fn barbarian_selected_but_inactive_rage_grounds_absence() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::SelectedInactive,
+            rounds_consumed_today: None,
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let climber = explanation(&computation.explanations, "class_feature.barbarian.raging_climber");
+        assert_eq!(climber.value, 0, "available but not raging must carry no bonus: {climber:?}");
+
+        let (climb, _swim) = climb_and_swim(&input);
+        assert_eq!(climb, 3, "an available-but-inactive rage must not inflate the Climb total");
+    }
+
+    #[test]
+    fn skald_not_singing_grounds_absence_and_no_skill_bonus() {
+        let input = human_skald_input(3);
+        let computation = compute_pilot_base_chassis(&input);
+
+        let climber = explanation(&computation.explanations, "class_feature.acg.skald.raging_climber");
+        assert_eq!(climber.value, 0, "no bonus while not singing: {climber:?}");
+        let swimmer = explanation(&computation.explanations, "class_feature.acg.skald.raging_swimmer");
+        assert_eq!(swimmer.value, 0, "no bonus while not singing: {swimmer:?}");
+    }
+
+    #[test]
+    fn skald_actively_singing_applies_rage_powers_level_to_climb_and_swim() {
+        let baseline = human_skald_input(3);
+        let (baseline_climb, baseline_swim) = climb_and_swim(&baseline);
+
+        let mut input = human_skald_input(3);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let climber = explanation(&computation.explanations, "class_feature.acg.skald.raging_climber");
+        assert_eq!(climber.value, 3, "RagePowersLVL = SkaldLVL = 3 while singing: {climber:?}");
+        let swimmer = explanation(&computation.explanations, "class_feature.acg.skald.raging_swimmer");
+        assert_eq!(swimmer.value, 3, "RagePowersLVL = SkaldLVL = 3 while singing: {swimmer:?}");
+
+        let (climb, swim) = climb_and_swim(&input);
+        // RagePowersLVL (3) + the extra +1 Strength modifier Inspired
+        // Rage's own tier-3 Strength score bonus adds (18 -> 20, +4 -> +5
+        // modifier) = +4 over baseline.
+        assert_eq!(climb, baseline_climb + 4, "Raging Climber's bonus must land on the real Climb total");
+        assert_eq!(swim, baseline_swim + 4, "Raging Swimmer's bonus must land on the real Swim total");
+    }
+
+    /// Class-ownership-gated by construction: a Fighter carrying a spoofed
+    /// `rage`/`inspired_rage` activation must never ground either record or
+    /// apply any bonus, mirroring `non_skald_characters_spoofed_inspired_rage_activation_is_ignored`.
+    #[test]
+    fn non_barbarian_non_skald_never_grounds_raging_climber_or_swimmer() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BARBARIAN_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("raging_climber") || e.id.contains("raging_swimmer")),
+            "a Fighter must never ground Raging Climber/Swimmer records, spoofed activations or \
+             not: {:?}",
+            computation.explanations
+        );
+
+        let (climb, swim) = climb_and_swim(&input);
+        // Fighter's own golden Climb/Swim total (rank 1 + Strength +4 +
+        // class-skill bonus +3 + Chain Shirt ACP -2 = 6, matching
+        // ge06_pilot_selected_skill_modifiers.rs's own golden value) must be
+        // unaffected by a stray Barbarian/Skald rage activation.
+        assert_eq!(climb, 6, "a Fighter's Climb total must never be inflated by a spoofed rage activation");
+        assert_eq!(swim, 6, "a Fighter's Swim total must never be inflated by a spoofed rage activation");
     }
 }
 

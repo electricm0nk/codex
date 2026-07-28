@@ -558,6 +558,24 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // the general spellcasting mechanism, not independently implemented"
     // reasoning that already excluded Oracle's known-spell posture,
     // Arcanist's Cantrips, and Warpriest's Orisons from their own counts.
+    //
+    // Skald's own count stays at 3, NOT 5, after task #54 grounded Raging
+    // Climber's and Raging Swimmer's real self-use magnitude (they now
+    // land on the real Climb/Swim totals in pilot_compute.rs): both are
+    // tagged `KEY:Rage Power ~ Raging Climber` / `~ Raging Swimmer` in the
+    // corpus, a DIFFERENT class-prefix namespace shared with Barbarian,
+    // not `KEY:Skald ~ ...`, so they fold into the still-fully-deferred
+    // `KEY:Skald ~ Rage Powers` slot rather than adding their own count --
+    // the exact same "different corpus class-prefix, fold into the slot"
+    // precedent Warpriest's own grounded Blessing minor powers
+    // (Destructive Attacks/Strength Surge, tagged `KEY:Destruction
+    // Blessing ~ ...`/`KEY:Strength Blessing ~ ...`) already established.
+    // The `KEY:Skald ~ Rage Powers` slot itself (the pool-count formula,
+    // `RagePowersLVL/3`, and the ally-granting "shared-list access")
+    // remains genuinely ungrounded -- #54 only grounds two of the wider
+    // 60-record Rage Powers family's own canonical-narrowing
+    // representatives' magnitude, per `rage-powers-canonical-narrowing-
+    // scoping.md`, not the slot mechanism that grants them.
     // Hunter ALSO counts a genuine 3 (Animal Companion, Wild Empathy,
     // Animal Focus -- deepening 2026-07-26, task #2): Wild Empathy is a
     // flat, unconditional check-modifier fact (`CHA+HunterLVL`), and
