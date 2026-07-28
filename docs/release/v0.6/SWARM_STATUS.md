@@ -1741,7 +1741,7 @@ Everything else in #63 held up exactly: the three real classes all use their bar
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-27T21:50:01
-Latest commit on tranche/6: 04a26835 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-27T21:45:02-04:00)
+Last mechanical check: 2026-07-27T21:55:01
+Latest commit on tranche/6: 2a2ae035 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-27T21:50:02-04:00)
 Last inbox activity (mtime proxy): backend=2026-07-27T19:33:06 frontend=unknown qa=unknown lead=2026-07-27T19:40:09
 <!-- AUTO-HEARTBEAT-END -->
