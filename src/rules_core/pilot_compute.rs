@@ -50697,8 +50697,18 @@ mod orphan_feat_producer_consumer_tests {
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     );
 
+    const WIZARD_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt"
+    );
+
     fn fighter() -> CharacterInput {
         load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture")
+    }
+
+    fn wizard() -> CharacterInput {
+        load_character_input_fixture(WIZARD_LEVEL_1_FIXTURE)
             .character_input
             .expect("valid fixture")
     }
@@ -50834,6 +50844,49 @@ mod orphan_feat_producer_consumer_tests {
             },
         );
         assert_eq!(value(&input, "feat.standalone.spell_focus.evocation"), Some(1));
+    }
+
+    /// Task #73 (Wizard-only Spell Focus, bounded slice off #69's
+    /// school-keyed-DC scoping). This is the class the slice was actually
+    /// scoped for -- the two tests above use the generic `fighter()`
+    /// fixture because the producer is genuinely class-agnostic (it reads
+    /// only `selected_feats` + `selected_choices`, never a class id), but
+    /// #73 asked specifically for a real Wizard fixture, so this closes
+    /// that literal coverage gap rather than leaving Wizard's own case
+    /// implied-but-unverified.
+    ///
+    /// The fixture Wizard already specializes in Evocation
+    /// (`choice:wizard_school_specialization -> school:evocation`) and
+    /// opposes Necromancy/Transmutation; Abjuration is chosen here
+    /// deliberately because it is neither, so this test cannot be
+    /// mistaken for exercising the specialization mechanic instead of
+    /// Spell Focus.
+    ///
+    /// Note for the record: this exact producer+consumer pair
+    /// (`feat_effects::spell_focus_facts_from_choices` and its
+    /// `feat.standalone.spell_focus.<school>` consumer in
+    /// `build_pilot_headless_receipt`) was already built and merged under
+    /// the session's earlier Mechanism-B Focus-feat work (`5d90dc91`,
+    /// 2026-07-27), before task #73 was greenlit off #69's scoping doc on
+    /// 2026-07-28. So #73's implementation was already shipped; this test
+    /// is the one real gap task #73 asked for and the prior work didn't
+    /// already cover -- Wizard-specific fixture verification -- not a
+    /// from-scratch build.
+    #[test]
+    fn a_real_wizard_fixture_grounds_spell_focus_for_its_chosen_school() {
+        let mut input = wizard();
+        assert!(
+            input.chosen.class_levels.iter().any(|c| c.class_id == "class:wizard"),
+            "must be a real Wizard fixture, not a stand-in"
+        );
+        input.chosen.selected_feats.push("Spell Focus".to_owned());
+        input.chosen.selected_choices.push(
+            crate::rules_core::character_input::SelectedChoice {
+                choice_set_id: "choice:spell_focus_target".to_owned(),
+                selection_id: "school:abjuration".to_owned(),
+            },
+        );
+        assert_eq!(value(&input, "feat.standalone.spell_focus.abjuration"), Some(1));
     }
 }
 
