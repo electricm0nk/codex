@@ -2603,17 +2603,19 @@ mod tests {
         // (`unmet_paladin_prepared_spell_conditions`) that only fires on a genuine
         // posture violation, and `compose_character_input` seeds no Paladin spell
         // selections, so the (valid, empty) posture no longer trips it. Only the
-        // still-untouched F6 hybrid-level-1 diagnostics remain, naming the
-        // non-spell class-feature burden and a separate, more general spell
-        // burden than the real one this slice grounds.
+        // hybrid spell burden remains: the sibling
+        // `class_feature.hybrid.paladin.unsupported` diagnostic was retired
+        // (tranche/6) because it flatly claimed Smite Evil / lay on hands / divine
+        // grace / mercy were unimplemented while the per-class decomposition
+        // dispatched on the same input grounds those burdens for real (or as
+        // correct level-1 absences) -- see
+        // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 1),
-            BTreeSet::from([
-                "class_feature.hybrid.paladin.unsupported".to_owned(),
-                "class_spell.hybrid.paladin.unsupported".to_owned(),
-            ]),
-            "Human Paladin L1 keeps only the F6 hybrid diagnostics; the real \
-             per-class spell-posture diagnostic no longer fires on a valid (empty) posture"
+            BTreeSet::from(["class_spell.hybrid.paladin.unsupported".to_owned(),]),
+            "Human Paladin L1 keeps only the F6 hybrid spell diagnostic; the retired \
+             non-spell class-feature diagnostic must not reappear, and the real per-class \
+             spell-posture diagnostic no longer fires on a valid (empty) posture"
         );
 
         // v0.6 alpha swarm, risks item 8 (2026-07-24): `table_class_id` now
@@ -2626,14 +2628,18 @@ mod tests {
         // it a real, conditional validation (mirrors the Paladin update just
         // above), and `compose_character_input` seeds no Ranger spell
         // selections, so a Human Ranger L1's (valid, empty) posture no longer
-        // trips it -- only the still-untouched F6 hybrid diagnostics remain.
+        // trips it. Only the hybrid spell burden remains: the sibling
+        // `class_feature.hybrid.ranger.unsupported` diagnostic was retired
+        // (tranche/6) because it flatly claimed favored enemy / combat style /
+        // tracking were unimplemented while the per-class decomposition
+        // dispatched on the same input grounds Track and the Favored Enemy flat
+        // surface for real -- see
+        // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:ranger", 1),
-            BTreeSet::from([
-                "class_feature.hybrid.ranger.unsupported".to_owned(),
-                "class_spell.hybrid.ranger.unsupported".to_owned(),
-            ]),
-            "Human Ranger L1 keeps only the F6 hybrid diagnostics; the real per-class \
+            BTreeSet::from(["class_spell.hybrid.ranger.unsupported".to_owned(),]),
+            "Human Ranger L1 keeps only the F6 hybrid spell diagnostic; the retired \
+             non-spell class-feature diagnostic must not reappear, and the real per-class \
              spell-posture diagnostic no longer fires on a valid (empty) posture"
         );
 

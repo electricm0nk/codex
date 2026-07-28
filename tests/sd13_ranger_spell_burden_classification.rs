@@ -187,30 +187,21 @@ fn ranger_level1_spell_burden_is_pinned_independently() {
         );
     }
 
-    // The non-spell class-feature burden must remain its own claim-blocking
-    // diagnostic, separate from the spell burden.
-    let feature = claim_blocking(&computation, "class_feature.hybrid.ranger.unsupported");
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "ranger class-feature diagnostic must name the '{token}' non-spell burden: {}",
-            feature.message
-        );
-    }
-
-    // The two Ranger-burden diagnostics must be emitted as distinct records so the
-    // spell burden can be lifted independently in a future slice.
+    // The non-spell class-feature burden diagnostic
+    // (`class_feature.hybrid.ranger.unsupported`) is retired: it flatly claimed
+    // favored enemy / combat style / tracking were unimplemented, which the
+    // per-class decomposition dispatched on this same input contradicts by
+    // grounding Track and the Favored Enemy flat surface for real. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
     assert!(
-        spell.id != feature.id,
-        "ranger spell-burden diagnostic must be a distinct id from the non-spell \
-         class-feature burden (got both at id '{}')",
-        spell.id
+        !has_diagnostic(&computation, "class_feature.hybrid.ranger.unsupported"),
+        "the retired non-spell class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
     );
     assert!(
-        !spell.id.contains("paladin") && !feature.id.contains("paladin"),
-        "ranger burden diagnostics must not be misattributed to paladin (spell='{}', feature='{}')",
-        spell.id,
-        feature.id
+        !spell.id.contains("paladin"),
+        "ranger spell-burden diagnostic must not be misattributed to paladin (spell='{}')",
+        spell.id
     );
 
     // No fabricated spell posture.

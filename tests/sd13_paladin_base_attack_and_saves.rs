@@ -244,15 +244,21 @@ fn paladin_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_block
         "class_chassis.paladin.partial_caster.effective_caster_level"
     ));
 
-    // Both claim-blocking burdens (the combined hybrid class-feature burden, gated
-    // to fire only at the hybrid baseline level 1, and the partial-caster spell
-    // burden) still fire; this slice grounds no spell math.
-    let feature_blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == "class_feature.hybrid.paladin.unsupported")
-        .expect("hybrid paladin class-feature blocker must still fire at level 1");
-    assert!(feature_blocker.claim_blocking);
+    // The former hybrid class-feature blocker (`class_feature.hybrid.paladin.
+    // unsupported`) is retired: it flatly claimed Smite Evil / lay on hands /
+    // divine grace / mercy were unimplemented, which the grounded records
+    // asserted immediately above (Smite Evil's real numbers, the lay on hands /
+    // divine grace / mercy level-gate absences) contradict. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`. Only the partial-caster
+    // spell burden still fires; this slice grounds no spell math.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.paladin.unsupported"),
+        "the retired hybrid class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
     // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
     // `class_spell.paladin.partial_caster.unsupported` is no longer
     // unconditional: at level 1 no paladin spell level is accessible at all

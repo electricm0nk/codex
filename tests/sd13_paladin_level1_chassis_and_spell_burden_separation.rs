@@ -170,15 +170,24 @@ fn paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers() {
         );
     }
 
-    // The accepted F6 hybrid pair remains claim-blocking: this slice grounds
-    // level gates, not the hybrid chassis pair.
-    for id in [F6_HYBRID_PALADIN_FEATURE_ID, F6_HYBRID_PALADIN_SPELL_ID] {
-        let diag = claim_blocking(&computation, id);
-        assert!(
-            !diag.message.is_empty(),
-            "remaining paladin blocker '{id}' must carry a non-empty message"
-        );
-    }
+    // The F6 hybrid spell blocker remains claim-blocking: this slice grounds level
+    // gates, not the hybrid spell burden. The F6 hybrid non-spell class-feature
+    // blocker (`F6_HYBRID_PALADIN_FEATURE_ID`) was retired separately -- it flatly
+    // claimed Smite Evil / lay on hands / divine grace / mercy were unimplemented,
+    // which this exact per-class decomposition (dispatched on the same input)
+    // contradicts by grounding Smite Evil for real and lay on hands / divine grace /
+    // mercy as correct level-1 absences. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+    let spell_diag = claim_blocking(&computation, F6_HYBRID_PALADIN_SPELL_ID);
+    assert!(
+        !spell_diag.message.is_empty(),
+        "remaining paladin blocker '{F6_HYBRID_PALADIN_SPELL_ID}' must carry a non-empty message"
+    );
+    assert!(
+        !has_diagnostic(&computation, F6_HYBRID_PALADIN_FEATURE_ID),
+        "the retired F6 hybrid non-spell class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
 
     // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
     // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: at level 1 no
@@ -462,14 +471,20 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
 
 #[test]
 fn paladin_f6_hybrid_blockers_remain_intact_under_separation() {
-    // The F6 hybrid blocker ids must keep being claim-blocking. This slice is
-    // an extension, never a downgrade, of the F6 acceptance surface.
+    // The F6 hybrid spell blocker id must keep being claim-blocking. This slice is
+    // an extension, never a downgrade, of the F6 acceptance surface. The F6 hybrid
+    // non-spell class-feature blocker (`F6_HYBRID_PALADIN_FEATURE_ID`) was retired:
+    // it flatly claimed Smite Evil / lay on hands / divine grace / mercy were
+    // unimplemented, which this exact per-class decomposition contradicts by
+    // grounding those burdens for real (or as correct level-1 absences) on the
+    // same input. See `tests/hybrid_diagnostic_grounded_contradiction.rs`.
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        has_diagnostic(&computation, F6_HYBRID_PALADIN_FEATURE_ID),
-        "F6 hybrid class-feature blocker must remain claim-blocking"
+        !has_diagnostic(&computation, F6_HYBRID_PALADIN_FEATURE_ID),
+        "the retired F6 hybrid non-spell class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
     );
     assert!(
         has_diagnostic(&computation, F6_HYBRID_PALADIN_SPELL_ID),

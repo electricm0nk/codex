@@ -160,16 +160,21 @@ fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The non-spell class-feature burden must be named explicitly, not hidden behind a
-    // generic "unsupported hybrid" label.
-    let feature = claim_blocking(&computation, "class_feature.hybrid.paladin.unsupported");
-    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
-        assert!(
-            feature.message.contains(token),
-            "paladin feature blocker must name the '{token}' burden: {}",
-            feature.message
-        );
-    }
+    // The former non-spell class-feature blanket blocker
+    // (`class_feature.hybrid.paladin.unsupported`) is retired: the per-class
+    // decomposition (`explain_paladin_level1_chassis_and_spell_burden_separation`)
+    // dispatched for this exact input already grounds Smite Evil for real and
+    // grounds lay on hands / divine grace / mercy as correct level-1 absences, so
+    // re-asserting a blanket "not implemented" claim here would contradict those
+    // grounded records. See `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.paladin.unsupported"),
+        "the retired non-spell class-feature blanket blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
 
     // The later spell burden must be named explicitly and stay claim-blocking.
     let spell = claim_blocking(&computation, "class_spell.hybrid.paladin.unsupported");
@@ -197,14 +202,21 @@ fn ranger_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let feature = claim_blocking(&computation, "class_feature.hybrid.ranger.unsupported");
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "ranger feature blocker must name the '{token}' burden: {}",
-            feature.message
-        );
-    }
+    // The former non-spell class-feature blanket blocker
+    // (`class_feature.hybrid.ranger.unsupported`) is retired: the per-class
+    // decomposition (`explain_ranger_level1_chassis_and_class_feature_separation`)
+    // dispatched for this exact input already grounds Track and the Favored Enemy
+    // flat surface for real, so re-asserting a blanket "not implemented" claim here
+    // would contradict those grounded records. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.ranger.unsupported"),
+        "the retired non-spell class-feature blanket blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
 
     let spell = claim_blocking(&computation, "class_spell.hybrid.ranger.unsupported");
     assert!(

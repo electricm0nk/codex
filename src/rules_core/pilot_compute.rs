@@ -19430,21 +19430,43 @@ fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
 
 /// Surface direct SD13-E3-F6 runtime evidence for the deterministic Human Paladin
 /// level-1 and Human Ranger level-1 hybrid chassis, while keeping both explicitly
-/// claim-blocked on their still-missing burdens.
+/// claim-blocked on their still-missing later hybrid spell burden.
 ///
-/// This deliberately does not compute a supported hybrid chassis. It grounds no base
-/// attack/save progression, no smite / lay-on-hands / divine-grace / mercy execution,
-/// no favored-enemy / combat-style / tracking execution, and no spell posture. It only:
+/// This deliberately does not compute a supported hybrid chassis on its own. It only:
 /// - leaves one chassis-recognition explanation so the `class:paladin:1` / `class:ranger:1`
 ///   identity is acknowledged as a hybrid martial baseline rather than an undocumented
 ///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two claim-blocking diagnostics naming the still-missing non-spell class-feature
-///   burden family and the later hybrid spell burden explicitly, rather than hiding behind
-///   a generic "unsupported hybrid" label.
+/// - emits one claim-blocking diagnostic naming the later hybrid spell burden explicitly,
+///   rather than hiding behind a generic "unsupported hybrid" label.
+///
+/// **This function used to also emit a second claim-blocking diagnostic**
+/// (`class_feature.hybrid.<class>.unsupported`) flatly asserting the non-spell
+/// class-feature burden -- Smite Evil / lay on hands / divine grace / mercy for
+/// Paladin, favored enemy / combat style / tracking for Ranger -- "are not
+/// implemented in this bounded hybrid chassis baseline". That diagnostic was a
+/// baseline placeholder meant to be superseded once real per-class work landed on
+/// top of it. It has been: `explain_paladin_level1_chassis_and_spell_burden_separation`
+/// and `explain_ranger_level1_chassis_and_class_feature_separation` are ALSO
+/// dispatched unconditionally for the exact same deterministic Human level-1 input
+/// (see the call sites immediately below this function's own call site) and ground
+/// REAL, non-fabricated values for exactly the burden this diagnostic claimed was
+/// unimplemented: `class_chassis.paladin.smite_evil_attack_bonus` /
+/// `_damage_bonus`, and `class_chassis.ranger.track` /
+/// `favored_enemy_skill_bonus` / `favored_enemy_attack_damage_bonus`. Emitting both
+/// at once was a genuine self-contradiction visible in a real character's computed
+/// output (Paladin and Ranger are both `Computed`-status classes a user can build
+/// and save) -- not internal bookkeeping on an unreachable path. The per-class
+/// feature-burden diagnostic is therefore retired here; the per-class functions'
+/// own remaining named-but-unproven burdens (Divine Bond, a second mercy slot, the
+/// favored-enemy conditional-application engine, etc.) are already tracked by
+/// their own doc comments and matrix rows, not by this now-superseded blanket
+/// claim. The later hybrid SPELL burden diagnostic stays: Paladin/Ranger
+/// spellcasting genuinely remains unimplemented at level 1, and nothing grounds a
+/// spell posture that would contradict it.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks these inputs; this seam
-/// keeps that blocked posture but makes the hybrid class identity and its named burdens
-/// legible on the runtime path.
+/// keeps that blocked posture but makes the hybrid class identity and its remaining
+/// named burden legible on the runtime path.
 fn explain_hybrid_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -19457,21 +19479,17 @@ fn explain_hybrid_level1_chassis(
         return;
     }
 
-    let (class_id, class_name, chassis_id, feature_id, feature_burden, spell_id) = match hybrid {
+    let (class_id, class_name, chassis_id, spell_id) = match hybrid {
         HybridClass::Paladin => (
             PALADIN_CLASS_ID,
             "Paladin",
             "class_chassis.hybrid_baseline.paladin",
-            "class_feature.hybrid.paladin.unsupported",
-            "smite evil, lay on hands, divine grace, and mercy",
             "class_spell.hybrid.paladin.unsupported",
         ),
         HybridClass::Ranger => (
             RANGER_CLASS_ID,
             "Ranger",
             "class_chassis.hybrid_baseline.ranger",
-            "class_feature.hybrid.ranger.unsupported",
-            "favored enemy, combat style, and skill/tracking",
             "class_spell.hybrid.ranger.unsupported",
         ),
     };
@@ -19490,18 +19508,12 @@ fn explain_hybrid_level1_chassis(
         ),
     });
 
-    // Still blocked (1/2): name the non-spell class-feature burden family explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: feature_id.to_owned(),
-        message: format!(
-            "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
-             burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
-             {class_name} class-feature support is claimed"
-        ),
-        claim_blocking: true,
-    });
-
-    // Still blocked (2/2): name the later hybrid spell burden explicitly.
+    // Still blocked: name the later hybrid spell burden explicitly. (The former
+    // non-spell class-feature burden diagnostic that used to sit alongside this one
+    // was retired -- see this function's own doc comment -- because the per-class
+    // decomposition functions dispatched immediately below this call site already
+    // ground real values for that exact burden on the same input, which made the
+    // blanket "not implemented" claim false, not just redundant.)
     diagnostics.push(ComputationDiagnostic {
         id: spell_id.to_owned(),
         message: format!(

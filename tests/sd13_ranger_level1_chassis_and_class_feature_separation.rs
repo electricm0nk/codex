@@ -34,8 +34,8 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
@@ -101,27 +101,6 @@ fn load(fixture: &str) -> CharacterInput {
     result
         .character_input
         .expect("valid fixture should produce a character input record")
-}
-
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
 }
 
 fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
@@ -373,17 +352,23 @@ fn ranger_track_is_grounded_with_value_one_at_level_one() {
 
 #[test]
 fn ranger_f6_hybrid_blockers_remain_intact_under_separation() {
+    // The F6 hybrid non-spell class-feature blocker (`F6_HYBRID_RANGER_FEATURE_ID`)
+    // is retired: it flatly claimed favored enemy / combat style / tracking were
+    // unimplemented, which this exact per-class decomposition (dispatched on the
+    // same input) contradicts by grounding Track and the Favored Enemy flat surface
+    // for real (combat style is a genuinely correct level-1 absence, not a
+    // contradiction, but the blocker claimed non-implementation of the WHOLE
+    // family, including the two that are grounded). See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`. The F6 hybrid spell
+    // blocker stays claim-blocking; this slice grounds no spell posture.
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let feature = claim_blocking(&computation, F6_HYBRID_RANGER_FEATURE_ID);
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "F6 combined ranger feature blocker must still name '{token}': {}",
-            feature.message
-        );
-    }
+    assert!(
+        !has_diagnostic(&computation, F6_HYBRID_RANGER_FEATURE_ID),
+        "the retired F6 hybrid non-spell class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
 
     assert!(
         has_diagnostic(&computation, F6_HYBRID_RANGER_SPELL_ID),

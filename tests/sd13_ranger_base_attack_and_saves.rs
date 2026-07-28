@@ -207,15 +207,21 @@ fn ranger_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocke
         "class_chassis.ranger.level_gate.combat_style"
     ));
 
-    // Both claim-blocking burdens (the combined hybrid class-feature burden, the
-    // later hybrid spell burden) still fire; this slice grounds no combat-style feat
-    // mechanics and no spell math.
-    let feature_blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == "class_feature.hybrid.ranger.unsupported")
-        .expect("hybrid ranger class-feature blocker must still fire");
-    assert!(feature_blocker.claim_blocking);
+    // The former hybrid class-feature blocker (`class_feature.hybrid.ranger.
+    // unsupported`) is retired: it flatly claimed favored enemy / combat style /
+    // tracking were unimplemented, which the grounded records asserted immediately
+    // above (Track, the Favored Enemy flat surface, the combat-style level-gate
+    // absence) contradict. See `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+    // Only the later hybrid spell burden still fires; this slice grounds no
+    // combat-style feat mechanics and no spell math.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.ranger.unsupported"),
+        "the retired hybrid class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
     let spell_blocker = computation
         .diagnostics
         .iter()
