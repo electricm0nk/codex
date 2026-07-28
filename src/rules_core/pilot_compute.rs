@@ -13012,10 +13012,12 @@ fn ground_or_block_witch_class_features(
                 "Witch level {level} with the Ward hex grants a warded creature a \
                  +{ward_bonus} deflection bonus to AC and a +{ward_bonus} resistance bonus on \
                  saving throws (base 2, +1 at level 8, +1 at level 16). Grounds only the flat \
-                 magnitude -- this headless engine computes no player AC/save total to \
-                 integrate this into (unlike attack bonus, which does have a real integrated \
-                 total); self-application (the witch may ward herself) is the only case \
-                 named, warding another creature is not modeled"
+                 magnitude -- task #88 correction: `defense.baseline_armor_class` and the total \
+                 saves ARE real integrated totals this codebase computes (the same totals \
+                 Barbarian Rage's penalty and Oracle's Nature's Whispers bonus already \
+                 integrate into), this magnitude is simply not wired into either one yet; \
+                 self-application (the witch may ward herself) is the only case named, warding \
+                 another creature is not modeled"
             ),
         });
         diagnostics.push(ComputationDiagnostic {
@@ -14105,10 +14107,13 @@ fn ground_warpriest_fervor_channel_and_sacred_armor(
                 detail: format!(
                     "Warpriest level {level} Sacred Armor enhancement bonus: \
                      +{enhancement} (1 + max(0, (min(20, level) - 7)/3)) -- +1 at level 7, +1 \
-                     per 3 levels after, capping at +5. This engine computes no player \
-                     armor-class total that an armor enhancement bonus could layer onto, and the \
-                     swift-action activation and the menu of armor special abilities it can buy \
-                     instead are not modelled, so this grounds as a standalone flat magnitude"
+                     per 3 levels after, capping at +5. Grounds only the flat magnitude -- task \
+                     #88 correction: `defense.baseline_armor_class` IS a real integrated AC \
+                     total this codebase computes (the same total Brawler's own AC Bonus \
+                     already integrates into), this magnitude is simply not wired into it yet, \
+                     and the swift-action activation and the menu of armor special abilities it \
+                     can buy instead are not modelled either, so this grounds as a standalone \
+                     flat magnitude"
                 ),
             });
             explanations.push(ComputationExplanation {
@@ -14732,9 +14737,11 @@ fn ground_or_block_swashbuckler_class_features(
         value: nimble_dodge_bonus,
         detail: format!(
             "Swashbuckler level {level} Nimble: a +{nimble_dodge_bonus} dodge bonus to AC while \
-             wearing light or no armor ((level+1)/4 = {nimble_dodge_bonus}). This codebase \
-             computes no player AC total anywhere to integrate this into; grounded as a \
-             standalone flat record"
+             wearing light or no armor ((level+1)/4 = {nimble_dodge_bonus}). Grounds only the \
+             flat magnitude -- task #88 correction: `defense.baseline_armor_class` IS a real \
+             integrated AC total this codebase computes (the same total Brawler's own AC Bonus \
+             already integrates into), this magnitude is simply not wired into it yet; grounded \
+             as a standalone flat record"
         ),
     });
 
@@ -30398,9 +30405,11 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      (the same idiom as the Evocation Force Missile pool above). At \
                      Intelligence modifier {} this is max(3 + {}, 0) = \
                      {protective_ward_uses_per_day}. This grounds only the flat daily-use \
-                     count; it creates no 10-foot-radius protective-magic field, applies no \
-                     deflection bonus to any actual AC total, and tracks no action economy or \
-                     per-use consumption",
+                     count; it creates no 10-foot-radius protective-magic field, and tracks no \
+                     action economy or per-use consumption. Task #88 correction: \
+                     `defense.baseline_armor_class` IS a real integrated AC total this codebase \
+                     computes, but this pool-size record has no bonus of its own to apply to it \
+                     anyway (the deflection bonus itself is grounded separately below)",
                     ability_modifiers.intelligence, ability_modifiers.intelligence
                 ),
             });
@@ -30438,9 +30447,13 @@ fn explain_wizard_level1_prepared_spell_baseline(
                      bonus to AC (PF1 Core Rulebook Abjuration School): \
                      AbjurationProtectiveWardBonus resolves to \
                      (AbjurationSchoolLVL/5)+1 = ({abjuration_school_lvl}/5)+1 = \
-                     {protective_ward_deflection_bonus}. This grounds only the flat deflection- \
-                     bonus magnitude; it applies no bonus to any actual AC total and grants no \
-                     real allies-in-area targeting"
+                     {protective_ward_deflection_bonus}. Grounds only the flat deflection- \
+                     bonus magnitude -- task #88 correction: `defense.baseline_armor_class` IS \
+                     a real integrated AC total this codebase computes (the same total \
+                     Brawler's own AC Bonus already integrates into), this magnitude is simply \
+                     not wired into it yet, and it grants no real allies-in-area targeting \
+                     (unlike the self-only bonuses already wired in, Protective Ward's real \
+                     benefit is an area effect on allies, which stays unmodeled regardless)"
                 ),
             });
         }
@@ -33595,10 +33608,12 @@ fn explain_bard_level1_spell_baseline(
                  15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_SAVE_BONUS} \
                  morale bonus on saving throws for the inspired creature(s). This magnitude is \
                  non-level-scaled (fixed at +4 for the class feature's entire existence), \
-                 mirroring the Well-Versed idiom. This is a standalone explanation record only; \
-                 it is never applied to any actual saving-throw total because no \
-                 save-resolution engine exists anywhere in this codebase, and no \
-                 targeting/action-economy engine decides which creature(s) it affects"
+                 mirroring the Well-Versed idiom. This is a standalone explanation record only \
+                 -- task #88 correction: `defense.total_save.*` ARE real integrated totals \
+                 this codebase computes for a Bard, but no targeting/action-economy engine \
+                 exists to decide whether the bard targeted herself (this ability can also \
+                 target another willing creature) or is currently active at all, so this \
+                 bonus is never applied to them"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -33609,9 +33624,12 @@ fn explain_bard_level1_spell_baseline(
                  15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_AC_BONUS} dodge \
                  bonus to AC for the inspired creature(s). This magnitude is non-level-scaled \
                  (fixed at +4 for the class feature's entire existence), mirroring the \
-                 Well-Versed idiom. This is a standalone explanation record only; it is never \
-                 applied to any actual AC total because no AC-application engine exists \
-                 anywhere in this codebase"
+                 Well-Versed idiom. This is a standalone explanation record only -- task #88 \
+                 correction: `defense.baseline_armor_class` IS a real integrated AC total this \
+                 codebase computes for a Bard, but no targeting/action-economy engine exists \
+                 to decide whether the bard targeted herself (this ability can also target \
+                 another willing creature) or is currently active at all, so this bonus is \
+                 never applied to it"
             ),
         });
         let inspire_heroics_target_count =
@@ -36576,6 +36594,89 @@ mod wizard_spell_save_dc_tests {
                 .any(|e| e.id == "class_chassis.wizard.spell_save_dc.spell_level_1"),
             "the spell save DC record must be grounded regardless of school specialization: \
              {computation:?}"
+        );
+    }
+}
+
+/// task #88 correction: Protective Ward's own detail strings used to claim
+/// "applies no [deflection] bonus to any actual AC total" (authored
+/// 2026-07-28, task #66) -- false: Wizard is one of the two original
+/// dispatch-supported chassis (alongside Fighter), so a GE-06-posture
+/// Wizard has always reached the real `defense.baseline_armor_class`
+/// pillar via `compute_combat_baseline`. Protective Ward's deflection
+/// bonus simply isn't wired into it (correctly still true -- it also
+/// requires area-of-effect ally targeting this codebase doesn't model).
+#[cfg(test)]
+mod wizard_abjuration_protective_ward_ac_claim_tests {
+    use super::{compute_pilot_base_chassis, WIZARD_CLASS_ID};
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, CharacterInput, SelectedChoice,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// A GE-06-posture (Longsword/Chain Shirt/Dodge/Weapon Focus/no shield)
+    /// Human Wizard at level 6 (past Protective Ward's level-1 unlock,
+    /// giving a real nonzero deflection bonus of (6/5)+1=2), with the
+    /// canonical Abjuration school + opposed-schools selection.
+    fn abjuration_wizard_with_ge06_posture(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels[0].class_id = WIZARD_CLASS_ID.to_owned();
+        input.chosen.class_levels[0].level = level;
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_school_specialization".to_owned(),
+            selection_id: "school:abjuration".to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:necromancy".to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
+            selection_id: "school:transmutation".to_owned(),
+        });
+        input
+    }
+
+    #[test]
+    fn protective_ward_detail_no_longer_falsely_claims_no_ac_total_exists() {
+        let computation =
+            compute_pilot_base_chassis(&abjuration_wizard_with_ge06_posture(6));
+
+        let deflection = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.school.abjuration.protective_ward_deflection_bonus")
+            .expect("Protective Ward's deflection bonus must ground at level 6");
+        assert_eq!(deflection.value, 2, "level 6 Protective Ward deflection: (6/5)+1=2: {:?}", deflection);
+        assert!(
+            !deflection.detail.contains("applies no bonus to any actual AC total"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            deflection
+        );
+        assert!(
+            deflection.detail.contains("defense.baseline_armor_class"),
+            "the corrected detail must name the real AC total it isn't wired into: {:?}",
+            deflection
+        );
+
+        let baseline_ac = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect(
+                "a GE-06-posture Wizard is one of the two original supported chassis, so \
+                 baseline AC must be real, not absent",
+            );
+        assert!(
+            !baseline_ac.detail.contains("Protective Ward"),
+            "Protective Ward's +2 must NOT be folded into baseline AC yet -- the corrected \
+             claim says 'not wired in', not 'wired in': {:?}",
+            baseline_ac
         );
     }
 }
@@ -46398,6 +46499,53 @@ mod warpriest_dispatch_widening_safety_tests {
         );
     }
 
+    /// task #88 correction: Sacred Armor's own detail string used to claim
+    /// "this engine computes no player armor-class total that an armor
+    /// enhancement bonus could layer onto" -- false: `is_supported_warpriest_single_class`
+    /// is part of `has_supported_class_chassis`, so a GE-06-posture Warpriest
+    /// reaches the same `defense.baseline_armor_class` pillar every other
+    /// supported class does (Brawler's own AC Bonus already integrates into
+    /// it). Sacred Armor's magnitude simply isn't wired into it. Proves both
+    /// halves: the total really is computed, and Sacred Armor's bonus really
+    /// is absent from it.
+    #[test]
+    fn warpriest_sacred_armor_detail_no_longer_falsely_claims_no_ac_total_exists() {
+        let receipt = build_pilot_headless_receipt(&human_warpriest_input(7));
+
+        let sacred_armor = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.warpriest.sacred_armor_enhancement")
+            .expect("Sacred Armor enhancement must ground at level 7");
+        assert!(
+            !sacred_armor.detail.contains("computes no player"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            sacred_armor
+        );
+        assert!(
+            sacred_armor.detail.contains("defense.baseline_armor_class"),
+            "the corrected detail must name the real AC total it isn't wired into: {:?}",
+            sacred_armor
+        );
+
+        let baseline_ac = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect(
+                "a GE-06-posture Warpriest is a supported class chassis, so baseline AC must be \
+                 real, not absent",
+            );
+        assert!(
+            !baseline_ac.detail.contains("Sacred Armor"),
+            "Sacred Armor's +1 must NOT be folded into baseline AC yet -- the corrected claim \
+             says 'not wired in', not 'wired in': {:?}",
+            baseline_ac
+        );
+    }
+
     /// A Warpriest whose ONLY recognized Blessing is Strength must no
     /// longer hit the blessing-powers claim-blocking diagnostic -- the
     /// gate now admits either canonical Blessing, not Destruction alone.
@@ -47947,6 +48095,76 @@ mod witch_dispatch_widening_safety_tests {
         );
     }
 
+    /// task #88 correction: the Ward hex's own detail string used to claim
+    /// "this headless engine computes no player AC/save total to integrate
+    /// this into" -- false even at the time it was written (2026-07-25's
+    /// Skald/Bloodrager closures had already wired Rage-shaped AC/save
+    /// bonuses into these exact totals, a day before the Witch closure
+    /// landed). `is_supported_witch_single_class` is part of
+    /// `has_supported_class_chassis`, so a GE-06-posture Witch reaches the
+    /// same `defense.baseline_armor_class` and `defense.total_save.*`
+    /// pillars every other supported class does -- Ward's own magnitude
+    /// simply isn't wired into either. This proves both halves: the totals
+    /// really are computed (not fabricated as "nonexistent"), and Ward's
+    /// bonus really is absent from them (the corrected detail's "not wired
+    /// in yet" framing, not the old "no total exists" framing, is the
+    /// accurate one).
+    #[test]
+    fn witch_ward_hex_detail_no_longer_falsely_claims_no_ac_save_total_exists() {
+        let mut input = human_witch_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: WARD_HEX_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let ward = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.witch.ward_hex.deflection_and_resistance_bonus")
+            .expect("Ward's bonus must be grounded once recognized");
+        assert!(
+            !ward.detail.contains("computes no player AC/save total"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            ward
+        );
+        assert!(
+            ward.detail.contains("defense.baseline_armor_class"),
+            "the corrected detail must name the real AC total it isn't wired into: {:?}",
+            ward
+        );
+
+        let baseline_ac = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect(
+                "a GE-06-posture Witch is a supported class chassis, so baseline AC must be \
+                 real, not absent",
+            );
+        assert!(
+            !baseline_ac.detail.contains("Ward"),
+            "Ward's +2 must NOT be folded into baseline AC yet -- the corrected claim says \
+             'not wired in', not 'wired in': {:?}",
+            baseline_ac
+        );
+
+        let total_will_save = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.will")
+            .expect("total saves must also be real for a supported Witch, not absent");
+        assert!(
+            !total_will_save.detail.contains("Ward"),
+            "Ward's resistance bonus must NOT be folded into total saves yet: {:?}",
+            total_will_save
+        );
+    }
+
     /// Ward's bonus progression at higher levels, verified against the
     /// PCGen corpus formula directly (not merely trusting the level-1
     /// base case above): +1 at level 8, +1 more at level 16.
@@ -48100,6 +48318,54 @@ mod swashbuckler_dispatch_widening_safety_tests {
                 .any(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_not_yet_gained"),
             "expected the honest not-yet-gained recognition record at level 1: {:?}",
             receipt.computation.explanations
+        );
+    }
+
+    /// task #88 correction: Nimble's own detail string used to claim "this
+    /// codebase computes no player AC total anywhere to integrate this
+    /// into" -- false: `is_supported_swashbuckler_single_class` is part of
+    /// `has_supported_class_chassis`, so a GE-06-posture Swashbuckler
+    /// reaches the same `defense.baseline_armor_class` pillar every other
+    /// supported class does (Brawler's own AC Bonus already integrates
+    /// into it). Nimble's magnitude simply isn't wired into it. Level 4
+    /// gives a real nonzero bonus ((4+1)/4=1), so the "not folded in"
+    /// assertion is meaningful.
+    #[test]
+    fn swashbuckler_nimble_detail_no_longer_falsely_claims_no_ac_total_exists() {
+        let receipt = build_pilot_headless_receipt(&human_swashbuckler_input(4));
+
+        let nimble = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.swashbuckler.nimble_dodge_bonus")
+            .expect("Nimble dodge bonus must ground unconditionally");
+        assert_eq!(nimble.value, 1, "Swashbuckler level 4 Nimble: (4+1)/4=1: {:?}", nimble);
+        assert!(
+            !nimble.detail.contains("computes no player AC total"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            nimble
+        );
+        assert!(
+            nimble.detail.contains("defense.baseline_armor_class"),
+            "the corrected detail must name the real AC total it isn't wired into: {:?}",
+            nimble
+        );
+
+        let baseline_ac = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect(
+                "a GE-06-posture Swashbuckler is a supported class chassis, so baseline AC must \
+                 be real, not absent",
+            );
+        assert!(
+            !baseline_ac.detail.contains("Nimble"),
+            "Nimble's +1 must NOT be folded into baseline AC yet -- the corrected claim says \
+             'not wired in', not 'wired in': {:?}",
+            baseline_ac
         );
     }
 
@@ -50266,6 +50532,85 @@ mod bard_dispatch_widening_safety_tests {
                     && d.claim_blocking),
             "expected the real spell-posture diagnostic to fire in the multiclass mix too: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+
+    /// task #88 correction: Inspire Heroics' own detail strings (authored
+    /// 2026-07-16, Tranche 3, before any AC/save-total integration existed)
+    /// used to claim "no AC-application engine exists anywhere in this
+    /// codebase" and "no save-resolution engine exists anywhere in this
+    /// codebase" -- both false now: Bard is a `table_class_id`-recognized,
+    /// dispatch-supported chassis (proven by Inspire Courage's own real
+    /// attack-bonus integration), so a GE-06-posture Bard reaches the same
+    /// real `defense.baseline_armor_class` / `defense.total_save.*` totals
+    /// every other supported class does. Inspire Heroics' own magnitudes
+    /// simply aren't wired into either (a real gap: no targeting engine
+    /// exists to decide self vs. ally vs. inactive).
+    #[test]
+    fn bard_inspire_heroics_detail_no_longer_falsely_claims_no_ac_save_totals_exist() {
+        // BARD_INSPIRE_HEROICS_LEVEL is 15 (PF1 Core Rulebook grant level).
+        let receipt = build_pilot_headless_receipt(&human_bard_input(15));
+
+        let save_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.bard.inspire_heroics_save_bonus")
+            .expect("Inspire Heroics save bonus must ground at level 15");
+        assert!(
+            !save_bonus.detail.contains("no save-resolution engine exists"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            save_bonus
+        );
+        assert!(
+            save_bonus.detail.contains("defense.total_save"),
+            "the corrected detail must name the real save totals it isn't wired into: {:?}",
+            save_bonus
+        );
+
+        let ac_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.bard.inspire_heroics_ac_bonus")
+            .expect("Inspire Heroics AC bonus must ground at level 15");
+        assert!(
+            !ac_bonus.detail.contains("no AC-application engine exists"),
+            "the corrected detail must not repeat the false no-total-exists claim: {:?}",
+            ac_bonus
+        );
+        assert!(
+            ac_bonus.detail.contains("defense.baseline_armor_class"),
+            "the corrected detail must name the real AC total it isn't wired into: {:?}",
+            ac_bonus
+        );
+
+        let baseline_ac = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.baseline_armor_class")
+            .expect(
+                "a GE-06-posture Bard is a table-class-id-recognized supported chassis, so \
+                 baseline AC must be real, not absent",
+            );
+        assert!(
+            !baseline_ac.detail.contains("Inspire Heroics"),
+            "Inspire Heroics' +4 must NOT be folded into baseline AC yet -- the corrected \
+             claim says 'not wired in', not 'wired in': {:?}",
+            baseline_ac
+        );
+
+        let total_will_save = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "defense.total_save.will")
+            .expect("total saves must also be real for a supported Bard, not absent");
+        assert!(
+            !total_will_save.detail.contains("Inspire Heroics"),
+            "Inspire Heroics' +4 must NOT be folded into total saves yet: {:?}",
+            total_will_save
         );
     }
 }
