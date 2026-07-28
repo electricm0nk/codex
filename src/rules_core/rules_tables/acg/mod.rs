@@ -228,7 +228,7 @@ pub struct AcgClassCoverage {
     /// -- see `class_coverage`'s own branches for each.
     ///
     /// The full current roster, all ten ACG classes, none at 0:
-    /// **Arcanist 2**, **Bloodrager 2**, **Shaman 2**, **Hunter 3**,
+    /// **Arcanist 3**, **Bloodrager 2**, **Shaman 2**, **Hunter 3**,
     /// **Skald 3**, **Warpriest 5**, **Slayer 6**, **Investigator 8**,
     /// **Brawler 9**, **Swashbuckler 12**.
     ///
@@ -242,12 +242,17 @@ pub struct AcgClassCoverage {
     /// derived from the old counts, and no test asserts a doc comment,
     /// so this is the one place these numbers can rot silently.
     ///
-    /// Arcanist counts 2, not 1, unlike every prior closure this session:
-    /// Arcane Reservoir AND Spells Prepared
+    /// Arcanist counts 3, raised from 2 by task #56 (Familiar Exploit
+    /// closure, 2026-07-28): Arcane Reservoir, Spells Prepared
     /// (`pilot_compute::ground_or_block_arcanist_class_features`/
-    /// `ground_arcanist_prepared_spellbook`) are both real, distinct
-    /// `KEY:Arcanist ~ ...` records with genuine backing logic now.
-    /// `Cantrips` is a real, distinct KEY record too (verified directly:
+    /// `ground_arcanist_prepared_spellbook`), AND the Familiar Exploit
+    /// (`ground_familiar_master_benefit`, shared class-agnostic
+    /// machinery already serving Witch and Shaman -- `KEY:Arcanist
+    /// Exploit ~ Familiar` carries the identical `BONUS:VAR|
+    /// FamiliarMasterLVL|ArcanistLVL` token, no Arcane Reservoir cost,
+    /// no PRE gate) are all real, distinct `KEY:Arcanist ~ ...` /
+    /// `KEY:Arcanist Exploit ~ ...` records with genuine backing logic
+    /// now. `Cantrips` is a real, distinct KEY record too (verified directly:
     /// "prepare N cantrips, cast like any spell but don't consume a slot,
     /// not expended when cast"), but its own DISTINGUISHING mechanical
     /// content (no-slot-consumption, not-expended-when-cast) is not
@@ -523,8 +528,9 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // pool-size, and Shaman's Life Spirit Channel are the real, wired
     // named class features among all ten ACG classes today -- every
     // real ACG class now has at least one, see this field's own doc
-    // comment above for why Arcanist counts 2, not 1 (and why Cantrips
-    // does not add a third), why Slayer counts a genuine 4 (its four
+    // comment above for why Arcanist counts 3, not 1 (raised to 2 for
+    // Spells Prepared, then to 3 by task #56's Familiar Exploit; and why
+    // Cantrips does not add a fourth), why Slayer counts a genuine 4 (its four
     // sub-features are structurally independent, not facets of one
     // shared mechanism), why Swashbuckler counts a genuine 3 (same
     // "structurally independent" reasoning as Slayer), why Investigator
@@ -576,7 +582,15 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // `Blessings` slot).
     let named_features_wired = match class_id {
         AcgClassId::Shaman => 2,
-        AcgClassId::Arcanist => 2,
+        // Arcanist rose 2 -> 3 with task #56: the Familiar Exploit
+        // (`KEY:Arcanist Exploit ~ Familiar`) dispatches into the same
+        // shared, class-agnostic `ground_familiar_master_benefit` that
+        // Witch and Shaman already use -- a real, distinct
+        // `KEY:Arcanist Exploit ~ ...` record with its own corpus token
+        // (`BONUS:VAR|FamiliarMasterLVL|ArcanistLVL`), not a facet of
+        // Arcane Reservoir or Spells Prepared, so it earns its own slot
+        // on top of that existing 2.
+        AcgClassId::Arcanist => 3,
         // Bloodrager rose 2 -> 9 with task #42: the existing Bloodrage and
         // Spells slots plus Fast Movement, Uncanny Dodge, Improved Uncanny
         // Dodge, Blood Sanctuary, Damage Reduction, Greater Bloodrage and

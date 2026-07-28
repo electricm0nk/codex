@@ -121,7 +121,7 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// Channel Energy, and Sacred Armor -- three more distinct
 /// `KEY:Warpriest ~ ...` records, each with its own separately-
 /// implemented formula -- taking its own count from 2 to 5. Arcanist's
-/// own `named_features_wired == 2` (not 1, unlike Bloodrager/
+/// own `named_features_wired == 3` (not 1, unlike Bloodrager/
 /// Shaman), and Slayer's/
 /// Swashbuckler's/Brawler's/Skald's/Hunter's own `== 4`/`== 3`/`== 3`/`==
 /// 3`/`== 3` (Investigator's own `== 5` covered above) for yet another
@@ -129,9 +129,12 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// `AcgClassCoverage::named_features_wired`'s own doc comment in
 /// `rules_tables::acg::mod` for the full record: Arcanist's real
 /// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
-/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
-/// `Cantrips` does NOT add a third (not separately implemented);
-/// Warpriest has NO general-spellcasting KEY record at all (only
+/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, and task #56
+/// closes a third -- the Familiar Exploit (`KEY:Arcanist Exploit ~
+/// Familiar`), which dispatches into the same shared, class-agnostic
+/// `ground_familiar_master_benefit` machinery Witch and Shaman already
+/// use -- while `Cantrips` does NOT add a fourth (not separately
+/// implemented); Warpriest has NO general-spellcasting KEY record at all (only
 /// `Orisons`, also not separately implemented), so its own count stays
 /// at its five real feature records, with BOTH grounded Blessing minor
 /// powers -- Destruction's Destructive Attacks and Strength's Strength
@@ -155,6 +158,15 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// spellcasting and Life Spirit's own higher-tier abilities (Healer's
 /// Touch, genuinely gated to level 8+, not immediately available) both
 /// stay deferred, so it does not add a second count either.
+///
+/// **Deepened again (Arcanist, 2026-07-28, task #56):** Arcanist's own
+/// count moved from 2 to 3 -- the Familiar Exploit (`KEY:Arcanist
+/// Exploit ~ Familiar`, `BONUS:VAR|FamiliarMasterLVL|ArcanistLVL`, no
+/// Arcane Reservoir cost, no PRE gate, available at 1st level) is now
+/// genuinely wired alongside Arcane Reservoir and Spells Prepared. This
+/// is a class-eligibility extension of the already-shipped,
+/// class-agnostic `ground_familiar_master_benefit` helper (previously
+/// shared by Witch and Shaman only, task #11/#12), not a new mechanism.
 #[test]
 fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that_shamans_own_closure_landed()
 {
@@ -207,7 +219,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
             "Animal Companion + Wild Empathy + Animal Focus (Bull)",
             3,
         ),
-        (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared", 2),
+        (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared + Familiar", 3),
         (
             AcgClassId::Warpriest,
             "Blessings + Sacred Weapon + Fervor + Channel Energy + Sacred Armor",

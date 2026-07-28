@@ -11759,7 +11759,9 @@ fn ground_summoner_eidolon(
 /// rather than another standalone record.
 fn bonded_familiar_species(input: &CharacterInput) -> Option<FamiliarSpecies> {
     let owns_familiar_class = input.chosen.class_levels.iter().any(|class_level| {
-        class_level.class_id == WITCH_CLASS_ID || class_level.class_id == SHAMAN_CLASS_ID
+        class_level.class_id == WITCH_CLASS_ID
+            || class_level.class_id == SHAMAN_CLASS_ID
+            || class_level.class_id == ARCANIST_CLASS_ID
     });
     if !owns_familiar_class {
         return None;
@@ -12491,15 +12493,22 @@ fn ground_arcanist_prepared_spellbook(
 /// Grounds Arcanist's class features for `level` (v0.6 alpha swarm, risks
 /// item 8, Arcanist full-build closure). Called from
 /// `compute_acg_class_chassis`'s Arcanist branch, gated only on Arcanist
-/// class-ownership. Grounds the Arcane Reservoir (flat, unconditional --
-/// no choice or activation gate) and the real prepared-spellbook
-/// posture (conditional on `unmet_arcanist_spellbook_conditions`), then
-/// grounds or blocks Metamagic Knowledge (v0.6 alpha swarm, Metamagic
-/// Knowledge Exploit closure): a recognized `choice:
+/// class-ownership. Grounds the Familiar Exploit (task #56) via the
+/// shared, class-agnostic `ground_familiar_master_benefit` -- `KEY:
+/// Arcanist Exploit ~ Familiar` carries the identical `BONUS:VAR|
+/// FamiliarMasterLVL|ArcanistLVL` token as Witch's and Shaman's own
+/// familiar grants, with no Arcane Reservoir cost and no PRE gate, so
+/// this is a class-eligibility extension of already-shipped machinery,
+/// not a new mechanism. Also grounds the Arcane Reservoir (flat,
+/// unconditional -- no choice or activation gate) and the real
+/// prepared-spellbook posture (conditional on
+/// `unmet_arcanist_spellbook_conditions`), then grounds or blocks
+/// Metamagic Knowledge (v0.6 alpha swarm, Metamagic Knowledge Exploit
+/// closure): a recognized `choice:
 /// arcanist_metamagic_knowledge` selection naming `Empower Spell`
 /// (validated for real via `feat_prereqs::metamagic`, genuine reuse, not
 /// hand-rolled) clears the claim-blocking exploits diagnostic in favor
-/// of a non-blocking note naming the other 45 Exploits as still
+/// of a non-blocking note naming the other 44 Exploits as still
 /// deferred; an unrecognized/missing choice keeps the original
 /// claim-blocking `exploits_deferred` diagnostic unchanged.
 fn ground_or_block_arcanist_class_features(
@@ -12509,6 +12518,8 @@ fn ground_or_block_arcanist_class_features(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    ground_familiar_master_benefit(input, level, explanations);
+
     let reservoir_max = arcanist_reservoir_max(level);
     let reservoir_daily_fill = arcanist_reservoir_daily_fill(level);
     explanations.push(ComputationExplanation {
@@ -12560,8 +12571,10 @@ fn ground_or_block_arcanist_class_features(
 /// grounds the real feat grant (its own catalog description text, via
 /// `resolve_metamagic_feat_effect`) and replaces the claim-blocking
 /// `exploits_deferred` diagnostic with a non-blocking note naming the
-/// other 45 Exploits (plus Greater Exploits, Consume Spells, Magical
-/// Supremacy) as still deferred. An unrecognized or missing choice keeps
+/// other 44 Exploits, Greater Exploits, Consume Spells, and Magical
+/// Supremacy as still deferred (Familiar is no longer among them --
+/// task #56 wired it into the shared, class-agnostic
+/// `ground_familiar_master_benefit`). An unrecognized or missing choice keeps
 /// the original claim-blocking `exploits_deferred` diagnostic
 /// unchanged, mirroring the exact "recognized choice clears the
 /// blocker, unrecognized stays blocked" shape Cleric's domain and
@@ -12625,7 +12638,7 @@ fn ground_or_block_arcanist_metamagic_knowledge(
         message: format!(
             "{ARCANIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
              pillar, Arcane Reservoir, prepared spellbook, and Metamagic Knowledge: the other \
-             45 Arcanist Exploits (a chooser-list of real mechanical variety, named but not \
+             44 Arcanist Exploits (a chooser-list of real mechanical variety, named but not \
              built), Greater Arcanist Exploits, Consume Spells (a real formula, Charisma-\
              modifier-gated resource conversion), and Magical Supremacy (a capstone ability) \
              remain ungrounded anywhere in this codebase; no class-feature execution is \
@@ -46816,21 +46829,54 @@ mod opponent_conditioned_tier_zero_tests {
         }
     }
 
+    /// Arcanist's own Familiar Exploit (`KEY:Arcanist Exploit ~ Familiar`,
+    /// task #56) carries the identical `BONUS:VAR|FamiliarMasterLVL|
+    /// ArcanistLVL` token as Witch's and Shaman's own familiar grants --
+    /// no Arcane Reservoir cost, no PRE gate, available at 1st level -- so
+    /// it dispatches into the same shared, class-agnostic
+    /// `ground_familiar_master_benefit` rather than a new mechanism.
+    #[test]
+    fn arcanist_grounds_the_shared_familiar_benefit_too() {
+        let mut arcanist = character("class:arcanist", 5);
+        assert_eq!(
+            value(&arcanist, "class_feature.familiar.master_hit_point_bonus"),
+            None,
+            "no familiar is seeded"
+        );
+        arcanist.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: super::FAMILIAR_CHOICE_ID.to_owned(),
+            selection_id: super::FAMILIAR_TOAD_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&arcanist, "class_feature.familiar.master_hit_point_bonus"),
+            Some(3),
+            "Arcanist must get the same familiar benefit as Witch/Shaman"
+        );
+        assert_eq!(super::character_familiar_hp_bonus(&arcanist), 3, "Arcanist HP bonus");
+    }
+
     /// Guard for the one shared-mechanism counting hazard this codebase
     /// actually has (added 2026-07-27 after the sweep that followed
     /// `66b8aae9`).
     ///
     /// The criterion the sweep produced: a `named_features_wired`
     /// asymmetry is only possible when ONE feature-grounding helper is
-    /// shared by TWO classes that BOTH have coverage rows -- i.e. both
-    /// APG/ACG, since CRB has no coverage matrix at all. Exactly one
+    /// shared by TWO OR MORE classes that BOTH have coverage rows -- i.e.
+    /// both APG/ACG, since CRB has no coverage matrix at all. Exactly one
     /// helper in the codebase meets that: `ground_familiar_master_benefit`,
-    /// shared by Witch and Shaman. It was genuinely wrong for a while
-    /// (Shaman credited the slot, Witch did not) and stayed invisible
-    /// because nothing compares the two rows.
+    /// shared by Witch, Shaman, and (task #56) Arcanist. It was genuinely
+    /// wrong for a while (Shaman credited the slot, Witch did not) and
+    /// stayed invisible because nothing compares the rows.
+    ///
+    /// Arcanist joined the set 2026-07-28 (task #56): `KEY:Arcanist
+    /// Exploit ~ Familiar` carries the identical `BONUS:VAR|
+    /// FamiliarMasterLVL|ArcanistLVL` token as Witch's/Shaman's own
+    /// familiar grants, so it dispatches into the same shared,
+    /// class-agnostic helper rather than a new mechanism -- an
+    /// eligibility-check extension, not a new pillar.
     ///
     /// So this enumerates every APG and ACG class rather than checking
-    /// the two known ones: if a third class ever picks up the shared
+    /// the known ones: if a further class ever picks up the shared
     /// `Standard Familiar List` -- a Spirit Summoner archetype, say --
     /// it lands here as a failure, forcing a deliberate decision about
     /// its own count instead of silently landing credited for one row
@@ -46856,20 +46902,31 @@ mod opponent_conditioned_tier_zero_tests {
 
         assert_eq!(
             grounding,
-            vec!["class:shaman".to_string(), "class:witch".to_string()],
+            vec![
+                "class:arcanist".to_string(),
+                "class:shaman".to_string(),
+                "class:witch".to_string(),
+            ],
             "a class started (or stopped) grounding the shared familiar benefit. Every class \
              in this list must credit the familiar slot in its own named_features_wired entry \
              -- decide that deliberately, then update this assertion"
         );
 
-        // Both credit it: Witch = Hex slot + Familiar, Shaman = Spirit
-        // slot + Spirit Animal. Equal counts here are a coincidence of
-        // both having exactly one other slot, not a rule -- what matters
-        // is that neither is missing the familiar.
+        // All three credit it: Witch = Hex slot + Familiar, Shaman =
+        // Spirit slot + Spirit Animal, Arcanist = Arcane Reservoir +
+        // Spells Prepared + Familiar. Equal counts across Witch/Shaman
+        // are a coincidence of both having exactly one other slot, not a
+        // rule -- what matters is that none of the three is missing the
+        // familiar.
         assert_eq!(
             apg::class_coverage(apg::ApgClassId::Witch).named_features_wired,
             2,
             "Witch must credit Hex slot + Familiar"
+        );
+        assert_eq!(
+            acg::class_coverage(acg::AcgClassId::Arcanist).named_features_wired,
+            3,
+            "Arcanist must credit Arcane Reservoir + Spells Prepared + Familiar"
         );
         assert_eq!(
             acg::class_coverage(acg::AcgClassId::Shaman).named_features_wired,
