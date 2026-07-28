@@ -274,20 +274,20 @@ fn monk_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
+// ----- Level 13 was later widened into the supported tranche (task #49) -----
 
 #[test]
-fn monk_level_13_is_not_promoted_by_this_slice() {
+fn monk_level_13_was_later_widened_into_the_supported_tranche() {
     let level_13 = MONK_LEVEL10_FIXTURE.replace("class:monk:10", "class:monk:13");
     let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "level-13 Monk must not gain any bounded monk explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.monk.")),
+        "level-13 Monk is now recognized by the later task #49 level-20-capstone widening \
+         slice (tests/sd49_monk_level20_capstone.rs carries its proof): {:?}",
         computation.explanations
     );
 }

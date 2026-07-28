@@ -54,8 +54,10 @@
 //! **Documented bounded scope note (mirroring the discipline
 //! `barbarian.rs`'s and `druid.rs`'s own module doc comments already
 //! established for their own scope notes):** Slow Fall's reach magnitude
-//! (20 ft. at 4th level, rising to 30/40/50/60 ft. at 6th/8th/10th/12th
-//! level) is recorded only in the underlying explanation's `detail` text,
+//! (20 ft. at 4th level, rising 10 ft. every even level thereafter through
+//! 90 ft. at 18th, then becoming unlimited "any distance" at 20th per the
+//! feature's own rule text -- task #49) is recorded only in the underlying
+//! explanation's `detail` text,
 //! never in its `.value` field (`pilot_compute.rs`'s own grant-only
 //! identity-record idiom — the same shape as Barbarian's Uncanny Dodge or
 //! Druid's Woodland Stride, both always `.value == 0`). This diff, which
@@ -81,15 +83,17 @@
 //! enumerate real candidates from" boundary `barbarian.rs`'s own Rage
 //! Power note already established, here scoped to Monk's bonus-feat
 //! slots instead. `MAX_SUPPORTED_MONK_LEVEL` (`pilot_compute.rs`) bounds
-//! the grounded chassis data to Monk level 12 (`class_tables.rs`'s own
-//! `CLASS_META` row carries the identical `max_supported_level: 12`); a
-//! transition whose `to_level` exceeds that ceiling honestly produces no
-//! `automatic_features` (the chassis probe returns no monk-namespaced
-//! explanations there), while `capstone_threshold` still reports
-//! correctly — a pure PF1 Core Rulebook level-number fact (level 20 is
-//! every core class's capstone level), not derived from any per-class
-//! grounded data source, mirroring `druid.rs`'s identical precedent for
-//! its own lower ceiling (`MAX_SUPPORTED_DRUID_LEVEL = 15`).
+//! the grounded chassis data to Monk level 20, the full PF1 Core Rulebook
+//! capstone range (task #49, 2026-07-28; widened from 12 -- `class_tables.rs`'s
+//! own `CLASS_META` row carries the identical `max_supported_level: 20`); a
+//! transition whose `to_level` exceeds that ceiling would honestly produce
+//! no `automatic_features` (the chassis probe returns no monk-namespaced
+//! explanations there), and `capstone_threshold` reports correctly whether
+//! or not the chassis ceiling has been reached — a pure PF1 Core Rulebook
+//! level-number fact (level 20 is every core class's capstone level), not
+//! derived from any per-class grounded data source, mirroring `druid.rs`'s
+//! identical precedent for its own lower ceiling
+//! (`MAX_SUPPORTED_DRUID_LEVEL = 15`).
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};

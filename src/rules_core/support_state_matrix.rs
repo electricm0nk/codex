@@ -826,7 +826,8 @@ const MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs + \
     tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
     tests/sd13_monk_second_bonus_feat.rs + \
     tests/sd13_monk_bonus_feats_three_and_four.rs + \
-    tests/sd18_monk_level11_diamond_body.rs + tests/sd18_monk_level12_widening.rs";
+    tests/sd18_monk_level11_diamond_body.rs + tests/sd18_monk_level12_widening.rs + \
+    tests/sd49_monk_level20_capstone.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -3772,8 +3773,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
-                            Monk level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12 \
+                            Monk level-1 through level-20 (the full PF1 Core Rulebook capstone \
+                            range, task #49) \
                             martial chassis identity, with base-attack, base-save, AC Bonus, the \
                             unarmed strike damage die (genuinely rising to 1d10 at level 8, \
                             unchanged at levels 9-10, genuinely stepping up to 2d6 at level 12 \
@@ -3799,8 +3800,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Improved Evasion grounded as a level-9 identity/recognition record \
                             (the level-9 \"Special\" column's only entry), Diamond Body grounded \
                             as a level-11 grant-only poison-immunity identity record, Abundant \
-                            Step (the level-12 class table's new named feature) checked and \
-                            confirmed not flat, and the \
+                            Step's caster-level magnitude grounded standalone at level 12, \
+                            Diamond Soul (spell resistance) grounded at level 13, Quivering Palm \
+                            (DC and duration) grounded at level 15, Timeless Body and Tongue of \
+                            the Sun and Moon grounded as level-17 grant-only identity records, \
+                            Empty Body grounded as a level-19 grant-only identity record, Perfect \
+                            Self's damage reduction (10/chaotic) grounded at level 20 (task #49), \
+                            and the \
                             recognized bonus feat's own mechanics still unproven",
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
@@ -4022,19 +4028,48 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Abundant Step, is checked and confirmed NOT flat (it requires both a \
                     ki-point-spending action-economy engine and a dimension-door-equivalent \
                     teleportation-resolution engine, neither of which exists in this codebase), \
-                    so it is deliberately left named-but-unproven, mirroring the Wholeness of \
-                    Body / High Jump precedent exactly — no record or diagnostic is fabricated \
-                    for it. Named burdens remain unproven: the \
+                    so at the time this widening landed it was left named-but-unproven, \
+                    mirroring the Wholeness of Body / High Jump precedent. A further task #49 \
+                    slice (2026-07-28) widens the level-range gate all the way to level 20 \
+                    (supported_monk_level, 1..=20), the full PF1 Core Rulebook Monk capstone \
+                    range, verified independently against the PF1 Core Rulebook Monk class \
+                    table (d20pfsrd and the Archives of Nethys aonprd.com mirror). Before \
+                    widening the cap, three already-shipped formulas were re-verified and \
+                    extended through their newly-reachable upper bands as their own commit: the \
+                    unarmed strike damage die genuinely extends to 2d8 (levels 16-19) and 2d10 \
+                    (level 20, min(5, MonkLVL/4) proving the progression stops there); Flurry of \
+                    Blows genuinely gains a fourth attack at 15th level (Greater Two-Weapon \
+                    Fighting); and Slow Fall's reach genuinely extends through 90 ft (18th) \
+                    before becoming unlimited (\"fall any distance without harm\", the feature's \
+                    own rule text, rather than a naive 100-ft extrapolation) at 20th. Seven \
+                    capstone-band features are then grounded: Abundant Step's own caster-level \
+                    magnitude (12th, caster level = monk level, superseding the \
+                    named-but-unproven note above -- the dimension-door EXECUTION itself still \
+                    stays unmodeled, only the caster-level number is grounded), Diamond Soul \
+                    (13th, spell resistance = 10 + monk level), Quivering Palm (15th, DC = 10 + \
+                    1/2 monk level + Wisdom modifier and a monk-level-days duration, both \
+                    grounded standalone with no save-or-die resolution engine), Timeless Body \
+                    (17th, grant-only, no numeric formula token), Tongue of the Sun and Moon \
+                    (17th, grant-only), Empty Body (19th, grant-only -- its 3-ki-point cost and \
+                    1-minute duration are both fixed, not level-scaled), and Perfect Self (20th, \
+                    DR 10/chaotic -- previously provably dead code under the old \
+                    MAX_SUPPORTED_MONK_LEVEL = 12 ceiling since level 20 could never be reached \
+                    at all, now genuinely reachable and grounded fresh). Perfect Self's separate \
+                    Outsider-type clause carries no numeric magnitude and needs a \
+                    creature-type-conditioned resolution engine that does not exist here, so it \
+                    stays deferred regardless of level. Named burdens remain unproven: the \
                     recognized bonus feat's own \
                     mechanics (no \
                     attack-resolution, grapple-check, trip-check, or DC/save engine exists for \
                     any of the restricted-list feats). The level-2 and level-6 bonus feat grants \
                     (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level, neither \
                     recognized by this widening), Wholeness of Body's own execution, Abundant \
-                    Step's own execution, the level-16+ unarmed damage die progression, \
+                    Step's own dimension-door execution, Quivering Palm's own save-or-die \
+                    execution, Diamond Soul's own spell-resistance-check execution, Empty Body's \
+                    own etherealness execution, Perfect Self's own Outsider-type clause, \
                     flurry with special monk weapons, wiring into integrated combat totals, any \
-                    ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
-                    Monk level 13+ all remain unproven, and no martial math beyond the grounded \
+                    ki-power execution engine, and High Jump's own Acrobatics/ki-point mechanics \
+                    all remain unproven, and no martial math beyond the grounded \
                     flat surfaces is fabricated. This row's every named grounded milestone is \
                     now surfaced live in the desktop app's Class Progression Catalog browser \
                     (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
@@ -4044,13 +4079,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     name -- satisfying the loop instruction's own definition of \
                     Supported/Product-visible (every named grounded dimension AND the operator's \
                     UI surfaces it)",
-                next_required_uplift: "none for recognition or UI-surfacing; grounding the one \
-                    remaining named Monk martial pillar burden (the recognized bonus feat's own \
-                    mechanics — an execution engine per feat, not a flat number), the \
-                    level-2/level-6 bonus feat grant recognition, Wholeness of Body's and \
-                    Abundant Step's own execution, and Monk level 13+ progression as real \
-                    computed contributions is a future SD-N's scope, not a further per-cycle \
-                    widening of this row",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    recognized bonus feat's own mechanics (an execution engine per feat, not a \
+                    flat number), the level-2/level-6 bonus feat grant recognition, Wholeness of \
+                    Body's / Abundant Step's / Quivering Palm's / Empty Body's own execution \
+                    engines, Diamond Soul's spell-resistance-check application, and Perfect \
+                    Self's Outsider-type clause as real computed contributions is a future \
+                    SD-N's scope, not a further per-cycle widening of this row -- Monk is now at \
+                    its full PF1 Core Rulebook level-20 capstone range (task #49), so there is \
+                    no further level-range gate left to widen",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",

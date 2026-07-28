@@ -266,26 +266,28 @@ fn monk_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(ki_pool.value, 9, "Monk level 10 ki pool must stay 9");
 }
 
-// ----- Negative control: level 12 IS now promoted (SD18 cycle-2026-07-15T0600) -----
+// ----- Level 13 was later widened into the supported tranche (task #49) -----
 //
 // Formerly a "level 12 stays unrecognized" negative control; superseded when
 // `tests/sd18_monk_level12_widening.rs` genuinely widened
-// `MAX_SUPPORTED_MONK_LEVEL` to 12. Moved to the next unproven boundary,
-// level 13, mirroring the Barbarian/Bard/Cleric/Druid/Fighter level-12
-// widening precedent.
+// `MAX_SUPPORTED_MONK_LEVEL` to 12, then moved to "level 13 stays
+// unrecognized". Superseded again when task #49 widened the ceiling all the
+// way to 20 (the full PF1 capstone) -- flipped to a positive assertion,
+// mirroring how `tests/sd13_monk_level9_progression.rs`'s own level-10
+// boundary was flipped once a later slice widened past it.
 
 #[test]
-fn monk_level_13_is_not_promoted_by_this_slice() {
+fn monk_level_13_was_later_widened_into_the_supported_tranche() {
     let level_13 = MONK_LEVEL11_FIXTURE.replace("class:monk:11", "class:monk:13");
     let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "level-13 Monk must not gain any bounded monk explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.monk.")),
+        "level-13 Monk is now recognized by the later task #49 level-20-capstone widening \
+         slice (tests/sd49_monk_level20_capstone.rs carries its proof): {:?}",
         computation.explanations
     );
 }

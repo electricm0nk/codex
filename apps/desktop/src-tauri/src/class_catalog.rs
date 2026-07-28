@@ -66,7 +66,12 @@ mod tests {
     #[test]
     fn catalog_contains_all_eleven_classes_and_expected_counts() {
         let response = build_class_catalog();
-        assert_eq!(response.entries.len(), 207);
+        // Task #49 (2026-07-28) widened Monk's own max_supported_level from
+        // 12 to 20 (rules_tables::crb::class_tables.rs's CLASS_META row,
+        // mirroring pilot_compute.rs's own MAX_SUPPORTED_MONK_LEVEL
+        // widening to the full PF1 Core Rulebook capstone range), so the
+        // total row count rises from 207 to 215 (207 - 12 + 20).
+        assert_eq!(response.entries.len(), 215);
 
         let counts = |class_id: &str| {
             response
@@ -80,7 +85,7 @@ mod tests {
         assert_eq!(counts("Cleric"), 20);
         assert_eq!(counts("Druid"), 15);
         assert_eq!(counts("Fighter"), 20);
-        assert_eq!(counts("Monk"), 12);
+        assert_eq!(counts("Monk"), 20);
         assert_eq!(counts("Paladin"), 20);
         assert_eq!(counts("Ranger"), 20);
         assert_eq!(counts("Rogue"), 20);

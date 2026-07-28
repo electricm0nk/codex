@@ -80,7 +80,7 @@ const CLASS_META: &[ClassMeta] = &[
     ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Druid, max_supported_level: 15, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 10 },
-    ClassMeta { class_id: ClassId::Monk, max_supported_level: 12, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 10 },
+    ClassMeta { class_id: ClassId::Monk, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Paladin, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Ranger, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: true, will: false }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Rogue, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: false }, hit_die: 8 },
