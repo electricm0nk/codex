@@ -15963,8 +15963,30 @@ fn ground_raging_climber_and_swimmer(
     class_label: &str,
     id_prefix: &str,
     is_raging: bool,
+    in_bounded_scope: bool,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
+    // Task #74. These are real per-class skill-bonus magnitudes, so they must
+    // stay inside their class's bounded scope like every other
+    // `class_feature.<class>.*` record -- a multiclass character, or one at a
+    // level outside the class's supported range, must ground nothing here.
+    //
+    // They sit next to the rage/inspired-rage EXECUTION-STATE recognition
+    // records (`rage_execution.not_raging`, `inspired_rage_execution.
+    // not_singing`), which are deliberately universal: those exist precisely so
+    // a spoofed activation on a non-Barbarian is caught rather than silently
+    // ignored, and the negative-control tests allow-list them by exact id for
+    // that reason. Task #54 added these calls beside those records and
+    // inherited that universality by accident -- but a skill bonus is not an
+    // execution-state recognition, so it does not belong in the allow-list.
+    //
+    // The guard lives here rather than at the call sites on purpose: there are
+    // six of them across two classes, and a seventh added later would silently
+    // reopen the leak. Each caller supplies its own class-appropriate gate.
+    if !in_bounded_scope {
+        return;
+    }
+
     let magnitude = if is_raging { i16::from(level) } else { 0 };
 
     for (power_name, bonus_var, skill) in [
@@ -16056,6 +16078,7 @@ fn ground_or_block_skald_inspired_rage(
             "Skald",
             "class_feature.acg.skald",
             false,
+            is_supported_skald_single_class(input),
             explanations,
         );
         return;
@@ -16111,6 +16134,7 @@ fn ground_or_block_skald_inspired_rage(
                 "Skald",
                 "class_feature.acg.skald",
                 true,
+                is_supported_skald_single_class(input),
                 explanations,
             );
         }
@@ -16130,6 +16154,7 @@ fn ground_or_block_skald_inspired_rage(
                 "Skald",
                 "class_feature.acg.skald",
                 false,
+                is_supported_skald_single_class(input),
                 explanations,
             );
         }
@@ -24278,6 +24303,7 @@ fn ground_or_block_barbarian_rage(
             "Barbarian",
             "class_feature.barbarian",
             false,
+            supported_barbarian_level(input).is_some(),
             explanations,
         );
         return;
@@ -24350,6 +24376,7 @@ fn ground_or_block_barbarian_rage(
                 "Barbarian",
                 "class_feature.barbarian",
                 true,
+                supported_barbarian_level(input).is_some(),
                 explanations,
             );
         }
@@ -24369,6 +24396,7 @@ fn ground_or_block_barbarian_rage(
                 "Barbarian",
                 "class_feature.barbarian",
                 false,
+                supported_barbarian_level(input).is_some(),
                 explanations,
             );
         }
