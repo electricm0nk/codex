@@ -17064,6 +17064,34 @@ const BLOODRAGER_FAST_MOVEMENT_FEET: i16 = 10;
 /// `BONUS:VAR|BloodragerBloodSanctuaryBonus|2`, class-table level 3.
 const BLOODRAGER_BLOOD_SANCTUARY_BONUS: i16 = 2;
 
+/// Bloodrager Indomitable Will's own level gate and magnitude (task
+/// #83), from `KEY:Bloodrager ~ Indomitable Will`: "At 14th level, a
+/// bloodrager gains a +4 bonus on Will saves to resist enchantment
+/// spells while bloodraging", carried in the corpus as
+/// `ASPECT:SaveBonus|While Bloodraging +4 vs. enchantments`.
+///
+/// **Deliberately its own constants rather than reusing Barbarian's**
+/// already-grounded `BARBARIAN_INDOMITABLE_WILL_*`, which happen to hold
+/// the same 14/+4. The two are separate corpus records on separate
+/// classes that coincide numerically; sharing a constant would encode a
+/// dependency the corpus does not have, and would silently propagate an
+/// errata to one class into the other.
+const BLOODRAGER_INDOMITABLE_WILL_LEVEL: u8 = 14;
+const BLOODRAGER_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS: i16 = 4;
+
+/// Blood Casting's and Eschew Materials' own level gates (task #83),
+/// both 4th-level bloodrager class features per their own corpus
+/// records' DESC.
+///
+/// Both are deliberately separate from `BLOODRAGER_FIRST_CASTING_LEVEL`,
+/// which is also 4. That one is derived from the class's own
+/// `BONUS:CASTERLEVEL|...|PRECLASS:1,Bloodrager=4`; these two come from
+/// their own `KEY:Bloodrager ~ ...` records. Three independent corpus
+/// facts that agree on a number are still three facts, and collapsing
+/// them would make a future divergence invisible.
+const BLOODRAGER_BLOOD_CASTING_LEVEL: u8 = 4;
+const BLOODRAGER_ESCHEW_MATERIALS_LEVEL: u8 = 4;
+
 /// Greater (11) and Mighty (20) Bloodrage are NOT new logic here: the
 /// shipped `bloodrager_bloodrage_tier` already returns the full
 /// progression (+4/+2 base, +6/+3 from 11, +8/+4 from 20), reusing
@@ -17198,6 +17226,85 @@ fn ground_bloodrager_remaining_features(
              bloodrager_bloodrage_tier, so this record and the active-bloodrage path cannot \
              disagree"
         ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.indomitable_will".to_owned(),
+        value: gated(
+            BLOODRAGER_INDOMITABLE_WILL_LEVEL,
+            BLOODRAGER_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS,
+        ),
+        detail: if level < BLOODRAGER_INDOMITABLE_WILL_LEVEL {
+            format!(
+                "Bloodrager Indomitable Will at bloodrager level {level}: correctly absent at \
+                 level {level} by its own corpus level gate; the at-grant magnitude is named but \
+                 not computed. Indomitable Will is a 14th-level bloodrager class feature."
+            )
+        } else {
+            format!(
+                "Bloodrager Indomitable Will granted at bloodrager level {level} (PF1 Advanced \
+                 Class Guide, 14th-level bloodrager class feature): while bloodraging, a \
+                 +{BLOODRAGER_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS} bonus on Will saves \
+                 to resist enchantment spells, which the corpus states STACKS with all other \
+                 modifiers including the Will-save morale bonus the bloodrage itself grants \
+                 (`ASPECT:SaveBonus|While Bloodraging +4 vs. enchantments`). This is a bounded \
+                 flat-magnitude record only: no saving-throw-resolution engine, no \
+                 spell-school-classification engine (to decide an incoming save is against an \
+                 enchantment), and no bloodrage-state gate is applied to it here, so it grounds \
+                 no actual Will-save bonus. Same shape and magnitude as Barbarian's own \
+                 already-grounded Indomitable Will, but a SEPARATE corpus record on a separate \
+                 class -- the two coincide numerically rather than sharing a source"
+            )
+        },
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.blood_casting".to_owned(),
+        value: 0,
+        detail: if level < BLOODRAGER_BLOOD_CASTING_LEVEL {
+            format!(
+                "Bloodrager Blood Casting at bloodrager level {level}: correctly absent at level \
+                 {level} by its own corpus level gate. Blood Casting is a 4th-level bloodrager \
+                 class feature."
+            )
+        } else {
+            format!(
+                "Bloodrager Blood Casting granted at bloodrager level {level} (PF1 Advanced \
+                 Class Guide, 4th-level bloodrager class feature): the bloodrager can cast his \
+                 bloodrager spells while bloodraging, may cast them defensively, and may attempt \
+                 concentration checks for them while bloodraging. Grounded at +0 as genuinely \
+                 vacuous under this scope rather than fabricated: this codebase models no \
+                 concentration check anywhere (no id contains `concentration`), and imposes no \
+                 casting restriction while bloodraging for Blood Casting to lift. Its corpus \
+                 record carries no `BONUS:` token of any kind -- the feature is a permission, \
+                 not a magnitude. The same treatment Monk's Catch Off-Guard/Throw Anything \
+                 already uses: the benefit is real, its triggering condition never arises here"
+            )
+        },
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.eschew_materials".to_owned(),
+        value: 0,
+        detail: if level < BLOODRAGER_ESCHEW_MATERIALS_LEVEL {
+            format!(
+                "Bloodrager Eschew Materials at bloodrager level {level}: correctly absent at \
+                 level {level} by its own corpus level gate. The Eschew Materials bonus feat is \
+                 granted at 4th level."
+            )
+        } else {
+            format!(
+                "Bloodrager Eschew Materials granted at bloodrager level {level} (PF1 Advanced \
+                 Class Guide, 4th-level bloodrager class feature): the bloodrager gains Eschew \
+                 Materials as a bonus feat (`ABILITY:FEAT|AUTOMATIC|Eschew Materials`), letting \
+                 him cast a spell with a material component costing 1 gp or less without that \
+                 component. A boolean feat grant, not a numeric bonus, so it carries no \
+                 fabricated mechanical value (+0) -- the same shape as Sorcerer's own \
+                 already-grounded `class_chassis.sorcerer.eschew_materials`, differing only in \
+                 the level at which each class grants it. It grounds no spell math and no \
+                 material-component economy, neither of which this codebase models"
+            )
+        },
     });
 }
 
@@ -17401,11 +17508,19 @@ fn push_bloodrager_spellcasting_deferred_diagnostic(
             message: format!(
                 "{BLOODRAGER_CLASS_ID} level {level} remains blocked on its spellcasting \
                  posture: it casts from its own spell list (`SPELLLIST:1|Bloodrager`, no \
-                 borrowed list), and while its spells-per-day and spells-known tables are now \
-                 grounded, the spell list itself, Blood Casting, and Eschew Materials are not \
-                 built. Bloodline bonus spells (10 bloodlines x 4 spells, first granted at \
-                 bloodline progression level 7) and the Elemental bloodline's own element \
-                 sub-choice are deferred as well"
+                 borrowed list), and its spells-per-day and spells-known tables are grounded. \
+                 The spell list itself IS built -- `acg::bloodrager_spell_list` carries all 200 \
+                 corpus-verified entries with its own tests -- but is NOT WIRED: \
+                 `bloodrager_spell_level` has no consumer anywhere in this codebase, so no \
+                 Bloodrager spell actually resolves and the class cannot validate a prepared or \
+                 known spell against its own list. That wiring, not the data, is the real \
+                 remaining gap (task #87). Bloodline bonus spells (10 bloodlines x 4 spells, \
+                 first granted at bloodline progression level 7) and the Elemental bloodline's \
+                 own element sub-choice are deferred as well. This message previously said the \
+                 spell list was \"not built\" and named Blood Casting and Eschew Materials \
+                 alongside it: the list has been built since task #1, and both features are \
+                 grounded as of task #83 -- built-but-unwired is a different claim from unbuilt, \
+                 and stating the weaker one hid a module that already exists"
             ),
             claim_blocking: true,
         });
@@ -17446,22 +17561,24 @@ fn push_bloodrager_other_features_deferred_diagnostic(
             "{BLOODRAGER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, Bloodrage, its class-skill list, its spells-per-day/spells-known \
              tables, Fast Movement, Uncanny Dodge and Improved Uncanny Dodge, Blood Sanctuary, \
-             Damage Reduction, and the Greater/Tireless/Mighty Bloodrage tiers: the entire \
-             Bloodline slot, Indomitable Will, Blood Casting, and the 4th-level Eschew \
-             Materials bonus-feat grant remain ungrounded anywhere in this codebase (the only \
-             `eschew_materials` id in this codebase is Sorcerer's own). Crossblooded Bloodline \
+             Damage Reduction, the Greater/Tireless/Mighty Bloodrage tiers, Indomitable Will, \
+             Blood Casting and Eschew Materials: the entire Bloodline slot is the ONE remaining \
+             class-feature gap here, and it is a real workstream rather than a transcription \
+             gap -- 10 bloodlines (Aberrant, Abyssal, Arcane, Celestial, Destined, Draconic, \
+             Elemental, Fey, Infernal, Undead), each with its own power ladder, PARALLEL to \
+             Sorcerer's rather than shared with it (task #59), so none of Sorcerer's shipped \
+             bloodline work transfers. Crossblooded Bloodline \
              Selection is excluded deliberately: it is archetype-gated \
              (`PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`) and \
-             archetypes are out of scope for base-class chassis, per task #67. No class-feature \
+             archetypes are out of scope for base-class chassis, per task #67. Note this class \
+             is NOT one feature from Computed even so: its own spellcasting posture blocks \
+             separately (see `spellcasting_deferred.unsupported`). No class-feature \
              execution is fabricated in this bounded chassis \
              baseline. This message previously listed Fast Movement, Uncanny Dodge, Blood \
              Sanctuary, Damage Reduction and the Bloodrage tiers as ungrounded -- all five are \
-             in fact grounded (tasks #39/#42). Indomitable Will, Blood Casting and Eschew \
-             Materials were named in \
-             NEITHER clause: all three are real `KEY:Bloodrager ~ ...` corpus records with no \
-             grounded id, found only by enumerating the class's full corpus feature set rather \
-             than auditing this message's own list. Indomitable Will is the same DESC-only flat \
-             +4-Will-vs-enchantment shape as Barbarian's already-grounded version"
+             in fact grounded (tasks #39/#42) -- and then, after task #76 added them, listed \
+             Indomitable Will, Blood Casting and Eschew Materials, all three of which are now \
+             genuinely grounded by task #83"
         ),
         claim_blocking: true,
     });
@@ -46240,6 +46357,80 @@ mod bloodrager_remaining_features_tests {
             .iter()
             .find(|e| e.id == id)
             .map(|e| e.value)
+    }
+
+    /// Blood Casting and Eschew Materials are BOOLEAN grants: both carry
+    /// value 0 whether or not the character has reached their gate, so a
+    /// value-only assertion could not tell "granted" from "correctly
+    /// absent" and would pass against a record that never fires at all.
+    /// Their tests read the detail instead (task #83).
+    fn detail(level: u8, id: &str) -> Option<String> {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: "class:bloodrager".to_owned(), level }];
+        build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.detail.clone())
+    }
+
+    /// Indomitable Will: a flat +4 on Will saves to resist enchantment
+    /// spells while bloodraging, at bloodrager level 14 (task #83).
+    /// Verified against `KEY:Bloodrager ~ Indomitable Will`'s own
+    /// `ASPECT:SaveBonus|While Bloodraging +4 vs. enchantments` and its
+    /// DESC. The corpus record carries NO `BONUS:` token, so like
+    /// Barbarian's own already-grounded Indomitable Will this is a flat
+    /// magnitude record only.
+    #[test]
+    fn indomitable_will_appears_exactly_at_its_level_14_gate() {
+        let id = "class_feature.acg.bloodrager.indomitable_will";
+        assert_eq!(value(13, id), Some(0), "absence at 13 must itself be grounded");
+        assert_eq!(value(14, id), Some(4), "the +4 lands at its own level-14 gate");
+        assert_eq!(value(20, id), Some(4), "no second tier exists");
+    }
+
+    /// Eschew Materials: a real automatic bonus-feat grant at level 4
+    /// (`ABILITY:FEAT|AUTOMATIC|Eschew Materials`), mirroring Sorcerer's
+    /// own `class_chassis.sorcerer.eschew_materials` boolean-grant record
+    /// (task #83).
+    #[test]
+    fn eschew_materials_is_granted_at_its_level_4_gate() {
+        let id = "class_feature.acg.bloodrager.eschew_materials";
+        assert!(
+            detail(3, id).expect("absence must be grounded").contains("correctly absent"),
+            "below its gate the record must say so rather than imply a grant"
+        );
+        assert!(
+            detail(4, id).expect("the grant must be grounded").contains("granted"),
+            "at level 4 the feat is genuinely granted"
+        );
+        assert_eq!(value(4, id), Some(0), "a boolean feat grant carries no fabricated magnitude");
+    }
+
+    /// Blood Casting: the ability to cast and concentrate on bloodrager
+    /// spells while bloodraging, at level 4. Grounded as genuinely
+    /// vacuous under this scope -- it lifts a restriction this codebase
+    /// does not model (no concentration engine exists anywhere) -- the
+    /// same shape as Monk's Catch Off-Guard/Throw Anything record
+    /// (task #83).
+    #[test]
+    fn blood_casting_is_granted_at_level_4_and_is_vacuous_under_this_scope() {
+        let id = "class_feature.acg.bloodrager.blood_casting";
+        assert!(
+            detail(3, id).expect("absence must be grounded").contains("correctly absent"),
+            "below its gate the record must say so"
+        );
+        let granted = detail(4, id).expect("the grant must be grounded");
+        assert!(granted.contains("granted"), "at level 4 the ability is genuinely granted");
+        assert!(
+            granted.contains("concentration"),
+            "the detail must name the unmodeled restriction it lifts, not imply a live benefit"
+        );
+        assert_eq!(value(4, id), Some(0), "no fabricated magnitude");
     }
 
     /// Gates come from the CLASS TABLE's per-level rows (1/2/3/5), not the

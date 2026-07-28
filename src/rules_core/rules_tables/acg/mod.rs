@@ -638,7 +638,23 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         // and gates (2 and 5) -- even though the corpus expresses Improved
         // as a second increment to one shared counter. Greater and Mighty
         // likewise: identical tokens, separate records, separate gates.
-        AcgClassId::Bloodrager => 9,
+        //
+        // Bloodrager rose 9 -> 10 with task #83, which grounded THREE more
+        // corpus records but earns only ONE slot. Indomitable Will counts:
+        // its own `KEY:Bloodrager ~ Indomitable Will` record, own level
+        // gate (14), and a real separately-computed magnitude (+4 on Will
+        // saves vs enchantment while bloodraging). Blood Casting and
+        // Eschew Materials deliberately do NOT count, on the same
+        // "distinguishing content is not separately implemented" reasoning
+        // that already excludes Warpriest's Orisons and Arcanist's
+        // Cantrips: both are grounded honestly at +0 as vacuous under this
+        // scope -- Blood Casting lifts a casting-while-raging restriction
+        // this codebase never imposes (no concentration engine exists),
+        // and Eschew Materials is a boolean feat grant against a
+        // material-component economy this codebase does not model. They
+        // are real, correctly-grounded records; they are not implemented
+        // MECHANISMS, and this field counts mechanisms.
+        AcgClassId::Bloodrager => 10,
         // Skald rose 3 -> 8 with task #50: Well-Versed, Spell Kenning,
         // Lore Master, Versatile Performance, and Rage Powers' own
         // pool-size count are each their own separate `KEY:Skald ~ ...`

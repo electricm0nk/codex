@@ -207,11 +207,19 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
              + Lore Master + Versatile Performance + Rage Powers pool-size",
             8,
         ),
+        // Task #83 added Indomitable Will as a tenth. It grounded three
+        // corpus records but only this one earns a slot: Blood Casting and
+        // Eschew Materials are both honestly grounded at +0 as vacuous
+        // under this scope (no concentration engine, no material-component
+        // economy), so they are correctly-grounded RECORDS rather than
+        // implemented MECHANISMS -- the same reasoning that keeps
+        // Warpriest's Orisons and Arcanist's Cantrips uncounted.
         (
             AcgClassId::Bloodrager,
             "Bloodrage + Spells + Fast Movement + Uncanny Dodge + Improved Uncanny Dodge + \
-             Blood Sanctuary + Damage Reduction + Greater Bloodrage + Mighty Bloodrage",
-            9,
+             Blood Sanctuary + Damage Reduction + Greater Bloodrage + Mighty Bloodrage + \
+             Indomitable Will",
+            10,
         ),
         (
             AcgClassId::Brawler,
