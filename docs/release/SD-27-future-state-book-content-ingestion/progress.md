@@ -21,7 +21,11 @@
 | 2.2' | `pathfinder_unchained_verify` | E2 | complete | 2026-07-27T21:26Z | 2026-07-27T21:32Z | Independently re-verified 3x; sha256/line citations confirmed real |
 | 3.2 | `pathfinder_unchained_parity` | E3 | complete | 2026-07-28T11:30Z | 2026-07-28T11:47Z | Real PCGen Gradle pipeline, BUILD SUCCESSFUL. 14/15 dimensions match — only the inherited CG-03 mismatch (no ARG-style equipment-weight gap; PU's pilot exercised a feat, not a book-specific weighted item) |
 | (deferred) | — | E3 | — | — | — | **17 deferred future-state books** (Adventurer's Guide, B2-B6, Bonus Bestiary, Horror Adventures, Monster Codex, Mythic Adventures, Occult Adventures, the 6 Tier-2 Ultimate books) are operator-gated on SD-27 closing cleanly. Beginner Box and Core Essentials removed from scope per operator directive 2026-07-27 (redundant to other tomes; will not be brought in). Deferred to SD-28+. The pre-build cycle pattern from E2.1-2.2 is templated and reusable. |
-| 4.1-4.5 | (closure) | E4 | pending | — | — | Standard closure epilogue |
+| 4.1 | `final-criterion-scan` | E4 | complete | 2026-07-28T11:58Z | 2026-07-28T12:05Z | 14/14 pre-closure criteria complete across all 3 independent sources, 0 discrepancies |
+| 4.2 | `architecture-closure` | E4 | pending | — | — | Truth-up + graphify |
+| 4.3 | `release-notes` | E4 | pending | — | — | Populate the 7-section template |
+| 4.4 | `version-bump` | E4 | pending | — | — | 0.6.0 → 0.6.1 |
+| 4.5 | `pr-merge` | E4 | — | — | — | **Not in this run's confirmed scope** — operator opens the PR |
 
 ## TODO
 
