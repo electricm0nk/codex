@@ -15747,9 +15747,50 @@ fn compute_acg_class_chassis(
 /// Skald's Raging Song rounds-per-day budget: 3 + Charisma modifier + 2 *
 /// (level - 1) (PF1 Advanced Class Guide, verified against the PCGen corpus
 /// DESC text -- the same shape as `bard_bardic_performance_rounds_per_day`
-/// with a different base, 3 rather than 4). Pure function (v0.6 alpha
-/// swarm, risks item 8, first APG/ACG closure) so the real rage-execution
-/// validation (`ground_or_block_skald_inspired_rage`,
+/// with a different base, 3 rather than 4).
+///
+/// **Deliberate, ruled deviation from the corpus's literal `BONUS:VAR`
+/// token** (task #50, 2026-07-28; lead ruling recorded as
+/// `risks-and-open-questions.md` item 69, the same precedent class as
+/// item 50's Swashbuckler deed gate -- see
+/// `swashbuckler_deed_tier_reached`'s own doc comment for the sibling
+/// case). The raw corpus token, `BONUS:VAR|SkaldRagingSongRoundsPerDay|
+/// 3+CHA+(2*SkaldLVL)` under `KEY:Skald ~ Raging Song` in
+/// `acg_abilities_class.lst`, disagrees with the formula below by a
+/// uniform `-2` at every level: expanding this formula gives
+/// `3+CHA+2*(level-1) = 1+CHA+2*level`, against the token's own
+/// `3+CHA+2*level`.
+///
+/// Resolved without any RAW recollection, using a cross-check already in
+/// the corpus: Skald's own DESC text states explicitly that Raging Song
+/// "counts as the bard's bardic performance special ability for any
+/// effect that affects bardic performances" -- naming Bard's own Bardic
+/// Performance as a structurally identical sibling record, already
+/// shipped and lead-verified this session. Bard's own corpus token,
+/// `BONUS:VAR|BardicPerformanceDuration|2+CHA+(2*BardicPerformanceLVL)`,
+/// is algebraically identical to Bard's own shipped
+/// `bard_bardic_performance_rounds_per_day` formula (`4+CHA+2*(level-1)`,
+/// confirmed by direct computation at levels 1/2/3/20). That reveals the
+/// corpus's own authoring convention for this exact shape: the token's
+/// flat addend equals the DESC-prose base MINUS 2, because the token
+/// multiplies by `level` directly while the prose's "+2 per level after
+/// 1st" implies `level-1`. Applying that same convention to Skald: the
+/// DESC-prose base is 3 ("3 + his Charisma modifier" at 1st level,
+/// explicit in the DESC text), so a correctly-authored token would read
+/// `1+CHA+(2*SkaldLVL)` -- not the `3+CHA+(2*SkaldLVL)` actually shipped
+/// in the corpus. The shipped Rust formula below already matches both
+/// the DESC prose and Bard's own correctly-authored sibling token
+/// exactly (levels 1/2/3/20 give 3/5/7/41 either way); it is the
+/// corpus's raw `BONUS:VAR` token for Skald specifically that carries
+/// the transcription defect (missing the `-2` offset applied correctly
+/// everywhere else in this same family).
+///
+/// **Ruling: no code change.** `SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY`
+/// and this formula are already correct and stay exactly as they are --
+/// this is a known, knowingly-overridden corpus defect, not an
+/// uncorrected bug. Pure function (v0.6 alpha swarm, risks item 8, first
+/// APG/ACG closure) so the real rage-execution validation
+/// (`ground_or_block_skald_inspired_rage`,
 /// `active_skald_inspired_rage_bonus`) shares one source of truth.
 fn skald_inspired_rage_rounds_per_day(charisma_modifier: i16, level: u8) -> i16 {
     SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY + charisma_modifier + 2 * (i16::from(level) - 1)
