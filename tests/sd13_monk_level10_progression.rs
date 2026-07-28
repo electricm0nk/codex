@@ -22,8 +22,9 @@
 //! - the ki pool GENUINELY RISES to 8 (`10 / 2 + Wisdom modifier 3`), and
 //!   Slow Fall's reach GENUINELY RISES to 50 ft (the class table's level-10
 //!   "Special" column names "slow fall 50 ft." explicitly), via a new
-//!   50-ft tier on the same grant-only identity record
-//!   (`MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL = 10`).
+//!   50-ft tier on the same grant-only identity record (task #49 later
+//!   unified this and every other Slow Fall reach gate into
+//!   `monk_slow_fall_reach_feet`'s single floor(MonkLVL/2)*10 formula).
 //! - Still Mind stays the flat +2; Purity of Body, Evasion, and Improved
 //!   Evasion stay granted +0 identity records; the level-1 bonus-feat
 //!   choice recognition still fires and its execution burden still

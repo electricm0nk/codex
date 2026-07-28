@@ -4439,9 +4439,10 @@ fn effective_character_feats(input: &CharacterInput) -> Vec<String> {
 // (10 / 2 + 2); the unarmed die stays 1d10 (band 8-11); the Flurry flat
 // attack modifier genuinely rises to +8 (level - 2) with the count staying 3
 // (next change 15th); the ki pool genuinely rises to 8 (10 / 2 + Wis mod)
-// and Slow Fall's reach genuinely rises to 50 ft
-// (MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL, named explicitly in the level-10
-// "Special" column); the column's other two entries stay named-but-unproven:
+// and Slow Fall's reach genuinely rises to 50 ft (named explicitly in the
+// level-10 "Special" column; task #49 later unified this and every other
+// Slow Fall reach gate into `monk_slow_fall_reach_feet`'s single
+// floor(MonkLVL/2)*10 formula); the column's other two entries stay named-but-unproven:
 // the repeat "Bonus feat" grant (like the level-2/6 repeats) and "ki pool
 // (lawful)" — the ki-strike lawful DR-bypass property needs a
 // DR/attack-resolution engine that does not exist here, mirroring how the
@@ -4468,8 +4469,8 @@ fn effective_character_feats(input: &CharacterInput) -> Vec<String> {
 // itself rises; the Flurry flat attack modifier genuinely rises to +10
 // (level - 2) with the count staying 3; the ki pool genuinely rises to 9
 // (12 / 2 + Wisdom modifier); Slow Fall's reach genuinely rises to 60 ft
-// (MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL, named explicitly in the level-12
-// "Special" column); the level-12 "Special" column's other entry, Abundant
+// (named explicitly in the level-12 "Special" column); the level-12
+// "Special" column's other entry, Abundant
 // Step, is checked and confirmed NOT flat (it requires both a
 // ki-point-spending action-economy engine and a dimension-door-equivalent
 // teleportation-resolution engine, neither of which exists in this
@@ -4540,17 +4541,15 @@ const MONK_MANEUVER_TRAINING_LEVEL: u8 = 3;
 const MONK_HIGH_JUMP_LEVEL: u8 = 5;
 /// `PREVARGTEQ:Monk_CFP_Level,7` on Wholeness of Body's own grant line.
 const MONK_WHOLENESS_OF_BODY_LEVEL: u8 = 7;
-/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
-/// die steps up from 1d6 to 1d8 (4th level, verified independently against two
-/// primary sources: d20pfsrd and legacy.aonprd.com both give the Medium-monk
-/// unarmed damage progression as 1d6 at levels 1-3, 1d8 at levels 4-7, 1d10 at
-/// levels 8-11, 2d6 at levels 12-15, 2d8 at levels 16-19, and 2d10 at level 20).
-const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
-/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
-/// die steps up again from 1d8 to 1d10 (8th level, verified independently
-/// against the same two primary sources' Medium-monk unarmed damage
-/// progression table: the 1d10 band runs levels 8-11).
-const MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL: u8 = 8;
+// The 4th-level (1d6->1d8) and 8th-level (1d8->1d10) unarmed-strike-die
+// step-ups were previously tracked by their own consts
+// (MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL / _SECOND_STEP_UP_LEVEL), each
+// verified independently against d20pfsrd and legacy.aonprd.com's
+// Medium-monk unarmed damage progression table (1d6 at 1-3, 1d8 at 4-7,
+// 1d10 at 8-11, 2d6 at 12-15, 2d8 at 16-19, 2d10 at 20). Task #49 folded
+// both step-ups into `monk_unarmed_strike_damage_die`'s single
+// `min(5, MonkLVL/4)` band-index formula, which reproduces both exactly;
+// the two single-purpose consts are retired in favor of the one function.
 /// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
 /// die steps up again, from 1d10 to 2d6 (12th level, verified independently
 /// against the same two primary sources' Medium-monk unarmed damage
@@ -4568,58 +4567,45 @@ const MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL: u8 = 12;
 /// Two-Weapon Fighting" — i.e. two bonus attacks instead of one, for three
 /// total attacks on a flurry full-attack action, up from two at levels 1-7).
 const MONK_FLURRY_THIRD_ATTACK_LEVEL: u8 = 8;
-/// PF1 Core Rulebook level gate at which Slow Fall's own reach magnitude
-/// increases again, from 30 ft to 40 ft (8th level, verified independently
-/// against two primary sources' Monk class table: the level-8 "Special"
-/// column reads "Slow fall 40 ft." — the full progression is 20 ft at 4th,
-/// 30 ft at 6th, 40 ft at 8th, and 50 ft at 10th). This is the level-8 row's
-/// ONLY "Special" column entry per both primary sources — checked and
-/// confirmed NOT a new class feature (specifically confirmed NOT Improved
-/// Uncanny Dodge, which Monk never gains at any level per either primary
-/// source) — so, mirroring the level-6 precedent, the record's own `value`
-/// field still stays 0 and only the detail text's reach figure changes.
-const MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL: u8 = 8;
-/// PF1 Core Rulebook level gate at which Monk's Slow Fall reach rises to 50
-/// ft (10th level — the class table's level-10 "Special" column names "slow
-/// fall 50 ft." explicitly, verified independently against d20pfsrd and
-/// legacy.aonprd.com).
-const MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL: u8 = 10;
-/// PF1 Core Rulebook level gate at which Monk's Slow Fall reach rises to 60
-/// ft (12th level — the class table's level-12 "Special" column names
-/// "slow fall 60 ft." explicitly, verified independently against d20pfsrd
-/// and the Archives of Nethys aonprd.com mirror). The column's other entry,
-/// Abundant Step, is checked and confirmed NOT flat (it requires both a
-/// ki-point-spending action-economy engine and a
-/// dimension-door-equivalent teleportation-resolution engine, neither of
-/// which exists in this codebase), so it is deliberately left
-/// named-but-unproven, mirroring the Wholeness of Body / High Jump
-/// precedent exactly — no record is fabricated for it.
-const MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL: u8 = 12;
+/// PF1 Core Rulebook level gate at which Flurry of Blows grants a FOURTH
+/// attack (15th level, task #49, verified independently against both
+/// primary sources' verbatim Flurry of Blows rule text: flurry functions as
+/// Two-Weapon Fighting at 1st, Improved TWF at 8th, and Greater TWF at
+/// 15th -- four total attacks on a flurry full-attack action, up from three
+/// at levels 8-14). Previously unreachable under
+/// `MAX_SUPPORTED_MONK_LEVEL = 12`; the attack count was hard-capped at 3.
+const MONK_FLURRY_FOURTH_ATTACK_LEVEL: u8 = 15;
+/// PF1 Core Rulebook level at which Slow Fall stops being a finite
+/// reduction and becomes "fall any distance without harm" (task #49,
+/// verified independently against both primary sources: the level-20
+/// "Special" column reads "Slow fall any distance", and the rule text
+/// itself states the wall-assisted descent absorbs unlimited fall damage
+/// rather than continuing the arithmetic 10-ft-per-two-levels progression
+/// to a finite 100 ft).
+const MONK_SLOW_FALL_ANY_DISTANCE_LEVEL: u8 = 20;
+// Slow Fall's reach magnitude at 8th (40 ft), 10th (50 ft), 12th (60 ft),
+// and 6th (30 ft) level was previously tracked by four separate consts
+// (MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL / _FIFTY_FOOT_REACH_LEVEL /
+// _SIXTY_FOOT_REACH_LEVEL / _INCREASED_REACH_LEVEL), each verified
+// independently against both primary sources' Monk class table "Special"
+// column ("Slow fall 40 ft." / "slow fall 50 ft." / "slow fall 60 ft." /
+// "Bonus feat, slow fall 30 ft."), and each confirmed to carry no OTHER new
+// class feature at its level (specifically checked and confirmed NOT
+// Improved Uncanny Dodge at 8th, which Monk never gains at any level per
+// either source, and the level-6 "Bonus feat" entry confirmed to be the
+// same open-ended repeat bonus-feat choice-list shape already
+// named-but-unproven at 2nd level, not a new automatic grant). Task #49
+// unified all of these into the single `floor(MonkLVL/2)*10` formula
+// (`monk_slow_fall_reach_feet`), which reproduces every one of these
+// checked values exactly for levels 4-12 and extends the same verified
+// formula honestly through level 18, so the four single-purpose consts are
+// retired in favor of the one function; their verification history is
+// preserved here rather than silently dropped.
 /// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
 /// (4th level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
 /// 4th-level special feature entry).
 const MONK_KI_POOL_AND_SLOW_FALL_LEVEL: u8 = 4;
-/// PF1 Core Rulebook level gate at which Slow Fall's own reach magnitude
-/// increases from 20 ft to 30 ft (6th level, verified independently against
-/// two primary sources: d20pfsrd and legacy.aonprd.com both list "Bonus feat,
-/// slow fall 30 ft." as the Monk 6th-level special feature entry — the full
-/// progression is 20 ft at 4th, 30 ft at 6th, 40 ft at 8th, and 50 ft at
-/// 10th). This is a genuine flat-magnitude increase in the rule text, mirroring
-/// the Rogue Trap Sense idiom; the record's own `value` field still stays 0
-/// (still a bounded grant-only identity record, since no fall-damage-
-/// resolution engine exists in this codebase to apply any reduction to), but
-/// the detail text names the level-accurate reach so it is never a stale,
-/// fabricated-by-omission "20 feet" claim at level 6. The level-6 "Special"
-/// column's OTHER entry, "Bonus feat," was checked and confirmed to be the
-/// SAME open-ended repeat bonus-feat choice-list shape already deliberately
-/// left named-but-unproven at 2nd level (not a new automatic class feature,
-/// and not Improved Trip specifically — Improved Trip is merely one of the
-/// five feats already recognized as a possible *choice* for this and every
-/// other Monk bonus feat grant) — mirroring exactly the Rogue level-6 "second
-/// Rogue Talent slot" precedent: no new choice-slot and no new diagnostic was
-/// added for it.
-const MONK_SLOW_FALL_INCREASED_REACH_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Monk gains Purity of Body (5th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "High jump, purity of body" as the Monk
@@ -24159,6 +24145,71 @@ fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + wisdom_modifier
 }
 
+/// The Medium monk's unarmed strike damage die, as `(die face size, die
+/// count, display name)` -- PF1 Core Rulebook Monk class table, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror (task #49): 1d6/1d8/1d10/2d6/2d8/2d10 at levels
+/// 1-3/4-7/8-11/12-15/16-19/20 (`min(5, MonkLVL/4)` band index). The
+/// `min(5, ...)` is what proves the progression stops at 2d10 rather than
+/// continuing past level 20.
+///
+/// Extracted from what was previously an inline 4-arm `if`/`else` capped at
+/// 2d6 (bands 4 and 5, 2d8 and 2d10, were unreachable under the old
+/// `MAX_SUPPORTED_MONK_LEVEL = 12` and ungrounded). This function reproduces
+/// the old inline logic exactly for levels 1-11 and extends it through 20.
+fn monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'static str) {
+    match (i16::from(level) / 4).min(5) {
+        0 => (6, 1, "1d6"),
+        1 => (8, 1, "1d8"),
+        2 => (10, 1, "1d10"),
+        3 => (6, 2, "2d6"),
+        4 => (8, 2, "2d8"),
+        _ => (10, 2, "2d10"),
+    }
+}
+
+/// The number of attacks a Flurry of Blows full-attack grants: 2 at 1st
+/// level (Two-Weapon Fighting shape), 3 at 8th (Improved TWF -- "the monk
+/// can make two additional attacks when he uses flurry of blows"), and 4 at
+/// 15th (Greater TWF), verified independently against both primary
+/// sources' verbatim Flurry of Blows rule text (task #49).
+///
+/// Deliberately NOT the corpus's own `BONUS:VAR|FlurryAttacks|
+/// 2+(FlurryLVL>=6)+(>=8)+(>=11)+(>=15)+(>=16)` token, which reaches 7 by
+/// level 20 by counting total attack-routine entries including the
+/// base-attack iteratives that arrive at 6/11/16 -- a different quantity
+/// from the flurry-granted attack count this function documents.
+/// Substituting it would look like "using the corpus value" while silently
+/// changing what is measured.
+fn monk_flurry_of_blows_attack_count(level: u8) -> i16 {
+    if level < MONK_FLURRY_THIRD_ATTACK_LEVEL {
+        2
+    } else if level < MONK_FLURRY_FOURTH_ATTACK_LEVEL {
+        3
+    } else {
+        4
+    }
+}
+
+/// How many feet shorter a fall is treated as, for Slow Fall. `None` means
+/// "any distance" -- the level-20 case, which is genuinely unlimited rather
+/// than a large finite number.
+///
+/// `floor(MonkLVL/2)*10` reproduces the previously hand-written 20/30/40/
+/// 50/60 ladder (levels 4/6/8/10/12) exactly, and extends it honestly:
+/// 70/80/90 ft at levels 14/16/18. **Level 20 is not 100 ft** -- PF1's own
+/// rule text at 20th level reads "he can use a nearby wall to slow his
+/// descent and fall any distance without harm" rather than continuing the
+/// arithmetic progression, verified independently against both primary
+/// sources (task #49). Callers must reach this only at or above the Slow
+/// Fall grant level (4th); below it the feature does not exist.
+fn monk_slow_fall_reach_feet(level: u8) -> Option<i16> {
+    if level >= MONK_SLOW_FALL_ANY_DISTANCE_LEVEL {
+        return None;
+    }
+    Some(i16::from(level) / 2 * 10)
+}
+
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -24277,15 +24328,7 @@ fn explain_monk_level1_chassis(
     // roll, damage total, or attack-resolution engine is computed, and the
     // level-16+ die progression (2d8 and beyond) is not grounded.
     let (unarmed_die_value, unarmed_die_count, unarmed_die_name) =
-        if level < MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL {
-            (6, 1, "1d6")
-        } else if level < MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL {
-            (8, 1, "1d8")
-        } else if level < MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL {
-            (10, 1, "1d10")
-        } else {
-            (6, 2, "2d6")
-        };
+        monk_unarmed_strike_damage_die(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
         value: unarmed_die_value,
@@ -24359,7 +24402,7 @@ fn explain_monk_level1_chassis(
              integrated combat totals is implemented"
         ),
     });
-    let flurry_attack_count = if level < MONK_FLURRY_THIRD_ATTACK_LEVEL { 2 } else { 3 };
+    let flurry_attack_count = monk_flurry_of_blows_attack_count(level);
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.flurry_of_blows_attack_count".to_owned(),
         value: flurry_attack_count,
@@ -24560,29 +24603,27 @@ fn explain_monk_level1_chassis(
             ),
         });
     } else {
-        let slow_fall_reach_feet = if level < MONK_SLOW_FALL_INCREASED_REACH_LEVEL {
-            20
-        } else if level < MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL {
-            30
-        } else if level < MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL {
-            40
-        } else if level < MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL {
-            50
-        } else {
-            60
+        let slow_fall_reach = monk_slow_fall_reach_feet(level);
+        let slow_fall_reach_text = match slow_fall_reach {
+            Some(feet) => format!("{feet} feet"),
+            None => "any distance".to_owned(),
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature whose own reach magnitude increases to 30 ft. at 6th level, 40 \
-                 ft. at 8th level, 50 ft. at 10th level, and 60 ft. at 12th level): \"a monk \
-                 within arm's reach of a wall can use it to slow his descent\" — she takes \
-                 falling damage as if the fall were {slow_fall_reach_feet} feet shorter than it \
-                 actually is. This is a bounded grant-only identity record only (value 0, \
-                 non-fabricated): no fall-damage-resolution engine exists anywhere in this \
-                 codebase to apply the {slow_fall_reach_feet}-foot reduction to"
+                 class feature whose own reach magnitude is floor(monk level / 2) * 10 ft, \
+                 rising 10 ft every even level thereafter -- to 30 ft. at 6th level, 40 ft. at \
+                 8th level, 50 ft. at 10th level, 60 ft. at 12th level, 70 ft. at 14th level, 80 \
+                 ft. at 16th level, and 90 ft. at 18th level -- and becoming ANY distance at 20th \
+                 level, which the feature's own rule text states outright rather than continuing \
+                 the progression to a finite 100): \"a monk within arm's reach of a wall can use \
+                 it to slow his descent\" — she takes falling damage as if the fall were \
+                 {slow_fall_reach_text} shorter than it actually is. This is a bounded \
+                 grant-only identity record only (value 0, non-fabricated): no \
+                 fall-damage-resolution engine exists anywhere in this codebase to apply the \
+                 {slow_fall_reach_text} reduction to"
             ),
         });
     }
@@ -45014,6 +45055,90 @@ mod monk_task36_feature_tests {
             .detail;
         assert!(detail.contains("UNCONDITIONAL"), "{detail}");
         assert!(detail.contains("+20"), "{detail}");
+    }
+}
+
+/// Task #49: the three Monk formulas that were hard-capped below level 20,
+/// extracted as pure functions so their upper bands are directly testable
+/// BEFORE `MAX_SUPPORTED_MONK_LEVEL` widens (this module's own tests exercise
+/// levels up to 20 directly against the pure functions; the gated dispatch
+/// path in `explain_monk_level1_chassis` cannot reach past level 12 yet, so
+/// this commit is provably inert there -- see `monk_task36_feature_tests`
+/// and the `sd13_monk_level*`/`sd18_monk_level*` integration suites, which
+/// keep pinning the exact level 1-12 values unchanged).
+///
+/// Every band below is derived from the PF1 Core Rulebook Monk class table
+/// and Flurry of Blows / Slow Fall rule text (cross-checked independently
+/// against d20pfsrd and the Archives of Nethys aonprd.com mirror this
+/// session), not from memory alone.
+#[cfg(test)]
+mod monk_task49_level_range_formula_tests {
+    use super::{
+        monk_flurry_of_blows_attack_count, monk_slow_fall_reach_feet,
+        monk_unarmed_strike_damage_die,
+    };
+
+    /// Medium-monk unarmed strike damage: 1d6/1d8/1d10/2d6/2d8/2d10 at
+    /// levels 1-3/4-7/8-11/12-15/16-19/20 (`min(5, MonkLVL/4)` band index).
+    /// The min(5, ...) is what proves the progression stops at 2d10 rather
+    /// than continuing past level 20.
+    #[test]
+    fn unarmed_strike_damage_die_covers_all_six_bands_through_level_twenty() {
+        for (level, want) in [
+            (1u8, (6i16, 1i16, "1d6")),
+            (3, (6, 1, "1d6")),
+            (4, (8, 1, "1d8")),
+            (7, (8, 1, "1d8")),
+            (8, (10, 1, "1d10")),
+            (11, (10, 1, "1d10")),
+            (12, (6, 2, "2d6")),
+            (15, (6, 2, "2d6")),
+            // The two bands that did not exist before this task.
+            (16, (8, 2, "2d8")),
+            (19, (8, 2, "2d8")),
+            (20, (10, 2, "2d10")),
+        ] {
+            assert_eq!(monk_unarmed_strike_damage_die(level), want, "monk level {level}");
+        }
+    }
+
+    /// Flurry grants attacks as Two-Weapon Fighting (1st, 2 attacks),
+    /// Improved TWF (8th, 3 attacks), then Greater TWF (15th, 4 attacks).
+    /// Deliberately NOT the corpus's own `FlurryAttacks` BONUS:VAR token,
+    /// which counts total attack-routine entries including BAB iteratives
+    /// (reaching 7 by level 20) -- a different quantity from the
+    /// flurry-granted attack count this record documents.
+    #[test]
+    fn flurry_attack_count_gains_its_fourth_attack_at_fifteenth_level() {
+        for (level, want) in [(1u8, 2i16), (7, 2), (8, 3), (14, 3), (15, 4), (20, 4)] {
+            assert_eq!(monk_flurry_of_blows_attack_count(level), want, "monk level {level}");
+        }
+    }
+
+    /// Slow Fall's reach is `floor(MonkLVL/2)*10` ft at every gate from 4th
+    /// through 18th (this single formula reproduces the previously
+    /// hand-written 20/30/40/50/60 ladder exactly for levels 4-12). At 20th
+    /// the feature's own rule text switches to "fall any distance without
+    /// harm" rather than continuing to a finite 100 ft -- `None` carries
+    /// that unlimited case honestly rather than fabricating a number.
+    #[test]
+    fn slow_fall_reach_follows_one_formula_and_is_unlimited_at_twenty() {
+        for (level, want) in [
+            (4u8, Some(20i16)),
+            (5, Some(20)),
+            (6, Some(30)),
+            (8, Some(40)),
+            (10, Some(50)),
+            (12, Some(60)),
+            // Every band below here was frozen at 60 before this task.
+            (14, Some(70)),
+            (16, Some(80)),
+            (18, Some(90)),
+            (19, Some(90)),
+            (20, None),
+        ] {
+            assert_eq!(monk_slow_fall_reach_feet(level), want, "monk level {level}");
+        }
     }
 }
 
