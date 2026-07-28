@@ -9391,16 +9391,22 @@ fn ground_cavalier_mount_and_defer_the_rest(
         id: "class_feature.apg.cavalier.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{CAVALIER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, the Mount, its class-skill list, Challenge's uses-per-day and \
-             self-applied Armor Class penalty, Expert Trainer, the bonus-combat-feat and \
-             teamwork-feat counts, and Order of the Sword's own Sense Motive bonus: Banner and \
-             Greater Banner, the charge family (Cavalier's Charge, Mighty Charge, Supreme \
-             Charge), Challenge's own +level damage against its target, Demanding Challenge, \
-             the five non-Sword Orders and every order's challenge rider, and Order of the \
-             Sword's own By My Honor remain ungrounded. The charge family and every challenge \
-             rider are blocked on real missing engine state -- a charge action and a persistent \
-             opponent relationship -- not on transcription effort; no class-feature execution \
-             is fabricated in this bounded chassis baseline"
+             pillar, the Mount, its class-skill list, Challenge's uses-per-day, self-applied \
+             Armor Class penalty and its own +level damage bonus, Expert Trainer, the \
+             bonus-combat-feat and teamwork-feat counts, and Order of the Sword's own Sense \
+             Motive bonus: Banner and Greater Banner, the charge family (Cavalier's Charge, \
+             Mighty Charge, Supreme Charge), Demanding Challenge, the five non-Sword Orders and \
+             every order's challenge rider, Order of the Sword's own By My Honor, and the \
+             Tactician family's own grant facet (Tactician/Greater Tactician/Master Tactician \
+             each also confer the chosen teamwork feat on allies within 30 feet -- only the \
+             tier COUNT grounds) remain ungrounded. The charge family and every challenge \
+             rider are blocked on real \
+             missing engine state -- a charge action and a persistent opponent relationship -- \
+             not on transcription effort; no class-feature execution is fabricated in this \
+             bounded chassis baseline. This message previously claimed Challenge's +level \
+             damage was ungrounded while listing Challenge's other two facets as grounded: \
+             `challenge_damage_bonus` is shipped (task #6), so the message contradicted itself \
+             about a single feature's own facets"
         ),
         claim_blocking: true,
     });
@@ -10033,11 +10039,22 @@ fn push_alchemist_other_features_deferred_diagnostic(diagnostics: &mut Vec<Compu
         id: "class_feature.apg.alchemist.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{ALCHEMIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Mutagen, Bomb, Poison Resistance, and (subject to its own real \
-             prepared-extract validation) spellcasting: this APG class has no class-skill list, \
-             and no other named class feature (Discovery -- a chooser-list of real mechanical \
-             variety -- Swift Alchemy, Swift Poisoning) grounded anywhere in this codebase yet; \
-             no class-feature or spell execution is fabricated in this bounded chassis baseline"
+             chassis pillar, Mutagen's first stat-bonus tier, Bomb, Poison Resistance, \
+             Formulae's own formula-book contents, and (subject to its own real \
+             prepared-extract validation) spellcasting: no other named class feature (Discovery \
+             -- a chooser-list of real mechanical variety, 35 shared `KEY:Discovery ~ ...` \
+             records -- Grand Discovery, Swift Alchemy, Swift Poisoning, Instant Alchemy, \
+             Persistent Mutagen, Poison Use, the Brew Potion and Throw Anything bonus-feat \
+             grants, and Mutagen's own second and third stat-bonus tiers \
+             (`SecondMutagenStatBonus`/`ThirdMutagenStatBonus` -- only the flat first-tier \
+             +4/-2 is grounded)) is grounded anywhere in this codebase yet; \
+             no class-feature or spell execution is fabricated in this bounded chassis \
+             baseline. This message previously asserted \"this APG class has no class-skill \
+             list\": Alchemist's own `KEY:Alchemist ~ Class Skills` corpus record exists -- it \
+             simply contains none of the three skills this codebase tracks, so the resulting \
+             zero bonus is correct for a different reason than the one claimed. Grand \
+             Discovery, Instant Alchemy, Persistent Mutagen, Poison Use, Brew Potion, Throw \
+             Anything and the higher Mutagen tiers were named in NEITHER clause (task #76)"
         ),
         claim_blocking: true,
     });
@@ -11617,13 +11634,19 @@ fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
         message: format!(
             "{ORACLE_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
              pillar, its known-spell posture, Life Mystery's own Healing Hands, and the Clouded \
-             Vision, Lame, Wasting, and Deaf Curses: Haunted (a genuine no-op -- zero numeric \
-             tokens in the corpus), Tongues (an 8-language chooser with no magnitude), the \
-             remaining Mystery revelations, Oracle's own Mystery-granted bonus spell-list \
+             Vision, Lame, Wasting, and Deaf Curses, and at least one revelation each from the \
+             Bone, Flame, Life, Lore and Nature Mysteries: Haunted (a genuine no-op -- zero \
+             numeric tokens in the corpus), Tongues (an 8-language chooser with no magnitude), \
+             Orisons (the `CAST:0,3` at-will 0-level set -- the known-spell grounding covers \
+             spell levels 1-3 only), the five Mysteries with NO grounded revelation at all \
+             (Battle, Heavens, Stone, Waves, Winds) plus every ungrounded revelation within \
+             the five that do, Oracle's own Mystery-granted bonus spell-list \
              portion of `SPELLLIST:2|Cleric|Oracle`, and spontaneous Cure Wounds/Inflict Wounds \
              conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap) remain \
              ungrounded anywhere in this codebase; no class-feature or spell execution is \
-             fabricated in this bounded chassis baseline"
+             fabricated in this bounded chassis baseline. Orisons and the five \
+             no-revelation Mysteries were previously covered only by the vague phrase \
+             \"the remaining Mystery revelations\" (task #76)"
         ),
         claim_blocking: true,
     });
@@ -12048,11 +12071,16 @@ fn ground_summoner_eidolon(
              slice grounds the canonical Quadruped's fixed stat block and the pool SIZE, but the \
              full evolution point-buy economy (104 real evolution records with costs 1-4 and \
              their own base-form and level prerequisites) is not modelled, so which evolutions a \
-             given Eidolon actually bought is unknown. The other two base forms (Biped, \
-             Serpentine), Aspect and Greater Aspect, Life Link, Bond Senses, Shield Ally and \
-             Greater Shield Ally, Maker's Call, Transposition, Twin Eidolon, the Summon Monster \
-             spell-like ability, and Summoner's own spontaneous Charisma spellcasting all remain \
-             ungrounded; no evolution spending or class-feature execution is fabricated here"
+             given Eidolon actually bought is unknown. Still genuinely ungrounded alongside it, \
+             per a full `KEY:Summoner ~` / `KEY:Eidolon ~` corpus enumeration: the other two \
+             base forms (Biped, Serpentine), Aspect and Greater Aspect, Life Link, Life Bond, \
+             Shield Ally and Greater Shield Ally, Transposition, Gate, the Eidolon's own Link, \
+             Share Spells and Skills records, and Summoner's own spontaneous Charisma \
+             spellcasting including its Cantrips. Bond Senses, Maker's Call, Merge Forms, Twin \
+             Eidolon and the Summon Monster spell-like ability's \
+             duration/uses/accessible-spell-level are NOT \
+             among them -- all five are grounded (task #35) and this message previously claimed \
+             otherwise. No evolution spending or class-feature execution is fabricated here"
         ),
         claim_blocking: true,
     });
@@ -12538,9 +12566,13 @@ fn ground_or_block_witch_class_features(
     } else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.witch.hex_powers.unsupported".to_owned(),
-            message: "Witch remains blocked on its Hex powers burden: no recognized Ward hex \
-                 choice is present (only Ward's own deflection/resistance bonus is genuinely \
-                 grounded in this codebase), so no Witch Hex-power support is claimed"
+            message: "Witch remains blocked on its Hex powers burden: no recognized hex choice \
+                 is present. Three of the corpus's 27 hexes have their own grounded magnitude \
+                 (Ward's deflection/resistance, Cauldron's Craft (alchemy) bonus, Flight's \
+                 Swim bonus) and the shared hex save DC grounds for all 27, but each requires \
+                 an explicit recorded choice; nothing is seeded. This message previously said \
+                 \"only Ward's own deflection/resistance bonus is genuinely grounded\", which \
+                 stopped being true once Cauldron and Flight landed (task #76)"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -12561,13 +12593,20 @@ fn push_witch_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computati
         id: "class_feature.apg.witch.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{WITCH_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar and Ward hex's own deflection/resistance bonus: fresh own-list \
-             spellcasting (Cantrips, Patron Spells -- no `SPELLLIST:` reuse token, a genuinely \
-             new data-ingestion cost), the Familiar and Familiar Touch Spells (an unbuilt \
-             subsystem, mechanically distinct from the already-built Animal Companion Wolf \
-             stat block), and the other ~18 base hexes plus the Major Hex/Grand Hex tiers \
-             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
-             is fabricated in this bounded chassis baseline"
+             pillar, its class-skill list (Intimidate only -- a genuine partial match), its \
+             own-list spellcasting with daily preparation and prepared-spell validation, \
+             Familiar Touch Spells, the bonded familiar's own master hit-point benefit, the \
+             single shared hex save DC covering all 27 hex records, and the Ward, Cauldron and \
+             Flight hexes' own magnitudes: Patron Spells, the bonded familiar's own creature \
+             stat block, and the other 24 of the corpus's 27 hexes (14 `Witch Hex`, 8 `Witch \
+             Major Hex`, 5 `Witch Grand Hex`) remain ungrounded anywhere in this codebase; no \
+             class-feature or spell execution is fabricated in this bounded chassis baseline. \
+             This message previously listed own-list spellcasting (\"Cantrips, Patron Spells -- \
+             no `SPELLLIST:` reuse token, a genuinely new data-ingestion cost\") and \"the \
+             Familiar and Familiar Touch Spells (an unbuilt subsystem)\" as wholly ungrounded: \
+             both were true when written and are false now (tasks #11/#23/#33), with only \
+             Patron Spells and the familiar creature's own stat block genuinely remaining \
+             (task #76)"
         ),
         claim_blocking: true,
     });
@@ -13492,10 +13531,11 @@ fn ground_or_block_warpriest_class_features(
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.warpriest.blessing_powers.unsupported".to_owned(),
             message: "Warpriest remains blocked on its Blessing powers burden: no recognized \
-                 Destruction or Strength Blessing choice is present (only Destruction's own \
-                 Destructive Attacks and Strength's own Strength Surge minor powers are \
-                 genuinely grounded in this codebase), so no Warpriest Blessing-power support is \
-                 claimed"
+                 Destruction or Strength Blessing choice is present. Of the corpus's 33 \
+                 Blessing types -- each carrying its own minor AND major power, 66 powers in \
+                 all -- exactly two powers are genuinely grounded in this codebase \
+                 (Destruction's Destructive Attacks and Strength's Strength Surge, both minor), \
+                 so no Warpriest Blessing-power support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -13699,15 +13739,21 @@ fn push_warpriest_other_features_deferred_diagnostic(diagnostics: &mut Vec<Compu
             "{WARPRIEST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, Blessings' flat uses-per-day/DC, Sacred Weapon's base damage die, \
              Fervor's pool and heal dice, Channel Energy's save DC, Sacred Armor's enhancement \
-             and pool, and prepared spellbook: 18 of the 20 Blessing types (only Destruction's \
-             own Destructive Attacks and Strength's own Strength Surge are grounded), Sacred \
+             and pool, its class-skill list, Orisons, and prepared spellbook: 31 of the \
+             corpus's 33 Blessing types (only Destruction's own Destructive Attacks and \
+             Strength's own Strength Surge are grounded -- 2 of 66 powers, since each of the 33 \
+             types carries its own minor AND major power), Sacred \
              Weapon's active weapon-enhancement mechanic, Aspect of War, Spontaneous Casting, \
-             Aura, Focus Weapon, and Bonus Languages remain ungrounded anywhere in this \
-             codebase. Sacred Weapon's active enhancement and roughly 15 of the remaining \
+             Aura, Focus Weapon, Bonus Languages, and the Channel Positive/Negative Energy \
+             dice and uses (only the shared save DC and Fervor dice are grounded) remain \
+             ungrounded anywhere in this codebase. Sacred Weapon's active enhancement and a \
+             large share of the remaining \
              Blessing powers are blocked on the same real, missing architecture -- a \
              weapon-enhancement activation surface and a summon subsystem -- not on \
              transcription effort; no class-feature execution is fabricated in this bounded \
-             chassis baseline"
+             chassis baseline. This message previously said \"18 of the 20 Blessing types\": \
+             the real corpus count is 33 types, verified by enumerating `KEY:<X> Blessing ~ \
+             ...` directly (task #76)"
         ),
         claim_blocking: true,
     });
@@ -13909,12 +13955,17 @@ fn ground_or_block_slayer_class_features(
         id: "class_feature.acg.slayer.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SLAYER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Sneak Attack dice, Trap Sense, Trapfinding, and Track: Studied Target \
-             (Slayer's own marquee ability -- bonuses against a studied opponent, opponent-\
-             dependent, no target-creature representation exists anywhere in this codebase) and \
-             Slayer Talents (a chooser-list of real mechanical variety, named but not built) \
-             remain ungrounded; no class-feature execution is fabricated in this bounded \
-             chassis baseline"
+             pillar, Sneak Attack dice, Trap Sense, Trapfinding, Track, Studied Target's own \
+             bonus/count magnitudes, and the Foil Scrutiny talent with the talent count: \
+             Stalker, Quarry, Quarry Output, Improved Quarry, Master Slayer, Slayer's Advance \
+             and Swift Tracker remain ungrounded anywhere in this codebase, and the \
+             Slayer Talent family is covered at 1 of its 41 real corpus records. Studied \
+             Target's magnitudes are grounded but its APPLICATION is not -- the bonus only \
+             matters against a studied opponent, and no target-creature representation exists \
+             here. No class-feature execution is fabricated in this bounded chassis baseline. \
+             This message previously named Studied Target and Slayer Talents as the two things \
+             remaining, and named nothing else -- both were already grounded (tasks #13/#58), \
+             while the seven features actually missing went unlisted"
         ),
         claim_blocking: true,
     });
@@ -14322,14 +14373,23 @@ fn push_swashbuckler_other_features_deferred_diagnostic(
         id: "class_feature.acg.swashbuckler.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SWASHBUCKLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Panache's flat daily maximum, Nimble's dodge bonus, and Charmed \
-             Life: Deeds (a chooser-list of real mechanical variety naming what Panache is \
-             actually spent on -- Derring-Do, Dodging Panache, Menacing Swordplay, Precise \
-             Strike, and the rest -- named but not built), Swashbuckler Finesse (a feat-\
-             prerequisite substitution mechanic this codebase has no hook for), Bonus Feats, \
-             Swashbuckler Weapon Training/Mastery, Swashbuckler's Grace/Edge, and every other \
-             named class feature remain ungrounded anywhere in this codebase; no class-feature \
-             execution is fabricated in this bounded chassis baseline"
+             chassis pillar, its class-skill list, Panache's flat daily maximum, Nimble's dodge \
+             bonus, Charmed Life, Swashbuckler Finesse, Swashbuckler Weapon Training, and the \
+             six Deeds already built (Derring-Do, Dodging Panache, Precise Strike with its \
+             critical case, Bleeding Wound, Deadly Stab, Stunning Stab). Thirteen of the \
+             corpus's nineteen `Swashbuckler Deed` records remain ungrounded anywhere in this \
+             codebase: Opportune Parry and Riposte (1st), Kip-Up, Menacing Swordplay and \
+             Swashbuckler Initiative (3rd), Superior Feint, Swashbuckler's Grace and Targeted \
+             Strike (7th), Evasive and Subtle Blade (11th), Dizzying Defense, Perfect Thrust \
+             and Swashbuckler's Edge (15th), and Cheat Death (19th). Swashbuckler Weapon \
+             Mastery is likewise ungrounded, and Bonus Feats is grounded only for its \
+             fighter-level-equivalence facet -- the bonus-feat slot itself \
+             (`Pool_SwashbucklerBonusFeat`, 4th level and every four thereafter) is not. No \
+             class-feature execution is fabricated in this bounded chassis baseline. This \
+             message previously described Deeds as \"named but not built\" and Swashbuckler \
+             Finesse as having \"no hook\" in this codebase -- both were true when written and \
+             are false now (task #14); a later revision then named only four remaining items, \
+             which understated the real gap (task #76)"
         ),
         claim_blocking: true,
     });
@@ -14974,7 +15034,8 @@ fn push_investigator_other_features_deferred_diagnostic(
         id: "class_feature.acg.investigator.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Trapfinding, Trap Sense, Inspiration's flat pool-size fact, Poison \
+             chassis pillar, its class-skill list, Trapfinding, Trap Sense, Inspiration's flat \
+             pool-size fact, Poison \
              Resistance, Alchemy, Resiliency's own temporary-hit-point magnitude (task #58, \
              recognized via her own separate Rogue Talent whitelist choice slot -- only \
              Resiliency, not the other 39 whitelist entries), and (subject to its own real \
@@ -14982,12 +15043,15 @@ fn push_investigator_other_features_deferred_diagnostic(
              free/two-use action on skill/ability/attack/save rolls, plus the free \
              Knowledge/Linguistics/Spellcraft interaction), the remainder of Investigator \
              Talents (a chooser-list of real mechanical variety including the large Rogue \
-             Talent and Discovery sub-lists, Resiliency alone excepted), Studied Combat, \
-             Studied Strike (both opponent-dependent, deferred pending an opponent-tracking \
-             pillar, ruled consistently with Slayer's own Studied Target), Keen Recollection, \
-             Poison Lore, Swift Alchemy, True Inspiration, and every other named class feature \
-             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
-             is fabricated in this bounded chassis baseline"
+             Talent and Discovery sub-lists, Resiliency alone excepted), Keen Recollection, \
+             Poison Lore, Swift Alchemy, and True Inspiration remain ungrounded anywhere in \
+             this codebase; no class-feature or spell execution is fabricated in this bounded \
+             chassis baseline. Studied Combat and Studied Strike are NOT among them: their \
+             bonus, duration, Studied Defense AC bonus and strike dice are all grounded, and \
+             this message previously deferred them \"pending an opponent-tracking pillar, ruled \
+             consistently with Slayer's own Studied Target\" -- a ruling that no longer matches \
+             either class's shipped state. As with Slayer, what remains unmodelled for both is \
+             the APPLICATION against a specific studied opponent, not the magnitudes"
         ),
         claim_blocking: true,
     });
@@ -15621,12 +15685,24 @@ fn push_shaman_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
         id: "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SHAMAN_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, its own prepared spellcasting, Spirit Animal's familiar master benefit, \
-             and Life Spirit's own Channel ability: Spirit Magic (the spirit-granted bonus \
-             spells layered on top of the class list), Manifestation (a capstone ability), the \
-             other 9 primary spirits, and the large Hex/Spirit Hex chooser-list remain \
-             ungrounded anywhere in this codebase; no class-feature or spell execution is \
-             fabricated here"
+             pillar, its own prepared spellcasting including Orisons, Spirit Animal's familiar \
+             master benefit, and the immediately-available base ability of ALL TEN primary \
+             Spirits (Battle, Bones, Flame, Heavens, Life, Lore, Nature, Stone, Waves, Wind). \
+             Still ungrounded anywhere in this codebase: Spirit Magic (the spirit-granted bonus \
+             spells layered on top of the class list), Manifestation (a capstone ability), each \
+             Spirit's three higher abilities gated at `ShamanSpiritGreater` (`PRECLASS:1,\
+             Shaman=8`), `ShamanSpiritTrue` (`PRECLASS:1,Shaman=16`) and Manifestation, \
+             Wandering Spirit, and the hex chooser-lists (13 `Shaman Hex`, 49 `Shaman Spirit \
+             Hex`, 49 `Shaman Wandering Hex` records). No class-feature or spell execution is \
+             fabricated here. This message previously claimed \"the other 9 primary spirits\" \
+             were ungrounded while the sibling `spirit_powers.unsupported` record simultaneously \
+             stated all ten are recognized: the sibling was right and this clause was stale. \
+             Battle, Heavens, Lore and Nature ship as ordinary `id: \"...\"` literals; Bones, \
+             Flame, Stone, Waves and Wind ship as table-constructed \
+             `format!(\"class_feature.acg.shaman.{{key}}_spirit.touch_bonus_damage\")` ids that \
+             an `id: \"`-prefixed search does not match, which is how those five stayed \
+             invisible to an id-grep audit (task #76). Wandering Spirit and Wandering Hex were \
+             named in NEITHER clause"
         ),
         claim_blocking: true,
     });
@@ -16594,15 +16670,22 @@ fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computati
              Knowledge, Well-Versed, the flat pool-size/count magnitudes for Spell Kenning, Lore \
              Master, Versatile Performance, and Rage Powers, and Raging Climber/Raging \
              Swimmer's own self-use magnitude (two of the 60-record Rage Powers family, landing \
-             on the real Climb/Swim totals): this ACG class has no class-skill list and no \
+             on the real Climb/Swim totals), and its class-skill list: no \
              other named class feature or execution mechanism (Damage Reduction's own \
              ally-extension, Spell Kenning's own cross-class spell-borrowing execution, Lore \
              Master's own take-10/take-20 execution, Versatile Performance's own Perform-type \
              choice and skill-substitution execution, Rage Powers' own ally-granting \
-             shared-list access plus the other 58 named-but-unmodeled rage powers, Dirge of \
-             Doom, Song of Marching, Song of Strength, and Song of the Fallen) grounded \
+             shared-list access plus the other 58 named-but-unmodeled rage powers, Raging Song \
+             itself and its Dirge of \
+             Doom, Song of Marching, Song of Strength and Song of the Fallen songs, Master \
+             Skald, Uncanny Dodge and Improved Uncanny Dodge, Cantrips, and the Scribe Scroll \
+             bonus-feat grant) is grounded \
              anywhere in this codebase yet; no class-feature execution is fabricated in this \
-             bounded chassis baseline"
+             bounded chassis baseline. This message previously asserted \"this ACG class has no \
+             class-skill list\": Skald's own `KEY:Skald ~ Class Skills` corpus record exists \
+             and genuinely includes Climb, Intimidate and Swim (task #78). Master Skald, \
+             Uncanny Dodge, Improved Uncanny Dodge, Cantrips and Scribe Scroll were named in \
+             NEITHER clause (task #76)"
         ),
         claim_blocking: true,
     });
@@ -17361,11 +17444,24 @@ fn push_bloodrager_other_features_deferred_diagnostic(
         id: "class_feature.acg.bloodrager.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{BLOODRAGER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Bloodrage, its class-skill list, and its spells-per-day/\
-             spells-known tables: Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage \
-             Reduction, the Greater/Tireless/Mighty Bloodrage tiers, and the entire Bloodline \
-             slot remain ungrounded anywhere in this codebase; no class-feature execution is \
-             fabricated in this bounded chassis baseline"
+             chassis pillar, Bloodrage, its class-skill list, its spells-per-day/spells-known \
+             tables, Fast Movement, Uncanny Dodge and Improved Uncanny Dodge, Blood Sanctuary, \
+             Damage Reduction, and the Greater/Tireless/Mighty Bloodrage tiers: the entire \
+             Bloodline slot, Indomitable Will, Blood Casting, and the 4th-level Eschew \
+             Materials bonus-feat grant remain ungrounded anywhere in this codebase (the only \
+             `eschew_materials` id in this codebase is Sorcerer's own). Crossblooded Bloodline \
+             Selection is excluded deliberately: it is archetype-gated \
+             (`PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`) and \
+             archetypes are out of scope for base-class chassis, per task #67. No class-feature \
+             execution is fabricated in this bounded chassis \
+             baseline. This message previously listed Fast Movement, Uncanny Dodge, Blood \
+             Sanctuary, Damage Reduction and the Bloodrage tiers as ungrounded -- all five are \
+             in fact grounded (tasks #39/#42). Indomitable Will, Blood Casting and Eschew \
+             Materials were named in \
+             NEITHER clause: all three are real `KEY:Bloodrager ~ ...` corpus records with no \
+             grounded id, found only by enumerating the class's full corpus feature set rather \
+             than auditing this message's own list. Indomitable Will is the same DESC-only flat \
+             +4-Will-vs-enchantment shape as Barbarian's already-grounded version"
         ),
         claim_blocking: true,
     });
@@ -17970,12 +18066,15 @@ fn ground_brawler_ac_bonus_and_defer_the_rest(
         id: "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{BRAWLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, AC Bonus, Brawler's Cunning, and Brawler's Strike: Brawler's Flurry, \
-             Knockout, Martial Flexibility, Awesome Blow, Improved Awesome Blow, Martial \
-             Training, Bonus Feats, Close Weapon Mastery, Maneuver Training, and Brawler's \
-             Strike's own Alignment Selection chooser (unlocked at level 12+) remain \
-             ungrounded anywhere in this codebase; no class-feature execution is fabricated in \
-             this bounded chassis baseline"
+             pillar, AC Bonus, Brawler's Cunning, Brawler's Strike, Brawler's Flurry, Knockout, \
+             Martial Flexibility, Martial Training, Bonus Feats, and Maneuver Training: Awesome \
+             Blow, Improved Awesome Blow, and Close Weapon Mastery remain ungrounded anywhere in \
+             this codebase; no class-feature execution is fabricated in this bounded chassis \
+             baseline. This message previously listed Flurry, Knockout, Martial Flexibility, \
+             Martial Training, Bonus Feats and Maneuver Training as ungrounded -- all six are in \
+             fact grounded (task #5) -- and listed Brawler's Strike's Alignment Selection \
+             chooser, which carries its own separate non-blocking `strike_alignment_selection.\
+             unmodeled` record and does not belong in a claim-blocking list"
         ),
         claim_blocking: true,
     });
@@ -26094,21 +26193,34 @@ fn explain_monk_level1_chassis(
             )
         } else {
             format!(
-                "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: the \
-                 recognized choice ({feat_name}) is acknowledged as chosen input only — \
-                 {feat_name}'s actual feat effect requires a general feat-selection or \
-                 feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
-                 baseline, so no Monk bonus-feat execution support is claimed"
+                "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: \
+                 the recognized choice ({feat_name}) is acknowledged as chosen input only. Of \
+                 the seven feats the corpus makes available at `MonkBonusFeatLVL,1` \
+                 (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
+                 Scorpion Style, Throw Anything), six now have grounded mechanics and return \
+                 before this diagnostic is reached; Deflect Arrows is the only one that does \
+                 not, and it is blocked on the incoming-attack/opponent-interaction engine \
+                 (task #15), NOT on a missing feat-selection or feat-prerequisite engine -- \
+                 this message previously asserted the latter for every recognized choice, \
+                 which stopped being true once those six landed (task #76)"
             )
         }
     } else {
         format!(
-            "Monk level {level} remains blocked on its level-1 bonus feat grant: the free bonus \
-             feat drawn from the restricted Monk feat list (Catch Off-Guard, Combat Reflexes, \
-             Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything) is not \
-             recognized as chosen input \
-             in this bounded martial chassis baseline — no feat-selection or feat-prerequisite \
-             engine exists here — so no Monk bonus-feat support is claimed"
+            "Monk level {level} remains blocked on its bonus feat grant: no choice from the \
+             restricted Monk feat list is recognized as chosen input, so nothing is resolved. \
+             Six of the seven feats available at `MonkBonusFeatLVL,1` (Catch Off-Guard, Combat \
+             Reflexes, Dodge, Improved Grapple, Scorpion Style, Throw Anything) DO have \
+             grounded mechanics once a choice is recorded -- this message previously claimed \
+             \"no feat-selection or feat-prerequisite engine exists here\", which stopped being \
+             true once those landed (task #76). What is genuinely unbuilt: Deflect Arrows \
+             (blocked on the incoming-attack engine, task #15), and the higher-tier options the \
+             corpus gates at `MonkBonusFeatLVL,6` (Gorgon's Fist, Improved Bull Rush, Improved \
+             Disarm, Improved Feint, Improved Trip, Mobility) and `,10` (Improved Critical, \
+             Medusa's Wrath, Snatch Arrows, Spring Attack), none of which are grounded. Only \
+             ONE bonus-feat slot is modelled here regardless of level, while the corpus pool is \
+             `1+max((MonkBonusFeatLVL+2)/4,0)` -- six slots at Monk level 20, now reachable \
+             since the level cap widened (task #49)"
         )
     };
     diagnostics.push(ComputationDiagnostic {
@@ -38313,6 +38425,32 @@ mod acg_class_chassis_dispatch_tests {
     /// beyond X, Y, Z" preamble) and no longer lists either among the
     /// still-missing features (v0.6 alpha swarm, risks item 8, Brawler
     /// deepening, 2026-07-26).
+    ///
+    /// **Reworked by task #76 (2026-07-28), deliberately reversing one
+    /// of this test's original assertions.** Two changes, both because
+    /// the assertions had been pinned to a message that has since become
+    /// more accurate, not because the class's real state changed:
+    ///
+    /// 1. The preamble check was an exact literal (`"AC Bonus, Brawler's
+    ///    Cunning, and Brawler's Strike:"`). Task #5 grounded six more
+    ///    features (Flurry, Knockout, Martial Flexibility, Martial
+    ///    Training, Bonus Feats, Maneuver Training) and #76 moved them
+    ///    into the grounded preamble where they belong, which broke the
+    ///    run-on literal without making the message any less true. Now
+    ///    checked by substring per feature, so crediting further real
+    ///    groundings cannot spuriously fail this test again.
+    ///
+    /// 2. This test used to REQUIRE that Brawler's Strike's Alignment
+    ///    Selection chooser be named in the claim-blocking missing-list.
+    ///    #76 asserts the opposite, and the reversal is the point: that
+    ///    chooser carries its own dedicated
+    ///    `strike_alignment_selection.unmodeled` record with
+    ///    `claim_blocking: false`. Naming it in BOTH places double-counts
+    ///    it and actively misleads -- a reader who meets it inside a
+    ///    claim-blocking message reasonably infers it is part of what
+    ///    blocks the class, while the codebase's own separate diagnostic
+    ///    explicitly says it does not. Acknowledged once, correctly
+    ///    scoped, in exactly one place.
     #[test]
     fn brawler_other_features_deferred_acknowledges_cunning_and_strike_as_grounded() {
         let input = acg_style_input("class:brawler", 1);
@@ -38324,31 +38462,62 @@ mod acg_class_chassis_dispatch_tests {
             .iter()
             .find(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported")
             .expect("other_features_deferred must still fire");
-        assert!(
-            deferred.message.contains("AC Bonus, Brawler's Cunning, and Brawler's Strike:"),
-            "the diagnostic's own preamble must acknowledge Cunning/Strike as genuinely \
-             grounded, not just AC Bonus: {:?}",
-            deferred
-        );
+
+        // Only the message's FIRST sentence carries the live
+        // preamble/missing-list claim; everything after it is the
+        // correction history #76 records, which legitimately names
+        // features (including Alignment Selection) while explaining why
+        // they are NOT in the missing-list. Splitting on the last colon
+        // of the whole message would sweep that prose in and invert the
+        // assertions below.
+        let live_claim = deferred
+            .message
+            .split_once(". ")
+            .map_or(deferred.message.as_str(), |(head, _)| head);
         // `rsplit_once` (not `split_once`): the message's own leading
         // `{BRAWLER_CLASS_ID}` (e.g. "class:brawler") itself contains a
         // colon, so splitting on the FIRST colon would cut mid-class-id
         // rather than at the real preamble/missing-list boundary.
-        let missing_features_clause = deferred
-            .message
+        let (grounded_preamble, missing_features_clause) = live_claim
             .rsplit_once(':')
-            .expect("the diagnostic message must have a still-missing clause after the colon")
-            .1;
+            .expect("the diagnostic message must have a still-missing clause after the colon");
+
+        for grounded in ["AC Bonus", "Brawler's Cunning", "Brawler's Strike"] {
+            assert!(
+                grounded_preamble.contains(grounded),
+                "the diagnostic's own preamble must acknowledge {grounded} as genuinely \
+                 grounded: {deferred:?}"
+            );
+        }
+        for not_missing in ["Brawler's Cunning", "Alignment Selection"] {
+            assert!(
+                !missing_features_clause.contains(not_missing),
+                "{not_missing} must not appear in the still-missing clause of a claim-blocking \
+                 diagnostic: {deferred:?}"
+            );
+        }
+    }
+
+    /// The other half of the reversal documented on
+    /// `brawler_other_features_deferred_acknowledges_cunning_and_strike_as_grounded`:
+    /// dropping Alignment Selection from the claim-blocking missing-list
+    /// must not lose the fact. It is still acknowledged -- once -- by its
+    /// own correctly-scoped, non-blocking record at the level it is
+    /// actually unlocked (progression tier 3, Brawler level 12).
+    #[test]
+    fn brawler_alignment_selection_is_acknowledged_once_by_its_own_non_blocking_record() {
+        let receipt = build_pilot_headless_receipt(&acg_style_input("class:brawler", 12));
+
+        let alignment = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.brawler.strike_alignment_selection.unmodeled")
+            .expect("the dedicated Alignment Selection record must fire at level 12");
         assert!(
-            !missing_features_clause.contains("Brawler's Cunning"),
-            "Brawler's Cunning must not appear in the still-missing clause: {:?}",
-            deferred
-        );
-        assert!(
-            missing_features_clause.contains("Brawler's Strike's own Alignment Selection"),
-            "Brawler's Strike's own still-unmodeled Alignment Selection chooser must still be \
-             named as missing (only the base DR-bypass fact is grounded): {:?}",
-            deferred
+            !alignment.claim_blocking,
+            "Alignment Selection is deliberately NON-blocking -- that is precisely why it must \
+             not be named in the claim-blocking missing-list: {alignment:?}"
         );
     }
 
