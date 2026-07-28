@@ -19273,6 +19273,187 @@ fn ground_or_block_hunter_animal_focus(
     }
 }
 
+/// Grounds Hunter's remaining flat-magnitude class features (task #85),
+/// each verified against its own `KEY:Hunter ~ ...` corpus record.
+///
+/// **Second Animal Focus and Master Hunter share ONE record.** Both carry
+/// the identical token `BONUS:ABILITYPOOL|Hunter Animal Focus|1`, i.e.
+/// each is a +1 increment to the same simultaneous-focus pool rather than
+/// a distinct magnitude -- the same "two features, one shared counter"
+/// shape as Bloodrager's Uncanny Dodge / Improved Uncanny Dodge tier.
+/// Modelling them as two separate records would imply two independent
+/// mechanics where the corpus has one.
+///
+/// This counter is deliberately NOT the same thing as
+/// `animal_focus_execution.uses_per_day`, which is the MINUTES-per-day
+/// budget (equal to Hunter level). These increment how many different
+/// animal aspects may be active at once; that one bounds how long. Same
+/// feature family, unrelated quantities.
+#[cfg(test)]
+mod hunter_remaining_features_tests {
+    use super::ground_hunter_remaining_features;
+
+    /// Exercises the pure grounding function directly rather than through
+    /// `build_pilot_headless_receipt`.
+    ///
+    /// **Deliberate, and worth the explanation:** the full-receipt path
+    /// runs Hunter's animal-companion slice, which carries a
+    /// `debug_assert_eq!(companion_level, 1, "only companion level 1 is
+    /// grounded this slice")`. That bound is real, pre-existing and
+    /// unrelated to these features -- it is about the companion's own stat
+    /// block, not about Hunter's class-feature progression -- but it makes
+    /// every above-level-1 Hunter receipt panic under `cfg(test)`. Routing
+    /// these tests through it would test that limitation rather than these
+    /// magnitudes. `ground_hunter_remaining_features` is a pure
+    /// `level -> records` function, so calling it directly tests exactly
+    /// what this slice grounds and nothing else.
+    ///
+    /// Note the records themselves are NOT dead above level 1: the guard
+    /// is a `debug_assert`, compiled out in release, so production does
+    /// reach these levels.
+    fn value(level: u8, id: &str) -> Option<i16> {
+        let mut explanations = Vec::new();
+        ground_hunter_remaining_features(level, &mut explanations);
+        explanations.iter().find(|e| e.id == id).map(|e| e.value)
+    }
+
+    /// Each feature lands exactly at its own corpus gate, and its absence
+    /// below that gate is itself grounded rather than omitted (task #85).
+    #[test]
+    fn each_feature_appears_exactly_at_its_corpus_gate() {
+        for (id, gate, at_gate) in [
+            ("class_feature.acg.hunter.track_survival_bonus", 2u8, 1i16),
+            ("class_feature.acg.hunter.precise_companion_bonus_feat_count", 2, 1),
+            ("class_feature.acg.hunter.bonus_tricks", 7, 1),
+        ] {
+            assert_eq!(value(gate - 1, id), Some(0), "{id} absence must be grounded");
+            assert_eq!(value(gate, id), Some(at_gate), "{id} at its own gate");
+        }
+    }
+
+    /// Track is half level, rounded down, and keeps tracking level.
+    #[test]
+    fn track_is_half_level_rounded_down() {
+        let id = "class_feature.acg.hunter.track_survival_bonus";
+        assert_eq!(value(2, id), Some(1));
+        assert_eq!(value(3, id), Some(1), "3/2 truncates to 1");
+        assert_eq!(value(20, id), Some(10));
+    }
+
+    /// `floor((HunterLVL-1)/6)` -- first trick at 7th, then 13th and 19th,
+    /// exactly matching the record's own DESC.
+    #[test]
+    fn bonus_tricks_step_at_seven_thirteen_and_nineteen() {
+        let id = "class_feature.acg.hunter.bonus_tricks";
+        assert_eq!(value(6, id), Some(0));
+        assert_eq!(value(7, id), Some(1));
+        assert_eq!(value(12, id), Some(1));
+        assert_eq!(value(13, id), Some(2));
+        assert_eq!(value(19, id), Some(3));
+        assert_eq!(value(20, id), Some(3), "no fourth trick before 25th");
+    }
+
+    /// Second Animal Focus (8th) and Master Hunter (20th) are two corpus
+    /// features incrementing ONE shared pool by the identical token, so
+    /// they share a single counter rather than earning separate records.
+    #[test]
+    fn the_simultaneous_focus_counter_steps_twice() {
+        let id = "class_feature.acg.hunter.simultaneous_animal_focus_count";
+        assert_eq!(value(1, id), Some(1), "one aspect at a time by default");
+        assert_eq!(value(7, id), Some(1));
+        assert_eq!(value(8, id), Some(2), "Second Animal Focus at 8th");
+        assert_eq!(value(19, id), Some(2));
+        assert_eq!(value(20, id), Some(3), "Master Hunter at 20th");
+    }
+
+    /// The simultaneous-aspect counter must not be confused with the
+    /// minutes-per-day budget: they are different quantities that happen
+    /// to belong to the same feature family.
+    #[test]
+    fn the_focus_counter_is_not_the_minutes_per_day_budget() {
+        // The minutes-per-day budget is grounded elsewhere (equal to
+        // Hunter level, so 20 at level 20). This counter is 3. Asserting
+        // the value directly keeps the distinction explicit without
+        // pulling the activation path into a pure-function test.
+        assert_eq!(
+            value(20, "class_feature.acg.hunter.simultaneous_animal_focus_count"),
+            Some(3),
+            "3 aspects at once is a different quantity from the 20 minutes/day budget"
+        );
+    }
+}
+
+const HUNTER_TRACK_LEVEL: u8 = 2;
+const HUNTER_PRECISE_COMPANION_LEVEL: u8 = 2;
+const HUNTER_BONUS_TRICKS_LEVEL: u8 = 7;
+const HUNTER_SECOND_ANIMAL_FOCUS_LEVEL: u8 = 8;
+const HUNTER_MASTER_HUNTER_LEVEL: u8 = 20;
+
+fn ground_hunter_remaining_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    let gated = |gate: u8, granted: i16| if level >= gate { granted } else { 0 };
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.hunter.track_survival_bonus".to_owned(),
+        value: gated(HUNTER_TRACK_LEVEL, i16::from(level) / 2),
+        detail: format!(
+            "Hunter Track at hunter level {level}: adds half her level ({}) to Survival checks \
+             made to FOLLOW TRACKS specifically (`BONUS:SKILL|Survival|HunterLVL/2`, a 2nd-level \
+             class feature). Grounds the magnitude only -- this codebase computes no \
+             follow-tracks-specific Survival check, so the bonus is named and not applied to the \
+             general Survival total, the same treatment Slayer's and Inquisitor's own Track \
+             records already use",
+            i16::from(level) / 2
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.hunter.bonus_tricks".to_owned(),
+        value: gated(HUNTER_BONUS_TRICKS_LEVEL, (i16::from(level) - 1) / 6),
+        detail: format!(
+            "Hunter Bonus Tricks at hunter level {level}: {} bonus trick(s) known by her animal \
+             companion, from the corpus's own `BONUS:VAR|HunterBonusTricks|\
+             floor((HunterLVL-1)/6)`. The formula and the DESC agree exactly -- first trick at \
+             7th, then 13th and 19th. Grounds the COUNT; which tricks were chosen is a chooser \
+             this codebase does not model, and the companion's own trick list is not built",
+            (i16::from(level) - 1) / 6
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.hunter.precise_companion_bonus_feat_count".to_owned(),
+        value: gated(HUNTER_PRECISE_COMPANION_LEVEL, 1),
+        detail: format!(
+            "Hunter Precise Companion at hunter level {level}: one bonus feat \
+             (`BONUS:ABILITYPOOL|Hunter Precise Companion Feat|1`, a 2nd-level class feature), \
+             chosen as either Precise Shot or Outflank, with the prerequisites explicitly \
+             waived. Grounds the SLOT COUNT only: which of the two was taken is a real chooser \
+             this codebase does not model, and neither feat's own mechanics are built. If \
+             Outflank is chosen the corpus also grants it to the animal companion -- \
+             ally-scoped, and likewise not modelled"
+        ),
+    });
+
+    let simultaneous_foci = 1
+        + i16::from(level >= HUNTER_SECOND_ANIMAL_FOCUS_LEVEL)
+        + i16::from(level >= HUNTER_MASTER_HUNTER_LEVEL);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.hunter.simultaneous_animal_focus_count".to_owned(),
+        value: simultaneous_foci,
+        detail: format!(
+            "Hunter simultaneous Animal Focus aspects at hunter level {level}: \
+             {simultaneous_foci}. One counter, TWO corpus features incrementing it by the \
+             identical token `BONUS:ABILITYPOOL|Hunter Animal Focus|1` -- Second Animal Focus \
+             at 8th and Master Hunter at 20th -- so this is one shared pool rather than two \
+             independent mechanics, the same shape as Bloodrager's Uncanny Dodge/Improved \
+             Uncanny Dodge tier counter. Distinct from `animal_focus_execution.uses_per_day`, \
+             which is the minutes-per-day budget: this bounds how MANY aspects may be active at \
+             once, that one bounds how LONG. Which aspects are chosen stays the existing \
+             activation-gated chooser's business; Master Hunter's own always-move-at-full-speed\
+             -while-tracking rider is not modelled (no movement-during-Survival engine exists)"
+        ),
+    });
+}
+
 fn ground_hunter_animal_companion_and_defer_the_rest(
     input: &CharacterInput,
     level: u8,
@@ -19300,6 +19481,7 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
         claim_blocking: false,
     });
     ground_hunter_wild_empathy(level, ability_modifiers, explanations);
+    ground_hunter_remaining_features(level, explanations);
     ground_or_block_hunter_animal_focus(input, level, explanations, diagnostics);
     ground_or_block_hunter_known_spells(input, level, explanations, diagnostics);
     // v0.6 alpha swarm, task #44: the known-spell posture is now genuinely
