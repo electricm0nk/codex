@@ -127,7 +127,37 @@ Genuinely still ungrounded: the Bloodline slot, and (per the separate
 `spellcasting_deferred` diagnostic, which is accurate) the spell list itself,
 Blood Casting, Eschew Materials, and bloodline bonus spells.
 
-**Corrected clause:** the remaining list is the Bloodline slot only.
+**Corrected clause:** ~~the remaining list is the Bloodline slot only.~~
+**See the correction immediately below — this was wrong.**
+
+> #### CORRECTION (2026-07-28): the Slayer trap bit this entry
+>
+> I derived "the Bloodline slot only" from Bloodrager's own diagnostics, which
+> is exactly the inference the standing rule forbids: a message going quiet
+> about a feature is not evidence the feature is done.
+>
+> Re-deriving independently from the corpus, `acg_abilities_class.lst` carries
+> 19 `KEY:Bloodrager ~ …` base records. **`Indomitable Will` appears in neither
+> of Bloodrager's two diagnostics and is not grounded** — no
+> `bloodrager_indomitable_will` anything exists; the only
+> `class_feature.*.indomitable_will` id in the crate is Barbarian's.
+>
+> So the honest remaining list is **the Bloodline slot AND Indomitable Will**,
+> at minimum. Anyone applying the corrected text must not narrow this message to
+> the Bloodline slot alone.
+>
+> **Bonus: it is cheap to ground, with an exact precedent.** Bloodrager's record
+> is DESC-only (`+4 bonus on Will saves to resist enchantment spells while
+> bloodraging`, no `BONUS:` token). Barbarian's `KEY:Barbarian ~ Indomitable
+> Will` is *also* DESC-only and is already grounded as
+> `class_feature.barbarian.indomitable_will` at a flat +4. Structural twins, same
+> evidentiary path, precedent already accepted — this is a small, real, unclaimed
+> grounding opportunity rather than just a text fix.
+
+**Brawler checked against the same trap — clean.** Its 14 corpus records are
+fully covered by its diagnostic apart from `Class Skills` and `Weapon and Armor
+Proficiency` (both plumbing, not player-facing features), so the "four items
+genuinely remain" verdict above stands as written.
 
 ### Slayer — both named items are at least partly shipped
 
