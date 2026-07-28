@@ -25,7 +25,7 @@
 | 4.2 | `architecture-closure` | E4 | complete | 2026-07-28T12:00Z | 2026-07-28T12:03Z | Truth-up: clean, no architecture impact. Graphify: genuine environment gap (no CLI installed), honestly reported not fabricated |
 | 4.3 | `release-notes` | E4 | complete | 2026-07-28T12:05Z | 2026-07-28T12:12Z | All 7 sections populated from receipt-backed facts, 0 placeholders |
 | 4.4 | `version-bump` | E4 | complete | 2026-07-28T12:15Z | 2026-07-28T12:22Z | 0.6.0 → 0.6.1 across all 5 anchors (4 primary + `src-tauri/Cargo.lock`'s own-package field, a newly-discovered 5th anchor). `cargo check --offline` clean |
-| 4.5 | `pr-merge` | E4 | — | — | — | **Not in this run's confirmed scope** — operator opens the PR |
+| 4.5 | `pr-merge` | E4 | PR opened | 2026-07-28T12:30Z | 2026-07-28T12:35Z | [PR #342](https://github.com/electricm0nk/codex/pull/342), `tranche/7` → `develop`. Operator go-ahead given; merge itself is the operator's own action |
 
 ## TODO
 
@@ -155,3 +155,4 @@ manifest is authoritative for status, this table for narrative.
 | 4.2 architecture-closure | `artifacts/epic_4/architecture-closure-cycle_receipt.md` |
 | 4.3 release-notes | `artifacts/epic_4/release-notes-cycle_receipt.md` |
 | 4.4 version-bump | `artifacts/epic_4/version-bump-cycle_receipt.md` |
+| 4.5 pr-merge | `artifacts/epic_4/pr-merge-cycle_receipt.md` |
