@@ -4431,7 +4431,20 @@ fn effective_character_feats(input: &CharacterInput) -> Vec<String> {
 // codebase), so it is deliberately left named-but-unproven, mirroring the
 // Wholeness of Body / High Jump precedent exactly — no record is
 // fabricated for it.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 12;
+/// Widened 12 -> 20 by task #49, admitting the whole Monk capstone band
+/// (Diamond Soul 13, Quivering Palm 15, Timeless Body and Tongue of the Sun
+/// and Moon 17, Empty Body 19, Perfect Self 20).
+///
+/// This was deliberately NOT done as a side effect of grounding one feature.
+/// Widening the cap makes every already-shipped Monk formula start emitting at
+/// levels 13-20, and three of them were hard-capped below 20 at the time --
+/// the unarmed strike damage die (no band past 2d6), the Flurry of Blows
+/// attack count (capped at 3, missing its 15th-level fourth attack), and Slow
+/// Fall (frozen at 60 ft, missing both the 70/80/90 steps and the genuinely
+/// unlimited level-20 case). All three were corrected in this task's preceding
+/// commit, which was inert while the cap still read 12, so that this change
+/// could never expose a wrong value even transiently.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 20;
 
 /// Perfect Self's grant level and DR magnitude, read directly off
 /// `cr_abilities_class.lst` (`AUTOMATIC|Monk ~ Perfect Self` gated
@@ -4448,6 +4461,20 @@ const MONK_PERFECT_SELF_DAMAGE_REDUCTION: i16 = 10;
 /// Greater Two-Weapon Fighting there, after Improved TWF at 8th). Previously
 /// missing entirely -- the count was hard-capped at 3.
 const MONK_FLURRY_FOURTH_ATTACK_LEVEL: u8 = 15;
+
+/// The capstone-band grant levels, each read directly off its own
+/// `ABILITY:Monk Class Feature|AUTOMATIC|Monk ~ <name>` line's
+/// `PREVARGTEQ:Monk_CFP_Level,<N>` gate in `cr_abilities_class.lst`.
+///
+/// Abundant Step's gate of 12 sits INSIDE the pre-widening `1..=12` range --
+/// it was a pre-existing gap, not one the cap widening admits. The other five
+/// are genuinely newly reachable.
+const MONK_ABUNDANT_STEP_LEVEL: u8 = 12;
+const MONK_DIAMOND_SOUL_LEVEL: u8 = 13;
+const MONK_QUIVERING_PALM_LEVEL: u8 = 15;
+const MONK_TIMELESS_BODY_LEVEL: u8 = 17;
+const MONK_TONGUE_OF_THE_SUN_AND_MOON_LEVEL: u8 = 17;
+const MONK_EMPTY_BODY_LEVEL: u8 = 19;
 
 /// At 20th level Slow Fall stops being a finite reduction and becomes "fall
 /// any distance without harm" (the Slow Fall record's own final `DESC`, gated
@@ -23701,6 +23728,44 @@ fn monk_slow_fall_reach_feet(level: u8) -> Option<i16> {
     Some(i16::from(level) / 2 * 10)
 }
 
+/// Diamond Soul's spell resistance: `BONUS:VAR|DiamondSoul|10+DiamondSoulLVL`
+/// with `DiamondSoulLVL = MonkLVL` -- SR 23 at 13th rising to SR 30 at 20th.
+fn monk_diamond_soul_spell_resistance(level: u8) -> i16 {
+    10 + i16::from(level)
+}
+
+/// Quivering Palm's Fortitude save DC:
+/// `BONUS:VAR|QuiveringPalmDC|10+(QuiveringPalmLVL/2)+WIS`, `QuiveringPalmLVL
+/// = MonkLVL`. Byte-identical in shape to `monk_scorpion_style_dc` and
+/// Stunning Fist's own DC, which is why a save DC grounds fine here without a
+/// save-resolution engine: a DC is a property of the character, not of any
+/// opponent. Wisdom is applied verbatim, not floored -- the corpus adds the
+/// raw modifier.
+fn monk_quivering_palm_save_dc(level: u8, wisdom_modifier: i16) -> i16 {
+    10 + i16::from(level) / 2 + wisdom_modifier
+}
+
+/// How long the Quivering Palm attack remains hanging over its target, in
+/// days: `BONUS:VAR|QuiveringPalmDuration|QuiveringPalmLVL` = `MonkLVL`.
+fn monk_quivering_palm_duration_days(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// The caster level Abundant Step's dimension-door effect uses:
+/// `BONUS:VAR|AbundantStepCasterLVL|AbundantStepLVL` with `AbundantStepLVL =
+/// MonkLVL`.
+///
+/// The level-12 fixture's own header still says Abundant Step is "confirmed
+/// NOT flat this slice" because it needs a ki-spending action economy and a
+/// teleportation-resolution engine. Both remain true and both remain
+/// ungrounded -- but under the corrected standalone-grounding bar the caster
+/// level itself is a real, verified magnitude, and withholding it because the
+/// *effect* is unmodelled is exactly the stale reasoning the Stunning Fist and
+/// Paladin DR corrections already overturned.
+fn monk_abundant_step_caster_level(level: u8) -> i16 {
+    i16::from(level)
+}
+
 /// Monk Wholeness of Body's self-heal magnitude: `WholenessOfBody =
 /// WholenessOfBodyLVL = MonkLVL` hit points, for 2 ki points -- verified
 /// against the corpus's own two `BONUS:VAR` tokens.
@@ -24115,16 +24180,16 @@ fn explain_monk_level1_chassis(
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature whose reach magnitude is floor(monk level / 2) * 10 ft: 20 ft at \
-                 4th, rising 10 ft at every even level thereafter — 30 at 6th, 40 at 8th, 50 at \
-                 10th, 60 at 12th, 70 at 14th, 80 at 16th, 90 at 18th — and becoming ANY \
-                 distance at 20th, which the feature's own rule text states outright rather than \
-                 continuing the progression to a finite 100): \"a monk within arm's reach of a \
-                 wall can use it to slow his descent\" — she takes falling damage as if the fall \
-                 were {slow_fall_reach_text} shorter than it actually is. This is a bounded \
-                 grant-only identity record only (value 0, non-fabricated): no \
-                 fall-damage-resolution engine exists anywhere in this codebase to apply the \
-                 {slow_fall_reach_text} reduction to"
+                 class feature whose reach in feet is floor(monk level / 2) * 10, stepping up at \
+                 every even level and becoming ANY distance at 20th — which the feature's own \
+                 rule text states outright rather than continuing the progression to a finite \
+                 number): \"a monk within arm's reach of a wall can use it to slow his descent\" \
+                 — she takes falling damage as if the fall were {slow_fall_reach_text} shorter \
+                 than it actually is. This is a bounded grant-only identity record only (value \
+                 0, non-fabricated): no fall-damage-resolution engine exists anywhere in this \
+                 codebase to apply the {slow_fall_reach_text} reduction to. Only this level's own \
+                 reach is named here; earlier levels' figures are deliberately not recited, since \
+                 a record that quotes another level's number reads as a stale value"
             ),
         });
     }
@@ -24307,13 +24372,140 @@ fn explain_monk_level1_chassis(
                  PF1 Core Rulebook level gate. Perfect Self is a {MONK_PERFECT_SELF_LEVEL}th-level \
                  monk class feature granting DR \
                  {MONK_PERFECT_SELF_DAMAGE_REDUCTION}/chaotic (corpus `DR:10/Chaotic`, verified \
-                 against cr_abilities_class.lst). Its gate sits above this codebase's own \
-                 MAX_SUPPORTED_MONK_LEVEL of {MAX_SUPPORTED_MONK_LEVEL}, so no monk this engine \
-                 can currently compose reaches it -- the magnitude is verified and named here, \
-                 not fabricated as though granted. Perfect Self's other clause (the monk is \
+                 against cr_abilities_class.lst). Perfect Self's other clause (the monk is \
                  treated as an Outsider for spells and magical effects) carries no magnitude and \
                  needs a creature-type engine that does not exist here, so it stays deferred \
                  regardless of level"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.perfect_self_damage_reduction".to_owned(),
+            value: MONK_PERFECT_SELF_DAMAGE_REDUCTION,
+            detail: format!(
+                "Monk Perfect Self granted at monk level {level} (PF1 Core Rulebook, \
+                 {MONK_PERFECT_SELF_LEVEL}th-level capstone): DR \
+                 {MONK_PERFECT_SELF_DAMAGE_REDUCTION}/chaotic, verified against the feature's own \
+                 corpus token `DR:10/Chaotic`. Flat -- the monk gains no further DR tier. Grounds \
+                 the magnitude and its /chaotic bypass condition; no damage-reduction APPLICATION \
+                 engine exists here to subtract it from incoming damage, exactly the way \
+                 class_feature.barbarian.damage_reduction, class_chassis.paladin.damage_reduction \
+                 and Fighter's Armor Mastery DR are already grounded -- a DR value is a property \
+                 of the character, not of any incoming attack. Perfect Self's OTHER clause (the \
+                 monk is treated as an Outsider for spells and magical effects, though still \
+                 raisable from the dead as his previous creature type) carries no magnitude and \
+                 needs a creature-type engine that exists nowhere in this codebase, so it stays \
+                 deferred: this record grounds one of the feature's two clauses, not the feature"
+            ),
+        });
+    }
+
+    // Task #49: the rest of the capstone band, newly reachable now that
+    // MAX_SUPPORTED_MONK_LEVEL admits levels 13-20. Four carry real corpus
+    // magnitudes; three carry no numeric token at all and ground as value-0
+    // identity records rather than fabricated numbers.
+    if level >= MONK_ABUNDANT_STEP_LEVEL {
+        let caster_level = monk_abundant_step_caster_level(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.abundant_step_caster_level".to_owned(),
+            value: caster_level,
+            detail: format!(
+                "Monk Abundant Step at monk level {level}: the dimension door effect uses a \
+                 caster level of {caster_level} (corpus `AbundantStepCasterLVL = AbundantStepLVL \
+                 = MonkLVL`). Grounds the caster level only -- the 2-ki cost, the action economy, \
+                 and the teleportation itself are all unmodelled here and are named rather than \
+                 faked. Note this feature's gate ({MONK_ABUNDANT_STEP_LEVEL}) sits inside the \
+                 pre-widening supported range, so it was a pre-existing gap rather than one the \
+                 level-cap widening admitted"
+            ),
+        });
+    }
+
+    if level >= MONK_DIAMOND_SOUL_LEVEL {
+        let spell_resistance = monk_diamond_soul_spell_resistance(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.diamond_soul".to_owned(),
+            value: spell_resistance,
+            detail: format!(
+                "Monk Diamond Soul granted at monk level {level} (PF1 Core Rulebook, \
+                 {MONK_DIAMOND_SOUL_LEVEL}th-level class feature): spell resistance \
+                 {spell_resistance} (corpus `DiamondSoul = 10 + DiamondSoulLVL`, where \
+                 DiamondSoulLVL = MonkLVL). Grounds the SR magnitude as a standalone fact; no \
+                 spell-resistance-check engine exists here to roll against it, the same reason \
+                 every other flat defensive magnitude in this file grounds standalone"
+            ),
+        });
+    }
+
+    if level >= MONK_QUIVERING_PALM_LEVEL {
+        let save_dc = monk_quivering_palm_save_dc(level, ability_modifiers.wisdom);
+        let duration_days = monk_quivering_palm_duration_days(level);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.quivering_palm_save_dc".to_owned(),
+            value: save_dc,
+            detail: format!(
+                "Monk Quivering Palm granted at monk level {level} (PF1 Core Rulebook, \
+                 {MONK_QUIVERING_PALM_LEVEL}th-level class feature): Fortitude save DC {save_dc} \
+                 (corpus `10 + (QuiveringPalmLVL/2) + WIS` = 10 + {level}/2 + {}). The same DC \
+                 shape as Scorpion Style's and Stunning Fist's already-grounded DCs -- a save DC \
+                 is a property of the character, so it grounds without the save-or-die resolution \
+                 engine this codebase does not have",
+                ability_modifiers.wisdom
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.quivering_palm_duration_days".to_owned(),
+            value: duration_days,
+            detail: format!(
+                "Monk Quivering Palm duration at monk level {level}: the attack hangs over its \
+                 target for {duration_days} days (corpus `QuiveringPalmDuration = \
+                 QuiveringPalmLVL = MonkLVL`). Grounds the window only; the once-per-day usage \
+                 limit and the slaying effect itself are unmodelled"
+            ),
+        });
+    }
+
+    if level >= MONK_TIMELESS_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.timeless_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Timeless Body granted at monk level {level} (PF1 Core Rulebook, \
+                 {MONK_TIMELESS_BODY_LEVEL}th-level class feature): the monk no longer takes \
+                 ability score penalties from aging and cannot be magically aged, though age \
+                 bonuses still accrue and any penalties already taken remain. A bounded \
+                 grant-only identity record (value 0, non-fabricated): the feature's own corpus \
+                 record carries NO numeric token, and no aging engine exists here -- so there is \
+                 no magnitude to ground rather than a magnitude being withheld"
+            ),
+        });
+    }
+
+    if level >= MONK_TONGUE_OF_THE_SUN_AND_MOON_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.tongue_of_the_sun_and_moon".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Tongue of the Sun and Moon granted at monk level {level} (PF1 Core \
+                 Rulebook, {MONK_TONGUE_OF_THE_SUN_AND_MOON_LEVEL}th-level class feature): the \
+                 monk can speak with any living creature. A bounded grant-only identity record \
+                 (value 0, non-fabricated): the corpus record carries no numeric token and no \
+                 language engine exists here"
+            ),
+        });
+    }
+
+    if level >= MONK_EMPTY_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.empty_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Empty Body granted at monk level {level} (PF1 Core Rulebook, \
+                 {MONK_EMPTY_BODY_LEVEL}th-level class feature): by spending 3 ki the monk \
+                 assumes an ethereal state for 1 minute, as the etherealness spell. A bounded \
+                 grant-only identity record (value 0, non-fabricated): the corpus record carries \
+                 no numeric token of its own, and neither a ki-spending engine nor an ethereal \
+                 state exists in this codebase"
             ),
         });
     }

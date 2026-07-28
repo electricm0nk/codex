@@ -276,18 +276,40 @@ fn monk_level9_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 13 stays unrecognized by this slice -----
 
 #[test]
-fn monk_level_13_is_not_promoted_by_this_slice() {
+fn monk_level_13_is_now_recognized_since_the_cap_widened() {
+    // BOUNDARY MOVED (task #49). This test previously asserted the opposite --
+    // that a level-13 Monk grounded NO monk explanation -- which was correct
+    // while MAX_SUPPORTED_MONK_LEVEL was 12. Task #49 widened the cap to 20 to
+    // admit the capstone band, so level 13 is now genuinely supported and the
+    // old assertion asserted a boundary that no longer exists.
+    //
+    // The usual repair for a stale negative control is to re-point it at
+    // something still unsupported (the way the ge06_* tests were swapped
+    // Cleric -> Barbarian -> Monk). That is not available here: the cap is now
+    // 20 and PF1 defines no legitimate character above 20th level, so there is
+    // no valid-but-unsupported monk level left to probe. Inverting it to assert
+    // the new truth keeps real coverage of the widening's low end rather than
+    // deleting the case; the high end is covered by
+    // tests/sd49_monk_level20_capstone.rs.
     let level_13 = MONK_LEVEL10_FIXTURE.replace("class:monk:10", "class:monk:13");
     let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "level-13 Monk must not gain any bounded monk explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.monk.")),
+        "level-13 Monk must now be recognized after the #49 cap widening: {:?}",
         computation.explanations
+    );
+    // Diamond Soul's own gate is 13, so it is the feature that proves the
+    // widening actually reaches this level rather than merely recognizing it.
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id == "class_chassis.monk.diamond_soul"),
+        "level 13 is Diamond Soul's own gate, so its record must be present"
     );
 }
 
