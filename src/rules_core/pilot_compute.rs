@@ -3791,6 +3791,16 @@ const WIZARD_OPPOSED_SCHOOLS_CHOICE_ID: &str = "choice:wizard_opposed_schools";
 const EVOCATION_SCHOOL_SELECTION: &str = "school:evocation";
 const NECROMANCY_SCHOOL_SELECTION: &str = "school:necromancy";
 const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
+// Task #66 Abjuration slice: a second canonical deterministic school
+// selection, alongside the pre-existing Evocation triple above. A wizard
+// specializes in exactly one school, so this and
+// `wizard_has_canonical_specialization_selections` are mutually exclusive
+// on any single input. Necromancy/Transmutation remain legal opposed
+// schools regardless of which school is the specialty (PF1's only
+// opposition restriction is "not your own specialty school and not
+// Divination"), so the same two opposed-school constants are reused rather
+// than duplicated.
+const ABJURATION_SCHOOL_SELECTION: &str = "school:abjuration";
 /// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
 /// additional spell slot of each spell level she can cast, 1st and up, usable only
 /// for spells of the chosen school. At the bounded baseline level 1 that is exactly
@@ -27069,6 +27079,31 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
         && opposed.contains(&TRANSMUTATION_SCHOOL_SELECTION)
 }
 
+/// Task #66: return `true` when the input carries the canonical deterministic
+/// Abjuration school specialization selections (Abjuration chosen as the
+/// specialty school, with Necromancy and Transmutation as the two opposed
+/// schools). Mirrors `wizard_has_canonical_specialization_selections`
+/// exactly, one school swapped for another; anything else — the choice slots
+/// absent or any non-canonical selection — returns `false`, so no Abjuration
+/// school-power grounding is fabricated for a choice that was never made.
+fn wizard_has_canonical_abjuration_selection(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(ABJURATION_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&NECROMANCY_SCHOOL_SELECTION)
+        && opposed.contains(&TRANSMUTATION_SCHOOL_SELECTION)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
@@ -27632,6 +27667,158 @@ fn explain_wizard_level1_prepared_spell_baseline(
                 ability_modifiers.intelligence, ability_modifiers.intelligence
             ),
         });
+    }
+
+    // Task #66: Wizard's Abjuration arcane school -- the Wizard-fed half only.
+    // Verified directly against `cr_abilities_class.lst`'s `KEY:Abjuration
+    // School ~ *` records this task: `AbjurationSchoolLVL` <- `ArcaneSchoolLVL`
+    // <- `WizardLVL`, and `AbjurationProgressionSchoolLVL` <-
+    // `ArcaneSchoolProgressionLVL` <- `WizardLVL` identically (the "Arcane
+    // School Tracker" internal record). `ArcaneSchoolLVL` is ALSO fed by
+    // `ArcanistLvl` via the Arcanist Exploit "School Understanding" -- that
+    // path is NOT built here (School Understanding is a separate,
+    // not-yet-built chooser-in-chooser, per task #55's scoping), so for a
+    // Wizard-only input both trackers reduce to exactly this Wizard's own
+    // class level. Explanation ids live under the shared
+    // `class_feature.school.abjuration.*` namespace (not a Wizard-specific
+    // id), matching this session's `class_feature.familiar.*` /
+    // `class_feature.domain.*` shared-ladder-family precedent, so the
+    // namespace is already correctly positioned for when Arcanist's own half
+    // is built later.
+    if wizard_has_canonical_abjuration_selection(input) {
+        let abjuration_school_lvl = wizard_level_value;
+        let abjuration_progression_school_lvl = wizard_level_value;
+
+        // Grounded for real: Resistance (`KEY:Abjuration School ~
+        // Resistance`). `BONUS:VAR|AbjurationResistanceBonus|5` fires
+        // unconditionally once the power itself unlocks
+        // (`PREVARGTEQ:AbjurationProgressionSchoolLVL,1` on the Abjuration
+        // School record's own `ABILITY:` grant line, i.e. from level 1), and
+        // a second `BONUS:VAR|AbjurationResistanceBonus|5|
+        // PREVARGTEQ:AbjurationProgressionSchoolLVL,11` stacks another +5 at
+        // level 11+, for a flat 10. At level 20 the record's own DESC text
+        // (not a BONUS:VAR formula) replaces "resistance" with "immunity to
+        // an energy type" -- a non-numeric capstone. The corpus's own
+        // `#Immunity` KEY record is commented out (an inactive record, not a
+        // live ability), so Immunity stays deferred/named-only: no
+        // Resistance magnitude is claimed at level 20+, since there is no
+        // longer a "resistance" number to ground.
+        if abjuration_progression_school_lvl >= 1 && abjuration_progression_school_lvl < 20 {
+            let resistance_bonus = if abjuration_progression_school_lvl >= 11 { 10 } else { 5 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.abjuration.resistance".to_owned(),
+                value: resistance_bonus,
+                detail: format!(
+                    "Wizard level {level} Abjuration School power Resistance flat magnitude \
+                     (PF1 Core Rulebook Abjuration School, `KEY:Abjuration School ~ \
+                     Resistance`): resistance 5 to an energy type of your choice, chosen when \
+                     you prepare spells; the resistance increases to 10 at \
+                     AbjurationProgressionSchoolLVL 11+ (two stacked \
+                     BONUS:VAR|AbjurationResistanceBonus|5 lines in the corpus record). At \
+                     Wizard level {level} this is {resistance_bonus}. This grounds only the \
+                     flat resistance magnitude; it applies no resistance to any actual damage \
+                     roll, tracks no daily energy-type reselection, and implements no \
+                     energy-type-of-choice bookkeeping. At level 20 the corpus record's DESC \
+                     text replaces resistance with immunity to an energy type -- a tokenless, \
+                     non-numeric capstone this slice leaves deferred/named-only, so no \
+                     Resistance explanation fires at level 20 or above"
+                ),
+            });
+        }
+
+        // Grounded for real: Protective Ward (`KEY:Abjuration School ~
+        // Protective Ward`) -- three flat, non-dice `BONUS:VAR` formulas, all
+        // unlocked from level 1 (`PREVARGTEQ:AbjurationProgressionSchoolLVL,1`
+        // on the Abjuration School record's own `ABILITY:` grant line for
+        // Protective Ward).
+        if abjuration_progression_school_lvl >= 1 {
+            // `AbjurationProtectiveWardTimes|ArcaneSchoolPowerTimes`.
+            // `ArcaneSchoolPowerTimes` is itself `DEFINE:
+            // ArcaneSchoolPowerTimes|0` `BONUS:VAR|ArcaneSchoolPowerTimes|
+            // INT+3` on the shared "Arcane School Tracker" internal record --
+            // the SAME "3 + Intelligence modifier" idiom the pre-existing
+            // Force Missile grounding above already uses (`INT` resolves to
+            // the ability MODIFIER in this codebase's BONUS:VAR convention).
+            let protective_ward_uses_per_day = (3 + ability_modifiers.intelligence).max(0);
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.abjuration.protective_ward_uses_per_day".to_owned(),
+                value: protective_ward_uses_per_day,
+                detail: format!(
+                    "Wizard level {level} Abjuration School power Protective Ward uses-per-day \
+                     pool (PF1 Core Rulebook Abjuration School): \
+                     AbjurationProtectiveWardTimes resolves to the shared \
+                     ArcaneSchoolPowerTimes counter, 3 + Intelligence modifier, floored at 0 \
+                     (the same idiom as the Evocation Force Missile pool above). At \
+                     Intelligence modifier {} this is max(3 + {}, 0) = \
+                     {protective_ward_uses_per_day}. This grounds only the flat daily-use \
+                     count; it creates no 10-foot-radius protective-magic field, applies no \
+                     deflection bonus to any actual AC total, and tracks no action economy or \
+                     per-use consumption",
+                    ability_modifiers.intelligence, ability_modifiers.intelligence
+                ),
+            });
+
+            // `AbjurationProtectiveWardDuration|INT` -- the bare Intelligence
+            // modifier. No floor is encoded in this corpus formula itself
+            // (unlike the Times formula's own built-in "+3" offset), so this
+            // grounds exactly the corpus formula rather than inventing an
+            // unencoded minimum.
+            let protective_ward_duration = ability_modifiers.intelligence;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.abjuration.protective_ward_duration".to_owned(),
+                value: protective_ward_duration,
+                detail: format!(
+                    "Wizard level {level} Abjuration School power Protective Ward duration in \
+                     rounds (PF1 Core Rulebook Abjuration School): \
+                     AbjurationProtectiveWardDuration resolves to the bare Intelligence \
+                     modifier, {protective_ward_duration}. This grounds only the flat \
+                     round-count magnitude; no floor is encoded in the corpus formula itself, \
+                     so none is fabricated here. It creates no protective-magic field and \
+                     tracks no round-by-round duration"
+                ),
+            });
+
+            // `AbjurationProtectiveWardBonus|(AbjurationSchoolLVL/5)+1` --
+            // integer division, matching the "half wizard level" flooring
+            // idiom already used by Intense Spells above.
+            let protective_ward_deflection_bonus = (abjuration_school_lvl / 5) + 1;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.abjuration.protective_ward_deflection_bonus"
+                    .to_owned(),
+                value: protective_ward_deflection_bonus,
+                detail: format!(
+                    "Wizard level {level} Abjuration School power Protective Ward deflection \
+                     bonus to AC (PF1 Core Rulebook Abjuration School): \
+                     AbjurationProtectiveWardBonus resolves to \
+                     (AbjurationSchoolLVL/5)+1 = ({abjuration_school_lvl}/5)+1 = \
+                     {protective_ward_deflection_bonus}. This grounds only the flat deflection- \
+                     bonus magnitude; it applies no bonus to any actual AC total and grants no \
+                     real allies-in-area targeting"
+                ),
+            });
+        }
+
+        // Grounded for real: Energy Absorption (`KEY:Abjuration School ~
+        // Energy Absorption`). `BONUS:VAR|AbjurationEnergyAbsorption|
+        // AbjurationSchoolLVL*3`, gated on the power's own level-6 unlock
+        // (`PREVARGTEQ:AbjurationProgressionSchoolLVL,6` on the Abjuration
+        // School record's own `ABILITY:` grant line for Energy Absorption).
+        if abjuration_progression_school_lvl >= 6 {
+            let energy_absorption = abjuration_school_lvl * 3;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.school.abjuration.energy_absorption".to_owned(),
+                value: energy_absorption,
+                detail: format!(
+                    "Wizard level {level} Abjuration School power Energy Absorption flat daily \
+                     pool (PF1 Core Rulebook Abjuration School): AbjurationEnergyAbsorption \
+                     resolves to AbjurationSchoolLVL*3 = {abjuration_school_lvl}*3 = \
+                     {energy_absorption}. This grounds only the flat daily-absorption-pool \
+                     magnitude; it applies no reduction to any actual energy-damage roll, \
+                     resolves no resistance-then-immunity-then-absorption ordering against a \
+                     real damage instance, and tracks no daily pool depletion"
+                ),
+            });
+        }
     }
 
     // SD-21 E6b.2/E6b.3: ground the real prepared-spellbook / daily-preparation
