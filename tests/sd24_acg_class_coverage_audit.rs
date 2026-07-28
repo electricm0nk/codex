@@ -201,7 +201,12 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
     }
 
     for (class_id, feature_name, expected_wired) in [
-        (AcgClassId::Skald, "Inspired Rage + Damage Reduction + Bardic Knowledge", 3),
+        (
+            AcgClassId::Skald,
+            "Inspired Rage + Damage Reduction + Bardic Knowledge + Well-Versed + Spell Kenning \
+             + Lore Master + Versatile Performance + Rage Powers pool-size",
+            8,
+        ),
         (
             AcgClassId::Bloodrager,
             "Bloodrage + Spells + Fast Movement + Uncanny Dodge + Improved Uncanny Dodge + \

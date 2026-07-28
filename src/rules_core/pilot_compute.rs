@@ -1747,6 +1747,53 @@ const SKALD_INSPIRED_RAGE_ARMOR_CLASS_PENALTY: i16 = -1;
 /// (verified against the PCGen corpus DESC text, the same shape as Bard's
 /// own Bardic Performance formula with a different base -- 3, not 4).
 const SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY: i16 = 3;
+/// PF1 Advanced Class Guide Well-Versed (`KEY:Skald ~ Well-Versed`, task
+/// #50): granted at 2nd level -- confirmed directly against the real
+/// PCGen corpus's own per-level grant row (`2	ABILITY:Skald Class
+/// Feature|AUTOMATIC|Skald ~ Well-Versed|...` in `acg_classes.lst`),
+/// since the feature's own `BONUS:VAR|SkaldWellVersedBonus|4` token
+/// carries no level term to self-gate on (unlike Spell Kenning/Lore
+/// Master/Versatile Performance/Rage Powers below, whose formulas floor
+/// to 0 below their own real grant level). A flat +4 bonus on saving
+/// throws against bardic performance, sonic, and language-dependent
+/// effects, not level-scaled -- byte-identical to Bard's own already-
+/// shipped `BARD_WELL_VERSED_BONUS` (Bard's own grant level, 2, happens
+/// to match Skald's).
+const SKALD_WELL_VERSED_LEVEL: u8 = 2;
+const SKALD_WELL_VERSED_BONUS: i16 = 4;
+/// PF1 Advanced Class Guide Spell Kenning (`KEY:Skald ~ Spell Kenning`,
+/// task #50): granted at 5th level, confirmed against the real corpus's
+/// own per-level grant row. `BONUS:VAR|SkaldSpellKenningUsesPerDay|
+/// (1+SkaldLVL)/6` self-gates to 0 below level 5 by its own floor
+/// division, matching the real grant level exactly.
+const SKALD_SPELL_KENNING_LEVEL: u8 = 5;
+/// PF1 Advanced Class Guide Lore Master (`KEY:Skald ~ Lore Master`, task
+/// #50): granted at 7th level, confirmed against the real corpus's own
+/// per-level grant row. `BONUS:VAR|SkaldLoreMasterUsesPerDay|
+/// min((SkaldLVL-1)/6,3)` self-gates to 0 below level 7 by its own floor
+/// division; the cap (3) is the corpus token's own second `min()`
+/// operand, reached at level 19.
+const SKALD_LORE_MASTER_LEVEL: u8 = 7;
+const SKALD_LORE_MASTER_MAX_USES_PER_DAY: i16 = 3;
+/// PF1 Advanced Class Guide Versatile Performance (`KEY:Skald ~
+/// Versatile Performance`, task #50): granted at 2nd level, confirmed
+/// against the real corpus's own per-level grant row.
+/// `BONUS:ABILITYPOOL|Skald Versatile Performance|min((SkaldLVL+3)/5)`
+/// is a genuinely single-argument `min()` in the raw corpus (confirmed
+/// directly, not a transcription defect) -- min of one argument is just
+/// that argument, so this grounds `(SkaldLVL+3)/5` as its own count,
+/// self-gating to 0 below level 2 by its own floor division.
+const SKALD_VERSATILE_PERFORMANCE_LEVEL: u8 = 2;
+/// PF1 Advanced Class Guide Rage Powers (`KEY:Skald ~ Rage Powers`, task
+/// #50): Skald's own pool-SIZE only (distinct from selecting/executing
+/// any individual rage power, out of scope here -- that is a separate
+/// build). Granted at 3rd level, confirmed against the real corpus's own
+/// per-level grant row. `BONUS:VAR|RagePowersLVL|SkaldLVL` sets the
+/// shared `RagePowersLVL` variable unconditionally from `SkaldLVL` (no
+/// borrowed-variable transcription gap the way Swashbuckler's deed gate
+/// had), and `BONUS:ABILITYPOOL|Rage Power|RagePowersLVL/3` self-gates
+/// to 0 below level 3 by its own floor division.
+const SKALD_RAGE_POWERS_LEVEL: u8 = 3;
 
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): ACG
 /// Bloodrager, a Barbarian+Sorcerer hybrid whose Bloodrage class feature
@@ -15674,6 +15721,11 @@ fn compute_acg_class_chassis(
         ground_or_block_skald_spellcasting(input, level, ability_modifiers, explanations, diagnostics);
         ground_skald_damage_reduction(level, explanations);
         ground_skald_bardic_knowledge(level, explanations);
+        ground_skald_well_versed(level, explanations);
+        ground_skald_spell_kenning(level, explanations);
+        ground_skald_lore_master(level, explanations);
+        ground_skald_versatile_performance(level, explanations);
+        ground_skald_rage_powers_pool_size(level, explanations);
         push_skald_other_features_deferred_diagnostic(diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
@@ -16186,6 +16238,253 @@ fn ground_skald_bardic_knowledge(level: u8, explanations: &mut Vec<ComputationEx
     });
 }
 
+/// Skald's own Well-Versed magnitude (task #50): flat, not level-scaled
+/// (see `SKALD_WELL_VERSED_BONUS`'s own doc comment for the corpus
+/// verification). Pure function so the standalone explanation record
+/// below has one source of truth for the magnitude.
+fn skald_well_versed_bonus() -> i16 {
+    SKALD_WELL_VERSED_BONUS
+}
+
+/// Grounds Skald's own Well-Versed as a standalone explanation record
+/// (task #50), mirroring Bard's own `class_feature.bard.well_versed`
+/// shape exactly: below `SKALD_WELL_VERSED_LEVEL` this is a correct PF1
+/// level-gate absence (value 0); at or above it, a flat +4 bonus on
+/// saving throws against bardic performance, sonic, and language-
+/// dependent effects. Never applied to any actual save total, since no
+/// saving-throw-resolution engine exists in this codebase; never claim-
+/// blocks.
+fn ground_skald_well_versed(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    if level < SKALD_WELL_VERSED_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.well_versed".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Well-Versed at skald level {level}: correctly absent at level {level} by \
+                 PF1 Advanced Class Guide level gate; the at-grant rule is named but not \
+                 computed. Well-Versed is a 2nd-level Skald class feature."
+            ),
+        });
+    } else {
+        let bonus = skald_well_versed_bonus();
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.well_versed".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Skald Well-Versed granted at skald level {level} (PF1 Advanced Class Guide, \
+                 2nd-level Skald class feature): a flat +{bonus} bonus on saving throws made \
+                 against bardic performance, sonic, and language-dependent effects, not \
+                 level-scaled -- byte-identical to Bard's own Well-Versed. This is a standalone \
+                 explanation record only; it is never applied to any actual save total because \
+                 no saving-throw-resolution engine exists anywhere in this codebase"
+            ),
+        });
+    }
+}
+
+/// Skald's own Spell Kenning uses-per-day magnitude (task #50):
+/// `(1+SkaldLVL)/6` verified directly against the raw corpus's own
+/// `BONUS:VAR|SkaldSpellKenningUsesPerDay|(1+SkaldLVL)/6` token, self-
+/// gating to 0 below level 5 by its own floor division (matching the
+/// real grant level exactly -- see `SKALD_SPELL_KENNING_LEVEL`'s own
+/// doc comment).
+fn skald_spell_kenning_uses_per_day(level: u8) -> i16 {
+    (1 + i16::from(level)) / 6
+}
+
+/// Grounds Skald's own Spell Kenning pool size as a standalone
+/// explanation record (task #50), the same "pool size, use not
+/// modelled" shape as `ground_swashbuckler_deeds`'s Derring-Do/Charmed
+/// Life uses-per-day records: no spell-casting-from-another-class'-list
+/// mechanism exists anywhere in this codebase, so only the flat
+/// uses-per-day count is grounded, named honestly. Below
+/// `SKALD_SPELL_KENNING_LEVEL` this is a correct PF1 level-gate absence
+/// (value 0); never claim-blocks.
+fn ground_skald_spell_kenning(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    if level < SKALD_SPELL_KENNING_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.spell_kenning_uses_per_day".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Spell Kenning at skald level {level}: correctly absent at level {level} \
+                 by PF1 Advanced Class Guide level gate; the at-grant rule is named but not \
+                 computed. Spell Kenning is a 5th-level Skald class feature."
+            ),
+        });
+    } else {
+        let uses_per_day = skald_spell_kenning_uses_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.spell_kenning_uses_per_day".to_owned(),
+            value: uses_per_day,
+            detail: format!(
+                "Skald Spell Kenning granted at skald level {level} (PF1 Advanced Class Guide, \
+                 5th-level Skald class feature): usable {uses_per_day} times per day, letting \
+                 the skald cast a bard/cleric/sorcerer-wizard spell as if it were one of his own \
+                 known skald spells, expending a skald spell slot of the same level. This \
+                 grounds only the flat uses-per-day pool size -- not the spell-borrowing \
+                 mechanism itself, since no cross-class spell-list-borrowing engine exists \
+                 anywhere in this codebase"
+            ),
+        });
+    }
+}
+
+/// Skald's own Lore Master uses-per-day magnitude (task #50):
+/// `min((SkaldLVL-1)/6,3)` verified directly against the raw corpus's
+/// own `BONUS:VAR|SkaldLoreMasterUsesPerDay|min((SkaldLVL-1)/6,3)`
+/// token -- a genuine two-argument `min()`, unlike Versatile
+/// Performance's single-argument one below. Self-gates to 0 below level
+/// 7 by its own floor division, rising to 1/day at 13th, and capping at
+/// `SKALD_LORE_MASTER_MAX_USES_PER_DAY` (3) at level 19 (see
+/// `SKALD_LORE_MASTER_LEVEL`'s own doc comment for the real per-level
+/// grant-row confirmation).
+fn skald_lore_master_uses_per_day(level: u8) -> i16 {
+    ((i16::from(level) - 1) / 6).min(SKALD_LORE_MASTER_MAX_USES_PER_DAY)
+}
+
+/// Grounds Skald's own Lore Master pool size as a standalone
+/// explanation record (task #50), mirroring Bard's own
+/// `class_feature.bard.lore_master` shape and the same "pool size, use
+/// not modelled" idiom as `ground_swashbuckler_deeds`: neither the
+/// take-10 nor the take-20 mechanic is executed against any Knowledge
+/// check, since no skill-check-resolution engine exists anywhere in
+/// this codebase. Below `SKALD_LORE_MASTER_LEVEL` this is a correct PF1
+/// level-gate absence (value 0); never claim-blocks.
+fn ground_skald_lore_master(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    if level < SKALD_LORE_MASTER_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.lore_master_uses_per_day".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Lore Master at skald level {level}: correctly absent at level {level} by \
+                 PF1 Advanced Class Guide level gate; the at-grant rule is named but not \
+                 computed. Lore Master is a 7th-level Skald class feature."
+            ),
+        });
+    } else {
+        let uses_per_day = skald_lore_master_uses_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.lore_master_uses_per_day".to_owned(),
+            value: uses_per_day,
+            detail: format!(
+                "Skald Lore Master granted at skald level {level} (PF1 Advanced Class Guide, \
+                 7th-level Skald class feature): take 10 on any Knowledge skill check he has \
+                 ranks in (an at-will capability with no flat magnitude to ground), plus take 20 \
+                 on any Knowledge skill check {uses_per_day} times per day (rising to 2/day at \
+                 13th level and 3/day at 19th level). This grounds only the take-20 half's flat \
+                 uses-per-day pool size -- not a full Knowledge-check resolution engine"
+            ),
+        });
+    }
+}
+
+/// Skald's own Versatile Performance slot-count magnitude (task #50):
+/// `(SkaldLVL+3)/5`, verified directly against the raw corpus's own
+/// `BONUS:ABILITYPOOL|Skald Versatile Performance|min((SkaldLVL+3)/5)`
+/// token. That token's `min()` is genuinely single-argument in the raw
+/// corpus (confirmed directly against `acg_abilities_class.lst`, not a
+/// transcription defect the way Raging Song's token is) -- min of one
+/// argument is just that argument, so this grounds `(SkaldLVL+3)/5`
+/// directly rather than inventing a second cap operand. Self-gates to 0
+/// below level 2 by its own floor division, matching the real per-level
+/// grant row and the DESC's own schedule (1 slot at level 2-6, 2 at
+/// 7-11, 3 at 12-16, continuing every 5 levels thereafter -- see
+/// `SKALD_VERSATILE_PERFORMANCE_LEVEL`'s own doc comment).
+fn skald_versatile_performance_slot_count(level: u8) -> i16 {
+    (i16::from(level) + 3) / 5
+}
+
+/// Grounds Skald's own Versatile Performance slot count as a standalone
+/// explanation record (task #50), the same pool-size-only shape as
+/// Skald's own Rage Powers below (not Bard's own fixed three-slot
+/// choice-list table, since Skald's own corpus formula genuinely keeps
+/// growing past 3 slots at higher levels, a different shape from
+/// Bard's). No Perform-substitution execution mechanism exists anywhere
+/// in this codebase, so only the flat slot count is grounded. Below
+/// `SKALD_VERSATILE_PERFORMANCE_LEVEL` this is a correct PF1 level-gate
+/// absence (value 0); never claim-blocks.
+fn ground_skald_versatile_performance(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    if level < SKALD_VERSATILE_PERFORMANCE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.versatile_performance_slot_count".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Versatile Performance at skald level {level}: correctly absent at level \
+                 {level} by PF1 Advanced Class Guide level gate; the at-grant rule is named but \
+                 not computed. Versatile Performance is a 2nd-level Skald class feature."
+            ),
+        });
+    } else {
+        let slot_count = skald_versatile_performance_slot_count(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.versatile_performance_slot_count".to_owned(),
+            value: slot_count,
+            detail: format!(
+                "Skald Versatile Performance granted at skald level {level} (PF1 Advanced Class \
+                 Guide, 2nd-level Skald class feature): {slot_count} Perform-substitution \
+                 slot(s) selected so far (1 at level 2-6, 2 at 7-11, 3 at 12-16, and so on every \
+                 5 levels). This grounds only the flat slot-count magnitude -- not which Perform \
+                 type is chosen or any actual skill-substitution execution, since no \
+                 skill-check-resolution engine or choice-selection mechanism for this feature \
+                 exists anywhere in this codebase"
+            ),
+        });
+    }
+}
+
+/// Skald's own Rage Powers pool-SIZE magnitude (task #50): `RagePowersLVL
+/// / 3`, verified directly against the raw corpus's own
+/// `BONUS:ABILITYPOOL|Rage Power|RagePowersLVL/3` and
+/// `BONUS:VAR|RagePowersLVL|SkaldLVL` tokens under `KEY:Skald ~ Rage
+/// Powers`. `RagePowersLVL` is set unconditionally from `SkaldLVL` (no
+/// Swashbuckler-deed-style borrowed-variable gap), so this grounds
+/// `SkaldLVL/3` directly. This is Skald's own POOL-SIZE count only --
+/// which individual rage powers are selectable/legal for a Skald to
+/// grant via Raging Song (a separate build) is explicitly out of scope
+/// here. Self-gates to 0 below level 3 by its own floor division,
+/// matching the real per-level grant row and the DESC's own "at 3rd
+/// level and every 3 levels thereafter" schedule (see
+/// `SKALD_RAGE_POWERS_LEVEL`'s own doc comment).
+fn skald_rage_powers_pool_size(level: u8) -> i16 {
+    i16::from(level) / 3
+}
+
+/// Grounds Skald's own Rage Powers pool size as a standalone
+/// explanation record (task #50), the same pool-size-only shape as
+/// `swashbuckler_panache_max`/Warpriest Blessing uses/day: no
+/// rage-power-selection choice list or execution mechanism exists for
+/// Skald anywhere in this codebase (individual rage powers are a
+/// separate build), so only the flat count is grounded. Below
+/// `SKALD_RAGE_POWERS_LEVEL` this is a correct PF1 level-gate absence
+/// (value 0); never claim-blocks.
+fn ground_skald_rage_powers_pool_size(level: u8, explanations: &mut Vec<ComputationExplanation>) {
+    if level < SKALD_RAGE_POWERS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.rage_powers_pool_size".to_owned(),
+            value: 0,
+            detail: format!(
+                "Skald Rage Powers at skald level {level}: correctly absent at level {level} by \
+                 PF1 Advanced Class Guide level gate; the at-grant rule is named but not \
+                 computed. Rage Powers is a 3rd-level Skald class feature."
+            ),
+        });
+    } else {
+        let pool_size = skald_rage_powers_pool_size(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.rage_powers_pool_size".to_owned(),
+            value: pool_size,
+            detail: format!(
+                "Skald Rage Powers pool size at skald level {level} (PF1 Advanced Class Guide, \
+                 3rd-level Skald class feature, one additional rage power every 3 levels \
+                 thereafter): {pool_size} rage power(s) known so far. This grounds only the \
+                 flat pool-size magnitude -- not which individual rage powers are known, legal, \
+                 or applied to Raging Song, since no rage-power-selection or execution \
+                 mechanism exists for Skald anywhere in this codebase"
+            ),
+        });
+    }
+}
+
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.acg.skald.unsupported` for Skald specifically (per the
 /// adversarial review's finding 2, updated for the spellcasting closure):
@@ -16211,32 +16510,63 @@ fn ground_skald_bardic_knowledge(level: u8, explanations: &mut Vec<ComputationEx
 /// self-only half and Bardic Knowledge are also no longer named as
 /// missing here -- both now genuinely wired (see
 /// `ground_skald_damage_reduction`/`ground_skald_bardic_knowledge`).
+///
+/// **Updated again (task #50)**: Well-Versed, and the flat pool-size/
+/// count magnitudes for Spell Kenning, Lore Master, Versatile
+/// Performance, and Rage Powers are also no longer named as flatly
+/// missing here -- all five are now genuinely wired (see
+/// `ground_skald_well_versed`/`ground_skald_spell_kenning`/
+/// `ground_skald_lore_master`/`ground_skald_versatile_performance`/
+/// `ground_skald_rage_powers_pool_size`). Well-Versed is fully covered
+/// (a flat, never-applied save bonus needs no further execution); the
+/// other four still have a genuinely missing execution half named
+/// explicitly (Spell Kenning's cross-class spell-borrowing, Lore
+/// Master's take-10/20 mechanic, Versatile Performance's Perform-type
+/// choice and skill-substitution, Rage Powers' individual-power
+/// selection and Raging Song application) -- the same "grounds the
+/// magnitude, names the still-missing mechanism" shape as Damage
+/// Reduction's own ally-extension above.
+///
 /// Pushed exactly once from the top-level Skald dispatch branch,
 /// independent of any of these features' own state.
 ///
 /// **Updated again (task #54, 2026-07-28)**: Raging Climber's and Raging
 /// Swimmer's own self-use magnitude (while singing, landing on the real
 /// Climb/Swim totals) are also no longer named as missing here -- see
-/// `ground_raging_climber_and_swimmer`. This does NOT mean Skald's Rage
-/// Powers feature at large is grounded: the pool-count formula
-/// (`RagePowersLVL/3`) and the ally-granting "shared-list access" stay
-/// fully deferred, and 58 of the 60-record Rage Powers family remain
-/// entirely unmodeled -- only these two canonical-narrowing
-/// representatives' own magnitude is real.
+/// `ground_raging_climber_and_swimmer`. At the time task #54 landed, the
+/// Rage Powers pool-count formula (`RagePowersLVL/3`) and the
+/// ally-granting "shared-list access" stayed fully deferred -- only
+/// these two canonical-narrowing representatives' own magnitude was
+/// real, out of the wider 60-record Rage Powers family.
+///
+/// **Reconciled with task #50 (rebased on top of #54, same day)**: the
+/// pool-count formula itself is now ALSO grounded (see
+/// `ground_skald_rage_powers_pool_size`), so it is folded into task
+/// #50's own "Rage Powers" acknowledgment below rather than left in
+/// #54's "still deferred" framing. What remains genuinely missing for
+/// Rage Powers is narrower than either task alone described: the
+/// ally-granting "shared-list access" (applying chosen rage powers to
+/// allies via Raging Song) and the other 58 named-but-unmodeled rage
+/// powers beyond the pool-size count and Raging Climber/Swimmer's own
+/// two magnitudes.
 fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
              pillar, Inspired Rage, known-spell posture, self-only Damage Reduction, Bardic \
-             Knowledge, and Raging Climber/Raging Swimmer's own self-use magnitude (two of the \
-             60-record Rage Powers family, landing on the real Climb/Swim totals): this ACG \
-             class has no class-skill list and no other named class feature (Lore Master, the \
-             Rage Powers pool-count and ally-granting shared-list access plus the other 58 \
-             named-but-unmodeled rage powers, Spell Kenning, Versatile Performance, Well-Versed, \
-             Dirge of Doom, Song of Marching, Song of Strength, Song of the Fallen, and Damage \
-             Reduction's own ally-extension) grounded anywhere in this codebase yet; no \
-             class-feature execution is fabricated in this bounded chassis baseline"
+             Knowledge, Well-Versed, the flat pool-size/count magnitudes for Spell Kenning, Lore \
+             Master, Versatile Performance, and Rage Powers, and Raging Climber/Raging \
+             Swimmer's own self-use magnitude (two of the 60-record Rage Powers family, landing \
+             on the real Climb/Swim totals): this ACG class has no class-skill list and no \
+             other named class feature or execution mechanism (Damage Reduction's own \
+             ally-extension, Spell Kenning's own cross-class spell-borrowing execution, Lore \
+             Master's own take-10/take-20 execution, Versatile Performance's own Perform-type \
+             choice and skill-substitution execution, Rage Powers' own ally-granting \
+             shared-list access plus the other 58 named-but-unmodeled rage powers, Dirge of \
+             Doom, Song of Marching, Song of Strength, and Song of the Fallen) grounded \
+             anywhere in this codebase yet; no class-feature execution is fabricated in this \
+             bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -39703,7 +40033,7 @@ mod skald_dispatch_widening_safety_tests {
             .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
             .expect("expected the other_features_deferred diagnostic");
         assert!(
-            deferred.message.contains("Bardic Knowledge, and Raging Climber"),
+            deferred.message.contains("Bardic Knowledge,"),
             "expected the preamble to acknowledge Bardic Knowledge as grounded: {}",
             deferred.message
         );
@@ -39715,9 +40045,14 @@ mod skald_dispatch_widening_safety_tests {
     }
 
     /// Task #54: Raging Climber/Raging Swimmer's own self-use magnitude is
-    /// now grounded and no longer named as missing, but the wider Rage
-    /// Powers feature (pool-count, ally-granting shared-list access, and
-    /// the other 58 named-but-unmodeled powers) genuinely stays deferred.
+    /// now grounded and no longer named as missing.
+    ///
+    /// **Reconciled with task #50 (rebased on top of #54, same day)**:
+    /// the wider Rage Powers pool-count formula is ALSO now grounded (see
+    /// `ground_skald_rage_powers_pool_size`), so it is no longer named as
+    /// deferred either -- only the ally-granting "shared-list access"
+    /// (applying chosen rage powers to allies via Raging Song) and the
+    /// other 58 named-but-unmodeled rage powers genuinely stay deferred.
     #[test]
     fn other_features_deferred_acknowledges_raging_climber_and_swimmer_but_not_the_wider_rage_powers_feature()
     {
@@ -39736,9 +40071,239 @@ mod skald_dispatch_widening_safety_tests {
             deferred.message
         );
         assert!(
-            deferred.message.contains("Rage Powers pool-count and ally-granting shared-list access")
+            deferred.message.contains("ally-granting shared-list access")
                 && deferred.message.contains("58 named-but-unmodeled rage powers"),
-            "expected the wider Rage Powers feature to still be named as deferred: {}",
+            "expected the wider Rage Powers feature (minus the now-grounded pool-count) to \
+             still be named as deferred: {}",
+            deferred.message
+        );
+        assert!(
+            !deferred.message.contains("Rage Powers pool-count"),
+            "the pool-count is now grounded too (task #50) and must no longer be named as \
+             deferred: {}",
+            deferred.message
+        );
+    }
+
+    /// Skald's own Well-Versed (task #50) is honestly absent below level 2
+    /// -- a real PF1 level gate, confirmed against the real corpus's own
+    /// per-level `ABILITY:...Skald ~ Well-Versed` grant row -- then grounds
+    /// a flat, non-level-scaled +4, byte-identical to Bard's own
+    /// Well-Versed magnitude.
+    #[test]
+    fn single_class_skald_well_versed_self_gates_at_level_2_and_grounds_a_flat_4() {
+        for (level, expected) in [(1, 0), (2, 4), (3, 4), (20, 4)] {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let well_versed = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.well_versed")
+                .unwrap_or_else(|| panic!("expected Well-Versed grounded at level {level}"));
+            assert_eq!(well_versed.value, expected, "level {level} Well-Versed: {:?}", well_versed);
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("well_versed") && d.claim_blocking),
+                "Well-Versed must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Skald's own Spell Kenning uses-per-day (task #50): `(1+SkaldLVL)/6`
+    /// self-gates to 0 below level 5, matching the real corpus's own
+    /// per-level grant row, then rises to 1/day at 5th, 2/day at 11th,
+    /// 3/day at 17th -- verified directly against the raw corpus DESC
+    /// text's own schedule.
+    #[test]
+    fn single_class_skald_spell_kenning_self_gates_and_progresses_at_the_real_level_gates() {
+        for (level, expected) in
+            [(1, 0), (4, 0), (5, 1), (10, 1), (11, 2), (16, 2), (17, 3), (20, 3)]
+        {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let spell_kenning = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.spell_kenning_uses_per_day")
+                .unwrap_or_else(|| panic!("expected Spell Kenning grounded at level {level}"));
+            assert_eq!(
+                spell_kenning.value, expected,
+                "level {level} Spell Kenning: {:?}",
+                spell_kenning
+            );
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("spell_kenning") && d.claim_blocking),
+                "Spell Kenning must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Skald's own Lore Master uses-per-day (task #50):
+    /// `min((SkaldLVL-1)/6,3)`, a genuine two-argument `min()`, self-gates
+    /// to 0 below level 7, matching the real corpus's own per-level grant
+    /// row, then rises to 1/day at 7th, 2/day at 13th, and caps at 3/day
+    /// at 19th.
+    #[test]
+    fn single_class_skald_lore_master_self_gates_and_caps_at_three_per_day() {
+        for (level, expected) in
+            [(1, 0), (6, 0), (7, 1), (12, 1), (13, 2), (18, 2), (19, 3), (20, 3)]
+        {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let lore_master = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.lore_master_uses_per_day")
+                .unwrap_or_else(|| panic!("expected Lore Master grounded at level {level}"));
+            assert_eq!(lore_master.value, expected, "level {level} Lore Master: {:?}", lore_master);
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("lore_master") && d.claim_blocking),
+                "Lore Master must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Skald's own Versatile Performance slot count (task #50):
+    /// `(SkaldLVL+3)/5`, a genuinely single-argument `min()` in the raw
+    /// corpus (ground the term itself, not an invented second cap
+    /// operand). Self-gates to 0 below level 2, matching the real corpus's
+    /// own per-level grant row and the DESC's own schedule: 1 slot at
+    /// level 2-6, 2 at 7-11, 3 at 12-16, continuing to grow every 5 levels
+    /// thereafter.
+    #[test]
+    fn single_class_skald_versatile_performance_self_gates_and_grows_every_five_levels() {
+        for (level, expected) in
+            [(1, 0), (2, 1), (6, 1), (7, 2), (11, 2), (12, 3), (16, 3), (17, 4), (20, 4)]
+        {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let versatile_performance = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.versatile_performance_slot_count")
+                .unwrap_or_else(|| {
+                    panic!("expected Versatile Performance grounded at level {level}")
+                });
+            assert_eq!(
+                versatile_performance.value, expected,
+                "level {level} Versatile Performance: {:?}",
+                versatile_performance
+            );
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("versatile_performance") && d.claim_blocking),
+                "Versatile Performance must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Skald's own Rage Powers pool SIZE (task #50, distinct from the
+    /// actual rage-power selection/execution built separately): `SkaldLVL
+    /// / 3` (`RagePowersLVL` is set unconditionally from `SkaldLVL` in the
+    /// real corpus, no borrowed-variable gap). Self-gates to 0 below level
+    /// 3, matching the real corpus's own per-level grant row and the
+    /// DESC's own "at 3rd level and every 3 levels thereafter" schedule.
+    #[test]
+    fn single_class_skald_rage_powers_pool_size_self_gates_and_grows_every_three_levels() {
+        for (level, expected) in [(1, 0), (2, 0), (3, 1), (5, 1), (6, 2), (8, 2), (9, 3), (20, 6)] {
+            let input = human_skald_input(level);
+            let receipt = build_pilot_headless_receipt(&input);
+
+            let rage_powers = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.rage_powers_pool_size")
+                .unwrap_or_else(|| panic!("expected Rage Powers pool size grounded at level {level}"));
+            assert_eq!(rage_powers.value, expected, "level {level} Rage Powers pool size: {:?}", rage_powers);
+
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id.contains("rage_powers") && d.claim_blocking),
+                "Rage Powers pool size must never claim-block at level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The other_features_deferred diagnostic (task #50) now also
+    /// acknowledges Well-Versed, Spell Kenning, Lore Master, Versatile
+    /// Performance, and Rage Powers' own pool size as grounded, while
+    /// still naming the genuinely still-missing execution pieces (Spell
+    /// Kenning's spell-borrowing, Lore Master's take-10/20, Versatile
+    /// Performance's Perform-type choice, Rage Powers' individual-power
+    /// selection) and the four remaining tokenless Raging Song variants.
+    #[test]
+    fn other_features_deferred_acknowledges_the_five_new_flat_magnitudes_as_grounded() {
+        let input = human_skald_input(20);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
+            .expect("expected the other_features_deferred diagnostic");
+        for acknowledged in [
+            "Well-Versed",
+            "Spell Kenning",
+            "Lore Master",
+            "Versatile Performance",
+            "Rage Powers",
+        ] {
+            assert!(
+                deferred.message.contains(acknowledged),
+                "expected the preamble to acknowledge {acknowledged} as grounded: {}",
+                deferred.message
+            );
+        }
+        assert!(
+            deferred.message.contains("Dirge of Doom")
+                && deferred.message.contains("Song of Marching")
+                && deferred.message.contains("Song of Strength")
+                && deferred.message.contains("Song of the Fallen"),
+            "expected the four tokenless Raging Song variants to still be named as missing: {}",
+            deferred.message
+        );
+        assert!(
+            !deferred.message.contains(
+                "Lore Master, Rage Powers shared-list access, Spell Kenning, Versatile \
+                 Performance, Well-Versed,"
+            ),
+            "the stale flat 'still missing' listing for these five must be gone: {}",
             deferred.message
         );
     }

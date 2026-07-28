@@ -229,8 +229,8 @@ pub struct AcgClassCoverage {
     ///
     /// The full current roster, all ten ACG classes, none at 0:
     /// **Arcanist 3**, **Bloodrager 2**, **Shaman 2**, **Hunter 3**,
-    /// **Skald 3**, **Warpriest 5**, **Slayer 6**, **Investigator 8**,
-    /// **Brawler 9**, **Swashbuckler 12**.
+    /// **Skald 8** (task #50), **Warpriest 5**, **Slayer 6**,
+    /// **Investigator 8**, **Brawler 9**, **Swashbuckler 12**.
     ///
     /// This paragraph previously ended "Every other ACG class remains at
     /// 0", describing the SD-22 Epic 4 state where the ingest was scoped
@@ -559,23 +559,44 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // reasoning that already excluded Oracle's known-spell posture,
     // Arcanist's Cantrips, and Warpriest's Orisons from their own counts.
     //
-    // Skald's own count stays at 3, NOT 5, after task #54 grounded Raging
-    // Climber's and Raging Swimmer's real self-use magnitude (they now
-    // land on the real Climb/Swim totals in pilot_compute.rs): both are
-    // tagged `KEY:Rage Power ~ Raging Climber` / `~ Raging Swimmer` in the
-    // corpus, a DIFFERENT class-prefix namespace shared with Barbarian,
-    // not `KEY:Skald ~ ...`, so they fold into the still-fully-deferred
-    // `KEY:Skald ~ Rage Powers` slot rather than adding their own count --
-    // the exact same "different corpus class-prefix, fold into the slot"
-    // precedent Warpriest's own grounded Blessing minor powers
+    // Skald's own count stayed at 3, NOT 5, after task #54 grounded
+    // Raging Climber's and Raging Swimmer's real self-use magnitude (they
+    // now land on the real Climb/Swim totals in pilot_compute.rs): both
+    // are tagged `KEY:Rage Power ~ Raging Climber` / `~ Raging Swimmer`
+    // in the corpus, a DIFFERENT class-prefix namespace shared with
+    // Barbarian, not `KEY:Skald ~ ...`, so they fold into the
+    // `KEY:Skald ~ Rage Powers` slot rather than adding their own count
+    // -- the exact same "different corpus class-prefix, fold into the
+    // slot" precedent Warpriest's own grounded Blessing minor powers
     // (Destructive Attacks/Strength Surge, tagged `KEY:Destruction
     // Blessing ~ ...`/`KEY:Strength Blessing ~ ...`) already established.
-    // The `KEY:Skald ~ Rage Powers` slot itself (the pool-count formula,
-    // `RagePowersLVL/3`, and the ally-granting "shared-list access")
-    // remains genuinely ungrounded -- #54 only grounds two of the wider
-    // 60-record Rage Powers family's own canonical-narrowing
-    // representatives' magnitude, per `rage-powers-canonical-narrowing-
-    // scoping.md`, not the slot mechanism that grants them.
+    // #54 explicitly left the `KEY:Skald ~ Rage Powers` slot itself (the
+    // pool-count formula, `RagePowersLVL/3`, and the ally-granting
+    // "shared-list access") genuinely ungrounded -- it only grounds two
+    // of the wider 60-record Rage Powers family's own canonical-
+    // narrowing representatives' magnitude, per `rage-powers-canonical-
+    // narrowing-scoping.md`, not the slot mechanism that grants them.
+    //
+    // Skald rose again from 3 to 8 with task #50, grounding exactly that
+    // still-open slot mechanism plus four more standalone records:
+    // Well-Versed (flat +4 save bonus, level-gated at 2nd), Spell
+    // Kenning (uses/day pool, self-gating `(1+SkaldLVL)/6`), Lore Master
+    // (uses/day pool, a genuine two-argument `min((SkaldLVL-1)/6,3)`),
+    // Versatile Performance (a genuinely single-argument
+    // `min((SkaldLVL+3)/5)` in the raw corpus -- ground the term itself,
+    // not an invented second cap), and Rage Powers (Skald's own
+    // pool-SIZE count only, `RagePowersLVL/3` with `RagePowersLVL` set
+    // unconditionally from `SkaldLVL`; individual rage-power selection/
+    // execution beyond Raging Climber/Swimmer is still a separate,
+    // deferred concern) are each their own separate `KEY:Skald ~ ...`
+    // record with independently-implemented formula logic. All five
+    // level-gate self-consistently with the real corpus's own per-level
+    // `ABILITY:...AUTOMATIC` grant rows in `acg_classes.lst`. Rage
+    // Powers' own pool-size record is additive with #54's Raging
+    // Climber/Swimmer grounding, not a duplicate of it -- the pool-size
+    // formula answers "how many rage powers does this skald know," while
+    // #54 answers "what do two specific, canonically-narrowed rage
+    // powers do once selected"; neither implies the other.
     // Hunter ALSO counts a genuine 3 (Animal Companion, Wild Empathy,
     // Animal Focus -- deepening 2026-07-26, task #2): Wild Empathy is a
     // flat, unconditional check-modifier fact (`CHA+HunterLVL`), and
@@ -618,7 +639,17 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         // as a second increment to one shared counter. Greater and Mighty
         // likewise: identical tokens, separate records, separate gates.
         AcgClassId::Bloodrager => 9,
-        AcgClassId::Skald | AcgClassId::Hunter => 3,
+        // Skald rose 3 -> 8 with task #50: Well-Versed, Spell Kenning,
+        // Lore Master, Versatile Performance, and Rage Powers' own
+        // pool-size count are each their own separate `KEY:Skald ~ ...`
+        // record with independently-implemented formula logic, added on
+        // top of Inspired Rage/Damage Reduction/Bardic Knowledge's
+        // already-landed 3. Versatile Performance and Rage Powers ground
+        // pool-SIZE counts only (not the underlying choice/execution),
+        // the same "pool size, use not modelled" idiom Swashbuckler's
+        // Panache and Warpriest's Blessing uses/day already established.
+        AcgClassId::Skald => 8,
+        AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 6,
         AcgClassId::Warpriest => 5,
         // Investigator rose 8 -> 9 with task #58: Resiliency, a genuinely
