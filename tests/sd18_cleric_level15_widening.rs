@@ -191,7 +191,7 @@ fn cleric_level15_touch_of_good_stays_and_other_facets_carry_over() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 7,
@@ -201,7 +201,7 @@ fn cleric_level15_touch_of_good_stays_and_other_facets_carry_over() {
 
     let tog_uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(tog_uses.value, 7, "Touch of Good's uses per day must stay 7 at level 15");
 
@@ -271,7 +271,7 @@ fn cleric_level14_truth_is_unchanged_by_this_slice() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(bonus.value, 7, "Cleric level 14 Touch of Good bonus must stay 7");
 }
@@ -319,7 +319,7 @@ fn multiclass_cleric_level15_is_not_promoted_by_this_slice() {
                 // unconditionally, regardless of level bound or
                 // single-class status (mirrors every other class's
                 // gate-ordering fix)
-                && e.id != "class_feature.cleric.good_domain.touch_of_good_not_active"),
+                && e.id != "class_feature.domain.good_touch_of_good_not_active"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );

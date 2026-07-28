@@ -189,7 +189,7 @@ fn cleric_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocke
     assert!(has_explanation(&computation, "class_chassis.cleric.domain_spell_slot"));
     assert!(has_explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus"
+        "class_feature.domain.good_touch_of_good_bonus"
     ));
     assert!(has_explanation(
         &computation,

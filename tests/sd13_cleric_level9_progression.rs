@@ -173,7 +173,7 @@ fn cleric_level9_domain_choice_and_power_facets_carry_over() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 4,
@@ -184,7 +184,7 @@ fn cleric_level9_domain_choice_and_power_facets_carry_over() {
 
     let tog_uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         tog_uses.value, 7,

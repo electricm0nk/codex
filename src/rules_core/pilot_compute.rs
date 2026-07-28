@@ -2091,6 +2091,26 @@ const INQUISITOR_JUDGMENT_ABILITY_ID: &str = "judgment";
 /// snapshot, not a turn-by-turn simulation" scope every activation-gated
 /// closure this session already assumes.
 const INQUISITOR_JUDGMENT_CHOICE_ID: &str = "choice:inquisitor_judgment";
+
+/// Task #64: the Inquisitor's own domain-choice seam, established this cycle
+/// following the exact CLERIC_DOMAIN_CHOICE_ID pattern (PF1 Advanced Player's Guide
+/// Domain: "An inquisitor can select one domain from among those belonging to her
+/// deity," the same deity-restricted choice shape Cleric already has and this
+/// codebase already leaves unmodeled -- the choice is surfaced as given, not
+/// deity-validated). Verified independently against two primary sources
+/// (d20pfsrd's own Inquisitor class page, quoted verbatim) before writing any code,
+/// correcting a stale, INCORRECT claim this codebase's own
+/// `push_inquisitor_other_features_deferred_diagnostic` doc comment previously made
+/// ("no domain power exists for Inquisitor per the corpus"): the real PF1 rule is
+/// the OPPOSITE of that claim. d20pfsrd's Inquisitor "Domain (or Inquisition)"
+/// feature reads, verbatim: "An inquisitor does not gain the bonus spells listed
+/// for each domain, nor does she gain bonus spell slots" (spells: NO) and "Each
+/// domain grants a number of domain powers, depending on the level of the
+/// inquisitor" (powers: YES) -- i.e. an Inquisitor's domain grants ONLY that
+/// domain's powers, never its spells, the exact mirror image of what the
+/// now-corrected comment claimed.
+const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
+
 /// PF1 Advanced Player's Guide Judgment (Justice): "granting a +X sacred
 /// [or profane] bonus on all attack rolls" -- picked as the one canonical
 /// judgment type this closure grounds because it is the only one of the 8
@@ -4935,17 +4955,56 @@ const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
 const GOOD_DOMAIN_SELECTION: &str = "domain:good";
 const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 
-/// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure): `ability_id`
-/// for the Good domain's granted power, Touch of Good. Grounds SELF-
-/// application only -- PF1 Core Rulebook Good Domain reads "touch a
-/// creature, granting IT a sacred bonus," and this codebase has no
-/// target-creature entity anywhere, so the only honest reuse of the
+/// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure, generalized
+/// task #64 to every real base class whose own domain-choice class feature
+/// genuinely grants the chosen domain's POWERS -- see
+/// `active_touch_of_good_bonus`): `ability_id` for the Good domain's
+/// granted power, Touch of Good. Shared across every such class rather
+/// than named per class, because it is the exact same PF1 Core Rulebook
+/// granted power regardless of which class's domain choice unlocked it.
+/// Grounds SELF-application only -- PF1 Core Rulebook Good Domain reads
+/// "touch a creature, granting IT a sacred bonus," and this codebase has
+/// no target-creature entity anywhere, so the only honest reuse of the
 /// `ClassAbilityActivation` schema (which has no `target` field) is the
-/// cleric touching herself. This is Touch of Good's RAW-secondary use
+/// character touching herself. This is Touch of Good's RAW-secondary use
 /// case (buffing an ally is the primary one), named explicitly wherever
 /// this ability is explained -- narrows by TARGET, not by facet, unlike
 /// Inspire Courage's attack-only narrowing.
-const CLERIC_TOUCH_OF_GOOD_ABILITY_ID: &str = "touch_of_good";
+///
+/// Task #64 checked all four other classes with any DomainLVL-shaped
+/// class feature before wiring anything, independently verifying each
+/// against fresh primary sources rather than trusting an existing
+/// blocker-message claim (one of which turned out to be wrong -- see
+/// below):
+/// - **Inquisitor: included.** PF1 Advanced Player's Guide Domain (or
+///   Inquisition): "An inquisitor can select one domain from among those
+///   belonging to her deity" (the same deity-restricted, alignment-gated
+///   choice shape Cleric already has and this codebase already leaves
+///   unmodeled) and grants ONLY that domain's powers -- "Each domain
+///   grants a number of domain powers, depending on the level of the
+///   inquisitor" -- explicitly NOT its bonus spells: "An inquisitor does
+///   not gain the bonus spells listed for each domain, nor does she gain
+///   bonus spell slots" (verbatim, d20pfsrd's Inquisitor class page).
+///   This CORRECTS a stale, wrong claim this codebase's own
+///   `push_inquisitor_other_features_deferred_diagnostic` doc comment
+///   previously made ("no domain power exists for Inquisitor per the
+///   corpus") -- the real rule is the opposite: powers yes, spells no.
+/// - **Druid: excluded.** Nature's Bond's domain option (chosen in place
+///   of an animal companion) genuinely does grant the chosen domain's
+///   powers, but PF1 Core Rulebook Nature Bond hard-restricts that choice
+///   to "one of the following cleric domains: Air, Animal, Earth, Fire,
+///   Plant, Water, or Weather" (verified independently against two
+///   primary sources: d20pfsrd's own Druid class page and the Archives of
+///   Nethys `DruidDomains` reference, both confirmed byte-for-byte
+///   consistent on this list) -- Good is never among them, so no real
+///   Druid can ever hold Good-domain Touch of Good, and wiring it here
+///   would fabricate an illegal domain/class combination.
+/// - **Hunter and Paladin: excluded.** Both were confirmed (multiple
+///   times this session, independently of this task) to have only
+///   archetype-only DomainLVL-setting paths (Divine Hunter, Temple
+///   Champion, Sacred Servant) -- no real base-class version of either
+///   ever sets DomainLVL at all, so neither is wired here.
+const TOUCH_OF_GOOD_ABILITY_ID: &str = "touch_of_good";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
 // cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
@@ -5334,6 +5393,17 @@ const DRUID_NATURE_SENSE_BONUS: i16 = 2;
 // bond is not part of the deterministic fixture and stays unrecognized).
 const DRUID_NATURE_BOND_CHOICE_ID: &str = "choice:druid_nature_bond";
 const DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID: &str = "bond:animal_companion";
+
+// Task #64 checked whether a Druid's Nature Bond domain option should also be wired
+// to the shared Good-domain Touch of Good granted power, the same way Cleric and
+// Inquisitor are (see TOUCH_OF_GOOD_ABILITY_ID's own doc comment) -- and confirmed,
+// independently against two primary sources (d20pfsrd's own Druid class page and the
+// Archives of Nethys DruidDomains reference), that Nature Bond's domain option is
+// hard-restricted to Air, Animal, Earth, Fire, Plant, Water, or Weather (PF1 Core
+// Rulebook: "granting the druid one of the following cleric domains: Air, Animal,
+// Earth, Fire, Plant, Water, or Weather"). The Good domain is never a legal Nature
+// Bond selection, so no DRUID_DOMAIN_CHOICE_ID seam or Druid wiring was added here --
+// doing so would fabricate a domain/power combination no real PF1 Druid can ever have.
 
 /// v0.6 alpha swarm, risks item 8 (Druid animal companion closure): Wolf's
 /// real PF1 Core Rulebook base statistics, verified against three
@@ -8983,6 +9053,7 @@ fn compute_apg_class_chassis(
     } else if class_id == ApgClassId::Inquisitor {
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
         ground_inquisitor_flat_named_facts(input, level, explanations);
+        ground_or_block_inquisitor_domain_power(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Oracle {
         ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Witch {
@@ -9966,7 +10037,7 @@ fn inquisitor_purity_judgment_save_bonus(level: u8) -> i16 {
 
 /// Whether `input` is an Inquisitor actively, validly pronouncing the
 /// Justice judgment (v0.6 alpha swarm, risks item 8, Inquisitor Judgment
-/// closure) -- mirrors `active_cleric_touch_of_good_bonus`'s exact shape
+/// closure) -- mirrors `active_touch_of_good_bonus`'s exact shape
 /// (class ownership, then a recognized choice, then an active
 /// class_ability_activations entry), the closest existing precedent for
 /// a self-applied attack-roll bonus gated on both a choice and an
@@ -10395,28 +10466,148 @@ fn ground_or_block_inquisitor_judgment(
     push_inquisitor_other_features_deferred_diagnostic(diagnostics);
 }
 
+/// Grounds or names-but-defers Inquisitor's Domain class feature's Good-domain granted
+/// power, Touch of Good (task #64, generalizing the pre-existing Cleric-only closure --
+/// see `active_touch_of_good_bonus` and `TOUCH_OF_GOOD_ABILITY_ID`'s own doc comment for
+/// the corpus verification backing this, which corrected a previously-wrong claim that
+/// Inquisitor domains grant no powers at all). PF1 Advanced Player's Guide Domain: an
+/// inquisitor selects one domain from among those belonging to her deity and gains ONLY
+/// that domain's powers, never its bonus spells. Called unconditionally alongside
+/// Judgment's own grounding, from the Inquisitor branch of `compute_apg_class_chassis`,
+/// mirroring the Cleric domain-power closure's exact shape (self-application-only,
+/// activation-gated) -- the catch-all diagnostic below preserves the same claim-blocking
+/// posture for every domain other than Good, exactly the "narrow the blocker, don't
+/// remove it" discipline this whole file uses.
+fn ground_or_block_inquisitor_domain_power(
+    input: &CharacterInput,
+    inquisitor_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let domain_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == INQUISITOR_DOMAIN_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    if !domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
+            message: "Inquisitor remains blocked on its Domain class feature's granted-power \
+                 burden: domain selection and the granted powers of any domain other than Good \
+                 (whose own Touch of Good is grounded separately when actually chosen) are not \
+                 implemented anywhere in this codebase, so no Inquisitor domain-power support is \
+                 claimed. Unlike Cleric, an inquisitor's domain never grants bonus spells (PF1 \
+                 Advanced Player's Guide Domain: 'An inquisitor does not gain the bonus spells \
+                 listed for each domain, nor does she gain bonus spell slots'), so there is no \
+                 separate domain-spell burden to name here"
+                .to_owned(),
+            claim_blocking: true,
+        });
+        return;
+    }
+
+    let touch_of_good_bonus = cleric_touch_of_good_bonus(inquisitor_level);
+    let touch_of_good_activation = input
+        .chosen
+        .class_ability_activations
+        .iter()
+        .find(|activation| activation.ability_id == TOUCH_OF_GOOD_ABILITY_ID);
+    match touch_of_good_activation.map(|activation| activation.active_state) {
+        Some(ActiveState::EquippedActive) => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.domain.good_touch_of_good_self_application".to_owned(),
+                value: touch_of_good_bonus,
+                detail: format!(
+                    "Inquisitor level {inquisitor_level}, whose Domain class feature selected \
+                     Good (PF1 Advanced Player's Guide Domain: an inquisitor gains ONLY that \
+                     domain's powers, never its bonus spells), is actively using Touch of Good \
+                     on HERSELF, SELF-APPLICATION ONLY (PF1 Core Rulebook Good Domain: touch a \
+                     creature, granting it a +{touch_of_good_bonus} sacred bonus on attack \
+                     rolls, skill checks, ability checks, and saving throws for 1 round). The \
+                     +{touch_of_good_bonus} bonus is applied to her own baseline melee attack \
+                     bonus, selected-skill modifiers, and total saves (see \
+                     compute_combat_baseline, compute_selected_skill_modifiers, \
+                     compute_total_saves). Granting this bonus to ANOTHER creature is NOT \
+                     modeled: no target-creature entity exists anywhere in this codebase. The \
+                     ability-check facet has no separate integrated total in this codebase and \
+                     stays a flat, unintegrated magnitude"
+                ),
+            });
+        }
+        _ => {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.domain.good_touch_of_good_not_active".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Inquisitor level {inquisitor_level} is not currently using Touch of Good \
+                     (no active class_ability_activations entry for \
+                     \"{TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 posture -- not every \
+                     Good-domain Inquisitor is using this limited-use power at every moment -- \
+                     so no sacred bonus is claimed"
+                ),
+            });
+        }
+    }
+
+    let wisdom_modifier = ability_modifier(input.chosen.ability_scores.wisdom);
+    let touch_of_good_uses_per_day = (3 + wisdom_modifier).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.domain.good_touch_of_good_uses_per_day".to_owned(),
+        value: touch_of_good_uses_per_day,
+        detail: format!(
+            "Inquisitor Good domain granted power Touch of Good uses per day (PF1 Core \
+             Rulebook Good Domain): 3 + Wisdom modifier, floored at 0. At Wisdom modifier \
+             {wisdom_modifier} this is max(3 + {wisdom_modifier}, 0) = \
+             {touch_of_good_uses_per_day}. This grounds only the flat daily use count; it \
+             performs no per-use consumption tracking"
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
+        message: "Inquisitor remains blocked on the rest of its Domain class feature's \
+             granted-power burden: only the Good domain's Touch of Good (bonus magnitude, \
+             self-application state, and uses-per-day count) is grounded so far; every domain \
+             other than Good remains entirely unproven, so no further Inquisitor domain-power \
+             support is claimed"
+            .to_owned(),
+        claim_blocking: true,
+    });
+}
+
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.apg.inquisitor.unsupported` for Inquisitor specifically
 /// (v0.6 alpha swarm, risks item 8, Inquisitor Judgment closure, widened
 /// 2026-07-26 to name Protection/Purity/Smiting and Stern Gaze as grounded
-/// rather than missing): named ONLY the genuinely still-missing pieces.
-/// Inquisitor's Domain (verified directly against
-/// `apg_abilities_class.lst`'s own KEY list: no "Domain" entry exists for
-/// Inquisitor at all, unlike Cleric -- it manifests purely as spell-list
-/// access, never a domain power) is folded into the spellcasting bucket
-/// rather than named separately, since there is no separate domain-power
-/// burden to name. Pushed unconditionally regardless of Judgment's own
-/// active state, mirroring Alchemist's/Skald's own diagnostic-honesty fix.
+/// rather than missing; task #64 corrected this comment's own prior WRONG
+/// claim that no Inquisitor domain power exists -- see
+/// `ground_or_block_inquisitor_domain_power`'s own doc comment for the
+/// corpus correction): named ONLY the genuinely still-missing pieces.
+/// Inquisitor's domain BONUS SPELLS specifically (verified directly
+/// against d20pfsrd's Inquisitor class page: "An inquisitor does not gain
+/// the bonus spells listed for each domain, nor does she gain bonus spell
+/// slots") are folded into the spellcasting bucket below rather than named
+/// separately, since there genuinely is no domain-spell burden for
+/// Inquisitor to name (unlike Cleric). The domain POWERS burden (Good's
+/// Touch of Good now grounded, every other domain still unproven) is named
+/// by `ground_or_block_inquisitor_domain_power`'s own separate diagnostic
+/// instead, so it is deliberately NOT duplicated in this message. Pushed
+/// unconditionally regardless of Judgment's own active state, mirroring
+/// Alchemist's/Skald's own diagnostic-honesty fix.
 fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INQUISITOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, the Justice/Protection/Purity/Smiting judgments, Stern Gaze's \
-             Intimidate half, Monster Lore, Cunning Initiative, and Track: this APG class has no \
-             class-skill list, no spellcasting posture (Inquisitor casts divine spells and gets \
-             one domain, but the domain only ever grants spell-list access -- no domain power \
-             exists for Inquisitor per the corpus -- and no spells-known/per-day table has been \
+             Intimidate half, Monster Lore, Cunning Initiative, Track, and the Good domain's \
+             Touch of Good: this APG class has no class-skill list, no spellcasting posture \
+             (Inquisitor casts divine spells and gets one domain, but that domain never grants \
+             bonus spells or bonus spell slots -- only domain powers, named separately as its \
+             own domain-powers burden -- and no spells-known/per-day table has been \
              independently verified or built, including Orisons), no remaining 5 judgment types \
              (Destruction, Healing, Piercing, Resiliency, Resistance), and no other named class \
              feature (Bane, Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's \
@@ -28580,11 +28771,11 @@ fn explain_cleric_level1_spell_baseline(
                 .chosen
                 .class_ability_activations
                 .iter()
-                .find(|activation| activation.ability_id == CLERIC_TOUCH_OF_GOOD_ABILITY_ID);
+                .find(|activation| activation.ability_id == TOUCH_OF_GOOD_ABILITY_ID);
             match touch_of_good_activation.map(|activation| activation.active_state) {
                 Some(ActiveState::EquippedActive) => {
                     explanations.push(ComputationExplanation {
-                        id: "class_feature.cleric.good_domain.touch_of_good_self_application"
+                        id: "class_feature.domain.good_touch_of_good_self_application"
                             .to_owned(),
                         value: touch_of_good_bonus,
                         detail: format!(
@@ -28607,12 +28798,12 @@ fn explain_cleric_level1_spell_baseline(
                 }
                 _ => {
                     explanations.push(ComputationExplanation {
-                        id: "class_feature.cleric.good_domain.touch_of_good_not_active".to_owned(),
+                        id: "class_feature.domain.good_touch_of_good_not_active".to_owned(),
                         value: 0,
                         detail: format!(
                             "Cleric level {cleric_level} is not currently using Touch of Good \
                              (no active class_ability_activations entry for \
-                             \"{CLERIC_TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 \
+                             \"{TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 \
                              posture -- not every Good-domain Cleric is using this limited-use \
                              power at every moment -- so no sacred bonus is claimed"
                         ),
@@ -28960,7 +29151,7 @@ fn explain_cleric_level1_spell_baseline(
         // the same pre-existing formula, not re-derived.
         let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
-            id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
+            id: "class_feature.domain.good_touch_of_good_bonus".to_owned(),
             value: touch_of_good_bonus,
             detail: format!(
                 "Cleric Good domain granted power Touch of Good sacred bonus (PF1 Core Rulebook \
@@ -28976,7 +29167,7 @@ fn explain_cleric_level1_spell_baseline(
 
         let touch_of_good_uses_per_day = (3 + ability_modifiers.wisdom).max(0);
         explanations.push(ComputationExplanation {
-            id: "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day".to_owned(),
+            id: "class_feature.domain.good_touch_of_good_uses_per_day".to_owned(),
             value: touch_of_good_uses_per_day,
             detail: format!(
                 "Cleric Good domain granted power Touch of Good uses per day (PF1 Core Rulebook \
@@ -29164,27 +29355,39 @@ fn cleric_touch_of_good_bonus(level: u8) -> i16 {
     (i16::from(level) / 2).max(1)
 }
 
-/// Whether `input` is a Cleric actively, validly using Touch of Good on
-/// herself right now, and if so, the sacred bonus to apply (v0.6 alpha
-/// swarm, risks item 8). Class-ownership-gated by construction: only
-/// returns `Some` when `class_levels` contains Cleric AND the Good domain
-/// is recognized as chosen (mirrors the Barbarian Rage / Bard Inspire
-/// Courage spoofed-activation shape exactly) -- a non-Cleric or a Cleric
-/// without Good domain chosen never has this bonus applied regardless of
-/// any stray `class_ability_activations` entry.
-fn active_cleric_touch_of_good_bonus(input: &CharacterInput) -> Option<i16> {
-    let cleric_level = input
-        .chosen
-        .class_levels
-        .iter()
-        .find(|class_level| class_level.class_id == CLERIC_CLASS_ID)
-        .map(|class_level| class_level.level)?;
+/// Whether `input` is a Cleric OR an Inquisitor actively, validly using
+/// Touch of Good on herself right now, and if so, the sacred bonus to
+/// apply (v0.6 alpha swarm, risks item 8; generalized task #64 from
+/// Cleric-only to every real base class whose own domain-choice class
+/// feature genuinely grants the chosen domain's powers -- see
+/// `TOUCH_OF_GOOD_ABILITY_ID`'s own doc comment for exactly which classes
+/// qualify, and why Druid is deliberately excluded despite also having a
+/// domain-choice class feature). Class-ownership-gated by construction:
+/// only returns `Some` when `class_levels` contains Cleric or Inquisitor
+/// AND that class's own domain-choice seam recognizes the Good domain as
+/// chosen (mirrors the Barbarian Rage / Bard Inspire Courage spoofed-
+/// activation shape exactly) -- a character with neither class, or one of
+/// these two classes without Good domain chosen, never has this bonus
+/// applied regardless of any stray `class_ability_activations` entry.
+/// Every real class here feeds the same DomainLVL variable from its own
+/// bare class level with no per-class offset (verified against the corpus
+/// this cycle), so `cleric_touch_of_good_bonus` reuses unmodified.
+fn active_touch_of_good_bonus(input: &CharacterInput) -> Option<i16> {
+    let (level, domain_choice_id) = input.chosen.class_levels.iter().find_map(|class_level| {
+        if class_level.class_id == CLERIC_CLASS_ID {
+            Some((class_level.level, CLERIC_DOMAIN_CHOICE_ID))
+        } else if class_level.class_id == INQUISITOR_CLASS_ID {
+            Some((class_level.level, INQUISITOR_DOMAIN_CHOICE_ID))
+        } else {
+            None
+        }
+    })?;
 
     let domain_selections: Vec<&str> = input
         .chosen
         .selected_choices
         .iter()
-        .filter(|c| c.choice_set_id == CLERIC_DOMAIN_CHOICE_ID)
+        .filter(|c| c.choice_set_id == domain_choice_id)
         .map(|c| c.selection_id.as_str())
         .collect();
     if !domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
@@ -29195,12 +29398,12 @@ fn active_cleric_touch_of_good_bonus(input: &CharacterInput) -> Option<i16> {
         .chosen
         .class_ability_activations
         .iter()
-        .find(|activation| activation.ability_id == CLERIC_TOUCH_OF_GOOD_ABILITY_ID)?;
+        .find(|activation| activation.ability_id == TOUCH_OF_GOOD_ABILITY_ID)?;
     if activation.active_state != ActiveState::EquippedActive {
         return None;
     }
 
-    Some(cleric_touch_of_good_bonus(cleric_level))
+    Some(cleric_touch_of_good_bonus(level))
 }
 
 /// The highest ACCESSIBLE cleric spell level (1st+) at the given cleric
@@ -31835,10 +32038,10 @@ fn compute_total_saves(
         .unwrap_or(0);
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
     // sacred bonus (self-application only) applies to all three saves --
-    // class-ownership-gated by `active_cleric_touch_of_good_bonus`
+    // class-ownership-gated by `active_touch_of_good_bonus`
     // construction, 0 for every non-Cleric, non-Good-domain, or
     // not-currently-active character.
-    let touch_of_good_save_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
+    let touch_of_good_save_bonus = active_touch_of_good_bonus(input).unwrap_or(0);
     // v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, widened
     // 2026-07-26): Inquisitor Purity judgment's sacred (or profane) bonus
     // on all saving throws applies here too, the same shape as Cleric's
@@ -31887,7 +32090,7 @@ fn compute_total_saves(
         value: total_saves.fortitude,
         detail: format!(
             "Total Fortitude save: {class_label} base Fortitude save (+{}) + Constitution modifier \
-             (+{}) + feat bonus (+{}, Great Fortitude if selected) + Cleric Touch of Good sacred \
+             (+{}) + feat bonus (+{}, Great Fortitude if selected) + Good domain Touch of Good sacred \
              bonus (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, \
              only while actively, validly judging Purity) = {}",
             base_saves.fortitude, ability_modifiers.constitution, feat_save_bonuses.fortitude,
@@ -31899,7 +32102,7 @@ fn compute_total_saves(
         value: total_saves.reflex,
         detail: format!(
             "Total Reflex save: {class_label} base Reflex save (+{}) + Dexterity modifier (+{}) + \
-             feat bonus (+{}, Lightning Reflexes if selected) + Cleric Touch of Good sacred bonus \
+             feat bonus (+{}, Lightning Reflexes if selected) + Good domain Touch of Good sacred bonus \
              (+{}, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only \
              while actively, validly judging Purity) + Oracle Sidestep Secret Charisma-for-\
              Dexterity substitution (+{sidestep_secret_reflex_bonus}, only for a Lore-Mystery \
@@ -31916,7 +32119,7 @@ fn compute_total_saves(
              feat bonus (+{}, Iron Will if selected) + Barbarian Rage morale bonus (+{}, only \
              while actively, validly raging) + Skald Inspired Rage morale bonus (+{}, only \
              while actively, validly singing) + Bloodrager Bloodrage morale bonus (+{}, only \
-             while actively, validly bloodraging) + Cleric Touch of Good sacred bonus (+{}, \
+             while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+{}, \
              self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only while \
              actively, validly judging Purity) = {}",
             base_saves.will,
@@ -32177,12 +32380,12 @@ fn compute_selected_skill_modifiers(
 
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
     // sacred bonus (self-application only) applies to all three selected
-    // skills -- class-ownership-gated by `active_cleric_touch_of_good_bonus`
+    // skills -- class-ownership-gated by `active_touch_of_good_bonus`
     // construction, 0 for every non-Cleric, non-Good-domain, or
     // not-currently-active character.
-    let touch_of_good_skill_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
+    let touch_of_good_skill_bonus = active_touch_of_good_bonus(input).unwrap_or(0);
     let touch_of_good_skill_detail = if touch_of_good_skill_bonus > 0 {
-        format!(" + Cleric Touch of Good sacred bonus ({touch_of_good_skill_bonus:+}, self-applied)")
+        format!(" + Good domain Touch of Good sacred bonus ({touch_of_good_skill_bonus:+}, self-applied)")
     } else {
         String::new()
     };
@@ -32664,10 +32867,10 @@ fn compute_combat_baseline(
             .unwrap_or(0);
     // v0.6 alpha swarm, risks item 8: Cleric Good domain's Touch of Good
     // sacred bonus (self-application only) applies here -- class-
-    // ownership-gated by `active_cleric_touch_of_good_bonus` construction,
+    // ownership-gated by `active_touch_of_good_bonus` construction,
     // 0 for every non-Cleric, non-Good-domain, or not-currently-active
     // character.
-    let touch_of_good_attack_bonus = active_cleric_touch_of_good_bonus(input).unwrap_or(0);
+    let touch_of_good_attack_bonus = active_touch_of_good_bonus(input).unwrap_or(0);
     // v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure):
     // Inquisitor Justice judgment's sacred (or profane) bonus on attack
     // rolls applies here too -- class-ownership-gated by
@@ -32695,7 +32898,7 @@ fn compute_combat_baseline(
         String::new()
     };
     let touch_of_good_detail = if touch_of_good_attack_bonus > 0 {
-        format!(" + Cleric Touch of Good sacred bonus (+{touch_of_good_attack_bonus}, self-applied)")
+        format!(" + Good domain Touch of Good sacred bonus (+{touch_of_good_attack_bonus}, self-applied)")
     } else {
         String::new()
     };
@@ -37480,7 +37683,7 @@ mod sorcerer_dispatch_widening_safety_tests {
 mod cleric_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
-        CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, CLERIC_TOUCH_OF_GOOD_ABILITY_ID,
+        CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, TOUCH_OF_GOOD_ABILITY_ID,
         FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION, HeadlessReceiptStatus,
     };
     use crate::rules_core::character_input::{
@@ -37728,7 +37931,7 @@ mod cleric_dispatch_widening_safety_tests {
     fn single_class_cleric_with_good_domain_touch_of_good_active_reaches_computed() {
         let mut input = human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION]);
         input.chosen.class_ability_activations.push(ClassAbilityActivation {
-            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            ability_id: TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
             active_state: ActiveState::EquippedActive,
             rounds_consumed_today: None,
         });
@@ -37800,7 +38003,7 @@ mod cleric_dispatch_widening_safety_tests {
         let mut input =
             human_cleric_input_with_domains(1, &[GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION]);
         input.chosen.class_ability_activations.push(ClassAbilityActivation {
-            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            ability_id: TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
             active_state: ActiveState::EquippedActive,
             rounds_consumed_today: None,
         });
@@ -37883,7 +38086,7 @@ mod cleric_dispatch_widening_safety_tests {
     /// A non-Cleric character carrying a spoofed `"touch_of_good"`
     /// activation entry must have it silently ignored -- the class-
     /// ownership gate is by construction
-    /// (`active_cleric_touch_of_good_bonus` only ever reads
+    /// (`active_touch_of_good_bonus` only ever reads
     /// `class_ability_activations` after confirming both `class_levels`
     /// contains Cleric and the Good domain is chosen), not a bolt-on
     /// rejection.
@@ -37894,7 +38097,7 @@ mod cleric_dispatch_widening_safety_tests {
         let mut input = result.character_input.expect("valid fixture");
         assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
         input.chosen.class_ability_activations.push(ClassAbilityActivation {
-            ability_id: CLERIC_TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            ability_id: TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
             active_state: ActiveState::EquippedActive,
             rounds_consumed_today: None,
         });
@@ -40384,10 +40587,11 @@ mod alchemist_dispatch_widening_safety_tests {
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, FIGHTER_CLASS_ID, INQUISITOR_CLASS_ID,
-        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
-        INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID,
-        INQUISITOR_JUDGMENT_PURITY_SELECTION_ID, INQUISITOR_JUDGMENT_SMITING_SELECTION_ID,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION,
+        INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
+        INQUISITOR_JUDGMENT_CHOICE_ID, INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
+        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GOOD_ABILITY_ID,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -40927,6 +41131,179 @@ mod inquisitor_dispatch_widening_safety_tests {
             "a non-Inquisitor character's spoofed judgment entry must never apply a bonus: {:?}",
             melee_attack_bonus
         );
+    }
+
+    /// Task #64: an Inquisitor whose Domain class feature selected Good and who is
+    /// actively, validly using Touch of Good genuinely gets the sacred bonus applied to
+    /// her real integrated melee attack bonus -- proving `active_touch_of_good_bonus`'s
+    /// generalization beyond Cleric-only is wired for real, not just a claim. Inquisitor
+    /// stays `Blocked` overall (the unconditional `other_features_deferred` diagnostic
+    /// always fires for Inquisitor regardless of Judgment/domain state, per
+    /// `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// immediately above), mirroring the "real bonus applied, still Blocked overall"
+    /// shape every other Inquisitor closure in this cluster already proves.
+    #[test]
+    fn single_class_inquisitor_with_good_domain_touch_of_good_active_applies_real_bonus() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            selection_id: GOOD_DOMAIN_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Inquisitor stays Blocked on its other-features-deferred posture even with Touch \
+             of Good active: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let self_application = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.good_touch_of_good_self_application")
+            .expect("Touch of Good self-application must be grounded");
+        assert_eq!(
+            self_application.value, 1,
+            "Inquisitor level 1 Touch of Good bonus: max(1/2, 1) = 1: {self_application:?}"
+        );
+
+        let uses_per_day = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.good_touch_of_good_uses_per_day")
+            .expect("Touch of Good uses per day must be grounded");
+        assert_eq!(
+            uses_per_day.value, 4,
+            "3 + WIS modifier (+1 from the fixture's WIS 12) = 4: {uses_per_day:?}"
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert!(
+            melee_attack_bonus.detail.contains("Good domain Touch of Good sacred bonus"),
+            "expected Touch of Good to be named in the melee attack bonus explanation: \
+             {melee_attack_bonus:?}"
+        );
+    }
+
+    /// An Inquisitor with Good domain selected but NOT currently using Touch of Good (no
+    /// active `class_ability_activations` entry) is a genuinely valid posture too: the
+    /// "not active" record grounds with a zero value, and no bonus is applied anywhere.
+    #[test]
+    fn single_class_inquisitor_with_good_domain_not_using_touch_of_good_applies_no_bonus() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            selection_id: GOOD_DOMAIN_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let not_active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.good_touch_of_good_not_active")
+            .expect("Touch of Good not-active record must be grounded");
+        assert_eq!(not_active.value, 0, "{not_active:?}");
+
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.good_touch_of_good_self_application"),
+            "no self-application record may exist without an active activation: {:?}",
+            receipt.computation.explanations
+        );
+
+        let melee_attack_bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee attack bonus must be grounded");
+        assert!(
+            !melee_attack_bonus.detail.contains("Good domain Touch of Good sacred bonus (+1"),
+            "an inactive Touch of Good must not apply a nonzero bonus: {melee_attack_bonus:?}"
+        );
+    }
+
+    /// An Inquisitor with no domain selected at all stays claim-blocked on the domain
+    /// powers burden, and no Touch of Good record is fabricated -- the catch-all
+    /// preserves the honest blocked posture exactly as before this task's slice.
+    #[test]
+    fn single_class_inquisitor_without_good_domain_selected_stays_blocked_on_domain_powers() {
+        let input = human_inquisitor_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.inquisitor.domain_powers.unsupported"
+                    && d.claim_blocking),
+            "expected the domain-powers blocker to fire with no domain chosen: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.domain.good_touch_of_good")),
+            "no Touch of Good record may be fabricated without a Good domain selection: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// Task #64 negative control: a Druid character carrying a spoofed
+    /// `choice:inquisitor_domain -> domain:good` selection AND a spoofed active
+    /// `"touch_of_good"` activation must never receive the bonus -- `DRUID_CLASS_ID` is
+    /// simply not one of the two class ids `active_touch_of_good_bonus` recognizes (task
+    /// #64 confirmed, against two independent primary sources, that Nature Bond's real
+    /// domain option can never legally be Good in the first place -- see
+    /// `TOUCH_OF_GOOD_ABILITY_ID`'s own doc comment), so this proves the exclusion holds
+    /// even under a maximally-adversarial spoofed input, not merely "nothing wires it."
+    #[test]
+    fn druid_characters_can_never_receive_touch_of_good_even_when_spoofed() {
+        let result = load_character_input_fixture(
+            "case_id=pf1-crb-human-druid-touch-of-good-spoof-negative-control\n\
+             source_package_id=pf1.core_rulebook\n\
+             race_id=race:human\n\
+             class_level=class:druid:5\n\
+             ability=strength:10\n\
+             ability=dexterity:12\n\
+             ability=constitution:13\n\
+             ability=intelligence:8\n\
+             ability=wisdom:17\n\
+             ability=charisma:12\n\
+             choice=choice:inquisitor_domain:domain:good\n",
+        );
+        assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: TOUCH_OF_GOOD_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        assert_eq!(super::active_touch_of_good_bonus(&input), None);
     }
 }
 

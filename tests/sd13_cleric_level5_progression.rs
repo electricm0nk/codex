@@ -208,7 +208,7 @@ fn cleric_level5_touch_of_good_bonus_stays_two() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 2,
@@ -219,7 +219,7 @@ fn cleric_level5_touch_of_good_bonus_stays_two() {
 
     let uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         uses.value, 7,
@@ -316,7 +316,7 @@ fn cleric_level4_truth_is_unchanged_by_this_widening() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 2,

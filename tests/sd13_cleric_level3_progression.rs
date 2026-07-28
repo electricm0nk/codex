@@ -208,7 +208,7 @@ fn cleric_level3_touch_of_good_bonus_stays_one() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 1,
@@ -219,7 +219,7 @@ fn cleric_level3_touch_of_good_bonus_stays_one() {
 
     let uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         uses.value, 7,
