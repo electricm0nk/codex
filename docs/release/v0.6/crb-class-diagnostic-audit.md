@@ -197,6 +197,99 @@ computed state don't rot; diagnostics that hard-code a prose claim about the
 codebase do.** Where a blocker can be rewritten to report what it checked rather
 than assert what exists, it should be.
 
+---
+
+# Addendum: full `claim_blocking: true` enumeration (2026-07-28)
+
+The original pass worked from a class-by-class list. A full sweep of every
+`claim_blocking: true` site across `src/` finds **84 sites, 67 distinct ids** —
+more than either named list covered. Six were in neither. Results below.
+
+Caveat on the enumeration: ids are resolved by walking back from each
+`claim_blocking` to the nearest preceding `id:` literal, which mis-attributes
+where the id is a variable. The hybrid Paladin/Ranger ids are the known case —
+they are pushed via a `feature_id` binding and so do not appear under their own
+names in the sweep. Treat 67 as a near-complete floor, not an exact count.
+
+## Second structural cause: gate widened, message not updated
+
+`#79`'s original finding was that features moved to *shared namespaces* while
+class diagnostics kept describing their own. The sweep surfaces a **second,
+distinct mechanism** with the same symptom:
+
+**A posture gate is widened, and its diagnostic message keeps naming the
+original narrow class set.**
+
+- `defense.total_save.unsupported` — **stale.** The gate is
+  `has_supported_class_chassis`, which now ORs **19** predicates (Fighter,
+  Wizard, multiclass, generic single-class, Skald, Bloodrager, Brawler, Hunter,
+  Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer,
+  Swashbuckler, Investigator, Witch, Shaman). The message still says totals are
+  "only computed from the grounded `class:fighter` levels 1-N or `class:wizard`
+  levels 1-M base saves". Its own in-code comment records the widening
+  ("SD-21 E6.26: widened from a Fighter-only gate…") — the comment was updated
+  and the user-facing string was not.
+- `skill.selected_modifier.unsupported` — **stale in two places.** Same gate,
+  same omission, in both the outer message ("only computed for the exact GE-06
+  deterministic **Fighter level-1** … posture") and the inner unmet string
+  pushed by `unmet_selected_skill_posture_conditions` ("missing supported
+  `class:fighter` … or `class:wizard` … chassis"). Its comment likewise records
+  the widening: "SD-21 E6b.1: widened from a Fighter-only gate to the same
+  dispatch-supported class set".
+
+These two matter more than the #79 findings for the same reason #79 mattered
+more than #76: they fire on *global* pillars, so any class can hit them.
+
+**Detection note:** these would not have been caught by the namespace check that
+found the #64/#66 drift, and the namespace drift would not have been caught by
+looking at gates. Two different mechanisms, needing two different checks — which
+is the argument for enumerating `claim_blocking: true` exhaustively rather than
+auditing class by class.
+
+## Consequence for task #78 (class-skill predicate fix)
+
+**This changes the fixture requirements I wrote into the punch-list, and #78 is
+already dispatched against that scoping.**
+
+`compute_selected_skill_modifiers` only runs when
+`unmet_selected_skill_posture_conditions` is empty, which requires **all** of:
+
+1. `has_supported_class_chassis(input)` — Monk reaches this via
+   `is_supported_generic_single_class` → `multiclass_class_level_supported`, not
+   by an explicit arm; Inquisitor, Hunter and Skald have explicit arms.
+2. **All three** of Climb, Intimidate and Swim allocated at **exactly** rank 1
+   (`SELECTED_SKILL_RANK`) — not one skill, not rank 2.
+3. **No other skill allocated at all** — any fourth allocation is refused.
+4. **Chain Shirt equipped-active** (`CHAIN_SHIRT_ITEM_ID`,
+   `ActiveState::EquippedActive`), because Climb and Swim fold in its
+   armor-check penalty.
+
+My punch-list note said only "add fixtures that allocate ranks in
+Climb/Intimidate/Swim for each of the four classes". That is necessary but not
+sufficient: a fixture missing the Chain Shirt, or allocating a fourth skill, or
+using any rank but 1, blocks before the predicates are ever consulted — and the
+symptom is a claim-blocking diagnostic, not an obviously wrong bonus, so it
+reads as "the class isn't supported" rather than "the fixture is wrong."
+
+The perturbation check I asked for still applies and is now more important: with
+this much posture required, a test can easily pass for the wrong reason.
+
+## Verdicts on the remaining newly-enumerated ids
+
+- `class_feature.barbarian.rage_execution.rounds_exceeded` — **accurate.** Fires
+  only when claimed rounds exceed the computed budget, and interpolates both
+  numbers.
+- `class_feature.bard.bardic_performance_execution.rounds_exceeded` —
+  **accurate**, identical shape.
+- `combat.baseline_unsupported` — **accurate but known-narrow**: it honestly
+  states the Longsword/Chain Shirt/Dodge/no-shield restriction. Already tracked
+  as task #80; no diagnostic-text defect.
+- `class_chassis.unsupported`, `feat_choice.non_canonical.{choice_set_id}` —
+  parameterized//validation-shaped, no standing prose claim to rot.
+
+Both execution diagnostics confirm the drift-proof pattern: they report computed
+state rather than asserting what exists.
+
 ## Scope limits
 
 - Fighter and Rogue have no `.unsupported` class diagnostics and were not
