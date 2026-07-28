@@ -18,8 +18,16 @@ import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
-import { resolveSelectedFeatEntries } from './featsTabModel';
+import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
+import { listWeaponTargets } from '../boundary/listWeaponTargets';
+import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
+import {
+  featTargetPickerTitle,
+  skillTargetOptions,
+  spellSchoolTargetOptions,
+  weaponTargetOptions,
+} from './featTargetOptions';
 import {
   buildLevelEntries,
   buildNextEntries,
@@ -124,14 +132,16 @@ export interface ItemPickerConfig {
  * `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'spell' | 'feat' | 'modifier' | null,
+  kind: 'weapon' | 'armor' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
     loadFeats: () => Promise<ItemPickerEntry[]>;
+    loadFeatTargets: () => Promise<ItemPickerEntry[]>;
     onSelectEquipment: (entry: ItemPickerEntry) => void;
     onSelectSpell: (entry: ItemPickerEntry) => void;
     onSelectFeat: (entry: ItemPickerEntry) => void;
+    onSelectFeatTarget: (entry: ItemPickerEntry) => void;
     onSelectModifier: (entry: ItemPickerEntry) => void;
   }
 ): ItemPickerConfig | null {
@@ -157,6 +167,18 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search feats…',
       loadEntries: deps.loadFeats,
       onSelect: deps.onSelectFeat,
+    };
+  }
+  // Second step of the two-step chooser-feat flow: the feat is picked
+  // first, then the thing it names. The title is overridden at the call
+  // site with the feat's own name, so the user sees what they are choosing
+  // for rather than a bare "Choose a target".
+  if (kind === 'featTarget') {
+    return {
+      title: 'Choose a target',
+      searchPlaceholder: 'Search targets…',
+      loadEntries: deps.loadFeatTargets,
+      onSelect: deps.onSelectFeatTarget,
     };
   }
   if (kind === 'modifier') {
@@ -1058,7 +1080,11 @@ function ActionsTab(props: { levelEntries: LevelEntry[] }) {
  * or any other genuine mismatch) falls back to the raw string rather than
  * being hidden or shown blank.
  */
-function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
+function FeatsTab(props: {
+  selectedFeats: string[];
+  chosenFeatTargets: ChosenFeatTargetsDto[];
+  onAddFeat: () => void;
+}) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -1081,7 +1107,11 @@ function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
     };
   }, []);
 
-  const resolvedFeats = resolveSelectedFeatEntries(props.selectedFeats, catalog ?? []);
+  const resolvedFeats = resolveSelectedFeatEntries(
+    props.selectedFeats,
+    catalog ?? [],
+    props.chosenFeatTargets
+  );
 
   return (
     <div>
@@ -1101,6 +1131,18 @@ function FeatsTab(props: { selectedFeats: string[]; onAddFeat: () => void }) {
         resolvedFeats.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+            {describeFeatTarget(row) === null ? null : (
+              <p
+                style={{
+                  color: row.targets.length === 0 ? 'var(--color-text-faint)' : 'var(--color-text)',
+                  fontSize: '0.78rem',
+                  fontStyle: row.targets.length === 0 ? 'italic' : 'normal',
+                  margin: '0.25rem 0 0',
+                }}
+              >
+                {describeFeatTarget(row)}
+              </p>
+            )}
             {row.entry ? (
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>
                 {row.entry.detail}
@@ -1151,7 +1193,16 @@ export function CharacterSheet(props: {
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
-  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | 'feat' | 'modifier' | null>(null);
+  const [itemPickerOpen, setItemPickerOpen] = useState<
+    'weapon' | 'armor' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
+  >(null);
+  // Set between the two steps of adding a chooser feat: the feat has been
+  // picked, and the picker has reopened for the thing it names.
+  const [pendingFeatTarget, setPendingFeatTarget] = useState<{
+    featKey: string;
+    featName: string;
+    targetKind: string;
+  } | null>(null);
   // Set only while a level-up that grants a feat is waiting on the user to
   // pick one via the reused feat `ItemPickerModal` (see `handleLevelUpAccept`/
   // `handleLevelUpFeatPick`) — null the rest of the time, including for a
@@ -1407,6 +1458,7 @@ export function CharacterSheet(props: {
         corpusDerived: outcome.corpusDerived,
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
+        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
       });
       setMoney(outcome.money);
     } catch (cause: unknown) {
@@ -1452,6 +1504,7 @@ export function CharacterSheet(props: {
         corpusDerived: outcome.corpusDerived,
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
+        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
       });
       setMoney(outcome.money);
     } catch (cause: unknown) {
@@ -1529,12 +1582,44 @@ export function CharacterSheet(props: {
     }
   }
 
-  async function handleAddFeat(entry: ItemPickerEntry) {
+  function handleAddFeat(entry: ItemPickerEntry) {
+    setMutationError(null);
+    // A chooser feat is meaningless without its target -- Weapon Focus with
+    // no weapon grounds nothing -- so route to the second picker step
+    // instead of silently saving a feat that computes nothing.
+    if (entry.chooserTargetKind) {
+      setPendingFeatTarget({
+        featKey: entry.key,
+        featName: entry.name,
+        targetKind: entry.chooserTargetKind,
+      });
+      setItemPickerOpen('featTarget');
+      return;
+    }
+    void commitFeatSelection(entry.key, null, null);
+  }
+
+  /** Second step: the target was picked, so save feat + target together. */
+  function handleFeatTargetPicked(entry: ItemPickerEntry) {
+    const pending = pendingFeatTarget;
+    if (!pending) {
+      return;
+    }
+    setPendingFeatTarget(null);
+    void commitFeatSelection(pending.featKey, entry.key, pending.targetKind);
+  }
+
+  async function commitFeatSelection(
+    featId: string,
+    target: string | null,
+    targetKind: string | null
+  ) {
     setMutationError(null);
     try {
       const outcome = await addFeatSelection({
         characterId: props.row.characterId,
-        featId: entry.key,
+        featId,
+        target,
         savedAt: new Date().toISOString(),
       });
       // The feat was just appended to chosen.selected_feats by this exact
@@ -1542,8 +1627,17 @@ export function CharacterSheet(props: {
       // not fabricated, the same append `add_feat_selection` itself made.
       const refresh = toCharacterMutationRefresh(
         outcome,
-        [...(props.detail?.selectedFeats ?? []), entry.key],
-        props.detail?.spellsSelected ?? []
+        [...(props.detail?.selectedFeats ?? []), featId],
+        props.detail?.spellsSelected ?? [],
+        // Mirrors exactly what the backend just recorded: the target is
+        // appended to this feat's existing entry, or a new entry is added.
+        // Nothing is invented -- a null target adds no target.
+        mergeChosenFeatTarget(
+          props.detail?.chosenFeatTargets ?? [],
+          featId,
+          target,
+          targetKind
+        )
       );
       if (refresh.kind === 'blocked') {
         setMutationError(refresh.message);
@@ -1812,12 +1906,28 @@ export function CharacterSheet(props: {
       listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
     loadSpells: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
     loadFeats: () => listFeats({ nameContains: null, category: null }).then((response) => mapFeatCatalogEntries(response.entries)),
+    loadFeatTargets: () => {
+      const kind = pendingFeatTarget?.targetKind ?? null;
+      if (kind === 'Weapon') {
+        return listWeaponTargets().then(weaponTargetOptions);
+      }
+      if (kind === 'Skill') {
+        return Promise.resolve(skillTargetOptions());
+      }
+      if (kind === 'SpellSchool') {
+        return Promise.resolve(spellSchoolTargetOptions());
+      }
+      return Promise.resolve([]);
+    },
     onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
     onSelectFeat: pendingFeatLevelUp ? (entry) => void handleLevelUpFeatPick(entry) : handleAddFeat,
+    onSelectFeatTarget: handleFeatTargetPicked,
     onSelectModifier: (entry) => void handleModifierPicked(entry),
   });
-  const itemPickerTitle = pendingFeatLevelUp
+  const itemPickerTitle = pendingFeatTarget
+    ? featTargetPickerTitle(pendingFeatTarget.featName, pendingFeatTarget.targetKind)
+    : pendingFeatLevelUp
     ? `Pick a feat — level ${pendingFeatLevelUp.newClassLevel}`
     : pendingModifierAttachment
       ? `Attach Modifier — ${pendingModifierAttachment.equipmentRecordName}`
@@ -2124,7 +2234,11 @@ export function CharacterSheet(props: {
                   onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
                 />
               ) : tab === 'Feats' ? (
-                <FeatsTab selectedFeats={props.detail?.selectedFeats ?? []} onAddFeat={() => setItemPickerOpen('feat')} />
+                <FeatsTab
+            selectedFeats={props.detail?.selectedFeats ?? []}
+            chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
+            onAddFeat={() => setItemPickerOpen('feat')}
+          />
               ) : tab === 'Actions' ? (
                 <ActionsTab levelEntries={currentBenefits} />
               ) : (

@@ -16,6 +16,16 @@ export interface ItemPickerEntry {
   key: string;
   name: string;
   detail: string;
+  /**
+   * Feat entries only: `'Weapon'`, `'Skill'` or `'SpellSchool'` when this
+   * feat needs a chosen target, absent otherwise.
+   *
+   * Carried on the picker entry so the Add Feat flow can tell, at the
+   * moment of the pick, whether a second target step is required — without
+   * re-querying the catalog or hardcoding a list of chooser feats in the
+   * frontend, which would be rules knowledge duplicated out of the engine.
+   */
+  chooserTargetKind?: string | null;
 }
 
 /** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
@@ -56,6 +66,7 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
     // bonus-tier records — see `FeatTableEntry.description`'s own doc
     // comment) rather than fabricating description text.
     detail: entry.description ? `${entry.category} · ${entry.description}` : entry.category,
+    chooserTargetKind: entry.chooserTargetKind,
   }));
 }
 

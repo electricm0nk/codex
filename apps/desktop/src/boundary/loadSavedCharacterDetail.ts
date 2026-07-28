@@ -39,6 +39,27 @@ export interface LoadSavedCharacterResponse {
    * already broken (the cheaper plain `addSpellSelection` suffices).
    */
   spellsSelected: SpellSelectionDto[];
+  /**
+   * The resolved target(s) for every chooser feat the character holds.
+   *
+   * `selectedFeats` alone cannot say *which* weapon a Weapon Focus names,
+   * and a repeatable feat taken twice appears there as two identical
+   * strings. One entry per chooser feat, not per pick — nothing in the data
+   * model pairs pick N with target N, so that pairing is not invented.
+   */
+  chosenFeatTargets: ChosenFeatTargetsDto[];
+}
+
+export interface ChosenFeatTargetsDto {
+  /** Verbatim as it appears in `selectedFeats`. */
+  featId: string;
+  /** `'Weapon'`, `'Skill'` or `'SpellSchool'`. */
+  targetKind: string;
+  /**
+   * Prefix-stripped targets. Empty when the feat is held but no target was
+   * ever recorded — a real state to display, not an error.
+   */
+  targets: string[];
 }
 
 export async function loadSavedCharacterDetail(

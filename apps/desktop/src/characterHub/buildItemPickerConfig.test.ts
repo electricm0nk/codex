@@ -5,6 +5,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 const WEAPON_ENTRY: ItemPickerEntry = { key: 'equipment:longsword', name: 'Longsword', detail: 'Arms & Armor' };
 const SPELL_ENTRY: ItemPickerEntry = { key: 'spell:fireball', name: 'spell:fireball', detail: 'Evocation · Level 3' };
 const FEAT_ENTRY: ItemPickerEntry = { key: 'feat:dodge', name: 'Dodge', detail: 'Combat · +1 dodge bonus to AC' };
+const FEAT_TARGET_ENTRY: ItemPickerEntry = { key: 'Longsword', name: 'Longsword', detail: '1d8 · threat 19-20/x2' };
 const MODIFIER_ENTRY: ItemPickerEntry = {
   key: 'Special Ability ~ +1 ~ Weapon',
   name: 'Special Ability ~ +1 ~ Weapon',
@@ -43,6 +44,8 @@ function makeDeps() {
   const spellSelections: ItemPickerEntry[] = [];
   const featSelections: ItemPickerEntry[] = [];
   const modifierSelections: ItemPickerEntry[] = [];
+  const featTargetSelections: ItemPickerEntry[] = [];
+  const loadFeatTargetsCalls: number[] = [];
 
   const deps = {
     loadEquipment: (category: string) => {
@@ -53,6 +56,11 @@ function makeDeps() {
       loadSpellsCalls.push(1);
       return Promise.resolve([SPELL_ENTRY]);
     },
+    loadFeatTargets: () => {
+      loadFeatTargetsCalls.push(1);
+      return Promise.resolve([FEAT_TARGET_ENTRY]);
+    },
+    onSelectFeatTarget: (entry: ItemPickerEntry) => featTargetSelections.push(entry),
     loadFeats: () => {
       loadFeatsCalls.push(1);
       return Promise.resolve([FEAT_ENTRY]);
@@ -65,6 +73,8 @@ function makeDeps() {
 
   return {
     deps,
+    featTargetSelections,
+    loadFeatTargetsCalls,
     loadEquipmentCalls,
     loadSpellsCalls,
     loadFeatsCalls,

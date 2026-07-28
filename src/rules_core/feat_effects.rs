@@ -1164,6 +1164,188 @@ pub fn base_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
     i16::try_from(picks).unwrap_or(i16::MAX).saturating_mul(FLEET_BASE_SPEED_FEET)
 }
 
+/// What kind of thing a chooser feat's target names. Decides which picker a
+/// caller should offer, and is the only rules knowledge a UI needs in order
+/// to prompt correctly.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ChooserTargetKind {
+    /// A specific weapon, e.g. `weapon:Longsword`.
+    Weapon,
+    /// A specific skill, e.g. `skill:Perception`.
+    Skill,
+    /// A school of magic, e.g. `school:Evocation`.
+    SpellSchool,
+}
+
+/// One chooser feat's complete Mechanism-B contract: how to recognise the
+/// feat, which choice set records its target, and what that target names.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ChooserFeatContract {
+    /// The catalog display key, e.g. `"Weapon Focus"`.
+    pub feat_key: &'static str,
+    /// The engine-token form where one exists, e.g. `"feat:weapon_focus"`.
+    /// `None` for feats that only ever appear under their catalog key.
+    pub synthetic_feat_id: Option<&'static str>,
+    /// The choice set that records this feat's target.
+    pub choice_set_id: &'static str,
+    /// The prefix every selection in that choice set carries.
+    pub selection_prefix: &'static str,
+    pub target_kind: ChooserTargetKind,
+}
+
+/// Every feat whose target this engine actually consumes.
+///
+/// **Deliberately not the corpus-wide set of `CHOOSE:` feats.** Many more
+/// corpus feats carry a `CHOOSE:` token, but a target recorded for a feat no
+/// producer reads would be decorative -- it would render in a UI and change
+/// nothing. This table is exactly the feats with a live producer above, so
+/// anything a caller records against it reaches real arithmetic.
+///
+/// Every field references the same private constant its producer uses rather
+/// than repeating the literal, so a contract cannot drift from the code that
+/// honours it. `chooser_contracts_cover_every_target_choice_set` guards the
+/// remaining gap -- adding a tenth chooser feat without extending this table.
+pub const CHOOSER_FEAT_CONTRACTS: &[ChooserFeatContract] = &[
+    ChooserFeatContract {
+        feat_key: SKILL_FOCUS_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: SKILL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SKILL_FOCUS_SKILL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Skill,
+    },
+    ChooserFeatContract {
+        feat_key: MASTER_CRAFTSMAN_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: MASTER_CRAFTSMAN_TARGET_CHOICE_SET,
+        selection_prefix: MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Skill,
+    },
+    ChooserFeatContract {
+        feat_key: SPELL_FOCUS_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: SPELL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SPELL_FOCUS_SCHOOL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::SpellSchool,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_SPELL_FOCUS_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: GREATER_SPELL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SPELL_FOCUS_SCHOOL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::SpellSchool,
+    },
+    ChooserFeatContract {
+        feat_key: WEAPON_FOCUS_FEAT_KEY,
+        synthetic_feat_id: Some(WEAPON_FOCUS_SYNTHETIC_FEAT_ID),
+        choice_set_id: WEAPON_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_WEAPON_FOCUS_FEAT_KEY,
+        synthetic_feat_id: Some(GREATER_WEAPON_FOCUS_SYNTHETIC_FEAT_ID),
+        choice_set_id: GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: WEAPON_SPECIALIZATION_FEAT_KEY,
+        synthetic_feat_id: Some(WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID),
+        choice_set_id: WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_WEAPON_SPECIALIZATION_FEAT_KEY,
+        synthetic_feat_id: Some(GREATER_WEAPON_SPECIALIZATION_SYNTHETIC_FEAT_ID),
+        choice_set_id: GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: IMPROVED_CRITICAL_FEAT_KEY,
+        synthetic_feat_id: Some(IMPROVED_CRITICAL_SYNTHETIC_FEAT_ID),
+        choice_set_id: IMPROVED_CRITICAL_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+];
+
+/// The chooser contract for a feat named by either its catalog key or its
+/// engine-token form, or `None` for a feat that takes no target.
+pub fn chooser_contract_for_feat(feat_id: &str) -> Option<&'static ChooserFeatContract> {
+    CHOOSER_FEAT_CONTRACTS.iter().find(|contract| {
+        contract.feat_key == feat_id || contract.synthetic_feat_id == Some(feat_id)
+    })
+}
+
+/// One feat's recorded targets, resolved against the contracts above.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ChosenFeatTargets {
+    /// Verbatim as it appeared in `selected_feats`.
+    pub feat_id: String,
+    pub target_kind: ChooserTargetKind,
+    /// The targets recorded for this feat, prefix stripped, deduplicated
+    /// case-insensitively in first-seen order. Empty when the feat is held
+    /// with no target recorded -- which is a real, reportable state, not an
+    /// error, and callers must render it as "no target chosen" rather than
+    /// inventing one.
+    pub targets: Vec<String>,
+}
+
+/// Resolves the recorded targets for every chooser feat the character holds.
+///
+/// Returns one entry per distinct chooser feat, in the order the feats first
+/// appear in `selected_feats`. Feats that take no target are absent entirely;
+/// a chooser feat with no recorded target is present with an empty
+/// `targets`, because "you have Weapon Focus but never said in what" is
+/// exactly the state a sheet needs to show.
+///
+/// **Duplicate picks are reported per feat, not per pick.** `selected_feats`
+/// is an append-only list with no deduplication, so a character can hold
+/// Weapon Focus twice; but nothing in the data model links the first pick to
+/// the first target. Returning one entry per feat carrying every target it
+/// names reports exactly what was recorded. Emitting one entry per pick would
+/// require pairing pick N with target N, which the data does not support and
+/// which would silently fabricate an association.
+pub fn chosen_feat_targets(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<ChosenFeatTargets> {
+    let mut resolved: Vec<ChosenFeatTargets> = Vec::new();
+
+    for feat_id in selected_feats {
+        let Some(contract) = chooser_contract_for_feat(feat_id) else {
+            continue;
+        };
+        if resolved.iter().any(|entry| entry.feat_id == *feat_id) {
+            continue;
+        }
+
+        let mut targets =
+            chosen_targets(selected_choices, contract.choice_set_id, contract.selection_prefix);
+        // Weapon Focus alone also accepts the pre-existing compound form
+        // recorded through the Fighter bonus-feat slot; the producer accepts
+        // it, so the sheet must show it rather than report "no target" for a
+        // character whose target is plainly recorded.
+        if contract.feat_key == WEAPON_FOCUS_FEAT_KEY {
+            targets.extend(chosen_targets(
+                selected_choices,
+                FIGHTER_BONUS_FEAT_CHOICE_SET,
+                LEGACY_WEAPON_FOCUS_COMPOUND_PREFIX,
+            ));
+        }
+
+        resolved.push(ChosenFeatTargets {
+            feat_id: feat_id.clone(),
+            target_kind: contract.target_kind,
+            targets: dedup_targets(targets).into_iter().map(str::to_owned).collect(),
+        });
+    }
+
+    resolved
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2337,6 +2519,202 @@ mod weapon_focus_facts_from_choices_tests {
             choice("choice:weapon_focus_target", "weapon:"),
         ];
         assert!(weapon_focus_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod chooser_feat_contract_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    /// The drift guard this table exists to make possible.
+    ///
+    /// Every `*_TARGET_CHOICE_SET` constant in this file names a chooser
+    /// feat whose target a producer reads. If one is ever added without a
+    /// matching contract, a UI built on this table would silently offer no
+    /// picker for it -- the feat would look targetless rather than
+    /// unsupported. Scanning our own source is unusual, but the alternative
+    /// is a hand-maintained count that decays exactly the way every other
+    /// hand-maintained inventory in this repo has.
+    #[test]
+    fn chooser_contracts_cover_every_target_choice_set() {
+        // Scan only the production region. Past the first `#[cfg(test)]`
+        // the file contains this very filter string, so scanning the whole
+        // file makes the test match its own source and fail on a constant
+        // that does not exist.
+        let full = include_str!("feat_effects.rs");
+        let source = full.split("\n#[cfg(test)]").next().expect("source is non-empty");
+        let declared: Vec<&str> = source
+            .lines()
+            .filter(|line| line.contains("_TARGET_CHOICE_SET: &str"))
+            .filter_map(|line| line.split('"').nth(1))
+            .collect();
+        // Multi-line constants put the literal on the following line, so
+        // pick those up too rather than silently undercounting.
+        let continued: Vec<&str> = source
+            .lines()
+            .zip(source.lines().skip(1))
+            .filter(|(decl, _)| {
+                decl.contains("_TARGET_CHOICE_SET: &str") && !decl.contains('"')
+            })
+            .filter_map(|(_, value)| value.split('"').nth(1))
+            .collect();
+
+        let mut all: Vec<&str> = declared.into_iter().chain(continued).collect();
+        all.sort_unstable();
+        all.dedup();
+        assert!(
+            all.len() >= 9,
+            "expected at least the 9 known chooser choice sets, found {all:?}"
+        );
+
+        for choice_set in all {
+            assert!(
+                CHOOSER_FEAT_CONTRACTS
+                    .iter()
+                    .any(|contract| contract.choice_set_id == choice_set),
+                "{choice_set} has no entry in CHOOSER_FEAT_CONTRACTS -- a chooser feat was \
+                 added without a contract, so nothing can offer a picker for it"
+            );
+        }
+    }
+
+    #[test]
+    fn every_contract_is_reachable_by_both_of_its_ids() {
+        for contract in CHOOSER_FEAT_CONTRACTS {
+            assert_eq!(
+                chooser_contract_for_feat(contract.feat_key),
+                Some(contract),
+                "{} must resolve by its catalog key",
+                contract.feat_key
+            );
+            if let Some(synthetic) = contract.synthetic_feat_id {
+                assert_eq!(
+                    chooser_contract_for_feat(synthetic),
+                    Some(contract),
+                    "{synthetic} must resolve by its engine token"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn a_feat_that_takes_no_target_has_no_contract() {
+        assert_eq!(chooser_contract_for_feat("Toughness"), None);
+        assert_eq!(chooser_contract_for_feat("feat:power_attack"), None);
+    }
+
+    #[test]
+    fn resolves_a_recorded_target_with_its_kind() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Focus"]),
+            &[choice("choice:weapon_focus_target", "weapon:Longsword")],
+        );
+        assert_eq!(
+            resolved,
+            vec![ChosenFeatTargets {
+                feat_id: "Weapon Focus".to_owned(),
+                target_kind: ChooserTargetKind::Weapon,
+                targets: vec!["Longsword".to_owned()],
+            }]
+        );
+    }
+
+    /// The state the sheet most needs to distinguish: the feat is held, but
+    /// no target was ever recorded. It must be reported, not omitted, and
+    /// must not be filled in with a default.
+    #[test]
+    fn a_chooser_feat_with_no_recorded_target_is_reported_with_an_empty_list() {
+        let resolved = chosen_feat_targets(&feats(&["Skill Focus"]), &[]);
+        assert_eq!(resolved.len(), 1, "the feat must still be reported");
+        assert_eq!(resolved[0].target_kind, ChooserTargetKind::Skill);
+        assert!(resolved[0].targets.is_empty(), "nothing may be seeded: {resolved:?}");
+    }
+
+    #[test]
+    fn feats_that_take_no_target_are_absent_entirely() {
+        assert!(chosen_feat_targets(&feats(&["Toughness", "Dodge"]), &[]).is_empty());
+    }
+
+    /// Two picks of one MULT:YES feat report both targets under one entry.
+    /// Pairing pick N with target N is not recorded anywhere, so it is not
+    /// invented here.
+    #[test]
+    fn a_feat_taken_twice_reports_both_targets_once() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Focus", "Weapon Focus"]),
+            &[
+                choice("choice:weapon_focus_target", "weapon:Longsword"),
+                choice("choice:weapon_focus_target", "weapon:Rapier"),
+            ],
+        );
+        assert_eq!(resolved.len(), 1, "one entry per feat, not per pick: {resolved:?}");
+        assert_eq!(resolved[0].targets, vec!["Longsword".to_owned(), "Rapier".to_owned()]);
+    }
+
+    /// The shipped deterministic fixture records Weapon Focus's target
+    /// through the Fighter bonus-feat slot, not the clean choice set. The
+    /// producer honours that form, so this must too -- otherwise the one
+    /// character that actually has a target would display none.
+    #[test]
+    fn the_legacy_compound_form_still_resolves_a_target() {
+        let resolved = chosen_feat_targets(
+            &feats(&["feat:weapon_focus"]),
+            &[choice("choice:fighter_bonus_feat", "feat:weapon_focus:weapon:longsword")],
+        );
+        assert_eq!(resolved.len(), 1);
+        assert_eq!(resolved[0].targets, vec!["longsword".to_owned()]);
+    }
+
+    #[test]
+    fn each_target_kind_resolves_for_a_representative_feat() {
+        let cases = [
+            ("Skill Focus", "choice:skill_focus_target", "skill:Perception", ChooserTargetKind::Skill),
+            (
+                "Spell Focus",
+                "choice:spell_focus_target",
+                "school:Evocation",
+                ChooserTargetKind::SpellSchool,
+            ),
+            (
+                "Improved Critical",
+                "choice:improved_critical_target",
+                "weapon:Rapier",
+                ChooserTargetKind::Weapon,
+            ),
+        ];
+        for (feat, set, selection, kind) in cases {
+            let resolved = chosen_feat_targets(&feats(&[feat]), &[choice(set, selection)]);
+            assert_eq!(resolved.len(), 1, "{feat} must resolve");
+            assert_eq!(resolved[0].target_kind, kind, "{feat} target kind");
+            assert_eq!(resolved[0].targets.len(), 1, "{feat} must carry its target");
+        }
+    }
+
+    /// A target recorded against the wrong choice set must not be picked up
+    /// by a different feat -- the same cross-contamination guard the
+    /// Specialization producer carries.
+    #[test]
+    fn a_target_from_another_feats_choice_set_is_not_read() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Specialization"]),
+            &[choice("choice:weapon_focus_target", "weapon:Longsword")],
+        );
+        assert_eq!(resolved.len(), 1);
+        assert!(
+            resolved[0].targets.is_empty(),
+            "Weapon Focus's target is not Weapon Specialization's: {resolved:?}"
+        );
     }
 }
 

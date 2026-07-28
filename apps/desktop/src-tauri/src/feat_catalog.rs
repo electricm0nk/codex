@@ -11,6 +11,7 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::feat_effects;
 use codex::rules_core::rules_tables::crb::feats::feat_tables;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -21,6 +22,15 @@ pub struct FeatCatalogEntryDto {
     pub category: String,
     pub name: String,
     pub description: Option<String>,
+    /// `"Weapon"`, `"Skill"` or `"SpellSchool"` for a feat whose target the
+    /// engine consumes; `None` for every other feat.
+    ///
+    /// This is deliberately narrower than the corpus: many more feats carry a
+    /// `CHOOSE:` token, but a target recorded against a feat no producer
+    /// reads would render in the picker and change nothing computed. Only
+    /// the feats in `feat_effects::CHOOSER_FEAT_CONTRACTS` are marked, so a
+    /// prompt shown to a player always leads to real arithmetic.
+    pub chooser_target_kind: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,6 +47,8 @@ fn map_catalog_entry(
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         description: entry.description.map(|d| d.to_string()),
+        chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
+            .map(|contract| format!("{:?}", contract.target_kind)),
     }
 }
 
@@ -174,5 +186,87 @@ mod tests {
             assert_eq!(entry.category, "Metamagic");
             assert!(entry.name.to_lowercase().contains("spell"));
         }
+    }
+}
+
+/// The real corpus weapon list, for the "which weapon?" step of adding a
+/// chooser feat.
+///
+/// Sourced from `rules_tables::crb::weapon_tables::WEAPON_TABLE` -- the same
+/// 106 ingested records the per-weapon attack/damage/threat-range totals are
+/// computed from. Deliberately NOT the arms-and-armor equipment catalog:
+/// that mixes armor and shields in, and offering "Chain Shirt" as a Weapon
+/// Focus target would let a player record a choice no producer can honour.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeaponTargetDto {
+    /// The weapon's corpus key, which is what a chooser feat's target names.
+    pub key: String,
+    /// e.g. `"1d8 · threat 19-20/x2"` -- enough to tell similar weapons apart
+    /// in the picker without opening anything.
+    pub detail: String,
+}
+
+pub fn build_weapon_target_list() -> Vec<WeaponTargetDto> {
+    use codex::rules_core::rules_tables::crb::weapon_tables::{
+        weapon_critical_threat_low, WEAPON_TABLE,
+    };
+
+    WEAPON_TABLE
+        .iter()
+        .map(|entry| WeaponTargetDto {
+            key: entry.key.to_string(),
+            detail: format!(
+                "{} · threat {}-20/x{}",
+                entry.damage_die,
+                weapon_critical_threat_low(entry),
+                entry.critical_multiplier
+            ),
+        })
+        .collect()
+}
+
+#[tauri::command]
+pub fn list_weapon_targets() -> Vec<WeaponTargetDto> {
+    build_weapon_target_list()
+}
+
+#[cfg(test)]
+mod weapon_target_tests {
+    use super::*;
+
+    #[test]
+    fn the_weapon_target_list_is_the_real_ingested_table() {
+        let targets = build_weapon_target_list();
+        assert!(targets.len() > 100, "expected the full ingested table, got {}", targets.len());
+        let longsword = targets
+            .iter()
+            .find(|t| t.key == "Longsword")
+            .expect("Longsword must be offerable as a target");
+        assert_eq!(longsword.detail, "1d8 · threat 19-20/x2");
+    }
+
+    /// Body armor must never appear -- a Weapon Focus target naming a Chain
+    /// Shirt could be recorded and would then ground nothing.
+    ///
+    /// **Shields deliberately DO appear, and that is correct.** A shield
+    /// bash is a real PF1 attack: the corpus gives `Shieldbash (Heavy
+    /// Shield)` its own `1d4`/x2 record and Martial proficiency, so Weapon
+    /// Focus (Heavy Steel Shield) is a legitimate build. An earlier version
+    /// of this test asserted no key could contain "Shield" and failed --
+    /// the data was right and the assertion was wrong.
+    #[test]
+    fn body_armor_is_not_offered_as_a_weapon_target_but_shields_are() {
+        let targets = build_weapon_target_list();
+        for armor in ["Chain Shirt", "Breastplate", "Full Plate", "Leather Armor"] {
+            assert!(
+                !targets.iter().any(|t| t.key.contains(armor)),
+                "{armor} is not a weapon and must not be offerable as a target"
+            );
+        }
+        assert!(
+            targets.iter().any(|t| t.key.contains("Shieldbash")),
+            "shield bash is a real weapon and must remain offerable"
+        );
     }
 }

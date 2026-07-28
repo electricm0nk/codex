@@ -1,4 +1,4 @@
-import { resolveSelectedFeatEntries } from './featsTabModel';
+import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ItemPickerEntry } from './itemPickerFilter';
 
@@ -65,6 +65,84 @@ function verifiesOrderAndCountAreParallelToInput() {
   assertEqual(resolved[2].entry?.key, 'Deflect Arrows', 'third row resolves to Deflect Arrows');
 }
 
+
+function verifiesAFeatWithNoTargetSaysNothingAboutTargets() {
+  const [row] = resolveSelectedFeatEntries(['Dodge'], CATALOG, []);
+  assertEqual(row.targetKind, null, 'Dodge takes no chosen target');
+  assertEqual(row.targets.length, 0, 'and carries no targets');
+  assertEqual(describeFeatTarget(row), null, 'so the row shows no target line at all');
+}
+
+function verifiesARecordedTargetIsShown() {
+  const [row] = resolveSelectedFeatEntries(
+    ['Weapon Focus'],
+    CATALOG,
+    [{ featId: 'Weapon Focus', targetKind: 'Weapon', targets: ['Longsword'] }]
+  );
+  assertEqual(row.targetKind, 'Weapon', 'the kind comes from the backend');
+  assertEqual(describeFeatTarget(row), 'Longsword', 'the chosen weapon is shown');
+}
+
+function verifiesTheTargetJoinSurvivesTheTwoIdShapes() {
+  // The backend reports `featId` verbatim, so it can arrive in the engine
+  // token shape while `selectedFeats` holds the catalog key, or vice versa.
+  const [row] = resolveSelectedFeatEntries(
+    ['Weapon Focus'],
+    CATALOG,
+    [{ featId: 'feat:weapon_focus', targetKind: 'Weapon', targets: ['Longsword'] }]
+  );
+  assertEqual(describeFeatTarget(row), 'Longsword', 'the two id shapes must join');
+}
+
+function verifiesAHeldButUntargetedChooserFeatSaysSoExplicitly() {
+  const [row] = resolveSelectedFeatEntries(
+    ['Weapon Focus'],
+    CATALOG,
+    [{ featId: 'Weapon Focus', targetKind: 'Weapon', targets: [] }]
+  );
+  const described = describeFeatTarget(row);
+  assert(described !== null, 'an untargeted chooser feat must not render silently as complete');
+  assert(
+    described!.includes('No weapon chosen'),
+    `expected an explicit no-target message, got: ${described}`
+  );
+}
+
+function verifiesBothTargetsOfARepeatedFeatAreShown() {
+  const [row] = resolveSelectedFeatEntries(
+    ['Weapon Focus'],
+    CATALOG,
+    [{ featId: 'Weapon Focus', targetKind: 'Weapon', targets: ['Longsword', 'Rapier'] }]
+  );
+  assertEqual(describeFeatTarget(row), 'Longsword, Rapier', 'both recorded targets are shown');
+}
+
+function verifiesMergingATargetNeverInventsOne() {
+  const before = [{ featId: 'Weapon Focus', targetKind: 'Weapon', targets: ['Longsword'] }];
+  assertEqual(
+    mergeChosenFeatTarget(before, 'Skill Focus', null, null),
+    before,
+    'adding a feat with no target must leave the list untouched'
+  );
+}
+
+function verifiesMergingAppendsToTheSameFeatRatherThanDuplicatingIt() {
+  const merged = mergeChosenFeatTarget(
+    [{ featId: 'Weapon Focus', targetKind: 'Weapon', targets: ['Longsword'] }],
+    'Weapon Focus',
+    'Rapier',
+    'Weapon'
+  );
+  assertEqual(merged.length, 1, 'one entry per feat, not per pick');
+  assertEqual(merged[0].targets.join(','), 'Longsword,Rapier', 'the second target is appended');
+}
+
+function verifiesMergingANewChooserFeatAddsAnEntry() {
+  const merged = mergeChosenFeatTarget([], 'Skill Focus', 'Perception', 'Skill');
+  assertEqual(merged.length, 1, 'a first target creates the entry');
+  assertEqual(merged[0].targetKind, 'Skill', 'carrying the kind it was picked for');
+}
+
 function main() {
   verifiesCatalogKeyFormatResolvesDirectly();
   verifiesEngineTokenFormatResolvesToSameCatalogEntry();
@@ -72,6 +150,14 @@ function main() {
   verifiesCompoundSubSelectionTokenResolvesToBaseFeat();
   verifiesUnrecognizedRawStringFallsBackToNullEntryRatherThanDropping();
   verifiesOrderAndCountAreParallelToInput();
+  verifiesAFeatWithNoTargetSaysNothingAboutTargets();
+  verifiesARecordedTargetIsShown();
+  verifiesTheTargetJoinSurvivesTheTwoIdShapes();
+  verifiesAHeldButUntargetedChooserFeatSaysSoExplicitly();
+  verifiesBothTargetsOfARepeatedFeatAreShown();
+  verifiesMergingATargetNeverInventsOne();
+  verifiesMergingAppendsToTheSameFeatRatherThanDuplicatingIt();
+  verifiesMergingANewChooserFeatAddsAnEntry();
   console.log('featsTabModel.test.ts: all assertions passed');
 }
 

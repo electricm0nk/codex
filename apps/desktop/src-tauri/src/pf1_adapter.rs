@@ -50,6 +50,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
+use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
@@ -68,8 +69,9 @@ use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_spells_selected_dto,
-    map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    map_chosen_feat_targets_dto, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
+    map_spells_selected_dto, map_summary_dto, summarize_envelope, CreateCharacterRequest,
+    CreateCharacterResponse,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
 use crate::characterHub::appendToCharacter::{
@@ -267,6 +269,7 @@ impl RuleSystemAdapter for Pf1Adapter {
             corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
             selected_feats: envelope.character_input.chosen.selected_feats.clone(),
             spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+            chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
         })
     }
 }
@@ -950,16 +953,75 @@ pub fn apply_add_feat_selection(character_input: &mut CharacterInput, feat_id: &
     character_input.chosen.selected_feats.push(feat_id.to_owned());
 }
 
+/// Appends a chooser feat together with the target it names, recording the
+/// target as a real `SelectedChoice` under the feat's own Mechanism-B
+/// contract.
+///
+/// Returns an error rather than silently degrading in the two cases that
+/// would otherwise produce a feat the engine cannot read: a target given for
+/// a feat that takes none, and a blank target. Both mean the caller and the
+/// rules disagree about the feat, and quietly dropping the target would
+/// leave a character that looks configured and computes as though it were
+/// not.
+///
+/// The prefix and choice-set id are read from
+/// [`feat_effects::chooser_contract_for_feat`] rather than assembled here,
+/// so this cannot drift from the producers that consume the result.
+pub fn resolve_feat_target_choice(
+    feat_id: &str,
+    target: Option<&str>,
+) -> Result<Option<SelectedChoice>, String> {
+    let Some(raw) = target else {
+        // No target given. Legitimate for an ordinary feat, and also for a
+        // chooser feat whose target has not been named yet -- the engine
+        // grounds nothing for it and the sheet reports it as untargeted.
+        return Ok(None);
+    };
+    if raw.trim().is_empty() {
+        return Err(format!(
+            "{feat_id} was given an empty target; a chooser feat needs a real target or none at all"
+        ));
+    }
+    let Some(contract) = feat_effects::chooser_contract_for_feat(feat_id) else {
+        return Err(format!(
+            "{feat_id} takes no chosen target, but '{raw}' was supplied"
+        ));
+    };
+    Ok(Some(SelectedChoice {
+        choice_set_id: contract.choice_set_id.to_owned(),
+        selection_id: format!("{}{}", contract.selection_prefix, raw.trim()),
+    }))
+}
+
+/// Appends the feat and, when one was resolved, the choice recording its
+/// target.
+pub fn apply_add_feat_selection_with_target(
+    character_input: &mut CharacterInput,
+    feat_id: &str,
+    target_choice: Option<SelectedChoice>,
+) {
+    if let Some(choice) = target_choice {
+        character_input.chosen.selected_choices.push(choice);
+    }
+    apply_add_feat_selection(character_input, feat_id);
+}
+
 /// `add_feat_selection`'s real implementation — see
 /// `mutate_saved_character_at_root` for the shared
 /// load -> mutate -> recompute -> re-save -> return-envelope semantics.
 pub(crate) fn add_feat_selection_at_root(
     root: &Path,
     feat_id: &str,
+    target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    // Resolve before mutating: `mutate_saved_character_at_root` takes an
+    // infallible closure, so a rejected target must surface as an error here
+    // rather than as a silently feat-only save.
+    let target_choice = resolve_feat_target_choice(feat_id, target)?;
+
     mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_feat_selection(character_input, feat_id);
+        apply_add_feat_selection_with_target(character_input, feat_id, target_choice.clone());
     })
 }
 
@@ -1345,7 +1407,7 @@ mod tests {
         let envelope = seed_envelope(character_id, 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T01:00:00Z")
+        let response = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T01:00:00Z")
             .expect("add-feat call should not error");
 
         match response {
@@ -1674,6 +1736,150 @@ mod tests {
             && matches!(s.acquisition_mode, crate::character_hub::AcquisitionModeDto::Prepared)));
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A minimal saved character for the chooser-target tests below.
+    fn chooser_test_envelope(character_id: &str) -> SavedCharacterEnvelope {
+        SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Chooser Target Test".to_owned(),
+            character_input: compose_character_input(&request_for("race:human", 1)),
+        }
+    }
+
+    /// Every freshly created character carries the canonical Fighter
+    /// bonus-feat seed (`choice:fighter_bonus_feat ->
+    /// feat:weapon_focus:weapon:longsword`), so the payload must surface a
+    /// real, non-empty target rather than only proving the empty case.
+    #[test]
+    fn load_saved_character_surfaces_resolved_chooser_feat_targets() {
+        let character_id = "pf1-adapter-chooser-targets-exposure";
+        let root = tempdir("chooser-targets-exposure");
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Chooser Targets Exposure Test".to_owned(),
+            character_input: compose_character_input(&request_for("race:human", 1)),
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let weapon_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id.contains("weapon_focus") || entry.feat_id == "Weapon Focus")
+            .unwrap_or_else(|| {
+                panic!(
+                    "Weapon Focus's seeded target must surface: {:?}",
+                    loaded.chosen_feat_targets
+                )
+            });
+        assert_eq!(weapon_focus.target_kind, "Weapon");
+        assert_eq!(
+            weapon_focus.targets,
+            vec!["longsword".to_owned()],
+            "the seeded legacy compound target must resolve, not read as untargeted"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The write path this whole task exists to create: a chooser feat added
+    /// with a target must persist a real `SelectedChoice`, and that target
+    /// must come back out through the load payload.
+    #[test]
+    fn adding_a_chooser_feat_with_a_target_persists_and_surfaces_it() {
+        let root = tempdir("add-chooser-feat-with-target");
+        let envelope = chooser_test_envelope("add-chooser-feat-with-target");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_at_root(&root, "Skill Focus", Some("Perception"), TEST_SAVED_AT)
+            .expect("adding a chooser feat with a target should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let skill_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id == "Skill Focus")
+            .unwrap_or_else(|| {
+                panic!("Skill Focus must surface: {:?}", loaded.chosen_feat_targets)
+            });
+        assert_eq!(skill_focus.target_kind, "Skill");
+        assert_eq!(skill_focus.targets, vec!["Perception".to_owned()]);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A chooser feat may legitimately be added without naming its target
+    /// yet. That must persist the feat and record no choice -- never a
+    /// seeded default, per the same no-silent-seeding rule the producers
+    /// follow.
+    #[test]
+    fn adding_a_chooser_feat_without_a_target_seeds_nothing() {
+        let root = tempdir("add-chooser-feat-no-target");
+        let envelope = chooser_test_envelope("add-chooser-feat-no-target");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_at_root(&root, "Skill Focus", None, TEST_SAVED_AT)
+            .expect("adding a chooser feat without a target should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let skill_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id == "Skill Focus")
+            .expect("the feat is held, so it must be reported as untargeted");
+        assert!(
+            skill_focus.targets.is_empty(),
+            "no target may be invented: {skill_focus:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_target_for_a_feat_that_takes_none_is_rejected() {
+        assert!(resolve_feat_target_choice("feat:toughness", Some("Longsword")).is_err());
+        assert!(resolve_feat_target_choice("Weapon Focus", Some("   ")).is_err());
+        // The legitimate shapes still pass.
+        assert!(resolve_feat_target_choice("feat:toughness", None).is_ok());
+        assert!(resolve_feat_target_choice("Weapon Focus", Some("Rapier")).is_ok());
+    }
+
+    /// The prefix and choice set must come from the feat's own contract, not
+    /// be assembled by callers -- otherwise a caller could write a selection
+    /// the producers cannot read.
+    #[test]
+    fn a_resolved_target_uses_the_feats_own_contract() {
+        let choice = resolve_feat_target_choice("Improved Critical", Some("Rapier"))
+            .expect("valid")
+            .expect("a chooser feat with a target yields a choice");
+        assert_eq!(choice.choice_set_id, "choice:improved_critical_target");
+        assert_eq!(choice.selection_id, "weapon:Rapier");
     }
 
     /// The multiclass-dip mirror of the test above: leveling a Wizard class

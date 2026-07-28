@@ -18,6 +18,15 @@ export interface FeatCatalogEntryDto {
   category: string;
   name: string;
   description: string | null;
+  /**
+   * `'Weapon'`, `'Skill'` or `'SpellSchool'` for a feat whose chosen target
+   * the engine consumes; `null` for every other feat.
+   *
+   * Narrower than the corpus on purpose: more feats carry a `CHOOSE:` token,
+   * but only these have a producer that reads the target, so a prompt shown
+   * for one always leads to real arithmetic.
+   */
+  chooserTargetKind: string | null;
 }
 
 export interface FeatCatalogFilter {

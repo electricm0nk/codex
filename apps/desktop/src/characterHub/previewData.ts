@@ -89,6 +89,10 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
       unresolvedEquipmentItemIds: [],
     },
     selectedFeats: ['feat:power_attack', 'feat:dodge', 'feat:weapon_focus'],
+  // Mirrors the real seeded Fighter loadout: `compose_character_input`
+  // records Weapon Focus's target through the Fighter bonus-feat slot, so
+  // the preview shows a resolved target rather than an untargeted feat.
+  chosenFeatTargets: [{ featId: 'feat:weapon_focus', targetKind: 'Weapon', targets: ['longsword'] }],
     spellsSelected: [],
   };
 }

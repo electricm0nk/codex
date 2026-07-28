@@ -146,7 +146,8 @@ mod tests {
     };
 
     use crate::character_hub::{
-        compose_character_input, map_resolved_equipment_dto, map_spells_selected_dto,
+        compose_character_input, map_chosen_feat_targets_dto, map_resolved_equipment_dto,
+        map_spells_selected_dto,
         AbilityScoresDto, AbilityModifiersDto, BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto,
         CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto, PilotSnapshotDto,
         SchoolCoverageDto, SelectedSkillModifiersDto,
@@ -353,6 +354,7 @@ mod tests {
                 corpus_derived,
                 selected_feats: envelope.character_input.chosen.selected_feats.clone(),
                 spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+                chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
             })
         }
     }

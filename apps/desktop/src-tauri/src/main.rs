@@ -40,7 +40,7 @@ use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
-use feat_catalog::{list_feat_catalog, list_feats};
+use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use race_catalog::list_race_catalog;
 use spell_catalog::{list_spell_catalog, list_spells};
 use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
@@ -176,6 +176,7 @@ fn main() {
             list_equipment,
             list_spells,
             list_feats,
+            list_weapon_targets,
             list_class_catalog,
             list_race_catalog,
             corpus_ingest_diagnostic

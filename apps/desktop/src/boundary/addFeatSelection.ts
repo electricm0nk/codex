@@ -17,6 +17,16 @@ import type { CreateCharacterOutcome } from './loadCreateCharacter';
 export interface AddFeatSelectionRequest {
   characterId: string;
   featId: string;
+  /**
+   * The target a chooser feat names — a weapon, skill or school, WITHOUT a
+   * prefix. The backend reads the prefix and choice-set id from the feat's
+   * own contract, so callers never assemble selection ids.
+   *
+   * Omit for feats that take no target. Omitting it for a chooser feat is
+   * also legitimate and records the feat as untargeted; supplying one for a
+   * feat that takes none is rejected rather than silently dropped.
+   */
+  target?: string | null;
   savedAt: string;
 }
 

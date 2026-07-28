@@ -271,6 +271,52 @@ pub struct LoadSavedCharacterResponse {
     /// import-only despite the name) rather than inventing a near-duplicate
     /// type.
     pub spells_selected: Vec<SpellSelectionImportDto>,
+    /// The resolved target(s) for every chooser feat the character holds.
+    ///
+    /// `selected_feats` alone cannot answer "Weapon Focus in *what*", and a
+    /// repeatable feat taken twice appears there as two identical strings.
+    /// Without this, the sheet renders both picks the same way — complete
+    /// looking, and wrong.
+    ///
+    /// One entry per chooser feat, not per pick: nothing in the data model
+    /// pairs pick N with target N, so the pairing is not invented here. A
+    /// feat held with no target recorded is present with an empty `targets`,
+    /// because "held but untargeted" is a state the sheet must show rather
+    /// than hide.
+    pub chosen_feat_targets: Vec<ChosenFeatTargetsDto>,
+}
+
+/// Wire form of `feat_effects::ChosenFeatTargets`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ChosenFeatTargetsDto {
+    pub feat_id: String,
+    /// `"Weapon"`, `"Skill"` or `"SpellSchool"` — the same vocabulary
+    /// `FeatCatalogEntryDto::chooser_target_kind` uses, so a caller can match
+    /// a held feat against its catalog entry without a second mapping.
+    pub target_kind: String,
+    pub targets: Vec<String>,
+}
+
+/// Projects the engine's resolved chooser targets onto the wire.
+///
+/// `pub(crate)` so `pf1_adapter`'s twin construction site calls this rather
+/// than reimplementing it — the same sharing the `map_spells_selected_dto`
+/// precedent established for exactly this pair of copy-paste call sites.
+pub(crate) fn map_chosen_feat_targets_dto(
+    character_input: &codex::rules_core::character_input::CharacterInput,
+) -> Vec<ChosenFeatTargetsDto> {
+    codex::rules_core::feat_effects::chosen_feat_targets(
+        &character_input.chosen.selected_feats,
+        &character_input.chosen.selected_choices,
+    )
+    .into_iter()
+    .map(|resolved| ChosenFeatTargetsDto {
+        feat_id: resolved.feat_id,
+        target_kind: format!("{:?}", resolved.target_kind),
+        targets: resolved.targets,
+    })
+    .collect()
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
@@ -854,6 +900,7 @@ pub fn load_saved_character(
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+        chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
     })
 }
 
@@ -1372,6 +1419,15 @@ pub fn record_and_prepare_spell_selection(
 pub struct AddFeatSelectionRequest {
     pub character_id: String,
     pub feat_id: String,
+    /// The target a chooser feat names -- a weapon, skill or school, without
+    /// its prefix (the prefix comes from the feat's own contract, so callers
+    /// never assemble selection ids). `None` for feats that take no target,
+    /// and also legitimate for a chooser feat whose target is not chosen yet.
+    ///
+    /// Defaults to `None` so a caller that predates chooser targets keeps
+    /// working unchanged.
+    #[serde(default)]
+    pub target: Option<String>,
     pub saved_at: String,
 }
 
@@ -1384,7 +1440,12 @@ pub fn add_feat_selection(
     request: AddFeatSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    add_feat_selection_at_root(&root, &request.feat_id, &request.saved_at)
+    add_feat_selection_at_root(
+        &root,
+        &request.feat_id,
+        request.target.as_deref(),
+        &request.saved_at,
+    )
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -3680,7 +3741,7 @@ mod tests {
         let starting_len = envelope.character_input.chosen.selected_feats.len();
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T00:00:00Z")
+        let response = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T00:00:00Z")
             .expect("add feat selection call should not error");
 
         match response {
@@ -3708,7 +3769,7 @@ mod tests {
     fn add_feat_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
         let root = tempdir("add-feat-missing-character");
 
-        let result = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T00:00:00Z");
+        let result = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T00:00:00Z");
 
         assert!(
             result.is_err(),

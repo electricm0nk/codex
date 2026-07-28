@@ -1,5 +1,9 @@
 import type { CreateCharacterOutcome, DiagnosticDto } from '../boundary/loadCreateCharacter';
-import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
+import type {
+  ChosenFeatTargetsDto,
+  LoadSavedCharacterResponse,
+  SpellSelectionDto,
+} from '../boundary/loadSavedCharacterDetail';
 
 /**
  * Maps a `CreateCharacterResponse`-shaped mutation outcome — the shape
@@ -63,7 +67,12 @@ export function isWizardSpellBootstrap(
 export function toCharacterMutationRefresh(
   outcome: CreateCharacterOutcome,
   selectedFeats: string[],
-  spellsSelected: SpellSelectionDto[]
+  spellsSelected: SpellSelectionDto[],
+  // Defaulted so the many call sites that cannot change a feat's target
+  // (equipment, modifiers, spells) stay unchanged. A caller that DID change
+  // a chooser target must pass the updated list, exactly as it already must
+  // for `selectedFeats`.
+  chosenFeatTargets: ChosenFeatTargetsDto[] = []
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
@@ -78,6 +87,7 @@ export function toCharacterMutationRefresh(
       corpusDerived: outcome.corpusDerived,
       selectedFeats,
       spellsSelected,
+      chosenFeatTargets,
     },
   };
 }
