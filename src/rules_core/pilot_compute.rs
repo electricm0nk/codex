@@ -11017,35 +11017,21 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
         id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INQUISITOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-<<<<<<< HEAD
-             chassis pillar, the Justice/Protection/Purity/Smiting judgments, Stern Gaze's \
-             Intimidate half, Monster Lore, Cunning Initiative, Track, and the Good domain's \
-             Touch of Good: this APG class has no class-skill list, no spellcasting posture \
-             (Inquisitor casts divine spells and gets one domain, but that domain never grants \
-             bonus spells or bonus spell slots -- only domain powers, named separately as its \
-             own domain-powers burden -- and no spells-known/per-day table has been \
-             independently verified or built, including Orisons), no remaining 5 judgment types \
-             (Destruction, Healing, Piercing, Resiliency, Resistance), and no other named class \
-             feature (Bane, Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's \
-             Sense Motive half) grounded anywhere in this codebase yet; no class-feature or \
-             spell execution is fabricated in this bounded chassis baseline"
-=======
              chassis pillar, all 9 Judgment types (Justice, Protection, Purity, Smiting, \
              Destruction, Healing, Piercing, Resiliency, Resistance), Stern Gaze's Intimidate \
-             half, Monster Lore, Cunning Initiative, Track, Bane's pool size, and its own \
-             known-spell posture (a real, independently-verified 219-spell list, levels 0-6 -- \
-             the real CLASS:Inquisitor record carries no SPELLLIST token, unlike Hunter/Oracle, \
-             so no existing list module could be reused): this APG class has no class-skill \
-             list, no domain power (Inquisitor casts divine spells and gets one domain, but the \
-             domain only ever grants spell-list access -- no domain power exists for Inquisitor \
-             per the corpus), Orisons are folded into the general known-spell posture above \
-             rather than named separately, and no other named class feature (Detect Alignment, \
-             Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's Sense Motive \
-             half, Second/Third Judgment, Greater Bane -- the latter two are DESC-only \
-             multipliers on already-grounded mechanics with no independent numeric magnitude of \
-             their own) grounded anywhere in this codebase yet; no class-feature or spell \
-             execution is fabricated in this bounded chassis baseline"
->>>>>>> a1c9282e (feat(v0.6): Inquisitor spellcasting, Bane pool, and full Judgment widening (task #47))
+             half, Monster Lore, Cunning Initiative, Track, Bane's pool size, the Good domain's \
+             Touch of Good, and its own known-spell posture (a real, independently-verified \
+             219-spell list, levels 0-6 -- the real CLASS:Inquisitor record carries no \
+             SPELLLIST token, unlike Hunter/Oracle, so no existing list module could be \
+             reused): this APG class has no class-skill list, no domain power for any domain \
+             but Good (named separately as its own domain-powers burden), Orisons are folded \
+             into the general known-spell posture above rather than named separately, and no \
+             other named class feature (Detect Alignment, Discern Lies, Exploit Weakness, Solo \
+             Tactics, Stalwart, Stern Gaze's Sense Motive half, Second/Third Judgment, Greater \
+             Bane -- the latter two are DESC-only multipliers on already-grounded mechanics \
+             with no independent numeric magnitude of their own) grounded anywhere in this \
+             codebase yet; no class-feature or spell execution is fabricated in this bounded \
+             chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -43902,21 +43888,14 @@ mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-<<<<<<< HEAD
         HeadlessReceiptStatus, FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION,
         INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
-        INQUISITOR_JUDGMENT_CHOICE_ID, INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID,
-        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
-        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GOOD_ABILITY_ID,
-=======
-        HeadlessReceiptStatus, FIGHTER_CLASS_ID, INQUISITOR_CLASS_ID,
-        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
+        INQUISITOR_JUDGMENT_CHOICE_ID,
         INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID, INQUISITOR_JUDGMENT_HEALING_SELECTION_ID,
         INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID,
-        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
         INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID, INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID,
-        INQUISITOR_JUDGMENT_PURITY_SELECTION_ID, INQUISITOR_JUDGMENT_SMITING_SELECTION_ID,
->>>>>>> a1c9282e (feat(v0.6): Inquisitor spellcasting, Bane pool, and full Judgment widening (task #47))
+        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GOOD_ABILITY_ID,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
