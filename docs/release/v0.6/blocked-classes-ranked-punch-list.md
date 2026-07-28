@@ -283,6 +283,26 @@ Honest framing: because all four classes are claim-blocked anyway, this is a
 of the four are Hunter, Monk and Inquisitor — the classes nearest to unblocking
 — so it becomes user-visible precisely when they close. Fix it before, not after.
 
+#### Implementation scope for this fix (added 2026-07-28)
+
+The three predicates are at `pilot_compute.rs:33024`
+(`selected_skill_climb_is_class_skill`), `:33048` (`_intimidate_`) and `:33071`
+(`_swim_`). Each needs one added match arm per class — 12 arms total, Monk /
+Inquisitor / Hunter / Skald across all three.
+
+**The hazard is not breakage, it is inertness.** I checked for tests asserting
+the current (wrong) behaviour and found none: no test suite for any of the four
+classes allocates skill ranks at all, and no test references `skill:climb`,
+`skill:swim` or `skill:intimidate` for them. So the change breaks nothing —
+and equally, **nothing in the existing suite proves it works.** Shipping it
+against a green run would be an uninformative pass of exactly the shape flagged
+in the standing "a perturbation that fails to fire proves nothing" rule.
+
+Whoever takes this must add fixtures that allocate ranks in Climb/Intimidate/Swim
+for each of the four classes and assert the +3 lands, then perturb (remove the
+class arm) and confirm the assertion fails. Without that, the fix is
+unverifiable rather than verified.
+
 Also worth recording: Bloodrager's class-skill grounding rests on **DESC prose,
 not a `CSKILL:` token** — ACG carries no `CSKILL:` on any class line, and
 Bloodrager's ability record encodes its 11 skills only in `DESC:`. That is the
