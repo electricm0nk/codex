@@ -6,6 +6,7 @@ pub mod cleric_spell_list;
 pub mod druid_spell_list;
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod weapon_tables;
 pub mod feat_data;
 pub mod feats;
 pub mod json_cache;
