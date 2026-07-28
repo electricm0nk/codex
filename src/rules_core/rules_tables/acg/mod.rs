@@ -621,7 +621,15 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
         AcgClassId::Skald | AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 6,
         AcgClassId::Warpriest => 5,
-        AcgClassId::Investigator => 8,
+        // Investigator rose 8 -> 9 with task #58: Resiliency, a genuinely
+        // separate `KEY:Investigator ~ Rogue Talent ~ Resiliency` record
+        // (own formula, `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`,
+        // own level variable, own choice-gated recognition), drawn from
+        // Investigator's own explicit 40-record Rogue Talent whitelist --
+        // added on top of the already-landed Trapfinding/Trap Sense/
+        // Inspiration/Poison Resistance/Alchemy/spellcasting/Studied
+        // Combat/Studied Strike 8.
+        AcgClassId::Investigator => 9,
         AcgClassId::Brawler => 9,
         AcgClassId::Swashbuckler => 12,
     };

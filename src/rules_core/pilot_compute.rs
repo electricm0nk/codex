@@ -2580,6 +2580,21 @@ const INVESTIGATOR_STUDIED_DEFENSE_LEVEL: u8 = 9;
 const INVESTIGATOR_STUDIED_DEFENSE_CHOICE_ID: &str = "choice:investigator_studied_defense";
 const INVESTIGATOR_STUDIED_DEFENSE_SELECTION: &str = "studied_defense:armor_class";
 
+/// PF1 Advanced Class Guide level gate of the Investigator's FIRST talent:
+/// "At 3rd level, and every two levels thereafter, an investigator gains
+/// an investigator talent" -- genuinely DIFFERENT cadence from Rogue's own
+/// 2/4/6/8..., verified independently (not assumed by analogy). Investigator
+/// draws Resiliency from its own explicit 40-record whitelist of
+/// `KEY:Investigator ~ Rogue Talent ~ *` records (`acg_abilities_class.lst`)
+/// -- a genuinely separate corpus record from Rogue's own copy, with its
+/// own level variable (`BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`, not
+/// `RogueTalentLVL`). Only Resiliency is recognized here (task #58); the
+/// other 39 whitelist entries and every other Investigator Talent stay
+/// named-but-unproven, the same open-ended-chooser posture Rogue's own
+/// talent slots carry for every OTHER talent besides Resiliency.
+const INVESTIGATOR_TALENT_GRANT_LEVEL: u8 = 3;
+const INVESTIGATOR_TALENT_CHOICE_ID: &str = "choice:investigator_talent";
+
 /// v0.6 alpha swarm, risks item 8 (Witch full-build closure, 11th
 /// ACG/APG class-specific closure): APG Witch, verified directly against
 /// `apg_classes.lst`'s own `SPELLSTAT:INT` token (no `SPELLLIST:` reuse
@@ -14497,6 +14512,38 @@ fn ground_or_block_investigator_class_features(
         });
     }
 
+    // Resiliency (task #58, v0.6 alpha swarm): Investigator's OWN separate
+    // copy of the Rogue Talent, drawn from its explicit 40-record
+    // `KEY:Investigator ~ Rogue Talent ~ *` whitelist. Genuinely different
+    // corpus record from Rogue's own copy -- `BONUS:VAR|ResiliencyHitPoints|
+    // InvestigatorLVL`, not `RogueTalentLVL` -- gated on Investigator's own
+    // talent chooser and its own real 3/5/7/9... grant cadence, not Rogue's.
+    if level >= INVESTIGATOR_TALENT_GRANT_LEVEL
+        && choice_selection(input, INVESTIGATOR_TALENT_CHOICE_ID) == Some(RESILIENCY_TALENT_SELECTION)
+    {
+        let temp_hp = crate::rules_core::durability::investigator_resiliency_temp_hp(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.investigator.resiliency_temp_hp".to_owned(),
+            value: temp_hp,
+            detail: format!(
+                "Investigator level {level} selected the Resiliency talent (from her own Rogue \
+                 Talent whitelist): once per day, when brought below 0 hit points, she can gain \
+                 {temp_hp} temporary hit points (equal to her investigator level, \
+                 `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`, a separate corpus record from \
+                 Rogue's own copy, no PRE gate) as an immediate action, lasting 1 minute. This \
+                 grounds the magnitude only: the once-per-day budget and the \"brought below 0 \
+                 hit points\" trigger are named but not enforced -- no once-per-day activation \
+                 tracker and no HP-threshold trigger engine exists anywhere in this codebase \
+                 (the same honest-gap idiom already used for Skald's Raging Song rounds-per-\
+                 day). No temporary-hit-point total exists anywhere in this codebase or its \
+                 downstream apps/desktop/src-tauri character_hub.rs consumer (which tracks \
+                 only max_hp/current_hp), so this grounds as a standalone flat magnitude rather \
+                 than a false integration claim, the same honest-gap idiom already used for \
+                 Witch's Ward hex"
+            ),
+        });
+    }
+
     let trapfinding_bonus = investigator_trapfinding_bonus(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.investigator.trapfinding_bonus".to_owned(),
@@ -14631,16 +14678,19 @@ fn push_investigator_other_features_deferred_diagnostic(
         message: format!(
             "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
              chassis pillar, Trapfinding, Trap Sense, Inspiration's flat pool-size fact, Poison \
-             Resistance, Alchemy, and (subject to its own real prepared-extract validation) \
-             spellcasting: Inspiration's actual spend (a free/two-use action on skill/ability/\
-             attack/save rolls, plus the free Knowledge/Linguistics/Spellcraft interaction), \
-             Investigator Talents (a chooser-list of real mechanical variety including the large \
-             Rogue Talent and Discovery sub-lists), Studied Combat, Studied Strike (both \
-             opponent-dependent, deferred pending an opponent-tracking pillar, ruled \
-             consistently with Slayer's own Studied Target), Keen Recollection, Poison Lore, \
-             Swift Alchemy, True Inspiration, and every other named class feature remain \
-             ungrounded anywhere in this codebase; no class-feature or spell execution is \
-             fabricated in this bounded chassis baseline"
+             Resistance, Alchemy, Resiliency's own temporary-hit-point magnitude (task #58, \
+             recognized via her own separate Rogue Talent whitelist choice slot -- only \
+             Resiliency, not the other 39 whitelist entries), and (subject to its own real \
+             prepared-extract validation) spellcasting: Inspiration's actual spend (a \
+             free/two-use action on skill/ability/attack/save rolls, plus the free \
+             Knowledge/Linguistics/Spellcraft interaction), the remainder of Investigator \
+             Talents (a chooser-list of real mechanical variety including the large Rogue \
+             Talent and Discovery sub-lists, Resiliency alone excepted), Studied Combat, \
+             Studied Strike (both opponent-dependent, deferred pending an opponent-tracking \
+             pillar, ruled consistently with Slayer's own Studied Target), Keen Recollection, \
+             Poison Lore, Swift Alchemy, True Inspiration, and every other named class feature \
+             remain ungrounded anywhere in this codebase; no class-feature or spell execution \
+             is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -25070,6 +25120,17 @@ const ROGUE_CLASS_ID: &str = "class:rogue";
 const ROGUE_TALENT_GRANT_LEVEL: u8 = 2;
 const ROGUE_TALENT_CHOICE_ID: &str = "choice:rogue_talent";
 
+/// The Resiliency rogue talent's selection id (task #58, v0.6 alpha
+/// swarm), used across every numbered Rogue talent choice slot AND
+/// Investigator's own separate talent chooser (`INVESTIGATOR_TALENT_
+/// CHOICE_ID`) -- the same talent, two classes' pools, distinguished by
+/// which `choice_set_id` it is found under, not by a per-class selection
+/// string. Matches the pre-existing `talent:resiliency` fixture value
+/// already used by `tests/sd25_rogue_level_up_explanation_filter_audit.rs`
+/// (slot 5, rogue level 10), so this grounding recognizes that exact
+/// fixture rather than inventing a second naming convention.
+const RESILIENCY_TALENT_SELECTION: &str = "talent:resiliency";
+
 /// PF1 Core Rulebook level gate of the Rogue's SECOND talent — the first
 /// "additional rogue talent for every 2 levels of rogue attained after 2nd
 /// level" lands at rogue level 4. A numbered choice slot per the proven
@@ -25874,6 +25935,50 @@ fn explain_rogue_level1_chassis(
                  the numbered choice slot only (open-ended raw string, no talent-list \
                  validation): the selected talent's own effect is not computed — no \
                  talent-effect engine exists in this codebase"
+            ),
+        });
+    }
+
+    // Resiliency (task #58, v0.6 alpha swarm): the one tokened talent this
+    // codebase actually computes a magnitude for, recognized across EVERY
+    // numbered slot above (not just the first) -- a rogue could take it at
+    // any of her ten possible talent picks. `cr_abilities_class.lst`'s own
+    // `KEY:Rogue Talent ~ Resiliency` record: `BONUS:VAR|ResiliencyHitPoints|
+    // RogueTalentLVL`, and `RogueTalentLVL` resolves to the rogue's own
+    // class level with no `PRE` gate at all. Each slot's own grant_level is
+    // honored (a selection sitting in a not-yet-unlocked slot does not
+    // ground), mirroring the open-ended recognition's own per-slot gating
+    // immediately above rather than trusting the selection independent of
+    // level.
+    let resiliency_slot = [
+        (ROGUE_TALENT_GRANT_LEVEL, ROGUE_TALENT_CHOICE_ID),
+        (ROGUE_SECOND_TALENT_GRANT_LEVEL, ROGUE_SECOND_TALENT_CHOICE_ID),
+    ]
+    .into_iter()
+    .chain(additional_talent_slots.iter().map(|(_, grant_level, choice_id)| (*grant_level, *choice_id)))
+    .find(|(grant_level, choice_id)| {
+        level >= *grant_level && choice_selection(input, choice_id) == Some(RESILIENCY_TALENT_SELECTION)
+    });
+
+    if resiliency_slot.is_some() {
+        let temp_hp = crate::rules_core::durability::rogue_resiliency_temp_hp(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.resiliency_temp_hp".to_owned(),
+            value: temp_hp,
+            detail: format!(
+                "Rogue level {level} selected the Resiliency talent: once per day, when \
+                 brought below 0 hit points, she can gain {temp_hp} temporary hit points \
+                 (equal to her rogue level, `BONUS:VAR|ResiliencyHitPoints|RogueTalentLVL`, no \
+                 PRE gate) as an immediate action, lasting 1 minute. This grounds the \
+                 magnitude only: the once-per-day budget and the \"brought below 0 hit \
+                 points\" trigger are named but not enforced -- no once-per-day activation \
+                 tracker and no HP-threshold trigger engine exists anywhere in this codebase \
+                 (the same honest-gap idiom already used for Skald's Raging Song rounds-per-\
+                 day). No temporary-hit-point total exists anywhere in this codebase or its \
+                 downstream apps/desktop/src-tauri character_hub.rs consumer (which tracks \
+                 only max_hp/current_hp), so this grounds as a standalone flat magnitude \
+                 rather than a false integration claim, the same honest-gap idiom already \
+                 used for Witch's Ward hex"
             ),
         });
     }
@@ -47750,6 +47855,188 @@ mod opponent_conditioned_tier_zero_tests {
         assert!(
             penalty.detail.to_lowercase().contains("except against"),
             "the AC penalty is scoped to everyone EXCEPT the target: {penalty:?}"
+        );
+    }
+}
+
+/// Task #58 (v0.6 alpha swarm): the Resiliency rogue talent, grounded for
+/// BOTH classes that can take it -- Rogue's own copy (`cr_abilities_class
+/// .lst`, `KEY:Rogue Talent ~ Resiliency`) and Investigator's separate
+/// copy drawn from its own explicit 40-record `KEY:Investigator ~ Rogue
+/// Talent ~ *` whitelist (`acg_abilities_class.lst`). Two distinct corpus
+/// records, two distinct level variables (`RogueTalentLVL` vs
+/// `InvestigatorLVL`), so two distinct grounding paths, not a shared
+/// formula.
+#[cfg(test)]
+mod resiliency_talent_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, FIGHTER_CLASS_ID,
+        INVESTIGATOR_CLASS_ID, INVESTIGATOR_TALENT_CHOICE_ID, RESILIENCY_TALENT_SELECTION,
+        ROGUE_CLASS_ID, ROGUE_TALENT_CHOICE_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn character(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// Nothing is seeded without an explicit choice -- Resiliency is a
+    /// pick among many rogue talents, never a silent default.
+    #[test]
+    fn rogue_resiliency_grounds_only_when_explicitly_selected() {
+        let without = character(ROGUE_CLASS_ID, 10);
+        assert_eq!(
+            value(&without, "class_feature.rogue.resiliency_temp_hp"),
+            None,
+            "nothing is seeded without an explicit talent choice"
+        );
+
+        let mut with = without.clone();
+        with.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ROGUE_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&with, "class_feature.rogue.resiliency_temp_hp"),
+            Some(10),
+            "level 10 Rogue: ResiliencyHitPoints = RogueTalentLVL = 10"
+        );
+    }
+
+    /// Recognized across EVERY numbered talent slot, not just the first
+    /// -- a rogue could take Resiliency at any of her ten possible slots.
+    #[test]
+    fn rogue_resiliency_is_recognized_in_any_numbered_talent_slot() {
+        let mut input = character(ROGUE_CLASS_ID, 20);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:rogue_talent_10".to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.rogue.resiliency_temp_hp"),
+            Some(20),
+            "slot 10 (level-20 grant) must be recognized just like slot 1"
+        );
+    }
+
+    /// A slot filled with Resiliency BEFORE that slot's own grant level is
+    /// reached must not ground -- a genuinely inconsistent input, not a
+    /// valid early activation. Slot 10 grants at level 20; this input is
+    /// only level 19.
+    #[test]
+    fn rogue_resiliency_respects_its_own_slots_grant_level() {
+        let mut input = character(ROGUE_CLASS_ID, 19);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:rogue_talent_10".to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.rogue.resiliency_temp_hp"),
+            None,
+            "slot 10 has not been granted yet at level 19"
+        );
+    }
+
+    /// A non-Rogue never grounds this explanation, even carrying the
+    /// exact matching choice/selection pair.
+    #[test]
+    fn non_rogue_never_grounds_rogue_resiliency() {
+        let mut input = character(FIGHTER_CLASS_ID, 10);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ROGUE_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(value(&input, "class_feature.rogue.resiliency_temp_hp"), None);
+    }
+
+    /// Investigator's own separate copy: `ResiliencyHitPoints =
+    /// InvestigatorLVL`, gated on its own talent chooser
+    /// (`choice:investigator_talent`), starting at investigator level 3
+    /// (the class's real first talent-grant level -- 3/5/7/9..., NOT
+    /// Rogue's own 2/4/6/8... cadence).
+    #[test]
+    fn investigator_resiliency_grounds_only_when_explicitly_selected() {
+        let without = character(INVESTIGATOR_CLASS_ID, 10);
+        assert_eq!(
+            value(&without, "class_feature.acg.investigator.resiliency_temp_hp"),
+            None,
+            "nothing is seeded without an explicit talent choice"
+        );
+
+        let mut with = without.clone();
+        with.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&with, "class_feature.acg.investigator.resiliency_temp_hp"),
+            Some(10),
+            "level 10 Investigator: ResiliencyHitPoints = InvestigatorLVL = 10, NOT RogueTalentLVL"
+        );
+    }
+
+    /// The investigator talent chooser is not available before level 3
+    /// (Investigator's own first talent-grant level -- distinct from
+    /// Rogue's level-2 cadence).
+    #[test]
+    fn investigator_resiliency_respects_its_own_level_3_talent_gate() {
+        let mut input = character(INVESTIGATOR_CLASS_ID, 2);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&input, "class_feature.acg.investigator.resiliency_temp_hp"),
+            None,
+            "investigator talents are not available before level 3"
+        );
+    }
+
+    /// A non-Investigator never grounds the Investigator-prefixed
+    /// explanation, even carrying the exact matching choice/selection.
+    #[test]
+    fn non_investigator_never_grounds_investigator_resiliency() {
+        let mut input = character(FIGHTER_CLASS_ID, 10);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(value(&input, "class_feature.acg.investigator.resiliency_temp_hp"), None);
+    }
+
+    /// The two classes' copies are genuinely independent records: an
+    /// Investigator carrying a selection under Rogue's OWN choice id does
+    /// not leak into the Investigator-side grounding -- each side only
+    /// reads its own `choice_set_id`.
+    #[test]
+    fn the_two_copies_do_not_cross_react_on_choice_set_id() {
+        let mut investigator = character(INVESTIGATOR_CLASS_ID, 10);
+        investigator.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ROGUE_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        assert_eq!(
+            value(&investigator, "class_feature.acg.investigator.resiliency_temp_hp"),
+            None,
+            "an Investigator's Rogue-choice-id selection must not ground the Investigator record"
         );
     }
 }

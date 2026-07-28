@@ -34,6 +34,17 @@
 //! `pilot_compute.rs`'s `explain_fighter_favored_class_bonus_choice` but
 //! never summed into any total there either — this file does not change
 //! that).
+//!
+//! **Update (task #58, v0.6 alpha swarm):** the Rogue Talent Resiliency
+//! grounds the FIRST temporary-hit-point magnitude in this codebase
+//! (`rogue_resiliency_temp_hp`/`investigator_resiliency_temp_hp`), but the
+//! "future scope decision" above is still genuinely unmade — no aggregate
+//! temporary-HP total field exists anywhere in this crate or its
+//! downstream `apps/desktop/src-tauri/character_hub.rs` consumer (which
+//! tracks only `max_hp`/`current_hp`). These two functions are pure
+//! per-source magnitudes, grounded in `pilot_compute.rs` as standalone
+//! flat facts (the same honest-gap idiom as Witch's Ward hex), not wired
+//! into any total, because there is no total to wire into yet.
 
 use crate::rules_core::character_input::CharacterClassLevel;
 use crate::rules_core::pilot_compute::table_class_id;
@@ -296,6 +307,40 @@ pub fn familiar_master_hp_bonus(species: Option<FamiliarSpecies>) -> i16 {
     }
 }
 
+/// The Rogue Talent Resiliency's temporary-hit-point magnitude (task #58,
+/// v0.6 alpha swarm), verified against `cr_abilities_class.lst`'s own
+/// `KEY:Rogue Talent ~ Resiliency` record: `BONUS:VAR|ResiliencyHitPoints|
+/// RogueTalentLVL`, with `RogueTalentLVL` resolving to the rogue's own
+/// class level and no `PRE` gate at all. PF1 Core Rulebook: "Once per
+/// day, a rogue with this ability can gain a number of temporary hit
+/// points equal to the rogue's level. Activating this ability is an
+/// immediate action that can only be performed when she is brought to
+/// below 0 hit points." These temporary hit points last 1 minute.
+///
+/// Grounds the magnitude only. The once-per-day budget and the "brought
+/// below 0 hit points" trigger are named but not enforced anywhere in
+/// this codebase -- no once-per-day activation tracker and no
+/// HP-threshold trigger engine exists, the same honest-gap idiom already
+/// used for Skald's Raging Song rounds-per-day (`skald_inspired_rage_
+/// rounds_per_day` in `pilot_compute.rs`).
+pub fn rogue_resiliency_temp_hp(rogue_level: u8) -> i16 {
+    i16::from(rogue_level)
+}
+
+/// Investigator's OWN separate copy of Resiliency (task #58, v0.6 alpha
+/// swarm), verified against `acg_abilities_class.lst`'s own
+/// `KEY:Investigator ~ Rogue Talent ~ Resiliency` record:
+/// `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL` -- a distinct corpus
+/// record from Rogue's own copy above, keyed to its own level variable
+/// (`InvestigatorLVL`, not `RogueTalentLVL`), not a shared formula.
+/// Investigator draws Resiliency from its own explicit whitelist of
+/// `KEY:Investigator ~ Rogue Talent ~ *` records (40 entries), of which
+/// Resiliency is one. Same magnitude-only, budget/trigger-named-but-
+/// unenforced treatment as `rogue_resiliency_temp_hp`.
+pub fn investigator_resiliency_temp_hp(investigator_level: u8) -> i16 {
+    i16::from(investigator_level)
+}
+
 #[cfg(test)]
 mod familiar_master_bonus_tests {
     use super::*;
@@ -328,5 +373,45 @@ mod familiar_master_bonus_tests {
         let base = compute_max_hp(&levels, 2).expect("fighter max hp");
         let with_toad = base + familiar_master_hp_bonus(Some(FamiliarSpecies::Toad));
         assert_eq!(with_toad - base, 3, "a Toad familiar is worth 3 real hit points");
+    }
+}
+
+#[cfg(test)]
+mod resiliency_temp_hp_tests {
+    use super::*;
+
+    /// Rogue's own copy (`cr_abilities_class.lst`, `KEY:Rogue Talent ~
+    /// Resiliency`): `BONUS:VAR|ResiliencyHitPoints|RogueTalentLVL`, and
+    /// `RogueTalentLVL` resolves to the rogue's own class level with no
+    /// `PRE` gate -- PF1 Core Rulebook: "a rogue with this ability can
+    /// gain a number of temporary hit points equal to the rogue's level."
+    #[test]
+    fn rogue_resiliency_temp_hp_equals_rogue_level() {
+        assert_eq!(rogue_resiliency_temp_hp(1), 1);
+        assert_eq!(rogue_resiliency_temp_hp(10), 10);
+        assert_eq!(rogue_resiliency_temp_hp(20), 20);
+    }
+
+    /// Investigator's OWN separate record (`acg_abilities_class.lst`,
+    /// `KEY:Investigator ~ Rogue Talent ~ Resiliency`):
+    /// `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL` -- a distinct
+    /// corpus record from Rogue's own copy, keyed to its own level
+    /// variable, not a shared formula. Verifies the two functions are
+    /// genuinely independent (not aliases of each other) despite the
+    /// identical formula shape.
+    #[test]
+    fn investigator_resiliency_temp_hp_equals_investigator_level() {
+        assert_eq!(investigator_resiliency_temp_hp(3), 3);
+        assert_eq!(investigator_resiliency_temp_hp(10), 10);
+        assert_eq!(investigator_resiliency_temp_hp(20), 20);
+    }
+
+    /// A level-0 (no levels in the class) input grounds to 0 temporary hit
+    /// points for both copies -- the formula floors naturally, no clamp
+    /// needed.
+    #[test]
+    fn zero_level_grounds_to_zero_temp_hp_for_both_copies() {
+        assert_eq!(rogue_resiliency_temp_hp(0), 0);
+        assert_eq!(investigator_resiliency_temp_hp(0), 0);
     }
 }

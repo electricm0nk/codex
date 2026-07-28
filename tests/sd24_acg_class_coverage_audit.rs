@@ -239,8 +239,8 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         (
             AcgClassId::Investigator,
             "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy \
-             + spellcasting + Studied Combat + Studied Strike",
-            8,
+             + spellcasting + Studied Combat + Studied Strike + Resiliency",
+            9,
         ),
         // The Spirit slot covers all ten spirits (mutually-exclusive
         // variants of one choice, so they fold rather than each earning a
