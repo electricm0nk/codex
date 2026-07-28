@@ -338,7 +338,20 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
 
         let expected_diagnostic_id = match class_id {
             AcgClassId::Hunter => {
-                format!("class_feature.acg.{}.spellcasting_deferred.unsupported", class_id.name())
+                // v0.6 alpha swarm, task #44 (Hunter spellcasting
+                // closure): Hunter's own known-spell posture is now
+                // genuinely validated (the union of the Druid and Ranger
+                // general spell lists, take-the-lower on a level
+                // conflict, the Hunter Spells Known table, and the six
+                // automatic Summon Nature's Ally grants), so the
+                // diagnostic is renamed from `spellcasting_deferred` to
+                // `other_features_deferred`, mirroring Skald's own
+                // rename below once its own known-spell posture was
+                // genuinely validated.
+                format!(
+                    "class_feature.acg.{}.other_features_deferred.unsupported",
+                    class_id.name()
+                )
             }
             AcgClassId::Bloodrager => {
                 // v0.6 alpha swarm, task #1 (Bloodrager spellcasting

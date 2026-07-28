@@ -121,6 +121,7 @@ use super::character_input::{
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::acg::shaman_spell_list;
+use super::rules_tables::acg::hunter_spell_list;
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::apg::witch_spell_list;
@@ -18409,6 +18410,217 @@ fn apply_brawler_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
     active_brawler_ac_bonus(input).unwrap_or(0)
 }
 
+/// The six Summon Nature's Ally spells (I-VI) Hunter automatically knows,
+/// per `acg_classes.lst`'s own `CLASS:Hunter` record: `KNOWNSPELLS:Summon
+/// Nature's Ally I|II|III|IV|V|VI`. Real PF1 rule text: "In addition, a
+/// hunter adds the following spells to her list of spells known at the
+/// indicated levels, as normal spells of that level" -- an unconditional,
+/// automatic grant on top of the Hunter Spells Known table's own per-level
+/// count, not a budgeted choice the way the rest of a Hunter's known
+/// spells are. Every entry's level matches the union spell list's own
+/// resolution for that name (`hunter_spell_list::hunter_spell_level`),
+/// verified identical on both source lists, so this array is not a second,
+/// independently-drifting source of truth for those six levels.
+const HUNTER_AUTOMATIC_KNOWN_SPELLS: [(&str, u8); 6] = [
+    ("Summon Nature's Ally I", 1),
+    ("Summon Nature's Ally II", 2),
+    ("Summon Nature's Ally III", 3),
+    ("Summon Nature's Ally IV", 4),
+    ("Summon Nature's Ally V", 5),
+    ("Summon Nature's Ally VI", 6),
+];
+
+/// The PF1 Advanced Class Guide Hunter Spells Known table's row, one entry
+/// per spell level 0-6 (index 0 is orisons; `None` for an inaccessible
+/// "--" column). A literal table lookup transcribed directly from
+/// `acg_classes.lst`'s own `CLASS:Hunter` record's `KNOWN:` column of its
+/// "Level progression" block (levels 1-20 all present -- Hunter casts from
+/// 1st level, unlike Bloodrager's own level-4-gated posture). Mirrors
+/// `oracle_spells_known_table`'s/`sorcerer_spells_known_table`'s own
+/// shape: the cap on distinct spells KNOWN (permanent), not a per-day
+/// consumable resource. This is the cap on FREELY CHOSEN known spells
+/// only -- the six automatic Summon Nature's Ally grants above are on top
+/// of these counts, not counted against them (see
+/// `unmet_hunter_known_spell_conditions`'s own doc comment).
+///
+/// This bounded slice grounds the KNOWN column only, mirroring Oracle's
+/// own narrower shape exactly (`ground_oracle_known_spells` grounds no
+/// per-day slot totals either) -- the corpus's own CAST column (spells
+/// per day) stays a separately named, still-ungrounded burden.
+fn hunter_spells_known_table(level: u8) -> [Option<i16>; 7] {
+    match level {
+        1 => [Some(4), Some(3), None, None, None, None, None],
+        2 => [Some(5), Some(4), None, None, None, None, None],
+        3 => [Some(6), Some(5), None, None, None, None, None],
+        4 => [Some(6), Some(5), Some(3), None, None, None, None],
+        5 => [Some(6), Some(5), Some(4), None, None, None, None],
+        6 => [Some(6), Some(5), Some(5), None, None, None, None],
+        7 => [Some(6), Some(6), Some(5), Some(3), None, None, None],
+        8 => [Some(6), Some(6), Some(5), Some(4), None, None, None],
+        9 => [Some(6), Some(6), Some(5), Some(5), None, None, None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3), None, None],
+        11 => [Some(6), Some(7), Some(6), Some(5), Some(4), None, None],
+        12 => [Some(6), Some(7), Some(6), Some(5), Some(5), None, None],
+        13 => [Some(6), Some(7), Some(6), Some(6), Some(5), Some(3), None],
+        14 => [Some(6), Some(7), Some(7), Some(6), Some(5), Some(4), None],
+        15 => [Some(6), Some(7), Some(7), Some(6), Some(5), Some(5), None],
+        16 => [Some(6), Some(7), Some(7), Some(6), Some(6), Some(5), Some(3)],
+        17 => [Some(6), Some(7), Some(7), Some(7), Some(6), Some(5), Some(4)],
+        18 => [Some(6), Some(7), Some(7), Some(7), Some(6), Some(5), Some(5)],
+        19 => [Some(6), Some(7), Some(7), Some(7), Some(6), Some(6), Some(5)],
+        20 => [Some(6), Some(7), Some(7), Some(7), Some(7), Some(6), Some(6)],
+        _ => [None, None, None, None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for Hunter's real known-spell
+/// posture, mirroring `unmet_oracle_known_spell_conditions`'s own shape
+/// exactly, substituting Hunter's own 1-20 table and
+/// `hunter_spell_list::hunter_spell_level` (the union of the Druid and
+/// Ranger general lists, take-the-lower on a level conflict, already
+/// bounded to Hunter's own 6th-level ceiling) for the per-spell-id level
+/// lookup. An empty list means the posture is fully valid; zero known
+/// spells is always valid, same reasoning as Sorcerer's/Oracle's own
+/// posture -- this check only inspects `AcquisitionMode::Known` freely
+/// chosen selections. The six automatic Summon Nature's Ally grants are
+/// never subject to this cap check at all: they are unconditional on
+/// class ownership and level alone (see `ground_hunter_known_spells`),
+/// exactly mirroring how Wild Empathy and Animal Focus are ungated by
+/// `spells_selected`.
+fn unmet_hunter_known_spell_conditions(input: &CharacterInput, hunter_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == HUNTER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let known_table = hunter_spells_known_table(hunter_level);
+
+    let mut known_per_level: [i16; 7] = [0; 7];
+    for spell_id in &known {
+        let Some(spell_level) = hunter_spell_list::hunter_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 Hunter spell list (the union of \
+                 the Druid and Ranger general lists, bounded to Hunter's own 6th-level ceiling)"
+            ));
+            continue;
+        };
+        if usize::from(spell_level) >= known_table.len() {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at hunter level {hunter_level}"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Hunter Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real known-spell posture once
+/// `unmet_hunter_known_spell_conditions` reports an empty unmet list,
+/// mirroring `ground_oracle_known_spells`'s own shape exactly, plus a
+/// second, unconditional record for the six automatic Summon Nature's
+/// Ally spells (v0.6 alpha swarm, task #44).
+fn ground_hunter_known_spells(
+    input: &CharacterInput,
+    hunter_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| s.source_class_id == HUNTER_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.hunter.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Hunter level {hunter_level} freely chosen known-spell selection ({} spells, \
+             AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
+             Hunter spell list (`hunter_spell_list::hunter_spell_level`, the union of the Druid \
+             and Ranger general lists, take-the-lower on a level conflict, bounded to Hunter's \
+             own 6th-level ceiling) and the Hunter Spells Known table's own per-level cap for \
+             levels 1-20. Real PF1 Hunter rules have no daily preparation step at all (Hunter is \
+             a spontaneous, not prepared, caster) -- a hunter's known spells are permanent once \
+             learned, cast spontaneously. This grounds the freely chosen known-spell selection \
+             for real; it computes no spell save DC resolution against a target and no casting \
+             execution",
+            known.len(),
+            known.join(", ")
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.acg.hunter.automatic_summon_natures_ally_known_spells".to_owned(),
+        value: HUNTER_AUTOMATIC_KNOWN_SPELLS.len() as i16,
+        detail: format!(
+            "Hunter level {hunter_level} automatically knows all six Summon Nature's Ally \
+             spells (I-VI, spell levels 1-6) per `acg_classes.lst`'s own \
+             `KNOWNSPELLS:Summon Nature's Ally I|II|III|IV|V|VI` token: {}. This grant is \
+             unconditional on class ownership alone (no `spells_selected` entry is required, \
+             the same \"always on\" shape as Wild Empathy) and adds to the Hunter Spells Known \
+             table's own per-level counts above rather than consuming a slot from them -- real \
+             PF1 rule text: \"a hunter adds the following spells to her list of spells known ... \
+             as normal spells of that level\"",
+            HUNTER_AUTOMATIC_KNOWN_SPELLS
+                .iter()
+                .map(|(name, _)| *name)
+                .collect::<Vec<_>>()
+                .join(", ")
+        ),
+    });
+}
+
+/// Top-level dispatch for Hunter's known-spell posture (v0.6 alpha swarm,
+/// task #44): grounds the real posture once
+/// `unmet_hunter_known_spell_conditions` reports an empty unmet list,
+/// otherwise pushes the narrower `class_spell.acg.hunter.known_spells
+/// .unsupported` claim-blocking diagnostic, mirroring
+/// `ground_or_block_oracle_class_features`'s own known-spell dispatch
+/// shape exactly.
+fn ground_or_block_hunter_known_spells(
+    input: &CharacterInput,
+    hunter_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let known_spell_unmet = unmet_hunter_known_spell_conditions(input, hunter_level);
+    if known_spell_unmet.is_empty() {
+        ground_hunter_known_spells(input, hunter_level, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.acg.hunter.known_spells.unsupported".to_owned(),
+            message: format!(
+                "Hunter remains blocked on its known-spell posture burden: {}",
+                known_spell_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+}
+
 /// Grounds Hunter's 1st-level Animal Companion (v0.6 alpha swarm, risks
 /// item 8, fourth APG/ACG closure) by reusing the exact Wolf stat-block
 /// math Druid's own closure already verified and shipped -- the corpus
@@ -18420,17 +18632,28 @@ fn apply_brawler_ac_bonus_to_combat_baseline(input: &CharacterInput) -> i16 {
 /// own doc comment for why this is unconditional, unlike Druid's own
 /// Nature-Bond-choice-gated version).
 ///
-/// Hunter casts (from the Druid/Ranger spell lists, restricted to Summon
-/// Nature's Ally spells only per the corpus's own `KNOWNSPELLS` token --
-/// a narrower and structurally different known-spell list than either
-/// Druid's or Ranger's own, not yet independently verified or built) and
-/// has its own remaining named features (Animal Focus, Nature Training,
-/// Wild Empathy, Precise Companion) still ungrounded -- stays claim-
-/// blocked via the new, narrower
-/// `class_feature.acg.hunter.spellcasting_deferred.unsupported`
-/// diagnostic, replacing the generic `class_feature.acg.hunter
-/// .unsupported` diagnostic for Hunter specifically, mirroring Skald's
-/// and Bloodrager's own diagnostic-honesty fix.
+/// **Correction (v0.6 alpha swarm, task #44):** the known-spell posture
+/// named below as still-missing is now real. `SPELLLIST:2|Druid|Ranger`
+/// on Hunter's own `CLASS:Hunter` record means Hunter's castable list is
+/// the UNION of the Druid and Ranger general lists (not restricted to
+/// Summon Nature's Ally spells the way an earlier version of this comment
+/// claimed -- `KNOWNSPELLS:Summon Nature's Ally I|II|III|IV|V|VI` only
+/// grants those six spells automatically, on top of the union list, it
+/// does not narrow the list itself). See `hunter_spell_list.rs` and
+/// `ground_or_block_hunter_known_spells` for the real grounding: the
+/// union spell list, the take-the-lower-level ruling for the 27 spells
+/// whose level conflicts between the two source lists, the Hunter Spells
+/// Known table (levels 1-20), and the six automatic Summon Nature's Ally
+/// grants. Hunter's own remaining named features (Animal Focus, Nature
+/// Training, Precise Companion) and its per-day CAST-table slot totals,
+/// spell save DCs, and casting execution stay ungrounded -- stays claim-
+/// blocked via the
+/// `class_feature.acg.hunter.other_features_deferred.unsupported`
+/// diagnostic (renamed from `spellcasting_deferred` now that the
+/// known-spell posture is genuinely validated), replacing the generic
+/// `class_feature.acg.hunter.unsupported` diagnostic for Hunter
+/// specifically, mirroring Skald's and Bloodrager's own
+/// diagnostic-honesty fix.
 /// Hunter Wild Empathy's flat check-modifier magnitude: Hunter level +
 /// Charisma modifier (deepening 2026-07-26, task #2), verified directly
 /// against `acg_abilities_class.lst`'s own `CHA+HunterLVL` formula.
@@ -18640,20 +18863,31 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     });
     ground_hunter_wild_empathy(level, ability_modifiers, explanations);
     ground_or_block_hunter_animal_focus(input, level, explanations, diagnostics);
+    ground_or_block_hunter_known_spells(input, level, explanations, diagnostics);
+    // v0.6 alpha swarm, task #44: the known-spell posture is now genuinely
+    // validated (the union of the Druid and Ranger general spell lists,
+    // take-the-lower on a level conflict, the Hunter Spells Known table,
+    // and the six automatic Summon Nature's Ally grants -- see
+    // `ground_or_block_hunter_known_spells`), so this diagnostic is
+    // renamed from `spellcasting_deferred` to `other_features_deferred`,
+    // mirroring Skald's/Bloodrager's/Brawler's own diagnostic-honesty
+    // rename exactly once their own gating feature stopped being
+    // genuinely deferred.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.acg.hunter.spellcasting_deferred.unsupported".to_owned(),
+        id: "class_feature.acg.hunter.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{HUNTER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Animal Companion, Wild Empathy, and the Bull Animal Focus: this ACG class \
-             has no class-skill list, no spellcasting posture (Hunter casts a restricted Summon \
-             Nature's Ally-only known-spell list from the Druid/Ranger spell lists, but its own \
-             spells-known/per-day table numbers have not yet been independently verified or \
-             built), no Nature Training (a real corpus record with zero numeric BONUS of any \
-             kind -- a qualification flag only, no magnitude to ground), no Precise Companion, \
-             and no other 12 Animal Focus options (Bat, Bear, Falcon, Frog, Monkey, Mouse, Owl, \
-             Snake, Stag, Tiger, plus the \"No Ability\" sentinel) grounded anywhere in this \
-             codebase yet; no class-feature or spell execution is fabricated in this bounded \
-             chassis baseline"
+             pillar, Animal Companion, Wild Empathy, the Bull Animal Focus, and its known-spell \
+             posture (task #44 -- the union of the Druid and Ranger general spell lists, \
+             take-the-lower on the 27 spells whose level conflicts between those two lists, the \
+             Hunter Spells Known table for levels 1-20, and the six automatic Summon Nature's \
+             Ally grants): this ACG class still has no class-skill list, no per-day CAST-table \
+             slot totals, no spell save DC, no casting execution, no Nature Training (a real \
+             corpus record with zero numeric BONUS of any kind -- a qualification flag only, no \
+             magnitude to ground), no Precise Companion, and no other 12 Animal Focus options \
+             (Bat, Bear, Falcon, Frog, Monkey, Mouse, Owl, Snake, Stag, Tiger, plus the \"No \
+             Ability\" sentinel) grounded anywhere in this codebase yet; no class-feature or \
+             spell execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
@@ -37839,6 +38073,14 @@ mod acg_class_chassis_dispatch_tests {
     /// fourth APG/ACG closure): mirrors them, and additionally verifies
     /// the reused Wolf companion stat block is grounded under Hunter's
     /// own id prefix.
+    ///
+    /// **Updated (v0.6 alpha swarm, task #44):** Hunter's own known-spell
+    /// posture is now genuinely validated (see
+    /// `hunter_dispatch_widening_safety_tests` for the dedicated
+    /// known-spell tests), so -- mirroring Skald's/Bloodrager's/Brawler's
+    /// own rename precedent above -- the remaining claim-blocking
+    /// diagnostic is `other_features_deferred`, not the retired
+    /// `spellcasting_deferred` name.
     #[test]
     fn hunter_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
         let input = acg_style_input("class:hunter", 1);
@@ -37847,7 +38089,7 @@ mod acg_class_chassis_dispatch_tests {
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Hunter must stay Blocked on its deferred spellcasting posture alone: {:?}",
+            "Hunter must stay Blocked on its other deferred features alone: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -37860,13 +38102,33 @@ mod acg_class_chassis_dispatch_tests {
             receipt.computation.diagnostics
         );
         assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.spellcasting_deferred.unsupported"),
+            "the retired spellcasting_deferred diagnostic must never appear for Hunter now that \
+             the known-spell posture is genuinely validated: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"),
+            "zero freely chosen known spells is itself a valid posture, mirroring Oracle's/\
+             Sorcerer's own reasoning: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.acg.hunter.spellcasting_deferred.unsupported"
+                .any(|d| d.id == "class_feature.acg.hunter.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "expected the new narrower spellcasting_deferred diagnostic: {:?}",
+            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         let companion_hp = receipt
@@ -37884,6 +38146,13 @@ mod acg_class_chassis_dispatch_tests {
             "Hunter's reused companion HP must match Druid's own verified math: {:?}",
             companion_hp
         );
+        let automatic_sna = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.hunter.automatic_summon_natures_ally_known_spells")
+            .expect("the automatic Summon Nature's Ally grant must be grounded");
+        assert_eq!(automatic_sna.value, 6, "all six Summon Nature's Ally spells: {:?}", automatic_sna);
     }
 
     /// Arcanist's own counterpart to the Skald/Bloodrager/Brawler/Hunter
@@ -41914,12 +42183,12 @@ mod bloodrager_dispatch_widening_safety_tests {
 #[cfg(test)]
 mod hunter_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, HUNTER_ANIMAL_FOCUS_ABILITY_ID, HUNTER_ANIMAL_FOCUS_CHOICE_ID,
-        HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID, HUNTER_CLASS_ID,
+        build_pilot_headless_receipt, ActiveState, AcquisitionMode, CharacterClassLevel,
+        CharacterInput, HeadlessReceiptStatus, HUNTER_ANIMAL_FOCUS_ABILITY_ID,
+        HUNTER_ANIMAL_FOCUS_CHOICE_ID, HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID, HUNTER_CLASS_ID,
     };
     use crate::rules_core::character_input::{
-        load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
+        load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
     };
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -42101,6 +42370,252 @@ mod hunter_dispatch_widening_safety_tests {
             "no Bull bonus should be applied for an over-budget posture: {:?}",
             receipt.computation.explanations
         );
+    }
+
+    /// A bare level-1 Hunter (no freely chosen known spells) still
+    /// automatically knows all six Summon Nature's Ally spells -- that
+    /// grant is unconditional on class ownership alone, mirroring Wild
+    /// Empathy's own "always on" shape -- and zero freely chosen known
+    /// spells is itself a valid posture (mirrors Oracle's/Sorcerer's own
+    /// reasoning), so the known_spells diagnostic never fires (v0.6 alpha
+    /// swarm, task #44).
+    #[test]
+    fn single_class_hunter_bare_gets_the_six_automatic_summon_natures_ally_spells() {
+        let input = human_hunter_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"),
+            "zero freely chosen known spells is itself a valid posture: {:?}",
+            receipt.computation.diagnostics
+        );
+        let automatic = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.hunter.automatic_summon_natures_ally_known_spells")
+            .expect("expected the automatic Summon Nature's Ally grant to be grounded");
+        assert_eq!(automatic.value, 6, "all six Summon Nature's Ally spells: {:?}", automatic);
+        assert!(
+            automatic.detail.contains("Summon Nature's Ally I")
+                && automatic.detail.contains("Summon Nature's Ally VI"),
+            "detail should name the spells: {:?}",
+            automatic
+        );
+        let freely_chosen = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.hunter.known_spells")
+            .expect("expected the freely-chosen known-spell count to be grounded");
+        assert_eq!(freely_chosen.value, 0, "no spells were freely chosen: {:?}", freely_chosen);
+    }
+
+    /// A real, on-list spell recorded as a Hunter known spell grounds the
+    /// freely-chosen known-spell count for real (v0.6 alpha swarm, task
+    /// #44). `Cure Light Wounds` is Druid 1st-level, so it must be
+    /// accepted at Hunter level 1.
+    #[test]
+    fn single_class_hunter_with_a_real_known_spell_grounds_it() {
+        let mut input = human_hunter_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: HUNTER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"),
+            "the known_spells diagnostic must not fire once a real known spell is recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.hunter.known_spells")
+            .expect("known-spell count must be grounded");
+        assert_eq!(known.value, 1, "Hunter level 1 with one freely chosen known spell: {:?}", known);
+    }
+
+    /// `Cure Light Wounds` is Druid 1st-level / Ranger 2nd-level -- a real
+    /// conflicting entry (v0.6 alpha swarm, task #44). The take-the-lower
+    /// ruling must resolve it to 1st level: a level-1 Hunter recording it
+    /// grounds cleanly (only 1st-level slots are accessible at Hunter
+    /// level 1), proving the ruling end to end. If the ruling instead took
+    /// the HIGHER level (2nd), this same input would incorrectly
+    /// claim-block as "not yet accessible at hunter level 1", since a
+    /// Hunter Spells Known table has no 2nd-level column until level 4.
+    #[test]
+    fn a_conflicting_level_spell_resolves_per_the_take_the_lower_ruling() {
+        assert_eq!(
+            super::druid_spell_list::druid_spell_level("Cure Light Wounds"),
+            Some(1),
+            "Cure Light Wounds must be Druid 1st-level"
+        );
+        assert_eq!(
+            super::ranger_spell_list::ranger_spell_level("Cure Light Wounds"),
+            Some(2),
+            "Cure Light Wounds must be Ranger 2nd-level"
+        );
+        assert_eq!(
+            super::hunter_spell_list::hunter_spell_level("Cure Light Wounds"),
+            Some(1),
+            "take-the-lower must resolve Cure Light Wounds to 1st level"
+        );
+
+        let mut input = human_hunter_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Cure Light Wounds".to_owned(),
+            source_class_id: HUNTER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"),
+            "a level-1 Hunter recording Cure Light Wounds must ground cleanly under the \
+             take-the-lower ruling (it would claim-block as inaccessible under take-the-higher): \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Hunter known spell not on the union of the Druid/Ranger general
+    /// lists (or above Hunter's own 6th-level ceiling) is a genuine
+    /// posture violation and must claim-block (v0.6 alpha swarm, task
+    /// #44).
+    #[test]
+    fn single_class_hunter_with_an_off_list_known_spell_stays_blocked_on_known_spells() {
+        let mut input = human_hunter_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Definitely Not A Real Spell".to_owned(),
+            source_class_id: HUNTER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"
+                    && d.claim_blocking),
+            "expected the known_spells claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A 9th-level Druid/Ranger-general-list spell (level above Hunter's
+    /// own 6th-level ceiling) is excluded the same way as an off-list
+    /// spell -- `hunter_spell_level` returns `None` above the ceiling, so
+    /// no separate range check is needed anywhere in the grounding itself
+    /// (v0.6 alpha swarm, task #44).
+    #[test]
+    fn single_class_hunter_with_a_spell_above_the_level_6_ceiling_stays_blocked() {
+        assert_eq!(
+            super::druid_spell_list::druid_spell_level("Summon Nature's Ally IX"),
+            Some(9),
+            "Summon Nature's Ally IX must be a real Druid 9th-level spell"
+        );
+        assert_eq!(
+            super::hunter_spell_list::hunter_spell_level("Summon Nature's Ally IX"),
+            None,
+            "Summon Nature's Ally IX must be excluded above Hunter's own 6th-level ceiling"
+        );
+
+        let mut input = human_hunter_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Summon Nature's Ally IX".to_owned(),
+            source_class_id: HUNTER_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"
+                    && d.claim_blocking),
+            "expected the known_spells claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A Hunter recording more freely chosen known spells at a level than
+    /// the Hunter Spells Known table allows for that level is a genuine
+    /// posture violation and must claim-block (v0.6 alpha swarm, task
+    /// #44). Level 1 cap for 1st-level spells is 3; record a 4th distinct
+    /// 1st-level spell.
+    #[test]
+    fn single_class_hunter_over_known_at_a_spell_level_stays_blocked_on_known_spells() {
+        let mut input = human_hunter_input(1);
+        for spell_id in ["Ant Haul", "Charm Animal", "Calm Animals", "Bristle"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: HUNTER_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"
+                    && d.claim_blocking
+                    && d.message.contains("over-known")),
+            "expected the over-known known_spells claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// `hunter_spells_known_table`'s own real level-scaling (byte-exact
+    /// transcription from `acg_classes.lst`'s Hunter "Level progression"
+    /// block, verified at a spread of levels including the 4th/7th/10th/
+    /// 13th/16th-level column-widening rows), proven directly rather than
+    /// through the level-1-only end-to-end pipeline (see
+    /// `human_hunter_input`'s own doc comment for why: Hunter's Animal
+    /// Companion math is only verified at companion level 1 in this
+    /// codebase, so the full pipeline can only be exercised at Hunter
+    /// level 1).
+    #[test]
+    fn hunter_spells_known_table_matches_the_real_acg_level_progression() {
+        for (level, expected) in [
+            (1, [Some(4), Some(3), None, None, None, None, None]),
+            (4, [Some(6), Some(5), Some(3), None, None, None, None]),
+            (7, [Some(6), Some(6), Some(5), Some(3), None, None, None]),
+            (10, [Some(6), Some(6), Some(6), Some(5), Some(3), None, None]),
+            (13, [Some(6), Some(7), Some(6), Some(6), Some(5), Some(3), None]),
+            (16, [Some(6), Some(7), Some(7), Some(6), Some(6), Some(5), Some(3)]),
+            (20, [Some(6), Some(7), Some(7), Some(7), Some(7), Some(6), Some(6)]),
+        ] {
+            assert_eq!(super::hunter_spells_known_table(level), expected, "level {level}");
+        }
     }
 }
 
