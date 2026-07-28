@@ -108,6 +108,27 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// `alchemist_spell_list` module Investigator's own closure built)
 /// does not add a fourth slot, per the established spellcasting-sharing
 /// convention. Alchemist's `named_features_wired` rises from 1 to 3.
+///
+/// **Updated again (Inquisitor Judgment/Bane/spellcasting closure, task
+/// #47, 2026-07-28):** Judgment now grounds all 9 real judgment types
+/// (Destruction, Healing, Piercing, Resiliency, and Resistance joined the
+/// already-shipped Justice, Protection, Purity, and Smiting), each
+/// grounded as a standalone fact when no live-total consumer exists --
+/// the same corrected bar task #18 already established for Monster Lore/
+/// Cunning Initiative/Track, applied here to Judgment's own remaining
+/// sub-types. Bane (`KEY:Inquisitor ~ Bane`, a flat rounds/day pool, the
+/// same "pool size only" shape as Swashbuckler's own Panache) is now also
+/// genuinely wired, earning its own slot. Inquisitor's own known-spell
+/// posture (a real, independently re-derived 219-spell spontaneous list
+/// across levels 0-6, built fresh in `rules_tables::apg::
+/// inquisitor_spell_list` since the real corpus record carries no
+/// `SPELLLIST:` token to reuse) is also now genuinely wired, but does NOT
+/// add a slot, the same spellcasting-sharing convention Oracle's own
+/// known-spell posture already established. Widening Judgment's own
+/// sub-types does not add a slot either (Judgment stays ONE slot,
+/// counting slots not sub-options). Inquisitor's `named_features_wired`
+/// rises from 5 to 6 (Judgment slot + Stern Gaze slot + Monster Lore +
+/// Cunning Initiative + Track + Bane).
 #[test]
 fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_alchemists_mutagen_inquisitors_judgment_oracles_mystery_and_curse_and_witchs_ward_hex()
 {
@@ -146,9 +167,9 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         (ApgClassId::Alchemist, "Mutagen + Bomb + Poison Resistance", 3),
         (
             ApgClassId::Inquisitor,
-            "Judgment (Justice/Protection/Purity/Smiting) + Stern Gaze + Monster Lore + \
-             Cunning Initiative + Track",
-            5,
+            "Judgment (all 9 real types) + Stern Gaze + Monster Lore + Cunning Initiative + \
+             Track + Bane",
+            6,
         ),
         (
             ApgClassId::Oracle,

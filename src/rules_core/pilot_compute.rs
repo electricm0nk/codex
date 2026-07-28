@@ -124,6 +124,7 @@ use super::rules_tables::acg::shaman_spell_list;
 use super::rules_tables::acg::hunter_spell_list;
 use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
+use super::rules_tables::apg::inquisitor_spell_list;
 use super::rules_tables::apg::witch_spell_list;
 use crate::rules_core::durability::FamiliarSpecies;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
@@ -2124,17 +2125,38 @@ const ALCHEMIST_POISON_IMMUNITY_LEVEL: u8 = 10;
 /// "opponent/effect-dependent" exclusion of all 7 remaining types against
 /// the raw corpus and finding it wrong for these three -- each is a flat,
 /// unconditional self-buff with a real live consumer (see each
-/// `INQUISITOR_JUDGMENT_*_SELECTION_ID` constant's own doc comment). The
-/// remaining 5 judgment types (Destruction, Healing, Piercing, Resiliency,
-/// Resistance) stay named-but-unbuilt behind the narrowed deferred
-/// diagnostic: Destruction needs a damage-roll total this codebase has
-/// nowhere to compute; Piercing needs a concentration/caster-level-check
-/// total that doesn't exist; Healing needs ongoing round-tick hit-point
-/// state; Resiliency grants damage reduction TO the inquisitor (a
-/// defensive DR-received facet distinct from Smiting's DR-bypass-on-
-/// attack, and one this codebase doesn't model); Resistance needs both a
-/// chosen-energy-type mechanism and an energy-resistance facet, neither
-/// of which exist.
+/// `INQUISITOR_JUDGMENT_*_SELECTION_ID` constant's own doc comment).
+///
+/// **All 9 real judgment types are now grounded (task #47, 2026-07-28,
+/// Sacred/Profane Judgment widening).** The remaining 5 (Destruction,
+/// Healing, Piercing, Resiliency, Resistance) were previously deferred
+/// under the theory that each "needs a total this codebase has nowhere
+/// to compute" -- but that was the exact over-strict bar task #18 already
+/// corrected for Monster Lore/Cunning Initiative/Track, and Smiting's own
+/// closure had already proven the fix: a live numeric total to layer onto
+/// was never actually required, only a genuinely verified magnitude,
+/// grounded as a standalone explanation record when no total exists.
+/// Re-checked directly against `apg_abilities_class.lst`: every one of
+/// the 5 carries a real `BONUS:VAR` formula off `InquisitorLVL` (no
+/// opponent- or target-dependence) --
+/// `KEY:Sacred Judgment ~ Destruction`/`KEY:Profane Judgment ~
+/// Destruction` (`1+InqJudgeDestructionLVL/3`, weapon damage rolls),
+/// `KEY:Sacred Judgment ~ Piercing`/`KEY:Profane Judgment ~ Piercing`
+/// (`1+InqJudgePiercingLVL/3`, concentration/CL-vs-SR checks),
+/// `KEY:Judgment ~ Healing` (`1+InqJudgeHealingLVL/3`, fast healing),
+/// `KEY:Judgment ~ Resiliency` (`1+InqJudgeResiliencyLVL/5`, DR), and
+/// `KEY:Judgment ~ Resistance` (`2*(1+floor(InqJudgeResistanceLVL/3))`,
+/// energy resistance) -- so each grounds the same "standalone fact, no
+/// live consumer" way Smiting already does, just with a real numeric
+/// value instead of Smiting's flat boolean one. `Sacred Judgment`/
+/// `Profane Judgment` are the two alignment-gated variants of the SAME
+/// base Judgment ability (`!PREALIGN:LE,NE,CE` / `!PREALIGN:LG,NG,CG`),
+/// not a second, additive ability -- every non-true-neutral inquisitor
+/// legally has access to exactly one of the two, and (per Justice's own
+/// established precedent) the numeric magnitude is identical either way,
+/// only the flavor name (sacred vs. profane) differs, so this closure
+/// does not attempt to pick the flavor correctly per-alignment for these
+/// five either.
 const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
 /// `ClassAbilityActivation.ability_id` for Inquisitor Judgment. Unlike
 /// Mutagen, Judgment DOES have a real per-day use budget (see
@@ -2222,6 +2244,84 @@ const INQUISITOR_JUDGMENT_PURITY_SELECTION_ID: &str = "judgment:purity";
 /// weapon attacks count as magic for the purposes of overcoming DR") --
 /// the closest existing precedent for this exact shape.
 const INQUISITOR_JUDGMENT_SMITING_SELECTION_ID: &str = "judgment:smiting";
+/// PF1 Advanced Player's Guide Judgment (Destruction): "gaining a +X
+/// sacred [or profane] bonus on all weapon damage rolls" -- verified
+/// directly against `apg_abilities_class.lst`'s own `KEY:Sacred Judgment
+/// ~ Destruction`/`KEY:Profane Judgment ~ Destruction` DESC/BONUS:VAR
+/// records (`1+InqJudgeDestructionLVL/3`, identical either flavor). No
+/// weapon-damage-roll total exists anywhere in this codebase to layer
+/// this onto, so it grounds as a standalone explanation record, the same
+/// shape as Smiting (task #47, 2026-07-28).
+const INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID: &str = "judgment:destruction";
+/// PF1 Advanced Player's Guide Judgment (Healing): "gaining fast healing
+/// %1" -- verified directly against `apg_abilities_class.lst`'s own
+/// `KEY:Judgment ~ Healing` DESC/BONUS:VAR record
+/// (`1+InqJudgeHealingLVL/3`, a base type with no Sacred/Profane split).
+/// No fast-healing / round-tick hit-point state exists anywhere in this
+/// codebase, so it grounds as a standalone explanation record, the same
+/// shape as Smiting (task #47, 2026-07-28).
+const INQUISITOR_JUDGMENT_HEALING_SELECTION_ID: &str = "judgment:healing";
+/// PF1 Advanced Player's Guide Judgment (Piercing): "a +X sacred [or
+/// profane] bonus on concentration checks and caster level checks made
+/// to overcome a target's spell resistance" -- verified directly against
+/// `apg_abilities_class.lst`'s own `KEY:Sacred Judgment ~ Piercing`/
+/// `KEY:Profane Judgment ~ Piercing` DESC/BONUS:VAR records
+/// (`1+InqJudgePiercingLVL/3`, identical either flavor). No concentration-
+/// check or caster-level-vs-SR-check total exists anywhere in this
+/// codebase, so it grounds as a standalone explanation record, the same
+/// shape as Smiting (task #47, 2026-07-28).
+const INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID: &str = "judgment:piercing";
+/// PF1 Advanced Player's Guide Judgment (Resiliency): "granting DR %1/
+/// magic" (or, from level 10 on, DR against the alignment type opposite
+/// the inquisitor's own) -- verified directly against
+/// `apg_abilities_class.lst`'s own `KEY:Judgment ~ Resiliency` DESC/
+/// BONUS:VAR record (`1+InqJudgeResiliencyLVL/5`, a base type with no
+/// Sacred/Profane split). This is damage reduction the inquisitor
+/// RECEIVES, a defensive facet distinct from Smiting's own DR-bypass-on-
+/// attack -- no DR-received total exists anywhere in this codebase, so
+/// it grounds as a standalone explanation record, the same shape as
+/// Smiting (task #47, 2026-07-28). This grounds only the flat numeric DR
+/// value; the level-10 bypass-type switch (magic vs. opposed alignment)
+/// is named in the detail text but not separately modeled, mirroring how
+/// Justice/Protection/Purity don't model which of Sacred/Profane an
+/// inquisitor's own alignment grants.
+const INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID: &str = "judgment:resiliency";
+/// PF1 Advanced Player's Guide Judgment (Resistance): "%1 points of
+/// energy resistance against one energy type ... chosen when the
+/// judgment is declared" -- verified directly against
+/// `apg_abilities_class.lst`'s own `KEY:Judgment ~ Resistance` DESC/
+/// BONUS:VAR record (`2*(1+floor(InqJudgeResistanceLVL/3))`, a base type
+/// with no Sacred/Profane split). The chosen energy TYPE does not affect
+/// the numeric magnitude (mirrors Justice/Protection/Purity not modeling
+/// which of Sacred/Profane an inquisitor's own alignment grants), and no
+/// energy-resistance total exists anywhere in this codebase, so it
+/// grounds as a standalone explanation record, the same shape as Smiting
+/// (task #47, 2026-07-28).
+const INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID: &str = "judgment:resistance";
+/// Inquisitor's own known-spell posture (task #47, 2026-07-28): verified
+/// directly against `apg_classes.lst`'s own `CLASS:Inquisitor` record --
+/// `SPELLSTAT:WIS MEMORIZE:NO`, the same spontaneous-divine posture as
+/// Sorcerer/Bard/Oracle, so this closure mirrors
+/// `unmet_oracle_known_spell_conditions`/`oracle_spells_known_table`/
+/// `ground_oracle_known_spells`'s own shape, not Wizard's/Arcanist's/
+/// Warpriest's own simpler prepared-spellbook shape. Unlike Oracle
+/// (`SPELLLIST:2|Cleric|Oracle` reuses Cleric's own list) and Hunter
+/// (reuses Ranger's), the real `CLASS:Inquisitor` record carries no
+/// `SPELLLIST:` token at all -- its spell list is independently tagged
+/// per-spell (`CLASSES:...Inquisitor=N` across `apg_spells.lst`/
+/// `acg_spells.lst`), so `rules_tables::apg::inquisitor_spell_list` had
+/// to be built fresh rather than reusing an existing module (see that
+/// module's own doc comment for the corpus derivation: 219 real spells,
+/// levels 0-6, split 15/38/43/44/35/24/20).
+///
+/// Unlike Oracle's own bounded 1-3 MVP (`ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL`),
+/// this table transcribes the FULL real level 1-20 `KNOWN:` row directly
+/// off `apg_classes.lst`'s own `CLASS:Inquisitor` per-level block (each
+/// row's `N+InquisitorKnownHack` term, with the corpus's own
+/// `DEFINE:InquisitorKnownHack|0` default -- no variant-rule hack
+/// applied) -- there was no reason to arbitrarily bound the scope when
+/// the complete verified table was directly available.
+const INQUISITOR_KNOWN_SPELLS_MAX_LEVEL: u8 = 20;
 
 /// v0.6 alpha swarm, risks item 8 (Arcanist full-build closure, first
 /// non-CRB class attempting real `Computed` status): APG/ACG Arcanist,
@@ -9180,6 +9280,19 @@ fn compute_apg_class_chassis(
         ground_or_block_inquisitor_judgment(input, level, explanations, diagnostics);
         ground_inquisitor_flat_named_facts(input, level, explanations);
         ground_or_block_inquisitor_domain_power(input, level, explanations, diagnostics);
+        let inquisitor_known_spell_unmet = unmet_inquisitor_known_spell_conditions(input, level);
+        if inquisitor_known_spell_unmet.is_empty() {
+            ground_inquisitor_known_spells(input, level, explanations);
+        } else {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_spell.apg.inquisitor.known_spells.unsupported".to_owned(),
+                message: format!(
+                    "Inquisitor remains blocked on its known-spell posture burden: {}",
+                    inquisitor_known_spell_unmet.join("; ")
+                ),
+                claim_blocking: true,
+            });
+        }
     } else if class_id == ApgClassId::Oracle {
         ground_or_block_oracle_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Witch {
@@ -10178,6 +10291,44 @@ fn inquisitor_purity_judgment_save_bonus(level: u8) -> i16 {
     1 + i16::from(level) / 5
 }
 
+/// PF1 Advanced Player's Guide Judgment / Destruction: "+X sacred [or
+/// profane] bonus on all weapon damage rolls" -- verified against
+/// `apg_abilities_class.lst`'s own `1+InqJudgeDestructionLVL/3` (task #47,
+/// 2026-07-28).
+fn inquisitor_destruction_judgment_damage_bonus(level: u8) -> i16 {
+    1 + i16::from(level) / 3
+}
+
+/// PF1 Advanced Player's Guide Judgment / Healing: fast healing X --
+/// verified against `apg_abilities_class.lst`'s own
+/// `1+InqJudgeHealingLVL/3` (task #47, 2026-07-28).
+fn inquisitor_healing_judgment_fast_healing(level: u8) -> i16 {
+    1 + i16::from(level) / 3
+}
+
+/// PF1 Advanced Player's Guide Judgment / Piercing: "+X sacred [or
+/// profane] bonus on concentration checks and caster level checks made
+/// to overcome a target's spell resistance" -- verified against
+/// `apg_abilities_class.lst`'s own `1+InqJudgePiercingLVL/3` (task #47,
+/// 2026-07-28).
+fn inquisitor_piercing_judgment_bonus(level: u8) -> i16 {
+    1 + i16::from(level) / 3
+}
+
+/// PF1 Advanced Player's Guide Judgment / Resiliency: damage reduction X
+/// -- verified against `apg_abilities_class.lst`'s own
+/// `1+InqJudgeResiliencyLVL/5` (task #47, 2026-07-28).
+fn inquisitor_resiliency_judgment_dr(level: u8) -> i16 {
+    1 + i16::from(level) / 5
+}
+
+/// PF1 Advanced Player's Guide Judgment / Resistance: energy resistance X
+/// -- verified against `apg_abilities_class.lst`'s own
+/// `2*(1+floor(InqJudgeResistanceLVL/3))` (task #47, 2026-07-28).
+fn inquisitor_resistance_judgment_energy_resistance(level: u8) -> i16 {
+    2 * (1 + i16::from(level) / 3)
+}
+
 /// Whether `input` is an Inquisitor actively, validly pronouncing the
 /// Justice judgment (v0.6 alpha swarm, risks item 8, Inquisitor Judgment
 /// closure) -- mirrors `active_touch_of_good_bonus`'s exact shape
@@ -10337,13 +10488,26 @@ fn inquisitor_track_bonus(level: u8) -> i16 {
     (i16::from(level) / 2).max(1)
 }
 
+/// PF1 Advanced Player's Guide Bane: "This ability lasts for %1 rounds
+/// per day" -- verified directly against `apg_abilities_class.lst`'s own
+/// `KEY:Inquisitor ~ Bane` record: `BONUS:VAR|InquisitorBanePool|
+/// InquisitorLVL`, a flat rounds/day pool with no division or scaling at
+/// all (task #47, 2026-07-28). The same "pool size only" MVP shape as
+/// Swashbuckler's own Panache (`swashbuckler_panache_max`) and Warpriest's
+/// own Fervor uses/day: this grounds only the flat daily pool size --
+/// which creature type (and subtype, for humanoid/outsider) is imbued,
+/// and how the rounds are spent/tracked across a day, is not modeled.
+fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
+    i16::from(level)
+}
+
 /// Grounds Inquisitor's remaining flat, standalone named-feature facts
-/// (Monster Lore, Cunning Initiative, Track) that had incorrectly stayed
-/// deferred under an earlier "needs a live consumer" bar -- corrected
-/// (task #18, 2026-07-26) after re-checking this codebase's own already-
-/// shipped precedent. Called unconditionally alongside Judgment's own
-/// grounding, from the Inquisitor branch of `compute_apg_class_chassis`;
-/// never claim-blocks.
+/// (Monster Lore, Cunning Initiative, Track, Bane) that had incorrectly
+/// stayed deferred under an earlier "needs a live consumer" bar --
+/// corrected (task #18, 2026-07-26; Bane added task #47, 2026-07-28)
+/// after re-checking this codebase's own already-shipped precedent.
+/// Called unconditionally alongside Judgment's own grounding, from the
+/// Inquisitor branch of `compute_apg_class_chassis`; never claim-blocks.
 fn ground_inquisitor_flat_named_facts(
     input: &CharacterInput,
     level: u8,
@@ -10384,6 +10548,19 @@ fn ground_inquisitor_flat_named_facts(
             "Inquisitor level {level} Track: a +{track_bonus} bonus on Survival checks made to \
              follow or identify tracks (max(level/2, 1) = {track_bonus}). Survival is not among \
              the three tracked skills either, so this grounds as a standalone flat record"
+        ),
+    });
+
+    let bane_pool_rounds = inquisitor_bane_pool_rounds(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.inquisitor.bane_pool_rounds".to_owned(),
+        value: bane_pool_rounds,
+        detail: format!(
+            "Inquisitor level {level} Bane: a {bane_pool_rounds}-round-per-day pool \
+             (InquisitorLVL, no scaling) during which one wielded weapon can be imbued with the \
+             bane weapon special ability against a chosen creature type (and subtype, for \
+             humanoid or outsider). This grounds only the flat daily pool size; which creature \
+             type is imbued and how rounds are spent/tracked across a day is not modeled"
         ),
     });
 }
@@ -10557,6 +10734,89 @@ fn ground_or_block_inquisitor_judgment(
                          Strike DR-bypass fact already established"
                     ),
                 });
+            } else if judgment_selection == Some(INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID) {
+                let damage_bonus = inquisitor_destruction_judgment_damage_bonus(inquisitor_level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                    value: damage_bonus,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is actively pronouncing the \
+                         Destruction judgment, within the grounded uses-per-day budget \
+                         ({uses_per_day} uses; {uses_consumed_today} consumed today), granting a \
+                         +{damage_bonus} sacred (or profane) bonus on all weapon damage rolls. No \
+                         weapon-damage-roll total exists anywhere in this codebase to layer this \
+                         onto, so it is grounded as a standalone fact record only, the same shape \
+                         Smiting already established"
+                    ),
+                });
+            } else if judgment_selection == Some(INQUISITOR_JUDGMENT_HEALING_SELECTION_ID) {
+                let fast_healing = inquisitor_healing_judgment_fast_healing(inquisitor_level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                    value: fast_healing,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is actively pronouncing the Healing \
+                         judgment, within the grounded uses-per-day budget ({uses_per_day} uses; \
+                         {uses_consumed_today} consumed today), granting fast healing \
+                         {fast_healing} (the inquisitor heals {fast_healing} point of damage each \
+                         round while alive and the judgment lasts). No round-tick hit-point state \
+                         exists anywhere in this codebase to layer this onto, so it is grounded as \
+                         a standalone fact record only, the same shape Smiting already established"
+                    ),
+                });
+            } else if judgment_selection == Some(INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID) {
+                let piercing_bonus = inquisitor_piercing_judgment_bonus(inquisitor_level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                    value: piercing_bonus,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is actively pronouncing the Piercing \
+                         judgment, within the grounded uses-per-day budget ({uses_per_day} uses; \
+                         {uses_consumed_today} consumed today), granting a +{piercing_bonus} \
+                         sacred (or profane) bonus on concentration checks and caster level \
+                         checks made to overcome a target's spell resistance. No concentration- \
+                         check or caster-level-vs-SR-check total exists anywhere in this codebase \
+                         to layer this onto, so it is grounded as a standalone fact record only, \
+                         the same shape Smiting already established"
+                    ),
+                });
+            } else if judgment_selection == Some(INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID) {
+                let dr = inquisitor_resiliency_judgment_dr(inquisitor_level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                    value: dr,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is actively pronouncing the \
+                         Resiliency judgment, within the grounded uses-per-day budget \
+                         ({uses_per_day} uses; {uses_consumed_today} consumed today), granting \
+                         damage reduction {dr}/magic (or, from level 10 on, DR against the \
+                         alignment type opposite the inquisitor's own -- this closure grounds \
+                         only the flat numeric DR value, not the bypass-type switch). No DR- \
+                         received total exists anywhere in this codebase to layer this onto (a \
+                         defensive facet distinct from Smiting's own DR-bypass-on-attack), so it \
+                         is grounded as a standalone fact record only, the same shape Smiting \
+                         already established"
+                    ),
+                });
+            } else if judgment_selection == Some(INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID) {
+                let energy_resistance =
+                    inquisitor_resistance_judgment_energy_resistance(inquisitor_level);
+                explanations.push(ComputationExplanation {
+                    id: "class_feature.apg.inquisitor.judgment_execution.active".to_owned(),
+                    value: energy_resistance,
+                    detail: format!(
+                        "Inquisitor level {inquisitor_level} is actively pronouncing the \
+                         Resistance judgment, within the grounded uses-per-day budget \
+                         ({uses_per_day} uses; {uses_consumed_today} consumed today), granting \
+                         {energy_resistance} points of energy resistance against one energy type \
+                         (acid, cold, electricity, fire, or sonic) chosen when the judgment is \
+                         declared -- the chosen type does not affect the numeric magnitude \
+                         (mirrors Justice/Protection/Purity not modeling which of Sacred/Profane \
+                         an inquisitor's own alignment grants). No energy-resistance total exists \
+                         anywhere in this codebase to layer this onto, so it is grounded as a \
+                         standalone fact record only, the same shape Smiting already established"
+                    ),
+                });
             } else {
                 diagnostics.push(ComputationDiagnostic {
                     id: "class_feature.apg.inquisitor.judgment_execution.judgment_choice_missing"
@@ -10564,15 +10824,16 @@ fn ground_or_block_inquisitor_judgment(
                     message: format!(
                         "Inquisitor level {inquisitor_level} claims an active Judgment \
                          ({INQUISITOR_JUDGMENT_ABILITY_ID}) but has no recognized \
-                         {INQUISITOR_JUDGMENT_CHOICE_ID} selection naming Justice, Protection, \
-                         Purity, or Smiting (got {judgment_selection:?}): pronouncing judgment \
-                         always requires choosing a type first per the PF1 Advanced Player's \
-                         Guide's own sequencing, and those four are the only ones of the 8 \
-                         judgment types this codebase grounds (see each \
-                         INQUISITOR_JUDGMENT_*_SELECTION_ID's own doc comment for why), so an \
-                         active judgment naming any other type -- or none -- is a genuine posture \
-                         violation, not a silently passing one -- no bonus is claimed for this \
-                         input"
+                         {INQUISITOR_JUDGMENT_CHOICE_ID} selection naming one of the 9 real \
+                         judgment types (Justice, Protection, Purity, Smiting, Destruction, \
+                         Healing, Piercing, Resiliency, Resistance -- got \
+                         {judgment_selection:?}): pronouncing judgment always requires choosing a \
+                         type first per the PF1 Advanced Player's Guide's own sequencing, and \
+                         those nine are the complete real judgment-type roster this closure \
+                         grounds (see each INQUISITOR_JUDGMENT_*_SELECTION_ID's own doc comment), \
+                         so an active judgment naming any other (unrecognized) value -- or none \
+                         -- is a genuine posture violation, not a silently passing one -- no bonus \
+                         is claimed for this input"
                     ),
                     claim_blocking: true,
                 });
@@ -10728,7 +10989,9 @@ fn ground_or_block_inquisitor_domain_power(
 /// rather than missing; task #64 corrected this comment's own prior WRONG
 /// claim that no Inquisitor domain power exists -- see
 /// `ground_or_block_inquisitor_domain_power`'s own doc comment for the
-/// corpus correction): named ONLY the genuinely still-missing pieces.
+/// corpus correction; widened again task #47, 2026-07-28, to name the
+/// remaining 5 judgment types, Bane, and known-spell posture as grounded
+/// too): named ONLY the genuinely still-missing pieces.
 /// Inquisitor's domain BONUS SPELLS specifically (verified directly
 /// against d20pfsrd's Inquisitor class page: "An inquisitor does not gain
 /// the bonus spells listed for each domain, nor does she gain bonus spell
@@ -10737,7 +11000,16 @@ fn ground_or_block_inquisitor_domain_power(
 /// Inquisitor to name (unlike Cleric). The domain POWERS burden (Good's
 /// Touch of Good now grounded, every other domain still unproven) is named
 /// by `ground_or_block_inquisitor_domain_power`'s own separate diagnostic
-/// instead, so it is deliberately NOT duplicated in this message. Pushed
+/// instead, so it is deliberately NOT duplicated in this message. Orisons
+/// are folded into the spellcasting bucket, not named separately -- the
+/// same "shares the general spellcasting mechanism, not independently
+/// implemented" reasoning already applied to Arcanist's Cantrips and
+/// Warpriest's own Orisons. Second/Third Judgment and Greater Bane are
+/// named but not separately grounded: both are DESC-only multipliers on
+/// already-grounded mechanics (Second/Third Judgment let an inquisitor
+/// pronounce more than one judgment type at once; Greater Bane widens
+/// Bane's own weapon-enhancement bonus) with no independent primary-
+/// source-backed numeric magnitude of their own to verify. Pushed
 /// unconditionally regardless of Judgment's own active state, mirroring
 /// Alchemist's/Skald's own diagnostic-honesty fix.
 fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
@@ -10745,6 +11017,7 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
         id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
         message: format!(
             "{INQUISITOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
+<<<<<<< HEAD
              chassis pillar, the Justice/Protection/Purity/Smiting judgments, Stern Gaze's \
              Intimidate half, Monster Lore, Cunning Initiative, Track, and the Good domain's \
              Touch of Good: this APG class has no class-skill list, no spellcasting posture \
@@ -10756,8 +11029,168 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
              feature (Bane, Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's \
              Sense Motive half) grounded anywhere in this codebase yet; no class-feature or \
              spell execution is fabricated in this bounded chassis baseline"
+=======
+             chassis pillar, all 9 Judgment types (Justice, Protection, Purity, Smiting, \
+             Destruction, Healing, Piercing, Resiliency, Resistance), Stern Gaze's Intimidate \
+             half, Monster Lore, Cunning Initiative, Track, Bane's pool size, and its own \
+             known-spell posture (a real, independently-verified 219-spell list, levels 0-6 -- \
+             the real CLASS:Inquisitor record carries no SPELLLIST token, unlike Hunter/Oracle, \
+             so no existing list module could be reused): this APG class has no class-skill \
+             list, no domain power (Inquisitor casts divine spells and gets one domain, but the \
+             domain only ever grants spell-list access -- no domain power exists for Inquisitor \
+             per the corpus), Orisons are folded into the general known-spell posture above \
+             rather than named separately, and no other named class feature (Detect Alignment, \
+             Discern Lies, Exploit Weakness, Solo Tactics, Stalwart, Stern Gaze's Sense Motive \
+             half, Second/Third Judgment, Greater Bane -- the latter two are DESC-only \
+             multipliers on already-grounded mechanics with no independent numeric magnitude of \
+             their own) grounded anywhere in this codebase yet; no class-feature or spell \
+             execution is fabricated in this bounded chassis baseline"
+>>>>>>> a1c9282e (feat(v0.6): Inquisitor spellcasting, Bane pool, and full Judgment widening (task #47))
         ),
         claim_blocking: true,
+    });
+}
+
+/// The PF1 Advanced Player's Guide Inquisitor Spells Known table's row,
+/// one entry per spell level 0-6 (index 0 is orisons; `None` for an
+/// inaccessible "--" column). A literal table lookup transcribed
+/// directly from `apg_classes.lst`'s own `CLASS:Inquisitor` per-level
+/// `KNOWN:` rows (task #47, 2026-07-28), levels 1-20 -- see
+/// `INQUISITOR_KNOWN_SPELLS_MAX_LEVEL`'s own doc comment for why this is
+/// the complete real table rather than an artificially bounded MVP slice.
+/// This is the cap on distinct spells KNOWN (permanent), the same shape
+/// as `oracle_spells_known_table`/`sorcerer_spells_known_table` --
+/// Inquisitor is a spontaneous caster (`MEMORIZE:NO`), not a prepared
+/// caster like Cleric/Wizard/Arcanist/Warpriest.
+fn inquisitor_spells_known_table(level: u8) -> [Option<i16>; 7] {
+    match level {
+        1 => [Some(4), Some(2), None, None, None, None, None],
+        2 => [Some(5), Some(3), None, None, None, None, None],
+        3 => [Some(6), Some(4), None, None, None, None, None],
+        4 => [Some(6), Some(4), Some(2), None, None, None, None],
+        5 => [Some(6), Some(4), Some(3), None, None, None, None],
+        6 => [Some(6), Some(4), Some(4), None, None, None, None],
+        7 => [Some(6), Some(5), Some(4), Some(2), None, None, None],
+        8 => [Some(6), Some(5), Some(4), Some(3), None, None, None],
+        9 => [Some(6), Some(5), Some(4), Some(4), None, None, None],
+        10 => [Some(6), Some(5), Some(5), Some(4), Some(2), None, None],
+        11 => [Some(6), Some(6), Some(5), Some(4), Some(3), None, None],
+        12 => [Some(6), Some(6), Some(5), Some(4), Some(4), None, None],
+        13 => [Some(6), Some(6), Some(5), Some(5), Some(4), Some(2), None],
+        14 => [Some(6), Some(6), Some(6), Some(5), Some(4), Some(3), None],
+        15 => [Some(6), Some(6), Some(6), Some(5), Some(4), Some(4), None],
+        16 => [Some(6), Some(6), Some(6), Some(5), Some(5), Some(4), Some(2)],
+        17 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(4), Some(3)],
+        18 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(4), Some(4)],
+        19 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(5), Some(4)],
+        20 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(5)],
+        _ => [None, None, None, None, None, None, None],
+    }
+}
+
+/// Return the list of unmet conditions for Inquisitor's real known-spell
+/// posture (task #47, 2026-07-28), mirroring
+/// `unmet_oracle_known_spell_conditions`'s own shape exactly, substituting
+/// Inquisitor's own full 1-20 table and
+/// `inquisitor_spell_list::inquisitor_spell_level` for the per-spell-id
+/// level lookup (the real `CLASS:Inquisitor` record carries no
+/// `SPELLLIST:` token, so this is Inquisitor's own independently-tagged
+/// list, not a reused one). An empty list means the posture is fully
+/// valid; zero known spells is always valid, same reasoning as
+/// Sorcerer's/Oracle's own posture.
+fn unmet_inquisitor_known_spell_conditions(input: &CharacterInput, inquisitor_level: u8) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if inquisitor_level > INQUISITOR_KNOWN_SPELLS_MAX_LEVEL {
+        unmet.push(format!(
+            "known-spell grounding is only supported for inquisitor levels \
+             1-{INQUISITOR_KNOWN_SPELLS_MAX_LEVEL}, got {inquisitor_level}"
+        ));
+        return unmet;
+    }
+
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == INQUISITOR_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    let known_table = inquisitor_spells_known_table(inquisitor_level);
+
+    let mut known_per_level: [i16; 7] = [0; 7];
+    for spell_id in &known {
+        let Some(spell_level) = inquisitor_spell_list::inquisitor_spell_level(spell_id) else {
+            unmet.push(format!(
+                "known spell '{spell_id}' is not on the real PF1 inquisitor spell list"
+            ));
+            continue;
+        };
+        if usize::from(spell_level) >= known_table.len() {
+            unmet.push(format!(
+                "known spell '{spell_id}' targets spell level {spell_level}, not yet accessible \
+                 at inquisitor level {inquisitor_level}"
+            ));
+            continue;
+        }
+        known_per_level[usize::from(spell_level)] += 1;
+    }
+
+    for (index, count) in known_per_level.iter().enumerate() {
+        if *count == 0 {
+            continue;
+        }
+        let cap = known_table[index].unwrap_or(0);
+        if *count > cap {
+            unmet.push(format!(
+                "spell level {index} over-known: {count} distinct spells known but only {cap} \
+                 slots available on the Inquisitor Spells Known table"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real known-spell posture once
+/// `unmet_inquisitor_known_spell_conditions` reports an empty unmet list
+/// (task #47, 2026-07-28), mirroring `ground_oracle_known_spells`'s own
+/// shape exactly.
+fn ground_inquisitor_known_spells(
+    input: &CharacterInput,
+    inquisitor_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let known: Vec<&str> = input
+        .chosen
+        .spells_selected
+        .iter()
+        .filter(|s| {
+            s.source_class_id == INQUISITOR_CLASS_ID && s.acquisition_mode == AcquisitionMode::Known
+        })
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.apg.inquisitor.known_spells".to_owned(),
+        value: known.len() as i16,
+        detail: format!(
+            "Inquisitor level {inquisitor_level} known-spell selection ({} spells, \
+             AcquisitionMode::Known): {}. Each known spell is verified against the real PF1 \
+             inquisitor spell list (`inquisitor_spell_list::inquisitor_spell_level`, all \
+             ingested books, a fresh independent parse -- the real CLASS:Inquisitor record \
+             carries no SPELLLIST token, unlike Hunter/Oracle, so no existing list module could \
+             be reused) and the Inquisitor Spells Known table's own per-level cap. Real PF1 \
+             Inquisitor rules have no daily preparation step at all (unlike Cleric/Wizard/\
+             Arcanist/Warpriest) -- an inquisitor's known spells are permanent once learned, \
+             cast spontaneously. This grounds the known-spell selection for real; it computes no \
+             spell save DC resolution against a target and no casting execution",
+            known.len(),
+            known.join(", ")
+        ),
     });
 }
 
@@ -43469,11 +43902,21 @@ mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
+<<<<<<< HEAD
         HeadlessReceiptStatus, FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION,
         INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
         INQUISITOR_JUDGMENT_CHOICE_ID, INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID,
         INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
         INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GOOD_ABILITY_ID,
+=======
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, INQUISITOR_CLASS_ID,
+        INQUISITOR_JUDGMENT_ABILITY_ID, INQUISITOR_JUDGMENT_CHOICE_ID,
+        INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID, INQUISITOR_JUDGMENT_HEALING_SELECTION_ID,
+        INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID,
+        INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID, INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID,
+        INQUISITOR_JUDGMENT_PURITY_SELECTION_ID, INQUISITOR_JUDGMENT_SMITING_SELECTION_ID,
+>>>>>>> a1c9282e (feat(v0.6): Inquisitor spellcasting, Bane pool, and full Judgment widening (task #47))
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -43834,17 +44277,214 @@ mod inquisitor_dispatch_widening_safety_tests {
         );
     }
 
-    /// An Inquisitor claiming an active Judgment but naming one of the 5
-    /// still-unbuilt judgment types (not one of Justice/Protection/
-    /// Purity/Smiting) is a genuine posture violation, distinct from the
-    /// "no choice at all" case already covered above -- both must
-    /// claim-block via the same diagnostic.
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Destruction judgment grounds the real weapon-damage-roll bonus as a
+    /// standalone explanation record (no numeric total exists to layer it
+    /// onto) -- still stays `Blocked` (other_features_deferred). Task #47,
+    /// 2026-07-28. Level 1 Destruction bonus: 1 + 1/3 = 1.
     #[test]
-    fn single_class_inquisitor_active_judgment_naming_an_unbuilt_type_stays_blocked() {
+    fn single_class_inquisitor_actively_judging_destruction_with_recognized_choice_applies_real_bonus()
+    {
         let mut input = human_inquisitor_input(1);
         input.chosen.selected_choices.push(SelectedChoice {
             choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
-            selection_id: "judgment:destruction".to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        let active_explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.active")
+            .expect("Destruction's active explanation must be grounded");
+        assert_eq!(
+            active_explanation.value, 1,
+            "Destruction judgment's damage-roll bonus must be applied: {active_explanation:?}"
+        );
+        assert!(
+            active_explanation.detail.contains("Destruction")
+                && active_explanation.detail.contains("weapon damage rolls"),
+            "expected the Destruction damage-roll bonus to be named: {active_explanation:?}"
+        );
+    }
+
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Healing judgment grounds the real fast-healing magnitude as a
+    /// standalone explanation record (no round-tick hit-point state exists
+    /// to layer it onto) -- still stays `Blocked` (other_features_deferred).
+    /// Task #47, 2026-07-28. Level 1 Healing fast healing: 1 + 1/3 = 1.
+    #[test]
+    fn single_class_inquisitor_actively_judging_healing_with_recognized_choice_applies_real_bonus() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_HEALING_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        let active_explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.active")
+            .expect("Healing's active explanation must be grounded");
+        assert_eq!(
+            active_explanation.value, 1,
+            "Healing judgment's fast-healing magnitude must be applied: {active_explanation:?}"
+        );
+        assert!(
+            active_explanation.detail.contains("Healing") && active_explanation.detail.contains("fast healing"),
+            "expected the Healing fast-healing fact to be named: {active_explanation:?}"
+        );
+    }
+
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Piercing judgment grounds the real concentration/CL-vs-SR bonus as
+    /// a standalone explanation record -- still stays `Blocked`
+    /// (other_features_deferred). Task #47, 2026-07-28. Level 1 Piercing
+    /// bonus: 1 + 1/3 = 1.
+    #[test]
+    fn single_class_inquisitor_actively_judging_piercing_with_recognized_choice_applies_real_bonus() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        let active_explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.active")
+            .expect("Piercing's active explanation must be grounded");
+        assert_eq!(
+            active_explanation.value, 1,
+            "Piercing judgment's bonus must be applied: {active_explanation:?}"
+        );
+        assert!(
+            active_explanation.detail.contains("Piercing")
+                && active_explanation.detail.contains("concentration"),
+            "expected the Piercing bonus to be named: {active_explanation:?}"
+        );
+    }
+
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Resiliency judgment grounds the real DR magnitude as a standalone
+    /// explanation record (a defensive DR-received facet distinct from
+    /// Smiting's own DR-bypass-on-attack) -- still stays `Blocked`
+    /// (other_features_deferred). Task #47, 2026-07-28. Level 1 Resiliency
+    /// DR: 1 + 1/5 = 1.
+    #[test]
+    fn single_class_inquisitor_actively_judging_resiliency_with_recognized_choice_applies_real_bonus()
+    {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        let active_explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.active")
+            .expect("Resiliency's active explanation must be grounded");
+        assert_eq!(
+            active_explanation.value, 1,
+            "Resiliency judgment's DR magnitude must be applied: {active_explanation:?}"
+        );
+        assert!(
+            active_explanation.detail.contains("Resiliency")
+                && active_explanation.detail.contains("damage reduction"),
+            "expected the Resiliency DR fact to be named: {active_explanation:?}"
+        );
+    }
+
+    /// A single-class Human Inquisitor actively, validly pronouncing the
+    /// Resistance judgment grounds the real energy-resistance magnitude as
+    /// a standalone explanation record -- still stays `Blocked`
+    /// (other_features_deferred). Task #47, 2026-07-28. Level 1 Resistance:
+    /// 2*(1+floor(1/3)) = 2.
+    #[test]
+    fn single_class_inquisitor_actively_judging_resistance_with_recognized_choice_applies_real_bonus()
+    {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        let active_explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.judgment_execution.active")
+            .expect("Resistance's active explanation must be grounded");
+        assert_eq!(
+            active_explanation.value, 2,
+            "Resistance judgment's energy-resistance magnitude must be applied: {active_explanation:?}"
+        );
+        assert!(
+            active_explanation.detail.contains("Resistance")
+                && active_explanation.detail.contains("energy resistance"),
+            "expected the Resistance fact to be named: {active_explanation:?}"
+        );
+    }
+
+    /// An Inquisitor claiming an active Judgment but naming an
+    /// unrecognized judgment selection id is a genuine posture violation,
+    /// distinct from the "no choice at all" case already covered above --
+    /// both must claim-block via the same diagnostic. All 9 real judgment
+    /// types are now built (task #47, 2026-07-28), so this uses a
+    /// definitely-bogus id rather than a real-but-formerly-unbuilt one
+    /// (Destruction, this test's own id before the widening, now resolves
+    /// to a real applied bonus -- see
+    /// `single_class_inquisitor_actively_judging_destruction_with_recognized_choice_applies_real_bonus`).
+    #[test]
+    fn single_class_inquisitor_active_judgment_naming_an_unrecognized_type_stays_blocked() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_JUDGMENT_CHOICE_ID.to_owned(),
+            selection_id: "judgment:nonexistent".to_owned(),
         });
         input.chosen.class_ability_activations.push(ClassAbilityActivation {
             ability_id: INQUISITOR_JUDGMENT_ABILITY_ID.to_owned(),
@@ -43891,11 +44531,12 @@ mod inquisitor_dispatch_widening_safety_tests {
         );
     }
 
-    /// Monster Lore, Cunning Initiative, and Track (task #18, 2026-07-26)
-    /// are grounded as standalone flat records, unconditional the moment
-    /// Inquisitor levels are present -- no choice, no activation gate,
-    /// same shape as Stern Gaze, and independent of Judgment's own state.
-    /// Fixture: WIS 12 -> +1 modifier.
+    /// Monster Lore, Cunning Initiative, Track (task #18, 2026-07-26), and
+    /// Bane (task #47, 2026-07-28) are grounded as standalone flat
+    /// records, unconditional the moment Inquisitor levels are present --
+    /// no choice, no activation gate, same shape as Stern Gaze, and
+    /// independent of Judgment's own state. Fixture: WIS 12 -> +1
+    /// modifier.
     #[test]
     fn single_class_inquisitor_gets_the_unconditional_flat_named_facts() {
         let input = human_inquisitor_input(1);
@@ -43921,6 +44562,26 @@ mod inquisitor_dispatch_widening_safety_tests {
             .find(|e| e.id == "class_feature.apg.inquisitor.track_bonus")
             .expect("Track must be grounded");
         assert_eq!(track.value, 1, "max(1/2, 1) = 1: {track:?}");
+
+        let bane = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.inquisitor.bane_pool_rounds")
+            .expect("Bane must be grounded");
+        assert_eq!(bane.value, 1, "level 1 Bane pool: InquisitorLVL = 1: {bane:?}");
+    }
+
+    /// Bane's real level-scaling (a flat InquisitorLVL rounds/day pool, no
+    /// division) matches the corpus's own formula at every level.
+    #[test]
+    fn inquisitor_bane_pool_rounds_matches_the_real_flat_level_formula() {
+        for level in [1, 2, 5, 10, 20] {
+            assert_eq!(
+                super::inquisitor_bane_pool_rounds(level),
+                i16::from(level),
+                "level {level} Bane pool rounds"
+            );
+        }
     }
 
     /// Track's own real level-scaling (max(level/2, 1)) matches Slayer's
@@ -44186,6 +44847,154 @@ mod inquisitor_dispatch_widening_safety_tests {
         });
 
         assert_eq!(super::active_touch_of_good_bonus(&input), None);
+    }
+}
+
+/// Task #47 (2026-07-28): tests Inquisitor's own spontaneous known-spell
+/// posture, mirroring `oracle_dispatch_widening_safety_tests`'s own shape
+/// exactly (`unmet_inquisitor_known_spell_conditions`/
+/// `inquisitor_spells_known_table`/`ground_inquisitor_known_spells` mirror
+/// Oracle's `unmet_oracle_known_spell_conditions`/
+/// `oracle_spells_known_table`/`ground_oracle_known_spells`).
+#[cfg(test)]
+mod inquisitor_known_spell_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, INQUISITOR_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SpellSelection};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_inquisitor_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: INQUISITOR_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    /// A bare single-class Human Inquisitor (no known spells) does not
+    /// trip the known_spells diagnostic -- zero known spells is itself a
+    /// valid posture, mirroring Sorcerer's/Oracle's own reasoning.
+    #[test]
+    fn single_class_inquisitor_bare_does_not_trip_known_spells_diagnostic() {
+        let input = human_inquisitor_input(1);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.inquisitor.known_spells.unsupported"),
+            "zero known spells is itself a valid posture, mirroring Sorcerer's/Oracle's own \
+             reasoning: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A single-class Human Inquisitor with a real known spell (verified
+    /// against the real, independently re-derived Inquisitor spell list)
+    /// grounds the known-spell posture for real and clears the
+    /// known_spells diagnostic, but stays `Blocked` on
+    /// other_features_deferred regardless. "Bane" (the spell, not the
+    /// class feature of the same name) is a real level-1 Inquisitor spell.
+    #[test]
+    fn single_class_inquisitor_with_a_real_known_spell_grounds_it_and_stays_blocked_elsewhere() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Bane".to_owned(),
+            source_class_id: INQUISITOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.inquisitor.known_spells.unsupported"),
+            "the known_spells diagnostic must not fire once a real known spell is recorded: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.inquisitor.known_spells")
+            .expect("known-spell count must be grounded");
+        assert_eq!(known.value, 1, "Inquisitor level 1 with one known spell: {:?}", known);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "Inquisitor still stays Blocked on other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Inquisitor known spell not on the real, independently re-derived
+    /// Inquisitor spell list is a genuine posture violation and must
+    /// claim-block via known_spells.
+    #[test]
+    fn single_class_inquisitor_with_an_off_list_known_spell_stays_blocked_on_known_spells() {
+        let mut input = human_inquisitor_input(1);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Definitely Not A Real Spell".to_owned(),
+            source_class_id: INQUISITOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.inquisitor.known_spells.unsupported"
+                    && d.claim_blocking),
+            "expected the known_spells claim-blocking diagnostic for an off-list spell: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// An Inquisitor over-known at a spell level (more distinct known
+    /// spells at that level than the real Spells Known table allows) is a
+    /// genuine posture violation and must claim-block via known_spells.
+    /// Level 1 caps at 4 orisons (level 0) / 2 first-level spells; five
+    /// distinct level-1 spells exceeds that cap.
+    #[test]
+    fn single_class_inquisitor_over_known_at_a_spell_level_stays_blocked_on_known_spells() {
+        let mut input = human_inquisitor_input(1);
+        for spell_id in ["Bane", "Bless", "Cause Fear", "Command", "Divine Favor"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: INQUISITOR_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.inquisitor.known_spells.unsupported"
+                    && d.claim_blocking
+                    && d.message.contains("over-known")),
+            "expected the over-known claim-blocking diagnostic: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 }
 
