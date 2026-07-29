@@ -308,8 +308,14 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
 /// `class_feature.acg.skald.spellcasting_deferred.unsupported` diagnostic,
 /// naming only the pieces still genuinely missing. Every other ACG class
 /// keeps the original, unmodified diagnostic.
+///
+/// **Updated (task #91, 2026-07-29):** the test name's "stay blocked" no
+/// longer holds for all ten. Five ACG classes now compute at every level,
+/// and their `other_features_deferred` records survive as non-blocking
+/// remainders. See the per-class expectation inside the loop; the
+/// requirement that the record EXIST for every class is unchanged.
 #[test]
-fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic() {
+fn acg_classes_ground_real_bab_save_and_carry_their_own_deferred_feature_record() {
     for class_id in AcgClassId::ALL {
         let input = minimal_input_for(class_id);
         let computation = compute_pilot_base_chassis(&input);
@@ -463,9 +469,36 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                     class_id
                 )
             });
-        assert!(
-            unsupported.claim_blocking,
-            "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
+        // **Updated (task #91, 2026-07-29).** Five ACG classes -- Brawler,
+        // Hunter, Skald, Slayer and Swashbuckler -- now ground every named
+        // feature on their corpus class tables, so their
+        // `other_features_deferred` records carry no remaining blocking
+        // claim and are demoted to `claim_blocking: false`.
+        //
+        // The record is deliberately KEPT rather than deleted, because each
+        // still carries a real remainder (deferred execution, and chooser
+        // catalog gaps such as Slayer's 1-of-41 talents, Skald's 2-of-60
+        // rage powers and Hunter's 1-of-13 animal foci). So this audit
+        // still requires the diagnostic to EXIST for every ACG class --
+        // that assertion is unchanged and sits above -- and now checks its
+        // blocking flag against the class's real state instead of
+        // asserting `true` for everyone.
+        //
+        // Adding a class to this set is a claim that it computes at all 20
+        // levels; `v06_class_state_dump` is the check.
+        let expected_claim_blocking = !matches!(
+            class_id,
+            AcgClassId::Brawler
+                | AcgClassId::Hunter
+                | AcgClassId::Skald
+                | AcgClassId::Slayer
+                | AcgClassId::Swashbuckler
+        );
+        assert_eq!(
+            unsupported.claim_blocking, expected_claim_blocking,
+            "{:?}: '{expected_diagnostic_id}' claim_blocking should be \
+             {expected_claim_blocking} -- a class that still has an ungrounded named feature \
+             must block, and a class that has none must not",
             class_id
         );
         if matches!(

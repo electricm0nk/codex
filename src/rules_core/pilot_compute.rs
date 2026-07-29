@@ -16701,10 +16701,18 @@ const SWASHBUCKLER_ZERO_MAGNITUDE_DEEDS: &[(u8, &str, &str)] = &[
     ),
 ];
 
-/// Folds a deed's display name into the snake_case tail of its
+/// Folds a class feature's display name into the snake_case tail of its
 /// explanation id (`"Opportune Parry and Riposte"` ->
-/// `"opportune_parry_and_riposte"`).
-fn swashbuckler_deed_id_slug(display_name: &str) -> String {
+/// `"opportune_parry_and_riposte"`, `"Kip-Up"` -> `"kip_up"`).
+///
+/// Deliberately class-neutral: Swashbuckler's deeds and Skald's
+/// zero-magnitude features both build ids this way, and the ids they
+/// produce are already namespaced by their own
+/// `class_feature.acg.<class>.` prefix at the call site, so sharing this
+/// fold cannot collide two classes' records. It carried a
+/// `swashbuckler_`-prefixed name when only that class used it; the name
+/// was corrected rather than a second identical copy added.
+fn class_feature_id_slug(display_name: &str) -> String {
     display_name
         .chars()
         .filter_map(|c| {
@@ -16885,7 +16893,7 @@ fn ground_swashbuckler_remaining_deeds_and_mastery(
         explanations.push(ComputationExplanation {
             id: format!(
                 "class_feature.acg.swashbuckler.deed.{}_grant",
-                swashbuckler_deed_id_slug(display_name)
+                class_feature_id_slug(display_name)
             ),
             value: 0,
             detail: format!(
@@ -19701,7 +19709,7 @@ fn ground_skald_remaining_named_features(
         explanations.push(ComputationExplanation {
             id: format!(
                 "class_feature.acg.skald.{}_grant",
-                swashbuckler_deed_id_slug(display_name)
+                class_feature_id_slug(display_name)
             ),
             value: 0,
             detail: format!(
