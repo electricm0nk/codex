@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T16:35:02
-Latest commit on tranche/6: 2346527b fix(v0.6): scale carrying capacity by creature size (Small races were 4/3 over) (40 minutes ago) (2026-07-29T15:55:00-04:00) -- STALE: no commit on tranche/6 in 40m, worth checking the swarm is still alive
+Last mechanical check: 2026-07-29T16:40:02
+Latest commit on tranche/6: b8e6b5e7 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T16:35:02-04:00)
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
