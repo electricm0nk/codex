@@ -284,6 +284,35 @@ Every book's cache is round-trip-tested by
 carry no corpus cache; they are registered instead as `book_stub` future-state
 placeholders under `data/stubs/` (see [status.md](./status.md)).
 
+## Engine state dumps (`src/bin/v06_*_state_dump.rs`)
+
+Two operator/ops binaries report the tables' real state as JSON on stdout.
+Neither is an app runtime surface — nothing in the shipped app calls them —
+and both exist for the same reason: the operator's status dashboard used to
+derive its numbers by regex-scraping hand-written English prose, and prose
+goes stale the moment somebody forgets to edit it.
+
+- **`v06_class_state_dump`** — sweeps all 27 CRB/APG/ACG classes across
+  levels 1-20 through the real `build_pilot_headless_receipt` pipeline,
+  reporting per class whether every level reaches
+  `HeadlessReceiptStatus::Computed` and, when it does not, the claim-blocking
+  diagnostics that name the remaining gap.
+- **`v06_content_state_dump`** — reports per-book ingested record counts
+  (counted from `ClassId::ALL`, `SPELL_LIST`, `equipment_tables()`,
+  `MonsterId::ALL`, `feat_tables()`), the full Bestiary 1 monster roster
+  resolved through the real `beastiary1::monster_resolve` entry point with
+  each monster's JSON-cache presence, every CRB race's real computed state,
+  and a behavioural probe of which of the 486 catalogued feats genuinely
+  change a computed number when added to a character. The feat probe is an
+  explicit lower bound: a feat whose effect needs a context this engine does
+  not model (an opponent, an ally, a combat action) cannot show up as a delta
+  and is reported unwired.
+
+The counting discipline is shared with
+`apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, which reports the
+same per-book counts to the app itself; the binary exists separately because
+that module sits behind a `#[tauri::command]` in a different cargo workspace.
+
 ## Adding a new book
 
 Following the existing four books' pattern, adding book `<xyz>` means:
