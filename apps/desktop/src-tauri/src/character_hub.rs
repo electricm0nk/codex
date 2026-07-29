@@ -3464,36 +3464,45 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// v0.6 alpha swarm item 7 (second phase, 2026-07-24): explicitly
-    /// verifies, rather than assumes, that a non-CRB class id
-    /// `starting_wealth_gp` newly recognizes (Alchemist) still reaches
-    /// `Blocked` exactly like any other unsupported class -- recognizing
-    /// the id for wealth purposes carries no risk of ever granting wealth
-    /// to a build that hasn't proven `Computed`, since nothing else in the
-    /// compute/chassis dispatch has ever heard of "class:alchemist" either.
+    /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten
+    /// 2026-07-29** (the four spellcasting-shaped classes).
+    ///
+    /// This test used to assert the OPPOSITE: that Alchemist -- a non-CRB
+    /// class id `starting_wealth_gp` recognizes for wealth purposes --
+    /// still reached `Blocked`, because "nothing else in the
+    /// compute/chassis dispatch has ever heard of `class:alchemist`".
+    /// That stopped being true: Alchemist's prepared-extract posture and
+    /// its Discovery chooser are both grounded now, and
+    /// `compose_character_input` seeds both canonically, so a freshly
+    /// created Human Alchemist genuinely reaches `Computed`.
+    ///
+    /// The guard the old test provided is not lost -- it is the general
+    /// case, and `create_character_at_root_grants_no_wealth_when_the_build_is_blocked`
+    /// (Oracle) still holds it. What this test now proves is the other
+    /// half, and it is the stronger half: the first non-CRB class to
+    /// reach `Computed` through the real creation path gets its own
+    /// correct, class-distinct starting wealth, and the wealth table's
+    /// non-CRB entries are therefore live rather than dead data.
     #[test]
-    fn create_character_at_root_grants_no_wealth_for_a_newly_recognized_non_crb_class() {
-        let root = tempdir("create-character-starting-wealth-non-crb-blocked");
+    fn create_character_at_root_grants_the_non_crb_starting_wealth_once_that_class_computes() {
+        let root = tempdir("create-character-starting-wealth-non-crb-computed");
         let request = request_for_class("race:human", "class:alchemist", 1);
 
         let response = create_character_at_root(&root, &request, "test-version".to_owned())
             .expect("create call should not error");
 
         match response {
-            CreateCharacterResponse::Blocked { .. } => {}
-            CreateCharacterResponse::Saved { .. } => {
-                panic!(
-                    "Human Alchemist level 1 is not expected to reach Computed -- no chassis \
-                     dispatch exists for this class id"
-                )
-            }
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                "Human Alchemist level 1 must now reach Computed from compose_character_input's \
+                 own canonical extract/Discovery seeds alone, got: {diagnostics:?}"
+            ),
         }
 
         assert_eq!(
             load_character_money_at_root(&root).unwrap().total_copper,
-            0,
-            "a non-CRB class newly recognized for wealth purposes must still grant zero wealth \
-             while genuinely Blocked"
+            10_500,
+            "105 gp (3d6 x 10, operator-cited average for Alchemist) = 10,500 cp"
         );
 
         std::fs::remove_dir_all(&root).ok();

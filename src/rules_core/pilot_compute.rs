@@ -1942,6 +1942,36 @@ const BLOODRAGER_BLOODRAGE_ARMOR_CLASS_PENALTY: i16 = -2;
 /// comment for the exact formula used.
 const BLOODRAGER_BLOODRAGE_BASE_ROUNDS_PER_DAY: i16 = 2;
 
+/// Bloodrager's Bloodline chooser, and the ONE canonical bloodline this
+/// codebase grounds out of the corpus's 10 (v0.6 alpha swarm, Bloodrager
+/// spellcasting-shaped closure).
+///
+/// Bloodrager's bloodlines are PARALLEL to Sorcerer's, not shared with
+/// them (task #59) -- each is its own `KEY:<X> Bloodrager Bloodline ~
+/// ...` family in `acg_abilities_class.lst`, so none of Sorcerer's
+/// shipped bloodline work transfers. Arcane is the canonical pick for
+/// the same reason it already is for Sorcerer (`bloodline:arcane` in
+/// `compose_character_input`), keeping one bloodline name across both
+/// classes rather than inventing a second convention -- but the grounding
+/// underneath is Bloodrager's own separate corpus records, not Sorcerer's.
+const BLOODRAGER_BLOODLINE_CHOICE_ID: &str = "choice:bloodrager_bloodline";
+const ARCANE_BLOODRAGER_BLOODLINE_SELECTION: &str = "bloodline:arcane";
+/// The Arcane Bloodrager Bloodline's own power ladder gates, read
+/// verbatim off each record's `PREVARGTEQ:Bloodrager_Arcane_
+/// BloodlineProgressionLVL,<n>` token: Disruptive Bloodrage 1, Arcane
+/// Bloodrage 4, Greater Arcane Bloodrage 8, Caster's Scourge 12, True
+/// Arcane Bloodrage 16, Caster's Bane 20.
+const ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_LEVEL: u8 = 1;
+const ARCANE_BLOODRAGER_ARCANE_BLOODRAGE_LEVEL: u8 = 4;
+const ARCANE_BLOODRAGER_GREATER_ARCANE_BLOODRAGE_LEVEL: u8 = 8;
+const ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL: u8 = 12;
+const ARCANE_BLOODRAGER_TRUE_ARCANE_BLOODRAGE_LEVEL: u8 = 16;
+const ARCANE_BLOODRAGER_CASTERS_BANE_LEVEL: u8 = 20;
+/// Disruptive Bloodrage's own magnitude: "The DC to cast spells
+/// defensively increases by 2 for enemies within your threatened area"
+/// (`KEY:Arcane Bloodrager Bloodline ~ Disruptive Bloodrage` DESC).
+const ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_DC_INCREASE: i16 = 2;
+
 /// v0.6 alpha swarm, risks item 8 (third APG/ACG closure): ACG Brawler, a
 /// pure martial class (no `SPELLSTAT`, `ROLE:None`) whose AC Bonus class
 /// feature ("when wearing light or no armor, a brawler adds %1 AC as a
@@ -2205,6 +2235,57 @@ const ALCHEMIST_POISON_RESISTANCE_LEVEL: u8 = 2;
 const ALCHEMIST_POISON_RESISTANCE_TWO_LEVEL: u8 = 5;
 const ALCHEMIST_POISON_RESISTANCE_THREE_LEVEL: u8 = 8;
 const ALCHEMIST_POISON_IMMUNITY_LEVEL: u8 = 10;
+
+/// Alchemist's Discovery chooser, and the ONE canonical Discovery this
+/// codebase grounds out of the corpus's 35 (v0.6 alpha swarm, Alchemist
+/// spellcasting-shaped closure) -- the same canonical-narrowing shape
+/// Cleric's Good domain, Wizard's Evocation school, Oracle's Mystery and
+/// Arcanist's Metamagic Knowledge already established: one corpus-verified
+/// option grounded for real, the other 34 named as honestly deferred.
+///
+/// The grant cadence is `level/2` -- read directly off
+/// `apg_abilities_class.lst`'s own `KEY:Alchemist ~ Discovery` record
+/// (`BONUS:ABILITYPOOL|Alchemist Discovery|AlchemistDiscoveryLVL/2`,
+/// with `BONUS:VAR|AlchemistDiscoveryLVL|AlchemistLVL`), so the first
+/// Discovery lands at alchemist level 2, not level 1.
+///
+/// Feral Mutagen is the canonical pick because it is the only Discovery
+/// whose corpus record carries real, self-contained numeric magnitudes
+/// that attach to an already-grounded feature of this class: it extends
+/// Mutagen (already wired here, choice- and activation-gated) rather than
+/// requiring a subsystem this engine lacks. Verified directly against
+/// `KEY:Discovery ~ Feral Mutagen`: "he gains two claw attacks and a bite
+/// attack... The claw attacks deal 1d6 points of damage (1d4 if the
+/// alchemist is Small) and the bite attack deals 1d8 points of damage
+/// (1d6 if the alchemist is Small). While the mutagen is in effect, the
+/// alchemist gains a +2 competence bonus on Intimidate skill checks"
+/// (`TEMPBONUS:PC|SKILL|Intimidate|2`).
+const ALCHEMIST_DISCOVERY_CHOICE_ID: &str = "choice:alchemist_discovery";
+const FERAL_MUTAGEN_DISCOVERY_SELECTION: &str = "discovery:feral_mutagen";
+/// First alchemist level at which any Discovery is granted (`level/2`).
+const ALCHEMIST_DISCOVERY_GRANT_LEVEL: u8 = 2;
+/// Feral Mutagen's Medium-size natural-attack damage dice, corpus-verbatim.
+const FERAL_MUTAGEN_CLAW_DAMAGE_DIE: i16 = 6;
+const FERAL_MUTAGEN_BITE_DAMAGE_DIE: i16 = 8;
+/// Feral Mutagen's competence bonus on Intimidate while mutated.
+const FERAL_MUTAGEN_INTIMIDATE_BONUS: i16 = 2;
+
+/// The one canonical extract this codebase seeds into an Alchemist's and
+/// an Investigator's formula book at creation time -- the shared
+/// `alchemist_spell_list` records it at extract level 1
+/// (`("Cure Light Wounds", 1)`), which is the only extract level either
+/// class can access at class level 1, so a single id works across the
+/// whole 1-20 sweep for both. Mirrors `WIZARD_STARTER_SPELL_ID`'s own
+/// bootstrap shape exactly.
+///
+/// `allow(dead_code)`: the production consumer is `compose_character_input`
+/// in `apps/desktop/src-tauri`, a SEPARATE cargo workspace that mirrors
+/// its own copy of every seed constant (see `WIZARD_STARTER_SPELL_ID`'s
+/// own mirrored copy there), so nothing in this crate's non-test build
+/// reads it. Declared here anyway because this is where the corpus
+/// verification for the value belongs.
+#[allow(dead_code)]
+pub(crate) const CANONICAL_EXTRACT_SPELL_ID: &str = "Cure Light Wounds";
 
 /// v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, third
 /// APG class-specific closure): APG Inquisitor's Judgment, verified
@@ -2521,6 +2602,24 @@ const WARPRIEST_CHANNEL_ENERGY_LEVEL: u8 = 4;
 /// Warpriest level at which Sacred Armor is granted (`acg_classes.lst`:
 /// `7 ABILITY:...|Warpriest ~ Sacred Armor`).
 const WARPRIEST_SACRED_ARMOR_LEVEL: u8 = 7;
+/// Fervor uses consumed by one Channel Energy, verified directly against
+/// `acg_abilities_class.lst`'s own `KEY:Warpriest ~ Channel Energy` DESC
+/// ("Using this ability is a standard action that expends two uses of his
+/// fervor ability") and restated on both display records ("This consumes
+/// 2 uses of your Fervor Ability").
+const WARPRIEST_CHANNEL_ENERGY_FERVOR_COST: i16 = 2;
+/// The one canonical spell this codebase seeds into a Warpriest's
+/// spellbook at creation time. `Light` is a real 0-level entry of
+/// `SPELL_LIST` (`Pf1SchoolId::Evocation`, level 0) and a real Cleric
+/// orison -- Warpriest casts from `SPELLLIST:1|Cleric`, so it is genuinely
+/// on this class's own list. Deliberately the SAME id
+/// `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID` already use, for
+/// the same bootstrap reason.
+/// `allow(dead_code)` for the same reason as `CANONICAL_EXTRACT_SPELL_ID`:
+/// the production consumer lives in the separate `apps/desktop/src-tauri`
+/// workspace, which mirrors its own copy.
+#[allow(dead_code)]
+pub(crate) const WARPRIEST_STARTER_SPELL_ID: &str = "Light";
 
 /// v0.6 alpha swarm, risks item 8 (Slayer full-build closure, seventh
 /// ACG/APG class-specific closure): APG/ACG Slayer, verified directly
@@ -9928,6 +10027,7 @@ fn compute_apg_class_chassis(
             alchemist_intelligence_modifier,
             explanations,
         );
+        ground_alchemist_feral_mutagen_discovery(input, level, explanations);
         let extract_unmet =
             unmet_alchemist_extract_conditions(input, level, alchemist_intelligence_modifier);
         if extract_unmet.is_empty() {
@@ -10753,7 +10853,7 @@ fn ground_or_block_alchemist_mutagen(
                  choice is present"
             ),
         });
-        push_alchemist_other_features_deferred_diagnostic(diagnostics);
+        push_alchemist_other_features_deferred_diagnostic(input, alchemist_level, diagnostics);
         return;
     };
 
@@ -10784,7 +10884,7 @@ fn ground_or_block_alchemist_mutagen(
                     ),
                     claim_blocking: true,
                 });
-                push_alchemist_other_features_deferred_diagnostic(diagnostics);
+                push_alchemist_other_features_deferred_diagnostic(input, alchemist_level, diagnostics);
                 return;
             };
 
@@ -10829,7 +10929,7 @@ fn ground_or_block_alchemist_mutagen(
         }
     }
 
-    push_alchemist_other_features_deferred_diagnostic(diagnostics);
+    push_alchemist_other_features_deferred_diagnostic(input, alchemist_level, diagnostics);
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -10847,32 +10947,164 @@ fn ground_or_block_alchemist_mutagen(
 /// now has its own separate
 /// `class_spell.apg.alchemist.prepared_extracts.unsupported` diagnostic
 /// (mirroring `class_spell.acg.investigator.prepared_extracts.unsupported`).
-/// Pushed unconditionally regardless of Mutagen's own active state,
-/// mirroring Skald's/Bloodrager's own diagnostic-honesty fix.
-fn push_alchemist_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// Pushed from every branch of `ground_or_block_alchemist_mutagen`
+/// regardless of Mutagen's own active state, mirroring Skald's/
+/// Bloodrager's own diagnostic-honesty fix.
+///
+/// **Canonical narrowing (v0.6 alpha swarm, Alchemist spellcasting-shaped
+/// closure).** This used to claim-block unconditionally. It now mirrors
+/// `ground_or_block_arcanist_metamagic_knowledge`'s established shape: a
+/// recognized Discovery choice grounds one real, corpus-verified option
+/// out of the 35 (`ground_alchemist_feral_mutagen_discovery`) and
+/// downgrades this to a NON-blocking note naming the other 34 plus the
+/// rest of the honest remainder; no recognized Discovery keeps it
+/// claim-blocking, unchanged.
+fn push_alchemist_other_features_deferred_diagnostic(
+    input: &CharacterInput,
+    level: u8,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let discovery_recognized = choice_selection(input, ALCHEMIST_DISCOVERY_CHOICE_ID)
+        == Some(FERAL_MUTAGEN_DISCOVERY_SELECTION);
+    let discovery_granted_yet = level >= ALCHEMIST_DISCOVERY_GRANT_LEVEL;
+
+    let remainder = "the other 34 Discoveries (a chooser-list of real mechanical variety, 35 \
+         shared `KEY:Discovery ~ ...` records in all), Grand Discovery, Swift Alchemy, Swift \
+         Poisoning, Instant Alchemy, Persistent Mutagen, Poison Use, the Brew Potion and Throw \
+         Anything bonus-feat grants, and Mutagen's own second and third stat-bonus tiers \
+         (`SecondMutagenStatBonus`/`ThirdMutagenStatBonus` -- only the flat first-tier +4/-2 is \
+         grounded) remain ungrounded anywhere in this codebase; no class-feature or spell \
+         execution is fabricated in this bounded chassis baseline. This message previously \
+         asserted \"this APG class has no class-skill list\": Alchemist's own `KEY:Alchemist ~ \
+         Class Skills` corpus record exists -- it simply contains none of the three skills this \
+         codebase tracks, so the resulting zero bonus is correct for a different reason than \
+         the one claimed (task #76)";
+
+    let grounded = "its base-attack-bonus/base-save chassis pillar, Mutagen's first stat-bonus \
+         tier, Bomb, Poison Resistance, Formulae's own formula-book contents, and (subject to \
+         its own real prepared-extract validation) spellcasting";
+
+    let message = if discovery_recognized && discovery_granted_yet {
+        format!(
+            "{ALCHEMIST_CLASS_ID} has {grounded}, plus one real, corpus-verified Discovery \
+             chosen from its own 35-record chooser (Feral Mutagen: its claw/bite damage dice \
+             and its +{FERAL_MUTAGEN_INTIMIDATE_BONUS} competence bonus on Intimidate while \
+             mutated) -- the canonical narrowing this codebase applies to every large class \
+             chooser (Cleric's Good domain, Wizard's Evocation school, Oracle's Mystery, \
+             Arcanist's Metamagic Knowledge). What is deferred, honestly and non-blockingly: \
+             {remainder}"
+        )
+    } else if discovery_recognized {
+        format!(
+            "{ALCHEMIST_CLASS_ID} has {grounded}. Its Discovery slot carries this codebase's \
+             one grounded Discovery choice (Feral Mutagen), which is correctly inert at level \
+             {level}: the corpus pool is `AlchemistDiscoveryLVL/2`, so the first Discovery is \
+             not granted until alchemist level {ALCHEMIST_DISCOVERY_GRANT_LEVEL} and there is \
+             no Discovery gap to block on at this level at all. What is deferred, honestly and \
+             non-blockingly: {remainder}"
+        )
+    } else {
+        format!(
+            "{ALCHEMIST_CLASS_ID} remains blocked beyond {grounded}: no recognized Discovery \
+             choice is present, and {remainder}"
+        )
+    };
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.alchemist.other_features_deferred.unsupported".to_owned(),
-        message: format!(
-            "{ALCHEMIST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Mutagen's first stat-bonus tier, Bomb, Poison Resistance, \
-             Formulae's own formula-book contents, and (subject to its own real \
-             prepared-extract validation) spellcasting: no other named class feature (Discovery \
-             -- a chooser-list of real mechanical variety, 35 shared `KEY:Discovery ~ ...` \
-             records -- Grand Discovery, Swift Alchemy, Swift Poisoning, Instant Alchemy, \
-             Persistent Mutagen, Poison Use, the Brew Potion and Throw Anything bonus-feat \
-             grants, and Mutagen's own second and third stat-bonus tiers \
-             (`SecondMutagenStatBonus`/`ThirdMutagenStatBonus` -- only the flat first-tier \
-             +4/-2 is grounded)) is grounded anywhere in this codebase yet; \
-             no class-feature or spell execution is fabricated in this bounded chassis \
-             baseline. This message previously asserted \"this APG class has no class-skill \
-             list\": Alchemist's own `KEY:Alchemist ~ Class Skills` corpus record exists -- it \
-             simply contains none of the three skills this codebase tracks, so the resulting \
-             zero bonus is correct for a different reason than the one claimed. Grand \
-             Discovery, Instant Alchemy, Persistent Mutagen, Poison Use, Brew Potion, Throw \
-             Anything and the higher Mutagen tiers were named in NEITHER clause (task #76)"
-        ),
-        claim_blocking: true,
+        message,
+        claim_blocking: !discovery_recognized,
     });
+}
+
+/// Grounds Alchemist's one canonical Discovery, Feral Mutagen (v0.6 alpha
+/// swarm, Alchemist spellcasting-shaped closure), gated on a recognized
+/// `choice:alchemist_discovery` selection plus the class's own
+/// `AlchemistDiscoveryLVL/2` grant gate.
+///
+/// Every value is transcribed verbatim from `apg_abilities_class.lst`'s
+/// own `KEY:Discovery ~ Feral Mutagen` record -- see
+/// `FERAL_MUTAGEN_DISCOVERY_SELECTION`'s doc comment for the quoted DESC
+/// and the `TEMPBONUS:PC|SKILL|Intimidate|2` token.
+///
+/// The damage dice ground unconditionally once the Discovery is granted,
+/// the same shape Warpriest's Sacred Weapon base damage die already uses:
+/// they are fixed properties of the Discovery at Medium size, not
+/// activation-dependent quantities. What the mutagen's active state gates
+/// is whether the attacks and the Intimidate bonus are *currently* held,
+/// which is recorded separately -- mirroring Destructive Attacks' and
+/// Strength Surge's own active/not-active split exactly.
+///
+/// Not integrated into a total, and honest about it: this codebase has no
+/// natural-attack routine for the claws/bite to enter, and the +2
+/// Intimidate is a `TEMPBONUS` that only exists while a mutagen is in
+/// effect, which `compute_selected_skill_modifiers` does not model. Both
+/// ground as standalone flat magnitudes under the same bar Bard's Bardic
+/// Knowledge and Slayer's Track already ship under.
+fn ground_alchemist_feral_mutagen_discovery(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level < ALCHEMIST_DISCOVERY_GRANT_LEVEL
+        || choice_selection(input, ALCHEMIST_DISCOVERY_CHOICE_ID)
+            != Some(FERAL_MUTAGEN_DISCOVERY_SELECTION)
+    {
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.alchemist.discovery.feral_mutagen_claw_damage_die".to_owned(),
+        value: FERAL_MUTAGEN_CLAW_DAMAGE_DIE,
+        detail: format!(
+            "Alchemist level {level} selected the Feral Mutagen discovery: whenever he imbibes \
+             a mutagen he gains TWO claw attacks dealing \
+             1d{FERAL_MUTAGEN_CLAW_DAMAGE_DIE} each (1d4 if Small -- this codebase's own \
+             fixture race is Medium). Primary attacks made at his full base attack bonus. This \
+             engine has no natural-attack routine and computes no weapon-damage total anywhere, \
+             so the damage die is grounded as a standalone magnitude rather than folded into a \
+             total that does not exist"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.alchemist.discovery.feral_mutagen_bite_damage_die".to_owned(),
+        value: FERAL_MUTAGEN_BITE_DAMAGE_DIE,
+        detail: format!(
+            "Alchemist level {level} Feral Mutagen bite attack: \
+             1d{FERAL_MUTAGEN_BITE_DAMAGE_DIE} (1d6 if Small). Same standalone-magnitude \
+             posture as the claws above"
+        ),
+    });
+
+    let mutated = active_alchemist_mutagen_bonus(input).is_some();
+    if mutated {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.alchemist.discovery.feral_mutagen_intimidate_bonus".to_owned(),
+            value: FERAL_MUTAGEN_INTIMIDATE_BONUS,
+            detail: format!(
+                "Alchemist level {level} is currently mutated, so Feral Mutagen's \
+                 +{FERAL_MUTAGEN_INTIMIDATE_BONUS} competence bonus on Intimidate checks is \
+                 genuinely held (`TEMPBONUS:PC|SKILL|Intimidate|2`). Grounded as a standalone \
+                 magnitude, NOT folded into this engine's real Intimidate total: it is a \
+                 TEMPBONUS that exists only for the mutagen's duration, and \
+                 compute_selected_skill_modifiers models no duration-scoped skill bonuses at \
+                 all, so adding it to the total would claim a time-scoping this codebase does \
+                 not enforce"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.alchemist.discovery.feral_mutagen_not_mutated".to_owned(),
+            value: 0,
+            detail: format!(
+                "Alchemist level {level} holds the Feral Mutagen discovery but is not currently \
+                 mutated: a genuinely valid PF1 posture (the discovery only takes effect \
+                 \"whenever the alchemist imbibes a mutagen\"), so no claw/bite attacks and no \
+                 +{FERAL_MUTAGEN_INTIMIDATE_BONUS} Intimidate bonus are claimed as currently \
+                 held. The dice above name what the discovery grants, not what is active now"
+            ),
+        });
+    }
 }
 
 /// Applies Alchemist Mutagen's ability-score bonus/penalty to `base` when
@@ -14714,6 +14946,24 @@ fn warpriest_channel_energy_dc(level: u8, wisdom_modifier: i16) -> Option<i16> {
     Some(10 + i16::from(level) / 2 + wisdom_modifier)
 }
 
+/// How many times per day a Warpriest can Channel Energy: the Fervor pool
+/// divided by the two Fervor uses one channel expends. `None` below level
+/// 4, Channel Energy's own grant level.
+///
+/// This is a derived count, not a transcribed table: the corpus gives
+/// Channel Energy no pool of its own at all (`BONUS:ABILITYPOOL|Warpriest
+/// Channel Energy|1` grants the *ability*, once, not daily uses), and its
+/// own DESC states the cost -- "expends two uses of his fervor ability".
+/// So the honest daily count is exactly this quotient, and it moves with
+/// Wisdom because Fervor's own pool does.
+fn warpriest_channel_energy_uses_per_day(level: u8, wisdom_modifier: i16) -> Option<i16> {
+    if level < WARPRIEST_CHANNEL_ENERGY_LEVEL {
+        return None;
+    }
+    let fervor_uses = warpriest_fervor_uses_per_day(level, wisdom_modifier)?;
+    Some(fervor_uses / WARPRIEST_CHANNEL_ENERGY_FERVOR_COST)
+}
+
 /// Warpriest Sacred Armor's armor enhancement bonus (deepening
 /// 2026-07-26, task #9), re-derived directly against
 /// `acg_abilities_class.lst`'s own `KEY:Warpriest ~ Sacred Armor`
@@ -14863,9 +15113,9 @@ fn ground_or_block_warpriest_class_features(
             }
         }
     }
-    if blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION)
-        || blessing_selections.contains(&STRENGTH_BLESSING_SELECTION)
-    {
+    let blessing_recognized = blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION)
+        || blessing_selections.contains(&STRENGTH_BLESSING_SELECTION);
+    if blessing_recognized {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled".to_owned(),
             message: "Warpriest Blessing minor/major power content beyond Destruction's own \
@@ -14909,7 +15159,69 @@ fn ground_or_block_warpriest_class_features(
         });
     }
 
-    push_warpriest_other_features_deferred_diagnostic(diagnostics);
+    ground_warpriest_focus_weapon(input, level, explanations);
+
+    push_warpriest_other_features_deferred_diagnostic(blessing_recognized, diagnostics);
+}
+
+/// Grounds Warpriest's own Focus Weapon class feature: "At 1st level, a
+/// warpriest receives Weapon Focus as a bonus feat (he can choose any
+/// weapon, not just his deity's favored weapon)" -- verified directly
+/// against `acg_abilities_class.lst`'s own `KEY:Warpriest ~ Focus Weapon`
+/// record, whose only token besides the DESC is
+/// `BONUS:ABILITYPOOL|Warpriest Focus Weapon Choice|1`.
+///
+/// This grant needs no new engine at all: Weapon Focus's own +1 attack
+/// bonus is already computed and already integrated into this codebase's
+/// real per-weapon attack totals (`feat.standalone.weapon_focus.<weapon>`,
+/// via `feat_effects::weapon_focus_facts_from_choices`). So the honest
+/// grounding is to resolve the grant against that live seam and report
+/// which weapon it actually landed on -- never to restate the bonus as a
+/// second, parallel number. When the character has not recorded the feat
+/// on the fields that seam reads, this records that absence rather than
+/// claiming a grant that produces nothing, mirroring Monk's own
+/// bonus-feat unmet-precondition branch.
+fn ground_warpriest_focus_weapon(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let facts = crate::rules_core::feat_effects::weapon_focus_facts_from_choices(
+        &input.chosen.selected_feats,
+        &input.chosen.selected_choices,
+    );
+    if facts.is_empty() {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.focus_weapon.not_recorded".to_owned(),
+            value: 0,
+            detail: format!(
+                "Warpriest level {level} Focus Weapon grants Weapon Focus as a bonus feat at \
+                 1st level, but this character records no resolvable Weapon Focus target: \
+                 `selected_feats` carries no Weapon Focus entry, or no weapon-target choice \
+                 names the weapon it applies to. The grant is real and its mechanics are \
+                 already built (Weapon Focus's +1 flows into this engine's per-weapon attack \
+                 totals whenever both are recorded), so this is an unmet precondition on the \
+                 input, not a missing engine -- no attack bonus is claimed for it here"
+            ),
+        });
+        return;
+    }
+    let weapons: Vec<&str> = facts.iter().map(|f| f.weapon_name.as_str()).collect();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.warpriest.focus_weapon.bonus_feat_granted".to_owned(),
+        value: facts.len() as i16,
+        detail: format!(
+            "Warpriest level {level} Focus Weapon is genuinely realized: this character holds \
+             Weapon Focus, resolved against {} weapon target(s) ({}), and the class grant \
+             places no restriction on which weapon (\"he can choose any weapon, not just his \
+             deity's favored weapon\"). No separate magnitude is recorded here on purpose -- \
+             Weapon Focus's own +1 attack bonus is ALREADY integrated into this engine's real \
+             per-weapon attack totals (`feat.standalone.weapon_focus.*`), and restating it \
+             would double-count a number the totals already carry",
+            facts.len(),
+            weapons.join(", ")
+        ),
+    });
 }
 
 /// Grounds Warpriest's Fervor, Channel Energy DC, and Sacred Armor as
@@ -14966,6 +15278,61 @@ fn ground_warpriest_fervor_channel_and_sacred_armor(
                  defers to Fervor's dice rather than defining its own). This engine computes no \
                  healing or hit-point-recovery total anywhere, so this grounds as a standalone \
                  flat magnitude only"
+            ),
+        });
+    }
+    // Channel Energy's own daily count. The corpus does NOT give Channel
+    // Energy a pool of its own: `KEY:Warpriest ~ Channel Energy` says
+    // "Using this ability is a standard action that expends two uses of
+    // his fervor ability", and both display records restate it ("This
+    // consumes 2 uses of your Fervor Ability"). So the real number of
+    // channels available per day is the already-grounded Fervor pool
+    // divided by that cost -- a derived count off a corpus-verified rule,
+    // not a second transcribed table. Retires the standing claim that
+    // "the Channel Positive/Negative Energy dice and uses ... remain
+    // ungrounded": the DICE half of that claim was already stale when
+    // written (both display records' `1+max(0,min(20,WarpriestLVL)-2)/3`
+    // is byte-identical to `warpriest_fervor_heal_dice`, grounded above),
+    // and this record closes the USES half.
+    match warpriest_channel_energy_uses_per_day(level, wisdom) {
+        Some(uses) => explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.channel_energy_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Warpriest level {level} Channel Energy uses per day: the Fervor pool \
+                 ({}) divided by the {WARPRIEST_CHANNEL_ENERGY_FERVOR_COST} Fervor uses one \
+                 channel expends = {uses}. Channel Energy has no daily pool of its own in the \
+                 corpus -- it spends Fervor's. Flat count only: no per-use consumption is \
+                 tracked here, and a Warpriest who spends Fervor on its other uses has \
+                 correspondingly fewer channels, which this record does not simulate",
+                warpriest_fervor_uses_per_day(level, wisdom).unwrap_or(0)
+            ),
+        }),
+        None => explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.channel_energy_uses_per_day".to_owned(),
+            value: 0,
+            detail: format!(
+                "Warpriest level {level} Channel Energy: correctly absent below level \
+                 {WARPRIEST_CHANNEL_ENERGY_LEVEL} by PF1 Advanced Class Guide level gate; the \
+                 at-grant magnitude is named but not computed"
+            ),
+        }),
+    }
+    if let Some(dice) = warpriest_fervor_heal_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.warpriest.channel_energy_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Warpriest level {level} Channel Energy dice: {dice}d6, the SAME magnitude as \
+                 Fervor's own heal/harm dice -- the Channel Positive Energy and Channel \
+                 Negative Energy records both carry `1+max(0,min(20,WarpriestLVL)-2)/3` \
+                 verbatim, byte-identical to the Fervor formula, and the Channel Energy record \
+                 itself defers to it (\"The amount of damage dealt or healed is equal to the \
+                 amount listed in the fervor ability\"). Recorded under its own id so the \
+                 feature is visibly grounded rather than only implied by Fervor's record. \
+                 Which of the two (positive or negative) a given Warpriest channels is \
+                 alignment- and deity-driven; this codebase models neither, so no \
+                 positive/negative determination is claimed"
             ),
         });
     }
@@ -15088,30 +15455,67 @@ fn ground_warpriest_strength_surge(
 /// `class_feature.acg.warpriest.unsupported` for Warpriest specifically
 /// (v0.6 alpha swarm, risks item 8, Warpriest full-build closure): named
 /// ONLY the genuinely still-missing pieces.
-fn push_warpriest_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+///
+/// **Canonical narrowing (v0.6 alpha swarm, Warpriest spellcasting-shaped
+/// closure).** This used to claim-block unconditionally, which meant a
+/// Warpriest who HAD made this codebase's one grounded Blessing choice
+/// was reported identically to one who had made none -- the same
+/// flattening `ground_or_block_arcanist_metamagic_knowledge` already
+/// corrected for Arcanist. It now mirrors that shape exactly: a
+/// recognized Blessing (Destruction or Strength) grounds a real
+/// class-feature option and downgrades this to a NON-blocking note naming
+/// the honest remainder; no recognized Blessing keeps it claim-blocking,
+/// unchanged.
+///
+/// Two clauses were retired here as genuinely stale rather than
+/// suppressed. **Focus Weapon** is now grounded for real
+/// (`ground_warpriest_focus_weapon`) against the already-integrated
+/// Weapon Focus attack-bonus seam. **The Channel Positive/Negative Energy
+/// dice and uses** are now grounded too: the dice half was stale when the
+/// clause was written (both display records carry Fervor's own
+/// `1+max(0,min(20,WarpriestLVL)-2)/3` verbatim), and the uses half is
+/// closed by `warpriest_channel_energy_uses_per_day`.
+fn push_warpriest_other_features_deferred_diagnostic(
+    blessing_recognized: bool,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let remainder = "31 of the corpus's 33 Blessing types (only Destruction's own Destructive \
+         Attacks and Strength's own Strength Surge are grounded -- 2 of 66 powers, since each \
+         of the 33 types carries its own minor AND major power), Sacred Weapon's active \
+         weapon-enhancement mechanic, Aspect of War, Spontaneous Casting, Aura, and Bonus \
+         Languages remain ungrounded anywhere in this codebase. Sacred Weapon's active \
+         enhancement and a large share of the remaining Blessing powers are blocked on the same \
+         real, missing architecture -- a weapon-enhancement activation surface and a summon \
+         subsystem -- not on transcription effort; no class-feature execution is fabricated in \
+         this bounded chassis baseline. Two clauses this message used to carry are retired as \
+         stale, not suppressed: Focus Weapon is now genuinely grounded against the already-\
+         integrated Weapon Focus attack-bonus seam, and the Channel Positive/Negative Energy \
+         dice and uses are now grounded (the dice were already Fervor's own formula verbatim; \
+         the uses are the Fervor pool divided by the 2 uses a channel expends). This message \
+         also previously said \"18 of the 20 Blessing types\": the real corpus count is 33 \
+         types, verified by enumerating `KEY:<X> Blessing ~ ...` directly (task #76)";
+
+    let grounded = "its base-attack-bonus/base-save chassis pillar, Blessings' flat \
+         uses-per-day/DC, Sacred Weapon's base damage die, Fervor's pool and heal dice, Channel \
+         Energy's save DC, dice and uses per day, Sacred Armor's enhancement and pool, Focus \
+         Weapon's bonus-feat grant, its class-skill list, Orisons, and prepared spellbook";
+
+    let message = if blessing_recognized {
+        format!(
+            "{WARPRIEST_CLASS_ID} has {grounded}, plus one real, corpus-verified Blessing type \
+             chosen from its own chooser -- the canonical narrowing this codebase applies to \
+             every large class chooser (Cleric's Good domain, Wizard's Evocation school, \
+             Oracle's Mystery, Arcanist's Metamagic Knowledge). What is deferred, honestly and \
+             non-blockingly: {remainder}"
+        )
+    } else {
+        format!("{WARPRIEST_CLASS_ID} remains blocked beyond {grounded}: {remainder}")
+    };
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.warpriest.other_features_deferred.unsupported".to_owned(),
-        message: format!(
-            "{WARPRIEST_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Blessings' flat uses-per-day/DC, Sacred Weapon's base damage die, \
-             Fervor's pool and heal dice, Channel Energy's save DC, Sacred Armor's enhancement \
-             and pool, its class-skill list, Orisons, and prepared spellbook: 31 of the \
-             corpus's 33 Blessing types (only Destruction's own Destructive Attacks and \
-             Strength's own Strength Surge are grounded -- 2 of 66 powers, since each of the 33 \
-             types carries its own minor AND major power), Sacred \
-             Weapon's active weapon-enhancement mechanic, Aspect of War, Spontaneous Casting, \
-             Aura, Focus Weapon, Bonus Languages, and the Channel Positive/Negative Energy \
-             dice and uses (only the shared save DC and Fervor dice are grounded) remain \
-             ungrounded anywhere in this codebase. Sacred Weapon's active enhancement and a \
-             large share of the remaining \
-             Blessing powers are blocked on the same real, missing architecture -- a \
-             weapon-enhancement activation surface and a summon subsystem -- not on \
-             transcription effort; no class-feature execution is fabricated in this bounded \
-             chassis baseline. This message previously said \"18 of the 20 Blessing types\": \
-             the real corpus count is 33 types, verified by enumerating `KEY:<X> Blessing ~ \
-             ...` directly (task #76)"
-        ),
-        claim_blocking: true,
+        message,
+        claim_blocking: !blessing_recognized,
     });
 }
 
@@ -16367,7 +16771,7 @@ fn ground_or_block_investigator_class_features(
         });
     }
 
-    push_investigator_other_features_deferred_diagnostic(diagnostics);
+    push_investigator_other_features_deferred_diagnostic(input, level, diagnostics);
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -16385,33 +16789,73 @@ fn ground_or_block_investigator_class_features(
 /// `class_spell.acg.arcanist.prepared_spellbook.unsupported`). Pushed
 /// exactly once from the top-level Investigator branch, independent of
 /// the extract posture's own state.
+/// **Canonical narrowing (v0.6 alpha swarm, Investigator
+/// spellcasting-shaped closure).** This used to claim-block
+/// unconditionally, which flattened two genuinely different characters
+/// into one report: an Investigator who HAD filled her talent slot with
+/// this codebase's one grounded talent (Resiliency, task #58) read
+/// identically to one who had chosen nothing. It now mirrors
+/// `ground_or_block_arcanist_metamagic_knowledge`'s established shape --
+/// a recognized talent choice grounds a real class-feature option and
+/// downgrades this to a NON-blocking note naming the honest remainder; no
+/// recognized choice keeps it claim-blocking, unchanged.
 fn push_investigator_other_features_deferred_diagnostic(
+    input: &CharacterInput,
+    level: u8,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let talent_recognized =
+        choice_selection(input, INVESTIGATOR_TALENT_CHOICE_ID) == Some(RESILIENCY_TALENT_SELECTION);
+    let talent_granted_yet = level >= INVESTIGATOR_TALENT_GRANT_LEVEL;
+
+    let remainder = "Inspiration's actual spend (a free/two-use action on skill/ability/attack/\
+         save rolls, plus the free Knowledge/Linguistics/Spellcraft interaction), the remainder \
+         of Investigator Talents (a chooser-list of real mechanical variety including the large \
+         Rogue Talent and Discovery sub-lists, Resiliency alone excepted), Keen Recollection, \
+         Poison Lore, Swift Alchemy, and True Inspiration remain ungrounded anywhere in this \
+         codebase; no class-feature or spell execution is fabricated in this bounded chassis \
+         baseline. Studied Combat and Studied Strike are NOT among them: their bonus, duration, \
+         Studied Defense AC bonus and strike dice are all grounded, and this message previously \
+         deferred them \"pending an opponent-tracking pillar, ruled consistently with Slayer's \
+         own Studied Target\" -- a ruling that no longer matches either class's shipped state. \
+         As with Slayer, what remains unmodelled for both is the APPLICATION against a specific \
+         studied opponent, not the magnitudes";
+
+    let grounded = "its base-attack-bonus/base-save chassis pillar, its class-skill list, \
+         Trapfinding, Trap Sense, Inspiration's flat pool-size fact, Poison Resistance, \
+         Alchemy, Studied Combat/Studied Strike/Studied Defense, and (subject to its own real \
+         prepared-extract validation) spellcasting";
+
+    let message = if talent_recognized && talent_granted_yet {
+        format!(
+            "{INVESTIGATOR_CLASS_ID} has {grounded}, plus Resiliency's own temporary-hit-point \
+             magnitude, recognized through her own separate Rogue Talent whitelist choice slot \
+             (task #58) -- the canonical narrowing this codebase applies to every large class \
+             chooser (Cleric's Good domain, Wizard's Evocation school, Oracle's Mystery, \
+             Arcanist's Metamagic Knowledge): one corpus-verified option grounded for real, the \
+             other 39 whitelist entries named rather than fabricated. What is deferred, \
+             honestly and non-blockingly: {remainder}"
+        )
+    } else if talent_recognized {
+        format!(
+            "{INVESTIGATOR_CLASS_ID} has {grounded}. Her talent slot carries this codebase's \
+             one grounded talent choice (Resiliency), which is correctly inert at level \
+             {level}: Investigator's first talent is not granted until level \
+             {INVESTIGATOR_TALENT_GRANT_LEVEL}, so there is no talent gap to block on at this \
+             level at all -- the recorded choice simply takes effect when the slot opens. What \
+             is deferred, honestly and non-blockingly: {remainder}"
+        )
+    } else {
+        format!(
+            "{INVESTIGATOR_CLASS_ID} remains blocked beyond {grounded}: no recognized \
+             Investigator Talent choice is present, and {remainder}"
+        )
+    };
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.investigator.other_features_deferred.unsupported".to_owned(),
-        message: format!(
-            "{INVESTIGATOR_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, its class-skill list, Trapfinding, Trap Sense, Inspiration's flat \
-             pool-size fact, Poison \
-             Resistance, Alchemy, Resiliency's own temporary-hit-point magnitude (task #58, \
-             recognized via her own separate Rogue Talent whitelist choice slot -- only \
-             Resiliency, not the other 39 whitelist entries), and (subject to its own real \
-             prepared-extract validation) spellcasting: Inspiration's actual spend (a \
-             free/two-use action on skill/ability/attack/save rolls, plus the free \
-             Knowledge/Linguistics/Spellcraft interaction), the remainder of Investigator \
-             Talents (a chooser-list of real mechanical variety including the large Rogue \
-             Talent and Discovery sub-lists, Resiliency alone excepted), Keen Recollection, \
-             Poison Lore, Swift Alchemy, and True Inspiration remain ungrounded anywhere in \
-             this codebase; no class-feature or spell execution is fabricated in this bounded \
-             chassis baseline. Studied Combat and Studied Strike are NOT among them: their \
-             bonus, duration, Studied Defense AC bonus and strike dice are all grounded, and \
-             this message previously deferred them \"pending an opponent-tracking pillar, ruled \
-             consistently with Slayer's own Studied Target\" -- a ruling that no longer matches \
-             either class's shipped state. As with Slayer, what remains unmodelled for both is \
-             the APPLICATION against a specific studied opponent, not the magnitudes"
-        ),
-        claim_blocking: true,
+        message,
+        claim_blocking: !talent_recognized,
     });
 }
 
@@ -18780,6 +19224,7 @@ fn ground_or_block_bloodrager_bloodrage(
     // bloodraging branch splits -- both branches must carry it.
     ground_bloodrager_damage_reduction(bloodrager_level, explanations);
     ground_bloodrager_remaining_features(bloodrager_level, explanations);
+    ground_bloodrager_arcane_bloodline(input, bloodrager_level, ability_modifiers, explanations);
 
     let Some(activation) = input
         .chosen
@@ -18799,8 +19244,8 @@ fn ground_or_block_bloodrager_bloodrage(
                  when an active, in-budget activation is present"
             ),
         });
-        push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
-        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+        push_bloodrager_spellcasting_deferred_diagnostic(input, bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(input, diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
         ground_or_block_bloodrager_known_spells(
             input,
@@ -18828,8 +19273,8 @@ fn ground_or_block_bloodrager_bloodrage(
                 ),
                 claim_blocking: true,
             });
-            push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
-        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+            push_bloodrager_spellcasting_deferred_diagnostic(input, bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(input, diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
         ground_or_block_bloodrager_known_spells(
             input,
@@ -18894,8 +19339,8 @@ fn ground_or_block_bloodrager_bloodrage(
         }
     }
 
-    push_bloodrager_spellcasting_deferred_diagnostic(bloodrager_level, diagnostics);
-        push_bloodrager_other_features_deferred_diagnostic(diagnostics);
+    push_bloodrager_spellcasting_deferred_diagnostic(input, bloodrager_level, diagnostics);
+        push_bloodrager_other_features_deferred_diagnostic(input, diagnostics);
         ground_bloodrager_spell_tables(bloodrager_level, explanations);
         ground_or_block_bloodrager_known_spells(
             input,
@@ -18912,35 +19357,64 @@ fn ground_or_block_bloodrager_bloodrage(
 /// spell list, and every other named-but-unbuilt Bloodrager class feature
 /// beyond Bloodrage), unlike the retired diagnostic's blanket "no named
 /// class-feature computation... grounded anywhere" claim, which is now
-/// false for Bloodrager. Pushed unconditionally regardless of Bloodrage's
-/// own raging state.
+/// false for Bloodrager. Pushed regardless of Bloodrage's own raging
+/// state.
+///
+/// **Canonical narrowing (v0.6 alpha swarm, Bloodrager
+/// spellcasting-shaped closure).** By its own text this diagnostic had
+/// already narrowed to ONE remaining item: the Bloodline bonus spells,
+/// which are downstream of the Bloodline slot rather than of anything
+/// spellcasting-specific. So it now resolves the same way that slot does
+/// -- a recognized, grounded bloodline (whose four bonus spells ARE
+/// grounded, see `ground_bloodrager_arcane_bloodline_bonus_spells`)
+/// downgrades it to a NON-blocking note naming the other nine
+/// bloodlines' bonus spells; any other (or no) selection keeps it
+/// claim-blocking, unchanged.
 fn push_bloodrager_spellcasting_deferred_diagnostic(
+    input: &CharacterInput,
     level: u8,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if level >= BLOODRAGER_FIRST_CASTING_LEVEL {
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.acg.bloodrager.spellcasting_deferred.unsupported".to_owned(),
-            message: format!(
+        let bloodline_recognized = choice_selection(input, BLOODRAGER_BLOODLINE_CHOICE_ID)
+            == Some(ARCANE_BLOODRAGER_BLOODLINE_SELECTION);
+        let shared = "it casts from its own spell list (`SPELLLIST:1|Bloodrager`, no borrowed \
+             list), its spells-per-day and spells-known tables are grounded, and as of task #87 \
+             its 200-entry `acg::bloodrager_spell_list` is genuinely WIRED -- a recorded \
+             known-spell selection is validated against that real list, the access ceiling \
+             derived from the shipped Spells Known table, and that table's own per-level caps, \
+             grounding `class_spell.acg.bloodrager.known_spells` when the posture holds and \
+             claim-blocking with the specific unmet reasons when it does not. No spell save DC \
+             resolution against a target and no casting execution is claimed for any Bloodrager \
+             spell. This message has twice described the spell list wrongly: it said \"not \
+             built\" when the list had existed since task #1, then (task #83) \"built but NOT \
+             WIRED\", which was true when written and stopped being true here";
+        let message = if bloodline_recognized {
+            format!(
+                "{BLOODRAGER_CLASS_ID} level {level} spellcasting posture is grounded: {shared}. \
+                 The one item this diagnostic still named -- the Bloodline bonus spells -- is \
+                 grounded for the one bloodline this codebase grounds (Arcane: Magic Missile at \
+                 7th, Invisibility at 10th, Lightning Bolt at 13th, Dimension Door at 16th, \
+                 each read off the bloodline record's own `SPELLKNOWN:` token). What stays \
+                 deferred, honestly and non-blockingly: the other 9 bloodlines' own four bonus \
+                 spells apiece, and the Elemental bloodline's element sub-choice -- both \
+                 downstream of the Bloodline slot, not of spellcasting"
+            )
+        } else {
+            format!(
                 "{BLOODRAGER_CLASS_ID} level {level} remains blocked on its spellcasting \
-                 posture: it casts from its own spell list (`SPELLLIST:1|Bloodrager`, no \
-                 borrowed list), its spells-per-day and spells-known tables are grounded, and \
-                 as of task #87 its 200-entry `acg::bloodrager_spell_list` is genuinely WIRED \
-                 -- a recorded known-spell selection is now validated against that real list, \
-                 the access ceiling derived from the shipped Spells Known table, and that \
-                 table's own per-level caps, grounding \
-                 `class_spell.acg.bloodrager.known_spells` when the posture holds and \
-                 claim-blocking with the specific unmet reasons when it does not. What remains \
-                 genuinely unbuilt: the Bloodline bonus spells (10 bloodlines x 4 spells, first \
+                 posture: {shared}. What remains genuinely unbuilt: the Bloodline bonus spells \
+                 for the 9 bloodlines this codebase does not ground (4 spells each, first \
                  granted at bloodline progression level 7) and the Elemental bloodline's own \
                  element sub-choice -- both downstream of the Bloodline slot itself, which is \
-                 this class's other open blocker. No spell save DC resolution against a target \
-                 and no casting execution is claimed for any Bloodrager spell. This message has \
-                 twice described the spell list wrongly: it said \"not built\" when the list had \
-                 existed since task #1, then (task #83) \"built but NOT WIRED\", which was true \
-                 when written and stopped being true here"
-            ),
-            claim_blocking: true,
+                 this class's other open blocker, and no recognized bloodline choice is present \
+                 here"
+            )
+        };
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.bloodrager.spellcasting_deferred.unsupported".to_owned(),
+            message,
+            claim_blocking: !bloodline_recognized,
         });
     } else {
         diagnostics.push(ComputationDiagnostic {
@@ -18970,35 +19444,220 @@ fn push_bloodrager_spellcasting_deferred_diagnostic(
 /// skills on a separate internal ability rather than a `CSKILL:` token
 /// on the class line -- a `CSKILL:`-shaped search finds nothing for ANY
 /// ACG class and would wrongly conclude the list is absent.
+/// **Canonical narrowing (v0.6 alpha swarm, Bloodrager
+/// spellcasting-shaped closure).** This used to claim-block
+/// unconditionally on "the entire Bloodline slot". One bloodline of the
+/// ten -- Arcane -- is now genuinely grounded
+/// (`ground_bloodrager_arcane_bloodline`), so this takes the same shape
+/// `ground_or_block_arcanist_metamagic_knowledge` established: a
+/// recognized, grounded bloodline downgrades this to a NON-blocking note
+/// naming the other nine and the parts of Arcane's own ladder that stay
+/// unmodelled; any other (or no) selection keeps it claim-blocking,
+/// unchanged.
 fn push_bloodrager_other_features_deferred_diagnostic(
+    input: &CharacterInput,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    let bloodline_recognized = choice_selection(input, BLOODRAGER_BLOODLINE_CHOICE_ID)
+        == Some(ARCANE_BLOODRAGER_BLOODLINE_SELECTION);
+
+    let grounded = "its base-attack-bonus/base-save chassis pillar, Bloodrage, its class-skill \
+         list, its spells-per-day/spells-known tables, Fast Movement, Uncanny Dodge and \
+         Improved Uncanny Dodge, Blood Sanctuary, Damage Reduction, the \
+         Greater/Tireless/Mighty Bloodrage tiers, Indomitable Will, Blood Casting and Eschew \
+         Materials";
+
+    let remainder = format!(
+        "the other 9 bloodlines (Aberrant, Abyssal, Celestial, Destined, Draconic, \
+         Elemental, Fey, Infernal, Undead) each carry their own separate power ladder and their \
+         own separate four bonus spells, and none of them is grounded; the Elemental \
+         bloodline's own element sub-choice is not modelled either. Within Arcane itself, four \
+         of the six ladder rungs stay unmodelled: Arcane Bloodrage (level \
+         {ARCANE_BLOODRAGER_ARCANE_BLOODRAGE_LEVEL}), Greater Arcane Bloodrage \
+         ({ARCANE_BLOODRAGER_GREATER_ARCANE_BLOODRAGE_LEVEL}) and True Arcane Bloodrage \
+         ({ARCANE_BLOODRAGER_TRUE_ARCANE_BLOODRAGE_LEVEL}) each apply a chosen SPELL's effects \
+         to the bloodrager for the bloodrage's duration, and this engine executes no spell \
+         effects at all, so grounding them would fabricate a subsystem; Caster's Bane \
+         ({ARCANE_BLOODRAGER_CASTERS_BANE_LEVEL}) is a \
+         provocation rule with no magnitude, and this codebase has no attack-of-opportunity \
+         provocation model for it to be true or false against. Crossblooded Bloodline Selection \
+         is excluded deliberately: it is archetype-gated \
+         (`PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`) and \
+         archetypes are out of scope for base-class chassis, per task #67. No class-feature \
+         execution is fabricated in this bounded chassis baseline. This message previously \
+         listed Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage Reduction and the \
+         Bloodrage tiers as ungrounded -- all five are in fact grounded (tasks #39/#42) -- and \
+         then, after task #76 added them, listed Indomitable Will, Blood Casting and Eschew \
+         Materials, all three of which are now genuinely grounded by task #83"
+    );
+
+    let message = if bloodline_recognized {
+        format!(
+            "{BLOODRAGER_CLASS_ID} has {grounded}, plus one real, corpus-verified bloodline \
+             chosen from its own 10-bloodline chooser (Arcane: Disruptive Bloodrage's +2 \
+             defensive-casting DC, Caster's Scourge's extra attack-of-opportunity pool, and all \
+             four Arcane bloodline bonus spells at their own 7th/10th/13th/16th grant levels) \
+             -- the canonical narrowing this codebase applies to every large class chooser \
+             (Cleric's Good domain, Wizard's Evocation school, Oracle's Mystery, Arcanist's \
+             Metamagic Knowledge). Bloodrager's bloodlines are PARALLEL to Sorcerer's rather \
+             than shared with them (task #59), so this is Bloodrager's own separate corpus work, \
+             not reuse. What is deferred, honestly and non-blockingly: {remainder}"
+        )
+    } else {
+        format!(
+            "{BLOODRAGER_CLASS_ID} remains blocked beyond {grounded}: the Bloodline slot is the \
+             ONE remaining class-feature gap here, and no recognized bloodline choice is \
+             present. Exactly one of the ten (Arcane) is grounded in this codebase; {remainder}"
+        )
+    };
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.bloodrager.other_features_deferred.unsupported".to_owned(),
-        message: format!(
-            "{BLOODRAGER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, Bloodrage, its class-skill list, its spells-per-day/spells-known \
-             tables, Fast Movement, Uncanny Dodge and Improved Uncanny Dodge, Blood Sanctuary, \
-             Damage Reduction, the Greater/Tireless/Mighty Bloodrage tiers, Indomitable Will, \
-             Blood Casting and Eschew Materials: the entire Bloodline slot is the ONE remaining \
-             class-feature gap here, and it is a real workstream rather than a transcription \
-             gap -- 10 bloodlines (Aberrant, Abyssal, Arcane, Celestial, Destined, Draconic, \
-             Elemental, Fey, Infernal, Undead), each with its own power ladder, PARALLEL to \
-             Sorcerer's rather than shared with it (task #59), so none of Sorcerer's shipped \
-             bloodline work transfers. Crossblooded Bloodline \
-             Selection is excluded deliberately: it is archetype-gated \
-             (`PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`) and \
-             archetypes are out of scope for base-class chassis, per task #67. Note this class \
-             is NOT one feature from Computed even so: its own spellcasting posture blocks \
-             separately (see `spellcasting_deferred.unsupported`). No class-feature \
-             execution is fabricated in this bounded chassis \
-             baseline. This message previously listed Fast Movement, Uncanny Dodge, Blood \
-             Sanctuary, Damage Reduction and the Bloodrage tiers as ungrounded -- all five are \
-             in fact grounded (tasks #39/#42) -- and then, after task #76 added them, listed \
-             Indomitable Will, Blood Casting and Eschew Materials, all three of which are now \
-             genuinely grounded by task #83"
+        message,
+        claim_blocking: !bloodline_recognized,
+    });
+}
+
+/// Grounds Bloodrager's one canonical bloodline, Arcane (v0.6 alpha
+/// swarm, Bloodrager spellcasting-shaped closure), gated on a recognized
+/// `choice:bloodrager_bloodline` selection.
+///
+/// Every gate and every magnitude is transcribed directly from
+/// `acg_abilities_class.lst`'s own `KEY:Arcane Bloodrager Bloodline ~ ...`
+/// family and the base-class `CATEGORY:Bloodrager Bloodline /
+/// TYPE:BloodragerBloodlineChoice` record that sets its progression
+/// variables (line 618). Two corpus traps were checked and avoided:
+///
+/// - The bloodline-spell gates 7/10/13/16 are the BASE class's own
+///   (`if(Bloodrager_Arcane_BloodlineProgressionLVL>=7)` etc). A second
+///   record carrying the same `Bloodrager_Arcane_BloodlineSpellLvl*`
+///   variable names uses 7/9/11/13 instead -- that one is
+///   `TYPE:EldritchScionBloodragerBloodlineChoice`, the Eldritch Scion
+///   ARCHETYPE, which is out of scope for base-class chassis per task
+///   #67. Reading it would have shifted three of the four grant levels.
+/// - `max(1,DEX)` on Caster's Scourge is PCGen's Dexterity MODIFIER, not
+///   the score (`DEXSCORE` is the score token), which matches the ACG's
+///   own printed rule.
+fn ground_bloodrager_arcane_bloodline(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if choice_selection(input, BLOODRAGER_BLOODLINE_CHOICE_ID)
+        != Some(ARCANE_BLOODRAGER_BLOODLINE_SELECTION)
+    {
+        return;
+    }
+
+    if level >= ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.bloodline.arcane.disruptive_bloodrage_dc_increase"
+                .to_owned(),
+            value: ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_DC_INCREASE,
+            detail: format!(
+                "Bloodrager level {level} Arcane bloodline, Disruptive Bloodrage (its \
+                 level-{ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_LEVEL} power): the DC to cast \
+                 spells defensively increases by \
+                 +{ARCANE_BLOODRAGER_DISRUPTIVE_BLOODRAGE_DC_INCREASE} for enemies within this \
+                 bloodrager's threatened area, stacking with the Disruptive feat's own \
+                 increase. A magnitude that applies to an OPPONENT's concentration check; this \
+                 engine computes no opponent state and no concentration check, so the flat \
+                 increase is grounded standalone rather than folded into a total that does not \
+                 exist -- the same scope-condition-versus-quantity line Slayer's and \
+                 Investigator's own Studied Target/Studied Combat records already draw"
+            ),
+        });
+    }
+
+    if level >= ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL {
+        let extra_attacks = ability_modifiers.dexterity.max(1);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.bloodline.arcane.casters_scourge_extra_attacks"
+                .to_owned(),
+            value: extra_attacks,
+            detail: format!(
+                "Bloodrager level {level} Arcane bloodline, Caster's Scourge (its \
+                 level-{ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL} power): a pool of \
+                 {extra_attacks} extra attacks of opportunity \
+                 (`BONUS:VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)`, PCGen's DEX \
+                 being the Dexterity MODIFIER ({}) rather than the score, so max(1, {}) = \
+                 {extra_attacks}). Usable only against spellcasters who cast or attempted to \
+                 cast defensively in the threatened area, and still requiring Spellbreaker or \
+                 the Caster's Bane power to actually attack a successful defensive caster. This \
+                 codebase tracks no attack-of-opportunity pool at all, so the count grounds \
+                 standalone and no provocation is resolved",
+                ability_modifiers.dexterity, ability_modifiers.dexterity
+            ),
+        });
+    }
+
+    ground_bloodrager_arcane_bloodline_bonus_spells(level, explanations);
+}
+
+/// The Arcane Bloodrager Bloodline's four bonus spells and their own
+/// grant levels, transcribed from `KEY:Arcane Bloodrager Bloodline ~
+/// Bonus Spells`'s own `SPELLKNOWN:CLASS|Bloodrager=<n>|<spell>` tokens
+/// paired with the base-class gates that enable each one.
+const ARCANE_BLOODRAGER_BONUS_SPELLS: [(u8, u8, &str); 4] = [
+    (7, 1, "Magic Missile"),
+    (10, 2, "Invisibility"),
+    (13, 3, "Lightning Bolt"),
+    (16, 4, "Dimension Door"),
+];
+
+/// Grounds the Arcane bloodline's bonus spells known for `level`.
+///
+/// These are granted IN ADDITION to the class's own Spells Known table
+/// and are deliberately not validated against
+/// `acg::bloodrager_spell_list`: two of the four (Invisibility, Dimension
+/// Door) are genuinely absent from `SPELLLIST:1|Bloodrager`, which is
+/// correct rather than a data gap -- a bloodline bonus spell is granted
+/// by the bloodline record's own `SPELLKNOWN:` token, not drawn from the
+/// class list. Checking them against that list would have wrongly
+/// rejected half of them.
+fn ground_bloodrager_arcane_bloodline_bonus_spells(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let granted: Vec<String> = ARCANE_BLOODRAGER_BONUS_SPELLS
+        .iter()
+        .filter(|(grant_level, _, _)| level >= *grant_level)
+        .map(|(grant_level, spell_level, name)| {
+            format!("{name} (spell level {spell_level}, granted at bloodrager level {grant_level})")
+        })
+        .collect();
+
+    if granted.is_empty() {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.bloodrager.bloodline.arcane.bonus_spells_known".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bloodrager level {level} Arcane bloodline bonus spells: none yet. The first is \
+                 granted at bloodrager level {}, per the base class's own \
+                 `if(Bloodrager_Arcane_BloodlineProgressionLVL>=7)` gate -- correctly absent \
+                 here rather than silently omitted",
+                ARCANE_BLOODRAGER_BONUS_SPELLS[0].0
+            ),
+        });
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.bloodrager.bloodline.arcane.bonus_spells_known".to_owned(),
+        value: granted.len() as i16,
+        detail: format!(
+            "Bloodrager level {level} Arcane bloodline bonus spells known ({}): {}. Each is \
+             added to spells known by the bloodline record's own `SPELLKNOWN:CLASS|Bloodrager=\
+             <n>|<spell>` token, IN ADDITION to the class Spells Known table's own count -- so \
+             these do not consume a Spells Known slot and are not validated against \
+             `SPELLLIST:1|Bloodrager` (Invisibility and Dimension Door are genuinely not on \
+             that list, which is correct for a bloodline grant). Grounds which spells are known \
+             and when; no casting execution and no save DC resolution against a target is \
+             claimed for any of them",
+            granted.len(),
+            granted.join("; ")
         ),
-        claim_blocking: true,
     });
 }
 
@@ -48178,9 +48837,19 @@ mod warpriest_dispatch_widening_safety_tests {
 
     /// A single-class Human Warpriest with the Destruction Blessing
     /// chosen but not currently using Destructive Attacks is a genuinely
-    /// valid posture -- stays `Blocked` on other_features_deferred alone
+    /// valid posture -- stays `Blocked` on its prepared spellbook alone
     /// (never blessing_powers, never the retired generic diagnostic),
     /// with the honest "not active" recognition record grounded.
+    ///
+    /// **Updated (v0.6 alpha swarm, Warpriest spellcasting-shaped
+    /// closure)**: this used to assert `other_features_deferred` was
+    /// claim-blocking here. A recognized Blessing now downgrades it to a
+    /// non-blocking note (the canonical-narrowing shape Arcanist's own
+    /// Metamagic Knowledge established), so the assertion is inverted
+    /// rather than dropped -- the diagnostic must still be PRESENT,
+    /// naming the honest remainder, just not claim-blocking. What keeps
+    /// this input `Blocked` is now the empty spellbook, which this test
+    /// pins explicitly so the reason cannot drift silently.
     #[test]
     fn single_class_warpriest_with_destruction_blessing_not_active_stays_blocked_on_other_features_only()
     {
@@ -48213,8 +48882,19 @@ mod warpriest_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
+                    && !d.claim_blocking),
+            "expected the other_features_deferred diagnostic, present but NON-blocking once a \
+             Blessing is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.warpriest.prepared_spellbook.unsupported"
                     && d.claim_blocking),
-            "expected the other_features_deferred diagnostic: {:?}",
+            "the empty spellbook is what keeps this input Blocked: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -48263,10 +48943,15 @@ mod warpriest_dispatch_widening_safety_tests {
 
     /// A single-class Human Warpriest with a real recorded and prepared
     /// spell, plus the Destruction Blessing recognized, grounds the
-    /// spellbook for real -- stays `Blocked` only on other_features_deferred
-    /// (never blessing_powers, never prepared_spellbook.unsupported),
-    /// with the real base/Wisdom-bonus/total spells-per-day counts
-    /// grounded.
+    /// spellbook for real -- and, as of the v0.6 alpha swarm's
+    /// Warpriest spellcasting-shaped closure, now reaches `Computed`:
+    /// those are exactly the two seeds `compose_character_input` applies
+    /// at creation, so this is the real shipped creation posture. It was
+    /// previously `Blocked` on `other_features_deferred`, which a
+    /// recognized Blessing now downgrades to a non-blocking note (the
+    /// canonical-narrowing shape Arcanist's Metamagic Knowledge
+    /// established). The assertion is inverted rather than dropped -- the
+    /// diagnostic must still be present, naming the honest remainder.
     ///
     /// Fixture Wisdom 12 (+1 modifier, no bonus spells at spell level 0,
     /// but a real bonus at level 1: (1-1)/4+1 = 1). Level 1 base:
@@ -48309,8 +48994,16 @@ mod warpriest_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.warpriest.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the other_features_deferred diagnostic even with a valid spellbook: {:?}",
+                    && !d.claim_blocking),
+            "expected the other_features_deferred diagnostic, present but NON-blocking, even \
+             with a valid spellbook: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "this is exactly the creation posture compose_character_input seeds, so it must \
+             reach Computed: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -56115,5 +56808,343 @@ mod monk_and_summoner_chassis_recognition_tests {
                 );
             }
         }
+    }
+}
+
+/// v0.6 alpha swarm: the four classes whose last remaining blockers were
+/// **spellcasting-shaped** -- Alchemist and Investigator (prepared
+/// extracts), Warpriest (prepared spellbook), Bloodrager (its own spell
+/// list plus the Bloodline slot its bonus spells hang off).
+///
+/// Every assertion here runs the SAME canonical seeds
+/// `compose_character_input` (`apps/desktop/src-tauri/src/pf1_adapter.rs`)
+/// applies at creation time, so a passing test is a claim about what a
+/// real freshly created character of that class does in the shipped app,
+/// not about a hypothetical hand-built input.
+#[cfg(test)]
+mod spellcasting_shaped_class_closure_tests {
+    use super::{
+        build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, ALCHEMIST_CLASS_ID, ALCHEMIST_DISCOVERY_CHOICE_ID,
+        ARCANE_BLOODRAGER_BLOODLINE_SELECTION, BLOODRAGER_BLOODLINE_CHOICE_ID,
+        BLOODRAGER_CLASS_ID, CANONICAL_EXTRACT_SPELL_ID, DESTRUCTION_BLESSING_SELECTION,
+        FERAL_MUTAGEN_DISCOVERY_SELECTION, INVESTIGATOR_CLASS_ID, INVESTIGATOR_TALENT_CHOICE_ID,
+        RESILIENCY_TALENT_SELECTION, WARPRIEST_BLESSING_CHOICE_ID, WARPRIEST_CLASS_ID,
+        WARPRIEST_STARTER_SPELL_ID,
+    };
+    use crate::rules_core::character_input::{
+        load_character_input_fixture, SelectedChoice, SpellSelection,
+    };
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn choice(set: &str, selection: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: set.to_owned(),
+            selection_id: selection.to_owned(),
+        }
+    }
+
+    fn spell(spell_id: &str, class_id: &str, mode: AcquisitionMode) -> SpellSelection {
+        SpellSelection {
+            spell_id: spell_id.to_owned(),
+            source_class_id: class_id.to_owned(),
+            acquisition_mode: mode,
+        }
+    }
+
+    /// The exact canonical seeds `compose_character_input` applies, per class.
+    fn canonical_seeds(class_id: &str) -> (Vec<SelectedChoice>, Vec<SpellSelection>) {
+        match class_id {
+            ALCHEMIST_CLASS_ID => (
+                vec![choice(
+                    ALCHEMIST_DISCOVERY_CHOICE_ID,
+                    FERAL_MUTAGEN_DISCOVERY_SELECTION,
+                )],
+                vec![
+                    spell(CANONICAL_EXTRACT_SPELL_ID, ALCHEMIST_CLASS_ID, AcquisitionMode::Known),
+                    spell(
+                        CANONICAL_EXTRACT_SPELL_ID,
+                        ALCHEMIST_CLASS_ID,
+                        AcquisitionMode::Prepared,
+                    ),
+                ],
+            ),
+            INVESTIGATOR_CLASS_ID => (
+                vec![choice(INVESTIGATOR_TALENT_CHOICE_ID, RESILIENCY_TALENT_SELECTION)],
+                vec![
+                    spell(
+                        CANONICAL_EXTRACT_SPELL_ID,
+                        INVESTIGATOR_CLASS_ID,
+                        AcquisitionMode::Known,
+                    ),
+                    spell(
+                        CANONICAL_EXTRACT_SPELL_ID,
+                        INVESTIGATOR_CLASS_ID,
+                        AcquisitionMode::Prepared,
+                    ),
+                ],
+            ),
+            WARPRIEST_CLASS_ID => (
+                vec![choice(WARPRIEST_BLESSING_CHOICE_ID, DESTRUCTION_BLESSING_SELECTION)],
+                vec![
+                    spell(WARPRIEST_STARTER_SPELL_ID, WARPRIEST_CLASS_ID, AcquisitionMode::Known),
+                    spell(
+                        WARPRIEST_STARTER_SPELL_ID,
+                        WARPRIEST_CLASS_ID,
+                        AcquisitionMode::Prepared,
+                    ),
+                ],
+            ),
+            BLOODRAGER_CLASS_ID => (
+                vec![choice(
+                    BLOODRAGER_BLOODLINE_CHOICE_ID,
+                    ARCANE_BLOODRAGER_BLOODLINE_SELECTION,
+                )],
+                Vec::new(),
+            ),
+            other => panic!("no canonical seeds defined for {other}"),
+        }
+    }
+
+    fn seeded(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        let (choices, spells) = canonical_seeds(class_id);
+        input.chosen.selected_choices.extend(choices);
+        input.chosen.spells_selected.extend(spells);
+        input
+    }
+
+    fn bare(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn blocking_ids(input: &CharacterInput) -> Vec<String> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect()
+    }
+
+    fn explanation_value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// The deliverable, stated once for all four: with the canonical
+    /// creation seeds in place, every level 1-20 reaches `Computed`.
+    #[test]
+    fn all_four_spellcasting_shaped_classes_reach_computed_at_every_level() {
+        for class_id in [
+            ALCHEMIST_CLASS_ID,
+            INVESTIGATOR_CLASS_ID,
+            WARPRIEST_CLASS_ID,
+            BLOODRAGER_CLASS_ID,
+        ] {
+            for level in 1..=20u8 {
+                let input = seeded(class_id, level);
+                assert_eq!(
+                    build_pilot_headless_receipt(&input).status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} level {level} must reach Computed with its canonical creation \
+                     seeds: {:?}",
+                    blocking_ids(&input)
+                );
+            }
+        }
+    }
+
+    /// The blockers are genuinely gated on the seeds, not deleted: with
+    /// no canonical seeds at all, every one of the four stays `Blocked`.
+    #[test]
+    fn every_one_of_the_four_stays_blocked_without_its_canonical_seeds() {
+        for class_id in [
+            ALCHEMIST_CLASS_ID,
+            INVESTIGATOR_CLASS_ID,
+            WARPRIEST_CLASS_ID,
+            BLOODRAGER_CLASS_ID,
+        ] {
+            for level in 1..=20u8 {
+                let input = bare(class_id, level);
+                assert_eq!(
+                    build_pilot_headless_receipt(&input).status,
+                    HeadlessReceiptStatus::Blocked,
+                    "{class_id} level {level} must stay Blocked with no seeds"
+                );
+            }
+        }
+    }
+
+    /// Alchemist's and Investigator's extract postures are one shared
+    /// mechanism (`alchemist_spell_list`), so an extract seed for one
+    /// must never satisfy the other's blocker.
+    #[test]
+    fn the_two_extract_classes_do_not_cross_satisfy_each_others_formula_books() {
+        let mut alchemist = bare(ALCHEMIST_CLASS_ID, 5);
+        alchemist.chosen.spells_selected.push(spell(
+            CANONICAL_EXTRACT_SPELL_ID,
+            INVESTIGATOR_CLASS_ID,
+            AcquisitionMode::Known,
+        ));
+        assert!(
+            blocking_ids(&alchemist)
+                .contains(&"class_spell.apg.alchemist.prepared_extracts.unsupported".to_owned()),
+            "an investigator-sourced extract must not fill an alchemist's formula book"
+        );
+    }
+
+    /// The prepared-extract grounding is real, not a bypass: it reports
+    /// the actual level-1 slot budget off the shipped table.
+    #[test]
+    fn the_extract_classes_ground_their_real_slot_budgets() {
+        assert_eq!(
+            explanation_value(
+                &seeded(ALCHEMIST_CLASS_ID, 1),
+                "class_spell.apg.alchemist.total_extracts_per_day.extract_level_1"
+            ),
+            Some(1),
+            "alchemist level 1: base 1 + Intelligence bonus 0 (fixture Int 10) = 1"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(INVESTIGATOR_CLASS_ID, 1),
+                "class_spell.acg.investigator.total_extracts_per_day.extract_level_1"
+            ),
+            Some(1),
+            "investigator level 1: base 1 + Intelligence bonus 0 = 1"
+        );
+    }
+
+    /// Warpriest's Channel Energy uses per day: the corpus record says
+    /// using it "expends two uses of his fervor ability", so the real
+    /// daily count is the already-grounded Fervor pool halved. Fixture
+    /// Wisdom 12 (+1): level 4 Fervor = 4/2 + 1 = 3, so 1 channel.
+    #[test]
+    fn warpriest_channel_energy_uses_are_the_fervor_pool_halved() {
+        assert_eq!(
+            explanation_value(
+                &seeded(WARPRIEST_CLASS_ID, 4),
+                "class_feature.acg.warpriest.channel_energy_uses_per_day"
+            ),
+            Some(1),
+            "level 4: Fervor 3 uses / 2 uses per channel = 1 channel"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(WARPRIEST_CLASS_ID, 20),
+                "class_feature.acg.warpriest.channel_energy_uses_per_day"
+            ),
+            Some(5),
+            "level 20: Fervor 11 uses / 2 = 5 channels"
+        );
+    }
+
+    /// Below its own level-4 gate Channel Energy is correctly absent, not
+    /// silently zero-with-no-record.
+    #[test]
+    fn warpriest_channel_energy_uses_are_absent_below_level_4() {
+        assert_eq!(
+            explanation_value(
+                &seeded(WARPRIEST_CLASS_ID, 3),
+                "class_feature.acg.warpriest.channel_energy_uses_per_day"
+            ),
+            Some(0),
+            "correctly absent below the level-4 gate"
+        );
+    }
+
+    /// Alchemist's canonical Discovery grounds its real corpus
+    /// magnitudes, and only from its own level-2 grant gate.
+    #[test]
+    fn alchemist_feral_mutagen_discovery_grounds_from_its_own_grant_level() {
+        assert_eq!(
+            explanation_value(
+                &seeded(ALCHEMIST_CLASS_ID, 1),
+                "class_feature.apg.alchemist.discovery.feral_mutagen_bite_damage_die"
+            ),
+            None,
+            "no Discovery is granted at alchemist level 1 (pool = level/2)"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(ALCHEMIST_CLASS_ID, 2),
+                "class_feature.apg.alchemist.discovery.feral_mutagen_bite_damage_die"
+            ),
+            Some(8),
+            "Feral Mutagen bite: 1d8 for a Medium alchemist"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(ALCHEMIST_CLASS_ID, 2),
+                "class_feature.apg.alchemist.discovery.feral_mutagen_claw_damage_die"
+            ),
+            Some(6),
+            "Feral Mutagen claws: 1d6 for a Medium alchemist"
+        );
+    }
+
+    /// Bloodrager's canonical Bloodline grounds Disruptive Bloodrage's
+    /// real +2 defensive-casting DC increase from its own level-1 gate,
+    /// and the higher rungs only at their own corpus gates.
+    #[test]
+    fn bloodrager_arcane_bloodline_grounds_its_real_power_ladder_gates() {
+        assert_eq!(
+            explanation_value(
+                &seeded(BLOODRAGER_CLASS_ID, 1),
+                "class_feature.acg.bloodrager.bloodline.arcane.disruptive_bloodrage_dc_increase"
+            ),
+            Some(2),
+            "Disruptive Bloodrage is a level-1 bloodline power: +2 defensive-casting DC"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(BLOODRAGER_CLASS_ID, 11),
+                "class_feature.acg.bloodrager.bloodline.arcane.casters_scourge_extra_attacks"
+            ),
+            None,
+            "Caster's Scourge is gated at bloodline progression level 12"
+        );
+        assert_eq!(
+            explanation_value(
+                &seeded(BLOODRAGER_CLASS_ID, 12),
+                "class_feature.acg.bloodrager.bloodline.arcane.casters_scourge_extra_attacks"
+            ),
+            Some(2),
+            "max(1, DEX modifier): fixture Dexterity 14 => +2"
+        );
+    }
+
+    /// An unrecognized bloodline selection must NOT clear the blocker --
+    /// only the one canonically grounded bloodline does.
+    #[test]
+    fn an_unrecognized_bloodrager_bloodline_keeps_the_blocker() {
+        let mut input = bare(BLOODRAGER_CLASS_ID, 5);
+        input
+            .chosen
+            .selected_choices
+            .push(choice(BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:draconic"));
+        assert_eq!(
+            build_pilot_headless_receipt(&input).status,
+            HeadlessReceiptStatus::Blocked,
+            "only the canonically grounded Arcane bloodline clears the Bloodline blocker"
+        );
     }
 }

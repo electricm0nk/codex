@@ -129,9 +129,17 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
         selection_id: selection.to_owned(),
     };
     let spell = |class: &str, mode: AcquisitionMode| SpellSelection {
-        // `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID` in
-        // `pf1_adapter.rs` are both `"Light"`.
+        // `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID`/
+        // `WARPRIEST_STARTER_SPELL_ID` in `pf1_adapter.rs` are all `"Light"`.
         spell_id: "Light".to_owned(),
+        source_class_id: format!("class:{class}"),
+        acquisition_mode: mode,
+    };
+    // `CANONICAL_EXTRACT_SPELL_ID` in `pf1_adapter.rs`. Alchemist and
+    // Investigator cast extracts off a formula list, not the CRB spell
+    // list, so their seed is a different literal from `spell` above.
+    let extract = |class: &str, mode: AcquisitionMode| SpellSelection {
+        spell_id: "Cure Light Wounds".to_owned(),
         source_class_id: format!("class:{class}"),
         acquisition_mode: mode,
     };
@@ -210,6 +218,50 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
         // uses-per-day, dice AND save DC).
         "shaman" => (
             vec![choice("choice:shaman_spirit", "spirit:life")],
+            Vec::new(),
+        ),
+        // pf1_adapter.rs: the four spellcasting-shaped classes. Three of
+        // them take Arcanist's own "chooser seed AND spell seed" shape;
+        // Bloodrager takes Sorcerer's chooser-only shape, since a
+        // Bloodrager with zero known spells is a genuinely valid posture
+        // and the class casts nothing at all below level 4.
+        //
+        // `CANONICAL_EXTRACT_SPELL_ID` is `"Cure Light Wounds"`, a real
+        // extract-level-1 entry of the shared `ALCHEMIST_SPELL_LIST`
+        // (Investigator's own `SPELLLIST:1|Alchemist` token makes that
+        // list literally shared with Alchemist). Each is still recorded
+        // under its OWN `source_class_id`: the two formula books never
+        // cross-satisfy, which `pilot_compute.rs`'s own
+        // `the_two_extract_classes_do_not_cross_satisfy_each_others_formula_books`
+        // pins.
+        "alchemist" => (
+            vec![choice("choice:alchemist_discovery", "discovery:feral_mutagen")],
+            vec![
+                extract("alchemist", AcquisitionMode::Known),
+                extract("alchemist", AcquisitionMode::Prepared),
+            ],
+        ),
+        "investigator" => (
+            vec![choice("choice:investigator_talent", "talent:resiliency")],
+            vec![
+                extract("investigator", AcquisitionMode::Known),
+                extract("investigator", AcquisitionMode::Prepared),
+            ],
+        ),
+        // Warpriest needs a Blessing choice AND a spellbook entry
+        // recorded plus prepared. `Light` is a real level-0 SPELL_LIST
+        // key and a real Cleric orison -- Warpriest casts from
+        // `SPELLLIST:1|Cleric` -- so `spell()` above already produces
+        // exactly the right shape.
+        "warpriest" => (
+            vec![choice("choice:warpriest_blessing", "blessing:destruction")],
+            vec![
+                spell("warpriest", AcquisitionMode::Known),
+                spell("warpriest", AcquisitionMode::Prepared),
+            ],
+        ),
+        "bloodrager" => (
+            vec![choice("choice:bloodrager_bloodline", "bloodline:arcane")],
             Vec::new(),
         ),
         _ => (Vec::new(), Vec::new()),

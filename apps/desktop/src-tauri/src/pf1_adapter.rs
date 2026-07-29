@@ -272,6 +272,67 @@ const FLIGHT_HEX_SELECTION: &str = "hex:flight";
 /// all in the level-8+/16+ gated tiers, which stay deferred.
 const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure, the four
+/// spellcasting-shaped classes): Alchemist, Investigator, Warpriest and
+/// Bloodrager each reach `Computed` at every level 1-20 today, but only
+/// once their own real, recognized creation-time choices are present, and
+/// no picker anywhere in the creation UI can submit one -- the same gap,
+/// and the same fix, as the Wizard/Arcanist/Sorcerer/Cleric/Druid/Monk
+/// seeds above.
+///
+/// Three of the four need BOTH a spell/extract seed AND a chooser seed
+/// (Arcanist's shape); Bloodrager needs only the chooser (Sorcerer's
+/// shape), since its own spell posture is genuinely valid with zero known
+/// spells. Every value below is verified directly against
+/// `pilot_compute.rs`'s own
+/// `spellcasting_shaped_class_closure_tests::all_four_spellcasting_shaped_classes_reach_computed_at_every_level`,
+/// which runs this exact seed set over the whole 1-20 sweep.
+const ALCHEMIST_CLASS_ID: &str = "class:alchemist";
+const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
+const WARPRIEST_CLASS_ID: &str = "class:warpriest";
+const BLOODRAGER_CLASS_ID: &str = "class:bloodrager";
+
+/// Alchemist and Investigator share one formula list
+/// (`SPELLLIST:1|Alchemist` on Investigator's own class record), so they
+/// share one canonical starter extract. `"Cure Light Wounds"` is a real
+/// `ALCHEMIST_SPELL_LIST` key at extract level 1 -- the only extract level
+/// either class can reach at class level 1 -- so a single value is inside
+/// the slot budget at every level of the sweep for both. Each is recorded
+/// under its OWN `source_class_id`; the two formula books never
+/// cross-satisfy.
+const CANONICAL_EXTRACT_SPELL_ID: &str = "Cure Light Wounds";
+
+/// Alchemist's canonical Discovery, one of the corpus's 35. Feral Mutagen
+/// is the only one whose record carries real self-contained magnitudes
+/// attaching to an already-grounded feature of this class (Mutagen).
+const ALCHEMIST_DISCOVERY_CHOICE_ID: &str = "choice:alchemist_discovery";
+const FERAL_MUTAGEN_DISCOVERY_SELECTION: &str = "discovery:feral_mutagen";
+
+/// Investigator's canonical Talent. Resiliency is the one entry of her own
+/// 40-record Rogue Talent whitelist this codebase grounds (task #58); the
+/// slot itself does not open until investigator level 3, so the seed is
+/// correctly inert at levels 1-2 and simply takes effect when it opens.
+const INVESTIGATOR_TALENT_CHOICE_ID: &str = "choice:investigator_talent";
+const RESILIENCY_TALENT_SELECTION: &str = "talent:resiliency";
+
+/// Warpriest's canonical Blessing (Destruction, whose Destructive Attacks
+/// minor power is grounded) plus its canonical starter spell. `"Light"` is
+/// a real level-0 `SPELL_LIST` key and a real Cleric orison -- Warpriest
+/// casts from `SPELLLIST:1|Cleric` -- and level-0 slots are 3+ at every
+/// warpriest level, so one seed covers the whole sweep. Deliberately the
+/// same literal `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID` use.
+const WARPRIEST_BLESSING_CHOICE_ID: &str = "choice:warpriest_blessing";
+const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
+const WARPRIEST_STARTER_SPELL_ID: &str = "Light";
+
+/// Bloodrager's canonical Bloodline, one of ten. Arcane keeps one
+/// bloodline NAME shared with the Sorcerer seed above, but Bloodrager's
+/// bloodlines are PARALLEL to Sorcerer's rather than shared with them
+/// (task #59) -- the grounding underneath is Bloodrager's own separate
+/// corpus records.
+const BLOODRAGER_BLOODLINE_CHOICE_ID: &str = "choice:bloodrager_bloodline";
+const ARCANE_BLOODRAGER_BLOODLINE_SELECTION: &str = "bloodline:arcane";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -517,6 +578,77 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
             source_class_id: ARCANIST_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == ALCHEMIST_CLASS_ID {
+        // v0.6 alpha swarm (the four spellcasting-shaped classes): Arcanist's
+        // own "chooser seed AND starter-spell seed, both required" shape.
+        // Alchemist's prepared-extract validator needs at least one extract
+        // recorded in the formula book AND one prepared today before it will
+        // ground anything, and its Discovery chooser is the canonical
+        // narrowing that resolves the remaining class-feature blocker.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: FERAL_MUTAGEN_DISCOVERY_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == INVESTIGATOR_CLASS_ID {
+        // Same shape as Alchemist immediately above, and genuinely the same
+        // underlying mechanism: Investigator's `SPELLLIST:1|Alchemist` token
+        // makes the formula list literally shared. The two are still seeded
+        // separately because each formula book is keyed on its own
+        // `source_class_id` and neither satisfies the other.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == WARPRIEST_CLASS_ID {
+        // Warpriest needs THREE seeds, not two: a Blessing choice (its own
+        // Blessing-powers blocker), and a spellbook entry recorded plus
+        // prepared (its prepared-spellbook blocker). The Blessing choice
+        // also resolves the class-feature blocker, the same way Cleric's
+        // Good domain does.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == BLOODRAGER_CLASS_ID {
+        // Sorcerer/Cleric/Druid's shape, not Arcanist's: NO spell seed. A
+        // Bloodrager with zero known spells is a genuinely valid posture
+        // (`unmet_bloodrager_known_spell_conditions` returns no unmet
+        // conditions for an empty known list), and the class casts nothing
+        // at all below level 4. Only the Bloodline chooser is needed.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: BLOODRAGER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODRAGER_BLOODLINE_SELECTION.to_owned(),
         });
     }
 
