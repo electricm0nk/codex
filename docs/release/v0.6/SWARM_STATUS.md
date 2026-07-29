@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-28T18:10:02
-Latest commit on tranche/6: 784a5cab feat(v0.6): ingest per-class weapon proficiency (task #80/#86, stage 1) (2 minutes ago) (2026-07-28T18:07:34-04:00)
-Last inbox activity (mtime proxy): backend=2026-07-28T18:08:20 frontend=unknown qa=unknown lead=2026-07-28T18:08:05
+Last mechanical check: 2026-07-29T03:10:03
+Latest commit on tranche/6: 2786e58c feat(v0.6): widen weapon proficiency table to the full 27-class roster (#80/#86) (55 seconds ago) (2026-07-29T03:09:07-04:00)
+Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
