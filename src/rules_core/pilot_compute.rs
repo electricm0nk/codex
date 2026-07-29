@@ -10114,13 +10114,17 @@ fn compute_apg_class_chassis(
 ///
 /// Cavalier has no `SPELLSTAT` at all (confirmed directly against
 /// `apg_classes.lst:42`) -- a pure martial class like Brawler, so the
-/// permanent remaining bucket here is Cavalier's OTHER named features
+/// remaining bucket here is Cavalier's OTHER named features
 /// (Challenge, Order, Tactician, Cavalier's Charge, and the rest), not
-/// deferred spell math -- stays claim-blocked via the new, narrower
+/// deferred spell math -- named via the narrower
 /// `class_feature.apg.cavalier.other_features_deferred.unsupported`
 /// diagnostic, replacing the generic `class_feature.apg.cavalier
 /// .unsupported` diagnostic for Cavalier specifically, mirroring
-/// Brawler's own diagnostic-honesty fix exactly.
+/// Brawler's own diagnostic-honesty fix exactly. That bucket used to be
+/// described here as "permanent" and unconditionally claim-blocking; as
+/// of Path A canonical narrowing (2026-07-29) it stops claim-blocking
+/// once the one canonical Order this codebase grounds is genuinely
+/// recorded, and still claim-blocks in every other posture.
 /// Grounds Cavalier's named class features (task #6, 2026-07-27):
 /// Challenge's uses-per-day pool and self-applied Armor Class penalty,
 /// Expert Trainer, the two feat counts, and Order of the Sword's own
@@ -10131,12 +10135,18 @@ fn compute_apg_class_chassis(
 /// the Sword's bonus). That is the weaker Panache-shaped evidentiary
 /// path, named in each record's own detail text rather than presented as
 /// token-verified.
+///
+/// Returns whether the one canonical Order this codebase grounds (Order
+/// of the Sword) is genuinely recorded. The caller uses that to decide
+/// whether the `other_features_deferred` diagnostic still claim-blocks --
+/// see `ground_cavalier_mount_and_defer_the_rest` (Path A canonical
+/// narrowing, 2026-07-29).
 fn ground_cavalier_named_features(
     input: &CharacterInput,
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
-) {
+) -> bool {
     let challenge_uses = cavalier_challenge_uses_per_day(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.apg.cavalier.challenge_uses_per_day".to_owned(),
@@ -10265,6 +10275,7 @@ fn ground_cavalier_named_features(
             claim_blocking: true,
         });
     }
+    order_selected
 }
 
 fn ground_cavalier_mount_and_defer_the_rest(
@@ -10280,7 +10291,8 @@ fn ground_cavalier_mount_and_defer_the_rest(
         explanations,
     );
     ground_horse_companion_link_vacuous("class_feature.cavalier.mount", "cavalier", explanations);
-    ground_cavalier_named_features(input, level, explanations, diagnostics);
+    let order_of_the_sword_recorded =
+        ground_cavalier_named_features(input, level, explanations, diagnostics);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
         message: "Cavalier Mount advancement is grounded for every column that has a consumer \
@@ -10321,10 +10333,34 @@ fn ground_cavalier_mount_and_defer_the_rest(
              bounded chassis baseline. This message previously claimed Challenge's +level \
              damage was ungrounded while listing Challenge's other two facets as grounded: \
              `challenge_damage_bonus` is shipped (task #6), so the message contradicted itself \
-             about a single feature's own facets"
+             about a single feature's own facets. {}",
+            cavalier_deferred_remainder_posture(order_of_the_sword_recorded)
         ),
-        claim_blocking: true,
+        claim_blocking: !order_of_the_sword_recorded,
     });
+}
+
+/// The one sentence that differs between this diagnostic's claim-blocking
+/// and non-claim-blocking forms (Path A canonical narrowing, 2026-07-29).
+///
+/// With Order of the Sword genuinely recorded, Cavalier's remaining gap is
+/// the same shape Arcanist's own `exploits_deferred` already carries once
+/// Metamagic Knowledge is recognized: a real, named, still-unbuilt
+/// remainder that no longer blocks the claim, because the class's one
+/// corpus-verified canonical chooser option IS grounded and nothing in the
+/// computed output depends on the deferred rest. Without it, the original
+/// claim-blocking posture is preserved byte-for-byte in behavior -- see
+/// `apg_canonical_choice_path_a_tests`, which pins both halves.
+fn cavalier_deferred_remainder_posture(order_of_the_sword_recorded: bool) -> &'static str {
+    if order_of_the_sword_recorded {
+        "This character HAS recorded the one canonical Order this codebase grounds (Order of the \
+         Sword, whose own Sense Motive bonus is computed above), so this remainder is named but \
+         no longer claim-blocking -- the same canonical-narrowing posture Arcanist's own \
+         exploits_deferred and Cleric's own domain seam already ship. Every item listed above \
+         genuinely remains ungrounded; none of them is silently fabricated."
+    } else {
+        "No canonical Order is recorded, so this remainder stays claim-blocking."
+    }
 }
 
 /// Alchemist Mutagen's duration: `level * 10` minutes (v0.6 alpha swarm,
@@ -11559,7 +11595,7 @@ fn ground_or_block_inquisitor_judgment(
                  when an active activation with the recognized Justice choice is present"
             ),
         });
-        push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+        push_inquisitor_other_features_deferred_diagnostic(input, diagnostics);
         return;
     };
 
@@ -11576,7 +11612,7 @@ fn ground_or_block_inquisitor_judgment(
                 ),
                 claim_blocking: true,
             });
-            push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+            push_inquisitor_other_features_deferred_diagnostic(input, diagnostics);
             return;
         }
     }
@@ -11751,7 +11787,7 @@ fn ground_or_block_inquisitor_judgment(
                     ),
                     claim_blocking: true,
                 });
-                push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+                push_inquisitor_other_features_deferred_diagnostic(input, diagnostics);
                 return;
             }
 
@@ -11781,7 +11817,7 @@ fn ground_or_block_inquisitor_judgment(
         }
     }
 
-    push_inquisitor_other_features_deferred_diagnostic(diagnostics);
+    push_inquisitor_other_features_deferred_diagnostic(input, diagnostics);
 }
 
 /// Grounds or names-but-defers Inquisitor's Domain class feature's Good-domain granted
@@ -11802,15 +11838,7 @@ fn ground_or_block_inquisitor_domain_power(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    let domain_selections: Vec<&str> = input
-        .chosen
-        .selected_choices
-        .iter()
-        .filter(|c| c.choice_set_id == INQUISITOR_DOMAIN_CHOICE_ID)
-        .map(|c| c.selection_id.as_str())
-        .collect();
-
-    if !domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
+    if !inquisitor_canonical_good_domain_recorded(input) {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
             message: "Inquisitor remains blocked on its Domain class feature's granted-power \
@@ -11886,14 +11914,45 @@ fn ground_or_block_inquisitor_domain_power(
 
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
-        message: "Inquisitor remains blocked on the rest of its Domain class feature's \
-             granted-power burden: only the Good domain's Touch of Good (bonus magnitude, \
-             self-application state, and uses-per-day count) is grounded so far; every domain \
-             other than Good remains entirely unproven, so no further Inquisitor domain-power \
-             support is claimed"
+        message: "Inquisitor's remaining Domain class-feature granted-power burden is named but \
+             no longer claim-blocking: the Good domain's Touch of Good (bonus magnitude, \
+             self-application state, and uses-per-day count) IS grounded, and the corpus makes \
+             Good a real base-class Inquisitor domain: the base `Inquisitor ~ Domains` record \
+             (`apg_abilities_class.lst:353`) carries `DEFINE:InquisitorDomainGood|0` among its \
+             104 domain tokens -- 33 generic domains, the deity-specific Death/Pharasma \
+             variant, and 70 subdomains -- counted directly against that line, not assumed. So \
+             a Good-domain inquisitor's domain power is genuinely computed rather than \
+             deferred. Every domain other than Good remains \
+             entirely unproven and is still not claimed anywhere -- selecting one keeps this \
+             diagnostic claim-blocking (Path A canonical narrowing, 2026-07-29, mirroring \
+             Cleric's own Good-domain seam)"
             .to_owned(),
-        claim_blocking: true,
+        claim_blocking: false,
     });
+}
+
+/// Whether this input records exactly the one canonical Inquisitor domain
+/// this codebase grounds -- Good -- and no other, unrecognized one
+/// alongside it (Path A canonical narrowing, 2026-07-29).
+///
+/// The "and no other" half is load-bearing rather than defensive: PF1
+/// gives an inquisitor exactly ONE domain (PF1 Advanced Player's Guide
+/// Domain), so a second selection is already an illegal posture, and
+/// letting it ride Good's own narrowing to `Computed` would claim support
+/// for a domain whose granted power is grounded nowhere. This is Cleric's
+/// own `unrecognized_other_domain_chosen` guard, applied to the class that
+/// was missing it.
+fn inquisitor_canonical_good_domain_recorded(input: &CharacterInput) -> bool {
+    let domain_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == INQUISITOR_DOMAIN_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    domain_selections.contains(&GOOD_DOMAIN_SELECTION)
+        && domain_selections.iter().all(|d| *d == GOOD_DOMAIN_SELECTION)
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -11926,7 +11985,20 @@ fn ground_or_block_inquisitor_domain_power(
 /// source-backed numeric magnitude of their own to verify. Pushed
 /// unconditionally regardless of Judgment's own active state, mirroring
 /// Alchemist's/Skald's own diagnostic-honesty fix.
-fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+fn push_inquisitor_other_features_deferred_diagnostic(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // Path A canonical narrowing (2026-07-29): once the one canonical
+    // Inquisitor domain this codebase grounds is genuinely recorded, this
+    // remainder is named but no longer claim-blocking -- Arcanist's own
+    // `exploits_deferred` shape exactly. With no domain recorded (or an
+    // unrecognized one alongside Good) the original claim-blocking posture
+    // is preserved unchanged, and `ground_or_block_inquisitor_domain_power`
+    // independently claim-blocks that same case, so this narrowing can
+    // never be the only thing standing between an unproven domain and
+    // `Computed`.
+    let canonical_domain_recorded = inquisitor_canonical_good_domain_recorded(input);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.inquisitor.other_features_deferred.unsupported".to_owned(),
         message: format!(
@@ -11945,9 +12017,19 @@ fn push_inquisitor_other_features_deferred_diagnostic(diagnostics: &mut Vec<Comp
              Bane -- the latter two are DESC-only multipliers on already-grounded mechanics \
              with no independent numeric magnitude of their own) grounded anywhere in this \
              codebase yet; no class-feature or spell execution is fabricated in this bounded \
-             chassis baseline"
+             chassis baseline. {}",
+            if canonical_domain_recorded {
+                "This character HAS recorded the one canonical Inquisitor domain this codebase \
+                 grounds (Good, whose Touch of Good is computed above), so this remainder is \
+                 named but no longer claim-blocking -- the same canonical-narrowing posture \
+                 Arcanist's own exploits_deferred and Cleric's own Good-domain seam already \
+                 ship. Every item listed above genuinely remains ungrounded; none of them is \
+                 silently fabricated."
+            } else {
+                "No canonical domain is recorded, so this remainder stays claim-blocking."
+            }
         ),
-        claim_blocking: true,
+        claim_blocking: !canonical_domain_recorded,
     });
 }
 
@@ -12563,8 +12645,10 @@ fn oracle_wasting_intimidate_net_effect() -> i16 {
 /// `choice:oracle_revelation` pick -- see `ORACLE_REVELATION_CHOICE_ID`
 /// for why the Mystery alone is not enough. Grounds nothing at all when
 /// no recognized revelation is recorded, and never claim-blocks on its
-/// own (Oracle's permanent block comes from
-/// `push_oracle_other_features_deferred_diagnostic`).
+/// own (Oracle's remaining block comes from
+/// `push_oracle_other_features_deferred_diagnostic`, which as of Path A
+/// canonical narrowing (2026-07-29) stops claim-blocking once a
+/// power-grounding Mystery AND a grounded Curse are both recorded).
 ///
 /// Two of the six also layer into REAL computed totals rather than
 /// grounding standalone -- Sidestep Secret into the Reflex save and
@@ -12960,11 +13044,17 @@ fn ground_oracle_deaf_curse(
 /// grounds the real known-spell posture, the Mystery choice, and the
 /// Curse choice, then always pushes the narrower
 /// `other_features_deferred` diagnostic naming the genuinely still-
-/// missing pieces. Unlike Arcanist's own closure, this permanently stays
-/// claim-blocked (no MVP narrowing was found for Cure Wounds/Inflict
-/// Wounds/Tongues this slice) -- an honest outcome, matching Cavalier/
-/// Alchemist/Inquisitor/Warpriest/Slayer's own shape, not every closure
-/// this segment reaches `HeadlessReceiptStatus::Computed`.
+/// missing pieces.
+///
+/// **Corrected 2026-07-29 (Path A canonical narrowing).** This comment
+/// used to assert Oracle "permanently stays claim-blocked (no MVP
+/// narrowing was found for Cure Wounds/Inflict Wounds/Tongues this
+/// slice)". Cure Wounds was never the narrowing Oracle needed: the class
+/// is chooser-shaped, and the narrowing is the canonical Mystery/Curse
+/// pair, exactly as for Arcanist's Metamagic Knowledge and Cleric's Good
+/// domain. `push_oracle_other_features_deferred_diagnostic` now stops
+/// claim-blocking once BOTH a power-grounding Mystery and a grounded
+/// Curse are recorded, and keeps blocking in every other posture.
 fn ground_or_block_oracle_class_features(
     input: &CharacterInput,
     level: u8,
@@ -13017,7 +13107,90 @@ fn ground_or_block_oracle_class_features(
         });
     }
 
-    push_oracle_other_features_deferred_diagnostic(diagnostics);
+    push_oracle_other_features_deferred_diagnostic(input, diagnostics);
+}
+
+/// Whether this Oracle's Mystery selection both (a) names only Mysteries
+/// this codebase recognizes and (b) actually GROUNDS a power for the one
+/// it names (Path A canonical narrowing, 2026-07-29).
+///
+/// (b) is the part that matters and the part a naive "is it in the
+/// recognized list?" check would get wrong. Life is the only Mystery whose
+/// grounded power (Healing Hands, `BONUS:SKILL|Heal|4`) follows from the
+/// Mystery choice alone; Lore, Nature, Bone and Flame each ground only
+/// through an explicitly recorded `choice:oracle_revelation` pick, because
+/// revelations are a budgeted selection rather than an automatic grant
+/// (see `ORACLE_REVELATION_CHOICE_ID`). Treating a bare `mystery:lore`
+/// with no revelation as "recognized" would let a character whose Mystery
+/// contributes literally nothing reach `Computed`.
+fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
+    let mystery_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == ORACLE_MYSTERY_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    let all_recognized = mystery_selections.iter().all(|selection| {
+        matches!(
+            *selection,
+            LIFE_MYSTERY_SELECTION
+                | LORE_MYSTERY_SELECTION
+                | NATURE_MYSTERY_SELECTION
+                | BONE_MYSTERY_SELECTION
+                | FLAME_MYSTERY_SELECTION
+        )
+    });
+    if !all_recognized {
+        return false;
+    }
+
+    if mystery_selections.contains(&LIFE_MYSTERY_SELECTION) {
+        return true;
+    }
+    [
+        (LORE_MYSTERY_SELECTION, ORACLE_SIDESTEP_SECRET_REVELATION),
+        (LORE_MYSTERY_SELECTION, ORACLE_LORE_KEEPER_REVELATION),
+        (NATURE_MYSTERY_SELECTION, ORACLE_NATURES_WHISPERS_REVELATION),
+        (BONE_MYSTERY_SELECTION, ORACLE_NEAR_DEATH_REVELATION),
+        (FLAME_MYSTERY_SELECTION, ORACLE_CINDER_DANCE_REVELATION),
+    ]
+    .iter()
+    .any(|(mystery, revelation)| oracle_level_with_revelation(input, mystery, revelation).is_some())
+}
+
+/// Whether this Oracle's Curse selection names at least one of the four
+/// genuinely grounded Curses and nothing this codebase does not recognize
+/// (Path A canonical narrowing, 2026-07-29).
+///
+/// Unlike Mysteries, all four grounded Curses follow from the Curse choice
+/// alone -- there is no second budgeted pick between choosing a Curse and
+/// receiving its effect -- so recognition and grounding coincide here.
+/// A PF1 oracle has exactly ONE curse, so a second selection is already an
+/// illegal posture; requiring every selection to be recognized keeps an
+/// ungrounded one (Haunted, Tongues, Blackened, ...) from riding a
+/// recognized one to `Computed`.
+fn oracle_curse_grounds_a_power(input: &CharacterInput) -> bool {
+    let curse_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == ORACLE_CURSE_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+
+    let recognized = |selection: &str| {
+        matches!(
+            selection,
+            CLOUDED_VISION_CURSE_SELECTION
+                | LAME_CURSE_SELECTION
+                | WASTING_CURSE_SELECTION
+                | DEAF_CURSE_SELECTION
+        )
+    };
+
+    !curse_selections.is_empty() && curse_selections.iter().all(|s| recognized(s))
 }
 
 /// Pushes the new, narrower diagnostic replacing
@@ -13025,9 +13198,29 @@ fn ground_or_block_oracle_class_features(
 /// alpha swarm, risks item 8, Oracle full-build closure): named ONLY the
 /// genuinely still-missing pieces. Pushed unconditionally regardless of
 /// the known-spell/Mystery/Curse postures' own states, mirroring
-/// Warpriest's/Arcanist's own diagnostic-honesty pattern -- this is the
-/// permanent claim-blocking gap for Oracle this slice.
-fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// Warpriest's/Arcanist's own diagnostic-honesty pattern.
+///
+/// **Superseded in one direction (Path A canonical narrowing,
+/// 2026-07-29).** This diagnostic's own doc comment and
+/// `ground_or_block_oracle_class_features`'s used to record that Oracle
+/// "permanently stays claim-blocked (no MVP narrowing was found for Cure
+/// Wounds/Inflict Wounds/Tongues this slice)". That was a true statement
+/// about a *slice*, not about the class: the MVP narrowing Oracle needed
+/// was never Cure Wounds -- it was the same canonical-chooser narrowing
+/// Arcanist's Metamagic Knowledge and Cleric's Good domain already ship.
+/// An Oracle who has genuinely recorded BOTH a Mystery that grounds a real
+/// power AND a grounded Curse has every claim this engine makes about her
+/// actually computed, so this remainder is named without blocking. Every
+/// other posture -- no Mystery, no Curse, or one this codebase grounds
+/// nothing for -- keeps the original claim-blocking behavior exactly, and
+/// the separate `mystery_powers`/`curse_powers` diagnostics claim-block
+/// those cases independently.
+fn push_oracle_other_features_deferred_diagnostic(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let canonical_choices_ground_powers =
+        oracle_mystery_grounds_a_power(input) && oracle_curse_grounds_a_power(input);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.oracle.other_features_deferred.unsupported".to_owned(),
         message: format!(
@@ -13045,9 +13238,19 @@ fn push_oracle_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computat
              ungrounded anywhere in this codebase; no class-feature or spell execution is \
              fabricated in this bounded chassis baseline. Orisons and the five \
              no-revelation Mysteries were previously covered only by the vague phrase \
-             \"the remaining Mystery revelations\" (task #76)"
+             \"the remaining Mystery revelations\" (task #76). {}",
+            if canonical_choices_ground_powers {
+                "This character HAS recorded both a Mystery that grounds a real power and a \
+                 grounded Curse, so this remainder is named but no longer claim-blocking -- the \
+                 same canonical-narrowing posture Arcanist's own exploits_deferred and Cleric's \
+                 own Good-domain seam already ship. Every item listed above genuinely remains \
+                 ungrounded; none of them is silently fabricated."
+            } else {
+                "No Mystery-and-Curse pair that grounds real powers is recorded, so this \
+                 remainder stays claim-blocking."
+            }
         ),
-        claim_blocking: true,
+        claim_blocking: !canonical_choices_ground_powers,
     });
 }
 
@@ -41152,10 +41355,13 @@ mod apg_class_chassis_dispatch_tests {
     /// swap: the OLD generic `class_feature.apg.oracle.unsupported`
     /// diagnostic must never appear for Oracle, while the NEW, narrower
     /// `class_feature.apg.oracle.other_features_deferred.unsupported`
-    /// diagnostic always does -- Oracle stays permanently `Blocked` on
-    /// this diagnostic (unlike Cavalier/Alchemist/Inquisitor, no MVP
-    /// narrowing was found this slice), with the Mystery/Curse claim-
-    /// blocking diagnostics also firing for a bare Oracle.
+    /// diagnostic always does -- a BARE Oracle (no Mystery, no Curse)
+    /// stays `Blocked` on this diagnostic, with the Mystery/Curse claim-
+    /// blocking diagnostics also firing. This comment used to call that
+    /// posture "permanent"; Path A canonical narrowing (2026-07-29)
+    /// retired that claim -- a recorded Mystery/Curse pair that grounds
+    /// real powers now reaches `Computed`. The bare posture asserted here
+    /// is unchanged.
     #[test]
     fn oracle_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
         let input = ranger_style_input("class:oracle", 1);
@@ -48147,12 +48353,17 @@ mod inquisitor_dispatch_widening_safety_tests {
     /// Task #64: an Inquisitor whose Domain class feature selected Good and who is
     /// actively, validly using Touch of Good genuinely gets the sacred bonus applied to
     /// her real integrated melee attack bonus -- proving `active_touch_of_good_bonus`'s
-    /// generalization beyond Cleric-only is wired for real, not just a claim. Inquisitor
-    /// stays `Blocked` overall (the unconditional `other_features_deferred` diagnostic
-    /// always fires for Inquisitor regardless of Judgment/domain state, per
-    /// `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
-    /// immediately above), mirroring the "real bonus applied, still Blocked overall"
-    /// shape every other Inquisitor closure in this cluster already proves.
+    /// generalization beyond Cleric-only is wired for real, not just a claim.
+    ///
+    /// **Updated 2026-07-29 (Path A canonical narrowing).** This test used to assert
+    /// Inquisitor stays `Blocked` here, because `other_features_deferred` fired
+    /// unconditionally. That was a statement about the diagnostic's wiring, not about
+    /// what the engine could honestly compute: with the one canonical, corpus-verified
+    /// Inquisitor domain recorded, every claim this engine makes about her IS computed,
+    /// so the deferred remainder is now named without blocking (Arcanist's own
+    /// `exploits_deferred` shape). The bare-Inquisitor case is unchanged and still
+    /// asserted by `inquisitor_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one`
+    /// immediately above.
     #[test]
     fn single_class_inquisitor_with_good_domain_touch_of_good_active_applies_real_bonus() {
         let mut input = human_inquisitor_input(1);
@@ -48170,9 +48381,9 @@ mod inquisitor_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Inquisitor stays Blocked on its other-features-deferred posture even with Touch \
-             of Good active: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "with the canonical Good domain recorded, Inquisitor's remaining gaps are named \
+             without blocking: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -50330,14 +50541,25 @@ mod oracle_dispatch_widening_safety_tests {
         assert_eq!(vision_cap.value, 30, "Clouded Vision caps vision at 30 feet: {:?}", vision_cap);
     }
 
-    /// Even with a valid known-spell posture, a recognized Life Mystery,
-    /// AND a recognized Clouded Vision Curse all at once, Oracle still
-    /// stays permanently `Blocked` on other_features_deferred alone --
-    /// unlike Arcanist, no MVP narrowing was found for Cure Wounds/
-    /// Inflict Wounds/Tongues this slice, an honest outcome named up
-    /// front in the scoping doc.
+    /// **Replaces `single_class_oracle_with_everything_recognized_still_stays_permanently_blocked`
+    /// (Path A canonical narrowing, 2026-07-29).** That test asserted
+    /// Oracle could never reach `Computed` because "no MVP narrowing was
+    /// found for Cure Wounds/Inflict Wounds/Tongues this slice". The
+    /// premise was the mistake, not the slice: Oracle is a chooser-shaped
+    /// class, and its MVP narrowing is the canonical Mystery/Curse pair,
+    /// the identical shape Arcanist's Metamagic Knowledge and Cleric's
+    /// Good domain already ship. With a valid known-spell posture, the
+    /// Life Mystery (whose Healing Hands is genuinely grounded) and the
+    /// Clouded Vision Curse (whose 30-foot cap is genuinely grounded) all
+    /// recorded, everything this engine claims about this character IS
+    /// computed, so the deferred remainder is named without blocking.
+    ///
+    /// The negative half -- bare Oracle, and Oracle with an ungrounded
+    /// Mystery or Curse -- is unchanged and asserted by
+    /// `single_class_oracle_bare_stays_blocked_on_mystery_curse_and_other_features`
+    /// and `apg_canonical_choice_path_a_tests`.
     #[test]
-    fn single_class_oracle_with_everything_recognized_still_stays_permanently_blocked() {
+    fn single_class_oracle_with_everything_recognized_reaches_computed() {
         let mut input = human_oracle_input(1);
         input.chosen.spells_selected.push(SpellSelection {
             spell_id: "Light".to_owned(),
@@ -50357,9 +50579,9 @@ mod oracle_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Oracle has no MVP narrowing for its other_features_deferred diagnostic this slice, \
-             so it must never reach Computed even with everything else recognized: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "with a grounded Mystery AND a grounded Curse recorded, Oracle's remaining gaps are \
+             named without blocking: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -50368,8 +50590,8 @@ mod oracle_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.apg.oracle.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected other_features_deferred to be the sole remaining claim-blocking gap: {:?}",
+                    && !d.claim_blocking),
+            "the deferred remainder must still be NAMED, just not claim-blocking: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -50561,7 +50783,8 @@ mod oracle_dispatch_widening_safety_tests {
             assert_eq!(
                 receipt.status,
                 HeadlessReceiptStatus::Blocked,
-                "Oracle stays permanently Blocked regardless of curse: {:?}",
+                "a Curse alone is not enough -- with no Mystery recorded, Oracle stays Blocked \
+                 on mystery_powers: {:?}",
                 receipt.computation.diagnostics
             );
         }
@@ -51070,11 +51293,22 @@ mod oracle_dispatch_widening_safety_tests {
         }
     }
 
-    /// Oracle stays permanently Blocked no matter how much of the Tier-1
-    /// set is grounded -- the closure grows `named_features_wired`, it
-    /// does not move Oracle toward Computed.
+    /// Grounding the whole Tier-1 revelation set does not by itself move
+    /// Oracle to `Computed`: this input records four Mysteries and five
+    /// revelations but NO Curse, and a PF1 oracle always has one, so the
+    /// curse-powers burden is genuinely unmet.
+    ///
+    /// This test used to be named `..._stays_permanently_blocked...` and
+    /// its comment claimed the closure "does not move Oracle toward
+    /// Computed" as a matter of design. Path A canonical narrowing
+    /// (2026-07-29) retired that claim -- adding a grounded Curse to this
+    /// same input does reach `Computed`, per
+    /// `single_class_oracle_with_everything_recognized_reaches_computed`.
+    /// What this test actually proves, and still proves, is the narrower
+    /// and more useful thing: revelations alone are not a substitute for
+    /// the Curse half of the pair.
     #[test]
-    fn oracle_stays_permanently_blocked_with_every_tier_one_revelation_recognized() {
+    fn oracle_stays_blocked_on_its_curse_burden_with_every_tier_one_revelation_recognized() {
         let mut input = human_oracle_input(11);
         input.chosen.ability_scores.charisma = 18;
         for (choice_set, selection) in [
@@ -51099,7 +51333,17 @@ mod oracle_dispatch_widening_safety_tests {
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Oracle is permanently Blocked by design: {:?}",
+            "revelations alone do not satisfy the Curse half of the pair: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.oracle.curse_powers.unsupported"
+                    && d.claim_blocking),
+            "the unmet burden must be named as the Curse one specifically: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -51110,7 +51354,7 @@ mod oracle_dispatch_widening_safety_tests {
                 .any(|d| d.id
                     == "class_feature.apg.oracle.other_features_deferred.unsupported"
                     && d.claim_blocking),
-            "the permanent deferred diagnostic must still fire: {:?}",
+            "the deferred diagnostic must still claim-block without a Curse: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -57622,6 +57866,268 @@ mod spellcasting_shaped_class_closure_tests {
             build_pilot_headless_receipt(&input).status,
             HeadlessReceiptStatus::Blocked,
             "only the canonically grounded Arcane bloodline clears the Bloodline blocker"
+        );
+    }
+}
+
+
+/// v0.6 alpha swarm (Path A canonical-narrowing closure for Cavalier,
+/// Inquisitor and Oracle, 2026-07-29): the three APG chooser-shaped
+/// classes whose engines already ground a real, corpus-verified canonical
+/// option but which never reached `Computed` because (a) nothing seeded
+/// that option in the default posture and (b) their
+/// `other_features_deferred` diagnostics stayed claim-blocking even when
+/// it WAS present.
+///
+/// This module pins both halves of the contract at once, at every level
+/// 1-20:
+///
+/// * with the canonical choice recorded, the class reaches genuine
+///   `HeadlessReceiptStatus::Computed`, and the honestly-deferred
+///   remainder is still NAMED -- as a non-claim-blocking diagnostic, the
+///   exact shape `ground_or_block_arcanist_metamagic_knowledge` already
+///   established for Arcanist's own 44 unbuilt Exploits;
+/// * without it, every original claim-blocking diagnostic fires exactly
+///   as before, so no input this narrowing did not specifically improve
+///   can silently reach `Computed`.
+///
+/// The second half is the load-bearing one: it is what keeps the APG
+/// class-coverage audit's own bare-input canary
+/// (`apg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic`)
+/// honest rather than merely passing.
+#[cfg(test)]
+mod apg_canonical_choice_path_a_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
+        CAVALIER_CLASS_ID, CAVALIER_ORDER_CHOICE_ID, CLOUDED_VISION_CURSE_SELECTION,
+        GOOD_DOMAIN_SELECTION, INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID,
+        LIFE_MYSTERY_SELECTION, ORACLE_CLASS_ID, ORACLE_CURSE_CHOICE_ID, ORACLE_MYSTERY_CHOICE_ID,
+        ORDER_OF_THE_SWORD_SELECTION,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// The same shared GE-06 deterministic fixture `v06_class_state_dump`
+    /// sweeps, with the class under test swapped in -- so what this module
+    /// proves and what the operator's dashboard reports are the same
+    /// posture, not two similar-looking ones.
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn choose(input: &mut CharacterInput, choice_set_id: &str, selection_id: &str) {
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        });
+    }
+
+    fn blocking_ids(input: &CharacterInput) -> Vec<String> {
+        let mut ids: Vec<String> = build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id.clone())
+            .collect();
+        ids.sort();
+        ids.dedup();
+        ids
+    }
+
+    /// The canonical seed each class needs, exactly mirroring what
+    /// `compose_character_input` (`apps/desktop/src-tauri/src/pf1_adapter.rs`)
+    /// and `v06_class_state_dump`'s own `canonical_seeds_for` apply.
+    fn canonically_chosen(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = single_class(class_id, level);
+        match class_id {
+            CAVALIER_CLASS_ID => {
+                choose(&mut input, CAVALIER_ORDER_CHOICE_ID, ORDER_OF_THE_SWORD_SELECTION)
+            }
+            INQUISITOR_CLASS_ID => {
+                choose(&mut input, INQUISITOR_DOMAIN_CHOICE_ID, GOOD_DOMAIN_SELECTION)
+            }
+            ORACLE_CLASS_ID => {
+                choose(&mut input, ORACLE_MYSTERY_CHOICE_ID, LIFE_MYSTERY_SELECTION);
+                choose(&mut input, ORACLE_CURSE_CHOICE_ID, CLOUDED_VISION_CURSE_SELECTION);
+            }
+            other => panic!("no canonical seed defined for {other}"),
+        }
+        input
+    }
+
+    /// **The milestone test.** Each of the three classes reaches genuine
+    /// `Computed` at every one of PF1's twenty class levels once its own
+    /// canonical, corpus-verified choice is recorded.
+    #[test]
+    fn each_class_reaches_computed_at_every_level_with_its_canonical_choice() {
+        for class_id in [CAVALIER_CLASS_ID, INQUISITOR_CLASS_ID, ORACLE_CLASS_ID] {
+            for level in 1..=20u8 {
+                let input = canonically_chosen(class_id, level);
+                assert_eq!(
+                    build_pilot_headless_receipt(&input).status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} level {level} must reach Computed with its canonical choice; \
+                     still blocking: {:?}",
+                    blocking_ids(&input)
+                );
+            }
+        }
+    }
+
+    /// The honest half: reaching `Computed` must NOT delete the record of
+    /// what stays deferred. Each class still emits its own
+    /// `other_features_deferred` diagnostic naming the remainder -- just
+    /// non-claim-blocking, mirroring Arcanist's own `exploits_deferred`.
+    #[test]
+    fn the_deferred_remainder_is_still_named_just_not_claim_blocking() {
+        for (class_id, deferred_id) in [
+            (CAVALIER_CLASS_ID, "class_feature.apg.cavalier.other_features_deferred.unsupported"),
+            (
+                INQUISITOR_CLASS_ID,
+                "class_feature.apg.inquisitor.other_features_deferred.unsupported",
+            ),
+            (ORACLE_CLASS_ID, "class_feature.apg.oracle.other_features_deferred.unsupported"),
+        ] {
+            for level in [1u8, 2, 8, 15, 20] {
+                let receipt = build_pilot_headless_receipt(&canonically_chosen(class_id, level));
+                let deferred = receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .find(|d| d.id == deferred_id)
+                    .unwrap_or_else(|| {
+                        panic!(
+                            "{class_id} level {level} must still NAME its deferred remainder: \
+                             {:?}",
+                            receipt.computation.diagnostics
+                        )
+                    });
+                assert!(
+                    !deferred.claim_blocking,
+                    "{class_id} level {level}: {deferred_id} must be non-claim-blocking once the \
+                     canonical choice is present: {deferred:?}"
+                );
+            }
+        }
+    }
+
+    /// The guard. Without the canonical choice, every original
+    /// claim-blocking diagnostic still fires at every level -- the
+    /// narrowing improves exactly the posture it claims to and nothing
+    /// else.
+    #[test]
+    fn without_the_canonical_choice_every_original_blocker_still_fires() {
+        for (class_id, want) in [
+            (
+                CAVALIER_CLASS_ID,
+                vec![
+                    "class_feature.apg.cavalier.order_powers.unsupported",
+                    "class_feature.apg.cavalier.other_features_deferred.unsupported",
+                ],
+            ),
+            (
+                INQUISITOR_CLASS_ID,
+                vec![
+                    "class_feature.apg.inquisitor.other_features_deferred.unsupported",
+                    "class_feature.inquisitor.domain_powers.unsupported",
+                ],
+            ),
+            (
+                ORACLE_CLASS_ID,
+                vec![
+                    "class_feature.apg.oracle.curse_powers.unsupported",
+                    "class_feature.apg.oracle.mystery_powers.unsupported",
+                    "class_feature.apg.oracle.other_features_deferred.unsupported",
+                ],
+            ),
+        ] {
+            for level in 1..=20u8 {
+                assert_eq!(
+                    blocking_ids(&single_class(class_id, level)),
+                    want.iter().map(|id| (*id).to_owned()).collect::<Vec<_>>(),
+                    "{class_id} level {level} must stay blocked exactly as before without its \
+                     canonical choice"
+                );
+            }
+        }
+    }
+
+    /// A second domain alongside Good is not a legal Inquisitor posture
+    /// (an inquisitor selects ONE domain), and an unrecognized one is not
+    /// grounded anywhere -- so the pair must keep claim-blocking rather
+    /// than riding Good's own narrowing to a false `Computed`. Mirrors
+    /// Cleric's own `unrecognized_other_domain_chosen` guard exactly.
+    #[test]
+    fn inquisitor_good_domain_plus_an_unrecognized_second_domain_stays_blocked() {
+        let mut input = canonically_chosen(INQUISITOR_CLASS_ID, 5);
+        choose(&mut input, INQUISITOR_DOMAIN_CHOICE_ID, "domain:war");
+
+        assert_eq!(
+            build_pilot_headless_receipt(&input).status,
+            HeadlessReceiptStatus::Blocked,
+            "an unrecognized second domain must not ride Good's narrowing to Computed"
+        );
+        assert!(
+            blocking_ids(&input)
+                .contains(&"class_feature.inquisitor.domain_powers.unsupported".to_owned()),
+            "expected the domain-powers blocker: {:?}",
+            blocking_ids(&input)
+        );
+    }
+
+    /// The same guard for Oracle: an unrecognized Mystery or Curse
+    /// alongside a recognized one keeps the class blocked. Neither the
+    /// Battle Mystery nor the Haunted Curse has a single grounded power
+    /// in this codebase, so a build naming one is not something this
+    /// engine can honestly call computed.
+    #[test]
+    fn oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked() {
+        for (choice_set_id, selection_id) in [
+            (ORACLE_MYSTERY_CHOICE_ID, "mystery:battle"),
+            (ORACLE_CURSE_CHOICE_ID, "curse:haunted"),
+        ] {
+            let mut input = canonically_chosen(ORACLE_CLASS_ID, 7);
+            choose(&mut input, choice_set_id, selection_id);
+            assert_eq!(
+                build_pilot_headless_receipt(&input).status,
+                HeadlessReceiptStatus::Blocked,
+                "{selection_id} is grounded nowhere -- it must not ride the canonical choice to \
+                 Computed; blocking: {:?}",
+                blocking_ids(&input)
+            );
+        }
+    }
+
+    /// Negative control: the canonical selections are class-owned. A
+    /// Fighter carrying all four spoofed entries is unaffected -- no
+    /// Cavalier/Inquisitor/Oracle record appears, and Fighter's own
+    /// golden path still computes.
+    #[test]
+    fn spoofed_canonical_choices_on_a_fighter_change_nothing() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut input = result.character_input.expect("valid fixture");
+        choose(&mut input, CAVALIER_ORDER_CHOICE_ID, ORDER_OF_THE_SWORD_SELECTION);
+        choose(&mut input, INQUISITOR_DOMAIN_CHOICE_ID, GOOD_DOMAIN_SELECTION);
+        choose(&mut input, ORACLE_MYSTERY_CHOICE_ID, LIFE_MYSTERY_SELECTION);
+        choose(&mut input, ORACLE_CURSE_CHOICE_ID, CLOUDED_VISION_CURSE_SELECTION);
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        assert!(
+            !receipt.computation.explanations.iter().any(|e| {
+                e.id.contains("cavalier") || e.id.contains("inquisitor") || e.id.contains("oracle")
+            }),
+            "no class-owned record may be fabricated on a Fighter: {:?}",
+            receipt.computation.explanations
         );
     }
 }

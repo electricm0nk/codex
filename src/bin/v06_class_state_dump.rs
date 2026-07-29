@@ -32,8 +32,10 @@
 //!    `compose_character_input` applies — Wizard's school specialization +
 //!    starter spellbook, Arcanist's Metamagic Knowledge + starter
 //!    spellbook, Sorcerer's bloodline + arcane bond, Cleric's domain,
-//!    Druid's nature bond. See `canonical_seeds_for` below; each seed
-//!    cites the `pf1_adapter.rs` block it mirrors.
+//!    Druid's nature bond, Monk's bonus feat, Cavalier's Order,
+//!    Inquisitor's domain, and Oracle's Mystery + Curse. See
+//!    `canonical_seeds_for` below; each seed cites the `pf1_adapter.rs`
+//!    block it mirrors.
 //!
 //! **Level sweep.** Each class is run at every level in `1..=20`, not at a
 //! single level. That is not decoration. Paladin and Ranger are blocked
@@ -272,6 +274,28 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
                 "choice:summoner_eidolon_evolution",
                 "evolution:improved_natural_armor",
             )],
+            Vec::new(),
+        ),
+        // pf1_adapter.rs: the Cavalier/Inquisitor/Oracle Path A block
+        // (2026-07-29). All three are the Sorcerer/Cleric/Druid/Monk
+        // shape -- a recognized chooser selection alone, no bootstrapped
+        // spell (each class's own known-spell posture, where it has one,
+        // is genuinely valid with zero known spells). Each seeds the ONE
+        // corpus-verified option this codebase actually grounds a power
+        // for; see `pilot_compute.rs`'s
+        // `apg_canonical_choice_path_a_tests` for the proof that these
+        // exact seeds are sufficient at every level 1-20, and that
+        // nothing else reaches `Computed` off the back of them.
+        "cavalier" => (
+            vec![choice("choice:cavalier_order", "order:sword")],
+            Vec::new(),
+        ),
+        "inquisitor" => (vec![choice("choice:inquisitor_domain", "domain:good")], Vec::new()),
+        "oracle" => (
+            vec![
+                choice("choice:oracle_mystery", "mystery:life"),
+                choice("choice:oracle_curse", "curse:clouded_vision"),
+            ],
             Vec::new(),
         ),
         _ => (Vec::new(), Vec::new()),

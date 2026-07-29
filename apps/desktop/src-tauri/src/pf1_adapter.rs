@@ -178,6 +178,57 @@ const SUMMONER_CLASS_ID: &str = "class:summoner";
 const SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID: &str = "choice:summoner_eidolon_evolution";
 const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_natural_armor";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure for the three APG
+/// chooser-shaped classes, 2026-07-29): Cavalier, Inquisitor and Oracle
+/// are the Sorcerer/Cleric/Druid/Monk shape exactly -- each engine
+/// (`pilot_compute.rs`) computes a complete build at every level 1-20, but
+/// only once its own real, recognized chooser selection is present, and no
+/// picker in the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`). None needs a
+/// bootstrapped spell: Inquisitor's and Oracle's own known-spell postures
+/// are genuinely valid with zero known spells (unlike Wizard's/Arcanist's
+/// prepared spellbooks), and Cavalier has no `SPELLSTAT` at all.
+///
+/// Each `selection_id` below is the ONE option this codebase actually
+/// grounds a power for, and every one is a corpus-verified BASE-class
+/// option -- not an archetype-gated record:
+///
+/// * `order:sword` — `KEY:Order of the Sword`,
+///   `TYPE:CavalierClassFeatures.CavalierOrder.SpecialQuality`
+///   (`apg_abilities_class.lst:279`), one of the six orders the base
+///   `KEY:Cavalier ~ Order` feature's own `BONUS:ABILITYPOOL|Cavalier
+///   Order|1` grants. Its Sense Motive bonus is the grounded power; the
+///   other five orders carry only opponent-/ally-conditioned challenge
+///   riders.
+/// * `domain:good` — the base `Inquisitor ~ Domains` record carries
+///   `DEFINE:InquisitorDomainGood|0` (`apg_abilities_class.lst:353`), and
+///   Good's own Touch of Good is the grounded power. Deliberately the same
+///   canonical domain Cleric already seeds, since both classes share
+///   `active_touch_of_good_bonus`.
+/// * `mystery:life` + `curse:clouded_vision` — `KEY:Oracle ~ Life
+///   Mystery` (`TYPE:...OracleMystery`) and `KEY:Oracle ~ Clouded Vision`
+///   (`TYPE:...OracleCurse`), the pools `Oracle's Mystery` /
+///   `Oracle's Curse` grant one pick from each of. Life is the only
+///   Mystery whose power (Healing Hands) follows from the Mystery choice
+///   alone rather than a second budgeted revelation pick, and Clouded
+///   Vision's 30-foot cap likewise needs no second choice — so this pair
+///   is the only seed that grounds real powers with one selection each.
+///
+/// Verified directly against `pilot_compute.rs`'s own
+/// `apg_canonical_choice_path_a_tests`, which proves these exact seeds are
+/// sufficient at every level 1-20 with no other precondition, AND that
+/// every other posture stays `Blocked` exactly as before.
+const CAVALIER_CLASS_ID: &str = "class:cavalier";
+const CAVALIER_ORDER_CHOICE_ID: &str = "choice:cavalier_order";
+const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
+const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
+const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
+const ORACLE_CLASS_ID: &str = "class:oracle";
+const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
+const LIFE_MYSTERY_SELECTION: &str = "mystery:life";
+const ORACLE_CURSE_CHOICE_ID: &str = "choice:oracle_curse";
+const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
+
 /// **Why Dodge, of the seven feats the corpus offers at
 /// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
 /// (`.../core_rulebook/cr_abilities_class.lst:1263`):
@@ -806,6 +857,50 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
             selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
+
+    } else if request.class_id == CAVALIER_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure for the three
+        // APG chooser-shaped classes, 2026-07-29) -- see
+        // `CAVALIER_CLASS_ID`'s own doc comment above for each seed's
+        // corpus record and for why these particular options, and
+        // `pilot_compute.rs`'s `apg_canonical_choice_path_a_tests` for the
+        // proof they are sufficient at every level 1-20. Like
+        // Sorcerer/Cleric/Druid/Monk and unlike Wizard/Arcanist, these are
+        // a silently-applied canonical default, not a real in-game choice.
+        //
+        // ONE seeding site only, the same reason Monk needs only one:
+        // Cavalier's, Inquisitor's and Oracle's class-feature seams all sit
+        // behind `compute_apg_class_chassis`, which
+        // `compute_class_chassis` reaches only for a SINGLE-class
+        // character (`ApgClassId::from_class_id_str` is deliberately not
+        // registered with `multiclass_class_level_supported`), so
+        // `apply_level_up`'s multiclass-dip branch never reaches it.
+        // Leveling an existing character takes the increment-existing-level
+        // branch, so this creation-time seed simply persists.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
+            selection_id: ORDER_OF_THE_SWORD_SELECTION.to_owned(),
+        });
+    } else if request.class_id == INQUISITOR_CLASS_ID {
+        selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            // The same canonical domain Cleric's own block above seeds --
+            // both classes share `active_touch_of_good_bonus`, and Good is
+            // the one domain either engine grounds a power for.
+            selection_id: "domain:good".to_owned(),
+        });
+    } else if request.class_id == ORACLE_CLASS_ID {
+        // Oracle is the only one of the three needing TWO seeds: a PF1
+        // oracle has both a Mystery and a Curse, and the engine
+        // claim-blocks on each independently, so neither alone reaches
+        // `Computed`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
         });
     }
 

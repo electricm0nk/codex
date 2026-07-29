@@ -3434,34 +3434,80 @@ mod tests {
     /// A build that does not reach `Computed` must never be granted starting
     /// wealth -- proves the wealth grant is gated on the same successful-save
     /// path as everything else, not a side effect that fires unconditionally.
+    ///
+    /// **Roster-independent by construction (2026-07-29).** This test used to
+    /// name ONE still-blocked class as its fixture, and had to be rewritten
+    /// every time that class was closed: Cleric until choice-picker Path A
+    /// seeded its canonical domain (2026-07-25), then Oracle until Path A
+    /// canonical narrowing seeded its Mystery/Curse pair (2026-07-29). The
+    /// churn was the signal -- the invariant under test was never about any
+    /// particular class. It now sweeps every class id `money::starting_wealth_gp`
+    /// recognizes, asserts the invariant on whichever of them are still
+    /// `Blocked`, and carries an explicit non-vacuity guard so it can never
+    /// quietly degrade into a no-op once the last one is closed.
     #[test]
     fn create_character_at_root_grants_no_wealth_when_the_build_is_blocked() {
-        let root = tempdir("create-character-starting-wealth-blocked");
-        // Oracle does not reach Computed today (no supported chassis) even
-        // though starting_wealth_gp itself recognizes "class:oracle". Cleric
-        // used to be this test's subject, but choice-picker Path A
-        // (2026-07-25) seeds a canonical domain choice for Cleric, so Cleric
-        // now genuinely reaches Computed and can no longer serve as a
-        // still-blocked fixture here.
-        let request = request_for_class("race:human", "class:oracle", 1);
+        // Every class id `money::starting_wealth_gp` returns `Some` for, in
+        // that function's own match order. Ten of these (Alchemist, Cavalier,
+        // Gunslinger, Inquisitor, Magus, Ninja, Oracle, Samurai, Summoner,
+        // Witch) are recognized for wealth purposes only -- exactly the
+        // population this invariant most needs to hold over.
+        let wealth_recognized_class_ids = [
+            "class:monk",
+            "class:druid",
+            "class:sorcerer",
+            "class:wizard",
+            "class:summoner",
+            "class:barbarian",
+            "class:bard",
+            "class:alchemist",
+            "class:oracle",
+            "class:samurai",
+            "class:witch",
+            "class:cleric",
+            "class:rogue",
+            "class:inquisitor",
+            "class:magus",
+            "class:ninja",
+            "class:fighter",
+            "class:paladin",
+            "class:ranger",
+            "class:cavalier",
+            "class:gunslinger",
+        ];
 
-        let response = create_character_at_root(&root, &request, "test-version".to_owned())
-            .expect("create call should not error");
+        let mut blocked_classes_seen = Vec::new();
+        for class_id in wealth_recognized_class_ids {
+            assert!(
+                codex::rules_core::money::starting_wealth_gp(class_id).is_some(),
+                "{class_id} must still be a wealth-recognized id -- if this fails, \
+                 starting_wealth_gp's roster changed and this list is stale"
+            );
 
-        match response {
-            CreateCharacterResponse::Blocked { .. } => {}
-            CreateCharacterResponse::Saved { .. } => {
-                panic!("Human Oracle level 1 is not expected to reach Computed in this build")
+            let root = tempdir(&format!("create-character-starting-wealth-blocked-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+
+            if let CreateCharacterResponse::Blocked { .. } = response {
+                blocked_classes_seen.push(class_id);
+                assert_eq!(
+                    load_character_money_at_root(&root).unwrap().total_copper,
+                    0,
+                    "{class_id} is Blocked, so it must never be granted wealth, fabricated or \
+                     otherwise"
+                );
             }
+
+            std::fs::remove_dir_all(&root).ok();
         }
 
-        assert_eq!(
-            load_character_money_at_root(&root).unwrap().total_copper,
-            0,
-            "a Blocked build must never be granted wealth, fabricated or otherwise"
+        assert!(
+            !blocked_classes_seen.is_empty(),
+            "every wealth-recognized class now reaches Computed, so this test proves nothing \
+             about the Blocked path any more -- replace it with a genuinely blocked fixture \
+             (e.g. an unsupported multiclass build) rather than deleting the invariant"
         );
-
-        std::fs::remove_dir_all(&root).ok();
     }
 
     /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten
@@ -3545,6 +3591,38 @@ mod tests {
         }
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Real end-to-end proof for the Cavalier/Inquisitor/Oracle Path A
+    /// seeding (2026-07-29): each of the three saves through the actual
+    /// `create_character_at_root` path, not merely through
+    /// `build_pilot_headless_receipt` on an in-memory input. That
+    /// distinction is not academic -- the Arcanist colon-convention bug
+    /// immediately above was a real failure that lived exactly in the gap
+    /// between "the engine reached Computed" and "the save call
+    /// succeeded", and every seed here likewise has to survive
+    /// `validate_character_input`'s own colon-segment rule.
+    #[test]
+    fn create_character_at_root_saves_a_fresh_cavalier_inquisitor_and_oracle() {
+        for class_id in ["class:cavalier", "class:inquisitor", "class:oracle"] {
+            let root = tempdir(&format!("create-character-path-a-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .unwrap_or_else(|error| {
+                    panic!("a fresh Human {class_id} 1 must save without error: {error:?}")
+                });
+
+            match response {
+                CreateCharacterResponse::Saved { .. } => {}
+                CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                    "a fresh Human {class_id} 1 is expected to reach Computed via \
+                     compose_character_input's own Path A seeding: {diagnostics:?}"
+                ),
+            }
+
+            std::fs::remove_dir_all(&root).ok();
+        }
     }
 
     // ----- purchase_equipment: atomic money-purchase coupling (risks item 9) -----
