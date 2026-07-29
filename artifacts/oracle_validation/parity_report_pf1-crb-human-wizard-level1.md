@@ -24,7 +24,7 @@
 | encumbrance.carrying_capacity.heavy_max_lbs | 300 | 300 | yes | — |
 | encumbrance.total_carried_weight_lbs | 29 | 29 | yes | — |
 | durability.max_hp | 8 | 8 | yes | — |
-| combat.baseline_melee_attack_bonus | 4 | 5 | no | — |
+| combat.baseline_melee_attack_bonus | 4 | 1 | no | — |
 
 ## Normalization Rules Used
 
@@ -33,4 +33,4 @@
 
 ## Discovered Deltas
 
-- `combat.baseline_melee_attack_bonus` — PCGen: 4, Codex: 5 (value mismatch)
+- `combat.baseline_melee_attack_bonus` — PCGen: 4, Codex: 1 (value mismatch)

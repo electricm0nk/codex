@@ -29,7 +29,8 @@ use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::pilot_compute::{
-    apply_human_ability_bonus, choice_selection, compute_pilot_base_chassis, fighter_armor_training,
+    apply_human_ability_bonus, character_is_proficient_with, choice_selection,
+    compute_pilot_base_chassis, equipped_weapon_stat_block, fighter_armor_training,
     fighter_level_in_mix,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
@@ -38,7 +39,8 @@ use crate::rules_core::pilot_compute::{
     CLIMB_SKILL_ID, DODGE_AC_BONUS, DODGE_FEAT_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
     POWER_ATTACK_ITEM_ID, SELECTED_SKILL_RANK, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
-    WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS, WIZARD_CLASS_ID,
+    WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
+    WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
 use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
 use crate::rules_core::rules_tables::RuleSetId;
@@ -417,6 +419,36 @@ pub fn compute_combat_baseline_from_corpus(
         return Err(unmet);
     };
 
+    // v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29): the
+    // nonproficiency penalty must be applied HERE TOO, not only in
+    // `pilot_compute::compute_combat_baseline`.
+    //
+    // This is the exact divergence
+    // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
+    // exists to catch, and it caught it: applying the penalty on only one
+    // of the two paths made Wizard level 1 read 4 here and 0 there. Both
+    // paths swing the same required Longsword against the same character,
+    // so any proficiency rule that applies to one applies identically to
+    // the other -- and this corpus-aware path is the intended eventual
+    // replacement for the hardcoded one, so shipping it without the
+    // penalty would just re-introduce the same silent overstatement later.
+    let nonproficiency_penalty = match equipped_weapon_stat_block(LONGSWORD_ITEM_ID)
+        .and_then(|weapon| character_is_proficient_with(input, weapon))
+    {
+        Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+        Some(true) => 0,
+        None => {
+            // Unknown, never assumed. Same contract as the hardcoded path:
+            // refuse to produce a number rather than guess a penalty.
+            unmet.push(format!(
+                "this character's proficiency with {LONGSWORD_ITEM_ID} is unknown (a class in \
+                 the mix has no ingested weapon-proficiency record), so the nonproficiency \
+                 penalty cannot be resolved"
+            ));
+            0
+        }
+    };
+
     if !unmet.is_empty() {
         return Err(unmet);
     }
@@ -428,7 +460,8 @@ pub fn compute_combat_baseline_from_corpus(
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
         + weapon_training_bonus
-        + attack_bonus_delta;
+        + attack_bonus_delta
+        + nonproficiency_penalty;
 
     let armor_training = fighter_armor_training(level);
     let effective_max_dex = effects.max_dex_cap.map(|cap| cap + armor_training.max_dex_increase);

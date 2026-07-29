@@ -224,8 +224,21 @@ fn wizard_level3_with_ge06_combat_posture_clears_the_combat_baseline_diagnostic(
     );
     let melee_attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
     // Wizard base attack bonus 1 + STR modifier (-1, STR 8) + Weapon Focus (+1)
-    // + no Weapon Training (Wizard has no Fighter class feature) = 1.
-    assert_eq!(melee_attack.value, 1, "{computation:?}");
+    // + no Weapon Training (Wizard has no Fighter class feature)
+    // - 4 nonproficiency = -3.
+    //
+    // Corrected 1 -> -3 (risks item #89, tasks #80+#86, 2026-07-29). This
+    // exact assertion is the one risks item #89 named as locking in a real
+    // wrong number on a shipped, Computed class: this baseline swings a
+    // Longsword, and the Wizard's own corpus grant
+    // (`cr_abilities_class.lst`, `KEY:Weapon and Armor Proficiency ~
+    // Wizard`) is exactly `AUTO:WEAPONPROF|Club|Dagger|Crossbow
+    // (Heavy)|Crossbow (Light)|Quarterstaff` -- no Longsword, and no
+    // blanket tier. A Wizard is genuinely non-proficient and owes PF1's -4
+    // (`WEAPONNONPROFPENALTY` in
+    // `system/gameModes/Pathfinder/miscinfo.lst:193`). -3 is the value
+    // risks item #89 independently predicted for this case.
+    assert_eq!(melee_attack.value, -3, "{computation:?}");
     let armor_class = explanation(&computation, "defense.baseline_armor_class");
     // 10 + Chain Shirt (+4) + DEX contribution (+2, DEX 14, uncapped by any
     // Fighter armor training) + Dodge (+1) = 17.

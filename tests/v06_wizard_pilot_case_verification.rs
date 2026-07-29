@@ -250,12 +250,37 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         comparison
     );
 
-    // The one remaining genuine mismatch: combat.baseline_melee_attack_bonus,
-    // the exact same shape as the Fighter pilot case's already-documented
-    // Weapon-Focus-inclusion discrepancy (Codex's baseline includes Weapon
-    // Focus (Longsword)'s +1; PCGen's compared export field apparently
-    // doesn't) -- not new, not something this cycle introduced, not
-    // attempted here (undiagnosed, out of QA's lane -- production code).
+    // The one remaining genuine mismatch: combat.baseline_melee_attack_bonus.
+    //
+    // **This oracle shares a blind spot with the thing it validates, and
+    // that is why the mismatch must NOT be read as "Codex is wrong".**
+    // Updated 2026-07-29 (risks item #89, tasks #80+#86): Codex moved from
+    // 5 to 1 when the nonproficiency penalty was finally applied. PCGen's
+    // compared export field stayed at 4. The gap is now -3 rather than
+    // +1, and it is the sum of TWO independent defects in that export
+    // field, not one:
+    //
+    //  1. It omits Weapon Focus (Longsword)'s +1, which the character
+    //     genuinely has (this is the long-documented half, the same shape
+    //     as the Fighter pilot case's discrepancy).
+    //  2. It omits PF1's own -4 nonproficiency penalty
+    //     (`WEAPONNONPROFPENALTY` in
+    //     `system/gameModes/Pathfinder/miscinfo.lst:193`), even though a
+    //     Wizard has no Longsword proficiency at all -- the Wizard's real
+    //     grant (`cr_abilities_class.lst`, `KEY:Weapon and Armor
+    //     Proficiency ~ Wizard`) is exactly `AUTO:WEAPONPROF|Club|Dagger|
+    //     Crossbow (Heavy)|Crossbow (Light)|Quarterstaff`.
+    //
+    // PCGen's 4 is therefore just BAB(0) + STR(+4) with both the feat and
+    // the penalty dropped. Before this fix the two omissions partly
+    // cancelled (Codex 5 vs PCGen 4 looked like a tidy +1 Weapon Focus
+    // delta), which is exactly how the second defect stayed hidden: the
+    // oracle and the engine agreed while BOTH were wrong. Correcting Codex
+    // uncovered it rather than caused it.
+    //
+    // The expected values below are updated deliberately and with that
+    // reasoning recorded, rather than leaving a correct engine showing red
+    // against a defective export.
     let mismatch = comparison
         .mismatches
         .iter()
@@ -263,7 +288,7 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         .unwrap_or_else(|| panic!("expected the known combat.baseline_melee_attack_bonus mismatch: {comparison:?}"));
     assert_eq!(mismatch.reason, MismatchReason::ValueMismatch);
     assert_eq!(mismatch.pcgen_value_i16, Some(4));
-    assert_eq!(mismatch.codex_value_i16, Some(5));
+    assert_eq!(mismatch.codex_value_i16, Some(1));
     assert_eq!(
         comparison.mismatches.len(),
         1,

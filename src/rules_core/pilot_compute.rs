@@ -36611,11 +36611,51 @@ fn normalize_weapon_identity(raw: &str) -> String {
 /// Resolves an equipment `item_id` to its real corpus weapon stat block,
 /// or `None` when the item is not a weapon this engine has ingested
 /// (armor, gear, or a weapon outside the CRB table).
-fn equipped_weapon_stat_block(item_id: &str) -> Option<&'static weapon_tables::WeaponTableEntry> {
+pub(crate) fn equipped_weapon_stat_block(
+    item_id: &str,
+) -> Option<&'static weapon_tables::WeaponTableEntry> {
     let wanted = normalize_weapon_identity(item_id);
     weapon_tables::WEAPON_TABLE
         .iter()
         .find(|entry| normalize_weapon_identity(entry.key) == wanted)
+}
+
+/// PF1's attack-roll penalty for using a weapon you are not proficient
+/// with, from the game system's own machine-readable constant:
+/// `WEAPONNONPROFPENALTY:-4` in
+/// `system/gameModes/Pathfinder/miscinfo.lst:193`. Not transcribed from
+/// rulebook prose or memory.
+pub(crate) const WEAPON_NONPROFICIENCY_ATTACK_PENALTY: i16 = -4;
+
+/// Whether this character is proficient with `weapon`, or `None` when at
+/// least one class in the mix has no ingested proficiency record and the
+/// question therefore cannot be answered honestly.
+///
+/// **`None` means "unknown", never "not proficient"** --
+/// `class_weapon_proficiency`'s own contract. A caller that collapsed
+/// `None` into `false` would silently invent a -4 penalty for a class
+/// whose grants were merely un-ingested, which is the same
+/// fabricated-number failure mode this whole fix exists to remove, just
+/// pointing the other way.
+///
+/// Multiclass follows PF1's actual rule: proficiency is the UNION across
+/// classes, so a Fighter/Wizard is proficient with everything Fighter is.
+/// A single non-proficient class in the mix must not remove a
+/// proficiency another class genuinely grants.
+///
+/// v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29).
+pub(crate) fn character_is_proficient_with(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    let mut any_proficient = false;
+    for class_level in &input.chosen.class_levels {
+        let proficiency = weapon_tables::class_weapon_proficiency(&class_level.class_id)?;
+        if weapon_tables::class_is_proficient_with(proficiency, weapon) {
+            any_proficient = true;
+        }
+    }
+    Some(any_proficient)
 }
 
 /// Grounds the per-weapon combat surfaces for every equipped weapon that
@@ -36838,13 +36878,75 @@ fn compute_combat_baseline(
     let justice_judgment_attack_bonus = active_inquisitor_justice_judgment_bonus(input)
         .map(|(_, bonus)| bonus)
         .unwrap_or(0);
+    // v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29): the
+    // nonproficiency penalty. This baseline hardcodes a Longsword (a
+    // MARTIAL weapon) and, until this fix, handed every dispatched class a
+    // full attack bonus for it -- including the many that have no Longsword
+    // proficiency at all. That made a real, silently-wrong number on
+    // classes users can build and save today (Wizard's shipped value was
+    // overstated by exactly 4).
+    //
+    // Proficiency is read from the ingested corpus table rather than
+    // inferred from a "martial classes only" rule of thumb, because that
+    // rule of thumb is wrong in both directions: Bard is proficient with
+    // the Longsword through an explicit
+    // `AUTO:WEAPONPROF|Longsword|...` list (`cr_abilities_class.lst`,
+    // `KEY:Weapon and Armor Proficiency ~ Bard`) despite having only the
+    // Simple tier, and Brawler carries a whole weapon GROUP grant
+    // ("Close") that does not contain the Longsword ("Blades Heavy").
+    //
+    // Known modelling boundary, deliberately not papered over: BOTH Cleric
+    // (`cr_abilities_class.lst`, `Weapon and Armor Proficiency ~ Cleric`)
+    // and Inquisitor (`apg_abilities_globalvar.lst:340`,
+    // `CATEGORY=Class|Inquisitor.MOD`) carry
+    // `AUTO:WEAPONPROF|DEITYWEAPONS` on top of their listed grants, so a
+    // character of either class whose deity favors the Longsword IS
+    // proficient in real PF1. No deity is modelled anywhere in this engine
+    // (`DEITY:` exists only as a `source_content` record kind, never as a
+    // chosen-input field) and none is present in this posture, so
+    // DEITYWEAPONS contributes nothing here and the penalty correctly
+    // applies -- but a future deity surface must revisit this, not assume
+    // these two classes are always non-proficient.
+    let longsword = equipped_weapon_stat_block(LONGSWORD_ITEM_ID);
+    let proficiency_verdict =
+        longsword.and_then(|weapon| character_is_proficient_with(input, weapon));
+    let nonproficiency_penalty = match proficiency_verdict {
+        Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+        Some(true) => 0,
+        // Unknown: refuse to guess in either direction. The diagnostic
+        // below claim-blocks so no number is presented as trustworthy.
+        None => 0,
+    };
+    if proficiency_verdict.is_none() {
+        diagnostics.push(ComputationDiagnostic {
+            id: "combat.baseline_weapon_proficiency_unknown".to_owned(),
+            message: format!(
+                "the baseline melee attack bonus applies PF1's \
+                 {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty only when \
+                 this character's proficiency with {LONGSWORD_ITEM_ID} is actually known, \
+                 and it is not: at least one class in {:?} has no ingested \
+                 rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the \
+                 Longsword itself is missing from the weapon table), so the attack total \
+                 below is NOT claimed to be correct",
+                input
+                    .chosen
+                    .class_levels
+                    .iter()
+                    .map(|c| c.class_id.as_str())
+                    .collect::<Vec<&str>>()
+            ),
+            claim_blocking: true,
+        });
+    }
+
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
         + weapon_training_bonus
         + inspire_courage_attack_bonus
         + touch_of_good_attack_bonus
-        + justice_judgment_attack_bonus;
+        + justice_judgment_attack_bonus
+        + nonproficiency_penalty;
     let weapon_training_detail = if weapon_training_bonus > 0 {
         format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
     } else {
@@ -36865,6 +36967,19 @@ fn compute_combat_baseline(
     } else {
         String::new()
     };
+    // Stated explicitly rather than folded silently into the total: a
+    // player looking at a lower-than-expected attack bonus must be able to
+    // see WHY from the explanation alone.
+    let nonproficiency_detail = match proficiency_verdict {
+        Some(false) => format!(
+            " {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty (this class has no \
+             Longsword proficiency in the corpus)"
+        ),
+        Some(true) => String::new(),
+        None => " (nonproficiency penalty UNRESOLVED -- see \
+                 combat.baseline_weapon_proficiency_unknown)"
+            .to_owned(),
+    };
 
     let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
@@ -36872,7 +36987,7 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}; \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
@@ -42762,9 +42877,18 @@ mod cleric_dispatch_widening_safety_tests {
         // Cleric level 1 base attack bonus (3/4 BAB: 1*3/4 = 0) + Strength
         // modifier (+4, fixture's chosen Human +2 Strength applied to
         // base 16) + Weapon Focus (+1) + Touch of Good (+1, half level 1
-        // = 0, floored to minimum 1) = 6.
+        // = 0, floored to minimum 1) - 4 nonproficiency = 2.
+        //
+        // Corrected 6 -> 2 (risks item #89, tasks #80+#86, 2026-07-29).
+        // The old 6 was a real wrong number, not a changed expectation:
+        // this baseline swings a Longsword, and Cleric's corpus grant is
+        // the Simple tier plus `AUTO:WEAPONPROF|DEITYWEAPONS`. The
+        // Longsword is Martial, and no deity is modelled anywhere in this
+        // engine, so a Cleric here is genuinely non-proficient and owes
+        // PF1's -4 (`WEAPONNONPROFPENALTY` in
+        // `system/gameModes/Pathfinder/miscinfo.lst:193`).
         assert_eq!(
-            melee_attack_bonus.value, 6,
+            melee_attack_bonus.value, 2,
             "Touch of Good's sacred bonus must be applied to the attack roll: {melee_attack_bonus:?}"
         );
     }
@@ -42786,8 +42910,10 @@ mod cleric_dispatch_widening_safety_tests {
             .find(|e| e.id == "combat.baseline_melee_attack_bonus")
             .expect("baseline melee attack bonus must be grounded");
         // Cleric level 1 base attack bonus (0) + Strength modifier (+4) +
-        // Weapon Focus (+1) + no Touch of Good bonus (not active) = 5.
-        assert_eq!(melee_attack_bonus.value, 5);
+        // Weapon Focus (+1) + no Touch of Good bonus (not active)
+        // - 4 nonproficiency = 1. Corrected 5 -> 1 for the same reason as
+        // the Touch-of-Good case above (risks item #89).
+        assert_eq!(melee_attack_bonus.value, 1);
     }
 
     /// A Cleric with BOTH Good and Healing domains (the pre-existing
@@ -46294,9 +46420,19 @@ mod inquisitor_dispatch_widening_safety_tests {
             .expect("baseline melee attack bonus must be grounded");
         // Base attack bonus (Inquisitor level 1: 0) + Strength modifier
         // (fixture base 16 + Human +2 -> +4) + Weapon Focus (+1) +
-        // Justice judgment bonus (+1) = 6.
+        // Justice judgment bonus (+1) - 4 nonproficiency = 2.
+        //
+        // Corrected 6 -> 2 (risks item #89, tasks #80+#86, 2026-07-29).
+        // Inquisitor's real corpus grant
+        // (`apg_abilities_globalvar.lst:340`) is the Simple tier plus
+        // `AUTO:WEAPONPROF|Crossbow (Hand)|Longbow|Crossbow (Repeating
+        // Heavy)|Crossbow (Repeating Light)|Shortbow` and
+        // `AUTO:WEAPONPROF|DEITYWEAPONS` -- no Longsword, and no deity is
+        // modelled, so this baseline's Longsword owes the -4. The
+        // Judgment bonus itself is unaffected, which is exactly what this
+        // test still guards.
         assert_eq!(
-            melee_attack_bonus.value, 6,
+            melee_attack_bonus.value, 2,
             "Justice judgment's attack-roll bonus must be applied: {:?}",
             melee_attack_bonus
         );
@@ -46338,9 +46474,10 @@ mod inquisitor_dispatch_widening_safety_tests {
             .find(|e| e.id == "combat.baseline_melee_attack_bonus")
             .expect("baseline melee attack bonus must be grounded");
         // No Justice judgment bonus applied for an active-but-unrecognized-
-        // choice posture: 0 (BAB) + 4 (STR) + 1 (Weapon Focus) = 5.
+        // choice posture: 0 (BAB) + 4 (STR) + 1 (Weapon Focus)
+        // - 4 (nonproficiency, see the Justice case above) = 1.
         assert_eq!(
-            melee_attack_bonus.value, 5,
+            melee_attack_bonus.value, 1,
             "no Judgment bonus is applied for an active-but-unrecognized-choice posture: {:?}",
             melee_attack_bonus
         );
@@ -46387,9 +46524,10 @@ mod inquisitor_dispatch_widening_safety_tests {
             .find(|e| e.id == "combat.baseline_melee_attack_bonus")
             .expect("baseline melee attack bonus must be grounded");
         // No Justice judgment bonus applied for an over-budget posture:
-        // 0 (BAB) + 4 (STR) + 1 (Weapon Focus) = 5.
+        // 0 (BAB) + 4 (STR) + 1 (Weapon Focus)
+        // - 4 (nonproficiency, see the Justice case above) = 1.
         assert_eq!(
-            melee_attack_bonus.value, 5,
+            melee_attack_bonus.value, 1,
             "no Judgment bonus is applied for an over-budget posture: {:?}",
             melee_attack_bonus
         );
@@ -46450,8 +46588,11 @@ mod inquisitor_dispatch_widening_safety_tests {
             .iter()
             .find(|e| e.id == "combat.baseline_melee_attack_bonus")
             .expect("baseline melee attack bonus must be grounded");
+        // 0 (BAB) + 4 (STR) + 1 (Weapon Focus) - 4 (nonproficiency, see
+        // the Justice case above) = 1. Protection contributes nothing to
+        // attack, which is what this test guards.
         assert_eq!(
-            melee_attack_bonus.value, 5,
+            melee_attack_bonus.value, 1,
             "Protection judgment must not leak an attack-roll bonus: {:?}",
             melee_attack_bonus
         );
