@@ -89,13 +89,38 @@ fn compute_max_hp_returns_none_for_a_wizard_rogue_multiclass_build() {
     );
 }
 
+/// Updated 2026-07-29 (v0.6 alpha swarm, Monk/Summoner chassis-recognition
+/// closure). This test previously asserted `None` for Monk, on the grounds
+/// that "durability is scoped to the same table_class_id allowlist as the
+/// multiclass BAB/save dispatch -- Monk is not in it". Monk IS in it now,
+/// so the premise is gone and the assertion is inverted rather than
+/// deleted: durability is still scoped to that allowlist, and the
+/// allowlist grew.
+///
+/// Monk d10 (`cr_classes.lst:147`, `CLASS:Monk HD:10`), level 1, CON mod
+/// +3: the level-1 die is maximized, so 10 + 3 = 13.
 #[test]
-fn compute_max_hp_returns_none_for_monk_outside_the_table_class_id_allowlist() {
+fn compute_max_hp_now_resolves_monk_since_table_class_id_recognizes_it() {
     let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 3);
     assert_eq!(
+        max_hp,
+        Some(13),
+        "Monk joined the table_class_id allowlist, so durability must resolve its real d10"
+    );
+}
+
+/// The negative control the Monk case above used to provide.
+///
+/// It is deliberately a synthetic id: Monk was the LAST real base class
+/// missing from `table_class_id`, so between it, `ApgClassId` and
+/// `AcgClassId` all 27 base classes now resolve a hit die, and no real
+/// class can express the "unrecognized" branch any more.
+#[test]
+fn compute_max_hp_returns_none_for_a_class_id_no_book_recognizes() {
+    let max_hp = compute_max_hp(&[class_level("class:not_a_real_pf1_class", 1)], 3);
+    assert_eq!(
         max_hp, None,
-        "durability is scoped to the same table_class_id allowlist as the multiclass BAB/save \
-         dispatch -- Monk is not in it"
+        "an unrecognized class id must resolve no hit die rather than a fabricated one"
     );
 }
 

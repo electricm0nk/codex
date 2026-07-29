@@ -112,13 +112,29 @@ fn monk_level1_leaves_direct_chassis_recognition_evidence() {
         "monk chassis recognition must name the class:monk:1 identity: {}",
         chassis.detail
     );
-    assert_eq!(
-        computation.base_attack_bonus, 0,
-        "monk baseline must not fabricate a base attack bonus"
-    );
+    // Monk level 1 base attack bonus is genuinely 0 (3/4 BAB: 1*3/4 = 0),
+    // so this assertion reads the same before and after the chassis
+    // widening -- but it now means "the real computed value", not "no
+    // value was fabricated".
+    assert_eq!(computation.base_attack_bonus, 0, "monk level 1 base attack bonus (3/4 BAB)");
+
+    // Updated 2026-07-29 (v0.6 alpha swarm, Monk/Summoner
+    // chassis-recognition closure). This previously asserted the ABSENCE
+    // of `class_chassis.base_attack_bonus`, because `table_class_id` did
+    // not map `class:monk` and Monk therefore never reached the
+    // table-driven chassis path at all. It does now, reading the
+    // corpus-backed `class_tables()` Monk row that was always present, so
+    // the explanation must be there -- and asserting its absence would now
+    // be asserting a bug. The comment on the old assertion called it "a
+    // supported Fighter base-attack chassis explanation"; that was
+    // misleading even then -- the id is the generic table-driven one every
+    // recognized class emits, not a Fighter-specific one.
+    let bab = explanation(&computation, "class_chassis.base_attack_bonus");
+    assert_eq!(bab.value, 0, "monk level 1 base attack bonus explanation must carry the real 0");
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "monk baseline must not surface a supported Fighter base-attack chassis explanation"
+        bab.detail.contains("class:monk"),
+        "the chassis explanation must name the real class it read: {}",
+        bab.detail
     );
 
     // Ability modifiers remain class-independent and still compute (WIS 17 -> +3).
