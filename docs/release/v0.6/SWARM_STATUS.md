@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T06:25:13
-Latest commit on tranche/6: fd4af96e chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T06:20:31-04:00)
+Last mechanical check: 2026-07-29T06:30:02
+Latest commit on tranche/6: 391fb09b docs(v0.6): mark risks item 89 resolved -- nonproficiency penalty applied (04dea038) (30 seconds ago) (2026-07-29T06:29:32-04:00)
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
