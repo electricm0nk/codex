@@ -92,8 +92,9 @@
 //! or not the chassis ceiling has been reached — a pure PF1 Core Rulebook
 //! level-number fact (level 20 is every core class's capstone level), not
 //! derived from any per-class grounded data source, mirroring `druid.rs`'s
-//! identical precedent for its own lower ceiling
-//! (`MAX_SUPPORTED_DRUID_LEVEL = 15`).
+//! identical precedent, which was established while Druid still had a lower
+//! ceiling (`MAX_SUPPORTED_DRUID_LEVEL` has since widened to 20, v0.6
+//! 2026-07-29; the precedent it set is what matters here, not its old value).
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};

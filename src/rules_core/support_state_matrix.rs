@@ -807,7 +807,8 @@ const DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
     tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
     tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs + \
-    tests/sd18_druid_level14_widening.rs + tests/sd18_druid_level15_widening.rs";
+    tests/sd18_druid_level14_widening.rs + tests/sd18_druid_level15_widening.rs + \
+    tests/v06_druid_level16_to_20_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -3752,7 +3753,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     aging-penalty-resolution engine fabricated. The row stays Partial, not \
                     Supported: the animal-companion execution burden, the Wild Shape execution \
                     burden, and the prepared divine spell posture burden all remain named and \
-                    unproven. No spell math is fabricated and no Druid level 16+ is proven. This \
+                    unproven. No spell math is fabricated. A v0.6 slice (2026-07-29) widens the \
+                    gate the rest of the way to level 20, closing Druid's last five blocked \
+                    levels so the class computes at every level 1-20 (the tenth CRB class to do \
+                    so). Each of the five rows was transcribed individually from the PCGen PF1 \
+                    Core Rulebook data set rather than assumed to continue the pattern: base \
+                    attack bonus 12/12/13/14/15, both good saves 10/10/11/11/12, poor Reflex \
+                    5/5/6/6/6 (cr_classes.lst line 93), and the CAST rows at cr_classes.lst \
+                    lines 131-135, which are byte-for-byte identical to Cleric's own lines \
+                    85-89. The complete CATEGORY=Class|Druid.MOD feature block \
+                    (cr_abilities_class.lst lines 223-234) tops out at Druid_CFP_Level,15, so \
+                    Timeless Body is genuinely Druid's last named CRB class feature and NO new \
+                    named feature exists at 16-20 to leave unshown. The 16/18/20 \"Special\" \
+                    column entries are Wild Shape frequency increments only, which stay \
+                    named-but-unproven with the rest of the Wild Shape burden. This \
                     row's every named grounded milestone is now surfaced live in the desktop \
                     app's Class Progression Catalog browser \
                     (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
@@ -3762,11 +3776,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     name -- satisfying the loop instruction's own definition of \
                     Supported/Product-visible (every named grounded dimension AND the operator's \
                     UI surfaces it)",
-                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
-                    animal-companion execution burden, the Wild Shape execution burden, and the \
-                    prepared divine spell posture burden as real computed contributions, then \
-                    Druid level 16+ progression, is a future SD-N's scope, not a further \
-                    per-cycle widening of this row",
+                next_required_uplift: "none for Druid recognition, UI-surfacing, or level range \
+                    (Druid's full PF1 level 1-20 span is now grounded); grounding the Druid \
+                    animal-companion execution burden, the Druid Wild Shape execution burden, \
+                    and the Druid prepared divine spell posture burden as real computed \
+                    contributions is a future SD-N's scope, not a further per-cycle widening of \
+                    this row",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

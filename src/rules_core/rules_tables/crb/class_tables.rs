@@ -78,7 +78,11 @@ const CLASS_META: &[ClassMeta] = &[
     ClassMeta { class_id: ClassId::Barbarian, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 12 },
     ClassMeta { class_id: ClassId::Bard, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
-    ClassMeta { class_id: ClassId::Druid, max_supported_level: 15, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
+    // Druid widened 15 -> 20 (v0.6, 2026-07-29), the last CRB class still
+    // short of the cap. `CLASS:Druid` carries `MAXLEVEL:20` and its BAB and
+    // save formulas are byte-for-byte identical to `CLASS:Cleric`'s
+    // (`cr_classes.lst` lines 93 and 55), which already ran to 20 here.
+    ClassMeta { class_id: ClassId::Druid, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Monk, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Paladin, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 10 },

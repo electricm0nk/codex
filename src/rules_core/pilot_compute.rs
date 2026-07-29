@@ -5652,7 +5652,55 @@ const DRUID_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 // mirroring exactly how Venom Immunity (level 9) and A Thousand Faces
 // (level 13) were grounded: a bounded +0 identity/recognition record, with
 // no aging-penalty-resolution engine fabricated.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 15;
+//
+// A final v0.6 slice (2026-07-29) widens the gate the rest of the way to 20,
+// closing the last five blocked Druid levels so the class computes at every
+// level 1-20. Unlike every widening above it this one opens a five-level band
+// at once, so each row was transcribed individually from the PCGen PF1 Core
+// Rulebook data set rather than assumed to continue the pattern, reading whole
+// records including the `.MOD` blocks a token-filtered grep hides:
+//
+//   - `cr_classes.lst` line 93 (`CLASS:Druid`) carries `MAXLEVEL:20` and the
+//     three progression formulas, which are byte-for-byte identical to
+//     `CLASS:Cleric` (line 55) -- already grounded to level 20 here. Base
+//     attack bonus (`classlevel*3/4`) rises 12/12/13/14/15 across 16-20; both
+//     good saves (`classlevel/2+2`) rise 10/10/11/11/12; poor Reflex
+//     (`classlevel/3`) rises 5/5/6/6/6. Reflex STAYING at 5 from level 15 to
+//     16-17, and at 6 from 18 through 20, are integer-division coincidences
+//     that were checked rather than assumed to keep climbing.
+//   - `cr_classes.lst` lines 131-135 are the real Druid `CAST:` rows for
+//     levels 16-20 and are byte-for-byte identical to Cleric's own lines
+//     85-89 -- which is what already justifies
+//     `druid_base_spells_per_day_table` delegating to
+//     `cleric_base_spells_per_day_table`, whose 16-20 rows therefore need no
+//     change. Level 16 has NINE columns; the tenth (9th-level druid spells)
+//     first appears at level 17, matching the already-present
+//     `DRUID_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17` -- a threshold
+//     this widening makes reachable for the first time.
+//   - `cr_abilities_class.lst` lines 223-234 are the COMPLETE
+//     `CATEGORY=Class|Druid.MOD` class-feature block, and its highest gate is
+//     `PREVARGTEQ:Druid_CFP_Level,15` (Timeless Body, line 234). There is NO
+//     new named Druid class feature at 16, 17, 18, 19, or 20 -- read off the
+//     whole block rather than inferred from the level-15 stopping point.
+//     Timeless Body is genuinely Druid's last named CRB class feature, so no
+//     new pillar is grounded here and nothing text-only is left unshown to
+//     the player by this slice.
+//   - The only 16/18/20 "Special" column entries are Wild Shape frequency
+//     increments (7/day, 8/day, at will), from `cr_abilities_class.lst` line
+//     853's `BONUS:VAR|WildShapeTimes|(DruidLVL>=4)+...+(DruidLVL>=16)+
+//     (DruidLVL>=18)+(DruidLVL>=20)` and line 796's
+//     `DESC:You can change shape at will ...|PREVARGTEQ:WildShapeProgression,9`.
+//     Levels 17 and 19 are genuinely blank. Worth recording for whoever
+//     eventually grounds Wild Shape: these three increments are PURELY
+//     frequency, because the form-tier grants
+//     (`CATEGORY=Special Ability|Wild Shape.MOD`, lines 857-861) stop at
+//     `PREVARGTEQ:DruidWildShape,12` -- the bundling argument that kept
+//     levels 4/6/8/10/12 unproven does not apply above 12. It stays
+//     named-but-unproven regardless, on the unchanged and still-true ground
+//     that this codebase has no shapeshifting execution engine at all; a
+//     uses/day counter with nothing to spend it on would be a fabricated
+//     number, which is the one outcome worse than a reported gap.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 20;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
@@ -9635,9 +9683,12 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
 /// / `class_chassis.base_save.*` explanation ids every chassis function
 /// pushes. Returns `None` (with a claim-blocking `class_chassis.unsupported`
 /// diagnostic) when no table row exists for `class_id` at `level` -- i.e.
-/// `level` exceeds that class's own `class_tables()`-declared ceiling (e.g.
-/// Druid caps at 15, Monk at 12), so a level beyond what this table can
-/// verify stays honestly blocked rather than silently computed.
+/// `level` exceeds that class's own `class_tables()`-declared ceiling, so a
+/// level beyond what this table can verify stays honestly blocked rather
+/// than silently computed. Read the ceiling from `CLASS_META` rather than
+/// from this sentence: every CRB class now declares 20 (Druid was the last
+/// to widen, v0.6 2026-07-29), but that is a fact about the table's current
+/// contents, not a guarantee this function relies on.
 fn compute_generic_table_chassis(
     class_id: ClassId,
     class_id_str: &str,

@@ -1,0 +1,58 @@
+# v0.6 deterministic Human Druid level 20 (capstone) progression fixture.
+# Completes the deterministic PF1 Core Rulebook Human Druid chassis sweep to
+# the PF1 level cap, preserving the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1 through level-16 fixtures, and the same canonical nature-bond
+# selection (animal companion). Chosen input only: it names selections; it
+# does not contain derived, computed, or parity values.
+#
+# Corpus grounding, read directly from the PCGen PF1 Core Rulebook data set
+# rather than assumed to continue the pattern:
+#   - Base attack bonus +15 (20 * 3 / 4 = 15), good Fortitude/Will +12
+#     (20 / 2 + 2 = 12), poor Reflex +6 (20 / 3 = 6) -- all three from the
+#     CLASS:Druid BONUS:COMBAT / BONUS:SAVE formulas on
+#     data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst
+#     line 93. Reflex STAYS +6 (an integer-division coincidence with levels
+#     18 and 19), checked rather than assumed.
+#   - Wild Empathy 21 (druid level 20 + Charisma modifier 1), from
+#     cr_abilities_class.lst line 2864's BONUS:VAR|WildEmpathy|WildEmpathyLVL+CHA.
+#   - Spells per day CAST:4,4,4,4,4,4,4,4,4,4 -- cr_classes.lst line 135.
+#     All ten columns are 4; this is the only Druid row where every spell
+#     level from orisons through 9th is a flat 4.
+#   - The PF1 CRB Druid class table's level-20 "Special" column reads
+#     "Wild shape (at will)" ONLY. The whole CATEGORY=Class|Druid.MOD feature
+#     block (cr_abilities_class.lst lines 223-234) tops out at
+#     PREVARGTEQ:Druid_CFP_Level,15 (Timeless Body) -- there is NO new named
+#     Druid class feature at 16, 17, 18, 19, or 20, so Timeless Body (15) is
+#     genuinely Druid's last named CRB class feature. The level-20 entry is
+#     the terminal Wild Shape frequency step (progression index 9, which
+#     cr_abilities_class.lst line 796's
+#     DESC:You can change shape at will ... PREVARGTEQ:WildShapeProgression,9
+#     renders as "at will"). Wild Shape stays deliberately named-but-unproven
+#     here exactly as at levels 4/6/8/10/12/14/16/18 -- no shapeshifting
+#     execution engine exists in this codebase to ground it against.
+#   - Wild Shape's FORM capability does not improve past level 12: the
+#     CATEGORY=Special Ability|Wild Shape.MOD WildShapeAbilityLevel grants
+#     (cr_abilities_class.lst lines 857-861) stop at
+#     PREVARGTEQ:DruidWildShape,12, so levels 16/18/20 are pure
+#     frequency increments with no new form tier.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no Wild Shape
+# execution (form list, duration tracking), no spellbook, no spells
+# prepared, no spell slots, and no spell DCs.
+case_id=pf1-crb-human-druid-level20
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:20
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md
