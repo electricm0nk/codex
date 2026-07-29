@@ -22062,6 +22062,167 @@ fn hunter_spells_known_table(level: u8) -> [Option<i16>; 7] {
     }
 }
 
+/// Hunter's base spells-per-day table -- the corpus's own `CAST:`
+/// column, transcribed level by level from `acg_classes.lst:144-163`.
+///
+/// Indexed by spell level 1-6; index 0 is spell level 1. Hunter's
+/// maximum spell level is 6, so this is a `[Option<i16>; 6]` where
+/// Skald's equivalent is `[_; 4]`.
+///
+/// **The leading `0` in every `CAST:` row is deliberately dropped, not
+/// stored.** That column is spell level 0 -- Orisons -- and PCGen writes
+/// `0` there to mean *unlimited*, not *none*. Storing it as a per-day
+/// count of zero would report a Hunter who can cast no orisons at all,
+/// which is the same trap Skald's Cantrips column carries.
+///
+/// Distinct from `hunter_spells_known_table` (the `KNOWN:` column):
+/// spells KNOWN is a permanent cap on distinct spells, spells PER DAY is
+/// the consumable slot budget. The corpus's own comment above the table
+/// warns that the KNOWN column is deliberately inflated by 1 to absorb
+/// the automatic Summon Nature's Ally grants; the CAST column carries no
+/// such adjustment, so the two must not be derived from one another.
+fn hunter_base_spells_per_day_table(level: u8) -> [Option<i16>; 6] {
+    match level {
+        1 => [Some(1), None, None, None, None, None],
+        2 => [Some(2), None, None, None, None, None],
+        3 => [Some(3), None, None, None, None, None],
+        4 => [Some(3), Some(1), None, None, None, None],
+        5 => [Some(4), Some(2), None, None, None, None],
+        6 => [Some(4), Some(3), None, None, None, None],
+        7 => [Some(4), Some(3), Some(1), None, None, None],
+        8 => [Some(4), Some(4), Some(2), None, None, None],
+        9 => [Some(5), Some(4), Some(3), None, None, None],
+        10 => [Some(5), Some(4), Some(3), Some(1), None, None],
+        11 => [Some(5), Some(4), Some(4), Some(2), None, None],
+        12 => [Some(5), Some(5), Some(4), Some(3), None, None],
+        13 => [Some(5), Some(5), Some(4), Some(3), Some(1), None],
+        14 => [Some(5), Some(5), Some(4), Some(4), Some(2), None],
+        15 => [Some(5), Some(5), Some(5), Some(4), Some(3), None],
+        16 => [Some(5), Some(5), Some(5), Some(4), Some(3), Some(1)],
+        17 => [Some(5), Some(5), Some(5), Some(4), Some(4), Some(2)],
+        18 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(3)],
+        19 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(4)],
+        20 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5)],
+        _ => [None, None, None, None, None, None],
+    }
+}
+
+/// Hunter's highest castable spell level at `level`, derived from the
+/// same `CAST:` rows: the count of populated spell-level columns.
+///
+/// Derived from the table rather than written as a second literal ladder
+/// so the two can never disagree -- the access ceiling IS "how many
+/// columns have a slot", by construction.
+fn hunter_spell_level_access(level: u8) -> i16 {
+    hunter_base_spells_per_day_table(level)
+        .iter()
+        .filter(|slots| slots.is_some())
+        .count() as i16
+}
+
+/// Nature Training's grant level, per `acg_classes.lst:125`.
+const HUNTER_NATURE_TRAINING_LEVEL: u8 = 1;
+
+/// Grounds Hunter's spellcasting chassis -- spell-level access, the
+/// per-day slot budget, and the spell save DC -- plus Nature Training
+/// (task #91).
+///
+/// These were the substance of Hunter's claim-blocking diagnostic. The
+/// shape deliberately mirrors `ground_or_block_skald_spellcasting`'s
+/// flat-records half: all three are real regardless of whether the
+/// known-spell posture validates, because a Hunter with an invalid
+/// known-spell list still has a real access ladder, a real slot budget
+/// and a real DC formula. The known-spell posture keeps its own separate
+/// claim-blocking diagnostic, which is untouched here.
+///
+/// **Hunter's SPELLSTAT is WISDOM** (`acg_classes.lst:114`), unlike
+/// Skald's Charisma -- and Hunter is a `FACT:SpellType|Divine` caster
+/// where Skald is Arcane. Copying Skald's Charisma term would produce a
+/// wrong DC for every Hunter.
+fn ground_hunter_spellcasting_chassis_and_nature_training(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let access_ceiling = hunter_spell_level_access(level);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.hunter.spontaneous.spell_level_access".to_owned(),
+        value: access_ceiling,
+        detail: format!(
+            "Hunter spell-level access at hunter level {level}: {access_ceiling}. Derived from \
+             the count of populated columns in the corpus's own CAST: row rather than written as \
+             a second literal ladder, so the ceiling and the slot table can never disagree. \
+             Hunter's maximum spell level is 6, not 4 or 9. This grounds the access ladder only: \
+             no slot consumption, no casting execution, and no spells-known posture is decided \
+             by this record"
+        ),
+    });
+
+    let base_spells_per_day = hunter_base_spells_per_day_table(level);
+    for (index, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.hunter.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Hunter base spells per day at hunter level {level}, spell level {spell_level}: \
+                 {base_count}, transcribed from the corpus's own CAST: column \
+                 (acg_classes.lst:144-163). This is the consumable slot budget, a different \
+                 table from the spells-KNOWN cap already grounded separately -- the corpus's own \
+                 comment warns that the KNOWN column is inflated by 1 to absorb the automatic \
+                 Summon Nature's Ally grants while CAST carries no such adjustment, so the two \
+                 must never be derived from each other. Grounds the BASE count only: bonus slots \
+                 from a high Wisdom are not computed, and the leading CAST: 0 for orisons means \
+                 UNLIMITED rather than none, so no zero-slot orison record is emitted"
+            ),
+        });
+    }
+
+    let wisdom_modifier = ability_modifier_for(ability_modifiers, "wisdom");
+    for spell_level in 1..=access_ceiling {
+        let spell_save_dc = 10 + spell_level + wisdom_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.hunter.spontaneous.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Hunter spell save DC at hunter level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Wisdom modifier {wisdom_modifier} = {spell_save_dc}. The \
+                 stat is WISDOM, per the class record's own SPELLSTAT:WIS -- Hunter is a divine \
+                 caster (FACT:SpellType|Divine), and reusing the Charisma term from Skald's \
+                 arcane equivalent would give every Hunter a wrong DC. This grounds the base DC \
+                 formula only: no saving-throw resolution, no target, and no feat DC modifiers \
+                 are computed"
+            ),
+        });
+    }
+
+    if level >= HUNTER_NATURE_TRAINING_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.hunter.nature_training_grant".to_owned(),
+            value: 0,
+            detail: format!(
+                "Hunter level {level} Nature Training, granted at level \
+                 {HUNTER_NATURE_TRAINING_LEVEL} (corpus KEY:Hunter ~ Nature Training): the \
+                 hunter counts as a druid or ranger for feats, traits, and options that modify \
+                 or improve an animal companion. This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): the record carries no BONUS, no DEFINE and no ADD -- \
+                 it is a pure qualification flag with no magnitude to compute, now or ever. \
+                 Grounds the qualification fact itself; this codebase resolves no \
+                 druid-or-ranger-gated companion feat or trait for it to unlock, and the corpus \
+                 author's own DESC carries a literal \"[Not implemented]\" marker recording that \
+                 PCGen does not resolve it either"
+            ),
+        });
+    }
+}
+
 /// Return the list of unmet conditions for Hunter's real known-spell
 /// posture, mirroring `unmet_oracle_known_spell_conditions`'s own shape
 /// exactly, substituting Hunter's own 1-20 table and
@@ -22646,6 +22807,7 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     ground_hunter_remaining_features(level, explanations);
     ground_or_block_hunter_animal_focus(input, level, explanations, diagnostics);
     ground_or_block_hunter_known_spells(input, level, explanations, diagnostics);
+    ground_hunter_spellcasting_chassis_and_nature_training(level, ability_modifiers, explanations);
     // v0.6 alpha swarm, task #44: the known-spell posture is now genuinely
     // validated (the union of the Druid and Ranger general spell lists,
     // take-the-lower on a level conflict, the Hunter Spells Known table,
@@ -22658,20 +22820,35 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.hunter.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{HUNTER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Animal Companion, Wild Empathy, the Bull Animal Focus, and its known-spell \
-             posture (task #44 -- the union of the Druid and Ranger general spell lists, \
-             take-the-lower on the 27 spells whose level conflicts between those two lists, the \
-             Hunter Spells Known table for levels 1-20, and the six automatic Summon Nature's \
-             Ally grants): this ACG class still has no class-skill list, no per-day CAST-table \
-             slot totals, no spell save DC, no casting execution, no Nature Training (a real \
-             corpus record with zero numeric BONUS of any kind -- a qualification flag only, no \
-             magnitude to ground), no Precise Companion, and no other 12 Animal Focus options \
-             (Bat, Bear, Falcon, Frog, Monkey, Mouse, Owl, Snake, Stag, Tiger, plus the \"No \
-             Ability\" sentinel) grounded anywhere in this codebase yet; no class-feature or \
-             spell execution is fabricated in this bounded chassis baseline"
+            "{HUNTER_CLASS_ID} now grounds every named feature on its corpus class table: the \
+             base-attack-bonus/base-save chassis pillar, its class-skill list, Animal Companion, \
+             Wild Empathy, Track, Bonus Tricks, Precise Companion, the Bull Animal Focus, the \
+             known-spell posture (task #44 -- the union of the Druid and Ranger general spell \
+             lists, take-the-lower on the 27 spells whose level conflicts between those two \
+             lists, the Hunter Spells Known table for levels 1-20, and the six automatic Summon \
+             Nature's Ally grants), and -- newly, task #91 -- the spell-level access ladder, the \
+             per-day CAST-table slot totals, the Wisdom-based spell save DC, and Nature Training. \
+             This diagnostic is therefore no longer claim-blocking; it is retained to carry the \
+             honest remainder. What stays deferred: (1) CASTING EXECUTION -- slot consumption, \
+             spell tracking, and casting itself -- exactly as it stays deferred for every other \
+             caster in this codebase including Skald, Sorcerer and Wizard; the access ladder, \
+             per-day budget and save DC are grounded as flat records, and no engine spends them. \
+             Bonus slots from a high Wisdom are likewise not computed. (2) The Animal Focus \
+             family is covered at 1 of its 13 corpus records (Bull), narrowed the same way \
+             Oracle's Mystery and Cavalier's Order of the Sword are. That is a catalog gap in a \
+             chooser list, not a missing magnitude, and it does NOT block: a Hunter who records \
+             an unrecognised focus is still caught by the separate, still-claim-blocking \
+             `animal_focus_execution.focus_choice_missing` record, which fires on absence of a \
+             recognisable choice rather than on incompleteness of the catalog. The twelve \
+             unmodelled options are Bat, Bear, Falcon, Frog, Monkey, Mouse, Owl, Snake, Stag, \
+             Tiger, Wolf, and the \"No Ability\" sentinel -- note WOLF, which an earlier revision \
+             of this message omitted while still claiming a count of twelve. (3) Nature Training \
+             grounds as a qualification flag with no magnitude; no druid-or-ranger-gated \
+             companion feat resolution exists for it to unlock. This message previously claimed \
+             this class had \"no class-skill list\" and \"no Precise Companion\" -- both were \
+             already grounded when it said so, and the claim was stale"
         ),
-        claim_blocking: true,
+        claim_blocking: false,
     });
 }
 
@@ -43085,15 +43262,31 @@ mod acg_class_chassis_dispatch_tests {
     /// own rename precedent above -- the remaining claim-blocking
     /// diagnostic is `other_features_deferred`, not the retired
     /// `spellcasting_deferred` name.
+    ///
+    /// **Task #91 flips the status assertion.** The three spellcasting
+    /// clauses this diagnostic's blocking claim carried (no per-day CAST
+    /// totals, no spell save DC, no access ladder) plus Nature Training
+    /// are now grounded, and its class-skill-list and Precise Companion
+    /// clauses were already stale when written.
     #[test]
-    fn hunter_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+    fn hunter_reaches_computed_with_its_remainder_diagnostic_demoted_not_deleted() {
         let input = acg_style_input("class:hunter", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Hunter must stay Blocked on its other deferred features alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Hunter grounds every named corpus feature and must now compute: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.other_features_deferred.unsupported"
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -43123,16 +43316,6 @@ mod acg_class_chassis_dispatch_tests {
                 .any(|d| d.id == "class_spell.acg.hunter.known_spells.unsupported"),
             "zero freely chosen known spells is itself a valid posture, mirroring Oracle's/\
              Sorcerer's own reasoning: {:?}",
-            receipt.computation.diagnostics
-        );
-        assert!(
-            receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.id == "class_feature.acg.hunter.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         let companion_hp = receipt
@@ -47834,14 +48017,23 @@ mod hunter_dispatch_widening_safety_tests {
     }
 
     /// A Hunter not using Animal Focus (no activation entry at all) is a
-    /// genuinely valid PF1 posture -- stays Blocked on deferred features
-    /// only, with the honest "not focused" recognition record grounded.
+    /// genuinely valid PF1 posture, producing an honest "not focused"
+    /// recognition record rather than a diagnostic.
+    ///
+    /// **Task #91 flips the status assertion** -- with Hunter's
+    /// spellcasting chassis and Nature Training grounded the class
+    /// computes. The posture fact this test protects is unchanged.
     #[test]
-    fn single_class_hunter_not_focused_stays_blocked_on_deferred_features_only() {
+    fn single_class_hunter_not_focused_computes_with_an_honest_not_focused_record() {
         let input = human_hunter_input(1);
         let receipt = build_pilot_headless_receipt(&input);
 
-        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "declining to use Animal Focus is a valid posture and must not block: {:?}",
+            receipt.computation.diagnostics
+        );
         assert!(
             receipt
                 .computation
@@ -48006,6 +48198,113 @@ mod hunter_dispatch_widening_safety_tests {
             .find(|e| e.id == "class_spell.acg.hunter.known_spells")
             .expect("expected the freely-chosen known-spell count to be grounded");
         assert_eq!(freely_chosen.value, 0, "no spells were freely chosen: {:?}", freely_chosen);
+    }
+
+    /// Hunter's per-day CAST table is a DIFFERENT table from its
+    /// spells-known table and must never be derived from it.
+    ///
+    /// The corpus's own comment above the class block warns that the
+    /// KNOWN column is deliberately inflated by 1 to absorb the automatic
+    /// Summon Nature's Ally grants, while CAST carries no such
+    /// adjustment. Level 1 makes the divergence visible: 1 slot per day
+    /// against 3 freely-chosen 1st-level spells known.
+    ///
+    /// The access ceiling is derived from the same table by counting
+    /// populated columns, so the two can never disagree; Hunter reaches
+    /// spell level 6, not 4 or 9.
+    #[test]
+    fn hunter_per_day_cast_table_is_distinct_from_its_known_table_and_caps_at_six() {
+        for (level, want) in [
+            (1u8, [Some(1i16), None, None, None, None, None]),
+            (4, [Some(3), Some(1), None, None, None, None]),
+            (10, [Some(5), Some(4), Some(3), Some(1), None, None]),
+            (16, [Some(5), Some(5), Some(5), Some(4), Some(3), Some(1)]),
+            (20, [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5)]),
+        ] {
+            assert_eq!(
+                super::hunter_base_spells_per_day_table(level),
+                want,
+                "hunter level {level}"
+            );
+        }
+
+        for (level, want) in [(1u8, 1i16), (3, 1), (4, 2), (7, 3), (10, 4), (13, 5), (16, 6), (20, 6)] {
+            assert_eq!(super::hunter_spell_level_access(level), want, "level {level}");
+        }
+
+        // The two tables genuinely differ at level 1: 1 slot/day, but 3
+        // freely-chosen 1st-level spells known.
+        assert_eq!(super::hunter_base_spells_per_day_table(1)[0], Some(1));
+        assert_eq!(super::hunter_spells_known_table(1)[1], Some(3));
+
+        let receipt = build_pilot_headless_receipt(&human_hunter_input(1));
+        let value = |id: &str| {
+            receipt.computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+        };
+        assert_eq!(
+            value("class_chassis.hunter.spontaneous.base_spells_per_day.spell_level_1"),
+            Some(1),
+        );
+        // Orisons are UNLIMITED (corpus CAST: 0), so no zero-slot record
+        // may be emitted for spell level 0.
+        assert_eq!(
+            value("class_chassis.hunter.spontaneous.base_spells_per_day.spell_level_0"),
+            None,
+            "a spell-level-0 record would report the CAST: 0 sentinel as 'no orisons'"
+        );
+    }
+
+    /// Hunter's spell save DC keys off WISDOM (SPELLSTAT:WIS, a divine
+    /// caster), not the Charisma its ACG sibling Skald uses. The fixture
+    /// gives a nonzero Wisdom modifier so a copy-paste of Skald's
+    /// Charisma term would produce a different number and fail here.
+    #[test]
+    fn hunter_spell_save_dc_uses_wisdom_not_charisma() {
+        let input = human_hunter_input(5);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        let wisdom_modifier = super::ability_modifier(input.chosen.ability_scores.wisdom);
+        let charisma_modifier = super::ability_modifier(input.chosen.ability_scores.charisma);
+        assert_ne!(
+            wisdom_modifier, charisma_modifier,
+            "this test is only meaningful when the two modifiers differ in the fixture"
+        );
+
+        for spell_level in 1..=2i16 {
+            let dc = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| {
+                    e.id
+                        == format!(
+                            "class_chassis.hunter.spontaneous.spell_save_dc.spell_level_{spell_level}"
+                        )
+                })
+                .unwrap_or_else(|| panic!("spell level {spell_level} DC must ground"))
+                .value;
+            assert_eq!(dc, 10 + spell_level + wisdom_modifier, "spell level {spell_level}");
+        }
+    }
+
+    /// Nature Training is a pure qualification flag: a real corpus record
+    /// carrying no BONUS, DEFINE or ADD. It grounds as a zero-magnitude
+    /// identity record from 1st level.
+    #[test]
+    fn hunter_nature_training_grounds_as_a_zero_magnitude_qualification_flag() {
+        let receipt = build_pilot_headless_receipt(&human_hunter_input(1));
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.hunter.nature_training_grant")
+            .expect("Nature Training grounds from level 1");
+        assert_eq!(record.value, 0);
+        assert!(
+            record.detail.contains("KEY:Hunter ~ Nature Training"),
+            "must cite its namespaced corpus key: {}",
+            record.detail
+        );
     }
 
     /// A real, on-list spell recorded as a Hunter known spell grounds the
