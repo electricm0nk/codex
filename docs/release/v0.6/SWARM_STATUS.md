@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T18:20:26
-Latest commit on tranche/6: 7e3e66b7 chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T18:15:02-04:00)
+Last mechanical check: 2026-07-29T19:45:02
+Latest commit on tranche/6: 68e994a2 feat(v0.6): carry engine explanations + weapon damage across IPC, ship the sheet (71 minutes ago) (2026-07-29T18:34:27-04:00) -- STALE: no commit on tranche/6 in 70m, worth checking the swarm is still alive
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
