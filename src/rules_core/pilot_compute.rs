@@ -2318,7 +2318,7 @@ const INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID: &str = "judgment:resistance";
 /// this table transcribes the FULL real level 1-20 `KNOWN:` row directly
 /// off `apg_classes.lst`'s own `CLASS:Inquisitor` per-level block (each
 /// row's `N+InquisitorKnownHack` term, with the corpus's own
-/// `DEFINE:InquisitorKnownHack|0` default -- no variant-rule hack
+/// `DEFINE:InquisitorKnownHack|0` default -- no variant-rule override
 /// applied) -- there was no reason to arbitrarily bound the scope when
 /// the complete verified table was directly available.
 const INQUISITOR_KNOWN_SPELLS_MAX_LEVEL: u8 = 20;
