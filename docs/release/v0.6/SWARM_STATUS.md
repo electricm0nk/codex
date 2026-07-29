@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T05:05:02
-Latest commit on tranche/6: 72d83e75 feat(v0.6): widen Druid to level 20 -- 10th class fully computing (70 seconds ago) (2026-07-29T05:03:52-04:00)
+Last mechanical check: 2026-07-29T05:10:04
+Latest commit on tranche/6: c2d83d6a chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T05:05:02-04:00)
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
