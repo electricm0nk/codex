@@ -16072,6 +16072,87 @@ fn slayer_studied_target_count(level: u8) -> i16 {
     [0, 6].iter().map(|gate| i16::from(level > *gate)).sum()
 }
 
+/// Stalker's grant level, per `acg_classes.lst:337`.
+const SLAYER_STALKER_LEVEL: u8 = 7;
+
+/// Swift Tracker's grant level, per `acg_classes.lst:338`.
+const SLAYER_SWIFT_TRACKER_LEVEL: u8 = 11;
+
+/// Slayer's Advance's grant level, per `acg_classes.lst:339`.
+const SLAYER_ADVANCE_LEVEL: u8 = 13;
+
+/// Quarry's grant level, per `acg_classes.lst:340`.
+///
+/// Note this is **14**, not the 11th level a reader who assumed parity
+/// with Ranger's Quarry might expect -- Slayer has its own table.
+const SLAYER_QUARRY_LEVEL: u8 = 14;
+
+/// Improved Quarry's grant level, per `acg_classes.lst:341`.
+const SLAYER_IMPROVED_QUARRY_LEVEL: u8 = 19;
+
+/// Master Slayer's grant level, per `acg_classes.lst:342`.
+const SLAYER_MASTER_SLAYER_LEVEL: u8 = 20;
+
+/// Quarry's insight bonus on attack rolls against the quarry: +2.
+///
+/// **Sourced from the record's `DESC:` prose, not a `BONUS:` token.**
+/// `KEY:Slayer ~ Quarry Output` (`acg_abilities_class.lst:1800`) carries
+/// no BONUS or DEFINE at all; its whole rule is text. The value is
+/// transcribed verbatim from "you receive a +2 insight bonus on attack
+/// rolls made against your quarry".
+const SLAYER_QUARRY_ATTACK_BONUS: i16 = 2;
+
+/// Improved Quarry's insight bonus on attack rolls: +4, superseding
+/// Quarry's +2. Same evidentiary path -- DESC prose on
+/// `KEY:Slayer ~ Improved Quarry` (`acg_abilities_class.lst:1789`),
+/// which likewise carries no BONUS token.
+const SLAYER_IMPROVED_QUARRY_ATTACK_BONUS: i16 = 4;
+
+/// Stalker's bonus on Disguise, Intimidate and Stealth checks against a
+/// studied opponent: `SlayerLVL/5 + 1`.
+///
+/// Verified against `acg_abilities_class.lst:1793`'s own
+/// `BONUS:VAR|SlayerStalkerBonus|SlayerStalkerLVL/5+1`, chained through
+/// `BONUS:VAR|SlayerStalkerLVL|SlayerStudiedTargetLVL` and Studied
+/// Target's `BONUS:VAR|SlayerStudiedTargetLVL|SlayerLVL`. Following that
+/// two-hop chain matters: reading `SlayerStalkerLVL` as an independent
+/// variable would leave it at its `DEFINE:...|0` default and yield a
+/// flat +1 at every level.
+///
+/// Deliberately shares no code with `slayer_studied_target_bonus`
+/// despite computing the same expression today. They are two separate
+/// corpus records whose agreement is incidental, and Stalker applies to
+/// a different skill set (Disguise/Intimidate/Stealth vs attack, damage
+/// and a different five skills).
+fn slayer_stalker_bonus(level: u8) -> i16 {
+    i16::from(level) / 5 + 1
+}
+
+/// Slayer's Advance uses per day: `1 + (SlayerLVL > 16)`.
+///
+/// Verified against `acg_abilities_class.lst:1791`'s own
+/// `BONUS:VAR|SlayersAdvanceTimes|1+(SlayerLVL>16)`. PCGen evaluates the
+/// comparison to 1/0, so this is 1/day from its 13th-level grant and
+/// 2/day from 17th -- **not** a level/N progression.
+fn slayer_advance_uses_per_day(level: u8) -> i16 {
+    1 + i16::from(i16::from(level) > 16)
+}
+
+/// Master Slayer's save DC: `10 + SlayerLVL/2 + INT modifier`.
+///
+/// Verified against `acg_abilities_class.lst:1794`'s own
+/// `BONUS:VAR|MasterSlayerDC|10+(MasterSlayerLVL/2)+INT`, with
+/// `BONUS:VAR|MasterSlayerLVL|SlayerLVL`.
+///
+/// **The stat is INT**, which is worth stating out loud: most save DCs
+/// in this file key off the class's casting stat, and Slayer has none.
+/// The bare `INT` token is a modifier, not a score -- the same
+/// bare-token/`SCORE`-token distinction that governs Brawler's Knockout
+/// DC versus Brawler's Cunning.
+fn slayer_master_slayer_dc(level: u8, intelligence_modifier: i16) -> i16 {
+    10 + i16::from(level) / 2 + intelligence_modifier
+}
+
 fn ground_or_block_slayer_class_features(
     input: &CharacterInput,
     level: u8,
@@ -16184,24 +16265,194 @@ fn ground_or_block_slayer_class_features(
         ),
     });
 
+    ground_slayer_remaining_named_features(input, level, explanations);
+
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.slayer.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{SLAYER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Sneak Attack dice, Trap Sense, Trapfinding, Track, Studied Target's own \
-             bonus/count magnitudes, and the Foil Scrutiny talent with the talent count: \
-             Stalker, Quarry, Quarry Output, Improved Quarry, Master Slayer, Slayer's Advance \
-             and Swift Tracker remain ungrounded anywhere in this codebase, and the \
-             Slayer Talent family is covered at 1 of its 41 real corpus records. Studied \
-             Target's magnitudes are grounded but its APPLICATION is not -- the bonus only \
-             matters against a studied opponent, and no target-creature representation exists \
-             here. No class-feature execution is fabricated in this bounded chassis baseline. \
-             This message previously named Studied Target and Slayer Talents as the two things \
-             remaining, and named nothing else -- both were already grounded (tasks #13/#58), \
-             while the seven features actually missing went unlisted"
+            "{SLAYER_CLASS_ID} now grounds every named feature on its corpus class table: the \
+             base-attack-bonus/base-save chassis pillar, its class-skill list, Sneak Attack dice, \
+             Trap Sense, Trapfinding, Track, Studied Target's bonus and count, the talent count \
+             with its canonical Foil Scrutiny pick, and -- newly, task #91 -- Stalker, Swift \
+             Tracker, Slayer's Advance, Quarry, Improved Quarry and Master Slayer. This \
+             diagnostic is therefore no longer claim-blocking; it is retained to carry the \
+             honest remainder. What stays deferred: (1) APPLICATION, not magnitude -- Studied \
+             Target's, Stalker's and Quarry's bonuses all only matter against a studied or \
+             quarried opponent, and no target-creature representation exists here, so the \
+             numbers are derived correctly but nothing consumes them; likewise Master Slayer's \
+             DC has no saving-throw resolution to be rolled against, and Sneak Attack's dice no \
+             damage total. Under this repo's standalone-fact grounding bar a missing consumer \
+             does not block a correctly-derived number. (2) The Slayer Talent family is covered \
+             at 1 of its 41 real corpus records (Foil Scrutiny), narrowed the same way Oracle's \
+             Mystery and Cavalier's Order of the Sword are: the canonical pick must be recorded \
+             explicitly and is never seeded, and the 40 unmodelled talents are a catalog gap, \
+             not a defect in the talent count. A Slayer who records some OTHER talent still \
+             computes -- that talent simply contributes no magnitude. (3) Swift Tracker, Quarry \
+             and Improved Quarry carry no BONUS or DEFINE token anywhere in the corpus; their \
+             numbers, where they have any, live only in DESC prose and are transcribed as such \
+             above. This message previously named Studied Target and Slayer Talents as the two \
+             things remaining, and named nothing else -- both were already grounded (tasks \
+             #13/#58) -- and a later revision correctly listed the seven features above, all of \
+             which are now grounded"
         ),
-        claim_blocking: true,
+        claim_blocking: false,
     });
+}
+
+/// Grounds Slayer's last seven named class features (task #91): Stalker,
+/// Swift Tracker, Slayer's Advance, Quarry, Quarry Output, Improved
+/// Quarry and Master Slayer.
+///
+/// These were the entire content of Slayer's claim-blocking
+/// `other_features_deferred` diagnostic. Three shapes appear:
+///
+/// * **Real `BONUS:VAR` magnitudes** -- Stalker, Slayer's Advance and
+///   Master Slayer each carry a live corpus formula, transcribed in
+///   `slayer_stalker_bonus`, `slayer_advance_uses_per_day` and
+///   `slayer_master_slayer_dc`.
+///
+/// * **DESC-prose magnitudes** -- Quarry's +2 and Improved Quarry's +4
+///   insight bonus on attack rolls exist only as rulebook text; the
+///   records carry no BONUS token. Transcribed verbatim, and labelled in
+///   the explanation as prose-sourced so a reader is never misled about
+///   the evidentiary path.
+///
+/// * **Zero magnitude** -- Swift Tracker reduces the Survival penalty
+///   for tracking while moving. Its record is DESC-only and the numbers
+///   inside it (-5, -10, -20) are the *normal* penalties it waives, not
+///   quantities derived from this character. It grounds as a bounded
+///   grant-only identity record, the Arcane Apotheosis idiom.
+///
+/// **The supersession is real and is honoured.** The corpus models
+/// Quarry as a hidden dispatcher (`KEY:Slayer ~ Quarry`, `VISIBLE:NO`,
+/// no DESC, no numerics) that grants the visible `Slayer ~ Quarry
+/// Output` record *only* when the character has nothing of TYPE
+/// `SlayerImprovedQuarry` -- and `KEY:Slayer ~ Improved Quarry` carries
+/// exactly that TYPE tag. So from 19th level Improved Quarry replaces
+/// Quarry Output rather than stacking with it. Emitting both would
+/// report +6 worth of insight bonus to a reader who summed them.
+fn ground_slayer_remaining_named_features(
+    input: &CharacterInput,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if level >= SLAYER_STALKER_LEVEL {
+        let stalker = slayer_stalker_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.stalker_bonus".to_owned(),
+            value: stalker,
+            detail: format!(
+                "Slayer level {level} Stalker (granted at level {SLAYER_STALKER_LEVEL}): a \
+                 +{stalker} bonus on Disguise, Intimidate and Stealth checks against his studied \
+                 opponent (level/5 + 1). The corpus reaches this through a two-hop variable \
+                 chain -- SlayerStalkerBonus = SlayerStalkerLVL/5+1, SlayerStalkerLVL = \
+                 SlayerStudiedTargetLVL, SlayerStudiedTargetLVL = SlayerLVL -- and reading \
+                 SlayerStalkerLVL as an independent variable would leave it at its DEFINE \
+                 default of 0 and yield a flat +1 at every level. Grounds standalone: the \
+                 formula reads only the slayer's own level. Intimidate IS one of the three \
+                 skills this engine computes, but this bonus is scoped to a studied opponent and \
+                 no target-creature representation exists, so it is deliberately NOT added to \
+                 the Intimidate total -- adding it would overstate the general-case skill"
+            ),
+        });
+    }
+
+    if level >= SLAYER_SWIFT_TRACKER_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.swift_tracker_grant".to_owned(),
+            value: 0,
+            detail: format!(
+                "Slayer level {level} Swift Tracker, granted at level \
+                 {SLAYER_SWIFT_TRACKER_LEVEL} (corpus KEY:Slayer ~ Swift Tracker): \"You can \
+                 move at your normal speed while using Survival to follow tracks without taking \
+                 the normal -5 penalty. You take only a -10 penalty (instead of the normal -20) \
+                 when moving at up to twice normal speed while tracking.\" This is a bounded \
+                 grant-only identity record (value 0, non-fabricated): the record's complete \
+                 token list is KEY, CATEGORY, TYPE, DESC and SOURCEPAGE, with no BONUS or DEFINE \
+                 anywhere. The -5/-10/-20 inside the text are the NORMAL tracking penalties this \
+                 feature waives or reduces, not quantities derived from this character, and this \
+                 codebase models no movement-rate-versus-tracking penalty for them to modify. \
+                 Distinct from KEY:Hunter ~ Swift Tracker, a separate record in a separate \
+                 namespace"
+            ),
+        });
+    }
+
+    if level >= SLAYER_ADVANCE_LEVEL {
+        let advance_uses = slayer_advance_uses_per_day(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.advance_uses_per_day".to_owned(),
+            value: advance_uses,
+            detail: format!(
+                "Slayer level {level} Slayer's Advance (granted at level {SLAYER_ADVANCE_LEVEL}): \
+                 usable {advance_uses} time(s) per day, moving up to twice his base speed as a \
+                 move action. Corpus formula 1+(SlayerLVL>16) -- the comparison evaluates to \
+                 1/0, so this is 1/day from the grant and 2/day from 17th, NOT a level/N \
+                 progression. The -10 Stealth penalty for using Stealth as part of the move is a \
+                 fixed rules constant inside the resolution, and this codebase computes no \
+                 movement action to apply the doubled speed to"
+            ),
+        });
+    }
+
+    // Quarry and Improved Quarry are mutually exclusive in the corpus,
+    // not cumulative -- see this function's doc comment.
+    if level >= SLAYER_IMPROVED_QUARRY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.improved_quarry_attack_bonus".to_owned(),
+            value: SLAYER_IMPROVED_QUARRY_ATTACK_BONUS,
+            detail: format!(
+                "Slayer level {level} Improved Quarry (granted at level \
+                 {SLAYER_IMPROVED_QUARRY_LEVEL}): a +{SLAYER_IMPROVED_QUARRY_ATTACK_BONUS} \
+                 insight bonus on attack rolls against his quarry, with all critical threats \
+                 automatically confirmed, quarry designated as a free action, and take-20 on \
+                 Survival to follow its tracks. This SUPERSEDES Quarry's \
+                 +{SLAYER_QUARRY_ATTACK_BONUS} rather than stacking with it: the corpus suppresses \
+                 the Quarry Output record whenever anything of TYPE SlayerImprovedQuarry is \
+                 present, and Improved Quarry carries exactly that tag -- so this codebase emits \
+                 one record or the other, never both. The magnitude is transcribed from the \
+                 record's DESC prose, which is the only place it exists: the record carries no \
+                 BONUS or DEFINE token. Grounds the bonus only -- no attack roll is computed \
+                 against a designated quarry here"
+            ),
+        });
+    } else if level >= SLAYER_QUARRY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.quarry_attack_bonus".to_owned(),
+            value: SLAYER_QUARRY_ATTACK_BONUS,
+            detail: format!(
+                "Slayer level {level} Quarry (granted at level {SLAYER_QUARRY_LEVEL}): a \
+                 +{SLAYER_QUARRY_ATTACK_BONUS} insight bonus on attack rolls against his quarry, \
+                 with all critical threats automatically confirmed and take-10 on Survival to \
+                 follow its tracks. The magnitude is transcribed from DESC prose -- the corpus \
+                 models Quarry as a hidden VISIBLE:NO dispatcher record carrying no DESC and no \
+                 numerics, which grants the visible `Slayer ~ Quarry Output` record that holds \
+                 the actual text. Neither carries a BONUS token. Replaced entirely by Improved \
+                 Quarry from level {SLAYER_IMPROVED_QUARRY_LEVEL}. Grounds the bonus only; the \
+                 quarry target itself is not modelled"
+            ),
+        });
+    }
+
+    if level >= SLAYER_MASTER_SLAYER_LEVEL {
+        let intelligence_modifier = ability_modifier(input.chosen.ability_scores.intelligence);
+        let dc = slayer_master_slayer_dc(level, intelligence_modifier);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.master_slayer_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Slayer level {level} Master Slayer (granted at level \
+                 {SLAYER_MASTER_SLAYER_LEVEL}) save DC: {dc} (10 + level/2 + the Intelligence \
+                 MODIFIER, {intelligence_modifier:+}). The stat is INT, per the corpus's own \
+                 `10+(MasterSlayerLVL/2)+INT` -- notable because Slayer has no casting stat, so \
+                 there is no spellcasting ability to default to. The bare INT token is a \
+                 modifier, not a score. Grounds the DC only: the effect it gates (kill, knock \
+                 unconscious for 1d4 hours, or paralyze for 2d6 rounds on a failed Fortitude \
+                 save) is opponent-directed, and this codebase resolves no saving throw against \
+                 a target -- the same split already accepted for Brawler's Knockout DC"
+            ),
+        });
+    }
 }
 
 /// PF1 Advanced Class Guide Swashbuckler Panache: "a swashbuckler gains a
@@ -42488,15 +42739,21 @@ mod acg_class_chassis_dispatch_tests {
     /// diagnostic always does. All four flat sub-feature formulas ground
     /// unconditionally regardless (no choice or activation gate for any
     /// of them).
+    ///
+    /// **Task #91 flips the status assertion.** Slayer's blocking claim
+    /// listed Stalker, Quarry, Quarry Output, Improved Quarry, Master
+    /// Slayer, Slayer's Advance and Swift Tracker. All seven are now
+    /// grounded from the corpus, so the diagnostic is demoted rather than
+    /// deleted and Slayer computes.
     #[test]
-    fn slayer_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+    fn slayer_reaches_computed_with_its_remainder_diagnostic_demoted_not_deleted() {
         let input = acg_style_input("class:slayer", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Slayer must stay Blocked on its other-features-deferred posture alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Slayer grounds every named corpus feature and must now compute: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -42508,15 +42765,16 @@ mod acg_class_chassis_dispatch_tests {
             "the retired generic diagnostic must never appear for Slayer: {:?}",
             receipt.computation.diagnostics
         );
+        let remainder = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.slayer.other_features_deferred.unsupported")
+            .expect("the remainder record must be kept, not deleted");
         assert!(
-            receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.id == "class_feature.acg.slayer.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
-            receipt.computation.diagnostics
+            !remainder.claim_blocking,
+            "the remainder names deferred application and a talent catalog gap, neither of which \
+             is a missing magnitude: {remainder:?}"
         );
 
         let sneak_attack = receipt
@@ -50334,16 +50592,20 @@ mod slayer_dispatch_widening_safety_tests {
     ///
     /// Level 1: Sneak Attack 1/3=0d6, Trap Sense max(1,1/3)=1,
     /// Trapfinding 1/2=0, Track max(1/2,1)=1.
+    ///
+    /// **Task #91 flips the status assertion** for the same reason as its
+    /// sibling in `acg_class_chassis_dispatch_tests`: the seven features
+    /// its blocking claim named are now grounded. The four flat formulas
+    /// this test exists to pin are unaffected and still checked below.
     #[test]
-    fn single_class_slayer_stays_blocked_on_other_features_only_with_all_four_flat_formulas_grounded()
-    {
+    fn single_class_slayer_computes_with_all_four_flat_formulas_grounded() {
         let input = human_slayer_input(1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Slayer must stay Blocked on its other-features-deferred posture alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Slayer grounds every named corpus feature and must now compute: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -50361,8 +50623,8 @@ mod slayer_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.slayer.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -56953,6 +57215,94 @@ mod opponent_conditioned_tier_zero_tests {
         }
         assert_eq!(value(&character(SLAYER_CLASS_ID, 5), "class_feature.acg.slayer.studied_target_bonus"), Some(2));
         assert_eq!(value(&character(SLAYER_CLASS_ID, 7), "class_feature.acg.slayer.studied_target_count"), Some(2));
+    }
+
+    /// Stalker follows a TWO-HOP corpus variable chain
+    /// (`SlayerStalkerBonus = SlayerStalkerLVL/5+1`, `SlayerStalkerLVL =
+    /// SlayerStudiedTargetLVL`, `SlayerStudiedTargetLVL = SlayerLVL`).
+    /// Stopping at the first hop leaves `SlayerStalkerLVL` at its
+    /// `DEFINE` default of 0 and produces a flat +1 forever -- which is
+    /// why this asserts a level where the answer is NOT 1.
+    #[test]
+    fn slayer_stalker_follows_the_full_variable_chain_not_its_define_default() {
+        for (level, want) in [(7u8, 2i16), (9, 2), (10, 3), (14, 3), (15, 4), (20, 5)] {
+            assert_eq!(super::slayer_stalker_bonus(level), want, "level {level}");
+        }
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 6), "class_feature.acg.slayer.stalker_bonus"), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 7), "class_feature.acg.slayer.stalker_bonus"), Some(2));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 20), "class_feature.acg.slayer.stalker_bonus"), Some(5));
+    }
+
+    /// Slayer's Advance is `1+(SlayerLVL>16)` -- a boolean step, not a
+    /// division. It is 1/day across its whole 13-16 band and 2/day from
+    /// 17, and must never scale smoothly.
+    #[test]
+    fn slayers_advance_is_a_boolean_step_at_seventeen_not_a_progression() {
+        for (level, want) in [(13u8, 1i16), (16, 1), (17, 2), (20, 2)] {
+            assert_eq!(super::slayer_advance_uses_per_day(level), want, "level {level}");
+        }
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 12), "class_feature.acg.slayer.advance_uses_per_day"), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 13), "class_feature.acg.slayer.advance_uses_per_day"), Some(1));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 17), "class_feature.acg.slayer.advance_uses_per_day"), Some(2));
+    }
+
+    /// Quarry and Improved Quarry are MUTUALLY EXCLUSIVE in the corpus:
+    /// Improved Quarry's TYPE tag suppresses the Quarry Output record.
+    /// Emitting both would let a reader sum them to +6.
+    #[test]
+    fn improved_quarry_supersedes_quarry_rather_than_stacking() {
+        let quarry = "class_feature.acg.slayer.quarry_attack_bonus";
+        let improved = "class_feature.acg.slayer.improved_quarry_attack_bonus";
+
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 13), quarry), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 14), quarry), Some(2));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 18), quarry), Some(2));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 18), improved), None);
+
+        // From 19 the base record must DISAPPEAR, not coexist.
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 19), quarry), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 19), improved), Some(4));
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 20), quarry), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 20), improved), Some(4));
+    }
+
+    /// Master Slayer's DC keys off INTELLIGENCE, not a casting stat --
+    /// Slayer has none -- and off the modifier, not the score.
+    #[test]
+    fn master_slayer_dc_uses_the_intelligence_modifier() {
+        assert_eq!(super::slayer_master_slayer_dc(20, 3), 23);
+        assert_eq!(super::slayer_master_slayer_dc(20, 0), 20);
+        assert_eq!(super::slayer_master_slayer_dc(20, -1), 19);
+        // A score-instead-of-modifier bug would land near 10+10+13.
+        assert!(super::slayer_master_slayer_dc(20, 3) < 30);
+
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 19), "class_feature.acg.slayer.master_slayer_dc"), None);
+        assert!(value(&character(SLAYER_CLASS_ID, 20), "class_feature.acg.slayer.master_slayer_dc").is_some());
+    }
+
+    /// Swift Tracker is a zero-magnitude record: the -5/-10/-20 in its
+    /// text are the normal penalties it waives, not derived quantities.
+    /// It grounds as a bounded grant-only identity record quoting the
+    /// real corpus DESC, and must cite its own namespaced key so it can
+    /// never be confused with `KEY:Hunter ~ Swift Tracker`.
+    #[test]
+    fn slayer_swift_tracker_grounds_as_a_zero_magnitude_identity_record() {
+        let id = "class_feature.acg.slayer.swift_tracker_grant";
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 10), id), None);
+        assert_eq!(value(&character(SLAYER_CLASS_ID, 11), id), Some(0));
+
+        let receipt = build_pilot_headless_receipt(&character(SLAYER_CLASS_ID, 11));
+        let detail = &receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .expect("Swift Tracker grounds at 11")
+            .detail;
+        assert!(
+            detail.contains("KEY:Slayer ~ Swift Tracker") && detail.contains("Hunter ~ Swift Tracker"),
+            "the record must cite its own namespaced key and disambiguate from Hunter's: {detail}"
+        );
     }
 
 
