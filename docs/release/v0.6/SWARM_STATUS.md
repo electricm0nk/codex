@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T04:25:01
-Latest commit on tranche/6: b6d1ea80 fix(v0.6): Paladin and Ranger compute at all 20 levels -- no spellcasting is a satisfied condition (6 minutes ago) (2026-07-29T04:19:26-04:00)
+Last mechanical check: 2026-07-29T04:30:01
+Latest commit on tranche/6: 9ddbe13d chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T04:25:01-04:00)
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
