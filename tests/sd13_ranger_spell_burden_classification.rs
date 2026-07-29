@@ -63,7 +63,7 @@
 
 use codex::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 use codex::rules_core::pilot_compute::{
-    build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
     ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
@@ -106,26 +106,12 @@ fn explanation<'a>(
         })
 }
 
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
-}
+// (A `claim_blocking` helper used to live here. The blanket
+// `class_spell.hybrid.ranger.unsupported` diagnostic it was written to pin was
+// retired on 2026-07-28 -- Rangers have no `CAST:` row before class level 4, so
+// a level-1 Ranger's absent spell posture is a satisfied condition -- leaving
+// the helper with no callers. See
+// `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
 
 fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
     computation.explanations.iter().any(|e| e.id == id)
@@ -175,17 +161,22 @@ fn ranger_level1_spell_burden_is_pinned_independently() {
     let input = load(RANGER_LEVEL1_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The later hybrid spell burden must be claim-blocking and explicitly named for
-    // Ranger (not Paladin). It must name the partial-caster pressure so a later slice
-    // cannot silently fabricate a Ranger spell posture.
-    let spell = claim_blocking(&computation, "class_spell.hybrid.ranger.unsupported");
-    for token in ["ranger", "spell slots", "spell source", "known/prepared"] {
-        assert!(
-            spell.message.to_lowercase().contains(token),
-            "ranger spell-burden diagnostic must name the '{token}' partial-caster posture: {}",
-            spell.message
-        );
-    }
+    // The blanket later-hybrid-spell burden diagnostic
+    // (`class_spell.hybrid.ranger.unsupported`) is retired too (v0.6 alpha swarm,
+    // 2026-07-28). Its concern -- that a later slice might "silently fabricate a
+    // Ranger spell posture" -- is now enforced by something far stronger than a
+    // blanket blocker: `unmet_ranger_prepared_spell_conditions` validates the real
+    // posture against the real PF1 ranger spell list, the real access ceiling and
+    // the real per-day slot budget at EVERY level, and
+    // `class_spell.ranger.partial_caster.unsupported` claim-blocks any genuine
+    // violation. At level 1 there is nothing to fabricate: Rangers have no `CAST:`
+    // row in `cr_classes.lst` before class level 4, so the grounded answer is a
+    // correct absence. See `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
+    assert!(
+        !has_diagnostic(&computation, "class_spell.hybrid.ranger.unsupported"),
+        "the retired blanket hybrid spell blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
 
     // The non-spell class-feature burden diagnostic
     // (`class_feature.hybrid.ranger.unsupported`) is retired: it flatly claimed
@@ -198,10 +189,12 @@ fn ranger_level1_spell_burden_is_pinned_independently() {
         "the retired non-spell class-feature blocker must not reappear: {:?}",
         computation.diagnostics
     );
+    // Misattribution is still guarded, now via the live per-class blocker id
+    // rather than the retired blanket one.
     assert!(
-        !spell.id.contains("paladin"),
-        "ranger spell-burden diagnostic must not be misattributed to paladin (spell='{}')",
-        spell.id
+        !has_diagnostic(&computation, "class_spell.paladin.partial_caster.unsupported"),
+        "a Ranger input must not surface a Paladin spell-posture diagnostic: {:?}",
+        computation.diagnostics
     );
 
     // No fabricated spell posture.
@@ -396,10 +389,12 @@ fn paladin_chassis_baseline_is_not_regressed_by_ranger_closeout() {
          Human level-1 Paladin input after the Ranger closeout: {:?}",
         computation.explanations
     );
+    // The Paladin blanket spell-burden diagnostic is retired (2026-07-28), for
+    // the same reason as the Ranger one: Paladins have no `CAST:` row before
+    // class level 4, so nothing is missing at level 1.
     assert!(
-        has_diagnostic(&computation, "class_spell.hybrid.paladin.unsupported"),
-        "Paladin spell-burden diagnostic must remain claim-blocking after the \
-         Ranger closeout: {:?}",
+        !has_diagnostic(&computation, "class_spell.hybrid.paladin.unsupported"),
+        "the retired blanket Paladin hybrid spell blocker must not reappear: {:?}",
         computation.diagnostics
     );
     // Ranger-specific diagnostics must not leak into a Paladin input.

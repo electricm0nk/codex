@@ -212,22 +212,24 @@ fn ranger_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blocke
     // tracking were unimplemented, which the grounded records asserted immediately
     // above (Track, the Favored Enemy flat surface, the combat-style level-gate
     // absence) contradict. See `tests/hybrid_diagnostic_grounded_contradiction.rs`.
-    // Only the later hybrid spell burden still fires; this slice grounds no
-    // combat-style feat mechanics and no spell math.
-    assert!(
-        !computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_feature.hybrid.ranger.unsupported"),
-        "the retired hybrid class-feature blocker must not reappear: {:?}",
-        computation.diagnostics
-    );
-    let spell_blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == "class_spell.hybrid.ranger.unsupported")
-        .expect("hybrid ranger spell blocker must still fire");
-    assert!(spell_blocker.claim_blocking);
+    // Both blanket hybrid burden blockers are now retired; this slice grounds no
+    // combat-style feat mechanics and no spell math, but neither absence is a
+    // claim-blocking gap. (The later-spell one went 2026-07-28: Rangers have no
+    // `CAST:` row in `cr_classes.lst` before class level 4, so a level-1 Ranger
+    // having no spell posture is the correct computed answer. Real spell-posture
+    // violations are still claim-blocked by
+    // `class_spell.ranger.partial_caster.unsupported`. See
+    // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
+    for retired in [
+        "class_feature.hybrid.ranger.unsupported",
+        "class_spell.hybrid.ranger.unsupported",
+    ] {
+        assert!(
+            !computation.diagnostics.iter().any(|d| d.id == retired),
+            "the retired hybrid blocker '{retired}' must not reappear: {:?}",
+            computation.diagnostics
+        );
+    }
 }
 
 // ----- Negative control: Ranger level 2 was later widened into the supported tranche -----

@@ -2826,12 +2826,22 @@ mod tests {
         // dispatched on the same input grounds those burdens for real (or as
         // correct level-1 absences) -- see
         // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+        //
+        // v0.6 alpha swarm (2026-07-28): the remaining hybrid SPELL diagnostic
+        // (`class_spell.hybrid.paladin.unsupported`) has now been retired too, so
+        // this set is empty and Human Paladin L1 joins Human Fighter L1 on the
+        // golden path. Paladins gain no spellcasting until class level 4 in PF1
+        // (`cr_classes.lst`'s `CLASS:Paladin` block has no `CAST:` row at all
+        // before level 4), so a level-1 Paladin's absent spell posture is the
+        // CORRECT computed answer, not a missing one -- and the per-class
+        // decomposition already grounds it (effective caster level 0, access
+        // ceiling 0, zero prepared spells). See
+        // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 1),
-            BTreeSet::from(["class_spell.hybrid.paladin.unsupported".to_owned(),]),
-            "Human Paladin L1 keeps only the F6 hybrid spell diagnostic; the retired \
-             non-spell class-feature diagnostic must not reappear, and the real per-class \
-             spell-posture diagnostic no longer fires on a valid (empty) posture"
+            BTreeSet::new(),
+            "Human Paladin L1 now reaches Computed with zero claim-blocking diagnostics: \
+             having no spellcasting at level 1 is a satisfied PF1 condition, not a gap"
         );
 
         // v0.6 alpha swarm, risks item 8 (2026-07-24): `table_class_id` now
@@ -2851,12 +2861,20 @@ mod tests {
         // dispatched on the same input grounds Track and the Favored Enemy flat
         // surface for real -- see
         // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+        //
+        // v0.6 alpha swarm (2026-07-28): the remaining hybrid SPELL diagnostic
+        // (`class_spell.hybrid.ranger.unsupported`) has now been retired too, so
+        // this set is empty and Human Ranger L1 joins Human Fighter L1 on the
+        // golden path. Rangers gain no spellcasting until class level 4 in PF1
+        // (`cr_classes.lst`'s `CLASS:Ranger` block has no `CAST:` row at all
+        // before level 4), so a level-1 Ranger's absent spell posture is the
+        // CORRECT computed answer, not a missing one. See
+        // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:ranger", 1),
-            BTreeSet::from(["class_spell.hybrid.ranger.unsupported".to_owned(),]),
-            "Human Ranger L1 keeps only the F6 hybrid spell diagnostic; the retired \
-             non-spell class-feature diagnostic must not reappear, and the real per-class \
-             spell-posture diagnostic no longer fires on a valid (empty) posture"
+            BTreeSet::new(),
+            "Human Ranger L1 now reaches Computed with zero claim-blocking diagnostics: \
+             having no spellcasting at level 1 is a satisfied PF1 condition, not a gap"
         );
 
         // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25):

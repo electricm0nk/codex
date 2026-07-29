@@ -7037,7 +7037,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_fighter_favored_class_bonus_choice(input, &mut explanations);
 
-    explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_hybrid_level1_chassis(input, &mut explanations);
     explain_barbarian_level1_chassis(
         input,
         &base_ability_modifiers,
@@ -21333,15 +21333,13 @@ fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
 }
 
 /// Surface direct SD13-E3-F6 runtime evidence for the deterministic Human Paladin
-/// level-1 and Human Ranger level-1 hybrid chassis, while keeping both explicitly
-/// claim-blocked on their still-missing later hybrid spell burden.
+/// level-1 and Human Ranger level-1 hybrid chassis.
 ///
-/// This deliberately does not compute a supported hybrid chassis on its own. It only:
-/// - leaves one chassis-recognition explanation so the `class:paladin:1` / `class:ranger:1`
-///   identity is acknowledged as a hybrid martial baseline rather than an undocumented
-///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits one claim-blocking diagnostic naming the later hybrid spell burden explicitly,
-///   rather than hiding behind a generic "unsupported hybrid" label.
+/// This deliberately does not compute a supported hybrid chassis on its own. It only
+/// leaves one chassis-recognition explanation so the `class:paladin:1` /
+/// `class:ranger:1` identity is acknowledged as a hybrid martial baseline rather than
+/// an undocumented packet placeholder (direct runtime evidence, carrying no fabricated
+/// mechanical value).
 ///
 /// **This function used to also emit a second claim-blocking diagnostic**
 /// (`class_feature.hybrid.<class>.unsupported`) flatly asserting the non-spell
@@ -21364,17 +21362,57 @@ fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
 /// own remaining named-but-unproven burdens (Divine Bond, a second mercy slot, the
 /// favored-enemy conditional-application engine, etc.) are already tracked by
 /// their own doc comments and matrix rows, not by this now-superseded blanket
-/// claim. The later hybrid SPELL burden diagnostic stays: Paladin/Ranger
-/// spellcasting genuinely remains unimplemented at level 1, and nothing grounds a
-/// spell posture that would contradict it.
+/// claim.
 ///
-/// The bounded Fighter-shaped compute path already claim-blocks these inputs; this seam
-/// keeps that blocked posture but makes the hybrid class identity and its remaining
-/// named burden legible on the runtime path.
+/// **The later hybrid SPELL burden diagnostic (`class_spell.hybrid.<class>.unsupported`)
+/// has now been retired too** (v0.6 alpha swarm, 2026-07-28), for exactly the same
+/// reason, and the sentence that used to sit here justifying its survival --
+/// "Paladin/Ranger spellcasting genuinely remains unimplemented at level 1, and
+/// nothing grounds a spell posture that would contradict it" -- was simply out of
+/// date. Two things falsify it:
+///
+/// 1. **The rules.** In `cr_classes.lst` the `CLASS:Paladin` and `CLASS:Ranger`
+///    blocks carry no `CAST:` row whatsoever for class levels 1-3. The first row
+///    either class has is at class level 4 (`CAST:0,0`), their `BONUS:CASTERLEVEL`
+///    rows are gated `PRECLASS:1,<class>=4` with a `CL-3` effective caster level,
+///    and the first nonzero BASE 1st-level slot lands at class level 5
+///    (`CAST:0,1`). A level-1 Paladin/Ranger having no slots, no caster level and
+///    no prepared-spell posture is therefore the CORRECT computed answer, not a
+///    missing one. Treating "this class has no spellcasting at this level" as an
+///    unimplemented gap rather than a satisfied condition is the actual bug.
+///
+/// 2. **The code.** `explain_paladin_level1_chassis_and_spell_burden_separation`
+///    and `explain_ranger_level1_chassis_and_class_feature_separation` are
+///    dispatched for this exact same input and, since the 2026-07-24/25 slices,
+///    validate and ground the real spell posture UNCONDITIONALLY at every level
+///    (the `unmet_*_prepared_spell_conditions` / `ground_*_prepared_spells` pair
+///    sits above their own single-class/Human gate). At level 1 they ground
+///    `class_chassis.<class>.partial_caster.effective_caster_level` = 0,
+///    `...spell_level_access` = 0, `class_spell.<class>.daily_preparation` = 0,
+///    and correctly emit no per-day slot record at all (because
+///    `<class>_base_spells_per_day_table(1)` is `[None; 4]`). So a spell posture
+///    IS grounded here, and the blanket "out of scope" claim contradicted it --
+///    the identical self-contradiction that retired the feature-burden sibling.
+///
+/// Note the level-1-only asymmetry this resolves was never rules-driven: this
+/// function is reached only via `hybrid_level1_class`, which hard-matches
+/// `level == HYBRID_BASELINE_LEVEL`. Levels 2-20 never "passed" a spell check --
+/// they were structurally never subject to this diagnostic. Levels 2 and 3 have
+/// exactly as little spellcasting as level 1 and reached `Computed` throughout,
+/// which is itself the evidence that correct-absence is the right treatment at
+/// level 1 too.
+///
+/// The honest blockers are untouched: `class_spell.<class>.partial_caster.unsupported`
+/// still claim-blocks a genuinely invalid prepared-spell posture (off-list spell,
+/// spell level above the access ceiling, over-prepared slot) at any level,
+/// including a Paladin/Ranger inside a multiclass mix. Pinned by
+/// `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
+///
+/// This seam therefore now only makes the hybrid class identity legible on the
+/// runtime path; it no longer imposes a blocked posture of its own.
 fn explain_hybrid_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
-    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     let Some(hybrid) = hybrid_level1_class(input) else {
         return;
@@ -21383,18 +21421,16 @@ fn explain_hybrid_level1_chassis(
         return;
     }
 
-    let (class_id, class_name, chassis_id, spell_id) = match hybrid {
+    let (class_id, class_name, chassis_id) = match hybrid {
         HybridClass::Paladin => (
             PALADIN_CLASS_ID,
             "Paladin",
             "class_chassis.hybrid_baseline.paladin",
-            "class_spell.hybrid.paladin.unsupported",
         ),
         HybridClass::Ranger => (
             RANGER_CLASS_ID,
             "Ranger",
             "class_chassis.hybrid_baseline.ranger",
-            "class_spell.hybrid.ranger.unsupported",
         ),
     };
 
@@ -21412,21 +21448,13 @@ fn explain_hybrid_level1_chassis(
         ),
     });
 
-    // Still blocked: name the later hybrid spell burden explicitly. (The former
-    // non-spell class-feature burden diagnostic that used to sit alongside this one
-    // was retired -- see this function's own doc comment -- because the per-class
-    // decomposition functions dispatched immediately below this call site already
-    // ground real values for that exact burden on the same input, which made the
-    // blanket "not implemented" claim false, not just redundant.)
-    diagnostics.push(ComputationDiagnostic {
-        id: spell_id.to_owned(),
-        message: format!(
-            "{class_name} remains blocked on its later hybrid spell burden: spell slots, spell source, \
-             and spells known/prepared posture are out of scope for this level-{HYBRID_BASELINE_LEVEL} \
-             chassis baseline and are deferred to the SD13-E4 spellcasting slice"
-        ),
-        claim_blocking: true,
-    });
+    // Nothing further is emitted here. Both blanket burden diagnostics this
+    // function used to push -- the non-spell `class_feature.hybrid.<class>.unsupported`
+    // and the later-spell `class_spell.hybrid.<class>.unsupported` -- have now been
+    // retired for the same reason, so this function structurally cannot self-block
+    // (its signature no longer takes a `diagnostics` parameter at all, matching
+    // `explain_ranger_level1_chassis_and_class_feature_separation`'s original shape).
+    // See this function's own doc comment.
 }
 
 /// The bounded Paladin milestone level this decomposition surface grounds, if

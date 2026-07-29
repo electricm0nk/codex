@@ -314,20 +314,15 @@ fn hybrid_spell_unsupported_diagnostic_never_leaks_into_explanations_or_grants()
     let computation = compute_pilot_base_chassis(&character);
 
     let diagnostic_id = HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID;
-    let diagnostic = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == diagnostic_id)
-        .unwrap_or_else(|| {
-            panic!(
-                "paladin level 1 must still carry the '{diagnostic_id}' claim-blocking \
-                 diagnostic: {:?}",
-                computation.diagnostics
-            )
-        });
+    // v0.6 alpha swarm (2026-07-28): this blanket diagnostic is now retired --
+    // Paladins have no `CAST:` row in `cr_classes.lst` before class level 4, so a
+    // level-1 Paladin having no spell posture is a satisfied condition, not a gap.
+    // The leak guard below is kept and strengthened: the id must not appear as a
+    // diagnostic, an explanation, OR a fabricated grant.
     assert!(
-        diagnostic.claim_blocking,
-        "'{diagnostic_id}' must stay claim-blocking at paladin level 1"
+        !computation.diagnostics.iter().any(|d| d.id == diagnostic_id),
+        "the retired '{diagnostic_id}' blocker must not reappear at paladin level 1: {:?}",
+        computation.diagnostics
     );
     assert!(
         !computation.explanations.iter().any(|e| e.id == diagnostic_id),

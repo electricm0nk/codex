@@ -295,20 +295,18 @@ fn hybrid_spell_unsupported_diagnostic_never_leaks_into_explanations_or_grants()
     let character = ranger_at_level(1);
     let computation = compute_pilot_base_chassis(&character);
 
-    let diagnostic = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID)
-        .unwrap_or_else(|| {
-            panic!(
-                "ranger level 1 must still carry the hybrid spell-burden claim-blocking \
-                 diagnostic: {:?}",
-                computation.diagnostics
-            )
-        });
+    // v0.6 alpha swarm (2026-07-28): this blanket diagnostic is now retired --
+    // Rangers have no `CAST:` row in `cr_classes.lst` before class level 4, so a
+    // level-1 Ranger having no spell posture is a satisfied condition, not a gap.
+    // The leak guard below is kept and strengthened: the id must not appear as a
+    // diagnostic, an explanation, OR a fabricated grant.
     assert!(
-        diagnostic.claim_blocking,
-        "the hybrid spell-burden diagnostic must stay claim-blocking at ranger level 1"
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the retired hybrid spell-burden blocker must not reappear at ranger level 1: {:?}",
+        computation.diagnostics
     );
     assert!(
         !computation
