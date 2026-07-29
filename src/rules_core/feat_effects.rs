@@ -305,15 +305,69 @@ const STANDALONE_TWO_SKILL_FACTS: &[StandaloneSkillFeatFact] = &[
     StandaloneSkillFeatFact { feat_key: "Stealthy", skill_name: "Stealth", bonus: TWO_SKILL_FEAT_BONUS },
 ];
 
+/// The Advanced Player's Guide's own standalone skill-feat facts, in the corpus
+/// source order of `apg_feats.lst`. Kept as a second table rather than appended
+/// to [`STANDALONE_TWO_SKILL_FACTS`] so that table's "two-skill General feat"
+/// audit story against `cr_feats.lst` stays exactly true; these are a different
+/// book and a different shape (one is a single-skill feat, the other targets two
+/// whole skill *categories*).
+///
+/// **The APG carries exactly two `BONUS:SKILL` feats** -- verified by scanning
+/// `apg_feats.lst` for the token, not assumed -- and the ACG carries none at
+/// all, so this table plus [`STANDALONE_TWO_SKILL_FACTS`] and the three
+/// already-computed skills of [`skill_bonuses_from_feats`] close `BONUS:SKILL`
+/// across all three books. (A third APG feat, Sharp Senses, boosts Perception
+/// through a `BONUS:VAR` rather than a `BONUS:SKILL` token and needs its own
+/// replacement-semantics handling; see
+/// [`sharp_senses_perception_bonus_from_feats`].)
+///
+/// Neither feat's skills are among the three
+/// `compute_selected_skill_modifiers` computes (Climb/Intimidate/Swim), so both
+/// ground standalone, exactly as the CRB table above does.
+///
+/// **Breadth of Experience targets categories, not named skills.** Its token is
+/// `BONUS:SKILL|TYPE.Knowledge,TYPE.Profession|2` -- PCGen's `TYPE.` prefix means
+/// "every skill of this type", and the `BENEFIT:` prose says so outright ("+2
+/// bonus on all Knowledge and Profession skill checks"). The two `skill_name`
+/// values below transcribe that prose rather than naming any one skill, because
+/// naming one would be a fabrication and dropping the feat would discard a real
+/// verified magnitude. Its second token
+/// (`BONUS:VAR|UseProfessionUntrained,UseKnowledgeUntrained|1|TYPE=Boolean`,
+/// letting those skills be used untrained) is a boolean capability with no
+/// numeric magnitude, already complete under the standing text-only ruling, and
+/// is deliberately not grounded as a number here.
+///
+/// Both feats' prerequisites (Breadth of Experience's
+/// `PRERACE:1,RACESUBTYPE=Dwarf,RACESUBTYPE=Elf,RACESUBTYPE=Gnome` plus its
+/// `PRETEXT:100+ years old.`, and Master Alchemist's
+/// `PRESKILL:1,Craft (Alchemy)=5`) are NOT asserted here -- prerequisite
+/// validation is `feat_prereqs`' job, the same split already documented for
+/// Master Craftsman, and both magnitudes are a flat, unconditional `+2` under
+/// any reading.
+const STANDALONE_APG_SKILL_FACTS: &[StandaloneSkillFeatFact] = &[
+    StandaloneSkillFeatFact { feat_key: "Breadth of Experience", skill_name: "all Knowledge skills", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Breadth of Experience", skill_name: "all Profession skills", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Master Alchemist", skill_name: "Craft (Alchemy)", bonus: TWO_SKILL_FEAT_BONUS },
+];
+
 /// Every grounded standalone skill-feat fact for the feats actually present in
-/// `selected_feats`, in the stable corpus order of `STANDALONE_TWO_SKILL_FACTS`.
+/// `selected_feats`, in the stable corpus order of `STANDALONE_TWO_SKILL_FACTS`
+/// followed by [`STANDALONE_APG_SKILL_FACTS`].
 /// Returns an empty vec (not fabricated facts) when none of the grounding feats
 /// is selected. Keyed on the exact catalog `key` string, so a longer feat whose
 /// name merely begins with a grounded key (e.g. "Acrobatic Steps") never
 /// matches.
+///
+/// No two facts across both tables name the same skill, which is load-bearing:
+/// the consumer derives its explanation id by slugifying `skill_name`, so a
+/// repeated skill would emit two records under one id. Sharp Senses' Perception
+/// bonus is deliberately kept out of these tables for exactly that reason -- it
+/// would collide with Alertness' Perception fact -- and grounds under its own id
+/// instead.
 pub fn standalone_skill_facts_from_feats(selected_feats: &[String]) -> Vec<StandaloneSkillFeatFact> {
     STANDALONE_TWO_SKILL_FACTS
         .iter()
+        .chain(STANDALONE_APG_SKILL_FACTS)
         .filter(|fact| selected_feats.iter().any(|feat| feat == fact.feat_key))
         .copied()
         .collect()
@@ -1162,6 +1216,179 @@ pub fn difficult_terrain_feet_from_feats(selected_feats: &[String]) -> i16 {
 pub fn base_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
     let picks = selected_feats.iter().filter(|feat| *feat == FLEET_FEAT_KEY).count();
     i16::try_from(picks).unwrap_or(i16::MAX).saturating_mul(FLEET_BASE_SPEED_FEET)
+}
+
+/// The real APG/ACG catalog keys for the four passive-bonus feats grounded
+/// below, verified against the ingested catalog records
+/// (`rules_tables::apg::feat_data::general` / `rules_tables::acg::feat_data::
+/// general`) AND against the raw corpus lines they came from
+/// (`apg_feats.lst` 21/41/172/187, `acg_feats.lst` 155). Each appears exactly
+/// once in its book, with no `.MOD` record and no `#`-disabled duplicate.
+const SHARP_SENSES_FEAT_KEY: &str = "Sharp Senses";
+const STEEL_SOUL_FEAT_KEY: &str = "Steel Soul";
+const DEEPSIGHT_FEAT_KEY: &str = "Deepsight";
+const STEADFAST_PERSONALITY_FEAT_KEY: &str = "Steadfast Personality";
+
+/// Sharp Senses' real **resulting** Perception bonus: `+4`, not the `+2` its
+/// token names.
+///
+/// This is the Spell-Focus total-vs-increment trap in its other direction, and
+/// reading the token alone gets it wrong. The corpus token is
+/// `BONUS:VAR|KeenSensesBonus|2` -- an *increment* to the same variable the
+/// racial keen-senses trait already sets to `2` (this engine already recognises
+/// that racial token: `BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial`,
+/// `BONUS:VAR|KeenSensesBonus|2`). Two plus two is four, and the `BENEFIT:`
+/// prose states the result outright: "You receive a +4 racial bonus on
+/// Perception skill checks. **This replaces the normal bonus from the keen
+/// senses racial trait.**"
+///
+/// So `+4` is the total a holder ends up with, and it does **not** stack on top
+/// of the racial `+2` -- it supersedes it. The feat's own
+/// `PREABILITY:1,CATEGORY=Special Ability,TYPE.KeenSenses` prerequisite
+/// guarantees the racial trait is present, so `+4` is exact for every character
+/// who can legally hold this feat, not a best case.
+const SHARP_SENSES_PERCEPTION_BONUS: i16 = 4;
+
+/// Sharp Senses' real, computed Perception bonus. Returns `0` (not a fabricated
+/// value) when the feat is absent. Not repeatable (no `STACK:YES`/`MULT:YES`),
+/// so a duplicated string stays `+4`.
+///
+/// Grounded under its own record rather than as a
+/// [`StandaloneSkillFeatFact`] deliberately: Alertness already grounds a
+/// Perception fact, and both would slugify to one explanation id. Keeping this
+/// separate also gives the replacement semantics somewhere to be stated, which a
+/// bare table row has no room for.
+pub fn sharp_senses_perception_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if selected_feats.iter().any(|feat| feat == SHARP_SENSES_FEAT_KEY) {
+        SHARP_SENSES_PERCEPTION_BONUS
+    } else {
+        0
+    }
+}
+
+/// Steel Soul's real **resulting** bonus on saves against spells and
+/// spell-like abilities: `+4`, not the `+2` its token names -- the identical
+/// increment-not-total shape as [`SHARP_SENSES_PERCEPTION_BONUS`], and verified
+/// the same way.
+///
+/// Token: `BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial`, incrementing the very
+/// variable the dwarf Hardy racial trait already sets to `2` (again already
+/// recognised by this engine). `BENEFIT:` prose: "You receive a +4 racial bonus
+/// on saving throws against spells and spell-like abilities. **This replaces the
+/// normal bonus from the dwarf's hardy racial trait.**" Its
+/// `PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Hardy` and
+/// `PRERACE:1,RACESUBTYPE=Dwarf` prerequisites guarantee the racial base, so `+4`
+/// is exact rather than a ceiling. Replaces, does not stack.
+///
+/// **Deliberately NOT layered onto any of `compute_total_saves`' three totals.**
+/// The bonus applies only against spells and spell-like abilities; those totals
+/// are the general, unconditional saves. Adding it there would overstate every
+/// save against a non-magical effect -- the same overstatement
+/// [`ENDURANCE_CHECK_BONUS`] refuses for its own named-hazard scope. It grounds
+/// standalone instead, which is precisely what this engine already does for the
+/// dwarf Hardy racial bonus this feat supersedes: a scope condition on a
+/// *category of effect* is a static property of the character, not a fact about
+/// a particular opponent, so it clears the standalone-grounding bar.
+///
+/// The feat's remaining token (`BONUS:VAR|DwarfHardyAspect|1|TYPE=Boolean`,
+/// with its paired `DEFINE:DwarfHardyAspect|0`) is a boolean display marker
+/// carrying no magnitude, and is not grounded as a number.
+const STEEL_SOUL_SAVE_VS_SPELLS_BONUS: i16 = 4;
+
+/// Steel Soul's real, computed bonus on saves against spells and spell-like
+/// abilities. Returns `0` (not a fabricated value) when the feat is absent. Not
+/// repeatable, so a duplicated string stays `+4`.
+pub fn steel_soul_save_vs_spells_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if selected_feats.iter().any(|feat| feat == STEEL_SOUL_FEAT_KEY) {
+        STEEL_SOUL_SAVE_VS_SPELLS_BONUS
+    } else {
+        0
+    }
+}
+
+/// Deepsight's real darkvision increase: `+60` feet.
+///
+/// Token (`BONUS:VISION|Darkvision|60`) and `BENEFIT:` prose ("Your darkvision
+/// has a range of 120 feet") agree once the prerequisite is read: the feat
+/// requires `PREVISION:1,Darkvision=60`, so the holder's base is exactly 60 and
+/// `60 + 60 = 120`. The token's `60` is an increment; the prose's `120` is the
+/// resulting total. Both numbers are real, and the value grounded here is the
+/// increment the token states, with the resulting 120 left to the consumer's
+/// record to explain -- this module never sees the character's race.
+///
+/// **Grounded standalone because this engine models no vision numerically at
+/// all.** Racial darkvision exists here only as prose inside a race trait's
+/// `detail` string (`race_tables.rs`: "Darkvision 60 ft (cr_races.lst
+/// race:dwarf SENSE:Darkvision (60 ft))"), never as a number, so there is no
+/// vision total to layer onto and no way to compute the 120 from data. The
+/// magnitude itself is unconditional -- no activation, no per-day budget, no
+/// opponent dependency -- so it clears the standalone bar cleanly; what is
+/// missing is a vision model, not a fact about this feat.
+const DEEPSIGHT_DARKVISION_FEET: i16 = 60;
+
+/// Deepsight's real, computed darkvision increase in feet. Returns `0` (not a
+/// fabricated value) when the feat is absent. Not repeatable, so a duplicated
+/// string stays `+60`.
+pub fn deepsight_darkvision_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if selected_feats.iter().any(|feat| feat == DEEPSIGHT_FEAT_KEY) {
+        DEEPSIGHT_DARKVISION_FEET
+    } else {
+        0
+    }
+}
+
+/// Steadfast Personality's real net change to Will saves against mind-affecting
+/// effects, for a character with the given Charisma and Wisdom **modifiers**:
+/// `CHA - max(WIS, 0)`.
+///
+/// Both of the feat's corpus tokens are needed to get this right, and each is
+/// meaningless alone:
+/// - `BONUS:SAVE|Will|CHA-WIS` adds `CHA - WIS`. A Will save already includes
+///   `+WIS`, so this nets to "use Charisma in place of Wisdom" -- exactly the
+///   `BENEFIT:` prose's "Add your Charisma modifier instead of your Wisdom bonus
+///   on Will saves against mind-affecting effects."
+/// - `BONUS:SAVE|Will|WIS|PREVARLT:WIS,0` adds `WIS` back, but **only when the
+///   Wisdom modifier is negative**. Combined, a negative-Wisdom character gets
+///   `CHA - WIS + WIS = CHA`, i.e. keeps the penalty *and* gains Charisma --
+///   again exactly the prose: "If you have a Wisdom penalty, you must apply both
+///   your Wisdom penalty and your Charisma modifier."
+///
+/// Collapsing those two cases gives `CHA - max(WIS, 0)`. Reading only the first
+/// token would understate a negative-Wisdom character by the full Wisdom
+/// penalty; reading only the second would be nonsense. (The `PREVARLT:WIS,0`
+/// gate is read as testing the Wisdom *modifier*, not the score: a score below
+/// zero is impossible, which would make the token dead code, whereas the prose
+/// explicitly describes the penalty case as live.)
+///
+/// Returns `None` when the feat is absent. Returns `Some(0)` -- a real,
+/// meaningful answer, not an absence -- when Charisma and Wisdom happen to be
+/// equal: the character genuinely holds the feat and it genuinely nets to zero
+/// for them, which is worth reporting rather than silently suppressing.
+///
+/// **Deliberately NOT layered onto `compute_total_saves`' Will total**, even
+/// though this engine *does* integrate the structurally identical Oracle
+/// Sidestep Secret (Charisma for Dexterity on Reflex saves). The difference is
+/// decisive: Sidestep Secret is unconditional and always on, so it belongs in
+/// the total, whereas this feat applies **only against mind-affecting effects**.
+/// The Will total here is the general, unconditional Will save, and folding a
+/// mind-affecting-only substitution into it would report a specific, checkable,
+/// wrong number for every other Will save the character makes. The condition is
+/// a scope condition on a category of effect -- a static property of the
+/// character rather than a fact about a particular opponent -- so it grounds
+/// standalone rather than being deferred.
+///
+/// Both modifiers are threaded as plain scalars, keeping this module the same
+/// dependency-free leaf the rest of the file is, and neither is clamped beyond
+/// the `max(WIS, 0)` the corpus itself specifies.
+pub fn steadfast_personality_will_bonus_from_feats(
+    selected_feats: &[String],
+    charisma_modifier: i16,
+    wisdom_modifier: i16,
+) -> Option<i16> {
+    if !selected_feats.iter().any(|feat| feat == STEADFAST_PERSONALITY_FEAT_KEY) {
+        return None;
+    }
+    Some(charisma_modifier - wisdom_modifier.max(0))
 }
 
 /// What kind of thing a chooser feat's target names. Decides which picker a
@@ -3019,5 +3246,147 @@ mod master_craftsman_facts_from_choices_tests {
             choice("choice:master_craftsman_target", "skill:"),
         ];
         assert!(master_craftsman_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+/// The APG/ACG passive-bonus widening (2026-07-29): the four feats whose flat
+/// modifier lands on a dimension this engine computes no total for, plus the
+/// two APG `BONUS:SKILL` feats folded into the standalone skill table.
+#[cfg(test)]
+mod apg_acg_passive_bonus_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|k| (*k).to_owned()).collect()
+    }
+
+    fn skill_names(selected: &[String]) -> Vec<&'static str> {
+        standalone_skill_facts_from_feats(selected).iter().map(|f| f.skill_name).collect()
+    }
+
+    #[test]
+    fn master_alchemist_grounds_its_single_craft_alchemy_skill() {
+        // Corpus: BONUS:SKILL|Craft (Alchemy)|2, BENEFIT "+2 bonus on Craft
+        // (alchemy) checks". A single-skill feat, unlike every CRB entry in
+        // the table it joins.
+        let facts = standalone_skill_facts_from_feats(&feats(&["Master Alchemist"]));
+        assert_eq!(facts.len(), 1, "{facts:?}");
+        assert_eq!(facts[0].skill_name, "Craft (Alchemy)");
+        assert_eq!(facts[0].bonus, 2);
+    }
+
+    #[test]
+    fn breadth_of_experience_grounds_both_skill_categories_it_names() {
+        // Corpus token targets TYPE.Knowledge and TYPE.Profession -- whole
+        // categories, not named skills -- so both are transcribed from the
+        // BENEFIT prose rather than one skill being invented.
+        assert_eq!(
+            skill_names(&feats(&["Breadth of Experience"])),
+            vec!["all Knowledge skills", "all Profession skills"]
+        );
+    }
+
+    #[test]
+    fn the_apg_skill_feats_do_not_disturb_the_crb_table() {
+        // The CRB two-skill feats still ground exactly as before, and the two
+        // tables compose rather than shadow one another.
+        assert_eq!(skill_names(&feats(&["Acrobatic"])), vec!["Acrobatics", "Fly"]);
+        assert_eq!(
+            skill_names(&feats(&["Acrobatic", "Master Alchemist"])),
+            vec!["Acrobatics", "Fly", "Craft (Alchemy)"],
+            "CRB facts keep their corpus order and precede the APG ones"
+        );
+    }
+
+    #[test]
+    fn no_two_standalone_skill_facts_share_a_skill_name() {
+        // Load-bearing: the consumer derives its explanation id by slugifying
+        // skill_name, so a repeated skill would emit two records under one id.
+        // This is exactly why Sharp Senses' Perception bonus is NOT in these
+        // tables -- it would collide with Alertness'.
+        let mut names: Vec<&str> = STANDALONE_TWO_SKILL_FACTS
+            .iter()
+            .chain(STANDALONE_APG_SKILL_FACTS)
+            .map(|f| f.skill_name)
+            .collect();
+        let before = names.len();
+        names.sort_unstable();
+        names.dedup();
+        assert_eq!(names.len(), before, "duplicate skill name across the standalone tables");
+    }
+
+    #[test]
+    fn sharp_senses_grounds_the_plus_four_result_not_its_plus_two_token() {
+        // The token is BONUS:VAR|KeenSensesBonus|2, an increment to the racial
+        // variable already worth 2; BENEFIT prose states the +4 result.
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&feats(&["Sharp Senses"])), 4);
+    }
+
+    #[test]
+    fn sharp_senses_grounds_nothing_when_absent_and_never_stacks_with_itself() {
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&[]), 0);
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&feats(&["Alertness"])), 0);
+        assert_eq!(
+            sharp_senses_perception_bonus_from_feats(&feats(&["Sharp Senses", "Sharp Senses"])),
+            4,
+            "not STACK:YES/MULT:YES in the corpus"
+        );
+    }
+
+    #[test]
+    fn steel_soul_grounds_the_plus_four_result_not_its_plus_two_token() {
+        assert_eq!(steel_soul_save_vs_spells_bonus_from_feats(&feats(&["Steel Soul"])), 4);
+        assert_eq!(steel_soul_save_vs_spells_bonus_from_feats(&[]), 0);
+        assert_eq!(
+            steel_soul_save_vs_spells_bonus_from_feats(&feats(&["Steel Soul", "Steel Soul"])),
+            4
+        );
+    }
+
+    #[test]
+    fn deepsight_grounds_the_sixty_foot_increment_its_token_states() {
+        assert_eq!(deepsight_darkvision_bonus_from_feats(&feats(&["Deepsight"])), 60);
+        assert_eq!(deepsight_darkvision_bonus_from_feats(&[]), 0);
+    }
+
+    #[test]
+    fn steadfast_personality_is_absent_without_the_feat() {
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&[], 4, 1), None);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&feats(&["Iron Will"]), 4, 1), None);
+    }
+
+    #[test]
+    fn steadfast_personality_swaps_charisma_in_for_a_positive_wisdom_modifier() {
+        // BONUS:SAVE|Will|CHA-WIS alone: +4 CHA replacing +1 WIS is a net +3.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 4, 1), Some(3));
+    }
+
+    #[test]
+    fn steadfast_personality_keeps_a_wisdom_penalty_and_adds_charisma_on_top() {
+        // The second token (BONUS:SAVE|Will|WIS|PREVARLT:WIS,0) fires only for
+        // a negative Wisdom modifier, so the penalty is KEPT rather than
+        // replaced: the net delta is the full Charisma modifier. Reading only
+        // the first token would give CHA - WIS = 4 - -2 = 6, overstating the
+        // bonus by cancelling a penalty the prose says must still apply.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 4, -2), Some(4));
+    }
+
+    #[test]
+    fn steadfast_personality_reports_a_real_zero_rather_than_an_absence() {
+        // Equal Charisma and Wisdom genuinely nets to zero; the character still
+        // holds the feat, so Some(0) is the honest answer, not None.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 2, 2), Some(0));
+    }
+
+    #[test]
+    fn steadfast_personality_can_be_a_net_penalty_and_is_not_clamped() {
+        // A low-Charisma, high-Wisdom character genuinely loses ground by
+        // swapping; clamping at 0 would fabricate a value the corpus formula
+        // does not specify.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, -1, 3), Some(-4));
     }
 }

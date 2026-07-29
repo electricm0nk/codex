@@ -38870,6 +38870,92 @@ fn ground_orphan_feat_facts(
         });
     }
 
+    // v0.6 alpha swarm (APG/ACG passive-bonus widening, 2026-07-29): the four
+    // APG/ACG feats whose flat bonus lands on a dimension this engine computes
+    // no total for. Each is a real corpus magnitude with a live consumer here,
+    // not an inert producer.
+    let sharp_senses = feat_effects::sharp_senses_perception_bonus_from_feats(&feats);
+    if sharp_senses != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.sharp_senses_perception_bonus".to_owned(),
+            value: sharp_senses,
+            detail: format!(
+                "Sharp Senses (APG) grants a +{sharp_senses} racial bonus on Perception checks. \
+                 Its corpus token is only BONUS:VAR|KeenSensesBonus|2, an INCREMENT to the same \
+                 variable the keen-senses racial trait already sets to 2 -- the feat's BENEFIT \
+                 prose states the resulting total, +4, and says it REPLACES the racial bonus \
+                 rather than stacking with it. Its own PREABILITY TYPE.KeenSenses prerequisite \
+                 guarantees that racial base, so +4 is exact. Perception is not among the three \
+                 skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so this \
+                 grounds standalone; where a separate racial keen-senses +2 record also appears, \
+                 this +4 supersedes it and the two must not be added"
+            ),
+        });
+    }
+
+    let steel_soul = feat_effects::steel_soul_save_vs_spells_bonus_from_feats(&feats);
+    if steel_soul != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.steel_soul_save_vs_spells".to_owned(),
+            value: steel_soul,
+            detail: format!(
+                "Steel Soul (APG) grants a +{steel_soul} racial bonus on saving throws against \
+                 spells and spell-like abilities. Same increment-not-total shape as Sharp \
+                 Senses: the token is BONUS:VAR|SaveBonus_vs_Spells|2, incrementing the variable \
+                 the dwarf Hardy racial trait already sets to 2, and the BENEFIT prose states the \
+                 +4 result and that it REPLACES Hardy's bonus rather than stacking. Deliberately \
+                 NOT added to the Fortitude/Reflex/Will totals: it applies only against spells \
+                 and spell-like abilities, while those totals are the general unconditional \
+                 saves, so folding it in would overstate every save against a non-magical effect. \
+                 Grounds standalone, exactly as this engine already grounds the dwarf Hardy bonus \
+                 this feat supersedes"
+            ),
+        });
+    }
+
+    let deepsight = feat_effects::deepsight_darkvision_bonus_from_feats(&feats);
+    if deepsight != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.deepsight_darkvision_feet".to_owned(),
+            value: deepsight,
+            detail: format!(
+                "Deepsight (APG) extends darkvision by {deepsight} feet \
+                 (BONUS:VISION|Darkvision|60). Its PREVISION:1,Darkvision=60 prerequisite fixes \
+                 the holder's base at 60 feet, so the BENEFIT prose's resulting range of 120 feet \
+                 is exact. This engine models no vision numerically anywhere -- racial darkvision \
+                 exists only as prose inside a race trait's detail string, never as a number -- so \
+                 the increment grounds standalone and the 120-foot total cannot be computed from \
+                 data here"
+            ),
+        });
+    }
+
+    let charisma = ability_modifier(input.chosen.ability_scores.charisma);
+    let wisdom_for_steadfast = ability_modifier(input.chosen.ability_scores.wisdom);
+    if let Some(steadfast) = feat_effects::steadfast_personality_will_bonus_from_feats(
+        &feats,
+        charisma,
+        wisdom_for_steadfast,
+    ) {
+        explanations.push(ComputationExplanation {
+            id: "feat.standalone.steadfast_personality_will_vs_mind_affecting".to_owned(),
+            value: steadfast,
+            detail: format!(
+                "Steadfast Personality (ACG) changes Will saves against mind-affecting effects by \
+                 {steadfast:+} for this character: Charisma ({charisma:+}) replaces Wisdom \
+                 ({wisdom_for_steadfast:+}), i.e. CHA - max(WIS, 0). Both corpus tokens are \
+                 needed: BONUS:SAVE|Will|CHA-WIS swaps Charisma in for Wisdom, and \
+                 BONUS:SAVE|Will|WIS|PREVARLT:WIS,0 adds Wisdom back only when it is a penalty, \
+                 matching the BENEFIT prose that a Wisdom penalty applies alongside the Charisma \
+                 modifier rather than being replaced by it. Deliberately NOT added to the Will \
+                 total: this applies ONLY against mind-affecting effects, whereas the computed \
+                 Will total is the general save -- unlike Oracle's Sidestep Secret, which is \
+                 unconditional and therefore is integrated. A zero here is a real result (equal \
+                 Charisma and Wisdom), not an absent one"
+            ),
+        });
+    }
+
     for bonus in feat_effects::combat_maneuver_bonuses_from_feats(&feats) {
         let slug = bonus.maneuver.to_lowercase().replace(' ', "_");
         explanations.push(ComputationExplanation {
@@ -40317,6 +40403,37 @@ mod standalone_feat_skill_facts_consumer_wiring_tests {
             "Intimidate must not be double-grounded as a standalone fact: {:?}",
             computation.explanations
         );
+    }
+
+    /// The APG's two `BONUS:SKILL` feats (2026-07-29 widening) reach the
+    /// same live consumer the CRB table already does.
+    #[test]
+    fn the_apg_skill_feats_ground_standalone_records_through_the_real_pipeline() {
+        for (feat, ids) in [
+            ("Master Alchemist", vec!["feat.standalone_skill_bonus.craft_(alchemy)"]),
+            (
+                "Breadth of Experience",
+                vec![
+                    "feat.standalone_skill_bonus.all_knowledge_skills",
+                    "feat.standalone_skill_bonus.all_profession_skills",
+                ],
+            ),
+        ] {
+            let mut input = load();
+            input.chosen.selected_feats.push(feat.to_owned());
+            let computation = compute(&input);
+            for id in ids {
+                assert!(
+                    computation.explanations.iter().any(|e| e.id == id && e.value == 2),
+                    "expected {feat} to ground {id} at +2: {:?}",
+                    computation
+                        .explanations
+                        .iter()
+                        .map(|e| &e.id)
+                        .collect::<Vec<_>>()
+                );
+            }
+        }
     }
 
     #[test]
@@ -57926,6 +58043,90 @@ mod orphan_feat_producer_consumer_tests {
             input.chosen.selected_feats.push(feat.to_owned());
             assert_eq!(value(&input, id), Some(want), "{feat} -> {id}");
         }
+    }
+
+    /// The APG/ACG passive-bonus widening (2026-07-29). Each of the four
+    /// keys on a feat the fixture does not have, so absence is the
+    /// baseline and the record's appearance proves live consumer wiring
+    /// rather than an inert producer.
+    #[test]
+    fn the_apg_acg_passive_bonus_feats_ground_standalone_records_when_selected() {
+        for (feat, id, want) in [
+            ("Sharp Senses", "feat.standalone.sharp_senses_perception_bonus", 4),
+            ("Steel Soul", "feat.standalone.steel_soul_save_vs_spells", 4),
+            ("Deepsight", "feat.standalone.deepsight_darkvision_feet", 60),
+        ] {
+            let mut input = fighter();
+            assert_eq!(value(&input, id), None, "{id} must be absent without {feat}");
+            input.chosen.selected_feats.push(feat.to_owned());
+            assert_eq!(value(&input, id), Some(want), "{feat} -> {id}");
+        }
+    }
+
+    /// Steadfast Personality's magnitude is computed from the character's
+    /// own ability modifiers, so it is pinned against a real fixture
+    /// rather than a table row.
+    #[test]
+    fn steadfast_personality_grounds_a_record_computed_from_this_characters_abilities() {
+        const ID: &str = "feat.standalone.steadfast_personality_will_vs_mind_affecting";
+        let mut input = fighter();
+        assert_eq!(value(&input, ID), None, "absent without the feat");
+
+        input.chosen.selected_feats.push("Steadfast Personality".to_owned());
+        let charisma = super::ability_modifier(input.chosen.ability_scores.charisma);
+        let wisdom = super::ability_modifier(input.chosen.ability_scores.wisdom);
+        assert_eq!(
+            value(&input, ID),
+            Some(charisma - wisdom.max(0)),
+            "CHA - max(WIS, 0), per both corpus BONUS:SAVE tokens read together"
+        );
+    }
+
+    /// The two conditional feats must NOT reach the unconditional save
+    /// totals. Steel Soul applies only against spells and spell-like
+    /// abilities, Steadfast Personality only against mind-affecting
+    /// effects; folding either into `defense.total_save.*` would report a
+    /// specific, checkable, wrong number for every other save. Proven by
+    /// differencing the same character with and without each feat, so this
+    /// cannot pass merely because a standalone record exists.
+    #[test]
+    fn the_two_conditional_save_feats_do_not_move_the_unconditional_save_totals() {
+        let baseline: Vec<Option<i16>> = ["fortitude", "reflex", "will"]
+            .iter()
+            .map(|s| value(&fighter(), &format!("defense.total_save.{s}")))
+            .collect();
+        assert!(
+            baseline.iter().all(Option::is_some),
+            "the fixture must compute real save totals for this test to mean anything: \
+             {baseline:?}"
+        );
+
+        for feat in ["Steel Soul", "Steadfast Personality"] {
+            let mut input = fighter();
+            input.chosen.selected_feats.push(feat.to_owned());
+            let after: Vec<Option<i16>> = ["fortitude", "reflex", "will"]
+                .iter()
+                .map(|s| value(&input, &format!("defense.total_save.{s}")))
+                .collect();
+            assert_eq!(
+                after, baseline,
+                "{feat} is conditional and must not change any unconditional save total"
+            );
+        }
+    }
+
+    /// Great Fortitude still moves the real Fortitude total, proving the
+    /// test above pins a genuine distinction rather than a save total that
+    /// no feat can ever reach.
+    #[test]
+    fn an_unconditional_save_feat_still_moves_its_total() {
+        let without = value(&fighter(), "defense.total_save.fortitude")
+            .expect("fortitude total must be computed");
+        let mut with = fighter();
+        with.chosen.selected_feats.push("Great Fortitude".to_owned());
+        let raised =
+            value(&with, "defense.total_save.fortitude").expect("still computed");
+        assert_eq!(raised - without, 2, "Great Fortitude grants a real, unconditional +2");
     }
 
     /// Improved Bull Rush grounds both its CMB and CMD halves; the
