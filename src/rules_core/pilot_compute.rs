@@ -20676,6 +20676,98 @@ fn brawler_martial_flexibility_uses(level: u8) -> i16 {
     (i16::from(level) / 2).max(1) + 3
 }
 
+/// The Medium-size Brawler unarmed strike damage die, as
+/// `(dice count, die face)`.
+///
+/// Transcribed from the corpus's **live** per-size records --
+/// `acg_abilities_class.lst` lines 966/976/986/996/1006/1016,
+/// `Brawler Unarmed Damage LVL <N> (Medium)`, each carrying its own
+/// `UDAM:` plus a corroborating
+/// `BONUS:VAR|PrimaryAttackDamageDice|<count>` and
+/// `BONUS:VAR|PrimaryAttackDamageSize|<face>` pair. It is deliberately
+/// **not** read off the `#`-disabled combined `UDAM:` lines at 944-949
+/// sitting directly above them in the same file: those are the retired
+/// all-sizes-on-one-line form, exactly the `#`-prefixed duplicate trap.
+/// (They happen to agree here, which is precisely why reading them would
+/// have felt safe.)
+///
+/// Band selection is the corpus's own
+/// `BONUS:VAR|BrawlerUnarmedDamageProgression|(min(5,BrawlerUnarmedDamageLVL/4))`
+/// (line 940) with `BONUS:VAR|BrawlerUnarmedDamageLVL|BrawlerLVL` on the
+/// same record -- integer division by 4, capped at 5. So: levels 1-3
+/// 1d6, 4-7 1d8, 8-11 1d10, 12-15 2d6, 16-19 2d8, 20 2d10.
+///
+/// **This ladder is value-identical to `monk_unarmed_strike_damage_die`
+/// at every level 1-20, and that is a real fact about PF1, not a
+/// shortcut taken here.** Brawler is written to advance unarmed damage
+/// on the monk's schedule, and the two corpus record sets agree band for
+/// band. It is nonetheless kept as its own function reading its own
+/// records, for two reasons: the sameness is a rules coincidence that
+/// either class could break independently (an archetype or errata moving
+/// one ladder must not silently move the other), and the two are
+/// separately sourced -- Monk's from the CRB, Brawler's from
+/// `acg_abilities_class.lst`. Sharing the function would make one class's
+/// number depend on the other class's corpus, which is the kind of
+/// coupling this file's identifier-collision discipline exists to
+/// prevent. An earlier draft of this comment asserted the ladders
+/// DIFFERED at level 12; that was wrong, and checking it against
+/// `monk_unarmed_strike_damage_die` is what caught it.
+fn brawler_unarmed_strike_damage_die(level: u8) -> (i16, i16) {
+    match (i16::from(level) / 4).min(5) {
+        0 => (1, 6),
+        1 => (1, 8),
+        2 => (1, 10),
+        3 => (2, 6),
+        4 => (2, 8),
+        _ => (2, 10),
+    }
+}
+
+/// Close Weapon Mastery's grant level, per `acg_classes.lst:101`
+/// (`5  ABILITY:Brawler Class Feature|AUTOMATIC|Brawler ~ Close Weapon
+/// Mastery`).
+const BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL: u8 = 5;
+
+/// The "4 levels lower" offset named verbatim in Close Weapon Mastery's
+/// own corpus `DESC:` (`acg_abilities_class.lst:1028`).
+const BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL_OFFSET: u8 = 4;
+
+/// Close Weapon Mastery's substituted base damage die, as
+/// `(dice count, die face)`, or `None` below its 5th-level grant.
+///
+/// The corpus record (`KEY:Brawler ~ Close Weapon Mastery`,
+/// `acg_abilities_class.lst:1028`) carries **no BONUS token at all** --
+/// its rule lives entirely in `DESC:`: "When wielding a close weapon,
+/// she uses the unarmed strike damage of a brawler 4 levels lower
+/// instead of the base damage for that weapon."
+///
+/// That is a real, computable magnitude rather than a zero-magnitude
+/// resolution, so this grounds an actual die rather than taking the
+/// grant-only identity route Awesome Blow takes below.
+///
+/// **Independently corroborated by the record's own two `.MOD` lines**
+/// (`acg_abilities_class.lst:1030-1031`), which spell out concrete
+/// Medium-size answers: `DESC:...treat its base damage as 1d6...
+/// |PRESIZEEQ:M|PREVAREQ:BrawlerUnarmedDamageProgression,1` and the
+/// matching `1d8` at progression `2`. Progression 1 is brawler levels
+/// 4-7 and progression 2 is 8-11; this function returns 1d6 across 5-7
+/// and 1d8 across 8-11, so the derived ladder and the corpus's own
+/// hardcoded answers agree without either being fitted to the other.
+fn brawler_close_weapon_mastery_die(level: u8) -> Option<(i16, i16)> {
+    if level < BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL {
+        return None;
+    }
+    Some(brawler_unarmed_strike_damage_die(
+        level - BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL_OFFSET,
+    ))
+}
+
+/// Awesome Blow's grant level, per `acg_classes.lst:102`.
+const BRAWLER_AWESOME_BLOW_LEVEL: u8 = 16;
+
+/// Improved Awesome Blow's grant level, per `acg_classes.lst:103`.
+const BRAWLER_IMPROVED_AWESOME_BLOW_LEVEL: u8 = 20;
+
 /// Grounds Brawler's six remaining real features (task #5, 2026-07-27),
 /// each at its own verified grant level.
 fn ground_brawler_remaining_features(
@@ -20811,6 +20903,140 @@ fn ground_brawler_remaining_features(
             ),
         });
     }
+
+    ground_brawler_close_weapon_mastery_and_awesome_blow(level, explanations);
+}
+
+/// Grounds Brawler's last three named class features (task #91):
+/// Close Weapon Mastery, Awesome Blow, and Improved Awesome Blow.
+///
+/// These were the entire remaining content of Brawler's claim-blocking
+/// `other_features_deferred` diagnostic. They split into two shapes, and
+/// the split is the whole point:
+///
+/// * **Close Weapon Mastery has a real magnitude.** Its corpus record
+///   carries no BONUS token, but its `DESC:` names a computable die
+///   ("the unarmed strike damage of a brawler 4 levels lower"), and the
+///   Brawler unarmed-damage ladder it indexes into is itself real corpus
+///   data. So it grounds an actual number -- see
+///   `brawler_close_weapon_mastery_die`.
+///
+/// * **Awesome Blow and Improved Awesome Blow have none.** Both records
+///   (`acg_abilities_class.lst:899` and `:900`) are `KEY` + `CATEGORY` +
+///   `TYPE` + `DESC` + `SOURCEPAGE` and nothing else -- verified field by
+///   field, not by a filtered grep. Their whole benefit is a resolution
+///   at the table. They are therefore grounded as **bounded grant-only
+///   identity records** (`value: 0`) quoting the real corpus DESC, the
+///   same idiom Sorcerer's Arcane Apotheosis and Rogue's Master Strike
+///   already use in this file.
+///
+/// They are deliberately **not** routed through
+/// `description_completion::feat_description_completion`, even though
+/// they are exactly the zero-magnitude shape that module was built for.
+/// That module certifies a FEAT's text reaches the player via the Feats
+/// tab, and it is checked against `input.chosen.selected_feats`. These
+/// are CLASS features: there is no class-feature description surface in
+/// the shipped app at all (the Actions tab renders hardcoded display
+/// names from `characterProgression.ts`, with no description field and
+/// no corpus text behind it), so claiming their text reaches the player
+/// would be precisely the unearned `success: true` that module exists to
+/// prevent. The distinction is already recorded at Arcane Apotheosis.
+///
+/// Note the near-miss: an `Improved Awesome Blow` row DOES exist in the
+/// ACG **feat** catalog (`rules_tables/acg/feat_data/combat.rs`), with a
+/// real description. It is a different record -- the feat, whose own
+/// prerequisite string points AT `Brawler ~ Awesome Blow` -- and routing
+/// the class feature through it would ground the wrong thing.
+fn ground_brawler_close_weapon_mastery_and_awesome_blow(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if let Some((dice_count, die_face)) = brawler_close_weapon_mastery_die(level) {
+        let source_level = level - BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL_OFFSET;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.close_weapon_mastery_base_damage_die".to_owned(),
+            value: die_face,
+            detail: format!(
+                "Brawler level {level} Close Weapon Mastery (granted at level \
+                 {BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL}): while wielding a close weapon she may \
+                 use the Medium-size Brawler unarmed strike damage of a brawler \
+                 {BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL_OFFSET} levels lower -- level \
+                 {source_level}, i.e. {dice_count}d{die_face} -- instead of that weapon's base \
+                 damage. This record grounds the die FACE ({die_face}); the die COUNT is its own \
+                 facet below, the same two-facet split Monk's unarmed strike die already uses. \
+                 The corpus record carries no BONUS token, so the magnitude comes from its DESC \
+                 read together with the live `Brawler Unarmed Damage LVL <N> (Medium)` ladder, \
+                 and is independently corroborated by the record's own two .MOD lines. Grounds \
+                 the substituted die only: this codebase computes no close-weapon attack, so \
+                 nothing consumes it yet, and the \"must be declared before the attack roll\" \
+                 timing clause is a table-side resolution with no magnitude"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.close_weapon_mastery_base_damage_die_count".to_owned(),
+            value: dice_count,
+            detail: format!(
+                "Brawler level {level} Close Weapon Mastery die count: {dice_count} \
+                 (full die {dice_count}d{die_face}, read from the level-{source_level} band of \
+                 the Brawler unarmed damage ladder). Carried as its own facet because a single \
+                 `value` cannot express `{dice_count}d{die_face}` -- dropping the count would \
+                 silently report {die_face} damage where the real answer is \
+                 {dice_count}d{die_face}"
+            ),
+        });
+    }
+
+    if level >= BRAWLER_AWESOME_BLOW_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.awesome_blow_grant".to_owned(),
+            value: 0,
+            detail: format!(
+                "Brawler level {level} Awesome Blow, granted at level \
+                 {BRAWLER_AWESOME_BLOW_LEVEL} (corpus KEY:Brawler ~ Awesome Blow): \"The brawler \
+                 can as a standard action perform an awesome blow combat maneuver against a \
+                 corporeal creature of her size or smaller. If the combat maneuver check \
+                 succeeds, the opponent takes damage as if the brawler hit it with the close \
+                 weapon she is wielding or an unarmed strike, it is knocked flying 10 feet in a \
+                 direction of the brawler's choice, and it falls prone. The brawler can only push \
+                 the opponent in a straight line, and the opponent can't move closer to the \
+                 brawler than the square it started in. If an obstacle prevents the completion of \
+                 the opponent's move, the opponent and the obstacle each take 1d6 points of \
+                 damage, and the opponent is knocked prone in the space adjacent to the obstacle. \
+                 (Unlike the Awesome Blow monster feat, the brawler can be of any size to use \
+                 this ability.)\" This is a bounded grant-only identity record (value 0, \
+                 non-fabricated): the record's complete token list is KEY, CATEGORY, TYPE, DESC \
+                 and SOURCEPAGE -- it carries no BONUS, no DEFINE and no ADD, so there is no \
+                 magnitude to compute, now or ever. The 10-foot push and the 1d6 obstacle damage \
+                 are fixed rules constants inside the resolution, not per-character quantities \
+                 this engine derives, and no combat-maneuver resolution engine exists here to \
+                 apply them against"
+            ),
+        });
+    }
+
+    if level >= BRAWLER_IMPROVED_AWESOME_BLOW_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.brawler.improved_awesome_blow_grant".to_owned(),
+            value: 0,
+            detail: format!(
+                "Brawler level {level} Improved Awesome Blow, granted at level \
+                 {BRAWLER_IMPROVED_AWESOME_BLOW_LEVEL} (corpus \
+                 KEY:Brawler ~ Improved Awesome Blow): \"The brawler can use her awesome blow \
+                 ability as an attack rather than as a standard action. She may use it on \
+                 creatures of any size. If the maneuver roll is a natural 20, the brawler can \
+                 immediately attempt to confirm the critical by rolling another combat maneuver \
+                 check with all the same modifiers as the one just rolled; if the confirmation \
+                 roll is successful, the attack deals double damage, and the damage from hitting \
+                 an obstacle (if any) is also doubled.\" This is a bounded grant-only identity \
+                 record (value 0, non-fabricated) on the same footing as Awesome Blow above: the \
+                 record's complete token list is KEY, CATEGORY, TYPE, DESC and SOURCEPAGE, with \
+                 no BONUS/DEFINE/ADD anywhere. Its entire content is an action-economy upgrade \
+                 and a critical-confirmation rule -- both resolutions, neither a magnitude. This \
+                 is the class feature, NOT the separately-catalogued `Improved Awesome Blow` ACG \
+                 feat that shares its display name and merely names this record as a prerequisite"
+            ),
+        });
+    }
 }
 
 /// narrower one naming only what's genuinely still missing).
@@ -20911,18 +21137,34 @@ fn ground_brawler_ac_bonus_and_defer_the_rest(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.brawler.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{BRAWLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, AC Bonus, Brawler's Cunning, Brawler's Strike, Brawler's Flurry, Knockout, \
-             Martial Flexibility, Martial Training, Bonus Feats, and Maneuver Training: Awesome \
-             Blow, Improved Awesome Blow, and Close Weapon Mastery remain ungrounded anywhere in \
-             this codebase; no class-feature execution is fabricated in this bounded chassis \
-             baseline. This message previously listed Flurry, Knockout, Martial Flexibility, \
-             Martial Training, Bonus Feats and Maneuver Training as ungrounded -- all six are in \
-             fact grounded (task #5) -- and listed Brawler's Strike's Alignment Selection \
-             chooser, which carries its own separate non-blocking `strike_alignment_selection.\
-             unmodeled` record and does not belong in a claim-blocking list"
+            "{BRAWLER_CLASS_ID} now grounds every named feature on its corpus class table: the \
+             base-attack-bonus/base-save chassis pillar, its class-skill list, AC Bonus, \
+             Brawler's Cunning, Brawler's Strike, Brawler's Flurry, Knockout, Martial \
+             Flexibility, Martial Training, Bonus Feats, Maneuver Training, and -- newly, task \
+             #91 -- Close Weapon Mastery's substituted damage die plus Awesome Blow and Improved \
+             Awesome Blow as bounded grant-only identity records. This diagnostic is therefore no \
+             longer claim-blocking. It is retained, rather than deleted, to carry the honest \
+             remainder: what stays deferred is EXECUTION, not magnitude. Specifically -- no \
+             combat-maneuver resolution engine exists here, so Awesome Blow's push and Maneuver \
+             Training's and Knockout's opponent-directed effects compute against no target; \
+             Martial Flexibility grounds its pool but not the borrow-a-combat-feat chooser; \
+             Brawler's Strike's DR bypass grounds as a flat fact with no damage-reduction \
+             resolution to apply it to; Close Weapon Mastery's die is grounded but no \
+             close-weapon attack consumes it; and Maneuver Training is narrowed to the canonical \
+             Bull Rush pick with the other nine maneuvers deferred. Each of those is a missing \
+             consumer for a correctly-derived number, which under this repo's standalone-fact \
+             grounding bar does not block the number itself. Awesome Blow and Improved Awesome \
+             Blow carry no corpus BONUS/DEFINE/ADD token of any kind -- verified field by field \
+             on `acg_abilities_class.lst:899` and `:900` -- so they have no magnitude that could \
+             ever be computed, and are grounded by quoting their real rulebook text rather than \
+             by fabricating a number. They are NOT claimed to be text-complete-to-the-player: no \
+             class-feature description surface exists in the shipped app, so that stronger claim \
+             is deliberately not made. This message previously listed Flurry, Knockout, Martial \
+             Flexibility, Martial Training, Bonus Feats and Maneuver Training as ungrounded -- \
+             all six are in fact grounded (task #5) -- and then listed Awesome Blow, Improved \
+             Awesome Blow and Close Weapon Mastery, all three of which are now grounded too"
         ),
-        claim_blocking: true,
+        claim_blocking: false,
     });
 }
 
@@ -41953,20 +42195,28 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
-    /// Brawler's own counterpart to the Skald/Bloodrager diagnostic-swap
-    /// tests above (v0.6 alpha swarm, risks item 8, third APG/ACG
-    /// closure): mirrors them, using
-    /// `other_features_deferred` (not `spellcasting_deferred`, since
-    /// Brawler has no spellcasting at all).
+    /// Brawler now reaches Computed (task #91).
+    ///
+    /// This test previously asserted the opposite -- that Brawler "must
+    /// stay Blocked on its other-features-deferred posture alone". That
+    /// was correct while Awesome Blow, Improved Awesome Blow and Close
+    /// Weapon Mastery were genuinely ungrounded. All three are now
+    /// grounded from the corpus, so the blocking claim has no remaining
+    /// content and the diagnostic has been demoted to non-blocking.
+    ///
+    /// The demotion is asserted explicitly rather than merely implied by
+    /// the status: a future edit that deletes the diagnostic outright
+    /// would also produce Computed, and that would lose the honest
+    /// remainder the record still carries.
     #[test]
-    fn brawler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+    fn brawler_reaches_computed_with_its_remainder_diagnostic_demoted_not_deleted() {
         let input = acg_style_input("class:brawler", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Brawler must stay Blocked on its other-features-deferred posture alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Brawler grounds every named corpus feature and must now compute: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -41978,15 +42228,16 @@ mod acg_class_chassis_dispatch_tests {
             "the retired generic diagnostic must never appear for Brawler: {:?}",
             receipt.computation.diagnostics
         );
+        let remainder = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported")
+            .expect("the remainder record must be kept, not deleted");
         assert!(
-            receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
-            receipt.computation.diagnostics
+            !remainder.claim_blocking,
+            "the remainder names deferred EXECUTION, not a missing magnitude, so it must not \
+             block: {remainder:?}"
         );
         let ac_bonus = receipt
             .computation
@@ -42965,8 +43216,20 @@ mod acg_class_chassis_dispatch_tests {
     ///    blocks the class, while the codebase's own separate diagnostic
     ///    explicitly says it does not. Acknowledged once, correctly
     ///    scoped, in exactly one place.
+    /// **Reworked again by task #91**, which closed the last three
+    /// features (Awesome Blow, Improved Awesome Blow, Close Weapon
+    /// Mastery) and so demoted this diagnostic to non-blocking.
+    ///
+    /// The previous version of this test parsed the message as
+    /// `"<grounded preamble>: <still-missing clause>"` and asserted
+    /// against each half. That structure only exists in a *blocking*
+    /// message, and there is no longer a still-missing clause to find --
+    /// so the parse is retired rather than patched. What is preserved is
+    /// the substance both earlier revisions were protecting: every
+    /// feature the class actually grounds is credited by name, and none
+    /// of them is described as missing.
     #[test]
-    fn brawler_other_features_deferred_acknowledges_cunning_and_strike_as_grounded() {
+    fn brawler_other_features_deferred_credits_every_grounded_feature() {
         let input = acg_style_input("class:brawler", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
@@ -42975,39 +43238,41 @@ mod acg_class_chassis_dispatch_tests {
             .diagnostics
             .iter()
             .find(|d| d.id == "class_feature.acg.brawler.other_features_deferred.unsupported")
-            .expect("other_features_deferred must still fire");
+            .expect("other_features_deferred must still fire as the honest remainder");
 
-        // Only the message's FIRST sentence carries the live
-        // preamble/missing-list claim; everything after it is the
-        // correction history #76 records, which legitimately names
-        // features (including Alignment Selection) while explaining why
-        // they are NOT in the missing-list. Splitting on the last colon
-        // of the whole message would sweep that prose in and invert the
-        // assertions below.
-        let live_claim = deferred
-            .message
-            .split_once(". ")
-            .map_or(deferred.message.as_str(), |(head, _)| head);
-        // `rsplit_once` (not `split_once`): the message's own leading
-        // `{BRAWLER_CLASS_ID}` (e.g. "class:brawler") itself contains a
-        // colon, so splitting on the FIRST colon would cut mid-class-id
-        // rather than at the real preamble/missing-list boundary.
-        let (grounded_preamble, missing_features_clause) = live_claim
-            .rsplit_once(':')
-            .expect("the diagnostic message must have a still-missing clause after the colon");
+        assert!(
+            !deferred.claim_blocking,
+            "with every named feature grounded there is nothing left to block on: {deferred:?}"
+        );
 
-        for grounded in ["AC Bonus", "Brawler's Cunning", "Brawler's Strike"] {
+        for grounded in [
+            "AC Bonus",
+            "Brawler's Cunning",
+            "Brawler's Strike",
+            "Brawler's Flurry",
+            "Knockout",
+            "Martial Flexibility",
+            "Martial Training",
+            "Bonus Feats",
+            "Maneuver Training",
+            "Close Weapon Mastery",
+            "Awesome Blow",
+            "Improved Awesome Blow",
+        ] {
             assert!(
-                grounded_preamble.contains(grounded),
-                "the diagnostic's own preamble must acknowledge {grounded} as genuinely \
-                 grounded: {deferred:?}"
+                deferred.message.contains(grounded),
+                "the remainder must credit {grounded} by name: {deferred:?}"
             );
         }
-        for not_missing in ["Brawler's Cunning", "Alignment Selection"] {
+
+        // The words that would signal a live blocking claim. Their
+        // absence is what distinguishes an honest remainder from a stale
+        // blocker that merely had its flag flipped.
+        for retired in ["remains blocked", "ungrounded anywhere"] {
             assert!(
-                !missing_features_clause.contains(not_missing),
-                "{not_missing} must not appear in the still-missing clause of a claim-blocking \
-                 diagnostic: {deferred:?}"
+                !deferred.message.contains(retired),
+                "a non-blocking remainder must not still speak as a blocker ({retired:?}): \
+                 {deferred:?}"
             );
         }
     }
@@ -56359,7 +56624,7 @@ mod orphan_feat_producer_consumer_tests {
 #[cfg(test)]
 mod brawler_remaining_feature_tests {
     use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
-        BRAWLER_CLASS_ID};
+        BRAWLER_CLASS_ID, BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL};
     use crate::rules_core::character_input::load_character_input_fixture;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
@@ -56399,6 +56664,142 @@ mod brawler_remaining_feature_tests {
         ] {
             assert_eq!(super::brawler_maneuver_training_count(level), want, "level {level}");
         }
+    }
+
+    /// The Brawler unarmed-damage ladder, pinned against the live
+    /// `Brawler Unarmed Damage LVL <N> (Medium)` records
+    /// (`acg_abilities_class.lst` 966/976/986/996/1006/1016), banded by
+    /// the corpus's own `min(5,BrawlerLVL/4)`.
+    ///
+    /// The second half of this test records, rather than hides, that the
+    /// ladder currently agrees with Monk's at every level. That is a true
+    /// PF1 fact (Brawler advances unarmed damage on the monk's
+    /// schedule), so asserting a difference here would be asserting a
+    /// fiction. What the assertion pins instead is that the agreement is
+    /// EXACT and deliberate -- if either corpus ladder is ever edited
+    /// apart from the other, this fails and forces the reader to decide
+    /// which one moved rather than letting one class silently inherit the
+    /// other's number.
+    #[test]
+    fn brawler_unarmed_damage_ladder_matches_its_own_corpus_records() {
+        for (level, want) in [
+            (1u8, (1i16, 6i16)), (3, (1, 6)),
+            (4, (1, 8)), (7, (1, 8)),
+            (8, (1, 10)), (11, (1, 10)),
+            (12, (2, 6)), (15, (2, 6)),
+            (16, (2, 8)), (19, (2, 8)),
+            (20, (2, 10)),
+        ] {
+            assert_eq!(
+                super::brawler_unarmed_strike_damage_die(level),
+                want,
+                "brawler level {level}"
+            );
+        }
+
+        for level in 1..=20u8 {
+            let (brawler_count, brawler_face) = super::brawler_unarmed_strike_damage_die(level);
+            let (monk_face, monk_count, _) = super::monk_unarmed_strike_damage_die(level);
+            assert_eq!(
+                (brawler_count, brawler_face),
+                (monk_count, monk_face),
+                "level {level}: Brawler and Monk unarmed ladders are expected to agree exactly. \
+                 If this fails, one corpus ladder moved -- do NOT make either class read the \
+                 other's table to restore agreement"
+            );
+        }
+    }
+
+    /// Close Weapon Mastery reads the die of a brawler FOUR LEVELS
+    /// LOWER, and is absent before its 5th-level grant.
+    ///
+    /// The two assertions at levels 5-7 and 8-11 are exactly the two
+    /// answers the corpus hardcodes in Close Weapon Mastery's own `.MOD`
+    /// lines (1d6 at `BrawlerUnarmedDamageProgression,1`; 1d8 at `,2`),
+    /// so this pins the derived ladder against an independent corpus
+    /// statement rather than against itself.
+    #[test]
+    fn close_weapon_mastery_reads_the_die_four_levels_lower() {
+        for level in 1..BRAWLER_CLOSE_WEAPON_MASTERY_LEVEL {
+            assert_eq!(
+                super::brawler_close_weapon_mastery_die(level),
+                None,
+                "Close Weapon Mastery must not exist at level {level}"
+            );
+        }
+        for (level, want) in [
+            (5u8, (1i16, 6i16)), (7, (1, 6)),
+            (8, (1, 8)), (11, (1, 8)),
+            (12, (1, 10)),
+            (16, (2, 6)),
+            (20, (2, 8)),
+        ] {
+            assert_eq!(
+                super::brawler_close_weapon_mastery_die(level),
+                Some(want),
+                "brawler level {level}"
+            );
+        }
+
+        assert_eq!(
+            value(&brawler(4), "class_feature.acg.brawler.close_weapon_mastery_base_damage_die"),
+            None,
+        );
+        assert_eq!(
+            value(&brawler(5), "class_feature.acg.brawler.close_weapon_mastery_base_damage_die"),
+            Some(6),
+        );
+        assert_eq!(
+            value(
+                &brawler(20),
+                "class_feature.acg.brawler.close_weapon_mastery_base_damage_die",
+            ),
+            Some(8),
+        );
+        // The count facet is load-bearing: without it a reader sees "8"
+        // and cannot tell 1d8 from 2d8.
+        assert_eq!(
+            value(
+                &brawler(20),
+                "class_feature.acg.brawler.close_weapon_mastery_base_damage_die_count",
+            ),
+            Some(2),
+        );
+    }
+
+    /// Awesome Blow (16th) and Improved Awesome Blow (20th) are
+    /// zero-magnitude corpus records -- KEY/CATEGORY/TYPE/DESC/SOURCEPAGE
+    /// and nothing else. They ground as bounded grant-only identity
+    /// records at their own gates, value 0, and must not appear early.
+    #[test]
+    fn awesome_blow_records_ground_only_at_their_corpus_gates() {
+        let awesome = "class_feature.acg.brawler.awesome_blow_grant";
+        let improved = "class_feature.acg.brawler.improved_awesome_blow_grant";
+
+        assert_eq!(value(&brawler(15), awesome), None);
+        assert_eq!(value(&brawler(16), awesome), Some(0));
+        assert_eq!(value(&brawler(20), awesome), Some(0));
+
+        assert_eq!(value(&brawler(19), improved), None);
+        assert_eq!(value(&brawler(20), improved), Some(0));
+
+        // The identity record must carry the real corpus text, not a
+        // placeholder -- that quoted text is the entire justification for
+        // grounding something whose value is 0.
+        let receipt = build_pilot_headless_receipt(&brawler(20));
+        let detail = &receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == awesome)
+            .expect("Awesome Blow grounds at 20")
+            .detail;
+        assert!(
+            detail.contains("knocked flying 10 feet")
+                && detail.contains("KEY:Brawler ~ Awesome Blow"),
+            "the identity record must quote the real corpus DESC and cite its namespaced key: \
+             {detail}"
+        );
     }
 
     /// Knockout's stat bonus is `max(STR,DEX)` -- BARE tokens, i.e.
