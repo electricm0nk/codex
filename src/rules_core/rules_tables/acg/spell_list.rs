@@ -102,6 +102,12 @@ pub struct SpellListEntry {
     /// record and made a selection carrying that name unresolvable
     /// between the two. The `KEY:` token is stored instead; see
     /// `tests/spell_cross_book_identity.rs`.
+    ///
+    /// This field is the record's *identity*, not its lookup surface:
+    /// those 9 rows are still reachable by their display name through
+    /// [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`].
+    /// Do not read a qualified `key` as "this record can only be found
+    /// under its archetype name".
     pub key: &'static str,
     pub school: Pf1SchoolId,
     /// Minimum spell level across the real record's `CLASSES:`/`DOMAINS:`
@@ -295,13 +301,52 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
     }
 }
 
-/// Resolves an ACG spell by name, scoped to `RuleSetId::Acg`. Returns
-/// `None` for any other rule set (cross-book invariant, mirrors
-/// `acg::class_chassis_resolve`), and `None` when the key isn't in
-/// `SPELL_LIST`.
-pub fn spell_resolve(key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
+/// The `(KEY:` token, display name`)` pair for each of the 9
+/// `acg_spells.lst` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`acg_spells.lst:785`-`793`), e.g. `:787` is
+/// `Summon Nature's Ally III<TAB>KEY:Naturalist Summon Nature's Ally III`.
+/// Every other ingested ACG row carries no `KEY:` token at all, so its
+/// display name *is* its key and it needs no entry here.
+///
+/// This exists because the two columns serve different jobs and both are
+/// real: the KEY is the record's cross-book identity (see [`SpellListEntry::key`]),
+/// while the display name is what a selection actually carries. It is a
+/// literal transcription of the corpus, not a derived rule — nothing here
+/// assumes the KEY is the display name with an archetype word glued on.
+pub const ARCHETYPE_QUALIFIED_KEYS: &[(&str, &str)] = &[
+    ("Naturalist Summon Nature's Ally I", "Summon Nature's Ally I"),
+    ("Naturalist Summon Nature's Ally II", "Summon Nature's Ally II"),
+    ("Naturalist Summon Nature's Ally III", "Summon Nature's Ally III"),
+    ("Naturalist Summon Nature's Ally IV", "Summon Nature's Ally IV"),
+    ("Naturalist Summon Nature's Ally V", "Summon Nature's Ally V"),
+    ("Naturalist Summon Nature's Ally VI", "Summon Nature's Ally VI"),
+    ("Naturalist Summon Nature's Ally VII", "Summon Nature's Ally VII"),
+    ("Naturalist Summon Nature's Ally VIII", "Summon Nature's Ally VIII"),
+    ("Naturalist Summon Nature's Ally IX", "Summon Nature's Ally IX"),
+];
+
+/// Resolves an ACG spell by either of its two corpus name columns, scoped
+/// to `RuleSetId::Acg`. Returns `None` for any other rule set (cross-book
+/// invariant, mirrors `acg::class_chassis_resolve`), and `None` when
+/// `name_or_key` names no ACG record.
+///
+/// A record's `KEY:` token always resolves. So does its display name,
+/// when the two differ — the 9 rows in [`ARCHETYPE_QUALIFIED_KEYS`] —
+/// because a caller may hold only the name a selection carries, with no
+/// archetype context. The KEY is tried first, so an exact record key can
+/// never be shadowed by another record's display name; within ACG the
+/// question is moot, since no display name in that table is also a record
+/// key (asserted by `tests/spell_cross_book_identity.rs`).
+pub fn spell_resolve(name_or_key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
     if rule_set != RuleSetId::Acg {
         return None;
     }
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == name_or_key) {
+        return Some(entry);
+    }
+    let key = ARCHETYPE_QUALIFIED_KEYS
+        .iter()
+        .find(|(_, display)| *display == name_or_key)
+        .map(|(key, _)| *key)?;
     SPELL_LIST.iter().find(|entry| entry.key == key)
 }

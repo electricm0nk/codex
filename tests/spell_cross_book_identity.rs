@@ -30,7 +30,7 @@
 
 use std::collections::HashMap;
 
-use codex::rules_core::rules_tables::{acg, apg, crb};
+use codex::rules_core::rules_tables::{RuleSetId, acg, apg, crb};
 
 /// Every `(key, book)` pair across the three ingested spell tables.
 fn all_keys() -> Vec<(&'static str, &'static str)> {
@@ -96,4 +96,76 @@ fn the_three_ingested_books_carry_their_full_corpus_record_counts() {
     assert_eq!(crb::spell_list::SPELL_LIST.len(), 652, "CRB cr_spells.lst");
     assert_eq!(apg::spell_list::SPELL_LIST.len(), 297, "APG apg_spells.lst");
     assert_eq!(acg::spell_list::SPELL_LIST.len(), 144, "ACG acg_spells.lst");
+}
+
+/// The other half of the identity contract. Storing the archetype-qualified
+/// `KEY:` token (above) is what keeps these 18 records distinct from the
+/// Core Rulebook records whose *display* names they share. But the corpus
+/// row has two columns, and the display column is the name a selection
+/// actually carries: `acg_spells.lst:787` reads
+/// `Summon Nature's Ally III<TAB>KEY:Naturalist Summon Nature's Ally III`.
+/// A caller holding only that display name — with no archetype context —
+/// must still resolve, so `spell_resolve` accepts either column.
+///
+/// This is unambiguous *within* each book: no ingested row in
+/// `acg_spells.lst` displays as a bare `Summon Nature's Ally <roman>`
+/// except the 9 Naturalist rows themselves (the only other such rows are
+/// the `.MOD` modifiers at `:546`-`:766`, which are not ingested as
+/// records), and likewise in `apg_spells.lst` the bare
+/// `Summon Monster <roman>` display name belongs only to the 9 Summoner
+/// rows (`:649`-`:657`) — its other ingested `Summon Monster` records all
+/// carry a distinguishing parenthetical (`Summon Monster V (Summons 1d3
+/// Shadows)`, `Summon Monster III (Reptiles Only)`).
+#[test]
+fn an_archetype_qualified_record_resolves_by_its_corpus_display_name() {
+    for numeral in ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"] {
+        let display = format!("Summon Nature's Ally {numeral}");
+        let entry = acg::spell_list::spell_resolve(&display, RuleSetId::Acg)
+            .unwrap_or_else(|| panic!("ACG display name {display:?} should resolve"));
+        assert_eq!(
+            entry.key,
+            format!("Naturalist Summon Nature's Ally {numeral}"),
+            "the display name must resolve to the archetype-qualified record"
+        );
+
+        let display = format!("Summon Monster {numeral}");
+        let entry = apg::spell_list::spell_resolve(&display, RuleSetId::Apg)
+            .unwrap_or_else(|| panic!("APG display name {display:?} should resolve"));
+        assert_eq!(
+            entry.key,
+            format!("Summoner Summon Monster {numeral}"),
+            "the display name must resolve to the archetype-qualified record"
+        );
+    }
+}
+
+/// Guards the display-name fallback against reintroducing exactly the
+/// ambiguity the `KEY:`-token change fixed: a display name must never
+/// shadow a *different* record already present in the same book under
+/// that name, and the two columns must stay one-to-one.
+#[test]
+fn no_archetype_display_name_shadows_another_record_in_its_own_book() {
+    fn check(book: &str, pairs: &'static [(&'static str, &'static str)], record_keys: &[&str]) {
+        let mut seen_display: HashMap<&'static str, &'static str> = HashMap::new();
+        for (key, display) in pairs {
+            assert!(
+                record_keys.contains(key),
+                "{book}: {key:?} is not a record in its own SPELL_LIST"
+            );
+            assert!(
+                !record_keys.contains(display),
+                "{book}: display name {display:?} (for {key:?}) is also a \
+                 record key in its own book, so the fallback would be ambiguous"
+            );
+            if let Some(previous) = seen_display.insert(display, key) {
+                panic!("{book}: display name {display:?} maps to both {previous:?} and {key:?}");
+            }
+        }
+    }
+
+    let acg_keys: Vec<&str> = acg::spell_list::SPELL_LIST.iter().map(|e| e.key).collect();
+    check("ACG", acg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &acg_keys);
+
+    let apg_keys: Vec<&str> = apg::spell_list::SPELL_LIST.iter().map(|e| e.key).collect();
+    check("APG", apg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &apg_keys);
 }

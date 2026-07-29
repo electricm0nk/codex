@@ -195,6 +195,12 @@ pub struct SpellListEntry {
     /// record and made a selection carrying that name unresolvable
     /// between the two. The `KEY:` token is stored instead; see
     /// `tests/spell_cross_book_identity.rs`.
+    ///
+    /// This field is the record's *identity*, not its lookup surface:
+    /// those 9 rows are still reachable by their display name through
+    /// [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`].
+    /// Do not read a qualified `key` as "this record can only be found
+    /// under its archetype name".
     pub key: &'static str,
     /// `None` when the corpus record has no `SCHOOL:` token (a real,
     /// documented gap — see this module's doc comment).
@@ -2418,13 +2424,56 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
     }
 }
 
-/// Resolves an APG spell by name, scoped to `RuleSetId::Apg`. Returns
-/// `None` for any other rule set (cross-book invariant, mirrors
-/// `apg::class_chassis_resolve`), and `None` when the key isn't in
-/// `SPELL_LIST`.
-pub fn spell_resolve(key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
+/// The `(KEY:` token, display name`)` pair for each of the 9
+/// `apg_spells.lst` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`apg_spells.lst:649`-`657`), e.g. `:651` is
+/// `Summon Monster III<TAB>KEY:Summoner Summon Monster III`. Every other
+/// ingested APG row carries no `KEY:` token at all, so its display name
+/// *is* its key and it needs no entry here.
+///
+/// Sibling of `acg::spell_list::ARCHETYPE_QUALIFIED_KEYS`; see that
+/// constant's doc comment for why both name columns are real. Note that
+/// the bare `Summon Monster <roman>` display name is unambiguous within
+/// APG: the book's other ingested `Summon Monster` records are the
+/// `.COPY=`-derived variants, which all carry a distinguishing
+/// parenthetical (`Summon Monster V (Summons 1d3 Shadows)`,
+/// `Summon Monster III (Reptiles Only)`, `Summon Monster VII (Reptiles
+/// Only)`), and the many bare `Summon Monster <roman>.MOD` rows are
+/// modifiers, not ingested records.
+pub const ARCHETYPE_QUALIFIED_KEYS: &[(&str, &str)] = &[
+    ("Summoner Summon Monster I", "Summon Monster I"),
+    ("Summoner Summon Monster II", "Summon Monster II"),
+    ("Summoner Summon Monster III", "Summon Monster III"),
+    ("Summoner Summon Monster IV", "Summon Monster IV"),
+    ("Summoner Summon Monster V", "Summon Monster V"),
+    ("Summoner Summon Monster VI", "Summon Monster VI"),
+    ("Summoner Summon Monster VII", "Summon Monster VII"),
+    ("Summoner Summon Monster VIII", "Summon Monster VIII"),
+    ("Summoner Summon Monster IX", "Summon Monster IX"),
+];
+
+/// Resolves an APG spell by either of its two corpus name columns, scoped
+/// to `RuleSetId::Apg`. Returns `None` for any other rule set (cross-book
+/// invariant, mirrors `apg::class_chassis_resolve`), and `None` when
+/// `name_or_key` names no APG record.
+///
+/// A record's `KEY:` token always resolves. So does its display name,
+/// when the two differ — the 9 rows in [`ARCHETYPE_QUALIFIED_KEYS`] —
+/// because a caller may hold only the name a selection carries, with no
+/// archetype context. The KEY is tried first, so an exact record key can
+/// never be shadowed by another record's display name; within APG the
+/// question is moot, since no display name in that table is also a record
+/// key (asserted by `tests/spell_cross_book_identity.rs`).
+pub fn spell_resolve(name_or_key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
     if rule_set != RuleSetId::Apg {
         return None;
     }
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == name_or_key) {
+        return Some(entry);
+    }
+    let key = ARCHETYPE_QUALIFIED_KEYS
+        .iter()
+        .find(|(_, display)| *display == name_or_key)
+        .map(|(key, _)| *key)?;
     SPELL_LIST.iter().find(|entry| entry.key == key)
 }
