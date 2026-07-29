@@ -5000,13 +5000,31 @@ const MONK_KI_POOL_AND_SLOW_FALL_LEVEL: u8 = 4;
 /// legacy.aonprd.com both list "High jump, purity of body" as the Monk
 /// 5th-level special feature entry). High Jump, the OTHER 5th-level "Special"
 /// column entry, is deliberately left named-but-unproven this slice: it
-/// requires wiring the monk's level into an Acrobatics-check total (no
-/// skill-check-total engine exists in this codebase) and spending a ki point
-/// (an action-economy/resource-consumption engine this codebase deliberately
-/// does not implement for the ki pool either), so it is checked and confirmed
-/// NOT flat rather than fabricated. Purity of Body alone is grounded, since
-/// it is a flat, non-level-scaled grant (disease immunity) matching the
-/// Barbarian/Rogue Uncanny Dodge / Monk Slow Fall grant-only idiom exactly.
+/// requires wiring the monk's level into an Acrobatics-check total and
+/// spending a ki point (an action-economy/resource-consumption engine this
+/// codebase deliberately does not implement for the ki pool either), so it is
+/// checked and confirmed NOT flat rather than fabricated.
+///
+/// **Stale-justification correction (v0.6 Receipt-to-Sheet slice 1 item 5).**
+/// This comment used to justify the deferral with "no skill-check-total engine
+/// exists in this codebase". That is false, and has been for some time:
+/// `skill_allocation::allocate_skill_ranks` returns a real `SkillTotals` whose
+/// per-skill `total_modifier` sums ranks, the key ability modifier and the
+/// class-skill bonus, applies PF1's class/cross-class rank caps, and is wired
+/// into `PilotReceipt.skills` by `contract.rs`'s `to_pilot_receipt`. The
+/// deferral itself still stands, for two reasons that are actually true:
+///   * that engine's recognized skill universe is a bounded five
+///     (`skill:climb`, `skill:swim`, `skill:intimidate`, `skill:diplomacy`,
+///     `skill:disable_device` — see `skill_key_ability_modifier`), and
+///     Acrobatics is not in it, so there is no Acrobatics total to add to;
+///   * High Jump's bonus applies only to the *jump* use of Acrobatics, and
+///     `SkillTotal` has no sub-use dimension — folding it into a whole-skill
+///     total would silently inflate Acrobatics balance and tumble checks too,
+///     which is a wrong number rather than a missing one.
+///
+/// Purity of Body alone is grounded, since it is a flat, non-level-scaled
+/// grant (disease immunity) matching the Barbarian/Rogue Uncanny Dodge / Monk
+/// Slow Fall grant-only idiom exactly.
 const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
 /// The PF1 Core Rulebook level at which Diamond Body is granted (SD18):
 /// "at 11th level, a monk gains immunity to all poisons," verified
@@ -7361,6 +7379,15 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    // v0.6 Receipt-to-Sheet slice 1, item 4: the caster level for every
+    // casting class in the mix. Deliberately unconditional on chassis support
+    // and on spell-posture validity -- the caster level is a fact about class
+    // and level alone. Paladin and Ranger are excluded here because they
+    // already ground the identical arithmetic under their own
+    // `partial_caster.effective_caster_level` ids; see
+    // `CASTER_LEVEL_RULES`' doc comment.
+    ground_caster_level_records(input, &mut explanations);
+
     explain_human_pilot_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
     explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
@@ -7789,15 +7816,55 @@ const DWARF_DEFENSIVE_TRAINING_DODGE_BONUS: i16 = 4;
 ///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
 ///     the size/senses records carry the grounded source value as identity only, and
 ///     the Stonecunning, Greed, Hardy, Stability, and Defensive Training records each
-///     name only their own flat bonus magnitude (no Perception-check-total,
-///     Appraise-check-total, stonework-detection, goods-valuation, saving-throw-total,
-///     Combat-Maneuver-Defense-total, or Armor-Class-total engine exists),
+///     name only their own flat bonus magnitude, for the per-trait reasons set out
+///     in the stale-justification correction below,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
 ///     families explicitly (Hatred, weapon familiarity, and the explicit absence of
 ///     any Dwarf racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+///
+/// **Stale-justification correction (v0.6 Receipt-to-Sheet slice 1 item 5).**
+/// This comment used to justify all five bonus records with a single sweeping
+/// claim: "no Perception-check-total, Appraise-check-total,
+/// stonework-detection, goods-valuation, saving-throw-total,
+/// Combat-Maneuver-Defense-total, or Armor-Class-total engine exists". Three of
+/// those seven are false against today's code — the same disease
+/// `docs/release/v0.6/stale-deferral-sweep.md` found in the damage-reduction
+/// family, and the same one task #88 already corrected on
+/// `defense.baseline_armor_class` and `defense.total_save.*` elsewhere in this
+/// file. What is actually true, per trait:
+///   * **Stonecunning** (+2 Perception to notice unusual stonework) and
+///     **Greed** (+2 Appraise on precious metals and gemstones): a
+///     skill-check-total engine DOES exist —
+///     `skill_allocation::allocate_skill_ranks`'s `SkillTotals`, wired into
+///     `PilotReceipt.skills`. It does not recognize Perception or Appraise
+///     (its universe is the bounded five in `skill_key_ability_modifier`), and
+///     both bonuses are conditional on a sub-use a whole-skill total cannot
+///     express, so they stay standalone — but not for the stated reason.
+///   * **Hardy** (+2 vs poison, +2 vs spells and spell-like abilities): a
+///     saving-throw-total engine DOES exist — `compute_total_saves` produces
+///     `PilotBaseChassisComputation.total_saves` and the `defense.total_save.*`
+///     records, and it already folds in unconditional feat bonuses via
+///     `feat_effects::save_bonuses_from_feats`, so the plumbing for an
+///     unconditional racial save bonus is present. Hardy is not one: it is
+///     conditional on the save's SOURCE, and `BaseSaves` is three scalars
+///     (Fortitude/Reflex/Will) with no by-source dimension. Adding it to the
+///     total would apply it to every save, which is a wrong number.
+///   * **Stability** (+4 CMD vs bull rush and trip while on the ground): no
+///     Combat-Maneuver-Defense total exists anywhere in this codebase. This
+///     part of the original claim is still TRUE.
+///   * **Defensive Training** (+4 dodge to AC vs the giant subtype): an
+///     Armor-Class-total engine DOES exist — `defense.baseline_armor_class`
+///     from `compute_combat_baseline` (gated to the GE-06 equipment posture).
+///     The bonus stays out of it because it is conditional on the opponent's
+///     creature subtype, and `CharacterInput` models no opponent at all.
+///
+/// The pattern across all five: every one is correctly deferred, and every one
+/// was deferred for a reason the text stated wrongly. A conditional bonus that
+/// no total can express is a genuine deferral; "the total does not exist" was
+/// not.
 fn explain_dwarf_race_seam(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -7941,9 +8008,17 @@ fn explain_dwarf_race_seam(
     //     abilities (dwarf_abilities_race.lst:25
     //     BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial).
     // Both share the same flat magnitude, so this names only the flat
-    // save-bonus magnitude, not a saving-throw-total engine: no
-    // saving-throw-resolution engine exists anywhere in this codebase, so no
-    // check resolution is fabricated from this record.
+    // save-bonus magnitude and does not fold it into the save total.
+    //
+    // v0.6 Receipt-to-Sheet slice 1 item 5: the shipped detail below used to
+    // justify that with "no saving-throw-total engine exists anywhere in this
+    // codebase". That was false — `compute_total_saves` produces
+    // `PilotBaseChassisComputation.total_saves` and the `defense.total_save.*`
+    // records, and already folds in unconditional feat bonuses via
+    // `feat_effects::save_bonuses_from_feats`. The deferral is nonetheless
+    // correct, for the reason now stated instead: Hardy is conditional on what
+    // the save is AGAINST, and `BaseSaves` is three by-category scalars with no
+    // by-source dimension, so adding it would apply it to every save.
     explanations.push(ComputationExplanation {
         id: "race.dwarf.trait_bundle.hardy".to_owned(),
         value: DWARF_HARDY_SAVE_BONUS,
@@ -7956,9 +8031,14 @@ fn explain_dwarf_race_seam(
              BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
              bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
              identity on the deterministic pilot seam, mirroring the already-grounded Elf \
-             Elven Immunities enchantment-save-bonus idiom; no saving-throw-total engine \
-             exists anywhere in this codebase, so no check resolution is fabricated from this \
-             record"
+             Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
+             this character's integrated save totals, which do exist (`total_saves`, surfaced \
+             as the `defense.total_save.*` records, and already folding in unconditional feat \
+             save bonuses): both halves of Hardy are conditional on what the saving throw is \
+             against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
+             with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
+             would wrongly apply it to every save of that category. The magnitude is therefore \
+             reported standalone, and no check resolution is fabricated from this record"
         ),
     });
 
@@ -23328,6 +23408,401 @@ fn fractional_save_value(level: u8, good: bool) -> f64 {
 /// `None` for any other class id.
 fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
     good_saves_for(table_class_id(class_id)?)
+}
+
+/// PF1's own class-level ceiling, and the `MAXLEVEL:20` every CRB/APG/ACG
+/// class record in the corpus declares. There is no 21st character level, so
+/// nothing above this grounds a caster level.
+const PF1_MAX_CLASS_LEVEL: u8 = 20;
+
+/// One casting class's corpus-transcribed caster-level rule
+/// (v0.6 Receipt-to-Sheet slice 1 item 4; see
+/// `docs/release/v0.6/execution-engine-scoping.md` §3 and §7).
+///
+/// Every field is a verbatim transcription, never a summary. The two
+/// `BONUS:*` strings are what make this record auditable without leaving the
+/// file: a reader can grep the named corpus line and compare byte for byte.
+struct CasterLevelRule {
+    /// The `class:<name>` suffix this rule answers for.
+    class_name: &'static str,
+    /// The corpus file and line the `BONUS:CASTERLEVEL` token lives on.
+    token_source: &'static str,
+    /// That token, verbatim.
+    token: &'static str,
+    /// The `BONUS:VAR` chain resolving the token's variable to the class
+    /// level, verbatim. Empty for the four ACG classes whose token names the
+    /// class level (`CL`) directly and therefore needs no resolution.
+    resolution: &'static str,
+    /// The class level at which the corpus's own `PRECLASS:` gate on the
+    /// token opens. `1` where the token carries no gate at all.
+    first_casting_class_level: u8,
+    /// The corpus's declared `SPELLSTAT:` for the class. Carried purely so
+    /// the record can name it; no ability-score arithmetic is done with it
+    /// here (bonus spell slots and save DCs are explicitly out of scope).
+    spell_stat: &'static str,
+}
+
+/// Every class in this codebase's 27-class roster that casts, EXCEPT the two
+/// partial casters (see below), paired with the corpus rule that fixes its
+/// caster level.
+///
+/// **All seventeen resolve to "caster level = class level."** That uniformity
+/// is a finding, not an assumption — each entry was transcribed one at a time
+/// from its own `BONUS:CASTERLEVEL` token and the `BONUS:VAR` chain that token
+/// names, and the shared terms were checked rather than waved through:
+///
+///   * `Caster_Level_Bonus` is `DEFINE`d to 0 in
+///     `core_essentials/ce_abilities.lst:11`. It is raised only by opt-in
+///     content — the Orange Prism Ioun Stone (`cr_abilities.lst:555`) and the
+///     APG Magical Knack trait, whose own
+///     `BONUS:CASTERLEVEL|<Class>|min(2,(TL-(var("CL=<Class>")+var("BL=<Class>"))))`
+///     family (`apg_abilities.lst:82-103`) is trait content, not base-class
+///     content. Neither is base-class content, so both contribute 0 here.
+///     This is exactly the "`DEFINE`s to 0, real value arrives elsewhere"
+///     trap, checked rather than assumed.
+///   * Each `CasterLevelBL<Class>` term is likewise `DEFINE`d to 0 on the
+///     class line itself and raised only by bloodline/archetype records.
+///   * The `BONUS:CASTERLEVEL|<Class>.RESET|0` records
+///     (`apg_abilities_class.lst:3435-3437`, `acg_abilities_class.lst:1272`)
+///     that would zero a caster level outright are `TYPE:Internal.<Class>
+///     ClassFeatures` "No Spellcasting" abilities, granted only by
+///     spellcasting-removing archetypes this repo does not ingest. They are
+///     archetype-only records posing as base-class content, and are
+///     deliberately not applied.
+///   * No `.MOD` record anywhere in the corpus alters any of these tokens; the
+///     only `#`-disabled `BONUS:CASTERLEVEL` lines
+///     (`apg_abilities.lst:46`, `ce_abilities.lst:48`,
+///     `uca_abilities_traits.lst:111,113`) are commented-out duplicates and
+///     carry no effect.
+///
+/// **The Bloodrager trap.** Bloodrager's spell progression has precisely the
+/// Paladin/Ranger shape — first spells at class level 4 — which invites
+/// reading its caster level as `level - 3`. The corpus says otherwise: its
+/// token resolves to the *full* class level and only the gate is delayed. The
+/// literal `-3` appears on Paladin and Ranger alone (and on APG's Antipaladin,
+/// which is outside this codebase's roster). Deriving Bloodrager's caster level
+/// from its spell-progression table shape instead of from its
+/// `BONUS:CASTERLEVEL` token would have produced a number that is wrong by 3 at
+/// every one of its seventeen casting levels, 4 through 20.
+///
+/// **Why Paladin and Ranger are absent.** Both already ground this exact
+/// arithmetic under `class_chassis.<class>.partial_caster.effective_caster_level`
+/// (`explain_paladin_level1_chassis_and_spell_burden_separation` and
+/// `explain_ranger_level1_chassis_and_class_feature_separation`). Emitting a
+/// second record carrying the same number under a second id would be a
+/// duplicate free to drift from the original; a consumer wanting a uniform
+/// caster-level lookup should map those two ids, not read a copy.
+const CASTER_LEVEL_RULES: &[CasterLevelRule] = &[
+    // ----- PF1 Core Rulebook (`core_rulebook/cr_classes.lst`) -----
+    CasterLevelRule {
+        class_name: "bard",
+        token_source: "core_rulebook/cr_classes.lst:28",
+        token: "BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard",
+        resolution: "cr_classes.lst:24 BONUS:VAR|Caster_Level_BL_Stripped_Bard|\
+                     Caster_Level_Bard-CasterLevelBLBard and \
+                     BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard",
+        first_casting_class_level: 1,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "cleric",
+        token_source: "core_rulebook/cr_classes.lst:59",
+        token: "BONUS:CASTERLEVEL|Cleric|Caster_Level_BL_Stripped_Cleric",
+        resolution: "cr_classes.lst:55 BONUS:VAR|Caster_Level_BL_Stripped_Cleric|\
+                     Caster_Level_Cleric-CasterLevelBLCleric and \
+                     BONUS:VAR|Caster_Level_Cleric|CL+Caster_Level_Bonus+CasterLevelBLCleric",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+    CasterLevelRule {
+        class_name: "druid",
+        token_source: "core_rulebook/cr_classes.lst:99",
+        token: "BONUS:CASTERLEVEL|Druid|Caster_Level_BL_Stripped_Druid",
+        resolution: "cr_classes.lst:93 BONUS:VAR|Caster_Level_BL_Stripped_Druid|\
+                     Caster_Level_Druid-CasterLevelBLDruid and \
+                     BONUS:VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+    CasterLevelRule {
+        class_name: "sorcerer",
+        token_source: "core_rulebook/cr_classes.lst:250",
+        token: "BONUS:CASTERLEVEL|Sorcerer|Caster_Level_BL_Stripped_Sorcerer",
+        resolution: "cr_classes.lst:246 BONUS:VAR|Caster_Level_BL_Stripped_Sorcerer|\
+                     Caster_Level_Sorcerer-CasterLevelBLSorcerer and \
+                     BONUS:VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer",
+        first_casting_class_level: 1,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "wizard",
+        token_source: "core_rulebook/cr_classes.lst:281",
+        token: "BONUS:CASTERLEVEL|Wizard|Caster_Level_BL_Stripped_Wizard",
+        resolution: "cr_classes.lst:277 BONUS:VAR|Caster_Level_BL_Stripped_Wizard|\
+                     Caster_Level_Wizard-CasterLevelBLWizard, \
+                     BONUS:VAR|Caster_Level_Wizard|WizardLVL+Caster_Level_Bonus+CasterLevelBLWizard \
+                     and BONUS:VAR|WizardLVL|CL",
+        first_casting_class_level: 1,
+        spell_stat: "INT",
+    },
+    // ----- PF1 Advanced Player's Guide (`advanced_players_guide/apg_classes.lst`) -----
+    CasterLevelRule {
+        class_name: "alchemist",
+        token_source: "advanced_players_guide/apg_classes.lst:15",
+        token: "BONUS:CASTERLEVEL|Alchemist|Caster_Level_BL_Stripped_Alchemist",
+        resolution: "apg_classes.lst:11 BONUS:VAR|Caster_Level_BL_Stripped_Alchemist|\
+                     Caster_Level_Alchemist-CasterLevelBLAlchemist and \
+                     BONUS:VAR|Caster_Level_Alchemist|CL+Caster_Level_Bonus+CasterLevelBLAlchemist",
+        first_casting_class_level: 1,
+        spell_stat: "INT",
+    },
+    CasterLevelRule {
+        class_name: "inquisitor",
+        token_source: "advanced_players_guide/apg_classes.lst:56",
+        token: "BONUS:CASTERLEVEL|Inquisitor|Caster_Level_BL_Stripped_Inquisitor",
+        resolution: "apg_classes.lst:50 BONUS:VAR|Caster_Level_BL_Stripped_Inquisitor|\
+                     Caster_Level_Inquisitor-CasterLevelBLInquisitor and \
+                     BONUS:VAR|Caster_Level_Inquisitor|CL+Caster_Level_Bonus+CasterLevelBLInquisitor",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+    CasterLevelRule {
+        class_name: "oracle",
+        token_source: "advanced_players_guide/apg_classes.lst:111",
+        token: "BONUS:CASTERLEVEL|Oracle|Caster_Level_BL_Stripped_Oracle",
+        resolution: "apg_classes.lst:107 BONUS:VAR|Caster_Level_BL_Stripped_Oracle|\
+                     Caster_Level_Oracle-CasterLevelBLOracle and \
+                     BONUS:VAR|Caster_Level_Oracle|CL+Caster_Level_Bonus+CasterLevelBLOracle",
+        first_casting_class_level: 1,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "summoner",
+        token_source: "advanced_players_guide/apg_classes.lst:145",
+        token: "BONUS:CASTERLEVEL|Summoner|Caster_Level_BL_Stripped_Summoner",
+        resolution: "apg_classes.lst:139 BONUS:VAR|Caster_Level_BL_Stripped_Summoner|\
+                     Caster_Level_Summoner-CasterLevelBLSummoner and \
+                     BONUS:VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner",
+        first_casting_class_level: 1,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "witch",
+        token_source: "advanced_players_guide/apg_classes.lst:176",
+        token: "BONUS:CASTERLEVEL|Witch|Caster_Level_BL_Stripped_Witch",
+        resolution: "apg_classes.lst:172 BONUS:VAR|Caster_Level_BL_Stripped_Witch|\
+                     Caster_Level_Witch-CasterLevelBLWitch and \
+                     BONUS:VAR|Caster_Level_Witch|CL+Caster_Level_Bonus+CasterLevelBLWitch",
+        first_casting_class_level: 1,
+        spell_stat: "INT",
+    },
+    // ----- PF1 Advanced Class Guide (`advanced_class_guide/acg_classes.lst`) -----
+    CasterLevelRule {
+        class_name: "arcanist",
+        token_source: "advanced_class_guide/acg_classes.lst:15",
+        token: "BONUS:CASTERLEVEL|Arcanist|CL",
+        resolution: "",
+        first_casting_class_level: 1,
+        spell_stat: "INT",
+    },
+    CasterLevelRule {
+        class_name: "bloodrager",
+        token_source: "advanced_class_guide/acg_classes.lst:44",
+        token: "BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4",
+        resolution: "acg_classes.lst:40 BONUS:VAR|Caster_Level_Bloodrager|\
+                     BloodragerLVL+Caster_Level_Bonus+CasterLevelBLBloodrager and \
+                     BONUS:VAR|BloodragerLVL|CL",
+        first_casting_class_level: 4,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "hunter",
+        token_source: "advanced_class_guide/acg_classes.lst:114",
+        token: "BONUS:CASTERLEVEL|Hunter|CL",
+        resolution: "",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+    CasterLevelRule {
+        class_name: "investigator",
+        token_source: "advanced_class_guide/acg_classes.lst:172",
+        token: "BONUS:CASTERLEVEL|Investigator|Caster_Level_Investigator",
+        resolution: "acg_classes.lst:168 BONUS:VAR|Caster_Level_Investigator|\
+                     InvestigatorLVL+Caster_Level_Bonus+CasterLevelBLInvestigator and \
+                     BONUS:VAR|InvestigatorLVL|classlevel(\"APPLIEDAS=NONEPIC\"), which is the \
+                     class level for every level this codebase supports (1-20, all non-epic)",
+        first_casting_class_level: 1,
+        spell_stat: "INT",
+    },
+    CasterLevelRule {
+        class_name: "shaman",
+        token_source: "advanced_class_guide/acg_classes.lst:225",
+        token: "BONUS:CASTERLEVEL|Shaman|CL",
+        resolution: "",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+    CasterLevelRule {
+        class_name: "skald",
+        token_source: "advanced_class_guide/acg_classes.lst:278",
+        token: "BONUS:CASTERLEVEL|Skald|Caster_Level_BL_Stripped_Skald",
+        resolution: "acg_classes.lst:274 BONUS:VAR|Caster_Level_BL_Stripped_Skald|\
+                     Caster_Level_Skald-CasterLevelBLSkald, \
+                     BONUS:VAR|Caster_Level_Skald|SkaldLVL+Caster_Level_Bonus+CasterLevelBLSkald \
+                     and BONUS:VAR|SkaldLVL|CL",
+        first_casting_class_level: 1,
+        spell_stat: "CHA",
+    },
+    CasterLevelRule {
+        class_name: "warpriest",
+        token_source: "advanced_class_guide/acg_classes.lst:368",
+        token: "BONUS:CASTERLEVEL|Warpriest|CL",
+        // The same corpus line also carries `BONUS:CASTERLEVEL|Cleric|CL`,
+        // because Warpriest casts off `SPELLLIST:1|Cleric`. Both are the same
+        // number (the Warpriest's own class level), so the borrowed list
+        // changes nothing about the value here.
+        resolution: "",
+        first_casting_class_level: 1,
+        spell_stat: "WIS",
+    },
+];
+
+/// The caster-level rule for a `class:<name>` id, or `None` for a class that
+/// casts nothing (and for Paladin/Ranger, which ground their own).
+fn caster_level_rule(class_id: &str) -> Option<&'static CasterLevelRule> {
+    let name = class_id.strip_prefix("class:")?;
+    CASTER_LEVEL_RULES.iter().find(|r| r.class_name == name)
+}
+
+/// `"wizard"` -> `"Wizard"`, for the prose in a caster-level record. Every
+/// `CASTER_LEVEL_RULES` class name is lowercase ASCII, so uppercasing the
+/// first character is sufficient and cannot split a grapheme.
+fn capitalized_class_name(class_name: &str) -> String {
+    let mut chars = class_name.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+        None => String::new(),
+    }
+}
+
+/// Ground `class_chassis.<class>.caster_level` for every casting class in the
+/// character's mix (v0.6 Receipt-to-Sheet slice 1 item 4).
+///
+/// **What this unlocks.** The Spells tab already renders each spell's full
+/// description, so a scaling clause like *"1d6 points of damage per caster
+/// level (maximum 10d6)"* is already on the player's screen. It is unusable
+/// without the one number it multiplies, and before this record no full caster
+/// in the codebase had one — the only `caster_level` ids that existed were
+/// Monk's Abundant Step and the two partial casters'. Per
+/// `docs/release/v0.6/execution-engine-scoping.md` §4, computing the dice
+/// themselves is a corpus-authoring project (PCGen's spell schema carries no
+/// damage token at all); this is the ~1% of that effort that captures most of
+/// its value.
+///
+/// **Single-class only, levels 1-20**, matching the shape every existing
+/// `class_chassis.<class>.*` record already has. Both halves of that gate are
+/// load-bearing, and both were caught by the existing negative controls rather
+/// than assumed:
+///
+///   * **Multiclass is deliberately not promoted.** Every per-class slice in
+///     this file pins a `multiclass_<class>_level<N>_is_not_promoted_by_this_slice`
+///     control asserting that a mix surfaces NO `class_chassis.<class>.*` id at
+///     all; `compute_multiclass_base_chassis` likewise discards its per-class
+///     sub-computations' explanations on purpose. Emitting a per-class caster
+///     level into a mix would have broken 71 of those controls. A multiclass
+///     caster level is a real thing a player wants, but it belongs to whatever
+///     slice promotes the multiclass class-chassis surface as a whole, not to
+///     this one.
+///   * **Level 21+ grounds nothing.** PF1 has no 21st character level and every
+///     CRB/APG/ACG class record declares `MAXLEVEL:20`; each class's
+///     `<class>_level_21_is_not_promoted_by_this_slice` control pins that the
+///     range gate does not overshoot. An ungated loop broke 27 of those.
+///
+/// Within that gate it is unconditional on chassis support and on
+/// spell-posture validity: the caster level is a fact about the class and level
+/// alone, and a character blocked on some unrelated burden still has one.
+///
+/// **Bounded strictly to the caster level.** No spells known, no spells per
+/// day, no bonus spell slots from a high `SPELLSTAT`, no spell save DCs, and no
+/// per-spell dice are computed here. Every one of those remains exactly as
+/// deferred as it was before this record existed.
+fn ground_caster_level_records(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    // Single-class only -- see this function's doc comment. `let [x] = ...`
+    // mirrors `compute_class_chassis`'s own single-class dispatch exactly.
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return;
+    };
+    let Some(rule) = caster_level_rule(&class_level.class_id) else {
+        return;
+    };
+    let level = class_level.level;
+    if level == 0 || level > PF1_MAX_CLASS_LEVEL {
+        return;
+    }
+    let gated_off = level < rule.first_casting_class_level;
+    let caster_level = if gated_off { 0 } else { i16::from(level) };
+    let class_display = capitalized_class_name(rule.class_name);
+
+    let resolution_text = if rule.resolution.is_empty() {
+        // The token names `CL` directly, so there is no variable to chase.
+        "The token names the class level (`CL`) directly, so the caster level is the class \
+         level with no intermediate variable."
+            .to_owned()
+    } else {
+        format!(
+            "That token's variable resolves through {} — `Caster_Level_Bonus` is DEFINEd to 0 \
+             in core_essentials/ce_abilities.lst:11 and raised only by opt-in item/trait \
+             content, and the CasterLevelBL term is DEFINEd to 0 and raised only by \
+             bloodline/archetype records, so both contribute 0 to a base-class character.",
+            rule.resolution
+        )
+    };
+
+    let gate_text = if rule.first_casting_class_level > 1 {
+        if gated_off {
+            format!(
+                "The token is gated `PRECLASS:1,{class}={gate}`, and this character is \
+                 {class} {level}, below that gate, so the caster level is a correct absence \
+                 (0) rather than a fabricated number. Note that only the GATE is delayed: \
+                 from {class} level {gate} the caster level is the FULL class level, not \
+                 `level - 3` — the literal `-3` appears on Paladin and Ranger alone.",
+                class = class_display,
+                gate = rule.first_casting_class_level,
+            )
+        } else {
+            format!(
+                "The token is gated `PRECLASS:1,{class}={gate}` and this character is at or \
+                 above that gate. Only the gate is delayed: the caster level is the FULL \
+                 class level, not `level - 3`, despite the spell progression having the \
+                 Paladin/Ranger shape — the literal `-3` appears on Paladin and Ranger alone.",
+                class = class_display,
+                gate = rule.first_casting_class_level,
+            )
+        }
+    } else {
+        "The token carries no PRECLASS gate, so it applies from class level 1.".to_owned()
+    };
+
+    explanations.push(ComputationExplanation {
+        id: format!("class_chassis.{}.caster_level", rule.class_name),
+        value: caster_level,
+        detail: format!(
+            "{class} caster level at {class} level {level}: {caster_level}, transcribed from \
+             the corpus's own `{token}` ({source}). {resolution_text} {gate_text} The class's \
+             declared `SPELLSTAT:{stat}` is named for reference only. This grounds the caster \
+             level and nothing else: no spells known, no spells per day, no bonus spell slots \
+             from a high {stat}, no spell save DC, and no per-spell dice counts are computed \
+             from it. The Spells tab already renders each spell's own description text, which \
+             is where a \"per caster level\" scaling clause and its cap live",
+            class = class_display,
+            token = rule.token,
+            source = rule.token_source,
+            stat = rule.spell_stat,
+        ),
+    });
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
