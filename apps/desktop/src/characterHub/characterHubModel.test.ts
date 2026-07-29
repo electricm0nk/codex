@@ -1,119 +1,85 @@
-import { CLASS_OPTIONS, describeClassSupportLevel, getLevelOptionsForClass } from './characterHubModel';
+import {
+  CLASS_OPTIONS,
+  MAX_CLASS_LEVEL,
+  canTakeAnotherLevelIn,
+  clampLevelForClass,
+  describeClassSupportLevel,
+  getLevelOptionsForClass,
+} from './characterHubModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 
+/**
+ * `levelOptions` is the app's honest claim about which levels of a class a
+ * player can actually build. Its ground truth is
+ * `cargo run --bin v06_class_state_dump`, which sweeps every class over
+ * levels 1-20 through the real `build_pilot_headless_receipt` pipeline under
+ * the exact posture `compose_character_input` produces. The run of
+ * 2026-07-29 reports 11 of 27 classes `Computed` at every level 1-20 —
+ * barbarian, bard, cleric, druid, fighter, paladin, ranger, rogue, sorcerer,
+ * wizard (CRB) and arcanist (ACG) — and every other class `Blocked` at every
+ * level 1-20.
+ *
+ * These tests pin exactly that split. A class either offers the full 1-20
+ * range because the engine computes it there, or it offers only level 1 (the
+ * "let the player see the real blocking diagnostics" posture) because the
+ * engine computes it nowhere.
+ */
+
+/** The classes the engine dump reports `Computed` at every level 1-20. */
+const FULLY_COMPUTED_CLASS_IDS = [
+  'class:barbarian',
+  'class:bard',
+  'class:cleric',
+  'class:druid',
+  'class:fighter',
+  'class:paladin',
+  'class:ranger',
+  'class:rogue',
+  'class:sorcerer',
+  'class:wizard',
+  'class:arcanist',
+];
+
 async function main() {
-  verifiesFighterGetsThreeLevels();
-  verifiesRangerGetsFiveLevels();
-  verifiesPaladinGetsFiveLevels();
-  verifiesBarbarianGetsThreeLevels();
-  verifiesBardGetsThreeLevels();
-  verifiesSorcererGetsTwoLevels();
-  verifiesClericGetsThreeLevels();
-  verifiesDruidGetsOneLevelOnly();
-  verifiesEveryOtherClassGetsLevelOneOnly();
+  verifiesEveryEngineComputedClassOffersAllTwentyLevels();
+  verifiesArcanistIsSelectableAtAll();
+  verifiesEngineBlockedClassesStayAtLevelOneOnly();
   verifiesUnknownClassFallsBackToLevelOneOnly();
+  verifiesClampLevelForClassKeepsLevelsInsideTheClassRange();
+  verifiesCanTakeAnotherLevelInStopsAtTheVerifiedCeiling();
   verifiesSupportLevelCopyPerLevel();
 }
 
-function verifiesFighterGetsThreeLevels() {
-  const levels = getLevelOptionsForClass('class:fighter');
-  assertEqual(levels.length, 3, 'fighter level option count');
-  assertEqual(levels[0], 1, 'fighter level option 0');
-  assertEqual(levels[2], 3, 'fighter level option 2');
+function verifiesEveryEngineComputedClassOffersAllTwentyLevels() {
+  assertEqual(MAX_CLASS_LEVEL, 20, 'PF1 class ceiling');
+  for (const classId of FULLY_COMPUTED_CLASS_IDS) {
+    const levels = getLevelOptionsForClass(classId);
+    assertEqual(levels.length, 20, `${classId} level option count`);
+    assertEqual(levels[0], 1, `${classId} lowest level option`);
+    assertEqual(levels[19], 20, `${classId} highest level option`);
+    for (let index = 0; index < 20; index += 1) {
+      assertEqual(levels[index], index + 1, `${classId} level option ${index}`);
+    }
+  }
 }
 
-// Ranger genuinely reaches Computed past level 1 (verified against
-// pilot_compute.rs and live-verified through the real dev build: a fresh
-// Elf Ranger reaches Computed at level 1 and stays Computed leveling up
-// through level 4, past the point spells first become accessible; only a
-// single-class Human at level 1 specifically stays blocked). Not lumped in
-// with the level-1-only classes below, mirroring how Fighter already isn't.
-function verifiesRangerGetsFiveLevels() {
-  const levels = getLevelOptionsForClass('class:ranger');
-  assertEqual(levels.length, 5, 'ranger level option count');
-  assertEqual(levels[0], 1, 'ranger level option 0');
-  assertEqual(levels[4], 5, 'ranger level option 4');
+// Arcanist reaches `Computed` at every level 1-20 in the same engine dump the
+// CRB classes are read from, and `pf1_adapter.rs` already seeds its canonical
+// Metamagic Knowledge choice + starter spellbook on the real creation path --
+// it was simply absent from this picker, so no player could select it.
+function verifiesArcanistIsSelectableAtAll() {
+  const arcanist = CLASS_OPTIONS.find((option) => option.id === 'class:arcanist');
+  assert(arcanist !== undefined, 'Arcanist must be offered in the class picker');
+  assertEqual(arcanist?.label, 'Arcanist', 'arcanist label');
+  assertEqual(arcanist?.supportLevel, 'full', 'arcanist support level');
+  assertEqual(arcanist?.hitDie, 6, 'arcanist hit die');
 }
 
-// Paladin mirrors Ranger exactly (ee3c50ce, same explain_hybrid_level1_chassis
-// shape) -- live-verified through the real dev build the same way: fresh Human
-// Paladin 1 stays Blocked, fresh Elf Paladin 1 reaches Computed and stays
-// Computed leveling up through level 4.
-function verifiesPaladinGetsFiveLevels() {
-  const levels = getLevelOptionsForClass('class:paladin');
-  assertEqual(levels.length, 5, 'paladin level option count');
-  assertEqual(levels[0], 1, 'paladin level option 0');
-  assertEqual(levels[4], 5, 'paladin level option 4');
-}
-
-// Barbarian is genuinely `full` (no hybrid-level-1/Human carve-out at all --
-// unlike Ranger/Paladin, it never appears in hybrid_level1_class's match
-// arms). Live-verified through the real dev build: a fresh Human Barbarian 1
-// (the default, not-raging posture) and a fresh Dwarf Barbarian 1 both
-// reached Computed/Saved; leveling the Dwarf character up reached level 2
-// cleanly, disk-confirmed.
-function verifiesBarbarianGetsThreeLevels() {
-  const levels = getLevelOptionsForClass('class:barbarian');
-  assertEqual(levels.length, 3, 'barbarian level option count');
-  assertEqual(levels[0], 1, 'barbarian level option 0');
-  assertEqual(levels[2], 3, 'barbarian level option 2');
-}
-
-// Bard is genuinely `full` too (no special choice gate -- its known-spell
-// posture treats an empty spell list as honestly valid, same shape as
-// Ranger's prepared-spell posture). Live-verified: a fresh Human Bard 1
-// (default settings) reached Computed/Saved, disk-confirmed; leveling that
-// character up through the real LevelUpDialog reached level 2 cleanly.
-function verifiesBardGetsThreeLevels() {
-  const levels = getLevelOptionsForClass('class:bard');
-  assertEqual(levels.length, 3, 'bard level option count');
-  assertEqual(levels[0], 1, 'bard level option 0');
-  assertEqual(levels[2], 3, 'bard level option 2');
-}
-
-// Sorcerer/Cleric/Druid moved from `headless-only` to `full` once Path A's
-// canonical-default choice-seeding landed (9bafe303). Each still has its own
-// real level range, verified directly against pilot_compute.rs and
-// live-verified through the real dev build + LevelUpDialog:
-// - Sorcerer: Computed at levels 1-2 only (ARCANE_BLOODLINE_BONUS_LEVEL = 3);
-//   a real level-3 attempt correctly stayed at level 2 with the named
-//   bloodline-progression diagnostic shown, not silently advanced.
-// - Cleric: no level cap found; verified clean through level 3.
-// - Druid: Computed at EXACTLY level 1 (animal_companion_chosen_top &&
-//   druid_level == 1); a real level-2 attempt correctly stayed at level 1
-//   with the named animal-companion diagnostic shown.
-function verifiesSorcererGetsTwoLevels() {
-  const levels = getLevelOptionsForClass('class:sorcerer');
-  assertEqual(levels.length, 2, 'sorcerer level option count');
-  assertEqual(levels[0], 1, 'sorcerer level option 0');
-  assertEqual(levels[1], 2, 'sorcerer level option 1');
-}
-
-function verifiesClericGetsThreeLevels() {
-  const levels = getLevelOptionsForClass('class:cleric');
-  assertEqual(levels.length, 3, 'cleric level option count');
-  assertEqual(levels[0], 1, 'cleric level option 0');
-  assertEqual(levels[2], 3, 'cleric level option 2');
-}
-
-function verifiesDruidGetsOneLevelOnly() {
-  const levels = getLevelOptionsForClass('class:druid');
-  assertEqual(levels.length, 1, 'druid level option count');
-  assertEqual(levels[0], 1, 'druid level option 0');
-}
-
-function verifiesEveryOtherClassGetsLevelOneOnly() {
+function verifiesEngineBlockedClassesStayAtLevelOneOnly() {
   for (const option of CLASS_OPTIONS) {
-    if (
-      option.id === 'class:fighter' ||
-      option.id === 'class:ranger' ||
-      option.id === 'class:paladin' ||
-      option.id === 'class:barbarian' ||
-      option.id === 'class:bard' ||
-      option.id === 'class:sorcerer' ||
-      option.id === 'class:cleric'
-    )
+    if (FULLY_COMPUTED_CLASS_IDS.includes(option.id)) {
       continue;
+    }
     const levels = getLevelOptionsForClass(option.id);
     assertEqual(levels.length, 1, `${option.id} level option count`);
     assertEqual(levels[0], 1, `${option.id} level option 0`);
@@ -124,6 +90,30 @@ function verifiesUnknownClassFallsBackToLevelOneOnly() {
   const levels = getLevelOptionsForClass('class:does-not-exist');
   assertEqual(levels.length, 1, 'unknown class level option count');
   assertEqual(levels[0], 1, 'unknown class level option 0');
+}
+
+// Switching the class picker must never leave a level selected that the newly
+// chosen class does not actually offer -- e.g. Fighter 20 -> Monk has to fall
+// back to 1, the only level Monk offers, rather than submitting a level the
+// engine reports Blocked.
+function verifiesClampLevelForClassKeepsLevelsInsideTheClassRange() {
+  assertEqual(clampLevelForClass('class:fighter', 20), 20, 'fighter keeps level 20');
+  assertEqual(clampLevelForClass('class:monk', 20), 1, 'monk clamps down to its only level');
+  assertEqual(clampLevelForClass('class:arcanist', 12), 12, 'arcanist keeps a mid level');
+  assertEqual(clampLevelForClass('class:does-not-exist', 7), 1, 'unknown class clamps to 1');
+  assertEqual(clampLevelForClass('class:wizard', 0), 1, 'a level below the range clamps up to 1');
+}
+
+// The level-up dialog must not offer a class level past what the engine dump
+// verified. PF1 itself stops at 20, and the dump sweeps exactly 1-20, so a
+// 21st level is not "supported but untested" -- it is unverified reach.
+function verifiesCanTakeAnotherLevelInStopsAtTheVerifiedCeiling() {
+  assert(canTakeAnotherLevelIn('class:fighter', 0), 'a brand-new Fighter level is available');
+  assert(canTakeAnotherLevelIn('class:fighter', 19), 'Fighter 19 -> 20 is available');
+  assert(!canTakeAnotherLevelIn('class:fighter', 20), 'Fighter 20 -> 21 must not be offered');
+  assert(canTakeAnotherLevelIn('class:monk', 0), 'a first Monk level is still offered (it shows real diagnostics)');
+  assert(!canTakeAnotherLevelIn('class:monk', 1), 'Monk 1 -> 2 must not be offered');
+  assert(canTakeAnotherLevelIn('class:arcanist', 5), 'Arcanist 5 -> 6 is available');
 }
 
 function verifiesSupportLevelCopyPerLevel() {

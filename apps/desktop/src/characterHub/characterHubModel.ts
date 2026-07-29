@@ -195,37 +195,63 @@ export interface ClassOption {
 }
 
 /**
- * The full PF1 core rulebook class roster.
+ * PF1's own class ceiling, and the exact ceiling
+ * `src/bin/v06_class_state_dump.rs` sweeps to (`MAX_LEVEL: u8 = 20`) — the
+ * two must agree, or `levelOptions` would be claiming a level the engine
+ * dump never checked.
+ */
+export const MAX_CLASS_LEVEL = 20;
+
+/**
+ * Every level 1-20, shared by each class the engine dump reports `Computed`
+ * at all of them. A shared frozen array rather than 11 copies: these entries
+ * are not independent judgements that happen to coincide, they are one fact
+ * ("the dump says all 20 levels compute") read off in eleven places.
+ */
+const EVERY_CLASS_LEVEL: number[] = Object.freeze(
+  Array.from({ length: MAX_CLASS_LEVEL }, (_unused, index) => index + 1)
+) as number[];
+
+/**
+ * The classes this app offers. All eleven PF1 Core Rulebook classes, plus
+ * every non-CRB class the engine can actually build — currently just ACG's
+ * Arcanist. This is deliberately not "every class in every book": a class
+ * belongs here only when `v06_class_state_dump` gives it real levels to
+ * offer, or (like Monk) when creating it surfaces the engine's own named
+ * blocking diagnostics rather than a generic failure.
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
- * `pilot_compute.rs`'s per-class `explain_*` functions (a
- * `human-diagnostics-only` class carries its own "This deliberately does
- * not compute a supported ... chassis/surface" doc comment, and the compute
- * path stays claim-blocked for Human exactly as it does for every other
- * race) and live-verified for Barbarian specifically back when it was in
- * this same bucket (a fresh Human Barbarian creation attempt returned
- * `Blocked` with named rage-burden diagnostics instead of the 4 generic
- * ones) — since superseded now that Barbarian's rage-execution engine is
- * real; see its own note below. Cleric and Druid have since moved out of
- * this bucket entirely (see the `full` note below) once their own
- * domain-powers/animal-companion burdens stopped being *permanently*
- * unconditional, and Monk followed on 2026-07-29 (see its own note below)
- * — as of which NO class in this roster is `human-diagnostics-only` any
- * more. The variant is kept because the distinction it draws is still the
- * honest one to reach for if a future class lands in that state; it is not
- * describing anything shipped today.
+ * `pilot_compute.rs`'s per-class `explain_*` functions (each of Monk and
+ * the other still-`human-diagnostics-only` classes carries its own "This
+ * deliberately does not compute a supported ... chassis/surface" doc
+ * comment, and the compute path stays claim-blocked for Human exactly as
+ * it does for every other race) and live-verified for Barbarian
+ * specifically back when it was in this same bucket (a fresh Human
+ * Barbarian creation attempt returned `Blocked` with named rage-burden
+ * diagnostics instead of the 4 generic ones) — since superseded now that
+ * Barbarian's rage-execution engine is real; see its own note below.
+ * Cleric and Druid have since moved out of this bucket entirely (see the
+ * `full` note below) once their own domain-powers/animal-companion
+ * burdens stopped being *permanently* unconditional.
  *
- * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
- * class-breadth epic, 2026-07-25): both reached real `Computed` status once
- * their spell posture was genuinely computed (`b7642d97` Ranger,
- * `ee3c50ce` Paladin) rather than left as an unconditional blocker. Both
- * still share `explain_hybrid_level1_chassis`'s original, untouched
- * single-class-Human-at-level-1 gate, so that one combination stays
- * `Blocked` while every other race/level combination genuinely computes —
- * see the `full-except-human-level-1` doc above for the live-verification
- * detail (repeated independently for each class: Human blocked at level 1,
- * Elf computed at level 1 and through level 4 of leveling up).
+ * Paladin and Ranger are now plain `full`. They were
+ * `full-except-human-level-1` from 2026-07-25 (class-breadth epic:
+ * `b7642d97` Ranger, `ee3c50ce` Paladin gave both a genuinely computed
+ * spell posture), because both still shared
+ * `explain_hybrid_level1_chassis`'s single-class-Human-at-level-1 gate —
+ * that one race/level combination stayed `Blocked` while every other one
+ * computed. **That gate is gone** (corrected 2026-07-29): the level sweep
+ * in `cargo run --bin v06_class_state_dump` runs on the Human fixture and
+ * reports both classes `Computed` at every level 1-20, level 1 included.
+ * Live-verified through the real dev build, not inferred from the dump: a
+ * fresh Human Paladin 1 and a fresh Human Ranger 1 each reached
+ * `Computed`/`Saved` with real distinct stat blocks (Paladin BAB +1 /
+ * Fort +4 / Will +3; Ranger BAB +1 / Fort +4 / Ref +4), and both also
+ * computed and saved at level 20. The `full-except-human-level-1` support
+ * level itself is deliberately kept in `ClassSupportLevel` — no class
+ * currently uses it, but it describes a real shape the engine can produce
+ * again, and its copy is still covered by this file's tests.
  *
  * Wizard and Rogue are `full`, not `partial-human-only` as this file
  * previously (incorrectly) had them: `supported_wizard_level` /
@@ -281,71 +307,80 @@ export interface ClassOption {
  * checked directly, not assumed: none of the three appear in
  * `hybrid_level1_class`'s match arms, and each of their own
  * bloodline/domain/nature-bond checks is explicitly coded and documented
- * as race-independent, evaluated before any Human-only gate. But two of
- * the three have a real, separate LEVEL cap this file's `levelOptions`
- * must respect, or the `full` label would overclaim:
- * - **Sorcerer**: this entry NO LONGER has an engine level cap (corrected
- *   2026-07-29). It previously read: "`ARCANE_BLOODLINE_BONUS_LEVEL = 3` —
- *   Computed for any race at levels 1-2 only; level 3+ stays genuinely
- *   `Blocked` (bloodline bonus spells/feats at 3rd+ aren't grounded)",
- *   which was live-verified true at the time. It is now false:
- *   `ground_sorcerer_arcane_bloodline_progression` grounds the Arcane
- *   bloodline's whole 3rd-and-above progression from the corpus, and
- *   `cargo run --bin v06_class_state_dump` reports Sorcerer `Computed` at
- *   every level 1-20 under this exact seeded posture (Arcane bloodline +
- *   familiar bond, which `pf1_adapter.rs` already applies). The `[1, 2]`
- *   below is therefore no longer an engine blocker — it is only this
- *   file's conservative live-verified-range convention, the same lag that
- *   leaves Wizard at `[1]` while the engine computes it at all 20 levels.
- *   Raising it is a UI-side change needing its own live `LevelUpDialog`
- *   verification, deliberately not made here alongside the engine fix.
- * - **Cleric**: no level cap found (Good domain, without Healing, has no
- *   level-gated condition anywhere in `explain_cleric_level1_spell_baseline`).
- *   Live-verified: a fresh Human Cleric 1 reached `Computed`/`Saved`,
- *   disk-confirmed; leveled cleanly through level 3 with no blocker.
- * - **Druid**: Computed only at EXACTLY level 1 — the code's own condition
- *   is `animal_companion_chosen_top && druid_level == 1`; level 2+ falls
- *   to the catch-all `Blocked` diagnostic (companion advancement isn't
- *   grounded past level 1). Live-verified: a fresh Human Druid 1 reached
- *   `Computed`/`Saved`, disk-confirmed; attempting level 2 through the
- *   real `LevelUpDialog` correctly stayed at level 1 with the real
- *   `class_feature.druid.animal_companion.unsupported` diagnostic shown.
+ * as race-independent, evaluated before any Human-only gate.
  *
- * - **Monk**: promoted from `human-diagnostics-only` to `full` (2026-07-29,
- *   choice-picker Path A). Monk's engine always could compute a complete
- *   build; its one claim-blocking diagnostic
- *   (`class_feature.monk.bounded_progression.bonus_feat.unsupported`) fired
- *   only because nothing seeded `choice:monk_bonus_feat`. `pf1_adapter.rs`'s
- *   `compose_character_input` now seeds the canonical
- *   `choice:monk_bonus_feat -> feat:dodge`, and the fixed loadout already
- *   carries `feat:dodge` on `selected_feats`, so the engine's own
- *   genuinely-active cross-check passes and it grounds the real +1 dodge AC
- *   bonus. `full` is earned, not assumed:
- *   `monk_level1_reaches_computed_for_every_race_the_ui_offers` pins
- *   `Computed` for all seven races in `RACE_OPTIONS`, and
- *   `cargo run --bin v06_class_state_dump` reports Monk
- *   `levels_blocked: []` across all 20 levels.
- *   `levelOptions` deliberately stays `[1]`: that is the same conservative
- *   lag Wizard and Rogue already carry (both engine-computed at every level,
- *   both offered at `[1]`). Raising it is a UI-side change needing its own
- *   live `LevelUpDialog`/creation-form verification, not made here alongside
- *   the backend fix.
+ * Arcanist is `full` too, and is the first non-CRB class offered here
+ * (v0.6 alpha swarm, class-picker breadth, 2026-07-29). Its Path A gap
+ * closed the same way Wizard's did: `compose_character_input`
+ * (`pf1_adapter.rs`) seeds the canonical Metamagic Knowledge exploit plus
+ * a starter spellbook on the real creation path, and does the same on the
+ * multiclass-dip path. The backend has accepted `class:arcanist` since
+ * then; this picker simply never listed it, so no player could reach it.
  *
- * `levelOptions` reflects exactly this: Sorcerer `[1, 2]`, Cleric
- * `[1, 2, 3]` (Fighter's own conservative verified-range convention, not
- * the theoretical max), Druid `[1]` only, Monk `[1]` only.
+ * ## Where `levelOptions` comes from
+ *
+ * `levelOptions` used to lag well behind the engine by convention — each
+ * entry only listed the levels somebody had personally driven through the
+ * running app, so Wizard/Rogue/Druid sat at `[1]` and Sorcerer at `[1, 2]`
+ * long after the engine computed them at all 20. That convention has been
+ * replaced with a checkable one: **`levelOptions` is exactly what
+ * `cargo run --bin v06_class_state_dump` reports as `Computed`**, spot-
+ * checked live rather than exhaustively re-driven.
+ *
+ * That dump is not a summary of this file — it sweeps every class over
+ * levels 1-20 through the real `build_pilot_headless_receipt` pipeline,
+ * under the exact input posture `compose_character_input` composes for a
+ * freshly created character (same fixture, same canonical choice/spell
+ * seeds). Its 2026-07-29 run reports 11 of 27 classes `Computed` at every
+ * level 1-20 — barbarian, bard, cleric, druid, fighter, paladin, ranger,
+ * rogue, sorcerer, wizard, arcanist — and every other class `Blocked` at
+ * every level 1-20.
+ *
+ * **Monk is the one deliberate exception to the rule above** (merge of
+ * two concurrent 2026-07-29 changes). Its Path A seed landed after this
+ * sweep ran, so the dump now reports Monk `Computed` at all 20 levels and
+ * its `supportLevel` is `full` -- earned by a test pinning `Computed` for
+ * all seven races in `RACE_OPTIONS`, not assumed. But Monk was NOT among
+ * the classes driven live at level 20 here, so `levelOptions` stays `[1]`
+ * rather than being widened on dump evidence alone. Widening it needs the
+ * same live creation/LevelUpDialog pass the other eleven got.
+ *
+ * So each of those 11 offers the full 1-20 range, and everything else
+ * offers `[1]` only (the "create it and read the engine's real blocking
+ * diagnostics" posture — not a claim that level 1 works). Re-run the dump
+ * before editing any `levelOptions` value; do not widen a class the dump
+ * reports `Blocked`, and do not leave a `Computed` class artificially
+ * capped.
+ *
+ * Live-verified 2026-07-29 through the real dev build at the new ceiling,
+ * rather than at every one of the 220 class/level pairs this opens: all
+ * eleven classes were created at level **20** and each reached
+ * `Computed`/`Saved` with real, class-distinct stat blocks, disk-confirmed
+ * (`class_level=class:<name>:20` in each `authoritative_character_input`).
+ * Level 1 was driven for Human Paladin/Ranger specifically (the old
+ * carve-out) and for Wizard. The `LevelUpDialog` path was driven
+ * separately, because creating at a level and leveling up to it are
+ * different code paths: a Wizard created at level 1 leveled cleanly to 2
+ * and then 3 (the level-3 feat grant correctly routed through the real
+ * feat picker first), disk-confirmed at `class:wizard:3`.
+ *
+ * Intermediate levels (2-19) are covered by the engine dump but were not
+ * each driven by hand. If one of them ever turns out to break the running
+ * UI while computing headlessly, the fix is to carve that level out of
+ * this list and say so here — not to widen quietly.
  */
 export const CLASS_OPTIONS: ClassOption[] = [
-  { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
-  { id: 'class:paladin', label: 'Paladin', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:ranger', label: 'Ranger', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'full', levelOptions: [1, 2], hitDie: 6 },
-  { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
-  { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
-  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 12 },
-  { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
+  { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:paladin', label: 'Paladin', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:ranger', label: 'Ranger', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 12 },
+  { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:arcanist', label: 'Arcanist', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
   { id: 'class:monk', label: 'Monk', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
 ];
 
@@ -353,6 +388,36 @@ const DEFAULT_LEVEL_OPTIONS: number[] = [1];
 
 export function getLevelOptionsForClass(classId: string): number[] {
   return CLASS_OPTIONS.find((option) => option.id === classId)?.levelOptions ?? DEFAULT_LEVEL_OPTIONS;
+}
+
+/**
+ * Keep a chosen level valid for the class it is being applied to. The class
+ * and level pickers are independent controls, so switching class can strand a
+ * level the new class does not offer (Fighter 20 → Monk, whose only offered
+ * level is 1). Falls back to the highest level the class does offer, so
+ * switching between two fully-computed classes preserves the player's level
+ * rather than silently resetting them to 1.
+ */
+export function clampLevelForClass(classId: string, level: number): number {
+  const options = getLevelOptionsForClass(classId);
+  if (options.includes(level)) {
+    return level;
+  }
+  const highest = options[options.length - 1] ?? 1;
+  return level < highest ? options[0] ?? 1 : highest;
+}
+
+/**
+ * Whether `LevelUpDialog` may offer another level in this class, given how
+ * many levels of it the character already holds (`0` for a class they have
+ * never taken). This is the same `levelOptions` claim the creation picker
+ * makes, applied to the other way into a level: a class the engine dump
+ * reports `Blocked` past level 1 must not be reachable by leveling up either,
+ * and no class may pass PF1's own level-20 ceiling — the dump sweeps exactly
+ * 1-20, so a 21st level is unverified reach, not merely untested.
+ */
+export function canTakeAnotherLevelIn(classId: string, currentClassLevel: number): boolean {
+  return getLevelOptionsForClass(classId).includes(currentClassLevel + 1);
 }
 
 export function describeClassSupportLevel(supportLevel: ClassSupportLevel, classLabel: string): string {
@@ -449,10 +514,12 @@ export function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
-/** Level-1 HP: the class hit die maximum plus the constitution modifier (floored at 1). */
-export function maxHitPointsAtLevelOne(hitDie: number, constitutionScore: number): number {
-  return Math.max(1, hitDie + abilityModifier(constitutionScore));
-}
+// `maxHitPointsAtLevelOne` used to live here. Its only caller was
+// `CreateCharacterForm`'s HP preview, which could assume level 1 back when the
+// form hardcoded that level. Now that the form has a real Level picker it uses
+// `characterProgression`'s `maxHitPoints` instead — the same function the
+// character sheet uses, so the previewed HP and the created character's HP
+// cannot disagree. Nothing else referenced the level-1-only version.
 
 /** Sum of `count` dice with `sides` faces. */
 export function rollDice(count: number, sides: number): number {

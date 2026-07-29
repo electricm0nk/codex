@@ -100,17 +100,27 @@ function verifiesCasterLevelOnlyCountsFullCasterClasses() {
   );
   assertEqual(casterLevel('class:wizard:2,class:sorcerer:3'), 5, 'caster level sums across multiple caster classes held at once');
   assertEqual(casterLevel('class:fighter:5'), 0, 'a character with no caster class has caster level 0');
+  // Arcanist is a full arcane caster (ACG): its caster level is its class
+  // level, exactly like Wizard's. Now that it is selectable in CLASS_OPTIONS,
+  // omitting it here would silently show every Arcanist a caster level of 0.
+  assertEqual(casterLevel('class:arcanist:7'), 7, 'Arcanist is a full caster — caster level equals its class level');
+  assertEqual(casterLevel('class:fighter:2,class:arcanist:3'), 3, 'a Fighter/Arcanist counts only the Arcanist levels');
 }
 
 function verifiesClassSkillPointsBaseAndDefault() {
   assertEqual(classSkillPointsBase('class:rogue'), 8, 'Rogue has 8 base skill points per level');
   assertEqual(classSkillPointsBase('class:fighter'), 2, 'Fighter has 2 base skill points per level');
   assertEqual(classSkillPointsBase('class:some_future_class'), 2, 'an unrecognized class defaults to 2 base skill points');
+  // ACG Arcanist: 3 + Int modifier skill ranks per level. Without its own
+  // entry it would fall through to the unrecognized-class default of 2 and
+  // quietly under-report every Arcanist's skill ranks.
+  assertEqual(classSkillPointsBase('class:arcanist'), 3, 'Arcanist has 3 base skill points per level');
 }
 
 function verifiesClassHitDieAndDefault() {
   assertEqual(classHitDie('class:wizard'), 6, 'Wizard has a d6 hit die');
   assertEqual(classHitDie('class:fighter'), 10, 'Fighter has a d10 hit die');
+  assertEqual(classHitDie('class:arcanist'), 6, 'Arcanist has a d6 hit die');
   assertEqual(classHitDie('class:some_future_class'), 8, 'an unrecognized class defaults to a d8 hit die');
 }
 

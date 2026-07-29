@@ -7,11 +7,13 @@ import {
   CLASS_OPTIONS,
   DEFAULT_ABILITY_SCORES,
   RACE_OPTIONS,
+  abilityModifier,
   ageEffectForAbility,
+  clampLevelForClass,
   classSupportLevelSuffix,
   describeClassSupportLevel,
   formatHeight,
-  maxHitPointsAtLevelOne,
+  getLevelOptionsForClass,
   rollDice,
   type AbilityKey,
   type AgeCategory,
@@ -35,6 +37,7 @@ import {
   rollStraightAbilityScores,
   type AbilityScoreMethodId,
 } from './abilityScoreMethods';
+import { maxHitPoints } from './characterProgression';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -114,7 +117,12 @@ function stepButtonStyle(enabled: boolean): CSSProperties {
   };
 }
 
-const FIXED_LEVEL = 1;
+/**
+ * Every character starts at level 1 unless the player raises the Level
+ * picker. This is the starting value, not a cap — the cap is per class, and
+ * comes from `getLevelOptionsForClass`.
+ */
+const STARTING_LEVEL = 1;
 
 type Allocation = Record<AbilityKey, number>;
 const ZERO_ALLOCATION: Allocation = {
@@ -158,6 +166,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [playerName, setPlayerName] = useState('');
   const [raceId, setRaceId] = useState(RACE_OPTIONS[0].id);
   const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
+  const [level, setLevel] = useState(STARTING_LEVEL);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
   const [allocation, setAllocation] = useState<Allocation>({ ...ZERO_ALLOCATION });
   const [method, setMethod] = useState<AbilityScoreMethodId>('manual');
@@ -202,7 +211,25 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
     return rawScore(key) + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key] + ageEffectForAbility(age, key);
   }
 
-  const maxHp = maxHitPointsAtLevelOne(selectedClass.hitDie, calculatedScore('constitution'));
+  const levelOptions = getLevelOptionsForClass(classId);
+
+  // Shares `maxHitPoints` with the character sheet rather than a level-1-only
+  // shortcut, so the HP shown here matches what the sheet will show for the
+  // level actually being created (PF1: max hit die at 1st, average after).
+  const maxHp = maxHitPoints(
+    [{ classId, classLabel: selectedClass.label, level }],
+    abilityModifier(calculatedScore('constitution'))
+  );
+
+  /**
+   * Selecting a class can strand a level that class does not offer (Fighter 20
+   * → Monk, whose only offered level is 1), so the level is re-clamped here
+   * rather than left to fail at submit time.
+   */
+  function handleClassChange(nextClassId: string) {
+    setClassId(nextClassId);
+    setLevel((current) => clampLevelForClass(nextClassId, current));
+  }
 
   function handleMethodChange(nextMethod: AbilityScoreMethodId) {
     setMethod(nextMethod);
@@ -314,7 +341,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
       // Human (see `applyRacialAbilityAdjustments`'s own doc comment).
       const finalAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, classId, level: FIXED_LEVEL, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
+        { displayLabel, raceId, classId, level, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -379,7 +406,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
               <label style={LABEL_STYLE} htmlFor="character-class">
                 Class
               </label>
-              <select id="character-class" style={INPUT_STYLE} value={classId} onChange={(event) => setClassId(event.target.value)}>
+              <select id="character-class" style={INPUT_STYLE} value={classId} onChange={(event) => handleClassChange(event.target.value)}>
                 {CLASS_OPTIONS.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.label}
@@ -393,8 +420,26 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
             {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
           </p>
 
-          {/* HP (computed) + Alignment + Deity — the old level row */}
+          {/* Level + HP (computed) + Alignment + Deity */}
           <div style={ROW_STYLE}>
+            {/* Only the levels `getLevelOptionsForClass` reports for this
+                class — i.e. exactly the levels the engine dump computes.
+                A single-option select still renders (Monk), so the ceiling
+                is visible rather than silently absent. */}
+            <LabeledField label="Level" htmlFor="character-level" flex="0 0 96px">
+              <select
+                id="character-level"
+                style={INPUT_STYLE}
+                value={level}
+                onChange={(event) => setLevel(Number(event.target.value))}
+              >
+                {levelOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </LabeledField>
             <LabeledField label="HP" flex="0 0 96px">
               <ReadOnlyBox value={String(maxHp)} />
             </LabeledField>

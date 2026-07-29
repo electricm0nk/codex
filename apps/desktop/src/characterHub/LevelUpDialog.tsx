@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CLASS_OPTIONS, describeClassSupportLevel } from './characterHubModel';
+import { CLASS_OPTIONS, canTakeAnotherLevelIn, describeClassSupportLevel } from './characterHubModel';
 import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterProgression';
 
 /**
@@ -26,11 +26,32 @@ export function LevelUpDialog(props: {
 }) {
   const [classId, setClassId] = useState<string>('');
 
+  /**
+   * Only the classes whose *next* level this app actually claims to build.
+   * `levelOptions` (via `canTakeAnotherLevelIn`) is the same engine-dump-
+   * derived claim the creation picker makes, and leveling up is the other way
+   * into a level — so a class the dump reports `Blocked` past level 1 must not
+   * be reachable here either, and nothing may pass PF1's level-20 ceiling.
+   * Filtering rather than disabling: an option that can never be chosen is
+   * noise, and the character's current level is already shown in the sheet.
+   */
+  const levelableOptions = CLASS_OPTIONS.filter((option) =>
+    canTakeAnotherLevelIn(option.id, props.heldClasses.find((held) => held.classId === option.id)?.level ?? 0)
+  );
+
   useEffect(() => {
     if (!props.open) {
       return;
     }
-    setClassId((current) => current || props.heldClasses[0]?.classId || CLASS_OPTIONS[0].id);
+    setClassId((current) => {
+      if (current && levelableOptions.some((option) => option.id === current)) {
+        return current;
+      }
+      const firstHeldAndLevelable = props.heldClasses.find((held) =>
+        levelableOptions.some((option) => option.id === held.classId)
+      );
+      return firstHeldAndLevelable?.classId ?? levelableOptions[0]?.id ?? '';
+    });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         props.onClose();
@@ -117,7 +138,7 @@ export function LevelUpDialog(props: {
               width: '100%',
             }}
           >
-            {CLASS_OPTIONS.map((option) => {
+            {levelableOptions.map((option) => {
               const held = props.heldClasses.find((entry) => entry.classId === option.id);
               return (
                 <option key={option.id} value={option.id}>

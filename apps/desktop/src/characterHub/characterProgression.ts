@@ -9,6 +9,7 @@ import { CLASS_OPTIONS } from './characterHubModel';
 
 /** Base skill ranks per level for each class, before the Intelligence modifier. */
 const CLASS_SKILL_POINTS: Record<string, number> = {
+  'class:arcanist': 3,
   'class:barbarian': 4,
   'class:bard': 6,
   'class:cleric': 2,
@@ -250,7 +251,16 @@ export function totalCharacterLevel(classSummary: string): number {
 }
 
 // PF1 full spellcasting classes — their levels sum into the caster level.
-const CASTER_CLASSES = new Set(['class:wizard', 'class:sorcerer', 'class:cleric', 'class:druid', 'class:bard']);
+// Arcanist (ACG) is a full arcane caster like Wizard: caster level equals its
+// class level, so it belongs here the moment it becomes selectable.
+const CASTER_CLASSES = new Set([
+  'class:wizard',
+  'class:sorcerer',
+  'class:cleric',
+  'class:druid',
+  'class:bard',
+  'class:arcanist',
+]);
 
 /** Caster level: total levels in full spellcasting classes (0 for a non-caster). */
 export function casterLevel(classSummary: string): number {
