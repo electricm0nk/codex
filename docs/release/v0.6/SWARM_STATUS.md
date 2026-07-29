@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-29T06:40:01
-Latest commit on tranche/6: 1a3883a7 fix(v0.6): resolve archetype-qualified spells by either corpus name column (2 minutes ago) (2026-07-29T06:38:09-04:00)
+Last mechanical check: 2026-07-29T06:45:02
+Latest commit on tranche/6: 95ea0b6c chore(v0.6): auto-heartbeat refresh [skip lead-review] (5 minutes ago) (2026-07-29T06:40:01-04:00)
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
