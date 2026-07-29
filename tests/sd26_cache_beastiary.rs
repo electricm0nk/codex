@@ -22,6 +22,9 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
+use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_tables::beastiary1::monster_key_resolve;
+
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
@@ -220,6 +223,87 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
         "beastiary1:monster:hell_hound",
     ] {
         assert!(ids.contains(expected), "expected id {expected:?} present in cache");
+    }
+}
+
+/// Exhaustive corpus-vs-table field equality for all 41 monsters.
+///
+/// The two neighbouring monster tests above are deliberately partial:
+/// `monster_cache_line_citations_match_the_real_corpus_for_spot_checked_entries`
+/// and `monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape`
+/// both assert over a hand-picked handful. That left the actual
+/// audited invariant — *every* field of *every* cached record equals
+/// the shipped `MonsterStatBlock` — pinned nowhere, so a one-field
+/// drift in either the Rust tables or the regenerated JSON cache could
+/// land green.
+///
+/// This cycle verified all 41 records by hand, three ways: the cached
+/// JSON, the real PCGen row in
+/// `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst` (whose
+/// sha256 every record cites, and which matches the live checkout
+/// byte-for-byte), and — for a 16-monster sample — the published
+/// Bestiary values via aonprd/d20pfsrd. Zero discrepancies. This test
+/// pins that result so it cannot silently decay.
+#[test]
+fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
+    let records = load_all("monster");
+    assert_eq!(records.len(), 41, "the real, corrected Bestiary 1 roster is 41 monsters");
+
+    for (path, record) in &records {
+        let data = &record["data"];
+        let id = data["id"].as_str().unwrap_or_else(|| panic!("{}: missing data.id", path.display()));
+
+        let block = monster_key_resolve(id, RuleSetId::Bestiary1)
+            .unwrap_or_else(|| panic!("{}: id {id:?} does not resolve via monster_key_resolve", path.display()));
+
+        assert_eq!(data["name"].as_str(), Some(block.name.as_str()), "{}: name", path.display());
+        assert_eq!(
+            data["challenge_rating"].as_f64(),
+            Some(f64::from(block.challenge_rating)),
+            "{}: challenge_rating",
+            path.display()
+        );
+        assert_eq!(data["size"].as_str(), Some(block.size.as_str()), "{}: size", path.display());
+        assert_eq!(data["speed_ft"].as_u64(), Some(u64::from(block.speed_ft)), "{}: speed_ft", path.display());
+        assert_eq!(data["race_type"].as_str(), Some(block.race_type.as_str()), "{}: race_type", path.display());
+        assert_eq!(
+            data["race_subtype"].as_str(),
+            block.race_subtype.as_deref(),
+            "{}: race_subtype (JSON null <-> Rust None)",
+            path.display()
+        );
+        assert_eq!(
+            data["source_page"].as_str(),
+            Some(block.source_page.as_str()),
+            "{}: source_page",
+            path.display()
+        );
+
+        let cached = data["natural_attacks"]
+            .as_array()
+            .unwrap_or_else(|| panic!("{}: natural_attacks must be an array", path.display()));
+        assert_eq!(
+            cached.len(),
+            block.natural_attacks.len(),
+            "{}: natural attack count",
+            path.display()
+        );
+        // Order is load-bearing: it is the left-to-right order of the
+        // `NATURALATTACKS:` token's `|`-separated entries on the real row.
+        for (index, (json_attack, rust_attack)) in cached.iter().zip(&block.natural_attacks).enumerate() {
+            assert_eq!(
+                json_attack["name"].as_str(),
+                Some(rust_attack.name.as_str()),
+                "{}: natural_attacks[{index}].name",
+                path.display()
+            );
+            assert_eq!(
+                json_attack["damage_dice"].as_str(),
+                Some(rust_attack.damage_dice.as_str()),
+                "{}: natural_attacks[{index}].damage_dice",
+                path.display()
+            );
+        }
     }
 }
 
