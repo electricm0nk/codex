@@ -118,6 +118,7 @@ use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
     SkillAllocation,
 };
+use super::description_completion::{feat_description_completion, ZeroMagnitudeResolution};
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::acg::shaman_spell_list;
@@ -27374,6 +27375,49 @@ fn explain_monk_level1_chassis(
         return;
     }
 
+    // Deflect Arrows has NO numeric magnitude anywhere in the corpus: its
+    // record carries no `BONUS:` token at all, and its entire benefit is a
+    // resolution the player invokes at the table ("once per round, when you
+    // would normally be hit with an attack from a ranged weapon, you may
+    // deflect it"). There is no number for this engine to compute -- not
+    // "not yet", but ever. Treating that as an unbuilt engine describes a
+    // gap that can never close.
+    //
+    // What the player actually needs is the rulebook text, and the Feats tab
+    // renders it. So this is complete once the description genuinely reaches
+    // them -- and `feat_description_completion` checks that against live
+    // data rather than assuming it, precisely because "complete" must never
+    // be claimed for something the player cannot see (see that module's own
+    // doc comment, and `docs/governance/no-stub-mvp-doctrine.md`). When it
+    // does NOT reach them, this falls through to the diagnostic below
+    // unchanged, exactly as the Dodge unmet-precondition branch does.
+    if recognized_bonus_feat_name == Some("Deflect Arrows")
+        && let ZeroMagnitudeResolution::TextComplete {
+            description,
+            surface,
+        } = feat_description_completion(input, "Deflect Arrows")
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.bounded_progression.bonus_feat.text_complete".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk level {level} level-1 bonus feat is Deflect Arrows, and it is complete \
+                 with no computed magnitude (+0, non-fabricated). The corpus record carries no \
+                 BONUS token of any kind -- there is no number to ground, now or ever, because \
+                 the feat's entire benefit IS a resolution the player invokes at the table \
+                 (once per round, negating one ranged attack that would have hit). What the \
+                 player needs is the rule text, and they have it: this character carries the \
+                 feat on `selected_feats`, which the character sheet's {surface:?} renders \
+                 together with the feat's real corpus description -- \"{description}\". This \
+                 record claims no attack-resolution or ranged-deflection engine exists (none \
+                 does); it claims only that a feature with no magnitude is served by showing \
+                 its description, which is verified here against the live feat catalog and \
+                 this character's own recorded feats rather than assumed"
+            ),
+        });
+        return;
+    }
+
     // Still blocked (the one remaining named burden): the level-1 bonus feat's own
     // mechanics. The choice-slot identity is recognized above (when present and
     // in-list); this diagnostic narrows to naming only what remains
@@ -27395,16 +27439,23 @@ fn explain_monk_level1_chassis(
             )
         } else {
             format!(
-                "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: \
-                 the recognized choice ({feat_name}) is acknowledged as chosen input only. Of \
-                 the seven feats the corpus makes available at `MonkBonusFeatLVL,1` \
-                 (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
-                 Scorpion Style, Throw Anything), six now have grounded mechanics and return \
-                 before this diagnostic is reached; Deflect Arrows is the only one that does \
-                 not, and it is blocked on the incoming-attack/opponent-interaction engine \
-                 (task #15), NOT on a missing feat-selection or feat-prerequisite engine -- \
-                 this message previously asserted the latter for every recognized choice, \
-                 which stopped being true once those six landed (task #76)"
+                "Monk level {level} remains blocked on its level-1 bonus feat: the recognized \
+                 choice ({feat_name}) is acknowledged as chosen input only. Of the seven feats \
+                 the corpus makes available at `MonkBonusFeatLVL,1` (Catch Off-Guard, Combat \
+                 Reflexes, Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw \
+                 Anything), six have grounded mechanics and return before this diagnostic is \
+                 reached; Deflect Arrows is the only one that does not. Deflect Arrows has no \
+                 numeric magnitude to compute at all, so it is NOT blocked on any unbuilt \
+                 engine -- it is complete as soon as its real description reaches the player, \
+                 and it does not for this input: {DEFLECT_ARROWS_FEAT_SELECTION} is absent from \
+                 `selected_feats`, the only field the character sheet's Feats tab renders from, \
+                 so this character's sheet shows the player nothing for it. This is a genuine \
+                 unmet precondition on the input, not a missing engine, and it closes by \
+                 recording the feat the player actually picked (every real in-app pick does) -- \
+                 exactly the shape of the Dodge branch above. Corrected 2026-07-28: this \
+                 message previously blamed a missing incoming-attack/opponent-interaction \
+                 engine, which named a gap that could never close, since a feat with no \
+                 magnitude has nothing for such an engine to compute"
             )
         }
     } else {
@@ -50810,16 +50861,16 @@ mod monk_bonus_feat_improvised_weapon_closure_tests {
         );
     }
 
-    /// A Monk whose level-1 bonus feat is Deflect Arrows -- the one
-    /// remaining restricted-list feat with no standalone numeric value at
-    /// all (its entire benefit IS the resolution: an opponent's ranged
-    /// attack occurring and being negated) -- still blocks. Confirms the
-    /// v0.6 alpha swarm Monk remaining-feats closure is narrowly scoped
-    /// to Combat Reflexes/Scorpion Style/Improved Grapple (plus the
-    /// already-closed Dodge/Catch Off-Guard/Throw Anything) and does not
-    /// silently widen to Deflect Arrows too.
+    /// A Monk whose level-1 bonus feat is Deflect Arrows, chosen through
+    /// the slot but NOT carried in `selected_feats`, still blocks.
+    ///
+    /// This is the integrity half of the zero-magnitude/description rule.
+    /// Deflect Arrows has no number to compute -- but the Feats tab renders
+    /// from `selected_feats` and nothing else, so for this input the player
+    /// sees no description anywhere and the feature is genuinely unserved.
+    /// Mirrors the Dodge unmet-precondition case directly above.
     #[test]
-    fn monk_with_deflect_arrows_bonus_feat_still_blocks() {
+    fn monk_deflect_arrows_not_surfaced_to_the_player_still_blocks() {
         let input = human_monk_input_with_bonus_feat("feat:deflect_arrows");
         let ids = claim_blocking_ids(&input);
 
@@ -50827,7 +50878,100 @@ mod monk_bonus_feat_improvised_weapon_closure_tests {
             ids.contains(
                 &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
             ),
-            "Deflect Arrows has no standalone numeric value and must still block: {ids:?}"
+            "Deflect Arrows chosen via the slot but absent from selected_feats reaches the \
+             player nowhere, so it must still block: {ids:?}"
+        );
+    }
+
+    /// The same Monk, with `feat:deflect_arrows` genuinely recorded in
+    /// `selected_feats` -- the shape every real in-app pick produces, since
+    /// both `handleAddFeat` and the level-up bonus-feat pick route through
+    /// `add_feat_selection` -- is NOT blocked.
+    ///
+    /// Deflect Arrows carries no numeric magnitude anywhere in the corpus:
+    /// its entire benefit is a resolution the player invokes at the table.
+    /// There is no number for this engine to compute, now or ever. What the
+    /// player needs is the rulebook text, and the Feats tab renders it. So
+    /// the feature is complete, and a claim-blocking diagnostic asserting an
+    /// unbuilt engine would be false.
+    #[test]
+    fn monk_deflect_arrows_surfaced_to_the_player_is_text_complete() {
+        let mut input = human_monk_input_with_bonus_feat("feat:deflect_arrows");
+        input.chosen.selected_feats.push("feat:deflect_arrows".to_owned());
+        let ids = claim_blocking_ids(&input);
+
+        assert!(
+            !ids.contains(
+                &"class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned()
+            ),
+            "Deflect Arrows has no magnitude to compute and its real description reaches the \
+             player on the Feats tab, so it must not claim-block: {ids:?}"
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| {
+                e.id == "class_feature.monk.bounded_progression.bonus_feat.text_complete"
+            })
+            .expect("expected the text-complete recognition record");
+        assert_eq!(record.value, 0, "a text-complete record fabricates no magnitude");
+        // The record must quote the real surfaced text, not a restatement --
+        // otherwise it could drift away from what the app actually shows.
+        let catalog_text = crate::rules_core::rules_tables::crb::feats::feat_tables()
+            .iter()
+            .find(|e| e.key == "Deflect Arrows")
+            .and_then(|e| e.description)
+            .expect("the CRB catalog carries Deflect Arrows with a description");
+        assert!(
+            record.detail.contains(catalog_text),
+            "the explanation must quote the exact text the player sees: {:?}",
+            record.detail
+        );
+    }
+
+    /// What actually stands between Monk and `Computed`, pinned exactly.
+    ///
+    /// The bonus-feat burden -- long recorded as Monk's "last remaining"
+    /// blocker -- is genuinely gone once Deflect Arrows is surfaced. But Monk
+    /// does NOT reach `Computed`, and this test refuses to pretend otherwise:
+    /// four chassis-integration blockers remain, and they are real missing
+    /// numbers (base attack bonus, total saves, skill modifiers), not
+    /// description gaps. Their single root cause is that `table_class_id`
+    /// does not map `class:monk`, so `is_supported_generic_single_class` --
+    /// and therefore `has_supported_class_chassis` -- rejects Monk, even
+    /// though `class_tables()` carries a complete, corpus-backed Monk row
+    /// (3/4 BAB, all three saves good, levels 1-20).
+    ///
+    /// Deliberately asserted as an EXACT set rather than a "still blocked"
+    /// smoke check, so this fails loudly the moment that widening lands and
+    /// whoever lands it is told to flip Monk to `Computed` here.
+    #[test]
+    fn monk_remaining_blockers_are_chassis_integration_only() {
+        let mut input = human_monk_input_with_bonus_feat("feat:deflect_arrows");
+        input.chosen.selected_feats.push("feat:deflect_arrows".to_owned());
+
+        let mut ids = claim_blocking_ids(&input);
+        ids.sort();
+
+        assert_eq!(
+            ids,
+            vec![
+                "class_chassis.unsupported".to_owned(),
+                "combat.baseline_unsupported".to_owned(),
+                "defense.total_save.unsupported".to_owned(),
+                "skill.selected_modifier.unsupported".to_owned(),
+            ],
+            "the bonus-feat burden must be gone, and ONLY the four chassis-integration \
+             blockers may remain; if this set shrank to empty, widen this test to assert \
+             HeadlessReceiptStatus::Computed"
+        );
+        assert_eq!(
+            build_pilot_headless_receipt(&input).status,
+            super::HeadlessReceiptStatus::Blocked,
+            "Monk stays honestly Blocked while its chassis pillars are unintegrated"
         );
     }
 }

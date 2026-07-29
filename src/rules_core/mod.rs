@@ -5,6 +5,7 @@ pub mod character_input;
 pub mod composed_input;
 pub mod contract;
 pub mod damage_total;
+pub mod description_completion;
 pub mod durability;
 pub mod encounters;
 pub mod encumbrance;
