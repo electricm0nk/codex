@@ -111,10 +111,28 @@ fn sorcerer_level1_recognizes_the_arcane_bloodline_class_skill_choice() {
          separately rather than still claiming it as unimplemented: {}",
         arcane_bond.message
     );
+    // Corrected 2026-07-29. This previously also required the blocker's message to
+    // contain "bonus feats", because the bloodline bonus spells and bonus feats at
+    // 3rd+ level were genuinely unimplemented. They are implemented now
+    // (`ground_sorcerer_arcane_bloodline_progression` transcribes the whole Arcane
+    // progression from the corpus), so a blocker that still claimed them as
+    // "not implemented anywhere in this codebase" would be asserting a gap that has
+    // closed. What genuinely remains for THIS fixture — an Arcane-bloodline Sorcerer
+    // that recorded no Arcane Bond choice — is the unrecognized Arcane Bond itself
+    // and the bloodline arcana that stays unresolved until it is recognized, so that
+    // is what the blocker must now name.
     assert!(
-        arcane_bond.message.contains("Arcane Bond") && arcane_bond.message.contains("bonus feats"),
-        "arcane-bond blocker must still name the genuinely remaining Arcane Bond / bonus \
-         spells/feats burden: {}",
+        arcane_bond.message.contains("Arcane Bond")
+            && arcane_bond.message.contains("bloodline arcana"),
+        "arcane-bond blocker must still name the genuinely remaining Arcane Bond / bloodline \
+         arcana burden: {}",
+        arcane_bond.message
+    );
+    assert!(
+        !arcane_bond.message.contains("bonus spells and bonus feats at 3rd+ level are not \
+             implemented"),
+        "the bloodline bonus spells/feats are grounded now; the blocker must not keep claiming \
+         them as unimplemented: {}",
         arcane_bond.message
     );
 }

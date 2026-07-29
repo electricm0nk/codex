@@ -1706,6 +1706,100 @@ const ARCANE_BOND_USES_PER_DAY: i16 = 1;
 /// recognized.
 const ARCANE_BLOODLINE_BONUS_LEVEL: u8 = 3;
 
+/// The Arcane bloodline's nine bonus spells, as `(sorcerer level granted,
+/// sorcerer spell level, spell name)`.
+///
+/// Transcribed verbatim from the PF1 Core Rulebook corpus record
+/// `KEY:Arcane Bloodline ~ Bonus Spells` (cr_abilities_class.lst), whose nine
+/// `SPELLKNOWN:CLASS|Sorcerer=<spell level>|<spell>|PREVAREQ:Sorcerer_CF_BloodlineSpell<n>,0|
+/// PREVARGTEQ:BloodlineCasterLVL,<grant level>` tokens supply all three columns
+/// directly. `BloodlineCasterLVL` is `SorcererLVL`
+/// (`BONUS:VAR|BloodlineCasterLVL|SorcererLVL|TYPE=Base`), so the gate levels are
+/// plain sorcerer levels.
+///
+/// Cross-checked, not merely restated: every entry's spell level is asserted
+/// against this codebase's own separately-ingested
+/// `sorcerer_spell_list::SORCERER_SPELL_LIST` by
+/// `every_arcane_bonus_spell_resolves_on_the_real_sorcerer_spell_list`, so a
+/// transcription slip in either table fails the build.
+///
+/// These are Arcane-bloodline-specific. Bloodrager also has an "Arcane"
+/// bloodline and ten of the Sorcerer bloodline names recur there, but those are
+/// entirely distinct corpus records under a different `KEY:` namespace and none
+/// of their values are used here.
+const ARCANE_BLOODLINE_BONUS_SPELLS: &[(u8, u8, &str)] = &[
+    (3, 1, "Identify"),
+    (5, 2, "Invisibility"),
+    (7, 3, "Dispel Magic"),
+    (9, 4, "Dimension Door"),
+    (11, 5, "Overland Flight"),
+    (13, 6, "True Seeing"),
+    (15, 7, "Teleport (Greater)"),
+    (17, 8, "Power Word Stun"),
+    (19, 9, "Wish"),
+];
+
+/// The eight feats a bloodline-feat slot may be spent on for the Arcane
+/// bloodline, transcribed from the corpus record `Arcane Bloodline ~ Feat
+/// Tracker` (cr_abilities_class.lst), whose
+/// `BONUS:VAR|Sorcerer_BloodlineFeat_<X>|1` tokens are exactly this set.
+///
+/// Only the COUNT of slots is grounded as a magnitude; which feat fills a slot
+/// is a player choice this seam deliberately does not model, the ratified
+/// treatment already used for Fighter's, Cavalier's, and Brawler's own bonus
+/// feats ("Only the count grounds; which feats are chosen is not modelled").
+/// This list exists so the count's explanation can name the real eligible set
+/// rather than gesturing at an unnamed one.
+const ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS: &[&str] = &[
+    "Combat Casting",
+    "Improved Counterspell",
+    "Improved Initiative",
+    "Iron Will",
+    "Scribe Scroll",
+    "Skill Focus (Knowledge [arcana])",
+    "Spell Focus",
+    "Still Spell",
+];
+
+/// Sorcerer level at which the first bloodline bonus feat is granted — the
+/// level `(BloodlineFeatProgression - 1) / 6` first reaches 1, and the first
+/// level at which any of this progression's player sub-choices arises.
+const ARCANE_BLOODLINE_FIRST_BONUS_FEAT_LEVEL: u8 = 7;
+/// Sorcerer level at which the Arcane bloodline's 3rd-level power, Metamagic
+/// Adept, is granted (corpus `KEY:Arcane Bloodline ~ Metamagic Adept`,
+/// `PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,3`).
+const ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL: u8 = 3;
+/// Sorcerer level at which the Arcane bloodline's 9th-level power, New Arcana,
+/// is granted (corpus `KEY:Arcane Bloodline ~ New Arcana`,
+/// `PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,9`).
+const ARCANE_BLOODLINE_NEW_ARCANA_LEVEL: u8 = 9;
+/// Sorcerer level at which the Arcane bloodline's 15th-level power, School
+/// Power, is granted (corpus `KEY:Arcane Bloodline ~ School Power Choice`,
+/// `PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,15`).
+const ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL: u8 = 15;
+/// Sorcerer level at which the Arcane bloodline's capstone, Arcane Apotheosis,
+/// is granted (corpus `KEY:Arcane Bloodline ~ Arcane Apotheosis`,
+/// `PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,20`).
+const ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL: u8 = 20;
+/// School Power's spell save DC bonus, from the corpus record's only numeric
+/// token: `BONUS:DC|SCHOOL.%LIST|2|TYPE=SchoolPower`.
+const SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS: i16 = 2;
+
+const SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.bonus_spells_known";
+const SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.bonus_feat_count";
+const SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.metamagic_adept_uses_per_day";
+const SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.new_arcana_spell_count";
+const SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.school_power_spell_dc_bonus";
+const SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.arcane_apotheosis";
+const SORCERER_ARCANE_BLOODLINE_SUBCHOICES_DIAGNOSTIC_ID: &str =
+    "class_feature.sorcerer.arcane_bloodline.progression_subchoices_unresolved";
+
 // SD13-E5 Arcane bloodline class-skill choice seam. The PF1 Core Rulebook Arcane
 // bloodline entry reads "Class Skill: Knowledge (any one)" (verified against both
 // d20pfsrd and the legacy Paizo PRD mirror) — a player's choice of any one Knowledge
@@ -29229,16 +29323,20 @@ fn explain_sorcerer_level1_spell_baseline(
                 None
             }
         });
-        // Bonus spells/feats at 3rd+ level are correctly absent below
-        // ARCANE_BLOODLINE_BONUS_LEVEL (a genuine PF1 level gate); at or
-        // above it, they are real, unimplemented grants, so the diagnostic
-        // must keep blocking even once Arcane Bond itself is recognized.
-        let bonus_spells_and_feats_correctly_absent = sorcerer_level < ARCANE_BLOODLINE_BONUS_LEVEL;
-
-        if recognized_arcane_bloodline
-            && recognized_arcane_bond_name.is_some()
-            && bonus_spells_and_feats_correctly_absent
-        {
+        // 2026-07-29 (Sorcerer levels 3-20 closure): this used to carry a
+        // `bonus_spells_and_feats_correctly_absent = sorcerer_level <
+        // ARCANE_BLOODLINE_BONUS_LEVEL` term in the condition below, which
+        // dropped every 3rd-level-and-above Sorcerer into the claim-blocking
+        // `else` branch because the bloodline's bonus spells and bonus feats
+        // were genuinely unimplemented. They are implemented now — see
+        // `ground_sorcerer_arcane_bloodline_progression`, which transcribes the
+        // whole 3rd-and-above progression from the corpus — so the term is gone
+        // and the level gate now lives inside that function, where it selects
+        // between a level-gate-absence record and a real magnitude per feature
+        // rather than blocking the whole class. The blocker below is NOT
+        // weakened: it still fires, unconditionally, for any Sorcerer whose
+        // bloodline or Arcane Bond this seam does not recognize.
+        if recognized_arcane_bloodline && recognized_arcane_bond_name.is_some() {
             let bond_name = recognized_arcane_bond_name.expect("checked by the if-condition above");
             explanations.push(ComputationExplanation {
                 id: "class_feature.sorcerer.arcane_bloodline.arcane_bond_choice".to_owned(),
@@ -29282,42 +29380,46 @@ fn explain_sorcerer_level1_spell_baseline(
                      correction only; it carries no mechanical value (+0)"
                     .to_owned(),
             });
-            explanations.push(ComputationExplanation {
-                id: "class_feature.sorcerer.arcane_bloodline.bonus_spells_and_feats_absent"
-                    .to_owned(),
-                value: 0,
-                detail: format!(
-                    "Sorcerer Arcane bloodline bonus spells and bonus feats at \
-                     {ARCANE_BLOODLINE_BONUS_LEVEL}rd level and above are correctly absent at \
-                     level {sorcerer_level} by PF1 Core Rulebook level gate; the at-grant rules \
-                     are named but not computed. Real bonus-spell/bonus-feat grants exist at \
-                     level {ARCANE_BLOODLINE_BONUS_LEVEL} and above and stay genuinely \
-                     unimplemented -- widening this seam past level \
-                     {}, once it happens, must re-block on this specific record rather than \
-                     silently treat it as still absent",
-                    ARCANE_BLOODLINE_BONUS_LEVEL - 1
-                ),
-            });
+            // The bonus spells, bonus feats, and 3rd/9th/15th/20th-level
+            // bloodline powers this seam used to name-but-not-compute. The
+            // record that used to sit here said a later widening "must re-block
+            // on this specific record rather than silently treat it as still
+            // absent"; that instruction is honoured by grounding the values
+            // rather than by deleting the claim — see
+            // `ground_sorcerer_arcane_bloodline_progression`, which keeps the
+            // below-gate absence records AND supplies the at-grant magnitudes,
+            // every one transcribed from the corpus.
+            ground_sorcerer_arcane_bloodline_progression(
+                sorcerer_level,
+                explanations,
+                diagnostics,
+            );
         } else {
+            // Reachable only when the bloodline itself is unrecognized, or when
+            // it is Arcane but no Arcane Bond choice was recorded — the
+            // `recognized_arcane_bloodline && recognized_arcane_bond_name
+            // .is_some()` case above now grounds instead of blocking, so the
+            // former third sub-branch here (which claimed the 3rd+-level bonus
+            // spells/feats were unimplemented) is unreachable and has been
+            // removed rather than left asserting a gap that has since closed.
             let arcane_bond_clause = if recognized_arcane_bloodline {
-                if recognized_arcane_bond_name.is_some() {
-                    "the bloodline arcana and Arcane Bond's own choice are resolved, but the \
-                     bloodline bonus spells and bonus feats at 3rd+ level are not implemented \
-                     anywhere in this codebase"
-                        .to_owned()
-                } else {
-                    "the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded \
-                     object) is not recognized as chosen input on this bounded seam, the \
-                     bloodline arcana (+1 spell save DC on spells modified by a metamagic feat \
-                     that raises the spell's level -- a conditional effect not yet resolved \
-                     until Arcane Bond itself is recognized), and the bloodline bonus spells and \
-                     bonus feats at 3rd+ level are not implemented anywhere in this codebase"
-                        .to_owned()
-                }
+                "the Arcane bloodline's level-1 power Arcane Bond (a familiar or a bonded \
+                 object) is not recognized as chosen input on this bounded seam, and the \
+                 bloodline arcana (+1 spell save DC on spells modified by a metamagic feat \
+                 that raises the spell's level) is a conditional effect not resolved until \
+                 Arcane Bond itself is recognized"
+                    .to_owned()
             } else {
+                // Deliberately says "Arcane" nowhere: this branch describes a
+                // character whose chosen bloodline this seam did not recognize,
+                // and naming the one canonical bloodline here would assert a
+                // bloodline-specific fact at a character who never chose it.
+                // `sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic`
+                // and its no-bloodline sibling pin exactly that.
                 "no bloodline power, bloodline arcana, bloodline class skill grant, or bonus \
-                 spells/feats at 3rd+ level are implemented for any bloodline anywhere in this \
-                 codebase"
+                 spells/feats at 3rd+ level are implemented for this character's bloodline; only \
+                 the single canonical bloodline this seam recognizes has its progression \
+                 grounded anywhere in this codebase"
                     .to_owned()
             };
             let class_skill_clause = if recognized_bloodline_class_skill_name.is_some() {
@@ -29959,6 +30061,400 @@ fn explain_sorcerer_level1_spell_baseline(
     // posture blocker is now pushed conditionally at the top of this
     // function (real validation, see that push site's own doc comment) --
     // the redundant unconditional push that used to live here was removed.
+}
+
+/// How many Arcane bloodline bonus spells a sorcerer of `level` has been
+/// granted: the count of `ARCANE_BLOODLINE_BONUS_SPELLS` rows whose corpus
+/// `PREVARGTEQ:BloodlineCasterLVL,<n>` gate has been met.
+///
+/// 0 below 3rd level, then one more at every odd level through 19th (9 total).
+/// Derived from the table rather than from a closed-form `(level-1)/2`
+/// expression on purpose: the gate levels are corpus data, and a formula would
+/// silently keep "granting" a tenth spell past 19th where the corpus stops.
+fn arcane_bloodline_bonus_spells_known(level: u8) -> i16 {
+    ARCANE_BLOODLINE_BONUS_SPELLS
+        .iter()
+        .filter(|(grant_level, _, _)| level >= *grant_level)
+        .count() as i16
+}
+
+/// The Arcane bloodline spells granted at or below `level`, in grant order,
+/// each rendered as `"<name> (bloodline spell level <n>, granted at sorcerer
+/// level <m>)"` for an explanation record to quote.
+fn arcane_bloodline_granted_bonus_spells(level: u8) -> Vec<String> {
+    ARCANE_BLOODLINE_BONUS_SPELLS
+        .iter()
+        .filter(|(grant_level, _, _)| level >= *grant_level)
+        .map(|(grant_level, spell_level, spell_id)| {
+            format!("{spell_id} (spell level {spell_level}, granted at sorcerer level {grant_level})")
+        })
+        .collect()
+}
+
+/// How many bloodline bonus feats a sorcerer of `level` has been granted.
+///
+/// Corpus chain (cr_abilities_class.lst), followed end to end rather than
+/// recalled: the `Arcane Bloodline` `CATEGORY:Sorcerer Bloodline` record carries
+/// `BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount`, and
+/// `BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base`, with
+/// `BONUS:VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base` and
+/// `BONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base`. So the pool is
+/// `(sorcerer level - 1) / 6`: 1 at 7th, 2 at 13th, 3 at 19th.
+///
+/// The corpus also carries three `-1` deductions against this same pool
+/// (`PREVARGTEQ:BloodlineFeatProgression,7|PREVAREQ:Sorcerer_CF_BloodlineFeat7,1`
+/// and the 13/19 equivalents). Each is gated on a `Sorcerer_CF_BloodlineFeat<n>`
+/// flag, which is the standard corpus mechanism for a sorcerer archetype that
+/// replaces a bloodline feat; this repo ingests no sorcerer archetype, so all
+/// three are provably vacuous here — the identical situation already documented
+/// for Cavalier's and Brawler's own bonus-feat pools, and checked here rather
+/// than assumed.
+///
+/// The `BONUS:VAR|BloodlineFeatCount|(DragonDiscipleLVL+1)/3` line is a
+/// different class entirely (Dragon Disciple, gated
+/// `PREABILITY:1,CATEGORY=Blood of Dragons Bloodline`) and contributes nothing to
+/// a single-class sorcerer.
+fn arcane_bloodline_bonus_feat_count(level: u8) -> i16 {
+    (i16::from(level) - 1) / 6
+}
+
+/// Metamagic Adept's uses per day at `level` (Arcane bloodline 3rd-level power).
+///
+/// Corpus (cr_abilities_class.lst, `KEY:Arcane Bloodline ~ Metamagic Adept`):
+/// `BONUS:VAR|Sorcerer_ArcaneMetamagicAdept_Times|floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4)`,
+/// where `Sorcerer_Arcane_BloodlinePower3LVL` resolves to the sorcerer's own
+/// bloodline level. 1/day at 3rd, rising by one at 7th, 11th, 15th, and 19th.
+///
+/// Callers must only invoke this at `level >= ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL`
+/// and below `ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL`: below the grant level the
+/// power does not exist, and at 20th Arcane Apotheosis supersedes the per-day
+/// budget entirely (see `ground_sorcerer_arcane_bloodline_progression`).
+fn arcane_bloodline_metamagic_adept_uses_per_day(level: u8) -> i16 {
+    (i16::from(level) + 1) / 4
+}
+
+/// How many spells New Arcana adds to the sorcerer's spells known at `level`
+/// (Arcane bloodline 9th-level power).
+///
+/// Corpus (cr_abilities_class.lst, `KEY:Arcane Bloodline ~ New Arcana`):
+/// `BONUS:VAR|Sorcerer_NewArcana_Number|floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4)`,
+/// feeding `BONUS:ABILITYPOOL|New Arcana|Sorcerer_NewArcana_Number`. One spell at
+/// 9th, a second at 13th, a third at 17th, and no fourth by 20th.
+///
+/// Callers must only invoke this at `level >= ARCANE_BLOODLINE_NEW_ARCANA_LEVEL`:
+/// `level - 5` is computed signed and would floor the wrong way below that gate.
+fn arcane_bloodline_new_arcana_spell_count(level: u8) -> i16 {
+    (i16::from(level) - 5) / 4
+}
+
+/// Grounds the Arcane bloodline's entire 3rd-level-and-above progression: the
+/// bonus spells, the bonus-feat pool, and the 3rd/9th/15th/20th-level bloodline
+/// powers (2026-07-29, Sorcerer levels 3-20 closure).
+///
+/// **What this replaced.** This progression used to be the sole reason a
+/// Sorcerer could not compute above 2nd level: the previous seam emitted a
+/// `bonus_spells_and_feats_absent` level-gate-absence record below 3rd, and at
+/// 3rd and above fell through to the claim-blocking
+/// `arcane_bond_and_bloodline_progression.unsupported` diagnostic. That record's
+/// own text instructed whoever widened the seam that they "must re-block on this
+/// specific record rather than silently treat it as still absent" — a real
+/// constraint, and it is honoured literally: the gap is not treated as absent
+/// and the diagnostic is not weakened. It is closed, by transcribing every value
+/// from the corpus record that had never been read.
+///
+/// **Canonical narrowing.** Only the Arcane bloodline is grounded — the same
+/// canonical-narrowing treatment already ratified for Oracle's Mystery, Cleric's
+/// Good domain, and Wizard's Abjuration school, and already the recognized
+/// bloodline for every other Sorcerer pillar in this file. The other CRB
+/// bloodlines' progressions stay genuinely ungrounded, and a Sorcerer whose
+/// bloodline this seam does not recognize as Arcane never reaches this function
+/// at all, so no Arcane-specific grant is ever fabricated for them.
+///
+/// **Every record's shape.** Each of the five magnitudes carries its own real
+/// number at or above its grant level and a `0` with explicit
+/// "correctly-absent-by-level-gate" wording below it — the Draconic Dragon
+/// Resistances / Barbarian Trap Sense idiom, so a reader can always tell an
+/// absent grant from a zero one. The single exception is Metamagic Adept at 20th
+/// level, where the `0` means *superseded*, not absent, and says so; see below.
+///
+/// **The 20th-level supersession.** The corpus Arcane Apotheosis record carries
+/// `BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1`, which switches off the
+/// bloodline's own `ABILITY:...|Arcane Bloodline ~ Power LVL 03|PREVARGTEQ:
+/// Sorcerer_Arcane_BloodlinePower3,1` grant, and the Metamagic Adept record's
+/// uses-per-day `ASPECT:`s are all suppressed by
+/// `!PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis`.
+/// Both agree: at 20th level Arcane Apotheosis replaces Metamagic Adept's
+/// per-day budget with an unlimited one. Reporting `5/day` at 20th — what the
+/// formula alone yields — would therefore be a wrong number, so this seam
+/// reports `0` and explains the supersession in the record itself.
+///
+/// **What is deliberately NOT claimed**, and is named by a non-claim-blocking
+/// diagnostic rather than left implicit:
+/// - which of the eight eligible feats fills each bloodline-feat slot (only the
+///   count grounds — the ratified Fighter/Cavalier/Brawler treatment),
+/// - which sorcerer/wizard spells New Arcana adds (a free chooser over the whole
+///   list),
+/// - which school of magic School Power names (its `+2` is school-agnostic, so
+///   the magnitude is grounded and the label is not — exactly how the sibling
+///   Draconic Dragon Resistances grounds its numbers without picking an energy
+///   type).
+fn ground_sorcerer_arcane_bloodline_progression(
+    sorcerer_level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // --- Bonus spells (3rd, and every odd level through 19th). ---
+    let bonus_spells_known = arcane_bloodline_bonus_spells_known(sorcerer_level);
+    let bonus_spell_detail = if bonus_spells_known == 0 {
+        format!(
+            "Sorcerer Arcane bloodline bonus spells at sorcerer level {sorcerer_level}: none yet, \
+             correctly absent by PF1 Core Rulebook level gate (the first bonus spell, Identify, \
+             is granted at sorcerer level {ARCANE_BLOODLINE_BONUS_LEVEL}; corpus \
+             KEY:Arcane Bloodline ~ Bonus Spells, PREVARGTEQ:BloodlineCasterLVL,\
+             {ARCANE_BLOODLINE_BONUS_LEVEL}). This is a level-gate absence, not an ungrounded \
+             gap: the whole nine-spell progression is transcribed and computed above this gate"
+        )
+    } else {
+        format!(
+            "Sorcerer Arcane bloodline bonus spells at sorcerer level {sorcerer_level}: \
+             {bonus_spells_known} granted so far — {}. Every entry is transcribed from the \
+             corpus record KEY:Arcane Bloodline ~ Bonus Spells (cr_abilities_class.lst), whose \
+             SPELLKNOWN:CLASS|Sorcerer=<spell level>|<spell> tokens are each gated \
+             PREVARGTEQ:BloodlineCasterLVL,<grant level>, and each spell's level is \
+             independently cross-checked against sorcerer_spell_list::SORCERER_SPELL_LIST. \
+             This grounds the COUNT and the named identities of the bonus spells the bloodline \
+             adds to spells known; it computes no spell save DC against a target and no casting \
+             execution, since no spell-casting-resolution engine exists anywhere in this \
+             codebase for any class",
+            arcane_bloodline_granted_bonus_spells(sorcerer_level).join(", ")
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID.to_owned(),
+        value: bonus_spells_known,
+        detail: bonus_spell_detail,
+    });
+
+    // --- Bonus feats (7th, 13th, 19th). ---
+    let bonus_feat_count = arcane_bloodline_bonus_feat_count(sorcerer_level);
+    let bonus_feat_detail = if bonus_feat_count == 0 {
+        format!(
+            "Sorcerer Arcane bloodline bonus feats at sorcerer level {sorcerer_level}: none yet, \
+             correctly absent by PF1 Core Rulebook level gate (the first is granted at 7th \
+             level). Corpus: BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount with \
+             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6, which is 0 below 7th"
+        )
+    } else {
+        format!(
+            "Sorcerer Arcane bloodline bonus feats at sorcerer level {sorcerer_level}: \
+             {bonus_feat_count} slot(s) granted ((sorcerer level - 1)/6 — one at 7th, 13th, and \
+             19th). Corpus: BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount, \
+             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base, \
+             BONUS:VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base, \
+             BONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base. The three corpus `-1` \
+             deductions against this same pool are each gated on a Sorcerer_CF_BloodlineFeat<n> \
+             archetype flag and this repo ingests no sorcerer archetype, so all three are \
+             provably vacuous here. Only the COUNT grounds; which feat fills a slot is not \
+             modelled — the ratified Fighter/Cavalier/Brawler bonus-feat treatment. The eight \
+             eligible feats for this bloodline (corpus Arcane Bloodline ~ Feat Tracker) are: {}",
+            ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS.join(", ")
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID.to_owned(),
+        value: bonus_feat_count,
+        detail: bonus_feat_detail,
+    });
+
+    // --- 3rd-level power: Metamagic Adept (superseded at 20th). ---
+    let (metamagic_uses, metamagic_detail) = if sorcerer_level
+        < ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL
+    {
+        (
+            0,
+            format!(
+                "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
+                 correctly absent by PF1 Core Rulebook level gate (a \
+                 {ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL}rd-level bloodline power; corpus \
+                 KEY:Arcane Bloodline ~ Metamagic Adept, \
+                 PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
+                 {ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL})"
+            ),
+        )
+    } else if sorcerer_level >= ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL {
+        (
+            0,
+            format!(
+                "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
+                 SUPERSEDED, not absent and not zero-limited. The corpus Arcane Apotheosis \
+                 record carries BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, which switches off \
+                 the bloodline's own 3rd-level-power grant at 20th level, and Metamagic Adept's \
+                 uses-per-day ASPECTs are each suppressed by \
+                 !PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis. \
+                 Arcane Apotheosis replaces the per-day budget with an unlimited one, so \
+                 reporting the raw formula's {} uses/day here would be a wrong number",
+                arcane_bloodline_metamagic_adept_uses_per_day(sorcerer_level)
+            ),
+        )
+    } else {
+        let uses = arcane_bloodline_metamagic_adept_uses_per_day(sorcerer_level);
+        (
+            uses,
+            format!(
+                "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
+                 usable {uses} time(s) per day (floor((sorcerer level + 1)/4) — 1/day at 3rd, \
+                 rising at 7th, 11th, 15th, and 19th). Corpus: \
+                 BONUS:VAR|Sorcerer_ArcaneMetamagicAdept_Times|\
+                 floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4). Only the daily BUDGET grounds; \
+                 the benefit itself (applying a known metamagic feat without increasing casting \
+                 time) can never be exercised here, since SpellSelection carries no metamagic \
+                 field anywhere in this codebase and no casting-resolution engine exists, so \
+                 there is nothing for a consumption count to gate"
+            ),
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID.to_owned(),
+        value: metamagic_uses,
+        detail: metamagic_detail,
+    });
+
+    // --- 9th-level power: New Arcana. ---
+    let (new_arcana, new_arcana_detail) = if sorcerer_level < ARCANE_BLOODLINE_NEW_ARCANA_LEVEL {
+        (
+            0,
+            format!(
+                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: \
+                 correctly absent by PF1 Core Rulebook level gate (a \
+                 {ARCANE_BLOODLINE_NEW_ARCANA_LEVEL}th-level bloodline power; corpus \
+                 KEY:Arcane Bloodline ~ New Arcana, \
+                 PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
+                 {ARCANE_BLOODLINE_NEW_ARCANA_LEVEL})"
+            ),
+        )
+    } else {
+        let count = arcane_bloodline_new_arcana_spell_count(sorcerer_level);
+        (
+            count,
+            format!(
+                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: \
+                 {count} additional spell(s) may be added to spells known \
+                 (floor((sorcerer level - 5)/4) — one at 9th, a second at 13th, a third at \
+                 17th). Corpus: BONUS:VAR|Sorcerer_NewArcana_Number|\
+                 floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4), feeding \
+                 BONUS:ABILITYPOOL|New Arcana|Sorcerer_NewArcana_Number. Only the COUNT grounds; \
+                 WHICH sorcerer/wizard spells are added is a free chooser over the whole list \
+                 and is not modelled, mirroring how Brawler's Martial Flexibility grounds its \
+                 pool without seeding a canonical feat"
+            ),
+        )
+    };
+    explanations.push(ComputationExplanation {
+        id: SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID.to_owned(),
+        value: new_arcana,
+        detail: new_arcana_detail,
+    });
+
+    // --- 15th-level power: School Power. ---
+    let (school_power_bonus, school_power_detail) =
+        if sorcerer_level < ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL {
+            (
+                0,
+                format!(
+                    "Sorcerer Arcane bloodline School Power at sorcerer level {sorcerer_level}: \
+                     correctly absent by PF1 Core Rulebook level gate (a \
+                     {ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL}th-level bloodline power; corpus \
+                     KEY:Arcane Bloodline ~ School Power Choice, \
+                     PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
+                     {ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL})"
+                ),
+            )
+        } else {
+            (
+                SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS,
+                format!(
+                    "Sorcerer Arcane bloodline School Power at sorcerer level {sorcerer_level}: \
+                     +{SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS} to the spell save DC of \
+                     spells from one chosen school of magic, stacking with Spell Focus. Corpus: \
+                     KEY:Arcane Bloodline ~ School Power Choice, BONUS:DC|SCHOOL.%LIST|2|\
+                     TYPE=SchoolPower. This grounds the magnitude as a school-agnostic fact — \
+                     the number is identical whichever school the CHOOSE:SCHOOLS|ALL sub-choice \
+                     names, so no canonical school is fabricated here, exactly as the sibling \
+                     Draconic Dragon Resistances grounds its two numbers without picking an \
+                     energy type. It is not folded into any spell-DC total: no \
+                     spell-save-DC-resolution engine against a target exists anywhere in this \
+                     codebase for any class"
+                ),
+            )
+        };
+    explanations.push(ComputationExplanation {
+        id: SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_EXPLANATION_ID.to_owned(),
+        value: school_power_bonus,
+        detail: school_power_detail,
+    });
+
+    // --- 20th-level capstone: Arcane Apotheosis (genuinely zero-magnitude). ---
+    // Emitted only at its own grant level. Unlike the five records above, a
+    // "0 = correctly absent" record below 20th would be indistinguishable from
+    // this record's true magnitude, which really is zero: the corpus Arcane
+    // Apotheosis record's only BONUS token is the
+    // `BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1` supersession flag already
+    // accounted for in the Metamagic Adept record above. Its whole benefit is a
+    // resolution, so this is a bounded grant-only identity record quoting the
+    // real corpus DESC — the same idiom Rogue's Master Strike already uses in
+    // this file. It is deliberately NOT routed through
+    // `description_completion::feat_description_completion`: that module resolves
+    // FEATS against the CRB feat catalog and certifies the Feats tab renders
+    // them, and Arcane Apotheosis is a class feature carried on no such surface,
+    // so claiming its text reaches the player would be exactly the unearned
+    // `success: true` that module exists to prevent.
+    if sorcerer_level >= ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID.to_owned(),
+            value: 0,
+            detail: format!(
+                "Sorcerer Arcane bloodline capstone Arcane Apotheosis, granted at sorcerer level \
+                 {ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL} (corpus \
+                 KEY:Arcane Bloodline ~ Arcane Apotheosis): \"Your body surges with arcane power. \
+                 You can add any metamagic feats that you know to your spells without increasing \
+                 their casting time, although you must still expend higher-level spell slots. \
+                 Whenever you use magic items that require charges, you can instead expend spell \
+                 slots to power the item. For every three levels of spell slots that you expend, \
+                 you consume one less charge when using a magic item that expends charges.\" \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): the \
+                 record's only numeric corpus token is \
+                 BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, the Metamagic Adept supersession \
+                 already grounded in that record above. The remaining benefits have no magnitude \
+                 to compute — no metamagic-application engine and no magic-item-charge engine \
+                 exists anywhere in this codebase — so this grounds the grant and its real \
+                 rulebook text, and no charge arithmetic"
+            ),
+        });
+    }
+
+    // The sub-choices this progression deliberately leaves to the player,
+    // named explicitly rather than left implicit. Non-claim-blocking, mirroring
+    // the Draconic Dragon Resistances energy-type diagnostic exactly: none of
+    // these changes any magnitude grounded above, so none of them is a gap in
+    // what this seam claims — but a reader deserves to be told which labels are
+    // still unfilled. Emitted only once the first such sub-choice actually
+    // arises (the 7th-level bloodline feat).
+    if sorcerer_level >= ARCANE_BLOODLINE_FIRST_BONUS_FEAT_LEVEL {
+        diagnostics.push(ComputationDiagnostic {
+            id: SORCERER_ARCANE_BLOODLINE_SUBCHOICES_DIAGNOSTIC_ID.to_owned(),
+            message: format!(
+                "Sorcerer Arcane bloodline progression at sorcerer level {sorcerer_level}: every \
+                 magnitude is grounded above from the corpus, but three player sub-choices stay \
+                 unresolved on this bounded seam and no canonical value is fabricated for any of \
+                 them — which of the eight eligible bloodline feats fills each granted slot, \
+                 which sorcerer/wizard spells New Arcana adds, and which school of magic School \
+                 Power names. None of the three changes a grounded number: the feat and New \
+                 Arcana records ground counts only, and School Power's +\
+                 {SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS} is identical for every school"
+            ),
+            claim_blocking: false,
+        });
+    }
 }
 
 /// PF1 Core Rulebook Draconic bloodline's 3rd-level "Dragon Resistances" power
@@ -41377,11 +41873,17 @@ mod sorcerer_dispatch_widening_safety_tests {
         );
     }
 
-    /// Even with Arcane Bond fully recognized, a Sorcerer at 3rd level or
-    /// above still blocks: bonus spells/feats are real, unimplemented
-    /// grants at that level, not a vacuous absence.
+    /// Superseded assertion, corrected 2026-07-29. This test previously
+    /// asserted that a 3rd-level Arcane-bloodline Sorcerer stays `Blocked`
+    /// because "bonus spells/feats at 3rd level are real, unimplemented
+    /// grants". That was true when it was written and is no longer: the
+    /// Arcane bloodline's whole 3rd-and-above progression is now grounded from
+    /// the corpus (see `sorcerer_arcane_bloodline_progression_tests`), so the
+    /// gap that justified the block has genuinely closed. The test is kept,
+    /// inverted, at the same level so the exact boundary the old blocker fired
+    /// at stays pinned rather than silently deleted.
     #[test]
-    fn single_class_sorcerer_with_arcane_bond_at_level_3_still_blocks_on_bonus_grants() {
+    fn single_class_sorcerer_with_arcane_bond_at_level_3_now_reaches_computed() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty());
         let mut input = result.character_input.expect("valid fixture");
@@ -41400,21 +41902,408 @@ mod sorcerer_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "bonus spells/feats at 3rd level are real, unimplemented grants, not a vacuous \
-             absence: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "the 3rd-level bonus spell (Identify) and bloodline power (Metamagic Adept) are now \
+             grounded from the corpus, so the old block no longer names a real gap: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
-            receipt
+            !receipt
                 .computation
                 .diagnostics
                 .iter()
                 .any(|d| d.id
-                    == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
-                    && d.claim_blocking),
-            "expected the diagnostic to re-block on bonus spells/feats at level 3: {:?}",
+                    == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"),
+            "expected the bloodline blocker to be retired for a recognized Arcane bloodline at \
+             level 3: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+}
+
+/// v0.6 alpha swarm (Sorcerer levels 3-20 closure, 2026-07-29): the Arcane
+/// bloodline's whole 3rd-and-above progression -- bonus spells, bonus feats,
+/// and the 3rd/9th/15th/20th-level bloodline powers.
+///
+/// Every value asserted below is transcribed from the PF1 Core Rulebook corpus
+/// (`pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst`)
+/// and NOT from memory:
+///
+/// * `KEY:Arcane Bloodline ~ Bonus Spells` -- nine `SPELLKNOWN:CLASS|Sorcerer=N|<spell>`
+///   tokens, each gated `PREVARGTEQ:BloodlineCasterLVL,<grant level>`.
+/// * `Arcane Bloodline` (`CATEGORY:Sorcerer Bloodline`) --
+///   `BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount`, where
+///   `BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base` and
+///   `BONUS:VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base` and
+///   `BONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base`.
+/// * `KEY:Arcane Bloodline ~ Metamagic Adept` --
+///   `BONUS:VAR|Sorcerer_ArcaneMetamagicAdept_Times|floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4)`.
+/// * `KEY:Arcane Bloodline ~ New Arcana` --
+///   `BONUS:VAR|Sorcerer_NewArcana_Number|floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4)`.
+/// * `KEY:Arcane Bloodline ~ School Power Choice` -- `BONUS:DC|SCHOOL.%LIST|2`.
+/// * `KEY:Arcane Bloodline ~ Arcane Apotheosis` --
+///   `BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1` (the 20th-level supersession of
+///   Metamagic Adept).
+#[cfg(test)]
+mod sorcerer_arcane_bloodline_progression_tests {
+    use super::{
+        arcane_bloodline_bonus_feat_count, arcane_bloodline_bonus_spells_known,
+        arcane_bloodline_metamagic_adept_uses_per_day, arcane_bloodline_new_arcana_spell_count,
+        build_pilot_headless_receipt, CharacterClassLevel, ComputationExplanation,
+        HeadlessReceiptStatus, ARCANE_BLOODLINE_BONUS_SPELLS,
+        ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS, ARCANE_BLOODLINE_SELECTION_ID,
+        ARCANE_BOND_FAMILIAR_SELECTION_ID, SORCERER_ARCANE_BOND_CHOICE_ID,
+        SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_EXPLANATION_ID,
+        SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS, SORCERER_BLOODLINE_CHOICE_ID,
+        SORCERER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::rules_tables::crb::sorcerer_spell_list;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// The exact production posture the shipped app composes for a Sorcerer
+    /// (`pf1_adapter.rs`'s Sorcerer block, mirrored by
+    /// `src/bin/v06_class_state_dump.rs`'s `canonical_seeds_for`): Arcane
+    /// bloodline plus a familiar as the Arcane Bond.
+    fn arcane_sorcerer_receipt(level: u8) -> crate::rules_core::pilot_compute::PilotHeadlessReceipt {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODLINE_SELECTION_ID.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SORCERER_ARCANE_BOND_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BOND_FAMILIAR_SELECTION_ID.to_owned(),
+        });
+        build_pilot_headless_receipt(&input)
+    }
+
+    fn explanation<'a>(
+        explanations: &'a [ComputationExplanation],
+        id: &str,
+    ) -> &'a ComputationExplanation {
+        explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation {id}"))
+    }
+
+    /// The nine bonus-spell rows, pinned verbatim against the corpus
+    /// `SPELLKNOWN:CLASS|Sorcerer=N|<spell>|...|PREVARGTEQ:BloodlineCasterLVL,<L>`
+    /// tokens of `KEY:Arcane Bloodline ~ Bonus Spells`.
+    #[test]
+    fn arcane_bloodline_bonus_spell_table_matches_the_corpus_verbatim() {
+        assert_eq!(
+            ARCANE_BLOODLINE_BONUS_SPELLS,
+            &[
+                (3u8, 1u8, "Identify"),
+                (5, 2, "Invisibility"),
+                (7, 3, "Dispel Magic"),
+                (9, 4, "Dimension Door"),
+                (11, 5, "Overland Flight"),
+                (13, 6, "True Seeing"),
+                (15, 7, "Teleport (Greater)"),
+                (17, 8, "Power Word Stun"),
+                (19, 9, "Wish"),
+            ]
+        );
+    }
+
+    /// Cross-check, not a restatement: every bonus spell must resolve on the
+    /// engine's own independently-ingested sorcerer spell list at exactly the
+    /// spell level the bloodline record's `Sorcerer=N` token declares. A
+    /// transcription slip in either table breaks this.
+    #[test]
+    fn every_arcane_bonus_spell_resolves_on_the_real_sorcerer_spell_list() {
+        for (grant_level, spell_level, spell_id) in ARCANE_BLOODLINE_BONUS_SPELLS {
+            assert_eq!(
+                sorcerer_spell_list::sorcerer_spell_level(spell_id),
+                Some(*spell_level),
+                "{spell_id} (granted at sorcerer level {grant_level}) must be a level-\
+                 {spell_level} sorcerer spell on the real list"
+            );
+        }
+    }
+
+    /// One new bonus spell at every odd level from 3rd through 19th, and none
+    /// before 3rd.
+    #[test]
+    fn arcane_bloodline_bonus_spells_known_steps_at_every_odd_level_from_3() {
+        let expected: [i16; 21] = [
+            0, // index 0, unused
+            0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9,
+        ];
+        for level in 1u8..=20 {
+            assert_eq!(
+                arcane_bloodline_bonus_spells_known(level),
+                expected[usize::from(level)],
+                "bonus spells known at sorcerer level {level}"
+            );
+        }
+    }
+
+    /// `(BloodlineFeatProgression - 1) / 6` with `BloodlineFeatProgression ==
+    /// SorcererLVL`: one bloodline feat at 7th, 13th, and 19th.
+    #[test]
+    fn arcane_bloodline_bonus_feat_count_matches_the_corpus_formula() {
+        for level in 1u8..=6 {
+            assert_eq!(arcane_bloodline_bonus_feat_count(level), 0, "level {level}");
+        }
+        for level in 7u8..=12 {
+            assert_eq!(arcane_bloodline_bonus_feat_count(level), 1, "level {level}");
+        }
+        for level in 13u8..=18 {
+            assert_eq!(arcane_bloodline_bonus_feat_count(level), 2, "level {level}");
+        }
+        for level in 19u8..=20 {
+            assert_eq!(arcane_bloodline_bonus_feat_count(level), 3, "level {level}");
+        }
+    }
+
+    /// The eight feats the corpus `Arcane Bloodline ~ Feat Tracker` record
+    /// enables, verbatim from its `BONUS:VAR|Sorcerer_BloodlineFeat_<X>|1`
+    /// tokens.
+    #[test]
+    fn arcane_bloodline_eligible_bonus_feats_match_the_corpus_feat_tracker() {
+        assert_eq!(
+            ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS,
+            &[
+                "Combat Casting",
+                "Improved Counterspell",
+                "Improved Initiative",
+                "Iron Will",
+                "Scribe Scroll",
+                "Skill Focus (Knowledge [arcana])",
+                "Spell Focus",
+                "Still Spell",
+            ]
+        );
+    }
+
+    /// `floor((level + 1) / 4)`: 1/day at 3rd, rising by one at 7th, 11th,
+    /// 15th, and 19th.
+    #[test]
+    fn arcane_bloodline_metamagic_adept_uses_match_the_corpus_formula() {
+        for (level, expected) in
+            [(3u8, 1i16), (4, 1), (5, 1), (6, 1), (7, 2), (10, 2), (11, 3), (14, 3), (15, 4),
+             (18, 4), (19, 5), (20, 5)]
+        {
+            assert_eq!(
+                arcane_bloodline_metamagic_adept_uses_per_day(level),
+                expected,
+                "Metamagic Adept uses/day at sorcerer level {level}"
+            );
+        }
+    }
+
+    /// `floor((level - 5) / 4)`: one added spell at 9th, a second at 13th, a
+    /// third at 17th, and no fourth by 20th.
+    #[test]
+    fn arcane_bloodline_new_arcana_count_matches_the_corpus_formula() {
+        for (level, expected) in
+            [(9u8, 1i16), (12, 1), (13, 2), (16, 2), (17, 3), (20, 3)]
+        {
+            assert_eq!(
+                arcane_bloodline_new_arcana_spell_count(level),
+                expected,
+                "New Arcana spells at sorcerer level {level}"
+            );
+        }
+    }
+
+    /// Level 3 -- the exact level the old blocker fired at. Identify is the
+    /// only bonus spell yet, Metamagic Adept is 1/day, and nothing from the
+    /// 9th/15th/20th tiers has arrived.
+    #[test]
+    fn arcane_sorcerer_reaches_computed_at_level_3_with_the_real_corpus_values() {
+        let receipt = arcane_sorcerer_receipt(3);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        let explanations = &receipt.computation.explanations;
+
+        let bonus_spells =
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID);
+        assert_eq!(bonus_spells.value, 1);
+        assert!(
+            bonus_spells.detail.contains("Identify"),
+            "{}",
+            bonus_spells.detail
+        );
+
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID)
+                .value,
+            1
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID)
+                .value,
+            0
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID).value,
+            0
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_EXPLANATION_ID)
+                .value,
+            0
+        );
+    }
+
+    /// Level 9 -- four bonus spells, the New Arcana tier opens, Metamagic
+    /// Adept is 2/day, one bloodline feat has been granted.
+    #[test]
+    fn arcane_sorcerer_reaches_computed_at_level_9_with_the_real_corpus_values() {
+        let receipt = arcane_sorcerer_receipt(9);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        let explanations = &receipt.computation.explanations;
+
+        let bonus_spells =
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID);
+        assert_eq!(bonus_spells.value, 4);
+        for spell in ["Identify", "Invisibility", "Dispel Magic", "Dimension Door"] {
+            assert!(bonus_spells.detail.contains(spell), "{}", bonus_spells.detail);
+        }
+        assert!(
+            !bonus_spells.detail.contains("Overland Flight"),
+            "the 11th-level bonus spell must not appear at 9th: {}",
+            bonus_spells.detail
+        );
+
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID).value,
+            1
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID)
+                .value,
+            2
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID)
+                .value,
+            1
+        );
+    }
+
+    /// Level 20 -- the full progression, plus the corpus's own
+    /// `BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1` supersession: Arcane
+    /// Apotheosis replaces Metamagic Adept's per-day budget entirely, so that
+    /// record must NOT report 5/day at 20th.
+    #[test]
+    fn arcane_sorcerer_reaches_computed_at_level_20_with_apotheosis_superseding_metamagic_adept() {
+        let receipt = arcane_sorcerer_receipt(20);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        let explanations = &receipt.computation.explanations;
+
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID).value,
+            9
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_BONUS_FEAT_COUNT_EXPLANATION_ID)
+                .value,
+            3
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_NEW_ARCANA_EXPLANATION_ID).value,
+            3
+        );
+        assert_eq!(
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_EXPLANATION_ID)
+                .value,
+            SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS
+        );
+
+        let metamagic =
+            explanation(explanations, SORCERER_ARCANE_BLOODLINE_METAMAGIC_ADEPT_EXPLANATION_ID);
+        assert_eq!(
+            metamagic.value, 0,
+            "Arcane Apotheosis removes the per-day limit; reporting 5/day here would be wrong"
+        );
+        assert!(
+            metamagic.detail.contains("Arcane Apotheosis"),
+            "the 0 must be explained as supersession, not absence: {}",
+            metamagic.detail
+        );
+
+        explanation(explanations, SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID);
+    }
+
+    /// Every level 1-20 reaches `Computed` for the production Sorcerer
+    /// posture -- the whole point of this slice.
+    #[test]
+    fn arcane_sorcerer_reaches_computed_at_every_level_1_through_20() {
+        for level in 1u8..=20 {
+            let receipt = arcane_sorcerer_receipt(level);
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "sorcerer level {level}: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The guard that must survive this widening: a Sorcerer whose bloodline
+    /// this seam does not recognize gains no Arcane-specific grant and stays
+    /// blocked. Only the Arcane bloodline is grounded; the other 19 CRB
+    /// bloodlines are deferred, not silently claimed.
+    #[test]
+    fn sorcerer_without_a_recognized_bloodline_still_blocks_at_level_20() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SORCERER_CLASS_ID.to_owned(), level: 20 }];
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
+                && d.claim_blocking),
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == SORCERER_ARCANE_BLOODLINE_BONUS_SPELLS_EXPLANATION_ID),
+            "no Arcane-specific grant may be fabricated for an unrecognized bloodline"
         );
     }
 }

@@ -280,14 +280,21 @@ export interface ClassOption {
  * as race-independent, evaluated before any Human-only gate. But two of
  * the three have a real, separate LEVEL cap this file's `levelOptions`
  * must respect, or the `full` label would overclaim:
- * - **Sorcerer**: `ARCANE_BLOODLINE_BONUS_LEVEL = 3` — Computed for any
- *   race at levels 1-2 only; level 3+ stays genuinely `Blocked` (bloodline
- *   bonus spells/feats at 3rd+ aren't grounded). Live-verified: a fresh
- *   Human Sorcerer 1 reached `Computed`/`Saved`, disk-confirmed; leveling
- *   up through the real `LevelUpDialog` reached level 2 cleanly, then
- *   attempting level 3 correctly stayed at level 2 with the real
- *   `class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported`
- *   diagnostic shown, not silently advanced.
+ * - **Sorcerer**: this entry NO LONGER has an engine level cap (corrected
+ *   2026-07-29). It previously read: "`ARCANE_BLOODLINE_BONUS_LEVEL = 3` —
+ *   Computed for any race at levels 1-2 only; level 3+ stays genuinely
+ *   `Blocked` (bloodline bonus spells/feats at 3rd+ aren't grounded)",
+ *   which was live-verified true at the time. It is now false:
+ *   `ground_sorcerer_arcane_bloodline_progression` grounds the Arcane
+ *   bloodline's whole 3rd-and-above progression from the corpus, and
+ *   `cargo run --bin v06_class_state_dump` reports Sorcerer `Computed` at
+ *   every level 1-20 under this exact seeded posture (Arcane bloodline +
+ *   familiar bond, which `pf1_adapter.rs` already applies). The `[1, 2]`
+ *   below is therefore no longer an engine blocker — it is only this
+ *   file's conservative live-verified-range convention, the same lag that
+ *   leaves Wizard at `[1]` while the engine computes it at all 20 levels.
+ *   Raising it is a UI-side change needing its own live `LevelUpDialog`
+ *   verification, deliberately not made here alongside the engine fix.
  * - **Cleric**: no level cap found (Good domain, without Healing, has no
  *   level-gated condition anywhere in `explain_cleric_level1_spell_baseline`).
  *   Live-verified: a fresh Human Cleric 1 reached `Computed`/`Saved`,
