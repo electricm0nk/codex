@@ -2350,14 +2350,14 @@ const INQUISITOR_KNOWN_SPELLS_MAX_LEVEL: u8 = 20;
 /// respect. See `docs/release/v0.6/arcanist-acg-full-build-scoping.md`
 /// for the full corpus verification and scope record.
 const ARCANIST_CLASS_ID: &str = "class:arcanist";
-/// Mirrors `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope
-/// discipline exactly: this slice verifies Arcanist's own spells-per-day
-/// table only for levels 1-3, the same incremental-widening idiom every
-/// other per-level table in this codebase already uses. Levels 4-20 keep
-/// the claim-blocking `class_chassis.unsupported`-shaped diagnostic
-/// (level exceeds this grounding's own supported ceiling) until a later
-/// cycle widens it.
-const ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// Mirrors `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` exactly, including its
+/// v0.6 widening: this table originally verified Arcanist's own spells-
+/// prepared table for levels 1-3 only and deferred levels 4-20 to a later
+/// cycle. That cycle has now run -- the full 1-20 table is derived from
+/// the corpus's own `BONUS:VAR` formulas (see
+/// `arcanist_base_spells_per_day`), so no legal class level is refused for
+/// lack of a verified row any more.
+const ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 20;
 
 /// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure, sixth
 /// ACG/APG class-specific closure): APG/ACG Warpriest, verified directly
@@ -2389,10 +2389,12 @@ const ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
 /// corpus verification and scope record.
 const WARPRIEST_CLASS_ID: &str = "class:warpriest";
 /// Mirrors `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`/
-/// `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope discipline
-/// exactly: this slice verifies Warpriest's own spells-per-day table only
-/// for levels 1-3.
-const WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL` exactly, including their v0.6
+/// widening: this table originally verified Warpriest's own spells-per-day
+/// table for levels 1-3 only. The full 1-20 table is now transcribed from
+/// the corpus (see `warpriest_base_spells_per_day`), so no legal class
+/// level is refused for lack of a verified row any more.
+const WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 20;
 /// The choice set for which 2 Blessings a Warpriest selects at 1st level
 /// (mirrors `CLERIC_DOMAIN_CHOICE_ID`'s own shape exactly -- a Vec of
 /// selections under one choice-set id, not a single value).
@@ -2582,10 +2584,16 @@ fn arcanist_metamagic_knowledge_feat_name(selection_id: &str) -> Option<String> 
 /// `docs/release/v0.6/oracle-apg-full-build-scoping.md` for the full
 /// corpus verification and scope record.
 const ORACLE_CLASS_ID: &str = "class:oracle";
-/// Mirrors `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-scope
-/// discipline exactly: this slice verifies Oracle's own known-spells
-/// table only for levels 1-3.
-const ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// Mirrors `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL` exactly, including
+/// its v0.6 widening: this table originally verified Oracle's own known-
+/// spells table for levels 1-3 only. The full 1-20 table is now
+/// transcribed from the corpus (see `oracle_spells_known_table`), so no
+/// legal class level is refused for lack of a verified row any more.
+///
+/// Note this only ever governed Oracle's known-spell posture. Oracle
+/// stays claim-blocked at every level on its Mystery/Curse/other-features
+/// diagnostics, which are entirely separate from this ceiling.
+const ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL: u8 = 20;
 /// The choice set for which Mystery an Oracle selects at 1st level
 /// (mirrors `WARPRIEST_BLESSING_CHOICE_ID`'s own single choice-set shape).
 const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
@@ -11207,20 +11215,66 @@ fn ground_inquisitor_known_spells(
 }
 
 /// The PF1 Advanced Player's Guide Oracle Spells Known table's row, one
-/// entry per spell level 0-3 (index 0 is cantrips/orisons; `None` for an
-/// inaccessible "--" column). A literal table lookup transcribed directly
-/// from `apg_classes.lst`'s own `CAST:`/`KNOWN:` rows, bounded to levels
-/// 1-3 (mirrors `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`'s own bounded-
-/// scope discipline). This is the cap on distinct spells KNOWN
+/// entry per spell level 0 (orisons) through 9 (`None` for an
+/// inaccessible "--" column). This is the cap on distinct spells KNOWN
 /// (permanent), the same shape as `sorcerer_spells_known_table` -- Oracle
 /// is a spontaneous caster (`MEMORIZE:NO`), not a prepared caster like
 /// Cleric/Wizard/Arcanist/Warpriest.
-fn oracle_spells_known_table(level: u8) -> [Option<i16>; 4] {
+///
+/// Transcribed literally from the PCGen corpus's own `CLASS:Oracle`
+/// level-progression `KNOWN:` rows at
+/// `data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst`
+/// lines 115-134 (level 1 on line 115 through level 20 on line 134) -- a
+/// literal table lookup, not a derived formula. Read off the `KNOWN:`
+/// column, deliberately not the `CAST:` column on those same lines:
+/// `CAST:` is Oracle's spells PER DAY, a different quantity, and it
+/// additionally carries a leading `0` sentinel in its spell-level-0
+/// column because a spontaneous caster's orisons are cast at will rather
+/// than from a daily count.
+///
+/// These rows are byte-identical to `sorcerer_spells_known_table`'s. That
+/// is not an assumed reuse: both files' raw rows were read and compared
+/// directly, and PF1 genuinely gives Oracle and Sorcerer the same spells-
+/// known progression. Each class keeps its own table so a future
+/// divergence in either book cannot silently propagate to the other.
+///
+/// Returns an all-`None` row outside the legal 1-20 class-level range.
+fn oracle_spells_known_table(level: u8) -> [Option<i16>; 10] {
     match level {
-        1 => [Some(4), Some(2), None, None],
-        2 => [Some(5), Some(2), None, None],
-        3 => [Some(5), Some(3), None, None],
-        _ => [None, None, None, None],
+        1 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None, None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None, None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None, None, None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None, None, None],
+        14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1), None, None],
+        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), None, None],
+        16 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None,
+        ],
+        17 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None,
+        ],
+        18 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2),
+            Some(1),
+        ],
+        19 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(2),
+        ],
+        20 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(3),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
     }
 }
 
@@ -11256,7 +11310,7 @@ fn unmet_oracle_known_spell_conditions(input: &CharacterInput, oracle_level: u8)
 
     let known_table = oracle_spells_known_table(oracle_level);
 
-    let mut known_per_level: [i16; 4] = [0; 4];
+    let mut known_per_level: [i16; 10] = [0; 10];
     for spell_id in &known {
         let Some(spell_level) = cleric_spell_list::cleric_spell_level(spell_id) else {
             unmet.push(format!(
@@ -13101,27 +13155,87 @@ fn arcanist_reservoir_max(level: u8) -> i16 {
 }
 
 /// PF1 Advanced Class Guide Arcanist "Spells Prepared" table, base counts
-/// before any Intelligence bonus spells, for spell levels 0 (cantrip)
-/// through 3rd, bounded to `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL`
-/// (mirroring `wizard_base_spells_per_day`'s own bounded-scope
-/// discipline). Verified via two independent sources (see
-/// `ARCANIST_CLASS_ID`'s own doc comment): the raw corpus `BONUS:VAR`
-/// formulas (`ArcanistPreparedLVL_0 = 4+(CastingLVL>=2)+(>=4)+(>=6)+
-/// (>=8)+(>=10)`, `ArcanistPreparedLVL_1 = 2+(>=3)+(>=5)+(>=7)`,
-/// `ArcanistPreparedLVL_2 = (>=4)+(>=5)+(>=7)+(>=9)+(>=11)`,
-/// hand-evaluated at levels 1-3) and legacy.aonprd.com's own printed
-/// "Table: Arcanist Spells Prepared" (levels 1-3 read `4/2/-/-`,
-/// `5/2/-/-`, `5/3/-/-`) -- both agree exactly. Genuinely DIFFERENT from
-/// `wizard_base_spells_per_day` (level 1 Wizard is `3/1/-/-`; Arcanist's
-/// own 2nd-level spells first become accessible at Arcanist level 4, not
-/// Wizard's level 3) -- this is a real, independently-verified parallel
-/// table, not a byte-identical reuse.
-fn arcanist_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+/// before any Intelligence bonus spells, one entry per spell level 0
+/// (cantrip) through 9 (`None` for an inaccessible "--" column).
+///
+/// Unlike Wizard's/Warpriest's own tables, the Arcanist's per-level counts
+/// are NOT literal `CAST:` rows in the corpus. Its `CLASS:Arcanist` level-
+/// progression line is a single `REPEATLEVEL` row of variable references
+/// (`acg_classes.lst:31`:
+/// `1:REPEATLEVEL:1 CAST:ArcanistPreparedLVL_0,...,ArcanistPreparedLVL_9`),
+/// and those variables are defined by `BONUS:VAR` formulas on the
+/// `KEY:Arcanist ~ Spells Prepared` record at
+/// `data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst`
+/// line 77. This table is those formulas evaluated at each level:
+///
+/// - `ArcanistPreparedLVL_0 = 4+(L>=2)+(L>=4)+(L>=6)+(L>=8)+(L>=10)`
+/// - `ArcanistPreparedLVL_1 = 2+(L>=3)+(L>=5)+(L>=7)`
+/// - `ArcanistPreparedLVL_2 = (L>=4)+(L>=5)+(L>=7)+(L>=9)+(L>=11)`
+/// - `ArcanistPreparedLVL_3 = (L>=6)+(L>=7)+(L>=9)+(L>=11)`
+/// - `ArcanistPreparedLVL_4 = (L>=8)+(L>=9)+(L>=11)+(L>=13)`
+/// - `ArcanistPreparedLVL_5 = (L>=10)+(L>=11)+(L>=13)+(L>=15)`
+/// - `ArcanistPreparedLVL_6 = (L>=12)+(L>=13)+(L>=15)`
+/// - `ArcanistPreparedLVL_7 = (L>=14)+(L>=15)+(L>=17)`
+/// - `ArcanistPreparedLVL_8 = (L>=16)+(L>=17)+(L>=19)`
+/// - `ArcanistPreparedLVL_9 = (L>=18)+(L>=19)+(L>=20)`
+///
+/// where each `(L>=N)` term is 1 when true and 0 when false, and `L` is
+/// `ArcanistCastingLVL` -- defined on the same record as
+/// `ArcanistLVL+var("BL=Arcanist")`, i.e. the plain class level for a
+/// single-class character with no caster-level bonus. A formula result of
+/// 0 means the spell level is not yet accessible, so it maps to `None`.
+///
+/// Deliberately NOT read off the same record's `ArcanistCastLVL_*`
+/// variables, which are a different quantity despite the near-identical
+/// name: those are the DESC display helpers for spell slots per day, are
+/// gated on `INTSCORE` and fold the Intelligence bonus spells inline,
+/// whereas this table is the Intelligence-independent base that
+/// `ability_bonus_spells` is added to separately by the caller.
+///
+/// The levels 1-3 rows are byte-for-byte the ones this table already
+/// shipped with, previously cross-checked against legacy.aonprd.com's own
+/// printed "Table: Arcanist Spells Prepared" (`4/2/-/-`, `5/2/-/-`,
+/// `5/3/-/-`). Genuinely DIFFERENT from `wizard_base_spells_per_day`
+/// (level 1 Wizard is `3/1/-/-`; Arcanist's 2nd-level spells first become
+/// accessible at Arcanist level 4, not Wizard's level 3).
+///
+/// Returns an all-`None` row outside the legal 1-20 class-level range.
+fn arcanist_base_spells_per_day(level: u8) -> [Option<i16>; 10] {
     match level {
-        1 => [Some(4), Some(2), None, None],
-        2 => [Some(5), Some(2), None, None],
-        3 => [Some(5), Some(3), None, None],
-        _ => [None, None, None, None],
+        1 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None, None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None, None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None, None, None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None, None, None],
+        14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1), None, None],
+        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), None, None],
+        16 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None,
+        ],
+        17 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None,
+        ],
+        18 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2),
+            Some(1),
+        ],
+        19 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(2),
+        ],
+        20 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(3),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
     }
 }
 
@@ -13502,23 +13616,52 @@ fn push_arcanist_exploits_deferred_diagnostic(diagnostics: &mut Vec<ComputationD
 }
 
 /// PF1 Advanced Class Guide Warpriest "Spells" table, base counts before
-/// any Wisdom bonus spells, for spell levels 0 (cantrip) through 3rd,
-/// bounded to `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL`. Verified
-/// directly against `acg_classes.lst`'s own real per-level `CAST:` rows
-/// (not a derived formula): level 1 `CAST:3,1`, level 2 `CAST:4,2`,
-/// level 3 `CAST:4,3`. Genuinely DIFFERENT from
-/// `cleric_base_spells_per_day_table` starting at level 3 (Cleric grants
-/// a 2nd-level spell slot at level 3; Warpriest does not, first
-/// unlocking 2nd-level spells at level 4) even though the spell-list
-/// CONTENT and casting SHAPE (prepared, no known-spells cap,
-/// `SPELLLIST:1|Cleric`) are genuinely shared -- see `WARPRIEST_CLASS_ID`'s
-/// own doc comment for the full verification record.
-fn warpriest_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+/// any Wisdom bonus spells, one entry per spell level 0 (cantrip) through
+/// 9 (`None` for an inaccessible "--" column).
+///
+/// Transcribed literally from the PCGen corpus's own `CLASS:Warpriest`
+/// level-progression `CAST:` rows at
+/// `data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst`
+/// lines 391-410 (level 1 on line 391 through level 20 on line 410) -- a
+/// literal table lookup, not a derived formula.
+///
+/// Warpriest is a 6-level caster: spell levels 7-9 stay `None` at every
+/// class level, matching both the corpus rows (no row has more than 7
+/// columns) and the class's own
+/// `KNOWNSPELLS:LEVEL=0|...|LEVEL=6` token on `acg_classes.lst:368`.
+///
+/// Genuinely DIFFERENT from `cleric_base_spells_per_day_table` starting at
+/// level 3 (Cleric grants a 2nd-level spell slot at level 3; Warpriest
+/// does not, first unlocking 2nd-level spells at level 4) even though the
+/// spell-list CONTENT and casting SHAPE (prepared, no known-spells cap,
+/// `SPELLLIST:1|Cleric`) are genuinely shared -- see
+/// `WARPRIEST_CLASS_ID`'s own doc comment for the full verification
+/// record.
+///
+/// Returns an all-`None` row outside the legal 1-20 class-level range.
+fn warpriest_base_spells_per_day(level: u8) -> [Option<i16>; 10] {
     match level {
-        1 => [Some(3), Some(1), None, None],
-        2 => [Some(4), Some(2), None, None],
-        3 => [Some(4), Some(3), None, None],
-        _ => [None, None, None, None],
+        1 => [Some(3), Some(1), None, None, None, None, None, None, None, None],
+        2 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(4), Some(3), None, None, None, None, None, None, None, None],
+        4 => [Some(4), Some(3), Some(1), None, None, None, None, None, None, None],
+        5 => [Some(4), Some(4), Some(2), None, None, None, None, None, None, None],
+        6 => [Some(5), Some(4), Some(3), None, None, None, None, None, None, None],
+        7 => [Some(5), Some(4), Some(3), Some(1), None, None, None, None, None, None],
+        8 => [Some(5), Some(4), Some(4), Some(2), None, None, None, None, None, None],
+        9 => [Some(5), Some(5), Some(4), Some(3), None, None, None, None, None, None],
+        10 => [Some(5), Some(5), Some(4), Some(3), Some(1), None, None, None, None, None],
+        11 => [Some(5), Some(5), Some(4), Some(4), Some(2), None, None, None, None, None],
+        12 => [Some(5), Some(5), Some(5), Some(4), Some(3), None, None, None, None, None],
+        13 => [Some(5), Some(5), Some(5), Some(4), Some(3), Some(1), None, None, None, None],
+        14 => [Some(5), Some(5), Some(5), Some(4), Some(4), Some(2), None, None, None, None],
+        15 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(3), None, None, None, None],
+        16 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(3), Some(1), None, None, None],
+        17 => [Some(5), Some(5), Some(5), Some(5), Some(4), Some(4), Some(2), None, None, None],
+        18 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(4), Some(3), None, None, None],
+        19 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5), Some(4), None, None, None],
+        20 => [Some(5), Some(5), Some(5), Some(5), Some(5), Some(5), Some(5), None, None, None],
+        _ => [None, None, None, None, None, None, None, None, None, None],
     }
 }
 
@@ -30575,29 +30718,73 @@ fn explain_wizard_level1_prepared_spell_baseline(
     }
 }
 
-/// This new grounding's own supported wizard-level ceiling (SD-21 E6b.2),
-/// independent of `MAX_SUPPORTED_WIZARD_LEVEL` (20): the base spells-per-day
-/// table below is only verified for levels 1-3 so far, mirroring every other
-/// incremental per-level widening already used throughout this file. Levels
-/// 4-20 keep the pre-existing claim-blocking diagnostics until a later cycle
-/// widens this ceiling.
-const WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+/// This grounding's own supported wizard-level ceiling (SD-21 E6b.2),
+/// matching `MAX_SUPPORTED_WIZARD_LEVEL` (20) since the v0.6 widening: the
+/// base spells-per-day table below originally shipped verified for levels
+/// 1-3 only, and deferred levels 4-20 to "a later cycle". This is that
+/// cycle -- the full 1-20 table is now transcribed literally from the
+/// corpus (see `wizard_base_spells_per_day`), so no level in the legal
+/// 1-20 range is refused for lack of a verified row any more.
+const WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook Wizard "Spells per Day" table, base counts before any
-/// Intelligence bonus spells or the specialist bonus slot, for spell levels 0
-/// (cantrip) through 3rd. Verified independently against d20pfsrd.com and the
-/// Archives of Nethys aonprd.com mirror (byte-for-byte agreement): level 1
-/// "3/1/-/-", level 2 "4/2/-/-", level 3 "4/2/1/-" (the level 2/3 rows were
-/// already cited in this function's own doc comment above; level 1 is the
-/// same verified table's opening row). Returns `[None; 4]` above level
-/// `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` -- this grounding's own bounded
-/// range, not the wider `MAX_SUPPORTED_WIZARD_LEVEL`.
-fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+/// Intelligence bonus spells or the specialist bonus slot, one entry per
+/// spell level 0 (cantrip) through 9 (`None` for an inaccessible "--"
+/// column).
+///
+/// Transcribed literally from the PCGen corpus's own `CLASS:Wizard` level-
+/// progression `CAST:` rows at
+/// `data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst`
+/// lines 303-322 (level 1 on line 303 through level 20 on line 322) -- a
+/// literal table lookup, not a derived formula. Each `CAST:` row is a
+/// comma-separated list starting at spell level 0, so `1 CAST:3,1` is
+/// "3 cantrips / 1 first-level", and absent trailing columns are the
+/// printed table's "--" (inaccessible) entries. The levels 1-3 rows are
+/// byte-for-byte the ones this table already shipped with, previously
+/// verified independently against d20pfsrd.com and the Archives of
+/// Nethys aonprd.com mirror; the levels 4-20 rows are new in the v0.6
+/// widening and come from the same corpus block.
+///
+/// Returns an all-`None` row outside the legal 1-20 class-level range.
+fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 10] {
     match level {
-        1 => [Some(3), Some(1), None, None],
-        2 => [Some(4), Some(2), None, None],
-        3 => [Some(4), Some(2), Some(1), None],
-        _ => [None, None, None, None],
+        1 => [Some(3), Some(1), None, None, None, None, None, None, None, None],
+        2 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(4), Some(2), Some(1), None, None, None, None, None, None, None],
+        4 => [Some(4), Some(3), Some(2), None, None, None, None, None, None, None],
+        5 => [Some(4), Some(3), Some(2), Some(1), None, None, None, None, None, None],
+        6 => [Some(4), Some(3), Some(3), Some(2), None, None, None, None, None, None],
+        7 => [Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None, None],
+        8 => [Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None, None],
+        9 => [Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        10 => [Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None, None],
+        11 => [Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        12 => [Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None, None],
+        13 => [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None, None],
+        14 => [Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None, None],
+        15 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None,
+        ],
+        16 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None,
+        ],
+        17 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(2),
+            Some(1),
+        ],
+        18 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3), Some(3),
+            Some(2),
+        ],
+        19 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(3),
+            Some(3),
+        ],
+        20 => [
+            Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4), Some(4),
+            Some(4),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
     }
 }
 
@@ -36855,31 +37042,89 @@ mod wizard_non_human_widening_tests {
         assert_eq!(record.value, 11, "10 + 1 + 0 = 11, unchanged from before this widening");
     }
 
-    /// The real `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` ceiling must fire for
-    /// a non-Human Wizard too, not just Human -- this is the exact gap item
-    /// 18 identified (the whole gated function, ceiling included, never ran
-    /// at all for non-Human before this widening).
+    /// The real `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`-gated spellbook
+    /// grounding must run for a non-Human Wizard too, not just Human -- this
+    /// is the exact gap item 18 identified (the whole gated function never
+    /// ran at all for non-Human before that widening).
+    ///
+    /// This test originally asserted that an Elf Wizard at level 4 was
+    /// honestly `Blocked` on the old bounded 1-3 ceiling. The v0.6
+    /// spellcasting widening transcribed the real levels 4-20 rows from the
+    /// corpus and lifted that ceiling to 20, so level 4 now legitimately
+    /// reaches `Computed`. The non-Human coverage the test exists to protect
+    /// is preserved and strengthened: rather than merely asserting "no longer
+    /// blocked", it pins the real corpus spells-per-day values that the
+    /// non-Human path must actually produce, so a non-Human Wizard silently
+    /// grounding nothing (the original item-18 bug shape) still fails here.
     #[test]
-    fn elf_wizard_level4_hits_the_real_spellbook_ceiling_just_like_human() {
+    fn elf_wizard_level4_grounds_the_real_widened_spellbook_just_like_human() {
         let input = elf_wizard_at_level(4);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "an Elf Wizard past the real level-3 spellbook ceiling must be honestly Blocked, \
-             not silently Computed: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "an Elf Wizard at level 4 is now inside the widened spellbook ceiling and must \
+             reach Computed: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
-            receipt.computation.diagnostics.iter().any(|d| d.id
-                == "class_spell.wizard.prepared_spellbook.unsupported"
-                && d.claim_blocking
-                && d.message.contains("1-3")),
-            "expected the real spellbook-ceiling diagnostic naming the 1-3 supported range, \
-             got: {:?}",
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.wizard.prepared_spellbook.unsupported"),
+            "the spellbook-ceiling diagnostic must no longer fire at level 4: {:?}",
             receipt.computation.diagnostics
         );
+
+        // cr_classes.lst:306 -- `4 CAST:4,3,2`. Fixture Intelligence 12 (+1),
+        // so only the base row is asserted here; the Intelligence bonus and
+        // the specialist slot are separate records.
+        for (spell_level, expected) in [(0i16, 4i16), (1, 3), (2, 2)] {
+            let id = format!("class_spell.wizard.base_spells_per_day.spell_level_{spell_level}");
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("a non-Human Wizard must ground {id}"));
+            assert_eq!(
+                record.value, expected,
+                "Wizard level 4 base spells per day at spell level {spell_level} \
+                 (cr_classes.lst:306): {record:?}"
+            );
+        }
+    }
+
+    /// The same non-Human path must also carry all the way to the top of the
+    /// widened range: `cr_classes.lst:322` -- `20 CAST:4,4,4,4,4,4,4,4,4,4`,
+    /// including the 9th-level column that only exists at level 20.
+    #[test]
+    fn elf_wizard_level20_grounds_the_full_corpus_spells_per_day_row() {
+        let input = elf_wizard_at_level(20);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "an Elf Wizard at level 20 must reach Computed after the widening: {:?}",
+            receipt.computation.diagnostics
+        );
+        for spell_level in 0..=9i16 {
+            let id = format!("class_spell.wizard.base_spells_per_day.spell_level_{spell_level}");
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("Wizard level 20 must ground {id}"));
+            assert_eq!(
+                record.value, 4,
+                "Wizard level 20 base spells per day is 4 at every spell level 0-9 \
+                 (cr_classes.lst:322): {record:?}"
+            );
+        }
     }
 
     /// The ceiling must NOT fire for an Elf Wizard at level 3 (still within
@@ -46238,6 +46483,70 @@ mod warpriest_dispatch_widening_safety_tests {
         );
     }
 
+    /// The v0.6 spellcasting widening must reach Warpriest end to end, not
+    /// merely as a table lookup: a level-20 Warpriest with the same valid
+    /// posture grounds the real top-of-table row rather than tripping the
+    /// old bounded 1-3 ceiling.
+    ///
+    /// `acg_classes.lst:410` -- `20 CAST:5,5,5,5,5,5,5`. Warpriest is a
+    /// 6-level caster, so spell levels 7-9 must ground no record at all even
+    /// at class level 20.
+    #[test]
+    fn warpriest_level20_grounds_the_full_widened_corpus_spells_per_day_row() {
+        let mut input = human_warpriest_input(20);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Light".to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.acg.warpriest.prepared_spellbook.unsupported"),
+            "the prepared_spellbook ceiling must not fire at level 20 after the widening: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        for spell_level in 0..=6i16 {
+            let id =
+                format!("class_spell.acg.warpriest.base_spells_per_day.spell_level_{spell_level}");
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("Warpriest level 20 must ground {id}"));
+            assert_eq!(
+                record.value, 5,
+                "Warpriest level 20 base spells per day is 5 at every accessible spell level 0-6 \
+                 (acg_classes.lst:410): {record:?}"
+            );
+        }
+        for spell_level in 7..=9i16 {
+            let id =
+                format!("class_spell.acg.warpriest.base_spells_per_day.spell_level_{spell_level}");
+            assert!(
+                !receipt.computation.explanations.iter().any(|e| e.id == id),
+                "Warpriest is a 6-level caster: spell level {spell_level} must ground no \
+                 spells-per-day record even at class level 20"
+            );
+        }
+    }
+
     /// A non-Warpriest character carrying spoofed Warpriest choice/
     /// activation/spell entries must have them silently ignored -- the
     /// class-ownership gate is by construction, not a bolt-on rejection.
@@ -46986,6 +47295,72 @@ mod oracle_dispatch_widening_safety_tests {
             receipt.status,
             HeadlessReceiptStatus::Blocked,
             "Oracle still stays Blocked on Mystery/Curse/other_features_deferred: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The v0.6 spellcasting widening must reach Oracle end to end: a
+    /// level-20 Oracle knowing a real 9th-level Cleric spell is a legal
+    /// posture (`apg_classes.lst:134` -- `20 KNOWN:9,5,5,4,4,4,3,3,3,3`
+    /// grants 3 known spells at spell level 9), where the old bounded 1-3
+    /// ceiling rejected the whole posture outright.
+    ///
+    /// Oracle still stays `Blocked` at every level on its
+    /// Mystery/Curse/other-features diagnostics -- those are entirely
+    /// separate from this ceiling and are deliberately untouched here.
+    #[test]
+    fn oracle_level20_admits_a_real_ninth_level_known_spell_after_the_widening() {
+        let mut input = human_oracle_input(20);
+        input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Miracle".to_owned(),
+            source_class_id: ORACLE_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.apg.oracle.known_spells.unsupported"),
+            "a 9th-level Cleric spell known at Oracle level 20 is a legal posture after the \
+             widening: {:?}",
+            receipt.computation.diagnostics
+        );
+        let known = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.oracle.known_spells")
+            .expect("known-spell count must be grounded at level 20");
+        assert_eq!(known.value, 1, "Oracle level 20 with one known spell: {known:?}");
+    }
+
+    /// The widened Oracle table must still be a real per-spell-level cap,
+    /// not an "anything goes above level 3" hole: `apg_classes.lst:118` --
+    /// `4 KNOWN:6,3,1` grants exactly one 2nd-level known spell at Oracle
+    /// level 4, so a second one is a genuine over-known violation.
+    #[test]
+    fn oracle_level4_still_enforces_the_real_per_spell_level_known_cap() {
+        let mut input = human_oracle_input(4);
+        for spell_id in ["Aid", "Align Weapon"] {
+            input.chosen.spells_selected.push(SpellSelection {
+                spell_id: spell_id.to_owned(),
+                source_class_id: ORACLE_CLASS_ID.to_owned(),
+                acquisition_mode: AcquisitionMode::Known,
+            });
+        }
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt.computation.diagnostics.iter().any(|d| d.id
+                == "class_spell.apg.oracle.known_spells.unsupported"
+                && d.message.contains("over-known")),
+            "two 2nd-level known spells exceed Oracle level 4's single 2nd-level slot \
+             (apg_classes.lst:118): {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -53310,5 +53685,147 @@ mod resiliency_talent_tests {
             None,
             "an Investigator's Rogue-choice-id selection must not ground the Investigator record"
         );
+    }
+}
+
+/// v0.6 alpha swarm: the "later cycle" the four bounded MVP spellcasting
+/// ceilings explicitly deferred to.
+///
+/// `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL`,
+/// `ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL`,
+/// `WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL` and
+/// `ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL` each shipped at 3 because only
+/// levels 1-3 of their per-level tables had been transcribed and verified.
+/// These tests pin the REAL remaining rows, transcribed literally from the
+/// PCGen corpus (see each table function's own doc comment for the exact
+/// file and line range), at levels 4, 10 and 20 -- not merely "the ceiling
+/// diagnostic no longer fires". A wrong number here is worse than a blocked
+/// class, so every row asserted below is the raw corpus row.
+///
+/// Rows are compared as `Vec` rather than fixed-width arrays so each
+/// assertion expresses the intended width (10 columns, spell levels 0-9)
+/// independently of the array type it is compared against.
+#[cfg(test)]
+mod spellcasting_level_cap_widening_tests {
+    use super::{
+        arcanist_base_spells_per_day, oracle_spells_known_table, warpriest_base_spells_per_day,
+        wizard_base_spells_per_day, ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL,
+        ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL, WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL,
+        WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL,
+    };
+
+    /// Build one expected row from the corpus's own comma-separated `CAST:`/
+    /// `KNOWN:` shape: trailing/absent columns and explicit `0`s both mean an
+    /// inaccessible ("--") spell level.
+    fn row(cols: &[i16]) -> Vec<Option<i16>> {
+        let mut out: Vec<Option<i16>> =
+            cols.iter().map(|c| if *c > 0 { Some(*c) } else { None }).collect();
+        out.resize(10, None);
+        out
+    }
+
+    /// All four ceilings must now cover the full 1-20 class-level range.
+    #[test]
+    fn every_bounded_spellcasting_ceiling_now_covers_all_twenty_levels() {
+        assert_eq!(WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL, 20);
+        assert_eq!(ARCANIST_SPELLBOOK_SUPPORTED_MAX_LEVEL, 20);
+        assert_eq!(WARPRIEST_SPELLBOOK_SUPPORTED_MAX_LEVEL, 20);
+        assert_eq!(ORACLE_KNOWN_SPELLS_SUPPORTED_MAX_LEVEL, 20);
+    }
+
+    /// `cr_classes.lst:306` / `:312` / `:322` (`CLASS:Wizard` level
+    /// progression `CAST:` rows).
+    #[test]
+    fn wizard_spells_per_day_matches_the_raw_corpus_cast_rows() {
+        assert_eq!(wizard_base_spells_per_day(4).to_vec(), row(&[4, 3, 2]), "cr_classes.lst:306");
+        assert_eq!(
+            wizard_base_spells_per_day(10).to_vec(),
+            row(&[4, 4, 4, 3, 3, 2]),
+            "cr_classes.lst:312"
+        );
+        assert_eq!(
+            wizard_base_spells_per_day(20).to_vec(),
+            row(&[4, 4, 4, 4, 4, 4, 4, 4, 4, 4]),
+            "cr_classes.lst:322"
+        );
+        // The already-shipped, independently-verified level 1-3 rows must be
+        // preserved byte-for-byte by this widening.
+        assert_eq!(wizard_base_spells_per_day(1).to_vec(), row(&[3, 1]), "cr_classes.lst:303");
+        assert_eq!(wizard_base_spells_per_day(3).to_vec(), row(&[4, 2, 1]), "cr_classes.lst:305");
+    }
+
+    /// `acg_abilities_class.lst:77`, `KEY:Arcanist ~ Spells Prepared`
+    /// `BONUS:VAR|ArcanistPreparedLVL_*` formulas evaluated at each level.
+    #[test]
+    fn arcanist_spells_prepared_matches_the_raw_corpus_bonus_var_formulas() {
+        assert_eq!(arcanist_base_spells_per_day(4).to_vec(), row(&[6, 3, 1]));
+        assert_eq!(arcanist_base_spells_per_day(10).to_vec(), row(&[9, 5, 4, 3, 2, 1]));
+        assert_eq!(arcanist_base_spells_per_day(20).to_vec(), row(&[9, 5, 5, 4, 4, 4, 3, 3, 3, 3]));
+        assert_eq!(arcanist_base_spells_per_day(1).to_vec(), row(&[4, 2]));
+        assert_eq!(arcanist_base_spells_per_day(3).to_vec(), row(&[5, 3]));
+    }
+
+    /// `acg_classes.lst:394` / `:400` / `:410` (`CLASS:Warpriest` level
+    /// progression `CAST:` rows). Warpriest is a 6-level caster: spell
+    /// levels 7-9 are never accessible, even at class level 20.
+    #[test]
+    fn warpriest_spells_per_day_matches_the_raw_corpus_cast_rows() {
+        assert_eq!(
+            warpriest_base_spells_per_day(4).to_vec(),
+            row(&[4, 3, 1]),
+            "acg_classes.lst:394"
+        );
+        assert_eq!(
+            warpriest_base_spells_per_day(10).to_vec(),
+            row(&[5, 5, 4, 3, 1]),
+            "acg_classes.lst:400"
+        );
+        assert_eq!(
+            warpriest_base_spells_per_day(20).to_vec(),
+            row(&[5, 5, 5, 5, 5, 5, 5]),
+            "acg_classes.lst:410"
+        );
+        assert_eq!(warpriest_base_spells_per_day(1).to_vec(), row(&[3, 1]), "acg_classes.lst:391");
+        assert_eq!(warpriest_base_spells_per_day(3).to_vec(), row(&[4, 3]), "acg_classes.lst:393");
+
+        let level20 = warpriest_base_spells_per_day(20);
+        for (spell_level, slot) in level20.iter().enumerate().skip(7) {
+            assert_eq!(
+                *slot, None,
+                "Warpriest is a 6-level caster: spell level {spell_level} must stay inaccessible"
+            );
+        }
+    }
+
+    /// `apg_classes.lst:118` / `:124` / `:134` (`CLASS:Oracle` level
+    /// progression `KNOWN:` rows).
+    #[test]
+    fn oracle_spells_known_matches_the_raw_corpus_known_rows() {
+        assert_eq!(oracle_spells_known_table(4).to_vec(), row(&[6, 3, 1]), "apg_classes.lst:118");
+        assert_eq!(
+            oracle_spells_known_table(10).to_vec(),
+            row(&[9, 5, 4, 3, 2, 1]),
+            "apg_classes.lst:124"
+        );
+        assert_eq!(
+            oracle_spells_known_table(20).to_vec(),
+            row(&[9, 5, 5, 4, 4, 4, 3, 3, 3, 3]),
+            "apg_classes.lst:134"
+        );
+        assert_eq!(oracle_spells_known_table(1).to_vec(), row(&[4, 2]), "apg_classes.lst:115");
+        assert_eq!(oracle_spells_known_table(3).to_vec(), row(&[5, 3]), "apg_classes.lst:117");
+    }
+
+    /// An out-of-range class level stays a real "no such class level"
+    /// sentinel for all four tables -- widening the ceiling must not turn an
+    /// out-of-range level into a silently-populated row.
+    #[test]
+    fn out_of_range_levels_still_return_a_fully_empty_row() {
+        for level in [0u8, 21u8] {
+            assert_eq!(wizard_base_spells_per_day(level).to_vec(), row(&[]), "level {level}");
+            assert_eq!(arcanist_base_spells_per_day(level).to_vec(), row(&[]), "level {level}");
+            assert_eq!(warpriest_base_spells_per_day(level).to_vec(), row(&[]), "level {level}");
+            assert_eq!(oracle_spells_known_table(level).to_vec(), row(&[]), "level {level}");
+        }
     }
 }
