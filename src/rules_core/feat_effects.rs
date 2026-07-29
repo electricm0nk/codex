@@ -946,6 +946,132 @@ pub fn improved_critical_targets_from_choices(
     dedup_targets(targets).into_iter().map(str::to_owned).collect()
 }
 
+/// The three CRB feats that GRANT weapon proficiency, and the two
+/// Mechanism-B target contracts the chooser pair need.
+///
+/// **These do not carry a `BONUS:` token at all, and that is the point.**
+/// A survey that looks for `BONUS:WEAPONPROF` finds the five weapon feats
+/// above and concludes the proficiency-granting feats are unimplementable
+/// -- but `BONUS:WEAPONPROF=<group>|TOHIT|n` means "apply n to attacks with
+/// that proficiency group", it never grants a proficiency. The grant token
+/// is `AUTO:WEAPONPROF`, which is why all three of these records read
+/// `effect: None` in this crate's own feat catalog and therefore computed
+/// nothing whatsoever before this producer. Their magnitude is not a bonus
+/// -- it is the REMOVAL of PF1's -4 nonproficiency attack penalty, which
+/// this engine already computes
+/// (`pilot_compute::WEAPON_NONPROFICIENCY_ATTACK_PENALTY`, read from the
+/// game mode's own `WEAPONNONPROFPENALTY:-4`).
+const SIMPLE_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Simple Weapon Proficiency";
+const MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Martial Weapon Proficiency";
+const EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Exotic Weapon Proficiency";
+const MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET: &str =
+    "choice:martial_weapon_proficiency_target";
+const EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET: &str =
+    "choice:exotic_weapon_proficiency_target";
+
+/// Every weapon proficiency a character's feats grant, in the two shapes
+/// the corpus actually uses.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct WeaponProficiencyGrantsFromFeats {
+    /// Simple Weapon Proficiency grants the whole Simple TIER, not one
+    /// weapon: its corpus record carries no `CHOOSE:` at all, only
+    /// `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Simple` -- the same
+    /// indirection `weapon_tables`' own doc comment documents for class
+    /// grants, whose target carries `AUTO:WEAPONPROF|TYPE=Simple`. Modelling
+    /// it as a per-weapon choice would understate it by the entire rest of
+    /// the Simple list.
+    pub grants_simple_tier: bool,
+    /// The individually named weapons granted by Martial Weapon Proficiency
+    /// and Exotic Weapon Proficiency, verbatim from each `weapon:<name>`
+    /// selection, deduplicated case-insensitively in first-seen order.
+    ///
+    /// Both are `MULT:YES` (repeatable for a different weapon each time)
+    /// with no `STACK:` token -- and stacking would be meaningless anyway,
+    /// since proficiency is boolean. The two feats' grants are pooled into
+    /// one list because `AUTO:WEAPONPROF|%LIST` is byte-identical on both:
+    /// which feat granted a proficiency changes nothing about its effect.
+    pub named_weapons: Vec<String>,
+}
+
+/// Grounds the real proficiency grants a character's feats confer.
+///
+/// Grants nothing for a chooser feat held with no recorded target -- the
+/// same no-silent-seeding contract as every other chooser feat here. That
+/// matters more than usual for this pair: seeding a default weapon would
+/// silently erase a -4 penalty from a real attack total.
+///
+/// **Prerequisites are deliberately not enforced**, matching every sibling
+/// producer in this module: Exotic Weapon Proficiency's `PRETOTALAB:1` and
+/// Martial Weapon Proficiency's `!PREABILITY:...Output` guard are
+/// `feat_prereqs`' responsibility.
+///
+/// **The chosen weapon's own tier is deliberately not checked either, and
+/// that is a considered call rather than an omission.** Martial Weapon
+/// Proficiency's `CHOOSE:WEAPONPROFICIENCY|!PC[TYPE=Martial]` and Exotic's
+/// `ANY[TYPE=Exotic]` restrict what the PICKER offers, and rejecting an
+/// off-tier target here would break a legitimate, extremely common PF1
+/// build: Exotic Weapon Proficiency (bastard sword) is the canonical way to
+/// wield a bastard sword one-handed, but `weapon_tables` resolves the
+/// Bastard Sword -- a genuinely dual-tier weapon -- to its Martial tier
+/// (see `the_two_dual_tier_weapons_resolve_to_their_martial_tier`). A tier
+/// gate would therefore reject a correct choice while the current shape
+/// only accepts an incorrect one that the picker never offers in the first
+/// place. Over-refusal is the worse failure, and the consumer joins the
+/// name to a real weapon and is where any such check would have to live
+/// anyway -- this module imports no weapon table, by design.
+pub fn weapon_proficiency_grants_from_feats(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> WeaponProficiencyGrantsFromFeats {
+    let holds = |key: &str| selected_feats.iter().any(|feat| feat == key);
+
+    let mut named: Vec<&str> = Vec::new();
+    if holds(MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY) {
+        named.extend(chosen_targets(
+            selected_choices,
+            MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        ));
+    }
+    if holds(EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY) {
+        named.extend(chosen_targets(
+            selected_choices,
+            EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        ));
+    }
+
+    WeaponProficiencyGrantsFromFeats {
+        grants_simple_tier: holds(SIMPLE_WEAPON_PROFICIENCY_FEAT_KEY),
+        named_weapons: dedup_targets(named).into_iter().map(str::to_owned).collect(),
+    }
+}
+
+/// Weapon Finesse's catalog key. It takes no target: unlike the five
+/// `%LIST` weapon feats, its corpus token names the `Finesseable` weapon
+/// TYPE directly (`BONUS:COMBAT|TOHIT.Finesseable|
+/// ((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged`), so it applies to
+/// every finesseable weapon the character wields at once and has no
+/// `CHOOSE:` token and no chooser contract.
+const WEAPON_FINESSE_FEAT_KEY: &str = "Weapon Finesse";
+
+/// Whether the character holds Weapon Finesse.
+///
+/// **Returns a boolean, not a magnitude, and the shape is the point.** The
+/// corpus token's payload is `((max(STR,DEX)-STR)+SHIELDACCHECK)` -- an
+/// expression over two ability scores and the worn shield's armor check
+/// penalty, none of which this dependency-free leaf module knows. There is
+/// no single number to hand back, the same way Improved Critical's
+/// threat-range doubling has none. The consumer, which holds the ability
+/// modifiers and the weapon's own `Finesseable` facet, is the only place
+/// that can evaluate it.
+///
+/// Not repeatable (no `MULT:`/`STACK:` token), so holding it twice is
+/// still one effect.
+pub fn holds_weapon_finesse(selected_feats: &[String]) -> bool {
+    selected_feats.iter().any(|feat| feat == WEAPON_FINESSE_FEAT_KEY)
+}
+
 /// Master Craftsman's catalog key and its Mechanism-B target contract:
 /// `choice:master_craftsman_target -> skill:<name>`. Fourth use of the chooser
 /// pattern proven by Skill Focus, Spell Focus and Weapon Focus.
@@ -1493,6 +1619,24 @@ pub const CHOOSER_FEAT_CONTRACTS: &[ChooserFeatContract] = &[
         feat_key: IMPROVED_CRITICAL_FEAT_KEY,
         synthetic_feat_id: Some(IMPROVED_CRITICAL_SYNTHETIC_FEAT_ID),
         choice_set_id: IMPROVED_CRITICAL_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    // The two proficiency-granting chooser feats. Simple Weapon
+    // Proficiency is deliberately absent: it grants a whole tier and
+    // carries no `CHOOSE:` token, so offering a weapon picker for it would
+    // invite a target the producer correctly ignores.
+    ChooserFeatContract {
+        feat_key: MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY,
+        synthetic_feat_id: None,
+        choice_set_id: EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
         selection_prefix: WEAPON_SELECTION_PREFIX,
         target_kind: ChooserTargetKind::Weapon,
     },
@@ -3134,6 +3278,148 @@ mod improved_critical_targets_from_choices_tests {
             choice("choice:improved_critical_target", "weapon:"),
         ];
         assert!(improved_critical_targets_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod weapon_proficiency_grants_from_feats_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    #[test]
+    fn grants_nothing_for_a_character_with_no_proficiency_feats() {
+        let grants = weapon_proficiency_grants_from_feats(&feats(&["Toughness"]), &[]);
+        assert_eq!(grants, WeaponProficiencyGrantsFromFeats::default());
+    }
+
+    /// Simple Weapon Proficiency grants a TIER, so it needs no target and
+    /// must not be modelled as one weapon.
+    #[test]
+    fn simple_weapon_proficiency_grants_the_whole_simple_tier_with_no_target() {
+        let grants =
+            weapon_proficiency_grants_from_feats(&feats(&["Simple Weapon Proficiency"]), &[]);
+        assert!(grants.grants_simple_tier);
+        assert!(
+            grants.named_weapons.is_empty(),
+            "a tier grant must not fabricate a named weapon: {grants:?}"
+        );
+    }
+
+    #[test]
+    fn martial_weapon_proficiency_grants_exactly_its_recorded_target() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[choice("choice:martial_weapon_proficiency_target", "weapon:Longsword")],
+        );
+        assert!(!grants.grants_simple_tier, "the martial feat grants no tier");
+        assert_eq!(grants.named_weapons, vec!["Longsword".to_owned()]);
+    }
+
+    #[test]
+    fn exotic_weapon_proficiency_grants_exactly_its_recorded_target() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Exotic Weapon Proficiency"]),
+            &[choice("choice:exotic_weapon_proficiency_target", "weapon:Spiked Chain")],
+        );
+        assert_eq!(grants.named_weapons, vec!["Spiked Chain".to_owned()]);
+    }
+
+    /// No silent seeding: this one matters more than usual, because a
+    /// fabricated target would erase a real -4 penalty from an attack total.
+    #[test]
+    fn a_proficiency_feat_with_no_recorded_target_grants_nothing() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency", "Exotic Weapon Proficiency"]),
+            &[],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    /// And the mirror: a recorded target with no feat behind it grants
+    /// nothing either.
+    #[test]
+    fn an_orphaned_target_with_no_feat_grants_nothing() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &[],
+            &[choice("choice:martial_weapon_proficiency_target", "weapon:Longsword")],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    /// `MULT:YES` on both feats: repeated picks name different weapons and
+    /// all of them must be granted.
+    #[test]
+    fn both_feats_are_repeatable_and_their_grants_pool_together() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency", "Exotic Weapon Proficiency"]),
+            &[
+                choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:Greatsword"),
+                choice("choice:exotic_weapon_proficiency_target", "weapon:Whip"),
+            ],
+        );
+        assert_eq!(
+            grants.named_weapons,
+            vec!["Longsword".to_owned(), "Greatsword".to_owned(), "Whip".to_owned()]
+        );
+    }
+
+    /// Proficiency is boolean, so a duplicated target is still one grant.
+    #[test]
+    fn a_duplicated_target_grants_once() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[
+                choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:longsword"),
+            ],
+        );
+        assert_eq!(grants.named_weapons, vec!["Longsword".to_owned()]);
+    }
+
+    #[test]
+    fn ignores_unrelated_choice_sets_and_malformed_selections() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[
+                choice("choice:weapon_focus_target", "weapon:Greatsword"),
+                choice("choice:martial_weapon_proficiency_target", "Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:"),
+            ],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    #[test]
+    fn weapon_finesse_is_recognised_only_when_held() {
+        assert!(!holds_weapon_finesse(&[]));
+        assert!(!holds_weapon_finesse(&feats(&["Weapon Focus"])));
+        assert!(holds_weapon_finesse(&feats(&["Weapon Finesse"])));
+    }
+
+    /// Weapon Finesse takes no target, so it must not appear in the chooser
+    /// table -- a picker offered for it would record a target nothing reads.
+    #[test]
+    fn weapon_finesse_has_no_chooser_contract() {
+        assert_eq!(chooser_contract_for_feat("Weapon Finesse"), None);
+    }
+
+    /// Simple Weapon Proficiency likewise takes no target.
+    #[test]
+    fn simple_weapon_proficiency_has_no_chooser_contract() {
+        assert_eq!(chooser_contract_for_feat("Simple Weapon Proficiency"), None);
+        assert!(chooser_contract_for_feat("Martial Weapon Proficiency").is_some());
+        assert!(chooser_contract_for_feat("Exotic Weapon Proficiency").is_some());
     }
 }
 

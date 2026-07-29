@@ -202,9 +202,117 @@ pub const WEAPON_TABLE: &[WeaponTableEntry] = &[
     WeaponTableEntry { key: "Whip", damage_die: "1d3", critical_threat_range_width: 1, critical_multiplier: 2, proficiency_name: Some("Whip"), proficiency: Some(WeaponProficiency::Exotic), weapon_group: Some("Flails"), is_melee: true, is_ranged: false },
 ];
 
+/// Every CRB weapon whose corpus `TYPE:` facet contains `Finesseable` --
+/// the exact set Weapon Finesse applies to, and the only correct way to
+/// answer "may this weapon use Dexterity on attack rolls".
+///
+/// **Read from the corpus facet, never re-derived from the PF1 prose.**
+/// The rulebook says "a light weapon, rapier, whip, or spiked chain",
+/// which is both incomplete and misleading against the data: the facet
+/// also carries Elven Curve Blade (an Exotic two-handed weapon), Unarmed
+/// Strike, Flurry of Blows and Shieldbash (Light Shield), and it carries
+/// them individually rather than through any `Light` grouping this table
+/// records. Deriving the list from "weapons this table calls light" is not
+/// even possible here -- `WeaponTableEntry` has no light facet at all.
+///
+/// **Two collisions in this list are real and were checked.**
+///  1. `Spiked Armor` and `Armor Spikes` are two separate corpus records
+///     that share one `PROFICIENCY:WEAPON|Spiked Armor` name. Only
+///     `Spiked Armor` carries `Finesseable`; `Armor Spikes` does not, so
+///     matching on the shared proficiency name instead of the display key
+///     would wrongly finesse it.
+///  2. The corpus's 27th `Finesseable` record is
+///     `Bastard Sword (Base).COPY=Sun Blade (Bastard Sword)` -- a `.COPY`
+///     record minting a specific MAGIC ITEM (the Sun Blade), not the base
+///     Bastard Sword, which is not finesseable and is not in this list.
+///     `Sun Blade` is not in `WEAPON_TABLE`, so the 27 corpus records fold
+///     to these 26 keys, each verified present above.
+///
+/// Source: `core_rulebook/cr_equip_arms_armor.lst`, every record whose
+/// `TYPE:` facet contains `Finesseable`.
+pub const FINESSEABLE_WEAPON_KEYS: &[&str] = &[
+    "Dagger",
+    "Elven Curve Blade",
+    "Flurry of Blows",
+    "Gauntlet",
+    "Handaxe",
+    "Kama",
+    "Kukri",
+    "Light Hammer",
+    "Light Mace",
+    "Light Pick",
+    "Nunchaku",
+    "Punching Dagger",
+    "Rapier",
+    "Sai",
+    "Sap",
+    "Shieldbash (Light Shield)",
+    "Short Sword",
+    "Siangham",
+    "Sickle",
+    "Spiked Armor",
+    "Spiked Chain",
+    "Spiked Gauntlet",
+    "Starknife",
+    "Throwing Axe",
+    "Unarmed Strike",
+    "Whip",
+];
+
+/// Whether Weapon Finesse can apply to this weapon. Matched on the display
+/// `key`, not `proficiency_name` -- see [`FINESSEABLE_WEAPON_KEYS`] for the
+/// Spiked Armor / Armor Spikes collision that makes the distinction
+/// load-bearing.
+pub fn weapon_is_finesseable(entry: &WeaponTableEntry) -> bool {
+    FINESSEABLE_WEAPON_KEYS.contains(&entry.key)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Every finesseable key must resolve to a real row -- a typo here
+    /// would silently mean "this weapon is never finesseable".
+    #[test]
+    fn every_finesseable_key_resolves_to_a_real_weapon() {
+        assert_eq!(FINESSEABLE_WEAPON_KEYS.len(), 26);
+        for key in FINESSEABLE_WEAPON_KEYS {
+            let entry = weapon_by_key(key)
+                .unwrap_or_else(|| panic!("{key} is not a real WEAPON_TABLE key"));
+            assert!(entry.is_melee, "{key} must be usable in melee to be finessed");
+            assert!(weapon_is_finesseable(entry), "{key} must answer true");
+        }
+    }
+
+    /// The collision the list's doc comment exists to prevent: two records
+    /// share one proficiency name, and only one of them is finesseable.
+    #[test]
+    fn spiked_armor_is_finesseable_but_armor_spikes_is_not() {
+        let spiked_armor = weapon_by_key("Spiked Armor").expect("present");
+        let armor_spikes = weapon_by_key("Armor Spikes").expect("present");
+        assert_eq!(
+            spiked_armor.proficiency_name, armor_spikes.proficiency_name,
+            "the two share one proficiency name, which is why key-matching matters"
+        );
+        assert!(weapon_is_finesseable(spiked_armor));
+        assert!(
+            !weapon_is_finesseable(armor_spikes),
+            "Armor Spikes carries no Finesseable facet in the corpus"
+        );
+    }
+
+    /// The base Bastard Sword is not finesseable -- only the Sun Blade
+    /// `.COPY` record derived from it is, and that is a magic item this
+    /// table does not carry.
+    #[test]
+    fn heavy_weapons_are_not_finesseable() {
+        for key in ["Bastard Sword", "Longsword", "Greatsword", "Battleaxe"] {
+            assert!(
+                !weapon_is_finesseable(weapon_by_key(key).expect("present")),
+                "{key} must not be finesseable"
+            );
+        }
+    }
 
     #[test]
     fn the_table_matches_the_verified_corpus_extraction() {

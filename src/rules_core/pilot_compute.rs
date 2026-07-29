@@ -39241,11 +39241,43 @@ pub(crate) const WEAPON_NONPROFICIENCY_ATTACK_PENALTY: i16 = -4;
 /// A single non-proficient class in the mix must not remove a
 /// proficiency another class genuinely grants.
 ///
-/// v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29).
+/// **Feats are checked before classes, and before the unknown-class
+/// bail-out.** The three CRB proficiency-granting feats (Simple/Martial/
+/// Exotic Weapon Proficiency) grant proficiency outright, so a character
+/// holding one has a KNOWN answer for that weapon even if some class in
+/// the mix has no ingested record. Checking classes first and returning
+/// `None` would throw away a fact the input states explicitly.
+///
+/// v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29); feat
+/// grants added by the combat feat-effects slice (2026-07-29).
 pub(crate) fn character_is_proficient_with(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,
 ) -> Option<bool> {
+    let grants = crate::rules_core::feat_effects::weapon_proficiency_grants_from_feats(
+        &effective_character_feats(input),
+        &input.chosen.selected_choices,
+    );
+    // Simple Weapon Proficiency grants the whole Simple tier, exactly as a
+    // class's own `AUTO:WEAPONPROF|TYPE=Simple` does.
+    if grants.grants_simple_tier
+        && weapon.proficiency == Some(weapon_tables::WeaponProficiency::Simple)
+    {
+        return Some(true);
+    }
+    // Martial/Exotic Weapon Proficiency name one weapon each. The recorded
+    // target is a display name (`weapon:Longsword`), so it joins on the
+    // same normalized identity the equipment ids use -- NOT on
+    // `proficiency_name`, which is a different namespace and would fail for
+    // more than half the table.
+    if grants
+        .named_weapons
+        .iter()
+        .any(|name| normalize_weapon_identity(name) == normalize_weapon_identity(weapon.key))
+    {
+        return Some(true);
+    }
+
     let mut any_proficient = false;
     for class_level in &input.chosen.class_levels {
         let proficiency = weapon_tables::class_weapon_proficiency(&class_level.class_id)?;
@@ -39278,6 +39310,18 @@ pub(crate) fn character_is_proficient_with(
 /// attack total -- the shape stage 3 was originally briefed as -- would
 /// have inflated every attack total by up to `+4` of damage bonus.
 ///
+/// **The attack total is the MELEE-use total.** Its governing ability is
+/// Strength (or Dexterity via Weapon Finesse), which is correct for melee
+/// and wrong for a ranged attack, where PF1 uses Dexterity. Eleven of this
+/// table's rows are both melee and ranged (Dagger, Trident, Club...), so
+/// there is no clean per-weapon answer without a wield/mode state this
+/// engine does not record -- the same gap the damage record below names.
+/// Deliberately left as-is rather than silently switching on `is_ranged`,
+/// which would change the meaning of an existing shipped record for the
+/// thrown weapons without being able to say which mode it now describes.
+/// That also keeps Point-Blank Shot deferred rather than half-grounded --
+/// see this slice's report.
+///
 /// **Damage is grounded as the feat contribution only, not a damage
 /// total.** A real total would need the Strength-to-damage multiplier,
 /// which is 1x one-handed, 1.5x two-handed and 0.5x off-hand -- and how a
@@ -39294,7 +39338,9 @@ fn ground_per_weapon_combat_totals(
     use crate::rules_core::feat_effects;
 
     let strength_modifier = ability_modifiers.strength;
+    let dexterity_modifier = ability_modifiers.dexterity;
     let feats = effective_character_feats(input);
+    let has_weapon_finesse = feat_effects::holds_weapon_finesse(&feats);
     let focus_facts =
         feat_effects::weapon_focus_facts_from_choices(&feats, &input.chosen.selected_choices);
     let specialization_facts = feat_effects::weapon_specialization_facts_from_choices(
@@ -39324,15 +39370,87 @@ fn ground_per_weapon_combat_totals(
         let names_this_weapon =
             |name: &str| normalize_weapon_identity(name) == normalize_weapon_identity(weapon.key);
 
-        // Attack: base attack bonus + Strength + the two Focus feats, each
-        // counted exactly once. The producer has already summed Greater onto
-        // base, so this reads one resolved bonus per weapon rather than
-        // adding two facts together here.
+        // Attack: base attack bonus + the governing ability + the two Focus
+        // feats, each counted exactly once. The producer has already summed
+        // Greater onto base, so this reads one resolved bonus per weapon
+        // rather than adding two facts together here.
         let focus_bonus = focus_facts
             .iter()
             .find(|fact| names_this_weapon(&fact.weapon_name))
             .map_or(0, |fact| fact.attack_bonus);
-        let attack_total = base_attack_bonus + strength_modifier + focus_bonus;
+
+        // Weapon Finesse (combat feat-effects slice, 2026-07-29). Corpus
+        // token: `BONUS:COMBAT|TOHIT.Finesseable|
+        // ((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged`. Applied as
+        // written -- as a swap to `max(STR, DEX)`, not a flat bonus -- and
+        // only for a weapon actually carrying the corpus's own
+        // `Finesseable` facet.
+        //
+        // The token's `SHIELDACCHECK` term (a worn shield's armor check
+        // penalty, which the feat's own BENEFIT text calls out: "If you
+        // carry a shield, its armor check penalty applies to your attack
+        // rolls") is NOT applied: no equipped shield contributes an armor
+        // check penalty anywhere in this engine's equipment model, so
+        // there is no verified number to subtract. Naming it rather than
+        // inventing one.
+        let finesse_applies = has_weapon_finesse && weapon_tables::weapon_is_finesseable(weapon);
+        let attack_ability_modifier =
+            if finesse_applies { strength_modifier.max(dexterity_modifier) } else { strength_modifier };
+        let finesse_detail = if !has_weapon_finesse {
+            String::new()
+        } else if !finesse_applies {
+            format!(
+                " Weapon Finesse is held but the {} carries no Finesseable facet in the corpus, so \
+                 Strength still governs.",
+                weapon.key
+            )
+        } else if attack_ability_modifier == strength_modifier {
+            format!(
+                " Weapon Finesse applies to this weapon but changes nothing here: Dexterity \
+                 ({dexterity_modifier:+}) does not exceed Strength ({strength_modifier:+}), and \
+                 the corpus token is max(STR,DEX)-STR, not a flat bonus."
+            )
+        } else {
+            format!(
+                " Weapon Finesse applies: Dexterity ({dexterity_modifier:+}) replaces Strength \
+                 ({strength_modifier:+}) on attack rolls with this finesseable weapon. The \
+                 token's shield armor-check-penalty term is not applied -- no equipped shield \
+                 contributes one in this engine."
+            )
+        };
+
+        // The -4 nonproficiency penalty, the same one
+        // `compute_combat_baseline` applies to its hardcoded Longsword.
+        // Without this a Wizard who equipped a Greatsword read a full
+        // attack bonus for it. Feat grants are already folded in by
+        // `character_is_proficient_with`, so Martial/Exotic Weapon
+        // Proficiency naming this weapon removes the penalty here.
+        let proficiency_verdict = character_is_proficient_with(input, weapon);
+        let nonproficiency_penalty = match proficiency_verdict {
+            Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+            // `None` is "unknown", never "not proficient" -- refuse to
+            // invent a penalty for a class whose grants are merely
+            // un-ingested, and say so instead.
+            Some(true) | None => 0,
+        };
+        let proficiency_detail = match proficiency_verdict {
+            Some(false) => format!(
+                " {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty: nothing this \
+                 character holds grants proficiency with this weapon -- neither a class grant nor \
+                 Simple/Martial/Exotic Weapon Proficiency naming it."
+            ),
+            Some(true) => " The character is proficient with this weapon (class grant or a \
+                 Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency \
+                 penalty applies."
+                .to_owned(),
+            None => " Proficiency is UNRESOLVED (a class in the mix has no ingested proficiency \
+                 record), so no nonproficiency penalty is applied in either direction and this \
+                 total is not claimed to account for one."
+                .to_owned(),
+        };
+
+        let attack_total =
+            base_attack_bonus + attack_ability_modifier + focus_bonus + nonproficiency_penalty;
         let focus_detail = if focus_bonus == 0 {
             " No Weapon Focus or Greater Weapon Focus names this weapon, so no feat bonus applies to \
              the attack roll."
@@ -39348,11 +39466,13 @@ fn ground_per_weapon_combat_totals(
             value: attack_total,
             detail: format!(
                 "Attack bonus with the equipped {}: base attack bonus (+{base_attack_bonus}) + \
-                 Strength modifier ({strength_modifier:+}) + weapon feats ({focus_bonus:+}) = \
-                 {attack_total}.{focus_detail} Only the Focus feats reach this total -- the \
-                 Specialization feats are damage and Improved Critical is threat range, both \
-                 grounded separately. Separate from combat.baseline_melee_attack_bonus, which \
-                 stays a Longsword-specific GE-06 fixture total until task #80 generalises it",
+                 governing ability modifier ({attack_ability_modifier:+}) + weapon feats \
+                 ({focus_bonus:+}) + nonproficiency penalty ({nonproficiency_penalty}) = \
+                 {attack_total}.{focus_detail}{finesse_detail}{proficiency_detail} Only the Focus \
+                 feats reach this total -- the Specialization feats are damage and Improved \
+                 Critical is threat range, both grounded separately. Separate from \
+                 combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 \
+                 fixture total until task #80 generalises it",
                 weapon.key
             ),
         });
@@ -54791,6 +54911,309 @@ mod per_weapon_attack_total_tests {
             .find(|e| e.id == "combat.weapon_damage_bonus.longsword")
             .expect("present");
         assert_eq!(damage.value, 0, "untargeted Weapon Specialization must not add damage");
+    }
+}
+
+/// The combat feat-effects slice (2026-07-29): the three CRB feats that
+/// GRANT weapon proficiency, and Weapon Finesse.
+///
+/// Every test here asserts a real computed TOTAL moving -- either
+/// `combat.baseline_melee_attack_bonus` or
+/// `combat.weapon_attack_bonus.<weapon>` -- never merely that a producer
+/// returned a number.
+#[cfg(test)]
+mod weapon_proficiency_feat_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::character_input::SelectedChoice;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn fixture() -> CharacterInput {
+        load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture")
+    }
+
+    /// The fixture is a Fighter (Martial tier), so it is already proficient
+    /// with its Longsword. A Wizard is not -- Wizard's ingested grant list
+    /// is Club/Dagger/Crossbows/Quarterstaff.
+    fn wizard_fixture() -> CharacterInput {
+        let mut input = fixture();
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: "class:wizard".to_owned(), level: 1 }];
+        input
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// The headline interaction the slice exists to prove: Martial Weapon
+    /// Proficiency naming the Longsword REMOVES the -4 nonproficiency
+    /// penalty from the shipped baseline total.
+    #[test]
+    fn martial_weapon_proficiency_removes_the_nonproficiency_penalty_from_the_baseline() {
+        let without = value(&wizard_fixture(), "combat.baseline_melee_attack_bonus")
+            .expect("the baseline total must ground for a Wizard");
+
+        let mut with = wizard_fixture();
+        with.chosen.selected_feats.push("Martial Weapon Proficiency".to_owned());
+        with.chosen
+            .selected_choices
+            .push(choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"));
+        let with_value = value(&with, "combat.baseline_melee_attack_bonus").expect("present");
+
+        assert_eq!(
+            with_value - without,
+            -WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+            "granting Longsword proficiency must raise the baseline by exactly 4 \
+             (was {without}, now {with_value})"
+        );
+    }
+
+    /// The same removal must reach the per-weapon total, which had no
+    /// proficiency term at all before this slice.
+    #[test]
+    fn the_per_weapon_total_carries_the_penalty_and_the_feat_removes_it() {
+        let without = value(&wizard_fixture(), "combat.weapon_attack_bonus.longsword")
+            .expect("the equipped Longsword must ground a per-weapon total for a Wizard");
+
+        let mut with = wizard_fixture();
+        with.chosen.selected_feats.push("Martial Weapon Proficiency".to_owned());
+        with.chosen
+            .selected_choices
+            .push(choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"));
+        let with_value = value(&with, "combat.weapon_attack_bonus.longsword").expect("present");
+
+        assert_eq!(
+            with_value - without,
+            -WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+            "the per-weapon total must move by exactly 4 (was {without}, now {with_value})"
+        );
+    }
+
+    /// A Fighter is already proficient, so the feat must be a no-op rather
+    /// than a second, stacking +4.
+    #[test]
+    fn granting_a_proficiency_the_class_already_has_changes_nothing() {
+        let before = value(&fixture(), "combat.weapon_attack_bonus.longsword").expect("present");
+        let mut with = fixture();
+        with.chosen.selected_feats.push("Martial Weapon Proficiency".to_owned());
+        with.chosen
+            .selected_choices
+            .push(choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"));
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.longsword"),
+            Some(before),
+            "proficiency is boolean -- granting it twice must not add a second +4"
+        );
+    }
+
+    /// No silent seeding, asserted on the total rather than the producer:
+    /// holding the feat without naming a weapon must leave the penalty in
+    /// place.
+    #[test]
+    fn an_untargeted_proficiency_feat_leaves_the_penalty_in_place() {
+        let without =
+            value(&wizard_fixture(), "combat.weapon_attack_bonus.longsword").expect("present");
+        let mut with = wizard_fixture();
+        with.chosen.selected_feats.push("Martial Weapon Proficiency".to_owned());
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.longsword"),
+            Some(without),
+            "an untargeted grant must not erase the -4"
+        );
+    }
+
+    /// A grant naming a DIFFERENT weapon must not transfer to this one.
+    #[test]
+    fn a_grant_naming_another_weapon_does_not_help_this_one() {
+        let without =
+            value(&wizard_fixture(), "combat.weapon_attack_bonus.longsword").expect("present");
+        let mut with = wizard_fixture();
+        with.chosen.selected_feats.push("Martial Weapon Proficiency".to_owned());
+        with.chosen
+            .selected_choices
+            .push(choice("choice:martial_weapon_proficiency_target", "weapon:Greatsword"));
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.longsword"),
+            Some(without),
+            "proficiency with a Greatsword says nothing about a Longsword"
+        );
+    }
+
+    /// Simple Weapon Proficiency grants a TIER: it must not touch the
+    /// Longsword (Martial), and the Wizard already has its Simple weapons
+    /// by class, so the honest way to see the tier grant work is a class
+    /// with no Simple tier at all. Druid's grant list is individually
+    /// named with no tier, and it does not include the Club... it does.
+    /// Monk's list likewise. So this asserts the negative half, which is
+    /// the one that could silently over-grant.
+    #[test]
+    fn simple_weapon_proficiency_does_not_reach_a_martial_weapon() {
+        let without =
+            value(&wizard_fixture(), "combat.weapon_attack_bonus.longsword").expect("present");
+        let mut with = wizard_fixture();
+        with.chosen.selected_feats.push("Simple Weapon Proficiency".to_owned());
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.longsword"),
+            Some(without),
+            "the Longsword is Martial; a Simple tier grant must not reach it"
+        );
+    }
+
+    /// Exotic Weapon Proficiency uses the same machinery, proven on a real
+    /// Exotic weapon rather than assumed from the Martial case.
+    #[test]
+    fn exotic_weapon_proficiency_removes_the_penalty_for_its_named_weapon() {
+        let mut base = fixture();
+        // Equip a Spiked Chain (Exotic) in place of the Longsword: even a
+        // Fighter is non-proficient with it.
+        for selection in &mut base.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = "item:spiked_chain".to_owned();
+            }
+        }
+        let without = value(&base, "combat.weapon_attack_bonus.spikedchain")
+            .expect("the Spiked Chain must ground a per-weapon total");
+
+        let mut with = base.clone();
+        with.chosen.selected_feats.push("Exotic Weapon Proficiency".to_owned());
+        with.chosen
+            .selected_choices
+            .push(choice("choice:exotic_weapon_proficiency_target", "weapon:Spiked Chain"));
+        let with_value =
+            value(&with, "combat.weapon_attack_bonus.spikedchain").expect("present");
+        assert_eq!(
+            with_value - without,
+            -WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+            "a Fighter is not proficient with an Exotic weapon until the feat grants it \
+             (was {without}, now {with_value})"
+        );
+    }
+}
+
+/// Weapon Finesse, wired into the per-weapon attack total (combat
+/// feat-effects slice, 2026-07-29).
+#[cfg(test)]
+mod weapon_finesse_tests {
+    use super::{build_pilot_headless_receipt, CharacterInput};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn fixture() -> CharacterInput {
+        load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture")
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// A Rapier is Finesseable and Martial, so a Fighter wields it
+    /// proficiently -- isolating the ability swap from the -4 penalty.
+    /// The fixture's Dexterity must exceed its Strength for the swap to be
+    /// visible, so this raises it explicitly rather than hoping.
+    fn dexterous_rapier_fixture() -> CharacterInput {
+        let mut input = fixture();
+        for selection in &mut input.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = "item:rapier".to_owned();
+            }
+        }
+        input.chosen.ability_scores.dexterity = 20;
+        input
+    }
+
+    #[test]
+    fn weapon_finesse_swaps_dexterity_in_on_a_finesseable_weapon() {
+        let base = dexterous_rapier_fixture();
+        let without = value(&base, "combat.weapon_attack_bonus.rapier")
+            .expect("the equipped Rapier must ground a per-weapon total");
+
+        let strength = value(&base, "ability_modifier.strength").expect("present");
+        let dexterity = value(&base, "ability_modifier.dexterity").expect("present");
+        assert!(
+            dexterity > strength,
+            "the test posture needs DEX ({dexterity}) above STR ({strength}) or it proves nothing"
+        );
+
+        let mut with = base.clone();
+        with.chosen.selected_feats.push("Weapon Finesse".to_owned());
+        let with_value = value(&with, "combat.weapon_attack_bonus.rapier").expect("present");
+
+        assert_eq!(
+            with_value - without,
+            dexterity - strength,
+            "the corpus token is max(STR,DEX)-STR, so the total must rise by exactly the gap \
+             (was {without}, now {with_value})"
+        );
+    }
+
+    /// The Longsword carries no Finesseable facet, so the same feat on the
+    /// same character must change nothing -- the check that would fail if
+    /// the facet lookup were skipped.
+    #[test]
+    fn weapon_finesse_does_not_reach_a_non_finesseable_weapon() {
+        let mut base = fixture();
+        base.chosen.ability_scores.dexterity = 20;
+        let without =
+            value(&base, "combat.weapon_attack_bonus.longsword").expect("present");
+        let mut with = base.clone();
+        with.chosen.selected_feats.push("Weapon Finesse".to_owned());
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.longsword"),
+            Some(without),
+            "a Longsword is not finesseable; Strength must still govern"
+        );
+    }
+
+    /// `max(STR, DEX)` never lowers the total: a strong, clumsy character
+    /// holding Weapon Finesse keeps Strength.
+    #[test]
+    fn weapon_finesse_never_lowers_an_attack_total() {
+        let mut base = fixture();
+        for selection in &mut base.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = "item:rapier".to_owned();
+            }
+        }
+        base.chosen.ability_scores.dexterity = 8;
+        let without = value(&base, "combat.weapon_attack_bonus.rapier").expect("present");
+        let mut with = base.clone();
+        with.chosen.selected_feats.push("Weapon Finesse".to_owned());
+        assert_eq!(
+            value(&with, "combat.weapon_attack_bonus.rapier"),
+            Some(without),
+            "max(STR,DEX) with DEX below STR is STR -- the total must not drop"
+        );
     }
 }
 
