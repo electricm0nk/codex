@@ -4823,6 +4823,7 @@ mod tests {
         use codex::rules_core::encumbrance::{
             carrying_capacity_thresholds, CarriedItem, EncumbranceComputation, EncumbranceLevel,
         };
+        use codex::rules_core::size::SizeCategory;
 
         // A real Strength-6 medium load: Chain Shirt (25 lb / 100 gp) plus
         // Longsword (4 lb / 15 gp), both real CRB corpus values, against
@@ -4842,7 +4843,7 @@ mod tests {
             ],
             total_carried_weight_lbs: 29.0,
             total_carried_cost_gp: 115.0,
-            thresholds: carrying_capacity_thresholds(6),
+            thresholds: carrying_capacity_thresholds(6, SizeCategory::Medium),
             level: EncumbranceLevel::Medium,
             unresolved_item_ids: Vec::new(),
             load_max_dex_cap: EncumbranceLevel::Medium.max_dex_cap(),
@@ -4868,12 +4869,13 @@ mod tests {
         use codex::rules_core::encumbrance::{
             carrying_capacity_thresholds, EncumbranceComputation, EncumbranceLevel,
         };
+        use codex::rules_core::size::SizeCategory;
 
         let computation = EncumbranceComputation {
             per_item: Vec::new(),
             total_carried_weight_lbs: 0.0,
             total_carried_cost_gp: 0.0,
-            thresholds: carrying_capacity_thresholds(10),
+            thresholds: carrying_capacity_thresholds(10, SizeCategory::Medium),
             level: EncumbranceLevel::Light,
             unresolved_item_ids: Vec::new(),
             load_max_dex_cap: EncumbranceLevel::Light.max_dex_cap(),

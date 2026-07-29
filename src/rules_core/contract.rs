@@ -28,6 +28,8 @@
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
+use crate::rules_core::rules_tables::crb::race_tables::race_size_for_race_id;
+use crate::rules_core::size::SizeCategory;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
@@ -374,10 +376,21 @@ pub fn to_pilot_receipt(
     // avoids a duplicate id in `PilotReceipt.diagnostics`/`chassis`).
     let mut discarded_explanations = Vec::new();
     let effective_ability_scores = apply_human_ability_bonus(input, &mut discarded_explanations);
+    // PF1 scales carrying capacity by creature size, read from the race's
+    // own corpus `FACT:BaseSize|<code>` token. An unrecognized race falls
+    // back to Medium: that is the pre-existing behaviour for every race
+    // (capacity used to be computed at Medium unconditionally), and Medium
+    // is the unmultiplied baseline `load.lst`'s own `LOAD:` column is
+    // expressed in -- so this fallback changes nothing for a race we
+    // cannot identify, while every curated playable race now gets its real
+    // size. Gnome and Halfling are Small and were previously handed 4/3 of
+    // their true capacity.
+    let size = race_size_for_race_id(&input.chosen.race_id).unwrap_or(SizeCategory::Medium);
     let encumbrance = compute_encumbrance(
         &input.chosen.equipment_selections,
         corpus,
         effective_ability_scores.strength,
+        size,
     );
 
     PilotReceipt {

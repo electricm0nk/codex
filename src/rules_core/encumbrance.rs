@@ -26,6 +26,9 @@
 //!  - `ENCUMBRANCE:Light|1/3`, `Medium|2/3`, `Heavy|1` give the light and
 //!    medium maxima as fractions of that same value (truncated to whole
 //!    pounds).
+//!  - `SIZEMULT:<code>|<value>` (lines 1-8) scales the load value by
+//!    creature size. Transcribed in `rules_core::size::SizeCategory::
+//!    load_capacity_ratio`, which owns that half of the file.
 //!  - `LOADMULT:4` gives the above-29 extrapolation: multiply the row with
 //!    the same ones digit by 4 for every 10 points of Strength above it.
 //!
@@ -36,12 +39,24 @@
 //! bound) instead of 133 -- which a three-row spot check missed. Every row
 //! is now asserted against the `load.lst`-derived values by
 //! `tests/v06_encumbrance.rs`'s
-//! `carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table`.
+//! `carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table`,
+//! and the light/medium columns are no longer transcribed at all: they are
+//! derived from the one `LOAD:` column, so the error class that produced
+//! the Str-15 bug cannot recur in them.
+//!
+//! # Creature size
+//!
+//! Capacity is scaled by creature size (`SIZEMULT:`). This module does not
+//! decide what size a character is -- `rules_core::size` owns the size
+//! type and `rules_tables::crb::race_tables::race_size` owns the
+//! race-to-size fact, read from each race record's own
+//! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// Max light/medium/heavy load in pounds for one Strength score, per PF1's
@@ -53,68 +68,102 @@ pub struct CarryingCapacityThresholds {
     pub heavy_max_lbs: f64,
 }
 
-/// Row `i` (0-indexed) is Strength score `i + 1`'s (light, medium, heavy)
-/// maximum load in pounds, verbatim from the cited source table (Strength
-/// 1-29). See module doc comment for the citation.
-const CARRYING_CAPACITY_TABLE: [(f64, f64, f64); 29] = [
-    (3.0, 6.0, 10.0),
-    (6.0, 13.0, 20.0),
-    (10.0, 20.0, 30.0),
-    (13.0, 26.0, 40.0),
-    (16.0, 33.0, 50.0),
-    (20.0, 40.0, 60.0),
-    (23.0, 46.0, 70.0),
-    (26.0, 53.0, 80.0),
-    (30.0, 60.0, 90.0),
-    (33.0, 66.0, 100.0),
-    (38.0, 76.0, 115.0),
-    (43.0, 86.0, 130.0),
-    (50.0, 100.0, 150.0),
-    (58.0, 116.0, 175.0),
-    // Str 15. The medium maximum here read 134.0 until a row-complete
-    // cross-check against PCGen's `load.lst` caught it: `LOAD:15|200` with
-    // `ENCUMBRANCE:Medium|2/3` derives 133, and the table's own doubling
-    // structure agrees (Str 5 -> 33, Str 10 -> 66, Str 20 -> 266). 134 is
-    // the *heavy* tier's lower bound in the printed prose table, one row
-    // over from the medium maximum this array holds.
-    (66.0, 133.0, 200.0),
-    (76.0, 153.0, 230.0),
-    (86.0, 173.0, 260.0),
-    (100.0, 200.0, 300.0),
-    (116.0, 233.0, 350.0),
-    (133.0, 266.0, 400.0),
-    (153.0, 306.0, 460.0),
-    (173.0, 346.0, 520.0),
-    (200.0, 400.0, 600.0),
-    (233.0, 466.0, 700.0),
-    (266.0, 533.0, 800.0),
-    (306.0, 613.0, 920.0),
-    (346.0, 693.0, 1040.0),
-    (400.0, 800.0, 1200.0),
-    (466.0, 933.0, 1400.0),
+/// Row `i` (0-indexed) is Strength score `i + 1`'s **heavy** maximum load
+/// in pounds -- `load.lst`'s `LOAD:<Strength>|<value>` column, lines 10-38,
+/// transcribed verbatim and nothing else.
+///
+/// The light and medium tiers are deliberately *not* stored. They are
+/// derived from this one column via `load.lst`'s own
+/// `ENCUMBRANCE:Light|1/3` and `ENCUMBRANCE:Medium|2/3` fractions, so the
+/// module hand-copies exactly one column instead of three. That is not a
+/// tidying preference: this table previously stored all three columns and
+/// the Strength-15 medium value was wrong (134, where the source derives
+/// 133) for exactly as long as it took a row-complete cross-check to
+/// notice. Two of the three columns were redundant *and* were the ones
+/// carrying the error.
+///
+/// Deriving is also what makes size scaling correct at all -- see
+/// `carrying_capacity_thresholds`.
+const PCGEN_LOAD_LST_HEAVY_BY_STRENGTH: [i64; 29] = [
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 115, 130, 150, 175, 200, 230, 260, 300, 350, 400, 460,
+    520, 600, 700, 800, 920, 1040, 1200, 1400,
 ];
 
-/// PF1 Table: Carrying Capacity, Strength score -> max light/medium/heavy
-/// load. Strength scores below 1 are defensively floored to the Strength-1
-/// row (PF1 does not define a player character's carrying capacity below
-/// 1). Strength scores above 29 extrapolate via the source table's own
-/// stated rule: find the 20-29 row sharing the same "ones" digit and
-/// multiply its three values by 4 for every 10 points above that row's
-/// Strength.
-pub fn carrying_capacity_thresholds(strength_score: i16) -> CarryingCapacityThresholds {
+/// Splits one heavy-tier load value into the three tier maxima for a given
+/// creature size, in exact integer arithmetic.
+///
+/// The order of operations is the whole point, and it is PCGen's:
+/// `LoadFacet.getMaxLoad` computes `loadValue * mult * getLoadMultForSize(id)`
+/// and `CharacterDisplay.getLoadToken` truncates the result exactly once
+/// (`getMaxLoad(mult).intValue()`). So size scales the *load value*, and
+/// truncation to whole pounds happens last -- per tier.
+///
+/// Applying size to already-truncated tier values instead would be wrong,
+/// and visibly so: a Small Strength-10 character's light maximum is
+/// `(100 * 3/4) / 3 = 25`, but scaling Medium's stored `33` gives
+/// `24.75 -> 24`. PF1's published Small column says 25.
+///
+/// Kept in `i64` rather than `f64` because the truncation is load-bearing:
+/// `300.0 * (2.0 / 3.0)` is `199.999...` in IEEE-754 and truncates to 199,
+/// where the correct answer is 200. Integer arithmetic has no such edge.
+fn tiers_for_heavy_load(heavy_load: i64, size: SizeCategory) -> CarryingCapacityThresholds {
+    let (numerator, denominator) = size.load_capacity_ratio();
+    let scaled = heavy_load * numerator;
+    CarryingCapacityThresholds {
+        // ENCUMBRANCE:Light|1/3
+        light_max_lbs: (scaled / (denominator * 3)) as f64,
+        // ENCUMBRANCE:Medium|2/3
+        medium_max_lbs: (scaled * 2 / (denominator * 3)) as f64,
+        // ENCUMBRANCE:Heavy|1
+        heavy_max_lbs: (scaled / denominator) as f64,
+    }
+}
+
+/// PF1 Table: Carrying Capacity, Strength score + creature size -> max
+/// light/medium/heavy load.
+///
+/// Size is a required argument rather than an option with a Medium
+/// default, on purpose. A defaulted size is what produced the bug this
+/// signature replaces: every caller silently got Medium, and Gnome and
+/// Halfling characters were handed `4/3` of their true capacity along with
+/// the wrong load tier, max-Dex cap and armor check penalty. Making the
+/// parameter explicit means a caller cannot get a Medium answer without
+/// having said "Medium".
+///
+/// Strength scores below 1 are defensively floored to the Strength-1 row
+/// (PF1 does not define a player character's carrying capacity below 1).
+/// Strength scores above 29 extrapolate via the source table's own stated
+/// rule: find the 20-29 row sharing the same "ones" digit and multiply by
+/// 4 for every 10 points above that row's Strength (`load.lst`'s
+/// `LOADMULT:4`).
+pub fn carrying_capacity_thresholds(
+    strength_score: i16,
+    size: SizeCategory,
+) -> CarryingCapacityThresholds {
     let clamped = strength_score.max(1);
-    let (light, medium, heavy) = if clamped <= 29 {
-        CARRYING_CAPACITY_TABLE[(clamped - 1) as usize]
-    } else {
-        let ones_digit = ((clamped - 20) % 10 + 10) % 10;
-        let base_strength = 20 + ones_digit;
-        let (base_light, base_medium, base_heavy) =
-            CARRYING_CAPACITY_TABLE[(base_strength - 1) as usize];
-        let tens_above = f64::from((clamped - base_strength) / 10);
-        let multiplier = 4.0_f64.powf(tens_above);
-        (base_light * multiplier, base_medium * multiplier, base_heavy * multiplier)
-    };
-    CarryingCapacityThresholds { light_max_lbs: light, medium_max_lbs: medium, heavy_max_lbs: heavy }
+    if clamped <= 29 {
+        return tiers_for_heavy_load(PCGEN_LOAD_LST_HEAVY_BY_STRENGTH[(clamped - 1) as usize], size);
+    }
+
+    // Above the table's Strength-29 ceiling the three tier maxima are
+    // scaled together, preserving this function's long-standing
+    // extrapolation behaviour (multiply the derived thresholds, rather
+    // than re-deriving tiers from a scaled load value -- the two differ by
+    // a pound or two once truncation compounds, and changing which one
+    // ships is not this task's to decide).
+    let ones_digit = ((clamped - 20) % 10 + 10) % 10;
+    let base_strength = 20 + ones_digit;
+    let base = tiers_for_heavy_load(
+        PCGEN_LOAD_LST_HEAVY_BY_STRENGTH[(base_strength - 1) as usize],
+        size,
+    );
+    let tens_above = f64::from((clamped - base_strength) / 10);
+    let multiplier = 4.0_f64.powf(tens_above);
+    CarryingCapacityThresholds {
+        light_max_lbs: base.light_max_lbs * multiplier,
+        medium_max_lbs: base.medium_max_lbs * multiplier,
+        heavy_max_lbs: base.heavy_max_lbs * multiplier,
+    }
 }
 
 /// PF1's three named load tiers, plus a fourth honest state for weight
@@ -259,26 +308,30 @@ pub struct EncumbranceComputation {
     pub load_armor_check_penalty: i16,
 }
 
-/// **Known limitation -- capacity is computed at Medium size.** PF1 scales
-/// carrying capacity by creature size, and `load.lst` carries the real
-/// multipliers (`SIZEMULT:S|0.75`, `L|2`, `H|4`, ... `SIZEMULT:F|0.125`).
-/// They are not applied here, because creature size is not modelled
-/// anywhere in this crate: there is no size field on `CharacterInput`, no
-/// size enum in `rules_core`, and this repo's ingested `cr_races.lst`
-/// contains only `.MOD` records carrying `SOURCEPAGE:` -- no `SIZE:` token
-/// to resolve one from.
+/// Carrying capacity is scaled by `size` per PF1's size rules; see
+/// `carrying_capacity_thresholds`.
 ///
-/// The practical consequence, stated plainly rather than buried: for a
-/// Small character (Gnome and Halfling, both curated playable races) the
-/// thresholds returned here are 4/3 of the true values, since PF1 gives
-/// Small creatures 3/4 of a Medium creature's capacity. Every Medium race
-/// is correct. Closing this needs a size model first -- inventing a
-/// race-to-size mapping inside the encumbrance module would put a second,
-/// unowned source of truth for creature size into the codebase.
+/// This closes the "capacity is computed at Medium size" limitation this
+/// function's doc comment used to carry. Creature size now has a real
+/// owner (`rules_core::size::SizeCategory`, with the race mapping in
+/// `rules_tables::crb::race_tables::race_size`), so this module consumes a
+/// size rather than assuming one -- which was the specific reason the
+/// original implementation stopped short of fixing it.
+///
+/// # Still deferred, deliberately
+///
+/// PF1 scales more than capacity by size -- weapon damage dice, AC,
+/// attack rolls, CMB/CMD, Stealth and Fly checks. **None of those apply
+/// size anywhere in this crate**, and none are touched here. Each needs
+/// its own corpus verification and each would change shipped numbers, so
+/// they stay named gaps rather than half-applied ones. In particular a
+/// Small character's weapon damage dice are still computed at Medium in
+/// `resolve_weapon_damage_breakdown`.
 pub fn compute_encumbrance(
     equipment_selections: &[EquipmentSelection],
     corpus: &SourcePackageContent,
     strength_score: i16,
+    size: SizeCategory,
 ) -> EncumbranceComputation {
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
@@ -315,7 +368,7 @@ pub fn compute_encumbrance(
         per_item.push(CarriedItem { item_id: selection.item_id.clone(), weight_lbs, cost_gp });
     }
 
-    let thresholds = carrying_capacity_thresholds(strength_score);
+    let thresholds = carrying_capacity_thresholds(strength_score, size);
     let level = classify_encumbrance(total_carried_weight_lbs, &thresholds);
 
     EncumbranceComputation {
@@ -371,15 +424,15 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
     #[test]
     fn carrying_capacity_thresholds_match_the_cited_table_at_known_rows() {
         assert_eq!(
-            carrying_capacity_thresholds(10),
+            carrying_capacity_thresholds(10, SizeCategory::Medium),
             CarryingCapacityThresholds { light_max_lbs: 33.0, medium_max_lbs: 66.0, heavy_max_lbs: 100.0 }
         );
         assert_eq!(
-            carrying_capacity_thresholds(18),
+            carrying_capacity_thresholds(18, SizeCategory::Medium),
             CarryingCapacityThresholds { light_max_lbs: 100.0, medium_max_lbs: 200.0, heavy_max_lbs: 300.0 }
         );
         assert_eq!(
-            carrying_capacity_thresholds(29),
+            carrying_capacity_thresholds(29, SizeCategory::Medium),
             CarryingCapacityThresholds { light_max_lbs: 466.0, medium_max_lbs: 933.0, heavy_max_lbs: 1400.0 }
         );
     }
@@ -389,7 +442,7 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
     #[test]
     fn carrying_capacity_thresholds_extrapolate_beyond_strength_29() {
         assert_eq!(
-            carrying_capacity_thresholds(30),
+            carrying_capacity_thresholds(30, SizeCategory::Medium),
             CarryingCapacityThresholds { light_max_lbs: 133.0 * 4.0, medium_max_lbs: 266.0 * 4.0, heavy_max_lbs: 400.0 * 4.0 }
         );
     }
@@ -403,12 +456,12 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
             selection("item:longsword", ActiveState::EquippedActive),
         ];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 10);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
 
         assert_eq!(computation.total_carried_weight_lbs, 15.0 + 5.0 + 4.0);
         assert!(computation.unresolved_item_ids.is_empty(), "{:?}", computation.unresolved_item_ids);
         assert_eq!(computation.per_item.len(), 3);
-        assert_eq!(computation.thresholds, carrying_capacity_thresholds(10));
+        assert_eq!(computation.thresholds, carrying_capacity_thresholds(10, SizeCategory::Medium));
         // 24 lbs total is within Strength 10's light max (33 lbs).
         assert_eq!(computation.level, EncumbranceLevel::Light);
     }
@@ -422,7 +475,7 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
             selection("item:not_a_real_item", ActiveState::EquippedActive),
         ];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 10);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
 
         assert_eq!(computation.total_carried_weight_lbs, 15.0, "Absent items must not contribute weight");
         assert_eq!(computation.unresolved_item_ids, vec!["item:not_a_real_item".to_owned()]);
@@ -435,7 +488,7 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
         // alone (15 lbs) exceeds even the heavy max.
         let equipment_selections = vec![selection("item:leather_armor", ActiveState::EquippedActive)];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 1);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 1, SizeCategory::Medium);
 
         assert_eq!(computation.level, EncumbranceLevel::OverHeavyCapacity);
     }
