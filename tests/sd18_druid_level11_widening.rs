@@ -90,6 +90,212 @@ fn explanation<'a>(
             )
         })
 }
+// ----- The animal companion: a deliberately level-generic, multiclass-reachable seam -----
+
+/// True for the animal-companion records, the one druid-namespaced family that
+/// is deliberately NOT withheld by the `supported_druid_level` gate.
+///
+/// `explain_druid_level1_spell_baseline` validates both Druid burdens *before*
+/// that single-class/level gate, so a multiclass Druid cannot silently escape
+/// them (v0.6 alpha swarm, risks item 8, seventh slice, 2026-07-25). Commit
+/// `ae63aa4c` then grounded the companion progression from the corpus at all
+/// twenty master levels, which turned that pre-gate validation from a
+/// claim-blocking diagnostic into real, corpus-derived records. Those records
+/// are consequently reachable from a multiclass mix, and from a druid level
+/// above the chassis ceiling -- correctly so in PF1 RAW, where a companion's
+/// effective druid level is the druid CLASS level alone and is unaffected by
+/// levels in any other class (`CompanionMasterLVL_Druid|DruidLVL`,
+/// `core_rulebook/cr_abilities_class.lst`).
+///
+/// The negative controls below exclude exactly this family and nothing else,
+/// so the bounded druid *chassis* stays as tightly fenced as it always was.
+fn is_animal_companion_record(id: &str) -> bool {
+    id.starts_with("class_chassis.druid.animal_companion.")
+        || id.starts_with("class_feature.druid.animal_companion.")
+}
+
+/// True for any druid-namespaced record the `supported_druid_level` gate is
+/// supposed to withhold from an unsupported input -- i.e. the bounded druid
+/// chassis, its spell baseline, and its class-feature identity records, but
+/// not the level-generic animal companion above.
+fn is_gated_druid_chassis_record(id: &str) -> bool {
+    !is_animal_companion_record(id)
+        && (id.starts_with("class_chassis.druid.")
+            || id.starts_with("class_feature.druid.")
+            || id == "class_chassis.spell_baseline.druid")
+}
+
+/// Asserts the Wolf animal companion's entire standalone stat block at
+/// `master_level`.
+///
+/// Every expected value passed in by the callers below is transcribed from the
+/// PCGen corpus, never copied from engine output:
+///
+/// - Hit Dice: a 2 HD floor (`MONSTERCLASS:Companion:2` on `Companion (Wolf)`,
+///   `core_rulebook/cr_races_companion.lst`) plus one further `HD:1` at master
+///   levels 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18 and 20, and nowhere
+///   else (`core_rulebook/cr_companionmods.lst`) -- giving
+///   2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15,15,16.
+/// - Natural armor: the Wolf race's own `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base`
+///   plus the companion class's `2*floor(MasterLevel/3)`
+///   (`cr_abilities_companion.lst`, `Animal Companion ~ AC Bonus`).
+/// - Strength: the Wolf's base 13 plus the companion class's
+///   `floor(MasterLevel/3)` (`cr_abilities_companion.lst`,
+///   `Animal Companion ~ Stat Bonus`).
+/// - Base attack bonus `HD*3/4`, base Fortitude/Reflex `HD/2+2` and base Will
+///   `HD/3` (PF1 CRB Animal Companion Base Statistics); primary natural attack
+///   damage `floor(1.5 * Strength modifier)` (PF1 CRB natural-attack rule); hit
+///   points on this codebase's own maximized-first-die-plus-average idiom
+///   across the companion's real Hit Dice.
+///
+/// This pins the whole progression, so a regression anywhere in the companion
+/// table, in the natural-armor/Strength advances, or in the effective-druid-level
+/// keying fails loudly instead of silently shipping a wrong stat block.
+#[allow(clippy::too_many_arguments)]
+fn assert_wolf_companion_stat_block(
+    computation: &PilotBaseChassisComputation,
+    master_level: u8,
+    expected_hit_dice: u8,
+    expected_attack_bonus: i16,
+    expected_fortitude_and_reflex: i16,
+    expected_will: i16,
+    expected_armor_class: i16,
+    expected_bite_damage_bonus: i16,
+    expected_hit_points: i16,
+) {
+    let record = |id: &str| -> &ComputationExplanation {
+        computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| {
+                panic!(
+                    "expected grounded animal-companion record '{id}' at master level \
+                     {master_level}, got {:?}",
+                    computation.explanations
+                )
+            })
+    };
+
+    let stat_block = record("class_chassis.druid.animal_companion.wolf_stat_block");
+    assert_eq!(
+        stat_block.value, 0,
+        "the companion stat-block header is a recognition record only and must carry no \
+         fabricated mechanical value: {}",
+        stat_block.detail
+    );
+
+    let attack = record("class_chassis.druid.animal_companion.base_attack_bonus");
+    assert_eq!(
+        attack.value, expected_attack_bonus,
+        "Wolf companion attack bonus (HD*3/4 + Strength modifier) at master level \
+         {master_level}: {}",
+        attack.detail
+    );
+    assert!(
+        attack.detail.contains(&format!("at {expected_hit_dice} HD")),
+        "the companion must be advanced to the corpus's own {expected_hit_dice} Hit Dice at \
+         master level {master_level}: {}",
+        attack.detail
+    );
+
+    let fortitude = record("class_chassis.druid.animal_companion.base_save.fortitude");
+    assert_eq!(
+        fortitude.value, expected_fortitude_and_reflex,
+        "Wolf companion base Fortitude save (HD/2+2) at master level {master_level}: {}",
+        fortitude.detail
+    );
+    let reflex = record("class_chassis.druid.animal_companion.base_save.reflex");
+    assert_eq!(
+        reflex.value, expected_fortitude_and_reflex,
+        "Wolf companion base Reflex save (HD/2+2) at master level {master_level}: {}",
+        reflex.detail
+    );
+    let will = record("class_chassis.druid.animal_companion.base_save.will");
+    assert_eq!(
+        will.value, expected_will,
+        "Wolf companion base Will save (HD/3) at master level {master_level}: {}",
+        will.detail
+    );
+
+    let armor_class = record("class_chassis.druid.animal_companion.armor_class");
+    assert_eq!(
+        armor_class.value, expected_armor_class,
+        "Wolf companion armor class (10 + base natural armor 2 + 2*floor({master_level}/3)): {}",
+        armor_class.detail
+    );
+
+    let bite = record("class_chassis.druid.animal_companion.bite_attack");
+    assert_eq!(
+        bite.value, expected_bite_damage_bonus,
+        "Wolf companion bite damage bonus (1.5x Strength modifier, floored) at master level \
+         {master_level}: {}",
+        bite.detail
+    );
+
+    let hit_points = record("class_chassis.druid.animal_companion.hit_points");
+    assert_eq!(
+        hit_points.value, expected_hit_points,
+        "Wolf companion hit points across {expected_hit_dice} d8 Hit Dice at master level \
+         {master_level}: {}",
+        hit_points.detail
+    );
+
+    for vacuous_id in [
+        "class_feature.druid.animal_companion.link_vacuous",
+        "class_feature.druid.animal_companion.share_spells_vacuous",
+    ] {
+        let vacuous = record(vacuous_id);
+        assert_eq!(
+            vacuous.value, 0,
+            "'{vacuous_id}' is a vacuity-correction record and must carry no mechanical \
+             value: {}",
+            vacuous.detail
+        );
+    }
+}
+
+/// Asserts that the animal-companion burden is genuinely closed: the old
+/// catch-all claim-blocker is gone, and the non-blocking advancement diagnostic
+/// that replaced it still names every column left deferred.
+fn assert_animal_companion_burden_is_closed_but_discloses_its_gaps(
+    computation: &PilotBaseChassisComputation,
+) {
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"),
+        "the animal-companion burden is grounded from the corpus at every master level, so \
+         the catch-all blocker must no longer fire for a chosen animal companion: {:?}",
+        computation.diagnostics
+    );
+
+    let advancement = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.druid.animal_companion.advancement_absent")
+        .unwrap_or_else(|| {
+            panic!(
+                "a grounded companion must still disclose the columns it does not ground: {:?}",
+                computation.diagnostics
+            )
+        });
+    assert!(
+        !advancement.claim_blocking,
+        "the advancement-absent disclosure names deferred columns that have no consumer in \
+         this engine; it must not claim-block: {}",
+        advancement.message
+    );
+    for deferred in ["bonus tricks", "Companion Stat Increase", "Evasion"] {
+        assert!(
+            advancement.message.contains(deferred),
+            "the advancement-absent disclosure must keep naming the deferred '{deferred}' \
+             column rather than quietly implying full support: {}",
+            advancement.message
+        );
+    }
+}
 
 // ----- Base attack bonus and saves at level 11 -----
 
@@ -189,20 +395,34 @@ fn druid_level11_does_not_fabricate_wild_shape_execution() {
     );
 }
 
-// ----- The two existing burden diagnostics still fire at level 11 -----
+// ----- The animal companion is grounded; the prepared divine burden still fires at level 11 -----
 
 #[test]
-fn druid_level11_still_claim_blocks_animal_companion_and_prepared_divine_burdens() {
+fn druid_level11_grounds_the_animal_companion_and_holds_the_prepared_divine_posture() {
     let input = load(DRUID_LEVEL11_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation.diagnostics.iter().any(
-            |d| d.id == "class_feature.druid.animal_companion.unsupported" && d.claim_blocking
-        ),
-        "level-11 Druid must still claim-block on the animal-companion execution burden: {:?}",
-        computation.diagnostics
+    // Superseded premise, corrected 2026-07-29. This test used to require
+    // `class_feature.druid.animal_companion.unsupported` to fire claim-blocking
+    // at level 11. Commit `ae63aa4c` grounded the animal companion's whole
+    // progression from the PCGen corpus at all twenty master levels, so at
+    // level 11 the burden is genuinely closed and that blocker is correctly
+    // gone -- the test's premise, not the engine, is what changed.
+    //
+    // The original protective intent (no unproven animal-companion support may
+    // reach a caller unannounced) is preserved and strengthened rather than
+    // dropped: instead of only checking that the seam was shut, the companion's
+    // real corpus-derived stat block at this exact master level is now pinned
+    // value by value, and the non-blocking disclosure that replaced the blocker
+    // is required to keep naming every column still deferred.
+    assert_animal_companion_burden_is_closed_but_discloses_its_gaps(&computation);
+    assert_wolf_companion_stat_block(
+        &computation, 11, 9, 9, 6, 3, 18, 4, 66,
     );
+
+    // Unchanged: the prepared divine spell posture burden keeps its original
+    // shape -- either the blocker fires claim-blocking, or no spell was
+    // fabricated in its absence.
     match computation
         .diagnostics
         .iter()
@@ -252,16 +472,25 @@ fn druid_level_16_is_not_promoted_by_this_slice() {
     let level_16 = DRUID_LEVEL11_FIXTURE.replace("class:druid:11", "class:druid:16");
     let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
+
+    // Unchanged: `MAX_SUPPORTED_DRUID_LEVEL` is 15, so the bounded druid
+    // chassis must still stop short of level 16.
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id.starts_with("class_feature.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"),
-        "level-16 Druid must not gain any bounded druid explanation: {:?}",
+            .any(|e| is_gated_druid_chassis_record(&e.id)),
+        "level-16 Druid must not gain any bounded druid chassis explanation: {:?}",
         computation.explanations
     );
+
+    // Superseded premise, corrected 2026-07-29. The animal companion is
+    // grounded from the corpus across all twenty master levels and is not tied
+    // to the chassis ceiling, so it correctly keeps advancing at level 16 while
+    // the chassis does not. Pinning its level-16 values here keeps the
+    // exclusion above honest: it can only ever admit a companion record whose
+    // numbers are right, never a chassis record that leaked through.
+    assert_wolf_companion_stat_block(&computation, 16, 13, 13, 8, 4, 22, 6, 94);
 }
 
 // ----- Negative control: the druid path must not leak onto other classes -----
@@ -291,15 +520,32 @@ fn multiclass_druid_level11_is_not_promoted_by_this_slice() {
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
+
+    // The bounded single-class druid chassis is still withheld from a
+    // multiclass mix -- unchanged, and still the point of this control.
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id.starts_with("class_feature.druid.")),
-        "multiclass Druid must not gain any bounded druid explanation: {:?}",
+            .any(|e| is_gated_druid_chassis_record(&e.id)),
+        "multiclass Druid must not gain any bounded druid chassis explanation: {:?}",
         computation.explanations
     );
+
+    // Superseded premise, corrected 2026-07-29. The animal-companion records
+    // share the `class_chassis.druid.` prefix this control used to reject
+    // wholesale, but they are deliberately reachable from a multiclass mix
+    // (see `is_animal_companion_record`) and are correct there: in PF1 a
+    // Druid 11/Fighter 1 really does have a companion, at effective druid
+    // level 11. Rather than silently tolerate the whole family, pin the
+    // thing that actually matters -- the companion is keyed to the DRUID class
+    // level (11), not to the character's total level (12). If the engine
+    // ever started advancing a multiclass character's companion off total
+    // level, these values would be those of master level 12 and this fails.
+    assert_wolf_companion_stat_block(
+        &computation, 11, 9, 9, 6, 3, 18, 4, 66,
+    );
+
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "multiclass Druid must stay claim-blocked in this slice"
