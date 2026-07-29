@@ -502,32 +502,120 @@ fn druid_level14_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_attack.value, 10, "Druid level 14 base attack bonus must stay 10");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
+// ----- Level 16 was widened in; the boundary control moves to level 21 -----
 
+//
+// Final move, 2026-07-29: commit `72d83e75` widened Druid all the way to the
+// PF1 cap -- MAX_SUPPORTED_DRUID_LEVEL and class_tables.rs's own CLASS_META
+// both 15 -> 20 -- making Druid the 10th fully-computing class. Level 16 is
+// therefore genuinely promoted now, so the absence assertion is superseded and
+// is replaced below by the widened truth it was standing in for. The boundary
+// control itself keeps its job and makes its last possible move, to level 21:
+// PF1 has no 21st character level (`MAXLEVEL:20`, core_rulebook/cr_classes.lst
+// CLASS:Druid), so that is a pure implementation-gate check -- the same idiom
+// every other already-capped class uses (`bard_level_21_is_not_promoted...`,
+// `barbarian_level_21_is_not_promoted...`, `sorcerer_level_21_is_not_promoted...`).
 #[test]
-fn druid_level_16_is_not_promoted_by_this_slice() {
+fn druid_level_16_was_later_widened_into_the_supported_tranche() {
+    // Superseded premise, corrected 2026-07-29 (see the note above). A
+    // level-16 Druid is now promoted, correctly and by design, so this control
+    // pins the widened truth rather than asserting an absence -- exactly the
+    // `druid_level_3_was_later_widened_into_the_supported_tranche` /
+    // `druid_level_4_...` precedent already established in
+    // tests/sd13_druid_level2_progression.rs.
+    //
+    // Every value is re-derived from the corpus, not copied from the engine
+    // (`core_rulebook/cr_classes.lst`, CLASS:Druid, MAXLEVEL:20): base attack
+    // `classlevel("APPLIEDAS=NONEPIC")*3/4` = 16*3/4 = 12; good Fortitude and
+    // Will `classlevel/2+2` = 16/2+2 = 10; poor Reflex `classlevel/3` = 16/3 =
+    // 5 (an integer-division value that must be checked, not assumed to keep
+    // climbing). Wild Empathy is the druid's own level plus the Charisma
+    // modifier (+1 on this fixture) = 17; Nature Sense stays the flat PF1 CRB
+    // +2.
     let level_16 = DRUID_LEVEL15_FIXTURE.replace("class:druid:15", "class:druid:16");
     let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Unchanged: `MAX_SUPPORTED_DRUID_LEVEL` is 15, so the bounded druid
-    // chassis must still stop short of level 16.
+    let base_attack = explanation(&computation, "class_chassis.druid.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 12,
+        "Druid level 16 3/4-BAB progression (16 * 3 / 4) must equal 12: {}",
+        base_attack.detail
+    );
+
+    let fortitude = explanation(&computation, "class_chassis.druid.base_save.fortitude");
+    assert_eq!(
+        fortitude.value, 10,
+        "Druid level 16 good Fortitude (16/2+2) must equal 10: {}",
+        fortitude.detail
+    );
+    let reflex = explanation(&computation, "class_chassis.druid.base_save.reflex");
+    assert_eq!(
+        reflex.value, 5,
+        "Druid level 16 poor Reflex (16/3) must equal 5: {}",
+        reflex.detail
+    );
+    let will = explanation(&computation, "class_chassis.druid.base_save.will");
+    assert_eq!(
+        will.value, 10,
+        "Druid level 16 good Will (16/2+2) must equal 10: {}",
+        will.detail
+    );
+
+    let wild_empathy = explanation(&computation, "class_chassis.druid.wild_empathy");
+    assert_eq!(
+        wild_empathy.value, 17,
+        "Druid level 16 wild empathy must equal druid level + Cha modifier (16 + 1): {}",
+        wild_empathy.detail
+    );
+    let nature_sense = explanation(&computation, "class_chassis.druid.nature_sense");
+    assert_eq!(
+        nature_sense.value, 2,
+        "Druid level 16 Nature Sense must stay the flat PF1 CRB +2 bonus: {}",
+        nature_sense.detail
+    );
+
+    // The companion advances with its master to master level 16 -- 13 Hit Dice
+    // by the corpus table, and the natural-armor/Strength advances that ride on
+    // the same master level.
+    assert_wolf_companion_stat_block(&computation, 16, 13, 13, 8, 4, 22, 6, 94);
+}
+
+#[test]
+fn druid_level_21_is_not_promoted_by_this_slice() {
+    // The boundary control's new home. PF1 has no 21st character level, so
+    // this is a pure implementation-gate check that the level range really is
+    // bounded rather than open-ended.
+    let level_21 = DRUID_LEVEL15_FIXTURE.replace("class:druid:15", "class:druid:21");
+    let input = load(&level_21);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Note this deliberately uses the raw prefixes rather than
+    // `is_gated_druid_chassis_record`: at level 21 the animal companion must be
+    // absent too, because the corpus companion progression is only defined
+    // across master levels 1-20. This is the one place the companion family is
+    // NOT excused.
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| is_gated_druid_chassis_record(&e.id)),
-        "level-16 Druid must not gain any bounded druid chassis explanation: {:?}",
+        !computation.explanations.iter().any(|e| e
+            .id
+            .starts_with("class_chassis.druid.")
+            || e.id.starts_with("class_feature.druid.")
+            || e.id == "class_chassis.spell_baseline.druid"),
+        "level-21 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 
-    // Superseded premise, corrected 2026-07-29. The animal companion is
-    // grounded from the corpus across all twenty master levels and is not tied
-    // to the chassis ceiling, so it correctly keeps advancing at level 16 while
-    // the chassis does not. Pinning its level-16 values here keeps the
-    // exclusion above honest: it can only ever admit a companion record whose
-    // numbers are right, never a chassis record that leaked through.
-    assert_wolf_companion_stat_block(&computation, 16, 13, 13, 8, 4, 22, 6, 94);
+    // ...and the companion burden falls back to its catch-all claim-blocker
+    // rather than fabricating a 21st-level master's companion or panicking on
+    // the companion table's own domain guard.
+    assert!(
+        computation.diagnostics.iter().any(
+            |d| d.id == "class_feature.druid.animal_companion.unsupported" && d.claim_blocking
+        ),
+        "an out-of-domain druid level must fall through to the catch-all \
+         animal-companion blocker: {:?}",
+        computation.diagnostics
+    );
 }
 
 // ----- Negative control: the druid path must not leak onto other classes -----

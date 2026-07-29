@@ -33453,7 +33453,21 @@ fn explain_druid_level1_spell_baseline(
         // natural-armor and Strength advances that scale off the same
         // master level, so there is no longer a level at which this seam
         // would have to guess.
-        if animal_companion_chosen_top {
+        //
+        // What replaced it is the companion table's own domain bound. This
+        // whole block deliberately runs BEFORE the `supported_druid_level`
+        // single-class/level gate below, so that a multiclass Druid cannot
+        // silently escape the burden -- which also means it is the first
+        // thing an out-of-domain druid level reaches. `MAXLEVEL:20`
+        // (`core_rulebook/cr_classes.lst`, CLASS:Druid) caps a real Druid at
+        // 20, and `animal_companion_table_index`'s own doc comment states
+        // that a caller passing a level outside 1-20 "is still a bug and
+        // still trips in test/debug builds". Both are true, so the caller is
+        // fixed here rather than the guard weakened: an out-of-domain level
+        // falls through to the catch-all claim-blocking diagnostic below,
+        // matching how every other class's level-21 implementation-gate
+        // check already behaves, instead of panicking on a debug_assert.
+        if animal_companion_chosen_top && druid_level <= MAX_ANIMAL_COMPANION_MASTER_LEVEL {
             // v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure):
             // extracted into shared helpers so Hunter's own animal
             // companion (mechanically identical -- see
