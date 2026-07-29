@@ -10025,6 +10025,7 @@ fn compute_apg_class_chassis(
         ground_alchemist_bomb_and_poison_resistance(
             level,
             alchemist_intelligence_modifier,
+            &input.chosen.selected_feats,
             explanations,
         );
         ground_alchemist_feral_mutagen_discovery(input, level, explanations);
@@ -10486,8 +10487,21 @@ fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
 /// anywhere in this engine) -- provably `0` for every character this
 /// engine represents, the same "provably vacuous" shape the Bomb damage
 /// dice's own override branches already established above.
-fn alchemist_bomb_uses_per_day(level: u8, intelligence_modifier: i16) -> i16 {
-    i16::from(level) + intelligence_modifier
+///
+/// A THIRD contribution to the same variable is real and now applied:
+/// the `Extra Bombs` feat's own `BONUS:VAR|AlchemistBombTimes|2` (see
+/// [`EXTRA_BOMBS_FEAT_KEY`]). Folded into the formula rather than added
+/// at the display site, matching [`barbarian_rage_rounds_per_day`]'s
+/// ratified reasoning: any future budget check reads the widened pool
+/// by construction.
+fn alchemist_bomb_uses_per_day(
+    level: u8,
+    intelligence_modifier: i16,
+    selected_feats: &[String],
+) -> i16 {
+    i16::from(level)
+        + intelligence_modifier
+        + extra_resource_feat_bonus(selected_feats, EXTRA_BOMBS_FEAT_KEY, EXTRA_BOMBS_USES)
 }
 
 /// PF1 Advanced Player's Guide Alchemist Poison Resistance's numeric
@@ -10528,6 +10542,7 @@ fn alchemist_is_poison_immune(level: u8) -> bool {
 fn ground_alchemist_bomb_and_poison_resistance(
     level: u8,
     intelligence_modifier: i16,
+    selected_feats: &[String],
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let bomb_damage_dice = alchemist_bomb_damage_dice(level);
@@ -10555,13 +10570,15 @@ fn ground_alchemist_bomb_and_poison_resistance(
     });
     explanations.push(ComputationExplanation {
         id: "class_feature.apg.alchemist.bomb_uses_per_day".to_owned(),
-        value: alchemist_bomb_uses_per_day(level, intelligence_modifier),
+        value: alchemist_bomb_uses_per_day(level, intelligence_modifier, selected_feats),
         detail: format!(
             "Alchemist level {level} Bomb uses per day: level + Intelligence modifier \
-             ({intelligence_modifier:+}) = {}. A Gnome-specific Favored Class Bonus can add \
-             further uses in the real PF1 rules, but this codebase models no favored-class-\
-             bonus selection mechanism at all, so that term is provably 0 here",
-            alchemist_bomb_uses_per_day(level, intelligence_modifier)
+             ({intelligence_modifier:+}) + Extra Bombs feat ({:+}) = {}. A Gnome-specific \
+             Favored Class Bonus can add further uses in the real PF1 rules, but this codebase \
+             models no favored-class-bonus selection mechanism at all, so that term is provably \
+             0 here",
+            extra_resource_feat_bonus(selected_feats, EXTRA_BOMBS_FEAT_KEY, EXTRA_BOMBS_USES),
+            alchemist_bomb_uses_per_day(level, intelligence_modifier, selected_feats)
         ),
     });
 
@@ -12482,8 +12499,35 @@ fn oracle_channel_dice(oracle_level: u8) -> i16 {
 
 /// Life Mystery's Channel save DC: `BONUS:VAR|OracleChannelDC|
 /// 10+(OracleChannelLVL/2)+CHA`.
-fn oracle_channel_dc(oracle_level: u8, charisma_modifier: i16) -> i16 {
-    10 + i16::from(oracle_level) / 2 + charisma_modifier
+///
+/// The `Improved Channel` feat contributes `+2` to this same variable,
+/// and this is the ONLY channel DC in this engine it can reach (v0.6
+/// alpha swarm, `BONUS:VAR` triage slice, 2026-07-29). The feat's own
+/// `cr_feats.lst` record names five variables --
+/// `ClericChannelPositiveEnergyDC`, `PaladinChannelPositiveEnergyDC`,
+/// `ClericChannelNegativeEnergyDC`, `PowerOverUndeadCommandDC`,
+/// `PowerOverUndeadTurnDC` -- and this engine computes a total for none
+/// of them: Cleric grounds `channel_energy_dice` and
+/// `channel_energy_uses_per_day` but no DC at all, Paladin grounds
+/// `channel_positive_energy_dice` but no DC. Read against the Core file
+/// alone the feat is a pure no-op here, which is exactly why it had been
+/// skipped. `apg_feats.lst`'s own `CATEGORY=FEAT|Improved Channel.MOD`
+/// adds `BONUS:VAR|OracleChannelDC|2` (and `UndeadServitudeDC|2`, which
+/// has no consumer here) -- the same "the real reach lives on a `.MOD`
+/// in a different book" shape that hid Extra Performance's Skald half.
+///
+/// Presence-based, not counted: Improved Channel carries no `STACK:`,
+/// no `MULT:` and no repeat clause. Magnitude `2` agrees between token
+/// and `BENEFIT:` prose ("Add 2 to the DC of saving throws made to
+/// resist the effects of your channel energy ability").
+fn oracle_channel_dc(oracle_level: u8, charisma_modifier: i16, selected_feats: &[String]) -> i16 {
+    10 + i16::from(oracle_level) / 2
+        + charisma_modifier
+        + non_stacking_resource_feat_bonus(
+            selected_feats,
+            IMPROVED_CHANNEL_FEAT_KEY,
+            IMPROVED_CHANNEL_DC_BONUS,
+        )
 }
 
 /// Bone Mystery's Near Death insight bonus on saves against disease,
@@ -12676,7 +12720,7 @@ fn ground_oracle_tier_one_revelations(
     {
         let uses = oracle_channel_uses_per_day(charisma);
         let dice = oracle_channel_dice(oracle_level);
-        let dc = oracle_channel_dc(oracle_level, charisma);
+        let dc = oracle_channel_dc(oracle_level, charisma, &input.chosen.selected_feats);
         explanations.push(ComputationExplanation {
             id: "class_feature.apg.oracle.life_mystery.channel_uses_per_day".to_owned(),
             value: uses,
@@ -12704,7 +12748,15 @@ fn ground_oracle_tier_one_revelations(
             value: dc,
             detail: format!(
                 "Oracle level {oracle_level} Life Mystery Channel save DC: 10 + level/2 + \
-                 Charisma modifier ({charisma:+}) = {dc}"
+                 Charisma modifier ({charisma:+}) + Improved Channel feat ({:+}) = {dc}. That \
+                 feat's own Core Rulebook record names only Cleric/Paladin channel DC variables \
+                 this engine computes no total for; its reach here comes from apg_feats.lst's \
+                 own `CATEGORY=FEAT|Improved Channel.MOD`, which adds BONUS:VAR|OracleChannelDC|2",
+                non_stacking_resource_feat_bonus(
+                    &input.chosen.selected_feats,
+                    IMPROVED_CHANNEL_FEAT_KEY,
+                    IMPROVED_CHANNEL_DC_BONUS
+                )
             ),
         });
     }
@@ -14598,8 +14650,22 @@ fn arcanist_reservoir_daily_fill(level: u8) -> i16 {
 /// hold a maximum of [3 + arcanist level] points." Verified directly
 /// against `acg_abilities_class.lst`'s own `BONUS:VAR|
 /// MaxArcanistReservoirSize|3+ArcanistLVL`.
-fn arcanist_reservoir_max(level: u8) -> i16 {
+///
+/// The `Extra Reservoir` feat adds `3` to **this** variable and only
+/// this one, which settles a genuine ambiguity in its own prose: "You
+/// gain three more points in your arcane reservoir, AND the maximum
+/// number of points ... increases by that amount" reads like both the
+/// daily fill and the cap rise. The corpus separates them cleanly --
+/// `ArcanistReservoirSize` (fill) and `MaxArcanistReservoirSize` (cap)
+/// are two distinct variables on the same `Arcanist ~ Arcane Reservoir`
+/// record, matching this engine's own two functions one-for-one -- and
+/// `acg_feats.lst`'s Extra Reservoir record names only the cap. So
+/// [`arcanist_reservoir_daily_fill`] deliberately does NOT take the
+/// feat; pinned by `extra_reservoir_raises_only_the_cap_never_the_
+/// daily_fill`.
+fn arcanist_reservoir_max(level: u8, selected_feats: &[String]) -> i16 {
     3 + i16::from(level)
+        + extra_resource_feat_bonus(selected_feats, EXTRA_RESERVOIR_FEAT_KEY, EXTRA_RESERVOIR_POINTS)
 }
 
 /// PF1 Advanced Class Guide Arcanist "Spells Prepared" table, base counts
@@ -14910,15 +14976,23 @@ fn ground_or_block_arcanist_class_features(
 ) {
     ground_familiar_master_benefit(input, level, explanations);
 
-    let reservoir_max = arcanist_reservoir_max(level);
+    let reservoir_max = arcanist_reservoir_max(level, &input.chosen.selected_feats);
     let reservoir_daily_fill = arcanist_reservoir_daily_fill(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.arcanist.arcane_reservoir_max".to_owned(),
         value: reservoir_max,
         detail: format!(
-            "Arcanist level {level} Arcane Reservoir maximum: 3 + level = {reservoir_max}. A \
-             flat, choice-free daily resource pool -- no class_ability_activations entry is \
-             needed to ground this value, unlike every activation-gated closure this session"
+            "Arcanist level {level} Arcane Reservoir maximum: 3 + level + Extra Reservoir feat \
+             ({:+}) = {reservoir_max}. A flat, choice-free daily resource pool -- no \
+             class_ability_activations entry is needed to ground this value, unlike every \
+             activation-gated closure this session. Extra Reservoir raises this cap only: the \
+             corpus gives the fill and the cap two separate variables and the feat names just \
+             MaxArcanistReservoirSize",
+            extra_resource_feat_bonus(
+                &input.chosen.selected_feats,
+                EXTRA_RESERVOIR_FEAT_KEY,
+                EXTRA_RESERVOIR_POINTS
+            )
         ),
     });
     explanations.push(ComputationExplanation {
@@ -16467,12 +16541,32 @@ fn ground_slayer_remaining_named_features(
 /// -- its own DESC says "unlike other swashbucklers... this ability
 /// alters the panache class feature," and the archetype's formula adding
 /// an Intelligence term ON TOP of a base `MAX(1,CHA)` confirms the base
-/// class's real formula is exactly `MAX(1,CHA)`, not a guess. A real,
-/// different evidentiary path than every other formula this session has
-/// grounded (all had a literal `BONUS:VAR` token) -- named honestly, not
-/// silently treated as equivalent-confidence.
-fn swashbuckler_panache_max(charisma_modifier: i16) -> i16 {
+/// class's real formula is exactly `MAX(1,CHA)`, not a guess.
+///
+/// **Evidentiary upgrade (2026-07-29).** The hedge above -- that this
+/// formula alone among its siblings rested on inference rather than a
+/// literal token -- can now be retired. A literal token does exist; it
+/// simply is not on the base record, which is why reading only
+/// `KEY:Swashbuckler ~ Panache` missed it. `acg_abilities_class.lst`
+/// line 1976 carries `CATEGORY=Special Ability|Swashbuckler ~
+/// Panache.MOD  BONUS:VAR|PanachePointsBase|max(CHA,1)|TYPE=Base`, and
+/// an `CATEGORY=Internal|Panache Tracker.MOD` block above it (lines
+/// 1965-1975) `DEFINE`s `PanachePointsBase`/`Panache_Cap`/
+/// `PanachePoints` to `0` and then routes
+/// `BONUS:VAR|Panache_Cap|PanachePointsBase`. That is precisely the
+/// "`DEFINE`s to 0 while the real value arrives from an unconditional
+/// `BONUS:VAR` on a different record" shape this file has been bitten by
+/// before (`WeaponFocusToHit`). The inferred value and the literal token
+/// agree exactly at `max(CHA,1)`, so no magnitude changes -- only the
+/// confidence label does.
+///
+/// `Extra Panache` adds `2` to `Panache_Cap` (and the same `2` to
+/// `PanachePoints`, the start-of-day count this engine does not
+/// separately compute); its prose "your maximum panache increases by
+/// two" matches the token exactly.
+fn swashbuckler_panache_max(charisma_modifier: i16, selected_feats: &[String]) -> i16 {
     charisma_modifier.max(1)
+        + extra_resource_feat_bonus(selected_feats, EXTRA_PANACHE_FEAT_KEY, EXTRA_PANACHE_POINTS)
 }
 
 /// PF1 Advanced Class Guide Swashbuckler Charmed Life uses per day:
@@ -17069,18 +17163,25 @@ fn ground_or_block_swashbuckler_class_features(
 
     ground_swashbuckler_deeds(level, ability_modifiers, explanations);
 
-    let panache_max = swashbuckler_panache_max(ability_modifiers.charisma);
+    let panache_max =
+        swashbuckler_panache_max(ability_modifiers.charisma, &input.chosen.selected_feats);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.swashbuckler.panache_max".to_owned(),
         value: panache_max,
         detail: format!(
-            "Swashbuckler level {level} Panache: max(1, Charisma modifier ({})) = {panache_max} \
-             points at the start of each day. Sourced from the ability's own DESC text (no \
-             literal BONUS:VAR token exists for the base class in this corpus checkout, cross-\
-             validated against the Inspired Blade archetype's own explicit MAX(1,CHA) base term \
-             -- see swashbuckler_panache_max's own doc comment). This grounds only the flat \
-             daily maximum; spending/regaining Panache on Deeds is not modeled",
-            ability_modifiers.charisma
+            "Swashbuckler level {level} Panache: max(1, Charisma modifier ({})) + Extra Panache \
+             feat ({:+}) = {panache_max} points at the start of each day. The base term is \
+             confirmed by the corpus's own `Swashbuckler ~ Panache.MOD` record, which carries a \
+             literal BONUS:VAR|PanachePointsBase|max(CHA,1) routed into Panache_Cap by the \
+             Internal Panache Tracker -- the base ability record itself only DEFINEs these to 0 \
+             (see swashbuckler_panache_max's own doc comment). This grounds only the flat daily \
+             maximum; spending/regaining Panache on Deeds is not modeled",
+            ability_modifiers.charisma,
+            extra_resource_feat_bonus(
+                &input.chosen.selected_feats,
+                EXTRA_PANACHE_FEAT_KEY,
+                EXTRA_PANACHE_POINTS
+            )
         ),
     });
 
@@ -17268,8 +17369,23 @@ fn investigator_trap_sense_bonus(level: u8) -> i16 {
 /// ability check, two uses for an attack roll or saving throw, or the
 /// free Knowledge/Linguistics/Spellcraft interaction) ties into per-roll
 /// resolution this codebase has no surface for, and stays deferred.
-fn investigator_inspiration_pool_size(level: u8, intelligence_modifier: i16) -> i16 {
+///
+/// The `Extra Inspiration` feat contributes `3` to the same variable
+/// (`BONUS:VAR|InvestigatorInspirationPoolBonus|3`). PCGen sums
+/// independent `BONUS:VAR` contributions to one variable, so the feat's
+/// `3` lands OUTSIDE the class record's own `max(1, ...)` clamp, not
+/// inside it -- the clamp belongs to the class formula alone.
+fn investigator_inspiration_pool_size(
+    level: u8,
+    intelligence_modifier: i16,
+    selected_feats: &[String],
+) -> i16 {
     (i16::from(level) / 2 + intelligence_modifier).max(1)
+        + extra_resource_feat_bonus(
+            selected_feats,
+            EXTRA_INSPIRATION_FEAT_KEY,
+            EXTRA_INSPIRATION_USES,
+        )
 }
 
 /// PF1 Advanced Class Guide Investigator Poison Resistance's numeric
@@ -17760,19 +17876,29 @@ fn ground_or_block_investigator_class_features(
         ),
     });
 
-    let inspiration_pool_size =
-        investigator_inspiration_pool_size(level, ability_modifiers.intelligence);
+    let inspiration_pool_size = investigator_inspiration_pool_size(
+        level,
+        ability_modifiers.intelligence,
+        &input.chosen.selected_feats,
+    );
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.investigator.inspiration_pool_size".to_owned(),
         value: inspiration_pool_size,
         detail: format!(
             "Investigator level {level} Inspiration pool size: max(1, level/2 + Intelligence \
-             modifier ({})) = {inspiration_pool_size} points at the start of each day, each \
-             worth 1d6 when spent. Grounds only the flat daily maximum -- spending a use on a \
-             skill/ability/attack/save roll, and the free Knowledge/Linguistics/Spellcraft \
-             interaction, are not modeled (no per-roll resolution surface exists in this \
-             codebase)",
-            ability_modifiers.intelligence
+             modifier ({})) + Extra Inspiration feat ({:+}) = {inspiration_pool_size} points at \
+             the start of each day, each worth 1d6 when spent. The feat's 3 lands outside the \
+             max(1, ...) clamp because the corpus applies it as a separate BONUS:VAR \
+             contribution to the same variable, not as a term inside the class formula. Grounds \
+             only the flat daily maximum -- spending a use on a skill/ability/attack/save roll, \
+             and the free Knowledge/Linguistics/Spellcraft interaction, are not modeled (no \
+             per-roll resolution surface exists in this codebase)",
+            ability_modifiers.intelligence,
+            extra_resource_feat_bonus(
+                &input.chosen.selected_feats,
+                EXTRA_INSPIRATION_FEAT_KEY,
+                EXTRA_INSPIRATION_USES
+            )
         ),
     });
 
@@ -18725,7 +18851,12 @@ fn compute_acg_class_chassis(
         ground_skald_lore_master(level, explanations);
         ground_skald_versatile_performance(level, explanations);
         ground_skald_rage_powers_pool_size(level, explanations);
-        ground_skald_remaining_named_features(level, ability_modifiers.charisma, explanations);
+        ground_skald_remaining_named_features(
+            level,
+            ability_modifiers.charisma,
+            &input.chosen.selected_feats,
+            explanations,
+        );
         push_skald_other_features_deferred_diagnostic(diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
@@ -18844,8 +18975,41 @@ fn compute_acg_class_chassis(
 /// APG/ACG closure) so the real rage-execution validation
 /// (`ground_or_block_skald_inspired_rage`,
 /// `active_skald_inspired_rage_bonus`) shares one source of truth.
-fn skald_inspired_rage_rounds_per_day(charisma_modifier: i16, level: u8) -> i16 {
-    SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY + charisma_modifier + 2 * (i16::from(level) - 1)
+///
+/// **`Extra Performance` reaches this pool too** (v0.6 alpha swarm,
+/// 2026-07-29). The feat is a Core Rulebook record whose own
+/// `cr_feats.lst` line names only `BardicPerformanceDuration` and gates
+/// on `PREABILITY:1,CATEGORY=Special Ability,TYPE.Bardic Performance` --
+/// read there and nowhere else, it is unambiguously Bard-only, which is
+/// how this engine treated it. `acg_feats.lst` then carries THREE
+/// `CATEGORY=FEAT|Extra Performance.MOD` records (lines 232-234) which
+/// together `PRE:.CLEAR` that gate, add
+/// `BONUS:VAR|SkaldRagingSongRoundsPerDay|6`, and re-impose a widened
+/// `PREMULT:1,[...TYPE.SkaldRagingSong],[...TYPE.Bardic Performance]`.
+/// The real value for Skald therefore lives entirely on `.MOD` records
+/// in a different book from the feat itself -- the same trap shape that
+/// hid `WeaponFocusToHit`, here in its additive direction: not a `0`
+/// masquerading as a magnitude, but a whole second consumer invisible
+/// from the base record.
+///
+/// The magnitude is `6`, identical to the Bard half, and the prose
+/// ("You can use bardic performance for 6 additional rounds per day")
+/// governs both because it is one feat with one benefit line. Skald's
+/// Raging Song is one shared pool that Inspired Rage and every other
+/// song spends from, so widening it here widens it for all of them.
+fn skald_inspired_rage_rounds_per_day(
+    charisma_modifier: i16,
+    level: u8,
+    selected_feats: &[String],
+) -> i16 {
+    SKALD_RAGING_SONG_BASE_ROUNDS_PER_DAY
+        + charisma_modifier
+        + 2 * (i16::from(level) - 1)
+        + extra_resource_feat_bonus(
+            selected_feats,
+            EXTRA_PERFORMANCE_FEAT_KEY,
+            EXTRA_ROUNDS_PER_DAY,
+        )
 }
 
 /// Skald's Inspired Rage magnitude tier: (Strength/Constitution morale
@@ -18913,7 +19077,11 @@ fn active_skald_inspired_rage_bonus(
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
-        let rounds_per_day = skald_inspired_rage_rounds_per_day(charisma_modifier, skald_level);
+        let rounds_per_day = skald_inspired_rage_rounds_per_day(
+            charisma_modifier,
+            skald_level,
+            &input.chosen.selected_feats,
+        );
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
             return None;
         }
@@ -19085,7 +19253,11 @@ fn ground_or_block_skald_inspired_rage(
     };
 
     let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
-    let rounds_per_day = skald_inspired_rage_rounds_per_day(charisma_modifier, skald_level);
+    let rounds_per_day = skald_inspired_rage_rounds_per_day(
+        charisma_modifier,
+        skald_level,
+        &input.chosen.selected_feats,
+    );
 
     if let Some(rounds_consumed) = activation.rounds_consumed_today {
         if i32::from(rounds_consumed) > i32::from(rounds_per_day) {
@@ -19627,6 +19799,7 @@ const SKALD_ZERO_MAGNITUDE_FEATURES: &[(u8, &str, &str)] = &[
 fn ground_skald_remaining_named_features(
     level: u8,
     charisma_modifier: i16,
+    selected_feats: &[String],
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     // Reuses `skald_inspired_rage_rounds_per_day` rather than deriving
@@ -19637,13 +19810,17 @@ fn ground_skald_remaining_named_features(
     // corpus's defective `3+CHA+(2*SkaldLVL)` token -- see its doc
     // comment. An earlier draft of this closure added a parallel
     // `skald_raging_song_rounds_per_day` before finding it.
-    let rounds = skald_inspired_rage_rounds_per_day(charisma_modifier, level);
+    let rounds = skald_inspired_rage_rounds_per_day(charisma_modifier, level, selected_feats);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.skald.raging_song_rounds_per_day".to_owned(),
         value: rounds,
         detail: format!(
             "Skald level {level} Raging Song: {rounds} rounds per day (3 + Charisma modifier \
-             {charisma_modifier:+} + 2 per level after the first). Raging Song is the umbrella \
+             {charisma_modifier:+} + 2 per level after the first + Extra Performance feat ({:+}) \
+             -- that Core feat looks Bard-only in cr_feats.lst, but acg_feats.lst's own \
+             `CATEGORY=FEAT|Extra Performance.MOD` records clear its Bardic-Performance-only \
+             prerequisite, add BONUS:VAR|SkaldRagingSongRoundsPerDay|6, and re-impose a widened \
+             prerequisite accepting either pool). Raging Song is the umbrella \
              performance that Inspired Rage, Song of Marching, Song of Strength, Dirge of Doom \
              and Song of the Fallen all spend from -- ONE shared pool, which is why this reads \
              the same `skald_inspired_rage_rounds_per_day` the rage-execution budget enforces \
@@ -19653,7 +19830,12 @@ fn ground_skald_remaining_named_features(
              not a magnitude. The corpus's own BONUS:VAR token for this record reads \
              3+CHA+(2*SkaldLVL), two higher than its own rule text at every level; that defect \
              was already identified and knowingly overridden in favour of the rule text -- see \
-             `skald_inspired_rage_rounds_per_day`'s doc comment for the standing ruling"
+             `skald_inspired_rage_rounds_per_day`'s doc comment for the standing ruling",
+            extra_resource_feat_bonus(
+                selected_feats,
+                EXTRA_PERFORMANCE_FEAT_KEY,
+                EXTRA_ROUNDS_PER_DAY
+            )
         ),
     });
 
@@ -21498,8 +21680,21 @@ fn brawler_bonus_feat_count(level: u8) -> i16 {
 /// combat-feat list, and under the ratified Skill Focus precedent that
 /// half needs an explicit recorded choice rather than a silently seeded
 /// canonical feat.
-fn brawler_martial_flexibility_uses(level: u8) -> i16 {
-    (i16::from(level) / 2).max(1) + 3
+///
+/// `Extra Martial Flexibility` adds `3` more
+/// (`BONUS:VAR|BrawlerMartialFlexibilityTimes|3`, prose "three
+/// additional times per day"). It routes through
+/// [`non_stacking_resource_feat_bonus`], **not** the counting helper
+/// every sibling uses: this is the one Extra-<resource> record in all
+/// three books with no `STACK:`/`MULT:` token and no repeat clause.
+fn brawler_martial_flexibility_uses(level: u8, selected_feats: &[String]) -> i16 {
+    (i16::from(level) / 2).max(1)
+        + 3
+        + non_stacking_resource_feat_bonus(
+            selected_feats,
+            EXTRA_MARTIAL_FLEXIBILITY_FEAT_KEY,
+            EXTRA_MARTIAL_FLEXIBILITY_USES,
+        )
 }
 
 /// The Medium-size Brawler unarmed strike damage die, as
@@ -21601,15 +21796,23 @@ fn ground_brawler_remaining_features(
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    let flexibility = brawler_martial_flexibility_uses(level);
+    let flexibility = brawler_martial_flexibility_uses(level, &input.chosen.selected_feats);
     explanations.push(ComputationExplanation {
         id: "class_feature.acg.brawler.martial_flexibility_uses_per_day".to_owned(),
         value: flexibility,
         detail: format!(
             "Brawler level {level} Martial Flexibility: usable {flexibility} times per day \
-             (max(1, level/2) + 3). Only the pool grounds -- the ability gains the benefit of a \
-             combat feat she does not possess, a chooser over the whole combat-feat list, which \
-             needs an explicit recorded choice rather than a seeded canonical feat"
+             (max(1, level/2) + 3 + Extra Martial Flexibility feat ({:+})). That feat is the \
+             one Extra-<resource> record in the Core/APG/ACG feat files with no STACK:/MULT: \
+             token and no repeat clause, so a second copy adds nothing. Only the pool grounds \
+             -- the ability gains the benefit of a combat feat she does not possess, a chooser \
+             over the whole combat-feat list, which needs an explicit recorded choice rather \
+             than a seeded canonical feat",
+            non_stacking_resource_feat_bonus(
+                &input.chosen.selected_feats,
+                EXTRA_MARTIAL_FLEXIBILITY_FEAT_KEY,
+                EXTRA_MARTIAL_FLEXIBILITY_USES
+            )
         ),
     });
 
@@ -22423,8 +22626,30 @@ fn hunter_wild_empathy_bonus(level: u8, charisma_modifier: i16) -> i16 {
 /// equal to Hunter level (deepening 2026-07-26, task #2), verified
 /// directly against `acg_abilities_class.lst`'s own
 /// `BONUS:VAR|HunterAnimalFocusMinutes|HunterLVL`.
-fn hunter_animal_focus_uses_per_day(level: u8) -> i16 {
+///
+/// The `Extended Animal Focus` feat contributes `max(1, WIS)` to the
+/// SAME variable (`acg_feats.lst`:
+/// `BONUS:VAR|HunterAnimalFocusMinutes|max(1,WIS)`, prose "Add your
+/// Wisdom modifier [minimum 1] to the number of minutes per day that
+/// you can use your animal focus ability" -- token and prose agree
+/// including the floor). Folded into the formula rather than applied at
+/// a display site because this budget's only consumer is the enforced
+/// over-budget claim-block: widening it anywhere else would show a
+/// number the enforcement did not honour.
+///
+/// Presence-based, not counted: the record carries no `STACK:`, no
+/// `MULT:`, and its BENEFIT has no repeat clause.
+fn hunter_animal_focus_uses_per_day(
+    level: u8,
+    wisdom_modifier: i16,
+    selected_feats: &[String],
+) -> i16 {
     i16::from(level)
+        + non_stacking_resource_feat_bonus(
+            selected_feats,
+            EXTENDED_ANIMAL_FOCUS_FEAT_KEY,
+            wisdom_modifier.max(1),
+        )
 }
 
 /// Hunter Animal Focus (Bull)'s STR enhancement bonus: +2 base, +2 more
@@ -22514,7 +22739,11 @@ fn ground_or_block_hunter_animal_focus(
         return;
     };
 
-    let uses_per_day = hunter_animal_focus_uses_per_day(level);
+    let uses_per_day = hunter_animal_focus_uses_per_day(
+        level,
+        ability_modifier(input.chosen.ability_scores.wisdom),
+        &input.chosen.selected_feats,
+    );
     if let Some(minutes_consumed_today) = activation.rounds_consumed_today {
         if i32::from(minutes_consumed_today) > i32::from(uses_per_day) {
             diagnostics.push(ComputationDiagnostic {
@@ -22522,8 +22751,9 @@ fn ground_or_block_hunter_animal_focus(
                 message: format!(
                     "Hunter level {level} Animal Focus activation claims \
                      {minutes_consumed_today} minutes consumed today, exceeding the grounded \
-                     per-day budget of {uses_per_day} minutes (equal to Hunter level): a genuine \
-                     posture violation, so no focus bonus is claimed for this input"
+                     per-day budget of {uses_per_day} minutes (Hunter level, plus max(1, Wisdom \
+                     modifier) if the Extended Animal Focus feat is held): a genuine posture \
+                     violation, so no focus bonus is claimed for this input"
                 ),
                 claim_blocking: true,
             });
@@ -28830,6 +29060,75 @@ const EXTRA_POINTS_PER_DAY: i16 = 2;
 fn extra_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
     let taken = selected_feats.iter().filter(|feat| *feat == feat_key).count();
     bonus.saturating_mul(i16::try_from(taken).unwrap_or(i16::MAX))
+}
+
+/// The five APG/ACG "Extra <resource>" feats whose pool this engine
+/// already computes (v0.6 alpha swarm, `BONUS:VAR`/`BONUS:DC`/
+/// `BONUS:ABILITYPOOL` triage slice, 2026-07-29), extending the four
+/// Core feats above rather than duplicating them.
+///
+/// Every magnitude is the raw `BONUS:VAR` token and the record's own
+/// `BENEFIT:` prose **in agreement**, checked one record at a time --
+/// the disagreement that deferred Extra Channel (`ABILITYPOOL|1` vs
+/// "two additional times per day") does not occur in any of these:
+/// - `Extra Bombs` (`apg_feats.lst`): `BONUS:VAR|AlchemistBombTimes|2`,
+///   "You can throw two additional bombs per day."
+/// - `Extra Inspiration` (`acg_feats.lst`):
+///   `BONUS:VAR|InvestigatorInspirationPoolBonus|3`, "three extra
+///   use[s] per day of inspiration". Its second token,
+///   `BONUS:VAR|InspirationTimes|3`, is deliberately NOT grounded:
+///   `InspirationTimes` is a different pool, the one `Amateur
+///   Investigator` conjures for a character with no Investigator level
+///   (`DEFINE:InspirationTimes|0` plus `BONUS:VAR|InspirationTimes|INT`
+///   on that feat's own record). This engine computes no total for it,
+///   and grounding it would mean inventing one.
+/// - `Extra Martial Flexibility` (`acg_feats.lst`):
+///   `BONUS:VAR|BrawlerMartialFlexibilityTimes|3`, "three additional
+///   times per day."
+/// - `Extra Panache` (`acg_feats.lst`): `BONUS:VAR|Panache_Cap|2`,
+///   "your maximum panache increases by two."
+/// - `Extra Reservoir` (`acg_feats.lst`):
+///   `BONUS:VAR|MaxArcanistReservoirSize|3`, "the maximum number of
+///   points in your arcane reservoir increases by that amount."
+const EXTRA_BOMBS_FEAT_KEY: &str = "Extra Bombs";
+const EXTRA_INSPIRATION_FEAT_KEY: &str = "Extra Inspiration";
+const EXTRA_MARTIAL_FLEXIBILITY_FEAT_KEY: &str = "Extra Martial Flexibility";
+const EXTRA_PANACHE_FEAT_KEY: &str = "Extra Panache";
+const EXTRA_RESERVOIR_FEAT_KEY: &str = "Extra Reservoir";
+/// Extra Bombs and Extra Panache each grant 2; Extra Inspiration,
+/// Extra Martial Flexibility and Extra Reservoir each grant 3.
+const EXTRA_BOMBS_USES: i16 = 2;
+const EXTRA_PANACHE_POINTS: i16 = 2;
+const EXTRA_INSPIRATION_USES: i16 = 3;
+const EXTRA_MARTIAL_FLEXIBILITY_USES: i16 = 3;
+const EXTRA_RESERVOIR_POINTS: i16 = 3;
+
+/// `Improved Channel` (`cr_feats.lst`), the one `BONUS:VAR` feat in
+/// this slice that lands on a DC rather than a resource pool. See
+/// [`oracle_channel_dc`] for why Oracle's Life Mystery Channel is the
+/// only total in this engine it can reach.
+const IMPROVED_CHANNEL_FEAT_KEY: &str = "Improved Channel";
+const IMPROVED_CHANNEL_DC_BONUS: i16 = 2;
+
+/// `Extended Animal Focus` (`acg_feats.lst`). Its magnitude is not a
+/// constant -- it is `max(1, WIS)` -- so only the key lives here; see
+/// [`hunter_animal_focus_uses_per_day`].
+const EXTENDED_ANIMAL_FOCUS_FEAT_KEY: &str = "Extended Animal Focus";
+
+/// `bonus` if `feat_key` is held **at all**, ignoring duplicates.
+///
+/// The deliberate counterpart to [`extra_resource_feat_bonus`], which
+/// COUNTS. `Extra Martial Flexibility` is the single Extra-<resource>
+/// record in all three books carrying no `STACK:`, no `MULT:` and no
+/// `CHOOSE:` token, and whose `BENEFIT:` has no "Special: you can take
+/// this feat multiple times" clause -- it is genuinely not repeatable.
+/// Every one of the other eight is `STACK:YES MULT:YES` with an
+/// explicit repeat clause. Routing this one through the counting helper
+/// would hand a Brawler +9 uses per day for a build the rules forbid,
+/// which is exactly the `STACK:`/`MULT:`-invisible-to-a-filtered-grep
+/// failure that already cost this family one correction pass.
+fn non_stacking_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
+    if selected_feats.iter().any(|feat| feat == feat_key) { bonus } else { 0 }
 }
 
 /// Barbarian's Rage rounds-per-day budget: 4 + Constitution modifier + 2 *
@@ -47090,7 +47389,7 @@ mod skald_dispatch_widening_safety_tests {
     fn raging_song_rounds_per_day_shares_the_inspired_rage_pool_and_follows_the_rule_text() {
         for (level, want) in [(1u8, 2i16), (2, 4), (3, 6), (20, 40)] {
             assert_eq!(
-                super::skald_inspired_rage_rounds_per_day(-1, level),
+                super::skald_inspired_rage_rounds_per_day(-1, level, &[]),
                 want,
                 "level {level} with Charisma modifier -1"
             );
@@ -47106,7 +47405,7 @@ mod skald_dispatch_widening_safety_tests {
                 .unwrap_or_else(|| panic!("Raging Song rounds must ground at level {level}"));
             assert_eq!(
                 rounds.value,
-                super::skald_inspired_rage_rounds_per_day(-1, level),
+                super::skald_inspired_rage_rounds_per_day(-1, level, &[]),
                 "Raging Song and Inspired Rage must report ONE shared pool at level {level}"
             );
         }
@@ -48359,6 +48658,77 @@ mod hunter_dispatch_widening_safety_tests {
             "expected the missing-focus-choice claim-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
+    }
+
+    /// ACG `Extended Animal Focus` widens that same genuinely-enforced
+    /// budget (v0.6 alpha swarm, `BONUS:VAR` triage slice, 2026-07-29).
+    ///
+    /// `acg_feats.lst`: `BONUS:VAR|HunterAnimalFocusMinutes|max(1,WIS)`,
+    /// prose "Add your Wisdom modifier [minimum 1] to the number of
+    /// minutes per day that you can use your animal focus ability" --
+    /// token and prose agree exactly, including the minimum-1 floor. It
+    /// writes to the SAME variable the class record's own
+    /// `BONUS:VAR|HunterAnimalFocusMinutes|HunterLVL` sets, which
+    /// `hunter_animal_focus_uses_per_day` already computes.
+    ///
+    /// The pin is behavioural, not cosmetic: the fixture's Wisdom 12
+    /// (+1) makes the level-1 budget 1 + 1 = 2 minutes, so the exact
+    /// activation the test below proves is claim-BLOCKING without the
+    /// feat must become valid with it. No `STACK:`/`MULT:` on the
+    /// record and no repeat clause in its BENEFIT, so it is
+    /// presence-based.
+    #[test]
+    fn extended_animal_focus_widens_the_enforced_hunter_minutes_budget() {
+        let mut input = human_hunter_input(1);
+        input.chosen.selected_feats.push("Extended Animal Focus".to_owned());
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: HUNTER_ANIMAL_FOCUS_CHOICE_ID.to_owned(),
+            selection_id: HUNTER_ANIMAL_FOCUS_BULL_SELECTION_ID.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: HUNTER_ANIMAL_FOCUS_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(2),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.hunter.animal_focus_execution.uses_exceeded"),
+            "2 minutes is within the Extended-Animal-Focus-widened budget (level 1 + Wisdom \
+             modifier 1 = 2); the enforced budget must see the feat: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The magnitude itself, across levels and Wisdom modifiers,
+    /// including the corpus's own `max(1, WIS)` floor at zero and
+    /// negative Wisdom.
+    #[test]
+    fn extended_animal_focus_adds_the_wisdom_modifier_with_a_minimum_of_one() {
+        let feat = vec!["Extended Animal Focus".to_owned()];
+        for (level, wisdom, want) in [
+            (1u8, 1i16, 2i16),
+            (1, 4, 5),
+            (1, 0, 2),
+            (1, -2, 2),
+            (5, 3, 8),
+            (20, 5, 25),
+        ] {
+            assert_eq!(
+                super::hunter_animal_focus_uses_per_day(level, wisdom, &feat),
+                want,
+                "level {level}, Wisdom modifier {wisdom}"
+            );
+            assert_eq!(
+                super::hunter_animal_focus_uses_per_day(level, wisdom, &[]),
+                i16::from(level),
+                "without the feat, level {level} must stay at the bare class budget"
+            );
+        }
     }
 
     /// An Animal Focus activation that exceeds the grounded per-day
@@ -52896,6 +53266,83 @@ mod oracle_dispatch_widening_safety_tests {
         }
     }
 
+    /// `Improved Channel` raises this DC by 2 -- and it is the ONLY
+    /// channel DC in this engine the feat can reach.
+    ///
+    /// The feat is a Core Rulebook record naming five variables
+    /// (`ClericChannelPositiveEnergyDC`, `PaladinChannelPositiveEnergyDC`,
+    /// `ClericChannelNegativeEnergyDC`, `PowerOverUndeadCommandDC`,
+    /// `PowerOverUndeadTurnDC`), every one of which this engine computes
+    /// nothing for: Cleric grounds `channel_energy_dice` and
+    /// `channel_energy_uses_per_day` but no DC, and Paladin grounds
+    /// `channel_positive_energy_dice` but no DC. Read against
+    /// `cr_feats.lst` alone the feat is therefore a pure no-op here.
+    /// `apg_feats.lst`'s own `CATEGORY=FEAT|Improved Channel.MOD` adds
+    /// `BONUS:VAR|OracleChannelDC|2`, and `OracleChannelDC` IS computed
+    /// (`oracle_channel_dc`) -- the same `.MOD`-in-a-different-book shape
+    /// that hid Extra Performance's Skald half.
+    ///
+    /// Magnitude `2` in both the token and the prose ("Add 2 to the DC of
+    /// saving throws made to resist the effects of your channel energy
+    /// ability"). No `STACK:`/`MULT:` and no repeat clause, so it is
+    /// presence-based, not counted.
+    ///
+    /// Charisma 18 (+4) at Oracle level 3: base DC 10 + 1 + 4 = 15,
+    /// raised to 17.
+    #[test]
+    fn improved_channel_raises_the_real_oracle_life_mystery_channel_dc_by_two() {
+        let base = oracle_with_revelation(3, LIFE_MYSTERY_SELECTION, ORACLE_CHANNEL_REVELATION);
+        let dc_of = |input: &CharacterInput| {
+            build_pilot_headless_receipt(input)
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.apg.oracle.life_mystery.channel_dc")
+                .map(|e| e.value)
+        };
+        assert_eq!(dc_of(&base), Some(15), "base Life Mystery channel DC");
+
+        let mut with_feat = base.clone();
+        with_feat.chosen.selected_feats.push("Improved Channel".to_owned());
+        assert_eq!(dc_of(&with_feat), Some(17), "Improved Channel must add exactly 2");
+
+        // Not MULT:YES: a second copy must add nothing more.
+        let mut twice = with_feat.clone();
+        twice.chosen.selected_feats.push("Improved Channel".to_owned());
+        assert_eq!(dc_of(&twice), Some(17), "Improved Channel is not repeatable");
+    }
+
+    /// The negative half of the same triage. Improved Channel's five
+    /// Core-Rulebook variables name Cleric and Paladin channel DCs this
+    /// engine does not compute; the feat must not silently move the
+    /// channel totals it DOES compute (dice and uses per day), for
+    /// either class or for the Oracle.
+    #[test]
+    fn improved_channel_moves_no_channel_total_other_than_the_oracle_dc() {
+        let base = oracle_with_revelation(3, LIFE_MYSTERY_SELECTION, ORACLE_CHANNEL_REVELATION);
+        let mut with_feat = base.clone();
+        with_feat.chosen.selected_feats.push("Improved Channel".to_owned());
+
+        let value_of = |input: &CharacterInput, id: &str| {
+            build_pilot_headless_receipt(input)
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .map(|e| e.value)
+        };
+        for id in [
+            "class_feature.apg.oracle.life_mystery.channel_uses_per_day",
+            "class_feature.apg.oracle.life_mystery.channel_dice",
+        ] {
+            assert_eq!(
+                value_of(&with_feat, id),
+                value_of(&base, id),
+                "Improved Channel raises only the DC, not {id}"
+            );
+        }
+    }
+
     /// Channel's dice and DC across the full level range, derived from
     /// the corpus formulas rather than spot-checked at one level.
     #[test]
@@ -52912,7 +53359,7 @@ mod oracle_dispatch_widening_safety_tests {
         for (level, charisma, expected_dc) in
             [(1, 0, 10), (1, 4, 14), (2, 4, 15), (20, 4, 24), (20, -1, 19)]
         {
-            assert_eq!(super::oracle_channel_dc(level, charisma), expected_dc);
+            assert_eq!(super::oracle_channel_dc(level, charisma, &[]), expected_dc);
         }
         assert_eq!(super::oracle_channel_uses_per_day(4), 5);
         assert_eq!(super::oracle_channel_uses_per_day(-1), 0);
@@ -57323,6 +57770,329 @@ mod extra_resource_feat_tests {
             receipt.computation.diagnostics
         );
     }
+
+    // ---------------------------------------------------------------
+    // v0.6 alpha swarm, `BONUS:VAR`/`BONUS:DC`/`BONUS:ABILITYPOOL`
+    // triage slice (2026-07-29): the five APG/ACG Extra-<resource>
+    // feats whose pool this engine ALREADY computes, plus the ACG
+    // `.MOD` that extends the already-shipped Extra Performance onto
+    // Skald's Raging Song.
+    //
+    // Every magnitude below is the corpus `BONUS:VAR` token AND the
+    // record's own `BENEFIT:` prose in agreement -- the disagreement
+    // shape that deferred Extra Channel (`ABILITYPOOL|1` vs "two
+    // additional times per day") does not occur in any of these six.
+    // ---------------------------------------------------------------
+
+    /// APG `Extra Bombs`: `BONUS:VAR|AlchemistBombTimes|2`, prose "You
+    /// can throw two additional bombs per day."
+    #[test]
+    fn extra_bombs_adds_two_uses_to_the_real_alchemist_bomb_total() {
+        assert_feat_adds(
+            "class:alchemist",
+            1,
+            "Extra Bombs",
+            "class_feature.apg.alchemist.bomb_uses_per_day",
+            2,
+        );
+    }
+
+    /// ACG `Extra Inspiration`: `BONUS:VAR|InvestigatorInspirationPool\
+    /// Bonus|3`, prose "You gain three extra use per day of inspiration
+    /// in your inspiration pool" (and its own Special clause repeats
+    /// "three extra uses"). The base formula clamps at `max(1, ...)`;
+    /// the feat's `BONUS:VAR` is a separate additive contribution to
+    /// the same variable, so it lands OUTSIDE that clamp.
+    #[test]
+    fn extra_inspiration_adds_three_uses_to_the_real_investigator_pool() {
+        assert_feat_adds(
+            "class:investigator",
+            1,
+            "Extra Inspiration",
+            "class_feature.acg.investigator.inspiration_pool_size",
+            3,
+        );
+    }
+
+    /// ACG `Extra Martial Flexibility`:
+    /// `BONUS:VAR|BrawlerMartialFlexibilityTimes|3`, prose "You can use
+    /// your martial flexibility ability three additional times per day."
+    #[test]
+    fn extra_martial_flexibility_adds_three_uses_to_the_real_brawler_pool() {
+        assert_feat_adds(
+            "class:brawler",
+            1,
+            "Extra Martial Flexibility",
+            "class_feature.acg.brawler.martial_flexibility_uses_per_day",
+            3,
+        );
+    }
+
+    /// ACG `Extra Panache`: `BONUS:VAR|Panache_Cap|2` (alongside
+    /// `BONUS:VAR|PanachePoints|2`), prose "your maximum panache
+    /// increases by two."
+    #[test]
+    fn extra_panache_adds_two_points_to_the_real_swashbuckler_maximum() {
+        assert_feat_adds(
+            "class:swashbuckler",
+            1,
+            "Extra Panache",
+            "class_feature.acg.swashbuckler.panache_max",
+            2,
+        );
+    }
+
+    /// ACG `Extra Reservoir`: `BONUS:VAR|MaxArcanistReservoirSize|3`,
+    /// prose "the maximum number of points in your arcane reservoir
+    /// increases by that amount."
+    #[test]
+    fn extra_reservoir_adds_three_points_to_the_real_arcanist_maximum() {
+        assert_feat_adds(
+            "class:arcanist",
+            1,
+            "Extra Reservoir",
+            "class_feature.acg.arcanist.arcane_reservoir_max",
+            3,
+        );
+    }
+
+    /// The corpus-decided half of Extra Reservoir, and the reason this
+    /// feat needed reading rather than paraphrasing.
+    ///
+    /// Its prose opens "You gain three more points in your arcane
+    /// reservoir, AND the maximum ... increases by that amount", which
+    /// reads like both the daily fill and the cap rise. The corpus
+    /// settles it: `acg_abilities_class.lst`'s own `Arcanist ~ Arcane
+    /// Reservoir` record carries TWO distinct variables --
+    /// `BONUS:VAR|ArcanistReservoirSize|3+ArcanistLVL/2` (the daily
+    /// fill) and `BONUS:VAR|MaxArcanistReservoirSize|3+ArcanistLVL`
+    /// (the cap) -- matching this engine's own
+    /// `arcanist_reservoir_daily_fill`/`arcanist_reservoir_max` exactly.
+    /// Extra Reservoir names ONLY `MaxArcanistReservoirSize`. So the cap
+    /// rises by 3 and the daily fill does not move, and asserting that
+    /// negative is what keeps the prose's first clause from being
+    /// silently double-counted.
+    #[test]
+    fn extra_reservoir_raises_only_the_cap_never_the_daily_fill() {
+        let without = character("class:arcanist", 1);
+        let base_fill =
+            explanation_value(&without, "class_feature.acg.arcanist.arcane_reservoir_daily_fill")
+                .expect("daily fill must be computed for a bare Arcanist");
+
+        let mut with = without.clone();
+        with.chosen.selected_feats.push("Extra Reservoir".to_owned());
+        assert_eq!(
+            explanation_value(&with, "class_feature.acg.arcanist.arcane_reservoir_daily_fill"),
+            Some(base_fill),
+            "Extra Reservoir names only MaxArcanistReservoirSize; the daily fill must not move"
+        );
+    }
+
+    /// The already-shipped CRB `Extra Performance` reaches a SECOND
+    /// pool that nothing here read before.
+    ///
+    /// `acg_feats.lst` carries three `CATEGORY=FEAT|Extra
+    /// Performance.MOD` records: `PRE:.CLEAR`, then
+    /// `BONUS:VAR|SkaldRagingSongRoundsPerDay|6`, then a re-widened
+    /// `PREMULT:1,[...TYPE.SkaldRagingSong],[...TYPE.Bardic
+    /// Performance]`. Read only against `cr_feats.lst`, this feat looks
+    /// Bard-only -- exactly the `.MOD`-carries-the-real-value trap, in
+    /// its additive direction. A Skald holding Extra Performance got
+    /// nothing before this test.
+    #[test]
+    fn extra_performance_also_adds_six_rounds_to_the_real_skald_raging_song_total() {
+        assert_feat_adds(
+            "class:skald",
+            1,
+            "Extra Performance",
+            "class_feature.acg.skald.raging_song_rounds_per_day",
+            6,
+        );
+    }
+
+    /// Skald's Raging Song budget is read in THREE places (the
+    /// displayed total plus two activation-budget checks), the same
+    /// shape that already bit Rage and Bardic Performance. Fixture
+    /// Charisma 8 (-1): base budget is 3 + (-1) = 2 rounds, extended to
+    /// 8 by Extra Performance. 5 is over base, within extended.
+    #[test]
+    fn extra_performance_widens_the_skald_activation_budget_not_merely_the_total() {
+        let mut input = character("class:skald", 1);
+        input.chosen.selected_feats.push("Extra Performance".to_owned());
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: "inspired_rage".to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: Some(5),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt.computation.diagnostics.iter().any(|d| d.id.contains("rounds_exceeded")),
+            "5 rounds is within the Extra-Performance-extended Skald budget; the activation \
+             check must see the feat: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Four of the five new feats are `STACK:YES MULT:YES` with an
+    /// explicit "you can take this feat multiple times" Special clause,
+    /// so each instance must add again -- the same counting contract
+    /// the original four established.
+    #[test]
+    fn repeated_new_extra_feats_stack_where_the_corpus_says_stack_yes() {
+        let cases = [
+            (
+                "class:alchemist",
+                1u8,
+                "Extra Bombs",
+                "class_feature.apg.alchemist.bomb_uses_per_day",
+                2i16,
+            ),
+            (
+                "class:investigator",
+                1,
+                "Extra Inspiration",
+                "class_feature.acg.investigator.inspiration_pool_size",
+                3,
+            ),
+            (
+                "class:swashbuckler",
+                1,
+                "Extra Panache",
+                "class_feature.acg.swashbuckler.panache_max",
+                2,
+            ),
+            (
+                "class:arcanist",
+                1,
+                "Extra Reservoir",
+                "class_feature.acg.arcanist.arcane_reservoir_max",
+                3,
+            ),
+        ];
+
+        for (class_id, level, feat, total_id, per_instance) in cases {
+            let base = character(class_id, level);
+            let baseline = explanation_value(&base, total_id).expect("total must compute");
+
+            for instances in 1..=3i16 {
+                let mut input = base.clone();
+                for _ in 0..instances {
+                    input.chosen.selected_feats.push(feat.to_owned());
+                }
+                let raised = explanation_value(&input, total_id).expect("total must compute");
+                assert_eq!(
+                    raised - baseline,
+                    per_instance * instances,
+                    "{feat} taken {instances}x must grant {per_instance} each ({class_id})"
+                );
+            }
+        }
+    }
+
+    /// The one that breaks the pattern, and the reason each record was
+    /// read whole rather than swept for `BONUS:VAR`.
+    ///
+    /// `Extra Martial Flexibility` carries NO `STACK:`, NO `MULT:` and
+    /// NO `CHOOSE:` token, and its `BENEFIT:` has no "Special: you can
+    /// take this feat multiple times" clause -- unique among all nine
+    /// Extra-<resource> feats this engine grounds. It is not
+    /// repeatable, so it must test for PRESENCE, not count occurrences.
+    /// Reusing the shared counting helper here would silently grant a
+    /// Brawler +9 for a build the rules forbid.
+    #[test]
+    fn extra_martial_flexibility_does_not_stack_because_it_is_not_mult_yes() {
+        let base = character("class:brawler", 1);
+        let total_id = "class_feature.acg.brawler.martial_flexibility_uses_per_day";
+        let baseline = explanation_value(&base, total_id).expect("total must compute");
+
+        for instances in 1..=3 {
+            let mut input = base.clone();
+            for _ in 0..instances {
+                input.chosen.selected_feats.push("Extra Martial Flexibility".to_owned());
+            }
+            assert_eq!(
+                explanation_value(&input, total_id),
+                Some(baseline + 3),
+                "Extra Martial Flexibility is not MULT:YES; {instances} copies must still be +3"
+            );
+        }
+    }
+
+    /// Each new feat carries a `PREABILITY`/`PREMULT` on its own class
+    /// resource. A Fighter holding all five must gain none of the five
+    /// totals -- the feat widens a pool the character earned, it never
+    /// conjures one.
+    #[test]
+    fn new_extra_feats_never_ground_for_a_character_lacking_the_class_feature() {
+        let totals = [
+            "class_feature.apg.alchemist.bomb_uses_per_day",
+            "class_feature.acg.investigator.inspiration_pool_size",
+            "class_feature.acg.brawler.martial_flexibility_uses_per_day",
+            "class_feature.acg.swashbuckler.panache_max",
+            "class_feature.acg.arcanist.arcane_reservoir_max",
+            "class_feature.acg.skald.raging_song_rounds_per_day",
+        ];
+        let mut fighter = character("class:fighter", 1);
+        for feat in [
+            "Extra Bombs",
+            "Extra Inspiration",
+            "Extra Martial Flexibility",
+            "Extra Panache",
+            "Extra Reservoir",
+            "Extra Performance",
+        ] {
+            fighter.chosen.selected_feats.push(feat.to_owned());
+        }
+
+        let receipt = build_pilot_headless_receipt(&fighter);
+        for total_id in totals {
+            assert!(
+                !receipt.computation.explanations.iter().any(|e| e.id == total_id),
+                "a Fighter holding every new Extra feat must not gain {total_id}"
+            );
+        }
+    }
+
+    /// No new feat may leak onto a sibling pool it does not name.
+    #[test]
+    fn each_new_extra_feat_leaves_every_sibling_resource_untouched() {
+        let cases = [
+            ("class:alchemist", 1u8, "class_feature.apg.alchemist.bomb_uses_per_day"),
+            ("class:investigator", 1, "class_feature.acg.investigator.inspiration_pool_size"),
+            ("class:brawler", 1, "class_feature.acg.brawler.martial_flexibility_uses_per_day"),
+            ("class:swashbuckler", 1, "class_feature.acg.swashbuckler.panache_max"),
+            ("class:arcanist", 1, "class_feature.acg.arcanist.arcane_reservoir_max"),
+            ("class:skald", 1, "class_feature.acg.skald.raging_song_rounds_per_day"),
+        ];
+        let feats = [
+            "Extra Bombs",
+            "Extra Inspiration",
+            "Extra Martial Flexibility",
+            "Extra Panache",
+            "Extra Reservoir",
+            "Extra Performance",
+        ];
+
+        for (index, (class_id, level, total_id)) in cases.iter().enumerate() {
+            let baseline = character(class_id, *level);
+            let base = explanation_value(&baseline, total_id)
+                .unwrap_or_else(|| panic!("{total_id} must be computed"));
+
+            for (feat_index, feat) in feats.iter().enumerate() {
+                if feat_index == index {
+                    continue;
+                }
+                let mut other = baseline.clone();
+                other.chosen.selected_feats.push((*feat).to_owned());
+                assert_eq!(
+                    explanation_value(&other, total_id),
+                    Some(base),
+                    "{feat} must not move {total_id}"
+                );
+            }
+        }
+    }
 }
 
 /// v0.6 alpha swarm, task #20 (2026-07-27): class-granted feats must
@@ -58929,7 +59699,7 @@ mod brawler_remaining_feature_tests {
     #[test]
     fn martial_flexibility_pool_grounds_from_first_level() {
         for (level, want) in [(1u8, 4i16), (2, 4), (4, 5), (10, 8), (20, 13)] {
-            assert_eq!(super::brawler_martial_flexibility_uses(level), want, "level {level}");
+            assert_eq!(super::brawler_martial_flexibility_uses(level, &[]), want, "level {level}");
         }
         assert_eq!(
             value(&brawler(1), "class_feature.acg.brawler.martial_flexibility_uses_per_day"),
