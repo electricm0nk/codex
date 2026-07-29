@@ -24,6 +24,8 @@ pub mod class_summoner;
 pub mod class_witch;
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod feat_data;
+pub mod feats;
 pub mod spell_list;
 
 use crate::rules_core::rules_tables::RuleSetId;

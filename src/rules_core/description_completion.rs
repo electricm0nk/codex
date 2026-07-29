@@ -51,7 +51,8 @@
 //! doc comment records why its feature is zero-magnitude.
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::rules_tables::crb::feats::feat_tables;
+use crate::rules_core::rules_tables::crb::feats::FeatTableEntry;
+use crate::rules_core::rules_tables::feats_all::all_feat_tables;
 
 /// Where in the shipped desktop app a feature's description is rendered.
 ///
@@ -163,11 +164,16 @@ fn fold_feat_identity(raw: &str) -> String {
 ///
 /// Both required facts are checked against live data, never assumed:
 ///
-/// 1. The feat resolves in the real 185-record CRB feat catalog
-///    (`feat_tables()`) and that record's `description` is present and
-///    non-blank. This is the same catalog, and the same field, that the
-///    `list_feats` command projects to the frontend, so a description found
-///    here is exactly the text the app receives.
+/// 1. The feat resolves in the real 486-record feat catalog across every
+///    ingested book (`all_feat_tables()`: 185 CRB + 172 APG + 129 ACG) and
+///    that record's `description` is present and non-blank. This is the
+///    same catalog, and the same field, that the `list_feats` command
+///    projects to the frontend, so a description found here is exactly the
+///    text the app receives. It reads the aggregate rather than
+///    `crb::feats::feat_tables()` for exactly that reason: once the picker
+///    started serving APG and ACG feats, a CRB-only lookup here would
+///    report `NoCatalogRecord` for a real APG feat whose description does
+///    in fact reach the player.
 /// 2. `input.chosen.selected_feats` carries the feat. That field is precisely
 ///    what `CharacterSheet.tsx`'s `FeatsTab` renders from, so its presence is
 ///    what makes the description appear on this character's sheet. A feat
@@ -179,15 +185,20 @@ fn fold_feat_identity(raw: &str) -> String {
 /// `handleLevelUpFeatPick` in `CharacterSheet.tsx`, including the bonus-feat
 /// pick offered at level-up) route through `add_feat_selection`, which appends
 /// to `selected_feats` — so a feat a player actually picked satisfies fact 2.
+/// Every feat record the picker can serve, flattened across all ingested
+/// books in book order — the exact set `feat_catalog.rs`'s
+/// `build_feat_catalog` walks.
+fn all_catalog_feats() -> impl Iterator<Item = &'static FeatTableEntry> {
+    all_feat_tables().iter().flat_map(|book| book.entries.iter())
+}
+
 pub fn feat_description_completion(
     input: &CharacterInput,
     feat_key: &str,
 ) -> ZeroMagnitudeResolution {
     let identity = fold_feat_identity(feat_key);
 
-    let Some(entry) = feat_tables()
-        .iter()
-        .find(|entry| fold_feat_identity(entry.key) == identity)
+    let Some(entry) = all_catalog_feats().find(|entry| fold_feat_identity(entry.key) == identity)
     else {
         return ZeroMagnitudeResolution::NotSurfaced {
             reason: NotSurfacedReason::NoCatalogRecord,
@@ -222,6 +233,7 @@ pub fn feat_description_completion(
 mod tests {
     use super::*;
     use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::rules_tables::crb::feats::feat_tables;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -312,6 +324,43 @@ mod tests {
 
         assert!(matches!(
             feat_description_completion(&input, "feat:deflect_arrows"),
+            ZeroMagnitudeResolution::TextComplete { .. }
+        ));
+    }
+
+    /// The APG/ACG ingest's own reachability proof at this seam: a real
+    /// APG feat recorded on the rendered field is text-complete, with the
+    /// verbatim corpus text. Before the ingest this lookup was CRB-only
+    /// and would have returned `NoCatalogRecord` for it.
+    #[test]
+    fn a_real_apg_feat_recorded_on_the_rendered_field_is_text_complete() {
+        let input = input_with_selected_feats(&["Extra Hex"]);
+
+        match feat_description_completion(&input, "Extra Hex") {
+            ZeroMagnitudeResolution::TextComplete {
+                description,
+                surface,
+            } => {
+                assert_eq!(surface, DescriptionSurface::FeatsTab);
+                let catalog_text = crate::rules_core::rules_tables::apg::feats::feat_tables()
+                    .iter()
+                    .find(|e| e.key == "Extra Hex")
+                    .and_then(|e| e.description)
+                    .expect("the APG catalog carries Extra Hex with a description");
+                assert_eq!(description, catalog_text);
+            }
+            other => panic!("expected TextComplete, got {other:?}"),
+        }
+    }
+
+    /// The same, for an ACG Panache feat — the category that exists only
+    /// because APG/ACG records carry it.
+    #[test]
+    fn a_real_acg_panache_feat_recorded_on_the_rendered_field_is_text_complete() {
+        let input = input_with_selected_feats(&["feat:extra_panache"]);
+
+        assert!(matches!(
+            feat_description_completion(&input, "Extra Panache"),
             ZeroMagnitudeResolution::TextComplete { .. }
         ));
     }

@@ -230,7 +230,15 @@ PrerequisiteEvaluation` and `compute_feat_effects(feat: &FeatKey) -> FeatEffects
 `FeatCategory` across four submodules under `src/rules_core/feat_prereqs/`: `src/rules_core/feat_prereqs/general.rs`,
 `src/rules_core/feat_prereqs/combat.rs`, `src/rules_core/feat_prereqs/item_creation.rs`, `src/rules_core/feat_prereqs/metamagic.rs` — one per category in
 `rules_tables::crb::feats::feat_tables()` (185 CRB feat records: 50 General, 110 Combat, 8
-ItemCreation, 17 Metamagic), all four categories landed.
+ItemCreation, 17 Metamagic), all four categories landed. `FeatCategory` also carries `Teamwork`
+and `Panache`, which only APG/ACG records use; those two dispatch arms have no landed
+evaluation path (every submodule above evaluates against the CRB catalog, which by construction
+holds no record of either) and say so rather than reporting a real APG/ACG feat as unrecognized.
+The book-spanning catalog the desktop Feat picker serves is
+`rules_tables::feats_all::all_feat_tables()` (486 records across CRB/APG/ACG) — see
+[rules-data-tables.md](./rules-data-tables.md). Ingesting those records does **not** ground their
+mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
+subset of CRB feats only.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches

@@ -11,6 +11,7 @@ pub mod apg;
 pub mod beastiary1;
 pub mod class_spell_levels;
 pub mod crb;
+pub mod feats_all;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
 /// record belongs to.

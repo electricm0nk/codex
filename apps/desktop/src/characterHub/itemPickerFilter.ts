@@ -79,15 +79,29 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
   }));
 }
 
+/** Friendly book labels for `RuleSetId` variants — mirrors the spell catalog's own `book` strings. */
+const FEAT_SOURCE_LABELS: Record<string, string> = {
+  Crb: 'CRB',
+  Apg: 'APG',
+  Acg: 'ACG',
+};
+
 export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
   return entries.map((entry) => ({
     key: entry.key,
     name: entry.name,
-    // Falls back to the bare category when the corpus record has no
-    // `DESC:` token (real corpus gap, e.g. the "Heighten Spell +N"
-    // bonus-tier records — see `FeatTableEntry.description`'s own doc
-    // comment) rather than fabricating description text.
-    detail: entry.description ? `${entry.category} · ${entry.description}` : entry.category,
+    // Book first, then category, then the corpus description — the
+    // catalog now spans CRB, APG and ACG, and a player picking a feat
+    // needs to know which book it comes from, exactly as
+    // `mapSpellCatalogEntries` already does. An unknown/future book falls
+    // back to the raw variant string rather than a fabricated label, and
+    // the description is omitted rather than invented when the corpus
+    // record has no `DESC:` token (a real gap: CRB's "Heighten Spell +N"
+    // records and APG's base "Elemental Fist" — see
+    // `FeatTableEntry.description`'s own doc comment).
+    detail: [FEAT_SOURCE_LABELS[entry.source] ?? entry.source, entry.category, entry.description]
+      .filter((part): part is string => Boolean(part))
+      .join(' · '),
     chooserTargetKind: entry.chooserTargetKind,
   }));
 }

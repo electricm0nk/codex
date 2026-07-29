@@ -9,9 +9,11 @@ import type { ItemPickerEntry } from './itemPickerFilter';
  * `selectedFeats: string[]` genuinely mixes two real shapes today (traced
  * against source, not assumed):
  *  - the feat catalog's own `key` field, human-readable verbatim, e.g.
- *    `"Deflect Arrows"` (`feats.rs`'s doc comment: `key` equals `name` for
- *    every one of the 185 CRB records) -- what the Feats-tab "Add Feat"
- *    picker itself pushes (`CharacterSheet.tsx`'s `handleAddFeat` /
+ *    `"Deflect Arrows"` (`key` equals `name` for every one of the 185 CRB
+ *    records and all 129 ACG records; 6 APG records carry a distinct
+ *    corpus `KEY:`, e.g. `"Elemental Spell ~ Acid"` displaying as
+ *    `"Elemental Spell (Acid)"`) -- what the Feats-tab "Add Feat" picker
+ *    itself pushes (`CharacterSheet.tsx`'s `handleAddFeat` /
  *    `handleLevelUpFeatPick` both append `entry.key` straight from the
  *    catalog).
  *  - the rules engine's own lowercase, `feat:`-prefixed, snake_case
@@ -33,10 +35,11 @@ export interface ResolvedFeatEntry {
   raw: string;
   /**
    * The matching catalog entry, or `null` when nothing in the catalog
-   * resolves -- e.g. a non-CRB feat (today's catalog is CRB-only, see
-   * `feat_catalog.rs`'s own doc comment) or a genuinely unrecognized
-   * token. Callers must fall back to rendering `raw` rather than dropping
-   * the row or showing a blank -- a silent gap is worse than an ugly one.
+   * resolves -- e.g. a feat from a book the engine has not ingested (the
+   * catalog spans CRB, APG and ACG today; see `feat_catalog.rs`'s own doc
+   * comment) or a genuinely unrecognized token. Callers must fall back to
+   * rendering `raw` rather than dropping the row or showing a blank -- a
+   * silent gap is worse than an ugly one.
    */
   entry: ItemPickerEntry | null;
   /**

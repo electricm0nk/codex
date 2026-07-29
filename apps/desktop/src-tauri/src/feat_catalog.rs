@@ -1,18 +1,25 @@
 //! v0.6 alpha swarm feat catalog browser — Tauri command adapter over the
-//! full CRB feat table store (`rules_tables::crb::feats`, all 185 real
-//! corpus records across all 4 CRB feat categories).
+//! full feat table store across every ingested rule book
+//! (`rules_tables::feats_all::all_feat_tables`): 486 real corpus records,
+//! 185 CRB + 172 APG + 129 ACG.
 //!
 //! Mirrors `equipment_catalog.rs`'s own command/pure-fn split and
 //! unfiltered/filtered command pair exactly — this is a standalone catalog
 //! view of every real feat record the engine knows about, for the
-//! frontend's Feat picker (which does not exist yet; this is the backend
-//! half of "expose + consume", the existing 185-record catalog just had
-//! zero Tauri exposure before this).
+//! frontend's Feat picker.
+//!
+//! **This was CRB-only until the APG/ACG ingest.** The two other books'
+//! feat tables did not exist anywhere in the engine, so a player building
+//! an APG or ACG class could not take a single feat from that class's own
+//! book. Reading the aggregate rather than `crb::feats::feat_tables()`
+//! directly is what puts those 301 feats in front of a player; every DTO
+//! now names its `source` book, the same way the spell catalog already
+//! does.
 
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::feat_effects;
-use codex::rules_core::rules_tables::crb::feats::feat_tables;
+use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -22,6 +29,13 @@ pub struct FeatCatalogEntryDto {
     pub category: String,
     pub name: String,
     pub description: Option<String>,
+    /// Which rule book this record came from — the `RuleSetId` variant
+    /// name verbatim, i.e. `"Crb"`, `"Apg"` or `"Acg"`. Read off the
+    /// `BookFeatTable` the entry belongs to, never inferred from the key.
+    ///
+    /// A player picking a feat needs to know which book it is from, the
+    /// same reason `SpellCatalogEntryDto` carries `book`.
+    pub source: String,
     /// `"Weapon"`, `"Skill"` or `"SpellSchool"` for a feat whose target the
     /// engine consumes; `None` for every other feat.
     ///
@@ -41,23 +55,29 @@ pub struct FeatCatalogResponse {
 
 fn map_catalog_entry(
     entry: &codex::rules_core::rules_tables::crb::feats::FeatTableEntry,
+    source: &str,
 ) -> FeatCatalogEntryDto {
     FeatCatalogEntryDto {
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
         description: entry.description.map(|d| d.to_string()),
+        source: source.to_string(),
         chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
             .map(|contract| format!("{:?}", contract.target_kind)),
     }
 }
 
-/// Build the full catalog response. A thin, testable wrapper behind the
-/// Tauri command below — mirrors `equipment_catalog::build_equipment_catalog`.
+/// Build the full catalog response across every ingested book, in book
+/// order (CRB, APG, ACG). A thin, testable wrapper behind the Tauri
+/// command below — mirrors `equipment_catalog::build_equipment_catalog`.
 pub fn build_feat_catalog() -> FeatCatalogResponse {
-    FeatCatalogResponse {
-        entries: feat_tables().iter().map(map_catalog_entry).collect(),
+    let mut entries = Vec::new();
+    for book in all_feat_tables() {
+        let source = format!("{:?}", book.rule_set);
+        entries.extend(book.entries.iter().map(|entry| map_catalog_entry(entry, &source)));
     }
+    FeatCatalogResponse { entries }
 }
 
 #[tauri::command]
@@ -76,6 +96,15 @@ pub struct FeatCatalogFilter {
     /// Exact match against the `FeatCategory` variant name verbatim (e.g.
     /// "Combat"), as projected onto `FeatCatalogEntryDto::category`.
     pub category: Option<String>,
+    /// Exact match against the `RuleSetId` variant name verbatim (`"Crb"`,
+    /// `"Apg"`, `"Acg"`), as projected onto `FeatCatalogEntryDto::source`.
+    /// `None` spans every book.
+    ///
+    /// `#[serde(default)]` because callers that predate the APG/ACG ingest
+    /// send a filter payload with no `source` key at all; that must mean
+    /// "every book", not a deserialization error.
+    #[serde(default)]
+    pub source: Option<String>,
 }
 
 /// Narrows the full catalog to the entries matching `filter`. A thin,
@@ -99,6 +128,10 @@ pub fn filter_feat_catalog(filter: &FeatCatalogFilter) -> FeatCatalogResponse {
             Some(category) => &entry.category == category,
             None => true,
         })
+        .filter(|entry| match &filter.source {
+            Some(source) => &entry.source == source,
+            None => true,
+        })
         .collect();
 
     FeatCatalogResponse { entries }
@@ -116,17 +149,77 @@ mod tests {
     use super::*;
 
     #[test]
-    fn catalog_contains_all_four_categories_and_expected_counts() {
+    fn catalog_spans_all_three_books_with_their_real_counts() {
         let response = build_feat_catalog();
-        assert_eq!(response.entries.len(), 185);
+        assert_eq!(response.entries.len(), 486, "185 CRB + 172 APG + 129 ACG");
+
+        let by_source =
+            |source: &str| response.entries.iter().filter(|e| e.source == source).count();
+        assert_eq!(by_source("Crb"), 185);
+        assert_eq!(by_source("Apg"), 172);
+        assert_eq!(by_source("Acg"), 129);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        assert_eq!(counts("General"), 50);
-        assert_eq!(counts("Combat"), 110);
+        // CRB 50 + APG 69 + ACG 62, and so on per category.
+        assert_eq!(counts("General"), 181);
+        assert_eq!(counts("Combat"), 250);
         assert_eq!(counts("ItemCreation"), 8);
-        assert_eq!(counts("Metamagic"), 17);
+        assert_eq!(counts("Metamagic"), 36);
+        assert_eq!(counts("Teamwork"), 7);
+        assert_eq!(counts("Panache"), 4);
+    }
+
+    /// The point of the whole ingest: a player opening the Feat picker can
+    /// now see and select real APG and ACG feats, with their real
+    /// descriptions, not just CRB's 185.
+    #[test]
+    fn real_apg_and_acg_feats_reach_the_picker_with_their_descriptions() {
+        let response = build_feat_catalog();
+        let find = |key: &str| {
+            response
+                .entries
+                .iter()
+                .find(|e| e.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be offered by the picker"))
+        };
+
+        let extra_hex = find("Extra Hex");
+        assert_eq!(extra_hex.source, "Apg");
+        assert_eq!(extra_hex.category, "General");
+        assert_eq!(
+            extra_hex.description.as_deref(),
+            Some("You have learned the secrets of a new hex.")
+        );
+
+        let allied = find("Allied Spellcaster");
+        assert_eq!(allied.source, "Apg");
+        assert_eq!(allied.category, "Teamwork");
+
+        let extra_panache = find("Extra Panache");
+        assert_eq!(extra_panache.source, "Acg");
+        assert_eq!(extra_panache.category, "Panache");
+        assert_eq!(
+            extra_panache.description.as_deref(),
+            Some("You have more panache than the ordinary swashbuckler.")
+        );
+
+        // A CRB feat is still there and still tagged CRB.
+        assert_eq!(find("Power Attack").source, "Crb");
+    }
+
+    #[test]
+    fn filter_feat_catalog_narrows_to_one_book() {
+        let response = filter_feat_catalog(&FeatCatalogFilter {
+            name_contains: None,
+            category: None,
+            source: Some("Acg".to_owned()),
+        });
+        assert_eq!(response.entries.len(), 129);
+        for entry in &response.entries {
+            assert_eq!(entry.source, "Acg");
+        }
     }
 
     #[test]
@@ -149,6 +242,7 @@ mod tests {
         let response = filter_feat_catalog(&FeatCatalogFilter {
             name_contains: Some("dodge".to_owned()),
             category: None,
+            source: None,
         });
 
         assert!(!response.entries.is_empty(), "the real CRB corpus has a Dodge feat");
@@ -163,9 +257,11 @@ mod tests {
         let response = filter_feat_catalog(&FeatCatalogFilter {
             name_contains: None,
             category: Some("Metamagic".to_owned()),
+            source: None,
         });
 
-        assert_eq!(response.entries.len(), 17);
+        // 17 CRB + 19 APG; the ACG has no Metamagic feat records.
+        assert_eq!(response.entries.len(), 36);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }
@@ -176,6 +272,7 @@ mod tests {
         let response = filter_feat_catalog(&FeatCatalogFilter {
             name_contains: Some("spell".to_owned()),
             category: Some("Metamagic".to_owned()),
+            source: None,
         });
 
         assert!(

@@ -35,7 +35,9 @@ pub mod crb;
   Epic 5's multiclass dispatch reads directly, see [rules-engine.md](./rules-engine.md)),
   `race_tables.rs` (per-race trait dimensions, `RaceId` enum),
   `feats.rs` + `feat_data/{general,combat,item_creation,metamagic}.rs`
-  (185-feat catalog split by `FeatCategory`), `spell_list.rs`,
+  (185-feat catalog split by `FeatCategory`; also home to the
+  `FeatCategory` / `FeatTableEntry` / `FeatEffectBonus` types the APG and
+  ACG feat catalogs reuse), `spell_list.rs`,
   `equipment_tables.rs` + `equipment_data/{arms_armor,general,magic_items,equipmods}.rs`,
   and `json_cache.rs` (the Shape-B JSON corpus-cache record types — see
   "JSON corpus cache" below).
@@ -44,9 +46,11 @@ pub mod crb;
   `class_oracle.rs`, `class_summoner.rs`, `class_witch.rs` — all six
   real APG classes; `mod.rs`'s doc comment notes Gunslinger and Magus
   are deliberately excluded because they are not real APG corpus
-  content), plus a shared `spell_list.rs`, `equipment_tables.rs`, and a
+  content), plus a shared `spell_list.rs`, `equipment_tables.rs`, a
   single `equipment_data.rs` (SD-24 Epic 6; one flat file rather than
-  CRB/ACG's `equipment_data/` directory split).
+  CRB/ACG's `equipment_data/` directory split), and
+  `feats.rs` + `feat_data/{general,combat,metamagic,teamwork}.rs`
+  (172-feat catalog).
 - **`acg/`** (Advanced Class Guide) — the same class-file shape: `mod.rs`
   plus ten per-class files (`class_arcanist.rs`, `class_bloodrager.rs`,
   `class_brawler.rs`, `class_hunter.rs`, `class_investigator.rs`,
@@ -57,7 +61,16 @@ pub mod crb;
   (SD-24 Epic 6) — `equipment_data/{arms_armor,general,magic_items,equipmods}.rs`,
   the last of which ingests `acg_equipmods.lst` into a new
   `EquipmentCategory::Equipmods` variant that criterion 6.1's original
-  scope had not counted at all.
+  scope had not counted at all; plus
+  `feats.rs` + `feat_data/{general,combat,teamwork,panache}.rs`
+  (129-feat catalog).
+- **`feats_all.rs`** (book-spanning) — the one place the three per-book
+  feat catalogs are joined, as `BookFeatTable { rule_set, entries }`
+  rows: 486 records total (185 CRB + 172 APG + 129 ACG). Provenance
+  lives on the table, not on each record. This is what the desktop
+  `list_feats` command and `description_completion::feat_description_completion`
+  both read, so the Feat picker offers every ingested book's feats and
+  the description-reachability audit resolves them.
 - **`beastiary1/`** (Bestiary 1) — `mod.rs` plus eight
   `monster_subset_01.rs` .. `monster_subset_08.rs` files, five (or six,
   for subset 06) monsters each, 41 monsters total as of this
@@ -193,13 +206,22 @@ which PCGen computes at runtime rather than publishing as row tokens;
 `class_witch.rs` transcribes only the BAB/save chassis, not named
 per-level features).
 
-One book deviates from pure hand-transcription:
-`src/rules_core/rules_tables/crb/feats.rs`'s doc comment states its
-185-feat catalog is "generated programmatically from the live corpus"
-rather than hand-transcribed line-by-line, specifically to avoid
-transcription error at that scale; its category derivation rule (the
-`TYPE:` facet) and excluded-record list are documented in the same doc
-comment.
+The feat catalogs deviate from pure hand-transcription: `crb/feats.rs`,
+`apg/feats.rs` and `acg/feats.rs` all state their catalogs are
+"generated programmatically from the live corpus" rather than
+hand-transcribed line-by-line, specifically to avoid transcription error
+at that scale. Each documents the same category derivation rule (the
+`TYPE:` facet) and its own excluded-record list — 10 for CRB, 12 for
+APG, 5 for ACG — in its own doc comment.
+
+Every feat record carries its `BONUS:` tokens (`effect`) and its
+top-level `PRE`-family tokens (`prerequisites`) verbatim and unparsed,
+for the same reason: they are PCGen formula expressions over runtime
+character state, not constants, so collapsing either into a resolved
+number would fabricate a value the corpus does not give. Carrying the
+`PRE` tokens lifts the blocker `feat_prereqs/general.rs` documented, but
+does not by itself evaluate them — `feat_prereqs` still checks catalog
+membership only.
 
 ## Equipment/spell content completeness (SD-24 Epic 6; ceilings raised by SD-25 Epic 7)
 

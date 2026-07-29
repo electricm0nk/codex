@@ -41,6 +41,8 @@ pub mod class_swashbuckler;
 pub mod class_warpriest;
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod feat_data;
+pub mod feats;
 pub mod hunter_spell_list;
 pub mod shaman_spell_list;
 pub mod spell_list;

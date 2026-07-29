@@ -1,5 +1,11 @@
-import { filterItemPickerEntries, mapEquipmentCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import {
+  filterItemPickerEntries,
+  mapEquipmentCatalogEntries,
+  mapFeatCatalogEntries,
+  mapSpellCatalogEntries,
+} from './itemPickerFilter';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
+import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 const EQUIPMENT_ENTRIES = [
@@ -15,6 +21,20 @@ const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
   // A real `apg_spells.lst` gap shape: resolves, but the corpus row
   // carries no SCHOOL:/CLASSES:/DESC: token.
   { key: 'spell:corpus_gap', book: 'APG', school: null, level: null, description: null },
+];
+
+/**
+ * Real records as `list_feats` serves them, one per ingested book plus an
+ * unknown-book row. `Extra Hex` / `Extra Panache` / `Elemental Fist` are
+ * verbatim from `apg_feats.lst` and `acg_feats.lst`; `Elemental Fist` is
+ * the one ingested APG record whose corpus row genuinely carries no
+ * `DESC:` token.
+ */
+const FEAT_ENTRIES: FeatCatalogEntryDto[] = [
+  { key: 'Power Attack', category: 'Combat', name: 'Power Attack', description: 'You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.', source: 'Crb', chooserTargetKind: null },
+  { key: 'Extra Hex', category: 'General', name: 'Extra Hex', description: 'You have learned the secrets of a new hex.', source: 'Apg', chooserTargetKind: null },
+  { key: 'Elemental Fist', category: 'Combat', name: 'Elemental Fist', description: null, source: 'Apg', chooserTargetKind: null },
+  { key: 'Extra Panache', category: 'Panache', name: 'Extra Panache', description: 'You have more panache than the ordinary swashbuckler.', source: 'Acg', chooserTargetKind: null },
 ];
 
 /**
@@ -94,6 +114,54 @@ function verifiesFilterOverSpellEntriesMatchesBySchool() {
   assertEqual(result[0].key, 'spell:cure_light_wounds', 'the matching entry is the conjuration spell');
 }
 
+/**
+ * The feat catalog spans CRB, APG and ACG since the APG/ACG ingest, so a
+ * feat row has to name its book the same way a spell row does — otherwise
+ * a player cannot tell "Extra Hex" (APG) from a core feat.
+ */
+function verifiesFeatMappingLeadsWithTheBookThenCategoryThenDescription() {
+  const [mapped] = mapFeatCatalogEntries([FEAT_ENTRIES[1]]);
+  assertEqual(mapped.key, 'Extra Hex', 'key is preserved');
+  assertEqual(mapped.name, 'Extra Hex', 'name is preserved');
+  assertEqual(
+    mapped.detail,
+    'APG · General · You have learned the secrets of a new hex.',
+    'detail leads with the book, then the category, then the real corpus description'
+  );
+}
+
+function verifiesFeatMappingOmitsADescriptionTheCorpusDoesNotHave() {
+  const [mapped] = mapFeatCatalogEntries([FEAT_ENTRIES[2]]);
+  assertEqual(
+    mapped.detail,
+    'APG · Combat',
+    'a record whose corpus row has no DESC: shows only book and category, never fabricated text'
+  );
+}
+
+function verifiesFeatMappingFallsBackToTheRawBookForAnUnknownVariant() {
+  // Deliberately synthetic: `RuleSetId` already names `Um` as a future
+  // variant, and this pins that a book this frontend has no label for
+  // still renders its raw variant string rather than a blank or a
+  // fabricated label. Mirrors
+  // `verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant`.
+  const [mapped] = mapFeatCatalogEntries([
+    { key: 'Some Future Feat', category: 'General', name: 'Some Future Feat', description: null, source: 'Um', chooserTargetKind: null },
+  ]);
+  assertEqual(
+    mapped.detail,
+    'Um · General',
+    'an unknown/future book falls back to the raw RuleSetId variant rather than a fabricated label'
+  );
+}
+
+function verifiesFilterOverFeatEntriesMatchesByBook() {
+  const entries = mapFeatCatalogEntries(FEAT_ENTRIES);
+  const result = filterItemPickerEntries(entries, 'acg');
+  assertEqual(result.length, 1, 'one feat matches an ACG book search');
+  assertEqual(result[0].key, 'Extra Panache', 'the matching entry is the ACG panache feat');
+}
+
 function main() {
   verifiesFilterMatchesEntryNameCaseInsensitively();
   verifiesFilterMatchesEntryDetailToo();
@@ -104,6 +172,10 @@ function main() {
   verifiesSpellMappingUsesKeyAsNameAndCombinesBookSchoolAndLevel();
   verifiesSpellMappingOmitsSchoolAndLevelTheCorpusDoesNotHave();
   verifiesFilterOverSpellEntriesMatchesBySchool();
+  verifiesFeatMappingLeadsWithTheBookThenCategoryThenDescription();
+  verifiesFeatMappingOmitsADescriptionTheCorpusDoesNotHave();
+  verifiesFeatMappingFallsBackToTheRawBookForAnUnknownVariant();
+  verifiesFilterOverFeatEntriesMatchesByBook();
 }
 
 main();

@@ -21,7 +21,12 @@ use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory, Fea
 
 #[test]
 fn every_feat_category_is_non_empty() {
-    for category in FeatCategory::ALL {
+    // `CRB_ONLY`, not `ALL`: `FeatCategory` also carries `Teamwork` and
+    // `Panache`, which exist solely on APG/ACG records (see the enum's own
+    // doc comment). `feat_tables()` here is the CRB catalog, so those two
+    // are legitimately absent from it and asserting otherwise would be
+    // asserting a fact about the wrong book.
+    for category in FeatCategory::CRB_ONLY {
         let count = feat_tables().iter().filter(|f| f.category == *category).count();
         assert!(
             count >= 1,
