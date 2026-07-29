@@ -26,6 +26,12 @@ import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './cha
 import { resolveSpellRouting } from './spellRoutingModel';
 import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
+import {
+  describeSpellAcquisition,
+  describeSpellSchoolAndLevel,
+  resolveSelectedSpellEntries,
+} from './spellsTabModel';
+import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
@@ -660,14 +666,6 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
 }
 
 /**
- * Spell-school reachability, sourced from `compute_pilot_with_corpus` via
- * the real IPC boundary — not mock data. Resolved against a small bundled
- * corpus-fixture set (see `src-tauri/src/corpus_fixtures.rs`), not the full
- * PCGen corpus, so only schools with a selected, resolvable spell appear
- * here; this is a reachability proof, not a spellbook or slot tracker
- * (spell slots, DCs, and prepared/known posture remain out of scope).
- */
-/**
  * Honest "not shown" signal for `CorpusDerivedDto.unresolvedSpellIds` /
  * `unresolvedEquipmentItemIds` — real, disk-persisted selections that fall
  * outside the desktop app's tiny bundled demo corpus (`corpus_fixtures.rs`,
@@ -687,37 +685,120 @@ function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
   );
 }
 
-function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddSpell: () => void }) {
+/**
+ * The character's own spells, each resolved to its real name, school, level
+ * and effect text.
+ *
+ * This tab used to render *only* `corpusDerived.schoolCoverage`. That
+ * section is real, but `load_saved_character` builds it via
+ * `compute_pilot_with_corpus(&..., corpus_fixture_bundle())`, and
+ * `corpus_fixtures.rs`'s `SPELL_FIXTURES` is two files
+ * (`spell_abjuration.txt`, `spell_illusion.txt`) — so every other spell a
+ * character actually held resolved against nothing, landed in
+ * `unresolvedSpellIds`, and reached the player as a bare internal id. The
+ * full 652-record catalog, with level and effect text, was in
+ * `SPELL_LIST` the whole time and already served by the same `listSpells`
+ * command the Add Spell picker calls (see `spellsTabModel.ts` for the full
+ * trace). Same defect the Feats tab already fixed: correct in the engine,
+ * invisible where it mattered.
+ *
+ * Per the operator's standing ruling, a spell's real description is a
+ * legitimate deliverable in its own right. This tab still computes no slots,
+ * DCs or prepared/known posture, and says so rather than implying otherwise.
+ */
+function SpellsTab(props: {
+  spellsSelected: SpellSelectionDto[];
+  corpusDerived: CorpusDerivedDto | undefined;
+  onAddSpell: () => void;
+}) {
+  const [catalog, setCatalog] = useState<SpellCatalogEntryDto[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    listSpells({ nameContains: null, school: null })
+      .then((response) => {
+        if (!cancelled) {
+          setCatalog(response.entries);
+        }
+      })
+      .catch(() => {
+        // Falls back to the raw-id rendering below (via an empty catalog, so
+        // every spell resolves to `resolved: false`) rather than an alarming
+        // error — the raw ids are still real, honest data.
+        if (!cancelled) {
+          setCatalog([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? []);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
-  const unresolved = props.corpusDerived?.unresolvedSpellIds ?? [];
+
   return (
     <div>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Corpus-derived spell-school reachability — proves each spell resolves against the real
-        PF1 corpus; does not compute slots, DCs, or prepared/known posture.
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.4rem', textAlign: 'center' }}>
+        Spells this character knows, from the real spell catalog. Slots, DCs and prepared/known
+        posture are not computed.
+      </p>
+      {/* The catalog's `level` is the corpus record's LOWEST class level, not
+          this character's class's level — `crb::spell_list`'s own `level`
+          field is the minimum across every class on the record. e.g. Hideous
+          Laughter is `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it shows as
+          Level 1 even for a Wizard, who learns it at 2. Saying so is the
+          honest option until a per-class level reaches this surface; the
+          per-class tables exist in the engine (`sorcerer_spell_list.rs` and
+          11 siblings) but no command exposes them yet. */}
+      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.68rem', margin: '0 0 1rem', textAlign: 'center' }}>
+        Level shown is the spell&rsquo;s lowest class level in the corpus, which for some classes
+        (notably Wizard and Sorcerer) is lower than the level they learn it at.
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddSpell} style={addItemButtonStyle}>
           Add Spell
         </button>
       </div>
-      {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="spell" /> : null}
-      {schools.length === 0 ? (
-        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-          No corpus-reachable spells selected yet.
-        </p>
+      {rows.length === 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No spells selected yet.</p>
       ) : (
-        schools.map((school) => (
-          <div key={school.school} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{school.school}</span>
-            <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.5rem' }}>
-              {school.spells.join(', ')}
-            </span>
-            {school.grounded ? (
-              <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
-            ) : null}
+        rows.map((row, index) => (
+          <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <span style={{ fontWeight: 700 }}>{row.name}</span>
+            {describeSpellSchoolAndLevel(row) === null ? null : (
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
+                {describeSpellSchoolAndLevel(row)}
+              </span>
+            )}
+            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+              {describeSpellAcquisition(row)}
+            </p>
+            {row.effectText === null ? null : (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>
+                {row.effectText}
+              </p>
+            )}
           </div>
         ))
+      )}
+      {schools.length === 0 ? null : (
+        <div style={{ marginTop: '1.5rem' }}>
+          <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0 0 0.4rem', textAlign: 'center' }}>
+            Engine corpus-resolution receipt — which selected spells the rules engine resolved
+            against its bundled demo corpus. Separate from the catalog lookup above.
+          </p>
+          {schools.map((school) => (
+            <div key={school.school} style={{ borderTop: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+              <span style={{ fontWeight: 700, fontSize: '0.78rem' }}>{school.school}</span>
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', marginLeft: '0.5rem' }}>
+                {school.spells.join(', ')}
+              </span>
+              {school.grounded ? (
+                <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+              ) : null}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -2393,7 +2474,11 @@ export function CharacterSheet(props: {
                   onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
                 />
               ) : tab === 'Spells' ? (
-                <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
+                <SpellsTab
+                  spellsSelected={props.detail?.spellsSelected ?? []}
+                  corpusDerived={props.detail?.corpusDerived}
+                  onAddSpell={() => setItemPickerOpen('spell')}
+                />
               ) : tab === 'Gear' ? (
                 <GearTab
                   corpusDerived={props.detail?.corpusDerived}

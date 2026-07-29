@@ -53,7 +53,14 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
     // `SpellCatalogEntryDto`'s doc comment) — `key` is the spell's real
     // corpus identity and doubles as the display name.
     name: entry.key,
-    detail: `${entry.school} · Level ${entry.level}`,
+    // Book first, since the catalog now spans CRB, APG and ACG and a
+    // player picking a spell needs to know which book it comes from.
+    // `school`/`level` are omitted rather than defaulted when the corpus
+    // row genuinely lacks them (a real `apg_spells.lst` gap), so the
+    // detail line never asserts a school or level the corpus never gave.
+    detail: [entry.book, entry.school, entry.level === null ? null : `Level ${entry.level}`]
+      .filter((part): part is string => part !== null)
+      .join(' · '),
   }));
 }
 

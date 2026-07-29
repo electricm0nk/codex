@@ -1,4 +1,5 @@
 import { filterItemPickerEntries, mapEquipmentCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 const EQUIPMENT_ENTRIES = [
@@ -7,10 +8,13 @@ const EQUIPMENT_ENTRIES = [
   { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50 },
 ];
 
-const SPELL_ENTRIES = [
-  { key: 'spell:magic_missile', school: 'Evocation', level: 1, description: 'A missile of magical energy.' },
-  { key: 'spell:fireball', school: 'Evocation', level: 3, description: 'A burst of flame.' },
-  { key: 'spell:cure_light_wounds', school: 'Conjuration', level: 1, description: 'Heals wounds.' },
+const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
+  { key: 'spell:magic_missile', book: 'CRB', school: 'Evocation', level: 1, description: 'A missile of magical energy.' },
+  { key: 'spell:fireball', book: 'CRB', school: 'Evocation', level: 3, description: 'A burst of flame.' },
+  { key: 'spell:cure_light_wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Heals wounds.' },
+  // A real `apg_spells.lst` gap shape: resolves, but the corpus row
+  // carries no SCHOOL:/CLASSES:/DESC: token.
+  { key: 'spell:corpus_gap', book: 'APG', school: null, level: null, description: null },
 ];
 
 /**
@@ -55,12 +59,22 @@ function verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant() {
   assertEqual(mapped.detail, 'SomeNewCategory', 'unmapped categories fall back to the raw variant string, never a fabricated label');
 }
 
-function verifiesSpellMappingUsesKeyAsNameAndCombinesSchoolAndLevel() {
+function verifiesSpellMappingUsesKeyAsNameAndCombinesBookSchoolAndLevel() {
   const [mapped] = mapSpellCatalogEntries([SPELL_ENTRIES[1]]);
   assertEqual(mapped.key, 'spell:fireball', 'key is preserved');
   assertEqual(mapped.name, 'spell:fireball', 'the spell catalog has no separate name field, so key doubles as the display name');
+  assert(mapped.detail.includes('CRB'), 'detail names the book the spell comes from');
   assert(mapped.detail.includes('Evocation'), 'detail includes the school');
   assert(mapped.detail.includes('3'), 'detail includes the spell level');
+}
+
+function verifiesSpellMappingOmitsSchoolAndLevelTheCorpusDoesNotHave() {
+  const [mapped] = mapSpellCatalogEntries([SPELL_ENTRIES[3]]);
+  assertEqual(
+    mapped.detail,
+    'APG',
+    'a record whose corpus row has no school or level shows only its book, never a fabricated school/level'
+  );
 }
 
 function verifiesFilterOverSpellEntriesMatchesBySchool() {
@@ -77,7 +91,8 @@ function main() {
   verifiesNoMatchesReturnsEmptyArray();
   verifiesEquipmentMappingUsesFriendlyCategoryLabel();
   verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant();
-  verifiesSpellMappingUsesKeyAsNameAndCombinesSchoolAndLevel();
+  verifiesSpellMappingUsesKeyAsNameAndCombinesBookSchoolAndLevel();
+  verifiesSpellMappingOmitsSchoolAndLevelTheCorpusDoesNotHave();
   verifiesFilterOverSpellEntriesMatchesBySchool();
 }
 
