@@ -147,10 +147,10 @@ mod tests {
 
     use crate::character_hub::{
         compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
-        map_resolved_equipment_dto, map_spells_selected_dto,
-        AbilityScoresDto, AbilityModifiersDto, BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto,
-        CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto, PilotSnapshotDto,
-        ResolvedEquipmentEffectDto, SchoolCoverageDto, SelectedSkillModifiersDto,
+        map_resolved_equipment_dto, map_snapshot_dto, map_spells_selected_dto,
+        AbilityScoresDto, CharacterSummaryDto, CorpusDerivedDto,
+        CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto,
+        ResolvedEquipmentEffectDto, SchoolCoverageDto,
     };
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
@@ -266,35 +266,15 @@ mod tests {
             let corpus_receipt =
                 compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
 
-            let snapshot = view_model.snapshot.as_ref().map(|snapshot| PilotSnapshotDto {
-                ability_modifiers: AbilityModifiersDto {
-                    strength: snapshot.ability_modifiers.strength,
-                    dexterity: snapshot.ability_modifiers.dexterity,
-                    constitution: snapshot.ability_modifiers.constitution,
-                    intelligence: snapshot.ability_modifiers.intelligence,
-                    wisdom: snapshot.ability_modifiers.wisdom,
-                    charisma: snapshot.ability_modifiers.charisma,
-                },
-                base_attack_bonus: snapshot.base_attack_bonus,
-                base_saves: BaseSavesDto {
-                    fortitude: snapshot.base_saves.fortitude,
-                    reflex: snapshot.base_saves.reflex,
-                    will: snapshot.base_saves.will,
-                },
-                baseline_melee_attack_bonus: snapshot.combat.baseline_melee_attack_bonus,
-                baseline_armor_class: snapshot.defense.baseline_armor_class,
-                total_saves: BaseSavesDto {
-                    fortitude: snapshot.defense.total_save.fortitude,
-                    reflex: snapshot.defense.total_save.reflex,
-                    will: snapshot.defense.total_save.will,
-                },
-                selected_skill_modifiers: SelectedSkillModifiersDto {
-                    climb: snapshot.skill.selected_modifier.climb,
-                    intimidate: snapshot.skill.selected_modifier.intimidate,
-                    swim: snapshot.skill.selected_modifier.swim,
-                },
-                damage_reduction: snapshot.defense.damage_reduction,
-            });
+            // Routed through `character_hub`'s own `map_snapshot_dto`
+            // rather than the hand-rolled field-by-field mirror this used
+            // to be. That mirror was a silent drop hazard by construction:
+            // every field added to `PilotSnapshotDto` had to be remembered
+            // in two places, and a forgotten one here would leave this
+            // adapter's callers reading a snapshot missing data the engine
+            // had computed -- the same class of gap the companion field
+            // itself was added to close.
+            let snapshot = view_model.snapshot.as_ref().map(map_snapshot_dto);
 
             let diagnostics = receipt
                 .computation

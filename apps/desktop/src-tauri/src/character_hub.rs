@@ -109,6 +109,59 @@ pub struct PilotSnapshotDto {
     /// (`pilot_view_model.rs`) for the full derivation.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub damage_reduction: Option<i16>,
+    /// v0.6 alpha swarm: the character's animal companion or mount, or
+    /// absent when this build grounds none.
+    ///
+    /// The stat block was fully computed in the engine across all twenty
+    /// master levels the whole time (`pilot_compute.rs`'s
+    /// `ground_wolf_companion_stat_block` /
+    /// `ground_horse_companion_stat_block`, for Druid, Hunter and the
+    /// Cavalier's Mount) but had no field to travel in, so the desktop
+    /// sheet's Pets tab rendered a "coming soon" placeholder over data
+    /// that already existed -- the same defect
+    /// `EquipmentEffectsDto::per_item` had.
+    ///
+    /// Same `skip_serializing_if` discipline as `damage_reduction`: a
+    /// companion-less class omits the key entirely rather than sending a
+    /// literal `null` the frontend's `!== undefined` checks would wave
+    /// through into an empty stat block.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub companion: Option<AnimalCompanionDto>,
+}
+
+/// Wire form of `pilot_view_model::PilotCompanionStat` -- one grounded
+/// companion statistic, with the engine's own label, value and derivation
+/// prose carried verbatim.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionStatDto {
+    pub label: String,
+    pub value: i16,
+    pub detail: String,
+}
+
+/// Wire form of `pilot_view_model::PilotCompanionViewModel`.
+///
+/// A wholly separate creature: none of these values are applied to the
+/// character's own integrated totals, and the sheet must not mix them in.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimalCompanionDto {
+    pub owner_class_label: String,
+    pub role_label: String,
+    pub species: String,
+    pub summary_detail: String,
+    /// Only statistics the engine actually emitted -- never zero-filled.
+    pub stats: Vec<CompanionStatDto>,
+    pub notes: Vec<String>,
+    /// The engine's non-blocking `advancement_absent` note: the honest
+    /// list of companion columns deliberately left ungrounded because
+    /// nothing in this codebase consumes them. It travels here rather
+    /// than in `diagnostics` because `load_saved_character` returns an
+    /// empty diagnostics list on the `Computed` path -- so this is the
+    /// player's only route to it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub advancement_note: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -518,6 +571,29 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
             snapshot.skill.selected_modifier,
         ),
         damage_reduction: snapshot.defense.damage_reduction,
+        companion: snapshot.companion.as_ref().map(map_animal_companion_dto),
+    }
+}
+
+fn map_animal_companion_dto(
+    companion: &codex::rules_core::pilot_view_model::PilotCompanionViewModel,
+) -> AnimalCompanionDto {
+    AnimalCompanionDto {
+        owner_class_label: companion.owner_class_label.clone(),
+        role_label: companion.role_label.clone(),
+        species: companion.species.clone(),
+        summary_detail: companion.summary_detail.clone(),
+        stats: companion
+            .stats
+            .iter()
+            .map(|stat| CompanionStatDto {
+                label: stat.label.clone(),
+                value: stat.value,
+                detail: stat.detail.clone(),
+            })
+            .collect(),
+        notes: companion.notes.clone(),
+        advancement_note: companion.advancement_note.clone(),
     }
 }
 
@@ -3871,6 +3947,7 @@ mod tests {
                     swim: 0,
                 },
                 damage_reduction: None,
+                companion: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -4563,6 +4640,7 @@ mod tests {
                     swim: 0,
                 },
                 damage_reduction: None,
+                companion: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -4760,6 +4838,7 @@ mod tests {
                     swim: 0,
                 },
                 damage_reduction: None,
+                companion: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -5352,5 +5431,105 @@ mod tests {
         let result = export_character_to_json(&root);
 
         assert!(result.is_err(), "exporting a nonexistent saved character must fail");
+    }
+
+    /// v0.6 alpha swarm: the animal companion / mount stat block is fully
+    /// computed in the engine and now reaches `PilotSnapshot.companion`
+    /// (`pilot_view_model.rs`), but a value that stops at the Tauri DTO
+    /// boundary is invisible to the player -- exactly the defect shape
+    /// `EquipmentEffects.per_item` had (fully populated, simply not
+    /// carried, leaving an "AC breakdown by source" panel sitting as a
+    /// placeholder over data that already existed). This proves the
+    /// boundary genuinely carries it.
+    #[test]
+    fn snapshot_dto_carries_a_real_animal_companion_across_the_boundary() {
+        // Deliberately `resolve_unified_pilot_snapshot`, not
+        // `PilotViewModel::from_receipt`: that is the function
+        // `load_saved_character` itself calls, and it assembles its own
+        // `PilotSnapshot` by hand rather than going through the view
+        // model. Testing the view model here would have proved nothing
+        // about what the live app actually receives.
+        let (snapshot, _corpus_receipt) = resolve_unified_pilot_snapshot(
+            &human_druid_with_animal_companion(),
+            corpus_fixture_bundle(),
+        )
+        .expect("a level-1 Druid with an animal companion resolves a snapshot");
+
+        let dto = map_snapshot_dto(&snapshot);
+
+        let companion = dto
+            .companion
+            .as_ref()
+            .expect("the Druid's real Wolf companion must cross the DTO boundary");
+        assert_eq!(companion.owner_class_label, "Druid");
+        assert_eq!(companion.species, "Wolf");
+        assert!(
+            companion
+                .stats
+                .iter()
+                .any(|stat| stat.label == "Armor Class" && stat.value == 12),
+            "the real computed values must survive the crossing: {:?}",
+            companion.stats
+        );
+        assert!(
+            companion.advancement_note.is_some(),
+            "the engine's honest not-grounded list must cross too -- a Computed load reports \
+             no diagnostics at all, so this is the player's only route to it"
+        );
+
+        // camelCase on the wire, and genuinely omitted (not `null`) for a
+        // companion-less class -- the same `skip_serializing_if` discipline
+        // `damage_reduction` and `EquipmentEffectsDto` already needed, for
+        // the same frontend `!== undefined` reason.
+        let json = serde_json::to_string(&dto).expect("serialization should succeed");
+        assert!(json.contains("\"companion\""), "companion must be on the wire: {json}");
+        assert!(json.contains("\"ownerClassLabel\":\"Druid\""), "camelCase on the wire: {json}");
+        assert!(json.contains("\"advancementNote\""), "camelCase on the wire: {json}");
+    }
+
+    #[test]
+    fn snapshot_dto_omits_the_companion_key_entirely_for_a_companionless_class() {
+        let result = codex::rules_core::character_input::load_character_input_fixture(
+            HUMAN_FIGHTER_LEVEL_1_FIXTURE,
+        );
+        let input = result.character_input.expect("valid fixture");
+        let (snapshot, _corpus_receipt) =
+            resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle())
+                .expect("a Human Fighter level 1 resolves a snapshot");
+
+        let json = serde_json::to_string(&map_snapshot_dto(&snapshot))
+            .expect("serialization should succeed");
+
+        assert!(
+            !json.contains("companion"),
+            "a Fighter has no companion -- the key must be absent, not a literal null the \
+             frontend's `!== undefined` checks would wave through into an empty stat block: \
+             {json}"
+        );
+    }
+
+    const HUMAN_FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// Mirrors the engine's own Druid-with-companion test input: the
+    /// deterministic Human fighter fixture with its class levels replaced
+    /// by Druid 1, plus the animal-companion nature bond.
+    fn human_druid_with_animal_companion() -> codex::rules_core::character_input::CharacterInput {
+        use codex::rules_core::character_input::{CharacterClassLevel, SelectedChoice};
+
+        let result = codex::rules_core::character_input::load_character_input_fixture(
+            HUMAN_FIGHTER_LEVEL_1_FIXTURE,
+        );
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel {
+            class_id: "class:druid".to_owned(),
+            level: 1,
+        }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:druid_nature_bond".to_owned(),
+            selection_id: "bond:animal_companion".to_owned(),
+        });
+        input
     }
 }

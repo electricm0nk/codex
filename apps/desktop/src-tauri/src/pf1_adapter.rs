@@ -63,7 +63,8 @@ use codex::rules_core::pilot_compute_corpus::{
     compute_selected_skill_modifiers_from_corpus, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
-    PilotCombatViewModel, PilotDefenseViewModel, PilotSkillViewModel, PilotSnapshot,
+    PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
+    PilotSnapshot,
 };
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -712,6 +713,13 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                         swim: skills.swim,
                     },
                 },
+                // Projected through the view model's own function rather
+                // than re-derived here: this snapshot is assembled by hand
+                // (it substitutes corpus-resolved combat/skill values for
+                // the receipt's own), and a second, drifting copy of the
+                // companion projection is exactly how the DR extraction
+                // just above ended up duplicated.
+                companion: PilotCompanionViewModel::from_receipt(&receipt),
             };
             Ok((snapshot, corpus_receipt))
         }

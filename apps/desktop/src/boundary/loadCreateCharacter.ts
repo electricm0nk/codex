@@ -44,6 +44,62 @@ export interface SelectedSkillModifiersDto {
   swim: number;
 }
 
+/**
+ * One grounded companion statistic — mirrors `CompanionStatDto` in
+ * `character_hub.rs`.
+ */
+export interface CompanionStatDto {
+  /**
+   * The engine's own honest name for what `value` is, e.g. `'Armor Class'`
+   * or `'Attack Bonus'`. Deliberately not a title-casing of the underlying
+   * record id: the record named `base_attack_bonus` carries the
+   * companion's base attack bonus *plus* its Strength modifier, and
+   * `bite_attack` carries only a flat damage bonus. See
+   * `COMPANION_STAT_ROWS` in `pilot_view_model.rs`.
+   */
+  label: string;
+  value: number;
+  /** The engine's own corpus-cited derivation prose, verbatim. */
+  detail: string;
+}
+
+/**
+ * The character's animal companion or mount — mirrors
+ * `AnimalCompanionDto` in `character_hub.rs`, projected from the
+ * `class_chassis.<class>.<role>.*` explanation records the engine grounds
+ * across all twenty master levels (Druid's and Hunter's Wolf animal
+ * companion, the Cavalier's Horse mount).
+ *
+ * A wholly separate creature: none of these values are applied to the
+ * character's own integrated totals, and the sheet must not mix them in.
+ */
+export interface AnimalCompanionDto {
+  /** e.g. `'Druid'` — read from the record that grounded the companion. */
+  ownerClassLabel: string;
+  /** What the owning class calls it: `'Animal Companion'` or `'Mount'`. */
+  roleLabel: string;
+  /** The canonical species this seam grounds: `'Wolf'` or `'Horse'`. */
+  species: string;
+  summaryDetail: string;
+  /** Only statistics the engine actually emitted — never zero-filled. */
+  stats: CompanionStatDto[];
+  /** Provably-vacuous named abilities (Link, Share Spells). */
+  notes: string[];
+  /**
+   * The engine's non-blocking `advancement_absent` note: the honest list of
+   * companion columns deliberately left ungrounded because nothing in the
+   * codebase consumes them (bonus tricks, companion skills and feats, the
+   * player-chosen stat increase at master levels 4/9/14/20, the size
+   * advance, Evasion/Devotion/Multiattack).
+   *
+   * It travels on the companion rather than in `diagnostics` because it is
+   * non-blocking, and `load_saved_character` returns an empty diagnostics
+   * list on the `Computed` path — so this is the player's only route to it.
+   * `skip_serializing_if` on the Rust side means the key may be absent.
+   */
+  advancementNote?: string;
+}
+
 export interface PilotSnapshotDto {
   abilityModifiers: AbilityScoresDto;
   baseAttackBonus: number;
@@ -60,6 +116,14 @@ export interface PilotSnapshotDto {
    * on the Rust side means the key itself may not be present on the wire.
    */
   damageReduction?: number;
+  /**
+   * The character's animal companion or mount, or absent when this build
+   * grounds none. The key itself is omitted on the wire (same
+   * `skip_serializing_if` discipline as `damageReduction`), so a
+   * companion-less class is `undefined` here rather than an empty or
+   * zeroed stat block.
+   */
+  companion?: AnimalCompanionDto;
 }
 
 export interface DiagnosticDto {

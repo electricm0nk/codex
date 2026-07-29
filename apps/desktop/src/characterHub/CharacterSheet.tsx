@@ -32,6 +32,8 @@ import {
   resolveSelectedSpellEntries,
   spellSourceClassIds,
 } from './spellsTabModel';
+import { buildPetsTabView } from './petsTabModel';
+import type { PilotSnapshotDto } from '../boundary/loadCreateCharacter';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
@@ -1453,6 +1455,83 @@ function FeatsTab(props: {
   );
 }
 
+/**
+ * The character's animal companion or mount, rendered from the real
+ * computed stat block.
+ *
+ * This replaced the sheet's generic `"{tab} — coming soon."` placeholder,
+ * but nothing about the data is new: `pilot_compute.rs`'s
+ * `ground_wolf_companion_stat_block` / `ground_horse_companion_stat_block`
+ * have grounded Hit Dice, base attack bonus, all three base saves, hit
+ * points, armor class, the natural-armor and Strength advances and the
+ * natural attack across all twenty master levels — for Druid, Hunter and
+ * the Cavalier's Mount. The values simply had no field to travel in:
+ * `PilotSnapshotDto` carried no companion, the same way
+ * `EquipmentEffects.per_item` was fully populated and uncarried while the
+ * AC-by-source panel sat as a placeholder over it.
+ *
+ * Nothing here is fabricated. The tab renders exactly the statistics the
+ * engine emitted, each beside the engine's own corpus-cited derivation.
+ * The columns the grounding deliberately left unbuilt — bonus tricks, the
+ * companion's own skills and feats, the player-chosen stat increase at
+ * master levels 4/9/14/20, the size advance, and the named abilities
+ * Evasion / Devotion / Multiattack — are shown as the engine's own honest
+ * `advancement_absent` note, never as invented values
+ * (`docs/governance/no-stub-mvp-doctrine.md`).
+ */
+function PetsTab(props: { snapshot: PilotSnapshotDto | null }) {
+  const view = buildPetsTabView(props.snapshot);
+
+  if (view.kind !== 'Companion') {
+    return (
+      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+        {view.message}
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
+        <div style={{ fontSize: '1.05rem', fontWeight: 700 }}>{view.heading}</div>
+        <div style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>{view.subheading}</div>
+      </div>
+
+      {view.stats.map((stat) => (
+        <div
+          key={stat.label}
+          style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}
+        >
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: '0.85rem' }}>{stat.label}</span>
+            <span style={{ fontWeight: 700 }}>{stat.rendered}</span>
+          </div>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.25rem 0 0' }}>
+            {stat.detail}
+          </p>
+        </div>
+      ))}
+
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '1rem 0 0' }}>
+        {view.summaryDetail}
+      </p>
+
+      {view.notes.map((note) => (
+        <p key={note} style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.5rem 0 0' }}>
+          {note}
+        </p>
+      ))}
+
+      {view.advancementNote === null ? null : (
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '1rem 0 0' }}>
+          <span style={{ fontWeight: 700 }}>Not modelled: </span>
+          {view.advancementNote}
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ---------- root ----------
 
 export function CharacterSheet(props: {
@@ -2542,6 +2621,8 @@ export function CharacterSheet(props: {
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
           />
+              ) : tab === 'Pets' ? (
+                <PetsTab snapshot={snapshot} />
               ) : tab === 'Actions' ? (
                 <ActionsTab levelEntries={currentBenefits} />
               ) : (
