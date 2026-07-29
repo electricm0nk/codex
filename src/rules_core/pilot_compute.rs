@@ -5640,8 +5640,125 @@ const DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID: &str = "bond:animal_compa
 /// Arcane bloodline, etc.).
 const WOLF_COMPANION_STRENGTH_SCORE: i16 = 13;
 const WOLF_COMPANION_CONSTITUTION_SCORE: i16 = 15;
+/// The Wolf companion race's own BASE natural armor
+/// (`BONUS:VAR|AC_Natural_Armor|2|TYPE=Base`,
+/// `core_rulebook/cr_races_companion.lst:32`). The companion class's own
+/// level-scaling natural-armor bonus stacks on top of this -- see
+/// `animal_companion_natural_armor_bonus`.
 const WOLF_COMPANION_NATURAL_ARMOR: i16 = 2;
 const WOLF_COMPANION_HIT_DIE_SIZE: u8 = 8;
+
+/// The highest master level the PF1 animal-companion progression is
+/// defined for (`MAXLEVEL:20` on `CLASS:Companion`,
+/// `core_rulebook/cr_classes_companion.lst:6`).
+const MAX_ANIMAL_COMPANION_MASTER_LEVEL: u8 = 20;
+
+/// The PF1 Core Rulebook "Animal Companion Base Statistics" Hit Dice
+/// column, indexed by `master_level - 1`.
+///
+/// Transcribed from the PCGen corpus, not from memory, from two encodings
+/// that must be combined:
+///
+/// * every CRB companion race carries `MONSTERCLASS:Companion:2`
+///   (`core_rulebook/cr_races_companion.lst` -- all 38 companion races,
+///   Wolf at line 32 and Horse at line 21), so a companion starts at 2 HD
+///   even for a 1st-level master; and
+/// * `core_rulebook/cr_companionmods.lst:11-24` grants exactly one further
+///   Hit Die (`HD:1`) at master levels 2, 4, 5, 6, 8, 9, 10, 12, 13, 14,
+///   16, 17, 18 and 20 -- and at no other level.
+///
+/// Every companion progression variable in the entire corpus repeats that
+/// same 14-level list -- `SpecialMountLVL`
+/// (`core_rulebook/cr_companionmods.lst:34-47`), `CavalierMountLVL`
+/// (`advanced_players_guide/apg_companionmods.lst:75-93`),
+/// `BeastRiderLvl`, `FeatheredCompanionLvl`, `EmpyrealCompanion`, and all
+/// twenty Packmaster `AnimalCompanionLVL{A..T}` variants -- so this is one
+/// universal table, which is exactly why Druid, Hunter and Cavalier can
+/// all share it.
+///
+/// The `CLASS:Companion` formulas that consume it
+/// (`core_rulebook/cr_classes_companion.lst:6`) key off this HD count, not
+/// off the master's level: `BASEAB = HD*3/4`,
+/// `BASE.Fortitude/BASE.Reflex = HD/2+2`, `BASE.Will = HD/3`, all floor
+/// division.
+const ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL: [u8; MAX_ANIMAL_COMPANION_MASTER_LEVEL as usize] =
+    [2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15, 16];
+
+/// Clamps a master level onto the real table's domain (1-20).
+///
+/// This is the replacement for the old
+/// `debug_assert_eq!(companion_level, 1, "only companion level 1 is
+/// grounded this slice")`. That guard had the wrong shape twice over: it
+/// rejected every level the progression actually defines, and because
+/// `debug_assert` compiles out of release builds it let a release build
+/// silently hand a 20th-level master's companion a 1st-level companion's
+/// Hit Dice. The guard is kept, not deleted -- a caller passing a level
+/// outside 1-20 is still a bug and still trips in test/debug builds -- but
+/// the domain it enforces is now the progression's real one, and release
+/// builds saturate onto the nearest real row instead of returning a
+/// number from the wrong end of the table.
+fn animal_companion_table_index(master_level: u8) -> usize {
+    debug_assert!(
+        (1..=MAX_ANIMAL_COMPANION_MASTER_LEVEL).contains(&master_level),
+        "animal companion master level {master_level} is outside the corpus progression's own 1-{MAX_ANIMAL_COMPANION_MASTER_LEVEL} domain"
+    );
+    usize::from(master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL)) - 1
+}
+
+/// The companion class's own level-scaling natural-armor bonus, which
+/// STACKS on top of the companion race's own base natural armor:
+/// `BONUS:COMBAT|AC|2*floor(MasterLevel/3)|TYPE=NaturalArmor.STACK`
+/// (`core_rulebook/cr_abilities_companion.lst:59`, the shared
+/// `Animal Companion ~ AC Bonus` record that BOTH
+/// `Base Companion ~ Animal Companion` and `Base Companion ~ Special
+/// Mount` pull in). Independently confirmed by the APG Cavalier Mount
+/// block, which spells the same progression out level by level as
+/// `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK` at master levels 3, 6,
+/// 9, 12, 15 and 18 (`apg_companionmods.lst:76,79,82,85,88,91`).
+///
+/// This has a live consumer -- the companion's own `.armor_class`
+/// explanation record -- so widening Hit Dice without widening this would
+/// have shipped an understated Armor Class from master level 3 upward.
+fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
+    let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
+    2 * (i16::from(clamped) / 3)
+}
+
+/// The companion class's own level-scaling Strength/Dexterity bonus:
+/// `BONUS:STAT|STR,DEX|floor(MasterLevel/3)`
+/// (`core_rulebook/cr_abilities_companion.lst:60`), independently
+/// confirmed by the APG Cavalier Mount block's own inline
+/// `BONUS:STAT|STR,DEX|1` at the same six master levels.
+///
+/// Only the Strength half currently has a consumer here (the companion's
+/// attack bonus and its natural attack's damage bonus). The Dexterity
+/// half is deliberately NOT applied anywhere: this codebase grounds no
+/// Dexterity contribution to the companion's Armor Class in the first
+/// place (the `.armor_class` record says so in its own detail text), so
+/// applying it would build an unwired field. Named here, deferred in the
+/// companion's own advancement diagnostic.
+///
+/// Distinct from the separate player-chosen `Companion Stat Increase`
+/// (`BONUS:ABILITYPOOL|Companion Stat Increase|1` at master levels 4, 9,
+/// 14 and 20, `apg_companionmods.lst:77,82,87,93`), which is a chooser
+/// input with no canonical default and stays deferred.
+fn animal_companion_stat_bonus(master_level: u8) -> i16 {
+    let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
+    i16::from(clamped) / 3
+}
+
+/// A companion's hit points at `hit_dice` Hit Dice of size `hit_die_size`:
+/// the maximized first Hit Die plus the average for every Hit Die after
+/// it, each plus the companion's own Constitution modifier -- this
+/// codebase's own established HP idiom (`durability.rs`'s
+/// `compute_max_hp`), now applied across the companion's real Hit Dice
+/// count rather than the hardcoded two it was written against.
+fn animal_companion_hit_points(hit_dice: u8, hit_die_size: u8, constitution_modifier: i16) -> i16 {
+    let maximized_first = i16::from(hit_die_size) + constitution_modifier;
+    let average_subsequent =
+        crate::rules_core::durability::average_hit_die_value(hit_die_size) + constitution_modifier;
+    maximized_first + i16::from(hit_dice.saturating_sub(1)) * average_subsequent
+}
 
 /// v0.6 alpha swarm, risks item 8 (Cavalier Mount closure, first APG
 /// class-specific closure): Horse's real PF1 Core Rulebook base
@@ -5670,24 +5787,18 @@ const HORSE_COMPANION_CONSTITUTION_SCORE: i16 = 15;
 const HORSE_COMPANION_NATURAL_ARMOR: i16 = 4;
 const HORSE_COMPANION_HIT_DIE_SIZE: u8 = 8;
 
-/// PF1 Core Rulebook Animal Companion Base Statistics table (verified
-/// against d20pfsrd, and independently confirmed by reading the actual
-/// PCGen `CLASS:Companion` formulas directly: `BASEAB = classlevel*3/4`,
-/// `Fort/Ref = classlevel/2+2`, `Will = classlevel/3`). At companion
-/// level 1 (`MONSTERCLASS:Companion:2`, i.e. 2 HD -- an animal companion's
-/// effective level starts at 2 HD even for a 1st-level druid), this
-/// evaluates to base attack +1, Fortitude/Reflex +3/+3, Will +0. Pure
-/// function so a future level-widening slice can extend it the same way
-/// every other class's own progression table was extended, without
-/// re-deriving the formula.
+/// The Wolf companion's Hit Dice at `companion_level` (the owning
+/// character's own class level -- see `ground_wolf_companion_stat_block`
+/// for why master level and companion level coincide for every class this
+/// engine grounds).
+///
+/// Reads the one universal corpus progression,
+/// `ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL`; see that constant for the
+/// full derivation and corpus citations. At master level 1 this is 2 HD
+/// (`MONSTERCLASS:Companion:2` -- a companion starts at 2 HD even for a
+/// 1st-level druid), rising to 16 HD at master level 20.
 fn wolf_companion_hit_dice(companion_level: u8) -> u8 {
-    // A 1st-level druid's animal companion always starts at 2 HD
-    // regardless of the druid's own level (PF1 Core Rulebook): this
-    // bounded slice only computes companion level 1 (2 HD), named
-    // explicitly rather than derived from a formula this slice doesn't
-    // have verified data for beyond this single case.
-    debug_assert_eq!(companion_level, 1, "only companion level 1 is grounded this slice");
-    2
+    ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[animal_companion_table_index(companion_level)]
 }
 
 /// Grounds the Wolf companion's standalone stat block as explanation
@@ -5714,23 +5825,31 @@ fn ground_wolf_companion_stat_block(
     let companion_base_attack_bonus = companion_hd_value * 3 / 4;
     let companion_fort_ref_save = companion_hd_value / 2 + 2;
     let companion_will_save = companion_hd_value / 3;
-    let strength_modifier = ability_modifier(WOLF_COMPANION_STRENGTH_SCORE);
+    // The companion class's own level-scaling Strength bonus stacks on the
+    // race's base score (corpus: `BONUS:STAT|STR,DEX|floor(MasterLevel/3)`).
+    // Zero at master levels 1 and 2, so every previously-shipped level-1
+    // value below is byte-for-byte unchanged by this widening.
+    let strength_bonus = animal_companion_stat_bonus(companion_level);
+    let strength_score = WOLF_COMPANION_STRENGTH_SCORE + strength_bonus;
+    let natural_armor = WOLF_COMPANION_NATURAL_ARMOR
+        + animal_companion_natural_armor_bonus(companion_level);
+    let companion_armor_class = 10 + natural_armor;
+    let strength_modifier = ability_modifier(strength_score);
     let constitution_modifier = ability_modifier(WOLF_COMPANION_CONSTITUTION_SCORE);
     let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
     // Primary natural attack: 1.5x Strength modifier, floored (PF1 Core
     // Rulebook natural-attack damage rule), added to the base 1d6 bite
     // die (the die itself is not a flat number and is named, not rolled).
     let companion_bite_damage_bonus = (strength_modifier * 3) / 2;
-    // Maximized first HD plus average for the second (this codebase's own
-    // established HP idiom, `durability.rs`'s `compute_max_hp`), each plus
-    // the companion's own Constitution modifier. The maximized first HD is
-    // simply the die size itself (a maximized roll always equals the
-    // die's maximum face value).
-    let companion_max_first_hit_die = i16::from(WOLF_COMPANION_HIT_DIE_SIZE);
-    let companion_average_second_hit_die =
-        crate::rules_core::durability::average_hit_die_value(WOLF_COMPANION_HIT_DIE_SIZE);
-    let companion_hp = (companion_max_first_hit_die + constitution_modifier)
-        + (companion_average_second_hit_die + constitution_modifier);
+    // Maximized first Hit Die plus average for every Hit Die after it
+    // (this codebase's own established HP idiom, `durability.rs`'s
+    // `compute_max_hp`), each plus the companion's own Constitution
+    // modifier.
+    let companion_hp = animal_companion_hit_points(
+        companion_hd,
+        WOLF_COMPANION_HIT_DIE_SIZE,
+        constitution_modifier,
+    );
 
     explanations.push(ComputationExplanation {
         id: format!("{id_prefix}.wolf_stat_block"),
@@ -5751,12 +5870,13 @@ fn ground_wolf_companion_stat_block(
         id: format!("{id_prefix}.base_attack_bonus"),
         value: companion_attack_bonus,
         detail: format!(
-            "Wolf companion base attack bonus at companion level {companion_hd} HD (PF1 Core \
-             Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
-             {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, Str \
-             {WOLF_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone record; the \
-             companion is a separate creature, not integrated into the {owner_class_label}'s own \
-             combat totals"
+            "Wolf companion base attack bonus at {companion_hd} HD (PF1 Core Rulebook Animal \
+             Companion Base Statistics: HD*3/4 = {companion_base_attack_bonus}) + Strength \
+             modifier ({strength_modifier:+}, Str {strength_score} = base \
+             {WOLF_COMPANION_STRENGTH_SCORE} + {strength_bonus} from the companion class's own \
+             floor(master level/3) Strength/Dexterity advance) = {companion_attack_bonus}. \
+             Standalone record; the companion is a separate creature, not integrated into the \
+             {owner_class_label}'s own combat totals"
         ),
     });
     explanations.push(ComputationExplanation {
@@ -5790,14 +5910,18 @@ fn ground_wolf_companion_stat_block(
     });
     explanations.push(ComputationExplanation {
         id: format!("{id_prefix}.armor_class"),
-        value: 10 + WOLF_COMPANION_NATURAL_ARMOR,
+        value: companion_armor_class,
         detail: format!(
-            "Wolf companion armor class: base 10 + natural armor (+{WOLF_COMPANION_NATURAL_ARMOR}) \
-             = {}. Verified against 2 of 3 sources (aonprd.com's own Wolf companion page and the \
-             PCGen corpus, which disagreed with d20pfsrd's +1 figure; resolved in favor of the \
-             majority, the corpus citing Core Rulebook p.56 directly). Standalone record; \
-             Dexterity's own contribution to the companion's AC is not grounded this slice",
-            10 + WOLF_COMPANION_NATURAL_ARMOR
+            "Wolf companion armor class: base 10 + natural armor (+{natural_armor} = the Wolf \
+             race's own base +{WOLF_COMPANION_NATURAL_ARMOR} plus \
+             +{} from the companion class's own 2*floor(master level/3) natural-armor advance) \
+             = {companion_armor_class}. The base figure was verified against 2 of 3 sources \
+             (aonprd.com's own Wolf companion page and the PCGen corpus, which disagreed with \
+             d20pfsrd's +1 figure; resolved in favor of the majority, the corpus citing Core \
+             Rulebook p.56 directly). Standalone record; Dexterity's own contribution to the \
+             companion's AC is not grounded, so the Dexterity half of the same advance is \
+             deliberately not applied either",
+            animal_companion_natural_armor_bonus(companion_level)
         ),
     });
     explanations.push(ComputationExplanation {
@@ -5818,10 +5942,11 @@ fn ground_wolf_companion_stat_block(
         value: companion_hp,
         detail: format!(
             "Wolf companion hit points at {companion_hd} HD (d{WOLF_COMPANION_HIT_DIE_SIZE}): \
-             maximized first Hit Die plus average for the second (this codebase's own \
-             established HP idiom, durability.rs's compute_max_hp), each plus the companion's \
-             Constitution modifier ({constitution_modifier:+}, Con \
-             {WOLF_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
+             maximized first Hit Die plus average for each of the remaining {} (this codebase's \
+             own established HP idiom, durability.rs's compute_max_hp), each plus the \
+             companion's Constitution modifier ({constitution_modifier:+}, Con \
+             {WOLF_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}",
+            companion_hd.saturating_sub(1)
         ),
     });
 }
@@ -5877,9 +6002,14 @@ fn ground_wolf_companion_link_and_share_spells_vacuous(
 /// reusing the Wolf-named function directly so neither this function's
 /// name nor its own future evolution ever risks touching Druid's/
 /// Hunter's already-shipped Wolf call sites.
+///
+/// The corpus confirms the progression really is shared: `CavalierMountLVL`
+/// (`advanced_players_guide/apg_companionmods.lst:75-93`) grants its Hit
+/// Dice at exactly the same fourteen master levels as the CRB animal
+/// companion's own `AnimalCompanionLVL` block, so both species names read
+/// the single `ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL` table.
 fn horse_companion_hit_dice(companion_level: u8) -> u8 {
-    debug_assert_eq!(companion_level, 1, "only companion level 1 is grounded this slice");
-    2
+    ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[animal_companion_table_index(companion_level)]
 }
 
 /// Grounds the Horse companion's standalone stat block as explanation
@@ -5901,7 +6031,15 @@ fn ground_horse_companion_stat_block(
     let companion_base_attack_bonus = companion_hd_value * 3 / 4;
     let companion_fort_ref_save = companion_hd_value / 2 + 2;
     let companion_will_save = companion_hd_value / 3;
-    let strength_modifier = ability_modifier(HORSE_COMPANION_STRENGTH_SCORE);
+    // Same corpus advance as the Wolf block's own -- the Cavalier Mount
+    // companionmod block spells it out level by level rather than as a
+    // formula, but resolves to the identical numbers.
+    let strength_bonus = animal_companion_stat_bonus(companion_level);
+    let strength_score = HORSE_COMPANION_STRENGTH_SCORE + strength_bonus;
+    let natural_armor = HORSE_COMPANION_NATURAL_ARMOR
+        + animal_companion_natural_armor_bonus(companion_level);
+    let companion_armor_class = 10 + natural_armor;
+    let strength_modifier = ability_modifier(strength_score);
     let constitution_modifier = ability_modifier(HORSE_COMPANION_CONSTITUTION_SCORE);
     let companion_attack_bonus = companion_base_attack_bonus + strength_modifier;
     // Primary natural attack: 1.5x Strength modifier, floored (PF1 Core
@@ -5917,11 +6055,11 @@ fn ground_horse_companion_stat_block(
     // primary/secondary natural-attack Strength-multiplier distinction
     // is modeled anywhere in this codebase).
     let companion_hoof_damage_bonus = (strength_modifier * 3) / 2;
-    let companion_max_first_hit_die = i16::from(HORSE_COMPANION_HIT_DIE_SIZE);
-    let companion_average_second_hit_die =
-        crate::rules_core::durability::average_hit_die_value(HORSE_COMPANION_HIT_DIE_SIZE);
-    let companion_hp = (companion_max_first_hit_die + constitution_modifier)
-        + (companion_average_second_hit_die + constitution_modifier);
+    let companion_hp = animal_companion_hit_points(
+        companion_hd,
+        HORSE_COMPANION_HIT_DIE_SIZE,
+        constitution_modifier,
+    );
 
     explanations.push(ComputationExplanation {
         id: format!("{id_prefix}.horse_stat_block"),
@@ -5945,11 +6083,12 @@ fn ground_horse_companion_stat_block(
         id: format!("{id_prefix}.base_attack_bonus"),
         value: companion_attack_bonus,
         detail: format!(
-            "Horse companion base attack bonus at companion level {companion_hd} HD (PF1 Core \
-             Rulebook Animal Companion Base Statistics: classlevel*3/4 = \
-             {companion_base_attack_bonus}) + Strength modifier ({strength_modifier:+}, Str \
-             {HORSE_COMPANION_STRENGTH_SCORE}) = {companion_attack_bonus}. Standalone record; \
-             the companion is a separate creature, not integrated into the \
+            "Horse companion base attack bonus at {companion_hd} HD (PF1 Core Rulebook Animal \
+             Companion Base Statistics: HD*3/4 = {companion_base_attack_bonus}) + Strength \
+             modifier ({strength_modifier:+}, Str {strength_score} = base \
+             {HORSE_COMPANION_STRENGTH_SCORE} + {strength_bonus} from the companion class's own \
+             floor(master level/3) Strength/Dexterity advance) = {companion_attack_bonus}. \
+             Standalone record; the companion is a separate creature, not integrated into the \
              {owner_class_label}'s own combat totals"
         ),
     });
@@ -5984,17 +6123,19 @@ fn ground_horse_companion_stat_block(
     });
     explanations.push(ComputationExplanation {
         id: format!("{id_prefix}.armor_class"),
-        value: 10 + HORSE_COMPANION_NATURAL_ARMOR,
+        value: companion_armor_class,
         detail: format!(
-            "Horse companion armor class: base 10 + natural armor \
-             (+{HORSE_COMPANION_NATURAL_ARMOR}) = {}. Verified against aonprd.com's own Horse \
-             companion page, backed directly by the PCGen corpus's \
+            "Horse companion armor class: base 10 + natural armor (+{natural_armor} = the Horse \
+             race's own base +{HORSE_COMPANION_NATURAL_ARMOR} plus +{} from the companion \
+             class's own 2*floor(master level/3) natural-armor advance) = \
+             {companion_armor_class}. The base figure was verified against aonprd.com's own \
+             Horse companion page, backed directly by the PCGen corpus's \
              BONUS:VAR|AC_Natural_Armor|4|TYPE=Base (cr_races_companion.lst:21) -- d20pfsrd's \
              own +1 figure disagreed and was rejected as the uncorroborated minority reading, \
              the same resolution methodology as Wolf's own natural-armor question. Standalone \
-             record; Dexterity's own contribution to the companion's AC is not grounded this \
-             slice",
-            10 + HORSE_COMPANION_NATURAL_ARMOR
+             record; Dexterity's own contribution to the companion's AC is not grounded, so the \
+             Dexterity half of the same advance is deliberately not applied either",
+            animal_companion_natural_armor_bonus(companion_level)
         ),
     });
     explanations.push(ComputationExplanation {
@@ -6019,10 +6160,11 @@ fn ground_horse_companion_stat_block(
         value: companion_hp,
         detail: format!(
             "Horse companion hit points at {companion_hd} HD (d{HORSE_COMPANION_HIT_DIE_SIZE}): \
-             maximized first Hit Die plus average for the second (this codebase's own \
-             established HP idiom, durability.rs's compute_max_hp), each plus the companion's \
-             Constitution modifier ({constitution_modifier:+}, Con \
-             {HORSE_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}"
+             maximized first Hit Die plus average for each of the remaining {} (this codebase's \
+             own established HP idiom, durability.rs's compute_max_hp), each plus the \
+             companion's Constitution modifier ({constitution_modifier:+}, Con \
+             {HORSE_COMPANION_CONSTITUTION_SCORE}) = {companion_hp}",
+            companion_hd.saturating_sub(1)
         ),
     });
 }
@@ -6062,6 +6204,302 @@ fn ground_horse_companion_link_vacuous(
              never has"
         ),
     });
+}
+
+#[cfg(test)]
+mod animal_companion_progression_tests {
+    use super::{
+        ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL, MAX_ANIMAL_COMPANION_MASTER_LEVEL,
+        animal_companion_natural_armor_bonus, animal_companion_stat_bonus,
+        horse_companion_hit_dice, wolf_companion_hit_dice,
+    };
+
+    /// The real PF1 Core Rulebook "Animal Companion Base Statistics" Hit
+    /// Dice column, transcribed from the PCGen corpus rather than from
+    /// memory.
+    ///
+    /// Derivation, from two independent corpus encodings that agree:
+    ///
+    /// 1. Every CRB companion race carries `MONSTERCLASS:Companion:2`
+    ///    (`core_rulebook/cr_races_companion.lst`, all 38 companion races;
+    ///    Wolf at line 32, Horse at line 21) -- a 2 HD floor even for a
+    ///    1st-level master.
+    /// 2. `core_rulebook/cr_companionmods.lst:11-24` grants exactly one
+    ///    additional Hit Die (`HD:1`) at master levels 2, 4, 5, 6, 8, 9,
+    ///    10, 12, 13, 14, 16, 17, 18 and 20 -- and nowhere else.
+    ///
+    /// The identical 14-level list is repeated by every other companion
+    /// progression variable in the whole corpus (`CavalierMountLVL` at
+    /// `advanced_players_guide/apg_companionmods.lst:75-93`,
+    /// `SpecialMountLVL` at `core_rulebook/cr_companionmods.lst:34-47`,
+    /// plus `BeastRiderLvl`, `FeatheredCompanionLvl`, `EmpyrealCompanion`
+    /// and all twenty Packmaster `AnimalCompanionLVL{A..T}` variants), so
+    /// this is one universal progression, not a per-class one.
+    const CORPUS_HIT_DICE_BY_MASTER_LEVEL: [u8; 20] =
+        [2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15, 16];
+
+    #[test]
+    fn the_hit_dice_table_matches_the_corpus_at_every_master_level() {
+        assert_eq!(
+            ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL, CORPUS_HIT_DICE_BY_MASTER_LEVEL,
+            "the shipped Hit Dice table must be the corpus's own progression"
+        );
+    }
+
+    /// Both species-named lookups must return the one universal
+    /// progression at every master level 1-20 -- the whole point of this
+    /// widening. Previously both hardcoded 2 and `debug_assert`ed that the
+    /// master level was 1.
+    #[test]
+    fn both_species_lookups_return_the_corpus_progression_at_every_master_level() {
+        for (index, &expected) in CORPUS_HIT_DICE_BY_MASTER_LEVEL.iter().enumerate() {
+            let master_level = u8::try_from(index + 1).expect("1..=20 fits in u8");
+            assert_eq!(
+                wolf_companion_hit_dice(master_level),
+                expected,
+                "Wolf companion Hit Dice at master level {master_level}"
+            );
+            assert_eq!(
+                horse_companion_hit_dice(master_level),
+                expected,
+                "Horse companion Hit Dice at master level {master_level}"
+            );
+        }
+    }
+
+    /// The progression is monotonic and never advances more than one Hit
+    /// Die per master level -- a cheap structural guard against a
+    /// transcription typo that happens to keep the endpoints right.
+    #[test]
+    fn the_hit_dice_progression_never_regresses_and_spans_two_to_sixteen() {
+        assert_eq!(
+            ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[0], 2,
+            "a 1st-level master's companion has 2 HD"
+        );
+        assert_eq!(
+            ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL[19], 16,
+            "a 20th-level master's companion has 16 HD"
+        );
+        for window in ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL.windows(2) {
+            let [earlier, later] = window else { unreachable!("windows(2) yields pairs") };
+            assert!(later >= earlier, "Hit Dice must never regress: {earlier} -> {later}");
+            assert!(later - earlier <= 1, "Hit Dice advance at most one per master level");
+        }
+    }
+
+    /// `BONUS:COMBAT|AC|2*floor(MasterLevel/3)|TYPE=NaturalArmor.STACK`
+    /// (`core_rulebook/cr_abilities_companion.lst:59`, the shared
+    /// `Animal Companion ~ AC Bonus` record reached by BOTH
+    /// `Base Companion ~ Animal Companion` and
+    /// `Base Companion ~ Special Mount`), independently confirmed by the
+    /// Cavalier Mount block's own inline `BONUS:VAR|AC_Natural_Armor|2`
+    /// at master levels 3, 6, 9, 12, 15 and 18
+    /// (`advanced_players_guide/apg_companionmods.lst:76,79,82,85,88,91`).
+    #[test]
+    fn the_natural_armor_bonus_matches_the_corpus_formula() {
+        for (master_level, expected) in [
+            (1u8, 0i16),
+            (2, 0),
+            (3, 2),
+            (5, 2),
+            (6, 4),
+            (9, 6),
+            (12, 8),
+            (15, 10),
+            (18, 12),
+            (20, 12),
+        ] {
+            assert_eq!(
+                animal_companion_natural_armor_bonus(master_level),
+                expected,
+                "natural armor bonus at master level {master_level}: 2*floor({master_level}/3)"
+            );
+        }
+    }
+
+    /// `BONUS:STAT|STR,DEX|floor(MasterLevel/3)`
+    /// (`core_rulebook/cr_abilities_companion.lst:60`), independently
+    /// confirmed by the Cavalier Mount block's own inline
+    /// `BONUS:STAT|STR,DEX|1` at the same six master levels.
+    #[test]
+    fn the_strength_and_dexterity_bonus_matches_the_corpus_formula() {
+        for (master_level, expected) in [
+            (1u8, 0i16),
+            (2, 0),
+            (3, 1),
+            (5, 1),
+            (6, 2),
+            (9, 3),
+            (12, 4),
+            (15, 5),
+            (18, 6),
+            (20, 6),
+        ] {
+            assert_eq!(
+                animal_companion_stat_bonus(master_level),
+                expected,
+                "Str/Dex bonus at master level {master_level}: floor({master_level}/3)"
+            );
+        }
+    }
+
+    /// The table covers exactly the domain the corpus defines: master
+    /// levels 1-20 (`MAXLEVEL:20` on `CLASS:Companion`).
+    #[test]
+    fn the_table_covers_exactly_the_corpus_domain() {
+        assert_eq!(ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL.len(), 20);
+        assert_eq!(MAX_ANIMAL_COMPANION_MASTER_LEVEL, 20);
+    }
+
+    /// The old `debug_assert_eq!(companion_level, 1, "only companion level
+    /// 1 is grounded this slice")` was REPLACED, not deleted: a master
+    /// level outside the progression's own 1-20 domain is still a caller
+    /// bug and still trips in debug/test builds. What changed is the
+    /// domain it enforces -- the progression's real one instead of a
+    /// single level.
+    #[test]
+    #[should_panic(expected = "outside the corpus progression's own 1-20 domain")]
+    fn a_master_level_below_the_domain_still_trips_the_guard() {
+        let _ = wolf_companion_hit_dice(0);
+    }
+
+    /// The same guard, at the top end, through the other species name --
+    /// so neither lookup can quietly lose it.
+    #[test]
+    #[should_panic(expected = "outside the corpus progression's own 1-20 domain")]
+    fn a_master_level_above_the_domain_still_trips_the_guard() {
+        let _ = horse_companion_hit_dice(MAX_ANIMAL_COMPANION_MASTER_LEVEL + 1);
+    }
+
+    /// In a RELEASE build the `debug_assert` above compiles out, so the
+    /// clamp underneath it is what actually protects the index. It
+    /// saturates onto the nearest real row. This is the half of the fix
+    /// that matters most: the old guard's release behaviour was to hand a
+    /// 20th-level master's companion a 1st-level companion's Hit Dice,
+    /// which is a wrong number shipping to users rather than a loud
+    /// failure.
+    ///
+    /// Exercised through the two unguarded scaling helpers, which share
+    /// the identical clamp and can be called at out-of-domain levels
+    /// without tripping the debug guard.
+    #[test]
+    fn out_of_domain_master_levels_clamp_onto_the_real_table() {
+        assert_eq!(animal_companion_natural_armor_bonus(0), 0, "below 1st clamps to the 1st-level row");
+        assert_eq!(animal_companion_stat_bonus(0), 0, "below 1st clamps to the 1st-level row");
+        assert_eq!(
+            animal_companion_natural_armor_bonus(MAX_ANIMAL_COMPANION_MASTER_LEVEL + 1),
+            animal_companion_natural_armor_bonus(MAX_ANIMAL_COMPANION_MASTER_LEVEL),
+            "past 20th clamps onto the 20th-level row rather than running away"
+        );
+        assert_eq!(
+            animal_companion_stat_bonus(MAX_ANIMAL_COMPANION_MASTER_LEVEL + 1),
+            animal_companion_stat_bonus(MAX_ANIMAL_COMPANION_MASTER_LEVEL),
+            "past 20th clamps onto the 20th-level row rather than running away"
+        );
+    }
+}
+
+/// End-to-end pins on the companion stat blocks the three consumer
+/// classes actually emit, at the low, middle and top of the progression.
+/// Separate from the pure-table tests above so a regression names itself:
+/// a broken table fails there, a broken stat-block assembly fails here.
+#[cfg(test)]
+mod animal_companion_stat_block_tests {
+    use super::{ComputationExplanation, ground_horse_companion_stat_block, ground_wolf_companion_stat_block};
+
+    fn value_of(explanations: &[ComputationExplanation], id: &str) -> i16 {
+        explanations
+            .iter()
+            .find(|explanation| explanation.id == id)
+            .unwrap_or_else(|| panic!("expected a `{id}` record; got {:?}", explanations.iter().map(|e| &e.id).collect::<Vec<_>>()))
+            .value
+    }
+
+    /// Druid and Hunter share the Wolf stat block, and both use their own
+    /// class level as the companion's master level unshifted (Druid via
+    /// `CompanionMasterLVL_Druid|DruidLVL`,
+    /// `core_rulebook/cr_abilities_class.lst:772`; Hunter via
+    /// "the hunter's effective druid level is equal to her hunter level",
+    /// `advanced_class_guide/acg_abilities_class.lst:1171`), so one set of
+    /// expected values covers both -- asserted for both owners rather than
+    /// assumed.
+    ///
+    /// Wolf base Str 13, Con 15 (+2), natural armor +2, d8 Hit Dice.
+    #[test]
+    fn the_wolf_stat_block_is_right_at_the_bottom_middle_and_top_of_the_progression() {
+        // (master level, HD, base attack bonus incl. Str, Fort/Ref, Will, AC, bite damage, HP)
+        for (master_level, hit_dice, attack, fort_ref, will, armor_class, bite, hit_points) in [
+            (1u8, 2u8, 2i16, 3i16, 0i16, 12i16, 1i16, 17i16),
+            (7, 6, 6, 5, 2, 16, 3, 45),
+            (20, 16, 16, 10, 5, 24, 6, 115),
+        ] {
+            assert_eq!(
+                super::wolf_companion_hit_dice(master_level),
+                hit_dice,
+                "Wolf Hit Dice at master level {master_level}"
+            );
+            for owner in ["Druid", "Hunter"] {
+                let mut explanations = Vec::new();
+                ground_wolf_companion_stat_block("companion", owner, master_level, &mut explanations);
+                let at = |id: &str| value_of(&explanations, id);
+                assert_eq!(at("companion.base_attack_bonus"), attack, "{owner} L{master_level} attack");
+                assert_eq!(at("companion.base_save.fortitude"), fort_ref, "{owner} L{master_level} Fort");
+                assert_eq!(at("companion.base_save.reflex"), fort_ref, "{owner} L{master_level} Ref");
+                assert_eq!(at("companion.base_save.will"), will, "{owner} L{master_level} Will");
+                assert_eq!(at("companion.armor_class"), armor_class, "{owner} L{master_level} AC");
+                assert_eq!(at("companion.bite_attack"), bite, "{owner} L{master_level} bite damage");
+                assert_eq!(at("companion.hit_points"), hit_points, "{owner} L{master_level} HP");
+            }
+        }
+    }
+
+    /// Cavalier's Mount, whose effective druid level is likewise his own
+    /// cavalier level (`BONUS:VAR|CompanionMasterLVL_Cavalier|CavalierLVL`,
+    /// `advanced_players_guide/apg_abilities_class.lst:194`).
+    ///
+    /// Horse base Str 16, Con 15 (+2), natural armor +4, d8 Hit Dice --
+    /// so the Hit Dice, saves and hit points match the Wolf's exactly,
+    /// while the Strength- and natural-armor-derived numbers do not.
+    #[test]
+    fn the_horse_mount_stat_block_is_right_at_the_bottom_middle_and_top_of_the_progression() {
+        for (master_level, hit_dice, attack, fort_ref, will, armor_class, hoof, hit_points) in [
+            (1u8, 2u8, 4i16, 3i16, 0i16, 14i16, 4i16, 17i16),
+            (7, 6, 8, 5, 2, 18, 6, 45),
+            (20, 16, 18, 10, 5, 26, 9, 115),
+        ] {
+            assert_eq!(
+                super::horse_companion_hit_dice(master_level),
+                hit_dice,
+                "Horse Hit Dice at master level {master_level}"
+            );
+            let mut explanations = Vec::new();
+            ground_horse_companion_stat_block("mount", "Cavalier", master_level, &mut explanations);
+            let at = |id: &str| value_of(&explanations, id);
+            assert_eq!(at("mount.base_attack_bonus"), attack, "Cavalier L{master_level} attack");
+            assert_eq!(at("mount.base_save.fortitude"), fort_ref, "Cavalier L{master_level} Fort");
+            assert_eq!(at("mount.base_save.reflex"), fort_ref, "Cavalier L{master_level} Ref");
+            assert_eq!(at("mount.base_save.will"), will, "Cavalier L{master_level} Will");
+            assert_eq!(at("mount.armor_class"), armor_class, "Cavalier L{master_level} AC");
+            assert_eq!(at("mount.hoof_attack"), hoof, "Cavalier L{master_level} hoof damage");
+            assert_eq!(at("mount.hit_points"), hit_points, "Cavalier L{master_level} HP");
+        }
+    }
+
+    /// The level-1 outputs must be byte-for-byte what shipped before this
+    /// widening -- `floor(1/3)` is 0 for both the natural-armor and the
+    /// Strength advance, so no previously-verified value moved.
+    #[test]
+    fn level_one_output_is_unchanged_by_the_widening() {
+        let mut wolf = Vec::new();
+        ground_wolf_companion_stat_block("companion", "Druid", 1, &mut wolf);
+        assert_eq!(value_of(&wolf, "companion.armor_class"), 12, "Wolf base natural armor +2");
+        assert_eq!(value_of(&wolf, "companion.base_attack_bonus"), 2, "Wolf: HD*3/4 = 1, Str 13 = +1");
+
+        let mut horse = Vec::new();
+        ground_horse_companion_stat_block("mount", "Cavalier", 1, &mut horse);
+        assert_eq!(value_of(&horse, "mount.armor_class"), 14, "Horse base natural armor +4");
+        assert_eq!(value_of(&horse, "mount.base_attack_bonus"), 4, "Horse: HD*3/4 = 1, Str 16 = +3");
+    }
 }
 
 
@@ -9545,12 +9983,22 @@ fn ground_cavalier_mount_and_defer_the_rest(
     ground_cavalier_named_features(input, level, explanations, diagnostics);
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cavalier.mount.advancement_absent".to_owned(),
-        message: "Cavalier Mount advancement past companion level 1 (2 HD) is not grounded: \
-                   this bounded seam only computes Cavalier level 1, the companion's only \
-                   verified level, mirroring Druid's/Hunter's own identical advancement gap. \
-                   Light Armor Proficiency and \"combat trained\"/no-armor-check-penalty-on-\
-                   Ride grants are also not grounded: this codebase computes no Ride check and \
-                   no armor-proficiency-gated-benefit engine at all"
+        message: "Cavalier Mount advancement is grounded for every column that has a consumer \
+                   in this engine -- Hit Dice across all twenty master levels (2 HD at 1st \
+                   through 16 HD at 20th; apg_companionmods.lst:75-93 grants them at exactly \
+                   the same fourteen levels as the Core Rulebook animal companion's own block, \
+                   and the cavalier's effective druid level is simply his cavalier level), and \
+                   with them base attack bonus, all three base saves and hit points, plus the \
+                   natural-armor and Strength advances the armor-class and attack/damage \
+                   records consume. Deliberately NOT grounded, because nothing in this codebase \
+                   consumes them: the Dexterity half of the stat advance, bonus tricks, the \
+                   Mount's skill ranks and feats, the player-chosen Companion Stat Increase at \
+                   master levels 4/9/14/20, the optional species size advance offered from \
+                   master level 4 for a Horse, and the named abilities Evasion (3rd), Devotion \
+                   (6th), Multiattack (9th) and Improved Evasion (16th). Light Armor \
+                   Proficiency and \"combat trained\"/no-armor-check-penalty-on-Ride grants \
+                   likewise stay ungrounded: this codebase computes no Ride check and no \
+                   armor-proficiency-gated-benefit engine at all"
             .to_owned(),
         claim_blocking: false,
     });
@@ -19472,21 +19920,21 @@ mod hunter_remaining_features_tests {
     /// Exercises the pure grounding function directly rather than through
     /// `build_pilot_headless_receipt`.
     ///
-    /// **Deliberate, and worth the explanation:** the full-receipt path
-    /// runs Hunter's animal-companion slice, which carries a
-    /// `debug_assert_eq!(companion_level, 1, "only companion level 1 is
-    /// grounded this slice")`. That bound is real, pre-existing and
-    /// unrelated to these features -- it is about the companion's own stat
-    /// block, not about Hunter's class-feature progression -- but it makes
-    /// every above-level-1 Hunter receipt panic under `cfg(test)`. Routing
-    /// these tests through it would test that limitation rather than these
-    /// magnitudes. `ground_hunter_remaining_features` is a pure
-    /// `level -> records` function, so calling it directly tests exactly
-    /// what this slice grounds and nothing else.
+    /// **Deliberate, and worth the explanation:** these are pure
+    /// `level -> records` magnitudes, so calling
+    /// `ground_hunter_remaining_features` directly tests exactly what this
+    /// slice grounds and nothing else, without dragging the whole receipt
+    /// pipeline into a class-feature magnitude assertion.
     ///
-    /// Note the records themselves are NOT dead above level 1: the guard
-    /// is a `debug_assert`, compiled out in release, so production does
-    /// reach these levels.
+    /// Historical note: this indirection was originally forced, not
+    /// merely preferred. Hunter's animal-companion slice used to carry a
+    /// `debug_assert_eq!(companion_level, 1, "only companion level 1 is
+    /// grounded this slice")`, which made every above-level-1 Hunter
+    /// receipt panic under `cfg(test)`. That bound is gone -- the
+    /// companion's Hit Dice now come from the real corpus progression at
+    /// every master level 1-20 -- so the full-receipt path would work
+    /// here now. The direct call is kept because it is still the sharper
+    /// test.
     fn value(level: u8, id: &str) -> Option<i16> {
         let mut explanations = Vec::new();
         ground_hunter_remaining_features(level, &mut explanations);
@@ -19650,9 +20098,20 @@ fn ground_hunter_animal_companion_and_defer_the_rest(
     );
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.hunter.animal_companion.advancement_absent".to_owned(),
-        message: "Hunter animal companion advancement past companion level 1 (2 HD) is not \
-                   grounded: this bounded seam only computes Hunter level 1, the companion's \
-                   only verified level, mirroring Druid's own identical advancement gap"
+        message: "Hunter animal companion advancement is grounded for every column that has a \
+                   consumer in this engine -- Hit Dice across all twenty master levels (2 HD at \
+                   1st through 16 HD at 20th; the hunter's effective druid level is equal to \
+                   her hunter level, acg_abilities_class.lst:1171, so she reads the Core \
+                   Rulebook companion progression unshifted), and with them base attack bonus, \
+                   all three base saves and hit points, plus the natural-armor and Strength \
+                   advances the armor-class and attack/damage records consume. Deliberately NOT \
+                   grounded, because nothing in this codebase consumes them: the Dexterity half \
+                   of the stat advance, bonus tricks, the companion's skill ranks and feats, \
+                   the player-chosen Companion Stat Increase at master levels 4/9/14/20, the \
+                   optional species size advance offered from master level 7 for a Wolf, the \
+                   named abilities Evasion (3rd), Devotion (6th), Multiattack (9th), Spell \
+                   Resistance (15th) and Improved Evasion (16th), and the hunter-specific \
+                   skirmisher tricks her companion may use (no trick engine exists)"
             .to_owned(),
         claim_blocking: false,
     });
@@ -32405,15 +32864,21 @@ fn explain_druid_level1_spell_baseline(
         // adversarially reviewed 2026-07-25): the animal-companion burden
         // is no longer flatly unconditional for every Druid -- an animal
         // companion's own stat block (Wolf, the canonical species) can
-        // genuinely close it at Druid level 1, the only companion level
-        // this slice has verified data for. The catch-all below (no
-        // nature bond chosen, a domain-type bond chosen -- never
-        // recognized by this seam -- or Druid level != 1) preserves the
-        // EXACT original unconditional diagnostic unchanged, mirroring
-        // the Cleric review's catch-all-preservation requirement exactly:
-        // no input this seam didn't specifically improve can silently
-        // reach Computed.
-        if animal_companion_chosen_top && druid_level == 1 {
+        // genuinely close it. The catch-all below (no nature bond chosen,
+        // or a domain-type bond chosen -- never recognized by this seam)
+        // preserves the EXACT original unconditional diagnostic unchanged,
+        // mirroring the Cleric review's catch-all-preservation requirement
+        // exactly: no input this seam didn't specifically improve can
+        // silently reach Computed.
+        //
+        // The former `&& druid_level == 1` half of this gate is gone: the
+        // companion's Hit Dice progression is now read from the real
+        // corpus table at every master level 1-20
+        // (`ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL`), together with the
+        // natural-armor and Strength advances that scale off the same
+        // master level, so there is no longer a level at which this seam
+        // would have to guess.
+        if animal_companion_chosen_top {
             // v0.6 alpha swarm, risks item 8 (fourth APG/ACG closure):
             // extracted into shared helpers so Hunter's own animal
             // companion (mechanically identical -- see
@@ -32434,10 +32899,23 @@ fn explain_druid_level1_spell_baseline(
             );
             diagnostics.push(ComputationDiagnostic {
                 id: "class_feature.druid.animal_companion.advancement_absent".to_owned(),
-                message: "Druid animal companion advancement past companion level 1 (2 HD) is \
-                     not grounded: this bounded seam only computes Druid level 1, the companion's \
-                     only verified level. A future Druid level-range widening must revisit this, \
-                     the same split Sorcerer's own bonus-spells-at-3rd+ level required"
+                message: "Druid animal companion advancement is grounded for every column that \
+                     has a consumer in this engine -- Hit Dice across all twenty master levels \
+                     (2 HD at 1st through 16 HD at 20th, the corpus's own \
+                     cr_companionmods.lst progression), and with them base attack bonus, all \
+                     three base saves and hit points, plus the natural-armor and Strength \
+                     advances (2*floor(level/3) and floor(level/3), \
+                     cr_abilities_companion.lst:59-60) that the armor-class and attack/damage \
+                     records consume. Deliberately NOT grounded, because nothing in this \
+                     codebase consumes them: the Dexterity half of the same stat advance (no \
+                     Dexterity-to-companion-AC contribution is computed at all), bonus tricks \
+                     (1+floor(level/3) -- no trick engine), the companion's skill ranks and \
+                     feats (no companion skill or feat engine), the player-chosen Companion \
+                     Stat Increase at master levels 4/9/14/20 (a chooser input with no \
+                     canonical default), the optional species size advance offered from master \
+                     level 7 for a Wolf, and the named abilities Evasion (3rd), Devotion (6th), \
+                     Multiattack (9th), Spell Resistance (15th) and Improved Evasion (16th), \
+                     none of which has an engine to act on"
                     .to_owned(),
                 claim_blocking: false,
             });
@@ -41694,11 +42172,20 @@ mod druid_dispatch_widening_safety_tests {
         );
     }
 
-    /// A Druid at a level OTHER than 1 with an animal companion chosen
-    /// still falls through to the unchanged catch-all -- companion
-    /// advancement past level 1 is not grounded this slice.
+    /// A Druid above 1st level with an animal companion chosen now reaches
+    /// Computed too. This test previously asserted the opposite -- that
+    /// level 5 fell through to the blocking catch-all -- because the
+    /// companion's Hit Dice were hardcoded to a 1st-level master's 2 HD.
+    /// The progression is now read from the real corpus table at every
+    /// master level, so the level gate is gone and the values below are
+    /// the genuine 5th-level ones, not the 1st-level ones.
+    ///
+    /// Wolf at master level 5: 5 HD, so base attack 5*3/4 = 3 plus a
+    /// Strength modifier of +2 (base Str 13 + floor(5/3) = 14) = +5;
+    /// Fortitude/Reflex 5/2+2 = +4; Will 5/3 = +1; armor class 10 + (2
+    /// base natural armor + 2*floor(5/3)) = 14.
     #[test]
-    fn single_class_druid_level5_with_animal_companion_still_blocks_on_the_catch_all() {
+    fn single_class_druid_level5_with_animal_companion_reaches_computed() {
         let input = human_druid_input_with_nature_bond(
             5,
             Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID),
@@ -41706,15 +42193,28 @@ mod druid_dispatch_widening_safety_tests {
 
         let receipt = build_pilot_headless_receipt(&input);
 
-        assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        let value_of = |id: &str| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected a `{id}` record"))
+                .value
+        };
+        assert_eq!(value_of("class_chassis.druid.animal_companion.base_attack_bonus"), 5);
+        assert_eq!(value_of("class_chassis.druid.animal_companion.base_save.fortitude"), 4);
+        assert_eq!(value_of("class_chassis.druid.animal_companion.base_save.will"), 1);
+        assert_eq!(value_of("class_chassis.druid.animal_companion.armor_class"), 14);
         assert!(
             receipt
                 .computation
                 .diagnostics
                 .iter()
-                .any(|d| d.id == "class_feature.druid.animal_companion.unsupported"
-                    && d.claim_blocking),
-            "companion advancement past level 1 must still trip the catch-all: {:?}",
+                .any(|d| d.id == "class_feature.druid.animal_companion.advancement_absent"
+                    && !d.claim_blocking),
+            "the columns with no consumer stay named in a non-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -43590,11 +44090,12 @@ mod hunter_dispatch_widening_safety_tests {
 
     /// Wild Empathy is unconditional the moment Hunter levels are present
     /// -- no choice, no activation gate. Fixture: CHA 8 -> -1 modifier.
-    /// Level 1: -1 + 1 = 0. (Hunter's own Animal Companion math is only
-    /// verified at level 1 in this codebase -- see
-    /// `wolf_companion_hit_dice`'s own `debug_assert_eq!` -- so the full
-    /// end-to-end pipeline can only be exercised at level 1; the formula's
-    /// own level-scaling is proven separately below via a direct,
+    /// Level 1: -1 + 1 = 0. (This test stays at level 1 because that is
+    /// the fixture's own level, not because of any companion limitation:
+    /// Hunter's Animal Companion math is now grounded at every master
+    /// level 1-20 from the real corpus progression, so the end-to-end
+    /// pipeline no longer panics above level 1. Wild Empathy's own
+    /// level-scaling is proven separately below via a direct,
     /// pipeline-free unit test.)
     #[test]
     fn single_class_hunter_gets_the_unconditional_wild_empathy_bonus() {
@@ -52045,11 +52546,14 @@ mod cavalier_named_feature_tests {
     /// Expert Trainer is a 4th-level feature and must not ground before
     /// its own gate.
     ///
-    /// Pipeline assertions stay at level 1: `ground_horse_companion_stat_block`
-    /// carries a pre-existing `debug_assert` that only companion level 1
-    /// is grounded, a documented boundary predating this closure (Hunter
-    /// hit the identical one). Higher levels are exercised through the
-    /// pure formula instead of expanding that unrelated limitation.
+    /// Pipeline assertions stay at level 1 and higher levels are exercised
+    /// through the pure formula. This used to be forced --
+    /// `ground_horse_companion_stat_block` carried a `debug_assert` that
+    /// only companion level 1 was grounded (Hunter hit the identical one)
+    /// -- but that boundary is gone now that the companion's Hit Dice come
+    /// from the real corpus progression at every master level 1-20. The
+    /// split is kept because the pure formula is the sharper assertion for
+    /// a per-level magnitude.
     #[test]
     fn expert_trainer_grounds_only_from_fourth_level() {
         assert_eq!(

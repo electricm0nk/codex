@@ -102,8 +102,18 @@ says so) — they are recognized as no-ops rather than executed. That is still
 throughout, but the corrected text should say so rather than imply full
 execution.
 
-Advancement genuinely is absent, and already has its own honest non-blocking
-record (`class_feature.druid.animal_companion.advancement_absent`).
+Advancement is now grounded for every column that has a consumer — Hit Dice
+across all twenty master levels (2 HD at 1st through 16 HD at 20th, from the
+corpus's own `cr_companionmods.lst` progression), and with them base attack
+bonus, all three base saves and hit points, plus the natural-armor and Strength
+advances that the armor-class and attack/damage records consume. The columns
+with no consumer in this engine (the Dexterity half of the stat advance, bonus
+tricks, companion skills and feats, the player-chosen Companion Stat Increase,
+the optional species size advance, and the named Evasion/Devotion/Multiattack/
+Spell Resistance/Improved Evasion abilities) stay deferred, and are named in
+the same honest non-blocking record
+(`class_feature.druid.animal_companion.advancement_absent`, whose id is kept
+for continuity with the tests that assert on it).
 
 ## Omission
 
