@@ -1,6 +1,16 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
-import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
+import {
+  loadSavedCharacterDetail,
+  type ExplanationDto,
+  type LoadSavedCharacterResponse,
+  type SpellSelectionDto,
+  type WeaponDamageDto,
+} from '../boundary/loadSavedCharacterDetail';
+import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
+import { buildClassFeatureSurface } from './classFeaturesModel';
+import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET } from './weaponsTabModel';
+import { buildSpellsPerDaySurface } from './spellsPerDayModel';
 import type {
   AbilityScoresDto,
   CorpusDerivedDto,
@@ -612,14 +622,40 @@ function DetailsPanel(props: {
   );
 }
 
-const WEAPON_COLUMNS = ['Weapon', 'Attack', 'Damage', 'Critical', 'Type', 'Range'] as const;
+/**
+ * The columns are exactly the facets `damage_total.rs` grounds per weapon —
+ * base dice, the Strength contribution, weapon enhancement (damage and
+ * attack kept apart, because they are separate corpus values), critical,
+ * and wield category.
+ *
+ * The previous header set (`Attack / Damage / Type / Range`) promised two
+ * things the engine does not compute: a single summed damage number, and
+ * per-weapon type/range. It sat above a hardcoded "No weapons added yet."
+ * with no row-rendering path at all.
+ *
+ * **No summed damage column, deliberately.** No summed damage-roll formula
+ * exists anywhere in the engine, and the wield multiplier needed to build
+ * one honestly is unknown — `contract.rs`'s `PilotReceipt::weapon_damage`
+ * boundary note owns that decision and it stands. Each facet is its own
+ * column; the player adds them at the table, where they know their own
+ * grip.
+ */
+const WEAPON_COLUMNS = ['Weapon', 'Base Dice', 'STR', 'Enh. Dmg', 'Enh. Atk', 'Critical', 'Wield'] as const;
 
-function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => void }) {
+const WEAPON_GRID_COLUMNS = '2fr repeat(6, 1fr)';
+
+function WeaponsTab(props: {
+  proficiency: WeaponProficiency;
+  weaponDamage: readonly WeaponDamageDto[];
+  corpusDerived: CorpusDerivedDto | null;
+  onAddWeapon: () => void;
+}) {
   const categories: ReadonlyArray<{ label: string; proficient: boolean }> = [
     { label: 'Simple', proficient: props.proficiency.simple },
     { label: 'Martial', proficient: props.proficiency.martial },
     { label: 'Exotic', proficient: props.proficiency.exotic },
   ];
+  const surface = buildWeaponsTabSurface(props.weaponDamage, props.corpusDerived);
   return (
     <div>
       {/* PF1 weapon proficiency categories */}
@@ -653,7 +689,7 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
           color: 'var(--color-text-muted)',
           display: 'grid',
           fontSize: '0.72rem',
-          gridTemplateColumns: '2fr repeat(5, 1fr)',
+          gridTemplateColumns: WEAPON_GRID_COLUMNS,
           gap: '0.5rem',
           letterSpacing: '0.04em',
           paddingBottom: '0.4rem',
@@ -664,7 +700,50 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
           <span key={column}>{column}</span>
         ))}
       </div>
-      <p style={{ color: 'var(--color-text-faint)', margin: '1.25rem 0 0', textAlign: 'center' }}>No weapons added yet.</p>
+
+      {surface.isEmpty ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: '1.25rem 0 0', textAlign: 'center' }}>
+          No weapons equipped.
+        </p>
+      ) : (
+        surface.rows.map((row) => (
+          <div key={row.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.45rem 0' }}>
+            <div
+              style={{
+                display: 'grid',
+                fontSize: '0.85rem',
+                gap: '0.5rem',
+                gridTemplateColumns: WEAPON_GRID_COLUMNS,
+              }}
+            >
+              <span style={{ color: 'var(--color-text)', fontWeight: 700 }}>{row.name}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.baseDice}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.strDamage}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.enhancementDamage}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.enhancementAttack}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.critical}</span>
+              <span style={{ color: 'var(--color-text)' }}>{row.wield}</span>
+            </div>
+            {row.featEffects.length > 0 ? (
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.25rem 0 0' }}>
+                Feat damage: {row.featEffects.join(', ')}
+              </p>
+            ) : null}
+          </div>
+        ))
+      )}
+
+      {/*
+        The one thing this table deliberately does not show. Stating it is
+        not an apology for a missing feature — it tells the player which
+        arithmetic is theirs, so nobody reads the columns as an incomplete
+        total.
+      */}
+      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.9rem 0 0', textAlign: 'center' }}>
+        Facets are shown separately, not summed: the damage total depends on how you wield the weapon
+        this round, which the engine cannot know. {ABSENT_FACET} means the weapon's corpus record carries
+        no value for that facet.
+      </p>
     </div>
   );
 }
@@ -723,6 +802,8 @@ function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
 function SpellsTab(props: {
   spellsSelected: SpellSelectionDto[];
   corpusDerived: CorpusDerivedDto | undefined;
+  /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
+  explanations: readonly ExplanationDto[];
   onAddSpell: () => void;
 }) {
   const [catalog, setCatalog] = useState<SpellCatalogEntryDto[] | null>(null);
@@ -782,13 +863,54 @@ function SpellsTab(props: {
 
   const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
+  // Real `class_spell.*.<total|base>_<spells|extracts>_per_day.*` records,
+  // for whichever casters this build actually grounds — replacing a
+  // hardcoded Wizard-only, levels-1-to-9 table that used to live in
+  // `characterProgression.ts`.
+  const spellsPerDay = buildSpellsPerDaySurface(props.explanations);
 
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.4rem', textAlign: 'center' }}>
-        Spells this character knows, from the real spell catalog. Slots, DCs and prepared/known
-        posture are not computed.
+        Spells this character knows, from the real spell catalog. DCs and prepared/known posture are
+        not computed.
       </p>
+
+      {spellsPerDay.isEmpty ? null : (
+        <div style={{ borderBottom: '1px solid var(--color-border)', margin: '0 0 1rem', paddingBottom: '0.75rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            Spells per day
+          </p>
+          {spellsPerDay.rows.map((row) => (
+            <div key={`${row.classToken}-${row.spellLevel}`} style={{ padding: '0.3rem 0' }}>
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginRight: '0.5rem', textTransform: 'capitalize' }}>
+                {row.classToken}
+              </span>
+              <span style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>
+                {row.spellLevel === 0 ? 'Cantrips' : `Level ${row.spellLevel}`}
+              </span>
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800, marginLeft: '0.5rem' }}>
+                {row.count}
+              </span>
+              {/*
+                A base count is not a total: the engine grounded the class
+                table's own column but not the casting stat's bonus spells.
+                Saying so is cheaper than showing a number that quietly
+                means something else.
+              */}
+              {row.basis === 'base' ? (
+                <span style={{ color: 'var(--color-text-faint)', fontSize: '0.68rem', marginLeft: '0.4rem' }}>
+                  (class table only — bonus spells not included)
+                </span>
+              ) : null}
+              {/* The engine's own derivation, verbatim. */}
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.68rem', margin: '0.1rem 0 0' }}>
+                {row.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
       {/* Each row's level now comes from the per-class spell list for that
           row's own `sourceClassId`, via `list_class_spell_levels` — so a
           Wizard reads Hideous Laughter (`CLASSES:Bard=1|Sorcerer,Wizard=2`)
@@ -1321,38 +1443,119 @@ function GearTab(props: {
 }
 
 /**
- * Flat "Class Features & Special Abilities" list — every feature granted by
- * every class level already taken, across all held classes. Not new data:
- * `buildLevelEntries` already computes this exact set for the collapsible
- * left-rail Progression cards, but that rail is unreadable once collapsed
- * (see `leftCollapsed` above) and interleaves features with skill-point
- * counts per level. This tab is the same real, already-computed data in a
- * flat, always-reachable form — no backend call, since the class/level
- * feature table already lives client-side in `characterProgression.ts`.
+ * "Class Features & Special Abilities" — the engine's own
+ * `class_feature.*` / `class_chassis.*` records for this exact build:
+ * every magnitude it computed, each under the corpus-cited derivation it
+ * wrote.
+ *
+ * This tab used to render a hand-authored client-side table of bare labels
+ * (`'Bravery +1'`, `'Bonus combat feat'`) covering two classes, with no
+ * magnitudes and no provenance — a second, uncited source of rules truth
+ * sitting on top of 411 records the engine already computed, tested and
+ * cited on every load and then dropped at the IPC boundary. The table is
+ * deleted; these rows are the engine's.
+ *
+ * `notComputed` is rendered as its own section, without numbers: those
+ * records are the engine saying a facet is not grounded, and their `value`
+ * is a filler zero. Showing them as "0" would flatten `Blocked` into a
+ * magnitude, which is exactly what this sheet must not do.
+ *
+ * The universal per-level benefits (a feat at every odd character level,
+ * an ability score increase every 4th) stay alongside, because they are
+ * PF1 general rules keyed to character level, not entries from any class
+ * table.
  */
-function ActionsTab(props: { levelEntries: LevelEntry[] }) {
-  const allFeatures = props.levelEntries.flatMap((entry) =>
-    entry.features.map((feature) => ({ characterLevel: entry.characterLevel, classLabel: entry.classLabel, feature }))
+function ActionsTab(props: {
+  levelEntries: LevelEntry[];
+  explanations: readonly ExplanationDto[];
+  heldClasses: HeldClass[];
+}) {
+  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses);
+  const generalBenefits = props.levelEntries.flatMap((entry) =>
+    entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
-  if (allFeatures.length === 0) {
-    return <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No class features granted yet.</p>;
+
+  if (surface.features.length === 0 && surface.notComputed.length === 0 && generalBenefits.length === 0) {
+    return (
+      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+        No class features granted yet.
+      </p>
+    );
   }
+
   return (
     <div>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Every class feature and special ability granted so far, by level.
-      </p>
-      {allFeatures.map((row, index) => (
-        <div
-          key={`${row.characterLevel}-${row.feature}-${index}`}
-          style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', padding: '0.4rem 0' }}
-        >
-          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 70 }}>
-            Lvl {row.characterLevel} {row.classLabel}
-          </span>
-          <span style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>{row.feature}</span>
+      {surface.features.length > 0 ? (
+        <>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+            Every class feature the rules engine computed for this build, with its own derivation.
+          </p>
+          {surface.features.map((row) => (
+            <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+                {row.classToken ? (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80, textTransform: 'capitalize' }}>
+                    {row.classToken}
+                  </span>
+                ) : (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80 }}>Chassis</span>
+                )}
+                <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{row.label}</span>
+                <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800 }}>{row.value}</span>
+              </div>
+              {/*
+                The engine's own corpus-cited derivation, verbatim. Never
+                paraphrased here: it is the rules citation, and for records
+                whose magnitude alone is incomplete (a sneak-attack die
+                *count* of 6 means 6d6) it is the only place the full
+                expression appears.
+              */}
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.2rem 0 0 calc(80px + 0.6rem)' }}>
+                {row.detail}
+              </p>
+            </div>
+          ))}
+        </>
+      ) : (
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.8rem', margin: '0 0 1rem', textAlign: 'center' }}>
+          The rules engine grounded no class-feature records for this build.
+        </p>
+      )}
+
+      {surface.notComputed.length > 0 ? (
+        <div style={{ marginTop: '1.25rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            Not computed
+          </p>
+          {surface.notComputed.map((notice) => (
+            <div key={notice.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{notice.label}</span>
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+                {notice.detail}
+              </p>
+            </div>
+          ))}
         </div>
-      ))}
+      ) : null}
+
+      {generalBenefits.length > 0 ? (
+        <div style={{ marginTop: '1.25rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            Universal level benefits
+          </p>
+          {generalBenefits.map((row, index) => (
+            <div
+              key={`${row.characterLevel}-${row.feature}-${index}`}
+              style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', padding: '0.35rem 0' }}
+            >
+              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80 }}>
+                Level {row.characterLevel}
+              </span>
+              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem' }}>{row.feature}</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1636,6 +1839,45 @@ export function CharacterSheet(props: {
       cancelled = true;
     };
   }, [props.row.characterId]);
+  /**
+   * The engine's computed records for this build: every
+   * `ComputationExplanation` it emitted, and the per-weapon damage
+   * breakdown. Both arrive on `load_saved_character` and on nothing else,
+   * so they are held here and re-read after mutations
+   * (`refreshEngineRecords`) rather than threaded through the mutation
+   * responses, which do not carry them.
+   *
+   * Seeded from `props.detail` so the browser preview (no Tauri runtime)
+   * still renders its sample records.
+   */
+  const [engineRecords, setEngineRecords] = useState<{
+    explanations: ExplanationDto[];
+    weaponDamage: WeaponDamageDto[];
+  }>({
+    explanations: props.detail?.explanations ?? [],
+    weaponDamage: props.detail?.weaponDamage ?? [],
+  });
+  useEffect(() => {
+    let cancelled = false;
+    setEngineRecords({
+      explanations: props.detail?.explanations ?? [],
+      weaponDamage: props.detail?.weaponDamage ?? [],
+    });
+    loadSavedCharacterDetail({ characterId: props.row.characterId })
+      .then((loaded) => {
+        if (!cancelled) {
+          setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+        }
+      })
+      .catch(() => {
+        // Keeps whatever `props.detail` seeded — the browser preview path.
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.row.characterId]);
+
   const [durability, setDurability] = useState<CharacterDurabilityDto | null>(null);
   const [durabilityBusy, setDurabilityBusy] = useState(false);
   const [durabilityError, setDurabilityError] = useState<string | null>(null);
@@ -1699,7 +1941,21 @@ export function CharacterSheet(props: {
   async function handleLevelUpAccept(classId: string) {
     setMutationError(null);
     const preview = previewLevelUp(heldClasses, classId);
-    if (levelGrantsFeat(preview.features)) {
+    // The feat gate now reads the engine's real grants for this exact
+    // transition alongside the universal odd-level feat, instead of a
+    // hand-authored class-feature table. A failed preview is treated as
+    // "no engine-reported grants" rather than blocking the level-up: the
+    // universal rule still applies and is decided locally.
+    let engineGrantNames: string[] = [];
+    try {
+      const plan = await previewLevelUpGrants({ characterId: props.row.characterId, classId });
+      engineGrantNames = plan.automaticFeatures
+        .map((grant) => grant.name)
+        .concat(plan.pickFromLists.filter((list) => list.category === 'Feat').map(() => 'feat'));
+    } catch {
+      engineGrantNames = [];
+    }
+    if (levelGrantsFeat(preview.features, engineGrantNames)) {
       setPendingFeatLevelUp({ classId, newClassLevel: preview.classLevel });
       setItemPickerOpen('feat');
       return;
@@ -1723,6 +1979,9 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
+      // A level-up moves nearly every class-feature magnitude, and the
+      // level-up response carries none of the engine's records.
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1794,8 +2053,9 @@ export function CharacterSheet(props: {
       props.onDetailRefreshed(featRefresh.detail);
       // Same as handleAddFeat — the feat grant can change maxHp, and
       // neither this call's response nor the level-up's own carries a
-      // durability field.
+      // durability field. Nor the engine's own records.
       await refreshDurability();
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1836,8 +2096,14 @@ export function CharacterSheet(props: {
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
+        // `purchase_equipment` returns no engine records; the Weapons tab
+        // reads them from `engineRecords`, re-read immediately below.
+        explanations: [],
+        weaponDamage: [],
       });
       setMoney(outcome.money);
+      // Buying a weapon is exactly what makes a new Weapons row appear.
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1882,8 +2148,13 @@ export function CharacterSheet(props: {
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
+        // See `handleAddEquipment` — no engine records on this response.
+        explanations: [],
+        weaponDamage: [],
       });
       setMoney(outcome.money);
+      // Attaching a +1 enhancement changes that weapon's Enh. columns.
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -1954,6 +2225,8 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
+      // A spell add changes the caster's own `class_spell.*` records.
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -2025,6 +2298,9 @@ export function CharacterSheet(props: {
       // response carries no durability field — refresh it explicitly so
       // the Defense tab doesn't show a stale pre-feat value.
       await refreshDurability();
+      // A feat can also change a weapon's damage (Weapon Specialization)
+      // and gate class-feature records.
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -2151,6 +2427,31 @@ export function CharacterSheet(props: {
   }
 
   /**
+   * Re-reads the engine's computed records (class-feature explanations and
+   * the per-weapon damage breakdown) after a mutation.
+   *
+   * The mutation commands return a `CreateCharacterResponse`, which carries
+   * neither — only `load_saved_character` does. Carrying the pre-mutation
+   * records forward instead would be worse than re-reading: a level-up
+   * moves nearly every class-feature magnitude, so the sheet would show
+   * last level's numbers as if they were current. Same post-mutation
+   * re-read shape `refreshDurability` above already uses, for the same
+   * render-staleness reason.
+   *
+   * A failure leaves whatever is already on screen rather than blanking
+   * the section — the browser preview (no Tauri runtime) takes this path
+   * on mount and keeps its seeded sample records.
+   */
+  async function refreshEngineRecords() {
+    try {
+      const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
+      setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+    } catch {
+      // Intentionally keeps the current records.
+    }
+  }
+
+  /**
    * `deltaHp`/`deltaNonlethal` are already the exact wire deltas (positive
    * to heal / take nonlethal damage is the caller's choice, see
    * `adjustCharacterHp`'s own doc comment) — one atomic round trip, no
@@ -2200,6 +2501,7 @@ export function CharacterSheet(props: {
       }
       setSkillAllocation(draft);
       props.onDetailRefreshed(refresh.detail);
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -2497,6 +2799,7 @@ export function CharacterSheet(props: {
               <LevelUpDialog
                 open={levelUpOpen}
                 onClose={() => setLevelUpOpen(false)}
+                characterId={props.row.characterId}
                 heldClasses={heldClasses}
                 intelligenceModifier={abilities.intelligence}
                 isHuman={isHuman}
@@ -2588,7 +2891,12 @@ export function CharacterSheet(props: {
 
             <div style={{ ...panel, minHeight: 200, padding: '1.25rem' }}>
               {tab === 'Weapons' ? (
-                <WeaponsTab proficiency={weaponProficiency} onAddWeapon={() => setItemPickerOpen('weapon')} />
+                <WeaponsTab
+                  proficiency={weaponProficiency}
+                  weaponDamage={engineRecords.weaponDamage}
+                  corpusDerived={props.detail?.corpusDerived ?? null}
+                  onAddWeapon={() => setItemPickerOpen('weapon')}
+                />
               ) : tab === 'Defense' ? (
                 <DefenseTab
                   damageReduction={snapshot?.damageReduction}
@@ -2603,6 +2911,7 @@ export function CharacterSheet(props: {
                 <SpellsTab
                   spellsSelected={props.detail?.spellsSelected ?? []}
                   corpusDerived={props.detail?.corpusDerived}
+                  explanations={engineRecords.explanations}
                   onAddSpell={() => setItemPickerOpen('spell')}
                 />
               ) : tab === 'Gear' ? (
@@ -2624,7 +2933,11 @@ export function CharacterSheet(props: {
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />
               ) : tab === 'Actions' ? (
-                <ActionsTab levelEntries={currentBenefits} />
+                <ActionsTab
+                  levelEntries={currentBenefits}
+                  explanations={engineRecords.explanations}
+                  heldClasses={heldClasses}
+                />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>
               )}

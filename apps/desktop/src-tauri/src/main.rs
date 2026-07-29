@@ -32,7 +32,8 @@ use character_hub::{
     delete_character, delete_character_portrait, export_character, export_character_json,
     import_character, level_up_character, list_saved_characters, load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
-    load_saved_character, purchase_equipment, record_and_prepare_spell_selection,
+    load_saved_character, preview_level_up, purchase_equipment,
+    record_and_prepare_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
@@ -154,6 +155,7 @@ fn main() {
             re_save_character,
             list_saved_characters,
             load_saved_character,
+            preview_level_up,
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,

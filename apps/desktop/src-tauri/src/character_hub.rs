@@ -23,11 +23,14 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
+use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
+use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
-    ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt, HeadlessReceiptStatus,
+    ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
+    ComputationExplanation, HeadlessReceiptStatus,
 };
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
@@ -423,6 +426,180 @@ pub struct LoadSavedCharacterResponse {
     /// because "held but untargeted" is a state the sheet must show rather
     /// than hide.
     pub chosen_feat_targets: Vec<ChosenFeatTargetsDto>,
+    /// Every `ComputationExplanation` the engine emitted for this build,
+    /// verbatim — id, computed value, and the engine's own corpus-cited
+    /// derivation text.
+    ///
+    /// Before this field the engine's 636+ distinct explanation records
+    /// (`class_chassis.rogue.sneak_attack`, `class_chassis.cleric.
+    /// channel_energy_dice`, `class_feature.fighter.bravery`, ...) were
+    /// computed, tested and cited on every load and then dropped right
+    /// here at the IPC boundary — the sheet had no field for them to
+    /// travel in. The same defect had already been one-off-patched four
+    /// times (Feats tab, Spells tab, AC-by-source, Pets tab); this is the
+    /// structural channel those patches each worked around.
+    ///
+    /// **`detail` is carried verbatim and must be rendered verbatim.** It
+    /// is the engine's corpus-cited derivation; paraphrasing or
+    /// regenerating it in the frontend would create a second, unverified
+    /// source of rules prose — exactly the hand-authored-rules-data debt
+    /// `docs/governance/no-stub-mvp-doctrine.md` forbids.
+    ///
+    /// Populated on both the `Computed` and the `Blocked` path: a blocked
+    /// build's explanations are still real records for the facets that
+    /// did ground, and hiding them would flatten `Blocked` into "nothing
+    /// computed."
+    pub explanations: Vec<ExplanationDto>,
+    /// One entry per `EquippedActive` item the engine identifies as a
+    /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
+    /// that weapon's corpus-cited damage facets.
+    ///
+    /// **No summed damage total, deliberately.** Each facet stays its own
+    /// field, exactly as `contract.rs`'s `PilotReceipt::weapon_damage`
+    /// boundary note requires: no summed "damage roll total" formula
+    /// exists anywhere in this codebase, and the wield multiplier that
+    /// would be needed to build one honestly is unknown. The sheet
+    /// renders the breakdown as separate columns; it does not add them up.
+    pub weapon_damage: Vec<WeaponDamageDto>,
+}
+
+/// Wire form of `pilot_compute::ComputationExplanation`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExplanationDto {
+    /// Stable engine id, e.g. `class_chassis.rogue.sneak_attack`.
+    pub id: String,
+    /// The computed magnitude this record explains.
+    pub value: i16,
+    /// The engine's own corpus-cited derivation text, verbatim.
+    pub detail: String,
+}
+
+/// Projects the engine's explanation records onto the wire, verbatim.
+pub(crate) fn map_explanations_dto(
+    explanations: &[ComputationExplanation],
+) -> Vec<ExplanationDto> {
+    explanations
+        .iter()
+        .map(|explanation| ExplanationDto {
+            id: explanation.id.clone(),
+            value: explanation.value,
+            detail: explanation.detail.clone(),
+        })
+        .collect()
+}
+
+/// Wire form of `damage_total::DiceExpression`.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiceExpressionDto {
+    pub count: u8,
+    pub die_size: u8,
+}
+
+/// Wire form of `damage_total::DamageRollFeatEffect`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeaponFeatEffectDto {
+    pub feat_key: String,
+    pub damage_bonus: i16,
+}
+
+/// Wire form of `damage_total::WeaponDamageBreakdown`.
+///
+/// Every facet is `Option`: `None` means the engine found no corpus token
+/// for it on this weapon, which is honest absence, not zero. The frontend
+/// must render absence as absence — a `None` critical multiplier is not
+/// "x0" and not "x2".
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeaponDamageDto {
+    /// The `EquipmentSelection.item_id` this breakdown belongs to.
+    pub weapon_item_id: String,
+    /// The resolved corpus record key (e.g. `Longsword (Base)`), from
+    /// whichever facet resolved it. `None` only if nothing resolved.
+    pub weapon_record_key: Option<String>,
+    pub base_dice: Option<DiceExpressionDto>,
+    /// The Strength modifier's contribution to this weapon's damage.
+    /// Bounded to `WeaponHandSlot::Primary` — `EquipmentSelection` has no
+    /// hand-slot field, so a genuine two-weapon-fighting off-hand weapon
+    /// is currently shown at its primary-hand fraction (see
+    /// `resolve_weapon_damage_breakdown`'s own doc comment).
+    pub str_damage_modifier: Option<i16>,
+    /// `OneHanded` / `TwoHanded` / `Light`, verbatim from the corpus
+    /// `WIELD:` token.
+    pub wield_category: Option<String>,
+    pub enhancement_attack_bonus: Option<i16>,
+    pub enhancement_damage_bonus: Option<i16>,
+    /// Inclusive `[low, high]` natural-roll threat bounds, e.g. `[19, 20]`
+    /// for a longsword.
+    pub critical_threat_range: Option<[u8; 2]>,
+    pub critical_multiplier: Option<u8>,
+    /// Constant damage bonuses from the character's feats. Gathered once
+    /// per character, not per weapon — this bounded slice does not model
+    /// per-weapon feat targeting.
+    pub feat_effects: Vec<WeaponFeatEffectDto>,
+}
+
+/// Projects the engine's per-weapon damage breakdown onto the wire.
+///
+/// Sums nothing: each facet crosses as its own field. See
+/// `LoadSavedCharacterResponse::weapon_damage`'s doc comment.
+pub(crate) fn map_weapon_damage_dto(
+    breakdowns: &[WeaponDamageBreakdown],
+) -> Vec<WeaponDamageDto> {
+    breakdowns
+        .iter()
+        .map(|breakdown| WeaponDamageDto {
+            weapon_item_id: breakdown.weapon_item_id.clone(),
+            weapon_record_key: breakdown
+                .base_dice
+                .as_ref()
+                .map(|dice| dice.weapon_record_key.clone())
+                .or_else(|| {
+                    breakdown
+                        .str_modifier
+                        .as_ref()
+                        .map(|str_mod| str_mod.weapon_record_key.clone())
+                }),
+            base_dice: breakdown.base_dice.as_ref().map(|dice| DiceExpressionDto {
+                count: dice.base_dice.count,
+                die_size: dice.base_dice.die_size,
+            }),
+            str_damage_modifier: breakdown
+                .str_modifier
+                .as_ref()
+                .map(|str_mod| str_mod.str_damage_modifier),
+            wield_category: breakdown
+                .str_modifier
+                .as_ref()
+                .map(|str_mod| format!("{:?}", str_mod.wield_category)),
+            enhancement_attack_bonus: breakdown
+                .weapon_enhancement
+                .as_ref()
+                .map(|enhancement| enhancement.attack_bonus),
+            enhancement_damage_bonus: breakdown
+                .weapon_enhancement
+                .as_ref()
+                .map(|enhancement| enhancement.damage_bonus),
+            critical_threat_range: breakdown
+                .critical_threat_range
+                .as_ref()
+                .map(|range| [range.critical_threat_range.0, range.critical_threat_range.1]),
+            critical_multiplier: breakdown
+                .critical_multiplier
+                .as_ref()
+                .map(|multiplier| multiplier.critical_multiplier),
+            feat_effects: breakdown
+                .feat_effects
+                .iter()
+                .map(|effect| WeaponFeatEffectDto {
+                    feat_key: effect.feat_key.clone(),
+                    damage_bonus: effect.damage_bonus,
+                })
+                .collect(),
+        })
+        .collect()
 }
 
 /// Wire form of `feat_effects::ChosenFeatTargets`.
@@ -1086,7 +1263,18 @@ pub fn load_saved_character(
     request: LoadSavedCharacterRequest,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    let envelope = SavedCharacterStore::load(&root).map_err(|err| err.message)?;
+    load_saved_character_at_root(&root)
+}
+
+/// The real body of `load_saved_character`, split out from the
+/// `AppHandle`-taking command so it is directly testable against a
+/// temp-dir character root — the same `*_at_root` convention
+/// `level_up_character_at_root` / `set_skill_allocations_at_root` already
+/// established in this module.
+pub(crate) fn load_saved_character_at_root(
+    root: &Path,
+) -> Result<LoadSavedCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
     let (snapshot, diagnostics, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
@@ -1098,6 +1286,19 @@ pub fn load_saved_character(
             ),
         };
 
+    // Both already computed above — `corpus_receipt.base` IS the
+    // `compute_pilot_base_chassis` output (explanations included), and
+    // `corpus_receipt.corpus_derived.equipment_effects` IS the resolved
+    // `EquippedActive` effect set. Reused rather than recomputed, matching
+    // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
+    let explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+        &envelope.character_input,
+        corpus_fixture_bundle(),
+        &corpus_receipt.corpus_derived.equipment_effects,
+        corpus_receipt.base.ability_modifiers.strength,
+    ));
+
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
@@ -1106,6 +1307,8 @@ pub fn load_saved_character(
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
         chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
+        explanations,
+        weapon_damage,
     })
 }
 
@@ -1164,6 +1367,189 @@ pub fn level_up_character(
         skill_allocations,
         &request.saved_at,
     )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreviewLevelUpRequest {
+    pub character_id: String,
+    /// The class the next character level would be taken in — either one
+    /// the character already holds (levels up by one) or a brand-new class
+    /// (starts at class level 1).
+    pub class_id: String,
+}
+
+/// What taking the next level in `class_id` grants, straight from Epic 7's
+/// real per-class level-up engine
+/// (`level_up::compute_level_up_grants_for_class`).
+///
+/// This exists because the frontend used to answer the same question from
+/// a hand-authored `CLASS_FEATURES` table in `characterProgression.ts` —
+/// bare labels (`'Bravery +1'`, `'Bonus combat feat'`) with no magnitudes
+/// and no provenance, duplicating and drifting from the engine's own
+/// grounded class tables. That table is deleted; this command replaces it.
+///
+/// An empty `automatic_features` is a real answer, not a failure: the
+/// per-class level-up modules are individually gated (Fighter's, for
+/// instance, is bounded to Human Fighter inputs) and
+/// `compute_level_up_grants_for_class` returns an honestly-empty
+/// `LevelUpPlan` for any class id outside the eleven PF1 Core classes it
+/// grounds. The dialog renders that absence as absence rather than
+/// inventing a placeholder line.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreviewLevelUpResponse {
+    /// The class's own level before this transition (0 for a class the
+    /// character does not yet hold).
+    pub from_level: u8,
+    /// The class's own level after this transition.
+    pub to_level: u8,
+    /// The character's total level after this transition.
+    pub character_level: u8,
+    /// Grants that fire automatically at `to_level` — no player choice
+    /// needed.
+    pub automatic_features: Vec<LevelUpGrantDto>,
+    /// Open-ended "pick N from this list" grants.
+    pub pick_from_lists: Vec<LevelUpPickListDto>,
+    /// Named resource pools whose size changes across this transition.
+    pub resource_pool_changes: Vec<LevelUpResourcePoolDeltaDto>,
+    /// True when `to_level` crosses this class's PF1 capstone.
+    pub capstone_threshold: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpGrantDto {
+    pub name: String,
+    /// The engine's own effect descriptions, verbatim — same discipline as
+    /// `ExplanationDto::detail`.
+    pub effects: Vec<LevelUpGrantEffectDto>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpGrantEffectDto {
+    pub description: String,
+    pub value: i16,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpPickListDto {
+    /// `"Feat"`, `"Spell"` or `"RagePower"`.
+    pub category: String,
+    pub count: u8,
+    pub candidates: Vec<LevelUpPickCandidateDto>,
+    pub filter: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpPickCandidateDto {
+    pub id: String,
+    pub name: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpResourcePoolDeltaDto {
+    pub pool_id: String,
+    pub from_value: i16,
+    pub to_value: i16,
+}
+
+/// Previews what the next level in `class_id` grants, without persisting
+/// anything. Read-only twin of `level_up_character`.
+#[tauri::command]
+pub fn preview_level_up(
+    app: tauri::AppHandle,
+    request: PreviewLevelUpRequest,
+) -> Result<PreviewLevelUpResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    preview_level_up_at_root(&root, &request.class_id)
+}
+
+/// The real body of `preview_level_up` — see `load_saved_character_at_root`
+/// for why the `AppHandle` is split off.
+pub(crate) fn preview_level_up_at_root(
+    root: &Path,
+    class_id: &str,
+) -> Result<PreviewLevelUpResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let class_levels = &envelope.character_input.chosen.class_levels;
+
+    let from_level = class_levels
+        .iter()
+        .find(|held| held.class_id == class_id)
+        .map(|held| held.level)
+        .unwrap_or(0);
+    let to_level = from_level.saturating_add(1);
+    let character_level = class_levels
+        .iter()
+        .map(|held| held.level)
+        .fold(0u8, |sum, level| sum.saturating_add(level))
+        .saturating_add(1);
+
+    // `compute_level_up_grants_for_class`, not the top-level
+    // `compute_level_up_grants`: the latter dispatches on the character's
+    // *sole* class and returns an empty plan for any multiclass build, so
+    // it would silently blank the preview for exactly the characters the
+    // sheet already supports (see `pf1_adapter.rs`'s register-A2 note).
+    let plan: LevelUpPlan = compute_level_up_grants_for_class(
+        &envelope.character_input,
+        class_id,
+        from_level,
+        to_level,
+    );
+
+    Ok(PreviewLevelUpResponse {
+        from_level,
+        to_level,
+        character_level,
+        automatic_features: plan
+            .automatic_features
+            .iter()
+            .map(|grant| LevelUpGrantDto {
+                name: grant.name.clone(),
+                effects: grant
+                    .effects
+                    .iter()
+                    .map(|effect| LevelUpGrantEffectDto {
+                        description: effect.description.clone(),
+                        value: effect.value,
+                    })
+                    .collect(),
+            })
+            .collect(),
+        pick_from_lists: plan
+            .pick_from_lists
+            .iter()
+            .map(|list| LevelUpPickListDto {
+                category: format!("{:?}", list.category),
+                count: list.count,
+                candidates: list
+                    .candidates
+                    .iter()
+                    .map(|candidate| LevelUpPickCandidateDto {
+                        id: candidate.id.clone(),
+                        name: candidate.name.clone(),
+                    })
+                    .collect(),
+                filter: list.filter.clone(),
+            })
+            .collect(),
+        resource_pool_changes: plan
+            .resource_pool_change
+            .pools
+            .iter()
+            .map(|pool| LevelUpResourcePoolDeltaDto {
+                pool_id: pool.pool_id.clone(),
+                from_value: pool.from_value,
+                to_value: pool.to_value,
+            })
+            .collect(),
+        capstone_threshold: plan.capstone_threshold,
+    })
 }
 
 /// The wire-level projection of `ActiveState` for the `add_equipment_selection`
@@ -5620,5 +6006,261 @@ mod tests {
             selection_id: "bond:animal_companion".to_owned(),
         });
         input
+    }
+
+    // ----- Receipt-to-Sheet slice 1: the explanation channel, the weapon
+    // line, and the engine-backed level-up preview -----
+
+    /// Saves `input` under a fresh temp root and returns that root, so the
+    /// `*_at_root` load/preview seams can be exercised without an
+    /// `AppHandle`.
+    fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
+        let root = tempdir(label).join("char-receipt-to-sheet");
+        let envelope = SavedCharacterEnvelope {
+            character_id: "char-receipt-to-sheet".to_owned(),
+            revision_id: "char-receipt-to-sheet.rev.1".to_owned(),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: LEVEL_UP_TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: "char-receipt-to-sheet.rev.1".to_owned(),
+            display_label: "Receipt To Sheet".to_owned(),
+            character_input: input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("envelope should save");
+        root
+    }
+
+    /// The scoping doc's headline acceptance case: a level-11 Rogue's
+    /// sneak-attack die count is computed, corpus-cited — and, before this
+    /// slice, dropped at the IPC boundary because
+    /// `LoadSavedCharacterResponse` had no field for it.
+    #[test]
+    fn load_saved_character_carries_a_level_11_rogues_sneak_attack_explanation_across_the_boundary()
+    {
+        let input = compose_character_input(&request_for_class("race:human", "class:rogue", 11));
+        let root = saved_root_for("rogue-11-sneak-attack", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved rogue should load");
+
+        let sneak_attack = response
+            .explanations
+            .iter()
+            .find(|explanation| explanation.id == "class_chassis.rogue.sneak_attack")
+            .expect("a level-11 Rogue must carry a sneak-attack explanation record");
+
+        assert_eq!(
+            sneak_attack.value, 6,
+            "PF1 Rogue sneak attack at level 11 is (11 + 1) / 2 = 6d6"
+        );
+        assert!(
+            sneak_attack.detail.contains("6d6"),
+            "the engine's own detail text must cross verbatim: {}",
+            sneak_attack.detail
+        );
+    }
+
+    /// `detail` must arrive byte-identical to what the engine produced —
+    /// the frontend renders it as rules prose, so any rewriting on the way
+    /// across would create a second, unverified source of it.
+    #[test]
+    fn load_saved_character_carries_every_explanation_detail_verbatim() {
+        let input = compose_character_input(&request_for_class("race:human", "class:rogue", 11));
+        let root = saved_root_for("verbatim-details", input.clone());
+
+        let response = load_saved_character_at_root(&root).expect("saved rogue should load");
+        let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+
+        assert_eq!(
+            response.explanations.len(),
+            engine.base.explanations.len(),
+            "no explanation record may be dropped at the boundary"
+        );
+        for (wire, engine_record) in response.explanations.iter().zip(&engine.base.explanations) {
+            assert_eq!(wire.id, engine_record.id);
+            assert_eq!(wire.value, engine_record.value);
+            assert_eq!(
+                wire.detail, engine_record.detail,
+                "detail for {} must cross verbatim",
+                engine_record.id
+            );
+        }
+    }
+
+    /// Class-feature records specifically — the set the sheet's Class
+    /// Features section renders — must be non-empty for a grounded build.
+    #[test]
+    fn load_saved_character_carries_class_feature_records_for_a_fighter() {
+        let input = compose_character_input(&request_for("race:human", 5));
+        let root = saved_root_for("fighter-class-features", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        let class_records: Vec<&str> = response
+            .explanations
+            .iter()
+            .map(|explanation| explanation.id.as_str())
+            .filter(|id| id.starts_with("class_feature.") || id.starts_with("class_chassis."))
+            .collect();
+
+        assert!(
+            class_records
+                .iter()
+                .any(|id| *id == "class_feature.fighter.bravery"),
+            "a level-5 Fighter must carry its Bravery record: {class_records:?}"
+        );
+        assert!(
+            class_records
+                .iter()
+                .any(|id| *id == "class_feature.fighter.armor_training"),
+            "a level-5 Fighter must carry its Armor Training record: {class_records:?}"
+        );
+        // `class_feature.fighter.weapon_training` is deliberately NOT
+        // asserted here: it is gated on the
+        // `choice:fighter_weapon_training_group` selection, which
+        // `compose_character_input` does not seed. Its absence is honest
+        // absence, and the sheet must render the records that exist rather
+        // than inventing the ones that do not.
+    }
+
+    /// The Weapons tab's acceptance case: an equipped longsword must
+    /// produce a real, populated breakdown on the wire. Before this slice
+    /// `damage_total.rs` computed all of this and nothing carried it.
+    #[test]
+    fn load_saved_character_carries_the_equipped_longswords_damage_breakdown() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        assert!(
+            input
+                .chosen
+                .equipment_selections
+                .iter()
+                .any(|selection| selection.item_id == "item:longsword"),
+            "the deterministic loadout is expected to equip a longsword"
+        );
+        let root = saved_root_for("longsword-breakdown", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        let longsword = response
+            .weapon_damage
+            .iter()
+            .find(|weapon| weapon.weapon_item_id == "item:longsword")
+            .expect("an equipped longsword must produce a weapon-damage row");
+
+        let base_dice = longsword.base_dice.expect("longsword carries a DAMAGE: token");
+        assert_eq!((base_dice.count, base_dice.die_size), (1, 8), "1d8");
+        assert_eq!(
+            longsword.critical_threat_range,
+            Some([19, 20]),
+            "CRITRANGE:2 means a threat on a natural 19-20"
+        );
+        assert_eq!(longsword.critical_multiplier, Some(2), "CRITMULT:x2");
+        assert_eq!(longsword.wield_category.as_deref(), Some("OneHanded"));
+        assert_eq!(
+            longsword.str_damage_modifier,
+            Some(4),
+            "STR 16 + the PF1 Standard Human +2 racial = 18 -> +4, applied in \
+             full for a one-handed weapon"
+        );
+        assert_eq!(
+            longsword.weapon_record_key.as_deref(),
+            Some("Longsword (Base)")
+        );
+    }
+
+    /// Honest absence, not a fabricated default: the Chain Shirt is
+    /// equipped too, and it is not a weapon — it must simply be absent
+    /// from `weapon_damage`, never present with zeroed facets.
+    #[test]
+    fn load_saved_character_omits_non_weapon_equipped_items_from_weapon_damage() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("non-weapon-omitted", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        assert!(
+            !response
+                .weapon_damage
+                .iter()
+                .any(|weapon| weapon.weapon_item_id == "item:chain_shirt"),
+            "armor must not appear as a weapon row: {:?}",
+            response
+                .weapon_damage
+                .iter()
+                .map(|weapon| &weapon.weapon_item_id)
+                .collect::<Vec<_>>()
+        );
+    }
+
+    /// The engine-backed replacement for the deleted frontend
+    /// `CLASS_FEATURES` table. The hand-authored table said Fighter level 2
+    /// grants `['Bravery +1', 'Bonus combat feat']` — two bare labels, no
+    /// magnitude, no citation. The engine's real answer for the same
+    /// transition is Bravery plus the base-attack-bonus and Fortitude-save
+    /// steps, each carrying its own value and table provenance.
+    ///
+    /// **The bonus combat feat is genuinely not in that answer**, and this
+    /// test pins that rather than papering over it:
+    /// `level_up/fighter.rs`'s own module doc records that
+    /// `pick_from_lists` stays empty for Fighter's ten Bonus Feat slots
+    /// (composing a real candidate list needs PF1 Combat-Feat eligibility
+    /// filtering plus per-candidate prerequisite evaluation — a documented,
+    /// bounded scope note left as that cycle's `next_required_uplift`), and
+    /// `class_feature.fighter.level_2_bonus_feat` only fires once
+    /// `choice:fighter_bonus_feat_2` has actually been selected, which is
+    /// after the level-up, not before it. Re-adding a hand-authored
+    /// `'Bonus combat feat'` string to cover the gap would be exactly the
+    /// uncited-rules-data debt this slice exists to remove.
+    #[test]
+    fn preview_level_up_reports_fighters_real_level_2_grants() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("preview-fighter-2", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        assert_eq!(preview.from_level, 1);
+        assert_eq!(preview.to_level, 2);
+        assert_eq!(preview.character_level, 2);
+
+        let names: Vec<&str> = preview
+            .automatic_features
+            .iter()
+            .map(|grant| grant.name.as_str())
+            .collect();
+        assert!(
+            names.iter().any(|name| name.contains("bravery")),
+            "Fighter's level-2 Bravery must be a reported grant: {names:?}"
+        );
+        assert!(
+            names
+                .iter()
+                .any(|name| name.contains("base_attack_bonus")),
+            "the level-2 base-attack-bonus step must be reported: {names:?}"
+        );
+        assert!(
+            preview.automatic_features.iter().all(|grant| !grant
+                .effects
+                .iter()
+                .any(|effect| effect.description.is_empty())),
+            "every reported grant effect must carry the engine's own description"
+        );
+    }
+
+    /// A class the character does not hold yet previews as a level-1 dip,
+    /// not as a level-up of something they have.
+    #[test]
+    fn preview_level_up_treats_an_unheld_class_as_a_fresh_level_1_dip() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-wizard-dip", input);
+
+        let preview =
+            preview_level_up_at_root(&root, "class:wizard").expect("preview should compute");
+
+        assert_eq!(preview.from_level, 0);
+        assert_eq!(preview.to_level, 1);
+        assert_eq!(preview.character_level, 4);
     }
 }

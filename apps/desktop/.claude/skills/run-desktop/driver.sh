@@ -81,7 +81,7 @@ cmd_launch() {
   # Ensure we don't leak Xvfb/tauri processes on launch failures or interrupts.
   trap 'cmd_stop || true' EXIT INT TERM
   echo "Starting Xvfb on :$DISPLAY_NUM ..."
-  Xvfb ":$DISPLAY_NUM" -screen 0 1280x900x24 >"$XVFB_LOG_FILE" 2>&1 &
+  Xvfb ":$DISPLAY_NUM" -screen 0 1920x1200x24 >"$XVFB_LOG_FILE" 2>&1 &
   local xvfb_pid=$!
   for _ in $(seq 1 30); do
     DISPLAY=":$DISPLAY_NUM" xdotool getdisplaygeometry >/dev/null 2>&1 && break

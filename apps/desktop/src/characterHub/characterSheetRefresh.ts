@@ -88,6 +88,17 @@ export function toCharacterMutationRefresh(
       selectedFeats,
       spellsSelected,
       chosenFeatTargets,
+      // The mutation commands return a `CreateCharacterResponse`, which
+      // carries neither of these. Left empty rather than guessed: a
+      // mutation changes what the engine would explain (a level-up moves
+      // every class-feature magnitude), so carrying the pre-mutation
+      // records forward would show stale numbers as if they were current.
+      // Callers that need the post-mutation records re-read the character
+      // through `loadSavedCharacterDetail` — see `refreshEngineRecords` in
+      // `CharacterSheet.tsx`, the same post-mutation re-read pattern
+      // `refreshDurability` already established there.
+      explanations: [],
+      weaponDamage: [],
     },
   };
 }

@@ -70,9 +70,8 @@ use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
-    map_chosen_feat_targets_dto, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
-    map_spells_selected_dto, map_summary_dto, summarize_envelope, CreateCharacterRequest,
-    CreateCharacterResponse,
+    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
+    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
 use crate::characterHub::appendToCharacter::{
@@ -497,28 +496,19 @@ impl RuleSystemAdapter for Pf1Adapter {
         })
     }
 
+    /// Delegates to `character_hub::load_saved_character_at_root` rather
+    /// than re-deriving the same load-and-project pipeline a second time.
+    ///
+    /// This used to be a field-by-field copy of that function, and it was a
+    /// silent drop hazard by construction: every field added to
+    /// `LoadSavedCharacterResponse` had to be remembered in two places, and
+    /// a forgotten one here left this adapter's callers reading a response
+    /// missing data the engine had computed — the identical gap
+    /// `map_snapshot_dto` was already extracted to close for
+    /// `PilotSnapshotDto` (see `rule_system_adapter.rs`'s own note on that
+    /// extraction).
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
-        let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-
-        let (snapshot, diagnostics, corpus_receipt) =
-            match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
-                Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
-                Err(diagnostics) => (
-                    None,
-                    diagnostics,
-                    compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
-                ),
-            };
-
-        Ok(LoadSavedCharacterResponse {
-            summary: summarize_envelope(&envelope),
-            snapshot: snapshot.as_ref().map(map_snapshot_dto),
-            diagnostics: map_diagnostics_dto(&diagnostics),
-            corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
-            selected_feats: envelope.character_input.chosen.selected_feats.clone(),
-            spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
-            chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
-        })
+        crate::character_hub::load_saved_character_at_root(root)
     }
 }
 

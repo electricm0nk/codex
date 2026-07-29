@@ -133,5 +133,60 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
   // the preview shows a resolved target rather than an untargeted feat.
   chosenFeatTargets: [{ featId: 'feat:weapon_focus', targetKind: 'Weapon', targets: ['longsword'] }],
     spellsSelected: [],
+    // Real records the engine emits for a Fighter 3 / Wizard 1, copied
+    // verbatim from its own output shape (id, value and the citation text
+    // it writes) so the browser preview exercises the same rendering path
+    // the desktop app does — not a prettified stand-in.
+    explanations: [
+      {
+        id: 'class_feature.fighter.bravery',
+        value: 1,
+        detail:
+          'Fighter level 2 Bravery (cr_abilities_class.lst Fighter; +1 at level 2 and another +1 ' +
+          'every 4 Fighter levels thereafter): grants +1 to Will saves against fear. This is a ' +
+          'flat, non-fabricated bonus magnitude only — no fear-condition or Will-save-resolution ' +
+          'engine exists anywhere in this codebase, so this bonus is never folded into the ' +
+          'unconditional Will save total',
+      },
+      {
+        id: 'class_chassis.wizard.scribe_scroll',
+        value: 1,
+        detail:
+          'Wizard level 1 Scribe Scroll bonus feat from the PF1 Core Rulebook Wizard class table: ' +
+          'granted once, at 1st level',
+      },
+      {
+        id: 'class_spell.wizard.total_spells_per_day.spell_level_0',
+        value: 3,
+        detail:
+          'Wizard level 1 spells per day for spell level 0 from the PF1 Core Rulebook Wizard ' +
+          'class table: 3 (cantrips take no Intelligence bonus spells)',
+      },
+      {
+        id: 'class_spell.wizard.total_spells_per_day.spell_level_1',
+        value: 2,
+        detail:
+          'Wizard level 1 spells per day for spell level 1: 1 base from the PF1 Core Rulebook ' +
+          'Wizard class table + 1 Intelligence bonus spell (Intelligence modifier +2) = 2',
+      },
+    ],
+    // The engine's real breakdown for Aldric's equipped Longsword. The
+    // Chain Shirt is deliberately absent: it is not a weapon, and the
+    // engine omits non-weapons entirely rather than listing them with
+    // zeroed facets.
+    weaponDamage: [
+      {
+        weaponItemId: 'item:longsword',
+        weaponRecordKey: 'Longsword (Base)',
+        baseDice: { count: 1, dieSize: 8 },
+        strDamageModifier: 3,
+        wieldCategory: 'OneHanded',
+        enhancementAttackBonus: null,
+        enhancementDamageBonus: null,
+        criticalThreatRange: [19, 20],
+        criticalMultiplier: 2,
+        featEffects: [],
+      },
+    ],
   };
 }
