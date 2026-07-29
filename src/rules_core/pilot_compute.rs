@@ -18717,6 +18717,7 @@ fn compute_acg_class_chassis(
         ground_skald_lore_master(level, explanations);
         ground_skald_versatile_performance(level, explanations);
         ground_skald_rage_powers_pool_size(level, explanations);
+        ground_skald_remaining_named_features(level, ability_modifiers.charisma, explanations);
         push_skald_other_features_deferred_diagnostic(diagnostics);
     } else if class_id == AcgClassId::Bloodrager {
         ground_or_block_bloodrager_bloodrage(input, level, ability_modifiers, explanations, diagnostics);
@@ -19501,6 +19502,221 @@ fn ground_skald_rage_powers_pool_size(level: u8, explanations: &mut Vec<Computat
     }
 }
 
+/// Song of Strength's bonus on allies' Strength checks and
+/// Strength-based skill checks: `SkaldLVL/2`.
+///
+/// **Sourced from DESC prose**, not a `BONUS:` token -- the record
+/// (`acg_abilities_class.lst:1741`) carries no numeric token at all.
+/// The rule reads "allies within 60 feet who can hear the skald may add
+/// 1/2 the skald's level to a Strength check or Strength-based skill
+/// check".
+fn skald_song_of_strength_bonus(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// Cantrips known, read from the level-0 column of Skald's own
+/// `KNOWN:` table in `acg_classes.lst:301-320`: `KNOWN:4,2` at 1st,
+/// `KNOWN:5,3` at 2nd, `KNOWN:6,4` at 3rd, and 6 from there on.
+///
+/// The paired `CAST:` column is `0` at every level, which in PCGen means
+/// *unlimited* rather than *none* -- cantrips "do not consume any slots
+/// and may be used again". Reading that 0 as a per-day count would
+/// report a Skald who can cast no cantrips at all.
+fn skald_cantrips_known(level: u8) -> i16 {
+    match level {
+        1 => 4,
+        2 => 5,
+        _ => 6,
+    }
+}
+
+/// Grant levels for Skald's remaining named features, per
+/// `acg_classes.lst:283-299`.
+const SKALD_SONG_OF_MARCHING_LEVEL: u8 = 3;
+const SKALD_UNCANNY_DODGE_LEVEL: u8 = 4;
+const SKALD_SONG_OF_STRENGTH_LEVEL: u8 = 6;
+const SKALD_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 8;
+const SKALD_DIRGE_OF_DOOM_LEVEL: u8 = 10;
+const SKALD_SONG_OF_THE_FALLEN_LEVEL: u8 = 14;
+const SKALD_MASTER_SKALD_LEVEL: u8 = 20;
+
+/// The Skald features whose corpus records carry **no numeric token of
+/// any kind**, as `(grant level, display name, corpus DESC excerpt)`.
+///
+/// Each verified field by field on its own `KEY:Skald ~ <Name>` record.
+/// Every one is `KEY` + `CATEGORY` + `TYPE` + `DESC` + `SOURCEPAGE`,
+/// with no `BONUS` and no `DEFINE`.
+///
+/// **Namespace matters here more than anywhere else in this file.**
+/// Skald's Uncanny Dodge and Improved Uncanny Dodge are genuinely
+/// Skald-owned records (`KEY:Skald ~ Uncanny Dodge`), NOT Barbarian's or
+/// Rogue's -- a bare name grep hits those instead and would wrongly
+/// suggest the feature is already covered. The same trap applies to
+/// Skald's Lore Master and Versatile Performance, which collide by name
+/// with Bard's but carry their own Skald-prefixed keys and their own
+/// `Skald*` variables; both are grounded separately with real
+/// magnitudes.
+///
+/// Song of Strength is deliberately excluded: it is not zero-magnitude
+/// (its DESC carries a real `1/2 level` bonus) and is grounded with a
+/// real value.
+const SKALD_ZERO_MAGNITUDE_FEATURES: &[(u8, &str, &str)] = &[
+    (
+        SKALD_SONG_OF_MARCHING_LEVEL,
+        "Song of Marching",
+        "By expending 1 round of raging song, the skald invigorates allies within 60 feet, who \
+         may hustle for the next hour; this movement counts as a walk (not a hustle) for the \
+         purpose of accruing nonlethal damage and fatigue",
+    ),
+    (
+        SKALD_UNCANNY_DODGE_LEVEL,
+        "Uncanny Dodge",
+        "He cannot be caught flat-footed, nor does he lose his Dex bonus to AC if the attacker is \
+         invisible. He still loses his Dexterity bonus to AC if he is immobilized ... If a skald \
+         already has uncanny dodge from a different class, he automatically gains improved \
+         uncanny dodge instead",
+    ),
+    (
+        SKALD_IMPROVED_UNCANNY_DODGE_LEVEL,
+        "Improved Uncanny Dodge",
+        "a skald can no longer be flanked. This defense denies enemies the ability to sneak \
+         attack the skald by flanking him, unless the attacker has at least four more levels in a \
+         class that grants sneak attack than the target has skald levels",
+    ),
+    (
+        SKALD_DIRGE_OF_DOOM_LEVEL,
+        "Dirge of Doom",
+        "a skald can create a sense of growing dread in his enemies, causing them to become \
+         shaken. This only affects enemies that are within 30 feet and able to hear the skald's \
+         performance ... This cannot cause a creature to become frightened or panicked",
+    ),
+    (
+        SKALD_SONG_OF_THE_FALLEN_LEVEL,
+        "Song of the Fallen",
+        "The skald selects a dead ally within 60 feet and expends 1 round of raging song to bring \
+         that ally back to life. The revived ally is alive but staggered ... The ally \
+         automatically dies if the skald ends this performance or is interrupted",
+    ),
+    (
+        SKALD_MASTER_SKALD_LEVEL,
+        "Master Skald",
+        "a skald's inspired rage no longer gives allies a penalty to AC, nor limits what skills \
+         or abilities they can use ... when making a full attack, affected allies may make an \
+         additional attack each round (as if using a haste effect)",
+    ),
+];
+
+/// Grounds Skald's remaining named class features (task #91): Raging
+/// Song's own rounds-per-day pool, Cantrips known, the Scribe Scroll
+/// bonus-feat grant, Song of Strength's real magnitude, and the six
+/// zero-magnitude features in `SKALD_ZERO_MAGNITUDE_FEATURES`.
+///
+/// Together with the magnitudes already grounded elsewhere (Inspired
+/// Rage, Damage Reduction, Bardic Knowledge, Well-Versed, Spell Kenning,
+/// Lore Master, Versatile Performance, the Rage Powers pool, and Raging
+/// Climber/Raging Swimmer), this closes every named feature on Skald's
+/// corpus class table.
+fn ground_skald_remaining_named_features(
+    level: u8,
+    charisma_modifier: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    // Reuses `skald_inspired_rage_rounds_per_day` rather than deriving
+    // its own copy: in PF1 every raging song spends from ONE shared
+    // per-day pool, so a second formula here would not merely duplicate
+    // code, it would assert a second pool that does not exist. That
+    // function also already carries this file's ratified ruling on the
+    // corpus's defective `3+CHA+(2*SkaldLVL)` token -- see its doc
+    // comment. An earlier draft of this closure added a parallel
+    // `skald_raging_song_rounds_per_day` before finding it.
+    let rounds = skald_inspired_rage_rounds_per_day(charisma_modifier, level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.skald.raging_song_rounds_per_day".to_owned(),
+        value: rounds,
+        detail: format!(
+            "Skald level {level} Raging Song: {rounds} rounds per day (3 + Charisma modifier \
+             {charisma_modifier:+} + 2 per level after the first). Raging Song is the umbrella \
+             performance that Inspired Rage, Song of Marching, Song of Strength, Dirge of Doom \
+             and Song of the Fallen all spend from -- ONE shared pool, which is why this reads \
+             the same `skald_inspired_rage_rounds_per_day` the rage-execution budget enforces \
+             against rather than deriving a second figure. Starting a song is a standard action, \
+             a move action at 7th and a swift action at 13th; this codebase models no action \
+             economy for that, and the 20%%-failure-chance-while-deaf clause is a resolution, \
+             not a magnitude. The corpus's own BONUS:VAR token for this record reads \
+             3+CHA+(2*SkaldLVL), two higher than its own rule text at every level; that defect \
+             was already identified and knowingly overridden in favour of the rule text -- see \
+             `skald_inspired_rage_rounds_per_day`'s doc comment for the standing ruling"
+        ),
+    });
+
+    let cantrips = skald_cantrips_known(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.skald.cantrips_known".to_owned(),
+        value: cantrips,
+        detail: format!(
+            "Skald level {level} Cantrips: {cantrips} 0-level spells known, read from the \
+             level-0 column of Skald's own KNOWN: table (4 at 1st, 5 at 2nd, 6 from 3rd on). \
+             They are cast at will: the paired CAST: column is 0 at every level, which in PCGen \
+             means UNLIMITED rather than none -- reading that 0 as a per-day count would report a \
+             Skald who can cast no cantrips at all. Grounds the known-count only; the separate \
+             spontaneous spell-level-access, per-day and save-DC records cover levels 1-4"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.acg.skald.scribe_scroll_bonus_feat".to_owned(),
+        value: 1,
+        detail: format!(
+            "Skald level {level} Scribe Scroll (granted at 1st level, corpus \
+             KEY:Skald ~ Scribe Scroll): 1 bonus feat, granted automatically rather than chosen \
+             -- the record's sole functional token is ABILITY:FEAT|AUTOMATIC|Scribe Scroll, with \
+             no BONUS or DEFINE. Grounded as a count-of-1 grant record, the same idiom as \
+             Wizard's own Scribe Scroll grant. This codebase resolves no item-creation, so the \
+             feat's benefit is not computed; what grounds is that the slot is filled by a known \
+             feat rather than left to a chooser"
+        ),
+    });
+
+    if level >= SKALD_SONG_OF_STRENGTH_LEVEL {
+        let strength_bonus = skald_song_of_strength_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.skald.song_of_strength_bonus".to_owned(),
+            value: strength_bonus,
+            detail: format!(
+                "Skald level {level} Song of Strength (granted at level \
+                 {SKALD_SONG_OF_STRENGTH_LEVEL}): allies within 60 feet who can hear the skald \
+                 may add +{strength_bonus} (half the skald's level) to a Strength check or \
+                 Strength-based skill check, once each round. The magnitude is transcribed from \
+                 the record's DESC prose, which is the only place it exists -- the record carries \
+                 no BONUS or DEFINE token. Grounds the magnitude only: the bonus lands on ALLIES, \
+                 and this codebase computes no ally's skill totals, so nothing consumes it"
+            ),
+        });
+    }
+
+    for (grant_level, display_name, description) in SKALD_ZERO_MAGNITUDE_FEATURES {
+        if level < *grant_level {
+            continue;
+        }
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_feature.acg.skald.{}_grant",
+                swashbuckler_deed_id_slug(display_name)
+            ),
+            value: 0,
+            detail: format!(
+                "Skald level {level} {display_name}, granted at level {grant_level} (corpus \
+                 KEY:Skald ~ {display_name}): \"{description}\" This is a bounded grant-only \
+                 identity record (value 0, non-fabricated): the record carries no BONUS and no \
+                 DEFINE -- verified field by field -- so it has no magnitude to compute, now or \
+                 ever. The key namespace is load-bearing: this is Skald's OWN record, not \
+                 Barbarian's or Rogue's or Bard's same-named one, which a bare name grep would \
+                 have matched instead"
+            ),
+        });
+    }
+}
+
 /// Pushes the new, narrower diagnostic replacing
 /// `class_feature.acg.skald.unsupported` for Skald specifically (per the
 /// adversarial review's finding 2, updated for the spellcasting closure):
@@ -19569,29 +19785,42 @@ fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computati
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{SKALD_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
-             pillar, Inspired Rage, known-spell posture, self-only Damage Reduction, Bardic \
-             Knowledge, Well-Versed, the flat pool-size/count magnitudes for Spell Kenning, Lore \
-             Master, Versatile Performance, and Rage Powers, and Raging Climber/Raging \
-             Swimmer's own self-use magnitude (two of the 60-record Rage Powers family, landing \
-             on the real Climb/Swim totals), and its class-skill list: no \
-             other named class feature or execution mechanism (Damage Reduction's own \
-             ally-extension, Spell Kenning's own cross-class spell-borrowing execution, Lore \
-             Master's own take-10/take-20 execution, Versatile Performance's own Perform-type \
-             choice and skill-substitution execution, Rage Powers' own ally-granting \
-             shared-list access plus the other 58 named-but-unmodeled rage powers, Raging Song \
-             itself and its Dirge of \
-             Doom, Song of Marching, Song of Strength and Song of the Fallen songs, Master \
-             Skald, Uncanny Dodge and Improved Uncanny Dodge, Cantrips, and the Scribe Scroll \
-             bonus-feat grant) is grounded \
-             anywhere in this codebase yet; no class-feature execution is fabricated in this \
-             bounded chassis baseline. This message previously asserted \"this ACG class has no \
-             class-skill list\": Skald's own `KEY:Skald ~ Class Skills` corpus record exists \
-             and genuinely includes Climb, Intimidate and Swim (task #78). Master Skald, \
-             Uncanny Dodge, Improved Uncanny Dodge, Cantrips and Scribe Scroll were named in \
-             NEITHER clause (task #76)"
+            "{SKALD_CLASS_ID} now grounds every named feature on its corpus class table: the \
+             base-attack-bonus/base-save chassis pillar, its class-skill list, Inspired Rage, \
+             known-spell posture and spontaneous spellcasting, self-only Damage Reduction, Bardic \
+             Knowledge, Well-Versed, the flat magnitudes for Spell Kenning, Lore Master, \
+             Versatile Performance and the Rage Powers pool, Raging Climber and Raging Swimmer \
+             (landing on the real Climb/Swim totals), and -- newly, task #91 -- Raging Song's own \
+             rounds-per-day pool, Cantrips known, the Scribe Scroll bonus-feat grant, Song of \
+             Strength's half-level bonus, and Song of Marching, Uncanny Dodge, Improved Uncanny \
+             Dodge, Dirge of Doom, Song of the Fallen and Master Skald as bounded grant-only \
+             identity records. This diagnostic is therefore no longer claim-blocking; it is \
+             retained to carry the honest remainder, which is substantial and worth reading. \
+             (1) EXECUTION, not magnitude, is what stays deferred: Damage Reduction's \
+             ally-extension, Spell Kenning's cross-class spell-borrowing, Lore Master's \
+             take-10/take-20, Versatile Performance's Perform-type choice and skill \
+             substitution, and Rage Powers' ally-granting shared-list access all have their \
+             counts or amounts grounded while the mechanism that would spend them does not \
+             exist here. Several also land on ALLIES -- Song of Strength, Song of Marching, Song \
+             of the Fallen, Dirge of Doom and Master Skald all modify other creatures -- and this \
+             codebase computes no ally's totals, so those magnitudes are derived correctly and \
+             consumed by nothing. Under this repo's standalone-fact grounding bar a missing \
+             consumer does not block a correctly-derived number. (2) The Rage Powers family is \
+             covered at 2 of its 60 loaded records (Raging Climber, Raging Swimmer), a catalog \
+             gap narrowed the same way Oracle's Mystery is, not a missing magnitude. Skald draws \
+             from the SAME shared pool and the SAME record set as Barbarian -- there is no \
+             Skald-specific rage power list -- so the two grounded powers work for Skald only \
+             because their value variable is RagePowersLVL, which Skald sets to SkaldLVL. \
+             (3) One real corpus disagreement is surfaced rather than hidden: Raging Song's \
+             BONUS:VAR token reads 3+CHA+(2*SkaldLVL), two higher at every level than the rule \
+             text on the same record, which increments only for levels after the first. The rule \
+             text is implemented; see that record's own explanation. This message previously \
+             asserted \"this ACG class has no class-skill list\": Skald's own \
+             `KEY:Skald ~ Class Skills` record exists and genuinely includes Climb, Intimidate \
+             and Swim (task #78). Master Skald, Uncanny Dodge, Improved Uncanny Dodge, Cantrips \
+             and Scribe Scroll were named in NEITHER clause (task #76) and are now grounded"
         ),
-        claim_blocking: true,
+        claim_blocking: false,
     });
 }
 
@@ -42693,15 +42922,31 @@ mod acg_class_chassis_dispatch_tests {
     /// Powers shared-list access, Spell Kenning, Versatile Performance,
     /// War Chant) remain completely unbuilt, so this diagnostic still
     /// unconditionally claim-blocks).
+    ///
+    /// **Task #91 flips the status assertion.** The features this
+    /// diagnostic's blocking claim named -- Raging Song itself and its
+    /// four songs, Master Skald, Uncanny Dodge, Improved Uncanny Dodge,
+    /// Cantrips and the Scribe Scroll grant -- are now grounded, so the
+    /// record is demoted rather than deleted and Skald computes.
     #[test]
-    fn skald_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+    fn skald_reaches_computed_with_its_remainder_diagnostic_demoted_not_deleted() {
         let input = acg_style_input("class:skald", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Skald must stay Blocked on its other-features-deferred posture alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Skald grounds every named corpus feature and must now compute: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -42721,16 +42966,6 @@ mod acg_class_chassis_dispatch_tests {
                 .any(|d| d.id == "class_feature.acg.skald.spellcasting_deferred.unsupported"),
             "the now-retired spellcasting_deferred diagnostic must never appear for Skald \
              either, now that known-spell posture is genuinely validated: {:?}",
-            receipt.computation.diagnostics
-        );
-        assert!(
-            receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -45892,15 +46127,21 @@ mod skald_dispatch_widening_safety_tests {
     /// on the new, narrower spellcasting_deferred diagnostic alone (never
     /// the retired generic one), with the honest "not singing" recognition
     /// record grounded.
+    ///
+    /// **Task #91 flips the status assertion** -- Skald's last named
+    /// features are grounded, so the class computes. The point this test
+    /// actually protects is unchanged and still asserted below: not
+    /// singing is a valid posture that produces an honest recognition
+    /// record, not a diagnostic.
     #[test]
-    fn single_class_skald_not_singing_stays_blocked_on_deferred_spellcasting_only() {
+    fn single_class_skald_not_singing_computes_with_an_honest_not_singing_record() {
         let input = human_skald_input(1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Skald must stay Blocked on spellcasting alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "not singing is a valid posture and must not block: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -45927,8 +46168,8 @@ mod skald_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -45941,8 +46182,12 @@ mod skald_dispatch_widening_safety_tests {
     ///
     /// Charisma 8 (fixture base) -> -1 modifier: rounds per day = 3 + (-1)
     /// + 2*(1-1) = 2, so only 1-2 rounds consumed today stays in budget.
+    ///
+    /// **Task #91 flips the status assertion** -- with Skald's last named
+    /// features grounded the class computes. What this test exists to
+    /// protect is the bonus integration below, which is unchanged.
     #[test]
-    fn single_class_skald_actively_singing_in_budget_applies_real_bonuses_but_stays_blocked() {
+    fn single_class_skald_actively_singing_in_budget_applies_real_bonuses() {
         let mut input = human_skald_input(1);
         input.chosen.class_ability_activations.push(ClassAbilityActivation {
             ability_id: SKALD_INSPIRED_RAGE_ABILITY_ID.to_owned(),
@@ -45954,8 +46199,8 @@ mod skald_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Skald stays Blocked on spellcasting even while actively, validly singing: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "an in-budget, actively singing Skald is a fully valid posture: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -45964,8 +46209,8 @@ mod skald_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the other_features_deferred diagnostic even while singing: {:?}",
+                    && !d.claim_blocking),
+            "expected the non-blocking remainder record even while singing: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -46379,15 +46624,15 @@ mod skald_dispatch_widening_safety_tests {
             .find(|d| d.id == "class_feature.acg.skald.other_features_deferred.unsupported")
             .expect("expected the other_features_deferred diagnostic");
         assert!(
-            deferred.message.contains("Raging Climber/Raging Swimmer's own self-use magnitude"),
-            "expected the preamble to acknowledge Raging Climber/Raging Swimmer as grounded: {}",
+            deferred.message.contains("Raging Climber and Raging Swimmer"),
+            "expected the message to credit Raging Climber/Raging Swimmer as grounded: {}",
             deferred.message
         );
         assert!(
             deferred.message.contains("ally-granting shared-list access")
-                && deferred.message.contains("58 named-but-unmodeled rage powers"),
-            "expected the wider Rage Powers feature (minus the now-grounded pool-count) to \
-             still be named as deferred: {}",
+                && deferred.message.contains("2 of its 60 loaded records"),
+            "expected the wider Rage Powers feature (minus the now-grounded pool-count and the \
+             two grounded powers) to still be named as deferred: {}",
             deferred.message
         );
         assert!(
@@ -46396,6 +46641,132 @@ mod skald_dispatch_widening_safety_tests {
              deferred: {}",
             deferred.message
         );
+        // Task #91: the Rage Powers catalog gap is a chooser-narrowing
+        // remainder, not a blocker -- Skald computes with it open.
+        assert!(
+            !deferred.claim_blocking,
+            "a catalog gap in a chooser list must not block the class: {deferred:?}"
+        );
+    }
+
+    /// Raging Song's rounds-per-day pool is the SAME pool Inspired Rage's
+    /// budget enforcement spends from -- one shared pool, per PF1 -- so
+    /// the two records must always agree. A second, independently derived
+    /// figure here would assert a pool that does not exist.
+    ///
+    /// It also follows the rule text, not the corpus's defective
+    /// `3+CHA+(2*SkaldLVL)` token, which is 2 high at every level. The
+    /// fixture's Charisma 8 (-1) makes that difference visible: 2 rather
+    /// than 4 at level 1.
+    #[test]
+    fn raging_song_rounds_per_day_shares_the_inspired_rage_pool_and_follows_the_rule_text() {
+        for (level, want) in [(1u8, 2i16), (2, 4), (3, 6), (20, 40)] {
+            assert_eq!(
+                super::skald_inspired_rage_rounds_per_day(-1, level),
+                want,
+                "level {level} with Charisma modifier -1"
+            );
+        }
+
+        for level in [1u8, 5, 20] {
+            let receipt = build_pilot_headless_receipt(&human_skald_input(level));
+            let rounds = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.acg.skald.raging_song_rounds_per_day")
+                .unwrap_or_else(|| panic!("Raging Song rounds must ground at level {level}"));
+            assert_eq!(
+                rounds.value,
+                super::skald_inspired_rage_rounds_per_day(-1, level),
+                "Raging Song and Inspired Rage must report ONE shared pool at level {level}"
+            );
+        }
+    }
+
+    /// Cantrips known come from the level-0 column of the KNOWN table
+    /// (4/5/6), NOT from the paired CAST column, which is 0 at every
+    /// level because cantrips are unlimited. Reading CAST would report a
+    /// Skald who can cast none.
+    #[test]
+    fn skald_cantrips_read_the_known_column_not_the_unlimited_cast_column() {
+        for (level, want) in [(1u8, 4i16), (2, 5), (3, 6), (20, 6)] {
+            assert_eq!(super::skald_cantrips_known(level), want, "level {level}");
+        }
+        let receipt = build_pilot_headless_receipt(&human_skald_input(1));
+        let cantrips = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.skald.cantrips_known")
+            .expect("Cantrips ground from level 1");
+        assert_eq!(cantrips.value, 4);
+        assert_ne!(cantrips.value, 0, "0 would mean the CAST column was read instead");
+    }
+
+    /// Song of Strength carries a REAL magnitude (half the skald's
+    /// level) that exists only in DESC prose, so it must not be filed
+    /// with the zero-magnitude features. The six that genuinely are
+    /// zero-magnitude ground at their own gates with value 0, and each
+    /// must cite its Skald-namespaced key -- a bare name grep would have
+    /// hit Barbarian's, Rogue's or Bard's same-named records instead.
+    #[test]
+    fn skald_zero_magnitude_features_gate_correctly_and_song_of_strength_is_not_among_them() {
+        let song_of_strength = "class_feature.acg.skald.song_of_strength_bonus";
+        assert!(
+            !build_pilot_headless_receipt(&human_skald_input(5))
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == song_of_strength),
+            "Song of Strength is a 6th-level feature"
+        );
+        for (level, want) in [(6u8, 3i16), (7, 3), (20, 10)] {
+            let receipt = build_pilot_headless_receipt(&human_skald_input(level));
+            assert_eq!(
+                receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .find(|e| e.id == song_of_strength)
+                    .map(|e| e.value),
+                Some(want),
+                "Song of Strength at level {level} is half the skald's level"
+            );
+        }
+
+        for (gate, name) in [
+            (3u8, "song_of_marching"),
+            (4, "uncanny_dodge"),
+            (8, "improved_uncanny_dodge"),
+            (10, "dirge_of_doom"),
+            (14, "song_of_the_fallen"),
+            (20, "master_skald"),
+        ] {
+            let id = format!("class_feature.acg.skald.{name}_grant");
+            assert!(
+                !build_pilot_headless_receipt(&human_skald_input(gate - 1))
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id == id),
+                "{id} must not exist below its level-{gate} gate"
+            );
+            let receipt = build_pilot_headless_receipt(&human_skald_input(gate));
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must ground at level {gate}"));
+            assert_eq!(record.value, 0, "{id} is genuinely zero-magnitude");
+            assert!(
+                record.detail.contains("KEY:Skald ~ "),
+                "{id} must cite its Skald-namespaced corpus key so it can never be confused \
+                 with Barbarian's, Rogue's or Bard's same-named record: {}",
+                record.detail
+            );
+        }
     }
 
     /// Skald's own Well-Versed (task #50) is honestly absent below level 2
