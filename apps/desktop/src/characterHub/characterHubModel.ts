@@ -343,16 +343,18 @@ const EVERY_CLASS_LEVEL: number[] = Object.freeze(
  * cross-check for these; `apg::hit_die_for`/`acg::hit_die_for` are.
  *
  * That same cross-check turned up one genuine disagreement, in a CRB class
- * this change did not otherwise touch: **Monk**. This table says `8`, but
- * `cr_classes.lst`'s `CLASS:Monk` record carries `HD:10` and `CLASS_META`
- * mirrors that `10`. PF1's published Monk is a d8, so the `8` here is very
- * probably the correct value and the corpus row the wrong one — but it is a
- * real rules question with a real HP consequence (a Monk 20 is 143 HP at d8
- * versus 164 at d10), reachable by players either way, so it is left as
- * found and reported rather than silently changed in either direction.
- * Whoever resolves it should make the corpus, `CLASS_META` and this table
- * agree; `characterHubModel.test.ts`'s `HIT_DIE_BY_CLASS_ID` pins the
- * current value and carries the same note.
+ * this change did not otherwise touch: **Monk**. **RESOLVED 2026-07-29 in
+ * this table's favour, by operator ruling** (risks item 91). This table
+ * said `8` while `cr_classes.lst`'s `CLASS:Monk` record carries `HD:10` and
+ * `CLASS_META` mirrored that `10` — so the shipped product displayed d8
+ * while computing HP from d10 (a Monk 20 is 143 HP at d8 versus 164 at
+ * d10). The operator ruled the published PF1 CRB p.56 value, d8, is
+ * correct; `CLASS_META`'s Monk row was corrected to `8` and now carries a
+ * documented corpus-defect override comment explaining why it deliberately
+ * does not transcribe its own `HD:` token. The corpus itself was
+ * intentionally NOT edited — it is this project's independent parity
+ * oracle. So the `8` below needed no change; it is now the engine that
+ * agrees with it, not the other way round.
  *
  * ## Where `levelOptions` comes from
  *

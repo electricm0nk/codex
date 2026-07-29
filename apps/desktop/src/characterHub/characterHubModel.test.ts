@@ -65,8 +65,8 @@ const FULLY_COMPUTED_CLASS_IDS = [
  * apg_classes.lst`, `advanced_class_guide/acg_classes.lst`. Cross-checked
  * against the engine's own per-class constants (`crb::class_tables`'s
  * `CLASS_META.hit_die` for the CRB eleven, and the `HIT_DIE` constant in
- * each `rules_tables/{apg,acg}/class_*.rs` for the rest), which agree
- * everywhere except Monk — see below.
+ * each `rules_tables/{apg,acg}/class_*.rs` for the rest), which now agree
+ * everywhere. Monk was the lone exception until 2026-07-29 — see below.
  */
 const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
   'class:barbarian': 12,
@@ -74,14 +74,14 @@ const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
   'class:cleric': 8,
   'class:druid': 8,
   'class:fighter': 10,
-  // NOTE: this 8 is the one place this table knowingly departs from both the
-  // corpus and the engine, and it is deliberately left alone rather than
-  // "fixed". `cr_classes.lst`'s `CLASS:Monk` line carries `HD:10` and
-  // `CLASS_META` mirrors that 10, but PF1's published Monk is a d8 and this
-  // value is what the player-facing HP preview uses. Changing it is a real
-  // rules decision with a real HP consequence, not a typo cleanup, so it is
-  // reported rather than silently changed. Whichever way it is resolved, the
-  // corpus, `CLASS_META` and this table should end up agreeing.
+  // NOTE: this 8 knowingly departs from the CORPUS (and only the corpus).
+  // `cr_classes.lst`'s `CLASS:Monk` line carries `HD:10`, but PF1's
+  // published Core Rulebook p.56 — the page that record's own SOURCEPAGE
+  // cites — gives the Monk a d8. The operator ruled d8 on 2026-07-29
+  // (risks item 91), and `CLASS_META` was corrected from 10 to 8 to match,
+  // so this table and the engine now agree; only the corpus dissents, and
+  // it is deliberately left unedited because it is the parity oracle.
+  // Do not "fix" this back to 10.
   'class:monk': 8,
   'class:paladin': 10,
   'class:ranger': 10,

@@ -225,12 +225,18 @@ mod tests {
     /// retired because the gap genuinely closed -- not because the
     /// assertion was weakened to make a failure go away.
     ///
-    /// Monk d10 (`cr_classes.lst:147`, `CLASS:Monk HD:10`), level 1,
-    /// CON mod +2: maximized level 1 = 10 + 2 = 12.
+    /// Monk d8 (published PF1 Core Rulebook p.56; operator ruling
+    /// 2026-07-29, risks item 91), level 1, CON mod +2: maximized level 1
+    /// = 8 + 2 = 10.
+    ///
+    /// This is deliberately NOT the corpus's `cr_classes.lst:147`
+    /// `CLASS:Monk HD:10`, which would give 12. `CLASS_META`'s Monk row
+    /// carries a documented corpus-defect override -- read its comment
+    /// block before changing this expectation.
     #[test]
     fn compute_max_hp_now_resolves_monk_the_last_class_to_join_table_class_id() {
         let max_hp = compute_max_hp(&[class_level("class:monk", 1)], 2);
-        assert_eq!(max_hp, Some(12));
+        assert_eq!(max_hp, Some(10));
     }
 
     #[test]

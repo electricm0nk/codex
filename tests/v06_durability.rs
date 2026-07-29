@@ -97,16 +97,71 @@ fn compute_max_hp_returns_none_for_a_wizard_rogue_multiclass_build() {
 /// deleted: durability is still scoped to that allowlist, and the
 /// allowlist grew.
 ///
-/// Monk d10 (`cr_classes.lst:147`, `CLASS:Monk HD:10`), level 1, CON mod
-/// +3: the level-1 die is maximized, so 10 + 3 = 13.
+/// Monk d8 (published PF1 Core Rulebook p.56; operator ruling 2026-07-29,
+/// risks item 91 -- deliberately NOT the corpus's defective `HD:10` at
+/// `cr_classes.lst:147`), level 1, CON mod +3: the level-1 die is
+/// maximized, so 8 + 3 = 11.
 #[test]
 fn compute_max_hp_now_resolves_monk_since_table_class_id_recognizes_it() {
     let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 3);
     assert_eq!(
         max_hp,
-        Some(13),
-        "Monk joined the table_class_id allowlist, so durability must resolve its real d10"
+        Some(11),
+        "Monk joined the table_class_id allowlist, so durability must resolve its real d8"
     );
+}
+
+// ----- Monk d8 corpus-defect override, pinned across the level range -----
+
+/// Pins the operator's 2026-07-29 d8 ruling (risks item 91) at the low,
+/// middle, and capstone ends of Monk's 1-20 range, so a silent regression
+/// back to the corpus's `HD:10` fails loudly rather than drifting by a few
+/// HP at one level nobody tests.
+///
+/// CON mod +2 throughout, which is the exact posture the ruling itself was
+/// stated in: a Monk 20 is 143 HP at d8 versus 164 at d10, a 21-point
+/// difference. Level 1 is the maximized die (8 + 2 = 10); every level
+/// after that adds the average (8/2 + 1 = 5, so 5 + 2 = 7 per level).
+///
+/// If the corpus's `HD:10` is ever restored, these become 12 / 84 / 164 --
+/// do NOT "fix" them to match. Read the doc comment on `CLASS_META`'s Monk
+/// row in `src/rules_core/rules_tables/crb/class_tables.rs` first.
+#[test]
+fn monk_max_hp_follows_the_published_d8_not_the_corpus_d10_at_levels_1_10_and_20() {
+    let level_1 = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 2);
+    assert_eq!(level_1, Some(10), "Monk 1 at d8, CON +2: maximized 8 + 2 = 10 (d10 would give 12)");
+
+    let level_10 = compute_max_hp(&[class_level(MONK_CLASS_ID, 10)], 2);
+    assert_eq!(
+        level_10,
+        Some(73),
+        "Monk 10 at d8, CON +2: 10 + 9*(5+2) = 73 (d10 would give 84)"
+    );
+
+    let level_20 = compute_max_hp(&[class_level(MONK_CLASS_ID, 20)], 2);
+    assert_eq!(
+        level_20,
+        Some(143),
+        "Monk 20 at d8, CON +2: 10 + 19*(5+2) = 143 -- the operator's own stated figure, \
+         versus 164 under the corpus's defective d10"
+    );
+}
+
+/// The d10 values are asserted NOT to be produced, in the same shape as
+/// `shaman_level_11_follows_the_corpus_not_the_peer_row` (risks item 56):
+/// pinning only the value used lets a regression that changes the formula
+/// AND the die cancel out. This pins the rejected value explicitly.
+#[test]
+fn monk_max_hp_is_never_the_d10_value_the_corpus_would_produce() {
+    for (level, d10_value) in [(1_u8, 12_i16), (10, 84), (20, 164)] {
+        let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, level)], 2);
+        assert_ne!(
+            max_hp,
+            Some(d10_value),
+            "Monk {level} must not compute {d10_value} HP -- that is the corpus's \
+             defective d10 value, overridden by operator ruling 2026-07-29 (risks item 91)"
+        );
+    }
 }
 
 /// The negative control the Monk case above used to provide.
