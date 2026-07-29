@@ -369,7 +369,20 @@ pub fn class_coverage(class_id: ApgClassId) -> ApgClassCoverage {
         // uses/day, accessible spell level) count as ONE slot per the
         // Cleric-Channel-Energy "one record, several parameters"
         // convention that already governs Alchemist's Bomb.
-        ApgClassId::Summoner => 6,
+        //
+        // Summoner rose from 6 to 7 (Summoner Eidolon evolution
+        // canonical-narrowing closure, 2026-07-29): the Improved Natural
+        // Armor evolution purchase is its own distinct corpus record
+        // (`KEY:Evolution ~ Improved Natural Armor`) with genuinely
+        // separate logic -- its own cost drawn from the pool, its own
+        // `PREVARLTEQ` prerequisite evaluated, and its own magnitude
+        // landed on the Eidolon's natural-armor total. That is a
+        // different mechanism from the Eidolon stat-block slot it sits
+        // beside, not another parameter of it. The other 103 evolution
+        // records do NOT add slots -- they are the same chooser's
+        // unbuilt sub-options, per this field's own "counts slots, not
+        // each slot's selectable sub-options" convention.
+        ApgClassId::Summoner => 7,
         ApgClassId::Witch => 2,
         ApgClassId::Alchemist => 3,
         ApgClassId::Oracle => 5,

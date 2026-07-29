@@ -264,6 +264,16 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             vec![choice("choice:bloodrager_bloodline", "bloodline:arcane")],
             Vec::new(),
         ),
+        // pf1_adapter.rs: the Summoner Path A seed. The Eidolon's one
+        // genuinely built evolution purchase -- cost 1 out of a level-1
+        // pool of 3, so it is affordable at every level in the sweep.
+        "summoner" => (
+            vec![choice(
+                "choice:summoner_eidolon_evolution",
+                "evolution:improved_natural_armor",
+            )],
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }

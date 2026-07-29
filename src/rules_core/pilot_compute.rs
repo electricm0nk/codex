@@ -10070,7 +10070,7 @@ fn compute_apg_class_chassis(
     } else if class_id == ApgClassId::Witch {
         ground_or_block_witch_class_features(input, level, explanations, diagnostics);
     } else if class_id == ApgClassId::Summoner {
-        ground_summoner_eidolon(level, explanations, diagnostics);
+        ground_summoner_eidolon(input, level, explanations, diagnostics);
         ground_summoner_slice_a_features(input, level, explanations);
     } else {
         // The real, unconditional blocker: nothing beyond BAB/save/HP is
@@ -13094,6 +13094,83 @@ const EIDOLON_BITE_DAMAGE_DIE: i16 = 6;
 const QUADRUPED_STRENGTH_BONUS: i16 = 4;
 const QUADRUPED_DEXTERITY_BONUS: i16 = 4;
 
+/// The choice slot recording WHICH evolution the Eidolon actually bought
+/// out of `eidolon_evolution_pool`'s points (v0.6 alpha swarm, Summoner
+/// Eidolon evolution canonical-narrowing closure, 2026-07-29).
+///
+/// Summoner's evolution menu is a point-buy economy over 104 real
+/// `KEY:Evolution ~ *` records, and modelling all of it was deliberately
+/// deferred as a product decision. This slot is the canonical-narrowing
+/// closure of that decision, and is the same recognized-choice shape
+/// Cleric's domain, Wizard's school, Sorcerer's bloodline, Oracle's
+/// Mystery and Arcanist's Metamagic Knowledge Exploit already ratified:
+/// ONE corpus-verified member of the menu is genuinely built, an
+/// unrecognized or absent selection keeps the original claim-blocking
+/// diagnostic, and the rest of the menu is named honestly in a
+/// non-blocking note.
+///
+/// Deliberately NOT a numbered slot family in the
+/// `BARBARIAN_RAGE_POWER_SLOTS` / `choice:rogue_talent_N` shape. Those
+/// menus grant a fixed number of picks at fixed levels, so a slot per
+/// pick is the right model. Evolutions are bought against a POINT pool
+/// with per-evolution costs of 1-4, so "how many picks exist" is not a
+/// function of level at all -- inventing N slots would misrepresent the
+/// economy's own shape.
+const SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID: &str = "choice:summoner_eidolon_evolution";
+
+/// The one evolution this slice genuinely builds, namespaced
+/// `evolution:<snake_case_slug>` to match the `metamagic:`/`domain:`/
+/// `bloodline:` convention every other chooser in this file uses.
+///
+/// Improved Natural Armor was chosen over the other 103 for three
+/// reasons, in order of weight:
+///
+/// 1. It is the only cheap evolution whose magnitude lands on a total
+///    this engine ALREADY computes -- `eidolon_natural_armor_bonus` and
+///    the Eidolon race's own `EIDOLON_RACIAL_NATURAL_ARMOR`. That makes
+///    it a genuine integration rather than another standalone record
+///    parked beside the stat block.
+/// 2. Its corpus `TYPE:EvolutionChoice.Extraordinary` carries no base-form
+///    restriction, so it is legal on the canonical Quadruped without
+///    smuggling in a second base form. (Contrast `Evolution ~ Bite`,
+///    whose TYPE names Quadruped and Serpentine only.)
+/// 3. Its real prerequisite is checkable from state this engine already
+///    has -- see `IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA`.
+const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_natural_armor";
+
+/// `Evolution ~ Improved Natural Armor`'s cost in evolution points.
+///
+/// The record carries NO `COST:` field. That is not a missing value: in
+/// this corpus `COST:` is the override and its absence means the PCGen
+/// default of 1, which is why 41 of the 104 evolution records omit it
+/// while 37 carry `COST:2`, 9 `COST:3` and 14 `COST:4`. Verified by
+/// enumerating the whole `KEY:Evolution ~ *` family rather than by
+/// reading this one record in isolation.
+const IMPROVED_NATURAL_ARMOR_COST: i16 = 1;
+
+/// Improved Natural Armor's own magnitude:
+/// `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK`, corroborated by the
+/// record's own `DESC` ("giving it a +2 bonus to its natural armor").
+/// `STACK:YES`/`MULT:YES` are why it stacks with the level-driven
+/// progression instead of overlapping it.
+const IMPROVED_NATURAL_ARMOR_BONUS: i16 = 2;
+
+/// The record's real prerequisite,
+/// `PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5`: the number of instances
+/// already taken must not exceed master level / 5 (integer division).
+///
+/// This slice buys exactly ONE instance, and the check for the first
+/// instance is `0 <= level/5`, which holds at every level from 1 to 20.
+/// So the purchase is genuinely legal across the whole sweep -- it is
+/// evaluated below rather than assumed, because a SECOND instance would
+/// require level 5 and this constant is what makes that boundary
+/// explicit for whoever widens the slice next.
+const IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA: i16 = 5;
+
+/// The total count of `KEY:Evolution ~ *` records in
+/// `apg_abilities_companion.lst`, enumerated directly.
+const EIDOLON_EVOLUTION_RECORD_COUNT: usize = 104;
+
 /// The Eidolon's evolution-point pool for a Summoner of `level`,
 /// transcribed from `apg_abilities_companion.lst`'s own
 /// `BONUS:VAR|EidolonEvolution|3+(SummonerLVL>=2)+...` -- a base 3 plus
@@ -13370,6 +13447,7 @@ fn ground_summoner_slice_a_features(
 /// these automatic grants; charging it would spend 4 points from a
 /// 3-point level-1 pool and yield an impossible negative.
 fn ground_summoner_eidolon(
+    input: &CharacterInput,
     level: u8,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
@@ -13463,23 +13541,215 @@ fn ground_summoner_eidolon(
         ),
     });
 
+    ground_or_block_summoner_eidolon_evolutions(input, level, pool, explanations, diagnostics);
+}
+
+/// The still-deferred remainder, named identically in both the blocking
+/// and non-blocking branches so the two cannot drift apart.
+///
+/// Enumerated from a full `KEY:Summoner ~` / `KEY:Eidolon ~` corpus
+/// sweep. Bond Senses, Maker's Call, Merge Forms, Twin Eidolon and the
+/// Summon Monster spell-like ability are deliberately NOT in this list --
+/// all five are genuinely grounded (task #35).
+const SUMMONER_REMAINING_DEFERRED_FEATURES: &str =
+    "the other two base forms (Biped, Serpentine), Aspect and Greater Aspect, Life Link, Life \
+     Bond, Shield Ally and Greater Shield Ally, Transposition, Gate, the Eidolon's own Link, \
+     Share Spells and Skills records, and Summoner's own spontaneous Charisma spellcasting \
+     including its Cantrips";
+
+/// Grounds or claim-blocks the Eidolon's evolution spending (v0.6 alpha
+/// swarm, Summoner Eidolon evolution canonical-narrowing closure,
+/// 2026-07-29) -- the last blocker on the last unclosed class of the
+/// 27-class roster.
+///
+/// A recognized `choice:summoner_eidolon_evolution` naming
+/// `evolution:improved_natural_armor` spends a real point out of the
+/// already-grounded pool, grounds its `+2` into the Eidolon's
+/// natural-armor TOTAL, and replaces
+/// the claim-blocking `evolutions_deferred` diagnostic with a
+/// non-blocking note naming the other 103 evolutions and the still-unspent
+/// points. An absent or unrecognized selection keeps the original
+/// claim-blocking diagnostic exactly as it was.
+///
+/// **Why unspent points are honestly non-blocking once one is spent.**
+/// The original blocker's real complaint was that "which evolutions a
+/// given Eidolon actually bought is unknown" -- the engine had no way to
+/// record a purchase at all. Once a purchase is recorded and validated,
+/// leftover points are a legal PF1 character state, not an unmodelled
+/// mechanic, and they are reported explicitly rather than hidden. This is
+/// the same line this codebase already drew for Barbarian's ten rage-power
+/// slots and Rogue's talent slots: both classes reach Computed while
+/// recording WHICH pick was made without applying most picks' effects, and
+/// both name that chooser-enforcement burden as still open. Nothing here
+/// weakens the blocker to force green -- an unseeded Summoner is still
+/// Blocked, and a bogus evolution still blocks.
+fn ground_or_block_summoner_eidolon_evolutions(
+    input: &CharacterInput,
+    level: u8,
+    pool: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(selection) = choice_selection(input, SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID) else {
+        push_summoner_evolutions_deferred_diagnostic(diagnostics);
+        return;
+    };
+
+    if selection != IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.summoner.eidolon.evolution_unrecognized".to_owned(),
+            message: format!(
+                "The Eidolon's evolution choice names '{selection}' via \
+                 {SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID}, but the only evolution this engine \
+                 genuinely builds is \
+                 '{IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION}'. The other \
+                 {} of the corpus's {EIDOLON_EVOLUTION_RECORD_COUNT} \
+                 `KEY:Evolution ~ *` records are named but not modelled, so no purchase is \
+                 fabricated for this selection",
+                EIDOLON_EVOLUTION_RECORD_COUNT - 1
+            ),
+            claim_blocking: true,
+        });
+        push_summoner_evolutions_deferred_diagnostic(diagnostics);
+        return;
+    }
+
+    // Both of this purchase's legality conditions are satisfied by
+    // construction for a SINGLE instance, and are asserted rather than
+    // branched on, because a branch that can never be taken is dead
+    // scaffolding dressed as a safety check:
+    //
+    //   * Affordability. `eidolon_evolution_pool` is 3 at level 1 and
+    //     only rises, so a cost-1 evolution is affordable at every level
+    //     in the sweep. A cost-4 evolution would NOT have been -- that is
+    //     precisely why the canonical pick is a cheap one.
+    //   * The record's own `PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5`.
+    //     For the first instance the check is `0 <= level/5`, true at
+    //     every level. A SECOND instance would require level 5.
+    //
+    // These assertions are the tripwire for whoever widens this slice:
+    // add a costlier evolution, or a second instance of this one, and the
+    // condition stops holding by construction and must become a real
+    // runtime branch with a real diagnostic. Same idiom as the Wolf
+    // companion helper's own `debug_assert_eq!(companion_level, 1)`.
+    let instances_taken: i16 = 1;
+    debug_assert!(
+        IMPROVED_NATURAL_ARMOR_COST <= pool,
+        "level {level}: Improved Natural Armor costs {IMPROVED_NATURAL_ARMOR_COST} but the \
+         evolution pool is only {pool}"
+    );
+    debug_assert!(
+        instances_taken - 1 <= i16::from(level) / IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA,
+        "level {level}: {instances_taken} instances of Improved Natural Armor exceeds the \
+         corpus PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5 cap"
+    );
+
+    let spent = IMPROVED_NATURAL_ARMOR_COST * instances_taken;
+    let unspent = pool - spent;
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.improved_natural_armor".to_owned(),
+        value: IMPROVED_NATURAL_ARMOR_BONUS,
+        detail: format!(
+            "Quadruped Eidolon Improved Natural Armor evolution: +{IMPROVED_NATURAL_ARMOR_BONUS} \
+             natural armor (corpus `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK` on \
+             `KEY:Evolution ~ Improved Natural Armor`, corroborated by its own DESC). Bought for \
+             {IMPROVED_NATURAL_ARMOR_COST} evolution point -- the record carries no COST field, \
+             which in this corpus means the default of 1, not a missing value. Its \
+             `TYPE:EvolutionChoice` carries no base-form restriction, so it is legal on the \
+             canonical Quadruped. This slice buys exactly ONE instance, which satisfies the \
+             record's real prerequisite (`PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5` -- at most \
+             one instance per {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} summoner levels) at \
+             every level by construction; a second instance would require summoner level \
+             {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} and is not bought here"
+        ),
+    });
+
+    let total = EIDOLON_RACIAL_NATURAL_ARMOR
+        + eidolon_natural_armor_bonus(level)
+        + IMPROVED_NATURAL_ARMOR_BONUS;
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.total_natural_armor".to_owned(),
+        value: total,
+        detail: format!(
+            "Quadruped Eidolon total natural armor: +{total} -- the Eidolon race's racial \
+             +{EIDOLON_RACIAL_NATURAL_ARMOR}, plus +{} from the level-driven progression, plus \
+             +{IMPROVED_NATURAL_ARMOR_BONUS} from the purchased Improved Natural Armor \
+             evolution, which the corpus marks `STACK:YES` so it genuinely adds rather than \
+             overlapping. This is the record the evolution's magnitude lands ON: the purchase \
+             changes a total this engine already computed, rather than sitting beside it",
+            eidolon_natural_armor_bonus(level)
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.evolution_points_spent".to_owned(),
+        value: spent,
+        detail: format!(
+            "Quadruped Eidolon evolution points spent: {spent} of the level {level} pool's \
+             {pool}, on Improved Natural Armor. The point-buy economy is genuinely honoured for \
+             this purchase -- the cost is drawn from the real pool rather than the evolution \
+             being granted for free"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.apg.summoner.eidolon.evolution_points_unspent".to_owned(),
+        value: unspent,
+        detail: format!(
+            "Quadruped Eidolon evolution points still unspent: {unspent} of {pool}. Reported \
+             rather than hidden: leaving points unspent is a legal PF1 character state, and \
+             spending them would require the other {} evolution records this slice does not \
+             model. The Quadruped's own automatic Bite and two Legs evolutions are granted \
+             AUTOMATIC by the corpus and draw nothing from this pool",
+            EIDOLON_EVOLUTION_RECORD_COUNT - 1
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported".to_owned(),
+        message: format!(
+            "{SUMMONER_CLASS_ID} grounds the canonical Quadruped Eidolon's stat block, its \
+             evolution-point pool, and ONE genuinely built evolution purchase (Improved Natural \
+             Armor, cost {IMPROVED_NATURAL_ARMOR_COST} drawn from that pool, its corpus \
+             prerequisite satisfied, magnitude landed \
+             on the Eidolon's natural-armor total). Still deferred, and named rather than \
+             hidden: the other {} of the corpus's {EIDOLON_EVOLUTION_RECORD_COUNT} \
+             `KEY:Evolution ~ *` records (costs 1-4, with their own base-form and level \
+             prerequisites), and this Eidolon's {unspent} remaining unspent points, which cannot \
+             be allocated without them. Also still ungrounded: {SUMMONER_REMAINING_DEFERRED_FEATURES}. \
+             This is a canonical narrowing in the ratified shape -- one corpus-verified member \
+             of a large menu genuinely built, the rest named honestly -- not a claim that the \
+             evolution economy is modelled. No evolution spending is fabricated",
+            EIDOLON_EVOLUTION_RECORD_COUNT - 1
+        ),
+        claim_blocking: false,
+    });
+}
+
+/// Pushes the ORIGINAL, claim-blocking `evolutions_deferred` diagnostic.
+/// Called only from `ground_or_block_summoner_eidolon_evolutions`'s
+/// not-recognized branches -- once an evolution IS recognized and bought,
+/// a different, non-blocking version of this same diagnostic id is pushed
+/// inline there instead. Mirrors
+/// `push_arcanist_exploits_deferred_diagnostic` exactly.
+fn push_summoner_evolutions_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported".to_owned(),
         message: format!(
             "{SUMMONER_CLASS_ID} remains blocked on its Eidolon's unspent evolution points: this \
-             slice grounds the canonical Quadruped's fixed stat block and the pool SIZE, but the \
-             full evolution point-buy economy (104 real evolution records with costs 1-4 and \
-             their own base-form and level prerequisites) is not modelled, so which evolutions a \
-             given Eidolon actually bought is unknown. Still genuinely ungrounded alongside it, \
-             per a full `KEY:Summoner ~` / `KEY:Eidolon ~` corpus enumeration: the other two \
-             base forms (Biped, Serpentine), Aspect and Greater Aspect, Life Link, Life Bond, \
-             Shield Ally and Greater Shield Ally, Transposition, Gate, the Eidolon's own Link, \
-             Share Spells and Skills records, and Summoner's own spontaneous Charisma \
-             spellcasting including its Cantrips. Bond Senses, Maker's Call, Merge Forms, Twin \
-             Eidolon and the Summon Monster spell-like ability's \
-             duration/uses/accessible-spell-level are NOT \
-             among them -- all five are grounded (task #35) and this message previously claimed \
-             otherwise. No evolution spending or class-feature execution is fabricated here"
+             slice grounds the canonical Quadruped's fixed stat block and the pool SIZE, but no \
+             evolution purchase is recorded, and the full evolution point-buy economy \
+             ({EIDOLON_EVOLUTION_RECORD_COUNT} real evolution records with costs 1-4 and their \
+             own base-form and level prerequisites) is not modelled, so which evolutions a given \
+             Eidolon actually bought is unknown. A recognized \
+             {SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID} selection naming \
+             '{IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION}' clears this blocker. Still genuinely \
+             ungrounded alongside it, per a full `KEY:Summoner ~` / `KEY:Eidolon ~` corpus \
+             enumeration: {SUMMONER_REMAINING_DEFERRED_FEATURES}. Bond Senses, Maker's Call, \
+             Merge Forms, Twin Eidolon and the Summon Monster spell-like ability's \
+             duration/uses/accessible-spell-level are NOT among them -- all five are grounded \
+             (task #35). No evolution spending or class-feature execution is fabricated here"
         ),
         claim_blocking: true,
     });
@@ -55418,6 +55688,213 @@ mod summoner_eidolon_tests {
                 "level {level} Summoner must stay Blocked"
             );
         }
+    }
+}
+
+/// v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
+/// closure, 2026-07-29): a recognized `choice:summoner_eidolon_evolution`
+/// naming the canonical Improved Natural Armor evolution spends a real
+/// point out of the already-grounded pool, grounds the evolution's real
+/// +2 natural armor into the Eidolon's own natural-armor total, and
+/// turns the `evolutions_deferred` blocker non-blocking -- the exact
+/// shape Arcanist's Metamagic Knowledge Exploit and Cleric's domain
+/// already ratified.
+#[cfg(test)]
+mod summoner_eidolon_evolution_choice_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput,
+        HeadlessReceiptStatus, IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION,
+        SUMMONER_CLASS_ID, SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    const EVOLUTIONS_DEFERRED: &str =
+        "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported";
+
+    fn summoner(level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SUMMONER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn summoner_with(level: u8, selection: &str) -> CharacterInput {
+        let mut input = summoner(level);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
+            selection_id: selection.to_owned(),
+        });
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    /// **The milestone test.** A Summoner whose Eidolon has actually
+    /// spent a point on the canonical Improved Natural Armor evolution
+    /// reaches `Computed` at every one of the 20 levels -- the last
+    /// blocker on the whole 27-class roster's hardest class.
+    #[test]
+    fn summoner_with_a_recognized_eidolon_evolution_reaches_computed_at_every_level() {
+        for level in 1u8..=20 {
+            let receipt = build_pilot_headless_receipt(&summoner_with(
+                level,
+                IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION,
+            ));
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "summoner level {level} with a spent evolution must reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The deferral diagnostic survives -- it is narrowed to non-blocking,
+    /// never deleted. The remaining unspent points and the other 103
+    /// evolutions must still be named honestly.
+    #[test]
+    fn the_evolutions_deferred_diagnostic_is_narrowed_not_removed() {
+        let receipt = build_pilot_headless_receipt(&summoner_with(
+            20,
+            IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION,
+        ));
+        let deferred = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == EVOLUTIONS_DEFERRED)
+            .expect("the deferral diagnostic must still be present, just non-blocking");
+        assert!(
+            !deferred.claim_blocking,
+            "a recognized evolution narrows the blocker: {deferred:?}"
+        );
+        assert!(
+            deferred.message.contains("103"),
+            "the narrowed message must name the other 103 evolutions: {}",
+            deferred.message
+        );
+    }
+
+    /// Improved Natural Armor's real corpus magnitude
+    /// (`BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK`) lands on the
+    /// Eidolon's natural-armor total rather than sitting beside it.
+    #[test]
+    fn improved_natural_armor_grounds_its_corpus_magnitude_and_the_new_total() {
+        let bonus = "class_feature.apg.summoner.eidolon.improved_natural_armor";
+        let total = "class_feature.apg.summoner.eidolon.total_natural_armor";
+
+        // Level 1: racial +2, level-driven +0, evolution +2 => +4.
+        let level_one = summoner_with(1, IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION);
+        assert_eq!(value(&level_one, bonus), Some(2), "the evolution's own +2");
+        assert_eq!(value(&level_one, total), Some(4), "2 racial + 0 level + 2 evolution");
+
+        // Level 20: racial +2, level-driven +16, evolution +2 => +20.
+        let capstone = summoner_with(20, IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION);
+        assert_eq!(value(&capstone, total), Some(20), "2 racial + 16 level + 2 evolution");
+    }
+
+    /// The point-buy economy is genuinely honoured: one point is spent
+    /// out of the level's real pool and the remainder is reported, never
+    /// silently ignored.
+    #[test]
+    fn the_spent_point_is_drawn_from_the_real_pool() {
+        let spent = "class_feature.apg.summoner.eidolon.evolution_points_spent";
+        let unspent = "class_feature.apg.summoner.eidolon.evolution_points_unspent";
+
+        // Level 1 pool is 3: one spent, two left.
+        let level_one = summoner_with(1, IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION);
+        assert_eq!(value(&level_one, spent), Some(1));
+        assert_eq!(value(&level_one, unspent), Some(2));
+
+        // The pool itself is unchanged by the purchase.
+        assert_eq!(
+            value(&level_one, "class_feature.apg.summoner.eidolon.evolution_pool"),
+            Some(3)
+        );
+    }
+
+    /// An unrecognized selection must NOT unblock the class -- it keeps
+    /// the original claim-blocking deferral and adds its own blocker,
+    /// mirroring Arcanist's `feat_ineligible` branch.
+    #[test]
+    fn an_unrecognized_evolution_selection_stays_blocked() {
+        let receipt =
+            build_pilot_headless_receipt(&summoner_with(5, "evolution:large"));
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "an unrecognized evolution must not fabricate a purchase: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == EVOLUTIONS_DEFERRED && d.claim_blocking),
+            "the original blocker must survive an unrecognized selection: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// With no choice recorded at all, Summoner is exactly as blocked as
+    /// it was before this closure -- no silent canonical seeding inside
+    /// the engine.
+    #[test]
+    fn a_summoner_with_no_recorded_evolution_choice_stays_blocked() {
+        for level in [1u8, 10, 20] {
+            let receipt = build_pilot_headless_receipt(&summoner(level));
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Blocked,
+                "level {level} without a choice must stay Blocked"
+            );
+            assert!(
+                receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == EVOLUTIONS_DEFERRED && d.claim_blocking),
+                "level {level}: the original blocker must be untouched"
+            );
+        }
+    }
+
+    /// A spoofed evolution choice on a non-Summoner grounds nothing and
+    /// leaves that character's own golden path alone.
+    #[test]
+    fn a_spoofed_evolution_choice_on_a_non_summoner_is_ignored() {
+        let mut fighter = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
+            selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&fighter);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Fighter's golden path must be unaffected: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt.computation.explanations.iter().any(|e| e.id.contains("eidolon")),
+            "no eidolon record may ground for a Fighter"
+        );
     }
 }
 

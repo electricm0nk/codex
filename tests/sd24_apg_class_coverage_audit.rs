@@ -191,10 +191,16 @@ fn zero_named_class_features_are_wired_for_any_apg_class_except_cavaliers_mount_
         // so its count could drift to any value without a single test
         // failing. That is how it stayed at 1 through Slice A. Adding the
         // row is the real fix here -- the number was only the symptom.
+        // Rose to 7 (Summoner Eidolon evolution canonical-narrowing
+        // closure, 2026-07-29): the Improved Natural Armor evolution
+        // purchase is a separately-implemented mechanism -- its own cost,
+        // its own corpus prerequisite, its own magnitude on the Eidolon's
+        // natural-armor total -- not another facet of the Eidolon slot.
         (
             ApgClassId::Summoner,
-            "Eidolon + Bond Senses + Maker's Call + Merge Forms + Twin Eidolon + Summon Monster",
-            6,
+            "Eidolon + Improved Natural Armor evolution + Bond Senses + Maker's Call + Merge \
+             Forms + Twin Eidolon + Summon Monster",
+            7,
         ),
     ] {
         let row = class_coverage(class_id);

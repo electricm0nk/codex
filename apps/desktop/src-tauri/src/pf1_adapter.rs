@@ -165,6 +165,19 @@ const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
 const MONK_CLASS_ID: &str = "class:monk";
 const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
 
+/// v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
+/// closure, 2026-07-29). Summoner was the last class on the 27-class
+/// roster with no closure path: its Eidolon's evolution point-buy
+/// economy was deliberately deferred as a product decision rather than
+/// half-built. The engine now genuinely builds ONE corpus-verified
+/// evolution purchase, and this seed is what lets a composed Summoner
+/// reach `Computed` -- the same Path A shape as Cleric's domain and
+/// Monk's bonus feat, and blocked on the same missing picker UI. See
+/// `pilot_compute.rs`'s `SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID`.
+const SUMMONER_CLASS_ID: &str = "class:summoner";
+const SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID: &str = "choice:summoner_eidolon_evolution";
+const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_natural_armor";
+
 /// **Why Dodge, of the seven feats the corpus offers at
 /// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
 /// (`.../core_rulebook/cr_abilities_class.lst:1263`):
@@ -769,6 +782,30 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
             selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+    } else if request.class_id == SUMMONER_CLASS_ID {
+        // v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
+        // closure, 2026-07-29) -- the same Path A shape as the five above.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `summoner_with_a_recognized_eidolon_evolution_reaches_computed_at_every_level`
+        // test: a recognized `choice:summoner_eidolon_evolution ->
+        // evolution:improved_natural_armor` is sufficient, with no other
+        // precondition, to reach `Computed` at every level 1-20. The
+        // evolution costs 1 point out of a level-1 pool of 3, so it is
+        // affordable at every level -- there is no level at which this
+        // seed becomes illegal, unlike a cost-4 evolution would be.
+        //
+        // ONE seeding site only, like Monk and for the same reason:
+        // Summoner's eidolon seam sits behind
+        // `is_supported_summoner_single_class`, which matches a
+        // SINGLE-class Summoner only, so `apply_level_up`'s
+        // multiclass-dip branch never reaches it. Leveling a Summoner
+        // 1 -> 2 takes the increment-existing-level branch, so this
+        // creation-time seed simply persists.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
+            selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
         });
     }
 
