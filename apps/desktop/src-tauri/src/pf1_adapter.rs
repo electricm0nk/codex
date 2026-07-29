@@ -857,7 +857,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
             selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
-
+        });
     } else if request.class_id == CAVALIER_CLASS_ID {
         // v0.6 alpha swarm (Path A choice-picker gap closure for the three
         // APG chooser-shaped classes, 2026-07-29) -- see
