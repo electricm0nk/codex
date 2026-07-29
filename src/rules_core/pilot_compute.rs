@@ -9256,6 +9256,7 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_investigator_single_class(input)
         || is_supported_witch_single_class(input)
         || is_supported_shaman_single_class(input)
+        || is_supported_summoner_single_class(input)
 }
 
 /// Prose listing of every chassis `has_supported_class_chassis` accepts,
@@ -9279,7 +9280,7 @@ pub(crate) fn supported_class_chassis_description() -> String {
          1-{MAX_SUPPORTED_WIZARD_LEVEL}, a supported multiclass mix, a supported generic \
          single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, \
          Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, \
-         Investigator, Witch, or Shaman chassis"
+         Investigator, Witch, Shaman, or Summoner chassis"
     )
 }
 
@@ -9483,6 +9484,35 @@ fn is_supported_witch_single_class(input: &CharacterInput) -> bool {
     apg::class_chassis_resolve(ApgClassId::Witch, class_level.level, RuleSetId::Apg).is_some()
 }
 
+/// v0.6 alpha swarm (Summoner chassis-recognition closure, 2026-07-29):
+/// whether `input` is a single-class Summoner at a level within
+/// `apg::class_chassis_resolve`'s declared ceiling for Summoner --
+/// mirrors `is_supported_witch_single_class`/the other APG exact-match
+/// gates exactly, including the same exact-match discipline
+/// (`== Some(ApgClassId::Summoner)`, not a broad `.is_some()`).
+///
+/// Summoner was the last of the six APG classes with no arm in
+/// `has_supported_class_chassis`, and its gap had the OPPOSITE shape to
+/// Monk's. `compute_class_chassis`'s APG branch already resolved Summoner
+/// correctly -- which is exactly why Summoner never emitted
+/// `class_chassis.unsupported` at any level, unlike Monk. The chassis was
+/// computed and then discarded: every consumer gated on this predicate
+/// (`unmet_combat_posture_conditions`, `compute_total_saves`,
+/// `unmet_selected_skill_posture_conditions`) refused a class whose
+/// base attack bonus and base saves were already sitting there. So the
+/// three downstream diagnostics Summoner shared with Monk had a wholly
+/// different cause, and reading Monk's root cause across to Summoner
+/// without checking would have been wrong.
+fn is_supported_summoner_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if ApgClassId::from_class_id_str(&class_level.class_id) != Some(ApgClassId::Summoner) {
+        return false;
+    }
+    apg::class_chassis_resolve(ApgClassId::Summoner, class_level.level, RuleSetId::Apg).is_some()
+}
+
 /// v0.6 alpha swarm, risks item 8 (second APG/ACG closure): whether
 /// `input` is a single-class Bloodrager at a level within
 /// `acg::class_chassis_resolve`'s declared ceiling for Bloodrager --
@@ -9670,6 +9700,21 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
         Some(ClassId::Barbarian)
     } else if class_id_str == BARD_CLASS_ID {
         Some(ClassId::Bard)
+    } else if class_id_str == MONK_CLASS_ID {
+        // v0.6 alpha swarm (Monk chassis-recognition closure, 2026-07-29).
+        // This arm's absence was the single root cause of FOUR of Monk's
+        // five claim-blocking diagnostics (`class_chassis.unsupported`,
+        // `combat.baseline_unsupported`, `defense.total_save.unsupported`,
+        // `skill.selected_modifier.unsupported`) at all 20 levels:
+        // `class_tables()` has carried a complete corpus-backed Monk row
+        // since the CRB table was built (`cr_classes.lst:147`, 3/4 BAB,
+        // all three saves good, `MAXLEVEL:20`), and
+        // `compute_generic_table_chassis` could always have read it -- but
+        // with no string mapping, `is_supported_generic_single_class`
+        // never reached the table at all, so the chassis pillar was
+        // computable and simply unreachable. Monk was the ONLY one of the
+        // eleven CRB classes missing from this mapping.
+        Some(ClassId::Monk)
     } else {
         None
     }
@@ -9689,6 +9734,16 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
 /// from this sentence: every CRB class now declares 20 (Druid was the last
 /// to widen, v0.6 2026-07-29), but that is a fact about the table's current
 /// contents, not a guarantee this function relies on.
+///
+/// Corrected 2026-07-29 (Monk chassis-recognition closure): this comment
+/// previously cited concrete ceiling examples -- "Druid caps at 15" and
+/// "Monk at 12" -- both of which went stale. Druid widened to 20 the same
+/// day; Monk's row had already declared `max_supported_level: 20` while
+/// Monk was not reachable through this function at all, since
+/// `table_class_id` did not map `class:monk` until this cycle. That is
+/// exactly the shipped-prose drift `AGENTS.md` warns about -- a doc comment
+/// naming a number no live function agrees with -- which is why the text
+/// above now points at `CLASS_META` instead of quoting values.
 fn compute_generic_table_chassis(
     class_id: ClassId,
     class_id_str: &str,
@@ -37215,10 +37270,11 @@ mod multiclass_bab_save_stacking_generalization_tests {
 /// `skill.selected_modifier.unsupported` used to hardcode "only computed
 /// from the grounded Fighter levels 1-N or Wizard levels 1-N", even though
 /// `has_supported_class_chassis` had long since widened past those two
-/// classes to 19 predicates (Skald, Bloodrager, Brawler, Hunter, Cavalier,
+/// classes to 20 predicates (Skald, Bloodrager, Brawler, Hunter, Cavalier,
 /// Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer,
-/// Swashbuckler, Investigator, Witch, Shaman, a supported multiclass mix,
-/// and a supported generic single class, on top of Fighter/Wizard). These
+/// Swashbuckler, Investigator, Witch, Shaman, Summoner, a supported
+/// multiclass mix, and a supported generic single class, on top of
+/// Fighter/Wizard). These
 /// tests prove both diagnostics -- including the second, inner hardcoded
 /// copy inside `unmet_selected_skill_posture_conditions` -- now compose
 /// their class-list prose from `supported_class_chassis_description`
@@ -37236,7 +37292,7 @@ mod chassis_unsupported_diagnostics_name_the_real_gate_tests {
     );
 
     /// A single class id no `has_supported_class_chassis` predicate
-    /// recognizes (not Fighter, not Wizard, not any of the 17 other
+    /// recognizes (not Fighter, not Wizard, not any of the 18 other
     /// single-class arms, and length 1 so the multiclass-mix arm cannot
     /// match either) -- guarantees the gate is false regardless of which
     /// classes are currently supported, so this test does not need its own
@@ -37279,7 +37335,7 @@ mod chassis_unsupported_diagnostics_name_the_real_gate_tests {
         assert!(
             !message.contains(&stale_fighter_or_wizard_only_fragment),
             "defense.total_save.unsupported must not hardcode a Fighter-or-Wizard-only \
-             framing now that has_supported_class_chassis accepts 19 predicates: {message}"
+             framing now that has_supported_class_chassis accepts 20 predicates: {message}"
         );
         // The real current supported set must be named, not a stale pair.
         for supported_class_name in ["Skald", "Bloodrager", "Cavalier", "Shaman", "Witch"] {
@@ -39993,50 +40049,87 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
-    /// The critical negative-leak test, mirroring the ACG-side one
-    /// exactly: the OTHER 1 APG class must produce ZERO
-    /// `defense.total_save.*`/`combat.baseline_*`/
-    /// `skill.selected_modifier.*` explanations at level 1, even under
-    /// the exact same satisfying posture that genuinely admits Cavalier,
-    /// Alchemist, Inquisitor, Oracle, and Witch -- proving `is_supported_cavalier_single_class`,
-    /// `is_supported_alchemist_single_class`,
-    /// `is_supported_inquisitor_single_class`,
-    /// `is_supported_oracle_single_class`, and
-    /// `is_supported_witch_single_class` are all real exact matches, not
-    /// broad `.is_some()` checks that would silently admit all 6 APG
-    /// classes into real pillar computation.
+    /// **Retired as a negative-leak test on 2026-07-29 (Monk/Summoner
+    /// chassis-recognition closure), and replaced in place rather than
+    /// deleted.**
+    ///
+    /// This test previously asserted that the ONE remaining unadmitted APG
+    /// class produced ZERO
+    /// `defense.total_save.*`/`combat.baseline_*`/`skill.selected_modifier.*`
+    /// explanations under the satisfying posture, skipping the five that
+    /// were genuinely admitted. That "other one" was Summoner, and it is
+    /// now admitted too (`is_supported_summoner_single_class`), so the
+    /// skip-list covered every row in `EXPECTED_LEVEL_1` and the loop body
+    /// stopped executing at all. Left as-is it would have been a
+    /// permanently vacuous green test -- worse than a failing one.
+    ///
+    /// What it becomes is the positive statement the roster now supports:
+    /// **all six** APG classes produce real pillar explanations. The
+    /// exact-match discipline the original test protected (that each
+    /// `is_supported_<class>_single_class` is a real `== Some(..)` match
+    /// and not a broad `.is_some()` that would admit any APG class) has
+    /// NOT been dropped -- it moves to
+    /// `each_apg_predicate_matches_only_its_own_class` below, which tests
+    /// the predicates directly instead of inferring exactness from a
+    /// side effect.
     #[test]
-    fn the_other_one_apg_class_produces_zero_pillar_explanations_despite_a_satisfying_posture() {
+    fn all_six_apg_classes_produce_real_pillar_explanations_under_the_satisfying_posture() {
         for (class_id, ..) in EXPECTED_LEVEL_1 {
-            if class_id == "class:cavalier"
-                || class_id == "class:alchemist"
-                || class_id == "class:inquisitor"
-                || class_id == "class:oracle"
-                || class_id == "class:witch"
-            {
-                continue;
-            }
-
             let input = ranger_style_input(class_id, 1);
             let receipt = build_pilot_headless_receipt(&input);
 
-            let leaked: Vec<&str> = receipt
-                .computation
-                .explanations
-                .iter()
-                .map(|e| e.id.as_str())
-                .filter(|id| {
-                    id.starts_with("defense.total_save.")
-                        || id.starts_with("defense.baseline_")
-                        || id.starts_with("combat.baseline_")
-                        || id.starts_with("skill.selected_modifier.")
-                })
-                .collect();
-            assert!(
-                leaked.is_empty(),
-                "{class_id} must produce zero total-save/combat-baseline/selected-skill \
-                 explanations (the chassis-integration gate must not silently admit it): {leaked:?}"
-            );
+            for expected_prefix in
+                ["defense.total_save.", "combat.baseline_", "skill.selected_modifier."]
+            {
+                assert!(
+                    receipt
+                        .computation
+                        .explanations
+                        .iter()
+                        .any(|e| e.id.starts_with(expected_prefix)),
+                    "expected at least one {expected_prefix}* explanation for {class_id}"
+                );
+            }
+        }
+    }
+
+    /// The exact-match guarantee the retired negative-leak test used to
+    /// provide, now asserted against the predicates themselves.
+    ///
+    /// Each `is_supported_<class>_single_class` must accept its OWN class
+    /// and reject the other five. A broad
+    /// `ApgClassId::from_class_id_str(..).is_some()` implementation would
+    /// pass the accept half and fail every reject half -- which is exactly
+    /// the bug shape this guards, and which admitting all six classes into
+    /// the composite gate can no longer reveal on its own.
+    #[test]
+    fn each_apg_predicate_matches_only_its_own_class() {
+        // Named rather than written inline: the array literal mixes six
+        // distinct fn-item types, so it needs an explicit fn-pointer
+        // annotation to coerce, and spelling that out inline trips
+        // clippy::type_complexity.
+        type ApgSupportPredicate = fn(&CharacterInput) -> bool;
+
+        let predicates: [(&str, ApgSupportPredicate); 6] = [
+            ("class:alchemist", super::is_supported_alchemist_single_class),
+            ("class:cavalier", super::is_supported_cavalier_single_class),
+            ("class:inquisitor", super::is_supported_inquisitor_single_class),
+            ("class:oracle", super::is_supported_oracle_single_class),
+            ("class:summoner", super::is_supported_summoner_single_class),
+            ("class:witch", super::is_supported_witch_single_class),
+        ];
+
+        for (owner_id, predicate) in predicates {
+            for (candidate_id, ..) in EXPECTED_LEVEL_1 {
+                let input = ranger_style_input(candidate_id, 1);
+                let accepted = predicate(&input);
+                assert_eq!(
+                    accepted,
+                    candidate_id == owner_id,
+                    "the {owner_id} predicate must accept only {owner_id}, but it \
+                     returned {accepted} for {candidate_id}"
+                );
+            }
         }
     }
 
@@ -52792,44 +52885,47 @@ mod monk_bonus_feat_improvised_weapon_closure_tests {
 
     /// What actually stands between Monk and `Computed`, pinned exactly.
     ///
-    /// The bonus-feat burden -- long recorded as Monk's "last remaining"
-    /// blocker -- is genuinely gone once Deflect Arrows is surfaced. But Monk
-    /// does NOT reach `Computed`, and this test refuses to pretend otherwise:
-    /// four chassis-integration blockers remain, and they are real missing
-    /// numbers (base attack bonus, total saves, skill modifiers), not
-    /// description gaps. Their single root cause is that `table_class_id`
-    /// does not map `class:monk`, so `is_supported_generic_single_class` --
-    /// and therefore `has_supported_class_chassis` -- rejects Monk, even
-    /// though `class_tables()` carries a complete, corpus-backed Monk row
-    /// (3/4 BAB, all three saves good, levels 1-20).
+    /// **Updated 2026-07-29 — this test did exactly the job it was written
+    /// to do.** It previously asserted Monk's blocker set was exactly the
+    /// four chassis-integration diagnostics
+    /// (`class_chassis.unsupported`, `combat.baseline_unsupported`,
+    /// `defense.total_save.unsupported`,
+    /// `skill.selected_modifier.unsupported`), deliberately as an EXACT
+    /// set rather than a "still blocked" smoke check, so it would fail
+    /// loudly the moment `table_class_id` learned `class:monk`. It did
+    /// fail, and this is the promised update rather than a deletion.
     ///
-    /// Deliberately asserted as an EXACT set rather than a "still blocked"
-    /// smoke check, so this fails loudly the moment that widening lands and
-    /// whoever lands it is told to flip Monk to `Computed` here.
+    /// All four are now gone: `table_class_id` maps `class:monk`, so
+    /// `is_supported_generic_single_class` -- and therefore
+    /// `has_supported_class_chassis` -- accepts Monk, and
+    /// `compute_generic_table_chassis` reads the corpus-backed
+    /// `class_tables()` Monk row that was always there.
+    ///
+    /// Monk still does NOT reach `Computed` in this posture, and this test
+    /// continues to refuse to pretend otherwise -- but for a genuinely
+    /// different and much smaller reason. With a bonus feat both CHOSEN
+    /// and recorded in `selected_feats`, the blocker set is empty and the
+    /// receipt is `Computed`; that is what this test now pins. The
+    /// separate `monk_and_summoner_chassis_recognition_tests` module pins
+    /// the no-bonus-feat posture, where the lone remaining blocker is the
+    /// bonus-feat grant itself.
     #[test]
     fn monk_remaining_blockers_are_chassis_integration_only() {
         let mut input = human_monk_input_with_bonus_feat("feat:deflect_arrows");
         input.chosen.selected_feats.push("feat:deflect_arrows".to_owned());
 
-        let mut ids = claim_blocking_ids(&input);
-        ids.sort();
+        let ids = claim_blocking_ids(&input);
 
-        assert_eq!(
-            ids,
-            vec![
-                "class_chassis.unsupported".to_owned(),
-                "combat.baseline_unsupported".to_owned(),
-                "defense.total_save.unsupported".to_owned(),
-                "skill.selected_modifier.unsupported".to_owned(),
-            ],
-            "the bonus-feat burden must be gone, and ONLY the four chassis-integration \
-             blockers may remain; if this set shrank to empty, widen this test to assert \
-             HeadlessReceiptStatus::Computed"
+        assert!(
+            ids.is_empty(),
+            "the four chassis-integration blockers must all be gone now that \
+             table_class_id maps class:monk, and the bonus-feat burden is already \
+             satisfied by this input: {ids:?}"
         );
         assert_eq!(
             build_pilot_headless_receipt(&input).status,
-            super::HeadlessReceiptStatus::Blocked,
-            "Monk stays honestly Blocked while its chassis pillars are unintegrated"
+            super::HeadlessReceiptStatus::Computed,
+            "a Monk whose bonus feat is both chosen and recorded now reaches Computed"
         );
     }
 }
@@ -55312,6 +55408,207 @@ mod spellcasting_level_cap_widening_tests {
             assert_eq!(arcanist_base_spells_per_day(level).to_vec(), row(&[]), "level {level}");
             assert_eq!(warpriest_base_spells_per_day(level).to_vec(), row(&[]), "level {level}");
             assert_eq!(oracle_spells_known_table(level).to_vec(), row(&[]), "level {level}");
+        }
+    }
+}
+
+/// v0.6 alpha swarm (Monk/Summoner chassis-recognition closure,
+/// 2026-07-29): the two classes whose chassis pillars were computable but
+/// unreachable, for two DIFFERENT reasons that happened to surface the
+/// same downstream trio.
+///
+/// Monk: `table_class_id` never mapped `class:monk`, so
+/// `is_supported_generic_single_class` -- and therefore
+/// `has_supported_class_chassis` -- rejected Monk outright, even though
+/// `class_tables()` has always carried a complete corpus-backed Monk row
+/// (3/4 BAB, all three saves good, levels 1-20). Monk's chassis
+/// computation itself was never the gap; only the string->`ClassId`
+/// mapping was.
+///
+/// Summoner: the opposite shape. `compute_class_chassis`'s APG branch
+/// already resolved Summoner correctly (which is why Summoner never
+/// emitted `class_chassis.unsupported` at all), but no
+/// `is_supported_summoner_single_class` arm existed in
+/// `has_supported_class_chassis`, so every gate keyed off that predicate
+/// -- combat baseline, total saves, selected skill modifiers -- refused a
+/// class whose chassis was sitting right there, already computed.
+///
+/// Both expected value sets below are re-derived from the corpus
+/// formulas, not copied from a published table:
+///   Monk, `cr_classes.lst:147` (`CLASS:Monk ... MAXLEVEL:20`), 3/4 BAB
+///   `(level*3)/4` and good saves `level/2+2` on all three.
+///   Summoner, `apg_classes.lst:139`,
+///   `BONUS:COMBAT|BASEAB|classlevel*3/4`, `BONUS:SAVE|BASE.Will|classlevel/2+2`,
+///   `BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel/3`, `MAXLEVEL:20`.
+#[cfg(test)]
+mod monk_and_summoner_chassis_recognition_tests {
+    use super::{
+        build_pilot_headless_receipt, has_supported_class_chassis, table_class_id,
+        CharacterClassLevel, CharacterInput, MONK_CLASS_ID, SUMMONER_CLASS_ID,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::rules_tables::crb::class_tables::ClassId;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn explanation(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .map(|e| e.value)
+    }
+
+    fn blocking_ids(input: &CharacterInput) -> Vec<String> {
+        let mut ids: Vec<String> = build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id)
+            .collect();
+        ids.sort();
+        ids
+    }
+
+    /// The single omission that blocked Monk: the string mapping itself.
+    #[test]
+    fn table_class_id_maps_monk() {
+        assert_eq!(table_class_id(MONK_CLASS_ID), Some(ClassId::Monk));
+    }
+
+    /// Both classes must now pass the gate every downstream pillar keys off.
+    #[test]
+    fn both_classes_pass_the_chassis_gate_at_every_level_one_through_twenty() {
+        for level in 1..=20u8 {
+            assert!(
+                has_supported_class_chassis(&single_class(MONK_CLASS_ID, level)),
+                "monk level {level} must be a supported chassis"
+            );
+            assert!(
+                has_supported_class_chassis(&single_class(SUMMONER_CLASS_ID, level)),
+                "summoner level {level} must be a supported chassis"
+            );
+        }
+    }
+
+    /// Monk's real chassis numbers, re-derived from the corpus formulas at
+    /// every one of the 20 levels -- not merely "present".
+    #[test]
+    fn monk_chassis_values_match_the_corpus_formulas_at_every_level() {
+        for level in 1..=20u8 {
+            let input = single_class(MONK_CLASS_ID, level);
+            let want_bab = (level as i16 * 3) / 4;
+            let want_good_save = level as i16 / 2 + 2;
+
+            assert_eq!(
+                explanation(&input, "class_chassis.base_attack_bonus"),
+                Some(want_bab),
+                "monk level {level} base attack bonus (3/4 BAB)"
+            );
+            for save in ["fortitude", "reflex", "will"] {
+                assert_eq!(
+                    explanation(&input, &format!("class_chassis.base_save.{save}")),
+                    Some(want_good_save),
+                    "monk level {level} base {save} save (Monk has all three good)"
+                );
+            }
+        }
+    }
+
+    /// Summoner's real chassis numbers: same 3/4 BAB as Monk, but only Will
+    /// is good -- Fortitude and Reflex are poor (`level/3`). Asserting the
+    /// poor saves explicitly is what proves the two classes did not get
+    /// collapsed onto one shared progression by this widening.
+    #[test]
+    fn summoner_chassis_values_match_the_corpus_formulas_at_every_level() {
+        for level in 1..=20u8 {
+            let input = single_class(SUMMONER_CLASS_ID, level);
+            let want_bab = (level as i16 * 3) / 4;
+            let want_poor_save = level as i16 / 3;
+            let want_good_save = level as i16 / 2 + 2;
+
+            assert_eq!(
+                explanation(&input, "class_chassis.base_attack_bonus"),
+                Some(want_bab),
+                "summoner level {level} base attack bonus (3/4 BAB)"
+            );
+            assert_eq!(
+                explanation(&input, "class_chassis.base_save.fortitude"),
+                Some(want_poor_save),
+                "summoner level {level} base Fortitude save (poor)"
+            );
+            assert_eq!(
+                explanation(&input, "class_chassis.base_save.reflex"),
+                Some(want_poor_save),
+                "summoner level {level} base Reflex save (poor)"
+            );
+            assert_eq!(
+                explanation(&input, "class_chassis.base_save.will"),
+                Some(want_good_save),
+                "summoner level {level} base Will save (good)"
+            );
+        }
+    }
+
+    /// The four chassis-integration diagnostics must be GONE for both
+    /// classes at every level -- this is the actual deliverable, stated as
+    /// an absence rather than inferred from the value assertions above.
+    #[test]
+    fn the_four_chassis_integration_blockers_are_gone_for_both_classes() {
+        for class_id in [MONK_CLASS_ID, SUMMONER_CLASS_ID] {
+            for level in 1..=20u8 {
+                let ids = blocking_ids(&single_class(class_id, level));
+                for gone in [
+                    "class_chassis.unsupported",
+                    "combat.baseline_unsupported",
+                    "defense.total_save.unsupported",
+                    "skill.selected_modifier.unsupported",
+                ] {
+                    assert!(
+                        !ids.contains(&gone.to_owned()),
+                        "{class_id} level {level} must no longer emit {gone}: {ids:?}"
+                    );
+                }
+            }
+        }
+    }
+
+    /// What genuinely remains, pinned exactly so it cannot quietly grow.
+    ///
+    /// Neither class reaches `Computed`, and this test refuses to pretend
+    /// otherwise. Each retains exactly ONE real, non-chassis feature gap:
+    /// Monk its bonus-feat grant (no `choice:monk_bonus_feat` is seeded in
+    /// this posture), Summoner its Eidolon evolution-point spending. Both
+    /// are genuine unbuilt/unchosen surfaces, not recognition gaps.
+    #[test]
+    fn each_class_retains_exactly_one_real_non_chassis_blocker() {
+        for (class_id, want) in [
+            (MONK_CLASS_ID, "class_feature.monk.bounded_progression.bonus_feat.unsupported"),
+            (
+                SUMMONER_CLASS_ID,
+                "class_feature.apg.summoner.eidolon.evolutions_deferred.unsupported",
+            ),
+        ] {
+            for level in 1..=20u8 {
+                assert_eq!(
+                    blocking_ids(&single_class(class_id, level)),
+                    vec![want.to_owned()],
+                    "{class_id} level {level} must retain exactly its one real feature gap"
+                );
+            }
         }
     }
 }

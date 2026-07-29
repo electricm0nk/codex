@@ -145,13 +145,22 @@ mod tests {
     const FIGHTER_CLASS_ID: &str = "class:fighter";
     const WIZARD_CLASS_ID: &str = "class:wizard";
     const ROGUE_CLASS_ID: &str = "class:rogue";
-    // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): Monk, not
-    // Barbarian -- table_class_id now recognizes Barbarian too (this test's
-    // previous example, itself substituted in for Cleric for the same
-    // reason), so it genuinely resolves a real max HP now. Monk remains
-    // genuinely unrecognized (not in table_class_id, APG, or ACG), so it's
-    // still a real negative-control example.
-    const MONK_CLASS_ID: &str = "class:monk";
+    // The negative control for `compute_max_hp`'s "unrecognized class"
+    // branch. This constant has now been substituted THREE times for the
+    // same reason -- Cleric, then Barbarian, then Monk each stopped being
+    // unrecognized as the class roster widened underneath it.
+    //
+    // v0.6 alpha swarm (Monk/Summoner chassis-recognition closure,
+    // 2026-07-29): it is deliberately no longer a real class at all, and
+    // it cannot be one again. Monk was the LAST real class missing from
+    // `table_class_id`; with it mapped, the three rosters
+    // `compute_max_hp` consults -- `table_class_id` (11 CRB),
+    // `ApgClassId` (6 APG), `AcgClassId` (10 ACG) -- cover all 27 base
+    // classes. So no real PF1 base class can serve as this negative
+    // control any more, and picking a fourth real class would just queue
+    // up a fourth silent promotion. A synthetic id exercises the same
+    // `None` branch permanently.
+    const UNRECOGNIZED_CLASS_ID: &str = "class:not_a_real_pf1_class";
 
     fn class_level(class_id: &str, level: u8) -> CharacterClassLevel {
         CharacterClassLevel { class_id: class_id.to_owned(), level }
@@ -207,8 +216,21 @@ mod tests {
 
     #[test]
     fn compute_max_hp_returns_none_for_an_unrecognized_class() {
-        let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 2);
+        let max_hp = compute_max_hp(&[class_level(UNRECOGNIZED_CLASS_ID, 1)], 2);
         assert_eq!(max_hp, None);
+    }
+
+    /// The other half of the constant swap above: Monk must now resolve a
+    /// REAL max HP rather than `None`, proving the negative control was
+    /// retired because the gap genuinely closed -- not because the
+    /// assertion was weakened to make a failure go away.
+    ///
+    /// Monk d10 (`cr_classes.lst:147`, `CLASS:Monk HD:10`), level 1,
+    /// CON mod +2: maximized level 1 = 10 + 2 = 12.
+    #[test]
+    fn compute_max_hp_now_resolves_monk_the_last_class_to_join_table_class_id() {
+        let max_hp = compute_max_hp(&[class_level("class:monk", 1)], 2);
+        assert_eq!(max_hp, Some(12));
     }
 
     #[test]
