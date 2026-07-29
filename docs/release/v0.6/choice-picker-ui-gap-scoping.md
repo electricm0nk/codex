@@ -226,3 +226,65 @@ equivalent landing) never touched the creation-UI question at all, so
 there's no engine-side design risk here to coordinate on. Path A can start
 frontend-only (small Rust change, reviewed the same way any other
 `pf1_adapter.rs` PR would be) without waiting on backend's own queue.
+
+---
+
+## Appendix — classes that later joined Path A (kept current)
+
+This doc's title names Sorcerer/Cleric/Druid, the three it was written for,
+but Path A's shape turned out to be the general remedy for "the engine can
+compute this class, but nothing seeds the one choice it needs." Later
+classes closed the same way, citing this doc rather than restating it:
+
+- **Arcanist** (2026-07-25) — needed BOTH a starter spell (Wizard's
+  bootstrap-deadlock shape) and a recognized Metamagic Knowledge choice.
+  Also surfaced a real bug the three original classes did not: a bare
+  `"Empower Spell"` selection_id has no colon and fails
+  `validate_character_input`'s round-trip grammar, so the seed had to be
+  `metamagic:empower_spell`.
+
+- **Monk** (2026-07-29) — the purest instance of this gap yet, and worth
+  recording because it looked like an engine gap for a long time. Monk's
+  one claim-blocking diagnostic,
+  `class_feature.monk.bounded_progression.bonus_feat.unsupported`, reads
+  like missing logic; it is not. Six of the seven feats the corpus offers
+  at `MonkBonusFeatLVL,1` already have grounded mechanics in
+  `pilot_compute.rs`. The diagnostic fired only because nothing anywhere
+  seeded `choice:monk_bonus_feat`, so the default posture never exercised a
+  seam that already worked.
+
+  Seeded `choice:monk_bonus_feat -> feat:dodge`. Dodge is the only one of
+  the six whose closure the engine actually CROSS-CHECKS against
+  `selected_feats` — and `compose_character_input`'s fixed loadout already
+  carries `feat:dodge` for every race, so the seed names a feat the
+  character genuinely has, whose +1 dodge AC bonus `compute_combat_baseline`
+  is already applying. The alternatives were each weaker: Catch
+  Off-Guard/Throw Anything close as provably vacuous under this bounded
+  slice (zero benefit), and Combat Reflexes/Scorpion Style/Improved Grapple
+  close on the choice alone, which would claim a feat the sheet's Feats tab
+  could not show the player.
+
+  **One seeding site, not two.** Wizard and Arcanist both needed a mirrored
+  seed in `apply_level_up`'s new-class-entry branch. Monk does not: its
+  whole bonus-feat seam sits behind `supported_monk_level`, which matches a
+  SINGLE-class Monk only, so a multiclass dip never reaches it. Established
+  empirically (`monk_multiclass_dip_reaches_computed_from_apply_level_up_alone`
+  passed before the fix), not assumed.
+
+  **Honest caveat carried in the code.** For a Human,
+  `compose_character_input` also seeds `choice:human_bonus_feat ->
+  feat:dodge`, and the corpus record carries
+  `!PREABILITY:1,CATEGORY=FEAT,Dodge` — so a Human Monk's canonical posture
+  names Dodge in two slots, which PF1 would treat as a wasted pick. The
+  computed result stays correct (the bonus is applied once, never doubled),
+  and this is the same class of approximation the fixed loadout already
+  makes elsewhere (it seeds `choice:fighter_bonus_feat` for every class,
+  Wizard included). Path B is what genuinely retires it.
+
+Each of these promoted its `characterHubModel.ts` `CLASS_OPTIONS` entry to
+`full` as the same follow-on the Recommendation above calls for — Monk from
+`human-diagnostics-only`, verified against all seven `RACE_OPTIONS` races
+rather than assumed. Note the standing lag that is NOT a Path A defect:
+`levelOptions` stays at the conservative live-verified range (Monk `[1]`,
+like Wizard and Rogue) even when the engine computes all 20 levels, because
+raising it is a UI-side change owing its own live verification.

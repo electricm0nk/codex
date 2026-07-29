@@ -199,18 +199,22 @@ export interface ClassOption {
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
- * `pilot_compute.rs`'s per-class `explain_*` functions (each of Monk and
- * the other still-`human-diagnostics-only` classes carries its own "This
- * deliberately does not compute a supported ... chassis/surface" doc
- * comment, and the compute path stays claim-blocked for Human exactly as
- * it does for every other race) and live-verified for Barbarian
- * specifically back when it was in this same bucket (a fresh Human
- * Barbarian creation attempt returned `Blocked` with named rage-burden
- * diagnostics instead of the 4 generic ones) — since superseded now that
- * Barbarian's rage-execution engine is real; see its own note below.
- * Cleric and Druid have since moved out of this bucket entirely (see the
- * `full` note below) once their own domain-powers/animal-companion
- * burdens stopped being *permanently* unconditional.
+ * `pilot_compute.rs`'s per-class `explain_*` functions (a
+ * `human-diagnostics-only` class carries its own "This deliberately does
+ * not compute a supported ... chassis/surface" doc comment, and the compute
+ * path stays claim-blocked for Human exactly as it does for every other
+ * race) and live-verified for Barbarian specifically back when it was in
+ * this same bucket (a fresh Human Barbarian creation attempt returned
+ * `Blocked` with named rage-burden diagnostics instead of the 4 generic
+ * ones) — since superseded now that Barbarian's rage-execution engine is
+ * real; see its own note below. Cleric and Druid have since moved out of
+ * this bucket entirely (see the `full` note below) once their own
+ * domain-powers/animal-companion burdens stopped being *permanently*
+ * unconditional, and Monk followed on 2026-07-29 (see its own note below)
+ * — as of which NO class in this roster is `human-diagnostics-only` any
+ * more. The variant is kept because the distinction it draws is still the
+ * honest one to reach for if a future class lands in that state; it is not
+ * describing anything shipped today.
  *
  * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
  * class-breadth epic, 2026-07-25): both reached real `Computed` status once
@@ -307,9 +311,29 @@ export interface ClassOption {
  *   real `LevelUpDialog` correctly stayed at level 1 with the real
  *   `class_feature.druid.animal_companion.unsupported` diagnostic shown.
  *
+ * - **Monk**: promoted from `human-diagnostics-only` to `full` (2026-07-29,
+ *   choice-picker Path A). Monk's engine always could compute a complete
+ *   build; its one claim-blocking diagnostic
+ *   (`class_feature.monk.bounded_progression.bonus_feat.unsupported`) fired
+ *   only because nothing seeded `choice:monk_bonus_feat`. `pf1_adapter.rs`'s
+ *   `compose_character_input` now seeds the canonical
+ *   `choice:monk_bonus_feat -> feat:dodge`, and the fixed loadout already
+ *   carries `feat:dodge` on `selected_feats`, so the engine's own
+ *   genuinely-active cross-check passes and it grounds the real +1 dodge AC
+ *   bonus. `full` is earned, not assumed:
+ *   `monk_level1_reaches_computed_for_every_race_the_ui_offers` pins
+ *   `Computed` for all seven races in `RACE_OPTIONS`, and
+ *   `cargo run --bin v06_class_state_dump` reports Monk
+ *   `levels_blocked: []` across all 20 levels.
+ *   `levelOptions` deliberately stays `[1]`: that is the same conservative
+ *   lag Wizard and Rogue already carry (both engine-computed at every level,
+ *   both offered at `[1]`). Raising it is a UI-side change needing its own
+ *   live `LevelUpDialog`/creation-form verification, not made here alongside
+ *   the backend fix.
+ *
  * `levelOptions` reflects exactly this: Sorcerer `[1, 2]`, Cleric
  * `[1, 2, 3]` (Fighter's own conservative verified-range convention, not
- * the theoretical max), Druid `[1]` only.
+ * the theoretical max), Druid `[1]` only, Monk `[1]` only.
  */
 export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
@@ -322,7 +346,7 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
   { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
   { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:monk', label: 'Monk', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:monk', label: 'Monk', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];

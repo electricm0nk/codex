@@ -177,6 +177,17 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             vec![choice("choice:druid_nature_bond", "bond:animal_companion")],
             Vec::new(),
         ),
+        // pf1_adapter.rs: the Monk Path A seed. Same one-choice shape as
+        // Sorcerer/Cleric/Druid -- no spell involved. The engine closes
+        // Monk's last bonus-feat blocker only when `feat:dodge` is ALSO
+        // genuinely on `selected_feats`; the shared GE-06 fixture this
+        // binary sweeps (`pf1_human_fighter_level1_ge06_deterministic_input.txt`)
+        // already carries it, exactly as `compose_character_input`'s own
+        // fixed loadout does, so the two postures really do match.
+        "monk" => (
+            vec![choice("choice:monk_bonus_feat", "feat:dodge")],
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }

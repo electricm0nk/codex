@@ -2643,13 +2643,15 @@ mod tests {
     ];
     const FIGHTER_CLASS_ID: &str = "class:fighter";
 
-    const GENERIC_DIAGNOSTIC_IDS: [&str; 4] = [
-        "class_chassis.unsupported",
-        "combat.baseline_unsupported",
-        "defense.total_save.unsupported",
-        "skill.selected_modifier.unsupported",
-    ];
-
+    // `GENERIC_DIAGNOSTIC_IDS` / `generic_ids()` / `generic_plus()` used to
+    // live here: the 4 chassis-wide diagnostics every unrecognized class
+    // tripped, plus a helper to assert "those 4, and additionally these
+    // named ones". Removed 2026-07-29 with Monk's choice-picker Path A
+    // closure -- Monk was the last class in this test still expecting them,
+    // so every remaining assertion below is either `BTreeSet::new()` (fully
+    // Computed) or a named-diagnostics-only set. They were deleted rather
+    // than `#[allow(dead_code)]`-ed: a helper no assertion uses cannot go
+    // stale in a way any test would catch.
     fn request_for(race_id: &str, level: u8) -> CreateCharacterRequest {
         request_for_class(race_id, FIGHTER_CLASS_ID, level)
     }
@@ -2684,16 +2686,6 @@ mod tests {
             .filter(|diagnostic| diagnostic.claim_blocking)
             .map(|diagnostic| diagnostic.id.clone())
             .collect()
-    }
-
-    fn generic_ids() -> BTreeSet<String> {
-        GENERIC_DIAGNOSTIC_IDS.iter().map(|id| id.to_string()).collect()
-    }
-
-    fn generic_plus(named: &[&str]) -> BTreeSet<String> {
-        let mut ids = generic_ids();
-        ids.extend(named.iter().map(|id| id.to_string()));
-        ids
     }
 
     #[test]
@@ -2976,9 +2968,24 @@ mod tests {
              Fighter's golden path, since task 4 widened the generic chassis dispatch to Rogue"
         );
 
+        // v0.6 alpha swarm, choice-picker Path A (Monk's own closure): Monk
+        // used to sit here with the 4 generic chassis-wide diagnostics plus
+        // its one real feature gap, the level-1 bonus feat -- which fired
+        // only because nothing seeded `choice:monk_bonus_feat`, never
+        // because the engine couldn't compute it. `compose_character_input`
+        // now seeds the canonical `choice:monk_bonus_feat -> feat:dodge`
+        // (see `pf1_adapter.rs`'s `DODGE_FEAT_SELECTION` doc comment for why
+        // Dodge of the seven corpus options), and the fixed loadout already
+        // carries `feat:dodge` on `selected_feats`, so the engine's own
+        // genuinely-active cross-check passes and it emits the real
+        // `...bonus_feat.dodge_active` grounding record. Human Monk L1 now
+        // reaches Computed with zero claim-blocking diagnostics, the same
+        // golden path as Fighter/Rogue/Cleric above.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:monk", 1),
-            generic_plus(&["class_feature.monk.bounded_progression.bonus_feat.unsupported"])
+            BTreeSet::new(),
+            "Human Monk L1 now reaches Computed with zero claim-blocking diagnostics, thanks to \
+             the seeded canonical Dodge bonus feat"
         );
 
         // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25):

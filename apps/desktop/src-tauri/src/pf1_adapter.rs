@@ -149,6 +149,68 @@ const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_
 /// `metamagic:<snake_case_slug>` convention.
 const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own): needed
+/// by `compose_character_input`'s Monk canonical-choice seeding below.
+/// Monk is the Sorcerer/Cleric/Druid shape, not Wizard's -- a single
+/// recognized choice is sufficient, and no bootstrapped spell is involved.
+///
+/// Monk's engine already computes a complete build at every level 1-20; its
+/// one remaining claim-blocking diagnostic
+/// (`class_feature.monk.bounded_progression.bonus_feat.unsupported`) fires
+/// purely because nothing anywhere seeds `choice:monk_bonus_feat`, so the
+/// default posture never exercises a seam that already works. No picker in
+/// the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+const MONK_CLASS_ID: &str = "class:monk";
+const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+
+/// **Why Dodge, of the seven feats the corpus offers at
+/// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
+/// (`.../core_rulebook/cr_abilities_class.lst:1263`):
+/// `Monk Bonus Feat ~ Dodge ... PREVARGTEQ:MonkBonusFeatLVL,1 ...
+/// ABILITY:FEAT|VIRTUAL|Dodge` -- genuinely available at level 1, alongside
+/// Catch Off-Guard, Combat Reflexes, Deflect Arrows, Improved Grapple,
+/// Scorpion Style, and Throw Anything (the 6th/10th-level additions are
+/// gated `PREVARGTEQ:MonkBonusFeatLVL,6` / `,10` and are not options here).
+///
+/// Six of those seven close the burden in `pilot_compute.rs`, but they are
+/// not equivalent, and Dodge is the only one that is genuinely resolved
+/// under the posture this function actually composes:
+///
+/// - **Dodge** is the one option the engine CROSS-CHECKS: its
+///   `dodge_bonus_feat_is_genuinely_active` gate closes the burden only when
+///   `feat:dodge` is really present on `chosen.selected_feats`, so the
+///   claimed benefit is one the character actually has. It is --
+///   unconditionally, for every race, in this very function's fixed GE-06
+///   loadout below. And the benefit is real and already computed:
+///   `compute_combat_baseline` applies `DODGE_AC_BONUS` (+1 AC) for any
+///   character carrying `feat:dodge`, regardless of which slot granted it.
+///   So this seed makes the engine compute a real effect; it is not a token
+///   that merely silences a diagnostic (`docs/governance/no-stub-mvp-doctrine.md`).
+/// - **Catch Off-Guard / Throw Anything** close as *provably vacuous* under
+///   this bounded slice (their entire benefit is improvised/splash weapons,
+///   which the deterministic Longsword baseline never models). Legal, but
+///   they would hand a player a canonical feat worth exactly zero.
+/// - **Combat Reflexes / Scorpion Style / Improved Grapple** each ground a
+///   real number, but their closures fire on the choice alone with no
+///   `selected_feats` cross-check -- seeding one would claim a feat the
+///   character does not carry, so the sheet's Feats tab would show the
+///   player nothing for the feat they supposedly picked.
+/// - **Deflect Arrows** requires `feat:deflect_arrows` on `selected_feats`
+///   (its `text_complete` branch), which this loadout does not carry.
+///
+/// **Honest caveat.** For a Human, this function also seeds
+/// `choice:human_bonus_feat -> feat:dodge`, and the corpus record above
+/// carries `!PREABILITY:1,CATEGORY=FEAT,Dodge` -- so a Human Monk's
+/// canonical posture names Dodge in two slots, which PF1 would treat as a
+/// wasted pick. The COMPUTED result is still correct (the +1 dodge bonus is
+/// applied once by `compute_combat_baseline`, never doubled), and this is
+/// the same class of approximation the fixed GE-06 loadout already makes
+/// everywhere else -- it seeds `choice:fighter_bonus_feat` for every class,
+/// Wizard included. A real per-class bonus-feat picker (Path B) is what
+/// replaces this, exactly as for the Sorcerer/Cleric/Druid seeds.
+const DODGE_FEAT_SELECTION: &str = "feat:dodge";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -453,6 +515,40 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:druid_nature_bond".to_owned(),
             selection_id: "bond:animal_companion".to_owned(),
+        });
+    } else if request.class_id == MONK_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own) --
+        // the same shape as the three above, and for the same reason: the
+        // engine can already compute a complete Monk, but only once a real
+        // recognized choice is present, and no picker can submit one.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `monk_with_dodge_bonus_feat_genuinely_active_does_not_trip_the_diagnostic`
+        // test: a recognized `choice:monk_bonus_feat -> feat:dodge`, PLUS
+        // `feat:dodge` genuinely present on `selected_feats` (which this
+        // function's fixed loadout above already carries, unconditionally,
+        // for every race), is sufficient with no other precondition to
+        // reach `Computed`. And it is genuinely RESOLVED, not merely
+        // tolerated: the engine emits a real
+        // `class_feature.monk.bounded_progression.bonus_feat.dodge_active`
+        // record carrying the +1 dodge AC bonus `compute_combat_baseline`
+        // is already applying. See `DODGE_FEAT_SELECTION`'s own doc comment
+        // for why Dodge specifically, of the seven corpus options at
+        // `MonkBonusFeatLVL,1`, and for the Human double-grant caveat.
+        //
+        // ONE seeding site only, unlike Wizard/Arcanist: Monk's whole
+        // bonus-feat seam sits behind `supported_monk_level`, which matches
+        // a SINGLE-class Monk only, so `apply_level_up`'s multiclass-dip
+        // branch never reaches it and needs no mirrored seed -- established
+        // empirically by
+        // `monk_multiclass_dip_reaches_computed_from_apply_level_up_alone`,
+        // which passes without one. Leveling a Monk 1 -> 2 takes
+        // `apply_level_up`'s increment-existing-level branch, so this
+        // creation-time seed simply persists -- pinned all the way to the
+        // PF1 cap by `monk_stays_computed_leveling_all_the_way_to_20`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
+            selection_id: DODGE_FEAT_SELECTION.to_owned(),
         });
     }
 
@@ -1164,6 +1260,10 @@ mod tests {
 
     fn arcanist_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: ARCANIST_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    fn monk_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest { class_id: MONK_CLASS_ID.to_owned(), ..request_for(character_id, level) }
     }
 
     fn seed_envelope(character_id: &str, level: u8) -> SavedCharacterEnvelope {
@@ -1954,6 +2054,216 @@ mod tests {
             HeadlessReceiptStatus::Computed,
             "multiclassing Rogue onto an existing Fighter must reach Computed through the real \
              UI level-up path, with no seeding fix needed (unlike Wizard): {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    // ----- Monk end-to-end UI reachability (v0.6 alpha swarm, Path A) -----
+    //
+    // Monk's engine can already compute a full level-1 build; its one
+    // remaining claim-blocking diagnostic
+    // (`class_feature.monk.bounded_progression.bonus_feat.unsupported`)
+    // fires only because nothing seeds `choice:monk_bonus_feat`, exactly
+    // the Sorcerer/Cleric/Druid "no picker exists for this choice set"
+    // shape. See `MONK_CLASS_ID`'s own doc comment for why Dodge is the
+    // canonical pick.
+
+    /// **The milestone test**: a freshly composed Monk, with NO choice
+    /// added by the caller, must reach `Computed` purely from what
+    /// `compose_character_input` itself seeds -- mirroring
+    /// `arcanist_level1_reaches_computed_from_compose_character_input_alone`
+    /// and `wizard_level1_reaches_computed_from_compose_character_input_alone`
+    /// exactly. This is the exact starting state `create_character` builds
+    /// and tries to save.
+    #[test]
+    fn monk_level1_reaches_computed_from_compose_character_input_alone() {
+        let character_input = compose_character_input(&monk_request_for("monk-starter-computed", 1));
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a freshly composed Monk level 1 must reach Computed with no caller-added choices, \
+             proving the canonical Dodge bonus-feat seed closes the last remaining gap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The seed must be genuinely active, not merely recorded: the engine's
+    /// `dodge_bonus_feat_is_genuinely_active` gate requires `feat:dodge` to
+    /// really be present on `selected_feats` (a Monk who names Dodge in the
+    /// slot but does not carry the feat still, correctly, blocks). This
+    /// pins that the composed posture satisfies BOTH halves, so the +1
+    /// dodge AC bonus this closure claims is one the character really has
+    /// -- not a token that merely silences a diagnostic.
+    #[test]
+    fn composed_monk_carries_both_halves_of_the_dodge_bonus_feat_seed() {
+        let character_input = compose_character_input(&monk_request_for("monk-dodge-halves", 1));
+
+        assert!(
+            character_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID
+                    && c.selection_id == DODGE_FEAT_SELECTION
+            }),
+            "the composed Monk must carry the canonical bonus-feat choice: {:?}",
+            character_input.chosen.selected_choices
+        );
+        assert!(
+            character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| feat == DODGE_FEAT_SELECTION),
+            "the composed Monk must genuinely carry feat:dodge, or the seeded choice would be \
+             an unmet precondition rather than a real grant: {:?}",
+            character_input.chosen.selected_feats
+        );
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+        assert!(
+            receipt.computation.explanations.iter().any(
+                |e| e.id == "class_feature.monk.bounded_progression.bonus_feat.dodge_active"
+            ),
+            "the engine must emit the real dodge_active grounding record, proving the seed is \
+             resolved rather than merely tolerated: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// The seed is Monk-only: no other class may pick up a
+    /// `choice:monk_bonus_feat` entry, mirroring
+    /// `a_composed_fighter_gets_no_arcanist_seed`'s own negative check.
+    #[test]
+    fn a_composed_fighter_gets_no_monk_bonus_feat_seed() {
+        let fighter_input = compose_character_input(&request_for("fighter-no-monk-seed", 1));
+
+        assert!(
+            !fighter_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID),
+            "a composed Fighter must not receive the Monk-only bonus-feat choice: {:?}",
+            fighter_input.chosen.selected_choices
+        );
+    }
+
+    /// Leveling a seeded Monk must stay `Computed` at every step to the PF1
+    /// cap: `apply_level_up` takes the increment-existing-level branch here,
+    /// so the creation-time seed simply persists and no second seeding site
+    /// is owed. This also pins that the further bonus-feat slots PF1 grants
+    /// at Monk 2/6/10 (`choice:monk_bonus_feat_2/_3/_4`) are
+    /// recognized-when-present but never claim-blocking, so widening the
+    /// level range cannot silently reintroduce a blocker.
+    #[test]
+    fn monk_stays_computed_leveling_all_the_way_to_20() {
+        let mut character_input = compose_character_input(&monk_request_for("monk-level-sweep", 1));
+
+        for expected_level in 2..=20u8 {
+            apply_level_up(&mut character_input, MONK_CLASS_ID);
+
+            assert_eq!(
+                character_input.chosen.class_levels,
+                vec![CharacterClassLevel {
+                    class_id: MONK_CLASS_ID.to_owned(),
+                    level: expected_level
+                }],
+                "apply_level_up must increment the existing Monk entry, not add a second one"
+            );
+
+            let receipt = build_pilot_headless_receipt(&character_input);
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "a Monk leveled up to {expected_level} through the real level-up path must stay \
+                 Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The creation-side mirror: `levelOptions` in `characterHubModel.ts`
+    /// feeds the create-character form's level dropdown, which composes
+    /// directly at the chosen level rather than leveling up to it. The
+    /// engine computes Monk at all 20 (`cargo run --bin v06_class_state_dump`
+    /// reports `levels_blocked: []`), and this pins that same truth through
+    /// the real production compose path -- so the UI's conservative
+    /// `[1]` range is a deliberate, documented UI-verification lag, not an
+    /// engine limit hiding behind it.
+    #[test]
+    fn monk_reaches_computed_at_every_created_level() {
+        for level in 1..=20u8 {
+            let character_input =
+                compose_character_input(&monk_request_for("monk-created-at-level", level));
+            let receipt = build_pilot_headless_receipt(&character_input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "a freshly composed Monk at level {level} must reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Monk's `CLASS_OPTIONS` entry in `characterHubModel.ts` is being
+    /// promoted from `human-diagnostics-only` to `full`, and that label
+    /// means specifically "reaches `Computed` for ANY race in
+    /// `RACE_OPTIONS`". Nothing in the Monk seam is race-gated
+    /// (`supported_monk_level` matches on class levels only, and the Dodge
+    /// cross-check reads `selected_feats`, which this loadout seeds for
+    /// every race), but the label must be earned rather than assumed -- so
+    /// this pins it against the real race roster the UI actually offers.
+    #[test]
+    fn monk_level1_reaches_computed_for_every_race_the_ui_offers() {
+        for race_id in [
+            "race:human",
+            "race:dwarf",
+            "race:elf",
+            "race:gnome",
+            "race:half-elf",
+            "race:half-orc",
+            "race:halfling",
+        ] {
+            let request = CreateCharacterRequest {
+                race_id: race_id.to_owned(),
+                ..monk_request_for("monk-any-race", 1)
+            };
+            let receipt = build_pilot_headless_receipt(&compose_character_input(&request));
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "Monk level 1 must reach Computed for {race_id}, or the `full` support label in \
+                 characterHubModel.ts's CLASS_OPTIONS would overclaim: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The multiclass-dip mirror. Unlike Wizard -- whose
+    /// `unmet_wizard_spellbook_conditions` gate is race/multiclass-blind and
+    /// therefore genuinely needed a SECOND seeding site in
+    /// `apply_level_up`'s new-class-entry branch -- Monk's whole
+    /// bonus-feat seam sits behind `supported_monk_level`, which matches
+    /// only a SINGLE-class Monk (`[class_level]`). A Fighter who dips Monk
+    /// never reaches that seam at all. This test pins that empirically, so
+    /// the "one site or two?" question is answered by the engine rather
+    /// than assumed -- and it is a real Computed assertion, not merely
+    /// "the Monk diagnostic is absent".
+    #[test]
+    fn monk_multiclass_dip_reaches_computed_from_apply_level_up_alone() {
+        let mut character_input = compose_character_input(&request_for("fighter-then-monk-dip", 1));
+        apply_level_up(&mut character_input, MONK_CLASS_ID);
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "multiclassing Monk onto an existing Fighter must reach Computed through the real \
+             UI level-up path: {:?}",
             receipt.computation.diagnostics
         );
     }
