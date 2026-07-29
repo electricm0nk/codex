@@ -84,7 +84,46 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
           appliedModifiers: [],
         },
       ],
-      equipmentEffects: { armorClassDelta: 4, armorCheckPenaltyTotal: -2, maxDexCap: 4, attackBonusDelta: 0 },
+      equipmentEffects: {
+        // Real CRB values for Aldric's two equipped records: the Chain
+        // Shirt's own ACCHECK:-2 / MAXDEX:4 / SPELLFAILURE:20 / +4 armor
+        // bonus, and a Longsword, which contributes no armor stats at all.
+        perItem: [
+          { itemId: 'item:longsword', equipmentRecordKey: 'Longsword (Base)', category: 'ArmsArmor' },
+          {
+            itemId: 'item:chain_shirt',
+            equipmentRecordKey: 'Chain Shirt (Base)',
+            category: 'ArmsArmor',
+            armorClassBonus: 4,
+            maxDex: 4,
+            spellFailure: 20,
+            armorCheckPenalty: -2,
+          },
+        ],
+        armorClassDelta: 4,
+        armorCheckPenaltyTotal: -2,
+        maxDexCap: 4,
+        attackBonusDelta: 0,
+      },
+      // Aldric's Strength modifier is +3 (score 16), whose real load.lst
+      // row is LOAD:16|230 — light 76 / medium 153 / heavy 230. He carries
+      // a Longsword (4 lb, 15 gp) and a Chain Shirt (25 lb, 100 gp), all
+      // real CRB WT:/COST: values, so 29 lb is comfortably a light load and
+      // imposes no penalties of its own.
+      encumbrance: {
+        totalCarriedWeightLbs: 29,
+        totalCarriedCostGp: 115,
+        lightMaxLbs: 76,
+        mediumMaxLbs: 153,
+        heavyMaxLbs: 230,
+        level: 'Light',
+        loadArmorCheckPenalty: 0,
+        perItem: [
+          { itemId: 'item:longsword', weightLbs: 4, costGp: 15 },
+          { itemId: 'item:chain_shirt', weightLbs: 25, costGp: 100 },
+        ],
+        unresolvedItemIds: [],
+      },
       unresolvedSpellIds: [],
       unresolvedEquipmentItemIds: [],
     },

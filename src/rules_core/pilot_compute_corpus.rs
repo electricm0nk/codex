@@ -25,10 +25,12 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::pilot_compute::{
-    choice_selection, compute_pilot_base_chassis, fighter_armor_training, fighter_level_in_mix,
+    apply_human_ability_bonus, choice_selection, compute_pilot_base_chassis, fighter_armor_training,
+    fighter_level_in_mix,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
@@ -57,7 +59,15 @@ pub struct CorpusPilotReceipt {
 }
 
 /// Per-domain corpus-derived contributions.
-#[derive(Debug, Clone, Default, PartialEq)]
+///
+/// Deliberately does NOT derive `Default`. It did until `encumbrance` was
+/// added, but the derive had no call site anywhere in the workspace, and a
+/// defaulted `EncumbranceComputation` would have to invent a carrying
+/// capacity for a Strength score nobody supplied -- a fabricated rules
+/// value of exactly the kind this crate refuses to produce. Every
+/// construction of this type goes through `compute_pilot_with_corpus`,
+/// which has a real `CharacterInput` to derive all of it from.
+#[derive(Debug, Clone, PartialEq)]
 pub struct CorpusDerivedSection {
     pub school_coverage: BTreeMap<Pf1SchoolId, SchoolCoverage>,
     pub equipped_items: Vec<ResolvedEquipment>,
@@ -95,6 +105,22 @@ pub struct CorpusDerivedSection {
     /// `equipment_selections[].item_id` that did not resolve against
     /// `corpus`.
     pub unresolved_equipment_item_ids: Vec<String>,
+    /// Real carried weight, PF1 carrying-capacity thresholds, load tier,
+    /// and that tier's own max-Dex/armor-check penalties
+    /// (`encumbrance::compute_encumbrance`).
+    ///
+    /// `contract::to_pilot_receipt` already computed this for
+    /// `PilotReceipt`, but the desktop app reaches the engine through
+    /// *this* function, not `contract.rs` -- so before this field, every
+    /// weight and encumbrance number the engine computes was unreachable
+    /// from the UI. Same additive, explicitly-not-claim-gated posture as
+    /// `equipment_effects` above.
+    ///
+    /// Unlike `equipment_effects`/`equipped_items`, this is NOT scoped to
+    /// `EquippedActive` -- a `SelectedInactive` item (owned, in the pack,
+    /// simply not worn) still weighs something, matching
+    /// `contract::to_pilot_receipt`'s own reasoning.
+    pub encumbrance: EncumbranceComputation,
 }
 
 /// A canonical Paizo-table-cell reference. Non-`None` proves the corpus
@@ -250,6 +276,20 @@ pub fn compute_pilot_with_corpus(
         .collect();
     let equipment_effects = compute_equipment_effects(&equipped, corpus);
 
+    // Carrying capacity needs the effective Strength *score* (not the
+    // modifier `base` carries), and reads the unfiltered selection list --
+    // both matching `contract::to_pilot_receipt`'s own encumbrance wiring
+    // exactly. The explanation `apply_human_ability_bonus` would push is
+    // discarded: `compute_pilot_base_chassis` above already pushed it once,
+    // for real, into `base`; pushing it again would duplicate an id.
+    let mut discarded_explanations = Vec::new();
+    let effective_ability_scores = apply_human_ability_bonus(input, &mut discarded_explanations);
+    let encumbrance = compute_encumbrance(
+        &input.chosen.equipment_selections,
+        corpus,
+        effective_ability_scores.strength,
+    );
+
     CorpusPilotReceipt {
         base,
         corpus_derived: CorpusDerivedSection {
@@ -258,6 +298,7 @@ pub fn compute_pilot_with_corpus(
             equipment_effects,
             unresolved_spell_ids,
             unresolved_equipment_item_ids,
+            encumbrance,
         },
     }
 }

@@ -146,11 +146,11 @@ mod tests {
     };
 
     use crate::character_hub::{
-        compose_character_input, map_chosen_feat_targets_dto, map_resolved_equipment_dto,
-        map_spells_selected_dto,
+        compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
+        map_resolved_equipment_dto, map_spells_selected_dto,
         AbilityScoresDto, AbilityModifiersDto, BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto,
         CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto, PilotSnapshotDto,
-        SchoolCoverageDto, SelectedSkillModifiersDto,
+        ResolvedEquipmentEffectDto, SchoolCoverageDto, SelectedSkillModifiersDto,
     };
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
@@ -325,6 +325,21 @@ mod tests {
                     .map(map_resolved_equipment_dto)
                     .collect(),
                 equipment_effects: EquipmentEffectsDto {
+                    per_item: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .per_item
+                        .iter()
+                        .map(|effect| ResolvedEquipmentEffectDto {
+                            item_id: effect.item_id.clone(),
+                            equipment_record_key: effect.equipment_record_key.clone(),
+                            category: format!("{:?}", effect.category),
+                            armor_class_bonus: effect.armor_class_bonus,
+                            max_dex: effect.max_dex,
+                            spell_failure: effect.spell_failure,
+                            armor_check_penalty: effect.armor_check_penalty,
+                        })
+                        .collect(),
                     armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,
                     armor_check_penalty_total: corpus_receipt
                         .corpus_derived
@@ -340,6 +355,7 @@ mod tests {
                         .equipment_effects
                         .attack_bonus_delta,
                 },
+                encumbrance: map_encumbrance_dto(&corpus_receipt.corpus_derived.encumbrance),
                 unresolved_spell_ids: corpus_receipt.corpus_derived.unresolved_spell_ids.clone(),
                 unresolved_equipment_item_ids: corpus_receipt
                     .corpus_derived

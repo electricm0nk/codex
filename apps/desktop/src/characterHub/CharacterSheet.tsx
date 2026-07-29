@@ -1,7 +1,14 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
-import type { AbilityScoresDto, CorpusDerivedDto, EquipmentEffectsDto, ResolvedEquipmentDto } from '../boundary/loadCreateCharacter';
+import type {
+  AbilityScoresDto,
+  CorpusDerivedDto,
+  EncumbranceDto,
+  EquipmentEffectsDto,
+  ResolvedEquipmentDto,
+} from '../boundary/loadCreateCharacter';
+import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './encumbranceTabModel';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -920,6 +927,7 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
 function DefenseTab(props: {
   damageReduction: number | undefined;
   equipmentEffects: EquipmentEffectsDto | undefined;
+  encumbrance: EncumbranceDto | undefined;
   durability: CharacterDurabilityDto | null;
   durabilityBusy: boolean;
   durabilityError: string | null;
@@ -934,23 +942,169 @@ function DefenseTab(props: {
         onAdjust={props.onAdjustHp}
       />
       <EquipmentEffectsPanel effects={props.equipmentEffects} />
+      <AcBySourcePanel effects={props.equipmentEffects} encumbrance={props.encumbrance} />
       {props.damageReduction !== undefined ? (
         <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
           <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
         </p>
       ) : null}
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-        AC breakdown by source and other Defense stats — coming soon.
+        Save modifiers by source — coming soon.
       </p>
     </div>
   );
 }
 
 /**
+ * AC breakdown by source: which equipped item contributed what.
+ *
+ * This replaced a "coming soon" placeholder, but the data behind it is not
+ * new — `equipment_effects::compute_equipment_effects` has always populated
+ * `EquipmentEffects.per_item` with each item's real corpus-derived armor
+ * bonus, max Dex, check penalty and spell failure. Only the aggregate
+ * totals crossed the IPC boundary, so the per-source detail the engine
+ * already knew was invisible. Exposing `EquipmentEffectsDto.perItem` is
+ * what made this renderable.
+ *
+ * The load row is a genuinely separate source: an encumbered character
+ * takes a max-Dex cap and check penalty from the *weight carried*, not from
+ * any worn item. It only appears when the current load actually imposes
+ * one.
+ */
+function AcBySourcePanel(props: {
+  effects: EquipmentEffectsDto | undefined;
+  encumbrance: EncumbranceDto | undefined;
+}) {
+  const rows = buildAcBySourceRows(props.effects?.perItem ?? []);
+  const loadMaxDex = props.encumbrance?.loadMaxDexCap;
+  const loadCheckPenalty = props.encumbrance?.loadArmorCheckPenalty ?? 0;
+  const loadContributes = loadMaxDex !== undefined || loadCheckPenalty !== 0;
+  if (rows.length === 0 && !loadContributes) {
+    return null;
+  }
+  const effectiveMaxDex = effectiveMaxDexCap(props.effects?.maxDexCap, loadMaxDex);
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
+        AC by Source
+      </p>
+      {rows.map((row) => (
+        <div
+          key={row.itemId}
+          style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', justifyContent: 'space-between', padding: '0.3rem 0' }}
+        >
+          <span style={{ fontWeight: 700 }}>{row.label}</span>
+          <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.74rem' }}>
+            {[
+              `AC ${fmt(row.armorClassBonus)}`,
+              row.maxDex !== undefined ? `Max Dex +${row.maxDex}` : null,
+              row.armorCheckPenalty !== undefined && row.armorCheckPenalty !== 0
+                ? `Check ${row.armorCheckPenalty}`
+                : null,
+              row.spellFailure !== undefined ? `Spell Fail ${row.spellFailure}%` : null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+          </span>
+        </div>
+      ))}
+      {loadContributes ? (
+        <div style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', justifyContent: 'space-between', padding: '0.3rem 0' }}>
+          <span style={{ fontWeight: 700 }}>Encumbrance</span>
+          <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.74rem' }}>
+            {[
+              loadMaxDex !== undefined ? `Max Dex +${loadMaxDex}` : null,
+              loadCheckPenalty !== 0 ? `Check ${loadCheckPenalty}` : null,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+          </span>
+        </div>
+      ) : null}
+      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', paddingTop: '0.45rem' }}>
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+          Total AC bonus from equipment
+        </span>
+        <span style={{ fontWeight: 800 }}>{fmt(props.effects?.armorClassDelta ?? 0)}</span>
+      </div>
+      {effectiveMaxDex !== undefined ? (
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.4rem 0 0' }}>
+          Effective max Dex bonus to AC: +{effectiveMaxDex} — the tighter of worn armor and current
+          load, which never sum.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * Real carried weight against PF1's Strength-derived carrying capacity,
+ * with the current load tier and the penalties that tier imposes.
+ *
+ * Every number here is computed by `rules_core::encumbrance` from the
+ * corpus's own `WT:`/`COST:` tokens and the real PCGen Pathfinder
+ * `load.lst` capacity table — none of it is derived in the frontend. The
+ * engine has computed all of it since the v0.6 alpha swarm; it simply had
+ * no path across the IPC boundary until `CorpusDerivedDto.encumbrance`
+ * existed, so none of it was ever visible to a player.
+ */
+function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
+  if (!props.encumbrance) {
+    return null;
+  }
+  const described = describeEncumbrance(props.encumbrance);
+  const barColor = described.overCapacity
+    ? 'var(--color-danger, #c0392b)'
+    : described.penalties.length > 0
+      ? 'var(--color-warning, #d68910)'
+      : 'var(--color-accent)';
+  return (
+    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
+      <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: 0, textTransform: 'uppercase' }}>
+          Carried Weight
+        </p>
+        <span style={{ color: barColor, fontSize: '0.72rem', fontWeight: 800 }}>{described.levelLabel}</span>
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.6rem' }}>
+        <StatTile label="Total Weight" value={described.totalWeightLabel} emphasize />
+        <StatTile label="Light / Med / Heavy" value={described.capacityLabel} />
+        <StatTile label="Remaining" value={`${described.remainingLbs} lb`} />
+        <StatTile label="Gear Value" value={described.totalCostLabel} />
+      </div>
+      {/* Proportion of the heavy maximum currently carried. */}
+      <div
+        aria-hidden
+        style={{ backgroundColor: 'var(--color-surface-2)', borderRadius: '999px', height: '0.35rem', overflow: 'hidden' }}
+      >
+        <div style={{ backgroundColor: barColor, height: '100%', width: `${described.fractionOfCapacity * 100}%` }} />
+      </div>
+      {described.penalties.length > 0 ? (
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
+          <span style={{ fontWeight: 700 }}>This load imposes:</span>{' '}
+          {described.penalties.map((penalty) => `${penalty.label} ${penalty.value}`).join(' · ')}
+        </p>
+      ) : null}
+      {described.overCapacity ? (
+        <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
+          Carrying more than this character's heavy maximum.
+        </p>
+      ) : null}
+      {described.unresolvedCount > 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0' }}>
+          {described.unresolvedCount} carried item(s) have no corpus weight and are excluded from this total.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/**
  * Equipped-item reachability, sourced from `compute_pilot_with_corpus` via
- * the real IPC boundary — not mock data. Same bundled-fixture scope note
- * as `SpellsTab`: derived stats (armor bonus, attack bonus, etc.) are a
- * documented capability-slice non-goal and are not yet populated.
+ * the real IPC boundary — not mock data. Per-item weight and price are the
+ * records' own real corpus `WT:`/`COST:` tokens; an item with no price
+ * shown is a genuine corpus absence (an unpriced base template, or a
+ * formula-priced modifier), not a lookup failure.
  */
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
@@ -963,12 +1117,17 @@ function GearTab(props: {
 }) {
   const items = props.corpusDerived?.equippedItems ?? [];
   const unresolved = props.corpusDerived?.unresolvedEquipmentItemIds ?? [];
+  const encumbrance = props.corpusDerived?.encumbrance;
+  // Per-item weight/price, keyed by the same `itemId` the equipped-items
+  // list is keyed on, so each row can show what it actually contributes.
+  const carriedById = new Map((encumbrance?.perItem ?? []).map((entry) => [entry.itemId, entry]));
   return (
     <div>
       <MoneyPanel money={props.money} busy={props.moneyBusy} error={props.moneyError} onAdjust={props.onAdjustMoney} />
+      <EncumbrancePanel encumbrance={encumbrance} />
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Corpus-derived equipment reachability — proves each item resolves against the real PF1
-        corpus; derived combat stats are not yet computed.
+        Corpus-derived equipment — each item resolves against the real PF1 corpus, and its weight
+        and price are that record's own corpus values.
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
@@ -991,6 +1150,17 @@ function GearTab(props: {
                 </span>
                 {item.grounded ? (
                   <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+                ) : null}
+                {/* Real corpus WT:/COST: values. A row with no price is a
+                    genuine corpus absence, so nothing is rendered for it
+                    rather than a fabricated 0 gp. */}
+                {carriedById.has(item.itemId) ? (
+                  <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
+                    {carriedById.get(item.itemId)!.weightLbs} lb
+                    {carriedById.get(item.itemId)!.costGp !== undefined
+                      ? ` · ${carriedById.get(item.itemId)!.costGp} gp`
+                      : ''}
+                  </span>
                 ) : null}
               </div>
               <button
@@ -2216,6 +2386,7 @@ export function CharacterSheet(props: {
                 <DefenseTab
                   damageReduction={snapshot?.damageReduction}
                   equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
+                  encumbrance={props.detail?.corpusDerived?.encumbrance}
                   durability={durability}
                   durabilityBusy={durabilityBusy}
                   durabilityError={durabilityError}

@@ -108,6 +108,126 @@ fn carrying_capacity_thresholds_extrapolate_two_tiers_beyond_strength_29() {
     );
 }
 
+/// The full `LOAD:<Strength>|<value>` column of the real PCGen Pathfinder
+/// game mode's `load.lst`, transcribed verbatim (Strength 1-29):
+/// `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
+/// lines 10-38. This is the *heavy* tier (`ENCUMBRANCE:Heavy|1`, i.e. a 1x
+/// multiplier on the load score); light is `1/3` and medium is `2/3` of the
+/// same value per that file's `ENCUMBRANCE:Light|1/3` / `Medium|2/3`.
+const PCGEN_LOAD_LST_HEAVY_BY_STRENGTH: [i64; 29] = [
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 115, 130, 150, 175, 200, 230, 260, 300, 350, 400, 460,
+    520, 600, 700, 800, 920, 1040, 1200, 1400,
+];
+
+/// Exhaustive cross-check of *every* Strength row against the real PCGen
+/// `load.lst` table, rather than the three-row spot check
+/// (`carrying_capacity_thresholds_match_the_real_pcgen_load_lst_table`,
+/// Str 6/16/25) that preceded it.
+///
+/// This matters: the spot check sampled only rows that happened to be
+/// correct, so a real off-by-one in the Str 15 medium threshold (134,
+/// where `load.lst` derives 133) sat undetected in
+/// `encumbrance.rs`'s hand-transcribed table. A row-complete assertion
+/// closes the whole class of transcription error, not just the one
+/// instance.
+///
+/// The light/medium values are *derived* from `load.lst`'s own heavy
+/// column and multipliers rather than separately transcribed, so this test
+/// depends on exactly one hand-copied column instead of three. PF1 load
+/// tiers truncate toward zero (integer pounds), matching PCGen's own
+/// `BigDecimal` load-score arithmetic.
+#[test]
+fn carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table() {
+    for (index, heavy) in PCGEN_LOAD_LST_HEAVY_BY_STRENGTH.iter().enumerate() {
+        let strength_score = (index + 1) as i16;
+        let expected = CarryingCapacityThresholds {
+            light_max_lbs: (heavy / 3) as f64,
+            medium_max_lbs: (heavy * 2 / 3) as f64,
+            heavy_max_lbs: *heavy as f64,
+        };
+        assert_eq!(
+            carrying_capacity_thresholds(strength_score),
+            expected,
+            "Strength {strength_score} must match load.lst's LOAD:{strength_score}|{heavy} row \
+             (light = 1/3, medium = 2/3 of the heavy tier)"
+        );
+    }
+}
+
+/// PF1's load tiers impose their own max-Dex cap and armor check penalty,
+/// independent of what any individual worn item imposes. Grounded in the
+/// real PCGen engine's own implementation, not reconstructed from memory:
+///
+///  - max Dex by load: `PlayerCharacter.java:5362-5368`
+///    (`case MEDIUM -> 3; case HEAVY -> 1; case OVERLOAD -> 0;` with Light
+///    imposing no cap of its own).
+///  - armor check penalty by load: `PlayerCharacter.java:5331`
+///    (`(load == Load.MEDIUM) ? -3 : (load == Load.HEAVY) ? -6 : 0`),
+///    matching `load.lst`'s own third `ENCUMBRANCE:` field
+///    (`Light|1/3||0`, `Medium|2/3||-3`, `Heavy|1||-6`).
+#[test]
+fn encumbrance_level_carries_the_real_pcgen_load_penalties() {
+    assert_eq!(EncumbranceLevel::Light.max_dex_cap(), None, "a light load imposes no max-Dex cap");
+    assert_eq!(EncumbranceLevel::Medium.max_dex_cap(), Some(3));
+    assert_eq!(EncumbranceLevel::Heavy.max_dex_cap(), Some(1));
+    assert_eq!(EncumbranceLevel::OverHeavyCapacity.max_dex_cap(), Some(0));
+
+    assert_eq!(EncumbranceLevel::Light.armor_check_penalty(), 0);
+    assert_eq!(EncumbranceLevel::Medium.armor_check_penalty(), -3);
+    assert_eq!(EncumbranceLevel::Heavy.armor_check_penalty(), -6);
+    assert_eq!(
+        EncumbranceLevel::OverHeavyCapacity.armor_check_penalty(),
+        -6,
+        "carrying beyond the heavy maximum is at least as penalising as a heavy load"
+    );
+}
+
+/// A real Strength-6 medium-load build must surface the load's own
+/// penalties on the computation itself, not merely name the tier -- the
+/// player-visible consequence of being encumbered.
+#[test]
+fn compute_encumbrance_reports_the_load_penalties_for_a_real_medium_load() {
+    let corpus = corpus_from(FIXTURE_TEXT);
+    // Strength 6: light 20, medium 40, heavy 60 (load.lst LOAD:6|60).
+    // Chain Shirt (25) + Longsword (4) = 29 lbs -> Medium.
+    let equipment_selections = vec![
+        selection("item:chain_shirt", ActiveState::EquippedActive),
+        selection("item:longsword", ActiveState::EquippedActive),
+    ];
+
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 6);
+
+    assert_eq!(computation.level, EncumbranceLevel::Medium);
+    assert_eq!(computation.load_max_dex_cap, Some(3));
+    assert_eq!(computation.load_armor_check_penalty, -3);
+}
+
+/// Carried *cost* rides along with carried weight: both come from the same
+/// `equipment_tables()` entry the weight lookup already resolves, so a
+/// loadout's total gp value needs no second resolution pass. Values are the
+/// real `COST:` tokens on the fixture's own corpus records (Chain Shirt 100,
+/// Longsword 15, Backpack 2 -- verbatim CRB).
+#[test]
+fn compute_encumbrance_totals_the_real_corpus_cost_of_the_carried_loadout() {
+    let corpus = corpus_from(FIXTURE_TEXT);
+    let equipment_selections = vec![
+        selection("item:chain_shirt", ActiveState::EquippedActive),
+        selection("item:longsword", ActiveState::EquippedActive),
+        selection("item:backpack", ActiveState::SelectedInactive),
+    ];
+
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 14);
+
+    assert_eq!(computation.total_carried_cost_gp, 100.0 + 15.0 + 2.0);
+    let chain_shirt = computation
+        .per_item
+        .iter()
+        .find(|item| item.item_id == "item:chain_shirt")
+        .expect("the equipped Chain Shirt must appear in the per-item breakdown");
+    assert_eq!(chain_shirt.weight_lbs, 25.0);
+    assert_eq!(chain_shirt.cost_gp, Some(100.0), "the real CRB COST:100 token");
+}
+
 #[test]
 fn compute_encumbrance_sums_a_different_real_item_set_than_the_inline_fixture() {
     let corpus = corpus_from(FIXTURE_TEXT);

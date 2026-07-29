@@ -112,12 +112,78 @@ export interface ResolvedEquipmentDto {
  * a real `0` there means exactly one weapon equipped with no enhancement,
  * and must render as "+0", not be treated the same as absent.
  */
+/**
+ * One equipped item's own contribution to the defensive totals — the data
+ * behind an "AC breakdown by source" view. Every optional field is a
+ * genuine corpus absence (a longsword has no armor bonus), omitted on the
+ * wire rather than zero-filled, so `undefined` means "this item does not
+ * have one" and a real `0` means "it has one, and it is zero".
+ */
+export interface ResolvedEquipmentEffectDto {
+  itemId: string;
+  equipmentRecordKey: string;
+  /** `'ArmsArmor' | 'General' | 'MagicItems' | 'Equipmods'`. */
+  category: string;
+  armorClassBonus?: number;
+  maxDex?: number;
+  spellFailure?: number;
+  armorCheckPenalty?: number;
+}
+
 export interface EquipmentEffectsDto {
+  /** Per-item contributions behind the aggregate totals below. */
+  perItem: ResolvedEquipmentEffectDto[];
   armorClassDelta: number;
   armorCheckPenaltyTotal: number;
   maxDexCap?: number;
   spellFailureChance?: number;
   attackBonusDelta?: number;
+}
+
+/** One carried item's real corpus weight and price. */
+export interface CarriedItemDto {
+  itemId: string;
+  weightLbs: number;
+  /**
+   * Absent when the corpus genuinely carries no price for the record (an
+   * unpriced `(Base)` template, or a modifier priced by formula over its
+   * base item) — never a fabricated `0`.
+   */
+  costGp?: number;
+}
+
+/**
+ * Real carried weight against PF1's Strength-derived carrying-capacity
+ * thresholds, plus the load tier's own penalties.
+ *
+ * Thresholds come from the real PCGen Pathfinder game mode's `load.lst`
+ * (`LOAD:<Strength>|<heavy>`, with light = 1/3 and medium = 2/3 of that);
+ * the load penalties come from PCGen's own engine (`PlayerCharacter.java`).
+ */
+export interface EncumbranceDto {
+  totalCarriedWeightLbs: number;
+  /** Floor on the loadout's gp value — unpriced items contribute nothing. */
+  totalCarriedCostGp: number;
+  lightMaxLbs: number;
+  mediumMaxLbs: number;
+  heavyMaxLbs: number;
+  /** `'Light' | 'Medium' | 'Heavy' | 'OverHeavyCapacity'`. */
+  level: string;
+  /**
+   * Max-Dex cap from the *load tier alone*, absent under a light load. An
+   * effective cap is the lower of this and `EquipmentEffectsDto.maxDexCap`
+   * — they do not sum.
+   */
+  loadMaxDexCap?: number;
+  /**
+   * Armor check penalty from the *load tier alone*; a real `0` under a
+   * light load. Does not sum with worn armor's own penalty — PF1 takes the
+   * more punishing of the two.
+   */
+  loadArmorCheckPenalty: number;
+  perItem: CarriedItemDto[];
+  /** Carried items whose weight could not be resolved against the corpus. */
+  unresolvedItemIds: string[];
 }
 
 /**
@@ -129,6 +195,7 @@ export interface CorpusDerivedDto {
   schoolCoverage: SchoolCoverageDto[];
   equippedItems: ResolvedEquipmentDto[];
   equipmentEffects: EquipmentEffectsDto;
+  encumbrance: EncumbranceDto;
   /**
    * Every `spellId`/`itemId` the character actually has selected and
    * persisted that did NOT resolve against this build's tiny bundled demo

@@ -12,20 +12,31 @@
 //! `rules_tables::crb::equipment_tables()` lookup by key).
 //!
 //! PF1's Table: Carrying Capacity (Strength score -> light/medium/heavy
-//! load maximum weight in pounds) is not present anywhere in this repo's
-//! ingested corpus or `rules_tables` -- it is core-rulebook prose/table
-//! content, not a `.lst` token stream. Per this codebase's own established
-//! "cited web second-source pass" convention for exactly this situation
-//! (`docs/architecture/status.md`'s equipment/spell `description` field
-//! note: "every value identity-matched from aonprd.com/d20pfsrd.com"), the
-//! table below is transcribed verbatim from Archives of Nethys's SRD
-//! mirror: <https://www.aonprd.com/Rules.aspx?ID=118> ("Carrying
-//! Capacity"), fetched 2026-07-23. Each row is the *maximum* weight for
-//! that load tier (the top of the Light/Medium/Heavy ranges the source
-//! table prints), for Strength scores 1-29; Strength scores above 29
-//! extrapolate via the source's own stated rule ("multiply the numbers in
-//! [the closest 20-29 row with the same ones digit] by 4 for every 10
-//! points the creature's Strength is above" that row).
+//! load maximum weight in pounds) is not present in this repo's *ingested*
+//! corpus (`data/pathfinder/.../core_rulebook/*.lst`) -- it is
+//! core-rulebook prose/table content, not an equipment token stream.
+//!
+//! It *is*, however, available in machine-readable form in the same PCGen
+//! checkout the ingested corpus comes from, as game-mode system data:
+//! `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`.
+//! That file is the authoritative source for this module:
+//!
+//!  - `LOAD:<Strength>|<value>` (lines 10-38) gives the *heavy* maximum for
+//!    Strength 0-29.
+//!  - `ENCUMBRANCE:Light|1/3`, `Medium|2/3`, `Heavy|1` give the light and
+//!    medium maxima as fractions of that same value (truncated to whole
+//!    pounds).
+//!  - `LOADMULT:4` gives the above-29 extrapolation: multiply the row with
+//!    the same ones digit by 4 for every 10 points of Strength above it.
+//!
+//! The table below was originally hand-transcribed from Archives of
+//! Nethys's SRD mirror (<https://www.aonprd.com/Rules.aspx?ID=118>) before
+//! `load.lst` was identified. That transcription carried one real error --
+//! Str 15's medium maximum read 134 (the *heavy* tier's printed lower
+//! bound) instead of 133 -- which a three-row spot check missed. Every row
+//! is now asserted against the `load.lst`-derived values by
+//! `tests/v06_encumbrance.rs`'s
+//! `carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table`.
 
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
@@ -60,7 +71,13 @@ const CARRYING_CAPACITY_TABLE: [(f64, f64, f64); 29] = [
     (43.0, 86.0, 130.0),
     (50.0, 100.0, 150.0),
     (58.0, 116.0, 175.0),
-    (66.0, 134.0, 200.0),
+    // Str 15. The medium maximum here read 134.0 until a row-complete
+    // cross-check against PCGen's `load.lst` caught it: `LOAD:15|200` with
+    // `ENCUMBRANCE:Medium|2/3` derives 133, and the table's own doubling
+    // structure agrees (Str 5 -> 33, Str 10 -> 66, Str 20 -> 266). 134 is
+    // the *heavy* tier's lower bound in the printed prose table, one row
+    // over from the medium maximum this array holds.
+    (66.0, 133.0, 200.0),
     (76.0, 153.0, 230.0),
     (86.0, 173.0, 260.0),
     (100.0, 200.0, 300.0),
@@ -112,6 +129,65 @@ pub enum EncumbranceLevel {
     OverHeavyCapacity,
 }
 
+impl EncumbranceLevel {
+    /// The maximum Dexterity bonus to AC this *load tier* allows, separate
+    /// from any cap a worn armor imposes. `None` for a light load, which
+    /// imposes no cap of its own.
+    ///
+    /// Grounded in the real PCGen engine's own implementation rather than
+    /// reconstructed from memory: `PlayerCharacter.java:5362-5368`
+    /// (`case MEDIUM -> 3; case HEAVY -> 1; case OVERLOAD -> 0;`, with the
+    /// `default` branch -- Light -- applying no load cap).
+    ///
+    /// A caller combining this with armor's own `MAXDEX` must take the
+    /// *lower* of the two, which is what PCGen's own loop does
+    /// (`PlayerCharacter.java:5374-5385`): the load cap and each equipped
+    /// item's cap both constrain, so the tightest wins.
+    pub fn max_dex_cap(self) -> Option<i16> {
+        match self {
+            EncumbranceLevel::Light => None,
+            EncumbranceLevel::Medium => Some(3),
+            EncumbranceLevel::Heavy => Some(1),
+            EncumbranceLevel::OverHeavyCapacity => Some(0),
+        }
+    }
+
+    /// The armor check penalty this *load tier* imposes, separate from any
+    /// penalty a worn armor imposes. `0` for a light load. Always
+    /// non-positive.
+    ///
+    /// Grounded in `PlayerCharacter.java:5331`
+    /// (`(load == Load.MEDIUM) ? -3 : (load == Load.HEAVY) ? -6 : 0`), which
+    /// matches the third field of `load.lst`'s own `ENCUMBRANCE:` rows
+    /// (`Light|1/3||0`, `Medium|2/3||-3`, `Heavy|1||-6`).
+    ///
+    /// `OverHeavyCapacity` is this crate's own deliberate choice, NOT a
+    /// transcription -- flagged explicitly so nobody reads it as sourced.
+    /// PCGen's ternary has no `OVERLOAD` branch and would fall through to
+    /// `0`, which is plainly not "less penalising than a heavy load"; it
+    /// reads as moot rather than intended, because PF1's actual rule for
+    /// exceeding the heavy maximum is that the character *cannot move at
+    /// all*. PCGen does model `OVERLOAD` as a real distinct state
+    /// elsewhere (`case OVERLOAD -> 0` for the max-Dex cap). Reusing the
+    /// heavy penalty is the conservative reading: an overloaded character
+    /// is at least as hampered as a heavily loaded one. The full PF1
+    /// consequence (no movement) is not modelled here -- this crate does
+    /// not model movement; see `EncumbranceLevel`'s own doc comment.
+    ///
+    /// Note a real PF1 subtlety this does *not* fold in: the load penalty
+    /// and equipped armor's penalty do not sum. PCGen takes the more
+    /// punishing of the two (`bonus = Math.min(bonus, penaltyForLoad)`,
+    /// `PlayerCharacter.java:5344`). Combining is the caller's job, so this
+    /// method reports only the load's own contribution.
+    pub fn armor_check_penalty(self) -> i16 {
+        match self {
+            EncumbranceLevel::Light => 0,
+            EncumbranceLevel::Medium => -3,
+            EncumbranceLevel::Heavy | EncumbranceLevel::OverHeavyCapacity => -6,
+        }
+    }
+}
+
 fn classify_encumbrance(total_weight_lbs: f64, thresholds: &CarryingCapacityThresholds) -> EncumbranceLevel {
     if total_weight_lbs <= thresholds.light_max_lbs {
         EncumbranceLevel::Light
@@ -124,11 +200,21 @@ fn classify_encumbrance(total_weight_lbs: f64, thresholds: &CarryingCapacityThre
     }
 }
 
-/// One resolved carried item's contribution to total weight.
+/// One resolved carried item's contribution to the loadout's total weight
+/// and total gp value. Both are read from the same `equipment_tables()`
+/// entry, so cost costs no second corpus resolution.
 #[derive(Debug, Clone, PartialEq)]
-pub struct CarriedItemWeight {
+pub struct CarriedItem {
     pub item_id: String,
     pub weight_lbs: f64,
+    /// The record's real corpus `COST:` token in gold pieces. `None` is a
+    /// genuine corpus absence, never a fabricated zero -- a `(Base)`
+    /// template record with no independent price, or an equipment modifier
+    /// whose cost is a formula over the base item rather than a fixed
+    /// number (see `EquipmentTableEntry::cost_gp`). An item priced `None`
+    /// still contributes its weight; it simply cannot contribute to
+    /// `EncumbranceComputation::total_carried_cost_gp`.
+    pub cost_gp: Option<f64>,
 }
 
 /// Real, corpus-grounded carrying-capacity/encumbrance computation for a
@@ -149,13 +235,46 @@ pub struct CarriedItemWeight {
 /// weight could not be fully verified."
 #[derive(Debug, Clone, PartialEq)]
 pub struct EncumbranceComputation {
-    pub per_item: Vec<CarriedItemWeight>,
+    pub per_item: Vec<CarriedItem>,
     pub total_carried_weight_lbs: f64,
+    /// Total gp value of every carried item that carries a real corpus
+    /// `COST:` token. Items priced `None` (see `CarriedItem::cost_gp`)
+    /// contribute nothing rather than a fabricated zero, so this is a
+    /// floor on the loadout's value, not necessarily its full value --
+    /// `per_item` retains the per-item detail needed to tell the two
+    /// apart.
+    pub total_carried_cost_gp: f64,
     pub thresholds: CarryingCapacityThresholds,
     pub level: EncumbranceLevel,
     pub unresolved_item_ids: Vec<String>,
+    /// The max-Dex cap imposed by `level` alone (`EncumbranceLevel::
+    /// max_dex_cap`). `None` under a light load. Does NOT account for any
+    /// worn armor's own cap -- a consumer showing an effective cap must
+    /// take the lower of this and `EquipmentEffects.max_dex_cap`.
+    pub load_max_dex_cap: Option<i16>,
+    /// The armor check penalty imposed by `level` alone
+    /// (`EncumbranceLevel::armor_check_penalty`); `0` under a light load.
+    /// Does NOT account for worn armor's own penalty, and the two do not
+    /// sum -- see `EncumbranceLevel::armor_check_penalty`.
+    pub load_armor_check_penalty: i16,
 }
 
+/// **Known limitation -- capacity is computed at Medium size.** PF1 scales
+/// carrying capacity by creature size, and `load.lst` carries the real
+/// multipliers (`SIZEMULT:S|0.75`, `L|2`, `H|4`, ... `SIZEMULT:F|0.125`).
+/// They are not applied here, because creature size is not modelled
+/// anywhere in this crate: there is no size field on `CharacterInput`, no
+/// size enum in `rules_core`, and this repo's ingested `cr_races.lst`
+/// contains only `.MOD` records carrying `SOURCEPAGE:` -- no `SIZE:` token
+/// to resolve one from.
+///
+/// The practical consequence, stated plainly rather than buried: for a
+/// Small character (Gnome and Halfling, both curated playable races) the
+/// thresholds returned here are 4/3 of the true values, since PF1 gives
+/// Small creatures 3/4 of a Medium creature's capacity. Every Medium race
+/// is correct. Closing this needs a size model first -- inventing a
+/// race-to-size mapping inside the encumbrance module would put a second,
+/// unowned source of truth for creature size into the codebase.
 pub fn compute_encumbrance(
     equipment_selections: &[EquipmentSelection],
     corpus: &SourcePackageContent,
@@ -164,6 +283,7 @@ pub fn compute_encumbrance(
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
     let mut total_carried_weight_lbs = 0.0_f64;
+    let mut total_carried_cost_gp = 0.0_f64;
 
     for selection in equipment_selections {
         if selection.active_state == ActiveState::Absent {
@@ -177,18 +297,22 @@ pub fn compute_encumbrance(
             continue;
         };
         let key = equipment_key_token(record).unwrap_or(&record.name).to_string();
-        let weight_lbs = equipment_tables()
-            .iter()
-            .find(|entry| entry.key == key)
-            .and_then(|entry| entry.weight_lbs);
+        let table_entry = equipment_tables().iter().find(|entry| entry.key == key);
 
-        let Some(weight_lbs) = weight_lbs else {
+        // Weight is what makes an item *carried* for encumbrance purposes,
+        // so a record with no `WT:` token is unresolved. Cost is
+        // supplementary: a real corpus absence there (a formula-priced
+        // modifier, an unpriced `(Base)` template) must not evict an item
+        // whose weight is perfectly well known.
+        let Some(weight_lbs) = table_entry.and_then(|entry| entry.weight_lbs) else {
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
+        let cost_gp = table_entry.and_then(|entry| entry.cost_gp);
 
         total_carried_weight_lbs += weight_lbs;
-        per_item.push(CarriedItemWeight { item_id: selection.item_id.clone(), weight_lbs });
+        total_carried_cost_gp += cost_gp.unwrap_or(0.0);
+        per_item.push(CarriedItem { item_id: selection.item_id.clone(), weight_lbs, cost_gp });
     }
 
     let thresholds = carrying_capacity_thresholds(strength_score);
@@ -197,9 +321,12 @@ pub fn compute_encumbrance(
     EncumbranceComputation {
         per_item,
         total_carried_weight_lbs,
+        total_carried_cost_gp,
         thresholds,
         level,
         unresolved_item_ids,
+        load_max_dex_cap: level.max_dex_cap(),
+        load_armor_check_penalty: level.armor_check_penalty(),
     }
 }
 

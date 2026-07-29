@@ -165,6 +165,9 @@ pub struct ResolvedEquipmentDto {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EquipmentEffectsDto {
+    /// Per-equipped-item contributions behind the aggregate totals below --
+    /// the "AC breakdown by source" data. Empty when nothing is equipped.
+    pub per_item: Vec<ResolvedEquipmentEffectDto>,
     pub armor_class_delta: i16,
     pub armor_check_penalty_total: i16,
     /// v0.6 alpha swarm (QA finding, 2026-07-24): without `skip_serializing_if`,
@@ -181,12 +184,95 @@ pub struct EquipmentEffectsDto {
     pub attack_bonus_delta: Option<i16>,
 }
 
+/// One carried item's real corpus weight and price, for the Gear tab's
+/// per-item breakdown (`encumbrance::CarriedItem`). `costGp` is omitted on
+/// the wire when the corpus genuinely carries no price for the record --
+/// never serialized as a fabricated `0`. Same `skip_serializing_if`
+/// discipline as `EquipmentEffectsDto::max_dex_cap`, for the same reason:
+/// a literal `null` defeats the frontend's `!== undefined` checks.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CarriedItemDto {
+    pub item_id: String,
+    pub weight_lbs: f64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cost_gp: Option<f64>,
+}
+
+/// The character's real carried weight against PF1's Strength-derived
+/// carrying-capacity thresholds, plus the load tier's own penalties
+/// (`encumbrance::EncumbranceComputation`).
+///
+/// Before this DTO, `compute_encumbrance` ran for real on every desktop
+/// compute and every number it produced was discarded at the IPC boundary
+/// -- the engine knew exactly what the character was carrying and the
+/// player could not see any of it.
+///
+/// `level` is the `EncumbranceLevel` variant name (`"Light"`, `"Medium"`,
+/// `"Heavy"`, `"OverHeavyCapacity"`), matching the `format!("{:?}", ...)`
+/// convention `SchoolCoverageDto.school` already uses on this boundary.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EncumbranceDto {
+    pub total_carried_weight_lbs: f64,
+    /// Total gp value of carried items that carry a real corpus price; a
+    /// floor, not necessarily the full value (see `CarriedItemDto.costGp`).
+    pub total_carried_cost_gp: f64,
+    pub light_max_lbs: f64,
+    pub medium_max_lbs: f64,
+    pub heavy_max_lbs: f64,
+    pub level: String,
+    /// The max-Dex cap imposed by the *load tier alone*, absent under a
+    /// light load. A consumer showing an effective cap must take the lower
+    /// of this and `EquipmentEffectsDto.max_dex_cap` -- they do not sum.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub load_max_dex_cap: Option<i16>,
+    /// The armor check penalty imposed by the *load tier alone*; a real `0`
+    /// under a light load. Does not sum with worn armor's own penalty --
+    /// PF1 takes the more punishing of the two.
+    pub load_armor_check_penalty: i16,
+    pub per_item: Vec<CarriedItemDto>,
+    /// Carried selections whose weight could not be resolved against the
+    /// corpus -- so a `0.0` total reads as "genuinely weightless" rather
+    /// than "we could not tell".
+    pub unresolved_item_ids: Vec<String>,
+}
+
+/// One equipped item's own contribution to the defensive totals
+/// (`equipment_effects::ResolvedEquipmentEffect`) -- the data behind an
+/// "AC breakdown by source" view.
+///
+/// This was computed for real by `compute_equipment_effects` long before
+/// it was exposed: `EquipmentEffects.per_item` has always been populated,
+/// but `EquipmentEffectsDto` carried only the aggregates, so the
+/// per-source detail stopped at the IPC boundary. Every `Option` here is a
+/// genuine corpus absence (a longsword has no armor bonus), omitted on the
+/// wire rather than zero-filled.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResolvedEquipmentEffectDto {
+    pub item_id: String,
+    pub equipment_record_key: String,
+    /// The `EquipmentCategory` variant name (`"ArmsArmor"`, `"General"`,
+    /// `"MagicItems"`, `"Equipmods"`).
+    pub category: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_class_bonus: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_dex: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spell_failure: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_check_penalty: Option<i16>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CorpusDerivedDto {
     pub school_coverage: Vec<SchoolCoverageDto>,
     pub equipped_items: Vec<ResolvedEquipmentDto>,
     pub equipment_effects: EquipmentEffectsDto,
+    pub encumbrance: EncumbranceDto,
     /// v0.6 alpha swarm (QA finding, 2026-07-24): every `spellId`/`itemId`
     /// the caller selected that did NOT resolve against this build's
     /// corpus -- e.g. a real, disk-persisted selection outside the
@@ -470,14 +556,57 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             .map(map_resolved_equipment_dto)
             .collect(),
         equipment_effects: EquipmentEffectsDto {
+            per_item: section
+                .equipment_effects
+                .per_item
+                .iter()
+                .map(|effect| ResolvedEquipmentEffectDto {
+                    item_id: effect.item_id.clone(),
+                    equipment_record_key: effect.equipment_record_key.clone(),
+                    category: format!("{:?}", effect.category),
+                    armor_class_bonus: effect.armor_class_bonus,
+                    max_dex: effect.max_dex,
+                    spell_failure: effect.spell_failure,
+                    armor_check_penalty: effect.armor_check_penalty,
+                })
+                .collect(),
             armor_class_delta: section.equipment_effects.armor_class_delta,
             armor_check_penalty_total: section.equipment_effects.armor_check_penalty_total,
             max_dex_cap: section.equipment_effects.max_dex_cap,
             spell_failure_chance: section.equipment_effects.spell_failure_chance,
             attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
         },
+        encumbrance: map_encumbrance_dto(&section.encumbrance),
         unresolved_spell_ids: section.unresolved_spell_ids.clone(),
         unresolved_equipment_item_ids: section.unresolved_equipment_item_ids.clone(),
+    }
+}
+
+/// Flattens `EncumbranceComputation`'s nested `thresholds` into the flat
+/// wire shape the frontend consumes, and stringifies the load tier the same
+/// way `SchoolCoverageDto.school` already stringifies its enum.
+pub(crate) fn map_encumbrance_dto(
+    encumbrance: &codex::rules_core::encumbrance::EncumbranceComputation,
+) -> EncumbranceDto {
+    EncumbranceDto {
+        total_carried_weight_lbs: encumbrance.total_carried_weight_lbs,
+        total_carried_cost_gp: encumbrance.total_carried_cost_gp,
+        light_max_lbs: encumbrance.thresholds.light_max_lbs,
+        medium_max_lbs: encumbrance.thresholds.medium_max_lbs,
+        heavy_max_lbs: encumbrance.thresholds.heavy_max_lbs,
+        level: format!("{:?}", encumbrance.level),
+        load_max_dex_cap: encumbrance.load_max_dex_cap,
+        load_armor_check_penalty: encumbrance.load_armor_check_penalty,
+        per_item: encumbrance
+            .per_item
+            .iter()
+            .map(|item| CarriedItemDto {
+                item_id: item.item_id.clone(),
+                weight_lbs: item.weight_lbs,
+                cost_gp: item.cost_gp,
+            })
+            .collect(),
+        unresolved_item_ids: encumbrance.unresolved_item_ids.clone(),
     }
 }
 
@@ -2477,6 +2606,32 @@ mod tests {
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
 
+    /// An empty-loadout `EncumbranceDto` for the *serialization-shape*
+    /// tests below, which assert camelCase key naming and tag placement and
+    /// care nothing about encumbrance values.
+    ///
+    /// The thresholds are the real Strength-10 row (`load.lst`
+    /// `LOAD:10|100`, so light 33 / medium 66 / heavy 100) rather than
+    /// zeroes, so this fixture never asserts a rules value that could not
+    /// actually occur. Carrying nothing is genuinely a light load with no
+    /// penalties. Production `CorpusDerivedDto`s are always built by
+    /// `map_corpus_derived_dto` from a real computation -- this helper is
+    /// reachable only from `#[cfg(test)]`.
+    fn empty_encumbrance_dto() -> EncumbranceDto {
+        EncumbranceDto {
+            total_carried_weight_lbs: 0.0,
+            total_carried_cost_gp: 0.0,
+            light_max_lbs: 33.0,
+            medium_max_lbs: 66.0,
+            heavy_max_lbs: 100.0,
+            level: "Light".to_owned(),
+            load_max_dex_cap: None,
+            load_armor_check_penalty: 0,
+            per_item: Vec::new(),
+            unresolved_item_ids: Vec::new(),
+        }
+    }
+
     const CURATED_RACE_IDS: [&str; 7] = [
         "race:human",
         "race:dwarf",
@@ -3696,12 +3851,14 @@ mod tests {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
                     armor_class_delta: 0,
                     armor_check_penalty_total: 0,
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
                 },
+                encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
             },
@@ -4386,12 +4543,14 @@ mod tests {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
                     armor_class_delta: 0,
                     armor_check_penalty_total: 0,
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
                 },
+                encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
             },
@@ -4430,6 +4589,7 @@ mod tests {
     #[test]
     fn equipment_effects_dto_omits_its_optional_fields_when_none_and_includes_them_when_some() {
         let with_none = EquipmentEffectsDto {
+            per_item: Vec::new(),
             armor_class_delta: 4,
             armor_check_penalty_total: -2,
             max_dex_cap: None,
@@ -4446,6 +4606,7 @@ mod tests {
         assert!(json.contains("\"armorCheckPenaltyTotal\":-2"));
 
         let with_some = EquipmentEffectsDto {
+            per_item: Vec::new(),
             armor_class_delta: 4,
             armor_check_penalty_total: -2,
             max_dex_cap: Some(4),
@@ -4456,6 +4617,89 @@ mod tests {
         assert!(json.contains("\"maxDexCap\":4"));
         assert!(json.contains("\"spellFailureChance\":20.0"));
         assert!(json.contains("\"attackBonusDelta\":1"));
+    }
+
+    /// The encumbrance DTO must cross the IPC boundary with the real
+    /// engine numbers intact and in the camelCase shape the TypeScript
+    /// `EncumbranceDto` declares -- the boundary where this domain's
+    /// computation was previously discarded entirely.
+    ///
+    /// `loadMaxDexCap` specifically follows the `maxDexCap` precedent: a
+    /// light load imposes no cap, and that must omit the key rather than
+    /// serialize a literal `null`, which would defeat the frontend's
+    /// `!== undefined` check and render "+null".
+    #[test]
+    fn encumbrance_dto_serializes_real_engine_values_in_the_camel_case_wire_shape() {
+        use codex::rules_core::encumbrance::{
+            carrying_capacity_thresholds, CarriedItem, EncumbranceComputation, EncumbranceLevel,
+        };
+
+        // A real Strength-6 medium load: Chain Shirt (25 lb / 100 gp) plus
+        // Longsword (4 lb / 15 gp), both real CRB corpus values, against
+        // load.lst's LOAD:6|60 row (light 20 / medium 40 / heavy 60).
+        let computation = EncumbranceComputation {
+            per_item: vec![
+                CarriedItem {
+                    item_id: "item:chain_shirt".to_owned(),
+                    weight_lbs: 25.0,
+                    cost_gp: Some(100.0),
+                },
+                CarriedItem {
+                    item_id: "item:longsword".to_owned(),
+                    weight_lbs: 4.0,
+                    cost_gp: Some(15.0),
+                },
+            ],
+            total_carried_weight_lbs: 29.0,
+            total_carried_cost_gp: 115.0,
+            thresholds: carrying_capacity_thresholds(6),
+            level: EncumbranceLevel::Medium,
+            unresolved_item_ids: Vec::new(),
+            load_max_dex_cap: EncumbranceLevel::Medium.max_dex_cap(),
+            load_armor_check_penalty: EncumbranceLevel::Medium.armor_check_penalty(),
+        };
+
+        let json = serde_json::to_string(&map_encumbrance_dto(&computation))
+            .expect("serialization should succeed");
+
+        assert!(json.contains("\"totalCarriedWeightLbs\":29.0"), "{json}");
+        assert!(json.contains("\"totalCarriedCostGp\":115.0"), "{json}");
+        assert!(json.contains("\"lightMaxLbs\":20.0"), "{json}");
+        assert!(json.contains("\"mediumMaxLbs\":40.0"), "{json}");
+        assert!(json.contains("\"heavyMaxLbs\":60.0"), "{json}");
+        assert!(json.contains("\"level\":\"Medium\""), "{json}");
+        assert!(json.contains("\"loadMaxDexCap\":3"), "{json}");
+        assert!(json.contains("\"loadArmorCheckPenalty\":-3"), "{json}");
+        assert!(json.contains("\"weightLbs\":25.0") && json.contains("\"costGp\":100.0"), "{json}");
+    }
+
+    #[test]
+    fn encumbrance_dto_omits_the_load_max_dex_cap_under_a_light_load_rather_than_nulling_it() {
+        use codex::rules_core::encumbrance::{
+            carrying_capacity_thresholds, EncumbranceComputation, EncumbranceLevel,
+        };
+
+        let computation = EncumbranceComputation {
+            per_item: Vec::new(),
+            total_carried_weight_lbs: 0.0,
+            total_carried_cost_gp: 0.0,
+            thresholds: carrying_capacity_thresholds(10),
+            level: EncumbranceLevel::Light,
+            unresolved_item_ids: Vec::new(),
+            load_max_dex_cap: EncumbranceLevel::Light.max_dex_cap(),
+            load_armor_check_penalty: EncumbranceLevel::Light.armor_check_penalty(),
+        };
+
+        let json = serde_json::to_string(&map_encumbrance_dto(&computation))
+            .expect("serialization should succeed");
+
+        assert!(
+            !json.contains("loadMaxDexCap"),
+            "a light load imposes no cap; the key must be omitted, not null: {json}"
+        );
+        // The check penalty is a real, always-present `0` under a light
+        // load -- an absent key here would be wrong, unlike the cap above.
+        assert!(json.contains("\"loadArmorCheckPenalty\":0"), "{json}");
     }
 
     #[test]
@@ -4496,12 +4740,14 @@ mod tests {
                 school_coverage: Vec::new(),
                 equipped_items: Vec::new(),
                 equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
                     armor_class_delta: 0,
                     armor_check_penalty_total: 0,
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
                 },
+                encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
                 unresolved_equipment_item_ids: Vec::new(),
             },
