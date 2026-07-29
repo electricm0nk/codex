@@ -58,7 +58,22 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
     // `school`/`level` are omitted rather than defaulted when the corpus
     // row genuinely lacks them (a real `apg_spells.lst` gap), so the
     // detail line never asserts a school or level the corpus never gave.
-    detail: [entry.book, entry.school, entry.level === null ? null : `Level ${entry.level}`]
+    //
+    // The level is labelled "Lowest class level", not "Level", because
+    // that is what the catalog record's own field is: the MINIMUM across
+    // every class named in its corpus `CLASSES:` tag. Hideous Laughter is
+    // `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it reads 1 here even for a
+    // Wizard who learns it at 2. This picker browses all 1093 records
+    // across every class, so it has no one class to answer for — unlike
+    // the Spells tab, which resolves each row against its own
+    // `sourceClassId` via `list_class_spell_levels` (see
+    // `spellsTabModel.ts`). Same wording as `SpellCatalogScreen.tsx`,
+    // the other cross-class browse.
+    detail: [
+      entry.book,
+      entry.school,
+      entry.level === null ? null : `Lowest class level ${entry.level}`,
+    ]
       .filter((part): part is string => part !== null)
       .join(' · '),
   }));

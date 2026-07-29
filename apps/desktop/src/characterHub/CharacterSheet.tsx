@@ -30,8 +30,10 @@ import {
   describeSpellAcquisition,
   describeSpellSchoolAndLevel,
   resolveSelectedSpellEntries,
+  spellSourceClassIds,
 } from './spellsTabModel';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
+import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
@@ -705,6 +707,16 @@ function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
  * Per the operator's standing ruling, a spell's real description is a
  * legitimate deliverable in its own right. This tab still computes no slots,
  * DCs or prepared/known posture, and says so rather than implying otherwise.
+ *
+ * **The level shown is now the level for the row's own source class.** The
+ * catalog record's `level` is the minimum across every class on the record,
+ * so this tab used to show a Wizard "Level 1" for Hideous Laughter
+ * (`CLASSES:Bard=1|Sorcerer,Wizard=2`) — 67 of the 580 Wizard-list spells
+ * read wrong that way, always low. Two loads feed the rows: `listSpells`
+ * for the record, and `loadClassSpellLevels` for the per-class level of
+ * each class this character actually learned spells from. Because every
+ * selection persists its own `sourceClassId`, a multiclass sheet needs no
+ * arbitration — each row answers for its own class. See `spellsTabModel.ts`.
  */
 function SpellsTab(props: {
   spellsSelected: SpellSelectionDto[];
@@ -733,7 +745,40 @@ function SpellsTab(props: {
     };
   }, []);
 
-  const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? []);
+  // Only the classes this character actually learned spells from, so a
+  // multiclass sheet pulls each of its lists and nothing else. Joined into
+  // a string so the effect re-runs when the set changes, not on every
+  // render of an equal array.
+  const sourceClassIds = spellSourceClassIds(props.spellsSelected);
+  const sourceClassKey = sourceClassIds.join('|');
+  const [classSpellLevels, setClassSpellLevels] = useState<ClassSpellLevelsDto[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    if (sourceClassIds.length === 0) {
+      setClassSpellLevels([]);
+      return;
+    }
+    loadClassSpellLevels(sourceClassIds)
+      .then((response) => {
+        if (!cancelled) {
+          setClassSpellLevels(response.classes);
+        }
+      })
+      .catch(() => {
+        // An empty list leaves every row `class-list-unknown`, which reads
+        // as a labelled "lowest class level" rather than claiming a
+        // per-class level this load never delivered.
+        if (!cancelled) {
+          setClassSpellLevels([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceClassKey]);
+
+  const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
 
   return (
@@ -742,17 +787,19 @@ function SpellsTab(props: {
         Spells this character knows, from the real spell catalog. Slots, DCs and prepared/known
         posture are not computed.
       </p>
-      {/* The catalog's `level` is the corpus record's LOWEST class level, not
-          this character's class's level — `crb::spell_list`'s own `level`
-          field is the minimum across every class on the record. e.g. Hideous
-          Laughter is `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it shows as
-          Level 1 even for a Wizard, who learns it at 2. Saying so is the
-          honest option until a per-class level reaches this surface; the
-          per-class tables exist in the engine (`sorcerer_spell_list.rs` and
-          11 siblings) but no command exposes them yet. */}
+      {/* Each row's level now comes from the per-class spell list for that
+          row's own `sourceClassId`, via `list_class_spell_levels` — so a
+          Wizard reads Hideous Laughter (`CLASSES:Bard=1|Sorcerer,Wizard=2`)
+          as "Wizard level 2", not the record's minimum-across-classes 1
+          this tab used to show every class. Where no per-class list exists
+          for a source class (Magus, Summoner, Oracle — real casters whose
+          lists are not ingested), the row falls back to the record's own
+          number under an explicit "Lowest class level" label rather than
+          attributing it to a class. See `spellsTabModel.ts`. */}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.68rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Level shown is the spell&rsquo;s lowest class level in the corpus, which for some classes
-        (notably Wizard and Sorcerer) is lower than the level they learn it at.
+        Each level is the level for that spell&rsquo;s own source class. Rows reading
+        &ldquo;Lowest class level&rdquo; are classes with no spell list ingested yet &mdash; that
+        number is the spell&rsquo;s lowest level across all classes, not this one&rsquo;s.
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddSpell} style={addItemButtonStyle}>

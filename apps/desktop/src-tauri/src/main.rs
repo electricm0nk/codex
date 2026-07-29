@@ -6,6 +6,7 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_ingest_diagnostic;
 mod equipment_catalog;
@@ -38,6 +39,7 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
@@ -178,6 +180,7 @@ fn main() {
             list_feats,
             list_weapon_targets,
             list_class_catalog,
+            list_class_spell_levels,
             list_race_catalog,
             corpus_ingest_diagnostic
         ])

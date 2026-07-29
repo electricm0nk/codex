@@ -66,6 +66,16 @@ function verifiesSpellMappingUsesKeyAsNameAndCombinesBookSchoolAndLevel() {
   assert(mapped.detail.includes('CRB'), 'detail names the book the spell comes from');
   assert(mapped.detail.includes('Evocation'), 'detail includes the school');
   assert(mapped.detail.includes('3'), 'detail includes the spell level');
+  // The catalog record's level is the minimum across every class on the
+  // record, and this picker browses every class at once, so the number is
+  // labelled for what it is rather than presented as the reader's own
+  // class's level. The Spells tab, which does know a row's class, shows
+  // that class's real level instead (see `spellsTabModel.ts`).
+  assertEqual(
+    mapped.detail,
+    'CRB · Evocation · Lowest class level 3',
+    'a cross-class browse labels the level as the record minimum, never a bare "Level N"'
+  );
 }
 
 function verifiesSpellMappingOmitsSchoolAndLevelTheCorpusDoesNotHave() {

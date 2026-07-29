@@ -15,3 +15,4 @@ pub mod race_tables;
 pub mod ranger_spell_list;
 pub mod sorcerer_spell_list;
 pub mod spell_list;
+pub mod wizard_spell_list;

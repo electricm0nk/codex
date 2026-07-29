@@ -2,8 +2,10 @@ import {
   describeSpellAcquisition,
   describeSpellSchoolAndLevel,
   resolveSelectedSpellEntries,
+  spellSourceClassIds,
 } from './spellsTabModel';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
+import type { ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import type { SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -56,8 +58,51 @@ const CATALOG: SpellCatalogEntryDto[] = [
   },
 ];
 
-function selection(spellId: string, acquisitionMode: SpellSelectionDto['acquisitionMode'] = 'Known'): SpellSelectionDto {
-  return { spellId, sourceClassId: 'class:wizard', acquisitionMode };
+/**
+ * The canonical example of the per-class level defect. Its real corpus tag
+ * is `CLASSES:Bard=1|Sorcerer,Wizard=2`, so the catalog record's own
+ * `level` is 1 — the Bard level — and a Wizard's sheet showed "Level 1"
+ * for a spell a Wizard learns at 2.
+ */
+const HIDEOUS_LAUGHTER: SpellCatalogEntryDto = {
+  key: 'Hideous Laughter',
+  book: 'CRB',
+  school: 'Enchantment',
+  level: 1,
+  description: 'The subject perceives everything as hilariously funny.',
+};
+
+const CATALOG_WITH_HIDEOUS_LAUGHTER: SpellCatalogEntryDto[] = [...CATALOG, HIDEOUS_LAUGHTER];
+
+/** Shaped exactly like the `list_class_spell_levels` response's rows. */
+const CLASS_LEVELS: ClassSpellLevelsDto[] = [
+  {
+    classId: 'class:wizard',
+    known: true,
+    entries: [
+      { key: 'Hideous Laughter', level: 2 },
+      { key: 'Magic Missile', level: 1 },
+      { key: "Mage's Disjunction", level: 9 },
+      { key: 'Shield', level: 1 },
+    ],
+  },
+  {
+    classId: 'class:bard',
+    known: true,
+    entries: [{ key: 'Hideous Laughter', level: 1 }],
+  },
+  // A real class the engine has ingested no spell list for. It names
+  // itself in genuine corpus `CLASSES:` tags, so its levels are knowable —
+  // they just are not known here, and must not be guessed.
+  { classId: 'class:magus', known: false, entries: [] },
+];
+
+function selection(
+  spellId: string,
+  acquisitionMode: SpellSelectionDto['acquisitionMode'] = 'Known',
+  sourceClassId = 'class:wizard'
+): SpellSelectionDto {
+  return { spellId, sourceClassId, acquisitionMode };
 }
 
 function verifiesASelectedSpellResolvesToItsRealNameSchoolLevelAndEffectText() {
@@ -131,10 +176,15 @@ function verifiesAnEmptyCatalogStillRendersEverySelectionAsRawIds() {
 }
 
 function verifiesTheSchoolAndLevelLineNamesTheBook() {
+  // With the per-class response present, the level is stated as that
+  // class's level. The bare "Level 1" this once read was the record's
+  // minimum across classes wearing a label it had not earned.
   assertEqual(
-    describeSpellSchoolAndLevel(resolveSelectedSpellEntries([selection('Magic Missile')], CATALOG)[0]),
-    'CRB · Evocation · Level 1',
-    'a fully populated row names its book, school and level'
+    describeSpellSchoolAndLevel(
+      resolveSelectedSpellEntries([selection('Magic Missile')], CATALOG, CLASS_LEVELS)[0]
+    ),
+    'CRB · Evocation · Wizard level 1',
+    'a fully populated row names its book, school and the level for its own class'
   );
 }
 
@@ -157,7 +207,173 @@ function verifiesAnUnresolvedRowMakesNoSchoolLevelOrBookClaim() {
   assertEqual(describeSpellSchoolAndLevel(row), null, 'an unresolvable selection renders no detail line');
 }
 
+/**
+ * The bug, at the surface a player reads. Before this, both rows below
+ * rendered "Level 1" — the catalog record's minimum-across-classes level.
+ */
+function verifiesAWizardSeesHideousLaughterAtLevelTwoAndABardAtLevelOne() {
+  const [wizardRow, bardRow] = resolveSelectedSpellEntries(
+    [
+      selection('Hideous Laughter', 'Known', 'class:wizard'),
+      selection('Hideous Laughter', 'Known', 'class:bard'),
+    ],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+
+  assertEqual(wizardRow.level, 1, "the catalog record's own level is still reported verbatim");
+  assertEqual(wizardRow.classLevel, 2, 'a Wizard learns Hideous Laughter at 2, not the record-wide 1');
+  assertEqual(wizardRow.classLevelStatus, 'class-level', 'the Wizard level is genuinely known');
+  assertEqual(
+    describeSpellSchoolAndLevel(wizardRow),
+    'CRB · Enchantment · Wizard level 2',
+    'the level line names the class it applies to and shows that class’s real level'
+  );
+
+  assertEqual(bardRow.classLevel, 1, 'a Bard learns Hideous Laughter at 1');
+  assertEqual(
+    describeSpellSchoolAndLevel(bardRow),
+    'CRB · Enchantment · Bard level 1',
+    'the same spell reads differently for a different source class — no arbitration needed'
+  );
+}
+
+/**
+ * The multiclass rule: each row is resolved against its OWN persisted
+ * `sourceClassId`, so a character holding two classes never needs a
+ * "primary class" tiebreak. Both rows above are on one character here.
+ */
+function verifiesEachRowUsesItsOwnSourceClassOnAMulticlassCharacter() {
+  const rows = resolveSelectedSpellEntries(
+    [
+      selection('Magic Missile', 'Known', 'class:wizard'),
+      selection('Hideous Laughter', 'Known', 'class:bard'),
+      selection('Hideous Laughter', 'Prepared', 'class:wizard'),
+    ],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(rows[0].classLevel, 1, 'Magic Missile is a 1st-level Wizard spell');
+  assertEqual(rows[1].classLevel, 1, 'the Bard row takes the Bard level');
+  assertEqual(rows[2].classLevel, 2, 'the Wizard row takes the Wizard level, on the same character');
+}
+
+/**
+ * A class the engine has no ingested list for must not be handed the
+ * catalog level as if it were that class's level. The record's own number
+ * is still real data, so it is shown — explicitly labelled as what it is.
+ */
+function verifiesAnUningestedSourceClassLabelsTheRecordLevelRatherThanClaimingIt() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection('Hideous Laughter', 'Known', 'class:magus')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(row.classLevel, null, 'no per-class level is invented for an uningested class');
+  assertEqual(row.classLevelStatus, 'class-list-unknown', 'the gap is named as a gap');
+  assertEqual(
+    describeSpellSchoolAndLevel(row),
+    'CRB · Enchantment · Lowest class level 1',
+    'the record level is shown only under a label saying what it actually measures'
+  );
+}
+
+/** A class id absent from the response entirely behaves like an unknown class. */
+function verifiesASourceClassMissingFromTheResponseIsTreatedAsUnknown() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection('Hideous Laughter', 'Known', 'class:fighter')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(row.classLevelStatus, 'class-list-unknown', 'an unrequested class claims no level');
+  assertEqual(row.classLevel, null, 'an unrequested class fabricates no level');
+}
+
+/**
+ * A known class whose list simply does not contain the spell is a
+ * different fact from "we have no list for this class", and reads
+ * differently: no Bard casts Mage's Disjunction at any level.
+ */
+function verifiesASpellOffTheClassListSaysSoRatherThanShowingALevel() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection("Mage's Disjunction", 'Known', 'class:bard')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(row.classLevel, null, 'a spell off the class list has no level for that class');
+  assertEqual(row.classLevelStatus, 'not-on-class-list', 'the two kinds of absence stay distinguishable');
+  assertEqual(
+    describeSpellSchoolAndLevel(row),
+    'CRB · Abjuration · Not on the Bard spell list',
+    'a spell no Bard can cast says so instead of showing the record level'
+  );
+}
+
+/** Before the per-class response arrives, no row may claim a class level. */
+function verifiesNoClassLevelIsClaimedBeforeTheResponseLoads() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection('Hideous Laughter')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    []
+  );
+  assertEqual(row.classLevel, null, 'nothing is claimed while the per-class data is still loading');
+  assertEqual(row.classLevelStatus, 'class-list-unknown', 'the loading state reads as unknown, not as a level');
+  assertEqual(
+    describeSpellSchoolAndLevel(row),
+    'CRB · Enchantment · Lowest class level 1',
+    'the pre-load line still labels the record level honestly'
+  );
+}
+
+/** An unresolved selection claims nothing at all, class level included. */
+function verifiesAnUnresolvedRowClaimsNoClassLevelEither() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection('Not A Real Spell')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(row.classLevel, null, 'an unresolvable selection fabricates no class level');
+  assertEqual(row.classLevelStatus, 'class-list-unknown', 'an unresolvable selection makes no class claim');
+  assertEqual(describeSpellSchoolAndLevel(row), null, 'an unresolvable selection still renders no detail line');
+}
+
+/** The class-level lookup tolerates the same id drift the catalog fold does. */
+function verifiesClassLevelResolutionToleratesTheSameIdDriftAsTheCatalog() {
+  const [row] = resolveSelectedSpellEntries(
+    [selection('hideous laughter')],
+    CATALOG_WITH_HIDEOUS_LAUGHTER,
+    CLASS_LEVELS
+  );
+  assertEqual(row.classLevel, 2, 'a case-drifted stored id still reaches the real per-class level');
+}
+
+/**
+ * What the tab must request from the backend: the distinct source classes
+ * its own rows actually reference, so a character never pulls lists it has
+ * no spells from.
+ */
+function verifiesTheDistinctSourceClassesAreDerivedFromTheSelectionsThemselves() {
+  const ids = spellSourceClassIds([
+    selection('Magic Missile', 'Known', 'class:wizard'),
+    selection('Hideous Laughter', 'Known', 'class:bard'),
+    selection('Shield', 'Prepared', 'class:wizard'),
+  ]);
+  assertEqual(ids.length, 2, 'each source class is requested once, not once per spell');
+  assertEqual(ids[0], 'class:bard', 'the request list is sorted so it is stable across renders');
+  assertEqual(ids[1], 'class:wizard', 'the request list is sorted so it is stable across renders');
+  assertEqual(spellSourceClassIds([]).length, 0, 'a character with no spells requests nothing');
+}
+
 async function main() {
+  verifiesAWizardSeesHideousLaughterAtLevelTwoAndABardAtLevelOne();
+  verifiesEachRowUsesItsOwnSourceClassOnAMulticlassCharacter();
+  verifiesAnUningestedSourceClassLabelsTheRecordLevelRatherThanClaimingIt();
+  verifiesASourceClassMissingFromTheResponseIsTreatedAsUnknown();
+  verifiesASpellOffTheClassListSaysSoRatherThanShowingALevel();
+  verifiesNoClassLevelIsClaimedBeforeTheResponseLoads();
+  verifiesAnUnresolvedRowClaimsNoClassLevelEither();
+  verifiesClassLevelResolutionToleratesTheSameIdDriftAsTheCatalog();
+  verifiesTheDistinctSourceClassesAreDerivedFromTheSelectionsThemselves();
   verifiesASelectedSpellResolvesToItsRealNameSchoolLevelAndEffectText();
   verifiesTheSchoolAndLevelLineNamesTheBook();
   verifiesARecordWithRealCorpusGapsClaimsNoSchoolOrLevel();
