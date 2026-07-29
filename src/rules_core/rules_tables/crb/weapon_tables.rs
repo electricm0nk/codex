@@ -321,6 +321,10 @@ pub struct ClassWeaponProficiency {
     /// `AUTO:WEAPONPROF|` list. These are `PROFICIENCY:WEAPON` names, NOT
     /// weapon display keys — see [`WeaponTableEntry::proficiency_name`].
     pub named: &'static [&'static str],
+    /// Whole `Weapon Group <name>` grants. Only Brawler uses this among the
+    /// 27 base classes, but omitting it would have silently understated
+    /// Brawler's proficiency for every Close-group weapon.
+    pub weapon_groups: &'static [&'static str],
 }
 
 /// Weapon proficiency for the eleven CRB base classes.
@@ -344,94 +348,35 @@ pub struct ClassWeaponProficiency {
 /// Archetype replacement is NOT modelled: every grant here is the
 /// unarchetyped base class, which is all this engine composes.
 pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
-    ClassWeaponProficiency {
-        class_id: "class:barbarian",
-        tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:bard",
-        tiers: &[WeaponProficiency::Simple],
-        named: &["Longsword", "Rapier", "Sap", "Sword (Short)", "Shortbow", "Whip"],
-    },
-    ClassWeaponProficiency {
-        // The corpus also grants `AUTO:WEAPONPROF|DEITYWEAPONS`. This
-        // engine does not model deities, so a Cleric's favoured-weapon
-        // proficiency is genuinely absent rather than silently assumed --
-        // the same gap already noted for Warpriest's Sacred Weapon.
-        class_id: "class:cleric",
-        tiers: &[WeaponProficiency::Simple],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:druid",
-        tiers: &[],
-        named: &[
-            "Club",
-            "Dagger",
-            "Dart",
-            "Quarterstaff",
-            "Scimitar",
-            "Scythe",
-            "Sickle",
-            "Shortspear",
-            "Sling",
-            "Spear",
-        ],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:fighter",
-        tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:monk",
-        tiers: &[],
-        named: &[
-            "Club",
-            "Crossbow (Light)",
-            "Crossbow (Heavy)",
-            "Dagger",
-            "Handaxe",
-            "Javelin",
-            "Kama",
-            "Nunchaku",
-            "Quarterstaff",
-            "Sai",
-            "Shortspear",
-            "Sword (Short)",
-            "Shuriken",
-            "Siangham",
-            "Sling",
-            "Spear",
-            "Unarmed Strike",
-        ],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:paladin",
-        tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:ranger",
-        tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:rogue",
-        tiers: &[WeaponProficiency::Simple],
-        named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:sorcerer",
-        tiers: &[WeaponProficiency::Simple],
-        named: &[],
-    },
-    ClassWeaponProficiency {
-        class_id: "class:wizard",
-        tiers: &[],
-        named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff"],
-    },
+    ClassWeaponProficiency { class_id: "class:alchemist", tiers: &[WeaponProficiency::Simple], named: &["Bomb"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:arcanist", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:barbarian", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:bard", tiers: &[WeaponProficiency::Simple], named: &["Longsword", "Rapier", "Sap", "Sword (Short)", "Shortbow", "Whip"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:bloodrager", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    // Brawler is the only base class granted a whole weapon GROUP
+    // ("Close"), which is why `weapon_groups` exists at all.
+    ClassWeaponProficiency { class_id: "class:brawler", tiers: &[WeaponProficiency::Simple], named: &["Handaxe", "Sword (Short)"], weapon_groups: &["Close"] },
+    ClassWeaponProficiency { class_id: "class:cavalier", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:cleric", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:druid", tiers: &[], named: &["Club", "Dagger", "Dart", "Quarterstaff", "Scimitar", "Scythe", "Sickle", "Shortspear", "Sling", "Spear"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:fighter", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:hunter", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:inquisitor", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Longbow", "Crossbow (Repeating Heavy)", "Crossbow (Repeating Light)", "Shortbow"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:investigator", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)", "Sword Cane"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Shortspear", "Sword (Short)", "Shuriken", "Siangham", "Sling", "Spear", "Unarmed Strike"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:oracle", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:paladin", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:ranger", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:rogue", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:shaman", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:skald", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:slayer", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:sorcerer", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:summoner", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:swashbuckler", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:warpriest", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:witch", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:wizard", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff"], weapon_groups: &[] },
 ];
 
 /// This class's weapon proficiency, or `None` for a class this table does
@@ -458,6 +403,11 @@ pub fn class_is_proficient_with(
 ) -> bool {
     if let Some(name) = weapon.proficiency_name
         && proficiency.named.contains(&name)
+    {
+        return true;
+    }
+    if let Some(group) = weapon.weapon_group
+        && proficiency.weapon_groups.contains(&group)
     {
         return true;
     }
@@ -575,8 +525,17 @@ mod class_weapon_proficiency_tests {
     /// anywhere else.
     #[test]
     fn every_named_class_proficiency_matches_a_real_weapon() {
+        // Two names are legitimately absent, documented rather than skipped
+        // so the guard still catches real typos: `Bomb` is the Alchemist's
+        // class feature (no stat block), and `Sword Cane` is a real weapon
+        // but an APG one while this table is CRB-only -- a genuine scope
+        // mismatch, recorded here as a known limit.
+        const OUTSIDE_THE_CRB_WEAPON_TABLE: &[&str] = &["Bomb", "Sword Cane"];
         for class in CLASS_WEAPON_PROFICIENCIES {
             for named in class.named {
+                if OUTSIDE_THE_CRB_WEAPON_TABLE.contains(named) {
+                    continue;
+                }
                 assert!(
                     WEAPON_TABLE.iter().any(|w| w.proficiency_name == Some(*named)),
                     "{}'s named proficiency {named:?} matches no weapon's PROFICIENCY:WEAPON token",
@@ -588,30 +547,98 @@ mod class_weapon_proficiency_tests {
 
     #[test]
     fn an_unknown_class_reports_unknown_rather_than_non_proficient() {
-        assert!(class_weapon_proficiency("class:alchemist").is_none());
         assert!(class_weapon_proficiency("class:not_a_class").is_none());
+        assert!(class_weapon_proficiency("class:eldritch_knight").is_none());
     }
 
+    /// The whole 27-class roster, not just the CRB set.
+    ///
+    /// Shipping this CRB-only was a real near-miss: it returned "unknown"
+    /// for 16 classes, and any caller flagging non-proficiency by omission
+    /// would have penalised seven martial ones (Bloodrager, Skald, Slayer,
+    /// Swashbuckler, Cavalier, Hunter, Warpriest).
     #[test]
-    fn all_eleven_crb_base_classes_are_covered() {
+    fn every_class_in_the_roster_is_covered() {
         for class_id in [
-            "class:barbarian",
-            "class:bard",
-            "class:cleric",
-            "class:druid",
-            "class:fighter",
-            "class:monk",
-            "class:paladin",
-            "class:ranger",
-            "class:rogue",
-            "class:sorcerer",
-            "class:wizard",
+            "class:alchemist", "class:arcanist", "class:barbarian", "class:bard",
+            "class:bloodrager", "class:brawler", "class:cavalier", "class:cleric",
+            "class:druid", "class:fighter", "class:hunter", "class:inquisitor",
+            "class:investigator", "class:monk", "class:oracle", "class:paladin",
+            "class:ranger", "class:rogue", "class:shaman", "class:skald",
+            "class:slayer", "class:sorcerer", "class:summoner", "class:swashbuckler",
+            "class:warpriest", "class:witch", "class:wizard",
         ] {
             assert!(
                 class_weapon_proficiency(class_id).is_some(),
                 "{class_id} has a real corpus proficiency record and must be covered"
             );
         }
-        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 11);
+        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 27);
+    }
+
+    /// The Longsword question decided for the whole roster in one place --
+    /// this is what the melee baseline actually turns on. 12 proficient,
+    /// 15 not.
+    #[test]
+    fn longsword_proficiency_is_correct_for_every_class() {
+        let longsword = weapon("Longsword");
+        let expected_proficient = [
+            "class:barbarian", "class:bard", "class:bloodrager", "class:cavalier",
+            "class:fighter", "class:hunter", "class:paladin", "class:ranger",
+            "class:skald", "class:slayer", "class:swashbuckler", "class:warpriest",
+        ];
+        let mut proficient = 0;
+        for class in CLASS_WEAPON_PROFICIENCIES {
+            let actual = class_is_proficient_with(class, longsword);
+            let expected = expected_proficient.contains(&class.class_id);
+            assert_eq!(
+                actual, expected,
+                "{} Longsword proficiency: expected {expected}, got {actual}",
+                class.class_id
+            );
+            proficient += usize::from(actual);
+        }
+        assert_eq!(proficient, 12, "12 of 27 classes are Longsword-proficient");
+    }
+
+    /// Bard reaches Longsword through its explicit list, NOT a martial
+    /// tier. A tier-only model would wrongly deny it.
+    #[test]
+    fn bard_reaches_longsword_by_name_not_by_tier() {
+        let bard = prof("class:bard");
+        assert!(!bard.tiers.contains(&WeaponProficiency::Martial), "Bard has no martial tier");
+        assert!(class_is_proficient_with(bard, weapon("Longsword")), "but names it explicitly");
+    }
+
+    /// Inquisitor is Simple + bows/crossbows + deity weapons -- NOT
+    /// martial, contrary to a common RAW recollection that would have
+    /// excluded it from the affected set.
+    #[test]
+    fn inquisitor_is_not_martial_despite_the_common_assumption() {
+        let inquisitor = prof("class:inquisitor");
+        assert!(!class_is_proficient_with(inquisitor, weapon("Longsword")));
+        assert!(class_is_proficient_with(inquisitor, weapon("Shortbow")), "named");
+        assert!(class_is_proficient_with(inquisitor, weapon("Club")), "blanket Simple");
+    }
+
+    /// Brawler is the only class granted a whole weapon GROUP. Longsword
+    /// is Blades Heavy, not Close, so it stays non-proficient -- but a
+    /// Close-group weapon must resolve through the group grant.
+    #[test]
+    fn brawler_gets_its_close_weapon_group() {
+        let brawler = prof("class:brawler");
+        assert!(!class_is_proficient_with(brawler, weapon("Longsword")), "Blades Heavy");
+        let close = WEAPON_TABLE
+            .iter()
+            .find(|w| {
+                w.weapon_group == Some("Close")
+                    && w.proficiency == Some(WeaponProficiency::Martial)
+            })
+            .expect("the table has a martial Close-group weapon");
+        assert!(
+            class_is_proficient_with(brawler, close),
+            "{} is Close group and must resolve via the group grant",
+            close.key
+        );
     }
 }
