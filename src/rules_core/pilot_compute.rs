@@ -2914,7 +2914,7 @@ const FAMILIAR_TOAD_SELECTION: &str = "familiar:toad";
 /// already hit).
 const WARD_HEX_SELECTION: &str = "hex:ward";
 /// The two hexes carrying a magnitude distinct from the shared hex save
-/// DC (task #11, 2026-07-27). Every other one of the 27 hex records --
+/// DC (task #11, 2026-07-27). Every other one of the 53 hex records --
 /// minor, major and grand -- carries only `WitchHexDC_<Name>|WitchHexDC`,
 /// a per-hex ALIAS of one shared variable, so they are facets of a
 /// single DC mechanism rather than 27 separate magnitudes.
@@ -13340,11 +13340,34 @@ fn ground_familiar_master_benefit(
 /// where the corpus sets `WitchHexStat = INT` and
 /// `WitchHexAbilityLVL = WitchLVL` (task #11, 2026-07-27).
 ///
-/// **One formula covers every hex.** All 27 hex records -- 14 minor, 8
-/// major, 5 grand -- carry only `BONUS:VAR|WitchHexDC_<Name>|WitchHexDC`,
-/// a per-hex alias of this single variable. That makes them facets of
-/// one DC mechanism, not 27 magnitudes, which is why grounding the DC
-/// once covers the whole hex list rather than needing a canonical pick.
+/// **One formula covers every hex.** 51 of the corpus's 53 base hex
+/// records carry only `BONUS:VAR|WitchHexDC_<Name>|WitchHexDC`, a
+/// per-hex alias of this single variable. That makes them facets of one
+/// DC mechanism, not 51 magnitudes, which is why grounding the DC once
+/// covers nearly the whole hex list rather than needing a canonical pick.
+///
+/// **Corpus-count correction (canonical-narrowing pass).** This doc and
+/// every sibling message used to say "all 27 hex records -- 14 minor, 8
+/// major, 5 grand". That is the Advanced Player's Guide's own set alone
+/// (14+8+5=27), presented as if it were the whole corpus. Re-derived
+/// across every `.lst` in the corpus, the real base-class hex list is
+/// **53** records -- 29 minor, 16 major, 8 grand -- spanning APG,
+/// Ultimate Magic, Ultimate Wilderness and Monster Codex. That total
+/// already excludes 6 archetype-locked records (5 gated on `Witch
+/// Archetype ~ Mountain Witch`, plus Bouda's Eye, granted only inside
+/// `Witch Archetype ~ Bouda`) and `Witch Hex ~ Hair`, which shares the
+/// KEY prefix but is `CATEGORY:Natural Attack` -- the auto-granted
+/// natural-weapon sub-record of the real Prehensile Hair hex, not a
+/// selectable hex.
+///
+/// **The "100% magnitude-bearing" claim is false.** A prior scoping pass
+/// recorded Witch's hexes as the only 100%-magnitude-bearing list on the
+/// roster. Re-checked directly: 51 of 53 carry at least one `BONUS:`
+/// token, so the real ratio is 51/53 (~96.2%). `Witch Hex ~ City Sight`
+/// and `Witch Hex ~ Summer's Heat` (both
+/// `ultimate_wilderness/uw_abilities_class.lst`) carry no `BONUS:` token
+/// at all -- no `WitchHexDC_<Name>` alias, no Ability Focus hook, `DESC:`
+/// only. They are the two hexes this shared DC genuinely does NOT cover.
 ///
 /// The corpus also carries `+2` variants gated on the
 /// `Ability Focus (Witch Hex)` feat and per-hex Ability Focus feats.
@@ -13374,7 +13397,7 @@ fn witch_has_hex(input: &CharacterInput, hex: &str) -> bool {
 
 /// The Flight hex's contribution to its Witch's computed Swim total.
 ///
-/// Flight is the standout of the 27 hexes: `BONUS:SKILL|Swim|4` lands on
+/// Flight is the standout of the 53 hexes: `BONUS:SKILL|Swim|4` lands on
 /// a skill this engine actually computes, so it integrates into the real
 /// total rather than grounding as another standalone record. Returns 0
 /// for every non-Witch and every Witch who did not take it.
@@ -13662,10 +13685,16 @@ fn ground_or_block_witch_class_features(
         value: hex_dc,
         detail: format!(
             "Witch level {level} hex save DC: 10 + Intelligence modifier + level/2 = {hex_dc}. \
-             ONE formula covers every hex -- all 27 records (14 minor, 8 major, 5 grand) carry \
+             ONE formula covers every hex -- 51 of the corpus's 53 base records carry \
              only a per-hex alias of this single shared variable, so they are facets of one DC \
-             mechanism rather than 27 separate magnitudes. The corpus's +2 Ability Focus \
-             variants are feat-conditional rather than class-derived and are not folded in"
+             mechanism rather than 51 separate magnitudes. Corpus-count correction: this said \
+             \"all 27 records (14 minor, 8 major, 5 grand)\", which is the APG's own set alone \
+             presented as the whole corpus; re-derived across every `.lst`, the base-class list \
+             is 53 (29 minor, 16 major, 8 grand) across APG, Ultimate Magic, Ultimate \
+             Wilderness and Monster Codex. `City Sight` and `Summer's Heat` are the two \
+             carrying no DC alias at all, so this formula covers 51 of the 53, not every one. \
+             The corpus's +2 Ability Focus variants are feat-conditional rather than \
+             class-derived and are not folded in"
         ),
     });
 
@@ -13691,7 +13720,7 @@ fn ground_or_block_witch_class_features(
                 "Witch level {level} took the Flight hex: a +{WITCH_FLIGHT_SWIM_BONUS} bonus on \
                  Swim checks. INTEGRATED into the real `skill.selected_modifier.swim` total -- \
                  Swim is one of the three skills this engine actually computes, making Flight \
-                 the only one of the 27 hexes whose magnitude reaches a live total. The hex's \
+                 the only one of the 53 hexes whose magnitude reaches a live total. The hex's \
                  own later-level flight benefits (feather fall, levitate, fly) are spell-effect \
                  wrappers with no independent magnitude and are not grounded"
             ),
@@ -13705,6 +13734,15 @@ fn ground_or_block_witch_class_features(
         .filter(|c| c.choice_set_id == WITCH_HEX_CHOICE_ID)
         .map(|c| c.selection_id.as_str())
         .collect();
+
+    // The canonical-narrowing posture is satisfied by any of the three
+    // hexes whose own magnitude this codebase genuinely grounds. Keep
+    // this list in step with the three grounding branches above -- an
+    // ungrounded hex id must NOT satisfy it (pinned by
+    // `an_ungrounded_witch_hex_selection_still_claim_blocks`).
+    let hex_recognized = hex_selections.contains(&WARD_HEX_SELECTION)
+        || hex_selections.contains(&CAULDRON_HEX_SELECTION)
+        || hex_selections.contains(&FLIGHT_HEX_SELECTION);
 
     if hex_selections.contains(&WARD_HEX_SELECTION) {
         let ward_bonus = witch_ward_bonus(level);
@@ -13725,10 +13763,39 @@ fn ground_or_block_witch_class_features(
         });
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.witch.hex_powers_beyond_ward.unmodeled".to_owned(),
-            message: "Witch Hex content beyond Ward remains unmodeled: the other ~18 base hexes \
+            message: "Witch Hex content beyond Ward remains unmodeled: the other 50 base hexes \
                  (Evil Eye, Misfortune, Slumber, Cackle, Fortune, Healing, and the rest, plus \
-                 the separate Major Hex/Grand Hex tiers) are not implemented. This does not \
+                 the separate Major Hex/Grand Hex tiers) are not implemented, beyond Cauldron's \
+                 and Flight's own grounded magnitudes and the shared save DC. Corpus-count \
+                 correction: this said \"the other ~18 base hexes\", an APG-only figure; the \
+                 real base-class list is 53 records across four books. This does not \
                  block an otherwise-valid Ward posture"
+                .to_owned(),
+            claim_blocking: false,
+        });
+    } else if hex_selections.contains(&CAULDRON_HEX_SELECTION)
+        || hex_selections.contains(&FLIGHT_HEX_SELECTION)
+    {
+        // Staleness fix (canonical-narrowing pass): this branch did not
+        // exist, so `hex_powers.unsupported` -- whose own message names
+        // all THREE grounded hexes -- still fired for a Witch who took
+        // Cauldron or Flight, telling her "no recognized hex choice is
+        // present" while the engine was simultaneously grounding her
+        // hex's real magnitude above. Ward keeps its own dedicated note
+        // only because its message enumerates the specific hexes Ward
+        // leaves behind; the substance of the two notes is the same.
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.apg.witch.hex_powers_beyond_base.unmodeled".to_owned(),
+            message: "Only the selected hex's own grounded magnitude is modeled, alongside the \
+                 shared hex save DC that covers 51 of the 53 records. Cauldron's Craft (Alchemy) \
+                 insight bonus and Flight's Swim bonus are the two non-Ward magnitudes this \
+                 codebase grounds; the other 50 of the corpus's 53 base hexes (29 `Witch \
+                 Hex`, 16 `Witch Major Hex`, 8 `Witch Grand Hex`) carry no modeled magnitude \
+                 beyond that shared DC -- which itself misses `City Sight` and `Summer's \
+                 Heat`, the two records carrying no `BONUS:` token at all -- and \
+                 Flight's own later-level feather fall/levitate/fly benefits are spell-effect \
+                 wrappers with no independent magnitude. This does not block an otherwise-valid \
+                 hex posture"
                 .to_owned(),
             claim_blocking: false,
         });
@@ -13736,48 +13803,76 @@ fn ground_or_block_witch_class_features(
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.witch.hex_powers.unsupported".to_owned(),
             message: "Witch remains blocked on its Hex powers burden: no recognized hex choice \
-                 is present. Three of the corpus's 27 hexes have their own grounded magnitude \
-                 (Ward's deflection/resistance, Cauldron's Craft (alchemy) bonus, Flight's \
-                 Swim bonus) and the shared hex save DC grounds for all 27, but each requires \
-                 an explicit recorded choice; nothing is seeded. This message previously said \
-                 \"only Ward's own deflection/resistance bonus is genuinely grounded\", which \
-                 stopped being true once Cauldron and Flight landed (task #76)"
+                 is present. Three of the corpus's 53 base hexes have their own grounded \
+                 magnitude (Ward's deflection/resistance, Cauldron's Craft (alchemy) bonus, \
+                 Flight's Swim bonus) and the shared hex save DC grounds for 51 of the 53, but \
+                 each requires an explicit recorded choice; nothing is seeded here. This \
+                 message previously said \"only Ward's own deflection/resistance bonus is \
+                 genuinely grounded\", which stopped being true once Cauldron and Flight landed \
+                 (task #76), and counted the hex list as 27 -- the APG's own set alone, \
+                 corrected to the full-corpus 53 by the canonical-narrowing pass"
                 .to_owned(),
             claim_blocking: true,
         });
     }
 
-    push_witch_other_features_deferred_diagnostic(diagnostics);
+    push_witch_other_features_deferred_diagnostic(diagnostics, hex_recognized);
 }
 
-/// Pushes the new, narrower diagnostic replacing
+/// Pushes the narrower diagnostic replacing
 /// `class_feature.apg.witch.unsupported` for Witch specifically (v0.6
-/// alpha swarm, risks item 8, Witch full-build closure): named ONLY the
-/// genuinely still-missing pieces. Pushed unconditionally regardless of
-/// the Hex posture's own state, mirroring Oracle's/Warpriest's own
-/// diagnostic-honesty pattern -- this is the permanent claim-blocking
-/// gap for Witch this slice.
-fn push_witch_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// alpha swarm, risks item 8, Witch full-build closure): names ONLY the
+/// genuinely still-missing pieces.
+///
+/// **Canonical-narrowing pass**: this used to be pushed unconditionally
+/// claim-blocking, which meant no Witch could ever reach `Computed` no
+/// matter what she chose. It now carries the SAME id and the SAME named
+/// gaps in both branches -- only `claim_blocking` differs -- exactly the
+/// shape Arcanist's own `exploits_deferred` established when it closed
+/// (`ground_or_block_arcanist_metamagic_knowledge`). The distinction is
+/// deliberate and narrow: once one corpus-verified hex is genuinely
+/// grounded, what remains is *breadth* (24 more hexes, Patron Spells,
+/// the familiar's own creature stat block) rather than a correctness
+/// hole -- every number the receipt reports for the recorded posture is
+/// right. With no recognized hex at all, the class's single defining
+/// chooser is unanswered, and that IS claim-blocking.
+///
+/// Neither branch drops a named gap. `hex_recognized` is true only for
+/// the three hexes whose own magnitude is grounded, never for an
+/// arbitrary selection string.
+fn push_witch_other_features_deferred_diagnostic(
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+    hex_recognized: bool,
+) {
+    let posture = if hex_recognized {
+        "and the recognized hex's own grounded magnitude. Genuinely still deferred, and NOT \
+         claim-blocking now that the class's defining chooser is answered by a corpus-verified \
+         pick"
+    } else {
+        "and the Ward, Cauldron and Flight hexes' own magnitudes (none of which is recognized \
+         here). Claim-blocking, because no recognized hex choice is present at all. Also still \
+         deferred"
+    };
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.apg.witch.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{WITCH_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+            "{WITCH_CLASS_ID} is grounded for its base-attack-bonus/base-save chassis \
              pillar, its class-skill list (Intimidate only -- a genuine partial match), its \
              own-list spellcasting with daily preparation and prepared-spell validation, \
              Familiar Touch Spells, the bonded familiar's own master hit-point benefit, the \
-             single shared hex save DC covering all 27 hex records, and the Ward, Cauldron and \
-             Flight hexes' own magnitudes: Patron Spells, the bonded familiar's own creature \
-             stat block, and the other 24 of the corpus's 27 hexes (14 `Witch Hex`, 8 `Witch \
-             Major Hex`, 5 `Witch Grand Hex`) remain ungrounded anywhere in this codebase; no \
-             class-feature or spell execution is fabricated in this bounded chassis baseline. \
-             This message previously listed own-list spellcasting (\"Cantrips, Patron Spells -- \
-             no `SPELLLIST:` reuse token, a genuinely new data-ingestion cost\") and \"the \
-             Familiar and Familiar Touch Spells (an unbuilt subsystem)\" as wholly ungrounded: \
-             both were true when written and are false now (tasks #11/#23/#33), with only \
-             Patron Spells and the familiar creature's own stat block genuinely remaining \
-             (task #76)"
+             single shared hex save DC covering 51 of its 53 hex records, {posture}: Patron \
+             Spells, the bonded familiar's own creature stat block, and the other 50 of the \
+             corpus's 53 base hexes (29 `Witch Hex`, 16 `Witch Major Hex`, 8 `Witch Grand Hex`) \
+             remain ungrounded \
+             anywhere in this codebase; no class-feature or spell execution is fabricated in \
+             this bounded chassis baseline. This message previously listed own-list \
+             spellcasting (\"Cantrips, Patron Spells -- no `SPELLLIST:` reuse token, a \
+             genuinely new data-ingestion cost\") and \"the Familiar and Familiar Touch Spells \
+             (an unbuilt subsystem)\" as wholly ungrounded: both were true when written and are \
+             false now (tasks #11/#23/#33), with only Patron Spells and the familiar creature's \
+             own stat block genuinely remaining (task #76)"
         ),
-        claim_blocking: true,
+        claim_blocking: !hex_recognized,
     });
 }
 
@@ -16567,7 +16662,7 @@ fn shaman_spirit_uses_per_day(charisma_modifier: i16) -> i16 {
 /// base abilities use: Bones' Touch of the Grave, Flame's Touch of Flame,
 /// Stone's Touch of Acid, Waves' Wave Strike, and Wind's Shocking Touch.
 /// One formula, five corpus records -- the same shared-mechanism shape as
-/// Witch's 27 hexes sharing a single save-DC variable.
+/// Witch's 53 hexes sharing a single save-DC variable.
 ///
 /// `ShamanSpiritLVL` resolves to `ShamanLVL` for a single-class Shaman.
 /// It carries a second setter, `BONUS:VAR|ShamanSpiritLVL|SorcererLVL`,
@@ -16687,6 +16782,8 @@ fn ground_or_block_shaman_class_features(
         .map(|c| c.selection_id.as_str())
         .collect();
 
+    let spirit_recognized;
+
     if spirit_selections.contains(&LIFE_SPIRIT_SELECTION) {
         let uses_per_day = shaman_channel_uses_per_day(ability_modifiers.charisma);
         let dice = shaman_channel_dice(level);
@@ -16719,14 +16816,19 @@ fn ground_or_block_shaman_class_features(
                 ability_modifiers.charisma
             ),
         });
+        spirit_recognized = true;
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.shaman.spirit_powers_beyond_life.unmodeled".to_owned(),
             message: "Shaman Spirit power content beyond Life's own Channel remains unmodeled: \
-                 the other 9 primary spirits (Battle, Bones, Flame, Heavens, Lore, Nature, \
-                 Stone, Waves, Wind) and their own granted abilities are not implemented, and \
                  Life Spirit's own higher-tier abilities (Healer's Touch, gated to level 8+; \
-                 Quick Healing; Manifestation) are not implemented either. This does not block \
-                 an otherwise-valid Life-Spirit posture"
+                 Quick Healing; Manifestation) are not implemented. STALENESS CORRECTION \
+                 (canonical-narrowing pass): this message also claimed \"the other 9 primary \
+                 spirits (Battle, Bones, Flame, Heavens, Lore, Nature, Stone, Waves, Wind) and \
+                 their own granted abilities are not implemented\". That is false and was \
+                 already false when written -- `ground_shaman_spirit_base_ability` grounds the \
+                 immediately-available base ability of all nine, which the sibling \
+                 `spirit_powers_beyond_base.unmodeled` record states directly. This does not \
+                 block an otherwise-valid Life-Spirit posture"
                 .to_owned(),
             claim_blocking: false,
         });
@@ -16736,30 +16838,42 @@ fn ground_or_block_shaman_class_features(
         ability_modifiers,
         explanations,
     ) {
+        spirit_recognized = true;
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.shaman.spirit_powers_beyond_base.unmodeled".to_owned(),
             message: "Only the selected Spirit's own immediately-available base ability is \
                  grounded. Each Spirit's three higher-tier abilities stay deferred: the \
                  `ShamanSpiritGreater` tier (PRECLASS:1,Shaman=8), the `ShamanSpiritTrue` tier \
-                 (PRECLASS:1,Shaman=16), and Manifestation (the capstone). This does not block \
-                 an otherwise-valid Spirit posture"
+                 (PRECLASS:1,Shaman=16), and Manifestation (the capstone). Worth naming \
+                 explicitly, because it is where the mechanical loss actually is: NONE of the \
+                 ten base abilities carries a `BONUS:` landing on a total this engine computes \
+                 -- every one is a `BONUS:VAR` feeding its own DESC text -- whereas the gated \
+                 tiers genuinely do (Heavens' Manifestation `BONUS:SAVE|ALL|...`, Life's \
+                 Healer's Touch `BONUS:SKILL|Heal|4`, Lore's Perfect Knowledge \
+                 `BONUS:SKILL|TYPE.Knowledge,Linguistics,Spellcraft|10|TYPE=Insight`). This \
+                 does not block an otherwise-valid Spirit posture"
                 .to_owned(),
             claim_blocking: false,
         });
     } else {
+        spirit_recognized = false;
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.shaman.spirit_powers.unsupported".to_owned(),
             message: "Shaman remains blocked on its Spirit powers burden: no recognized Spirit \
                  choice is present. All ten primary Spirits (Battle, Bones, Flame, Heavens, \
                  Life, Lore, Nature, Stone, Waves, Wind) are recognized through their own \
                  immediately-available base ability, so an unrecognized selection means no \
-                 Shaman Spirit-power support is claimed"
+                 Shaman Spirit-power support is claimed. The corpus also carries two \
+                 later-book Spirits this codebase does not recognize -- Mammoth \
+                 (`adventurers_guide/ag_abilities_class.lst`, Powerful Smash) and Wood \
+                 (`ultimate_wilderness/uw_abilities_class.lst`, Tree Limb), neither of which \
+                 carries any `BONUS:` token at all"
                 .to_owned(),
             claim_blocking: true,
         });
     }
 
-    push_shaman_other_features_deferred_diagnostic(diagnostics);
+    push_shaman_other_features_deferred_diagnostic(diagnostics, spirit_recognized);
 }
 
 /// Ground the immediately-available (ungated) base ability of whichever
@@ -16936,38 +17050,59 @@ fn key_titlecase(key: &str) -> String {
     }
 }
 
-/// Pushes the new, narrower diagnostic replacing
+/// Pushes the narrower diagnostic replacing
 /// `class_feature.acg.shaman.unsupported` for Shaman specifically (v0.6
-/// alpha swarm, risks item 8, Shaman full-build closure): named ONLY the
-/// genuinely still-missing pieces. Pushed unconditionally regardless of
-/// the Spirit posture's own state, mirroring Oracle's/Witch's own
-/// diagnostic-honesty pattern -- this is the permanent claim-blocking
-/// gap for Shaman this slice.
-fn push_shaman_other_features_deferred_diagnostic(diagnostics: &mut Vec<ComputationDiagnostic>) {
+/// alpha swarm, risks item 8, Shaman full-build closure): names ONLY the
+/// genuinely still-missing pieces.
+///
+/// **Canonical-narrowing pass**: this used to be pushed unconditionally
+/// claim-blocking, so no Shaman could reach `Computed` however she
+/// chose. It now carries the SAME id and the SAME named gaps in both
+/// branches -- only `claim_blocking` differs -- the shape Arcanist's own
+/// `exploits_deferred` established. Once a real Spirit is recognized,
+/// what remains is breadth (Spirit Magic, the gated tiers, Wandering
+/// Spirit, the hex chooser-lists), not a wrong number; with no Spirit at
+/// all, the class's defining chooser is unanswered and that IS
+/// claim-blocking.
+fn push_shaman_other_features_deferred_diagnostic(
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+    spirit_recognized: bool,
+) {
+    let posture = if spirit_recognized {
+        "Genuinely still deferred, and NOT claim-blocking now that the class's defining \
+         chooser is answered by a corpus-verified Spirit"
+    } else {
+        "Claim-blocking, because no recognized Spirit choice is present at all. Also still \
+         deferred"
+    };
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{SHAMAN_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
+            "{SHAMAN_CLASS_ID} is grounded for its base-attack-bonus/base-save chassis \
              pillar, its own prepared spellcasting including Orisons, Spirit Animal's familiar \
              master benefit, and the immediately-available base ability of ALL TEN primary \
              Spirits (Battle, Bones, Flame, Heavens, Life, Lore, Nature, Stone, Waves, Wind). \
-             Still ungrounded anywhere in this codebase: Spirit Magic (the spirit-granted bonus \
-             spells layered on top of the class list), Manifestation (a capstone ability), each \
-             Spirit's three higher abilities gated at `ShamanSpiritGreater` (`PRECLASS:1,\
+             {posture}, ungrounded anywhere in this codebase: Spirit Magic (the spirit-granted \
+             bonus spells layered on top of the class list), Manifestation (a capstone ability), \
+             each Spirit's three higher abilities gated at `ShamanSpiritGreater` (`PRECLASS:1,\
              Shaman=8`), `ShamanSpiritTrue` (`PRECLASS:1,Shaman=16`) and Manifestation, \
-             Wandering Spirit, and the hex chooser-lists (13 `Shaman Hex`, 49 `Shaman Spirit \
-             Hex`, 49 `Shaman Wandering Hex` records). No class-feature or spell execution is \
-             fabricated here. This message previously claimed \"the other 9 primary spirits\" \
-             were ungrounded while the sibling `spirit_powers.unsupported` record simultaneously \
-             stated all ten are recognized: the sibling was right and this clause was stale. \
-             Battle, Heavens, Lore and Nature ship as ordinary `id: \"...\"` literals; Bones, \
-             Flame, Stone, Waves and Wind ship as table-constructed \
+             Wandering Spirit, the two later-book Spirits (Mammoth, Wood), and the hex \
+             chooser-lists (13 `Shaman Hex`, 59 `Shaman Spirit Hex`, 59 `Shaman Wandering Hex` \
+             records). No class-feature or spell execution is fabricated here. This message \
+             previously claimed \"the other 9 primary spirits\" were ungrounded while the \
+             sibling `spirit_powers.unsupported` record simultaneously stated all ten are \
+             recognized: the sibling was right and this clause was stale. Battle, Heavens, Lore \
+             and Nature ship as ordinary `id: \"...\"` literals; Bones, Flame, Stone, Waves and \
+             Wind ship as table-constructed \
              `format!(\"class_feature.acg.shaman.{{key}}_spirit.touch_bonus_damage\")` ids that \
              an `id: \"`-prefixed search does not match, which is how those five stayed \
              invisible to an id-grep audit (task #76). Wandering Spirit and Wandering Hex were \
-             named in NEITHER clause"
+             named in NEITHER clause. The Spirit Hex / Wandering Hex counts read 49/49 until \
+             the canonical-narrowing pass re-derived them across the WHOLE corpus rather than \
+             `acg_abilities_class.lst` alone: the Adventurer's Guide and Ultimate Wilderness \
+             each add 5 more of each, for 59/59"
         ),
-        claim_blocking: true,
+        claim_blocking: !spirit_recognized,
     });
 }
 
@@ -36233,7 +36368,7 @@ fn compute_selected_skill_modifiers(
 
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     // v0.6 alpha swarm task #11 (2026-07-27): the Witch's Flight hex adds
-    // a real +4 here -- the only one of the 27 hex records whose magnitude
+    // a real +4 here -- the only one of the 53 hex records whose magnitude
     // lands on a total this engine computes. Class-ownership-gated and
     // explicit-choice-gated by construction, 0 for everyone else.
     let flight_hex_swim_bonus = witch_flight_hex_swim_bonus(input);
@@ -50025,7 +50160,8 @@ mod oracle_dispatch_widening_safety_tests {
 mod witch_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, HeadlessReceiptStatus,
-        FIGHTER_CLASS_ID, WARD_HEX_SELECTION, WITCH_CLASS_ID, WITCH_HEX_CHOICE_ID,
+        CAULDRON_HEX_SELECTION, FIGHTER_CLASS_ID, FLIGHT_HEX_SELECTION, WARD_HEX_SELECTION,
+        WITCH_CLASS_ID, WITCH_HEX_CHOICE_ID,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, AcquisitionMode, SelectedChoice, SpellSelection,
@@ -50232,10 +50368,152 @@ mod witch_dispatch_widening_safety_tests {
         assert_eq!(ward.value, 2, "Witch level 1 Ward bonus: base 2: {:?}", ward);
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Witch still stays Blocked on other_features_deferred: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Ward is one of the three corpus-grounded hexes, so the canonical-narrowing \
+             posture is satisfied and other_features_deferred reports non-blocking: {:?}",
             receipt.computation.diagnostics
         );
+    }
+
+    /// **Canonical narrowing, Witch's own (task: chooser-shaped power
+    /// lists).** Flight is the canonical hex this codebase seeds, chosen
+    /// over Ward and Cauldron because its magnitude is the only one of
+    /// the 27 that lands on a total this engine actually computes:
+    /// `BONUS:SKILL|Swim|4|TYPE=Racial`
+    /// (`advanced_players_guide/apg_abilities_class.lst:892`,
+    /// `KEY:Witch Hex ~ Flight`) flows into `skill.selected_modifier.swim`.
+    /// Ward's deflection/resistance is not wired into the AC/save totals,
+    /// and Cauldron's is a Craft (Alchemy) bonus on a skill this engine
+    /// does not compute -- both ground standalone.
+    ///
+    /// This also pins the staleness fix: `hex_powers.unsupported` used to
+    /// be retired by Ward ALONE, so a Witch who took Flight -- a hex whose
+    /// magnitude is genuinely grounded and genuinely integrated -- was
+    /// still told "no recognized hex choice is present", which the
+    /// diagnostic's own message contradicted by naming all three.
+    #[test]
+    fn single_class_witch_with_the_canonical_flight_hex_reaches_computed() {
+        let mut input = human_witch_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: FLIGHT_HEX_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers.unsupported"),
+            "hex_powers must not fire once the grounded Flight hex is recognized: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers_beyond_base.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking other-hexes note for a non-Ward grounded hex: {:?}",
+            receipt.computation.diagnostics
+        );
+        let flight = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.witch.flight_hex.swim_bonus")
+            .expect("Flight's Swim bonus must be grounded once recognized");
+        assert_eq!(
+            flight.value, 4,
+            "corpus `BONUS:SKILL|Swim|4|TYPE=Racial`: {:?}",
+            flight
+        );
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Witch with the canonical Flight hex must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Cauldron is the third grounded hex and must retire the blocker on
+    /// the same footing as Ward and Flight -- its magnitude is real
+    /// (`+4` insight on Craft (Alchemy)), it simply lands on a skill this
+    /// engine does not compute, which is a coverage fact about the skill
+    /// list, not a reason to call the hex unrecognized.
+    #[test]
+    fn single_class_witch_with_the_cauldron_hex_also_retires_the_blocker() {
+        let mut input = human_witch_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: CAULDRON_HEX_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Cauldron is a grounded hex and must satisfy the canonical-narrowing posture: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// A hex the corpus really has but this codebase has NOT grounded
+    /// (Slumber carries no magnitude beyond the shared hex DC) must still
+    /// claim-block. Canonical narrowing grounds one choice; it does not
+    /// silently accept every string.
+    #[test]
+    fn an_ungrounded_witch_hex_selection_still_claim_blocks() {
+        let mut input = human_witch_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: "hex:slumber".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.apg.witch.hex_powers.unsupported"
+                    && d.claim_blocking),
+            "an ungrounded hex must still claim-block: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "an ungrounded hex must leave the Witch Blocked: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The canonical Flight posture must hold at every PF1 level, not
+    /// just level 1 -- the sweep `v06_class_state_dump` reports on.
+    #[test]
+    fn witch_with_the_canonical_flight_hex_stays_computed_at_every_level() {
+        for level in 1..=20u8 {
+            let mut input = human_witch_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+                selection_id: FLIGHT_HEX_SELECTION.to_owned(),
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "Witch level {level} with the canonical Flight hex must be Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
     }
 
     /// task #88 correction: the Ward hex's own detail string used to claim
@@ -52268,8 +52546,94 @@ mod shaman_dispatch_widening_safety_tests {
 
         assert_eq!(
             receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "Life is a recognized Spirit, so the canonical-narrowing posture is satisfied and \
+             other_features_deferred reports non-blocking: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// **Canonical narrowing, Shaman's own (task: chooser-shaped power
+    /// lists).** Life is the canonical Spirit this codebase seeds. Unlike
+    /// Witch -- where only 3 of 53 hexes are grounded -- all TEN primary
+    /// Spirits are already recognized through their own
+    /// immediately-available base ability, so the narrowing here is about
+    /// which one the default posture seeds, not about which ones work.
+    /// Life earns it by grounding the richest real magnitude set (Channel
+    /// uses-per-day, dice AND save DC, the Cleric-Channel-Energy shape).
+    #[test]
+    fn shaman_with_the_canonical_life_spirit_stays_computed_at_every_level() {
+        for level in 1..=20u8 {
+            let mut input = human_shaman_input(level);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+                selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+            });
+
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "Shaman level {level} with the canonical Life Spirit must be Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Every one of the ten Spirits must reach `Computed`, not merely
+    /// clear `spirit_powers`. This is the stronger form of
+    /// `every_one_of_the_ten_spirits_is_recognized_through_the_live_dispatch`:
+    /// it pins that retiring `other_features_deferred` is keyed off real
+    /// Spirit recognition and not off the Life branch alone.
+    #[test]
+    fn all_ten_spirits_reach_computed_not_just_the_canonical_one() {
+        let spirits = [
+            "spirit:life",
+            "spirit:battle",
+            "spirit:bones",
+            "spirit:flame",
+            "spirit:heavens",
+            "spirit:lore",
+            "spirit:nature",
+            "spirit:stone",
+            "spirit:waves",
+            "spirit:wind",
+        ];
+        for spirit in spirits {
+            let mut input = human_shaman_input(8);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+                selection_id: spirit.to_owned(),
+            });
+            let receipt = build_pilot_headless_receipt(&input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "{spirit} must reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// An unrecognized Spirit must leave the Shaman `Blocked` outright,
+    /// not merely carry the `spirit_powers` diagnostic alongside an
+    /// otherwise-green receipt.
+    #[test]
+    fn an_unrecognized_spirit_leaves_the_shaman_blocked_outright() {
+        let mut input = human_shaman_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: "spirit:not_a_real_spirit".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "Shaman still stays Blocked on other_features_deferred: {:?}",
+            "an unknown Spirit must leave the Shaman Blocked: {:?}",
             receipt.computation.diagnostics
         );
     }
@@ -54780,7 +55144,7 @@ mod opponent_conditioned_tier_zero_tests {
 
 
     /// The shared Witch hex save DC: `10 + INT + WitchLVL/2`. Every one
-    /// of the 27 hex records aliases this single variable
+    /// of the 53 hex records aliases this single variable
     /// (`WitchHexDC_<Name>|WitchHexDC`), so it is ONE mechanism, not 27.
     #[test]
     fn the_witch_hex_save_dc_is_one_shared_formula_across_every_hex() {

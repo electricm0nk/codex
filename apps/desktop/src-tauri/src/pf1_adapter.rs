@@ -212,6 +212,66 @@ const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
 /// replaces this, exactly as for the Sorcerer/Cleric/Druid seeds.
 const DODGE_FEAT_SELECTION: &str = "feat:dodge";
 
+/// v0.6 alpha swarm (Path A choice-picker gap closure, the two
+/// chooser-shaped power lists): Witch's Hex and Shaman's Spirit. Both are
+/// the Sorcerer/Cleric/Druid/Monk shape -- a single recognized choice is
+/// sufficient and no bootstrapped spell is involved -- not Wizard's.
+///
+/// Each engine already computes a complete build at every level 1-20; each
+/// had exactly two claim-blocking diagnostics, and BOTH were downstream of
+/// the same fact: nothing anywhere seeds the class's one defining chooser,
+/// so the default posture never exercised a seam that already worked. No
+/// picker in the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+const WITCH_CLASS_ID: &str = "class:witch";
+const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
+const SHAMAN_CLASS_ID: &str = "class:shaman";
+const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
+
+/// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
+/// against the PCGen corpus
+/// (`.../advanced_players_guide/apg_abilities_class.lst:892`):
+/// `KEY:Witch Hex ~ Flight ... BONUS:SKILL|Swim|4|TYPE=Racial`, gated only
+/// by `PREVARGTEQ:WitchHexAbilityLVL,1` -- genuinely available at level 1.
+///
+/// Three hexes have a grounded magnitude in `pilot_compute.rs` and any of
+/// the three closes the burden, but they are not equivalent. Flight is the
+/// only one whose number reaches a total this engine actually computes:
+/// `compute_selected_skill_modifiers` folds it into
+/// `skill.selected_modifier.swim`. Ward's deflection/resistance bonus is
+/// grounded standalone (real AC/save totals exist, but Ward's magnitude is
+/// not wired into either), and Cauldron's `+4` insight lands on Craft
+/// (Alchemy), which is not among the three skills this engine computes. So
+/// this seed makes the engine compute a real, visible effect rather than
+/// handing a player a token that merely silences a diagnostic
+/// (`docs/governance/no-stub-mvp-doctrine.md`).
+const FLIGHT_HEX_SELECTION: &str = "hex:flight";
+
+/// **Why Life, of the ten primary Shaman Spirits.** Unlike Witch -- where
+/// only 3 of 53 hexes have a grounded magnitude -- all ten Spirits already
+/// ground their immediately-available base ability, so this picks which one
+/// the default posture records, not which one works
+/// (`all_ten_spirits_reach_computed_not_just_the_canonical_one` in
+/// `pilot_compute.rs` pins that every one of them reaches `Computed`).
+///
+/// Life earns the seed on magnitude richness. Verified against
+/// `.../advanced_class_guide/acg_abilities_class.lst:1600`,
+/// `KEY:Life Spirit ~ Channel` carries three real formulas --
+/// `BONUS:VAR|ShamanChannelTimes|1+CHA`,
+/// `BONUS:VAR|ShamanChannelDice|(ShamanChannelLVL+1)/2`,
+/// `BONUS:VAR|ShamanChannelDC|10+(ShamanChannelLVL/2)+CHA` -- which
+/// `pilot_compute.rs` grounds as three separate explanation records. The
+/// other nine each ground a single touch-attack or morale-bonus fact.
+///
+/// **Honest caveat.** None of the ten base abilities carries a `BONUS:`
+/// landing on a computed total -- every one is a `BONUS:VAR` feeding its
+/// own `DESC:` text -- so unlike Witch's Flight this seed grounds real
+/// magnitudes without integrating into an existing total. The Spirit
+/// abilities that DO land on real totals (Heavens' Manifestation
+/// `BONUS:SAVE|ALL`, Life's own Healer's Touch `BONUS:SKILL|Heal|4`) are
+/// all in the level-8+/16+ gated tiers, which stay deferred.
+const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
+
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
 /// closure it needs as parameters, exactly like this crate's existing
@@ -550,6 +610,33 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
             selection_id: DODGE_FEAT_SELECTION.to_owned(),
+        });
+    } else if request.class_id == WITCH_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure, the
+        // chooser-shaped power lists): the same one-choice shape as
+        // Sorcerer/Cleric/Druid/Monk. See `FLIGHT_HEX_SELECTION`'s own doc
+        // comment for why Flight specifically, of the corpus's 53 base
+        // hexes.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `single_class_witch_with_the_canonical_flight_hex_reaches_computed`
+        // and `witch_with_the_canonical_flight_hex_stays_computed_at_every_level`
+        // tests: a recognized `choice:witch_hex -> hex:flight` is
+        // sufficient, with no other precondition, to reach `Computed` at
+        // every level 1-20. No spell is seeded -- a Witch's prepared-spell
+        // posture is genuinely valid with zero spells, so Wizard's
+        // bootstrap-deadlock shape does not apply here.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: FLIGHT_HEX_SELECTION.to_owned(),
+        });
+    } else if request.class_id == SHAMAN_CLASS_ID {
+        // See `LIFE_SPIRIT_SELECTION`'s own doc comment for why Life, of
+        // the ten primary Spirits. Verified directly against
+        // `shaman_with_the_canonical_life_spirit_stays_computed_at_every_level`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
         });
     }
 
@@ -1272,6 +1359,20 @@ mod tests {
 
     fn monk_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: MONK_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    fn witch_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: WITCH_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
+    }
+
+    fn shaman_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: SHAMAN_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
     }
 
     fn seed_envelope(character_id: &str, level: u8) -> SavedCharacterEnvelope {
@@ -2137,6 +2238,140 @@ mod tests {
              resolved rather than merely tolerated: {:?}",
             receipt.computation.explanations
         );
+    }
+
+    /// The composed Witch really carries the canonical Flight hex, and it
+    /// really reaches `Computed` through the production compose path --
+    /// both halves, so a seed that silences a diagnostic without producing
+    /// a computable character would still fail here.
+    #[test]
+    fn a_composed_witch_gets_the_canonical_flight_hex_and_computes() {
+        let witch_input = compose_character_input(&witch_request_for("witch-seed", 1));
+
+        assert!(
+            witch_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == WITCH_HEX_CHOICE_ID
+                    && c.selection_id == FLIGHT_HEX_SELECTION
+            }),
+            "a composed Witch must carry the canonical Flight hex: {:?}",
+            witch_input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&witch_input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed Witch must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The composed Shaman really carries the canonical Life Spirit and
+    /// really computes.
+    #[test]
+    fn a_composed_shaman_gets_the_canonical_life_spirit_and_computes() {
+        let shaman_input = compose_character_input(&shaman_request_for("shaman-seed", 1));
+
+        assert!(
+            shaman_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID
+                    && c.selection_id == LIFE_SPIRIT_SELECTION
+            }),
+            "a composed Shaman must carry the canonical Life Spirit: {:?}",
+            shaman_input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&shaman_input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed Shaman must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Both seeds are class-scoped: no other class may pick either up,
+    /// mirroring `a_composed_fighter_gets_no_arcanist_seed`'s own negative
+    /// check. Also pins that Witch and Shaman do NOT cross-seed each other
+    /// -- their hex/spirit lists are parallel but entirely distinct corpus
+    /// records (Shaman's `Shaman Hex ~ Charm` carries its own
+    /// `ShamanCharmHexDuration`/`ShamanCharmHexDC`, Witch's carries
+    /// `WitchCharmSteps`/`WitchHexDC_Charm`), so a shared seed would be
+    /// exactly the "shared name is not a shared thing" error.
+    #[test]
+    fn the_witch_and_shaman_seeds_do_not_leak_across_classes() {
+        let fighter_input = compose_character_input(&request_for("fighter-no-seed", 1));
+        for choice_set in [WITCH_HEX_CHOICE_ID, SHAMAN_SPIRIT_CHOICE_ID] {
+            assert!(
+                !fighter_input
+                    .chosen
+                    .selected_choices
+                    .iter()
+                    .any(|c| c.choice_set_id == choice_set),
+                "a composed Fighter must not receive {choice_set}: {:?}",
+                fighter_input.chosen.selected_choices
+            );
+        }
+
+        let witch_input = compose_character_input(&witch_request_for("witch-no-spirit", 1));
+        assert!(
+            !witch_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID),
+            "a composed Witch must not receive the Shaman Spirit choice: {:?}",
+            witch_input.chosen.selected_choices
+        );
+
+        let shaman_input = compose_character_input(&shaman_request_for("shaman-no-hex", 1));
+        assert!(
+            !shaman_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == WITCH_HEX_CHOICE_ID),
+            "a composed Shaman must not receive the Witch Hex choice: {:?}",
+            shaman_input.chosen.selected_choices
+        );
+    }
+
+    /// Leveling a seeded Witch/Shaman must stay `Computed` at every step to
+    /// the PF1 cap. `apply_level_up` takes the increment-existing-level
+    /// branch for both, so the creation-time seed simply persists and no
+    /// second seeding site is owed -- established empirically here rather
+    /// than assumed, exactly as `monk_stays_computed_leveling_all_the_way_to_20`
+    /// did for Monk.
+    #[test]
+    fn the_seeded_witch_and_shaman_stay_computed_leveling_all_the_way_to_20() {
+        for (class_id, request) in [
+            (WITCH_CLASS_ID, witch_request_for("witch-level-sweep", 1)),
+            (SHAMAN_CLASS_ID, shaman_request_for("shaman-level-sweep", 1)),
+        ] {
+            let mut character_input = compose_character_input(&request);
+
+            for expected_level in 2..=20u8 {
+                apply_level_up(&mut character_input, class_id);
+
+                assert_eq!(
+                    character_input.chosen.class_levels,
+                    vec![CharacterClassLevel {
+                        class_id: class_id.to_owned(),
+                        level: expected_level
+                    }],
+                    "apply_level_up must increment the existing {class_id} entry"
+                );
+
+                let receipt = build_pilot_headless_receipt(&character_input);
+                assert_eq!(
+                    receipt.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} leveled to {expected_level} through the real level-up path \
+                     must stay Computed: {:?}",
+                    receipt.computation.diagnostics
+                );
+            }
+        }
     }
 
     /// The seed is Monk-only: no other class may pick up a

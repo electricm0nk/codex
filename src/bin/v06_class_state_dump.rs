@@ -188,6 +188,30 @@ fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelec
             vec![choice("choice:monk_bonus_feat", "feat:dodge")],
             Vec::new(),
         ),
+        // pf1_adapter.rs: the Witch Path A seed. Flight is the canonical
+        // hex because its magnitude is the only one of the corpus's 53
+        // that lands on a total this engine computes --
+        // `BONUS:SKILL|Swim|4|TYPE=Racial`
+        // (`advanced_players_guide/apg_abilities_class.lst:892`) flows
+        // into `skill.selected_modifier.swim`. No spell is seeded: a
+        // Witch's prepared-spell posture is genuinely valid with zero
+        // spells (`unmet_witch_prepared_spell_conditions` iterates the
+        // selections and finds nothing to reject), so Wizard's
+        // bootstrap-deadlock shape does not apply.
+        "witch" => (
+            vec![choice("choice:witch_hex", "hex:flight")],
+            Vec::new(),
+        ),
+        // pf1_adapter.rs: the Shaman Path A seed. Unlike Witch, all TEN
+        // primary Spirits already ground their immediately-available
+        // base ability, so this picks which one the default posture
+        // records rather than which one works. Life earns it by
+        // grounding the richest real magnitude set (Channel
+        // uses-per-day, dice AND save DC).
+        "shaman" => (
+            vec![choice("choice:shaman_spirit", "spirit:life")],
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }
