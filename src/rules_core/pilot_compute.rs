@@ -16529,6 +16529,196 @@ fn swashbuckler_deed_tier_reached(level: u8, tier: u8) -> bool {
     level >= tier
 }
 
+/// Swashbuckler Initiative's flat initiative bonus: +2 while she has at
+/// least 1 panache point.
+///
+/// Verified against `acg_abilities_class.lst:2075`'s own
+/// `TEMPBONUS:PC|COMBAT|INITIATIVE|2`. Note the token is a **TEMPBONUS**,
+/// not a `BONUS` -- PCGen does not apply it unconditionally, which
+/// matches the rule's own "as long as she has at least 1 panache point"
+/// condition. That is why this grounds as a standalone record and is not
+/// folded into any initiative total.
+const SWASHBUCKLER_INITIATIVE_BONUS: i16 = 2;
+
+/// Swashbuckler Weapon Mastery's critical-multiplier increase: +1
+/// (x2 becomes x3, and so on), at 20th level.
+///
+/// The parent record `KEY:Swashbuckler ~ Swashbuckler Weapon Mastery`
+/// (`acg_abilities_class.lst:2044`) carries **no numeric token at all**;
+/// it only grants two Internal helper records, and the magnitude lives
+/// on those: `TEMPBONUS:EQ|Weapon,Melee,Light,Piercing|WEAPON|
+/// CRITMULTADD|1|TYPE=NonStackingCrit` and its OneHanded twin
+/// (`:2047` and `:2048`). Reading only the parent would have concluded
+/// this feature is zero-magnitude, which is exactly the
+/// read-the-whole-record trap.
+const SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE: i16 = 1;
+
+/// Dizzying Defense's improved fighting-defensively dodge bonus (+4) and
+/// reduced attack penalty (-2), at 15th level.
+///
+/// Both numbers exist **only in the record's DESC prose**
+/// (`acg_abilities_class.lst:2091`); the record carries no BONUS or
+/// DEFINE token. Transcribed verbatim from "the dodge bonus to AC gained
+/// from that action increases to +4, and the penalty to attack rolls is
+/// reduced to -2".
+const SWASHBUCKLER_DIZZYING_DEFENSE_DODGE_BONUS: i16 = 4;
+
+/// See `SWASHBUCKLER_DIZZYING_DEFENSE_DODGE_BONUS`.
+const SWASHBUCKLER_DIZZYING_DEFENSE_ATTACK_PENALTY: i16 = -2;
+
+/// Swashbuckler Weapon Mastery's grant level, per `acg_classes.lst:359`.
+const SWASHBUCKLER_WEAPON_MASTERY_LEVEL: u8 = 20;
+
+/// Swashbuckler's bonus combat feats: `SwashbucklerLVL/4`.
+///
+/// The corpus supplies this as five separate `.MOD` increments on
+/// `Swashbuckler ~ Bonus Feats` (`acg_abilities_class.lst:2051-2055`),
+/// each `BONUS:VAR|Pool_SwashbucklerBonusFeat|1` gated
+/// `PREVARGTEQ:SwashbucklerLVL,<4|8|12|16|20>`. Summing those five gates
+/// is exactly integer `level/4` across levels 1-20, so this is the
+/// faithful closed form rather than a simplification.
+///
+/// The parent record itself carries **no** increment -- only
+/// `DEFINE:Pool_SwashbucklerBonusFeat|0` and the fighter-level
+/// equivalence `BONUS:VAR|FighterWeaponQualifyLVL|SwashbucklerLVL`
+/// already grounded separately. Reading the parent alone yields 0 feats
+/// at every level.
+///
+/// Each `.MOD` also carries a `PREVAREQ:Swashbuckler_CF_BonusFeatN,0`
+/// suppression flag. Every setter of those flags is a Swashbuckler
+/// ARCHETYPE record (Daring Infiltrator, Mysterious Avenger), and this
+/// repo ingests only the base `swashbuckler.json`, so all five are
+/// provably vacuous here -- the same archetype-deduction check already
+/// applied to Brawler's seven and Slayer's ten.
+fn swashbuckler_bonus_feat_count(level: u8) -> i16 {
+    i16::from(level) / 4
+}
+
+/// The Swashbuckler deeds whose corpus records carry **no numeric token
+/// of any kind**, as `(deed tier, display name, corpus DESC excerpt)`.
+///
+/// Each was verified field by field on its own record rather than by a
+/// filtered grep: every one is `KEY` + `SORTKEY` + `CATEGORY` + `TYPE` +
+/// `PREVARGTEQ` + `DESC` + `SOURCEPAGE` + `ASPECT`, with no `BONUS`, no
+/// `DEFINE`, and no `TEMPBONUS`. Their whole benefit is a resolution at
+/// the table, so they ground as bounded grant-only identity records --
+/// the Arcane Apotheosis idiom -- rather than being reported as
+/// unbuilt engine work that could never close.
+///
+/// **The key namespace is `Swashbuckler ~ <Name>`, not
+/// `Swashbuckler Deed ~ <Name>`.** `Swashbuckler Deed` appears in the
+/// corpus only as a TYPE segment; a grep for `KEY:Swashbuckler Deed ~`
+/// returns zero and would suggest these records do not exist.
+///
+/// Deliberately excluded from this table, because they are NOT
+/// zero-magnitude and are grounded with real numbers separately:
+/// Swashbuckler Initiative (+2 initiative) and Dizzying Defense
+/// (+4 dodge / -2 attack).
+///
+/// Also note `KEY:Swashbuckler ~ Daring` and
+/// `KEY:Swashbuckler ~ Martial Training` in the APG are **Rogue
+/// archetype talents** sharing this key prefix -- not ACG Swashbuckler
+/// class features, and correctly absent here.
+const SWASHBUCKLER_ZERO_MAGNITUDE_DEEDS: &[(u8, &str, &str)] = &[
+    (
+        1,
+        "Opportune Parry and Riposte",
+        "when an opponent makes a melee attack against the swashbuckler, she can spend 1 panache \
+         point and expend a use of an attack of opportunity to attempt to parry that attack ... \
+         If her result is greater than the attacking creature's result, the creature's attack \
+         automatically misses",
+    ),
+    (
+        3,
+        "Kip-Up",
+        "while the swashbuckler has at least 1 panache point, she can kip-up from prone as a move \
+         action without provoking an attack of opportunity. She can kip-up as a swift action \
+         instead by spending 1 panache point",
+    ),
+    (
+        3,
+        "Menacing Swordplay",
+        "when a swashbuckler hits an opponent with a light or one-handed piercing melee weapon, \
+         she can choose to use Intimidate to demoralize that opponent as a swift action instead \
+         of a standard action",
+    ),
+    (
+        7,
+        "Swashbuckler's Grace",
+        "while the swashbuckler has at least 1 panache point, she takes no penalty for moving at \
+         full speed when she uses Acrobatics to attempt to move through a threatened area or an \
+         enemy's space",
+    ),
+    (
+        7,
+        "Superior Feint",
+        "a swashbuckler with at least 1 panache point can, as a standard action, purposefully \
+         miss a creature she could make a melee attack against with a wielded light or one-handed \
+         piercing weapon. When she does, the creature is denied its Dexterity bonus to AC until \
+         the start of the swashbuckler's next turn",
+    ),
+    (
+        7,
+        "Targeted Strike",
+        "as a full-round action the swashbuckler can spend 1 panache point to make an attack with \
+         a single light or one-handed piercing melee weapon that cripples part of a foe's body \
+         ... Arms: drops one carried item. Head: confused for 1 round. Legs: knocked prone. \
+         Torso or Wings: staggered for one round",
+    ),
+    (
+        11,
+        "Subtle Blade",
+        "while a swashbuckler has at least 1 panache point, she is immune to disarm, steal, and \
+         sunder combat maneuvers made against a light or one-handed piercing melee weapon she is \
+         wielding",
+    ),
+    (
+        11,
+        "Evasive",
+        "while a swashbuckler has at least 1 panache point, she gains the benefits of the \
+         evasion, uncanny dodge, and improved uncanny dodge rogue class features. She uses her \
+         swashbuckler level as her rogue level for improved uncanny dodge",
+    ),
+    (
+        15,
+        "Perfect Thrust",
+        "while the swashbuckler has at least 1 panache point, she can as a full-round action make \
+         a perfect thrust ... she makes the attack against the target's touch AC, and ignores all \
+         damage reduction",
+    ),
+    (
+        15,
+        "Swashbuckler's Edge",
+        "while the swashbuckler has at least 1 panache point, she can take 10 on any Acrobatics, \
+         Climb, Escape Artist, Fly, Ride, or Swim check, even while distracted or in immediate \
+         danger",
+    ),
+    (
+        19,
+        "Cheat Death",
+        "whenever the swashbuckler is reduced to 0 or fewer hit points, she can spend all of her \
+         remaining panache points (minimum 1) to instead be reduced to 1 hit point",
+    ),
+];
+
+/// Folds a deed's display name into the snake_case tail of its
+/// explanation id (`"Opportune Parry and Riposte"` ->
+/// `"opportune_parry_and_riposte"`).
+fn swashbuckler_deed_id_slug(display_name: &str) -> String {
+    display_name
+        .chars()
+        .filter_map(|c| {
+            if c.is_ascii_alphanumeric() {
+                Some(c.to_ascii_lowercase())
+            } else if c == ' ' || c == '-' {
+                Some('_')
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
 /// Derring-Do's uses per day: `BONUS:VAR|DerringDoTimes|DEX` -- the
 /// Dexterity MODIFIER, not the score. Tier 1.
 fn swashbuckler_derring_do_uses(dexterity_modifier: i16) -> i16 {
@@ -16657,6 +16847,146 @@ fn ground_swashbuckler_deeds(
                 ),
             });
         }
+    }
+
+    ground_swashbuckler_remaining_deeds_and_mastery(level, explanations);
+}
+
+/// Grounds the thirteen Swashbuckler deeds that had no coverage, plus
+/// Swashbuckler Weapon Mastery and the bonus-feat pool (task #91).
+///
+/// Together these were the entire content of Swashbuckler's
+/// claim-blocking `other_features_deferred` diagnostic. The split is
+/// evidentiary, and the two numeric exceptions are the reason the
+/// zero-magnitude table could not simply be applied to all thirteen:
+///
+/// * **Eleven deeds carry no numeric token at all** -- see
+///   `SWASHBUCKLER_ZERO_MAGNITUDE_DEEDS`. Bounded grant-only identity
+///   records, value 0.
+///
+/// * **Swashbuckler Initiative carries a real `TEMPBONUS`** of +2 on
+///   initiative checks.
+///
+/// * **Dizzying Defense carries real numbers in DESC prose only**
+///   (+4 dodge, -2 attack while fighting defensively).
+///
+/// None of the eleven is claimed to be text-complete-to-the-player. The
+/// shipped app has no class-feature description surface, so quoting the
+/// corpus text here grounds the GRANT and its rulebook basis, not its
+/// delivery to a reader.
+fn ground_swashbuckler_remaining_deeds_and_mastery(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    for (tier, display_name, description) in SWASHBUCKLER_ZERO_MAGNITUDE_DEEDS {
+        if !swashbuckler_deed_tier_reached(level, *tier) {
+            continue;
+        }
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_feature.acg.swashbuckler.deed.{}_grant",
+                swashbuckler_deed_id_slug(display_name)
+            ),
+            value: 0,
+            detail: format!(
+                "Swashbuckler level {level} {display_name} (deed tier {tier}, corpus \
+                 KEY:Swashbuckler ~ {display_name}): \"{description}\" This is a bounded \
+                 grant-only identity record (value 0, non-fabricated): the record carries no \
+                 BONUS, no DEFINE and no TEMPBONUS -- verified field by field -- so it has no \
+                 magnitude to compute, now or ever. Its benefit is a resolution the player \
+                 invokes at the table. The panache costs named in the text are spends against \
+                 the Panache pool already grounded separately, not quantities derived here"
+            ),
+        });
+    }
+
+    if swashbuckler_deed_tier_reached(level, 3) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.deed.swashbuckler_initiative_bonus".to_owned(),
+            value: SWASHBUCKLER_INITIATIVE_BONUS,
+            detail: format!(
+                "Swashbuckler level {level} Swashbuckler Initiative (deed tier 3): a \
+                 +{SWASHBUCKLER_INITIATIVE_BONUS} bonus on initiative checks while she has at \
+                 least 1 panache point. Verified against the record's own \
+                 TEMPBONUS:PC|COMBAT|INITIATIVE|2. The token is a TEMPBONUS rather than a BONUS \
+                 precisely because the benefit is conditional on holding panache, so this grounds \
+                 as a standalone record and is deliberately NOT folded into any initiative total \
+                 -- doing so would assert the bonus applies unconditionally. The deed's second \
+                 clause (drawing a weapon as part of the initiative check, given Quick Draw) is a \
+                 resolution with no magnitude"
+            ),
+        });
+    }
+
+    if swashbuckler_deed_tier_reached(level, 15) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.deed.dizzying_defense_dodge_bonus".to_owned(),
+            value: SWASHBUCKLER_DIZZYING_DEFENSE_DODGE_BONUS,
+            detail: format!(
+                "Swashbuckler level {level} Dizzying Defense (deed tier 15): fighting \
+                 defensively becomes a swift action for 1 panache point, and the dodge bonus to \
+                 AC from that action rises to \
+                 +{SWASHBUCKLER_DIZZYING_DEFENSE_DODGE_BONUS} while the attack penalty is reduced \
+                 to {SWASHBUCKLER_DIZZYING_DEFENSE_ATTACK_PENALTY}. Both magnitudes are \
+                 transcribed from the record's DESC prose, which is the only place they exist -- \
+                 the record carries no BONUS or DEFINE token. Grounded standalone: this codebase \
+                 models no fighting-defensively combat action for either number to modify, so \
+                 neither is applied to an armour-class or attack total"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.deed.dizzying_defense_attack_penalty".to_owned(),
+            value: SWASHBUCKLER_DIZZYING_DEFENSE_ATTACK_PENALTY,
+            detail: format!(
+                "Swashbuckler level {level} Dizzying Defense attack penalty: \
+                 {SWASHBUCKLER_DIZZYING_DEFENSE_ATTACK_PENALTY} while fighting defensively in \
+                 this manner, replacing the normal -4. Carried as its own facet because a single \
+                 `value` cannot express a paired bonus-and-penalty, and because the penalty is \
+                 the half a reader is most likely to assume rather than check"
+            ),
+        });
+    }
+
+    if level >= SWASHBUCKLER_WEAPON_MASTERY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.weapon_mastery_critical_multiplier_increase"
+                .to_owned(),
+            value: SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE,
+            detail: format!(
+                "Swashbuckler level {level} Swashbuckler Weapon Mastery (granted at level \
+                 {SWASHBUCKLER_WEAPON_MASTERY_LEVEL}): critical threats with a light or \
+                 one-handed piercing melee weapon are automatically confirmed, and such weapons' \
+                 critical multipliers increase by \
+                 {SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE} (x2 becomes x3, and so \
+                 on). The magnitude is NOT on the parent record, which carries no numeric token \
+                 at all -- it lives on the two Internal helper records the parent grants, as \
+                 TEMPBONUS:EQ|...|WEAPON|CRITMULTADD|1|TYPE=NonStackingCrit. Reading only the \
+                 parent would have wrongly concluded this feature is zero-magnitude. Grounds the \
+                 increment only: this codebase computes no critical multiplier for a wielded \
+                 weapon, and the automatic-confirmation clause is a resolution with no magnitude"
+            ),
+        });
+    }
+
+    let bonus_feats = swashbuckler_bonus_feat_count(level);
+    if bonus_feats > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.swashbuckler.bonus_feat_count".to_owned(),
+            value: bonus_feats,
+            detail: format!(
+                "Swashbuckler level {level} has {bonus_feats} bonus combat feat slot(s) \
+                 (Pool_SwashbucklerBonusFeat), gained at 4th level and every four levels \
+                 thereafter -- level/4. The corpus supplies this as five separate .MOD \
+                 increments on the Bonus Feats parent, each +1 gated at levels 4/8/12/16/20; the \
+                 parent record itself carries no increment, so reading it alone yields 0 at every \
+                 level. The five archetype suppression flags on those .MODs are provably vacuous \
+                 here (every setter is a Swashbuckler archetype record and only the base class is \
+                 ingested). Grounds the SLOT COUNT only -- which combat feat fills each slot is a \
+                 chooser over the whole combat-feat list and is never seeded, the same discipline \
+                 applied to Brawler's Martial Flexibility. The separate fighter-level-equivalence \
+                 facet these slots qualify against is grounded in its own record"
+            ),
+        });
     }
 }
 
@@ -16858,26 +17188,34 @@ fn push_swashbuckler_other_features_deferred_diagnostic(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.swashbuckler.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{SWASHBUCKLER_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save \
-             chassis pillar, its class-skill list, Panache's flat daily maximum, Nimble's dodge \
-             bonus, Charmed Life, Swashbuckler Finesse, Swashbuckler Weapon Training, and the \
-             six Deeds already built (Derring-Do, Dodging Panache, Precise Strike with its \
-             critical case, Bleeding Wound, Deadly Stab, Stunning Stab). Thirteen of the \
-             corpus's nineteen `Swashbuckler Deed` records remain ungrounded anywhere in this \
-             codebase: Opportune Parry and Riposte (1st), Kip-Up, Menacing Swordplay and \
-             Swashbuckler Initiative (3rd), Superior Feint, Swashbuckler's Grace and Targeted \
-             Strike (7th), Evasive and Subtle Blade (11th), Dizzying Defense, Perfect Thrust \
-             and Swashbuckler's Edge (15th), and Cheat Death (19th). Swashbuckler Weapon \
-             Mastery is likewise ungrounded, and Bonus Feats is grounded only for its \
-             fighter-level-equivalence facet -- the bonus-feat slot itself \
-             (`Pool_SwashbucklerBonusFeat`, 4th level and every four thereafter) is not. No \
-             class-feature execution is fabricated in this bounded chassis baseline. This \
-             message previously described Deeds as \"named but not built\" and Swashbuckler \
-             Finesse as having \"no hook\" in this codebase -- both were true when written and \
-             are false now (task #14); a later revision then named only four remaining items, \
-             which understated the real gap (task #76)"
+            "{SWASHBUCKLER_CLASS_ID} now grounds every named feature on its corpus class table: \
+             the base-attack-bonus/base-save chassis pillar, its class-skill list, Panache's flat \
+             daily maximum, Nimble's dodge bonus, Charmed Life, Swashbuckler Finesse, \
+             Swashbuckler Weapon Training, all NINETEEN Swashbuckler Deed records, and -- newly, \
+             task #91 -- Swashbuckler Weapon Mastery's critical-multiplier increase and the \
+             bonus-feat slot count (`Pool_SwashbucklerBonusFeat`, level/4). This diagnostic is \
+             therefore no longer claim-blocking; it is retained to carry the honest remainder. \
+             Of the thirteen deeds closed by task #91, eleven carry no numeric corpus token of \
+             any kind -- verified field by field, not by a filtered grep -- and are grounded as \
+             bounded grant-only identity records quoting their real rulebook text: Opportune \
+             Parry and Riposte (1st), Kip-Up and Menacing Swordplay (3rd), Superior Feint, \
+             Swashbuckler's Grace and Targeted Strike (7th), Evasive and Subtle Blade (11th), \
+             Perfect Thrust and Swashbuckler's Edge (15th), and Cheat Death (19th). The other \
+             two are genuinely numeric and are grounded with real values: Swashbuckler \
+             Initiative's +2 (a TEMPBONUS, hence conditional on holding panache) and Dizzying \
+             Defense's +4 dodge / -2 attack (DESC prose only). What stays deferred is EXECUTION, \
+             not magnitude: no combat action, attack roll, critical multiplier, armour-class \
+             total or initiative total exists here for these numbers to feed, and the eleven \
+             zero-magnitude deeds have no number that could ever be computed. Those eleven are \
+             NOT claimed to be text-complete-to-the-player -- no class-feature description \
+             surface exists in the shipped app, so the stronger claim is deliberately not made. \
+             The bonus-feat slot count grounds without seeding which combat feat fills each slot. \
+             This message previously described Deeds as \"named but not built\" and Swashbuckler \
+             Finesse as having \"no hook\" (both false since task #14); a later revision named \
+             only four remaining items, understating the gap (task #76); the thirteen-deed list \
+             it then carried is now closed"
         ),
-        claim_blocking: true,
+        claim_blocking: false,
     });
 }
 
@@ -42794,15 +43132,20 @@ mod acg_class_chassis_dispatch_tests {
     /// diagnostic always does. Panache's max and Nimble's dodge bonus
     /// ground unconditionally regardless (no choice or activation gate
     /// for either).
+    ///
+    /// **Task #91 flips the status assertion**, for the same reason as
+    /// its sibling in `swashbuckler_dispatch_widening_safety_tests`: the
+    /// thirteen deeds, Weapon Mastery and the bonus-feat slot count its
+    /// blocking claim named are now grounded.
     #[test]
-    fn swashbuckler_stays_blocked_with_the_new_narrower_diagnostic_not_the_retired_one() {
+    fn swashbuckler_reaches_computed_with_its_remainder_diagnostic_demoted_not_deleted() {
         let input = acg_style_input("class:swashbuckler", 1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Swashbuckler must stay Blocked on its other-features-deferred posture alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Swashbuckler grounds every named corpus feature and must now compute: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -42821,8 +43164,8 @@ mod acg_class_chassis_dispatch_tests {
                 .iter()
                 .any(|d| d.id
                     == "class_feature.acg.swashbuckler.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -52417,16 +52760,21 @@ mod swashbuckler_dispatch_widening_safety_tests {
     ///
     /// Fixture Charisma 8 (-1 modifier): Panache max(1,-1)=1. Level 1
     /// Nimble: (1+1)/4=0.
+    ///
+    /// **Task #91 flips the status assertion.** The thirteen deeds,
+    /// Swashbuckler Weapon Mastery and the bonus-feat slot count that
+    /// this diagnostic's blocking claim named are now grounded, so the
+    /// record is demoted rather than deleted and Swashbuckler computes.
     #[test]
-    fn single_class_swashbuckler_level1_stays_blocked_on_other_features_only_with_panache_and_nimble_grounded_and_charmed_life_not_yet_gained()
+    fn single_class_swashbuckler_level1_computes_with_panache_and_nimble_grounded_and_charmed_life_not_yet_gained()
     {
         let input = human_swashbuckler_input(1);
         let receipt = build_pilot_headless_receipt(&input);
 
         assert_eq!(
             receipt.status,
-            HeadlessReceiptStatus::Blocked,
-            "Swashbuckler must stay Blocked on other-features-deferred alone: {:?}",
+            HeadlessReceiptStatus::Computed,
+            "Swashbuckler grounds every named corpus feature and must now compute: {:?}",
             receipt.computation.diagnostics
         );
         assert!(
@@ -52444,8 +52792,8 @@ mod swashbuckler_dispatch_widening_safety_tests {
                 .diagnostics
                 .iter()
                 .any(|d| d.id == "class_feature.acg.swashbuckler.other_features_deferred.unsupported"
-                    && d.claim_blocking),
-            "expected the new narrower other_features_deferred diagnostic: {:?}",
+                    && !d.claim_blocking),
+            "the remainder record must survive as a NON-blocking diagnostic: {:?}",
             receipt.computation.diagnostics
         );
 
@@ -52473,6 +52821,160 @@ mod swashbuckler_dispatch_widening_safety_tests {
                 .any(|e| e.id == "class_feature.acg.swashbuckler.charmed_life_not_yet_gained"),
             "expected the honest not-yet-gained recognition record at level 1: {:?}",
             receipt.computation.explanations
+        );
+    }
+
+    /// All nineteen corpus Deed records are now covered, each appearing
+    /// exactly at its own corpus tier gate (1/3/7/11/15/19) and never
+    /// before it.
+    ///
+    /// The count is asserted against the corpus's real total rather than
+    /// a running tally, so adding a deed record without gating it, or
+    /// double-emitting one, fails here.
+    #[test]
+    fn all_nineteen_deeds_are_covered_each_at_its_own_corpus_tier() {
+        // (explanation id fragment, first level it may appear)
+        let deeds: &[(&str, u8)] = &[
+            // The six already built before task #91.
+            ("derring_do_uses_per_day", 1),
+            ("dodging_panache_dodge_bonus", 1),
+            ("precise_strike_damage", 3),
+            ("bleeding_wound_damage", 11),
+            ("deadly_stab_dc", 19),
+            ("stunning_stab_dc", 19),
+            // The thirteen closed by task #91.
+            ("deed.opportune_parry_and_riposte_grant", 1),
+            ("deed.kip_up_grant", 3),
+            ("deed.menacing_swordplay_grant", 3),
+            ("deed.swashbuckler_initiative_bonus", 3),
+            ("deed.swashbucklers_grace_grant", 7),
+            ("deed.superior_feint_grant", 7),
+            ("deed.targeted_strike_grant", 7),
+            ("deed.subtle_blade_grant", 11),
+            ("deed.evasive_grant", 11),
+            ("deed.dizzying_defense_dodge_bonus", 15),
+            ("deed.perfect_thrust_grant", 15),
+            ("deed.swashbucklers_edge_grant", 15),
+            ("deed.cheat_death_grant", 19),
+        ];
+        assert_eq!(
+            deeds.len(),
+            19,
+            "the corpus carries exactly nineteen Swashbuckler Deed records"
+        );
+
+        for (fragment, gate) in deeds {
+            let id = format!("class_feature.acg.swashbuckler.{fragment}");
+            if *gate > 1 {
+                let below = build_pilot_headless_receipt(&human_swashbuckler_input(gate - 1));
+                assert!(
+                    !below.computation.explanations.iter().any(|e| e.id == id),
+                    "{id} must not exist at level {}, below its tier-{gate} gate",
+                    gate - 1
+                );
+            }
+            let at_gate = build_pilot_headless_receipt(&human_swashbuckler_input(*gate));
+            assert!(
+                at_gate.computation.explanations.iter().any(|e| e.id == id),
+                "{id} must ground at its tier-{gate} gate"
+            );
+            let capstone = build_pilot_headless_receipt(&human_swashbuckler_input(20));
+            assert_eq!(
+                capstone.computation.explanations.iter().filter(|e| e.id == id).count(),
+                1,
+                "{id} must appear exactly once at level 20, never double-emitted"
+            );
+        }
+    }
+
+    /// The two deeds among the thirteen that are NOT zero-magnitude
+    /// carry their real corpus values.
+    ///
+    /// Swashbuckler Initiative's +2 comes from a `TEMPBONUS`, and
+    /// Dizzying Defense's +4/-2 exist only in DESC prose -- two
+    /// different evidentiary paths, both distinct from the eleven
+    /// genuinely tokenless deeds, and both easy to mis-file as
+    /// zero-magnitude.
+    #[test]
+    fn the_two_numeric_deeds_carry_real_values_not_zero() {
+        let receipt = build_pilot_headless_receipt(&human_swashbuckler_input(15));
+        let value = |id: &str| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .map(|e| e.value)
+        };
+
+        assert_eq!(
+            value("class_feature.acg.swashbuckler.deed.swashbuckler_initiative_bonus"),
+            Some(2),
+        );
+        assert_eq!(
+            value("class_feature.acg.swashbuckler.deed.dizzying_defense_dodge_bonus"),
+            Some(4),
+        );
+        // The penalty is a real negative, not an absolute value.
+        assert_eq!(
+            value("class_feature.acg.swashbuckler.deed.dizzying_defense_attack_penalty"),
+            Some(-2),
+        );
+
+        // ...while a representative tokenless deed is genuinely 0.
+        assert_eq!(
+            value("class_feature.acg.swashbuckler.deed.kip_up_grant"),
+            Some(0),
+        );
+    }
+
+    /// Swashbuckler Weapon Mastery's magnitude is NOT on its parent
+    /// record -- it lives on the two Internal helper records the parent
+    /// grants (`CRITMULTADD|1`). Reading only the parent would conclude
+    /// this feature is zero-magnitude, so the assertion is specifically
+    /// that it is 1 and not 0.
+    #[test]
+    fn weapon_mastery_reads_its_magnitude_off_the_helper_records_not_the_parent() {
+        let id = "class_feature.acg.swashbuckler.weapon_mastery_critical_multiplier_increase";
+        let below = build_pilot_headless_receipt(&human_swashbuckler_input(19));
+        assert!(!below.computation.explanations.iter().any(|e| e.id == id));
+
+        let at_20 = build_pilot_headless_receipt(&human_swashbuckler_input(20));
+        let mastery = at_20
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .expect("Weapon Mastery grounds at 20");
+        assert_eq!(
+            mastery.value, 1,
+            "the +1 critical multiplier lives on the helper records; 0 would mean only the \
+             parent was read: {mastery:?}"
+        );
+    }
+
+    /// The bonus-feat pool is `level/4`, supplied by five separate .MOD
+    /// increments. The parent record carries none, so reading it alone
+    /// yields 0 forever -- hence the assertion that level 20 is 5.
+    #[test]
+    fn swashbuckler_bonus_feat_pool_sums_its_five_mod_increments() {
+        for (level, want) in [
+            (1u8, 0i16), (3, 0), (4, 1), (7, 1), (8, 2),
+            (11, 2), (12, 3), (15, 3), (16, 4), (19, 4), (20, 5),
+        ] {
+            assert_eq!(super::swashbuckler_bonus_feat_count(level), want, "level {level}");
+        }
+
+        let id = "class_feature.acg.swashbuckler.bonus_feat_count";
+        let at_3 = build_pilot_headless_receipt(&human_swashbuckler_input(3));
+        assert!(
+            !at_3.computation.explanations.iter().any(|e| e.id == id),
+            "no slot exists before 4th level, so no record should claim one"
+        );
+        let at_20 = build_pilot_headless_receipt(&human_swashbuckler_input(20));
+        assert_eq!(
+            at_20.computation.explanations.iter().find(|e| e.id == id).map(|e| e.value),
+            Some(5),
         );
     }
 
