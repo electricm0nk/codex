@@ -148,8 +148,40 @@ addition. Recommend a dedicated scoping cycle that answers, at minimum: (a) is a
 formula-engine interpretation needed, or can specific common patterns (flat bonuses, simple
 gated grants) be modeled the same "parallel copy, not shared function" way v0.6's own class
 closures already do it per-class; (b) what's the real size of the problem across all 19 deferred
-future-state books, not just PU; (c) does this block SD-28+ entirely or can it be deferred
-per-book the way v0.6 already defers permanently-blocked classes.
+future-state books, not just PU (**answered below, 2026-07-30**); (c) does this block SD-28+
+entirely or can it be deferred per-book the way v0.6 already defers permanently-blocked classes.
+
+**(b) Real sizing, direct read of the source corpus (not estimated):** this problem spans nearly
+every deferred book, in more shapes than just "class abilities":
+
+| Book | Formula file(s) | Real lines |
+|---|---|---|
+| Ultimate Combat | 24 files (archetypes, etc.) | 3,303 |
+| Ultimate Magic | 3 files | 2,819 |
+| Occult Adventures | 5 files — **includes genuinely new base classes** (Kineticist, Medium, Mesmerist, Occultist, Psychic, Spiritualist), not just alternate features | 2,304 |
+| Ultimate Wilderness | 7 files | 2,017 |
+| Ultimate Intrigue | 5 files | 1,614 |
+| Horror Adventures | 6 files | 1,066 |
+| Ultimate Campaign | 3 files — **traits, drawbacks, retraining rules**, a different shape than class abilities | 449 |
+| Mythic Adventures | 1 file | 363 |
+| Monster Codex | 4 files | 278 |
+| Bonus Bestiary | 1 file | 52 |
+| Ultimate Equipment | 1 file (`ue_abilities.lst`, general item abilities, not class-scoped) | 91 |
+| ARG + PU (already known) | 2 files | ~2,688 |
+
+**~17,000 real lines total**, not a handful of edge cases. Occult Adventures alone raises the
+stakes past "alternate class features" into "the schema needs to represent entirely new base
+classes" — a strictly bigger ask than anything ARG/PU needed. Ultimate Campaign shows the content
+isn't even uniformly "class-ability" shaped — traits/drawbacks/retraining are a structurally
+different PF1 mechanic that would need its own content-kind, not a shoehorn into whatever Finding
+3's eventual schema covers for classes.
+
+**(c), informed by (b):** given the scale and the real shape diversity found, recommend NOT
+attempting a single universal formula-interpreter up front. Better fit with this codebase's own
+proven pattern (v0.6's "parallel copy, not shared function" per-class closures): scope and land
+book-by-book, feature-by-feature, as each future-state book comes up for real ingestion —
+deferring cleanly (named gap, not silently dropped, matching how ARG/PU's exclusions were handled)
+rather than blocking all 17 remaining books on one big interpreter landing first.
 
 ## Sequencing recommendation
 
