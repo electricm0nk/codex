@@ -1,4 +1,9 @@
-import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
+import {
+  describeFeatTarget,
+  mergeChosenFeatTarget,
+  normalizeFeatIdentity,
+  resolveSelectedFeatEntries,
+} from './featsTabModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { ItemPickerEntry } from './itemPickerFilter';
 
@@ -143,6 +148,47 @@ function verifiesMergingANewChooserFeatAddsAnEntry() {
   assertEqual(merged[0].targetKind, 'Skill', 'carrying the kind it was picked for');
 }
 
+/**
+ * The exact table `src/rules_core/feat_identity.rs`'s own
+ * `FRONTEND_SHAPE_CASES` pins, mirrored here verbatim.
+ *
+ * Display (this module) and effect resolution (the engine) must fold feat
+ * identifiers identically: a shape that folds here but not there renders a
+ * feat on the sheet whose producer never fires, which is exactly the defect
+ * that left a player who picked Dodge with no armor class. Keeping the two
+ * tables literally identical means a change to either fold fails one of them.
+ */
+const SHARED_IDENTITY_SHAPES: ReadonlyArray<readonly [string, string]> = [
+  ['feat:deflect_arrows', 'deflectarrows'],
+  ['Deflect Arrows', 'deflectarrows'],
+  ['feat:weapon_focus:weapon:longsword', 'weaponfocus'],
+  ["Gorgon's Fist", 'gorgonsfist'],
+  ['feat:gorgons_fist', 'gorgonsfist'],
+  ['Elemental Spell ~ Acid', 'elementalspellacid'],
+  ['Elemental Spell (Acid)', 'elementalspellacid'],
+];
+
+function verifiesTheFoldMatchesTheEngineIdentityShapes() {
+  for (const [raw, expected] of SHARED_IDENTITY_SHAPES) {
+    assertEqual(
+      normalizeFeatIdentity(raw),
+      expected,
+      `folding ${JSON.stringify(raw)} must match src/rules_core/feat_identity.rs`
+    );
+  }
+}
+
+function verifiesTheFoldIsWholeStringEqualityNotAPrefixMatch() {
+  assert(
+    normalizeFeatIdentity('Acrobatic Steps') !== normalizeFeatIdentity('Acrobatic'),
+    'a longer feat whose name begins with another must not fold onto it'
+  );
+  assert(
+    normalizeFeatIdentity('feat:greater_weapon_focus') !== normalizeFeatIdentity('Weapon Focus'),
+    'Greater Weapon Focus is a different feat from Weapon Focus'
+  );
+}
+
 function main() {
   verifiesCatalogKeyFormatResolvesDirectly();
   verifiesEngineTokenFormatResolvesToSameCatalogEntry();
@@ -158,6 +204,8 @@ function main() {
   verifiesMergingATargetNeverInventsOne();
   verifiesMergingAppendsToTheSameFeatRatherThanDuplicatingIt();
   verifiesMergingANewChooserFeatAddsAnEntry();
+  verifiesTheFoldMatchesTheEngineIdentityShapes();
+  verifiesTheFoldIsWholeStringEqualityNotAPrefixMatch();
   console.log('featsTabModel.test.ts: all assertions passed');
 }
 

@@ -30,6 +30,7 @@ use crate::rules_core::rules_tables::crb::race_tables::race_size_for_race_id;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::equipment_resolver::equipment_id_resolve;
+use crate::rules_core::feat_identity;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
     compute_pilot_base_chassis, equipped_weapon_stat_block, fighter_armor_training,
@@ -375,10 +376,12 @@ pub fn compute_combat_baseline_from_corpus(
     require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
     require_active_state(input, POWER_ATTACK_ITEM_ID, ActiveState::SelectedInactive, &mut unmet);
 
-    if !chosen.selected_feats.iter().any(|f| f == DODGE_FEAT_ID) {
+    // Folded, not compared verbatim -- the same seam, and the same reason, as
+    // `pilot_compute::unmet_combat_posture_conditions`'s own pair of gates.
+    if !feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
         unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
     }
-    if !chosen.selected_feats.iter().any(|f| f == WEAPON_FOCUS_FEAT_ID) {
+    if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
     if fighter_level_in_mix(input).is_some() {

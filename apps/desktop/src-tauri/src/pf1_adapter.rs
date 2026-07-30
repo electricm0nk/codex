@@ -1895,6 +1895,96 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// A saved character whose `selected_feats` carries neither shape of the
+    /// feat under test, so what the picker sends is the only thing that can
+    /// satisfy the engine.
+    fn envelope_without(character_id: &str, feat: &str) -> SavedCharacterEnvelope {
+        let fold = |raw: &str| -> String {
+            let stripped = raw.strip_prefix("feat:").unwrap_or(raw);
+            stripped
+                .split(':')
+                .next()
+                .unwrap_or("")
+                .chars()
+                .filter(char::is_ascii_alphanumeric)
+                .map(|c| c.to_ascii_lowercase())
+                .collect()
+        };
+        let wanted = fold(feat);
+        let mut envelope = seed_envelope(character_id, 1);
+        envelope
+            .character_input
+            .chosen
+            .selected_feats
+            .retain(|held| fold(held) != wanted);
+        envelope
+    }
+
+    /// The identity seam, proven end to end through the command the app's own
+    /// `handleAddFeat` / `handleLevelUpFeatPick` call.
+    ///
+    /// `selected_feats` genuinely mixes two shapes: the catalog `key` the feat
+    /// picker sends (`"Dodge"`) and the engine's `feat:snake_case` token that
+    /// character creation seeds (`"feat:dodge"`). Every producer and every
+    /// posture gate must treat them as the same feat, or a player who picks a
+    /// feat from the catalog gets an id no producer can see. Before the shared
+    /// identity fold, `unmet_combat_posture_conditions` matched the token by
+    /// exact string equality, so picking Dodge (or Weapon Focus) through the
+    /// real picker left the character `Blocked` with no armor class and no
+    /// melee attack bonus at all.
+    ///
+    /// Asserted as an equivalence between the two shapes rather than against a
+    /// hardcoded armor class, so this cannot rot into pinning a stale number:
+    /// what it protects is that the picker's shape and the engine's shape
+    /// compute identically.
+    #[test]
+    fn a_feat_picked_by_catalog_key_computes_exactly_like_its_engine_token() {
+        for (catalog_key, engine_token) in [("Dodge", "feat:dodge"), ("Weapon Focus", "feat:weapon_focus")] {
+            let label = catalog_key.to_lowercase().replace(' ', "-");
+
+            let key_root = tempdir(&format!("identity-key-{label}"));
+            let key_id = format!("pf1-identity-key-{label}");
+            SavedCharacterStore::save(&envelope_without(&key_id, catalog_key), &key_root)
+                .expect("seed save should succeed");
+            let via_key = add_feat_selection_at_root(&key_root, catalog_key, None, TEST_SAVED_AT)
+                .expect("add-feat call should not error");
+
+            let token_root = tempdir(&format!("identity-token-{label}"));
+            let token_id = format!("pf1-identity-token-{label}");
+            SavedCharacterStore::save(&envelope_without(&token_id, catalog_key), &token_root)
+                .expect("seed save should succeed");
+            let via_token = add_feat_selection_at_root(&token_root, engine_token, None, TEST_SAVED_AT)
+                .expect("add-feat call should not error");
+
+            match (&via_key, &via_token) {
+                (
+                    CreateCharacterResponse::Saved { snapshot: key_snapshot, .. },
+                    CreateCharacterResponse::Saved { snapshot: token_snapshot, .. },
+                ) => {
+                    // `PilotSnapshotDto` carries no `PartialEq`, and adding one
+                    // for a test would widen a shipped wire type; its `Debug` is
+                    // fully derived, so it is a faithful whole-value compare.
+                    assert_eq!(
+                        format!("{key_snapshot:?}"),
+                        format!("{token_snapshot:?}"),
+                        "picking {catalog_key:?} from the catalog must compute exactly what \
+                         {engine_token:?} computes"
+                    );
+                }
+                (CreateCharacterResponse::Blocked { diagnostics }, _) => panic!(
+                    "picking {catalog_key:?} through the real add_feat_selection path must reach \
+                     Computed, got: {diagnostics:?}"
+                ),
+                (_, CreateCharacterResponse::Blocked { diagnostics }) => panic!(
+                    "the {engine_token:?} control arm must reach Computed, got: {diagnostics:?}"
+                ),
+            }
+
+            std::fs::remove_dir_all(&key_root).ok();
+            std::fs::remove_dir_all(&token_root).ok();
+        }
+    }
+
     // ----- Wizard spellbook posture fix (v0.6 alpha swarm) -----
     //
     // Before this fix, `compose_character_input` never seeded the

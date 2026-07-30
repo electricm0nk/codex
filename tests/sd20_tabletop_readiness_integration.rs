@@ -1123,15 +1123,29 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
 // unchanged by this cycle).
 // ---------------------------------------------------------------------
 
-/// A variant of the fixture's base character with `feat:dodge` (and its
-/// canonical `choice:human_bonus_feat` selection) dropped, which trips
-/// `compute_combat_baseline`'s `unmet_combat_posture_conditions` (it
-/// requires `selected_feats` to contain `feat:dodge`) without touching
-/// anything the selected-skill posture depends on.
+/// A variant of the fixture's base character with Dodge (and its canonical
+/// `choice:human_bonus_feat` selection) dropped, which trips
+/// `compute_combat_baseline`'s `unmet_combat_posture_conditions` without
+/// touching anything the selected-skill posture depends on.
+///
+/// **Every shape of Dodge is dropped, not just the `feat:dodge` spelling.**
+/// This fixture's own `selected_feats` carries Dodge twice -- once as the
+/// engine token `"feat:dodge"` and once as the catalog key `"Dodge"` the feat
+/// picker sends -- which is exactly the mixed-shape list real saved characters
+/// hold. The posture gate now matches through
+/// `rules_core::feat_identity`'s shared fold rather than by string equality
+/// (so a player who picks Dodge from the catalog is no longer left with no
+/// combat baseline at all), and under that fold removing one spelling leaves
+/// the character still holding Dodge. Removing only `"feat:dodge"` would make
+/// this test assert "a character who HAS Dodge is blocked", which is the
+/// opposite of its intent.
 fn character_missing_dodge_feat() -> CharacterInput {
     let fixture = load_fixture();
     let mut input = character_input_from_fixture(fixture.get("input"));
-    input.chosen.selected_feats.retain(|feat| feat != "feat:dodge");
+    input
+        .chosen
+        .selected_feats
+        .retain(|feat| !codex::rules_core::feat_identity::same(feat, "feat:dodge"));
     input
         .chosen
         .selected_choices

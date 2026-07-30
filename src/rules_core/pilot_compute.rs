@@ -128,6 +128,7 @@ use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::apg::inquisitor_spell_list;
 use super::rules_tables::apg::witch_spell_list;
 use crate::rules_core::durability::FamiliarSpecies;
+use crate::rules_core::feat_identity;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::bard_spell_list;
@@ -29533,7 +29534,7 @@ const EXTRA_POINTS_PER_DAY: i16 = 2;
 /// resource's own level gate. The feat widens a pool the character has
 /// already earned; it never conjures one.
 fn extra_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
-    let taken = selected_feats.iter().filter(|feat| *feat == feat_key).count();
+    let taken = feat_identity::count(selected_feats, feat_key);
     bonus.saturating_mul(i16::try_from(taken).unwrap_or(i16::MAX))
 }
 
@@ -29603,7 +29604,7 @@ const EXTENDED_ANIMAL_FOCUS_FEAT_KEY: &str = "Extended Animal Focus";
 /// which is exactly the `STACK:`/`MULT:`-invisible-to-a-filtered-grep
 /// failure that already cost this family one correction pass.
 fn non_stacking_resource_feat_bonus(selected_feats: &[String], feat_key: &str, bonus: i16) -> i16 {
-    if selected_feats.iter().any(|feat| feat == feat_key) { bonus } else { 0 }
+    if feat_identity::holds(selected_feats, feat_key) { bonus } else { 0 }
 }
 
 /// Barbarian's Rage rounds-per-day budget: 4 + Constitution modifier + 2 *
@@ -31288,7 +31289,7 @@ fn explain_monk_level1_chassis(
     // `selected_feats` (an inconsistent/incomplete input) still blocks --
     // this is not a silent pass, it is a genuine unmet precondition.
     let dodge_bonus_feat_is_genuinely_active = recognized_bonus_feat_name == Some("Dodge")
-        && input.chosen.selected_feats.iter().any(|feat| feat == DODGE_FEAT_ID);
+        && feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID);
 
     if dodge_bonus_feat_is_genuinely_active {
         explanations.push(ComputationExplanation {
@@ -40654,14 +40655,16 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
         &mut unmet,
     );
 
-    if !chosen.selected_feats.iter().any(|f| f == DODGE_FEAT_ID) {
+    // Matched through the shared identity fold, not by string equality: the
+    // feat picker sends the catalog key ("Dodge"), character creation seeds the
+    // engine token ("feat:dodge"), and both name the same feat. Comparing
+    // verbatim here meant a player who picked Dodge or Weapon Focus from the
+    // catalog left this posture unmet, so the whole combat baseline came back
+    // unsupported -- no armor class, no melee attack bonus.
+    if !feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
         unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
     }
-    if !chosen
-        .selected_feats
-        .iter()
-        .any(|f| f == WEAPON_FOCUS_FEAT_ID)
-    {
+    if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 

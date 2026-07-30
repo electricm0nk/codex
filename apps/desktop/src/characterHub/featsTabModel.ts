@@ -77,8 +77,19 @@ export interface ResolvedFeatEntry {
  *  - punctuation the corpus keeps in the display name but the engine
  *    token drops, e.g. catalog `"Gorgon's Fist"` vs. token
  *    `"feat:gorgons_fist"` (both fold to `"gorgonsfist"`).
+ *
+ * **This fold is one half of a pair, and the halves must stay identical.**
+ * The engine folds feat identifiers the same way in
+ * `src/rules_core/feat_identity.rs`, and that is what makes a feat picked
+ * from the catalog actually reach its producer -- before the Rust half
+ * existed, effect resolution compared feat strings verbatim, so picking
+ * Dodge or Weapon Focus here sent an id no producer could match and the
+ * character's whole combat baseline came back unsupported. Exported (rather
+ * than kept module-private) so `featsTabModel.test.ts` can pin the exact
+ * same shape table `feat_identity.rs`'s own `FRONTEND_SHAPE_CASES` pins; if
+ * either side changes, one of the two test tables fails.
  */
-function normalizeFeatIdentity(raw: string): string {
+export function normalizeFeatIdentity(raw: string): string {
   const withoutPrefix = raw.startsWith('feat:') ? raw.slice('feat:'.length) : raw;
   const baseSegment = withoutPrefix.split(':')[0];
   return baseSegment.toLowerCase().replace(/[^a-z0-9]/g, '');

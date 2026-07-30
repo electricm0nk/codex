@@ -129,32 +129,10 @@ pub enum NotSurfacedReason {
     NotRecordedOnRenderedField,
 }
 
-/// Folds a feat identifier down to a comparable identity: lowercase,
-/// alphanumeric characters only, with any `feat:` prefix and any trailing
-/// sub-choice segments dropped.
-///
-/// This is a deliberate, tested mirror of `normalizeFeatIdentity` in
-/// `apps/desktop/src/characterHub/featsTabModel.ts`. It must stay in step with
-/// it, because this module's whole claim is "the Feats tab will render this
-/// feat's row" — a fold that matched here but not there would let this module
-/// report `TextComplete` for a row the app silently drops.
-/// `feat_identity_fold_matches_frontend_shapes` below pins the exact input
-/// shapes that motivate each clause, taken from the frontend's own doc
-/// comment.
-///
-/// The two real shapes in `selected_feats` are the catalog's human-readable
-/// `key` (e.g. `"Deflect Arrows"`, what the in-sheet "Add Feat" picker pushes)
-/// and the engine's `feat:snake_case` token (e.g. `"feat:deflect_arrows"`,
-/// what character creation and level-up seed). Both must fold together.
-fn fold_feat_identity(raw: &str) -> String {
-    let without_prefix = raw.strip_prefix("feat:").unwrap_or(raw);
-    let base_segment = without_prefix.split(':').next().unwrap_or("");
-    base_segment
-        .chars()
-        .filter(|c| c.is_ascii_alphanumeric())
-        .map(|c| c.to_ascii_lowercase())
-        .collect()
-}
+/// Re-exported so this module's own call sites read the same as everywhere
+/// else. The fold itself, and the reason display and effect resolution must
+/// share exactly one, live in [`crate::rules_core::feat_identity`].
+use crate::rules_core::feat_identity::fold as fold_feat_identity;
 
 /// Resolve whether a **feat** with no numeric magnitude is complete for
 /// `input`, on the strength of its description reaching the player.
