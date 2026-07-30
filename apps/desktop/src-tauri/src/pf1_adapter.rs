@@ -50,6 +50,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
+use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
@@ -62,14 +63,15 @@ use codex::rules_core::pilot_compute_corpus::{
     compute_selected_skill_modifiers_from_corpus, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
-    PilotCombatViewModel, PilotDefenseViewModel, PilotSkillViewModel, PilotSnapshot,
+    PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
+    PilotSnapshot,
 };
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_spells_selected_dto,
-    map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
+    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
 use crate::characterHub::appendToCharacter::{
@@ -146,6 +148,271 @@ const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_
 /// catalog, so this seed must stay in sync with that translation's own
 /// `metamagic:<snake_case_slug>` convention.
 const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
+
+/// v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own): needed
+/// by `compose_character_input`'s Monk canonical-choice seeding below.
+/// Monk is the Sorcerer/Cleric/Druid shape, not Wizard's -- a single
+/// recognized choice is sufficient, and no bootstrapped spell is involved.
+///
+/// Monk's engine already computes a complete build at every level 1-20; its
+/// one remaining claim-blocking diagnostic
+/// (`class_feature.monk.bounded_progression.bonus_feat.unsupported`) fires
+/// purely because nothing anywhere seeds `choice:monk_bonus_feat`, so the
+/// default posture never exercises a seam that already works. No picker in
+/// the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+const MONK_CLASS_ID: &str = "class:monk";
+const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+
+/// v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
+/// closure, 2026-07-29). Summoner was the last class on the 27-class
+/// roster with no closure path: its Eidolon's evolution point-buy
+/// economy was deliberately deferred as a product decision rather than
+/// half-built. The engine now genuinely builds ONE corpus-verified
+/// evolution purchase, and this seed is what lets a composed Summoner
+/// reach `Computed` -- the same Path A shape as Cleric's domain and
+/// Monk's bonus feat, and blocked on the same missing picker UI. See
+/// `pilot_compute.rs`'s `SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID`.
+const SUMMONER_CLASS_ID: &str = "class:summoner";
+const SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID: &str = "choice:summoner_eidolon_evolution";
+const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_natural_armor";
+
+/// v0.6 alpha swarm (Path A choice-picker gap closure for the three APG
+/// chooser-shaped classes, 2026-07-29): Cavalier, Inquisitor and Oracle
+/// are the Sorcerer/Cleric/Druid/Monk shape exactly -- each engine
+/// (`pilot_compute.rs`) computes a complete build at every level 1-20, but
+/// only once its own real, recognized chooser selection is present, and no
+/// picker in the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`). None needs a
+/// bootstrapped spell: Inquisitor's and Oracle's own known-spell postures
+/// are genuinely valid with zero known spells (unlike Wizard's/Arcanist's
+/// prepared spellbooks), and Cavalier has no `SPELLSTAT` at all.
+///
+/// Each `selection_id` below is the ONE option this codebase actually
+/// grounds a power for, and every one is a corpus-verified BASE-class
+/// option -- not an archetype-gated record:
+///
+/// * `order:sword` — `KEY:Order of the Sword`,
+///   `TYPE:CavalierClassFeatures.CavalierOrder.SpecialQuality`
+///   (`apg_abilities_class.lst:279`), one of the six orders the base
+///   `KEY:Cavalier ~ Order` feature's own `BONUS:ABILITYPOOL|Cavalier
+///   Order|1` grants. Its Sense Motive bonus is the grounded power; the
+///   other five orders carry only opponent-/ally-conditioned challenge
+///   riders.
+/// * `domain:good` — the base `Inquisitor ~ Domains` record carries
+///   `DEFINE:InquisitorDomainGood|0` (`apg_abilities_class.lst:353`), and
+///   Good's own Touch of Good is the grounded power. Deliberately the same
+///   canonical domain Cleric already seeds, since both classes share
+///   `active_touch_of_good_bonus`.
+/// * `mystery:life` + `curse:clouded_vision` — `KEY:Oracle ~ Life
+///   Mystery` (`TYPE:...OracleMystery`) and `KEY:Oracle ~ Clouded Vision`
+///   (`TYPE:...OracleCurse`), the pools `Oracle's Mystery` /
+///   `Oracle's Curse` grant one pick from each of. Life is the only
+///   Mystery whose power (Healing Hands) follows from the Mystery choice
+///   alone rather than a second budgeted revelation pick, and Clouded
+///   Vision's 30-foot cap likewise needs no second choice — so this pair
+///   is the only seed that grounds real powers with one selection each.
+///
+/// Verified directly against `pilot_compute.rs`'s own
+/// `apg_canonical_choice_path_a_tests`, which proves these exact seeds are
+/// sufficient at every level 1-20 with no other precondition, AND that
+/// every other posture stays `Blocked` exactly as before.
+const CAVALIER_CLASS_ID: &str = "class:cavalier";
+const CAVALIER_ORDER_CHOICE_ID: &str = "choice:cavalier_order";
+const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
+const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
+const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
+const ORACLE_CLASS_ID: &str = "class:oracle";
+const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
+const LIFE_MYSTERY_SELECTION: &str = "mystery:life";
+const ORACLE_CURSE_CHOICE_ID: &str = "choice:oracle_curse";
+const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
+
+/// **Why Dodge, of the seven feats the corpus offers at
+/// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
+/// (`.../core_rulebook/cr_abilities_class.lst:1263`):
+/// `Monk Bonus Feat ~ Dodge ... PREVARGTEQ:MonkBonusFeatLVL,1 ...
+/// ABILITY:FEAT|VIRTUAL|Dodge` -- genuinely available at level 1, alongside
+/// Catch Off-Guard, Combat Reflexes, Deflect Arrows, Improved Grapple,
+/// Scorpion Style, and Throw Anything (the 6th/10th-level additions are
+/// gated `PREVARGTEQ:MonkBonusFeatLVL,6` / `,10` and are not options here).
+///
+/// Six of those seven close the burden in `pilot_compute.rs`, but they are
+/// not equivalent, and Dodge is the only one that is genuinely resolved
+/// under the posture this function actually composes:
+///
+/// - **Dodge** is the one option the engine CROSS-CHECKS: its
+///   `dodge_bonus_feat_is_genuinely_active` gate closes the burden only when
+///   `feat:dodge` is really present on `chosen.selected_feats`, so the
+///   claimed benefit is one the character actually has. Seeding this choice
+///   is therefore what *earns* the `feat:dodge` claim for a Monk — the slot
+///   is a real PF1 level-1 Monk bonus feat, and spending it on Dodge is a
+///   legal spend of a slot the character genuinely has. (This used to read
+///   "it is unconditionally present for every race in the fixed GE-06
+///   loadout below"; that unconditional claim is exactly what was removed,
+///   because for a non-Human non-Monk no slot granted it at all.)
+///   And the benefit is real and already computed:
+///   `compute_combat_baseline` applies `DODGE_AC_BONUS` (+1 AC) for any
+///   character carrying `feat:dodge`, regardless of which slot granted it.
+///   So this seed makes the engine compute a real effect; it is not a token
+///   that merely silences a diagnostic (`docs/governance/no-stub-mvp-doctrine.md`).
+/// - **Catch Off-Guard / Throw Anything** close as *provably vacuous* under
+///   this bounded slice (their entire benefit is improvised/splash weapons,
+///   which the deterministic Longsword baseline never models). Legal, but
+///   they would hand a player a canonical feat worth exactly zero.
+/// - **Combat Reflexes / Scorpion Style / Improved Grapple** each ground a
+///   real number, but their closures fire on the choice alone with no
+///   `selected_feats` cross-check -- seeding one would claim a feat the
+///   character does not carry, so the sheet's Feats tab would show the
+///   player nothing for the feat they supposedly picked.
+/// - **Deflect Arrows** requires `feat:deflect_arrows` on `selected_feats`
+///   (its `text_complete` branch), which this loadout does not carry.
+///
+/// **Honest caveat.** For a Human, this function also seeds
+/// `choice:human_bonus_feat -> feat:dodge`, and the corpus record above
+/// carries `!PREABILITY:1,CATEGORY=FEAT,Dodge` -- so a Human Monk's
+/// canonical posture names Dodge in two slots, which PF1 would treat as a
+/// wasted pick. The COMPUTED result is still correct (the +1 dodge bonus is
+/// applied once by `compute_combat_baseline`, never doubled), and this is
+/// the same class of approximation the fixed GE-06 loadout still makes for
+/// Weapon Focus -- it seeds `choice:fighter_bonus_feat`, a Fighter-only
+/// class feature, for every class, Wizard included. That remaining unbacked
+/// feat claim is NOT closed here: the combat baseline's whole attack
+/// formula is Longsword-specific, so it still genuinely requires Weapon
+/// Focus, and dropping the claim would re-block every non-Fighter. Closing
+/// it needs the weapon loadout widened first. A real per-class bonus-feat
+/// picker (Path B) is what replaces both, exactly as for the
+/// Sorcerer/Cleric/Druid seeds.
+const DODGE_FEAT_SELECTION: &str = "feat:dodge";
+
+/// The Human racial bonus-feat slot. Named as a constant (rather than
+/// spelled inline twice) because `compose_character_input` now both *seeds*
+/// this slot and *reads it back* to decide whether claiming `feat:dodge` on
+/// `selected_feats` is honest — two spellings of one id that must never
+/// drift apart, or the seed would silently start claiming a feat no slot
+/// granted again.
+const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
+
+/// v0.6 alpha swarm (Path A choice-picker gap closure, the two
+/// chooser-shaped power lists): Witch's Hex and Shaman's Spirit. Both are
+/// the Sorcerer/Cleric/Druid/Monk shape -- a single recognized choice is
+/// sufficient and no bootstrapped spell is involved -- not Wizard's.
+///
+/// Each engine already computes a complete build at every level 1-20; each
+/// had exactly two claim-blocking diagnostics, and BOTH were downstream of
+/// the same fact: nothing anywhere seeds the class's one defining chooser,
+/// so the default posture never exercised a seam that already worked. No
+/// picker in the creation UI can submit one (Path B in
+/// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+const WITCH_CLASS_ID: &str = "class:witch";
+const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
+const SHAMAN_CLASS_ID: &str = "class:shaman";
+const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
+
+/// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
+/// against the PCGen corpus
+/// (`.../advanced_players_guide/apg_abilities_class.lst:892`):
+/// `KEY:Witch Hex ~ Flight ... BONUS:SKILL|Swim|4|TYPE=Racial`, gated only
+/// by `PREVARGTEQ:WitchHexAbilityLVL,1` -- genuinely available at level 1.
+///
+/// Three hexes have a grounded magnitude in `pilot_compute.rs` and any of
+/// the three closes the burden, but they are not equivalent. Flight is the
+/// only one whose number reaches a total this engine actually computes:
+/// `compute_selected_skill_modifiers` folds it into
+/// `skill.selected_modifier.swim`. Ward's deflection/resistance bonus is
+/// grounded standalone (real AC/save totals exist, but Ward's magnitude is
+/// not wired into either), and Cauldron's `+4` insight lands on Craft
+/// (Alchemy), which is not among the three skills this engine computes. So
+/// this seed makes the engine compute a real, visible effect rather than
+/// handing a player a token that merely silences a diagnostic
+/// (`docs/governance/no-stub-mvp-doctrine.md`).
+const FLIGHT_HEX_SELECTION: &str = "hex:flight";
+
+/// **Why Life, of the ten primary Shaman Spirits.** Unlike Witch -- where
+/// only 3 of 53 hexes have a grounded magnitude -- all ten Spirits already
+/// ground their immediately-available base ability, so this picks which one
+/// the default posture records, not which one works
+/// (`all_ten_spirits_reach_computed_not_just_the_canonical_one` in
+/// `pilot_compute.rs` pins that every one of them reaches `Computed`).
+///
+/// Life earns the seed on magnitude richness. Verified against
+/// `.../advanced_class_guide/acg_abilities_class.lst:1600`,
+/// `KEY:Life Spirit ~ Channel` carries three real formulas --
+/// `BONUS:VAR|ShamanChannelTimes|1+CHA`,
+/// `BONUS:VAR|ShamanChannelDice|(ShamanChannelLVL+1)/2`,
+/// `BONUS:VAR|ShamanChannelDC|10+(ShamanChannelLVL/2)+CHA` -- which
+/// `pilot_compute.rs` grounds as three separate explanation records. The
+/// other nine each ground a single touch-attack or morale-bonus fact.
+///
+/// **Honest caveat.** None of the ten base abilities carries a `BONUS:`
+/// landing on a computed total -- every one is a `BONUS:VAR` feeding its
+/// own `DESC:` text -- so unlike Witch's Flight this seed grounds real
+/// magnitudes without integrating into an existing total. The Spirit
+/// abilities that DO land on real totals (Heavens' Manifestation
+/// `BONUS:SAVE|ALL`, Life's own Healer's Touch `BONUS:SKILL|Heal|4`) are
+/// all in the level-8+/16+ gated tiers, which stay deferred.
+const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
+
+/// v0.6 alpha swarm (Path A choice-picker gap closure, the four
+/// spellcasting-shaped classes): Alchemist, Investigator, Warpriest and
+/// Bloodrager each reach `Computed` at every level 1-20 today, but only
+/// once their own real, recognized creation-time choices are present, and
+/// no picker anywhere in the creation UI can submit one -- the same gap,
+/// and the same fix, as the Wizard/Arcanist/Sorcerer/Cleric/Druid/Monk
+/// seeds above.
+///
+/// Three of the four need BOTH a spell/extract seed AND a chooser seed
+/// (Arcanist's shape); Bloodrager needs only the chooser (Sorcerer's
+/// shape), since its own spell posture is genuinely valid with zero known
+/// spells. Every value below is verified directly against
+/// `pilot_compute.rs`'s own
+/// `spellcasting_shaped_class_closure_tests::all_four_spellcasting_shaped_classes_reach_computed_at_every_level`,
+/// which runs this exact seed set over the whole 1-20 sweep.
+const ALCHEMIST_CLASS_ID: &str = "class:alchemist";
+const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
+const WARPRIEST_CLASS_ID: &str = "class:warpriest";
+const BLOODRAGER_CLASS_ID: &str = "class:bloodrager";
+
+/// Alchemist and Investigator share one formula list
+/// (`SPELLLIST:1|Alchemist` on Investigator's own class record), so they
+/// share one canonical starter extract. `"Cure Light Wounds"` is a real
+/// `ALCHEMIST_SPELL_LIST` key at extract level 1 -- the only extract level
+/// either class can reach at class level 1 -- so a single value is inside
+/// the slot budget at every level of the sweep for both. Each is recorded
+/// under its OWN `source_class_id`; the two formula books never
+/// cross-satisfy.
+const CANONICAL_EXTRACT_SPELL_ID: &str = "Cure Light Wounds";
+
+/// Alchemist's canonical Discovery, one of the corpus's 35. Feral Mutagen
+/// is the only one whose record carries real self-contained magnitudes
+/// attaching to an already-grounded feature of this class (Mutagen).
+const ALCHEMIST_DISCOVERY_CHOICE_ID: &str = "choice:alchemist_discovery";
+const FERAL_MUTAGEN_DISCOVERY_SELECTION: &str = "discovery:feral_mutagen";
+
+/// Investigator's canonical Talent. Resiliency is the one entry of her own
+/// 40-record Rogue Talent whitelist this codebase grounds (task #58); the
+/// slot itself does not open until investigator level 3, so the seed is
+/// correctly inert at levels 1-2 and simply takes effect when it opens.
+const INVESTIGATOR_TALENT_CHOICE_ID: &str = "choice:investigator_talent";
+const RESILIENCY_TALENT_SELECTION: &str = "talent:resiliency";
+
+/// Warpriest's canonical Blessing (Destruction, whose Destructive Attacks
+/// minor power is grounded) plus its canonical starter spell. `"Light"` is
+/// a real level-0 `SPELL_LIST` key and a real Cleric orison -- Warpriest
+/// casts from `SPELLLIST:1|Cleric` -- and level-0 slots are 3+ at every
+/// warpriest level, so one seed covers the whole sweep. Deliberately the
+/// same literal `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID` use.
+const WARPRIEST_BLESSING_CHOICE_ID: &str = "choice:warpriest_blessing";
+const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
+const WARPRIEST_STARTER_SPELL_ID: &str = "Light";
+
+/// Bloodrager's canonical Bloodline, one of ten. Arcane keeps one
+/// bloodline NAME shared with the Sorcerer seed above, but Bloodrager's
+/// bloodlines are PARALLEL to Sorcerer's rather than shared with them
+/// (task #59) -- the grounding underneath is Bloodrager's own separate
+/// corpus records.
+const BLOODRAGER_BLOODLINE_CHOICE_ID: &str = "choice:bloodrager_bloodline";
+const ARCANE_BLOODRAGER_BLOODLINE_SELECTION: &str = "bloodline:arcane";
 
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
@@ -247,38 +514,47 @@ impl RuleSystemAdapter for Pf1Adapter {
         })
     }
 
+    /// Delegates to `character_hub::load_saved_character_at_root` rather
+    /// than re-deriving the same load-and-project pipeline a second time.
+    ///
+    /// This used to be a field-by-field copy of that function, and it was a
+    /// silent drop hazard by construction: every field added to
+    /// `LoadSavedCharacterResponse` had to be remembered in two places, and
+    /// a forgotten one here left this adapter's callers reading a response
+    /// missing data the engine had computed — the identical gap
+    /// `map_snapshot_dto` was already extracted to close for
+    /// `PilotSnapshotDto` (see `rule_system_adapter.rs`'s own note on that
+    /// extraction).
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
-        let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-
-        let (snapshot, diagnostics, corpus_receipt) =
-            match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
-                Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
-                Err(diagnostics) => (
-                    None,
-                    diagnostics,
-                    compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
-                ),
-            };
-
-        Ok(LoadSavedCharacterResponse {
-            summary: summarize_envelope(&envelope),
-            snapshot: snapshot.as_ref().map(map_snapshot_dto),
-            diagnostics: map_diagnostics_dto(&diagnostics),
-            corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
-            selected_feats: envelope.character_input.chosen.selected_feats.clone(),
-            spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
-        })
+        crate::character_hub::load_saved_character_at_root(root)
     }
 }
 
 // ----- Pure functions (unit-testable, no AppHandle / filesystem) -----
 
 /// Build a `CharacterInput` for the requested race/class/level. Race, class,
-/// and ability scores are the caller's real choices; the feat/skill/
-/// equipment loadout is fixed — `unmet_combat_posture_conditions`
-/// (`pilot_compute.rs`) requires this exact equipment/feat posture verbatim
+/// and ability scores are the caller's real choices; the skill/equipment
+/// loadout is fixed — `unmet_combat_posture_conditions`
+/// (`pilot_compute.rs`) requires this exact equipment posture verbatim
 /// to reach `Computed`, so widening it would not change which combinations
-/// reach `Computed`. Human additionally receives its own canonical
+/// reach `Computed`.
+///
+/// **That fixed loadout is the GE-06 deterministic pilot fixture**
+/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`),
+/// not a product decision about starting gear: the Longsword, Chain Shirt,
+/// absent shield, inactive Power Attack toggle and rank-1
+/// Climb/Intimidate/Swim allocations are exactly the posture the engine's
+/// bounded combat/skill slice was built and validated against. Every
+/// character created in the app is handed it because the engine computes
+/// no combat numbers for anything else, and `create_character` refuses to
+/// persist a build that is not `Computed`. Widening it is real, scoped
+/// engine work (a general armor/weapon-to-training-group model), not an
+/// adapter change.
+///
+/// `feat:dodge` used to be part of that fixed claim and no longer is: see
+/// the `selected_feats` construction below for why a *feat* claim is
+/// different in kind from an equipment posture, and what changed in the
+/// engine to let it be dropped. Human additionally receives its own canonical
 /// choice-slot values — the ability-bonus target is the caller's real
 /// choice (`request.ability_bonus_target`); every other race omits the
 /// Human-only slots. For every class except Wizard, `spells_selected` is
@@ -321,8 +597,8 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
 
     if request.race_id == HUMAN_RACE_ID {
         selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:human_bonus_feat".to_owned(),
-            selection_id: "feat:dodge".to_owned(),
+            choice_set_id: HUMAN_BONUS_FEAT_CHOICE_ID.to_owned(),
+            selection_id: DODGE_FEAT_SELECTION.to_owned(),
         });
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:human_ability_bonus".to_owned(),
@@ -392,6 +668,77 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             source_class_id: ARCANIST_CLASS_ID.to_owned(),
             acquisition_mode: AcquisitionMode::Prepared,
         });
+    } else if request.class_id == ALCHEMIST_CLASS_ID {
+        // v0.6 alpha swarm (the four spellcasting-shaped classes): Arcanist's
+        // own "chooser seed AND starter-spell seed, both required" shape.
+        // Alchemist's prepared-extract validator needs at least one extract
+        // recorded in the formula book AND one prepared today before it will
+        // ground anything, and its Discovery chooser is the canonical
+        // narrowing that resolves the remaining class-feature blocker.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
+            selection_id: FERAL_MUTAGEN_DISCOVERY_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == INVESTIGATOR_CLASS_ID {
+        // Same shape as Alchemist immediately above, and genuinely the same
+        // underlying mechanism: Investigator's `SPELLLIST:1|Alchemist` token
+        // makes the formula list literally shared. The two are still seeded
+        // separately because each formula book is keyed on its own
+        // `source_class_id` and neither satisfies the other.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
+            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
+            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == WARPRIEST_CLASS_ID {
+        // Warpriest needs THREE seeds, not two: a Blessing choice (its own
+        // Blessing-powers blocker), and a spellbook entry recorded plus
+        // prepared (its prepared-spellbook blocker). The Blessing choice
+        // also resolves the class-feature blocker, the same way Cleric's
+        // Good domain does.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+        spells_selected.push(SpellSelection {
+            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
+            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+    } else if request.class_id == BLOODRAGER_CLASS_ID {
+        // Sorcerer/Cleric/Druid's shape, not Arcanist's: NO spell seed. A
+        // Bloodrager with zero known spells is a genuinely valid posture
+        // (`unmet_bloodrager_known_spell_conditions` returns no unmet
+        // conditions for an empty known list), and the class casts nothing
+        // at all below level 4. Only the Bloodline chooser is needed.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: BLOODRAGER_BLOODLINE_CHOICE_ID.to_owned(),
+            selection_id: ARCANE_BLOODRAGER_BLOODLINE_SELECTION.to_owned(),
+        });
     }
 
     // v0.6 alpha swarm (Path A choice-picker gap closure, per
@@ -451,7 +798,170 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             choice_set_id: "choice:druid_nature_bond".to_owned(),
             selection_id: "bond:animal_companion".to_owned(),
         });
+    } else if request.class_id == MONK_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own) --
+        // the same shape as the three above, and for the same reason: the
+        // engine can already compute a complete Monk, but only once a real
+        // recognized choice is present, and no picker can submit one.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `monk_with_dodge_bonus_feat_genuinely_active_does_not_trip_the_diagnostic`
+        // test: a recognized `choice:monk_bonus_feat -> feat:dodge`, PLUS
+        // `feat:dodge` genuinely present on `selected_feats`, is sufficient
+        // with no other precondition to reach `Computed`. Seeding this
+        // choice is precisely what puts `feat:dodge` on `selected_feats`
+        // for a Monk -- the `selected_feats` construction below claims the
+        // feat only when a slot like this one really granted it, so the two
+        // halves are one decision, not a coincidence of a fixed loadout.
+        // And it is genuinely RESOLVED, not merely
+        // tolerated: the engine emits a real
+        // `class_feature.monk.bounded_progression.bonus_feat.dodge_active`
+        // record carrying the +1 dodge AC bonus `compute_combat_baseline`
+        // is already applying. See `DODGE_FEAT_SELECTION`'s own doc comment
+        // for why Dodge specifically, of the seven corpus options at
+        // `MonkBonusFeatLVL,1`, and for the Human double-grant caveat.
+        //
+        // ONE seeding site only, unlike Wizard/Arcanist: Monk's whole
+        // bonus-feat seam sits behind `supported_monk_level`, which matches
+        // a SINGLE-class Monk only, so `apply_level_up`'s multiclass-dip
+        // branch never reaches it and needs no mirrored seed -- established
+        // empirically by
+        // `monk_multiclass_dip_reaches_computed_from_apply_level_up_alone`,
+        // which passes without one. Leveling a Monk 1 -> 2 takes
+        // `apply_level_up`'s increment-existing-level branch, so this
+        // creation-time seed simply persists -- pinned all the way to the
+        // PF1 cap by `monk_stays_computed_leveling_all_the_way_to_20`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
+            selection_id: DODGE_FEAT_SELECTION.to_owned(),
+        });
+    } else if request.class_id == WITCH_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure, the
+        // chooser-shaped power lists): the same one-choice shape as
+        // Sorcerer/Cleric/Druid/Monk. See `FLIGHT_HEX_SELECTION`'s own doc
+        // comment for why Flight specifically, of the corpus's 53 base
+        // hexes.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `single_class_witch_with_the_canonical_flight_hex_reaches_computed`
+        // and `witch_with_the_canonical_flight_hex_stays_computed_at_every_level`
+        // tests: a recognized `choice:witch_hex -> hex:flight` is
+        // sufficient, with no other precondition, to reach `Computed` at
+        // every level 1-20. No spell is seeded -- a Witch's prepared-spell
+        // posture is genuinely valid with zero spells, so Wizard's
+        // bootstrap-deadlock shape does not apply here.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
+            selection_id: FLIGHT_HEX_SELECTION.to_owned(),
+        });
+    } else if request.class_id == SHAMAN_CLASS_ID {
+        // See `LIFE_SPIRIT_SELECTION`'s own doc comment for why Life, of
+        // the ten primary Spirits. Verified directly against
+        // `shaman_with_the_canonical_life_spirit_stays_computed_at_every_level`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
+            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+    } else if request.class_id == SUMMONER_CLASS_ID {
+        // v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
+        // closure, 2026-07-29) -- the same Path A shape as the five above.
+        //
+        // Verified directly against `pilot_compute.rs`'s own
+        // `summoner_with_a_recognized_eidolon_evolution_reaches_computed_at_every_level`
+        // test: a recognized `choice:summoner_eidolon_evolution ->
+        // evolution:improved_natural_armor` is sufficient, with no other
+        // precondition, to reach `Computed` at every level 1-20. The
+        // evolution costs 1 point out of a level-1 pool of 3, so it is
+        // affordable at every level -- there is no level at which this
+        // seed becomes illegal, unlike a cost-4 evolution would be.
+        //
+        // ONE seeding site only, like Monk and for the same reason:
+        // Summoner's eidolon seam sits behind
+        // `is_supported_summoner_single_class`, which matches a
+        // SINGLE-class Summoner only, so `apply_level_up`'s
+        // multiclass-dip branch never reaches it. Leveling a Summoner
+        // 1 -> 2 takes the increment-existing-level branch, so this
+        // creation-time seed simply persists.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
+            selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
+        });
+    } else if request.class_id == CAVALIER_CLASS_ID {
+        // v0.6 alpha swarm (Path A choice-picker gap closure for the three
+        // APG chooser-shaped classes, 2026-07-29) -- see
+        // `CAVALIER_CLASS_ID`'s own doc comment above for each seed's
+        // corpus record and for why these particular options, and
+        // `pilot_compute.rs`'s `apg_canonical_choice_path_a_tests` for the
+        // proof they are sufficient at every level 1-20. Like
+        // Sorcerer/Cleric/Druid/Monk and unlike Wizard/Arcanist, these are
+        // a silently-applied canonical default, not a real in-game choice.
+        //
+        // ONE seeding site only, the same reason Monk needs only one:
+        // Cavalier's, Inquisitor's and Oracle's class-feature seams all sit
+        // behind `compute_apg_class_chassis`, which
+        // `compute_class_chassis` reaches only for a SINGLE-class
+        // character (`ApgClassId::from_class_id_str` is deliberately not
+        // registered with `multiclass_class_level_supported`), so
+        // `apply_level_up`'s multiclass-dip branch never reaches it.
+        // Leveling an existing character takes the increment-existing-level
+        // branch, so this creation-time seed simply persists.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
+            selection_id: ORDER_OF_THE_SWORD_SELECTION.to_owned(),
+        });
+    } else if request.class_id == INQUISITOR_CLASS_ID {
+        selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            // The same canonical domain Cleric's own block above seeds --
+            // both classes share `active_touch_of_good_bonus`, and Good is
+            // the one domain either engine grounds a power for.
+            selection_id: "domain:good".to_owned(),
+        });
+    } else if request.class_id == ORACLE_CLASS_ID {
+        // Oracle is the only one of the three needing TWO seeds: a PF1
+        // oracle has both a Mystery and a Curse, and the engine
+        // claim-blocks on each independently, so neither alone reaches
+        // `Computed`.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
     }
+
+    // v0.6 alpha swarm (creation-seed honesty fix): `feat:dodge` is claimed
+    // ONLY when one of the seeded choice slots above actually granted it --
+    // Human's `choice:human_bonus_feat` or Monk's `choice:monk_bonus_feat`,
+    // both real PF1 bonus-feat slots that the engine independently
+    // cross-checks against `selected_feats` before grounding anything.
+    //
+    // It used to be claimed unconditionally, for every race and every class,
+    // because the combat baseline REQUIRED it: without `feat:dodge`,
+    // `unmet_combat_posture_conditions` raised a claim-blocking
+    // `combat.baseline_unsupported`, which blanked armor class and melee
+    // attack and (since `create_character` refuses to persist anything that
+    // is not `Computed`) made the character unsaveable. The engine now
+    // treats Dodge as a conditional contribution instead
+    // (`pilot_compute::compute_combat_baseline`'s `dodge_armor_class_bonus`
+    // and its corpus-aware twin), so the claim can simply stop being made.
+    //
+    // This matters because `selected_feats` is exactly what the sheet's
+    // Feats tab renders, verbatim (`CharacterSheet.tsx`'s `selectedFeats`
+    // prop): a Dwarf Fighter level 1 has two feat slots, and the seed was
+    // showing the player three feats.
+    let dodge_is_granted_by_a_seeded_slot = selected_choices.iter().any(|choice| {
+        choice.selection_id == DODGE_FEAT_SELECTION
+            && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
+                || choice.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID)
+    });
+    let mut selected_feats = vec!["feat:power_attack".to_owned()];
+    if dodge_is_granted_by_a_seeded_slot {
+        selected_feats.push(DODGE_FEAT_SELECTION.to_owned());
+    }
+    selected_feats.push("feat:weapon_focus".to_owned());
 
     CharacterInput {
         case_id: Some(request.character_id.clone()),
@@ -470,11 +980,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 wisdom: request.ability_scores.wisdom,
                 charisma: request.ability_scores.charisma,
             },
-            selected_feats: vec![
-                "feat:power_attack".to_owned(),
-                "feat:dodge".to_owned(),
-                "feat:weapon_focus".to_owned(),
-            ],
+            selected_feats,
             skill_allocations: vec![
                 SkillAllocation {
                     skill_id: "skill:climb".to_owned(),
@@ -613,6 +1119,13 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                         swim: skills.swim,
                     },
                 },
+                // Projected through the view model's own function rather
+                // than re-derived here: this snapshot is assembled by hand
+                // (it substitutes corpus-resolved combat/skill values for
+                // the receipt's own), and a second, drifting copy of the
+                // companion projection is exactly how the DR extraction
+                // just above ended up duplicated.
+                companion: PilotCompanionViewModel::from_receipt(&receipt),
             };
             Ok((snapshot, corpus_receipt))
         }
@@ -950,16 +1463,75 @@ pub fn apply_add_feat_selection(character_input: &mut CharacterInput, feat_id: &
     character_input.chosen.selected_feats.push(feat_id.to_owned());
 }
 
+/// Appends a chooser feat together with the target it names, recording the
+/// target as a real `SelectedChoice` under the feat's own Mechanism-B
+/// contract.
+///
+/// Returns an error rather than silently degrading in the two cases that
+/// would otherwise produce a feat the engine cannot read: a target given for
+/// a feat that takes none, and a blank target. Both mean the caller and the
+/// rules disagree about the feat, and quietly dropping the target would
+/// leave a character that looks configured and computes as though it were
+/// not.
+///
+/// The prefix and choice-set id are read from
+/// [`feat_effects::chooser_contract_for_feat`] rather than assembled here,
+/// so this cannot drift from the producers that consume the result.
+pub fn resolve_feat_target_choice(
+    feat_id: &str,
+    target: Option<&str>,
+) -> Result<Option<SelectedChoice>, String> {
+    let Some(raw) = target else {
+        // No target given. Legitimate for an ordinary feat, and also for a
+        // chooser feat whose target has not been named yet -- the engine
+        // grounds nothing for it and the sheet reports it as untargeted.
+        return Ok(None);
+    };
+    if raw.trim().is_empty() {
+        return Err(format!(
+            "{feat_id} was given an empty target; a chooser feat needs a real target or none at all"
+        ));
+    }
+    let Some(contract) = feat_effects::chooser_contract_for_feat(feat_id) else {
+        return Err(format!(
+            "{feat_id} takes no chosen target, but '{raw}' was supplied"
+        ));
+    };
+    Ok(Some(SelectedChoice {
+        choice_set_id: contract.choice_set_id.to_owned(),
+        selection_id: format!("{}{}", contract.selection_prefix, raw.trim()),
+    }))
+}
+
+/// Appends the feat and, when one was resolved, the choice recording its
+/// target.
+pub fn apply_add_feat_selection_with_target(
+    character_input: &mut CharacterInput,
+    feat_id: &str,
+    target_choice: Option<SelectedChoice>,
+) {
+    if let Some(choice) = target_choice {
+        character_input.chosen.selected_choices.push(choice);
+    }
+    apply_add_feat_selection(character_input, feat_id);
+}
+
 /// `add_feat_selection`'s real implementation — see
 /// `mutate_saved_character_at_root` for the shared
 /// load -> mutate -> recompute -> re-save -> return-envelope semantics.
 pub(crate) fn add_feat_selection_at_root(
     root: &Path,
     feat_id: &str,
+    target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    // Resolve before mutating: `mutate_saved_character_at_root` takes an
+    // infallible closure, so a rejected target must surface as an error here
+    // rather than as a silently feat-only save.
+    let target_choice = resolve_feat_target_choice(feat_id, target)?;
+
     mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_feat_selection(character_input, feat_id);
+        apply_add_feat_selection_with_target(character_input, feat_id, target_choice.clone());
     })
 }
 
@@ -1102,6 +1674,24 @@ mod tests {
 
     fn arcanist_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: ARCANIST_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    fn monk_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest { class_id: MONK_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    fn witch_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: WITCH_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
+    }
+
+    fn shaman_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: SHAMAN_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
     }
 
     fn seed_envelope(character_id: &str, level: u8) -> SavedCharacterEnvelope {
@@ -1345,7 +1935,7 @@ mod tests {
         let envelope = seed_envelope(character_id, 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = add_feat_selection_at_root(&root, "feat:toughness", "2026-07-21T01:00:00Z")
+        let response = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T01:00:00Z")
             .expect("add-feat call should not error");
 
         match response {
@@ -1368,6 +1958,96 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A saved character whose `selected_feats` carries neither shape of the
+    /// feat under test, so what the picker sends is the only thing that can
+    /// satisfy the engine.
+    fn envelope_without(character_id: &str, feat: &str) -> SavedCharacterEnvelope {
+        let fold = |raw: &str| -> String {
+            let stripped = raw.strip_prefix("feat:").unwrap_or(raw);
+            stripped
+                .split(':')
+                .next()
+                .unwrap_or("")
+                .chars()
+                .filter(char::is_ascii_alphanumeric)
+                .map(|c| c.to_ascii_lowercase())
+                .collect()
+        };
+        let wanted = fold(feat);
+        let mut envelope = seed_envelope(character_id, 1);
+        envelope
+            .character_input
+            .chosen
+            .selected_feats
+            .retain(|held| fold(held) != wanted);
+        envelope
+    }
+
+    /// The identity seam, proven end to end through the command the app's own
+    /// `handleAddFeat` / `handleLevelUpFeatPick` call.
+    ///
+    /// `selected_feats` genuinely mixes two shapes: the catalog `key` the feat
+    /// picker sends (`"Dodge"`) and the engine's `feat:snake_case` token that
+    /// character creation seeds (`"feat:dodge"`). Every producer and every
+    /// posture gate must treat them as the same feat, or a player who picks a
+    /// feat from the catalog gets an id no producer can see. Before the shared
+    /// identity fold, `unmet_combat_posture_conditions` matched the token by
+    /// exact string equality, so picking Dodge (or Weapon Focus) through the
+    /// real picker left the character `Blocked` with no armor class and no
+    /// melee attack bonus at all.
+    ///
+    /// Asserted as an equivalence between the two shapes rather than against a
+    /// hardcoded armor class, so this cannot rot into pinning a stale number:
+    /// what it protects is that the picker's shape and the engine's shape
+    /// compute identically.
+    #[test]
+    fn a_feat_picked_by_catalog_key_computes_exactly_like_its_engine_token() {
+        for (catalog_key, engine_token) in [("Dodge", "feat:dodge"), ("Weapon Focus", "feat:weapon_focus")] {
+            let label = catalog_key.to_lowercase().replace(' ', "-");
+
+            let key_root = tempdir(&format!("identity-key-{label}"));
+            let key_id = format!("pf1-identity-key-{label}");
+            SavedCharacterStore::save(&envelope_without(&key_id, catalog_key), &key_root)
+                .expect("seed save should succeed");
+            let via_key = add_feat_selection_at_root(&key_root, catalog_key, None, TEST_SAVED_AT)
+                .expect("add-feat call should not error");
+
+            let token_root = tempdir(&format!("identity-token-{label}"));
+            let token_id = format!("pf1-identity-token-{label}");
+            SavedCharacterStore::save(&envelope_without(&token_id, catalog_key), &token_root)
+                .expect("seed save should succeed");
+            let via_token = add_feat_selection_at_root(&token_root, engine_token, None, TEST_SAVED_AT)
+                .expect("add-feat call should not error");
+
+            match (&via_key, &via_token) {
+                (
+                    CreateCharacterResponse::Saved { snapshot: key_snapshot, .. },
+                    CreateCharacterResponse::Saved { snapshot: token_snapshot, .. },
+                ) => {
+                    // `PilotSnapshotDto` carries no `PartialEq`, and adding one
+                    // for a test would widen a shipped wire type; its `Debug` is
+                    // fully derived, so it is a faithful whole-value compare.
+                    assert_eq!(
+                        format!("{key_snapshot:?}"),
+                        format!("{token_snapshot:?}"),
+                        "picking {catalog_key:?} from the catalog must compute exactly what \
+                         {engine_token:?} computes"
+                    );
+                }
+                (CreateCharacterResponse::Blocked { diagnostics }, _) => panic!(
+                    "picking {catalog_key:?} through the real add_feat_selection path must reach \
+                     Computed, got: {diagnostics:?}"
+                ),
+                (_, CreateCharacterResponse::Blocked { diagnostics }) => panic!(
+                    "the {engine_token:?} control arm must reach Computed, got: {diagnostics:?}"
+                ),
+            }
+
+            std::fs::remove_dir_all(&key_root).ok();
+            std::fs::remove_dir_all(&token_root).ok();
+        }
     }
 
     // ----- Wizard spellbook posture fix (v0.6 alpha swarm) -----
@@ -1676,6 +2356,150 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// A minimal saved character for the chooser-target tests below.
+    fn chooser_test_envelope(character_id: &str) -> SavedCharacterEnvelope {
+        SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Chooser Target Test".to_owned(),
+            character_input: compose_character_input(&request_for("race:human", 1)),
+        }
+    }
+
+    /// Every freshly created character carries the canonical Fighter
+    /// bonus-feat seed (`choice:fighter_bonus_feat ->
+    /// feat:weapon_focus:weapon:longsword`), so the payload must surface a
+    /// real, non-empty target rather than only proving the empty case.
+    #[test]
+    fn load_saved_character_surfaces_resolved_chooser_feat_targets() {
+        let character_id = "pf1-adapter-chooser-targets-exposure";
+        let root = tempdir("chooser-targets-exposure");
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Chooser Targets Exposure Test".to_owned(),
+            character_input: compose_character_input(&request_for("race:human", 1)),
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let weapon_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id.contains("weapon_focus") || entry.feat_id == "Weapon Focus")
+            .unwrap_or_else(|| {
+                panic!(
+                    "Weapon Focus's seeded target must surface: {:?}",
+                    loaded.chosen_feat_targets
+                )
+            });
+        assert_eq!(weapon_focus.target_kind, "Weapon");
+        assert_eq!(
+            weapon_focus.targets,
+            vec!["longsword".to_owned()],
+            "the seeded legacy compound target must resolve, not read as untargeted"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The write path this whole task exists to create: a chooser feat added
+    /// with a target must persist a real `SelectedChoice`, and that target
+    /// must come back out through the load payload.
+    #[test]
+    fn adding_a_chooser_feat_with_a_target_persists_and_surfaces_it() {
+        let root = tempdir("add-chooser-feat-with-target");
+        let envelope = chooser_test_envelope("add-chooser-feat-with-target");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_at_root(&root, "Skill Focus", Some("Perception"), TEST_SAVED_AT)
+            .expect("adding a chooser feat with a target should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let skill_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id == "Skill Focus")
+            .unwrap_or_else(|| {
+                panic!("Skill Focus must surface: {:?}", loaded.chosen_feat_targets)
+            });
+        assert_eq!(skill_focus.target_kind, "Skill");
+        assert_eq!(skill_focus.targets, vec!["Perception".to_owned()]);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A chooser feat may legitimately be added without naming its target
+    /// yet. That must persist the feat and record no choice -- never a
+    /// seeded default, per the same no-silent-seeding rule the producers
+    /// follow.
+    #[test]
+    fn adding_a_chooser_feat_without_a_target_seeds_nothing() {
+        let root = tempdir("add-chooser-feat-no-target");
+        let envelope = chooser_test_envelope("add-chooser-feat-no-target");
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_at_root(&root, "Skill Focus", None, TEST_SAVED_AT)
+            .expect("adding a chooser feat without a target should succeed");
+
+        let loaded = Pf1Adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+
+        let skill_focus = loaded
+            .chosen_feat_targets
+            .iter()
+            .find(|entry| entry.feat_id == "Skill Focus")
+            .expect("the feat is held, so it must be reported as untargeted");
+        assert!(
+            skill_focus.targets.is_empty(),
+            "no target may be invented: {skill_focus:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_target_for_a_feat_that_takes_none_is_rejected() {
+        assert!(resolve_feat_target_choice("feat:toughness", Some("Longsword")).is_err());
+        assert!(resolve_feat_target_choice("Weapon Focus", Some("   ")).is_err());
+        // The legitimate shapes still pass.
+        assert!(resolve_feat_target_choice("feat:toughness", None).is_ok());
+        assert!(resolve_feat_target_choice("Weapon Focus", Some("Rapier")).is_ok());
+    }
+
+    /// The prefix and choice set must come from the feat's own contract, not
+    /// be assembled by callers -- otherwise a caller could write a selection
+    /// the producers cannot read.
+    #[test]
+    fn a_resolved_target_uses_the_feats_own_contract() {
+        let choice = resolve_feat_target_choice("Improved Critical", Some("Rapier"))
+            .expect("valid")
+            .expect("a chooser feat with a target yields a choice");
+        assert_eq!(choice.choice_set_id, "choice:improved_critical_target");
+        assert_eq!(choice.selection_id, "weapon:Rapier");
+    }
+
     /// The multiclass-dip mirror of the test above: leveling a Wizard class
     /// entry onto an existing character (not fresh creation) must also
     /// reach `Computed` with no manual spell selection, proving
@@ -1748,6 +2572,449 @@ mod tests {
             HeadlessReceiptStatus::Computed,
             "multiclassing Rogue onto an existing Fighter must reach Computed through the real \
              UI level-up path, with no seeding fix needed (unlike Wizard): {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    // ----- Monk end-to-end UI reachability (v0.6 alpha swarm, Path A) -----
+    //
+    // Monk's engine can already compute a full level-1 build; its one
+    // remaining claim-blocking diagnostic
+    // (`class_feature.monk.bounded_progression.bonus_feat.unsupported`)
+    // fires only because nothing seeds `choice:monk_bonus_feat`, exactly
+    // the Sorcerer/Cleric/Druid "no picker exists for this choice set"
+    // shape. See `MONK_CLASS_ID`'s own doc comment for why Dodge is the
+    // canonical pick.
+
+    /// **The milestone test**: a freshly composed Monk, with NO choice
+    /// added by the caller, must reach `Computed` purely from what
+    /// `compose_character_input` itself seeds -- mirroring
+    /// `arcanist_level1_reaches_computed_from_compose_character_input_alone`
+    /// and `wizard_level1_reaches_computed_from_compose_character_input_alone`
+    /// exactly. This is the exact starting state `create_character` builds
+    /// and tries to save.
+    #[test]
+    fn monk_level1_reaches_computed_from_compose_character_input_alone() {
+        let character_input = compose_character_input(&monk_request_for("monk-starter-computed", 1));
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a freshly composed Monk level 1 must reach Computed with no caller-added choices, \
+             proving the canonical Dodge bonus-feat seed closes the last remaining gap: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The seed must be genuinely active, not merely recorded: the engine's
+    /// `dodge_bonus_feat_is_genuinely_active` gate requires `feat:dodge` to
+    /// really be present on `selected_feats` (a Monk who names Dodge in the
+    /// slot but does not carry the feat still, correctly, blocks). This
+    /// pins that the composed posture satisfies BOTH halves, so the +1
+    /// dodge AC bonus this closure claims is one the character really has
+    /// -- not a token that merely silences a diagnostic.
+    #[test]
+    fn composed_monk_carries_both_halves_of_the_dodge_bonus_feat_seed() {
+        let character_input = compose_character_input(&monk_request_for("monk-dodge-halves", 1));
+
+        assert!(
+            character_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID
+                    && c.selection_id == DODGE_FEAT_SELECTION
+            }),
+            "the composed Monk must carry the canonical bonus-feat choice: {:?}",
+            character_input.chosen.selected_choices
+        );
+        assert!(
+            character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| feat == DODGE_FEAT_SELECTION),
+            "the composed Monk must genuinely carry feat:dodge, or the seeded choice would be \
+             an unmet precondition rather than a real grant: {:?}",
+            character_input.chosen.selected_feats
+        );
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+        assert!(
+            receipt.computation.explanations.iter().any(
+                |e| e.id == "class_feature.monk.bounded_progression.bonus_feat.dodge_active"
+            ),
+            "the engine must emit the real dodge_active grounding record, proving the seed is \
+             resolved rather than merely tolerated: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// The composed Witch really carries the canonical Flight hex, and it
+    /// really reaches `Computed` through the production compose path --
+    /// both halves, so a seed that silences a diagnostic without producing
+    /// a computable character would still fail here.
+    #[test]
+    fn a_composed_witch_gets_the_canonical_flight_hex_and_computes() {
+        let witch_input = compose_character_input(&witch_request_for("witch-seed", 1));
+
+        assert!(
+            witch_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == WITCH_HEX_CHOICE_ID
+                    && c.selection_id == FLIGHT_HEX_SELECTION
+            }),
+            "a composed Witch must carry the canonical Flight hex: {:?}",
+            witch_input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&witch_input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed Witch must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// The composed Shaman really carries the canonical Life Spirit and
+    /// really computes.
+    #[test]
+    fn a_composed_shaman_gets_the_canonical_life_spirit_and_computes() {
+        let shaman_input = compose_character_input(&shaman_request_for("shaman-seed", 1));
+
+        assert!(
+            shaman_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID
+                    && c.selection_id == LIFE_SPIRIT_SELECTION
+            }),
+            "a composed Shaman must carry the canonical Life Spirit: {:?}",
+            shaman_input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&shaman_input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed Shaman must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    /// Both seeds are class-scoped: no other class may pick either up,
+    /// mirroring `a_composed_fighter_gets_no_arcanist_seed`'s own negative
+    /// check. Also pins that Witch and Shaman do NOT cross-seed each other
+    /// -- their hex/spirit lists are parallel but entirely distinct corpus
+    /// records (Shaman's `Shaman Hex ~ Charm` carries its own
+    /// `ShamanCharmHexDuration`/`ShamanCharmHexDC`, Witch's carries
+    /// `WitchCharmSteps`/`WitchHexDC_Charm`), so a shared seed would be
+    /// exactly the "shared name is not a shared thing" error.
+    #[test]
+    fn the_witch_and_shaman_seeds_do_not_leak_across_classes() {
+        let fighter_input = compose_character_input(&request_for("fighter-no-seed", 1));
+        for choice_set in [WITCH_HEX_CHOICE_ID, SHAMAN_SPIRIT_CHOICE_ID] {
+            assert!(
+                !fighter_input
+                    .chosen
+                    .selected_choices
+                    .iter()
+                    .any(|c| c.choice_set_id == choice_set),
+                "a composed Fighter must not receive {choice_set}: {:?}",
+                fighter_input.chosen.selected_choices
+            );
+        }
+
+        let witch_input = compose_character_input(&witch_request_for("witch-no-spirit", 1));
+        assert!(
+            !witch_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == SHAMAN_SPIRIT_CHOICE_ID),
+            "a composed Witch must not receive the Shaman Spirit choice: {:?}",
+            witch_input.chosen.selected_choices
+        );
+
+        let shaman_input = compose_character_input(&shaman_request_for("shaman-no-hex", 1));
+        assert!(
+            !shaman_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == WITCH_HEX_CHOICE_ID),
+            "a composed Shaman must not receive the Witch Hex choice: {:?}",
+            shaman_input.chosen.selected_choices
+        );
+    }
+
+    /// Leveling a seeded Witch/Shaman must stay `Computed` at every step to
+    /// the PF1 cap. `apply_level_up` takes the increment-existing-level
+    /// branch for both, so the creation-time seed simply persists and no
+    /// second seeding site is owed -- established empirically here rather
+    /// than assumed, exactly as `monk_stays_computed_leveling_all_the_way_to_20`
+    /// did for Monk.
+    #[test]
+    fn the_seeded_witch_and_shaman_stay_computed_leveling_all_the_way_to_20() {
+        for (class_id, request) in [
+            (WITCH_CLASS_ID, witch_request_for("witch-level-sweep", 1)),
+            (SHAMAN_CLASS_ID, shaman_request_for("shaman-level-sweep", 1)),
+        ] {
+            let mut character_input = compose_character_input(&request);
+
+            for expected_level in 2..=20u8 {
+                apply_level_up(&mut character_input, class_id);
+
+                assert_eq!(
+                    character_input.chosen.class_levels,
+                    vec![CharacterClassLevel {
+                        class_id: class_id.to_owned(),
+                        level: expected_level
+                    }],
+                    "apply_level_up must increment the existing {class_id} entry"
+                );
+
+                let receipt = build_pilot_headless_receipt(&character_input);
+                assert_eq!(
+                    receipt.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} leveled to {expected_level} through the real level-up path \
+                     must stay Computed: {:?}",
+                    receipt.computation.diagnostics
+                );
+            }
+        }
+    }
+
+    /// The seed is Monk-only: no other class may pick up a
+    /// `choice:monk_bonus_feat` entry, mirroring
+    /// `a_composed_fighter_gets_no_arcanist_seed`'s own negative check.
+    #[test]
+    fn a_composed_fighter_gets_no_monk_bonus_feat_seed() {
+        let fighter_input = compose_character_input(&request_for("fighter-no-monk-seed", 1));
+
+        assert!(
+            !fighter_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID),
+            "a composed Fighter must not receive the Monk-only bonus-feat choice: {:?}",
+            fighter_input.chosen.selected_choices
+        );
+    }
+
+    /// Leveling a seeded Monk must stay `Computed` at every step to the PF1
+    /// cap: `apply_level_up` takes the increment-existing-level branch here,
+    /// so the creation-time seed simply persists and no second seeding site
+    /// is owed. This also pins that the further bonus-feat slots PF1 grants
+    /// at Monk 2/6/10 (`choice:monk_bonus_feat_2/_3/_4`) are
+    /// recognized-when-present but never claim-blocking, so widening the
+    /// level range cannot silently reintroduce a blocker.
+    #[test]
+    fn monk_stays_computed_leveling_all_the_way_to_20() {
+        let mut character_input = compose_character_input(&monk_request_for("monk-level-sweep", 1));
+
+        for expected_level in 2..=20u8 {
+            apply_level_up(&mut character_input, MONK_CLASS_ID);
+
+            assert_eq!(
+                character_input.chosen.class_levels,
+                vec![CharacterClassLevel {
+                    class_id: MONK_CLASS_ID.to_owned(),
+                    level: expected_level
+                }],
+                "apply_level_up must increment the existing Monk entry, not add a second one"
+            );
+
+            let receipt = build_pilot_headless_receipt(&character_input);
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "a Monk leveled up to {expected_level} through the real level-up path must stay \
+                 Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// The creation-side mirror: `levelOptions` in `characterHubModel.ts`
+    /// feeds the create-character form's level dropdown, which composes
+    /// directly at the chosen level rather than leveling up to it. The
+    /// engine computes Monk at all 20 (`cargo run --bin v06_class_state_dump`
+    /// reports `levels_blocked: []`), and this pins that same truth through
+    /// the real production compose path -- so the UI's conservative
+    /// `[1]` range is a deliberate, documented UI-verification lag, not an
+    /// engine limit hiding behind it.
+    #[test]
+    fn monk_reaches_computed_at_every_created_level() {
+        for level in 1..=20u8 {
+            let character_input =
+                compose_character_input(&monk_request_for("monk-created-at-level", level));
+            let receipt = build_pilot_headless_receipt(&character_input);
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "a freshly composed Monk at level {level} must reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    /// Monk's `CLASS_OPTIONS` entry in `characterHubModel.ts` is being
+    /// promoted from `human-diagnostics-only` to `full`, and that label
+    /// means specifically "reaches `Computed` for ANY race in
+    /// `RACE_OPTIONS`". Nothing in the Monk seam is race-gated
+    /// (`supported_monk_level` matches on class levels only, and the Dodge
+    /// cross-check reads `selected_feats`, which the Monk branch's own
+    /// `choice:monk_bonus_feat` seed backs for every race), but the label
+    /// must be earned rather than assumed -- so
+    /// this pins it against the real race roster the UI actually offers.
+    #[test]
+    fn monk_level1_reaches_computed_for_every_race_the_ui_offers() {
+        for race_id in [
+            "race:human",
+            "race:dwarf",
+            "race:elf",
+            "race:gnome",
+            "race:half-elf",
+            "race:half-orc",
+            "race:halfling",
+        ] {
+            let request = CreateCharacterRequest {
+                race_id: race_id.to_owned(),
+                ..monk_request_for("monk-any-race", 1)
+            };
+            let receipt = build_pilot_headless_receipt(&compose_character_input(&request));
+
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "Monk level 1 must reach Computed for {race_id}, or the `full` support label in \
+                 characterHubModel.ts's CLASS_OPTIONS would overclaim: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
+    }
+
+    // ----- The seed must not claim a feat no slot granted -----
+
+    /// **The honesty test.** `compose_character_input` seeds `feat:dodge`
+    /// onto `selected_feats` for EVERY freshly created character, and the
+    /// Feats tab renders `selected_feats` verbatim
+    /// (`CharacterSheet.tsx`'s `selectedFeats` prop), so a player who never
+    /// picked Dodge is shown Dodge on their sheet.
+    ///
+    /// For two postures that claim is genuinely backed by a slot that
+    /// really grants the feat, and those stay: a **Human** carries
+    /// `choice:human_bonus_feat -> feat:dodge`, and a **Monk** carries
+    /// `choice:monk_bonus_feat -> feat:dodge`. Both are real PF1 bonus-feat
+    /// slots, and the engine cross-checks each against `selected_feats`
+    /// before grounding anything.
+    ///
+    /// For every other posture no seeded slot grants Dodge at all. A Dwarf
+    /// Fighter level 1 has exactly two feat slots
+    /// (`choice:level_1_character_feat`, already spent on Power Attack, and
+    /// `choice:fighter_bonus_feat`, already spent on Weapon Focus), so the
+    /// Dodge on its sheet is a third feat PF1 never gave it.
+    ///
+    /// This is the no-stub doctrine's "no fixture-only data in production
+    /// paths" rule applied to a claimed *character fact* rather than a
+    /// claimed *number*.
+    #[test]
+    fn a_composed_non_human_non_monk_character_does_not_claim_a_feat_no_slot_granted() {
+        let request = CreateCharacterRequest {
+            race_id: "race:dwarf".to_owned(),
+            ..request_for("dwarf-fighter-honest-feats", 1)
+        };
+        let character_input = compose_character_input(&request);
+
+        let grants_dodge = character_input.chosen.selected_choices.iter().any(|choice| {
+            choice.selection_id == DODGE_FEAT_SELECTION
+                && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
+                    || choice.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID)
+        });
+        assert!(
+            !grants_dodge,
+            "precondition: a Dwarf Fighter must have no seeded slot that grants Dodge, or this \
+             test is not exercising the unbacked-claim case: {:?}",
+            character_input.chosen.selected_choices
+        );
+
+        assert!(
+            !character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| codex::rules_core::feat_identity::same(feat, DODGE_FEAT_SELECTION)),
+            "a freshly composed Dwarf Fighter must NOT carry {DODGE_FEAT_SELECTION}: no seeded \
+             choice slot grants it, so the Feats tab would show the player a feat they never \
+             picked and PF1 never gave them: {:?}",
+            character_input.chosen.selected_feats
+        );
+    }
+
+    /// The other half of the honesty fix, and the one that makes it safe:
+    /// dropping the unbacked Dodge claim must NOT blank the character. The
+    /// combat baseline used to *require* `feat:dodge`
+    /// (`unmet_combat_posture_conditions`), so a character without it got
+    /// a claim-blocking `combat.baseline_unsupported`, an armor class of 0,
+    /// a melee attack bonus of 0, and -- because `create_character` refuses
+    /// to persist anything that is not `Computed` -- could not be created
+    /// at all. Dodge is now a conditional *contribution* rather than a
+    /// precondition: a character without it computes the same armor class
+    /// exactly one point lower, honestly.
+    #[test]
+    fn a_composed_non_human_character_still_computes_without_the_dodge_claim() {
+        let dwarf = compose_character_input(&CreateCharacterRequest {
+            race_id: "race:dwarf".to_owned(),
+            ..request_for("dwarf-fighter-still-computes", 1)
+        });
+        let receipt = build_pilot_headless_receipt(&dwarf);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "dropping the unbacked Dodge claim must not re-block a Dwarf Fighter -- an honest \
+             sheet that cannot be saved is not an improvement: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        // And the armor class is a real, lower number -- not a blanked zero.
+        let human = compose_character_input(&request_for("human-fighter-with-dodge", 1));
+        let human_receipt = build_pilot_headless_receipt(&human);
+        assert_eq!(
+            receipt.computation.baseline_armor_class + 1,
+            human_receipt.computation.baseline_armor_class,
+            "the Dodge-less Dwarf's armor class must be exactly the +1 dodge bonus lower than \
+             the Human's (who really does have Dodge via choice:human_bonus_feat), not zeroed"
+        );
+        assert!(
+            receipt.computation.baseline_armor_class > 0,
+            "the Dodge-less armor class must be a real computed number, not a blanked 0"
+        );
+    }
+
+    /// The multiclass-dip mirror. Unlike Wizard -- whose
+    /// `unmet_wizard_spellbook_conditions` gate is race/multiclass-blind and
+    /// therefore genuinely needed a SECOND seeding site in
+    /// `apply_level_up`'s new-class-entry branch -- Monk's whole
+    /// bonus-feat seam sits behind `supported_monk_level`, which matches
+    /// only a SINGLE-class Monk (`[class_level]`). A Fighter who dips Monk
+    /// never reaches that seam at all. This test pins that empirically, so
+    /// the "one site or two?" question is answered by the engine rather
+    /// than assumed -- and it is a real Computed assertion, not merely
+    /// "the Monk diagnostic is absent".
+    #[test]
+    fn monk_multiclass_dip_reaches_computed_from_apply_level_up_alone() {
+        let mut character_input = compose_character_input(&request_for("fighter-then-monk-dip", 1));
+        apply_level_up(&mut character_input, MONK_CLASS_ID);
+
+        let receipt = build_pilot_headless_receipt(&character_input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "multiclassing Monk onto an existing Fighter must reach Computed through the real \
+             UI level-up path: {:?}",
             receipt.computation.diagnostics
         );
     }

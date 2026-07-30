@@ -63,10 +63,15 @@ pub fn bat_swarm() -> MonsterStatBlock {
 
 /// Source: `b1_races.lst:49`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,40`, `RACETYPE:Animal`, `CR:2`, `SOURCEPAGE:p.36`. The real
-/// row carries no `NATURALATTACKS:` token — its Gore attack is granted
-/// via `ABILITY:Internal|AUTOMATIC|Gore`, a cross-reference into a shared
-/// ability definition this cycle's parser does not resolve (out of
-/// scope; same shape as subset 01's Wolf/Gnoll).
+/// row carries no `NATURALATTACKS:` token.
+///
+/// **Gore dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Gore`, but resolving that reference
+/// (to `core_essentials/ce_abilities_race.lst:250`) yields a mechanical
+/// marker with no dice. `1d8` is corroborated by legacy.aonprd +
+/// d20pfsrd (both "gore +4 (1d8+4)"). Full citation in
+/// `super::natural_attack_provenance` — **read it before reverting this
+/// to an empty list.**
 pub fn boar() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Boar".to_string(),
@@ -76,7 +81,7 @@ pub fn boar() -> MonsterStatBlock {
         race_type: "Animal".to_string(),
         race_subtype: None,
         source_page: "p.36".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Gore".to_string(), damage_dice: "1d8".to_string() }],
     }
 }
 
@@ -124,6 +129,18 @@ pub fn bugbear() -> MonsterStatBlock {
 /// scope per this module's field-coverage boundary),
 /// `NATURALATTACKS:Filament,Weapon.Natural...,*1,0`, `RACETYPE:Vermin`,
 /// `CR:2`, `SOURCEPAGE:p.41`. No `RACESUBTYPE:` token on this row.
+///
+/// **This monster is the one partial case: Filament is transcribed,
+/// Claw is grounded.** Filament comes straight from the real
+/// `NATURALATTACKS:` token above (including its literal `0` damage —
+/// a real attack that deals none) and is unchanged. The row separately
+/// names a Claw via `ABILITY:Internal|AUTOMATIC|Claw`, whose target
+/// (`core_essentials/ce_abilities_race.lst:251`) carries no dice; `1d4`
+/// is corroborated by legacy.aonprd + d20pfsrd (both "2 claws +5
+/// (1d4+3)"). Both sources also place Filament on the **Ranged** line,
+/// independently matching the real token's own `...Ranged...` type
+/// flags. Order is load-bearing — the real corpus token comes first.
+/// Full citation in `super::natural_attack_provenance`.
 pub fn cave_fisher() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Cave Fisher".to_string(),
@@ -133,9 +150,9 @@ pub fn cave_fisher() -> MonsterStatBlock {
         race_type: "Vermin".to_string(),
         race_subtype: None,
         source_page: "p.41".to_string(),
-        natural_attacks: vec![NaturalAttack {
-            name: "Filament".to_string(),
-            damage_dice: "0".to_string(),
-        }],
+        natural_attacks: vec![
+            NaturalAttack { name: "Filament".to_string(), damage_dice: "0".to_string() },
+            NaturalAttack { name: "Claw".to_string(), damage_dice: "1d4".to_string() },
+        ],
     }
 }

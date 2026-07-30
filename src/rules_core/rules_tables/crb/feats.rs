@@ -34,17 +34,62 @@
 //! least one `BONUS:` token; the other 104, including all 8
 //! `ItemCreation` feats, do not). See `FeatEffectBonus`'s own doc
 //! comment for the token shape.
+//!
+//! Each record also carries `FeatTableEntry.prerequisites`: its
+//! top-level `PRE`-family tokens, verbatim (130 of the 185 records carry
+//! at least one; all 17 `Metamagic` records carry none). See that
+//! field's own doc comment.
+//!
+//! **This module also owns the shared feat schema.** `FeatCategory`,
+//! `FeatTableEntry` and `FeatEffectBonus` are defined here and reused
+//! verbatim by `rules_tables::apg::feats` (172 records) and
+//! `rules_tables::acg::feats` (129 records) rather than each book
+//! declaring a parallel type. `feat_tables()` below stays CRB-only;
+//! `rules_tables::feats_all::all_feat_tables()` is the book-spanning
+//! aggregate the desktop Feat picker reads.
 
+/// A feat category, derived from the corpus record's own `TYPE:` facet.
+///
+/// The first four variants are the Chapter 5 categories `cr_feats.lst`
+/// encodes and are the only ones a CRB record ever carries. `Teamwork`
+/// and `Panache` exist because `apg_feats.lst` and `acg_feats.lst`
+/// encode them as standalone `TYPE:` facets on records that carry no
+/// `Combat`/`General` facet at all -- 3 APG records (`TYPE:Teamwork`)
+/// and 8 ACG records (4 `TYPE:Teamwork`, 4 `TYPE:Panache`). Under the
+/// four-category rule those 11 real, player-facing feats would have been
+/// silently dropped, so the enum widened to what the corpus actually
+/// says rather than the catalog quietly losing them. Records whose
+/// `TYPE:` carries *both* facets (e.g. `TYPE:Combat.Teamwork`, 8 in APG
+/// and 5 in ACG) resolve to `Combat`, exactly as CRB already resolves
+/// `TYPE:Combat.AttackOption.ModifyAC` to `Combat` and drops the
+/// subtypes.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum FeatCategory {
     General,
     Combat,
     ItemCreation,
     Metamagic,
+    /// APG/ACG only -- no CRB record carries a `Teamwork` facet.
+    Teamwork,
+    /// ACG only -- no CRB or APG record carries a `Panache` facet.
+    Panache,
 }
 
 impl FeatCategory {
+    /// Every variant. Note this spans all three ingested books: `CRB_ONLY`
+    /// is the subset any `cr_feats.lst` record can actually carry.
     pub const ALL: &'static [FeatCategory] = &[
+        FeatCategory::General,
+        FeatCategory::Combat,
+        FeatCategory::ItemCreation,
+        FeatCategory::Metamagic,
+        FeatCategory::Teamwork,
+        FeatCategory::Panache,
+    ];
+
+    /// The four categories `cr_feats.lst` itself encodes. `feat_tables()`
+    /// (this module's CRB-only catalog) never yields any other variant.
+    pub const CRB_ONLY: &'static [FeatCategory] = &[
         FeatCategory::General,
         FeatCategory::Combat,
         FeatCategory::ItemCreation,
@@ -101,6 +146,35 @@ pub struct FeatTableEntry {
     /// is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class
     /// criterion), not this table's.
     pub effect: Option<&'static [FeatEffectBonus]>,
+    /// Every top-level `PRE`-family token the corpus record carries,
+    /// verbatim and unparsed, in source order -- `PREABILITY:`,
+    /// `PREMULT:`, `PRESTAT:`, `PRESKILL:`, `PRETOTALAB:`, `PRELEVEL:`,
+    /// `PRECLASS:`, `PRERACE:`, `PREVARGTEQ:`, the negated `!PREABILITY:`
+    /// form, and the rest. `None` when the record has none (55 of CRB's
+    /// 185, including all 17 Metamagic records; 29 of APG's 172; 4 of
+    /// ACG's 129).
+    ///
+    /// "Top-level" means tab-separated fields of the record itself. A
+    /// `PREMULT:` token embeds further `PRE...` clauses inside brackets
+    /// (e.g.
+    /// `PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]`);
+    /// those stay inside their `PREMULT:` string rather than being
+    /// flattened out, because flattening would lose the "any one of these
+    /// satisfies it" semantics the bracket grouping carries.
+    ///
+    /// Deliberately raw strings, not a parsed prerequisite AST -- these
+    /// are PCGen expressions over runtime character state, exactly like
+    /// the `BONUS:` formulas `effect` keeps verbatim, and for the same
+    /// reason. `feat_prereqs/general.rs`'s doc comment named this field's
+    /// absence as the blocker for a real per-feat prerequisite chain;
+    /// landing the data lifts that blocker but does not by itself
+    /// evaluate it -- `feat_prereqs` still checks catalog membership
+    /// only, and widening it to evaluate these tokens is its own job.
+    ///
+    /// `Some(&[])` never occurs: an empty slice would be
+    /// indistinguishable from "no data gathered yet", so absence is
+    /// always `None`, mirroring `effect`'s own rule.
+    pub prerequisites: Option<&'static [&'static str]>,
 }
 
 /// One `BONUS:` token lifted from a feat's corpus record, captured as a

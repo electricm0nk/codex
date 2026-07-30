@@ -17,10 +17,10 @@
 //! sourced base-attack/base-save from
 //! `rules_tables::crb::class_tables::class_tables()` and only its
 //! class-specific pillars from `pilot_compute.rs`'s chassis explanations.
-//! This module does NOT read `class_tables()` at all: `class_tables.rs`'s
-//! `CLASS_META` entry for `ClassId::Druid` carries `good_saves:
-//! GoodSaves { fortitude: false, reflex: false, will: true }`, which
-//! computes a *poor* Fortitude save (`classlevel / 3`). That contradicts
+//! This module does NOT read `class_tables()` at all. The original reason
+//! was a real `CLASS_META` bug: `ClassId::Druid` used to carry
+//! `good_saves: GoodSaves { fortitude: false, ... }`, computing a *poor*
+//! Fortitude save (`classlevel / 3`) and contradicting
 //! `pilot_compute.rs`'s own `explain_druid_level1_spell_baseline`
 //! formula — verified independently against two primary PF1 sources
 //! (d20pfsrd and legacy.aonprd.com, cross-checked against the level 4/5
@@ -28,17 +28,15 @@
 //! was written; see `tests/sd13_druid_base_attack_and_saves.rs` and
 //! `tests/sd18_druid_level15_widening.rs`) — good Fortitude
 //! (`classlevel/2+2`), poor Reflex (`classlevel/3`), good Will
-//! (`classlevel/2+2`), the same save shape as PF1's Cleric. Composing
-//! with the buggy `class_tables()` column would land a wrong number on a
-//! future printed character sheet. `class_tables.rs` is outside this
-//! cycle's file-touch partition (Epic 7 cycles may touch only
-//! `level_up.rs` / `level_up/<class>.rs` / the cycle's own test file), so
-//! the `CLASS_META` bug itself is not fixed here — every pillar this
-//! module grants instead reads the single already-grounded, verified,
-//! internally-consistent `pilot_compute.rs` source, and the discrepancy
-//! is flagged in the progress doc for a future SD-19 cycle to correct
-//! (Cleric's `CLASS_META` row shows the identical `fortitude: false`
-//! shape, so the same fix likely applies there too).
+//! (`classlevel/2+2`), the same save shape as PF1's Cleric.
+//!
+//! **That bug has since been FIXED** — `class_tables.rs`'s `CLASS_META`
+//! now carries `fortitude: true` for both Druid and Cleric, matching the
+//! primary sources. The reason this module still reads only
+//! `pilot_compute.rs` is therefore no longer "the table is wrong" but the
+//! narrower and still-good one that every pillar should come from a single
+//! already-grounded source rather than be composed across two. Do not cite
+//! the old bug as live: it is history, not current state.
 //!
 //! A level transition's automatic feature grants are computed as a
 //! **diff** between the chassis snapshot at `from_level` and at
@@ -67,13 +65,18 @@
 //! ... with no execution engine anywhere in this codebase") — no
 //! resource-pool value exists anywhere in this repo to compose from.
 //! `MAX_SUPPORTED_DRUID_LEVEL` in `pilot_compute.rs` bounds the grounded
-//! chassis data to Druid level 15; a transition whose `to_level` exceeds
-//! that ceiling honestly produces no `automatic_features` (the chassis
-//! probe returns no druid-namespaced explanations there), while
-//! `capstone_threshold` still reports correctly — it is a pure PF1 Core
-//! Rulebook level-number fact (level 20 is every core class's capstone
-//! level), not derived from any per-class grounded data source, so it is
-//! not fabrication to report it beyond Druid's own grounded ceiling.
+//! chassis data. As of the v0.6 level-16..20 widening (2026-07-29) that
+//! ceiling is 20, the full PF1 range, so every in-range transition now
+//! produces real `automatic_features` — including the 19 -> 20 capstone
+//! step, which grants the genuinely-changed base attack bonus (15), both
+//! good saves (12), and Wild Empathy (level + Charisma). Poor Reflex is 6
+//! at both 19 and 20, so it correctly grants nothing. The ceiling behaviour
+//! itself is unchanged and still load-bearing: a `to_level` above it
+//! honestly produces no `automatic_features` (the chassis probe returns no
+//! druid-namespaced explanations there), while `capstone_threshold` still
+//! reports correctly — it is a pure PF1 Core Rulebook level-number fact
+//! (level 20 is every core class's capstone level), not derived from any
+//! per-class grounded data source.
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
@@ -85,9 +88,12 @@ const DRUID_CLASS_ID: &str = "class:druid";
 const HUMAN_RACE_ID: &str = "race:human";
 /// PF1 Core Rulebook capstone level, universal across every core class
 /// (`LevelUpPlan.capstone_threshold`'s own doc comment). Druid's own
-/// grounded chassis data stops at `MAX_SUPPORTED_DRUID_LEVEL = 15`
-/// (`pilot_compute.rs`) — this constant is not a Druid-specific named
-/// ability, only the shared PF1 level-cap fact, mirroring
+/// grounded chassis data now reaches this same level
+/// (`MAX_SUPPORTED_DRUID_LEVEL = 20` in `pilot_compute.rs` since the v0.6
+/// widening), but the two remain independent: this constant is not a
+/// Druid-specific named ability, only the shared PF1 level-cap fact,
+/// and it stays correct regardless of where the chassis ceiling sits —
+/// mirroring
 /// `barbarian.rs`'s `BARBARIAN_CAPSTONE_LEVEL` for the same reason.
 const DRUID_CAPSTONE_LEVEL: u8 = 20;
 

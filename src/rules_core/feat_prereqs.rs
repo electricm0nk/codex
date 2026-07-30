@@ -161,6 +161,28 @@ pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
                 warnings: Vec::new(),
             }
         }
+        // `Teamwork` and `Panache` exist only on APG/ACG records (see
+        // `FeatCategory`'s own doc comment). Every per-category module
+        // above evaluates against the *CRB* catalog
+        // (`rules_tables::crb::feats::feat_tables()`), which by
+        // construction holds no record of either category, so neither has
+        // a landed evaluation path. Routing them through a CRB lookup
+        // anyway would report all 11 real APG/ACG feats as "not a
+        // recognized feat" -- a wrong reason dressed up as a real one.
+        // This states what is actually true instead.
+        FeatCategory::Teamwork | FeatCategory::Panache => PrerequisiteEvaluation {
+            is_eligible: false,
+            failing_prerequisites: vec![FailedPrerequisite {
+                reason: format!(
+                    "'{}' is a {:?}-category feat, which only APG/ACG records carry; \
+                     this engine has no landed prerequisite-evaluation path for that \
+                     category yet, so eligibility is unproven rather than denied on \
+                     a real prerequisite",
+                    feat.feat_id, feat.category
+                ),
+            }],
+            warnings: Vec::new(),
+        },
     }
 }
 
@@ -215,6 +237,15 @@ pub fn compute_feat_effects(feat: &FeatKey) -> FeatEffects {
                 description: None,
                 table_cell: None,
             },
+        },
+        // APG/ACG-only categories with no landed CRB-catalog resolver --
+        // see the matching arm in `evaluate_feat_prerequisites`. `None`
+        // fields mean "not resolved", which is exactly the case here, and
+        // is the same shape every other arm returns on a catalog miss.
+        FeatCategory::Teamwork | FeatCategory::Panache => FeatEffects {
+            feat_id: feat.feat_id.clone(),
+            description: None,
+            table_cell: None,
         },
     }
 }

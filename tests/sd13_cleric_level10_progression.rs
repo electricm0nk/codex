@@ -168,7 +168,7 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 5,
@@ -179,7 +179,7 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
 
     let tog_uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         tog_uses.value, 7,
@@ -250,7 +250,7 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(bonus.value, 4, "Cleric level 9 Touch of Good bonus must stay 4");
 

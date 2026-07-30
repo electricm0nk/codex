@@ -40,8 +40,21 @@ export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresD
   { name: 'Use Magic Device', ability: 'charisma' },
 ];
 
-/** PF1 core rulebook class skill lists, by class id (see characterHubModel's CLASS_OPTIONS). */
+/**
+ * Class skill lists by class id — one entry per class in `characterHubModel`'s
+ * `CLASS_OPTIONS`. A selectable class missing from here is not a harmless gap:
+ * `isClassSkill` would report every skill as cross-class, so the Skills tab
+ * would quietly show the wrong ranks-to-bonus math rather than showing nothing.
+ */
 const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
+  // ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
+  // Profession, Spellcraft, Use Magic Device. Same list as Wizard plus Use
+  // Magic Device, which Wizard does not get.
+  'class:arcanist': new Set([
+    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
+    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
+    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft', 'Use Magic Device',
+  ]),
   'class:barbarian': new Set([
     'Acrobatics', 'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Nature)', 'Perception', 'Ride', 'Survival', 'Swim',
   ]),

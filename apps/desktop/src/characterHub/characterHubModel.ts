@@ -195,7 +195,34 @@ export interface ClassOption {
 }
 
 /**
- * The full PF1 core rulebook class roster.
+ * PF1's own class ceiling, and the exact ceiling
+ * `src/bin/v06_class_state_dump.rs` sweeps to (`MAX_LEVEL: u8 = 20`) — the
+ * two must agree, or `levelOptions` would be claiming a level the engine
+ * dump never checked.
+ */
+export const MAX_CLASS_LEVEL = 20;
+
+/**
+ * Every level 1-20, shared by each class the engine dump reports `Computed`
+ * at all of them. A shared frozen array rather than 11 copies: these entries
+ * are not independent judgements that happen to coincide, they are one fact
+ * ("the dump says all 20 levels compute") read off in eleven places.
+ */
+const EVERY_CLASS_LEVEL: number[] = Object.freeze(
+  Array.from({ length: MAX_CLASS_LEVEL }, (_unused, index) => index + 1)
+) as number[];
+
+/**
+ * The classes this app offers: all 27 the engine can build — the eleven PF1
+ * Core Rulebook classes, APG's six (Alchemist, Cavalier, Inquisitor, Oracle,
+ * Summoner, Witch) and ACG's ten (Arcanist, Bloodrager, Brawler, Hunter,
+ * Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest). This is
+ * still deliberately not "every class in every book": a class belongs here
+ * only when `v06_class_state_dump` gives it real levels to offer. As of the
+ * 2026-07-29 sweep that happens to be every class the dump knows about, so
+ * the list and the dump's roster coincide — but they coincide as a result,
+ * not by construction. A class added to the engine but not yet computing
+ * must not be added here.
  *
  * `supportLevel` reflects the compute engine's real gating, not just
  * whether it recognizes the class — verified directly against
@@ -212,16 +239,23 @@ export interface ClassOption {
  * `full` note below) once their own domain-powers/animal-companion
  * burdens stopped being *permanently* unconditional.
  *
- * Paladin and Ranger are `full-except-human-level-1` (v0.6 alpha swarm,
- * class-breadth epic, 2026-07-25): both reached real `Computed` status once
- * their spell posture was genuinely computed (`b7642d97` Ranger,
- * `ee3c50ce` Paladin) rather than left as an unconditional blocker. Both
- * still share `explain_hybrid_level1_chassis`'s original, untouched
- * single-class-Human-at-level-1 gate, so that one combination stays
- * `Blocked` while every other race/level combination genuinely computes —
- * see the `full-except-human-level-1` doc above for the live-verification
- * detail (repeated independently for each class: Human blocked at level 1,
- * Elf computed at level 1 and through level 4 of leveling up).
+ * Paladin and Ranger are now plain `full`. They were
+ * `full-except-human-level-1` from 2026-07-25 (class-breadth epic:
+ * `b7642d97` Ranger, `ee3c50ce` Paladin gave both a genuinely computed
+ * spell posture), because both still shared
+ * `explain_hybrid_level1_chassis`'s single-class-Human-at-level-1 gate —
+ * that one race/level combination stayed `Blocked` while every other one
+ * computed. **That gate is gone** (corrected 2026-07-29): the level sweep
+ * in `cargo run --bin v06_class_state_dump` runs on the Human fixture and
+ * reports both classes `Computed` at every level 1-20, level 1 included.
+ * Live-verified through the real dev build, not inferred from the dump: a
+ * fresh Human Paladin 1 and a fresh Human Ranger 1 each reached
+ * `Computed`/`Saved` with real distinct stat blocks (Paladin BAB +1 /
+ * Fort +4 / Will +3; Ranger BAB +1 / Fort +4 / Ref +4), and both also
+ * computed and saved at level 20. The `full-except-human-level-1` support
+ * level itself is deliberately kept in `ClassSupportLevel` — no class
+ * currently uses it, but it describes a real shape the engine can produce
+ * again, and its copy is still covered by this file's tests.
  *
  * Wizard and Rogue are `full`, not `partial-human-only` as this file
  * previously (incorrectly) had them: `supported_wizard_level` /
@@ -277,51 +311,193 @@ export interface ClassOption {
  * checked directly, not assumed: none of the three appear in
  * `hybrid_level1_class`'s match arms, and each of their own
  * bloodline/domain/nature-bond checks is explicitly coded and documented
- * as race-independent, evaluated before any Human-only gate. But two of
- * the three have a real, separate LEVEL cap this file's `levelOptions`
- * must respect, or the `full` label would overclaim:
- * - **Sorcerer**: `ARCANE_BLOODLINE_BONUS_LEVEL = 3` — Computed for any
- *   race at levels 1-2 only; level 3+ stays genuinely `Blocked` (bloodline
- *   bonus spells/feats at 3rd+ aren't grounded). Live-verified: a fresh
- *   Human Sorcerer 1 reached `Computed`/`Saved`, disk-confirmed; leveling
- *   up through the real `LevelUpDialog` reached level 2 cleanly, then
- *   attempting level 3 correctly stayed at level 2 with the real
- *   `class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported`
- *   diagnostic shown, not silently advanced.
- * - **Cleric**: no level cap found (Good domain, without Healing, has no
- *   level-gated condition anywhere in `explain_cleric_level1_spell_baseline`).
- *   Live-verified: a fresh Human Cleric 1 reached `Computed`/`Saved`,
- *   disk-confirmed; leveled cleanly through level 3 with no blocker.
- * - **Druid**: Computed only at EXACTLY level 1 — the code's own condition
- *   is `animal_companion_chosen_top && druid_level == 1`; level 2+ falls
- *   to the catch-all `Blocked` diagnostic (companion advancement isn't
- *   grounded past level 1). Live-verified: a fresh Human Druid 1 reached
- *   `Computed`/`Saved`, disk-confirmed; attempting level 2 through the
- *   real `LevelUpDialog` correctly stayed at level 1 with the real
- *   `class_feature.druid.animal_companion.unsupported` diagnostic shown.
+ * as race-independent, evaluated before any Human-only gate.
  *
- * `levelOptions` reflects exactly this: Sorcerer `[1, 2]`, Cleric
- * `[1, 2, 3]` (Fighter's own conservative verified-range convention, not
- * the theoretical max), Druid `[1]` only.
+ * Arcanist is `full` too, and was the first non-CRB class offered here
+ * (v0.6 alpha swarm, class-picker breadth, 2026-07-29). Its Path A gap
+ * closed the same way Wizard's did: `compose_character_input`
+ * (`pf1_adapter.rs`) seeds the canonical Metamagic Knowledge exploit plus
+ * a starter spellbook on the real creation path, and does the same on the
+ * multiclass-dip path. The backend has accepted `class:arcanist` since
+ * then; this picker simply never listed it, so no player could reach it.
+ *
+ * The remaining fifteen APG/ACG classes were added the same day, for the
+ * same reason and on the same evidence: every one of them already reached
+ * `Computed` at all 20 levels in the engine dump, and every one was
+ * unreachable purely because this list did not name it. Ten of the fifteen
+ * need a canonical Path A seed on the real creation path (Alchemist,
+ * Cavalier, Inquisitor, Investigator, Oracle, Shaman, Summoner, Warpriest,
+ * Witch, Bloodrager) and `compose_character_input` already applies each —
+ * checked constant-by-constant against the dump's own `canonical_seeds_for`
+ * rather than assumed, since the two tables are separate hand-maintained
+ * mirrors in different crates and nothing enforces that they agree. The
+ * other five (Brawler, Hunter, Skald, Slayer, Swashbuckler) need no seed at
+ * all — they reach `Computed` from the bare chassis.
+ *
+ * `hitDie` for all fifteen comes from each class's own `HD:` token on its
+ * real `CLASS:` record (`apg_classes.lst` / `acg_classes.lst`), cross-checked
+ * against the engine's own per-class `HIT_DIE` constants
+ * (`rules_tables/apg/class_*.rs`, `rules_tables/acg/class_*.rs`) — the two
+ * agree on all fifteen. Note the engine's CRB `CLASS_META` table carries no
+ * row for any non-CRB class, so `crb::class_tables::hit_die_for` is not the
+ * cross-check for these; `apg::hit_die_for`/`acg::hit_die_for` are.
+ *
+ * That same cross-check turned up one genuine disagreement, in a CRB class
+ * this change did not otherwise touch: **Monk**. **RESOLVED 2026-07-29 in
+ * this table's favour, by operator ruling** (risks item 91). This table
+ * said `8` while `cr_classes.lst`'s `CLASS:Monk` record carries `HD:10` and
+ * `CLASS_META` mirrored that `10` — so the shipped product displayed d8
+ * while computing HP from d10 (a Monk 20 is 143 HP at d8 versus 164 at
+ * d10). The operator ruled the published PF1 CRB p.56 value, d8, is
+ * correct; `CLASS_META`'s Monk row was corrected to `8` and now carries a
+ * documented corpus-defect override comment explaining why it deliberately
+ * does not transcribe its own `HD:` token. The corpus itself was
+ * intentionally NOT edited — it is this project's independent parity
+ * oracle. So the `8` below needed no change; it is now the engine that
+ * agrees with it, not the other way round.
+ *
+ * ## Where `levelOptions` comes from
+ *
+ * `levelOptions` used to lag well behind the engine by convention — each
+ * entry only listed the levels somebody had personally driven through the
+ * running app, so Wizard/Rogue/Druid sat at `[1]` and Sorcerer at `[1, 2]`
+ * long after the engine computed them at all 20. That convention has been
+ * replaced with a checkable one: **`levelOptions` is exactly what
+ * `cargo run --bin v06_class_state_dump` reports as `Computed`**, spot-
+ * checked live rather than exhaustively re-driven.
+ *
+ * That dump is not a summary of this file — it sweeps every class over
+ * levels 1-20 through the real `build_pilot_headless_receipt` pipeline,
+ * under the exact input posture `compose_character_input` composes for a
+ * freshly created character (same fixture, same canonical choice/spell
+ * seeds). Its 2026-07-29 run reports **all 27 classes `Computed` at every
+ * level 1-20** (`computed_count: 27`, every row `levels_blocked: []`), so
+ * every entry above offers the full 1-20 range and none is capped.
+ *
+ * Monk's earlier `[1]` cap is gone with this change. It was never a claim
+ * that Monk broke past level 1 — the dump already reported it `Computed` at
+ * all 20 — only that nobody had driven it live, so the cap was held
+ * deliberately rather than widened on dump evidence alone. That live pass
+ * has now happened (see below), so the exception is retired.
+ *
+ * Re-run the dump before editing any `levelOptions` value; do not widen a
+ * class the dump reports `Blocked`, and do not leave a `Computed` class
+ * artificially capped.
+ *
+ * Live-verified 2026-07-29 through the real dev build at the new ceiling,
+ * rather than at every one of the 220 class/level pairs this opens: all
+ * eleven classes were created at level **20** and each reached
+ * `Computed`/`Saved` with real, class-distinct stat blocks, disk-confirmed
+ * (`class_level=class:<name>:20` in each `authoritative_character_input`).
+ * Level 1 was driven for Human Paladin/Ranger specifically (the old
+ * carve-out) and for Wizard. The `LevelUpDialog` path was driven
+ * separately, because creating at a level and leveling up to it are
+ * different code paths: a Wizard created at level 1 leveled cleanly to 2
+ * and then 3 (the level-3 feat grant correctly routed through the real
+ * feat picker first), disk-confirmed at `class:wizard:3`.
+ *
+ * Intermediate levels (2-19) are covered by the engine dump but were not
+ * each driven by hand. If one of them ever turns out to break the running
+ * UI while computing headlessly, the fix is to carve that level out of
+ * this list and say so here — not to widen quietly.
+ *
+ * ## The 2026-07-29 breadth pass (Monk + the fifteen APG/ACG classes)
+ *
+ * Every class added or widened in that change was created through the real
+ * running app, not just the dump. All sixteen (Monk plus the fifteen) were
+ * created at level **20** and each reached `Computed`/`Saved` with a real,
+ * class-distinct stat block — distinct in the way the rules require, not
+ * merely non-identical: Alchemist came out Fort/Ref-good, Summoner
+ * Will-only, Warpriest Fort/Will, Monk good in all three, each with the
+ * right 3/4- or full-BAB progression. All sixteen are disk-confirmed
+ * (`class_level=class:<name>:20` in each `authoritative_character_input`).
+ * Level **1** was driven for Slayer and level **10** for Witch, so the
+ * bottom and middle of the range are covered too, not only the ceiling.
+ *
+ * `LevelUpDialog` was driven separately, because creating at a level and
+ * levelling up to it are different code paths: the Witch created at 10 was
+ * levelled to 11 through the real dialog (which previewed "Hit die: d6",
+ * this table's own Witch value, reached through a different code path than
+ * the creation-form HP preview), the level-11 feat grant correctly routed
+ * through the real feat picker first, and the result persisted —
+ * disk-confirmed at `class:witch:11`, HP 62 → 68 and skill points 24 → 27.
+ *
+ * Character sheets were opened for Warpriest 20, Witch 10/11 and Hunter 20
+ * and render with no blank panels and no `undefined`: the Warpriest's
+ * Spells tab shows its seeded `Light` as both Known and Prepared under its
+ * own source class (which is what proves `compose_character_input`'s seed
+ * fires on the real creation path and not only in the dump), and the
+ * Hunter's Pets tab renders a fully grounded 16-HD Wolf companion. The
+ * other thirteen classes were created and saved but their sheets were not
+ * individually opened; only Human was driven, and only the levels named
+ * above.
  */
 export const CLASS_OPTIONS: ClassOption[] = [
-  { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 10 },
-  { id: 'class:paladin', label: 'Paladin', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:ranger', label: 'Ranger', supportLevel: 'full-except-human-level-1', levelOptions: [1, 2, 3, 4, 5], hitDie: 10 },
-  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'full', levelOptions: [1, 2], hitDie: 6 },
-  { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: [1], hitDie: 6 },
-  { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
-  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 12 },
-  { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: [1, 2, 3], hitDie: 8 },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: [1], hitDie: 8 },
-  { id: 'class:monk', label: 'Monk', supportLevel: 'human-diagnostics-only', levelOptions: [1], hitDie: 8 },
+  { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:paladin', label: 'Paladin', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:ranger', label: 'Ranger', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:sorcerer', label: 'Sorcerer', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  { id: 'class:wizard', label: 'Wizard', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  { id: 'class:bard', label: 'Bard', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 12 },
+  { id: 'class:rogue', label: 'Rogue', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:monk', label: 'Monk', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  // APG (`advanced_players_guide/apg_classes.lst`).
+  { id: 'class:alchemist', label: 'Alchemist', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:cavalier', label: 'Cavalier', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:inquisitor', label: 'Inquisitor', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:oracle', label: 'Oracle', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:summoner', label: 'Summoner', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:witch', label: 'Witch', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  // ACG (`advanced_class_guide/acg_classes.lst`).
+  { id: 'class:arcanist', label: 'Arcanist', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 6 },
+  { id: 'class:bloodrager', label: 'Bloodrager', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:brawler', label: 'Brawler', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:hunter', label: 'Hunter', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:investigator', label: 'Investigator', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:shaman', label: 'Shaman', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:skald', label: 'Skald', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:slayer', label: 'Slayer', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:swashbuckler', label: 'Swashbuckler', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:warpriest', label: 'Warpriest', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];
 
 export function getLevelOptionsForClass(classId: string): number[] {
   return CLASS_OPTIONS.find((option) => option.id === classId)?.levelOptions ?? DEFAULT_LEVEL_OPTIONS;
+}
+
+/**
+ * Keep a chosen level valid for the class it is being applied to. The class
+ * and level pickers are independent controls, so switching class can strand a
+ * level the new class does not offer (Fighter 20 → Monk, whose only offered
+ * level is 1). Falls back to the highest level the class does offer, so
+ * switching between two fully-computed classes preserves the player's level
+ * rather than silently resetting them to 1.
+ */
+export function clampLevelForClass(classId: string, level: number): number {
+  const options = getLevelOptionsForClass(classId);
+  if (options.includes(level)) {
+    return level;
+  }
+  const highest = options[options.length - 1] ?? 1;
+  return level < highest ? options[0] ?? 1 : highest;
+}
+
+/**
+ * Whether `LevelUpDialog` may offer another level in this class, given how
+ * many levels of it the character already holds (`0` for a class they have
+ * never taken). This is the same `levelOptions` claim the creation picker
+ * makes, applied to the other way into a level: a class the engine dump
+ * reports `Blocked` past level 1 must not be reachable by leveling up either,
+ * and no class may pass PF1's own level-20 ceiling — the dump sweeps exactly
+ * 1-20, so a 21st level is unverified reach, not merely untested.
+ */
+export function canTakeAnotherLevelIn(classId: string, currentClassLevel: number): boolean {
+  return getLevelOptionsForClass(classId).includes(currentClassLevel + 1);
 }
 
 export function describeClassSupportLevel(supportLevel: ClassSupportLevel, classLabel: string): string {
@@ -418,10 +594,12 @@ export function abilityModifier(score: number): number {
   return Math.floor((score - 10) / 2);
 }
 
-/** Level-1 HP: the class hit die maximum plus the constitution modifier (floored at 1). */
-export function maxHitPointsAtLevelOne(hitDie: number, constitutionScore: number): number {
-  return Math.max(1, hitDie + abilityModifier(constitutionScore));
-}
+// `maxHitPointsAtLevelOne` used to live here. Its only caller was
+// `CreateCharacterForm`'s HP preview, which could assume level 1 back when the
+// form hardcoded that level. Now that the form has a real Level picker it uses
+// `characterProgression`'s `maxHitPoints` instead — the same function the
+// character sheet uses, so the previewed HP and the created character's HP
+// cannot disagree. Nothing else referenced the level-1-only version.
 
 /** Sum of `count` dice with `sides` faces. */
 export function rollDice(count: number, sides: number): number {

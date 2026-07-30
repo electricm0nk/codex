@@ -146,11 +146,13 @@ mod tests {
     };
 
     use crate::character_hub::{
-        compose_character_input, map_resolved_equipment_dto, map_spells_selected_dto,
-        AbilityScoresDto, AbilityModifiersDto, BaseSavesDto, CharacterSummaryDto, CorpusDerivedDto,
-        CreateCharacterRequest, DiagnosticDto, EquipmentEffectsDto, PilotSnapshotDto,
-        SchoolCoverageDto, SelectedSkillModifiersDto,
+        compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
+        map_explanations_dto, map_resolved_equipment_dto, map_snapshot_dto,
+        map_spells_selected_dto, map_weapon_damage_dto, AbilityScoresDto,
+        CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
+        EquipmentEffectsDto, ResolvedEquipmentEffectDto, SchoolCoverageDto,
     };
+    use codex::rules_core::damage_total::resolve_weapon_damage_breakdown;
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
     use crate::characterHub::reSaveCharacter::re_save_character_at_root;
@@ -265,35 +267,15 @@ mod tests {
             let corpus_receipt =
                 compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
 
-            let snapshot = view_model.snapshot.as_ref().map(|snapshot| PilotSnapshotDto {
-                ability_modifiers: AbilityModifiersDto {
-                    strength: snapshot.ability_modifiers.strength,
-                    dexterity: snapshot.ability_modifiers.dexterity,
-                    constitution: snapshot.ability_modifiers.constitution,
-                    intelligence: snapshot.ability_modifiers.intelligence,
-                    wisdom: snapshot.ability_modifiers.wisdom,
-                    charisma: snapshot.ability_modifiers.charisma,
-                },
-                base_attack_bonus: snapshot.base_attack_bonus,
-                base_saves: BaseSavesDto {
-                    fortitude: snapshot.base_saves.fortitude,
-                    reflex: snapshot.base_saves.reflex,
-                    will: snapshot.base_saves.will,
-                },
-                baseline_melee_attack_bonus: snapshot.combat.baseline_melee_attack_bonus,
-                baseline_armor_class: snapshot.defense.baseline_armor_class,
-                total_saves: BaseSavesDto {
-                    fortitude: snapshot.defense.total_save.fortitude,
-                    reflex: snapshot.defense.total_save.reflex,
-                    will: snapshot.defense.total_save.will,
-                },
-                selected_skill_modifiers: SelectedSkillModifiersDto {
-                    climb: snapshot.skill.selected_modifier.climb,
-                    intimidate: snapshot.skill.selected_modifier.intimidate,
-                    swim: snapshot.skill.selected_modifier.swim,
-                },
-                damage_reduction: snapshot.defense.damage_reduction,
-            });
+            // Routed through `character_hub`'s own `map_snapshot_dto`
+            // rather than the hand-rolled field-by-field mirror this used
+            // to be. That mirror was a silent drop hazard by construction:
+            // every field added to `PilotSnapshotDto` had to be remembered
+            // in two places, and a forgotten one here would leave this
+            // adapter's callers reading a snapshot missing data the engine
+            // had computed -- the same class of gap the companion field
+            // itself was added to close.
+            let snapshot = view_model.snapshot.as_ref().map(map_snapshot_dto);
 
             let diagnostics = receipt
                 .computation
@@ -324,6 +306,21 @@ mod tests {
                     .map(map_resolved_equipment_dto)
                     .collect(),
                 equipment_effects: EquipmentEffectsDto {
+                    per_item: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .per_item
+                        .iter()
+                        .map(|effect| ResolvedEquipmentEffectDto {
+                            item_id: effect.item_id.clone(),
+                            equipment_record_key: effect.equipment_record_key.clone(),
+                            category: format!("{:?}", effect.category),
+                            armor_class_bonus: effect.armor_class_bonus,
+                            max_dex: effect.max_dex,
+                            spell_failure: effect.spell_failure,
+                            armor_check_penalty: effect.armor_check_penalty,
+                        })
+                        .collect(),
                     armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,
                     armor_check_penalty_total: corpus_receipt
                         .corpus_derived
@@ -339,6 +336,7 @@ mod tests {
                         .equipment_effects
                         .attack_bonus_delta,
                 },
+                encumbrance: map_encumbrance_dto(&corpus_receipt.corpus_derived.encumbrance),
                 unresolved_spell_ids: corpus_receipt.corpus_derived.unresolved_spell_ids.clone(),
                 unresolved_equipment_item_ids: corpus_receipt
                     .corpus_derived
@@ -353,6 +351,14 @@ mod tests {
                 corpus_derived,
                 selected_feats: envelope.character_input.chosen.selected_feats.clone(),
                 spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+                chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
+                explanations: map_explanations_dto(&corpus_receipt.base.explanations),
+                weapon_damage: map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+                    &envelope.character_input,
+                    corpus_fixture_bundle(),
+                    &corpus_receipt.corpus_derived.equipment_effects,
+                    corpus_receipt.base.ability_modifiers.strength,
+                )),
             })
         }
     }

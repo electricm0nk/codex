@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:18:10Z",
+  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
     "id": "beastiary1:monster:wolverine",
     "name": "Wolverine",
@@ -11,7 +11,16 @@
     "race_type": "Animal",
     "race_subtype": null,
     "source_page": "p.279",
-    "natural_attacks": []
+    "natural_attacks": [
+      {
+        "name": "Bite",
+        "damage_dice": "1d4"
+      },
+      {
+        "name": "Claw",
+        "damage_dice": "1d6"
+      }
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -22,5 +31,37 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite|Claw",
+      "published_melee_text": "2 claws +4 (1d6+2), bite +4 (1d4+2)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Wolverine",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/animals/wolverine/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Medium animal + Bestiary pg. 279 (matches the cached chassis's own source_page)"
+      }
+    },
+    {
+      "field": "natural_attacks[1].damage_dice",
+      "value": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite|Claw",
+      "published_melee_text": "2 claws +4 (1d6+2), bite +4 (1d4+2)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Wolverine",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/animals/wolverine/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Medium animal + Bestiary pg. 279 (matches the cached chassis's own source_page)"
+      }
+    }
+  ]
 }

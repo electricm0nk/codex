@@ -220,7 +220,7 @@ fn cleric_level_19_to_20_crosses_the_character_level_cap_with_no_fabricated_name
     assert_eq!(bab_grant.effects[0].value, 15, "cleric level 20 3/4-BAB (20*3/4) must be +15");
 
     let touch_of_good_grant =
-        grant_by_column(&plan, "class_chassis.cleric.domain_power_good_touch_of_good_bonus")
+        grant_by_column(&plan, "class_feature.domain.good_touch_of_good_bonus")
             .unwrap_or_else(|| panic!("expected a Touch of Good bonus grant at level 20: {:?}", plan.automatic_features));
     assert_eq!(touch_of_good_grant.effects[0].value, 10, "Touch of Good bonus (20/2) must be 10 at level 20");
 }
@@ -287,7 +287,7 @@ fn cleric_without_domain_selections_still_grounds_bab_saves_and_channel_energy()
     assert!(grant_by_column(&plan, "class_chassis.cleric.base_attack_bonus").is_some());
     assert!(grant_by_column(&plan, "class_chassis.cleric.base_save.fortitude").is_some());
     assert!(
-        grant_by_column(&plan, "class_chassis.cleric.domain_power_good_touch_of_good_bonus").is_none(),
+        grant_by_column(&plan, "class_feature.domain.good_touch_of_good_bonus").is_none(),
         "Touch of Good must not be fabricated when the Good domain was never chosen"
     );
 }

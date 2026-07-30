@@ -1,5 +1,9 @@
 import type { CreateCharacterOutcome, DiagnosticDto } from '../boundary/loadCreateCharacter';
-import type { LoadSavedCharacterResponse, SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
+import type {
+  ChosenFeatTargetsDto,
+  LoadSavedCharacterResponse,
+  SpellSelectionDto,
+} from '../boundary/loadSavedCharacterDetail';
 
 /**
  * Maps a `CreateCharacterResponse`-shaped mutation outcome — the shape
@@ -63,7 +67,12 @@ export function isWizardSpellBootstrap(
 export function toCharacterMutationRefresh(
   outcome: CreateCharacterOutcome,
   selectedFeats: string[],
-  spellsSelected: SpellSelectionDto[]
+  spellsSelected: SpellSelectionDto[],
+  // Defaulted so the many call sites that cannot change a feat's target
+  // (equipment, modifiers, spells) stay unchanged. A caller that DID change
+  // a chooser target must pass the updated list, exactly as it already must
+  // for `selectedFeats`.
+  chosenFeatTargets: ChosenFeatTargetsDto[] = []
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
@@ -78,6 +87,18 @@ export function toCharacterMutationRefresh(
       corpusDerived: outcome.corpusDerived,
       selectedFeats,
       spellsSelected,
+      chosenFeatTargets,
+      // The mutation commands return a `CreateCharacterResponse`, which
+      // carries neither of these. Left empty rather than guessed: a
+      // mutation changes what the engine would explain (a level-up moves
+      // every class-feature magnitude), so carrying the pre-mutation
+      // records forward would show stale numbers as if they were current.
+      // Callers that need the post-mutation records re-read the character
+      // through `loadSavedCharacterDetail` — see `refreshEngineRecords` in
+      // `CharacterSheet.tsx`, the same post-mutation re-read pattern
+      // `refreshDurability` already established there.
+      explanations: [],
+      weaponDamage: [],
     },
   };
 }

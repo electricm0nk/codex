@@ -44,6 +44,62 @@ export interface SelectedSkillModifiersDto {
   swim: number;
 }
 
+/**
+ * One grounded companion statistic — mirrors `CompanionStatDto` in
+ * `character_hub.rs`.
+ */
+export interface CompanionStatDto {
+  /**
+   * The engine's own honest name for what `value` is, e.g. `'Armor Class'`
+   * or `'Attack Bonus'`. Deliberately not a title-casing of the underlying
+   * record id: the record named `base_attack_bonus` carries the
+   * companion's base attack bonus *plus* its Strength modifier, and
+   * `bite_attack` carries only a flat damage bonus. See
+   * `COMPANION_STAT_ROWS` in `pilot_view_model.rs`.
+   */
+  label: string;
+  value: number;
+  /** The engine's own corpus-cited derivation prose, verbatim. */
+  detail: string;
+}
+
+/**
+ * The character's animal companion or mount — mirrors
+ * `AnimalCompanionDto` in `character_hub.rs`, projected from the
+ * `class_chassis.<class>.<role>.*` explanation records the engine grounds
+ * across all twenty master levels (Druid's and Hunter's Wolf animal
+ * companion, the Cavalier's Horse mount).
+ *
+ * A wholly separate creature: none of these values are applied to the
+ * character's own integrated totals, and the sheet must not mix them in.
+ */
+export interface AnimalCompanionDto {
+  /** e.g. `'Druid'` — read from the record that grounded the companion. */
+  ownerClassLabel: string;
+  /** What the owning class calls it: `'Animal Companion'` or `'Mount'`. */
+  roleLabel: string;
+  /** The canonical species this seam grounds: `'Wolf'` or `'Horse'`. */
+  species: string;
+  summaryDetail: string;
+  /** Only statistics the engine actually emitted — never zero-filled. */
+  stats: CompanionStatDto[];
+  /** Provably-vacuous named abilities (Link, Share Spells). */
+  notes: string[];
+  /**
+   * The engine's non-blocking `advancement_absent` note: the honest list of
+   * companion columns deliberately left ungrounded because nothing in the
+   * codebase consumes them (bonus tricks, companion skills and feats, the
+   * player-chosen stat increase at master levels 4/9/14/20, the size
+   * advance, Evasion/Devotion/Multiattack).
+   *
+   * It travels on the companion rather than in `diagnostics` because it is
+   * non-blocking, and `load_saved_character` returns an empty diagnostics
+   * list on the `Computed` path — so this is the player's only route to it.
+   * `skip_serializing_if` on the Rust side means the key may be absent.
+   */
+  advancementNote?: string;
+}
+
 export interface PilotSnapshotDto {
   abilityModifiers: AbilityScoresDto;
   baseAttackBonus: number;
@@ -60,6 +116,14 @@ export interface PilotSnapshotDto {
    * on the Rust side means the key itself may not be present on the wire.
    */
   damageReduction?: number;
+  /**
+   * The character's animal companion or mount, or absent when this build
+   * grounds none. The key itself is omitted on the wire (same
+   * `skip_serializing_if` discipline as `damageReduction`), so a
+   * companion-less class is `undefined` here rather than an empty or
+   * zeroed stat block.
+   */
+  companion?: AnimalCompanionDto;
 }
 
 export interface DiagnosticDto {
@@ -112,12 +176,78 @@ export interface ResolvedEquipmentDto {
  * a real `0` there means exactly one weapon equipped with no enhancement,
  * and must render as "+0", not be treated the same as absent.
  */
+/**
+ * One equipped item's own contribution to the defensive totals — the data
+ * behind an "AC breakdown by source" view. Every optional field is a
+ * genuine corpus absence (a longsword has no armor bonus), omitted on the
+ * wire rather than zero-filled, so `undefined` means "this item does not
+ * have one" and a real `0` means "it has one, and it is zero".
+ */
+export interface ResolvedEquipmentEffectDto {
+  itemId: string;
+  equipmentRecordKey: string;
+  /** `'ArmsArmor' | 'General' | 'MagicItems' | 'Equipmods'`. */
+  category: string;
+  armorClassBonus?: number;
+  maxDex?: number;
+  spellFailure?: number;
+  armorCheckPenalty?: number;
+}
+
 export interface EquipmentEffectsDto {
+  /** Per-item contributions behind the aggregate totals below. */
+  perItem: ResolvedEquipmentEffectDto[];
   armorClassDelta: number;
   armorCheckPenaltyTotal: number;
   maxDexCap?: number;
   spellFailureChance?: number;
   attackBonusDelta?: number;
+}
+
+/** One carried item's real corpus weight and price. */
+export interface CarriedItemDto {
+  itemId: string;
+  weightLbs: number;
+  /**
+   * Absent when the corpus genuinely carries no price for the record (an
+   * unpriced `(Base)` template, or a modifier priced by formula over its
+   * base item) — never a fabricated `0`.
+   */
+  costGp?: number;
+}
+
+/**
+ * Real carried weight against PF1's Strength-derived carrying-capacity
+ * thresholds, plus the load tier's own penalties.
+ *
+ * Thresholds come from the real PCGen Pathfinder game mode's `load.lst`
+ * (`LOAD:<Strength>|<heavy>`, with light = 1/3 and medium = 2/3 of that);
+ * the load penalties come from PCGen's own engine (`PlayerCharacter.java`).
+ */
+export interface EncumbranceDto {
+  totalCarriedWeightLbs: number;
+  /** Floor on the loadout's gp value — unpriced items contribute nothing. */
+  totalCarriedCostGp: number;
+  lightMaxLbs: number;
+  mediumMaxLbs: number;
+  heavyMaxLbs: number;
+  /** `'Light' | 'Medium' | 'Heavy' | 'OverHeavyCapacity'`. */
+  level: string;
+  /**
+   * Max-Dex cap from the *load tier alone*, absent under a light load. An
+   * effective cap is the lower of this and `EquipmentEffectsDto.maxDexCap`
+   * — they do not sum.
+   */
+  loadMaxDexCap?: number;
+  /**
+   * Armor check penalty from the *load tier alone*; a real `0` under a
+   * light load. Does not sum with worn armor's own penalty — PF1 takes the
+   * more punishing of the two.
+   */
+  loadArmorCheckPenalty: number;
+  perItem: CarriedItemDto[];
+  /** Carried items whose weight could not be resolved against the corpus. */
+  unresolvedItemIds: string[];
 }
 
 /**
@@ -129,6 +259,7 @@ export interface CorpusDerivedDto {
   schoolCoverage: SchoolCoverageDto[];
   equippedItems: ResolvedEquipmentDto[];
   equipmentEffects: EquipmentEffectsDto;
+  encumbrance: EncumbranceDto;
   /**
    * Every `spellId`/`itemId` the character actually has selected and
    * persisted that did NOT resolve against this build's tiny bundled demo

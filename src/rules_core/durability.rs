@@ -34,6 +34,17 @@
 //! `pilot_compute.rs`'s `explain_fighter_favored_class_bonus_choice` but
 //! never summed into any total there either — this file does not change
 //! that).
+//!
+//! **Update (task #58, v0.6 alpha swarm):** the Rogue Talent Resiliency
+//! grounds the FIRST temporary-hit-point magnitude in this codebase
+//! (`rogue_resiliency_temp_hp`/`investigator_resiliency_temp_hp`), but the
+//! "future scope decision" above is still genuinely unmade — no aggregate
+//! temporary-HP total field exists anywhere in this crate or its
+//! downstream `apps/desktop/src-tauri/character_hub.rs` consumer (which
+//! tracks only `max_hp`/`current_hp`). These two functions are pure
+//! per-source magnitudes, grounded in `pilot_compute.rs` as standalone
+//! flat facts (the same honest-gap idiom as Witch's Ward hex), not wired
+//! into any total, because there is no total to wire into yet.
 
 use crate::rules_core::character_input::CharacterClassLevel;
 use crate::rules_core::pilot_compute::table_class_id;
@@ -134,13 +145,22 @@ mod tests {
     const FIGHTER_CLASS_ID: &str = "class:fighter";
     const WIZARD_CLASS_ID: &str = "class:wizard";
     const ROGUE_CLASS_ID: &str = "class:rogue";
-    // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25): Monk, not
-    // Barbarian -- table_class_id now recognizes Barbarian too (this test's
-    // previous example, itself substituted in for Cleric for the same
-    // reason), so it genuinely resolves a real max HP now. Monk remains
-    // genuinely unrecognized (not in table_class_id, APG, or ACG), so it's
-    // still a real negative-control example.
-    const MONK_CLASS_ID: &str = "class:monk";
+    // The negative control for `compute_max_hp`'s "unrecognized class"
+    // branch. This constant has now been substituted THREE times for the
+    // same reason -- Cleric, then Barbarian, then Monk each stopped being
+    // unrecognized as the class roster widened underneath it.
+    //
+    // v0.6 alpha swarm (Monk/Summoner chassis-recognition closure,
+    // 2026-07-29): it is deliberately no longer a real class at all, and
+    // it cannot be one again. Monk was the LAST real class missing from
+    // `table_class_id`; with it mapped, the three rosters
+    // `compute_max_hp` consults -- `table_class_id` (11 CRB),
+    // `ApgClassId` (6 APG), `AcgClassId` (10 ACG) -- cover all 27 base
+    // classes. So no real PF1 base class can serve as this negative
+    // control any more, and picking a fourth real class would just queue
+    // up a fourth silent promotion. A synthetic id exercises the same
+    // `None` branch permanently.
+    const UNRECOGNIZED_CLASS_ID: &str = "class:not_a_real_pf1_class";
 
     fn class_level(class_id: &str, level: u8) -> CharacterClassLevel {
         CharacterClassLevel { class_id: class_id.to_owned(), level }
@@ -196,8 +216,27 @@ mod tests {
 
     #[test]
     fn compute_max_hp_returns_none_for_an_unrecognized_class() {
-        let max_hp = compute_max_hp(&[class_level(MONK_CLASS_ID, 1)], 2);
+        let max_hp = compute_max_hp(&[class_level(UNRECOGNIZED_CLASS_ID, 1)], 2);
         assert_eq!(max_hp, None);
+    }
+
+    /// The other half of the constant swap above: Monk must now resolve a
+    /// REAL max HP rather than `None`, proving the negative control was
+    /// retired because the gap genuinely closed -- not because the
+    /// assertion was weakened to make a failure go away.
+    ///
+    /// Monk d8 (published PF1 Core Rulebook p.56; operator ruling
+    /// 2026-07-29, risks item 91), level 1, CON mod +2: maximized level 1
+    /// = 8 + 2 = 10.
+    ///
+    /// This is deliberately NOT the corpus's `cr_classes.lst:147`
+    /// `CLASS:Monk HD:10`, which would give 12. `CLASS_META`'s Monk row
+    /// carries a documented corpus-defect override -- read its comment
+    /// block before changing this expectation.
+    #[test]
+    fn compute_max_hp_now_resolves_monk_the_last_class_to_join_table_class_id() {
+        let max_hp = compute_max_hp(&[class_level("class:monk", 1)], 2);
+        assert_eq!(max_hp, Some(10));
     }
 
     #[test]
@@ -296,6 +335,40 @@ pub fn familiar_master_hp_bonus(species: Option<FamiliarSpecies>) -> i16 {
     }
 }
 
+/// The Rogue Talent Resiliency's temporary-hit-point magnitude (task #58,
+/// v0.6 alpha swarm), verified against `cr_abilities_class.lst`'s own
+/// `KEY:Rogue Talent ~ Resiliency` record: `BONUS:VAR|ResiliencyHitPoints|
+/// RogueTalentLVL`, with `RogueTalentLVL` resolving to the rogue's own
+/// class level and no `PRE` gate at all. PF1 Core Rulebook: "Once per
+/// day, a rogue with this ability can gain a number of temporary hit
+/// points equal to the rogue's level. Activating this ability is an
+/// immediate action that can only be performed when she is brought to
+/// below 0 hit points." These temporary hit points last 1 minute.
+///
+/// Grounds the magnitude only. The once-per-day budget and the "brought
+/// below 0 hit points" trigger are named but not enforced anywhere in
+/// this codebase -- no once-per-day activation tracker and no
+/// HP-threshold trigger engine exists, the same honest-gap idiom already
+/// used for Skald's Raging Song rounds-per-day (`skald_inspired_rage_
+/// rounds_per_day` in `pilot_compute.rs`).
+pub fn rogue_resiliency_temp_hp(rogue_level: u8) -> i16 {
+    i16::from(rogue_level)
+}
+
+/// Investigator's OWN separate copy of Resiliency (task #58, v0.6 alpha
+/// swarm), verified against `acg_abilities_class.lst`'s own
+/// `KEY:Investigator ~ Rogue Talent ~ Resiliency` record:
+/// `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL` -- a distinct corpus
+/// record from Rogue's own copy above, keyed to its own level variable
+/// (`InvestigatorLVL`, not `RogueTalentLVL`), not a shared formula.
+/// Investigator draws Resiliency from its own explicit whitelist of
+/// `KEY:Investigator ~ Rogue Talent ~ *` records (40 entries), of which
+/// Resiliency is one. Same magnitude-only, budget/trigger-named-but-
+/// unenforced treatment as `rogue_resiliency_temp_hp`.
+pub fn investigator_resiliency_temp_hp(investigator_level: u8) -> i16 {
+    i16::from(investigator_level)
+}
+
 #[cfg(test)]
 mod familiar_master_bonus_tests {
     use super::*;
@@ -328,5 +401,45 @@ mod familiar_master_bonus_tests {
         let base = compute_max_hp(&levels, 2).expect("fighter max hp");
         let with_toad = base + familiar_master_hp_bonus(Some(FamiliarSpecies::Toad));
         assert_eq!(with_toad - base, 3, "a Toad familiar is worth 3 real hit points");
+    }
+}
+
+#[cfg(test)]
+mod resiliency_temp_hp_tests {
+    use super::*;
+
+    /// Rogue's own copy (`cr_abilities_class.lst`, `KEY:Rogue Talent ~
+    /// Resiliency`): `BONUS:VAR|ResiliencyHitPoints|RogueTalentLVL`, and
+    /// `RogueTalentLVL` resolves to the rogue's own class level with no
+    /// `PRE` gate -- PF1 Core Rulebook: "a rogue with this ability can
+    /// gain a number of temporary hit points equal to the rogue's level."
+    #[test]
+    fn rogue_resiliency_temp_hp_equals_rogue_level() {
+        assert_eq!(rogue_resiliency_temp_hp(1), 1);
+        assert_eq!(rogue_resiliency_temp_hp(10), 10);
+        assert_eq!(rogue_resiliency_temp_hp(20), 20);
+    }
+
+    /// Investigator's OWN separate record (`acg_abilities_class.lst`,
+    /// `KEY:Investigator ~ Rogue Talent ~ Resiliency`):
+    /// `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL` -- a distinct
+    /// corpus record from Rogue's own copy, keyed to its own level
+    /// variable, not a shared formula. Verifies the two functions are
+    /// genuinely independent (not aliases of each other) despite the
+    /// identical formula shape.
+    #[test]
+    fn investigator_resiliency_temp_hp_equals_investigator_level() {
+        assert_eq!(investigator_resiliency_temp_hp(3), 3);
+        assert_eq!(investigator_resiliency_temp_hp(10), 10);
+        assert_eq!(investigator_resiliency_temp_hp(20), 20);
+    }
+
+    /// A level-0 (no levels in the class) input grounds to 0 temporary hit
+    /// points for both copies -- the formula floors naturally, no clamp
+    /// needed.
+    #[test]
+    fn zero_level_grounds_to_zero_temp_hp_for_both_copies() {
+        assert_eq!(rogue_resiliency_temp_hp(0), 0);
+        assert_eq!(investigator_resiliency_temp_hp(0), 0);
     }
 }

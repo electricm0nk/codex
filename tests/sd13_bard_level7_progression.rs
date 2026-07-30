@@ -308,6 +308,17 @@ fn bard_level7_gains_no_new_bard_namespaced_explanation_id() {
         // level; it is not a "Special"-column class feature, so listing it
         // keeps this control accurate without weakening its claim.
         "class_chassis.bard.spontaneous.spell_level_access",
+        // Added by the v0.6 Receipt-to-Sheet caster-level slice: the
+        // corpus-transcribed caster level (a Bard casts at its full class
+        // level -- cr_classes.lst:28
+        // BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard, resolving
+        // through cr_classes.lst:24
+        // BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard).
+        // Like spell_level_access above it fires at every supported level
+        // rather than being gained at this one, and it is not a
+        // "Special"-column class feature, so listing it keeps this control
+        // accurate without weakening its claim.
+        "class_chassis.bard.caster_level",
         // The base_spells_per_day family (a further SD13-E5 slice): literal
         // spells-per-day table records, not "Special"-column class features.
         "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1",

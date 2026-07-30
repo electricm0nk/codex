@@ -13,13 +13,13 @@
 use crate::rules_core::rules_tables::crb::feats::{FeatCategory, FeatTableEntry};
 
 pub const ITEM_CREATION_TABLE: &[FeatTableEntry] = &[
-    FeatTableEntry { key: "Brew Potion", category: FeatCategory::ItemCreation, name: "Brew Potion", description: Some("You can create magic potions."), effect: None },
-    FeatTableEntry { key: "Craft Magic Arms and Armor", category: FeatCategory::ItemCreation, name: "Craft Magic Arms and Armor", description: Some("You can create magic armor, shields, or weapons."), effect: None },
-    FeatTableEntry { key: "Craft Rod", category: FeatCategory::ItemCreation, name: "Craft Rod", description: Some("You can create magic rods."), effect: None },
-    FeatTableEntry { key: "Craft Staff", category: FeatCategory::ItemCreation, name: "Craft Staff", description: Some("You can create magic staves."), effect: None },
-    FeatTableEntry { key: "Craft Wand", category: FeatCategory::ItemCreation, name: "Craft Wand", description: Some("You can create magic wands."), effect: None },
-    FeatTableEntry { key: "Craft Wondrous Item", category: FeatCategory::ItemCreation, name: "Craft Wondrous Item", description: Some("You can create wondrous items, a type of magic item."), effect: None },
-    FeatTableEntry { key: "Forge Ring", category: FeatCategory::ItemCreation, name: "Forge Ring", description: Some("You can create magic rings."), effect: None },
-    FeatTableEntry { key: "Scribe Scroll", category: FeatCategory::ItemCreation, name: "Scribe Scroll", description: Some("You can create magic scrolls."), effect: None },
+    FeatTableEntry { key: "Brew Potion", category: FeatCategory::ItemCreation, name: "Brew Potion", description: Some("You can create magic potions."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=3],[PREVARGTEQ:CasterLevel_Highest,3]"]) },
+    FeatTableEntry { key: "Craft Magic Arms and Armor", category: FeatCategory::ItemCreation, name: "Craft Magic Arms and Armor", description: Some("You can create magic armor, shields, or weapons."), effect: None, prerequisites: Some(&["PREMULT:1,[PREMULT:1,[PRECLASS:1,SPELLCASTER=5],[PREVARGTEQ:CasterLevel_Highest,5]],[PREVARGTEQ:MasterCraftsmanRanks,5]"]) },
+    FeatTableEntry { key: "Craft Rod", category: FeatCategory::ItemCreation, name: "Craft Rod", description: Some("You can create magic rods."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=9],[PREVARGTEQ:CasterLevel_Highest,9]"]) },
+    FeatTableEntry { key: "Craft Staff", category: FeatCategory::ItemCreation, name: "Craft Staff", description: Some("You can create magic staves."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=11],[PREVARGTEQ:CasterLevel_Highest,11]"]) },
+    FeatTableEntry { key: "Craft Wand", category: FeatCategory::ItemCreation, name: "Craft Wand", description: Some("You can create magic wands."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=5],[PREVARGTEQ:CasterLevel_Highest,5]"]) },
+    FeatTableEntry { key: "Craft Wondrous Item", category: FeatCategory::ItemCreation, name: "Craft Wondrous Item", description: Some("You can create wondrous items, a type of magic item."), effect: None, prerequisites: Some(&["PREMULT:1,[PREMULT:1,[PRECLASS:1,SPELLCASTER=3],[PREVARGTEQ:CasterLevel_Highest,3]],[PREVARGTEQ:MasterCraftsmanRanks,3]"]) },
+    FeatTableEntry { key: "Forge Ring", category: FeatCategory::ItemCreation, name: "Forge Ring", description: Some("You can create magic rings."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=7],[PREVARGTEQ:CasterLevel_Highest,7]"]) },
+    FeatTableEntry { key: "Scribe Scroll", category: FeatCategory::ItemCreation, name: "Scribe Scroll", description: Some("You can create magic scrolls."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"]) },
 ];
 

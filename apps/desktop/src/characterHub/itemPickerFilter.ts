@@ -16,6 +16,16 @@ export interface ItemPickerEntry {
   key: string;
   name: string;
   detail: string;
+  /**
+   * Feat entries only: `'Weapon'`, `'Skill'` or `'SpellSchool'` when this
+   * feat needs a chosen target, absent otherwise.
+   *
+   * Carried on the picker entry so the Add Feat flow can tell, at the
+   * moment of the pick, whether a second target step is required — without
+   * re-querying the catalog or hardcoding a list of chooser feats in the
+   * frontend, which would be rules knowledge duplicated out of the engine.
+   */
+  chooserTargetKind?: string | null;
 }
 
 /** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
@@ -43,19 +53,56 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
     // `SpellCatalogEntryDto`'s doc comment) — `key` is the spell's real
     // corpus identity and doubles as the display name.
     name: entry.key,
-    detail: `${entry.school} · Level ${entry.level}`,
+    // Book first, since the catalog now spans CRB, APG and ACG and a
+    // player picking a spell needs to know which book it comes from.
+    // `school`/`level` are omitted rather than defaulted when the corpus
+    // row genuinely lacks them (a real `apg_spells.lst` gap), so the
+    // detail line never asserts a school or level the corpus never gave.
+    //
+    // The level is labelled "Lowest class level", not "Level", because
+    // that is what the catalog record's own field is: the MINIMUM across
+    // every class named in its corpus `CLASSES:` tag. Hideous Laughter is
+    // `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it reads 1 here even for a
+    // Wizard who learns it at 2. This picker browses all 1093 records
+    // across every class, so it has no one class to answer for — unlike
+    // the Spells tab, which resolves each row against its own
+    // `sourceClassId` via `list_class_spell_levels` (see
+    // `spellsTabModel.ts`). Same wording as `SpellCatalogScreen.tsx`,
+    // the other cross-class browse.
+    detail: [
+      entry.book,
+      entry.school,
+      entry.level === null ? null : `Lowest class level ${entry.level}`,
+    ]
+      .filter((part): part is string => part !== null)
+      .join(' · '),
   }));
 }
+
+/** Friendly book labels for `RuleSetId` variants — mirrors the spell catalog's own `book` strings. */
+const FEAT_SOURCE_LABELS: Record<string, string> = {
+  Crb: 'CRB',
+  Apg: 'APG',
+  Acg: 'ACG',
+};
 
 export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
   return entries.map((entry) => ({
     key: entry.key,
     name: entry.name,
-    // Falls back to the bare category when the corpus record has no
-    // `DESC:` token (real corpus gap, e.g. the "Heighten Spell +N"
-    // bonus-tier records — see `FeatTableEntry.description`'s own doc
-    // comment) rather than fabricating description text.
-    detail: entry.description ? `${entry.category} · ${entry.description}` : entry.category,
+    // Book first, then category, then the corpus description — the
+    // catalog now spans CRB, APG and ACG, and a player picking a feat
+    // needs to know which book it comes from, exactly as
+    // `mapSpellCatalogEntries` already does. An unknown/future book falls
+    // back to the raw variant string rather than a fabricated label, and
+    // the description is omitted rather than invented when the corpus
+    // record has no `DESC:` token (a real gap: CRB's "Heighten Spell +N"
+    // records and APG's base "Elemental Fist" — see
+    // `FeatTableEntry.description`'s own doc comment).
+    detail: [FEAT_SOURCE_LABELS[entry.source] ?? entry.source, entry.category, entry.description]
+      .filter((part): part is string => Boolean(part))
+      .join(' · '),
+    chooserTargetKind: entry.chooserTargetKind,
   }));
 }
 

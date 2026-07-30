@@ -97,18 +97,29 @@ fn boggard_returns_none_for_ruleset_apg_acg_crb() {
 }
 
 /// Boar and Bugbear both carry no `NATURALATTACKS:` token on their real
-/// row (Boar's Gore is granted via `ABILITY:Internal|AUTOMATIC|Gore`;
-/// Bugbear fights with manufactured weapons per `AUTO:WEAPONPROF`) — same
-/// "no natural attack" shape subset 01's Gnoll and Wolf already proved.
+/// row — but for **different reasons**, and this test now distinguishes
+/// them. It originally asserted both were attack-less, which conflated
+/// two unlike cases:
+///
+/// - **Boar** really has a Gore; its row grants it via
+///   `ABILITY:Internal|AUTOMATIC|Gore`, a reference that carries no dice
+///   at any hop. Its `1d8` is grounded from published values
+///   (`rules_tables::beastiary1::natural_attack_provenance`).
+/// - **Bugbear** genuinely has no natural attack — it fights with
+///   manufactured weapons per `AUTO:WEAPONPROF`. Its empty list is
+///   correct and must stay empty.
 #[test]
-fn boar_and_bugbear_have_no_natural_attacks() {
+fn boar_has_a_grounded_gore_while_bugbear_is_a_genuine_weapon_user() {
     let boar = monster_resolve(MonsterId::Boar, RuleSetId::Bestiary1)
         .expect("Boar should resolve via RuleSetId::Bestiary1");
-    assert!(boar.natural_attacks.is_empty());
+    assert!(
+        boar.natural_attacks.iter().any(|a| a.name == "Gore" && a.damage_dice == "1d8"),
+        "Boar's Gore is named by its row and its dice are grounded -- the absent NATURALATTACKS: token is not evidence it has no attack"
+    );
 
     let bugbear = monster_resolve(MonsterId::Bugbear, RuleSetId::Bestiary1)
         .expect("Bugbear should resolve via RuleSetId::Bestiary1");
-    assert!(bugbear.natural_attacks.is_empty());
+    assert!(bugbear.natural_attacks.is_empty(), "Bugbear is a weapon user; its empty list is correct, not a gap");
     assert_eq!(bugbear.race_subtype.as_deref(), Some("Goblinoid"));
 }
 
@@ -119,7 +130,11 @@ fn cave_fisher_resolves_by_key_via_ruleset_bestiary1_only() {
     let monster = monster_key_resolve("beastiary1:monster:cave_fisher", RuleSetId::Bestiary1)
         .expect("beastiary1:monster:cave_fisher should resolve via RuleSetId::Bestiary1");
     assert_eq!(monster.name, "Cave Fisher");
-    assert!(monster.natural_attacks.iter().any(|a| a.name == "Filament"));
+    // Filament is transcribed from the real `NATURALATTACKS:` token;
+    // Claw is named by the row's `ABILITY:Internal|AUTOMATIC|Claw` and
+    // its dice grounded. The real token stays first.
+    assert!(monster.natural_attacks.iter().any(|a| a.name == "Filament" && a.damage_dice == "0"));
+    assert!(monster.natural_attacks.iter().any(|a| a.name == "Claw" && a.damage_dice == "1d4"));
 
     assert_eq!(monster_key_resolve("beastiary1:monster:cave_fisher", RuleSetId::Apg), None);
     assert_eq!(monster_key_resolve("beastiary1:monster:unknown", RuleSetId::Bestiary1), None);

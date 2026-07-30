@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:18:10Z",
+  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
     "id": "beastiary1:monster:centaur",
     "name": "Centaur",
@@ -11,7 +11,12 @@
     "race_type": "Monstrous Humanoid",
     "race_subtype": null,
     "source_page": "p.42",
-    "natural_attacks": []
+    "natural_attacks": [
+      {
+        "name": "Hoof",
+        "damage_dice": "1d6"
+      }
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -22,5 +27,22 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Hoof",
+      "published_melee_text": "longsword +5 (1d8+2/19-20), 2 hooves +0 (1d6+1)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Centaur",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/monstrous-humanoids/centaur/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 3 + Large monstrous humanoid + Bestiary pg. 42 (matches the cached chassis's own source_page); the longsword is a manufactured weapon and is deliberately excluded, matching how Gnoll/Derro/Bugbear are handled"
+      }
+    }
+  ]
 }

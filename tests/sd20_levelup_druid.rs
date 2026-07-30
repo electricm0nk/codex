@@ -227,32 +227,84 @@ fn druid_level_19_to_20_crosses_the_capstone_threshold_without_fabricating_featu
         "level 20 is the PF1 Core Rulebook capstone level for every core class"
     );
 
-    // (v0.6 alpha swarm, risks item 8) Beyond Druid's grounded CLASS-FEATURE
-    // ceiling (level 15), pilot_compute.rs's chassis still produces no
-    // class_chassis.druid.* or class_feature.druid.* explanations -- that
-    // part of this test's original premise still holds. But the seventh
-    // slice's prepared-divine spell grounding (ground_druid_prepared_spells)
-    // is checked unconditionally for any druid class level, not gated by
-    // MAX_SUPPORTED_DRUID_LEVEL, and reuses Cleric's real, full-range PF1
-    // Core Rulebook spells-per-day table (byte-for-byte identical, valid
-    // through level 20) -- so class_spell.druid.total_spells_per_day.*
-    // genuinely keeps rising past level 15 too. This is real, grounded
-    // spell math, not fabrication: the plan must reflect it rather than
-    // over-claiming an emptiness that no longer holds.
+    // (Superseded boundary: this test's original premise was that level 20
+    // sits beyond Druid's grounded chassis ceiling, so only
+    // class_spell.druid.* spell-math grants could legitimately appear. The
+    // v0.6 level-16..20 widening (2026-07-29) moved
+    // MAX_SUPPORTED_DRUID_LEVEL from 15 to 20, so class_chassis.druid.*
+    // records are now genuinely grounded at the capstone and MUST appear.
+    // The test's real subject -- that nothing is FABRICATED at the capstone
+    // -- is unchanged and is now asserted against the actual PF1 Core
+    // Rulebook values instead of against an emptiness that no longer holds.
+    // See tests/v06_druid_level16_to_20_widening.rs for the corpus lines.)
     assert!(
         !plan.automatic_features.is_empty(),
-        "class_spell.druid.total_spells_per_day.* is real, grounded spell math (Cleric's shared \
-         table, valid through level 20) and must still surface a grant on the level 19 -> 20 \
-         transition, even beyond Druid's own class-feature ceiling of 15: {:?}",
+        "the level 19 -> 20 transition must surface real grants: {:?}",
         plan.automatic_features
     );
+
+    let grant_value = |column_key: &str| {
+        plan.automatic_features
+            .iter()
+            .find(|grant| grant.source_table.column_key == column_key)
+            .map(|grant| grant.effects[0].value)
+    };
+
+    // The values that GENUINELY change on the 19 -> 20 step, from the
+    // CLASS:Druid formulas at cr_classes.lst line 93.
+    assert_eq!(
+        grant_value("class_chassis.druid.base_attack_bonus"),
+        Some(15),
+        "base attack bonus must rise to 15 (20 * 3 / 4) on the capstone step: {:?}",
+        plan.automatic_features
+    );
+    assert_eq!(
+        grant_value("class_chassis.druid.base_save.fortitude"),
+        Some(12),
+        "good Fortitude must rise to 12 (20 / 2 + 2) on the capstone step"
+    );
+    assert_eq!(
+        grant_value("class_chassis.druid.base_save.will"),
+        Some(12),
+        "good Will must rise to 12 (20 / 2 + 2) on the capstone step"
+    );
+    assert_eq!(
+        grant_value("class_chassis.druid.wild_empathy"),
+        Some(21),
+        "Wild Empathy must rise to 21 (druid level 20 + Charisma modifier 1)"
+    );
+
+    // Poor Reflex is 6 at BOTH level 19 and level 20 (19/3 == 20/3 == 6), so
+    // it must produce NO grant -- a grant here would mean the diff invented a
+    // change the class table does not have.
+    assert_eq!(
+        grant_value("class_chassis.druid.base_save.reflex"),
+        None,
+        "poor Reflex is 6 at both level 19 and level 20 (19/3 == 20/3), so the capstone step \
+         must grant no Reflex change: {:?}",
+        plan.automatic_features
+    );
+
+    // cr_abilities_class.lst lines 223-234 top out at Druid_CFP_Level,15
+    // (Timeless Body), so levels 16-20 add NO named class feature. Nothing
+    // in class_feature.druid.* may be granted on this step.
     assert!(
         plan.automatic_features
             .iter()
-            .all(|grant| grant.source_table.column_key.starts_with("class_spell.druid.")),
-        "beyond Druid's grounded class-feature ceiling (level 15), only real class_spell.druid.* \
-         spell-math grants may appear -- no class_chassis.druid.* or class_feature.druid.* \
-         explanation is fabricated: {:?}",
+            .all(|grant| !grant.source_table.column_key.starts_with("class_feature.druid.")),
+        "levels 16-20 add no named Druid class feature (cr_abilities_class.lst lines 223-234 \
+         stop at Druid_CFP_Level,15), so the capstone step must grant none: {:?}",
+        plan.automatic_features
+    );
+
+    // Wild Shape (at will) is the real level-20 "Special" column entry, but
+    // this repo still has no shapeshifting execution engine, so it must stay
+    // named-but-unproven rather than being half-invented at the capstone.
+    assert!(
+        plan.automatic_features
+            .iter()
+            .all(|grant| !grant.source_table.column_key.contains("wild_shape")),
+        "the capstone must not fabricate Wild Shape execution: {:?}",
         plan.automatic_features
     );
 }

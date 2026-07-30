@@ -256,33 +256,26 @@ fn ranger_partial_caster_family_newly_grants_at_the_level_4_spell_access_gate() 
 // ----- Verified negative finding: both hybrid "unsupported" diagnostics are correctly excluded -----
 
 #[test]
-fn hybrid_feature_unsupported_diagnostic_never_leaks_into_explanations_or_grants() {
+fn hybrid_feature_unsupported_diagnostic_is_retired() {
+    // `class_feature.hybrid.ranger.unsupported` used to fire unconditionally at
+    // ranger level 1, flatly claiming favored enemy / combat style / tracking were
+    // unimplemented. It was retired because the per-class decomposition
+    // (`explain_ranger_level1_chassis_and_class_feature_separation`), dispatched
+    // unconditionally on the exact same input, grounds Track and the Favored Enemy
+    // flat surface for real -- making the blanket "not implemented" claim false,
+    // not just redundant. See `tests/hybrid_diagnostic_grounded_contradiction.rs`
+    // for the direct proof.
     let character = ranger_at_level(1);
     let computation = compute_pilot_base_chassis(&character);
 
-    let diagnostic = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID)
-        .unwrap_or_else(|| {
-            panic!(
-                "ranger level 1 must still carry the hybrid non-spell class-feature \
-                 claim-blocking diagnostic: {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diagnostic.claim_blocking,
-        "the hybrid non-spell class-feature diagnostic must stay claim-blocking at ranger \
-         level 1"
-    );
     assert!(
         !computation
-            .explanations
+            .diagnostics
             .iter()
-            .any(|e| e.id == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID),
-        "the hybrid non-spell class-feature diagnostic id must never appear in .explanations at \
-         ranger level 1"
+            .any(|d| d.id == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the retired '{HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID}' diagnostic must not \
+         reappear: {:?}",
+        computation.diagnostics
     );
 
     let plan = compute_ranger_level_up_grants(&character, 0, 1);
@@ -291,8 +284,8 @@ fn hybrid_feature_unsupported_diagnostic_never_leaks_into_explanations_or_grants
             .automatic_features
             .iter()
             .any(|grant| grant.source_table.column_key == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID),
-        "the LevelUpPlan for ranger 0 -> 1 must never fabricate a Grant from the hybrid \
-         non-spell class-feature claim-blocking diagnostic: {:#?}",
+        "the ranger 0 -> 1 LevelUpPlan must never fabricate a Grant from the retired \
+         '{HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID}': {:#?}",
         plan.automatic_features
     );
 }
@@ -302,20 +295,18 @@ fn hybrid_spell_unsupported_diagnostic_never_leaks_into_explanations_or_grants()
     let character = ranger_at_level(1);
     let computation = compute_pilot_base_chassis(&character);
 
-    let diagnostic = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID)
-        .unwrap_or_else(|| {
-            panic!(
-                "ranger level 1 must still carry the hybrid spell-burden claim-blocking \
-                 diagnostic: {:?}",
-                computation.diagnostics
-            )
-        });
+    // v0.6 alpha swarm (2026-07-28): this blanket diagnostic is now retired --
+    // Rangers have no `CAST:` row in `cr_classes.lst` before class level 4, so a
+    // level-1 Ranger having no spell posture is a satisfied condition, not a gap.
+    // The leak guard below is kept and strengthened: the id must not appear as a
+    // diagnostic, an explanation, OR a fabricated grant.
     assert!(
-        diagnostic.claim_blocking,
-        "the hybrid spell-burden diagnostic must stay claim-blocking at ranger level 1"
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the retired hybrid spell-burden blocker must not reappear at ranger level 1: {:?}",
+        computation.diagnostics
     );
     assert!(
         !computation

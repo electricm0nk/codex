@@ -185,7 +185,7 @@ fn known_cleric_pillars_each_produce_a_grant_across_their_own_documented_thresho
         has_grant_from_id(
             3,
             4,
-            "class_chassis.cleric.domain_power_good_touch_of_good_bonus"
+            "class_feature.domain.good_touch_of_good_bonus"
         ),
         "domain_power_good_touch_of_good_bonus must produce a grant on the level 3 -> 4 rise"
     );

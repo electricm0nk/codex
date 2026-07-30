@@ -116,11 +116,14 @@ fn yellow_musk_creeper_returns_none_for_ruleset_apg_acg_crb() {
 /// fields, each pipe-separated, accumulating into four entries — the
 /// same multi-token-accumulation shape subset 05's Sahuagin/Skum already
 /// proved. Vargouille, Wolverine, and Worg's real rows carry no
-/// `NATURALATTACKS:` token at all — the same "fights via an
-/// `ABILITY:Internal` cross-reference instead" shape subset 04's
-/// Choker/Crocodile/Dark Creeper already proved.
+/// `NATURALATTACKS:` token at all — they name their attacks via
+/// `ABILITY:Internal` cross-references, so their dice are grounded from
+/// published values rather than transcribed
+/// (`rules_tables::beastiary1::natural_attack_provenance`). This test
+/// previously asserted all three were attack-less, which mistook a
+/// missing corpus token for a missing attack.
 #[test]
-fn troglodyte_accumulates_four_natural_attacks_vargouille_wolverine_worg_have_none() {
+fn troglodyte_accumulates_four_natural_attacks_and_vargouille_wolverine_worg_are_grounded() {
     let troglodyte = monster_resolve(MonsterId::Troglodyte, RuleSetId::Bestiary1)
         .expect("Troglodyte should resolve via RuleSetId::Bestiary1");
     assert_eq!(
@@ -145,17 +148,25 @@ fn troglodyte_accumulates_four_natural_attacks_vargouille_wolverine_worg_have_no
 
     let vargouille = monster_resolve(MonsterId::Vargouille, RuleSetId::Bestiary1)
         .expect("Vargouille should resolve via RuleSetId::Bestiary1");
-    assert!(vargouille.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+    // No `NATURALATTACKS:` token on the real row -- the Bite is named by
+    // `ABILITY:Internal|AUTOMATIC|Bite` and its dice grounded. The kiss
+    // and shriek stay out: every source lists them under Special Attacks
+    // with no damage dice at all.
+    assert!(vargouille.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d4"));
+    assert!(!vargouille.natural_attacks.iter().any(|a| a.name == "Kiss" || a.name == "Shriek"));
     assert_eq!(vargouille.speed_ft, 0, "MOVE:Fly,30 has no Walk pair on the real row");
 
     let wolverine = monster_resolve(MonsterId::Wolverine, RuleSetId::Bestiary1)
         .expect("Wolverine should resolve via RuleSetId::Bestiary1");
-    assert!(wolverine.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+    // Row names both attacks via `ABILITY:Internal|AUTOMATIC|Bite|Claw`;
+    // list order follows that operand order.
+    assert!(wolverine.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d4"));
+    assert!(wolverine.natural_attacks.iter().any(|a| a.name == "Claw" && a.damage_dice == "1d6"));
     assert_eq!(wolverine.speed_ft, 30, "walk speed, not the burrow/climb speed");
 
     let worg = monster_resolve(MonsterId::Worg, RuleSetId::Bestiary1)
         .expect("Worg should resolve via RuleSetId::Bestiary1");
-    assert!(worg.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+    assert!(worg.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d6"));
     assert_eq!(worg.speed_ft, 50);
 }
 

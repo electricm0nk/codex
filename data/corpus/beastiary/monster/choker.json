@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:18:10Z",
+  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
     "id": "beastiary1:monster:choker",
     "name": "Choker",
@@ -11,7 +11,12 @@
     "race_type": "Aberration",
     "race_subtype": null,
     "source_page": "p.45",
-    "natural_attacks": []
+    "natural_attacks": [
+      {
+        "name": "Tentacle",
+        "damage_dice": "1d4"
+      }
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -22,5 +27,22 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Tentacle",
+      "published_melee_text": "2 tentacles +6 (1d4+3 plus grab)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Choker",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/aberrations/choker/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Small aberration + Bestiary pg. 45 (matches the cached chassis's own source_page); the published block has tentacles only -- no claw attack exists, so none is recorded"
+      }
+    }
+  ]
 }

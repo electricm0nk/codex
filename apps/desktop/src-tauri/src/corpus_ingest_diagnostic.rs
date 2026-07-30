@@ -85,6 +85,7 @@ fn crb_counts() -> BTreeMap<String, u32> {
 fn apg_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("classes".to_string(), ApgClassId::ALL.len() as u32);
+    counts.insert("feats".to_string(), apg::feats::feat_tables().len() as u32);
     counts.insert("spells".to_string(), apg::spell_list::SPELL_LIST.len() as u32);
     counts.insert(
         "equipment".to_string(),
@@ -96,6 +97,7 @@ fn apg_counts() -> BTreeMap<String, u32> {
 fn acg_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("classes".to_string(), AcgClassId::ALL.len() as u32);
+    counts.insert("feats".to_string(), acg::feats::feat_tables().len() as u32);
     counts.insert("spells".to_string(), acg::spell_list::SPELL_LIST.len() as u32);
     counts.insert(
         "equipment".to_string(),
@@ -222,6 +224,27 @@ mod tests {
             crb.content_kind_counts["equipment"],
             crb_equipment_tables::equipment_tables().len() as u32
         );
+    }
+
+    /// The APG/ACG feat ingest has to show up here too — this diagnostic
+    /// is what reports per-book coverage, and leaving `feats` off the APG
+    /// and ACG rows would understate 301 real ingested records.
+    #[test]
+    fn apg_and_acg_feat_counts_match_the_real_underlying_tables() {
+        let response = build_corpus_ingest_diagnostic();
+        let apg_book = response.iter().find(|b| b.book_id == "apg").expect("apg present");
+        assert_eq!(
+            apg_book.content_kind_counts["feats"],
+            apg::feats::feat_tables().len() as u32
+        );
+        assert_eq!(apg_book.content_kind_counts["feats"], 172);
+
+        let acg_book = response.iter().find(|b| b.book_id == "acg").expect("acg present");
+        assert_eq!(
+            acg_book.content_kind_counts["feats"],
+            acg::feats::feat_tables().len() as u32
+        );
+        assert_eq!(acg_book.content_kind_counts["feats"], 129);
     }
 
     #[test]

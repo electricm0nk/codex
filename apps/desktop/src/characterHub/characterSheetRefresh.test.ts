@@ -35,7 +35,22 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
       corpusDerived: {
         schoolCoverage: [],
         equippedItems: [],
-        equipmentEffects: { armorClassDelta: 0, armorCheckPenaltyTotal: 0 },
+        equipmentEffects: { perItem: [], armorClassDelta: 0, armorCheckPenaltyTotal: 0 },
+        // Nothing equipped: a real empty loadout at the Strength-10
+        // load.lst row (LOAD:10|100 -> 33 / 66 / 100), which is genuinely a
+        // light load with no penalties. These tests assert refresh/surface
+        // plumbing, not encumbrance values.
+        encumbrance: {
+          totalCarriedWeightLbs: 0,
+          totalCarriedCostGp: 0,
+          lightMaxLbs: 33,
+          mediumMaxLbs: 66,
+          heavyMaxLbs: 100,
+          level: 'Light',
+          loadArmorCheckPenalty: 0,
+          perItem: [],
+          unresolvedItemIds: [],
+        },
         unresolvedSpellIds: [],
         unresolvedEquipmentItemIds: [],
       },

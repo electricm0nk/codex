@@ -253,17 +253,18 @@ fn unsupported_chassis_blocks_skill_modifiers() {
     // Replace the Fighter level-1 chassis with a Monk level-1 chassis. The
     // selected-skill surface is grounded only on the Fighter class posture
     // and must refuse rather than fabricate Fighter class-skill bonuses.
-    // (Was Barbarian level-1 until the v0.6 alpha swarm's Barbarian
-    // rage-execution-engine pass gave Barbarian its own real
-    // class_chassis.* computation, so Barbarian stopped being an
-    // unsupported negative control -- Monk still is, confirmed against
-    // `table_class_id`. Was Cleric level-1 before that, then Rogue level-1
-    // before that -- see ge06_failure_classifier.rs for why Rogue stopped
-    // being one first.)
+    // The negative control is a SYNTHETIC class id, not a real class. It
+    // was Rogue level-1, then Cleric, then Barbarian, then Monk -- each
+    // stopped being unsupported the moment `table_class_id` learned it
+    // (see ge06_failure_classifier.rs for why Rogue went first). Monk was
+    // the LAST real class outside that mapping (v0.6 alpha swarm,
+    // Monk/Summoner chassis-recognition closure, 2026-07-29), so all 27
+    // base classes are now recognized and no real class can serve here
+    // again.
     let mutated = DETERMINISTIC_FIXTURE
-        .replace("class_level=class:fighter:1", "class_level=class:monk:1");
+        .replace("class_level=class:fighter:1", "class_level=class:not_a_real_pf1_class:1");
     assert!(
-        mutated.contains("class_level=class:monk:1"),
+        mutated.contains("class_level=class:not_a_real_pf1_class:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

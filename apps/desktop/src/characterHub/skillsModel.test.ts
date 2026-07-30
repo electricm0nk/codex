@@ -39,11 +39,28 @@ function verifiesIsClassSkillMulticlassUnion() {
   );
 }
 
+// Arcanist became selectable in CLASS_OPTIONS once the engine dump confirmed
+// it computes at every level 1-20. A selectable class with no entry in
+// CLASS_SKILLS silently reports *every* skill as a cross-class skill on the
+// Skills tab -- a wrong sheet, not an absent one -- so its list has to land
+// with it. ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
+// Profession, Spellcraft, Use Magic Device.
+function verifiesIsClassSkillCoversArcanist() {
+  const arcanist = [heldClass('class:arcanist')];
+  assert(isClassSkill(arcanist, 'Spellcraft'), 'Spellcraft is an Arcanist class skill');
+  assert(isClassSkill(arcanist, 'Use Magic Device'), 'Use Magic Device is an Arcanist class skill (unlike Wizard)');
+  assert(isClassSkill(arcanist, 'Knowledge (Planes)'), 'Arcanist gets Knowledge (all), including the Planes');
+  assert(isClassSkill(arcanist, 'Knowledge (Nature)'), 'Arcanist gets Knowledge (all), including Nature');
+  assert(!isClassSkill(arcanist, 'Stealth'), 'Stealth is not an Arcanist class skill');
+  assert(!isClassSkill(arcanist, 'Perception'), 'Perception is not an Arcanist class skill');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
   verifiesIsClassSkillForAConfirmedBoundary();
   verifiesIsClassSkillMulticlassUnion();
+  verifiesIsClassSkillCoversArcanist();
 }
 
 main().catch((error: unknown) => {

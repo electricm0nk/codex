@@ -324,21 +324,37 @@ fn sorcerer_level1_stays_blocked_on_arcane_bond_and_bloodline_progression_burden
     let computation = compute_pilot_base_chassis(&input);
 
     // With the bloodline CHOICE grounded, the blocker narrows to what actually remains
-    // unimplemented: Arcane Bond execution, the bloodline arcana, the bloodline class
-    // skill grant, and the 3rd+-level bonus spells/feats.
+    // unimplemented for this fixture (an Arcane-bloodline Sorcerer that recorded no
+    // Arcane Bond choice): Arcane Bond execution, the bloodline arcana, and the
+    // bloodline class skill grant.
+    //
+    // Corrected 2026-07-29: this token list also required "bonus spells" and "bonus
+    // feats", which was accurate while the bloodline's 3rd+-level progression was
+    // unimplemented. `ground_sorcerer_arcane_bloodline_progression` now transcribes
+    // that whole progression from the corpus, so a blocker still naming those as a
+    // remaining burden would be asserting a gap that has closed. The negative
+    // assertion below replaces them, so this stays a real check rather than a
+    // silently loosened one.
     let arcane_bond = claim_blocking(&computation, ARCANE_BOND_BLOCKER_ID);
     assert!(
         arcane_bond.message.contains("Arcane Bond"),
         "sorcerer arcane-bond blocker must name the Arcane Bond execution burden: {}",
         arcane_bond.message
     );
-    for token in ["arcana", "class skill", "bonus spells", "bonus feats"] {
+    for token in ["arcana", "class skill"] {
         assert!(
             arcane_bond.message.contains(token),
             "arcane-bond blocker must name the remaining '{token}' bloodline burden: {}",
             arcane_bond.message
         );
     }
+    assert!(
+        !arcane_bond.message.contains("bonus spells and bonus feats at 3rd+ level are not \
+             implemented"),
+        "the bloodline bonus spells/feats are grounded now; the blocker must not keep claiming \
+         them as unimplemented: {}",
+        arcane_bond.message
+    );
     assert!(
         !arcane_bond.message.contains("Eschew Materials"),
         "arcane-bond blocker must not fold in the now-grounded Eschew Materials grant: {}",

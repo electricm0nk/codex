@@ -226,22 +226,29 @@ fn monk_level12_slow_fall_reach_rises() {
     );
 }
 
-// ----- Abundant Step is checked and confirmed not flat: no record is fabricated -----
+// ----- Abundant Step's caster-level magnitude was later grounded by task #49 -----
 
 #[test]
-fn monk_level12_abundant_step_is_not_fabricated() {
+fn monk_level12_abundant_step_caster_level_was_later_grounded() {
+    // At the time this file's own slice landed, Abundant Step was checked
+    // and confirmed not flat (it requires a ki-point-spending
+    // action-economy engine and a teleportation-resolution engine, neither
+    // of which exists in this codebase) and deliberately left unfabricated.
+    // Task #49 (2026-07-28) revisited it: the ONE flat magnitude the
+    // feature's own rule text names -- "his caster level for this effect is
+    // equal to his monk level" -- is grounded standalone (mirroring the
+    // Wholeness of Body / High Jump precedent), while the dimension-door
+    // execution itself stays unmodeled. This is the same "was later
+    // widened" flip `tests/sd13_monk_level9_progression.rs` established for
+    // its own superseded boundary.
     let input = load(MONK_LEVEL12_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.to_lowercase().contains("abundant_step")),
-        "Abundant Step requires a ki-point-spending action-economy engine and a \
-         teleportation-resolution engine, neither of which exists in this codebase, so no \
-         record must be fabricated for it: {:?}",
-        computation.explanations
+    let abundant_step = explanation(&computation, "class_chassis.monk.abundant_step_caster_level");
+    assert_eq!(
+        abundant_step.value, 12,
+        "Monk level 12 Abundant Step caster level must equal monk level (12): {}",
+        abundant_step.detail
     );
 }
 
@@ -308,20 +315,20 @@ fn monk_level11_truth_is_unchanged_by_this_slice() {
     assert_eq!(ki_pool.value, 9, "Monk level 11 ki pool must stay 9");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
+// ----- Level 13 was later widened into the supported tranche by task #49 -----
 
 #[test]
-fn monk_level_13_is_not_promoted_by_this_slice() {
+fn monk_level_13_was_later_widened_into_the_supported_tranche() {
     let level_13 = MONK_LEVEL12_FIXTURE.replace("class:monk:12", "class:monk:13");
     let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "level-13 Monk must not gain any bounded monk explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.monk.")),
+        "level-13 Monk is now recognized by the later task #49 level-20-capstone widening \
+         slice (tests/sd49_monk_level20_capstone.rs carries its proof): {:?}",
         computation.explanations
     );
 }

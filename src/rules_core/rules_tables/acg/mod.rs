@@ -41,6 +41,10 @@ pub mod class_swashbuckler;
 pub mod class_warpriest;
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod feat_data;
+pub mod feats;
+pub mod hunter_spell_list;
+pub mod shaman_spell_list;
 pub mod spell_list;
 
 use crate::rules_core::rules_tables::RuleSetId;
@@ -224,19 +228,34 @@ pub struct AcgClassCoverage {
     /// `pilot_compute::ground_hunter_animal_companion_and_defer_the_rest`,
     /// `pilot_compute::ground_or_block_warpriest_class_features`,
     /// `pilot_compute::ground_or_block_slayer_class_features`)
-    /// -- see `class_coverage`'s own branches for each. Every other ACG
-    /// class remains at 0: SD-22 Epic 4 deliberately scoped its ingest to the
-    /// BAB/save chassis only (see e.g. `class_arcanist.rs`'s own doc
-    /// comment), and no follow-on cycle has since ingested
-    /// `acg_abilities_class.lst`'s per-level feature blocks for any other
-    /// ACG class.
+    /// -- see `class_coverage`'s own branches for each.
     ///
-    /// Arcanist counts 2, not 1, unlike every prior closure this session:
-    /// Arcane Reservoir AND Spells Prepared
+    /// The full current roster, all ten ACG classes, none at 0:
+    /// **Arcanist 3**, **Bloodrager 2**, **Shaman 2**, **Hunter 3**,
+    /// **Skald 8** (task #50), **Warpriest 5**, **Slayer 6**,
+    /// **Investigator 8**, **Brawler 9**, **Swashbuckler 12**.
+    ///
+    /// This paragraph previously ended "Every other ACG class remains at
+    /// 0", describing the SD-22 Epic 4 state where the ingest was scoped
+    /// to the BAB/save chassis only. That is no longer true of any ACG
+    /// class -- the per-class closures ingested
+    /// `acg_abilities_class.lst`'s feature blocks for all ten. Corrected
+    /// 2026-07-27, the same sweep that caught the identical stale
+    /// sentence in `apg/mod.rs`: a count change has to sweep the prose
+    /// derived from the old counts, and no test asserts a doc comment,
+    /// so this is the one place these numbers can rot silently.
+    ///
+    /// Arcanist counts 3, raised from 2 by task #56 (Familiar Exploit
+    /// closure, 2026-07-28): Arcane Reservoir, Spells Prepared
     /// (`pilot_compute::ground_or_block_arcanist_class_features`/
-    /// `ground_arcanist_prepared_spellbook`) are both real, distinct
-    /// `KEY:Arcanist ~ ...` records with genuine backing logic now.
-    /// `Cantrips` is a real, distinct KEY record too (verified directly:
+    /// `ground_arcanist_prepared_spellbook`), AND the Familiar Exploit
+    /// (`ground_familiar_master_benefit`, shared class-agnostic
+    /// machinery already serving Witch and Shaman -- `KEY:Arcanist
+    /// Exploit ~ Familiar` carries the identical `BONUS:VAR|
+    /// FamiliarMasterLVL|ArcanistLVL` token, no Arcane Reservoir cost,
+    /// no PRE gate) are all real, distinct `KEY:Arcanist ~ ...` /
+    /// `KEY:Arcanist Exploit ~ ...` records with genuine backing logic
+    /// now. `Cantrips` is a real, distinct KEY record too (verified directly:
     /// "prepare N cantrips, cast like any spell but don't consume a slot,
     /// not expended when cast"), but its own DISTINGUISHING mechanical
     /// content (no-slot-consumption, not-expended-when-cast) is not
@@ -381,17 +400,38 @@ pub struct AcgClassCoverage {
     /// deferred to its own follow-on slice, so it does not add a fourth
     /// count here.
     ///
-    /// Shaman counts 1 (Life Spirit's own Channel ability), the same
-    /// single-slot shape as Skald/Bloodrager/Hunter: the Spirit choice
-    /// itself is one slot, and Channel is the only immediately-available
-    /// power this closure grounds under it (Life Spirit's own higher-
-    /// tier Healer's Touch/Quick Healing/Manifestation abilities, the
-    /// other 9 primary spirits, Spirit Magic, Orisons, and fresh
-    /// own-list spellcasting all stay deferred). With Shaman's own
-    /// closure, all ten real ACG classes now have at least one genuinely
-    /// wired named feature -- the match below is exhaustive over
-    /// `AcgClassId`, not a wildcard fallback, since every real ACG class
-    /// has a real answer now.
+    /// Shaman counts 2 (the Spirit slot + Spirit Animal), raised from 1
+    /// by task #12.
+    ///
+    /// **The other 9 spirits do NOT each earn a slot**, even though all
+    /// ten are now genuinely grounded through their own
+    /// immediately-available base ability. A shaman selects exactly one
+    /// Spirit, so the ten are mutually-exclusive VARIANTS of a single
+    /// choice, not independent co-available features -- the same
+    /// reasoning that keeps Oracle's ten Mysteries at one "Mystery slot"
+    /// and Witch's ~20 hexes at one Hex slot. (Contrast Oracle's curses,
+    /// which DO each earn a slot: they are top-level `KEY:Oracle ~ ...`
+    /// records with independent formulas, whereas the spirits are
+    /// mechanism-namespaced `KEY:Shaman Spirit ~ ...` records.) Grounding
+    /// nine more variants widens what the one slot covers; it does not
+    /// add slots.
+    ///
+    /// **Spirit Animal earns the second slot** because it is a genuinely
+    /// separate class feature, not a variant of the Spirit choice: its
+    /// own `KEY:Shaman ~ Spirit Animal` record grants the shared Standard
+    /// Familiar List and lands a real magnitude on the computed max-HP
+    /// total. That bump was owed from the familiar closure (`8e47479a`)
+    /// and simply never landed.
+    ///
+    /// **Spellcasting is deliberately NOT counted**, matching the same
+    /// "not independently implemented" reasoning that already excludes
+    /// Arcanist's Cantrips and Warpriest's Orisons from their own counts.
+    ///
+    /// Still deferred and uncounted: each Spirit's three higher-tier
+    /// abilities (the `ShamanSpiritGreater`/`ShamanSpiritTrue`/
+    /// Manifestation tiers), Spirit Magic, and the Hex/Spirit Hex
+    /// chooser-list. The match below is exhaustive over `AcgClassId`, not
+    /// a wildcard fallback, since every real ACG class has a real answer.
     ///
     /// Brawler counts 3 (AC Bonus, Brawler's Cunning, Brawler's Strike),
     /// same "genuinely independent mechanisms" reasoning as Swashbuckler/
@@ -491,8 +531,9 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // pool-size, and Shaman's Life Spirit Channel are the real, wired
     // named class features among all ten ACG classes today -- every
     // real ACG class now has at least one, see this field's own doc
-    // comment above for why Arcanist counts 2, not 1 (and why Cantrips
-    // does not add a third), why Slayer counts a genuine 4 (its four
+    // comment above for why Arcanist counts 3, not 1 (raised to 2 for
+    // Spells Prepared, then to 3 by task #56's Familiar Exploit; and why
+    // Cantrips does not add a fourth), why Slayer counts a genuine 4 (its four
     // sub-features are structurally independent, not facets of one
     // shared mechanism), why Swashbuckler counts a genuine 3 (same
     // "structurally independent" reasoning as Slayer), why Investigator
@@ -520,6 +561,45 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // the general spellcasting mechanism, not independently implemented"
     // reasoning that already excluded Oracle's known-spell posture,
     // Arcanist's Cantrips, and Warpriest's Orisons from their own counts.
+    //
+    // Skald's own count stayed at 3, NOT 5, after task #54 grounded
+    // Raging Climber's and Raging Swimmer's real self-use magnitude (they
+    // now land on the real Climb/Swim totals in pilot_compute.rs): both
+    // are tagged `KEY:Rage Power ~ Raging Climber` / `~ Raging Swimmer`
+    // in the corpus, a DIFFERENT class-prefix namespace shared with
+    // Barbarian, not `KEY:Skald ~ ...`, so they fold into the
+    // `KEY:Skald ~ Rage Powers` slot rather than adding their own count
+    // -- the exact same "different corpus class-prefix, fold into the
+    // slot" precedent Warpriest's own grounded Blessing minor powers
+    // (Destructive Attacks/Strength Surge, tagged `KEY:Destruction
+    // Blessing ~ ...`/`KEY:Strength Blessing ~ ...`) already established.
+    // #54 explicitly left the `KEY:Skald ~ Rage Powers` slot itself (the
+    // pool-count formula, `RagePowersLVL/3`, and the ally-granting
+    // "shared-list access") genuinely ungrounded -- it only grounds two
+    // of the wider 60-record Rage Powers family's own canonical-
+    // narrowing representatives' magnitude, per `rage-powers-canonical-
+    // narrowing-scoping.md`, not the slot mechanism that grants them.
+    //
+    // Skald rose again from 3 to 8 with task #50, grounding exactly that
+    // still-open slot mechanism plus four more standalone records:
+    // Well-Versed (flat +4 save bonus, level-gated at 2nd), Spell
+    // Kenning (uses/day pool, self-gating `(1+SkaldLVL)/6`), Lore Master
+    // (uses/day pool, a genuine two-argument `min((SkaldLVL-1)/6,3)`),
+    // Versatile Performance (a genuinely single-argument
+    // `min((SkaldLVL+3)/5)` in the raw corpus -- ground the term itself,
+    // not an invented second cap), and Rage Powers (Skald's own
+    // pool-SIZE count only, `RagePowersLVL/3` with `RagePowersLVL` set
+    // unconditionally from `SkaldLVL`; individual rage-power selection/
+    // execution beyond Raging Climber/Swimmer is still a separate,
+    // deferred concern) are each their own separate `KEY:Skald ~ ...`
+    // record with independently-implemented formula logic. All five
+    // level-gate self-consistently with the real corpus's own per-level
+    // `ABILITY:...AUTOMATIC` grant rows in `acg_classes.lst`. Rage
+    // Powers' own pool-size record is additive with #54's Raging
+    // Climber/Swimmer grounding, not a duplicate of it -- the pool-size
+    // formula answers "how many rage powers does this skald know," while
+    // #54 answers "what do two specific, canonically-narrowed rage
+    // powers do once selected"; neither implies the other.
     // Hunter ALSO counts a genuine 3 (Animal Companion, Wild Empathy,
     // Animal Focus -- deepening 2026-07-26, task #2): Wild Empathy is a
     // flat, unconditional check-modifier fact (`CHA+HunterLVL`), and
@@ -543,12 +623,63 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // making them sub-selectable-list entries under the single
     // `Blessings` slot).
     let named_features_wired = match class_id {
-        AcgClassId::Shaman => 1,
-        AcgClassId::Arcanist | AcgClassId::Bloodrager => 2,
-        AcgClassId::Skald | AcgClassId::Hunter => 3,
+        AcgClassId::Shaman => 2,
+        // Arcanist rose 2 -> 3 with task #56: the Familiar Exploit
+        // (`KEY:Arcanist Exploit ~ Familiar`) dispatches into the same
+        // shared, class-agnostic `ground_familiar_master_benefit` that
+        // Witch and Shaman already use -- a real, distinct
+        // `KEY:Arcanist Exploit ~ ...` record with its own corpus token
+        // (`BONUS:VAR|FamiliarMasterLVL|ArcanistLVL`), not a facet of
+        // Arcane Reservoir or Spells Prepared, so it earns its own slot
+        // on top of that existing 2.
+        AcgClassId::Arcanist => 3,
+        // Bloodrager rose 2 -> 9 with task #42: the existing Bloodrage and
+        // Spells slots plus Fast Movement, Uncanny Dodge, Improved Uncanny
+        // Dodge, Blood Sanctuary, Damage Reduction, Greater Bloodrage and
+        // Mighty Bloodrage. Uncanny Dodge and Improved Uncanny Dodge count
+        // separately -- distinct corpus features with their own grant rows
+        // and gates (2 and 5) -- even though the corpus expresses Improved
+        // as a second increment to one shared counter. Greater and Mighty
+        // likewise: identical tokens, separate records, separate gates.
+        //
+        // Bloodrager rose 9 -> 10 with task #83, which grounded THREE more
+        // corpus records but earns only ONE slot. Indomitable Will counts:
+        // its own `KEY:Bloodrager ~ Indomitable Will` record, own level
+        // gate (14), and a real separately-computed magnitude (+4 on Will
+        // saves vs enchantment while bloodraging). Blood Casting and
+        // Eschew Materials deliberately do NOT count, on the same
+        // "distinguishing content is not separately implemented" reasoning
+        // that already excludes Warpriest's Orisons and Arcanist's
+        // Cantrips: both are grounded honestly at +0 as vacuous under this
+        // scope -- Blood Casting lifts a casting-while-raging restriction
+        // this codebase never imposes (no concentration engine exists),
+        // and Eschew Materials is a boolean feat grant against a
+        // material-component economy this codebase does not model. They
+        // are real, correctly-grounded records; they are not implemented
+        // MECHANISMS, and this field counts mechanisms.
+        AcgClassId::Bloodrager => 10,
+        // Skald rose 3 -> 8 with task #50: Well-Versed, Spell Kenning,
+        // Lore Master, Versatile Performance, and Rage Powers' own
+        // pool-size count are each their own separate `KEY:Skald ~ ...`
+        // record with independently-implemented formula logic, added on
+        // top of Inspired Rage/Damage Reduction/Bardic Knowledge's
+        // already-landed 3. Versatile Performance and Rage Powers ground
+        // pool-SIZE counts only (not the underlying choice/execution),
+        // the same "pool size, use not modelled" idiom Swashbuckler's
+        // Panache and Warpriest's Blessing uses/day already established.
+        AcgClassId::Skald => 8,
+        AcgClassId::Hunter => 3,
         AcgClassId::Slayer => 6,
         AcgClassId::Warpriest => 5,
-        AcgClassId::Investigator => 8,
+        // Investigator rose 8 -> 9 with task #58: Resiliency, a genuinely
+        // separate `KEY:Investigator ~ Rogue Talent ~ Resiliency` record
+        // (own formula, `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`,
+        // own level variable, own choice-gated recognition), drawn from
+        // Investigator's own explicit 40-record Rogue Talent whitelist --
+        // added on top of the already-landed Trapfinding/Trap Sense/
+        // Inspiration/Poison Resistance/Alchemy/spellcasting/Studied
+        // Combat/Studied Strike 8.
+        AcgClassId::Investigator => 9,
         AcgClassId::Brawler => 9,
         AcgClassId::Swashbuckler => 12,
     };

@@ -250,12 +250,37 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         comparison
     );
 
-    // The one remaining genuine mismatch: combat.baseline_melee_attack_bonus,
-    // the exact same shape as the Fighter pilot case's already-documented
-    // Weapon-Focus-inclusion discrepancy (Codex's baseline includes Weapon
-    // Focus (Longsword)'s +1; PCGen's compared export field apparently
-    // doesn't) -- not new, not something this cycle introduced, not
-    // attempted here (undiagnosed, out of QA's lane -- production code).
+    // The one remaining genuine mismatch: combat.baseline_melee_attack_bonus.
+    //
+    // **This oracle shares a blind spot with the thing it validates, and
+    // that is why the mismatch must NOT be read as "Codex is wrong".**
+    // Updated 2026-07-29 (risks item #89, tasks #80+#86): Codex moved from
+    // 5 to 1 when the nonproficiency penalty was finally applied. PCGen's
+    // compared export field stayed at 4. The gap is now -3 rather than
+    // +1, and it is the sum of TWO independent defects in that export
+    // field, not one:
+    //
+    //  1. It omits Weapon Focus (Longsword)'s +1, which the character
+    //     genuinely has (this is the long-documented half, the same shape
+    //     as the Fighter pilot case's discrepancy).
+    //  2. It omits PF1's own -4 nonproficiency penalty
+    //     (`WEAPONNONPROFPENALTY` in
+    //     `system/gameModes/Pathfinder/miscinfo.lst:193`), even though a
+    //     Wizard has no Longsword proficiency at all -- the Wizard's real
+    //     grant (`cr_abilities_class.lst`, `KEY:Weapon and Armor
+    //     Proficiency ~ Wizard`) is exactly `AUTO:WEAPONPROF|Club|Dagger|
+    //     Crossbow (Heavy)|Crossbow (Light)|Quarterstaff`.
+    //
+    // PCGen's 4 is therefore just BAB(0) + STR(+4) with both the feat and
+    // the penalty dropped. Before this fix the two omissions partly
+    // cancelled (Codex 5 vs PCGen 4 looked like a tidy +1 Weapon Focus
+    // delta), which is exactly how the second defect stayed hidden: the
+    // oracle and the engine agreed while BOTH were wrong. Correcting Codex
+    // uncovered it rather than caused it.
+    //
+    // The expected values below are updated deliberately and with that
+    // reasoning recorded, rather than leaving a correct engine showing red
+    // against a defective export.
     let mismatch = comparison
         .mismatches
         .iter()
@@ -263,7 +288,7 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         .unwrap_or_else(|| panic!("expected the known combat.baseline_melee_attack_bonus mismatch: {comparison:?}"));
     assert_eq!(mismatch.reason, MismatchReason::ValueMismatch);
     assert_eq!(mismatch.pcgen_value_i16, Some(4));
-    assert_eq!(mismatch.codex_value_i16, Some(5));
+    assert_eq!(mismatch.codex_value_i16, Some(1));
     assert_eq!(
         comparison.mismatches.len(),
         1,
@@ -271,4 +296,77 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         comparison
     );
     assert!(!comparison.all_matched());
+}
+
+/// v0.6 alpha swarm (armored-Wizard ASF%/ACP task): confirms that PF1's two
+/// unproficiency-adjacent armor mechanics -- arcane spell failure chance and
+/// armor check penalty -- are genuinely, class-agnostically grounded for the
+/// exact Wizard-in-a-Chain-Shirt scenario this task was dispatched to fix,
+/// not just for the Fighter case existing coverage already proved.
+///
+/// **Finding, not a new mechanism**: `equipment_effects::compute_equipment_effects`
+/// (wired into `to_pilot_receipt` unconditionally, see `contract.rs`'s own
+/// `equipment_effects` field doc comment) already sums every equipped item's
+/// real `SPELLFAILURE:`/`ACCHECK:` corpus tokens into
+/// `EquipmentEffects.spell_failure_chance`/`armor_check_penalty_total`,
+/// completely independent of the wearer's class or armor proficiency --
+/// correct per RAW, since a Chain Shirt's 20% arcane spell failure chance
+/// and -2 armor check penalty are properties of the armor itself, not of who
+/// wears it (`tests/sd20_contract_equipment_wiring.rs` already proved this
+/// for a Fighter; this is the same real, live receipt field, now proven for
+/// the class that actually cares about ASF%). This closes the "an armored
+/// Wizard's spellcasting is unaffected" concern this task was dispatched
+/// with: it already IS affected, on the real output contract, with the
+/// exact corpus-verified magnitudes
+/// (`cr_equip_arms_armor.lst:40 Chain Shirt -> ACCHECK:-2, SPELLFAILURE:20`).
+/// Armor PROFICIENCY itself (whether a class avoids some further RAW
+/// nonproficiency penalty) remains genuinely unmodeled and out of scope --
+/// see this task's own swarm-status entry for why building it fresh would
+/// be speculative, unrequested scope creep rather than grounding an
+/// existing gap.
+#[test]
+fn wizard_in_a_chain_shirt_gets_the_real_spell_failure_and_check_penalty_on_the_receipt() {
+    let input_load = load_character_input_fixture(DETERMINISTIC_FIXTURE);
+    assert!(
+        input_load.diagnostics.is_empty(),
+        "wizard pilot deterministic input fixture should load cleanly: {:?}",
+        input_load.diagnostics
+    );
+    let input = input_load
+        .character_input
+        .expect("valid deterministic input fixture should produce a CharacterInput record");
+    let corpus = corpus_with_wizard_gear();
+    let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
+    let pilot_receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
+
+    assert_eq!(
+        pilot_receipt.equipment_effects.spell_failure_chance,
+        Some(20.0),
+        "Chain Shirt's real SPELLFAILURE:20 corpus token must reach the receipt for a Wizard, \
+         exactly as it already does for a Fighter: {:?}",
+        pilot_receipt.equipment_effects
+    );
+    assert_eq!(
+        pilot_receipt.equipment_effects.armor_check_penalty_total,
+        -2,
+        "Chain Shirt's real ACCHECK:-2 corpus token must reach the receipt for a Wizard: {:?}",
+        pilot_receipt.equipment_effects
+    );
+
+    // The same -2 Chain Shirt armor-check penalty is also independently
+    // applied inside `pilot_compute.rs`'s own deterministic Climb/Swim
+    // computation (a second, narrower consumer, separate from the generic
+    // receipt-level aggregate above) -- both must agree it is real and
+    // nonzero for this exact posture.
+    let climb = pilot_receipt
+        .chassis
+        .explanations
+        .iter()
+        .find(|e| e.id == "skill.selected_modifier.climb")
+        .expect("Climb explanation must be present for the Wizard GE-06 posture");
+    assert!(
+        climb.detail.contains("Chain Shirt armor-check penalty"),
+        "Climb's own explanation should cite the Chain Shirt armor-check penalty: {}",
+        climb.detail
+    );
 }

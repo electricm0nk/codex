@@ -34,8 +34,8 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
@@ -101,27 +101,6 @@ fn load(fixture: &str) -> CharacterInput {
     result
         .character_input
         .expect("valid fixture should produce a character input record")
-}
-
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
 }
 
 fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
@@ -373,21 +352,43 @@ fn ranger_track_is_grounded_with_value_one_at_level_one() {
 
 #[test]
 fn ranger_f6_hybrid_blockers_remain_intact_under_separation() {
+    // The F6 hybrid non-spell class-feature blocker (`F6_HYBRID_RANGER_FEATURE_ID`)
+    // is retired: it flatly claimed favored enemy / combat style / tracking were
+    // unimplemented, which this exact per-class decomposition (dispatched on the
+    // same input) contradicts by grounding Track and the Favored Enemy flat surface
+    // for real (combat style is a genuinely correct level-1 absence, not a
+    // contradiction, but the blocker claimed non-implementation of the WHOLE
+    // family, including the two that are grounded). See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`. The F6 hybrid SPELL
+    // blocker has since been retired too (2026-07-28) on the same grounds:
+    // Rangers have no `CAST:` row in `cr_classes.lst` before class level 4, and
+    // the sibling partial-caster surface grounds the level-1 spell posture as a
+    // correct absence, so the blanket "out of scope" claim was false. See
+    // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let feature = claim_blocking(&computation, F6_HYBRID_RANGER_FEATURE_ID);
-    for token in ["favored enemy", "combat style", "tracking"] {
+    for retired in [F6_HYBRID_RANGER_FEATURE_ID, F6_HYBRID_RANGER_SPELL_ID] {
         assert!(
-            feature.message.contains(token),
-            "F6 combined ranger feature blocker must still name '{token}': {}",
-            feature.message
+            !has_diagnostic(&computation, retired),
+            "the retired F6 hybrid blocker '{retired}' must not reappear: {:?}",
+            computation.diagnostics
         );
     }
 
+    // Superseded, not merely dropped: the spell burden the retired blocker
+    // asserted is now a grounded computed value on this same input.
     assert!(
-        has_diagnostic(&computation, F6_HYBRID_RANGER_SPELL_ID),
-        "F6 hybrid spell blocker must remain claim-blocking"
+        has_explanation(
+            &computation,
+            "class_chassis.ranger.partial_caster.effective_caster_level"
+        ) && has_explanation(
+            &computation,
+            "class_chassis.ranger.partial_caster.spell_level_access"
+        ),
+        "the retired spell blocker must be superseded by grounded partial-caster \
+         records: {:?}",
+        computation.explanations
     );
 
     // The F6 chassis recognition explanation must still be present so the F6

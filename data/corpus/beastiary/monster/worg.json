@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:18:10Z",
+  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
     "id": "beastiary1:monster:worg",
     "name": "Worg",
@@ -11,7 +11,12 @@
     "race_type": "Magical Beast",
     "race_subtype": null,
     "source_page": "p.280",
-    "natural_attacks": []
+    "natural_attacks": [
+      {
+        "name": "Bite",
+        "damage_dice": "1d6"
+      }
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -22,5 +27,22 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +7 (1d6+4 plus trip)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Worg",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/magical-beasts/worg/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Medium magical beast + Bestiary pg. 280 (matches the cached chassis's own source_page)"
+      }
+    }
+  ]
 }

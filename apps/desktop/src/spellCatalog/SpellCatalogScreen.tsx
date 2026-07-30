@@ -23,16 +23,26 @@ const SCHOOL_ORDER = [
 
 const MAX_RENDERED_ROWS = 200;
 
+/** Display labels for the wire's short book codes. */
+const BOOK_LABELS: Record<string, string> = {
+  CRB: 'Core Rulebook',
+  APG: "Advanced Player's Guide",
+  ACG: 'Advanced Class Guide',
+};
+
+const BOOK_ORDER = ['CRB', 'APG', 'ACG'] as const;
+
 /**
- * Full spell catalog browser — every real corpus record across all 9 PF1
- * strict schools (652 spells), not a per-character sample. Distinct from
- * the Character Sheet's Spells tab, which only shows what one character
- * has selected.
+ * Full spell catalog browser — every real corpus record across all three
+ * ingested books (CRB 652, APG 297, ACG 144), not a per-character sample.
+ * Distinct from the Character Sheet's Spells tab, which only shows what
+ * one character has selected.
  */
 export function SpellCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<SpellCatalogEntryDto[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [school, setSchool] = useState<string | 'All'>('All');
+  const [book, setBook] = useState<string | 'All'>('All');
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -46,20 +56,37 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
   const schoolCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const entry of entries ?? []) {
+      // A record whose corpus row has no `SCHOOL:` token is counted under
+      // no school — it is genuinely unknown, not silently bucketed.
+      if (entry.school === null) continue;
       counts[entry.school] = (counts[entry.school] ?? 0) + 1;
     }
     return counts;
   }, [entries]);
+
+  const bookCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const entry of entries ?? []) {
+      counts[entry.book] = (counts[entry.book] ?? 0) + 1;
+    }
+    return counts;
+  }, [entries]);
+
+  const schoollessCount = useMemo(
+    () => (entries ?? []).filter((entry) => entry.school === null).length,
+    [entries]
+  );
 
   const filtered = useMemo(() => {
     if (!entries) return [];
     const needle = query.trim().toLowerCase();
     return entries.filter((entry) => {
       if (school !== 'All' && entry.school !== school) return false;
+      if (book !== 'All' && entry.book !== book) return false;
       if (needle && !entry.key.toLowerCase().includes(needle)) return false;
       return true;
     });
-  }, [entries, school, query]);
+  }, [entries, school, book, query]);
 
   const visible = filtered.slice(0, MAX_RENDERED_ROWS);
   const totalCount = entries?.length ?? 0;
@@ -84,9 +111,36 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real corpus record the engine knows about — {totalCount} spells across all 9 PF1 strict
-            schools. Not what any one character has selected.
+            Every real corpus record the engine knows about — {totalCount} spells across the Core
+            Rulebook, Advanced Player&rsquo;s Guide and Advanced Class Guide. Not what any one
+            character has selected.
+            {schoollessCount > 0 ? (
+              <>
+                {' '}
+                {schoollessCount} carry no school in the corpus and appear only under
+                &ldquo;All&rdquo;.
+              </>
+            ) : null}{' '}
+            Level shown is each record&rsquo;s lowest class level, not any one class&rsquo;s level
+            &mdash; e.g. Hideous Laughter is Bard 1 but Sorcerer/Wizard 2, and lists as Level 1.
           </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
+            <button type="button" onClick={() => setBook('All')} style={schoolButtonStyle(book === 'All')}>
+              All books ({totalCount})
+            </button>
+            {BOOK_ORDER.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setBook(code)}
+                style={schoolButtonStyle(book === code)}
+                title={BOOK_LABELS[code]}
+              >
+                {code} ({bookCounts[code] ?? 0})
+              </button>
+            ))}
+          </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <button
@@ -134,8 +188,11 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
 
           <div style={{ ...panel, maxHeight: 480, overflowY: 'auto', padding: visible.length ? '0.25rem 1rem' : '1rem' }}>
             {visible.map((entry) => (
+              // `key` is unique across all three books (see
+              // `tests/spell_cross_book_identity.rs`), so it alone is a
+              // safe React key.
               <div
-                key={`${entry.school}:${entry.key}`}
+                key={entry.key}
                 style={{
                   borderBottom: '1px solid var(--color-border)',
                   padding: '0.5rem 0',
@@ -144,16 +201,32 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
                 <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.75rem', justifyContent: 'space-between' }}>
                   <span>
                     <span style={{ fontWeight: 700 }}>{entry.key}</span>
+                    <span
+                      style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}
+                      title={BOOK_LABELS[entry.book] ?? entry.book}
+                    >
+                      {entry.book}
+                    </span>
+                    {/* Absent school/level are stated as absent — the corpus
+                        genuinely omits them on some APG rows — never
+                        defaulted to a plausible-looking value. */}
                     <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                      {entry.school}
+                      {entry.school ?? 'school not in corpus'}
                     </span>
                   </span>
                   <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                    Level {entry.level}
+                    {entry.level === null ? 'level not in corpus' : `Level ${entry.level}`}
                   </span>
                 </div>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
-                  {entry.description}
+                <p
+                  style={{
+                    color: entry.description === null ? 'var(--color-text-faint)' : 'var(--color-text-muted)',
+                    fontSize: '0.75rem',
+                    fontStyle: entry.description === null ? 'italic' : 'normal',
+                    margin: '0.25rem 0 0',
+                  }}
+                >
+                  {entry.description ?? 'No description in the corpus for this record.'}
                 </p>
               </div>
             ))}

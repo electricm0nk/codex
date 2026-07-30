@@ -43,14 +43,19 @@
 //! only monster in this subset carrying a `RACESUBTYPE:` token
 //! (`RACESUBTYPE:Derro`).
 
-use super::MonsterStatBlock;
+use super::{MonsterStatBlock, NaturalAttack};
 
 /// Source: `b1_races.lst:18`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,30,Burrow,20` (walk speed transcribed; burrow speed out of
-/// scope), no `NATURALATTACKS:` token (fights via
-/// `ABILITY:Internal|AUTOMATIC|Bite` cross-reference instead —
-/// transcribed as an empty list, not an invented attack), `RACETYPE:
-/// Magical Beast`, no `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.15`.
+/// scope), no `NATURALATTACKS:` token, `RACETYPE:Magical Beast`, no
+/// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.15`.
+///
+/// **Bite dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Bite` but no hop of that reference
+/// carries dice. `2d6` is corroborated by aonprd + d20pfsrd (both
+/// "bite +5 (2d6+4 plus 1d4 acid and grab)"). Full citation in
+/// `super::natural_attack_provenance` — **read it before reverting this
+/// to an empty list.**
 pub fn ankheg() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Ankheg".to_string(),
@@ -60,15 +65,19 @@ pub fn ankheg() -> MonsterStatBlock {
         race_type: "Magical Beast".to_string(),
         race_subtype: None,
         source_page: "p.15".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Bite".to_string(), damage_dice: "2d6".to_string() }],
     }
 }
 
 /// Source: `b1_races.lst:29`, `CR:3`. Real row tokens: `SIZE:L`,
-/// `MOVE:Walk,5`, no `NATURALATTACKS:` token (fights via
-/// `ABILITY:Internal|AUTOMATIC|Slam` cross-reference instead —
-/// transcribed as an empty list), `RACETYPE:Plant`, no `RACESUBTYPE:`
-/// token, `CR:3`, `SOURCEPAGE:p.22`.
+/// `MOVE:Walk,5`, no `NATURALATTACKS:` token, `RACETYPE:Plant`, no
+/// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.22`.
+///
+/// **Slam dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Slam` but no hop carries dice. `1d8`
+/// is corroborated by aonprd + d20pfsrd (both "slam +7 (1d8+7 plus
+/// grab)"). Full citation in `super::natural_attack_provenance` — **read
+/// it before reverting this to an empty list.**
 pub fn assassin_vine() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Assassin Vine".to_string(),
@@ -78,15 +87,22 @@ pub fn assassin_vine() -> MonsterStatBlock {
         race_type: "Plant".to_string(),
         race_subtype: None,
         source_page: "p.22".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Slam".to_string(), damage_dice: "1d8".to_string() }],
     }
 }
 
 /// Source: `b1_races.lst:60`, `CR:3`. Real row tokens: `SIZE:L`,
-/// `MOVE:Walk,50`, no `NATURALATTACKS:` token (fights via
-/// `ABILITY:Internal|AUTOMATIC|Hoof` cross-reference instead —
-/// transcribed as an empty list), `RACETYPE:Monstrous Humanoid`, no
-/// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.42`.
+/// `MOVE:Walk,50`, no `NATURALATTACKS:` token, `RACETYPE:Monstrous
+/// Humanoid`, no `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.42`.
+///
+/// **Hoof dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Hoof` but no hop carries dice. `1d6`
+/// is corroborated by aonprd + d20pfsrd (both "longsword +5
+/// (1d8+2/19-20), 2 hooves +0 (1d6+1)"). The longsword is a manufactured
+/// weapon and is deliberately excluded, the same way Gnoll's and Derro's
+/// weapon attacks are. Full citation in
+/// `super::natural_attack_provenance` — **read it before reverting this
+/// to an empty list.**
 pub fn centaur() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Centaur".to_string(),
@@ -96,16 +112,21 @@ pub fn centaur() -> MonsterStatBlock {
         race_type: "Monstrous Humanoid".to_string(),
         race_subtype: None,
         source_page: "p.42".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Hoof".to_string(), damage_dice: "1d6".to_string() }],
     }
 }
 
 /// Source: `b1_races.lst:73`, `CR:3`. Real row tokens: `SIZE:S`,
 /// `MOVE:Walk,20,Fly,60` (walk speed transcribed; fly speed out of
-/// scope), no `NATURALATTACKS:` token (fights via
-/// `ABILITY:Internal|AUTOMATIC|Bite` cross-reference instead —
-/// transcribed as an empty list), `RACETYPE:Magical Beast`, no
+/// scope), no `NATURALATTACKS:` token, `RACETYPE:Magical Beast`, no
 /// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.48`.
+///
+/// **Bite dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Bite` but no hop carries dice. `1d4`
+/// is corroborated by aonprd + d20pfsrd (both "bite +9 (1d4-2 plus
+/// petrification)" — the `-2` is the Strength penalty, not a die-size
+/// change). Full citation in `super::natural_attack_provenance` — **read
+/// it before reverting this to an empty list.**
 pub fn cockatrice() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Cockatrice".to_string(),
@@ -115,7 +136,7 @@ pub fn cockatrice() -> MonsterStatBlock {
         race_type: "Magical Beast".to_string(),
         race_subtype: None,
         source_page: "p.48".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Bite".to_string(), damage_dice: "1d4".to_string() }],
     }
 }
 

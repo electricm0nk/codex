@@ -121,7 +121,7 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// Channel Energy, and Sacred Armor -- three more distinct
 /// `KEY:Warpriest ~ ...` records, each with its own separately-
 /// implemented formula -- taking its own count from 2 to 5. Arcanist's
-/// own `named_features_wired == 2` (not 1, unlike Bloodrager/
+/// own `named_features_wired == 3` (not 1, unlike Bloodrager/
 /// Shaman), and Slayer's/
 /// Swashbuckler's/Brawler's/Skald's/Hunter's own `== 4`/`== 3`/`== 3`/`==
 /// 3`/`== 3` (Investigator's own `== 5` covered above) for yet another
@@ -129,9 +129,12 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// `AcgClassCoverage::named_features_wired`'s own doc comment in
 /// `rules_tables::acg::mod` for the full record: Arcanist's real
 /// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
-/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, while
-/// `Cantrips` does NOT add a third (not separately implemented);
-/// Warpriest has NO general-spellcasting KEY record at all (only
+/// ...` record (`Spells Prepared`) beyond Arcane Reservoir, and task #56
+/// closes a third -- the Familiar Exploit (`KEY:Arcanist Exploit ~
+/// Familiar`), which dispatches into the same shared, class-agnostic
+/// `ground_familiar_master_benefit` machinery Witch and Shaman already
+/// use -- while `Cantrips` does NOT add a fourth (not separately
+/// implemented); Warpriest has NO general-spellcasting KEY record at all (only
 /// `Orisons`, also not separately implemented), so its own count stays
 /// at its five real feature records, with BOTH grounded Blessing minor
 /// powers -- Destruction's Destructive Attacks and Strength's Strength
@@ -155,6 +158,15 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// spellcasting and Life Spirit's own higher-tier abilities (Healer's
 /// Touch, genuinely gated to level 8+, not immediately available) both
 /// stay deferred, so it does not add a second count either.
+///
+/// **Deepened again (Arcanist, 2026-07-28, task #56):** Arcanist's own
+/// count moved from 2 to 3 -- the Familiar Exploit (`KEY:Arcanist
+/// Exploit ~ Familiar`, `BONUS:VAR|FamiliarMasterLVL|ArcanistLVL`, no
+/// Arcane Reservoir cost, no PRE gate, available at 1st level) is now
+/// genuinely wired alongside Arcane Reservoir and Spells Prepared. This
+/// is a class-eligibility extension of the already-shipped,
+/// class-agnostic `ground_familiar_master_benefit` helper (previously
+/// shared by Witch and Shaman only, task #11/#12), not a new mechanism.
 #[test]
 fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that_shamans_own_closure_landed()
 {
@@ -189,8 +201,26 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
     }
 
     for (class_id, feature_name, expected_wired) in [
-        (AcgClassId::Skald, "Inspired Rage + Damage Reduction + Bardic Knowledge", 3),
-        (AcgClassId::Bloodrager, "Bloodrage + Spells (spells-per-day/known tables)", 2),
+        (
+            AcgClassId::Skald,
+            "Inspired Rage + Damage Reduction + Bardic Knowledge + Well-Versed + Spell Kenning \
+             + Lore Master + Versatile Performance + Rage Powers pool-size",
+            8,
+        ),
+        // Task #83 added Indomitable Will as a tenth. It grounded three
+        // corpus records but only this one earns a slot: Blood Casting and
+        // Eschew Materials are both honestly grounded at +0 as vacuous
+        // under this scope (no concentration engine, no material-component
+        // economy), so they are correctly-grounded RECORDS rather than
+        // implemented MECHANISMS -- the same reasoning that keeps
+        // Warpriest's Orisons and Arcanist's Cantrips uncounted.
+        (
+            AcgClassId::Bloodrager,
+            "Bloodrage + Spells + Fast Movement + Uncanny Dodge + Improved Uncanny Dodge + \
+             Blood Sanctuary + Damage Reduction + Greater Bloodrage + Mighty Bloodrage + \
+             Indomitable Will",
+            10,
+        ),
         (
             AcgClassId::Brawler,
             "AC Bonus + Cunning + Strike + Martial Flexibility + Martial Training + Bonus Feats \
@@ -202,7 +232,7 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
             "Animal Companion + Wild Empathy + Animal Focus (Bull)",
             3,
         ),
-        (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared", 2),
+        (AcgClassId::Arcanist, "Arcane Reservoir + Spells Prepared + Familiar", 3),
         (
             AcgClassId::Warpriest,
             "Blessings + Sacred Weapon + Fervor + Channel Energy + Sacred Armor",
@@ -222,10 +252,14 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
         (
             AcgClassId::Investigator,
             "Trapfinding + Trap Sense + Inspiration pool-size + Poison Resistance + Alchemy \
-             + spellcasting + Studied Combat + Studied Strike",
-            8,
+             + spellcasting + Studied Combat + Studied Strike + Resiliency",
+            9,
         ),
-        (AcgClassId::Shaman, "Life Spirit Channel", 1),
+        // The Spirit slot covers all ten spirits (mutually-exclusive
+        // variants of one choice, so they fold rather than each earning a
+        // slot -- Oracle's ten Mysteries precedent); Spirit Animal is a
+        // genuinely separate feature landing a real max-HP magnitude.
+        (AcgClassId::Shaman, "Spirit slot (all 10) + Spirit Animal", 2),
     ] {
         let row = class_coverage(class_id);
         assert_eq!(
@@ -274,8 +308,14 @@ fn zero_named_class_features_are_wired_for_any_acg_class_except_all_ten_now_that
 /// `class_feature.acg.skald.spellcasting_deferred.unsupported` diagnostic,
 /// naming only the pieces still genuinely missing. Every other ACG class
 /// keeps the original, unmodified diagnostic.
+///
+/// **Updated (task #91, 2026-07-29):** the test name's "stay blocked" no
+/// longer holds for all ten. Five ACG classes now compute at every level,
+/// and their `other_features_deferred` records survive as non-blocking
+/// remainders. See the per-class expectation inside the loop; the
+/// requirement that the record EXIST for every class is unchanged.
 #[test]
-fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagnostic() {
+fn acg_classes_ground_real_bab_save_and_carry_their_own_deferred_feature_record() {
     for class_id in AcgClassId::ALL {
         let input = minimal_input_for(class_id);
         let computation = compute_pilot_base_chassis(&input);
@@ -304,7 +344,20 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
 
         let expected_diagnostic_id = match class_id {
             AcgClassId::Hunter => {
-                format!("class_feature.acg.{}.spellcasting_deferred.unsupported", class_id.name())
+                // v0.6 alpha swarm, task #44 (Hunter spellcasting
+                // closure): Hunter's own known-spell posture is now
+                // genuinely validated (the union of the Druid and Ranger
+                // general spell lists, take-the-lower on a level
+                // conflict, the Hunter Spells Known table, and the six
+                // automatic Summon Nature's Ally grants), so the
+                // diagnostic is renamed from `spellcasting_deferred` to
+                // `other_features_deferred`, mirroring Skald's own
+                // rename below once its own known-spell posture was
+                // genuinely validated.
+                format!(
+                    "class_feature.acg.{}.other_features_deferred.unsupported",
+                    class_id.name()
+                )
             }
             AcgClassId::Bloodrager => {
                 // v0.6 alpha swarm, task #1 (Bloodrager spellcasting
@@ -416,9 +469,36 @@ fn acg_classes_ground_real_bab_save_but_stay_blocked_on_the_unconditional_diagno
                     class_id
                 )
             });
-        assert!(
-            unsupported.claim_blocking,
-            "{:?}: '{expected_diagnostic_id}' must remain claim_blocking: true",
+        // **Updated (task #91, 2026-07-29).** Five ACG classes -- Brawler,
+        // Hunter, Skald, Slayer and Swashbuckler -- now ground every named
+        // feature on their corpus class tables, so their
+        // `other_features_deferred` records carry no remaining blocking
+        // claim and are demoted to `claim_blocking: false`.
+        //
+        // The record is deliberately KEPT rather than deleted, because each
+        // still carries a real remainder (deferred execution, and chooser
+        // catalog gaps such as Slayer's 1-of-41 talents, Skald's 2-of-60
+        // rage powers and Hunter's 1-of-13 animal foci). So this audit
+        // still requires the diagnostic to EXIST for every ACG class --
+        // that assertion is unchanged and sits above -- and now checks its
+        // blocking flag against the class's real state instead of
+        // asserting `true` for everyone.
+        //
+        // Adding a class to this set is a claim that it computes at all 20
+        // levels; `v06_class_state_dump` is the check.
+        let expected_claim_blocking = !matches!(
+            class_id,
+            AcgClassId::Brawler
+                | AcgClassId::Hunter
+                | AcgClassId::Skald
+                | AcgClassId::Slayer
+                | AcgClassId::Swashbuckler
+        );
+        assert_eq!(
+            unsupported.claim_blocking, expected_claim_blocking,
+            "{:?}: '{expected_diagnostic_id}' claim_blocking should be \
+             {expected_claim_blocking} -- a class that still has an ungrounded named feature \
+             must block, and a class that has none must not",
             class_id
         );
         if matches!(

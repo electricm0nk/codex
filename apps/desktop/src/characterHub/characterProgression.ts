@@ -9,6 +9,7 @@ import { CLASS_OPTIONS } from './characterHubModel';
 
 /** Base skill ranks per level for each class, before the Intelligence modifier. */
 const CLASS_SKILL_POINTS: Record<string, number> = {
+  'class:arcanist': 3,
   'class:barbarian': 4,
   'class:bard': 6,
   'class:cleric': 2,
@@ -22,78 +23,34 @@ const CLASS_SKILL_POINTS: Record<string, number> = {
   'class:wizard': 2,
 };
 
-/**
- * Class features by class level. Fighter is detailed (it is the fully-computed
- * class); other classes fall back to a generic descriptor until their tables
- * are added.
+/*
+ * Two hand-authored rules tables used to live here and are deliberately
+ * gone:
+ *
+ *   - a per-class-level class-feature map of bare labels (`'Bravery +1'`,
+ *     `'Bonus combat feat'`, `'Armor training 1'`) covering Fighter and
+ *     Wizard only, with no magnitudes and no provenance. It duplicated 411
+ *     cited `class_feature.*` / `class_chassis.*` records the engine
+ *     computes on every load.
+ *   - a hardcoded Wizard-only spells-per-day table
+ *     covering class levels 1-9, standing in for real
+ *     `class_spell.*.total_spells_per_day.*` records the engine grounds for
+ *     every supported caster.
+ *
+ * Rules data hand-authored in the frontend is exactly the debt
+ * `docs/governance/no-stub-mvp-doctrine.md` forbids: a second, uncited
+ * source of rules truth that drifts silently from the engine's. Both
+ * surfaces now read the engine's own records —
+ * `classFeaturesModel.ts` and `spellsPerDayModel.ts` project them from
+ * `LoadSavedCharacterResponse.explanations`, and `boundary/previewLevelUp.ts`
+ * answers "what does the next level grant" from Epic 7's real per-class
+ * level-up engine.
+ *
+ * What remains in this module is deliberately not class-table data: skill
+ * points per class, the universal PF1 benefits (a feat at every odd
+ * character level, an ability score increase every 4th), class-summary
+ * parsing, and hit points.
  */
-const CLASS_FEATURES: Record<string, Record<number, string[]>> = {
-  // Full PF1 Core Fighter progression (bonus combat feat at 1st and every even level).
-  'class:fighter': {
-    1: ['Bonus combat feat'],
-    2: ['Bravery +1', 'Bonus combat feat'],
-    3: ['Armor training 1'],
-    4: ['Bonus combat feat'],
-    5: ['Weapon training 1'],
-    6: ['Bravery +2', 'Bonus combat feat'],
-    7: ['Armor training 2'],
-    8: ['Bonus combat feat'],
-    9: ['Weapon training 2'],
-    10: ['Bravery +3', 'Bonus combat feat'],
-    11: ['Armor training 3'],
-    12: ['Bonus combat feat'],
-    13: ['Weapon training 3'],
-    14: ['Bravery +4', 'Bonus combat feat'],
-    15: ['Armor training 4'],
-    16: ['Bonus combat feat'],
-    17: ['Weapon training 4'],
-    18: ['Bravery +5', 'Bonus combat feat'],
-    19: ['Armor mastery'],
-    20: ['Weapon mastery', 'Bonus combat feat'],
-  },
-  // Wizard: arcane school & bond at 1st, Scribe Scroll bonus feat, bonus feats every 5 levels.
-  'class:wizard': {
-    1: ['Arcane bond', 'Arcane school', 'Cantrips', 'Scribe Scroll'],
-    5: ['Bonus feat'],
-    10: ['Bonus feat'],
-    15: ['Bonus feat'],
-    20: ['Bonus feat'],
-  },
-};
-
-// PF1 Core Wizard spells per day by class level (index 0 = cantrips), before the
-// Intelligence bonus spells. Enough levels for realistic testing.
-const WIZARD_SPELLS_PER_DAY: Record<number, readonly number[]> = {
-  1: [3, 1],
-  2: [4, 2],
-  3: [4, 2, 1],
-  4: [4, 3, 2],
-  5: [4, 3, 2, 1],
-  6: [4, 3, 3, 2],
-  7: [4, 4, 3, 2, 1],
-  8: [4, 4, 3, 3, 2],
-  9: [4, 4, 4, 3, 2, 1],
-};
-
-const SPELL_LEVEL_ORDINALS = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th'];
-
-function spellLevelName(index: number): string {
-  return index === 0 ? '0' : SPELL_LEVEL_ORDINALS[index - 1] ?? `${index}th`;
-}
-
-/** Spellcasting lines (spells/day + spells learned) gained at a caster class level. */
-function casterLines(classId: string, classLevel: number): string[] {
-  if (classId !== 'class:wizard') {
-    return [];
-  }
-  const lines: string[] = [];
-  const perDay = WIZARD_SPELLS_PER_DAY[classLevel];
-  if (perDay) {
-    lines.push(`Spells/day — ${perDay.map((count, index) => `${spellLevelName(index)}: ${count}`).join(', ')}`);
-  }
-  lines.push(classLevel === 1 ? 'Spellbook: all 0-level + (3 + Int mod) 1st-level spells' : 'Spellbook: learns 2 new spells');
-  return lines;
-}
 
 export interface WeaponProficiency {
   simple: boolean;
@@ -125,6 +82,16 @@ export interface LevelEntry {
   classLevel: number;
   /** Base skill ranks for this class before the Intelligence modifier. */
   skillPointsBase: number;
+  /**
+   * The universal PF1 benefits this *character* level grants — a feat at
+   * every odd level, an ability score increase every 4th. Both are general
+   * rules keyed to total character level, not entries from any class table.
+   *
+   * Class features are deliberately not here: they come from the engine's
+   * own `class_feature.*` / `class_chassis.*` records (see
+   * `classFeaturesModel.ts`) rather than from a table hand-authored in the
+   * frontend.
+   */
   features: string[];
 }
 
@@ -148,14 +115,13 @@ function generalBenefits(characterLevel: number): string[] {
 }
 
 function makeLevelEntry(classId: string, classLabel: string, classLevel: number, characterLevel: number): LevelEntry {
-  const features = CLASS_FEATURES[classId]?.[classLevel] ?? [`${classLabel} class features`];
   return {
     characterLevel,
     classId,
     classLabel,
     classLevel,
     skillPointsBase: classSkillPointsBase(classId),
-    features: [...features, ...casterLines(classId, classLevel), ...generalBenefits(characterLevel)],
+    features: generalBenefits(characterLevel),
   };
 }
 
@@ -192,19 +158,34 @@ export function previewLevelUp(heldClasses: HeldClass[], classId: string): Level
 }
 
 /**
- * True when a level's granted features include a feat pick — either the
- * universal odd-character-level feat (`generalBenefits`'s `'Feat'`) or a
- * class's own bonus-feat feature (Fighter's `'Bonus combat feat'` at 1st and
- * every even class level, Wizard's `'Bonus feat'` at 5/10/15/20). Drives
- * whether `LevelUpDialog`'s accept flow needs to collect a real feat pick
- * before persisting the level-up.
+ * True when a level grants a feat pick, so `LevelUpDialog`'s accept flow
+ * knows to collect a real one before persisting the level-up.
+ *
+ * Two independent sources, OR'd:
+ *
+ *   - `features` — the universal odd-character-level feat from
+ *     `generalBenefits`. A PF1 general rule, not class-table data.
+ *   - `engineGrantNames` — the grant names Epic 7's real per-class
+ *     level-up engine reports for this transition (`previewLevelUp`).
+ *
+ * **Known gap, deliberately not papered over.** Fighter's bonus combat
+ * feat at every even class level does not reach either source today:
+ * `level_up/fighter.rs`'s own module doc records that `pick_from_lists`
+ * stays empty for its ten Bonus Feat slots (building a real candidate list
+ * needs PF1 Combat-Feat eligibility filtering plus per-candidate
+ * prerequisite evaluation, left as that cycle's `next_required_uplift`),
+ * and `class_feature.fighter.level_N_bonus_feat` only fires *after*
+ * `choice:fighter_bonus_feat_N` has been selected. The previous
+ * hand-authored class-feature string `'Bonus combat feat'` covered this
+ * by asserting a rule the engine never verified; re-adding it would be the
+ * uncited-rules-data debt this module just shed. The gap belongs in the
+ * engine, and closing it there fixes this call site for free.
  */
-export function levelGrantsFeat(features: string[]): boolean {
-  // `\bfeat\b`, not `/feat/i` -- the fallback "<Class> class features" string
-  // (used for any class not yet in `CLASS_FEATURES`) contains "feat" as a
-  // substring of "features", which a plain substring match would wrongly
-  // treat as a feat grant.
-  return features.some((feature) => /\bfeat\b/i.test(feature));
+export function levelGrantsFeat(features: string[], engineGrantNames: readonly string[] = []): boolean {
+  // `\bfeat\b`, not `/feat/i` -- "features" contains "feat" as a substring,
+  // which a plain substring match would wrongly treat as a feat grant.
+  const grantsFeat = (text: string) => /\bfeat\b/i.test(text);
+  return features.some(grantsFeat) || engineGrantNames.some(grantsFeat);
 }
 
 function parseOneClass(segment: string): HeldClass {
@@ -250,7 +231,16 @@ export function totalCharacterLevel(classSummary: string): number {
 }
 
 // PF1 full spellcasting classes — their levels sum into the caster level.
-const CASTER_CLASSES = new Set(['class:wizard', 'class:sorcerer', 'class:cleric', 'class:druid', 'class:bard']);
+// Arcanist (ACG) is a full arcane caster like Wizard: caster level equals its
+// class level, so it belongs here the moment it becomes selectable.
+const CASTER_CLASSES = new Set([
+  'class:wizard',
+  'class:sorcerer',
+  'class:cleric',
+  'class:druid',
+  'class:bard',
+  'class:arcanist',
+]);
 
 /** Caster level: total levels in full spellcasting classes (0 for a non-caster). */
 export function casterLevel(classSummary: string): number {

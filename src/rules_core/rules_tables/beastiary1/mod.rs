@@ -90,6 +90,27 @@
 //! (41 monsters total) — see `docs/release/SD-22/progress.md`'s cycle
 //! log for this cycle's closure-readiness assessment.
 //!
+//! **Natural-attack grounding (v0.6, 2026-07-29):** a full verification
+//! pass found this book error-free across all 41 monsters but with 12
+//! carrying missing or partial natural attacks — Ankheg, Assassin Vine,
+//! Boar, Cave Fisher (partial), Centaur, Choker, Cockatrice, Crocodile,
+//! Vargouille, Wolf, Wolverine, Worg. Those rows name their attacks with
+//! an `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference instead of an
+//! inline `NATURALATTACKS:` token, and **no hop of that reference
+//! carries damage dice** (the target rows live in
+//! `core_essentials/ce_abilities_race.lst`, not under `bestiary/`, and
+//! are dice-less mechanical markers — PCGen supplies the dice at runtime
+//! from size tables). All 12 are now grounded from published values with
+//! at least two agreeing allowed-domain sources; the single exception is
+//! Crocodile's Tail Slap, genuinely recovered from a real cross-file
+//! corpus token (`b1_abilities_race.lst:248`, `...,*1,1d12`). Full
+//! per-value citations live in `natural_attack_provenance`, pinned by
+//! `tests/v06_beastiary1_natural_attack_grounding.rs`. Five other
+//! monsters (Bugbear, Dark Creeper, Derro, Dryad, Gnoll) keep empty
+//! attack lists **correctly** — they are weapon users, confirmed in
+//! print, and a test now guards them against a future "close the empty
+//! lists" sweep.
+//!
 //! **Equipment tables (SD-25 criterion 7.N item 4, added this cycle):**
 //! `equipment_tables`/`equipment_data` close the "no `beastiary1`
 //! equipment module exists" scope gap
@@ -100,6 +121,7 @@
 
 pub mod equipment_data;
 pub mod equipment_tables;
+pub mod natural_attack_provenance;
 pub mod monster_subset_01;
 pub mod monster_subset_02;
 pub mod monster_subset_03;
@@ -111,8 +133,22 @@ pub mod monster_subset_08;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
-/// A single natural-weapon attack, transcribed from a `NATURALATTACKS:`
-/// token on the monster's real `.lst` row.
+/// A single natural-weapon attack.
+///
+/// Usually transcribed from a `NATURALATTACKS:` token on the monster's
+/// real `.lst` row. Twelve Bestiary 1 monsters instead carry only an
+/// `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference, which names the
+/// attack but supplies no dice at any hop — for those, `damage_dice` is
+/// grounded from published values and every one is documented, with its
+/// sources, in [`natural_attack_provenance`]. **Read that module before
+/// changing any `natural_attacks` list back to empty.**
+///
+/// `damage_dice` is the die expression only, with no Strength modifier
+/// (`"1d6"`, not `"1d6+1"`). `"0"` means a real attack that deals no
+/// damage — e.g. Cave Fisher's Filament, whose own corpus token ends
+/// `,*1,0`. The per-attack `*N` count on a `NATURALATTACKS:` token is
+/// deliberately **not** modelled: this struct records distinct attack
+/// types, so a Ghoul's `Claw,...,*2,1d6` yields one `Claw` entry.
 #[derive(Debug, Clone, PartialEq)]
 pub struct NaturalAttack {
     pub name: String,

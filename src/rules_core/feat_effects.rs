@@ -34,6 +34,7 @@
 //! future slice, not guessed at here.
 
 use crate::rules_core::character_input::SelectedChoice;
+use crate::rules_core::feat_identity;
 
 /// The complete set of feats a character actually possesses: everything the
 /// player chose (`selected_feats`) plus everything their class granted
@@ -68,7 +69,7 @@ use crate::rules_core::character_input::SelectedChoice;
 pub fn effective_feats(selected_feats: &[String], class_granted_feats: &[&str]) -> Vec<String> {
     let mut feats = selected_feats.to_vec();
     for granted in class_granted_feats {
-        if !feats.iter().any(|feat| feat == granted) {
+        if !feat_identity::holds(&feats, granted) {
             feats.push((*granted).to_owned());
         }
     }
@@ -77,18 +78,23 @@ pub fn effective_feats(selected_feats: &[String], class_granted_feats: &[&str]) 
 
 /// The real PF1 Core Rulebook feat catalog's key for Toughness
 /// (`rules_tables::crb::feat_data::general`'s own
-/// `FeatTableEntry { key: "Toughness", ... }` record) -- NOT a synthetic
-/// `"feat:toughness"` id, and verified against the real selection pipeline
-/// rather than assumed: `FeatCatalogEntryDto.key` (`feat_catalog.rs`) passes
-/// the catalog key through verbatim with no transformation, and the
-/// frontend's `handleAddFeat`/`handleAddFeatLevelUp` (`CharacterSheet.tsx`)
-/// send `entry.key` directly as `addFeatSelection`'s `featId`, which
-/// `apply_add_feat_selection` (`pf1_adapter.rs`) pushes onto
-/// `selected_feats` unmodified. This exact string, not the `"feat:<name>"`
-/// convention the three hardcoded fixed-loadout feats use (a separate,
-/// bespoke id space that never runs through the catalog at all), is what a
-/// real user's `selected_feats` entry actually contains after picking
-/// Toughness through the live Feat picker.
+/// `FeatTableEntry { key: "Toughness", ... }` record), verified against the
+/// real selection pipeline rather than assumed: `FeatCatalogEntryDto.key`
+/// (`feat_catalog.rs`) passes the catalog key through verbatim with no
+/// transformation, and the frontend's `handleAddFeat`/`handleAddFeatLevelUp`
+/// (`CharacterSheet.tsx`) send `entry.key` directly as `addFeatSelection`'s
+/// `featId`, which `apply_add_feat_selection` (`pf1_adapter.rs`) pushes onto
+/// `selected_feats` unmodified. This is exactly what a real user's
+/// `selected_feats` entry contains after picking Toughness through the live
+/// Feat picker.
+///
+/// **The `feat:toughness` spelling names the same feat, and is matched too.**
+/// This comment used to insist the `"feat:<name>"` convention was "a separate,
+/// bespoke id space that never runs through the catalog at all" -- it is not:
+/// `compose_character_input` seeds that shape, and it reaches
+/// `add_feat_selection` directly. Producers here match through
+/// [`crate::rules_core::feat_identity`]'s fold, so which spelling a character
+/// happens to carry never decides whether the feat works.
 const TOUGHNESS_FEAT_KEY: &str = "Toughness";
 
 /// The real PF1 Core Rulebook Toughness feat benefit: a flat +3 hit points
@@ -112,7 +118,7 @@ const TOUGHNESS_HP_BONUS: i16 = 3;
 /// or for any feat this engine does not yet ground.
 pub fn hp_bonus_from_feats(selected_feats: &[String]) -> i16 {
     let mut bonus = 0;
-    if selected_feats.iter().any(|feat| feat == TOUGHNESS_FEAT_KEY) {
+    if feat_identity::holds(selected_feats, TOUGHNESS_FEAT_KEY) {
         bonus += TOUGHNESS_HP_BONUS;
     }
     bonus
@@ -154,17 +160,17 @@ pub struct SaveBonusesFromFeats {
 /// `selected_feats` carries a feat this engine does not yet ground.
 pub fn save_bonuses_from_feats(selected_feats: &[String]) -> SaveBonusesFromFeats {
     SaveBonusesFromFeats {
-        fortitude: if selected_feats.iter().any(|feat| feat == GREAT_FORTITUDE_FEAT_KEY) {
+        fortitude: if feat_identity::holds(selected_feats, GREAT_FORTITUDE_FEAT_KEY) {
             SAVE_FEAT_BONUS
         } else {
             0
         },
-        reflex: if selected_feats.iter().any(|feat| feat == LIGHTNING_REFLEXES_FEAT_KEY) {
+        reflex: if feat_identity::holds(selected_feats, LIGHTNING_REFLEXES_FEAT_KEY) {
             SAVE_FEAT_BONUS
         } else {
             0
         },
-        will: if selected_feats.iter().any(|feat| feat == IRON_WILL_FEAT_KEY) {
+        will: if feat_identity::holds(selected_feats, IRON_WILL_FEAT_KEY) {
             SAVE_FEAT_BONUS
         } else {
             0
@@ -233,7 +239,7 @@ pub fn skill_bonuses_from_feats(
     selected_feats: &[String],
     strength_modifier: i16,
 ) -> SkillBonusesFromFeats {
-    let has = |key: &str| selected_feats.iter().any(|feat| feat == key);
+    let has = |key: &str| feat_identity::holds(selected_feats, key);
 
     let athletic = has(ATHLETIC_FEAT_KEY);
     let persuasive_intimidate = if has(PERSUASIVE_FEAT_KEY) { TWO_SKILL_FEAT_BONUS } else { 0 };
@@ -305,16 +311,70 @@ const STANDALONE_TWO_SKILL_FACTS: &[StandaloneSkillFeatFact] = &[
     StandaloneSkillFeatFact { feat_key: "Stealthy", skill_name: "Stealth", bonus: TWO_SKILL_FEAT_BONUS },
 ];
 
+/// The Advanced Player's Guide's own standalone skill-feat facts, in the corpus
+/// source order of `apg_feats.lst`. Kept as a second table rather than appended
+/// to [`STANDALONE_TWO_SKILL_FACTS`] so that table's "two-skill General feat"
+/// audit story against `cr_feats.lst` stays exactly true; these are a different
+/// book and a different shape (one is a single-skill feat, the other targets two
+/// whole skill *categories*).
+///
+/// **The APG carries exactly two `BONUS:SKILL` feats** -- verified by scanning
+/// `apg_feats.lst` for the token, not assumed -- and the ACG carries none at
+/// all, so this table plus [`STANDALONE_TWO_SKILL_FACTS`] and the three
+/// already-computed skills of [`skill_bonuses_from_feats`] close `BONUS:SKILL`
+/// across all three books. (A third APG feat, Sharp Senses, boosts Perception
+/// through a `BONUS:VAR` rather than a `BONUS:SKILL` token and needs its own
+/// replacement-semantics handling; see
+/// [`sharp_senses_perception_bonus_from_feats`].)
+///
+/// Neither feat's skills are among the three
+/// `compute_selected_skill_modifiers` computes (Climb/Intimidate/Swim), so both
+/// ground standalone, exactly as the CRB table above does.
+///
+/// **Breadth of Experience targets categories, not named skills.** Its token is
+/// `BONUS:SKILL|TYPE.Knowledge,TYPE.Profession|2` -- PCGen's `TYPE.` prefix means
+/// "every skill of this type", and the `BENEFIT:` prose says so outright ("+2
+/// bonus on all Knowledge and Profession skill checks"). The two `skill_name`
+/// values below transcribe that prose rather than naming any one skill, because
+/// naming one would be a fabrication and dropping the feat would discard a real
+/// verified magnitude. Its second token
+/// (`BONUS:VAR|UseProfessionUntrained,UseKnowledgeUntrained|1|TYPE=Boolean`,
+/// letting those skills be used untrained) is a boolean capability with no
+/// numeric magnitude, already complete under the standing text-only ruling, and
+/// is deliberately not grounded as a number here.
+///
+/// Both feats' prerequisites (Breadth of Experience's
+/// `PRERACE:1,RACESUBTYPE=Dwarf,RACESUBTYPE=Elf,RACESUBTYPE=Gnome` plus its
+/// `PRETEXT:100+ years old.`, and Master Alchemist's
+/// `PRESKILL:1,Craft (Alchemy)=5`) are NOT asserted here -- prerequisite
+/// validation is `feat_prereqs`' job, the same split already documented for
+/// Master Craftsman, and both magnitudes are a flat, unconditional `+2` under
+/// any reading.
+const STANDALONE_APG_SKILL_FACTS: &[StandaloneSkillFeatFact] = &[
+    StandaloneSkillFeatFact { feat_key: "Breadth of Experience", skill_name: "all Knowledge skills", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Breadth of Experience", skill_name: "all Profession skills", bonus: TWO_SKILL_FEAT_BONUS },
+    StandaloneSkillFeatFact { feat_key: "Master Alchemist", skill_name: "Craft (Alchemy)", bonus: TWO_SKILL_FEAT_BONUS },
+];
+
 /// Every grounded standalone skill-feat fact for the feats actually present in
-/// `selected_feats`, in the stable corpus order of `STANDALONE_TWO_SKILL_FACTS`.
+/// `selected_feats`, in the stable corpus order of `STANDALONE_TWO_SKILL_FACTS`
+/// followed by [`STANDALONE_APG_SKILL_FACTS`].
 /// Returns an empty vec (not fabricated facts) when none of the grounding feats
 /// is selected. Keyed on the exact catalog `key` string, so a longer feat whose
 /// name merely begins with a grounded key (e.g. "Acrobatic Steps") never
 /// matches.
+///
+/// No two facts across both tables name the same skill, which is load-bearing:
+/// the consumer derives its explanation id by slugifying `skill_name`, so a
+/// repeated skill would emit two records under one id. Sharp Senses' Perception
+/// bonus is deliberately kept out of these tables for exactly that reason -- it
+/// would collide with Alertness' Perception fact -- and grounds under its own id
+/// instead.
 pub fn standalone_skill_facts_from_feats(selected_feats: &[String]) -> Vec<StandaloneSkillFeatFact> {
     STANDALONE_TWO_SKILL_FACTS
         .iter()
-        .filter(|fact| selected_feats.iter().any(|feat| feat == fact.feat_key))
+        .chain(STANDALONE_APG_SKILL_FACTS)
+        .filter(|fact| feat_identity::holds(selected_feats, fact.feat_key))
         .copied()
         .collect()
 }
@@ -379,7 +439,7 @@ pub fn skill_focus_facts_from_choices(
     selected_feats: &[String],
     selected_choices: &[SelectedChoice],
 ) -> Vec<SkillFocusFact> {
-    if !selected_feats.iter().any(|feat| feat == SKILL_FOCUS_FEAT_KEY) {
+    if !feat_identity::holds(selected_feats, SKILL_FOCUS_FEAT_KEY) {
         return Vec::new();
     }
     let mut facts: Vec<SkillFocusFact> = Vec::new();
@@ -422,7 +482,7 @@ const IMPROVED_INITIATIVE_BONUS: i16 = 4;
 /// `inquisitor_cunning_initiative_bonus`'s own already-grounded standalone
 /// initiative record.
 pub fn initiative_bonus_from_feats(selected_feats: &[String]) -> i16 {
-    if selected_feats.iter().any(|feat| feat == IMPROVED_INITIATIVE_FEAT_KEY) {
+    if feat_identity::holds(selected_feats, IMPROVED_INITIATIVE_FEAT_KEY) {
         IMPROVED_INITIATIVE_BONUS
     } else {
         0
@@ -458,7 +518,7 @@ const ENDURANCE_CHECK_BONUS: i16 = 4;
 /// `0` (not a fabricated value) when the feat is absent. Not repeatable (no
 /// `STACK:YES`/`MULT:YES` in the corpus), so a duplicated string stays +4.
 pub fn endurance_check_bonus_from_feats(selected_feats: &[String]) -> i16 {
-    if selected_feats.iter().any(|feat| feat == ENDURANCE_FEAT_KEY) {
+    if feat_identity::holds(selected_feats, ENDURANCE_FEAT_KEY) {
         ENDURANCE_CHECK_BONUS
     } else {
         0
@@ -554,7 +614,7 @@ pub fn spell_focus_facts_from_choices(
     selected_feats: &[String],
     selected_choices: &[SelectedChoice],
 ) -> Vec<SpellFocusFact> {
-    if !selected_feats.iter().any(|feat| feat == SPELL_FOCUS_FEAT_KEY) {
+    if !feat_identity::holds(selected_feats, SPELL_FOCUS_FEAT_KEY) {
         return Vec::new();
     }
 
@@ -571,7 +631,7 @@ pub fn spell_focus_facts_from_choices(
         }
     }
 
-    if selected_feats.iter().any(|feat| feat == GREATER_SPELL_FOCUS_FEAT_KEY) {
+    if feat_identity::holds(selected_feats, GREATER_SPELL_FOCUS_FEAT_KEY) {
         for school in chosen_schools(selected_choices, GREATER_SPELL_FOCUS_TARGET_CHOICE_SET) {
             if let Some(fact) = facts
                 .iter_mut()
@@ -585,23 +645,28 @@ pub fn spell_focus_facts_from_choices(
     facts
 }
 
-/// Weapon Focus / Greater Weapon Focus, recognised across **both** id spaces
-/// this codebase uses for them.
+/// Weapon Focus / Greater Weapon Focus.
 ///
 /// Unlike Skill Focus and Spell Focus, Weapon Focus already existed here before
 /// this module: the fixed creation-time loadout records it in `selected_feats`
-/// under the **synthetic** id `feat:weapon_focus` (never the catalog key), and
+/// under the engine token `feat:weapon_focus` rather than the catalog key, and
 /// expresses its target as a **compound selection** inside the Fighter
 /// bonus-feat choice slot (`choice:fighter_bonus_feat ->
-/// feat:weapon_focus:weapon:longsword`). Recognising only the catalog key and a
-/// clean new choice set would leave the real shipped Fighter loadout grounding
-/// nothing -- the same "misses exactly the characters it matters most for"
-/// failure as Ranger's automatic Endurance. So presence is accepted from either
-/// id, and targets from either source, deduplicated by weapon.
+/// feat:weapon_focus:weapon:longsword`).
+///
+/// **Presence needs no special handling for that.** Every producer here matches
+/// through [`crate::rules_core::feat_identity`]'s shared fold, which already
+/// treats the catalog key, the engine token and the compound form as one feat --
+/// this pair used to carry hand-listed `*_SYNTHETIC_FEAT_ID` constants for
+/// exactly that job, and they were deleted as redundant once the fold landed.
+/// Only the **target** still needs the extra lookup: it lives in the Fighter
+/// bonus-feat choice slot rather than this feat's own choice set, so both
+/// sources are read and deduplicated by weapon. Reading only the new choice set
+/// would leave the real shipped Fighter loadout grounding nothing -- the same
+/// "misses exactly the characters it matters most for" failure as Ranger's
+/// automatic Endurance.
 const WEAPON_FOCUS_FEAT_KEY: &str = "Weapon Focus";
-const WEAPON_FOCUS_SYNTHETIC_FEAT_ID: &str = "feat:weapon_focus";
 const GREATER_WEAPON_FOCUS_FEAT_KEY: &str = "Greater Weapon Focus";
-const GREATER_WEAPON_FOCUS_SYNTHETIC_FEAT_ID: &str = "feat:greater_weapon_focus";
 const WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:weapon_focus_target";
 const GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:greater_weapon_focus_target";
 const FIGHTER_BONUS_FEAT_CHOICE_SET: &str = "choice:fighter_bonus_feat";
@@ -672,8 +737,9 @@ fn dedup_targets<'a>(names: Vec<&'a str>) -> Vec<&'a str> {
 }
 
 /// Grounds Weapon Focus's real attack bonus per explicitly chosen weapon,
-/// recognising both the catalog and synthetic feat ids and both the new and
-/// pre-existing target representations (see [`WEAPON_FOCUS_FEAT_KEY`]).
+/// recognising both the new and pre-existing target representations (see
+/// [`WEAPON_FOCUS_FEAT_KEY`]). The feat's own id shapes are absorbed by the
+/// shared identity fold, not enumerated here.
 ///
 /// Grounds nothing when the feat is held with no target, or a target is orphaned
 /// with no feat -- the same no-silent-seeding contract as Skill Focus and Spell
@@ -699,13 +765,11 @@ pub fn weapon_focus_facts_from_choices(
     selected_feats: &[String],
     selected_choices: &[SelectedChoice],
 ) -> Vec<WeaponFocusFact> {
-    let holds = |catalog_key: &str, synthetic_id: &str| {
-        selected_feats.iter().any(|feat| feat == catalog_key || feat == synthetic_id)
-    };
+    let holds = |catalog_key: &str| feat_identity::holds(selected_feats, catalog_key);
 
     let mut facts: Vec<WeaponFocusFact> = Vec::new();
 
-    if holds(WEAPON_FOCUS_FEAT_KEY, WEAPON_FOCUS_SYNTHETIC_FEAT_ID) {
+    if holds(WEAPON_FOCUS_FEAT_KEY) {
         let mut targets =
             chosen_targets(selected_choices, WEAPON_FOCUS_TARGET_CHOICE_SET, WEAPON_SELECTION_PREFIX);
         targets.extend(chosen_targets(
@@ -721,7 +785,7 @@ pub fn weapon_focus_facts_from_choices(
         }
     }
 
-    if holds(GREATER_WEAPON_FOCUS_FEAT_KEY, GREATER_WEAPON_FOCUS_SYNTHETIC_FEAT_ID) {
+    if holds(GREATER_WEAPON_FOCUS_FEAT_KEY) {
         let targets = chosen_targets(
             selected_choices,
             GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET,
@@ -742,6 +806,342 @@ pub fn weapon_focus_facts_from_choices(
     }
 
     facts
+}
+
+/// Weapon Specialization's and Greater Weapon Specialization's catalog keys and
+/// their Mechanism-B target contracts, following the same shape as the two
+/// Focus feats above.
+///
+/// Neither carries a legacy compound-id form the way Weapon Focus does: the
+/// shipped Fighter fixture is level 1 and cannot hold either feat (see the
+/// qualify gates below), so there is no pre-existing loadout to stay compatible
+/// with and no reason to invent a second accepted representation.
+const WEAPON_SPECIALIZATION_FEAT_KEY: &str = "Weapon Specialization";
+const GREATER_WEAPON_SPECIALIZATION_FEAT_KEY: &str = "Greater Weapon Specialization";
+const WEAPON_SPECIALIZATION_TARGET_CHOICE_SET: &str = "choice:weapon_specialization_target";
+const GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET: &str =
+    "choice:greater_weapon_specialization_target";
+
+/// Both Specialization feats' real bonuses: `+2` **each**, genuinely cumulative
+/// to `+4`, and applied to **damage rolls, not attack rolls**.
+///
+/// This is the single most important fact about this family and the easiest to
+/// get wrong. Both tokens are `BONUS:WEAPONPROF=%LIST|DAMAGE|2` -- the payload
+/// slot reads `DAMAGE` where the two Focus feats read `TOHIT`. Grouping all
+/// four "weapon feats" as attack-roll contributors, which their shared naming
+/// invites, would silently inflate every attack total by up to `+4`.
+///
+/// Unlike Weapon Focus, the magnitude here is a literal `2` in the token rather
+/// than a variable needing a trace, and both `BENEFIT:` texts agree ("+2 bonus
+/// on all damage rolls"). Greater's benefit text states the stacking outright:
+/// "This bonus to damage stacks with other damage roll bonuses, including any
+/// you gain from Weapon Specialization." Its `STACK:NO` constrains taking the
+/// *same feat* twice for one weapon, not its interaction with the base feat --
+/// the same distinction already resolved for Greater Weapon Focus.
+const WEAPON_SPECIALIZATION_DAMAGE_BONUS: i16 = 2;
+const GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS: i16 = 2;
+
+/// One grounded Specialization fact: the real damage-roll bonus applied to one
+/// specific, player-chosen weapon.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct WeaponSpecializationFact {
+    /// The chosen weapon, verbatim from whichever selection named it.
+    pub weapon_name: String,
+    /// `+2` from either feat alone, `+4` when both name this weapon.
+    pub damage_bonus: i16,
+}
+
+/// Grounds the Specialization family's real damage bonus per explicitly chosen
+/// weapon, mirroring [`weapon_focus_facts_from_choices`] exactly -- including
+/// grounding Greater alone, on the same ratified ambiguity-not-prerequisites
+/// axis (Greater's `+2` is unambiguous in isolation).
+///
+/// **Prerequisites are deliberately not enforced here.** Corpus gates these on
+/// Fighter levels via internal qualify variables (`PREVARGTEQ:WeapSpecQualify`
+/// / `GreatWeapSpecQualify`, set by hidden `FighterWeaponQualify` abilities at
+/// Fighter 4 and 12), plus feat chains through Weapon Focus. This producer
+/// grounds what is held and explicitly chosen, exactly as the Focus producer
+/// does; prerequisite validity is a separate concern from magnitude, and
+/// splitting that responsibility differently here would make two sibling
+/// producers behave inconsistently for no stated reason.
+pub fn weapon_specialization_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<WeaponSpecializationFact> {
+    let holds = |catalog_key: &str| feat_identity::holds(selected_feats, catalog_key);
+
+    let mut facts: Vec<WeaponSpecializationFact> = Vec::new();
+
+    if holds(WEAPON_SPECIALIZATION_FEAT_KEY) {
+        let targets = chosen_targets(
+            selected_choices,
+            WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        );
+        for weapon in dedup_targets(targets) {
+            facts.push(WeaponSpecializationFact {
+                weapon_name: weapon.to_owned(),
+                damage_bonus: WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+            });
+        }
+    }
+
+    if holds(GREATER_WEAPON_SPECIALIZATION_FEAT_KEY) {
+        let targets = chosen_targets(
+            selected_choices,
+            GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        );
+        for weapon in dedup_targets(targets) {
+            match facts
+                .iter_mut()
+                .find(|fact| fact.weapon_name.to_lowercase() == weapon.to_lowercase())
+            {
+                Some(fact) => fact.damage_bonus += GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+                None => facts.push(WeaponSpecializationFact {
+                    weapon_name: weapon.to_owned(),
+                    damage_bonus: GREATER_WEAPON_SPECIALIZATION_DAMAGE_BONUS,
+                }),
+            }
+        }
+    }
+
+    facts
+}
+
+/// Improved Critical's catalog key and its Mechanism-B target contract.
+const IMPROVED_CRITICAL_FEAT_KEY: &str = "Improved Critical";
+const IMPROVED_CRITICAL_TARGET_CHOICE_SET: &str = "choice:improved_critical_target";
+
+/// Every weapon explicitly named by an Improved Critical selection, deduplicated
+/// case-insensitively, in first-seen order.
+///
+/// **This returns targets rather than a magnitude, and the shape is the point.**
+/// Improved Critical's token is `BONUS:WEAPONPROF=%LIST|CRITRANGEDOUBLE|1|
+/// TYPE=NonStackingCrit` -- a *multiplier on the weapon's own threat range*,
+/// not a flat bonus. There is no single number to hand back: doubling means
+/// something different for every weapon (a Longsword's 19-20 becomes 17-20, a
+/// Battleaxe's 20 becomes 19-20), so only a consumer holding the weapon's stat
+/// block can apply it. Returning a `+1`-shaped fact here to match its siblings
+/// would be inventing a magnitude the corpus does not state.
+///
+/// `TYPE=NonStackingCrit` means it never compounds with another threat-range
+/// effect of the same type, so holding it is boolean per weapon -- hence a plain
+/// target list with no count.
+pub fn improved_critical_targets_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<String> {
+    let holds = selected_feats
+        .iter()
+        .any(|feat| feat_identity::same(feat, IMPROVED_CRITICAL_FEAT_KEY));
+    if !holds {
+        return Vec::new();
+    }
+
+    let targets = chosen_targets(
+        selected_choices,
+        IMPROVED_CRITICAL_TARGET_CHOICE_SET,
+        WEAPON_SELECTION_PREFIX,
+    );
+    dedup_targets(targets).into_iter().map(str::to_owned).collect()
+}
+
+/// The three CRB feats that GRANT weapon proficiency, and the two
+/// Mechanism-B target contracts the chooser pair need.
+///
+/// **These do not carry a `BONUS:` token at all, and that is the point.**
+/// A survey that looks for `BONUS:WEAPONPROF` finds the five weapon feats
+/// above and concludes the proficiency-granting feats are unimplementable
+/// -- but `BONUS:WEAPONPROF=<group>|TOHIT|n` means "apply n to attacks with
+/// that proficiency group", it never grants a proficiency. The grant token
+/// is `AUTO:WEAPONPROF`, which is why all three of these records read
+/// `effect: None` in this crate's own feat catalog and therefore computed
+/// nothing whatsoever before this producer. Their magnitude is not a bonus
+/// -- it is the REMOVAL of PF1's -4 nonproficiency attack penalty, which
+/// this engine already computes
+/// (`pilot_compute::WEAPON_NONPROFICIENCY_ATTACK_PENALTY`, read from the
+/// game mode's own `WEAPONNONPROFPENALTY:-4`).
+const SIMPLE_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Simple Weapon Proficiency";
+const MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Martial Weapon Proficiency";
+const EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY: &str = "Exotic Weapon Proficiency";
+const MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET: &str =
+    "choice:martial_weapon_proficiency_target";
+const EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET: &str =
+    "choice:exotic_weapon_proficiency_target";
+
+/// Every weapon proficiency a character's feats grant, in the two shapes
+/// the corpus actually uses.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct WeaponProficiencyGrantsFromFeats {
+    /// Simple Weapon Proficiency grants the whole Simple TIER, not one
+    /// weapon: its corpus record carries no `CHOOSE:` at all, only
+    /// `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Simple` -- the same
+    /// indirection `weapon_tables`' own doc comment documents for class
+    /// grants, whose target carries `AUTO:WEAPONPROF|TYPE=Simple`. Modelling
+    /// it as a per-weapon choice would understate it by the entire rest of
+    /// the Simple list.
+    pub grants_simple_tier: bool,
+    /// The individually named weapons granted by Martial Weapon Proficiency
+    /// and Exotic Weapon Proficiency, verbatim from each `weapon:<name>`
+    /// selection, deduplicated case-insensitively in first-seen order.
+    ///
+    /// Both are `MULT:YES` (repeatable for a different weapon each time)
+    /// with no `STACK:` token -- and stacking would be meaningless anyway,
+    /// since proficiency is boolean. The two feats' grants are pooled into
+    /// one list because `AUTO:WEAPONPROF|%LIST` is byte-identical on both:
+    /// which feat granted a proficiency changes nothing about its effect.
+    pub named_weapons: Vec<String>,
+}
+
+/// Grounds the real proficiency grants a character's feats confer.
+///
+/// Grants nothing for a chooser feat held with no recorded target -- the
+/// same no-silent-seeding contract as every other chooser feat here. That
+/// matters more than usual for this pair: seeding a default weapon would
+/// silently erase a -4 penalty from a real attack total.
+///
+/// **Prerequisites are deliberately not enforced**, matching every sibling
+/// producer in this module: Exotic Weapon Proficiency's `PRETOTALAB:1` and
+/// Martial Weapon Proficiency's `!PREABILITY:...Output` guard are
+/// `feat_prereqs`' responsibility.
+///
+/// **The chosen weapon's own tier is deliberately not checked either, and
+/// that is a considered call rather than an omission.** Martial Weapon
+/// Proficiency's `CHOOSE:WEAPONPROFICIENCY|!PC[TYPE=Martial]` and Exotic's
+/// `ANY[TYPE=Exotic]` restrict what the PICKER offers, and rejecting an
+/// off-tier target here would break a legitimate, extremely common PF1
+/// build: Exotic Weapon Proficiency (bastard sword) is the canonical way to
+/// wield a bastard sword one-handed, but `weapon_tables` resolves the
+/// Bastard Sword -- a genuinely dual-tier weapon -- to its Martial tier
+/// (see `the_two_dual_tier_weapons_resolve_to_their_martial_tier`). A tier
+/// gate would therefore reject a correct choice while the current shape
+/// only accepts an incorrect one that the picker never offers in the first
+/// place. Over-refusal is the worse failure, and the consumer joins the
+/// name to a real weapon and is where any such check would have to live
+/// anyway -- this module imports no weapon table, by design.
+pub fn weapon_proficiency_grants_from_feats(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> WeaponProficiencyGrantsFromFeats {
+    let holds = |key: &str| feat_identity::holds(selected_feats, key);
+
+    let mut named: Vec<&str> = Vec::new();
+    if holds(MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY) {
+        named.extend(chosen_targets(
+            selected_choices,
+            MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        ));
+    }
+    if holds(EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY) {
+        named.extend(chosen_targets(
+            selected_choices,
+            EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+            WEAPON_SELECTION_PREFIX,
+        ));
+    }
+
+    WeaponProficiencyGrantsFromFeats {
+        grants_simple_tier: holds(SIMPLE_WEAPON_PROFICIENCY_FEAT_KEY),
+        named_weapons: dedup_targets(named).into_iter().map(str::to_owned).collect(),
+    }
+}
+
+/// Weapon Finesse's catalog key. It takes no target: unlike the five
+/// `%LIST` weapon feats, its corpus token names the `Finesseable` weapon
+/// TYPE directly (`BONUS:COMBAT|TOHIT.Finesseable|
+/// ((max(STR,DEX)-STR)+SHIELDACCHECK)|TYPE=NotRanged`), so it applies to
+/// every finesseable weapon the character wields at once and has no
+/// `CHOOSE:` token and no chooser contract.
+const WEAPON_FINESSE_FEAT_KEY: &str = "Weapon Finesse";
+
+/// Whether the character holds Weapon Finesse.
+///
+/// **Returns a boolean, not a magnitude, and the shape is the point.** The
+/// corpus token's payload is `((max(STR,DEX)-STR)+SHIELDACCHECK)` -- an
+/// expression over two ability scores and the worn shield's armor check
+/// penalty, none of which this dependency-free leaf module knows. There is
+/// no single number to hand back, the same way Improved Critical's
+/// threat-range doubling has none. The consumer, which holds the ability
+/// modifiers and the weapon's own `Finesseable` facet, is the only place
+/// that can evaluate it.
+///
+/// Not repeatable (no `MULT:`/`STACK:` token), so holding it twice is
+/// still one effect.
+pub fn holds_weapon_finesse(selected_feats: &[String]) -> bool {
+    feat_identity::holds(selected_feats, WEAPON_FINESSE_FEAT_KEY)
+}
+
+/// Master Craftsman's catalog key and its Mechanism-B target contract:
+/// `choice:master_craftsman_target -> skill:<name>`. Fourth use of the chooser
+/// pattern proven by Skill Focus, Spell Focus and Weapon Focus.
+const MASTER_CRAFTSMAN_FEAT_KEY: &str = "Master Craftsman";
+const MASTER_CRAFTSMAN_TARGET_CHOICE_SET: &str = "choice:master_craftsman_target";
+const MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX: &str = "skill:";
+
+/// Master Craftsman's real benefit: a flat `+2` on one chosen Craft or
+/// Profession skill. Token (`BONUS:SKILL|LIST|2`) and `BENEFIT:` prose ("You
+/// receive a +2 bonus on your chosen Craft or Profession skill") agree exactly
+/// -- no level scaling, no conditional tier.
+const MASTER_CRAFTSMAN_SKILL_BONUS: i16 = 2;
+
+/// One grounded Master Craftsman fact: the real `+2` on a specific,
+/// player-chosen Craft or Profession skill.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct MasterCraftsmanFact {
+    /// The chosen skill, verbatim from the `"skill:<name>"` selection.
+    pub skill_name: String,
+    /// Always [`MASTER_CRAFTSMAN_SKILL_BONUS`] (+2).
+    pub bonus: i16,
+}
+
+/// Grounds Master Craftsman's real `+2` per explicitly chosen Craft/Profession
+/// skill -- only when the feat is in `selected_feats` AND a matching
+/// `choice:master_craftsman_target -> skill:<name>` is present. Grounds nothing
+/// (never a fabricated canonical skill) when either half is missing, the same
+/// no-silent-seeding contract the other three chooser feats carry.
+///
+/// One fact per distinct skill, first-seen order, compared case-insensitively:
+/// the feat is `STACK:NO MULT:YES` (repeatable across different Craft/Profession
+/// skills, never stacking on one), and the consumer lowercases the skill name to
+/// build its explanation id.
+///
+/// **Two parts of this feat are deliberately not grounded here.**
+/// 1. Its second corpus token, `BONUS:VAR|MasterCraftsmanRanks|
+///    var("SKILLRANK=%LIST")`, makes ranks in the chosen skill stand in for
+///    caster level when crafting magic items. This codebase models no item
+///    creation at all (all eight `ItemCreation` feats carry no numeric token)
+///    and tracks no Craft/Profession ranks, so there is nothing to substitute
+///    into -- naming it rather than inventing a value.
+/// 2. Its `PRESKILL:1,TYPE.Craft=5,TYPE.Profession=5` prerequisite (5 ranks in
+///    the chosen skill) is not enforced here. Prerequisite validation is
+///    `feat_prereqs`' job, the same split already documented for Acrobatic
+///    Steps, and the `+2` magnitude is unambiguous regardless -- so reporting it
+///    asserts nothing uncertain. Worth knowing that the deterministic skill
+///    posture pins ranks at 1 (`pilot_compute::SELECTED_SKILL_RANK`), so no
+///    character this engine currently composes could legally hold this feat;
+///    that is a gap in what the engine can represent, not a reason to withhold a
+///    verified number.
+pub fn master_craftsman_facts_from_choices(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<MasterCraftsmanFact> {
+    if !feat_identity::holds(selected_feats, MASTER_CRAFTSMAN_FEAT_KEY) {
+        return Vec::new();
+    }
+    let targets = chosen_targets(
+        selected_choices,
+        MASTER_CRAFTSMAN_TARGET_CHOICE_SET,
+        MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX,
+    );
+    dedup_targets(targets)
+        .into_iter()
+        .map(|skill_name| MasterCraftsmanFact {
+            skill_name: skill_name.to_owned(),
+            bonus: MASTER_CRAFTSMAN_SKILL_BONUS,
+        })
+        .collect()
 }
 
 /// One real, corpus-verified combat-maneuver bonus granted by one feat.
@@ -826,7 +1226,7 @@ pub fn combat_maneuver_bonuses_from_feats(
 ) -> Vec<CombatManeuverFeatBonus> {
     COMBAT_MANEUVER_FEAT_BONUSES
         .iter()
-        .filter(|bonus| selected_feats.iter().any(|feat| feat == bonus.feat_key))
+        .filter(|bonus| feat_identity::holds(selected_feats, bonus.feat_key))
         .copied()
         .collect()
 }
@@ -877,7 +1277,7 @@ pub fn stunning_fist_facts_from_feats(
     monk_level: u8,
     wisdom_modifier: i16,
 ) -> Option<StunningFistFacts> {
-    if !selected_feats.iter().any(|feat| feat == STUNNING_FIST_FEAT_KEY) {
+    if !feat_identity::holds(selected_feats, STUNNING_FIST_FEAT_KEY) {
         return None;
     }
     let non_monk_levels = total_level.saturating_sub(monk_level);
@@ -922,7 +1322,7 @@ const FLEET_BASE_SPEED_FEET: i16 = 5;
 /// producer reports the corpus magnitude of whatever is actually selected rather
 /// than silently re-deriving legality.
 pub fn difficult_terrain_feet_from_feats(selected_feats: &[String]) -> i16 {
-    let has = |key: &str| selected_feats.iter().any(|feat| feat == key);
+    let has = |key: &str| feat_identity::holds(selected_feats, key);
     let mut feet = 0;
     if has(NIMBLE_MOVES_FEAT_KEY) {
         feet += NIMBLE_MOVES_DIFFICULT_TERRAIN_FEET;
@@ -941,8 +1341,377 @@ pub fn difficult_terrain_feet_from_feats(selected_feats: &[String]) -> i16 {
 /// verified magnitude just as surely as fabricating one would overstate it.
 /// Returns `0` when Fleet is absent.
 pub fn base_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
-    let picks = selected_feats.iter().filter(|feat| *feat == FLEET_FEAT_KEY).count();
+    let picks = feat_identity::count(selected_feats, FLEET_FEAT_KEY);
     i16::try_from(picks).unwrap_or(i16::MAX).saturating_mul(FLEET_BASE_SPEED_FEET)
+}
+
+/// The real APG/ACG catalog keys for the four passive-bonus feats grounded
+/// below, verified against the ingested catalog records
+/// (`rules_tables::apg::feat_data::general` / `rules_tables::acg::feat_data::
+/// general`) AND against the raw corpus lines they came from
+/// (`apg_feats.lst` 21/41/172/187, `acg_feats.lst` 155). Each appears exactly
+/// once in its book, with no `.MOD` record and no `#`-disabled duplicate.
+const SHARP_SENSES_FEAT_KEY: &str = "Sharp Senses";
+const STEEL_SOUL_FEAT_KEY: &str = "Steel Soul";
+const DEEPSIGHT_FEAT_KEY: &str = "Deepsight";
+const STEADFAST_PERSONALITY_FEAT_KEY: &str = "Steadfast Personality";
+
+/// Sharp Senses' real **resulting** Perception bonus: `+4`, not the `+2` its
+/// token names.
+///
+/// This is the Spell-Focus total-vs-increment trap in its other direction, and
+/// reading the token alone gets it wrong. The corpus token is
+/// `BONUS:VAR|KeenSensesBonus|2` -- an *increment* to the same variable the
+/// racial keen-senses trait already sets to `2` (this engine already recognises
+/// that racial token: `BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial`,
+/// `BONUS:VAR|KeenSensesBonus|2`). Two plus two is four, and the `BENEFIT:`
+/// prose states the result outright: "You receive a +4 racial bonus on
+/// Perception skill checks. **This replaces the normal bonus from the keen
+/// senses racial trait.**"
+///
+/// So `+4` is the total a holder ends up with, and it does **not** stack on top
+/// of the racial `+2` -- it supersedes it. The feat's own
+/// `PREABILITY:1,CATEGORY=Special Ability,TYPE.KeenSenses` prerequisite
+/// guarantees the racial trait is present, so `+4` is exact for every character
+/// who can legally hold this feat, not a best case.
+const SHARP_SENSES_PERCEPTION_BONUS: i16 = 4;
+
+/// Sharp Senses' real, computed Perception bonus. Returns `0` (not a fabricated
+/// value) when the feat is absent. Not repeatable (no `STACK:YES`/`MULT:YES`),
+/// so a duplicated string stays `+4`.
+///
+/// Grounded under its own record rather than as a
+/// [`StandaloneSkillFeatFact`] deliberately: Alertness already grounds a
+/// Perception fact, and both would slugify to one explanation id. Keeping this
+/// separate also gives the replacement semantics somewhere to be stated, which a
+/// bare table row has no room for.
+pub fn sharp_senses_perception_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, SHARP_SENSES_FEAT_KEY) {
+        SHARP_SENSES_PERCEPTION_BONUS
+    } else {
+        0
+    }
+}
+
+/// Steel Soul's real **resulting** bonus on saves against spells and
+/// spell-like abilities: `+4`, not the `+2` its token names -- the identical
+/// increment-not-total shape as [`SHARP_SENSES_PERCEPTION_BONUS`], and verified
+/// the same way.
+///
+/// Token: `BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial`, incrementing the very
+/// variable the dwarf Hardy racial trait already sets to `2` (again already
+/// recognised by this engine). `BENEFIT:` prose: "You receive a +4 racial bonus
+/// on saving throws against spells and spell-like abilities. **This replaces the
+/// normal bonus from the dwarf's hardy racial trait.**" Its
+/// `PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Hardy` and
+/// `PRERACE:1,RACESUBTYPE=Dwarf` prerequisites guarantee the racial base, so `+4`
+/// is exact rather than a ceiling. Replaces, does not stack.
+///
+/// **Deliberately NOT layered onto any of `compute_total_saves`' three totals.**
+/// The bonus applies only against spells and spell-like abilities; those totals
+/// are the general, unconditional saves. Adding it there would overstate every
+/// save against a non-magical effect -- the same overstatement
+/// [`ENDURANCE_CHECK_BONUS`] refuses for its own named-hazard scope. It grounds
+/// standalone instead, which is precisely what this engine already does for the
+/// dwarf Hardy racial bonus this feat supersedes: a scope condition on a
+/// *category of effect* is a static property of the character, not a fact about
+/// a particular opponent, so it clears the standalone-grounding bar.
+///
+/// The feat's remaining token (`BONUS:VAR|DwarfHardyAspect|1|TYPE=Boolean`,
+/// with its paired `DEFINE:DwarfHardyAspect|0`) is a boolean display marker
+/// carrying no magnitude, and is not grounded as a number.
+const STEEL_SOUL_SAVE_VS_SPELLS_BONUS: i16 = 4;
+
+/// Steel Soul's real, computed bonus on saves against spells and spell-like
+/// abilities. Returns `0` (not a fabricated value) when the feat is absent. Not
+/// repeatable, so a duplicated string stays `+4`.
+pub fn steel_soul_save_vs_spells_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, STEEL_SOUL_FEAT_KEY) {
+        STEEL_SOUL_SAVE_VS_SPELLS_BONUS
+    } else {
+        0
+    }
+}
+
+/// Deepsight's real darkvision increase: `+60` feet.
+///
+/// Token (`BONUS:VISION|Darkvision|60`) and `BENEFIT:` prose ("Your darkvision
+/// has a range of 120 feet") agree once the prerequisite is read: the feat
+/// requires `PREVISION:1,Darkvision=60`, so the holder's base is exactly 60 and
+/// `60 + 60 = 120`. The token's `60` is an increment; the prose's `120` is the
+/// resulting total. Both numbers are real, and the value grounded here is the
+/// increment the token states, with the resulting 120 left to the consumer's
+/// record to explain -- this module never sees the character's race.
+///
+/// **Grounded standalone because this engine models no vision numerically at
+/// all.** Racial darkvision exists here only as prose inside a race trait's
+/// `detail` string (`race_tables.rs`: "Darkvision 60 ft (cr_races.lst
+/// race:dwarf SENSE:Darkvision (60 ft))"), never as a number, so there is no
+/// vision total to layer onto and no way to compute the 120 from data. The
+/// magnitude itself is unconditional -- no activation, no per-day budget, no
+/// opponent dependency -- so it clears the standalone bar cleanly; what is
+/// missing is a vision model, not a fact about this feat.
+const DEEPSIGHT_DARKVISION_FEET: i16 = 60;
+
+/// Deepsight's real, computed darkvision increase in feet. Returns `0` (not a
+/// fabricated value) when the feat is absent. Not repeatable, so a duplicated
+/// string stays `+60`.
+pub fn deepsight_darkvision_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, DEEPSIGHT_FEAT_KEY) {
+        DEEPSIGHT_DARKVISION_FEET
+    } else {
+        0
+    }
+}
+
+/// Steadfast Personality's real net change to Will saves against mind-affecting
+/// effects, for a character with the given Charisma and Wisdom **modifiers**:
+/// `CHA - max(WIS, 0)`.
+///
+/// Both of the feat's corpus tokens are needed to get this right, and each is
+/// meaningless alone:
+/// - `BONUS:SAVE|Will|CHA-WIS` adds `CHA - WIS`. A Will save already includes
+///   `+WIS`, so this nets to "use Charisma in place of Wisdom" -- exactly the
+///   `BENEFIT:` prose's "Add your Charisma modifier instead of your Wisdom bonus
+///   on Will saves against mind-affecting effects."
+/// - `BONUS:SAVE|Will|WIS|PREVARLT:WIS,0` adds `WIS` back, but **only when the
+///   Wisdom modifier is negative**. Combined, a negative-Wisdom character gets
+///   `CHA - WIS + WIS = CHA`, i.e. keeps the penalty *and* gains Charisma --
+///   again exactly the prose: "If you have a Wisdom penalty, you must apply both
+///   your Wisdom penalty and your Charisma modifier."
+///
+/// Collapsing those two cases gives `CHA - max(WIS, 0)`. Reading only the first
+/// token would understate a negative-Wisdom character by the full Wisdom
+/// penalty; reading only the second would be nonsense. (The `PREVARLT:WIS,0`
+/// gate is read as testing the Wisdom *modifier*, not the score: a score below
+/// zero is impossible, which would make the token dead code, whereas the prose
+/// explicitly describes the penalty case as live.)
+///
+/// Returns `None` when the feat is absent. Returns `Some(0)` -- a real,
+/// meaningful answer, not an absence -- when Charisma and Wisdom happen to be
+/// equal: the character genuinely holds the feat and it genuinely nets to zero
+/// for them, which is worth reporting rather than silently suppressing.
+///
+/// **Deliberately NOT layered onto `compute_total_saves`' Will total**, even
+/// though this engine *does* integrate the structurally identical Oracle
+/// Sidestep Secret (Charisma for Dexterity on Reflex saves). The difference is
+/// decisive: Sidestep Secret is unconditional and always on, so it belongs in
+/// the total, whereas this feat applies **only against mind-affecting effects**.
+/// The Will total here is the general, unconditional Will save, and folding a
+/// mind-affecting-only substitution into it would report a specific, checkable,
+/// wrong number for every other Will save the character makes. The condition is
+/// a scope condition on a category of effect -- a static property of the
+/// character rather than a fact about a particular opponent -- so it grounds
+/// standalone rather than being deferred.
+///
+/// Both modifiers are threaded as plain scalars, keeping this module the same
+/// dependency-free leaf the rest of the file is, and neither is clamped beyond
+/// the `max(WIS, 0)` the corpus itself specifies.
+pub fn steadfast_personality_will_bonus_from_feats(
+    selected_feats: &[String],
+    charisma_modifier: i16,
+    wisdom_modifier: i16,
+) -> Option<i16> {
+    if !feat_identity::holds(selected_feats, STEADFAST_PERSONALITY_FEAT_KEY) {
+        return None;
+    }
+    Some(charisma_modifier - wisdom_modifier.max(0))
+}
+
+/// What kind of thing a chooser feat's target names. Decides which picker a
+/// caller should offer, and is the only rules knowledge a UI needs in order
+/// to prompt correctly.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ChooserTargetKind {
+    /// A specific weapon, e.g. `weapon:Longsword`.
+    Weapon,
+    /// A specific skill, e.g. `skill:Perception`.
+    Skill,
+    /// A school of magic, e.g. `school:Evocation`.
+    SpellSchool,
+}
+
+/// One chooser feat's complete Mechanism-B contract: how to recognise the
+/// feat, which choice set records its target, and what that target names.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ChooserFeatContract {
+    /// The catalog display key, e.g. `"Weapon Focus"`.
+    ///
+    /// One key is enough to recognise the feat in every shape.
+    /// [`chooser_contract_for_feat`] matches through
+    /// [`crate::rules_core::feat_identity`]'s fold, so the engine-token form
+    /// (`"feat:weapon_focus"`) and the compound target-carrying form
+    /// (`"feat:weapon_focus:weapon:longsword"`) both resolve here without this
+    /// table naming them. It used to carry a per-feat `synthetic_feat_id`
+    /// alongside this one; that field was removed rather than kept, because a
+    /// contract listing only some feats' token forms is precisely the drift the
+    /// shared fold exists to end.
+    pub feat_key: &'static str,
+    /// The choice set that records this feat's target.
+    pub choice_set_id: &'static str,
+    /// The prefix every selection in that choice set carries.
+    pub selection_prefix: &'static str,
+    pub target_kind: ChooserTargetKind,
+}
+
+/// Every feat whose target this engine actually consumes.
+///
+/// **Deliberately not the corpus-wide set of `CHOOSE:` feats.** Many more
+/// corpus feats carry a `CHOOSE:` token, but a target recorded for a feat no
+/// producer reads would be decorative -- it would render in a UI and change
+/// nothing. This table is exactly the feats with a live producer above, so
+/// anything a caller records against it reaches real arithmetic.
+///
+/// Every field references the same private constant its producer uses rather
+/// than repeating the literal, so a contract cannot drift from the code that
+/// honours it. `chooser_contracts_cover_every_target_choice_set` guards the
+/// remaining gap -- adding a tenth chooser feat without extending this table.
+pub const CHOOSER_FEAT_CONTRACTS: &[ChooserFeatContract] = &[
+    ChooserFeatContract {
+        feat_key: SKILL_FOCUS_FEAT_KEY,
+        choice_set_id: SKILL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SKILL_FOCUS_SKILL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Skill,
+    },
+    ChooserFeatContract {
+        feat_key: MASTER_CRAFTSMAN_FEAT_KEY,
+        choice_set_id: MASTER_CRAFTSMAN_TARGET_CHOICE_SET,
+        selection_prefix: MASTER_CRAFTSMAN_SKILL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Skill,
+    },
+    ChooserFeatContract {
+        feat_key: SPELL_FOCUS_FEAT_KEY,
+        choice_set_id: SPELL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SPELL_FOCUS_SCHOOL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::SpellSchool,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_SPELL_FOCUS_FEAT_KEY,
+        choice_set_id: GREATER_SPELL_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: SPELL_FOCUS_SCHOOL_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::SpellSchool,
+    },
+    ChooserFeatContract {
+        feat_key: WEAPON_FOCUS_FEAT_KEY,
+        choice_set_id: WEAPON_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_WEAPON_FOCUS_FEAT_KEY,
+        choice_set_id: GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: WEAPON_SPECIALIZATION_FEAT_KEY,
+        choice_set_id: WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: GREATER_WEAPON_SPECIALIZATION_FEAT_KEY,
+        choice_set_id: GREATER_WEAPON_SPECIALIZATION_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: IMPROVED_CRITICAL_FEAT_KEY,
+        choice_set_id: IMPROVED_CRITICAL_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    // The two proficiency-granting chooser feats. Simple Weapon
+    // Proficiency is deliberately absent: it grants a whole tier and
+    // carries no `CHOOSE:` token, so offering a weapon picker for it would
+    // invite a target the producer correctly ignores.
+    ChooserFeatContract {
+        feat_key: MARTIAL_WEAPON_PROFICIENCY_FEAT_KEY,
+        choice_set_id: MARTIAL_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+    ChooserFeatContract {
+        feat_key: EXOTIC_WEAPON_PROFICIENCY_FEAT_KEY,
+        choice_set_id: EXOTIC_WEAPON_PROFICIENCY_TARGET_CHOICE_SET,
+        selection_prefix: WEAPON_SELECTION_PREFIX,
+        target_kind: ChooserTargetKind::Weapon,
+    },
+];
+
+/// The chooser contract for a feat named by either its catalog key or its
+/// engine-token form, or `None` for a feat that takes no target.
+pub fn chooser_contract_for_feat(feat_id: &str) -> Option<&'static ChooserFeatContract> {
+    CHOOSER_FEAT_CONTRACTS.iter().find(|contract| {
+        feat_identity::same(contract.feat_key, feat_id)
+    })
+}
+
+/// One feat's recorded targets, resolved against the contracts above.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ChosenFeatTargets {
+    /// Verbatim as it appeared in `selected_feats`.
+    pub feat_id: String,
+    pub target_kind: ChooserTargetKind,
+    /// The targets recorded for this feat, prefix stripped, deduplicated
+    /// case-insensitively in first-seen order. Empty when the feat is held
+    /// with no target recorded -- which is a real, reportable state, not an
+    /// error, and callers must render it as "no target chosen" rather than
+    /// inventing one.
+    pub targets: Vec<String>,
+}
+
+/// Resolves the recorded targets for every chooser feat the character holds.
+///
+/// Returns one entry per distinct chooser feat, in the order the feats first
+/// appear in `selected_feats`. Feats that take no target are absent entirely;
+/// a chooser feat with no recorded target is present with an empty
+/// `targets`, because "you have Weapon Focus but never said in what" is
+/// exactly the state a sheet needs to show.
+///
+/// **Duplicate picks are reported per feat, not per pick.** `selected_feats`
+/// is an append-only list with no deduplication, so a character can hold
+/// Weapon Focus twice; but nothing in the data model links the first pick to
+/// the first target. Returning one entry per feat carrying every target it
+/// names reports exactly what was recorded. Emitting one entry per pick would
+/// require pairing pick N with target N, which the data does not support and
+/// which would silently fabricate an association.
+pub fn chosen_feat_targets(
+    selected_feats: &[String],
+    selected_choices: &[SelectedChoice],
+) -> Vec<ChosenFeatTargets> {
+    let mut resolved: Vec<ChosenFeatTargets> = Vec::new();
+
+    for feat_id in selected_feats {
+        let Some(contract) = chooser_contract_for_feat(feat_id) else {
+            continue;
+        };
+        if resolved.iter().any(|entry| entry.feat_id == *feat_id) {
+            continue;
+        }
+
+        let mut targets =
+            chosen_targets(selected_choices, contract.choice_set_id, contract.selection_prefix);
+        // Weapon Focus alone also accepts the pre-existing compound form
+        // recorded through the Fighter bonus-feat slot; the producer accepts
+        // it, so the sheet must show it rather than report "no target" for a
+        // character whose target is plainly recorded.
+        if contract.feat_key == WEAPON_FOCUS_FEAT_KEY {
+            targets.extend(chosen_targets(
+                selected_choices,
+                FIGHTER_BONUS_FEAT_CHOICE_SET,
+                LEGACY_WEAPON_FOCUS_COMPOUND_PREFIX,
+            ));
+        }
+
+        resolved.push(ChosenFeatTargets {
+            feat_id: feat_id.clone(),
+            target_kind: contract.target_kind,
+            targets: dedup_targets(targets).into_iter().map(str::to_owned).collect(),
+        });
+    }
+
+    resolved
 }
 
 #[cfg(test)]
@@ -966,14 +1735,26 @@ mod tests {
         assert_eq!(hp_bonus_from_feats(&selected_feats), 3);
     }
 
+    /// **Deliberate behaviour change**, replacing a test that asserted
+    /// `hp_bonus_from_feats(["feat:toughness"]) == 0`.
+    ///
+    /// That test's stated premise -- "a real Toughness pick never produces
+    /// that shape" -- was simply untrue. `feat:<snake_case>` is not a bespoke
+    /// id space confined to the fixed loadout: `compose_character_input` seeds
+    /// it, and `add_feat_selection` is called with it directly by this repo's
+    /// own adapter tests. Treating the two shapes as different feats is what
+    /// left a player who picked Dodge from the catalog with no armor class at
+    /// all. Both shapes name Toughness, so both ground its real +3.
     #[test]
-    fn does_not_match_the_old_synthetic_feat_toughness_convention() {
-        // The three hardcoded fixed-loadout feats use a "feat:<name>"
-        // convention (a bespoke id space, never catalog-derived); a real
-        // Toughness pick never produces that shape. Confirms this engine
-        // keys on the real catalog string, not the unrelated convention.
-        let selected_feats = vec!["feat:toughness".to_owned()];
-        assert_eq!(hp_bonus_from_feats(&selected_feats), 0);
+    fn grounds_toughness_from_the_engine_token_shape_too() {
+        assert_eq!(hp_bonus_from_feats(&["feat:toughness".to_owned()]), 3);
+    }
+
+    /// The fold must not turn a *different* feat into Toughness.
+    #[test]
+    fn grounds_nothing_for_a_feat_that_merely_resembles_toughness() {
+        assert_eq!(hp_bonus_from_feats(&["feat:toughness_of_stone".to_owned()]), 0);
+        assert_eq!(hp_bonus_from_feats(&["Improved Toughness".to_owned()]), 0);
     }
 
     #[test]
@@ -2014,10 +2795,11 @@ mod weapon_focus_facts_from_choices_tests {
 
     #[test]
     fn grounds_the_shipped_fighter_loadout_via_the_synthetic_id_and_legacy_compound() {
-        // The whole reason for unioning both id spaces: the real shipped Fighter
-        // fixture carries the SYNTHETIC feat id in selected_feats and expresses
-        // its target as a compound selection inside choice:fighter_bonus_feat.
-        // Keying only on the catalog key would ground nothing for it.
+        // The real shipped Fighter fixture carries the ENGINE TOKEN in
+        // selected_feats and expresses its target as a compound selection
+        // inside choice:fighter_bonus_feat. Presence resolves through the
+        // shared identity fold (which is why no per-feat token constant is
+        // listed any more); the compound target still needs its own lookup.
         let selected = feats(&["feat:weapon_focus"]);
         assert_eq!(
             weapon_focus_facts_from_choices(&selected, &[legacy("longsword")]),
@@ -2118,5 +2900,793 @@ mod weapon_focus_facts_from_choices_tests {
             choice("choice:weapon_focus_target", "weapon:"),
         ];
         assert!(weapon_focus_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod chooser_feat_contract_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    /// The drift guard this table exists to make possible.
+    ///
+    /// Every `*_TARGET_CHOICE_SET` constant in this file names a chooser
+    /// feat whose target a producer reads. If one is ever added without a
+    /// matching contract, a UI built on this table would silently offer no
+    /// picker for it -- the feat would look targetless rather than
+    /// unsupported. Scanning our own source is unusual, but the alternative
+    /// is a hand-maintained count that decays exactly the way every other
+    /// hand-maintained inventory in this repo has.
+    #[test]
+    fn chooser_contracts_cover_every_target_choice_set() {
+        // Scan only the production region. Past the first `#[cfg(test)]`
+        // the file contains this very filter string, so scanning the whole
+        // file makes the test match its own source and fail on a constant
+        // that does not exist.
+        let full = include_str!("feat_effects.rs");
+        let source = full.split("\n#[cfg(test)]").next().expect("source is non-empty");
+        let declared: Vec<&str> = source
+            .lines()
+            .filter(|line| line.contains("_TARGET_CHOICE_SET: &str"))
+            .filter_map(|line| line.split('"').nth(1))
+            .collect();
+        // Multi-line constants put the literal on the following line, so
+        // pick those up too rather than silently undercounting.
+        let continued: Vec<&str> = source
+            .lines()
+            .zip(source.lines().skip(1))
+            .filter(|(decl, _)| {
+                decl.contains("_TARGET_CHOICE_SET: &str") && !decl.contains('"')
+            })
+            .filter_map(|(_, value)| value.split('"').nth(1))
+            .collect();
+
+        let mut all: Vec<&str> = declared.into_iter().chain(continued).collect();
+        all.sort_unstable();
+        all.dedup();
+        assert!(
+            all.len() >= 9,
+            "expected at least the 9 known chooser choice sets, found {all:?}"
+        );
+
+        for choice_set in all {
+            assert!(
+                CHOOSER_FEAT_CONTRACTS
+                    .iter()
+                    .any(|contract| contract.choice_set_id == choice_set),
+                "{choice_set} has no entry in CHOOSER_FEAT_CONTRACTS -- a chooser feat was \
+                 added without a contract, so nothing can offer a picker for it"
+            );
+        }
+    }
+
+    /// Every contract must resolve from every shape a real `selected_feats`
+    /// entry can carry -- not just the shapes some table happened to list.
+    /// The token and compound forms are derived from the key here rather than
+    /// declared, so a newly added chooser feat is covered automatically.
+    #[test]
+    fn every_contract_is_reachable_from_every_real_selection_shape() {
+        for contract in CHOOSER_FEAT_CONTRACTS {
+            let token = format!(
+                "feat:{}",
+                contract.feat_key.to_lowercase().replace(['\'', '-'], "").replace(' ', "_")
+            );
+            let compound = format!("{token}:weapon:longsword");
+            for shape in [contract.feat_key.to_owned(), token.clone(), compound] {
+                assert_eq!(
+                    chooser_contract_for_feat(&shape),
+                    Some(contract),
+                    "{} must resolve from the shape {shape:?}",
+                    contract.feat_key
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn a_feat_that_takes_no_target_has_no_contract() {
+        assert_eq!(chooser_contract_for_feat("Toughness"), None);
+        assert_eq!(chooser_contract_for_feat("feat:power_attack"), None);
+    }
+
+    #[test]
+    fn resolves_a_recorded_target_with_its_kind() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Focus"]),
+            &[choice("choice:weapon_focus_target", "weapon:Longsword")],
+        );
+        assert_eq!(
+            resolved,
+            vec![ChosenFeatTargets {
+                feat_id: "Weapon Focus".to_owned(),
+                target_kind: ChooserTargetKind::Weapon,
+                targets: vec!["Longsword".to_owned()],
+            }]
+        );
+    }
+
+    /// The state the sheet most needs to distinguish: the feat is held, but
+    /// no target was ever recorded. It must be reported, not omitted, and
+    /// must not be filled in with a default.
+    #[test]
+    fn a_chooser_feat_with_no_recorded_target_is_reported_with_an_empty_list() {
+        let resolved = chosen_feat_targets(&feats(&["Skill Focus"]), &[]);
+        assert_eq!(resolved.len(), 1, "the feat must still be reported");
+        assert_eq!(resolved[0].target_kind, ChooserTargetKind::Skill);
+        assert!(resolved[0].targets.is_empty(), "nothing may be seeded: {resolved:?}");
+    }
+
+    #[test]
+    fn feats_that_take_no_target_are_absent_entirely() {
+        assert!(chosen_feat_targets(&feats(&["Toughness", "Dodge"]), &[]).is_empty());
+    }
+
+    /// Two picks of one MULT:YES feat report both targets under one entry.
+    /// Pairing pick N with target N is not recorded anywhere, so it is not
+    /// invented here.
+    #[test]
+    fn a_feat_taken_twice_reports_both_targets_once() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Focus", "Weapon Focus"]),
+            &[
+                choice("choice:weapon_focus_target", "weapon:Longsword"),
+                choice("choice:weapon_focus_target", "weapon:Rapier"),
+            ],
+        );
+        assert_eq!(resolved.len(), 1, "one entry per feat, not per pick: {resolved:?}");
+        assert_eq!(resolved[0].targets, vec!["Longsword".to_owned(), "Rapier".to_owned()]);
+    }
+
+    /// The shipped deterministic fixture records Weapon Focus's target
+    /// through the Fighter bonus-feat slot, not the clean choice set. The
+    /// producer honours that form, so this must too -- otherwise the one
+    /// character that actually has a target would display none.
+    #[test]
+    fn the_legacy_compound_form_still_resolves_a_target() {
+        let resolved = chosen_feat_targets(
+            &feats(&["feat:weapon_focus"]),
+            &[choice("choice:fighter_bonus_feat", "feat:weapon_focus:weapon:longsword")],
+        );
+        assert_eq!(resolved.len(), 1);
+        assert_eq!(resolved[0].targets, vec!["longsword".to_owned()]);
+    }
+
+    #[test]
+    fn each_target_kind_resolves_for_a_representative_feat() {
+        let cases = [
+            ("Skill Focus", "choice:skill_focus_target", "skill:Perception", ChooserTargetKind::Skill),
+            (
+                "Spell Focus",
+                "choice:spell_focus_target",
+                "school:Evocation",
+                ChooserTargetKind::SpellSchool,
+            ),
+            (
+                "Improved Critical",
+                "choice:improved_critical_target",
+                "weapon:Rapier",
+                ChooserTargetKind::Weapon,
+            ),
+        ];
+        for (feat, set, selection, kind) in cases {
+            let resolved = chosen_feat_targets(&feats(&[feat]), &[choice(set, selection)]);
+            assert_eq!(resolved.len(), 1, "{feat} must resolve");
+            assert_eq!(resolved[0].target_kind, kind, "{feat} target kind");
+            assert_eq!(resolved[0].targets.len(), 1, "{feat} must carry its target");
+        }
+    }
+
+    /// A target recorded against the wrong choice set must not be picked up
+    /// by a different feat -- the same cross-contamination guard the
+    /// Specialization producer carries.
+    #[test]
+    fn a_target_from_another_feats_choice_set_is_not_read() {
+        let resolved = chosen_feat_targets(
+            &feats(&["Weapon Specialization"]),
+            &[choice("choice:weapon_focus_target", "weapon:Longsword")],
+        );
+        assert_eq!(resolved.len(), 1);
+        assert!(
+            resolved[0].targets.is_empty(),
+            "Weapon Focus's target is not Weapon Specialization's: {resolved:?}"
+        );
+    }
+}
+
+#[cfg(test)]
+mod weapon_specialization_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(weapon: &str) -> SelectedChoice {
+        choice("choice:weapon_specialization_target", &format!("weapon:{weapon}"))
+    }
+
+    fn greater_target(weapon: &str) -> SelectedChoice {
+        choice("choice:greater_weapon_specialization_target", &format!("weapon:{weapon}"))
+    }
+
+    fn fact(weapon: &str, damage_bonus: i16) -> WeaponSpecializationFact {
+        WeaponSpecializationFact { weapon_name: weapon.to_owned(), damage_bonus }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(weapon_specialization_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert!(weapon_specialization_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphaned_target_with_no_feat() {
+        assert!(weapon_specialization_facts_from_choices(&[], &[target("longsword")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_damage_bonus_for_a_chosen_weapon() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[target("Longsword")]),
+            vec![fact("Longsword", 2)]
+        );
+    }
+
+    #[test]
+    fn accepts_the_synthetic_feat_id_as_well_as_the_catalog_key() {
+        let selected = feats(&["feat:weapon_specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[target("Rapier")]),
+            vec![fact("Rapier", 2)]
+        );
+    }
+
+    /// The corpus fact this family turns on: Greater ADDS to base rather than
+    /// replacing or taking-highest, per its own BENEFIT text.
+    #[test]
+    fn greater_stacks_additively_with_base_on_the_same_weapon() {
+        let selected = feats(&["Weapon Specialization", "Greater Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(
+                &selected,
+                &[target("Longsword"), greater_target("Longsword")]
+            ),
+            vec![fact("Longsword", 4)],
+            "+2 and +2 must total +4, not take-highest +2"
+        );
+    }
+
+    #[test]
+    fn greater_grounds_alone_on_its_own_unambiguous_bonus() {
+        let selected = feats(&["Greater Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(&selected, &[greater_target("Rapier")]),
+            vec![fact("Rapier", 2)]
+        );
+    }
+
+    #[test]
+    fn deduplicates_repeated_targets_case_insensitively() {
+        let selected = feats(&["Weapon Specialization"]);
+        assert_eq!(
+            weapon_specialization_facts_from_choices(
+                &selected,
+                &[target("Longsword"), target("longsword")]
+            ),
+            vec![fact("Longsword", 2)],
+            "one weapon must not ground twice under one id"
+        );
+    }
+
+    /// Guards the mistake this whole family invites: a Focus target must never
+    /// be read as a Specialization target, and vice versa. If the choice-set
+    /// constants were ever crossed, the two feats' magnitudes would land on
+    /// each other's roll type.
+    #[test]
+    fn does_not_read_focus_targets_or_malformed_selections() {
+        let selected = feats(&["Weapon Specialization"]);
+        let choices = vec![
+            choice("choice:weapon_focus_target", "weapon:longsword"),
+            choice("choice:greater_weapon_focus_target", "weapon:longsword"),
+            choice("choice:weapon_specialization_target", "longsword"),
+            choice("choice:weapon_specialization_target", "weapon:"),
+        ];
+        assert!(weapon_specialization_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod improved_critical_targets_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(weapon: &str) -> SelectedChoice {
+        choice("choice:improved_critical_target", &format!("weapon:{weapon}"))
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(improved_critical_targets_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        let selected = feats(&["Improved Critical"]);
+        assert!(improved_critical_targets_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphaned_target_with_no_feat() {
+        assert!(improved_critical_targets_from_choices(&[], &[target("longsword")]).is_empty());
+    }
+
+    #[test]
+    fn returns_the_chosen_weapon_for_either_feat_id() {
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["Improved Critical"]),
+                &[target("Longsword")]
+            ),
+            vec!["Longsword".to_owned()]
+        );
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["feat:improved_critical"]),
+                &[target("Rapier")]
+            ),
+            vec!["Rapier".to_owned()]
+        );
+    }
+
+    #[test]
+    fn deduplicates_repeated_targets_case_insensitively() {
+        assert_eq!(
+            improved_critical_targets_from_choices(
+                &feats(&["Improved Critical"]),
+                &[target("Longsword"), target("longsword")]
+            ),
+            vec!["Longsword".to_owned()],
+            "TYPE=NonStackingCrit -- holding it twice for one weapon is still once"
+        );
+    }
+
+    #[test]
+    fn ignores_unrelated_choices_and_malformed_selections() {
+        let selected = feats(&["Improved Critical"]);
+        let choices = vec![
+            choice("choice:weapon_focus_target", "weapon:longsword"),
+            choice("choice:improved_critical_target", "longsword"),
+            choice("choice:improved_critical_target", "weapon:"),
+        ];
+        assert!(improved_critical_targets_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+#[cfg(test)]
+mod weapon_proficiency_grants_from_feats_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    #[test]
+    fn grants_nothing_for_a_character_with_no_proficiency_feats() {
+        let grants = weapon_proficiency_grants_from_feats(&feats(&["Toughness"]), &[]);
+        assert_eq!(grants, WeaponProficiencyGrantsFromFeats::default());
+    }
+
+    /// Simple Weapon Proficiency grants a TIER, so it needs no target and
+    /// must not be modelled as one weapon.
+    #[test]
+    fn simple_weapon_proficiency_grants_the_whole_simple_tier_with_no_target() {
+        let grants =
+            weapon_proficiency_grants_from_feats(&feats(&["Simple Weapon Proficiency"]), &[]);
+        assert!(grants.grants_simple_tier);
+        assert!(
+            grants.named_weapons.is_empty(),
+            "a tier grant must not fabricate a named weapon: {grants:?}"
+        );
+    }
+
+    #[test]
+    fn martial_weapon_proficiency_grants_exactly_its_recorded_target() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[choice("choice:martial_weapon_proficiency_target", "weapon:Longsword")],
+        );
+        assert!(!grants.grants_simple_tier, "the martial feat grants no tier");
+        assert_eq!(grants.named_weapons, vec!["Longsword".to_owned()]);
+    }
+
+    #[test]
+    fn exotic_weapon_proficiency_grants_exactly_its_recorded_target() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Exotic Weapon Proficiency"]),
+            &[choice("choice:exotic_weapon_proficiency_target", "weapon:Spiked Chain")],
+        );
+        assert_eq!(grants.named_weapons, vec!["Spiked Chain".to_owned()]);
+    }
+
+    /// No silent seeding: this one matters more than usual, because a
+    /// fabricated target would erase a real -4 penalty from an attack total.
+    #[test]
+    fn a_proficiency_feat_with_no_recorded_target_grants_nothing() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency", "Exotic Weapon Proficiency"]),
+            &[],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    /// And the mirror: a recorded target with no feat behind it grants
+    /// nothing either.
+    #[test]
+    fn an_orphaned_target_with_no_feat_grants_nothing() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &[],
+            &[choice("choice:martial_weapon_proficiency_target", "weapon:Longsword")],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    /// `MULT:YES` on both feats: repeated picks name different weapons and
+    /// all of them must be granted.
+    #[test]
+    fn both_feats_are_repeatable_and_their_grants_pool_together() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency", "Exotic Weapon Proficiency"]),
+            &[
+                choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:Greatsword"),
+                choice("choice:exotic_weapon_proficiency_target", "weapon:Whip"),
+            ],
+        );
+        assert_eq!(
+            grants.named_weapons,
+            vec!["Longsword".to_owned(), "Greatsword".to_owned(), "Whip".to_owned()]
+        );
+    }
+
+    /// Proficiency is boolean, so a duplicated target is still one grant.
+    #[test]
+    fn a_duplicated_target_grants_once() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[
+                choice("choice:martial_weapon_proficiency_target", "weapon:Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:longsword"),
+            ],
+        );
+        assert_eq!(grants.named_weapons, vec!["Longsword".to_owned()]);
+    }
+
+    #[test]
+    fn ignores_unrelated_choice_sets_and_malformed_selections() {
+        let grants = weapon_proficiency_grants_from_feats(
+            &feats(&["Martial Weapon Proficiency"]),
+            &[
+                choice("choice:weapon_focus_target", "weapon:Greatsword"),
+                choice("choice:martial_weapon_proficiency_target", "Longsword"),
+                choice("choice:martial_weapon_proficiency_target", "weapon:"),
+            ],
+        );
+        assert!(grants.named_weapons.is_empty(), "{grants:?}");
+    }
+
+    #[test]
+    fn weapon_finesse_is_recognised_only_when_held() {
+        assert!(!holds_weapon_finesse(&[]));
+        assert!(!holds_weapon_finesse(&feats(&["Weapon Focus"])));
+        assert!(holds_weapon_finesse(&feats(&["Weapon Finesse"])));
+    }
+
+    /// Weapon Finesse takes no target, so it must not appear in the chooser
+    /// table -- a picker offered for it would record a target nothing reads.
+    #[test]
+    fn weapon_finesse_has_no_chooser_contract() {
+        assert_eq!(chooser_contract_for_feat("Weapon Finesse"), None);
+    }
+
+    /// Simple Weapon Proficiency likewise takes no target.
+    #[test]
+    fn simple_weapon_proficiency_has_no_chooser_contract() {
+        assert_eq!(chooser_contract_for_feat("Simple Weapon Proficiency"), None);
+        assert!(chooser_contract_for_feat("Martial Weapon Proficiency").is_some());
+        assert!(chooser_contract_for_feat("Exotic Weapon Proficiency").is_some());
+    }
+}
+
+#[cfg(test)]
+mod master_craftsman_facts_from_choices_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|key| (*key).to_owned()).collect()
+    }
+
+    fn choice(choice_set_id: &str, selection_id: &str) -> SelectedChoice {
+        SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        }
+    }
+
+    fn target(skill: &str) -> SelectedChoice {
+        choice("choice:master_craftsman_target", &format!("skill:{skill}"))
+    }
+
+    fn fact(skill: &str) -> MasterCraftsmanFact {
+        MasterCraftsmanFact { skill_name: skill.to_owned(), bonus: 2 }
+    }
+
+    #[test]
+    fn grounds_nothing_for_empty_inputs() {
+        assert!(master_craftsman_facts_from_choices(&[], &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_when_the_feat_is_held_but_no_target_is_chosen() {
+        // Same no-silent-seeding contract as every other chooser feat here: the
+        // value of Master Craftsman IS which Craft/Profession skill was picked.
+        let selected = feats(&["Master Craftsman"]);
+        assert!(master_craftsman_facts_from_choices(&selected, &[]).is_empty());
+    }
+
+    #[test]
+    fn grounds_nothing_for_an_orphan_target_without_the_feat() {
+        assert!(master_craftsman_facts_from_choices(&[], &[target("Craft (armor)")]).is_empty());
+    }
+
+    #[test]
+    fn grounds_the_real_flat_plus_two_for_an_explicitly_chosen_skill() {
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(&selected, &[target("Craft (armor)")]),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn preserves_a_parenthesised_skill_name_verbatim() {
+        // Craft and Profession skills carry parenthetical specialisations and can
+        // contain spaces; they never contain colons, so the single "skill:"
+        // prefix strip recovers the whole name intact.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(&selected, &[target("Profession (siege engineer)")]),
+            vec![fact("Profession (siege engineer)")]
+        );
+    }
+
+    #[test]
+    fn grounds_one_fact_per_distinct_skill_in_input_order() {
+        // MULT:YES -- repeatable across different Craft/Profession skills.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("Profession (sailor)")]
+            ),
+            vec![fact("Craft (armor)"), fact("Profession (sailor)")]
+        );
+    }
+
+    #[test]
+    fn grounds_only_one_fact_when_the_same_skill_is_chosen_twice() {
+        // STACK:NO -- never stacks on one skill, same contract as Skill Focus.
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("Craft (armor)")]
+            ),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn treats_case_variants_of_one_skill_as_the_same_target() {
+        let selected = feats(&["Master Craftsman"]);
+        assert_eq!(
+            master_craftsman_facts_from_choices(
+                &selected,
+                &[target("Craft (armor)"), target("craft (armor)")]
+            ),
+            vec![fact("Craft (armor)")]
+        );
+    }
+
+    #[test]
+    fn ignores_a_choice_from_a_different_choice_set_or_with_a_wrong_prefix() {
+        let selected = feats(&["Master Craftsman"]);
+        let choices = vec![
+            choice("choice:skill_focus_target", "skill:Craft (armor)"),
+            choice("choice:master_craftsman_target", "Craft (armor)"),
+            choice("choice:master_craftsman_target", "skill:"),
+        ];
+        assert!(master_craftsman_facts_from_choices(&selected, &choices).is_empty());
+    }
+}
+
+/// The APG/ACG passive-bonus widening (2026-07-29): the four feats whose flat
+/// modifier lands on a dimension this engine computes no total for, plus the
+/// two APG `BONUS:SKILL` feats folded into the standalone skill table.
+#[cfg(test)]
+mod apg_acg_passive_bonus_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|k| (*k).to_owned()).collect()
+    }
+
+    fn skill_names(selected: &[String]) -> Vec<&'static str> {
+        standalone_skill_facts_from_feats(selected).iter().map(|f| f.skill_name).collect()
+    }
+
+    #[test]
+    fn master_alchemist_grounds_its_single_craft_alchemy_skill() {
+        // Corpus: BONUS:SKILL|Craft (Alchemy)|2, BENEFIT "+2 bonus on Craft
+        // (alchemy) checks". A single-skill feat, unlike every CRB entry in
+        // the table it joins.
+        let facts = standalone_skill_facts_from_feats(&feats(&["Master Alchemist"]));
+        assert_eq!(facts.len(), 1, "{facts:?}");
+        assert_eq!(facts[0].skill_name, "Craft (Alchemy)");
+        assert_eq!(facts[0].bonus, 2);
+    }
+
+    #[test]
+    fn breadth_of_experience_grounds_both_skill_categories_it_names() {
+        // Corpus token targets TYPE.Knowledge and TYPE.Profession -- whole
+        // categories, not named skills -- so both are transcribed from the
+        // BENEFIT prose rather than one skill being invented.
+        assert_eq!(
+            skill_names(&feats(&["Breadth of Experience"])),
+            vec!["all Knowledge skills", "all Profession skills"]
+        );
+    }
+
+    #[test]
+    fn the_apg_skill_feats_do_not_disturb_the_crb_table() {
+        // The CRB two-skill feats still ground exactly as before, and the two
+        // tables compose rather than shadow one another.
+        assert_eq!(skill_names(&feats(&["Acrobatic"])), vec!["Acrobatics", "Fly"]);
+        assert_eq!(
+            skill_names(&feats(&["Acrobatic", "Master Alchemist"])),
+            vec!["Acrobatics", "Fly", "Craft (Alchemy)"],
+            "CRB facts keep their corpus order and precede the APG ones"
+        );
+    }
+
+    #[test]
+    fn no_two_standalone_skill_facts_share_a_skill_name() {
+        // Load-bearing: the consumer derives its explanation id by slugifying
+        // skill_name, so a repeated skill would emit two records under one id.
+        // This is exactly why Sharp Senses' Perception bonus is NOT in these
+        // tables -- it would collide with Alertness'.
+        let mut names: Vec<&str> = STANDALONE_TWO_SKILL_FACTS
+            .iter()
+            .chain(STANDALONE_APG_SKILL_FACTS)
+            .map(|f| f.skill_name)
+            .collect();
+        let before = names.len();
+        names.sort_unstable();
+        names.dedup();
+        assert_eq!(names.len(), before, "duplicate skill name across the standalone tables");
+    }
+
+    #[test]
+    fn sharp_senses_grounds_the_plus_four_result_not_its_plus_two_token() {
+        // The token is BONUS:VAR|KeenSensesBonus|2, an increment to the racial
+        // variable already worth 2; BENEFIT prose states the +4 result.
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&feats(&["Sharp Senses"])), 4);
+    }
+
+    #[test]
+    fn sharp_senses_grounds_nothing_when_absent_and_never_stacks_with_itself() {
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&[]), 0);
+        assert_eq!(sharp_senses_perception_bonus_from_feats(&feats(&["Alertness"])), 0);
+        assert_eq!(
+            sharp_senses_perception_bonus_from_feats(&feats(&["Sharp Senses", "Sharp Senses"])),
+            4,
+            "not STACK:YES/MULT:YES in the corpus"
+        );
+    }
+
+    #[test]
+    fn steel_soul_grounds_the_plus_four_result_not_its_plus_two_token() {
+        assert_eq!(steel_soul_save_vs_spells_bonus_from_feats(&feats(&["Steel Soul"])), 4);
+        assert_eq!(steel_soul_save_vs_spells_bonus_from_feats(&[]), 0);
+        assert_eq!(
+            steel_soul_save_vs_spells_bonus_from_feats(&feats(&["Steel Soul", "Steel Soul"])),
+            4
+        );
+    }
+
+    #[test]
+    fn deepsight_grounds_the_sixty_foot_increment_its_token_states() {
+        assert_eq!(deepsight_darkvision_bonus_from_feats(&feats(&["Deepsight"])), 60);
+        assert_eq!(deepsight_darkvision_bonus_from_feats(&[]), 0);
+    }
+
+    #[test]
+    fn steadfast_personality_is_absent_without_the_feat() {
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&[], 4, 1), None);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&feats(&["Iron Will"]), 4, 1), None);
+    }
+
+    #[test]
+    fn steadfast_personality_swaps_charisma_in_for_a_positive_wisdom_modifier() {
+        // BONUS:SAVE|Will|CHA-WIS alone: +4 CHA replacing +1 WIS is a net +3.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 4, 1), Some(3));
+    }
+
+    #[test]
+    fn steadfast_personality_keeps_a_wisdom_penalty_and_adds_charisma_on_top() {
+        // The second token (BONUS:SAVE|Will|WIS|PREVARLT:WIS,0) fires only for
+        // a negative Wisdom modifier, so the penalty is KEPT rather than
+        // replaced: the net delta is the full Charisma modifier. Reading only
+        // the first token would give CHA - WIS = 4 - -2 = 6, overstating the
+        // bonus by cancelling a penalty the prose says must still apply.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 4, -2), Some(4));
+    }
+
+    #[test]
+    fn steadfast_personality_reports_a_real_zero_rather_than_an_absence() {
+        // Equal Charisma and Wisdom genuinely nets to zero; the character still
+        // holds the feat, so Some(0) is the honest answer, not None.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, 2, 2), Some(0));
+    }
+
+    #[test]
+    fn steadfast_personality_can_be_a_net_penalty_and_is_not_clamped() {
+        // A low-Charisma, high-Wisdom character genuinely loses ground by
+        // swapping; clamping at 0 would fabricate a value the corpus formula
+        // does not specify.
+        let selected = feats(&["Steadfast Personality"]);
+        assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, -1, 3), Some(-4));
     }
 }

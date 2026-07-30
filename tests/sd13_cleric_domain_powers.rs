@@ -36,9 +36,9 @@ use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_cu
 const CLERIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_cleric_level1_sd13_deterministic_input.txt");
 
-const TOUCH_OF_GOOD_BONUS_ID: &str = "class_chassis.cleric.domain_power_good_touch_of_good_bonus";
+const TOUCH_OF_GOOD_BONUS_ID: &str = "class_feature.domain.good_touch_of_good_bonus";
 const TOUCH_OF_GOOD_USES_PER_DAY_ID: &str =
-    "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day";
+    "class_feature.domain.good_touch_of_good_uses_per_day";
 const REBUKE_DEATH_USES_PER_DAY_ID: &str =
     "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day";
 

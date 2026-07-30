@@ -2,21 +2,38 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 
 /**
- * Read-only desktop boundary over the full CRB spell catalog.
+ * Read-only desktop boundary over the full spell catalog.
  *
  * Invokes the `list_spell_catalog` Tauri command, which returns every real
- * corpus record in `rules_tables::crb::spell_list::SPELL_LIST` (all 652
- * records across all 9 PF1 strict schools) verbatim — not a per-character
- * sample. Distinct from the Character Sheet's Spells tab data, which
- * reflects only what one character has selected.
+ * corpus record across all three ingested books verbatim — CRB (652), APG
+ * (297) and ACG (144), 1093 in total — not a per-character sample.
+ * Distinct from the Character Sheet's Spells tab data, which reflects only
+ * what one character has selected.
  */
 
+/** `"CRB"`, `"APG"` or `"ACG"` — see `spell_catalog.rs`. */
+export type SpellBookDto = string;
+
 export interface SpellCatalogEntryDto {
+  /**
+   * The record's corpus identity — its `KEY:` token when the corpus row
+   * carries one, else its display name. Unique across all three books, so
+   * it is safe to use as a resolution key and a React list key.
+   */
   key: string;
-  /** The `Pf1SchoolId` variant name verbatim, e.g. "Abjuration". */
-  school: string;
-  level: number;
-  description: string;
+  book: SpellBookDto;
+  /**
+   * The `Pf1SchoolId` variant name verbatim, e.g. "Abjuration".
+   *
+   * `null` for the 16 APG records ingested without one — a genuine
+   * absence in the data, not a loading state. Render the absence; never
+   * substitute a plausible-looking school.
+   */
+  school: string | null;
+  /** `null` for the 41 APG records ingested without a spell level. */
+  level: number | null;
+  /** `null` for the 12 APG records ingested without description text. */
+  description: string | null;
 }
 
 export interface SpellCatalogResponse {

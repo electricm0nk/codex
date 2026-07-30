@@ -69,6 +69,12 @@ struct ClassMeta {
     /// `cr_classes.lst` `HD:` token every other field in this table already
     /// cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this
     /// table's own save-formula doc comments already cite for Fighter).
+    ///
+    /// **One row is deliberately NOT a transcription of its `HD:` token:**
+    /// Monk is `8` here against the corpus's `HD:10`, per the operator's
+    /// 2026-07-29 ruling (risks item 91). See the comment block on the Monk
+    /// row below before changing it -- it is a documented corpus-defect
+    /// override, not an uncorrected drift.
     hit_die: u8,
 }
 
@@ -78,9 +84,42 @@ const CLASS_META: &[ClassMeta] = &[
     ClassMeta { class_id: ClassId::Barbarian, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 12 },
     ClassMeta { class_id: ClassId::Bard, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
-    ClassMeta { class_id: ClassId::Druid, max_supported_level: 15, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
+    // Druid widened 15 -> 20 (v0.6, 2026-07-29), the last CRB class still
+    // short of the cap. `CLASS:Druid` carries `MAXLEVEL:20` and its BAB and
+    // save formulas are byte-for-byte identical to `CLASS:Cleric`'s
+    // (`cr_classes.lst` lines 93 and 55), which already ran to 20 here.
+    ClassMeta { class_id: ClassId::Druid, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 10 },
-    ClassMeta { class_id: ClassId::Monk, max_supported_level: 12, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 10 },
+    // MONK HIT DIE: DELIBERATE, OPERATOR-RULED OVERRIDE OF A CORPUS DEFECT.
+    // DO NOT "correct" this 8 back to 10 to match the corpus.
+    //
+    // The PCGen corpus says 10: `cr_classes.lst:147` reads
+    // `CLASS:Monk  HD:10  ... SOURCEPAGE:p.56`. Every other `hit_die` in
+    // this table is a faithful transcription of its own `HD:` token. This
+    // one is not, and that is intentional.
+    //
+    // The published Pathfinder 1e Core Rulebook, at the very page the
+    // corpus record itself cites (p.56), gives the Monk a d8. The corpus
+    // token contradicts its own SOURCEPAGE -- an internal contradiction of
+    // exactly the kind risks item 50 (Swashbuckler's `SwashbucklerDeedQualifyLVL`)
+    // and item 69 (Skald's Raging Song `-2` base-offset) established as the
+    // bar for deviating from a literal corpus token. The operator (Todd
+    // Hintzmann) ruled directly on 2026-07-29 that the Monk's hit die is d8.
+    //
+    // This is recorded as risks item 91 in
+    // `docs/release/v0.6/risks-and-open-questions.md`. The consequence is
+    // real and visible: a Monk 20 at CON +2 is 143 HP here, versus 164 under
+    // the corpus's d10. Pinned at levels 1/10/20 by
+    // `tests/v06_durability.rs`'s
+    // `monk_max_hp_follows_the_published_d8_not_the_corpus_d10_at_levels_1_10_and_20`,
+    // which also asserts the d10 values are NOT produced.
+    //
+    // Note the corpus is NOT edited to match: `/home/ubuntu/workspace/repos/pcgen`
+    // is this project's independent parity oracle (`src/oracle_validation/`),
+    // and making the oracle agree with us by construction would destroy the
+    // independence that makes parity testing meaningful -- the precise blind
+    // spot that hid the -4 nonproficiency error in risks item 89.
+    ClassMeta { class_id: ClassId::Monk, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: true, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Paladin, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Ranger, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: true, will: false }, hit_die: 10 },
     ClassMeta { class_id: ClassId::Rogue, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: false }, hit_die: 8 },
