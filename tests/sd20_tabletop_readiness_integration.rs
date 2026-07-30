@@ -1123,39 +1123,53 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
 // unchanged by this cycle).
 // ---------------------------------------------------------------------
 
-/// A variant of the fixture's base character with Dodge (and its canonical
-/// `choice:human_bonus_feat` selection) dropped, which trips
+/// A variant of the fixture's base character with Weapon Focus (and its
+/// canonical `choice:fighter_bonus_feat` selection) dropped, which trips
 /// `compute_combat_baseline`'s `unmet_combat_posture_conditions` without
 /// touching anything the selected-skill posture depends on.
 ///
-/// **Every shape of Dodge is dropped, not just the `feat:dodge` spelling.**
-/// This fixture's own `selected_feats` carries Dodge twice -- once as the
-/// engine token `"feat:dodge"` and once as the catalog key `"Dodge"` the feat
-/// picker sends -- which is exactly the mixed-shape list real saved characters
-/// hold. The posture gate now matches through
-/// `rules_core::feat_identity`'s shared fold rather than by string equality
-/// (so a player who picks Dodge from the catalog is no longer left with no
-/// combat baseline at all), and under that fold removing one spelling leaves
-/// the character still holding Dodge. Removing only `"feat:dodge"` would make
-/// this test assert "a character who HAS Dodge is blocked", which is the
-/// opposite of its intent.
-fn character_missing_dodge_feat() -> CharacterInput {
+/// **Was Dodge; is now Weapon Focus, and that swap is the point.** Dodge
+/// stopped being a *precondition* of this baseline (it is a conditional
+/// contribution now -- `compute_combat_baseline`'s `dodge_armor_class_bonus`),
+/// because requiring it forced `compose_character_input` to claim
+/// `feat:dodge` for every freshly created character whether or not any
+/// choice slot had granted it. So dropping Dodge is no longer a deviation
+/// at all, and a fixture built on it would assert nothing. Weapon Focus is
+/// still genuinely required -- this baseline's whole attack formula is
+/// Longsword-specific -- so it is the honest replacement vehicle. Every
+/// assertion below is unchanged: what this test protects
+/// (`printed_sheet_cell_map` renders `Blocked`, never a fabricated
+/// `Number(0)`, when a claim-blocking diagnostic fires) is exactly as
+/// strict as it was.
+///
+/// **Every shape of Weapon Focus is dropped, not just the
+/// `feat:weapon_focus` spelling.** This fixture's own `selected_feats`
+/// carries it twice -- once as the engine token `"feat:weapon_focus"` and
+/// once as the catalog key `"Weapon Focus"` the feat picker sends -- which
+/// is exactly the mixed-shape list real saved characters hold. The posture
+/// gate matches through `rules_core::feat_identity`'s shared fold rather
+/// than by string equality (so a player who picks it from the catalog is
+/// not left with no combat baseline at all), and under that fold removing
+/// one spelling leaves the character still holding the feat. Removing only
+/// `"feat:weapon_focus"` would make this test assert "a character who HAS
+/// Weapon Focus is blocked", which is the opposite of its intent.
+fn character_missing_weapon_focus_feat() -> CharacterInput {
     let fixture = load_fixture();
     let mut input = character_input_from_fixture(fixture.get("input"));
     input
         .chosen
         .selected_feats
-        .retain(|feat| !codex::rules_core::feat_identity::same(feat, "feat:dodge"));
+        .retain(|feat| !codex::rules_core::feat_identity::same(feat, "feat:weapon_focus"));
     input
         .chosen
         .selected_choices
-        .retain(|choice| choice.choice_set_id != "choice:human_bonus_feat");
+        .retain(|choice| choice.choice_set_id != "choice:fighter_bonus_feat");
     input
 }
 
 #[test]
 fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
-    let input = character_missing_dodge_feat();
+    let input = character_missing_weapon_focus_feat();
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
     let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
@@ -1165,7 +1179,7 @@ fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
             .diagnostics
             .iter()
             .any(|d| d.id == "combat.baseline_unsupported" && d.claim_blocking),
-        "dropping feat:dodge must trip combat.baseline_unsupported (claim_blocking: true): {:?}",
+        "dropping feat:weapon_focus must trip combat.baseline_unsupported (claim_blocking: true): {:?}",
         receipt.diagnostics
     );
     // The underlying chassis field is still a fabricated-looking zero at

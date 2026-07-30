@@ -330,15 +330,19 @@ pub fn compute_pilot_with_corpus(
 /// Chain-Shirt-specific constants.
 ///
 /// **Deliberately keeps the weapon requirement unchanged** (must still be
-/// exactly the Longsword) and both feat requirements unchanged (`Dodge`,
-/// `Weapon Focus`, contributing their existing fixed bonuses) -- weapon-
+/// exactly the Longsword) and the `Weapon Focus` feat requirement unchanged
+/// (contributing its existing fixed bonus) -- weapon-
 /// loadout widening is a distinct, later increment: Fighter Weapon
 /// Training's attack bonus is itself hardcoded to the Longsword's "Heavy
 /// Blades" weapon-training group, and widening the weapon would need a
 /// real weapon-to-training-group mapping this crate does not have yet.
-/// Whether feat *requirements* (as opposed to feat *effects*, already
-/// covered by the "never block on an unrecognized feat effect" policy) get
-/// widened is a separate, undecided question, not part of this slice.
+/// Whether the remaining feat *requirement* (as opposed to feat *effects*,
+/// already covered by the "never block on an unrecognized feat effect"
+/// policy) gets widened is a separate, undecided question, not part of this
+/// slice. `Dodge`'s requirement HAS since been dropped -- it is now a
+/// conditional contribution below rather than a precondition, because
+/// requiring it forced character creation to claim the feat for characters
+/// no slot had granted it to.
 ///
 /// The one real, meaningful attack-bonus widening this DOES capture: the
 /// required Longsword may now carry `applied_modifiers` (sub-task 1/2/6),
@@ -376,11 +380,15 @@ pub fn compute_combat_baseline_from_corpus(
     require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
     require_active_state(input, POWER_ATTACK_ITEM_ID, ActiveState::SelectedInactive, &mut unmet);
 
+    // v0.6 alpha swarm (creation-seed honesty fix): Dodge is deliberately NOT
+    // required, mirroring `pilot_compute::unmet_combat_posture_conditions`'s
+    // own change exactly -- see that function for the full reasoning. This
+    // path is the one `create_character` actually gates on
+    // (`resolve_unified_pilot_snapshot`), so leaving the requirement here
+    // would keep every non-Human, non-Monk character uncreatable.
+    //
     // Folded, not compared verbatim -- the same seam, and the same reason, as
-    // `pilot_compute::unmet_combat_posture_conditions`'s own pair of gates.
-    if !feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
-        unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
-    }
+    // `pilot_compute::unmet_combat_posture_conditions`'s own gate.
     if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
@@ -482,8 +490,20 @@ pub fn compute_combat_baseline_from_corpus(
         Some(cap) => dexterity_modifier.min(cap),
         None => dexterity_modifier,
     };
-    let armor_class =
-        ARMOR_CLASS_BASE + effects.armor_class_delta + dexterity_contribution + DODGE_AC_BONUS;
+    // Conditional contribution, not a precondition -- identical to
+    // `pilot_compute::compute_combat_baseline`'s own `dodge_armor_class_bonus`,
+    // and kept byte-for-byte equivalent to it so
+    // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
+    // stays a real parity check rather than a divergence waiting to happen.
+    let dodge_armor_class_bonus = if feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
+        DODGE_AC_BONUS
+    } else {
+        0
+    };
+    let armor_class = ARMOR_CLASS_BASE
+        + effects.armor_class_delta
+        + dexterity_contribution
+        + dodge_armor_class_bonus;
 
     Ok(CorpusAwareCombatBaseline { melee_attack_bonus, armor_class })
 }

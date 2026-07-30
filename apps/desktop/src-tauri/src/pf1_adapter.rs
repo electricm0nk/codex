@@ -244,9 +244,14 @@ const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 /// - **Dodge** is the one option the engine CROSS-CHECKS: its
 ///   `dodge_bonus_feat_is_genuinely_active` gate closes the burden only when
 ///   `feat:dodge` is really present on `chosen.selected_feats`, so the
-///   claimed benefit is one the character actually has. It is --
-///   unconditionally, for every race, in this very function's fixed GE-06
-///   loadout below. And the benefit is real and already computed:
+///   claimed benefit is one the character actually has. Seeding this choice
+///   is therefore what *earns* the `feat:dodge` claim for a Monk — the slot
+///   is a real PF1 level-1 Monk bonus feat, and spending it on Dodge is a
+///   legal spend of a slot the character genuinely has. (This used to read
+///   "it is unconditionally present for every race in the fixed GE-06
+///   loadout below"; that unconditional claim is exactly what was removed,
+///   because for a non-Human non-Monk no slot granted it at all.)
+///   And the benefit is real and already computed:
 ///   `compute_combat_baseline` applies `DODGE_AC_BONUS` (+1 AC) for any
 ///   character carrying `feat:dodge`, regardless of which slot granted it.
 ///   So this seed makes the engine compute a real effect; it is not a token
@@ -269,11 +274,24 @@ const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 /// canonical posture names Dodge in two slots, which PF1 would treat as a
 /// wasted pick. The COMPUTED result is still correct (the +1 dodge bonus is
 /// applied once by `compute_combat_baseline`, never doubled), and this is
-/// the same class of approximation the fixed GE-06 loadout already makes
-/// everywhere else -- it seeds `choice:fighter_bonus_feat` for every class,
-/// Wizard included. A real per-class bonus-feat picker (Path B) is what
-/// replaces this, exactly as for the Sorcerer/Cleric/Druid seeds.
+/// the same class of approximation the fixed GE-06 loadout still makes for
+/// Weapon Focus -- it seeds `choice:fighter_bonus_feat`, a Fighter-only
+/// class feature, for every class, Wizard included. That remaining unbacked
+/// feat claim is NOT closed here: the combat baseline's whole attack
+/// formula is Longsword-specific, so it still genuinely requires Weapon
+/// Focus, and dropping the claim would re-block every non-Fighter. Closing
+/// it needs the weapon loadout widened first. A real per-class bonus-feat
+/// picker (Path B) is what replaces both, exactly as for the
+/// Sorcerer/Cleric/Druid seeds.
 const DODGE_FEAT_SELECTION: &str = "feat:dodge";
+
+/// The Human racial bonus-feat slot. Named as a constant (rather than
+/// spelled inline twice) because `compose_character_input` now both *seeds*
+/// this slot and *reads it back* to decide whether claiming `feat:dodge` on
+/// `selected_feats` is honest — two spellings of one id that must never
+/// drift apart, or the seed would silently start claiming a feat no slot
+/// granted again.
+const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 
 /// v0.6 alpha swarm (Path A choice-picker gap closure, the two
 /// chooser-shaped power lists): Witch's Hex and Shaman's Spirit. Both are
@@ -515,11 +533,28 @@ impl RuleSystemAdapter for Pf1Adapter {
 // ----- Pure functions (unit-testable, no AppHandle / filesystem) -----
 
 /// Build a `CharacterInput` for the requested race/class/level. Race, class,
-/// and ability scores are the caller's real choices; the feat/skill/
-/// equipment loadout is fixed — `unmet_combat_posture_conditions`
-/// (`pilot_compute.rs`) requires this exact equipment/feat posture verbatim
+/// and ability scores are the caller's real choices; the skill/equipment
+/// loadout is fixed — `unmet_combat_posture_conditions`
+/// (`pilot_compute.rs`) requires this exact equipment posture verbatim
 /// to reach `Computed`, so widening it would not change which combinations
-/// reach `Computed`. Human additionally receives its own canonical
+/// reach `Computed`.
+///
+/// **That fixed loadout is the GE-06 deterministic pilot fixture**
+/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`),
+/// not a product decision about starting gear: the Longsword, Chain Shirt,
+/// absent shield, inactive Power Attack toggle and rank-1
+/// Climb/Intimidate/Swim allocations are exactly the posture the engine's
+/// bounded combat/skill slice was built and validated against. Every
+/// character created in the app is handed it because the engine computes
+/// no combat numbers for anything else, and `create_character` refuses to
+/// persist a build that is not `Computed`. Widening it is real, scoped
+/// engine work (a general armor/weapon-to-training-group model), not an
+/// adapter change.
+///
+/// `feat:dodge` used to be part of that fixed claim and no longer is: see
+/// the `selected_feats` construction below for why a *feat* claim is
+/// different in kind from an equipment posture, and what changed in the
+/// engine to let it be dropped. Human additionally receives its own canonical
 /// choice-slot values — the ability-bonus target is the caller's real
 /// choice (`request.ability_bonus_target`); every other race omits the
 /// Human-only slots. For every class except Wizard, `spells_selected` is
@@ -562,8 +597,8 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
 
     if request.race_id == HUMAN_RACE_ID {
         selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:human_bonus_feat".to_owned(),
-            selection_id: "feat:dodge".to_owned(),
+            choice_set_id: HUMAN_BONUS_FEAT_CHOICE_ID.to_owned(),
+            selection_id: DODGE_FEAT_SELECTION.to_owned(),
         });
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:human_ability_bonus".to_owned(),
@@ -772,10 +807,13 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         // Verified directly against `pilot_compute.rs`'s own
         // `monk_with_dodge_bonus_feat_genuinely_active_does_not_trip_the_diagnostic`
         // test: a recognized `choice:monk_bonus_feat -> feat:dodge`, PLUS
-        // `feat:dodge` genuinely present on `selected_feats` (which this
-        // function's fixed loadout above already carries, unconditionally,
-        // for every race), is sufficient with no other precondition to
-        // reach `Computed`. And it is genuinely RESOLVED, not merely
+        // `feat:dodge` genuinely present on `selected_feats`, is sufficient
+        // with no other precondition to reach `Computed`. Seeding this
+        // choice is precisely what puts `feat:dodge` on `selected_feats`
+        // for a Monk -- the `selected_feats` construction below claims the
+        // feat only when a slot like this one really granted it, so the two
+        // halves are one decision, not a coincidence of a fixed loadout.
+        // And it is genuinely RESOLVED, not merely
         // tolerated: the engine emits a real
         // `class_feature.monk.bounded_progression.bonus_feat.dodge_active`
         // record carrying the +1 dodge AC bonus `compute_combat_baseline`
@@ -894,6 +932,37 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         });
     }
 
+    // v0.6 alpha swarm (creation-seed honesty fix): `feat:dodge` is claimed
+    // ONLY when one of the seeded choice slots above actually granted it --
+    // Human's `choice:human_bonus_feat` or Monk's `choice:monk_bonus_feat`,
+    // both real PF1 bonus-feat slots that the engine independently
+    // cross-checks against `selected_feats` before grounding anything.
+    //
+    // It used to be claimed unconditionally, for every race and every class,
+    // because the combat baseline REQUIRED it: without `feat:dodge`,
+    // `unmet_combat_posture_conditions` raised a claim-blocking
+    // `combat.baseline_unsupported`, which blanked armor class and melee
+    // attack and (since `create_character` refuses to persist anything that
+    // is not `Computed`) made the character unsaveable. The engine now
+    // treats Dodge as a conditional contribution instead
+    // (`pilot_compute::compute_combat_baseline`'s `dodge_armor_class_bonus`
+    // and its corpus-aware twin), so the claim can simply stop being made.
+    //
+    // This matters because `selected_feats` is exactly what the sheet's
+    // Feats tab renders, verbatim (`CharacterSheet.tsx`'s `selectedFeats`
+    // prop): a Dwarf Fighter level 1 has two feat slots, and the seed was
+    // showing the player three feats.
+    let dodge_is_granted_by_a_seeded_slot = selected_choices.iter().any(|choice| {
+        choice.selection_id == DODGE_FEAT_SELECTION
+            && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
+                || choice.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID)
+    });
+    let mut selected_feats = vec!["feat:power_attack".to_owned()];
+    if dodge_is_granted_by_a_seeded_slot {
+        selected_feats.push(DODGE_FEAT_SELECTION.to_owned());
+    }
+    selected_feats.push("feat:weapon_focus".to_owned());
+
     CharacterInput {
         case_id: Some(request.character_id.clone()),
         source_package_id: SOURCE_PACKAGE_ID.to_owned(),
@@ -911,11 +980,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 wisdom: request.ability_scores.wisdom,
                 charisma: request.ability_scores.charisma,
             },
-            selected_feats: vec![
-                "feat:power_attack".to_owned(),
-                "feat:dodge".to_owned(),
-                "feat:weapon_focus".to_owned(),
-            ],
+            selected_feats,
             skill_allocations: vec![
                 SkillAllocation {
                     skill_id: "skill:climb".to_owned(),
@@ -2799,8 +2864,9 @@ mod tests {
     /// means specifically "reaches `Computed` for ANY race in
     /// `RACE_OPTIONS`". Nothing in the Monk seam is race-gated
     /// (`supported_monk_level` matches on class levels only, and the Dodge
-    /// cross-check reads `selected_feats`, which this loadout seeds for
-    /// every race), but the label must be earned rather than assumed -- so
+    /// cross-check reads `selected_feats`, which the Monk branch's own
+    /// `choice:monk_bonus_feat` seed backs for every race), but the label
+    /// must be earned rather than assumed -- so
     /// this pins it against the real race roster the UI actually offers.
     #[test]
     fn monk_level1_reaches_computed_for_every_race_the_ui_offers() {
@@ -2827,6 +2893,104 @@ mod tests {
                 receipt.computation.diagnostics
             );
         }
+    }
+
+    // ----- The seed must not claim a feat no slot granted -----
+
+    /// **The honesty test.** `compose_character_input` seeds `feat:dodge`
+    /// onto `selected_feats` for EVERY freshly created character, and the
+    /// Feats tab renders `selected_feats` verbatim
+    /// (`CharacterSheet.tsx`'s `selectedFeats` prop), so a player who never
+    /// picked Dodge is shown Dodge on their sheet.
+    ///
+    /// For two postures that claim is genuinely backed by a slot that
+    /// really grants the feat, and those stay: a **Human** carries
+    /// `choice:human_bonus_feat -> feat:dodge`, and a **Monk** carries
+    /// `choice:monk_bonus_feat -> feat:dodge`. Both are real PF1 bonus-feat
+    /// slots, and the engine cross-checks each against `selected_feats`
+    /// before grounding anything.
+    ///
+    /// For every other posture no seeded slot grants Dodge at all. A Dwarf
+    /// Fighter level 1 has exactly two feat slots
+    /// (`choice:level_1_character_feat`, already spent on Power Attack, and
+    /// `choice:fighter_bonus_feat`, already spent on Weapon Focus), so the
+    /// Dodge on its sheet is a third feat PF1 never gave it.
+    ///
+    /// This is the no-stub doctrine's "no fixture-only data in production
+    /// paths" rule applied to a claimed *character fact* rather than a
+    /// claimed *number*.
+    #[test]
+    fn a_composed_non_human_non_monk_character_does_not_claim_a_feat_no_slot_granted() {
+        let request = CreateCharacterRequest {
+            race_id: "race:dwarf".to_owned(),
+            ..request_for("dwarf-fighter-honest-feats", 1)
+        };
+        let character_input = compose_character_input(&request);
+
+        let grants_dodge = character_input.chosen.selected_choices.iter().any(|choice| {
+            choice.selection_id == DODGE_FEAT_SELECTION
+                && (choice.choice_set_id == HUMAN_BONUS_FEAT_CHOICE_ID
+                    || choice.choice_set_id == MONK_BONUS_FEAT_CHOICE_ID)
+        });
+        assert!(
+            !grants_dodge,
+            "precondition: a Dwarf Fighter must have no seeded slot that grants Dodge, or this \
+             test is not exercising the unbacked-claim case: {:?}",
+            character_input.chosen.selected_choices
+        );
+
+        assert!(
+            !character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| codex::rules_core::feat_identity::same(feat, DODGE_FEAT_SELECTION)),
+            "a freshly composed Dwarf Fighter must NOT carry {DODGE_FEAT_SELECTION}: no seeded \
+             choice slot grants it, so the Feats tab would show the player a feat they never \
+             picked and PF1 never gave them: {:?}",
+            character_input.chosen.selected_feats
+        );
+    }
+
+    /// The other half of the honesty fix, and the one that makes it safe:
+    /// dropping the unbacked Dodge claim must NOT blank the character. The
+    /// combat baseline used to *require* `feat:dodge`
+    /// (`unmet_combat_posture_conditions`), so a character without it got
+    /// a claim-blocking `combat.baseline_unsupported`, an armor class of 0,
+    /// a melee attack bonus of 0, and -- because `create_character` refuses
+    /// to persist anything that is not `Computed` -- could not be created
+    /// at all. Dodge is now a conditional *contribution* rather than a
+    /// precondition: a character without it computes the same armor class
+    /// exactly one point lower, honestly.
+    #[test]
+    fn a_composed_non_human_character_still_computes_without_the_dodge_claim() {
+        let dwarf = compose_character_input(&CreateCharacterRequest {
+            race_id: "race:dwarf".to_owned(),
+            ..request_for("dwarf-fighter-still-computes", 1)
+        });
+        let receipt = build_pilot_headless_receipt(&dwarf);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "dropping the unbacked Dodge claim must not re-block a Dwarf Fighter -- an honest \
+             sheet that cannot be saved is not an improvement: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        // And the armor class is a real, lower number -- not a blanked zero.
+        let human = compose_character_input(&request_for("human-fighter-with-dodge", 1));
+        let human_receipt = build_pilot_headless_receipt(&human);
+        assert_eq!(
+            receipt.computation.baseline_armor_class + 1,
+            human_receipt.computation.baseline_armor_class,
+            "the Dodge-less Dwarf's armor class must be exactly the +1 dodge bonus lower than \
+             the Human's (who really does have Dodge via choice:human_bonus_feat), not zeroed"
+        );
+        assert!(
+            receipt.computation.baseline_armor_class > 0,
+            "the Dodge-less armor class must be a real computed number, not a blanked 0"
+        );
     }
 
     /// The multiclass-dip mirror. Unlike Wizard -- whose

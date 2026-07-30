@@ -40574,10 +40574,29 @@ fn compute_combat_baseline(
     // Draconic bloodline choice are both met, since it is a permanent (Ex) quality.
     let draconic_dragon_resistances_natural_armor_bonus =
         apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline(input);
+    // v0.6 alpha swarm (creation-seed honesty fix): Dodge is a conditional
+    // CONTRIBUTION, not a precondition. `unmet_combat_posture_conditions`
+    // used to *require* `feat:dodge` before this baseline would compute
+    // anything at all, which forced `compose_character_input`
+    // (`apps/desktop/src-tauri/src/pf1_adapter.rs`) to seed the feat onto
+    // every freshly created character just so the engine would produce a
+    // number -- claiming a feat no choice slot had granted, on the very
+    // list the sheet's Feats tab renders verbatim. Dodge's +1 is not
+    // load-bearing for the rest of this formula: a character without it
+    // computes the same armor class, one point lower, honestly. Every
+    // character that really does carry Dodge (through any slot -- the
+    // identity fold is slot-blind, exactly as before) gets the identical
+    // number it always did.
+    let dodge_armor_class_bonus = if feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID)
+    {
+        DODGE_AC_BONUS
+    } else {
+        0
+    };
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
-        + DODGE_AC_BONUS
+        + dodge_armor_class_bonus
         + rage_armor_class_penalty
         + inspired_rage_armor_class_penalty
         + bloodrage_armor_class_penalty
@@ -40594,7 +40613,8 @@ fn compute_combat_baseline(
         detail: format!(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
-             + Dodge (+{DODGE_AC_BONUS}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
+             + Dodge (+{dodge_armor_class_bonus}, only for a character actually carrying \
+             {DODGE_FEAT_ID}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
              while actively, validly singing) + Bloodrager Bloodrage penalty ({bloodrage_armor_class_penalty}, \
              only while actively, validly bloodraging) + Brawler AC Bonus (+{brawler_ac_bonus_value}, while \
@@ -40655,15 +40675,33 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
         &mut unmet,
     );
 
+    // v0.6 alpha swarm (creation-seed honesty fix): **Dodge is deliberately
+    // NOT required here.** It used to be, and that requirement is what
+    // forced `compose_character_input` to seed `feat:dodge` onto every
+    // freshly created character regardless of race or class -- a feat no
+    // choice slot had granted, shown to the player verbatim on the sheet's
+    // Feats tab. Dodge is now a conditional contribution in
+    // `compute_combat_baseline` instead (`dodge_armor_class_bonus`): the
+    // baseline computes either way, one point of armor class lower without
+    // it. Nothing is weakened -- no number that used to be claimed is now
+    // claimed on thinner evidence; a claim that used to be *fabricated at
+    // creation time* simply is not made any more.
+    //
+    // Weapon Focus IS still required, and that is not an oversight: this
+    // baseline's whole attack formula is Longsword-specific (Fighter
+    // Weapon Training is hardcoded to the Longsword's "Heavy Blades"
+    // group), and for the one class whose slot actually grants it
+    // (`choice:fighter_bonus_feat`, a real Fighter class feature) the
+    // claim is backed. Seeding it for non-Fighters is the same class of
+    // unbacked claim Dodge was, and closing that one needs the weapon
+    // loadout widened first -- a separate increment, not this fix.
+    //
     // Matched through the shared identity fold, not by string equality: the
-    // feat picker sends the catalog key ("Dodge"), character creation seeds the
-    // engine token ("feat:dodge"), and both name the same feat. Comparing
-    // verbatim here meant a player who picked Dodge or Weapon Focus from the
+    // feat picker sends the catalog key ("Weapon Focus"), character creation
+    // seeds the engine token ("feat:weapon_focus"), and both name the same
+    // feat. Comparing verbatim here meant a player who picked it from the
     // catalog left this posture unmet, so the whole combat baseline came back
     // unsupported -- no armor class, no melee attack bonus.
-    if !feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
-        unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
-    }
     if !feat_identity::holds(&chosen.selected_feats, WEAPON_FOCUS_FEAT_ID) {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }

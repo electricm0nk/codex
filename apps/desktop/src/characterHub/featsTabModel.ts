@@ -19,10 +19,12 @@ import type { ItemPickerEntry } from './itemPickerFilter';
  *  - the rules engine's own lowercase, `feat:`-prefixed, snake_case
  *    selection token, e.g. `"feat:deflect_arrows"` -- what
  *    `pf1_adapter.rs`'s `compose_character_input` seeds a freshly created
- *    character with (`selected_feats: vec!["feat:power_attack",
- *    "feat:dodge", "feat:weapon_focus"]`) and what `pilot_compute.rs`'s
- *    feat-gate checks (e.g. line ~4781/4822 for Deflect Arrows) match
- *    against verbatim.
+ *    character with (`feat:power_attack` and `feat:weapon_focus` always,
+ *    plus `feat:dodge` only when a seeded choice slot actually granted it
+ *    -- Human's `choice:human_bonus_feat` or Monk's
+ *    `choice:monk_bonus_feat`) and what `pilot_compute.rs`'s feat-gate
+ *    checks (e.g. line ~4781/4822 for Deflect Arrows) match against
+ *    verbatim.
  * No normalization layer sits between the two anywhere in the backend --
  * `rule_system_adapter.rs` and `pf1_adapter.rs` both clone/append
  * `selected_feats` raw (confirmed by direct read, not inferred), so a real

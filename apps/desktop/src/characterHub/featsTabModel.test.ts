@@ -17,9 +17,9 @@ import type { ItemPickerEntry } from './itemPickerFilter';
  *  - the rules engine's own lowercase `feat:snake_case` selection token
  *    (e.g. "feat:deflect_arrows") -- what `pf1_adapter.rs`'s
  *    `compose_character_input` seeds a fresh character with
- *    (`selected_feats: vec!["feat:power_attack", "feat:dodge",
- *    "feat:weapon_focus"]`) and what `pilot_compute.rs`'s gates match
- *    against. No normalization layer exists anywhere between the two
+ *    (`feat:power_attack` and `feat:weapon_focus` always, plus
+ *    `feat:dodge` only when a seeded choice slot actually granted it) and
+ *    what `pilot_compute.rs`'s gates match against. No normalization layer exists anywhere between the two
  *    (checked `rule_system_adapter.rs`/`pf1_adapter.rs` directly --
  *    `selected_feats` is cloned/appended raw, never translated).
  */
