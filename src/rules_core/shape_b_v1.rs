@@ -197,6 +197,86 @@ impl std::fmt::Display for LicenseValidationError {
 
 impl std::error::Error for LicenseValidationError {}
 
+/// One raw `KEY:VALUE` token from a record's source LST line(s), preserved
+/// verbatim. Mirrors `pcgen_import::lst_parser::equipment::EquipmentToken`'s
+/// `key`/`value` fields exactly (that struct's `line_number`/raw-text fields
+/// are provenance detail already covered by `CorpusSource`, not duplicated
+/// here).
+///
+/// **Why this exists (2026-07-30, desktop-runtime-reachability finding):**
+/// Shape B v1's original per-content-kind `data` payloads (`EquipmentCacheData`
+/// et al.) are a deliberately thin "bootstrap coverage" projection --
+/// `key`/`category`/`name`/`cost_gp`/`weight_lbs`/`description` for
+/// equipment, no `ACCHECK:`/`MAXDEX:`/`SPELLFAILURE:`/`BONUS:` data at all.
+/// That's sufficient for the compiled `rules_tables::crb::equipment_tables()`
+/// static table this schema originally fed, but the real engine's
+/// book-agnostic resolvers (`encumbrance.rs`, `equipment_effects.rs`, and
+/// every future book-agnostic resolver) read a record's raw tokens/bonus
+/// chains directly -- which only ever existed in the *raw LST text* the
+/// codegen tools parse at generation time, never persisted to the on-disk
+/// JSON cache itself. The desktop app's live corpus loader
+/// (`apps/desktop/src-tauri/src/corpus_fixtures.rs`) needs a **reviewable,
+/// PI-screened, license-annotated** artifact to load from -- raw LST text
+/// is neither reviewed nor screened. This type (plus [`RawBonusChain`]) is
+/// the additive fix: carry the *generic* raw token/bonus-chain shape every
+/// resolver already expects, inside the same Shape B v1 record the
+/// PI-blacklist/license machinery already governs, rather than re-deriving
+/// bespoke named fields (`accheck`, `maxdex`, ...) per content kind that
+/// would need updating every time a resolver needs one more token. Pure
+/// game-mechanic tokens (`WT`, `COST`, `ACCHECK`, `BONUS:COMBAT|AC`, ...)
+/// are OGL open content, not Product Identity -- PI risk lives in
+/// prose/name fields (`description`, `name` in rare cases), which the
+/// existing `license`/`pi_field`/`pi_marker` machinery already governs
+/// unchanged by this addition.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct RawToken {
+    pub key: String,
+    pub value: String,
+}
+
+/// One raw `BONUS:...` clause's pipe-delimited qualifiers, in source order.
+/// Mirrors `pcgen_import::lst_parser::equipment::BonusToken::qualifiers`
+/// exactly. See [`RawToken`]'s doc comment for why this exists.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct RawBonusChain {
+    pub qualifiers: Vec<String>,
+}
+
+/// `data/corpus/<book>/equipment/<category>/<slug>.json` payload, v1.
+/// Additive over the pre-existing `EquipmentCacheData` copies
+/// (`rules_tables::crb::json_cache`, `rules_tables::advanced_race_guide::
+/// json_cache`, `sd27_gen_book_cache`'s own local copy -- byte-identical to
+/// each other before this addition, confirmed via direct diff): every field
+/// those carry (`key`/`category`/`name`/`cost_gp`/`weight_lbs`/
+/// `description`) is present here unchanged, plus 2 new
+/// `#[serde(default)]` fields (`raw_tokens`, `raw_bonus_chains` -- see
+/// [`RawToken`]'s doc comment). An on-disk record written before this
+/// addition deserializes cleanly with both new fields defaulting to empty
+/// `Vec`s, which is honestly indistinguishable from "record was
+/// regenerated but genuinely has no tokens" -- the real distinguishing
+/// signal is `completeness`, unchanged by this addition, so a caller that
+/// needs to tell "not yet regenerated" apart from "regenerated, no extra
+/// tokens" should gate on that instead.
+///
+/// This is now the single shared definition; per-book `json_cache.rs`
+/// copies and `sd27_gen_book_cache.rs`'s local struct should import this
+/// type rather than maintain their own, per the same consolidation
+/// principle `CorpusRecordV1<T>` itself already established over v0's
+/// per-book duplication.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EquipmentCacheData {
+    pub key: String,
+    pub category: String,
+    pub name: String,
+    pub cost_gp: Option<f64>,
+    pub weight_lbs: Option<f64>,
+    pub description: Option<String>,
+    #[serde(default)]
+    pub raw_tokens: Vec<RawToken>,
+    #[serde(default)]
+    pub raw_bonus_chains: Vec<RawBonusChain>,
+}
+
 /// Validates a v1 record's license annotation per `decisions.md §17`'s
 /// "Validation: every record has a license field" output requirement,
 /// plus the 5th-audit's PI/marker consistency rule (added 2.0.6+, but
@@ -366,5 +446,67 @@ mod tests {
             pi_marker: None,
         };
         assert_eq!(validate_license(&record), Ok(()));
+    }
+
+    /// Additive proof for `EquipmentCacheData`'s `raw_tokens`/
+    /// `raw_bonus_chains` addition (2026-07-30 desktop-runtime-reachability
+    /// finding): a real, byte-for-byte on-disk pre-existing equipment
+    /// record (`data/corpus/core_rulebook/equipment/arms_armor/
+    /// padded_armor_base.json`, verbatim) deserializes cleanly, with both
+    /// new fields defaulting to empty `Vec`s rather than failing to parse.
+    #[test]
+    fn real_pre_existing_equipment_json_deserializes_with_raw_token_fields_defaulting_to_empty() {
+        let real_on_disk_json = r#"{
+            "population": "in_scope",
+            "completeness": "full",
+            "ingested_at": "2026-07-22T23:36:36Z",
+            "data": {
+                "key": "Padded Armor (Base)",
+                "category": "arms_armor",
+                "name": "Padded Armor",
+                "cost_gp": 5.0,
+                "weight_lbs": 10.0,
+                "description": "Little more than heavy, quilted cloth, this armor provides only the most basic protection."
+            },
+            "source": {
+                "kind": "lst_token",
+                "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+                "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+                "line": 37,
+                "record_key": "Padded Armor (Base)"
+            },
+            "license": "OGL",
+            "pi_field": null,
+            "pi_marker": null
+        }"#;
+
+        let record: CorpusRecordV1<EquipmentCacheData> =
+            serde_json::from_str(real_on_disk_json).expect("a real pre-existing on-disk record must deserialize");
+
+        assert_eq!(record.data.key, "Padded Armor (Base)");
+        assert_eq!(record.data.cost_gp, Some(5.0));
+        assert_eq!(record.data.weight_lbs, Some(10.0));
+        assert!(record.data.raw_tokens.is_empty(), "not-yet-regenerated record: empty, not a parse failure");
+        assert!(record.data.raw_bonus_chains.is_empty());
+
+        // And a freshly-regenerated record with real raw tokens round-trips.
+        let regenerated = CorpusRecordV1 {
+            data: EquipmentCacheData {
+                raw_tokens: vec![
+                    RawToken { key: "ACCHECK".to_string(), value: "0".to_string() },
+                    RawToken { key: "MAXDEX".to_string(), value: "6".to_string() },
+                ],
+                raw_bonus_chains: vec![RawBonusChain {
+                    qualifiers: vec!["COMBAT".to_string(), "AC".to_string(), "2".to_string(), "TYPE=Armor".to_string()],
+                }],
+                ..record.data.clone()
+            },
+            ..record
+        };
+        let json = serde_json::to_string(&regenerated).expect("must serialize");
+        let round_tripped: CorpusRecordV1<EquipmentCacheData> =
+            serde_json::from_str(&json).expect("must deserialize its own output");
+        assert_eq!(round_tripped.data.raw_tokens, regenerated.data.raw_tokens);
+        assert_eq!(round_tripped.data.raw_bonus_chains, regenerated.data.raw_bonus_chains);
     }
 }
