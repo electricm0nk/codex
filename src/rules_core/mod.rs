@@ -4,6 +4,7 @@ pub mod cache_gen;
 pub mod character_input;
 pub mod composed_input;
 pub mod contract;
+pub mod corpus_loader;
 pub mod damage_total;
 pub mod description_completion;
 pub mod durability;
