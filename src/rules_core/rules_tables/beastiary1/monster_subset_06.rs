@@ -112,11 +112,18 @@ pub fn troglodyte() -> MonsterStatBlock {
 
 /// Source: `b1_races.lst:401`, `CR:2`. Real row tokens: `SIZE:S`,
 /// `MOVE:Fly,30` (no `Walk` pair on this row; transcribed as
-/// `speed_ft: 0`), no `NATURALATTACKS:` token on this row (fights via an
-/// `ABILITY:Internal|AUTOMATIC|Bite` cross-reference instead —
-/// transcribed as an empty list, not an invented attack),
+/// `speed_ft: 0`), no `NATURALATTACKS:` token on this row,
 /// `RACETYPE:Outsider`, `RACESUBTYPE:Evil|Extraplanar`, `CR:2`,
 /// `SOURCEPAGE:p.272`.
+///
+/// **Bite dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Bite` but no hop carries dice. `1d4`
+/// is corroborated by aonprd + d20pfsrd (both "bite +5 (1d4 plus
+/// poison)"). The vargouille's **kiss and shriek are deliberately not
+/// recorded**: every source lists them only under Special Attacks, with
+/// no damage dice anywhere, so giving them dice would be fabrication.
+/// Full citation in `super::natural_attack_provenance` — **read it
+/// before reverting this to an empty list.**
 pub fn vargouille() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Vargouille".to_string(),
@@ -126,16 +133,24 @@ pub fn vargouille() -> MonsterStatBlock {
         race_type: "Outsider".to_string(),
         race_subtype: Some("Evil|Extraplanar".to_string()),
         source_page: "p.272".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Bite".to_string(), damage_dice: "1d4".to_string() }],
     }
 }
 
 /// Source: `b1_races.lst:416`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30,Burrow,10,Climb,10` (walk speed transcribed;
 /// burrow/climb speeds out of scope), no `NATURALATTACKS:` token on this
-/// row (fights via `ABILITY:Internal|AUTOMATIC|Bite|Claw` cross-reference
-/// instead — transcribed as an empty list), `RACETYPE:Animal`, no
-/// `RACESUBTYPE:` token, `CR:2`, `SOURCEPAGE:p.279`.
+/// row, `RACETYPE:Animal`, no `RACESUBTYPE:` token, `CR:2`,
+/// `SOURCEPAGE:p.279`.
+///
+/// **Bite and Claw dice are grounded, not transcribed.** The row names
+/// both attacks via `ABILITY:Internal|AUTOMATIC|Bite|Claw` but no hop
+/// carries dice. Bite `1d4` and Claw `1d6` are corroborated by aonprd +
+/// d20pfsrd (both "2 claws +4 (1d6+2), bite +4 (1d4+2)"). List order
+/// follows the real row's own `|Bite|Claw` operand order, per this
+/// book's "attack order comes from the real row's token order"
+/// convention. Full citation in `super::natural_attack_provenance` —
+/// **read it before reverting this to an empty list.**
 pub fn wolverine() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Wolverine".to_string(),
@@ -145,16 +160,23 @@ pub fn wolverine() -> MonsterStatBlock {
         race_type: "Animal".to_string(),
         race_subtype: None,
         source_page: "p.279".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![
+            NaturalAttack { name: "Bite".to_string(), damage_dice: "1d4".to_string() },
+            NaturalAttack { name: "Claw".to_string(), damage_dice: "1d6".to_string() },
+        ],
     }
 }
 
 /// Source: `b1_races.lst:418`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,50` (walk speed transcribed), no `NATURALATTACKS:` token on
-/// this row (fights via `ABILITY:Internal|AUTOMATIC|...|Bite`
-/// cross-reference instead — transcribed as an empty list),
-/// `RACETYPE:Magical Beast`, no `RACESUBTYPE:` token, `CR:2`,
+/// this row, `RACETYPE:Magical Beast`, no `RACESUBTYPE:` token, `CR:2`,
 /// `SOURCEPAGE:p.280`.
+///
+/// **Bite dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|...|Bite` but no hop carries dice.
+/// `1d6` is corroborated by aonprd + d20pfsrd (both "bite +7 (1d6+4 plus
+/// trip)"). Full citation in `super::natural_attack_provenance` — **read
+/// it before reverting this to an empty list.**
 pub fn worg() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Worg".to_string(),
@@ -164,7 +186,7 @@ pub fn worg() -> MonsterStatBlock {
         race_type: "Magical Beast".to_string(),
         race_subtype: None,
         source_page: "p.280".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Bite".to_string(), damage_dice: "1d6".to_string() }],
     }
 }
 

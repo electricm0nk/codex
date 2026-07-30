@@ -40,10 +40,16 @@ use super::{MonsterStatBlock, NaturalAttack};
 /// `MOVE:Walk,20,Climb,10` (walk speed transcribed; climb speed out of
 /// scope per this module's field-coverage boundary), `RACETYPE:Aberration`,
 /// `CR:2`, `SOURCEPAGE:p.45`. No `RACESUBTYPE:` token on this row. The
-/// real row carries no `NATURALATTACKS:` token — its Tentacle attack is
-/// granted via `ABILITY:Internal|AUTOMATIC|Tentacle`, a cross-reference
-/// into a shared ability definition this cycle's parser does not resolve
-/// (out of scope; same shape as subset 03's Boar/Bugbear).
+/// real row carries no `NATURALATTACKS:` token.
+///
+/// **Tentacle dice are grounded, not transcribed.** The row names the
+/// attack via `ABILITY:Internal|AUTOMATIC|Tentacle`, but resolving that
+/// reference (to `core_essentials/ce_abilities_race.lst:260`) yields a
+/// mechanical marker with no dice. `1d4` is corroborated by aonprd +
+/// d20pfsrd (both "2 tentacles +6 (1d4+3 plus grab)"). The published
+/// block has tentacles only — the choker has no claw attack, so none is
+/// recorded. Full citation in `super::natural_attack_provenance` —
+/// **read it before reverting this to an empty list.**
 pub fn choker() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Choker".to_string(),
@@ -53,17 +59,34 @@ pub fn choker() -> MonsterStatBlock {
         race_type: "Aberration".to_string(),
         race_subtype: None,
         source_page: "p.45".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Tentacle".to_string(), damage_dice: "1d4".to_string() }],
     }
 }
 
 /// Source: `b1_races.lst:83`, `CR:2`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,20,Swim,30` (walk speed transcribed; swim speed out of
 /// scope per this module's field-coverage boundary), `RACETYPE:Animal`,
-/// `CR:2`, `SOURCEPAGE:p.51`. No `RACESUBTYPE:` token on this row. The
-/// real row carries no `NATURALATTACKS:` token — its bite/tail attacks
-/// are granted via `ABILITY:Internal|AUTOMATIC|Racial Traits ~
-/// Crocodile`, a cross-reference this cycle's parser does not resolve.
+/// `CR:2`, `SOURCEPAGE:p.51`. No `RACESUBTYPE:` token on this row, and no
+/// `NATURALATTACKS:` token.
+///
+/// **Mixed provenance — the Tail Slap is a genuine corpus recovery.**
+/// This row reaches its attacks through
+/// `ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile`, which resolves
+/// to `b1_abilities_race.lst:244`. That record's own
+/// `ABILITY:Internal|AUTOMATIC|Bite|Crocodile ~ Tail Slap` names both
+/// attacks, in that order:
+///
+/// - **Bite `1d8`** — grounded. The generic `Bite` marker carries no
+///   dice; corroborated by aonprd + d20pfsrd ("bite +5 (1d8+4 plus
+///   grab)").
+/// - **Tail Slap `1d12`** — *transcribed from a real corpus token.*
+///   Unlike the generic markers, `Crocodile ~ Tail Slap`
+///   (`b1_abilities_race.lst:248`) carries an inline
+///   `NATURALATTACKS:Tail Slap,...,*1,1d12`. The published text agrees
+///   independently ("tail slap +0 (1d12+2)").
+///
+/// Full citations in `super::natural_attack_provenance` — **read it
+/// before reverting this to an empty list.**
 pub fn crocodile() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Crocodile".to_string(),
@@ -73,7 +96,10 @@ pub fn crocodile() -> MonsterStatBlock {
         race_type: "Animal".to_string(),
         race_subtype: None,
         source_page: "p.51".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![
+            NaturalAttack { name: "Bite".to_string(), damage_dice: "1d8".to_string() },
+            NaturalAttack { name: "Tail Slap".to_string(), damage_dice: "1d12".to_string() },
+        ],
     }
 }
 

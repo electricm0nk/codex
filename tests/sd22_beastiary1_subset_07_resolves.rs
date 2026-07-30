@@ -34,7 +34,10 @@ fn ankheg_resolves_via_ruleset_bestiary1() {
     assert_eq!(monster.race_type, "Magical Beast");
     assert_eq!(monster.race_subtype, None);
     assert_eq!(monster.source_page, "p.15");
-    assert!(monster.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+    // No `NATURALATTACKS:` token on the real row -- the Bite is named by
+    // `ABILITY:Internal|AUTOMATIC|Bite` and its `2d6` grounded from
+    // published values (`natural_attack_provenance`).
+    assert!(monster.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "2d6"));
 }
 
 #[test]

@@ -307,6 +307,153 @@ fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
     }
 }
 
+/// The 12 monsters whose natural-attack damage dice are not transcribed
+/// from their own `b1_races.lst` row, and therefore carry per-field
+/// provenance narrowing the record-level `lst_token` claim. See
+/// `rules_tables::beastiary1::natural_attack_provenance`.
+const GROUNDED_MONSTER_SLUGS: &[&str] = &[
+    "ankheg",
+    "assassin_vine",
+    "boar",
+    "cave_fisher",
+    "centaur",
+    "choker",
+    "cockatrice",
+    "crocodile",
+    "vargouille",
+    "wolf",
+    "wolverine",
+    "worg",
+];
+
+#[test]
+fn field_provenance_is_present_on_exactly_the_twelve_grounded_monsters() {
+    // A record-level `source.kind: "lst_token"` is truthful for the
+    // chassis fields and the attack *names*, but would silently imply
+    // the damage dice came from that line too. `field_provenance` is what
+    // keeps the record honest -- if it vanishes, the cache starts
+    // misattributing web-grounded values to a corpus line.
+    let expected: BTreeSet<String> = GROUNDED_MONSTER_SLUGS.iter().map(|s| s.to_string()).collect();
+    let mut actual = BTreeSet::new();
+    for (path, record) in load_all("monster") {
+        let stem = path.file_stem().unwrap().to_string_lossy().to_string();
+        if record.get("field_provenance").is_some() {
+            actual.insert(stem);
+        }
+    }
+    assert_eq!(
+        actual, expected,
+        "field_provenance must appear on exactly the 12 monsters whose attack dice were grounded outside their own row"
+    );
+}
+
+#[test]
+fn every_field_provenance_entry_points_at_a_real_attack_and_agrees_with_its_value() {
+    for (path, record) in load_all("monster") {
+        let Some(entries) = record.get("field_provenance") else { continue };
+        let entries = entries
+            .as_array()
+            .unwrap_or_else(|| panic!("{}: field_provenance must be an array", path.display()));
+        assert!(!entries.is_empty(), "{}: field_provenance must not be an empty array", path.display());
+
+        let attacks = record["data"]["natural_attacks"].as_array().unwrap();
+        for entry in entries {
+            let field = entry["field"].as_str().unwrap_or_else(|| panic!("{}: provenance entry missing field", path.display()));
+            // Parse `natural_attacks[<i>].damage_dice` and check the
+            // cited index really holds the cited value.
+            let index: usize = field
+                .trim_start_matches("natural_attacks[")
+                .split(']')
+                .next()
+                .and_then(|i| i.parse().ok())
+                .unwrap_or_else(|| panic!("{}: unparseable provenance field {field:?}", path.display()));
+            assert!(
+                field.ends_with("].damage_dice"),
+                "{}: provenance field {field:?} must target a damage_dice value",
+                path.display()
+            );
+            let attack = attacks
+                .get(index)
+                .unwrap_or_else(|| panic!("{}: provenance cites natural_attacks[{index}], which does not exist", path.display()));
+            assert_eq!(
+                attack["damage_dice"].as_str(),
+                entry["value"].as_str(),
+                "{}: provenance value disagrees with natural_attacks[{index}].damage_dice",
+                path.display()
+            );
+            assert!(
+                !entry["corpus_name_token"].as_str().unwrap_or_default().is_empty(),
+                "{}: provenance must record the real row token that names the attack",
+                path.display()
+            );
+            assert!(
+                !entry["published_melee_text"].as_str().unwrap_or_default().is_empty(),
+                "{}: provenance must quote the published text the dice were read from",
+                path.display()
+            );
+
+            let source = entry["source"].as_object().unwrap();
+            let kind = source["kind"].as_str().unwrap();
+            assert!(
+                ALLOWED_SOURCE_KINDS.contains(&kind),
+                "{}: field provenance kind {kind:?} is not one of the discriminated-union kinds",
+                path.display()
+            );
+            match kind {
+                "web_second_source" => {
+                    let urls = source["urls"].as_array().unwrap_or_else(|| panic!("{}: web field provenance needs urls", path.display()));
+                    assert!(
+                        urls.len() >= 2,
+                        "{}: {field} cites {} source(s) -- the grounding bar is at least two independent agreeing sources",
+                        path.display(),
+                        urls.len()
+                    );
+                    for url in urls {
+                        let url = url.as_str().unwrap();
+                        assert!(
+                            url.contains("d20pfsrd.com") || url.contains("aonprd.com"),
+                            "{}: url {url:?} is outside the allowed-domain list (decisions.md §11.5)",
+                            path.display()
+                        );
+                    }
+                    assert!(!source["identity_match_basis"].as_str().unwrap_or_default().is_empty());
+                    assert!(!source["fetched_at"].as_str().unwrap_or_default().is_empty());
+                }
+                "lst_token" => {
+                    // A real corpus recovery -- must cite a checkable line.
+                    assert!(source["line"].as_u64().unwrap_or(0) > 0, "{}: {field} lst_token needs a real line", path.display());
+                    for f in ["path", "sha256", "record_key"] {
+                        assert!(source.contains_key(f), "{}: {field} lst_token missing {f}", path.display());
+                    }
+                }
+                other => panic!("{}: unexpected field-provenance kind {other:?}", path.display()),
+            }
+        }
+    }
+}
+
+#[test]
+fn crocodile_tail_slap_cites_the_real_cross_file_corpus_token_it_was_recovered_from() {
+    // The single genuine corpus recovery in this pass: `Crocodile ~ Tail
+    // Slap` (b1_abilities_race.lst:248) carries a real inline
+    // `NATURALATTACKS:...,*1,1d12`, unlike the dice-less generic markers
+    // the other 11 monsters' references resolve to.
+    let records: std::collections::HashMap<String, Value> = load_all("monster")
+        .into_iter()
+        .map(|(_, v)| (v["data"]["name"].as_str().unwrap().to_string(), v))
+        .collect();
+    let croc = records.get("Crocodile").expect("Crocodile record present");
+    let entries = croc["field_provenance"].as_array().unwrap();
+    let tail = entries
+        .iter()
+        .find(|e| e["value"] == "1d12")
+        .expect("Crocodile tail slap provenance entry present");
+    assert_eq!(tail["source"]["kind"], "lst_token", "the tail slap has a real corpus token; it must not cite as web_second_source");
+    assert_eq!(tail["source"]["path"], "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst");
+    assert_eq!(tail["source"]["line"].as_u64(), Some(248));
+    assert_eq!(tail["source"]["record_key"], "Crocodile ~ Tail Slap");
+}
+
 #[test]
 fn equipment_cache_has_exactly_the_real_4_records_at_the_real_100_percent_ceiling() {
     let records = load_all("equipment");
