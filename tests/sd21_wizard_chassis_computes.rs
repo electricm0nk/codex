@@ -174,21 +174,25 @@ fn wizard_level_3_with_ge06_combat_posture() -> CharacterInput {
         item_id: "item:longsword".to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "item:chain_shirt".to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "item:shield".to_string(),
         equipped_or_active: false,
         active_state: ActiveState::Absent,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.equipment_selections.push(EquipmentSelection {
         item_id: "power_attack".to_string(),
         equipped_or_active: false,
         active_state: ActiveState::SelectedInactive,
+        applied_modifiers: Vec::new(),
     });
     for skill_id in ["skill:climb", "skill:intimidate", "skill:swim"] {
         input.chosen.skill_allocations.push(SkillAllocation {
@@ -220,8 +224,21 @@ fn wizard_level3_with_ge06_combat_posture_clears_the_combat_baseline_diagnostic(
     );
     let melee_attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
     // Wizard base attack bonus 1 + STR modifier (-1, STR 8) + Weapon Focus (+1)
-    // + no Weapon Training (Wizard has no Fighter class feature) = 1.
-    assert_eq!(melee_attack.value, 1, "{computation:?}");
+    // + no Weapon Training (Wizard has no Fighter class feature)
+    // - 4 nonproficiency = -3.
+    //
+    // Corrected 1 -> -3 (risks item #89, tasks #80+#86, 2026-07-29). This
+    // exact assertion is the one risks item #89 named as locking in a real
+    // wrong number on a shipped, Computed class: this baseline swings a
+    // Longsword, and the Wizard's own corpus grant
+    // (`cr_abilities_class.lst`, `KEY:Weapon and Armor Proficiency ~
+    // Wizard`) is exactly `AUTO:WEAPONPROF|Club|Dagger|Crossbow
+    // (Heavy)|Crossbow (Light)|Quarterstaff` -- no Longsword, and no
+    // blanket tier. A Wizard is genuinely non-proficient and owes PF1's -4
+    // (`WEAPONNONPROFPENALTY` in
+    // `system/gameModes/Pathfinder/miscinfo.lst:193`). -3 is the value
+    // risks item #89 independently predicted for this case.
+    assert_eq!(melee_attack.value, -3, "{computation:?}");
     let armor_class = explanation(&computation, "defense.baseline_armor_class");
     // 10 + Chain Shirt (+4) + DEX contribution (+2, DEX 14, uncapped by any
     // Fighter armor training) + Dodge (+1) = 17.
@@ -241,10 +258,16 @@ fn wizard_level3_with_ge06_combat_posture_clears_the_selected_skill_diagnostic()
         computation.diagnostics
     );
     let climb = explanation(&computation, "skill.selected_modifier.climb");
-    // rank 1 + STR modifier (-1) + class-skill bonus (+3) + no armor-check
-    // penalty reduction (Wizard has no Fighter armor training, Chain Shirt
-    // ACP is -2) = 1.
-    assert_eq!(climb.value, 1, "{computation:?}");
+    // v0.6 alpha swarm fix (93a0636d): the class-skill bonus is no longer
+    // applied unconditionally -- Climb/Intimidate/Swim are not real Wizard
+    // class skills (cr_abilities_class.lst:2565: Wizard's real class skills
+    // are Appraise/Craft/Fly/Knowledge/Linguistics/Profession/Spellcraft),
+    // so a single-class Wizard gets no class-skill bonus here. Was
+    // incorrectly 1 (rank 1 + STR modifier -1 + a fabricated +3 class-skill
+    // bonus + no armor-check penalty reduction); real value is rank 1 +
+    // STR modifier (-1) + no class-skill bonus (+0) + Chain Shirt ACP (-2)
+    // = -2.
+    assert_eq!(climb.value, -2, "{computation:?}");
 }
 
 #[test]

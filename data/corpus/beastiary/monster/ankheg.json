@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:18:10Z",
+  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
     "id": "beastiary1:monster:ankheg",
     "name": "Ankheg",
@@ -11,7 +11,12 @@
     "race_type": "Magical Beast",
     "race_subtype": null,
     "source_page": "p.15",
-    "natural_attacks": []
+    "natural_attacks": [
+      {
+        "name": "Bite",
+        "damage_dice": "2d6"
+      }
+    ]
   },
   "source": {
     "kind": "lst_token",
@@ -19,5 +24,22 @@
     "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 18,
     "record_key": "Ankheg"
-  }
+  },
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "2d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +5 (2d6+4 plus 1d4 acid and grab)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Ankheg",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/magical-beasts/ankheg/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 3 + Large magical beast + Bestiary pg. 15 (matches the cached chassis's own source_page)"
+      }
+    }
+  ]
 }

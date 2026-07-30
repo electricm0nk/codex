@@ -155,17 +155,20 @@ fn bard_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() {
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported
-    // for Bard) is untouched: no fabricated base_attack_bonus field, and no
-    // supported Fighter-style base-attack chassis explanation leaks in.
+    // ...but the integrated `base_attack_bonus` field is untouched: no fabricated
+    // integrated value is wired in from the standalone record.
     assert_eq!(
         computation.base_attack_bonus, 0,
         "the standalone bard base-attack explanation must not be wired into the integrated \
          base_attack_bonus field"
     );
+    // (v0.6 alpha swarm, risks item 8) Bard is now recognized by
+    // table_class_id, so the generic class-chassis base-attack-bonus
+    // explanation IS surfaced (unlike the earlier unsupported-chassis state);
+    // the value still floors to 0 at level 1 (3/4 BAB), only presence changed.
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "bard baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "bard is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 }
 
@@ -191,20 +194,52 @@ fn bard_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_blockers
         "class_chassis.bard.fascinate_affected_creatures"
     ));
 
-    // Both claim-blocking burdens (performance execution, spontaneous spell posture)
-    // still fire; this slice grounds no performance-execution engine and no spell math.
-    let performance_execution = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == "class_feature.bard.bardic_performance_execution.unsupported")
-        .expect("bardic performance execution blocker must still fire");
-    assert!(performance_execution.claim_blocking);
-    let spontaneous_spells = computation
+    // (v0.6 alpha swarm, risks item 8, known-spell closure) class_spell.bard
+    // .spontaneous_known_and_per_day.unsupported is no longer unconditional --
+    // this bare fixture has zero known spells, a genuinely valid posture, so
+    // the blocker correctly does not fire here.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported")
-        .expect("spontaneous known-spell / slot posture blocker must still fire");
-    assert!(spontaneous_spells.claim_blocking);
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.bard.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
+
+    // (v0.6 alpha swarm, risks item 8) class_feature.bard.bardic_performance_execution
+    // .unsupported is retired -- this bare fixture has no bardic performance
+    // activation, a genuinely valid posture, so no performance-execution
+    // diagnostic claim-blocks here; the non-blocking other-performances note
+    // still fires unconditionally.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.starts_with("class_feature.bard.bardic_performance_execution")
+                && d.claim_blocking),
+        "a genuinely valid not-performing posture must not claim-block on performance execution: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.id
+            == "class_feature.bard.bardic_performance_execution.other_performances_not_modeled"
+            && !d.claim_blocking),
+        "the other-performances-not-modeled note must still fire, non-blocking: {:?}",
+        computation.diagnostics
+    );
 }
 
 // ----- Bard level 2 was later widened into the supported tranche -----

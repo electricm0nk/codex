@@ -195,14 +195,27 @@ fn sorcerer_level10_spontaneous_burden_stays_claim_blocked_despite_the_access_re
         access.detail
     );
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == SPONTANEOUS_BLOCKER_ID && d.claim_blocking),
-        "the spontaneous known/per-day burden must stay claim-blocking at level 10: {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8) SPONTANEOUS_BLOCKER_ID is no longer
+    // unconditional -- this fixture has zero known spells, a genuinely valid
+    // posture, so the blocker correctly does not fire here. The access record
+    // above already proves the ladder is grounded for real and never fabricated;
+    // that's the property this test actually needs.
+    match computation.diagnostics.iter().find(|d| d.id == SPONTANEOUS_BLOCKER_ID) {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.sorcerer.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: no leak onto other classes -----

@@ -93,13 +93,25 @@ const HUMAN_RACE_ID: &str = "race:human";
 /// fabricated grant.
 const CLERIC_CHARACTER_LEVEL_CAP: u8 = 20;
 
-/// Every explanation id `pilot_compute.rs::explain_cleric_level1_spell_baseline`
-/// emits is either this exact recognition id or carries this prefix. Used
+/// Most explanation ids `pilot_compute.rs::explain_cleric_level1_spell_baseline`
+/// emits are either this exact recognition id or carry this prefix. Used
 /// to scope the diff to Cleric's own pillars only (never another class's
 /// or the class-independent race/ability explanations that also appear
 /// in the same chassis snapshot).
 const CLERIC_RECOGNITION_ID: &str = "class_chassis.spell_baseline.cleric";
 const CLERIC_EXPLANATION_PREFIX: &str = "class_chassis.cleric.";
+/// Task #64: the Good domain's Touch of Good granted power (bonus magnitude and
+/// uses-per-day count) moved to a shared, class-agnostic `class_feature.domain.*`
+/// namespace (also reused by Inquisitor's own domain-power grounding) rather than
+/// staying under `CLERIC_EXPLANATION_PREFIX`, per that task's explicit ruling. Since
+/// `cleric_chassis_explanations` above always probes a single-class Cleric only,
+/// these two ids are unambiguously Cleric's own pillar values in this context (no
+/// other class's explanations can appear in the same probe), so they are named here
+/// explicitly rather than matched by prefix.
+const CLERIC_TOUCH_OF_GOOD_SHARED_EXPLANATION_IDS: [&str; 2] = [
+    "class_feature.domain.good_touch_of_good_bonus",
+    "class_feature.domain.good_touch_of_good_uses_per_day",
+];
 
 /// Composes a Cleric `LevelUpPlan` for the transition from `from_level`
 /// to `to_level`. Bounded to single-class Human Cleric inputs, mirroring
@@ -169,7 +181,8 @@ fn append_class_feature_grants(
 
     for to_explanation in &to_explanations {
         let is_cleric_pillar = to_explanation.id == CLERIC_RECOGNITION_ID
-            || to_explanation.id.starts_with(CLERIC_EXPLANATION_PREFIX);
+            || to_explanation.id.starts_with(CLERIC_EXPLANATION_PREFIX)
+            || CLERIC_TOUCH_OF_GOOD_SHARED_EXPLANATION_IDS.contains(&to_explanation.id.as_str());
         if !is_cleric_pillar {
             continue;
         }
@@ -209,9 +222,12 @@ fn append_class_feature_grants(
 /// explanation id (e.g. `"class_chassis.cleric.channel_energy_dice"` ->
 /// `"channel energy dice"`) — never a hand-typed label naming CRB rule
 /// text this module has not itself verified. Mirrors Barbarian's own
-/// `friendly_name` helper.
+/// `friendly_name` helper. Also strips the shared `class_feature.domain.`
+/// namespace task #64 moved the Good domain's Touch of Good ids to (see
+/// `CLERIC_TOUCH_OF_GOOD_SHARED_EXPLANATION_IDS`'s own doc comment).
 fn friendly_name(id: &str) -> String {
     id.trim_start_matches(CLERIC_EXPLANATION_PREFIX)
         .trim_start_matches("class_chassis.spell_baseline.")
+        .trim_start_matches("class_feature.domain.")
         .replace(['_', '.'], " ")
 }

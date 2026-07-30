@@ -189,29 +189,24 @@ fn paladin_level10_blocker_stays_and_no_bonus_slots_are_fabricated() {
         third.detail
     );
 
-    let blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID)
-        .expect("the partial-caster blocker must still exist at level 10");
-    assert!(blocker.claim_blocking, "the blocker must stay claim-blocking");
-    assert!(
-        !blocker.message.contains("spells-per-day progression"),
-        "the blocker must stop deferring the now-grounded base spells-per-day counts: {}",
-        blocker.message
-    );
-    // When this slice landed, bonus slots and DCs were the unproven remainder;
-    // further SD13-E5 slices grounded the base spell-save-DC arithmetic and the
-    // Charisma bonus-slot counts, so the remainder this control pins is now
-    // lineage, prepared posture, and the base+bonus TOTAL integration.
-    assert!(
-        blocker.message.contains("spell-source lineage")
-            && blocker.message.contains("prepared posture")
-            && (blocker.message.contains("TOTAL") || blocker.message.contains("total")),
-        "the blocker must still name the genuinely-unproven remainder (lineage, prepared \
-         posture, base+bonus TOTAL integration): {}",
-        blocker.message
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional, and its message shape changed entirely
+    // (it's a real, conditional validation now, not a static deferred-work
+    // list naming "lineage"/"prepared posture"/"TOTAL"). PALADIN_LEVEL10_FIXTURE
+    // predates spells_selected (zero prepared), so the posture is genuinely
+    // valid and the blocker correctly does not fire -- the real "base counts
+    // grounded, nothing fabricated" guarantee now comes from the
+    // daily-preparation record's own count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(blocker) => assert!(blocker.claim_blocking, "the blocker must stay claim-blocking"),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 10: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- Negative control: no leak onto other classes -----

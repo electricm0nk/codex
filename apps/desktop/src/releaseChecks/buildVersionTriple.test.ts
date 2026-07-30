@@ -38,14 +38,15 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche moves to 5 (tranche/5 is SD-22's active branch) and major
-  // stays 0 until first main-publish, per decisions.md §2's build-version
-  // responsibility note. The tranche digit only advances when a new
-  // tranche/N branch is cut for the next bundle — not automatically at a
-  // bundle's own closure while still on the same tranche branch (corrected
-  // after Epic 7's closure-epilogue cycle initially bumped this to tranche=6
-  // in error).
-  assert(pkg.startsWith('0.5.'), `version "${pkg}" must move to major=0, tranche=5 on tranche/5`);
+  // Anchor: tranche moves to 6 (tranche/6 is the v0.6 alpha release swarm's
+  // active branch, cut fresh from develop) and major stays 0 until first
+  // main-publish, per decisions.md §2's build-version responsibility note.
+  // The tranche digit only advances when a new tranche/N branch is cut for
+  // the next bundle — not automatically at a bundle's own closure while
+  // still on the same tranche branch (an earlier Epic 7 closure-epilogue
+  // cycle bumped this to tranche=6 in error and it was reverted; this time
+  // the bump is intentional, driven by a real tranche/6 cut).
+  assert(pkg.startsWith('0.6.'), `version "${pkg}" must move to major=0, tranche=6 on tranche/6`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();

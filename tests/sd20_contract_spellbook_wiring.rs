@@ -108,6 +108,7 @@ fn wizard_with_shield_prepared() -> (CharacterInput, SourcePackageContent<'stati
                 source_class_id: "class:wizard".to_string(),
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };
@@ -139,6 +140,7 @@ fn fighter_with_no_spells() -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

@@ -62,7 +62,8 @@
 //! Wizard's/Sorcerer's/Bard's own fix shape.
 
 use codex::rules_core::character_input::{
-    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    AbilityScores, AcquisitionMode, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    SpellSelection,
 };
 use codex::rules_core::level_up::paladin::compute_paladin_level_up_grants;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
@@ -106,6 +107,7 @@ fn paladin_at_level(level: u8) -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -250,7 +252,24 @@ fn partial_caster_unsupported_diagnostic_never_leaks_into_explanations_or_grants
     for from_level in 1..20u8 {
         let to_level = from_level + 1;
         let character = paladin_at_level(to_level);
-        let computation = compute_pilot_base_chassis(&character);
+
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+        // PARTIAL_CASTER_UNSUPPORTED_DIAGNOSTIC_ID is no longer unconditional:
+        // `paladin_at_level`'s bare fixture (zero prepared spells) has a
+        // genuinely valid posture at every level, so the blocker would not
+        // fire at all. This test is specifically about the diagnostic never
+        // leaking into .explanations or a fabricated LevelUpPlan Grant, so a
+        // genuinely invalid preparation (an off-list spell) is added -- to a
+        // clone used only for the chassis computation below, not to
+        // `character` itself, so the level-up grant check further down still
+        // exercises the real, unmodified per-level transition.
+        let mut chassis_input = character.clone();
+        chassis_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: "class:paladin".to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        });
+        let computation = compute_pilot_base_chassis(&chassis_input);
 
         let diagnostic = computation
             .diagnostics
@@ -290,48 +309,67 @@ fn partial_caster_unsupported_diagnostic_never_leaks_into_explanations_or_grants
 }
 
 #[test]
-fn hybrid_spell_and_feature_unsupported_diagnostics_never_leak_into_explanations_or_grants() {
+fn hybrid_spell_unsupported_diagnostic_never_leaks_into_explanations_or_grants() {
     let character = paladin_at_level(1);
     let computation = compute_pilot_base_chassis(&character);
 
-    for diagnostic_id in [
-        HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID,
-        HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID,
-    ] {
-        let diagnostic = computation
-            .diagnostics
-            .iter()
-            .find(|d| d.id == diagnostic_id)
-            .unwrap_or_else(|| {
-                panic!(
-                    "paladin level 1 must still carry the '{diagnostic_id}' claim-blocking \
-                     diagnostic: {:?}",
-                    computation.diagnostics
-                )
-            });
-        assert!(
-            diagnostic.claim_blocking,
-            "'{diagnostic_id}' must stay claim-blocking at paladin level 1"
-        );
-        assert!(
-            !computation.explanations.iter().any(|e| e.id == diagnostic_id),
-            "'{diagnostic_id}' must never appear in .explanations at paladin level 1"
-        );
-    }
+    let diagnostic_id = HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID;
+    // v0.6 alpha swarm (2026-07-28): this blanket diagnostic is now retired --
+    // Paladins have no `CAST:` row in `cr_classes.lst` before class level 4, so a
+    // level-1 Paladin having no spell posture is a satisfied condition, not a gap.
+    // The leak guard below is kept and strengthened: the id must not appear as a
+    // diagnostic, an explanation, OR a fabricated grant.
+    assert!(
+        !computation.diagnostics.iter().any(|d| d.id == diagnostic_id),
+        "the retired '{diagnostic_id}' blocker must not reappear at paladin level 1: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        !computation.explanations.iter().any(|e| e.id == diagnostic_id),
+        "'{diagnostic_id}' must never appear in .explanations at paladin level 1"
+    );
 
     let plan = compute_paladin_level_up_grants(&character, 0, 1);
-    for diagnostic_id in [
-        HYBRID_SPELL_UNSUPPORTED_DIAGNOSTIC_ID,
-        HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID,
-    ] {
-        assert!(
-            !plan
-                .automatic_features
-                .iter()
-                .any(|grant| grant.source_table.column_key == diagnostic_id),
-            "the paladin 0 -> 1 LevelUpPlan must never fabricate a Grant from '{diagnostic_id}': \
-             {:#?}",
-            plan.automatic_features
-        );
-    }
+    assert!(
+        !plan
+            .automatic_features
+            .iter()
+            .any(|grant| grant.source_table.column_key == diagnostic_id),
+        "the paladin 0 -> 1 LevelUpPlan must never fabricate a Grant from '{diagnostic_id}': \
+         {:#?}",
+        plan.automatic_features
+    );
+}
+
+#[test]
+fn hybrid_feature_unsupported_diagnostic_is_retired() {
+    // `class_feature.hybrid.paladin.unsupported` used to fire unconditionally at
+    // paladin level 1, flatly claiming Smite Evil / lay on hands / divine grace /
+    // mercy were unimplemented. It was retired because the per-class decomposition
+    // (`explain_paladin_level1_chassis_and_spell_burden_separation`), dispatched
+    // unconditionally on the exact same input, grounds Smite Evil for real and
+    // grounds lay on hands / divine grace / mercy as correct level-1 absences --
+    // making the blanket "not implemented" claim false, not just redundant. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs` for the direct proof.
+    let character = paladin_at_level(1);
+    let computation = compute_pilot_base_chassis(&character);
+
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the retired '{HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID}' diagnostic must not \
+         reappear: {:?}",
+        computation.diagnostics
+    );
+
+    let plan = compute_paladin_level_up_grants(&character, 0, 1);
+    assert!(
+        !plan.automatic_features.iter().any(|grant| grant.source_table.column_key
+            == HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the paladin 0 -> 1 LevelUpPlan must never fabricate a Grant from the retired \
+         '{HYBRID_FEATURE_UNSUPPORTED_DIAGNOSTIC_ID}': {:#?}",
+        plan.automatic_features
+    );
 }

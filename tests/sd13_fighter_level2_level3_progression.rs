@@ -261,12 +261,34 @@ fn rogue_replacing_the_fighter_chassis_never_leaks_fighter_seams() {
     // `class_chassis.*` explanation. A later SD13-E5 slice
     // (tests/sd13_rogue_level2_progression.rs) widened the Rogue level-1-only
     // gate to level 2 and grounds `class_chassis.rogue.*` records there; this
-    // negative control is superseded, not violated — it now asserts the
-    // narrower, still-true claim: Rogue's own grounded records never carry
-    // the Fighter-only class-feature seams, and the shared
-    // `computation.base_attack_bonus` struct field (the Fighter-chassis
-    // integration point, distinct from the standalone Rogue explanation
-    // records) stays unfabricated for a Rogue chassis.
+    // negative control was superseded once already — it narrowed to: Rogue's
+    // own grounded records never carry the Fighter-only class-feature seams,
+    // and the shared `computation.base_attack_bonus` struct field stayed
+    // unfabricated for a Rogue chassis.
+    //
+    // (v0.6 swarm update, superseded a second time) The v0.6 alpha swarm's
+    // multiclass BAB/save-stacking generalization (task 4) gave Rogue a
+    // genuinely integrated `class_chassis.*` computation via the table-driven
+    // `compute_generic_table_chassis` path, so `computation.base_attack_bonus`
+    // is now Rogue's real, non-fabricated level-2 value (3/4 BAB:
+    // floor(2*3/4) = 1), and the shared `class_chassis.*` / `defense.total_save.*`
+    // explanations now legitimately exist alongside the standalone
+    // `class_chassis.rogue.*` records. With this fixture's full deterministic
+    // Longsword/Chain Shirt/Dodge/Climb-Intimidate-Swim posture (inherited
+    // from the Fighter level-2 fixture this test mutates), Rogue now computes
+    // a fully claim-blocking-free receipt too -- there is no remaining
+    // class-chassis-shaped reason for Rogue to be interchangeable-but-blocked.
+    // What is STILL true, and is this test's actual protective purpose: the
+    // Fighter-only named class-feature seams (level-2 bonus feat, armor
+    // training) never leak onto a Rogue chassis, regardless of how far
+    // Rogue's own generic integration has widened.
+    //
+    // Filed as a defect to backend (not fixed here -- QA does not touch
+    // production code): `combat.baseline_melee_attack_bonus` and
+    // `defense.total_save.*`'s explanation text hardcodes the word "Fighter"
+    // (e.g. "Fighter base attack bonus (+1)") even when the actual computed
+    // chassis is Rogue's. Cosmetic (the numeric values are correct), but
+    // misleading for any tester-facing surface that shows explanation text.
     let mutated =
         LEVEL_2_FIXTURE.replace("class_level=class:fighter:2", "class_level=class:rogue:2");
     assert!(
@@ -277,24 +299,25 @@ fn rogue_replacing_the_fighter_chassis_never_leaks_fighter_seams() {
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "Rogue chassis must remain claim-blocked: {:?}",
+        !computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "Rogue chassis with a fully matching deterministic posture is now genuinely computed, \
+         with no remaining claim-blocking diagnostic: {:?}",
         computation.diagnostics
     );
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "Rogue must not fabricate the shared Fighter-chassis base_attack_bonus struct field; \
-         Rogue's own base-attack explanation is a standalone record, not wired into it"
+        computation.base_attack_bonus, 1,
+        "Rogue level 2's real 3/4-BAB progression (floor(2*3/4)) is 1, now genuinely integrated \
+         into the shared base_attack_bonus struct field"
     );
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.") && !e.id.starts_with("class_chassis.rogue.")),
-        "Rogue chassis must withhold every non-Rogue-namespaced chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "the shared, non-Rogue-namespaced class_chassis.base_attack_bonus explanation now \
+         legitimately exists for an integrated Rogue chassis: {:?}",
         computation.explanations
     );
-    // The Fighter-only class-feature seams must not leak onto a Rogue chassis.
+    // The Fighter-only class-feature seams must still never leak onto a Rogue chassis --
+    // this is the invariant this test actually protects, independent of how far Rogue's
+    // own generic chassis integration has widened.
     assert!(
         !has_explanation(&computation, "class_feature.fighter.level_2_bonus_feat"),
         "Rogue must not surface the Fighter level-2 bonus-feat seam"

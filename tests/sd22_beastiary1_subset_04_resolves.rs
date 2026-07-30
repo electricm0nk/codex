@@ -34,10 +34,10 @@ fn choker_resolves_via_ruleset_bestiary1() {
     assert_eq!(monster.race_type, "Aberration");
     assert_eq!(monster.race_subtype, None);
     assert_eq!(monster.source_page, "p.45");
-    assert!(
-        monster.natural_attacks.is_empty(),
-        "Tentacle is an ABILITY:Internal cross-reference, not a NATURALATTACKS: token"
-    );
+    // The Tentacle is named by an `ABILITY:Internal` cross-reference
+    // rather than a `NATURALATTACKS:` token, so its dice are grounded
+    // from published values rather than transcribed.
+    assert!(monster.natural_attacks.iter().any(|a| a.name == "Tentacle" && a.damage_dice == "1d4"));
 }
 
 #[test]
@@ -97,25 +97,31 @@ fn dark_creeper_returns_none_for_ruleset_apg_acg_crb() {
 }
 
 /// Choker, Crocodile, and Dark Creeper all carry no `NATURALATTACKS:`
-/// token on their real row (each fights via an `ABILITY:Internal`
-/// cross-reference or manufactured weapons instead) — same "no natural
-/// attack" shape subset 01's Gnoll/Wolf and subset 03's Boar/Bugbear
-/// already proved. Iron Cobra and Morlock DO carry real
-/// `NATURALATTACKS:` tokens (Morlock's is pipe-separated, two-attack).
+/// token on their real row — but only **Dark Creeper** is genuinely
+/// attack-less. This test originally asserted all three were empty,
+/// conflating "the row has no `NATURALATTACKS:` token" with "the monster
+/// has no attack". Choker and Crocodile both really fight with natural
+/// weapons; their rows merely name them by cross-reference, so their
+/// dice are grounded (`natural_attack_provenance`). Iron Cobra and
+/// Morlock DO carry real `NATURALATTACKS:` tokens (Morlock's is
+/// pipe-separated, two-attack).
 #[test]
-fn choker_crocodile_dark_creeper_have_no_natural_attacks_iron_cobra_and_morlock_do() {
+fn choker_and_crocodile_have_grounded_attacks_while_dark_creeper_is_a_genuine_weapon_user() {
     let choker = monster_resolve(MonsterId::Choker, RuleSetId::Bestiary1)
         .expect("Choker should resolve via RuleSetId::Bestiary1");
-    assert!(choker.natural_attacks.is_empty());
+    assert!(choker.natural_attacks.iter().any(|a| a.name == "Tentacle" && a.damage_dice == "1d4"));
 
     let crocodile = monster_resolve(MonsterId::Crocodile, RuleSetId::Bestiary1)
         .expect("Crocodile should resolve via RuleSetId::Bestiary1");
-    assert!(crocodile.natural_attacks.is_empty());
+    assert!(crocodile.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d8"));
+    // The Tail Slap is the one attack in this pass recovered from a real
+    // cross-file corpus token (`b1_abilities_race.lst:248`), not the web.
+    assert!(crocodile.natural_attacks.iter().any(|a| a.name == "Tail Slap" && a.damage_dice == "1d12"));
     assert_eq!(crocodile.size, "L");
 
     let dark_creeper = monster_resolve(MonsterId::DarkCreeper, RuleSetId::Bestiary1)
         .expect("Dark Creeper should resolve via RuleSetId::Bestiary1");
-    assert!(dark_creeper.natural_attacks.is_empty());
+    assert!(dark_creeper.natural_attacks.is_empty(), "Dark Creeper is a weapon user; its empty list is correct, not a gap");
     assert_eq!(dark_creeper.race_subtype.as_deref(), Some("Dark Folk"));
 
     let iron_cobra = monster_resolve(MonsterId::IronCobra, RuleSetId::Bestiary1)

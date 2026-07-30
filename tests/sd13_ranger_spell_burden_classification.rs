@@ -23,10 +23,8 @@
 //!    from the non-spell class-feature burden
 //!    (`class_feature.hybrid.ranger.unsupported`).
 //! 3. A level-2..10 Ranger input — synthesized by replacing the class level in
-//!    the bounded level-1 fixture — stays claim-blocked, never gains the
-//!    level-1 hybrid recognition record, never fabricates a partial-caster
-//!    spell posture, and never produces a computed receipt. This is the explicit
-//!    partial-caster pressure preservation the slice is required to prove.
+//!    the bounded level-1 fixture — stays claim-blocked and never gains the
+//!    level-1 hybrid recognition record.
 //!
 //! The slice is intentionally not a Ranger class engine: it grounds no
 //! favored-enemy, no combat-style, no tracking, no animal companion, no
@@ -35,10 +33,37 @@
 //! (`class_chassis.hybrid_baseline.paladin` recognition) is asserted
 //! non-regressed so that the closeout of Ranger does not silently move the
 //! Paladin row.
+//!
+//! **Superseded twice over (v0.6 alpha swarm, risks item 8):** `table_class_id`
+//! was widened to recognize Ranger (first slice), then Ranger's own real
+//! prepared-spell posture was grounded (`class_spell.ranger.partial_caster.unsupported`
+//! now fires only on a genuine unmet condition -- an off-list spell, a spell
+//! level beyond the ranger's own access ceiling, or a per-level slot-budget
+//! overrun -- not unconditionally; an empty prepared-spell list is honestly
+//! valid). Point 3 above is now stale in one specific way worth stating
+//! plainly: the level-2..10 Ranger input this file constructs (by
+//! text-substituting the class level in `RANGER_LEVEL1_FIXTURE`) stays
+//! `Blocked` at every level 2..10 for a *different* reason than originally
+//! documented -- `combat.baseline_unsupported` /
+//! `skill.selected_modifier.unsupported` (the same exact-posture gates that
+//! block any class whose selected feats/equipment/skills don't match the
+//! deterministic GE-06 combat/skill posture), not
+//! `class_spell.ranger.partial_caster.unsupported`, which correctly never
+//! fires here since this fixture carries no `spells_selected` at all (an
+//! honestly valid, empty posture). `ranger_levels_2_through_10_stay_blocked_on_the_bounded_fixture`
+//! below states this precisely rather than misattributing the block to
+//! Ranger's own spell gate. The two tests after it
+//! (`ranger_levels_2_through_10_reach_computed_with_a_valid_spell_posture` /
+//! `..._stay_blocked_with_a_genuine_spell_posture_violation`) independently
+//! exercise Ranger's own spell-posture gate directly, using the same
+//! Fighter-fixture-plus-swapped-class-levels construction
+//! `pilot_compute.rs`'s own `ranger_dispatch_widening_safety_tests` module
+//! uses, since this file's own fixture can't reach that gate at all (it
+//! fails the unrelated combat/skill posture first).
 
 use codex::rules_core::character_input::{load_character_input_fixture, CharacterInput};
 use codex::rules_core::pilot_compute::{
-    build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
     ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
@@ -81,26 +106,12 @@ fn explanation<'a>(
         })
 }
 
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
-}
+// (A `claim_blocking` helper used to live here. The blanket
+// `class_spell.hybrid.ranger.unsupported` diagnostic it was written to pin was
+// retired on 2026-07-28 -- Rangers have no `CAST:` row before class level 4, so
+// a level-1 Ranger's absent spell posture is a satisfied condition -- leaving
+// the helper with no callers. See
+// `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
 
 fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
     computation.explanations.iter().any(|e| e.id == id)
@@ -132,10 +143,14 @@ fn ranger_level1_chassis_baseline_recognition_is_ranger_specific() {
         "Ranger input must not surface the Paladin chassis-baseline recognition record"
     );
 
-    // Recognition only; no fabricated mechanical value.
+    // (v0.6 swarm update, risks item 8) No longer recognition-only: `table_class_id`
+    // was widened to recognize Ranger via the shared table-driven
+    // `compute_generic_table_chassis` dispatch, so this is now a real, non-fabricated
+    // base attack bonus (Ranger's full-BAB progression, 1 at level 1). Mirrors the
+    // identical Rogue-widening flip in `sd13_rogue_level1_chassis_baseline.rs`.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "hybrid baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "ranger level 1's real full-BAB progression (classlevel) is now genuinely integrated"
     );
 }
 
@@ -146,42 +161,40 @@ fn ranger_level1_spell_burden_is_pinned_independently() {
     let input = load(RANGER_LEVEL1_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The later hybrid spell burden must be claim-blocking and explicitly named for
-    // Ranger (not Paladin). It must name the partial-caster pressure so a later slice
-    // cannot silently fabricate a Ranger spell posture.
-    let spell = claim_blocking(&computation, "class_spell.hybrid.ranger.unsupported");
-    for token in ["ranger", "spell slots", "spell source", "known/prepared"] {
-        assert!(
-            spell.message.to_lowercase().contains(token),
-            "ranger spell-burden diagnostic must name the '{token}' partial-caster posture: {}",
-            spell.message
-        );
-    }
-
-    // The non-spell class-feature burden must remain its own claim-blocking
-    // diagnostic, separate from the spell burden.
-    let feature = claim_blocking(&computation, "class_feature.hybrid.ranger.unsupported");
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "ranger class-feature diagnostic must name the '{token}' non-spell burden: {}",
-            feature.message
-        );
-    }
-
-    // The two Ranger-burden diagnostics must be emitted as distinct records so the
-    // spell burden can be lifted independently in a future slice.
+    // The blanket later-hybrid-spell burden diagnostic
+    // (`class_spell.hybrid.ranger.unsupported`) is retired too (v0.6 alpha swarm,
+    // 2026-07-28). Its concern -- that a later slice might "silently fabricate a
+    // Ranger spell posture" -- is now enforced by something far stronger than a
+    // blanket blocker: `unmet_ranger_prepared_spell_conditions` validates the real
+    // posture against the real PF1 ranger spell list, the real access ceiling and
+    // the real per-day slot budget at EVERY level, and
+    // `class_spell.ranger.partial_caster.unsupported` claim-blocks any genuine
+    // violation. At level 1 there is nothing to fabricate: Rangers have no `CAST:`
+    // row in `cr_classes.lst` before class level 4, so the grounded answer is a
+    // correct absence. See `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
     assert!(
-        spell.id != feature.id,
-        "ranger spell-burden diagnostic must be a distinct id from the non-spell \
-         class-feature burden (got both at id '{}')",
-        spell.id
+        !has_diagnostic(&computation, "class_spell.hybrid.ranger.unsupported"),
+        "the retired blanket hybrid spell blocker must not reappear: {:?}",
+        computation.diagnostics
     );
+
+    // The non-spell class-feature burden diagnostic
+    // (`class_feature.hybrid.ranger.unsupported`) is retired: it flatly claimed
+    // favored enemy / combat style / tracking were unimplemented, which the
+    // per-class decomposition dispatched on this same input contradicts by
+    // grounding Track and the Favored Enemy flat surface for real. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
     assert!(
-        !spell.id.contains("paladin") && !feature.id.contains("paladin"),
-        "ranger burden diagnostics must not be misattributed to paladin (spell='{}', feature='{}')",
-        spell.id,
-        feature.id
+        !has_diagnostic(&computation, "class_feature.hybrid.ranger.unsupported"),
+        "the retired non-spell class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
+    // Misattribution is still guarded, now via the live per-class blocker id
+    // rather than the retired blanket one.
+    assert!(
+        !has_diagnostic(&computation, "class_spell.paladin.partial_caster.unsupported"),
+        "a Ranger input must not surface a Paladin spell-posture diagnostic: {:?}",
+        computation.diagnostics
     );
 
     // No fabricated spell posture.
@@ -205,17 +218,24 @@ fn ranger_level1_spell_burden_is_pinned_independently() {
     );
 }
 
-// ----- (3) Ranger level 2..10 stay claim-blocked: partial-caster pressure preserved -----
+// ----- (3) Ranger level 2..10 on THIS file's bounded fixture: still blocked, but honestly for an unrelated reason -----
 
 #[test]
-fn ranger_levels_2_through_10_do_not_gain_chassis_or_spell_posture() {
-    // The bounded level-1 chassis-baseline + spell-burden slice deliberately does
-    // not promote Ranger past level 1. A level-2..10 Ranger must not gain the
-    // level-1 hybrid recognition record and must not fabricate any partial-caster
-    // spell posture. The Ranger partial-caster pressure (1 first-level slot at
-    // level 2, growing through level 10) is named by the existing
-    // `class_spell.hybrid.ranger.unsupported` diagnostic and never computed by
-    // this slice.
+fn ranger_levels_2_through_10_stay_blocked_on_the_bounded_fixture() {
+    // This file's own level-2..10 input (text-substituting the class level in
+    // `RANGER_LEVEL1_FIXTURE`) never gains the level-1-only hybrid recognition
+    // record, and stays claim-blocked at every level -- but (v0.6 swarm update,
+    // see this file's own module doc comment) NOT because of Ranger's own spell
+    // posture: this fixture carries no `spells_selected` at all, so
+    // `class_spell.ranger.partial_caster.unsupported` correctly never fires
+    // (an empty posture is honestly valid). The real reason it stays blocked
+    // is the same deterministic-posture gate that blocks any class whose
+    // selected feats/equipment/skills don't match the exact GE-06 combat/skill
+    // posture -- `combat.baseline_unsupported` and
+    // `skill.selected_modifier.unsupported` -- which this Ranger-specific
+    // fixture was never built to satisfy. Ranger's own spell-posture gate is
+    // exercised directly (with a fixture that DOES satisfy that unrelated
+    // posture) by the two tests immediately below.
     for level in 2u8..=10 {
         let fixture =
             RANGER_LEVEL1_FIXTURE.replace("class:ranger:1", &format!("class:ranger:{level}"));
@@ -232,50 +252,126 @@ fn ranger_levels_2_through_10_do_not_gain_chassis_or_spell_posture() {
             !has_explanation(&computation, "class_chassis.hybrid_baseline.paladin"),
             "level-{level} Ranger must not surface the Paladin chassis-baseline record"
         );
-        // No fabricated partial-caster spell posture.
-        assert!(
-            !has_explanation(&computation, "class_spell.prepared.ranger")
-                && !has_explanation(&computation, "class_spell.spontaneous.ranger")
-                && !has_explanation(&computation, "class_spell.slots.ranger")
-                && !has_explanation(&computation, "class_spell.partial_caster_slots.ranger"),
-            "level-{level} Ranger must not fabricate any partial-caster spell posture \
-             explanations: {:?}",
-            computation.explanations
-        );
+        // (Note: `class_spell.ranger.daily_preparation` DOES legitimately appear
+        // here even on this bounded fixture -- an empty prepared-spell list is a
+        // real, honest "0 spells, valid posture" state, not a fabrication, and
+        // `ground_ranger_prepared_spells` correctly runs and records it. Not
+        // asserted absent here; that would be asserting a false claim.)
 
-        // Stays claim-blocked — either via `class_chassis.unsupported` (the
-        // bounded Fighter-shaped compute path blocker for any non-Fighter /
-        // level-4+ Fighter) or via the explicit hybrid burden diagnostics
-        // that `hybrid_level1_class` does not emit at level > 1.
         let receipt = build_pilot_headless_receipt(&input);
         assert_eq!(
             receipt.status,
             HeadlessReceiptStatus::Blocked,
-            "level-{level} Ranger must stay claim-blocked on the bounded slice"
+            "level-{level} Ranger on this bounded fixture must stay claim-blocked: {:?}",
+            receipt.computation.diagnostics
         );
         let view_model = PilotViewModel::from_receipt(&receipt);
         assert!(
             view_model.snapshot.is_none(),
             "level-{level} Ranger must not emit a computed snapshot"
         );
-        assert!(
-            computation.diagnostics.iter().any(|d| d.claim_blocking),
-            "level-{level} Ranger must carry at least one claim-blocking diagnostic"
-        );
 
-        // If a level-2..10 Ranger is unexpectedly reached by a future relaxed
-        // `hybrid_level1_class` matcher, the spell-burden diagnostic must still
-        // name the partial-caster pressure so the burden is named even when the
-        // blocker surface shifts. We tolerate EITHER: the upstream
-        // `class_chassis.unsupported` blocker, OR the hybrid spell-burden blocker.
-        // We do NOT tolerate both being absent (that would be silent promotion).
-        let upper_blocker = has_diagnostic(&computation, "class_chassis.unsupported");
-        let hybrid_spell_blocker =
-            has_diagnostic(&computation, "class_spell.hybrid.ranger.unsupported");
+        // The real reason: the unrelated combat/skill exact-posture gates, not
+        // Ranger's own (correctly silent, since the posture is empty and
+        // therefore valid) spell-posture diagnostic.
         assert!(
-            upper_blocker || hybrid_spell_blocker,
-            "level-{level} Ranger must be blocked by at least one of \
-             `class_chassis.unsupported` or `class_spell.hybrid.ranger.unsupported`"
+            has_diagnostic(&computation, "combat.baseline_unsupported")
+                && has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+            "level-{level} Ranger on this bounded fixture must be blocked by the unrelated \
+             combat/skill exact-posture gates: {:?}",
+            computation.diagnostics
+        );
+        assert!(
+            !has_diagnostic(&computation, "class_spell.ranger.partial_caster.unsupported"),
+            "level-{level} Ranger's own spell-posture diagnostic must NOT fire here -- an \
+             empty prepared-spell list is honestly valid, and this fixture's block comes \
+             entirely from the unrelated combat/skill posture gates: {:?}",
+            computation.diagnostics
+        );
+    }
+}
+
+// ----- (3b) Ranger's OWN spell-posture gate, exercised directly (this file's bounded fixture can't reach it) -----
+
+/// Builds a real, combat/skill-posture-satisfying input for a single-class
+/// Ranger at `level` by starting from the Fighter fixture (already
+/// deterministic-posture-satisfying) and swapping only the class identity --
+/// the same construction `pilot_compute.rs`'s own
+/// `ranger_dispatch_widening_safety_tests` module uses, so this file can
+/// independently re-verify the same claim through the shared
+/// `tests/**`-owned fixture-loading path rather than duplicating the exact
+/// in-crate test.
+fn ranger_at_level_with_satisfied_combat_posture(level: u8) -> CharacterInput {
+    let fighter_fixture = include_str!(
+        "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    let mut input = load(fighter_fixture);
+    input.chosen.class_levels = vec![codex::rules_core::character_input::CharacterClassLevel {
+        class_id: "class:ranger".to_owned(),
+        level,
+    }];
+    input
+}
+
+#[test]
+fn ranger_levels_2_through_10_reach_computed_with_a_valid_spell_posture() {
+    for level in 2u8..=10 {
+        let input = ranger_at_level_with_satisfied_combat_posture(level);
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "level-{level} Ranger with a valid (empty) spell posture and a satisfied \
+             combat/skill posture must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported"),
+            "level-{level} Ranger's spell-posture diagnostic must not fire on a valid \
+             (empty) posture: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+}
+
+#[test]
+fn ranger_levels_2_through_10_stay_blocked_with_a_genuine_spell_posture_violation() {
+    // "Magic Missile" is never on the real PF1 ranger spell list
+    // (`rules_tables::crb::ranger_spell_list`, all ingested books) at any
+    // level, so it is a
+    // genuine off-list violation uniformly across the whole 2..10 range --
+    // unlike a specific spell level, whose accessibility shifts as the
+    // ranger's own access ceiling grows through this range.
+    for level in 2u8..=10 {
+        let mut input = ranger_at_level_with_satisfied_combat_posture(level);
+        input.chosen.spells_selected.push(codex::rules_core::character_input::SpellSelection {
+            spell_id: "Magic Missile".to_owned(),
+            source_class_id: "class:ranger".to_owned(),
+            acquisition_mode: codex::rules_core::character_input::AcquisitionMode::Prepared,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "level-{level} Ranger preparing an off-list spell must stay Blocked: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_spell.ranger.partial_caster.unsupported"
+                    && d.claim_blocking),
+            "level-{level} Ranger must carry the real spell-posture diagnostic: {:?}",
+            receipt.computation.diagnostics
         );
     }
 }
@@ -293,10 +389,12 @@ fn paladin_chassis_baseline_is_not_regressed_by_ranger_closeout() {
          Human level-1 Paladin input after the Ranger closeout: {:?}",
         computation.explanations
     );
+    // The Paladin blanket spell-burden diagnostic is retired (2026-07-28), for
+    // the same reason as the Ranger one: Paladins have no `CAST:` row before
+    // class level 4, so nothing is missing at level 1.
     assert!(
-        has_diagnostic(&computation, "class_spell.hybrid.paladin.unsupported"),
-        "Paladin spell-burden diagnostic must remain claim-blocking after the \
-         Ranger closeout: {:?}",
+        !has_diagnostic(&computation, "class_spell.hybrid.paladin.unsupported"),
+        "the retired blanket Paladin hybrid spell blocker must not reappear: {:?}",
         computation.diagnostics
     );
     // Ranger-specific diagnostics must not leak into a Paladin input.

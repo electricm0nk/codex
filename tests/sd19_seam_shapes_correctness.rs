@@ -147,6 +147,7 @@ fn base_input() -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -287,6 +288,7 @@ fn end_to_end_seam_call_over_all_13_fixtures_is_non_empty_and_preserves_base_cha
                 item_id: item_key.to_string(),
                 equipped_or_active: true,
                 active_state: codex::rules_core::character_input::ActiveState::EquippedActive,
+                applied_modifiers: Vec::new(),
             });
     }
 

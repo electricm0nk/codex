@@ -100,6 +100,7 @@ fn base_fighter_input(equipment_selections: Vec<EquipmentSelection>) -> Characte
             equipment_selections,
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -110,6 +111,7 @@ fn equipped(item_id: &str) -> EquipmentSelection {
         item_id: item_id.to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     }
 }
 

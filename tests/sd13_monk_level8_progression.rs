@@ -325,36 +325,42 @@ fn monk_level8_slow_fall_reach_rises_to_forty_feet() {
 
 // ----- Wholeness of Body is still deliberately NOT fabricated at level 8 -----
 
+/// Wholeness of Body IS grounded from task #36 onward. The earlier guard
+/// asserted the OLD bar, demanding a healing engine that the corrected
+/// bar (risks item 52) no longer requires for a standalone magnitude.
 #[test]
-fn monk_level8_does_not_fabricate_a_wholeness_of_body_record() {
+fn monk_level8_grounds_wholeness_of_body_as_a_flat_record() {
     let input = load(MONK_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.to_lowercase().contains("wholeness")),
-        "Wholeness of Body must not be fabricated as a flat record at level 8: {:?}",
-        computation.explanations
-    );
+    let fact = computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "class_chassis.monk.wholeness_of_body")
+        .expect("Wholeness of Body must be grounded at monk level 8");
+    assert_eq!(fact.value, 8, "heals MonkLVL hp: {:?}", fact);
 }
 
 // ----- High Jump is still deliberately NOT grounded at level 8 -----
 
+/// High Jump IS grounded from task #36 onward. The earlier guard here
+/// asserted the OLD standalone-grounding bar, and was stale on two
+/// counts: it demanded an "Acrobatics-check-total engine" that the
+/// corrected bar (risks item 52) no longer requires for a standalone
+/// fact, and it cited the ki cost as blocking the whole ability when the
+/// corpus record's own DESC scopes the ki spend to a SEPARATE +20 clause.
+/// The flat +MonkLVL is unconditional; only the +20 boost stays deferred.
 #[test]
-fn monk_level8_does_not_fabricate_a_high_jump_record() {
+fn monk_level8_grounds_high_jump_as_a_flat_record() {
     let input = load(MONK_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.to_lowercase().contains("high_jump")),
-        "High Jump must not be fabricated as a flat record at level 8: {:?}",
-        computation.explanations
-    );
+    let fact = computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "class_chassis.monk.high_jump")
+        .expect("High Jump must be grounded at monk level 8");
+    assert_eq!(fact.value, 8, "High Jump is a flat +MonkLVL: {:?}", fact);
 }
 
 // ----- No Improved Uncanny Dodge / new class-feature record is fabricated at level 8 -----

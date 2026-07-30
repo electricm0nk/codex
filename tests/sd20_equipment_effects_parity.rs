@@ -293,6 +293,7 @@ fn equipment_effects_arms_armor_parity_fixture_round_trips_through_the_real_engi
                 item_id: entry.get("item_id").as_str().to_owned(),
                 equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
                 active_state,
+                applied_modifiers: Vec::new(),
             }
         })
         .collect();

@@ -30,11 +30,14 @@
 //!   the Flurry of Blows attack count rises 2 -> 3 in the same transition
 //!   (both verified independently against `tests/sd13_monk_level8_progression.rs`).
 //! - level 10 -> 11: Diamond Body newly granted.
-//! - level 12 -> 13: `MAX_SUPPORTED_MONK_LEVEL` (`pilot_compute.rs`) is 12;
-//!   a transition past that ceiling honestly produces an empty
-//!   `automatic_features` (no fabricated data), mirroring Druid's own
-//!   `MAX_SUPPORTED_DRUID_LEVEL` bounded-ceiling idiom, while
-//!   `capstone_threshold` still correctly reports false (13 < 20).
+//! - level 12 -> 13: task #49 widened `MAX_SUPPORTED_MONK_LEVEL`
+//!   (`pilot_compute.rs`) from 12 to 20, so this transition now genuinely
+//!   grants Diamond Soul (spell resistance = 10 + monk level) rather than
+//!   honestly producing an empty plan -- the old ceiling test is flipped to
+//!   a positive assertion below, mirroring how
+//!   `tests/sd13_monk_level9_progression.rs`'s own level-10 boundary was
+//!   flipped once a later slice widened past it. `capstone_threshold`
+//!   still correctly reports false at 13 (< 20).
 
 use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
@@ -64,6 +67,7 @@ fn human_monk_input(level: u8) -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -272,20 +276,63 @@ fn monk_level_10_to_11_grants_diamond_body() {
 }
 
 #[test]
-fn monk_level_12_to_13_honestly_produces_no_grants_beyond_the_grounded_ceiling() {
-    // pilot_compute.rs's own MAX_SUPPORTED_MONK_LEVEL is 12; a transition
-    // whose to_level exceeds that ceiling must not fabricate data.
+fn monk_level_12_to_13_grants_diamond_soul_now_that_the_ceiling_is_widened() {
+    // Task #49 widened pilot_compute.rs's own MAX_SUPPORTED_MONK_LEVEL from
+    // 12 to 20 (and class_tables.rs's mirrored Monk max_supported_level to
+    // match), so this transition is no longer past the grounded ceiling:
+    // Diamond Soul (13th-level, spell resistance = 10 + monk level) is a
+    // real new grant.
     let character = human_monk_input(12);
     let plan = compute_level_up_grants(&character, 12, 13);
 
-    assert!(
-        plan.automatic_features.is_empty(),
-        "level 13 exceeds MAX_SUPPORTED_MONK_LEVEL=12; no monk chassis data exists there, so no \
-         grant may be fabricated: {:?}",
+    let grant = |name_fragment: &str| {
         plan.automatic_features
+            .iter()
+            .find(|grant| grant.name.contains(name_fragment))
+    };
+
+    let diamond_soul_grant = grant("diamond soul").unwrap_or_else(|| {
+        panic!("expected a diamond_soul_spell_resistance grant at level 13: {:?}", plan.automatic_features)
+    });
+    assert_eq!(
+        diamond_soul_grant.effects[0].value, 23,
+        "monk level 13 Diamond Soul spell resistance is 10 + 13 = 23"
     );
-    assert!(plan.resource_pool_change.pools.is_empty());
+    assert!(
+        diamond_soul_grant.effects[0]
+            .description
+            .contains("granted at monk level 13"),
+        "diamond soul grant must cite the real grounded explanation text: {:?}",
+        diamond_soul_grant.effects[0]
+    );
+
     assert!(!plan.capstone_threshold, "level 13 has not yet crossed the level-20 capstone");
+}
+
+#[test]
+fn monk_level_19_to_20_grants_perfect_self_dr_and_crosses_the_capstone() {
+    // Perfect Self's DR was previously provably dead code under the old
+    // MAX_SUPPORTED_MONK_LEVEL = 12 ceiling (level 20 was never reachable at
+    // all); task #49 widens the ceiling to 20, making this a real,
+    // independently re-derived grant rather than a fabricated one.
+    let character = human_monk_input(19);
+    let plan = compute_level_up_grants(&character, 19, 20);
+
+    let grant = |name_fragment: &str| {
+        plan.automatic_features
+            .iter()
+            .find(|grant| grant.name.contains(name_fragment))
+    };
+
+    let perfect_self_grant = grant("perfect self damage reduction").unwrap_or_else(|| {
+        panic!("expected a perfect_self_damage_reduction grant at level 20: {:?}", plan.automatic_features)
+    });
+    assert_eq!(
+        perfect_self_grant.effects[0].value, 10,
+        "monk level 20 Perfect Self grants DR 10/chaotic"
+    );
+
+    assert!(plan.capstone_threshold, "level 20 must cross the universal PF1 capstone");
 }
 
 #[test]

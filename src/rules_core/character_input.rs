@@ -27,6 +27,43 @@ pub struct ChosenCharacterState {
     /// lines — every pre-SD-19 fixture and construction site keeps
     /// compiling and passing unmodified.
     pub spells_selected: Vec<SpellSelection>,
+    /// Combat-time class-ability activations declared for this specific
+    /// computed snapshot (e.g. "is the barbarian currently raging").
+    /// v0.6 alpha swarm, risks item 8 (combat-time activation state
+    /// scoping). Defaults to empty via fixtures that omit `activation=`
+    /// lines — every pre-existing fixture and construction site keeps
+    /// compiling and passing unmodified.
+    pub class_ability_activations: Vec<ClassAbilityActivation>,
+}
+
+/// One class ability's declared activation state and rounds-per-day
+/// consumption for this specific computed snapshot (e.g. Barbarian Rage,
+/// Bard Bardic Performance). Represented only; no ability effect is
+/// computed here -- mirrors `EquipmentSelection`'s own
+/// representation-only shape exactly.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ClassAbilityActivation {
+    /// e.g. "rage", "bardic_performance" -- the same flat compound-string
+    /// id idiom as `feat:weapon_focus:weapon:longsword` elsewhere in this
+    /// module, not a per-class enum. Any pillar that reads this field for
+    /// a given `ability_id` must first confirm the character's own
+    /// `class_levels` actually contains that ability's owning class
+    /// before applying anything -- this type carries no such validation
+    /// itself, the same way `SpellSelection.source_class_id` is a bare,
+    /// unvalidated string here too.
+    pub ability_id: String,
+    /// Reuses `ActiveState` directly (the same enum `EquipmentSelection`
+    /// uses) rather than introducing a class-ability-specific duplicate:
+    /// `EquippedActive` means "active for this computed snapshot",
+    /// `Absent` means no activation is declared at all, and
+    /// `SelectedInactive` means chosen/available but not active this
+    /// snapshot (mirrors Power Attack's own existing use of this variant).
+    pub active_state: ActiveState,
+    /// Rounds of the ability's own already-grounded rounds-per-day budget
+    /// consumed so far today. `None` for abilities with no per-day budget
+    /// (there are none among Rage/Bardic Performance, but this field
+    /// should not assume every future ability has one).
+    pub rounds_consumed_today: Option<u16>,
 }
 
 /// One spell a class knows, has prepared, or has been granted. SD-19.
@@ -88,6 +125,12 @@ pub struct EquipmentSelection {
     /// equipped/active, absent, and selected-but-inactive. This represents the
     /// chosen state only; it does not compute any equipment effect.
     pub active_state: ActiveState,
+    /// item_ids of equipmods-category items applied to this specific selection
+    /// (e.g. "Special Ability ~ +1 ~ Weapon" on a Longsword selection), mirroring
+    /// PCGen's own single-entry `CUSTOMIZATION:EQMOD=` convention: an applied
+    /// equipmod has no separate top-level `equipment_selections` entry of its
+    /// own -- it lives on the weapon/armor selection it modifies.
+    pub applied_modifiers: Vec<String>,
 }
 
 /// The chosen active state of a selection for baseline outputs. Represented only;
@@ -151,6 +194,7 @@ struct ParsedFixture {
     equipment_selections: Vec<EquipmentSelection>,
     selected_choices: Vec<SelectedChoice>,
     spells_selected: Vec<SpellSelection>,
+    class_ability_activations: Vec<ClassAbilityActivation>,
     selection_provenance: Vec<SelectionProvenance>,
     diagnostics: Vec<CharacterInputDiagnostic>,
 }
@@ -202,6 +246,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
                     equipment_selections: parsed.equipment_selections,
                     selected_choices: parsed.selected_choices,
                     spells_selected: parsed.spells_selected,
+                    class_ability_activations: parsed.class_ability_activations,
                 },
                 selection_provenance: parsed.selection_provenance,
             }),
@@ -225,8 +270,10 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "feat" => parsed.selected_feats.push(value.to_owned()),
         "skill" => apply_skill_allocation(value, parsed),
         "equipment" => apply_equipment_selection(value, parsed),
+        "equipment_modifier" => apply_equipment_modifier(value, parsed),
         "choice" => apply_selected_choice(value, parsed),
         "spell" => apply_spell_selection(value, parsed),
+        "activation" => apply_class_ability_activation(value, parsed),
         "provenance" => parsed.selection_provenance.push(SelectionProvenance {
             source_ref: value.to_owned(),
         }),
@@ -351,7 +398,41 @@ fn apply_equipment_selection(value: &str, parsed: &mut ParsedFixture) {
         item_id: item_id.to_owned(),
         equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
         active_state,
+        applied_modifiers: Vec::new(),
     });
+}
+
+fn apply_equipment_modifier(value: &str, parsed: &mut ParsedFixture) {
+    // Same last-colon convention as `apply_equipment_selection`: item_id may
+    // contain its own colon (e.g. "item:longsword"), the modifier item_id does
+    // not, so the boundary is the final colon in the value.
+    let Some((item_id, modifier_item_id)) = value.rsplit_once(':') else {
+        parsed.diagnostics.push(diagnostic(
+            "equipment_selections",
+            format!(
+                "invalid character input equipment modifier '{value}' is missing a modifier item id"
+            ),
+        ));
+        return;
+    };
+
+    let Some(selection) = parsed
+        .equipment_selections
+        .iter_mut()
+        .find(|selection| selection.item_id == item_id)
+    else {
+        parsed.diagnostics.push(diagnostic(
+            "equipment_selections",
+            format!(
+                "invalid character input equipment modifier '{value}' has no matching \
+                 equipment selection for '{item_id}' -- the 'equipment_modifier' line must \
+                 come after its 'equipment' line"
+            ),
+        ));
+        return;
+    };
+
+    selection.applied_modifiers.push(modifier_item_id.to_owned());
 }
 
 fn active_state_from_token(state: &str) -> Option<ActiveState> {
@@ -416,6 +497,65 @@ fn acquisition_mode_from_token(token: &str) -> Option<AcquisitionMode> {
         "granted" => Some(AcquisitionMode::Granted),
         _ => None,
     }
+}
+
+/// Parses `activation=<ability_id>:<state>[:<rounds>]`. Unlike
+/// `apply_spell_selection`'s edge-parse (whose middle segment,
+/// `source_class_id`, conventionally contains its own colon), `ability_id`
+/// values ("rage", "bardic_performance") never do, so a plain
+/// front-to-back split is unambiguous here.
+fn apply_class_ability_activation(value: &str, parsed: &mut ParsedFixture) {
+    let malformed = || {
+        diagnostic(
+            "class_ability_activations",
+            format!(
+                "invalid character input activation '{value}' must have at least 2 \
+                 colon-separated parts (ability_id:state[:rounds_consumed_today])"
+            ),
+        )
+    };
+
+    let mut parts = value.splitn(3, ':');
+    let Some(ability_id) = parts.next().filter(|s| !s.is_empty()) else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+    let Some(state_token) = parts.next() else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+    let Some(active_state) = active_state_from_token(state_token) else {
+        parsed.diagnostics.push(diagnostic(
+            "class_ability_activations",
+            format!(
+                "invalid character input activation '{value}' has an unsupported active state"
+            ),
+        ));
+        return;
+    };
+
+    let rounds_consumed_today = match parts.next() {
+        None => None,
+        Some(rounds_text) => match rounds_text.parse::<u16>() {
+            Ok(rounds) => Some(rounds),
+            Err(_) => {
+                parsed.diagnostics.push(diagnostic(
+                    "class_ability_activations",
+                    format!(
+                        "invalid character input activation '{value}' has a non-numeric \
+                         rounds_consumed_today"
+                    ),
+                ));
+                return;
+            }
+        },
+    };
+
+    parsed.class_ability_activations.push(ClassAbilityActivation {
+        ability_id: ability_id.to_owned(),
+        active_state,
+        rounds_consumed_today,
+    });
 }
 
 fn apply_selected_choice(value: &str, parsed: &mut ParsedFixture) {
@@ -492,5 +632,254 @@ fn diagnostic(
         message: message.into(),
         subject_ref: subject_ref.into(),
         claim_blocking: true,
+    }
+}
+
+#[cfg(test)]
+mod applied_modifiers_tests {
+    use super::*;
+
+    const FIXTURE: &str = "\
+case_id=case:test
+source_package_id=core_rulebook
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+equipment=item:longsword:equipped
+";
+
+    /// An existing `equipment=` fixture line with no accompanying
+    /// `equipment_modifier=` line must produce a real, empty
+    /// `applied_modifiers` -- not an absent field, since the type has no
+    /// `Option` to be absent from.
+    #[test]
+    fn equipment_selection_defaults_to_no_applied_modifiers() {
+        let result = load_character_input_fixture(FIXTURE);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert!(input.chosen.equipment_selections[0].applied_modifiers.is_empty());
+    }
+
+    /// The core case: an `equipment_modifier=` line attaches its modifier
+    /// item id onto the matching `equipment=` selection's
+    /// `applied_modifiers`, keyed by `item_id`. Uses an item_id that itself
+    /// contains a colon (`item:longsword`) to prove the last-colon split
+    /// correctly isolates the modifier id, not a substring of the item id.
+    #[test]
+    fn equipment_modifier_line_attaches_to_the_matching_equipment_selection() {
+        let fixture = format!(
+            "{FIXTURE}equipment_modifier=item:longsword:Special Ability ~ +1 ~ Weapon\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert_eq!(
+            input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["Special Ability ~ +1 ~ Weapon".to_string()]
+        );
+    }
+
+    /// Two modifiers on the same selection must both land, in order --
+    /// proves the field is a real accumulating list, not a single slot.
+    #[test]
+    fn multiple_equipment_modifier_lines_all_attach_to_the_same_selection() {
+        let fixture = format!(
+            "{FIXTURE}\
+equipment_modifier=item:longsword:Special Ability ~ +1 ~ Weapon\n\
+equipment_modifier=item:longsword:Special Ability ~ Flaming ~ Weapon\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(
+            input.chosen.equipment_selections[0].applied_modifiers,
+            vec![
+                "Special Ability ~ +1 ~ Weapon".to_string(),
+                "Special Ability ~ Flaming ~ Weapon".to_string(),
+            ]
+        );
+    }
+
+    /// An `equipment_modifier=` line naming an item_id with no matching
+    /// prior `equipment=` line is a real fixture-authoring error and must
+    /// surface a diagnostic, not silently do nothing.
+    #[test]
+    fn equipment_modifier_line_with_no_matching_selection_is_a_diagnostic() {
+        let fixture = format!("{FIXTURE}equipment_modifier=item:shield:Masterwork\n");
+        let result = load_character_input_fixture(&fixture);
+
+        assert!(result.character_input.is_none());
+        assert!(
+            result
+                .diagnostics
+                .iter()
+                .any(|d| d.subject_ref == "equipment_selections"),
+            "expected a diagnostic for the unmatched equipment_modifier line: {:?}",
+            result.diagnostics
+        );
+    }
+}
+
+#[cfg(test)]
+mod class_ability_activation_tests {
+    use super::*;
+
+    const FIXTURE: &str = "\
+case_id=case:test
+source_package_id=core_rulebook
+race_id=race:human
+class_level=class:barbarian:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+";
+
+    /// A fixture with no `activation=` lines at all must default to a
+    /// real, empty `class_ability_activations` -- not an absent field,
+    /// since the type has no `Option` to be absent from. Proves every
+    /// pre-existing fixture keeps compiling and passing unmodified.
+    #[test]
+    fn fixture_with_no_activation_lines_defaults_to_empty() {
+        let result = load_character_input_fixture(FIXTURE);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert!(input.chosen.class_ability_activations.is_empty());
+    }
+
+    /// The core case: `activation=rage:active` parses to a real
+    /// `ClassAbilityActivation` with `EquippedActive` and no rounds
+    /// consumed.
+    #[test]
+    fn activation_line_with_no_rounds_parses_active_state_only() {
+        let fixture = format!("{FIXTURE}activation=rage:active\n");
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.class_ability_activations.len(), 1);
+        let activation = &input.chosen.class_ability_activations[0];
+        assert_eq!(activation.ability_id, "rage");
+        assert_eq!(activation.active_state, ActiveState::EquippedActive);
+        assert_eq!(activation.rounds_consumed_today, None);
+    }
+
+    /// The third, optional segment: `activation=rage:active:3` carries a
+    /// real rounds-consumed count.
+    #[test]
+    fn activation_line_with_rounds_parses_the_consumed_count() {
+        let fixture = format!("{FIXTURE}activation=rage:active:3\n");
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.class_ability_activations[0].rounds_consumed_today, Some(3));
+    }
+
+    /// `selected_inactive` and `absent` both parse too -- the same three
+    /// `ActiveState` variants `EquipmentSelection` already uses.
+    #[test]
+    fn activation_line_supports_all_three_active_states() {
+        let fixture = format!(
+            "{FIXTURE}\
+activation=rage:selected_inactive\n\
+activation=bardic_performance:absent\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.class_ability_activations.len(), 2);
+        assert_eq!(
+            input.chosen.class_ability_activations[0].active_state,
+            ActiveState::SelectedInactive
+        );
+        assert_eq!(
+            input.chosen.class_ability_activations[1].active_state,
+            ActiveState::Absent
+        );
+    }
+
+    /// Two activations both land, in order -- proves the field is a real
+    /// accumulating list, not a single slot (e.g. a Barbarian/Bard
+    /// multiclass with both abilities active).
+    #[test]
+    fn multiple_activation_lines_all_land_in_order() {
+        let fixture = format!(
+            "{FIXTURE}\
+activation=rage:active:2\n\
+activation=bardic_performance:active:1\n"
+        );
+        let result = load_character_input_fixture(&fixture);
+        let input = result.character_input.expect("fixture must parse cleanly");
+
+        assert_eq!(input.chosen.class_ability_activations.len(), 2);
+        assert_eq!(input.chosen.class_ability_activations[0].ability_id, "rage");
+        assert_eq!(
+            input.chosen.class_ability_activations[1].ability_id,
+            "bardic_performance"
+        );
+    }
+
+    /// An unsupported active-state token is a real fixture-authoring
+    /// error and must surface a diagnostic, not silently do nothing or
+    /// default to some fallback state.
+    #[test]
+    fn activation_line_with_an_unsupported_state_is_a_diagnostic() {
+        let fixture = format!("{FIXTURE}activation=rage:frenzied\n");
+        let result = load_character_input_fixture(&fixture);
+
+        assert!(result.character_input.is_none());
+        assert!(
+            result
+                .diagnostics
+                .iter()
+                .any(|d| d.subject_ref == "class_ability_activations"),
+            "expected a diagnostic for the unsupported active state: {:?}",
+            result.diagnostics
+        );
+    }
+
+    /// A missing state segment (`activation=rage` alone) is malformed and
+    /// must surface a diagnostic.
+    #[test]
+    fn activation_line_missing_the_state_segment_is_a_diagnostic() {
+        let fixture = format!("{FIXTURE}activation=rage\n");
+        let result = load_character_input_fixture(&fixture);
+
+        assert!(result.character_input.is_none());
+        assert!(
+            result
+                .diagnostics
+                .iter()
+                .any(|d| d.subject_ref == "class_ability_activations"),
+            "expected a diagnostic for the missing state segment: {:?}",
+            result.diagnostics
+        );
+    }
+
+    /// A non-numeric rounds_consumed_today segment is malformed and must
+    /// surface a diagnostic, not silently drop the segment or default to
+    /// 0.
+    #[test]
+    fn activation_line_with_non_numeric_rounds_is_a_diagnostic() {
+        let fixture = format!("{FIXTURE}activation=rage:active:many\n");
+        let result = load_character_input_fixture(&fixture);
+
+        assert!(result.character_input.is_none());
+        assert!(
+            result
+                .diagnostics
+                .iter()
+                .any(|d| d.subject_ref == "class_ability_activations"),
+            "expected a diagnostic for the non-numeric rounds_consumed_today: {:?}",
+            result.diagnostics
+        );
     }
 }

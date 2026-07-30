@@ -105,6 +105,7 @@ const SPELL_LEVEL_ACCESS_ID: &str = "class_chassis.paladin.partial_caster.spell_
 const PARTIAL_CASTER_BLOCKER_ID: &str = "class_spell.paladin.partial_caster.unsupported";
 const AURA_OF_FAITH_ID: &str = "class_chassis.paladin.aura_of_faith";
 const AURA_OF_RIGHTEOUSNESS_ID: &str = "class_chassis.paladin.aura_of_righteousness";
+const DAMAGE_REDUCTION_ID: &str = "class_chassis.paladin.damage_reduction";
 const MERCY_5_CHOICE_ID: &str = "class_chassis.paladin.mercy_5_choice";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -275,14 +276,26 @@ fn paladin_level17_spell_level_access_stays_four() {
         "the 4th-level total spells-per-day record must stay grounded at level 17"
     );
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == PARTIAL_CASTER_BLOCKER_ID && d.claim_blocking),
-        "level-17 Paladin must still claim-block on the partial-caster spell burden: {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional: it's a real, conditional validation of
+    // AcquisitionMode::Prepared selections. This fixture predates
+    // spells_selected (zero prepared), so the posture is genuinely valid and
+    // the blocker correctly does not fire -- the real "no spell slots are
+    // fabricated" guarantee now comes from the daily-preparation record's own
+    // count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 17: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- No sixth mercy slot is introduced at level 17 (not a repeat-grant level) -----
@@ -363,6 +376,67 @@ fn paladin_level17_aura_of_righteousness_is_newly_granted() {
             || level16_aura.detail.to_lowercase().contains("correctly"),
         "Aura of Righteousness at level 16 must name the correct absence, not a grant: {}",
         level16_aura.detail
+    );
+}
+
+// ----- Aura of Righteousness's DR clause carries a real magnitude -----
+
+/// The DR half of Aura of Righteousness is a flat, self-scoped magnitude
+/// (corpus `DR:5/Evil`), grounded as its own record rather than folded into
+/// the aura's identity record -- which stays a value-0 grant marker, since
+/// the feature has three clauses and only this one is grounded.
+///
+/// This reverses a stale deferral, not a verified one: the aura record's own
+/// text cited "no damage-reduction-application engine ... exists anywhere in
+/// this codebase", which is the same reasoning three shipped DR records
+/// already reject (`class_feature.barbarian.damage_reduction`,
+/// `class_feature.acg.skald.damage_reduction`, Fighter's
+/// `ARMOR_MASTERY_DAMAGE_REDUCTION`). A DR magnitude is a property of the
+/// character, not of any incoming attack.
+#[test]
+fn paladin_level17_damage_reduction_grounds_its_real_magnitude() {
+    let input = load(PALADIN_LEVEL17_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let dr = explanation(&computation, DAMAGE_REDUCTION_ID);
+    assert_eq!(
+        dr.value, 5,
+        "Aura of Righteousness grants a real DR 5/evil at level 17: {}",
+        dr.detail
+    );
+    assert!(
+        dr.detail.to_lowercase().contains("evil"),
+        "the DR record must name its /evil bypass, which is the whole rule: {}",
+        dr.detail
+    );
+
+    // The aura's own identity record stays a value-0 grant marker: two of its
+    // three clauses (compulsion immunity, the ally +4 morale bonus) remain
+    // genuinely ungrounded, so the feature as a whole is not "computed".
+    let aura = explanation(&computation, AURA_OF_RIGHTEOUSNESS_ID);
+    assert_eq!(
+        aura.value, 0,
+        "the aura record must stay a grant-only marker even once its DR clause is grounded: {}",
+        aura.detail
+    );
+}
+
+#[test]
+fn paladin_level16_damage_reduction_is_a_correct_level_gate_absence() {
+    let input = load(PALADIN_LEVEL16_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let dr = explanation(&computation, DAMAGE_REDUCTION_ID);
+    assert_eq!(
+        dr.value, 0,
+        "Paladin DR must be a correct level-gate absence below 17, not a fabricated 5: {}",
+        dr.detail
+    );
+    assert!(
+        dr.detail.to_lowercase().contains("absent")
+            || dr.detail.to_lowercase().contains("correctly"),
+        "the level-16 DR record must name the correct absence, not a grant: {}",
+        dr.detail
     );
 }
 

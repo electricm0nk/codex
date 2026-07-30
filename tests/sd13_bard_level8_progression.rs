@@ -286,6 +286,10 @@ fn bard_level8_gains_no_new_bard_namespaced_explanation_id() {
 
     let known_bard_ids = [
         "class_chassis.spell_baseline.bard",
+        // (v0.6 alpha swarm, risks item 8) bardic-performance-execution's
+        // not-performing record is checked unconditionally at every level
+        // once a bare Bard input exists, not a new class feature.
+        "class_feature.bard.bardic_performance_execution.not_performing",
         "class_chassis.bard.base_attack_bonus",
         "class_chassis.bard.base_save.fortitude",
         "class_chassis.bard.base_save.reflex",
@@ -305,6 +309,17 @@ fn bard_level8_gains_no_new_bard_namespaced_explanation_id() {
         // level; it is not a "Special"-column class feature, so listing it
         // keeps this control accurate without weakening its claim.
         "class_chassis.bard.spontaneous.spell_level_access",
+        // Added by the v0.6 Receipt-to-Sheet caster-level slice: the
+        // corpus-transcribed caster level (a Bard casts at its full class
+        // level -- cr_classes.lst:28
+        // BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard, resolving
+        // through cr_classes.lst:24
+        // BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard).
+        // Like spell_level_access above it fires at every supported level
+        // rather than being gained at this one, and it is not a
+        // "Special"-column class feature, so listing it keeps this control
+        // accurate without weakening its claim.
+        "class_chassis.bard.caster_level",
         // The base_spells_per_day family (a further SD13-E5 slice): literal
         // spells-per-day table records, not "Special"-column class features.
         "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1",
@@ -358,20 +373,45 @@ fn bard_level8_still_claim_blocks_performance_execution_and_spontaneous_spell_bu
     let input = load(BARD_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_feature.bard.bardic_performance_execution.unsupported"
-            && d.claim_blocking),
-        "level-8 Bard must still claim-block on the bardic performance-execution burden: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.id
-            == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
-            && d.claim_blocking),
-        "level-8 Bard must still claim-block on the spontaneous spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.bard.bardic_performance_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_performing = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.bard.bardic_performance_execution.not_performing");
+            assert!(
+                not_performing.is_some(),
+                "level-8 Bard must ground an honest not-performing record when no \
+                 bardic-performance posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.bard.spontaneous_known_and_per_day.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.bard.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- The accepted Bard level-7 truth is unaffected -----

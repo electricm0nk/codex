@@ -16,22 +16,37 @@
 //! pins the matrix truth: the rogue row stays `Partial` / `Computed` with a
 //! note naming the honestly-unproven remainder.
 //!
-//! It is intentionally not a Rogue class engine. The base-attack/base-save
-//! explanations are standalone `class_chassis.rogue.*` records, not wired into
-//! `compute_fighter_chassis`, `compute_total_saves`, or
-//! `compute_combat_baseline` — `defense.total_save.*` is still never computed
-//! for Rogue. The sneak-attack explanation grounds only the die-count facet
-//! (`1`), not damage-roll execution or the flanking/Dexterity-denial
-//! trigger-condition engine. The trapfinding explanation grounds only the
-//! flat numeric bonus and the magic-trap-disarm statement, not a
-//! check-execution engine, trap DCs, or a magic-trap disarm engine. This
-//! slice grounds no rogue talent and no level-2+ progression. It also
-//! preserves the accepted Fighter 1-3 truth, the
-//! Barbarian/Monk partial/computed truth, the Paladin/Ranger blocked hybrid
-//! negative controls, and the Human race/interaction truth.
+//! It is intentionally not a Rogue class engine. The sneak-attack explanation
+//! grounds only the die-count facet (`1`), not damage-roll execution or the
+//! flanking/Dexterity-denial trigger-condition engine. The trapfinding
+//! explanation grounds only the flat numeric bonus and the magic-trap-disarm
+//! statement, not a check-execution engine, trap DCs, or a magic-trap disarm
+//! engine. This slice grounds no rogue talent and no level-2+ progression. It
+//! also preserves the accepted Fighter 1-3 truth, the Barbarian/Monk
+//! partial/computed truth, the Paladin/Ranger blocked hybrid negative
+//! controls, and the Human race/interaction truth.
+//!
+//! **Superseded (v0.6 alpha swarm, task 4):** the multiclass BAB/save-stacking
+//! generalization widened `table_class_id`'s dispatch to include Rogue,
+//! giving Rogue level 1-20 its own real, integrated `class_chassis.*`
+//! computation (not just the standalone `class_chassis.rogue.*` pillar
+//! records this file's original slice grounded) via the shared table-driven
+//! `compute_generic_table_chassis` path. This makes the previous paragraph's
+//! "standalone, not wired into `compute_total_saves`" claim stale: Rogue's
+//! base-attack/base-save ARE now wired into the integrated
+//! `class_chassis.base_attack_bonus` / `class_chassis.base_save.*`
+//! explanations, and `defense.total_save.*` IS now computed for single-class
+//! Rogue (fortitude/reflex/will each get a real value — `compute_total_saves`
+//! is class-agnostic and reads whatever base saves are integrated). What
+//! still correctly claim-blocks a Rogue level-1 receipt is unrelated to
+//! class-chassis recognition: `combat.baseline_unsupported` and
+//! `skill.selected_modifier.unsupported` still fire, since the Rogue fixture
+//! doesn't match the deterministic Longsword/Chain Shirt/Dodge/Climb-
+//! Intimidate-Swim posture those two diagnostics require. See the tests
+//! below marked "(v0.6 swarm update)" for the exact current truth.
 //! `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`
-//! keeps passing unmodified: this slice adds grounded pillar explanations
-//! only, and never computes `defense.total_save.*` for Rogue.
+//! now uses Cleric, not Rogue, as its unsupported negative control (Rogue
+//! stopped being unsupported — see that file for the same note).
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -116,13 +131,20 @@ fn rogue_level1_leaves_direct_chassis_recognition_evidence() {
         "rogue chassis recognition must name the class:rogue:1 identity: {}",
         chassis.detail
     );
+    // (v0.6 swarm update) Rogue's base attack bonus is now genuinely integrated
+    // via the table-driven `compute_generic_table_chassis` dispatch (v0.6 alpha
+    // swarm task 4's multiclass BAB/save-stacking generalization) -- the value 0
+    // is Rogue's real 3/4-BAB progression at level 1 (floor(1 * 3 / 4) = 0), not
+    // a fabricated absence, and the integrated explanation now legitimately
+    // exists alongside the standalone `class_chassis.rogue.*` pillar records.
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "rogue baseline must not fabricate a base attack bonus"
+        "rogue level 1's real 3/4-BAB progression (floor(1*3/4)) is 0"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "rogue baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "rogue base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 
     // Ability modifiers remain class-independent and still compute (DEX 17 -> +3).
@@ -298,9 +320,21 @@ fn rogue_level1_retires_the_trapfinding_blocker_but_generics_still_block() {
         "no named rogue pillar diagnostic may remain — the named set is now empty: {:?}",
         computation.diagnostics
     );
-    // The generic chassis diagnostic still claim-blocks the integrated surface:
-    // the grounded pillar records are standalone, not wired into totals.
-    claim_blocking(&computation, "class_chassis.unsupported");
+    // (v0.6 swarm update) class_chassis.unsupported no longer fires for single-class
+    // Rogue -- the v0.6 alpha swarm's multiclass BAB/save-stacking generalization
+    // (task 4) gave Rogue a genuinely integrated class_chassis computation. What
+    // still claim-blocks the integrated receipt is unrelated to class recognition:
+    // the deterministic combat-baseline posture (Longsword/Chain Shirt/Dodge/no
+    // shield/no Power Attack/Weapon Focus) the Rogue fixture doesn't match.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_chassis.unsupported"),
+        "class_chassis.unsupported must no longer fire for a supported single-class Rogue: {:?}",
+        computation.diagnostics
+    );
+    claim_blocking(&computation, "combat.baseline_unsupported");
 
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
@@ -419,25 +453,50 @@ fn multiclass_rogue_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- The pre-existing GE-06 negative control keeps passing unmodified -----
+// ----- (v0.6 swarm update): claim-blocking persists, but total saves are now genuinely computed -----
 
 #[test]
-fn rogue_still_produces_a_claim_blocking_diagnostic_and_no_total_saves() {
+fn rogue_still_produces_a_claim_blocking_diagnostic_and_total_saves_are_now_computed() {
+    // Was `rogue_still_produces_a_claim_blocking_diagnostic_and_no_total_saves`,
+    // pinning the pre-v0.6-swarm truth that Rogue's base saves were standalone
+    // and never reached `defense.total_save.*`. The v0.6 alpha swarm's
+    // multiclass BAB/save-stacking generalization (task 4) gave Rogue a
+    // genuinely integrated `class_chassis.base_save.*` computation, and
+    // `compute_total_saves` is class-agnostic: it computes `defense.total_save.*`
+    // from whatever base saves are integrated, regardless of which class
+    // produced them. So total saves ARE now computed for single-class Rogue --
+    // renamed and flipped rather than left with a stale, misleading name.
     let input = load(ROGUE_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "rogue chassis must produce a claim-blocking diagnostic: {:?}",
+        "rogue chassis must still produce a claim-blocking diagnostic (now from the \
+         deterministic combat-baseline/skill-posture gates, not class-chassis recognition): {:?}",
         computation.diagnostics
     );
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("defense.total_save.")),
-        "rogue chassis must withhold total-save explanations: {:?}",
+            .any(|e| e.id == "defense.total_save.fortitude"),
+        "rogue's base saves are now integrated, so total-save explanations must exist: {:?}",
         computation.explanations
+    );
+    assert_eq!(
+        explanation(&computation, "defense.total_save.fortitude").value,
+        1,
+        "Total Fortitude: Rogue base Fortitude (+0) + Constitution modifier (+1) = 1"
+    );
+    assert_eq!(
+        explanation(&computation, "defense.total_save.reflex").value,
+        6,
+        "Total Reflex: Rogue base Reflex (+2) + Dexterity modifier (+4) = 6"
+    );
+    assert_eq!(
+        explanation(&computation, "defense.total_save.will").value,
+        0,
+        "Total Will: Rogue base Will (+0) + Wisdom modifier (+0) = 0"
     );
 }
 

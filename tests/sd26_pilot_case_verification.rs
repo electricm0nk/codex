@@ -77,14 +77,39 @@
 //! forwarded as a new, separate open item (see this repo's SD-26 progress doc,
 //! `## Open blockers`, for the follow-up tracking entry).
 //!
-//! Net result: 8 of 9 selected parity dimensions now genuinely agree
-//! (`character.identity`, `defense.baseline_armor_class`, all three
-//! `defense.total_save.*` dimensions, and all three
-//! `skill.selected_modifier.*` dimensions including the two this cycle fixed),
-//! and exactly one genuine mismatch remains
+//! Net result (at the CG-03 fix cycle): 8 of 9 selected parity dimensions
+//! genuinely agree (`character.identity`, `defense.baseline_armor_class`,
+//! all three `defense.total_save.*` dimensions, and all three
+//! `skill.selected_modifier.*` dimensions including the two that cycle
+//! fixed), and exactly one genuine mismatch remains
 //! (`combat.baseline_melee_attack_bonus`, PCGen: 5, Codex: 6). Because a real
 //! mismatch remains, `current_claim_status` correctly stays `not_yet_grounded`
-//! — this cycle does NOT force the upgrade to `oracle_checked`.
+//! — that cycle did NOT force the upgrade to `oracle_checked`.
+//!
+//! ## Wave-2 dimension expansion (v0.6 alpha swarm)
+//! Backend's `b726a36` (comparator field-extraction) extended the PCGen
+//! normalizer to also emit `encumbrance.carrying_capacity.{light,medium,
+//! heavy}_max_lbs`, `encumbrance.total_carried_weight_lbs`, and
+//! `durability.max_hp` — sourced from `encumbrance.rs`/`durability.rs`,
+//! both grounded earlier in wave 2. That exposed a stale assertion here:
+//! `SelectedParityDimensions::from_receipt` (the headless, corpus-free
+//! adapter this test used) never populated those five dimensions, so they
+//! surfaced as `MissingFromCodex` mismatches rather than real comparisons.
+//! Backend's `2298780` added `from_pilot_receipt` — a new adapter reading
+//! the corpus-aware `contract::PilotReceipt` (which already carries the
+//! `encumbrance` field wired in `d475097`), rather than touching
+//! `from_receipt` at all (zero blast radius on this file's siblings,
+//! `ge06_selected_parity_dimensions.rs` / `sd26_comparator.rs`, which still
+//! use `from_receipt` unchanged). QA (this cycle) switched this specific
+//! test to `from_pilot_receipt`, since real PCGen-comparison coverage for
+//! durability/encumbrance is strictly better than a permanent
+//! `MissingFromCodex` gap, and PCGen's real export values for this pilot
+//! case were independently confirmed to already match Codex's own
+//! `encumbrance.rs`/`durability.rs` formulas (light/medium/heavy 100/200/300
+//! lbs at Strength 18 post-CG-03, 29 lbs carried, 12 max HP) before this
+//! switch — so the expectation below is a genuine 13-of-14 match, not a
+//! guess. `combat.baseline_melee_attack_bonus` remains the one real,
+//! previously-diagnosed, still-unfixed mismatch.
 
 use codex::oracle_validation::comparator::{compare, MismatchReason};
 use codex::oracle_validation::golden_fixture::{load_golden_case_fixture, ClaimTier};
@@ -94,10 +119,44 @@ use codex::oracle_validation::parity_report::{
 };
 use codex::oracle_validation::pcgen_runner::{run_pcgen_character, PcgenRunOptions};
 use codex::oracle_validation::selected_parity_dimensions::SelectedParityDimensions;
+use codex::pcgen_import::ir_converter::convert_equipment_record;
+use codex::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
 use codex::rules_core::character_input::load_character_input_fixture;
-use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+use codex::rules_core::contract::to_pilot_receipt;
+use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
+use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 use std::path::PathBuf;
+
+/// The exact GE-06 deterministic posture's equipment records (Longsword +
+/// Chain Shirt, `WT:4`/`WT:25` — the real weights PCGen's own export
+/// reports as 29 lbs total carried). Mirrors
+/// `tests/sd20_tabletop_readiness_integration.rs`'s own
+/// `FIGHTER_GEAR_FIXTURE_TEXT` (same posture, same fixture shape) rather
+/// than sharing it directly, since this file has no dependency on that
+/// one today and duplicating a small, stable fixture text is cheaper than
+/// introducing a cross-file coupling for it.
+const FIGHTER_GEAR_FIXTURE_TEXT: &str = "\
+Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Resizable.Melee.Martial.OneHanded.Slashing.Sword.BladeHeavy.Weapon Group Blades Heavy\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\tWIELD:OneHanded\tSIZE:M
+Chain Shirt\tKEY:Chain Shirt (Base)\tTYPE:Armor.Light\tCOST:100\tWT:25\tACCHECK:-2\tMAXDEX:4\tSPELLFAILURE:20\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0
+Masterwork (Weapon)\tKEY:Special Quality ~ Masterwork ~ Weapon\tTYPE:MasterworkQuality.Weapon\tCOST:0\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement
+";
+
+fn corpus_with_fighter_gear() -> SourcePackageContent<'static> {
+    let result = parse_equipment_entries("cr_equip_arms_armor.lst", FIGHTER_GEAR_FIXTURE_TEXT);
+    assert!(
+        result.diagnostics.is_empty(),
+        "fixture text must parse cleanly: {:?}",
+        result.diagnostics
+    );
+    let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+    let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+    for record in result.entries {
+        let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+        corpus.push(convert_equipment_record(record));
+    }
+    corpus
+}
 
 const DETERMINISTIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
@@ -152,18 +211,18 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
 /// comparator (2.1) -> parity_report (2.3), run for real against the pilot
 /// case's real Codex-computed dimensions and a real PCGen engine invocation
 /// against the completed, genuinely same-character pilot `.pcg`. Confirms the
-/// pipeline is genuinely wired and, after the CG-03 Human ability-modifier
-/// fix, confirms 8 of 9 dimensions now agree (the two prior Climb/Swim
-/// mismatches are now fixed for real, directly confirming the ability-modifier
-/// fix is correct) while one real, DIFFERENT mismatch
-/// (`combat.baseline_melee_attack_bonus`) is newly exposed — a previously
-/// masked, structurally distinct discrepancy this cycle does not attempt to
-/// fix (see this file's module doc comment) — so the golden fixture's
-/// `current_claim_status` correctly stays at `not_yet_grounded` rather than
-/// being force-upgraded.
+/// pipeline is genuinely wired and, per this file's module doc comment,
+/// confirms 13 of 14 dimensions now agree (the CG-03 Climb/Swim fixes, plus
+/// wave-2's five new durability/encumbrance dimensions once genuinely
+/// compared via `from_pilot_receipt` instead of left as `MissingFromCodex`)
+/// while one real, unfixed mismatch (`combat.baseline_melee_attack_bonus`)
+/// remains — so the golden fixture's `current_claim_status` correctly stays
+/// at `not_yet_grounded` rather than being force-upgraded.
 #[test]
 fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
-    // --- Codex side: real, computed selected parity dimensions. ---
+    // --- Codex side: real, computed selected parity dimensions, via the
+    // corpus-aware PilotReceipt (from_pilot_receipt) so durability/encumbrance
+    // are genuinely compared against PCGen rather than left MissingFromCodex. ---
     let input_load = load_character_input_fixture(DETERMINISTIC_FIXTURE);
     assert!(
         input_load.diagnostics.is_empty(),
@@ -173,8 +232,15 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
     let input = input_load
         .character_input
         .expect("valid deterministic input fixture should produce a CharacterInput record");
-    let receipt = build_pilot_headless_receipt(&input);
-    let codex_dims = SelectedParityDimensions::from_receipt(&receipt);
+    let corpus = corpus_with_fighter_gear();
+    let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
+    let pilot_receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
+    let codex_dims = SelectedParityDimensions::from_pilot_receipt(
+        &pilot_receipt,
+        &input.chosen.class_levels,
+        input.case_id.as_deref(),
+        &input.source_package_id,
+    );
     assert!(
         !codex_dims.dimensions.is_empty(),
         "expected real computed Codex selected parity dimensions for the pilot case"
@@ -222,11 +288,12 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
         "parity report should name the pilot case id"
     );
 
-    // --- The real, genuine finding after the CG-03 fix: identity still agrees (this
-    // remains a real same-character run), and Climb/Swim now GENUINELY match too (proving
-    // the Human ability-modifier fix is correct) -- 8 of 9 dimensions match. Only
-    // combat.baseline_melee_attack_bonus, previously masked by a compensating error, now
-    // genuinely diverges. ---
+    // --- The real, genuine finding: identity still agrees (this remains a real
+    // same-character run), Climb/Swim genuinely match (the CG-03 fix), and the five
+    // wave-2 durability/encumbrance dimensions now genuinely match too (PCGen's real
+    // export values already agreed with Codex's own formulas -- see this file's module
+    // doc comment) -- 13 of 14 dimensions match. Only combat.baseline_melee_attack_bonus,
+    // previously masked by a compensating error, genuinely diverges. ---
     let matched_ids: Vec<&str> = comparison
         .matches
         .iter()
@@ -241,6 +308,11 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
         "skill.selected_modifier.climb",
         "skill.selected_modifier.intimidate",
         "skill.selected_modifier.swim",
+        "durability.max_hp",
+        "encumbrance.carrying_capacity.light_max_lbs",
+        "encumbrance.carrying_capacity.medium_max_lbs",
+        "encumbrance.carrying_capacity.heavy_max_lbs",
+        "encumbrance.total_carried_weight_lbs",
     ] {
         assert!(
             matched_ids.contains(&expected_match),
@@ -249,10 +321,28 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
             comparison
         );
     }
+    // The five wave-2 dimensions' real matched values, not just their presence --
+    // independently confirming the numbers, not just that a comparison happened.
+    for (dimension_id, expected_value) in [
+        ("durability.max_hp", 12i16),
+        ("encumbrance.carrying_capacity.light_max_lbs", 100i16),
+        ("encumbrance.carrying_capacity.medium_max_lbs", 200i16),
+        ("encumbrance.carrying_capacity.heavy_max_lbs", 300i16),
+        ("encumbrance.total_carried_weight_lbs", 29i16),
+    ] {
+        let matched = comparison
+            .matches
+            .iter()
+            .find(|m| m.dimension_id == dimension_id)
+            .unwrap_or_else(|| panic!("expected a real match for dimension '{dimension_id}': {comparison:?}"));
+        assert_eq!(matched.pcgen_value_i16, Some(expected_value), "{dimension_id}: {matched:?}");
+        assert_eq!(matched.codex_value_i16, Some(expected_value), "{dimension_id}: {matched:?}");
+    }
     assert_eq!(
         comparison.matches.len(),
-        8,
-        "expected exactly 8 genuinely matching dimensions (Climb/Swim now fixed for real): {:?}",
+        14,
+        "expected exactly 14 genuinely matching dimensions (8 original + 5 wave-2 \
+         durability/encumbrance dimensions + combat.base_attack_bonus): {:?}",
         comparison
     );
 

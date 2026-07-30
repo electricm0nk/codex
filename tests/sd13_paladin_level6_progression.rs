@@ -258,16 +258,27 @@ fn paladin_level6_effective_caster_level_genuinely_becomes_3() {
          from 2 at level 5: {caster_level:?}"
     );
 
-    let spell_blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID)
-        .expect("paladin partial-caster spell blocker must still fire at level 6");
-    assert!(
-        spell_blocker.claim_blocking,
-        "the partial-caster spell burden stays claim-blocking; no spell slots are fabricated \
-         merely because the effective-caster-level gate widened again"
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional: it's a real, conditional validation of
+    // AcquisitionMode::Prepared selections. This fixture predates
+    // spells_selected (zero prepared), so the posture is genuinely valid and
+    // the blocker correctly does not fire -- the real "no spell slots are
+    // fabricated" guarantee now comes from the daily-preparation record's own
+    // count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated merely because the effective-caster-level gate widened \
+                 again at level 6: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- Mercy stays granted (not re-derived) at level 6; no second slot fabricated -----

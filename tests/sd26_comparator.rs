@@ -47,6 +47,7 @@ fn codex_selected_dimensions() -> SelectedParityDimensions {
 fn agreeing_pcgen_output() -> NormalizedOutput {
     NormalizedOutput {
         dim_values: vec![
+            numeric("combat.base_attack_bonus", 1),
             numeric("combat.baseline_melee_attack_bonus", 6),
             numeric("defense.baseline_armor_class", 17),
             numeric("defense.total_save.fortitude", 4),
@@ -86,7 +87,7 @@ fn all_dimensions_agree_yields_no_mismatches() {
 
     let result = compare(&pcgen, &codex);
 
-    assert_eq!(result.matches.len(), 9, "expected all 9 dimensions to match");
+    assert_eq!(result.matches.len(), 10, "expected all 10 dimensions to match");
     assert!(
         result.mismatches.is_empty(),
         "expected no mismatches, got: {:?}",
@@ -118,7 +119,7 @@ fn a_disagreeing_value_is_reported_as_value_mismatch() {
 
     let result = compare(&pcgen, &codex);
 
-    assert_eq!(result.matches.len(), 8, "eight dimensions still agree");
+    assert_eq!(result.matches.len(), 9, "nine dimensions still agree");
     assert_eq!(result.mismatches.len(), 1, "exactly one dimension disagrees");
     assert!(!result.all_matched());
 
@@ -139,7 +140,7 @@ fn a_pcgen_only_dimension_is_reported_as_missing_from_codex() {
 
     let result = compare(&pcgen, &codex);
 
-    assert_eq!(result.matches.len(), 9);
+    assert_eq!(result.matches.len(), 10);
     assert_eq!(result.mismatches.len(), 1);
 
     let mismatch = &result.mismatches[0];
@@ -159,7 +160,7 @@ fn a_codex_only_dimension_is_reported_as_missing_from_pcgen() {
 
     let result = compare(&pcgen, &codex);
 
-    assert_eq!(result.matches.len(), 8);
+    assert_eq!(result.matches.len(), 9);
     assert_eq!(result.mismatches.len(), 1);
 
     let mismatch = &result.mismatches[0];

@@ -168,7 +168,7 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 5,
@@ -179,7 +179,7 @@ fn cleric_level10_touch_of_good_rises_and_other_facets_carry_over() {
 
     let tog_uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         tog_uses.value, 7,
@@ -211,19 +211,31 @@ fn cleric_level10_still_claim_blocks_domain_power_and_prepared_divine_burdens() 
 
     assert!(
         computation.diagnostics.iter().any(
-            |d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking
+            |d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking
         ),
         "level-10 Cleric must still claim-block on the domain-power execution burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation.diagnostics.iter().any(
-            |d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking
-        ),
-        "level-10 Cleric must still claim-block on the prepared divine spell posture burden: \
-         {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: the level-9 fixture is unaffected by this widening -----
@@ -238,7 +250,7 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(bonus.value, 4, "Cleric level 9 Touch of Good bonus must stay 4");
 

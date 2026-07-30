@@ -6,9 +6,11 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_ingest_diagnostic;
 mod equipment_catalog;
+mod feat_catalog;
 mod ge08_workbench;
 mod pf1_adapter;
 mod race_catalog;
@@ -25,17 +27,23 @@ use campaign_drive::{
     write_campaign_drive_artifacts,
 };
 use character_hub::{
-    add_equipment_selection, add_spell_selection, clone_character, create_character,
+    add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
+    adjust_character_money, attach_equipment_modifier, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
-    import_character, level_up_character, list_saved_characters, load_character_portrait,
-    load_saved_character, save_character_portrait,
+    import_character, level_up_character, list_saved_characters, load_character_bio,
+    load_character_durability, load_character_money, load_character_portrait,
+    load_saved_character, preview_level_up, purchase_equipment,
+    record_and_prepare_spell_selection,
+    save_character_portrait, set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
+use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use race_catalog::list_race_catalog;
 use spell_catalog::{list_spell_catalog, list_spells};
 use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
@@ -137,14 +145,26 @@ fn main() {
             level_up_character,
             recompute_character,
             add_equipment_selection,
+            purchase_equipment,
+            attach_equipment_modifier,
             add_spell_selection,
+            record_and_prepare_spell_selection,
+            add_feat_selection,
+            set_skill_allocations,
             append_to_character,
             re_save_character,
             list_saved_characters,
             load_saved_character,
+            preview_level_up,
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,
+            update_character_bio,
+            load_character_bio,
+            load_character_money,
+            adjust_character_money,
+            load_character_durability,
+            adjust_character_hp,
             delete_character,
             export_character_json,
             export_character,
@@ -156,9 +176,13 @@ fn main() {
             drive_delete_campaign,
             list_equipment_catalog,
             list_spell_catalog,
+            list_feat_catalog,
             list_equipment,
             list_spells,
+            list_feats,
+            list_weapon_targets,
             list_class_catalog,
+            list_class_spell_levels,
             list_race_catalog,
             corpus_ingest_diagnostic
         ])

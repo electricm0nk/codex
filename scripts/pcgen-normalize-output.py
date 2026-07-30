@@ -14,15 +14,32 @@ into the golden-fixture comparison shape consumed by:
 * ``src/oracle_validation/selected_parity_dimensions.rs`` — the
   ``SelectedDimension`` carrier shape (``id`` / ``value_string`` /
   ``value_i16`` / ``source_package_id``) for the mandatory pilot dimensions:
-  ``character.identity``, ``combat.baseline_melee_attack_bonus``,
+  ``character.identity``, ``combat.base_attack_bonus`` (v0.6 alpha swarm,
+  self-directed backend scan), ``combat.baseline_melee_attack_bonus``,
   ``defense.baseline_armor_class``, ``defense.total_save.{fortitude,reflex,will}``,
-  and ``skill.selected_modifier.{climb,intimidate,swim}``.
+  ``skill.selected_modifier.{climb,intimidate,swim}``, and (v0.6 alpha
+  swarm item 4) ``encumbrance.carrying_capacity.{light,medium,heavy}_max_lbs``,
+  ``encumbrance.total_carried_weight_lbs``, ``durability.max_hp``, and
+  (best-effort — see ``_parse_funds_to_copper``'s own doc comment)
+  ``money.total_copper``.
 
 This script performs no parity judgement of its own — it is a pure
 normalizer from raw PCGen XML to the typed comparison shape above. Parity
 comparison against Codex's own computed output is out of scope here
 (consistent with golden_fixture.rs's documented non-goals) and belongs to a
 later GE-05 comparator slice / SD-25 criterion 4.4's end-to-end wiring.
+
+v0.6 alpha swarm item 4 added the encumbrance/durability/money dimensions
+above so QA can red-green test ``src/rules_core/encumbrance.rs``,
+``durability.rs``, and ``money.rs`` (all landed this same swarm) against
+real PCGen output rather than a hand-derived expectation. One field is a
+genuine, currently-unfillable gap rather than an oversight: PCGen's own
+``base-xml.ftl`` template emits ``<hit_points><current/></hit_points>`` as
+a hardcoded empty self-closing tag with no ``@pcstring`` interpolation at
+all (verified directly against the template in the local PCGen checkout,
+``code/testsuite/base-xml.ftl``) — current HP is structurally absent from
+this export route, not merely unparsed, so no XPath fix here can recover
+it. ``durability.max_hp`` is extracted; current HP is not.
 
 Usage:
     pcgen-normalize-output.py <pcgen_xml_path> [-o OUTPUT_JSON]
@@ -62,6 +79,31 @@ _SKILL_NAME_TO_SUFFIX = {
 }
 
 _SIGNED_INT_RE = re.compile(r"[-+]?\d+")
+
+# v0.6 alpha swarm item 4: PCGen's MISC.FUNDS export (base-xml.ftl's
+# <misc><funds><fund>...</fund></funds></misc>) is unstructured free text,
+# e.g. "5 pp, 12 gp, 3 sp, 8 cp" or "42 gp" -- not a structured pp/gp/sp/cp
+# breakdown the way weight_allowance/hit_points are. This regex extracts
+# each "<amount> <denomination>" pair it can find; any text this pattern
+# doesn't match is silently not counted (a diagnostic notes when nothing at
+# all was parsed, rather than fabricating a zero when parsing genuinely
+# failed on a shape this regex doesn't anticipate).
+_FUNDS_ENTRY_RE = re.compile(r"(\d+)\s*(pp|gp|sp|cp)\b", re.IGNORECASE)
+_COPPER_PER_DENOMINATION = {"pp": 1000, "gp": 100, "sp": 10, "cp": 1}
+
+
+def _parse_funds_to_copper(raw: str | None) -> int | None:
+    """Best-effort parse of PCGen's free-text MISC.FUNDS value into a total
+    copper-piece count, mirroring src/rules_core/money.rs's own
+    denomination ratios. Returns None when the text carries no recognizable
+    "<amount> <denomination>" pair at all (e.g. empty, or an unanticipated
+    format) rather than fabricating a zero balance."""
+    if raw is None:
+        return None
+    matches = _FUNDS_ENTRY_RE.findall(raw)
+    if not matches:
+        return None
+    return sum(int(amount) * _COPPER_PER_DENOMINATION[denom.lower()] for amount, denom in matches)
 
 
 @dataclass
@@ -193,6 +235,26 @@ def normalize(
         "(expected /character/attack/melee/total)",
     )
 
+    # v0.6 alpha swarm (self-directed backend scan, 2026-07-24): the raw
+    # class-table base attack bonus, distinct from the Strength/feat-inclusive
+    # melee total above. Uses `/character/attack/melee/bab` specifically, NOT
+    # the confusingly-named sibling `/character/attack/melee/base_attack_bonus`
+    # element -- verified empirically by running the real PCGen pipeline
+    # against the Fighter pilot fixture: both elements happened to read `+1`
+    # for that build, but `bab`'s underlying PCGen token
+    # (`ATTACK.MELEE.BASE`) is the one that's unambiguously the raw BAB by
+    # PCGen's own naming convention (identical across melee/ranged/grapple for
+    # a non-size-shifted character), while `base_attack_bonus`'s token
+    # (`ATTACK.MELEE`, no `.BASE`/`.TOTAL` suffix) is an internal PCGen
+    # intermediate whose meaning was not independently confirmed to always
+    # coincide with raw BAB for every build shape.
+    emit_i16(
+        "combat.base_attack_bonus",
+        _signed_int(_text(root.find("./attack/melee/bab"))),
+        "missing PCGen output field for dimension 'combat.base_attack_bonus' "
+        "(expected /character/attack/melee/bab)",
+    )
+
     emit_i16(
         "defense.baseline_armor_class",
         _signed_int(_text(root.find("./armor_class/total"))),
@@ -219,6 +281,48 @@ def normalize(
             f"missing PCGen output field for dimension 'skill.selected_modifier.{dimension_suffix}' "
             f"(expected /character/skills/skill[name~='{skill_key}']/skill_mod)",
         )
+
+    # v0.6 alpha swarm item 4: carry capacity / encumbrance / durability /
+    # money dimensions, so QA can red-green test src/rules_core/
+    # encumbrance.rs, durability.rs, and money.rs against real PCGen output.
+    for tag, dimension_suffix in (
+        ("light", "light_max_lbs"),
+        ("medium", "medium_max_lbs"),
+        ("heavy", "heavy_max_lbs"),
+    ):
+        emit_i16(
+            f"encumbrance.carrying_capacity.{dimension_suffix}",
+            _signed_int(_text(root.find(f"./weight_allowance/{tag}"))),
+            f"missing PCGen output field for dimension "
+            f"'encumbrance.carrying_capacity.{dimension_suffix}' "
+            f"(expected /character/weight_allowance/{tag})",
+        )
+
+    emit_i16(
+        "encumbrance.total_carried_weight_lbs",
+        _signed_int(_text(root.find("./equipment/total/weight"))),
+        "missing PCGen output field for dimension 'encumbrance.total_carried_weight_lbs' "
+        "(expected /character/equipment/total/weight)",
+    )
+
+    emit_i16(
+        "durability.max_hp",
+        _signed_int(_text(root.find("./hit_points/points"))),
+        "missing PCGen output field for dimension 'durability.max_hp' "
+        "(expected /character/hit_points/points)",
+    )
+
+    # Best-effort only -- see _parse_funds_to_copper's own doc comment.
+    # PCGen's base-xml.ftl also structurally never populates current HP
+    # (<hit_points><current/></hit_points> is a hardcoded empty tag with no
+    # @pcstring interpolation at all) -- no XPath fix can recover that from
+    # this export route, so no durability.current_hp dimension is emitted.
+    emit_i16(
+        "money.total_copper",
+        _parse_funds_to_copper(_text(root.find("./misc/funds/fund"))),
+        "missing or unparseable PCGen output field for dimension 'money.total_copper' "
+        "(expected /character/misc/funds/fund as free text, e.g. '5 gp, 3 sp')",
+    )
 
     return result
 

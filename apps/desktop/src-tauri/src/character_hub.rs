@@ -23,9 +23,19 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
-use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
-use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, CorpusDerivedSection};
-use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
+use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
+use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
+use codex::rules_core::feat_effects;
+use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
+use codex::rules_core::money;
+use codex::rules_core::pilot_compute::{
+    ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
+    ComputationExplanation, HeadlessReceiptStatus,
+};
+use codex::rules_core::pilot_compute_corpus::{
+    compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
+};
+use codex::rules_core::pilot_view_model::PilotSnapshot;
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -94,6 +104,67 @@ pub struct PilotSnapshotDto {
     pub baseline_armor_class: i16,
     pub total_saves: BaseSavesDto,
     pub selected_skill_modifiers: SelectedSkillModifiersDto,
+    /// v0.6 alpha swarm (risks-and-open-questions.md item 6): the flat DR
+    /// magnitude from a grounded class-feature DR explanation (currently
+    /// only Barbarian's), or absent when no such record exists or its
+    /// magnitude is the level-gate absence value of 0. See
+    /// `PilotDefenseViewModel::damage_reduction`'s own doc comment
+    /// (`pilot_view_model.rs`) for the full derivation.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub damage_reduction: Option<i16>,
+    /// v0.6 alpha swarm: the character's animal companion or mount, or
+    /// absent when this build grounds none.
+    ///
+    /// The stat block was fully computed in the engine across all twenty
+    /// master levels the whole time (`pilot_compute.rs`'s
+    /// `ground_wolf_companion_stat_block` /
+    /// `ground_horse_companion_stat_block`, for Druid, Hunter and the
+    /// Cavalier's Mount) but had no field to travel in, so the desktop
+    /// sheet's Pets tab rendered a "coming soon" placeholder over data
+    /// that already existed -- the same defect
+    /// `EquipmentEffectsDto::per_item` had.
+    ///
+    /// Same `skip_serializing_if` discipline as `damage_reduction`: a
+    /// companion-less class omits the key entirely rather than sending a
+    /// literal `null` the frontend's `!== undefined` checks would wave
+    /// through into an empty stat block.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub companion: Option<AnimalCompanionDto>,
+}
+
+/// Wire form of `pilot_view_model::PilotCompanionStat` -- one grounded
+/// companion statistic, with the engine's own label, value and derivation
+/// prose carried verbatim.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionStatDto {
+    pub label: String,
+    pub value: i16,
+    pub detail: String,
+}
+
+/// Wire form of `pilot_view_model::PilotCompanionViewModel`.
+///
+/// A wholly separate creature: none of these values are applied to the
+/// character's own integrated totals, and the sheet must not mix them in.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimalCompanionDto {
+    pub owner_class_label: String,
+    pub role_label: String,
+    pub species: String,
+    pub summary_detail: String,
+    /// Only statistics the engine actually emitted -- never zero-filled.
+    pub stats: Vec<CompanionStatDto>,
+    pub notes: Vec<String>,
+    /// The engine's non-blocking `advancement_absent` note: the honest
+    /// list of companion columns deliberately left ungrounded because
+    /// nothing in this codebase consumes them. It travels here rather
+    /// than in `diagnostics` because `load_saved_character` returns an
+    /// empty diagnostics list on the `Computed` path -- so this is the
+    /// player's only route to it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub advancement_note: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -118,6 +189,137 @@ pub struct ResolvedEquipmentDto {
     /// Whether this item also grounds through the foundation slice's
     /// bootstrap table cell (`TableCellRef`), not just the corpus.
     pub grounded: bool,
+    /// v0.6 alpha swarm items 1+27 sub-task 6: this selection's own
+    /// resolved `applied_modifiers` (e.g. a resolved "+1 Enhancement to
+    /// Weapon" attached to this Longsword) -- reuses this same DTO shape
+    /// rather than a new type, since a resolved modifier is structurally
+    /// just another resolved equipment record. Empty for a selection with
+    /// no attached modifiers, or whose modifiers all failed to resolve
+    /// (those surface via `CorpusDerivedDto.unresolvedEquipmentItemIds`
+    /// instead, same list a top-level unresolvable selection already
+    /// uses).
+    pub applied_modifiers: Vec<ResolvedEquipmentDto>,
+}
+
+/// v0.6 alpha swarm item 1, shape (c) (`item-1-architecture-wall-design.md`):
+/// the real, corpus-resolved aggregate equipment-effect totals for the
+/// character's currently `EquippedActive` items. Explicitly NOT claim-gated
+/// -- unlike `PilotSnapshotDto.baselineArmorClass` (the deterministic-posture
+/// value the `Computed`/`Blocked` gate itself is built on), these numbers
+/// reflect whatever real gear is actually equipped, corpus-resolved,
+/// regardless of whether the build reaches `Computed`.
+///
+/// `attack_bonus_delta` (the bounded single-weapon slice) is `null` on the
+/// wire whenever zero or two-or-more weapons are `EquippedActive` --
+/// `CharacterInput`'s schema has no field recording which weapon a modifier
+/// item attaches to, so with more than one weapon equipped, which one an
+/// enhancement modifies is genuinely ambiguous (see
+/// `EquipmentEffects.attack_bonus_delta`'s own doc comment,
+/// `equipment_effects.rs`). With exactly one weapon equipped it is a real,
+/// unambiguous value, including a real `0` when no enhancement applies --
+/// the frontend must treat `null` as "not shown" (ambiguous), not as zero.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentEffectsDto {
+    /// Per-equipped-item contributions behind the aggregate totals below --
+    /// the "AC breakdown by source" data. Empty when nothing is equipped.
+    pub per_item: Vec<ResolvedEquipmentEffectDto>,
+    pub armor_class_delta: i16,
+    pub armor_check_penalty_total: i16,
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): without `skip_serializing_if`,
+    /// a Rust `None` here serialized as `"maxDexCap":null` -- key present,
+    /// literal `null`, not an omitted key -- so the frontend's `!== undefined`
+    /// hide-checks (`null !== undefined` is `true`) never fired, rendering
+    /// garbled `"+null"`/`"null%"` strings instead of hiding the field. Mirrors
+    /// the precedent `PilotSnapshotDto.damage_reduction` already set.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_dex_cap: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spell_failure_chance: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub attack_bonus_delta: Option<i16>,
+}
+
+/// One carried item's real corpus weight and price, for the Gear tab's
+/// per-item breakdown (`encumbrance::CarriedItem`). `costGp` is omitted on
+/// the wire when the corpus genuinely carries no price for the record --
+/// never serialized as a fabricated `0`. Same `skip_serializing_if`
+/// discipline as `EquipmentEffectsDto::max_dex_cap`, for the same reason:
+/// a literal `null` defeats the frontend's `!== undefined` checks.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CarriedItemDto {
+    pub item_id: String,
+    pub weight_lbs: f64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cost_gp: Option<f64>,
+}
+
+/// The character's real carried weight against PF1's Strength-derived
+/// carrying-capacity thresholds, plus the load tier's own penalties
+/// (`encumbrance::EncumbranceComputation`).
+///
+/// Before this DTO, `compute_encumbrance` ran for real on every desktop
+/// compute and every number it produced was discarded at the IPC boundary
+/// -- the engine knew exactly what the character was carrying and the
+/// player could not see any of it.
+///
+/// `level` is the `EncumbranceLevel` variant name (`"Light"`, `"Medium"`,
+/// `"Heavy"`, `"OverHeavyCapacity"`), matching the `format!("{:?}", ...)`
+/// convention `SchoolCoverageDto.school` already uses on this boundary.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EncumbranceDto {
+    pub total_carried_weight_lbs: f64,
+    /// Total gp value of carried items that carry a real corpus price; a
+    /// floor, not necessarily the full value (see `CarriedItemDto.costGp`).
+    pub total_carried_cost_gp: f64,
+    pub light_max_lbs: f64,
+    pub medium_max_lbs: f64,
+    pub heavy_max_lbs: f64,
+    pub level: String,
+    /// The max-Dex cap imposed by the *load tier alone*, absent under a
+    /// light load. A consumer showing an effective cap must take the lower
+    /// of this and `EquipmentEffectsDto.max_dex_cap` -- they do not sum.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub load_max_dex_cap: Option<i16>,
+    /// The armor check penalty imposed by the *load tier alone*; a real `0`
+    /// under a light load. Does not sum with worn armor's own penalty --
+    /// PF1 takes the more punishing of the two.
+    pub load_armor_check_penalty: i16,
+    pub per_item: Vec<CarriedItemDto>,
+    /// Carried selections whose weight could not be resolved against the
+    /// corpus -- so a `0.0` total reads as "genuinely weightless" rather
+    /// than "we could not tell".
+    pub unresolved_item_ids: Vec<String>,
+}
+
+/// One equipped item's own contribution to the defensive totals
+/// (`equipment_effects::ResolvedEquipmentEffect`) -- the data behind an
+/// "AC breakdown by source" view.
+///
+/// This was computed for real by `compute_equipment_effects` long before
+/// it was exposed: `EquipmentEffects.per_item` has always been populated,
+/// but `EquipmentEffectsDto` carried only the aggregates, so the
+/// per-source detail stopped at the IPC boundary. Every `Option` here is a
+/// genuine corpus absence (a longsword has no armor bonus), omitted on the
+/// wire rather than zero-filled.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResolvedEquipmentEffectDto {
+    pub item_id: String,
+    pub equipment_record_key: String,
+    /// The `EquipmentCategory` variant name (`"ArmsArmor"`, `"General"`,
+    /// `"MagicItems"`, `"Equipmods"`).
+    pub category: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_class_bonus: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_dex: Option<i16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spell_failure: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_check_penalty: Option<i16>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -125,6 +327,20 @@ pub struct ResolvedEquipmentDto {
 pub struct CorpusDerivedDto {
     pub school_coverage: Vec<SchoolCoverageDto>,
     pub equipped_items: Vec<ResolvedEquipmentDto>,
+    pub equipment_effects: EquipmentEffectsDto,
+    pub encumbrance: EncumbranceDto,
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): every `spellId`/`itemId`
+    /// the caller selected that did NOT resolve against this build's
+    /// corpus -- e.g. a real, disk-persisted selection outside the
+    /// desktop app's deliberately tiny bundled demo corpus
+    /// (`corpus_fixtures.rs`, ~4 records total). Before this field, such a
+    /// selection simply vanished from `schoolCoverage`/`equippedItems`
+    /// with no signal at all, indistinguishable from "nothing selected"
+    /// even though the underlying data was never lost. The frontend
+    /// should render these as an honest "not shown -- outside demo
+    /// corpus" indicator, not silence.
+    pub unresolved_spell_ids: Vec<String>,
+    pub unresolved_equipment_item_ids: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -180,11 +396,256 @@ pub struct LoadSavedCharacterResponse {
     pub snapshot: Option<PilotSnapshotDto>,
     pub diagnostics: Vec<DiagnosticDto>,
     pub corpus_derived: CorpusDerivedDto,
+    /// The character's full persisted `chosen.selected_feats`, verbatim —
+    /// not just feats added in the current session. Backlog item 8
+    /// (`risks-and-open-questions.md`): the Feat picker previously had no
+    /// way to render a loaded character's existing feat list.
+    pub selected_feats: Vec<String>,
+    /// The character's full persisted `chosen.spells_selected`, verbatim —
+    /// not just spells added in the current session. Backlog item 9a
+    /// (`risks-and-open-questions.md`): same shape of gap as item 8
+    /// (`selected_feats`) — frontend had no way to detect a Wizard's
+    /// current spell count/contents without this, which was the root of
+    /// their "always route through record_and_prepare_spell_selection"
+    /// workaround since they couldn't tell whether a spell add was truly
+    /// "the first spell." Reuses `SpellSelectionImportDto` (already a
+    /// general-purpose round-trip wire shape for export/import, not
+    /// import-only despite the name) rather than inventing a near-duplicate
+    /// type.
+    pub spells_selected: Vec<SpellSelectionImportDto>,
+    /// The resolved target(s) for every chooser feat the character holds.
+    ///
+    /// `selected_feats` alone cannot answer "Weapon Focus in *what*", and a
+    /// repeatable feat taken twice appears there as two identical strings.
+    /// Without this, the sheet renders both picks the same way — complete
+    /// looking, and wrong.
+    ///
+    /// One entry per chooser feat, not per pick: nothing in the data model
+    /// pairs pick N with target N, so the pairing is not invented here. A
+    /// feat held with no target recorded is present with an empty `targets`,
+    /// because "held but untargeted" is a state the sheet must show rather
+    /// than hide.
+    pub chosen_feat_targets: Vec<ChosenFeatTargetsDto>,
+    /// Every `ComputationExplanation` the engine emitted for this build,
+    /// verbatim — id, computed value, and the engine's own corpus-cited
+    /// derivation text.
+    ///
+    /// Before this field the engine's 636+ distinct explanation records
+    /// (`class_chassis.rogue.sneak_attack`, `class_chassis.cleric.
+    /// channel_energy_dice`, `class_feature.fighter.bravery`, ...) were
+    /// computed, tested and cited on every load and then dropped right
+    /// here at the IPC boundary — the sheet had no field for them to
+    /// travel in. The same defect had already been one-off-patched four
+    /// times (Feats tab, Spells tab, AC-by-source, Pets tab); this is the
+    /// structural channel those patches each worked around.
+    ///
+    /// **`detail` is carried verbatim and must be rendered verbatim.** It
+    /// is the engine's corpus-cited derivation; paraphrasing or
+    /// regenerating it in the frontend would create a second, unverified
+    /// source of rules prose — exactly the hand-authored-rules-data debt
+    /// `docs/governance/no-stub-mvp-doctrine.md` forbids.
+    ///
+    /// Populated on both the `Computed` and the `Blocked` path: a blocked
+    /// build's explanations are still real records for the facets that
+    /// did ground, and hiding them would flatten `Blocked` into "nothing
+    /// computed."
+    pub explanations: Vec<ExplanationDto>,
+    /// One entry per `EquippedActive` item the engine identifies as a
+    /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
+    /// that weapon's corpus-cited damage facets.
+    ///
+    /// **No summed damage total, deliberately.** Each facet stays its own
+    /// field, exactly as `contract.rs`'s `PilotReceipt::weapon_damage`
+    /// boundary note requires: no summed "damage roll total" formula
+    /// exists anywhere in this codebase, and the wield multiplier that
+    /// would be needed to build one honestly is unknown. The sheet
+    /// renders the breakdown as separate columns; it does not add them up.
+    pub weapon_damage: Vec<WeaponDamageDto>,
+}
+
+/// Wire form of `pilot_compute::ComputationExplanation`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExplanationDto {
+    /// Stable engine id, e.g. `class_chassis.rogue.sneak_attack`.
+    pub id: String,
+    /// The computed magnitude this record explains.
+    pub value: i16,
+    /// The engine's own corpus-cited derivation text, verbatim.
+    pub detail: String,
+}
+
+/// Projects the engine's explanation records onto the wire, verbatim.
+pub(crate) fn map_explanations_dto(
+    explanations: &[ComputationExplanation],
+) -> Vec<ExplanationDto> {
+    explanations
+        .iter()
+        .map(|explanation| ExplanationDto {
+            id: explanation.id.clone(),
+            value: explanation.value,
+            detail: explanation.detail.clone(),
+        })
+        .collect()
+}
+
+/// Wire form of `damage_total::DiceExpression`.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiceExpressionDto {
+    pub count: u8,
+    pub die_size: u8,
+}
+
+/// Wire form of `damage_total::DamageRollFeatEffect`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeaponFeatEffectDto {
+    pub feat_key: String,
+    pub damage_bonus: i16,
+}
+
+/// Wire form of `damage_total::WeaponDamageBreakdown`.
+///
+/// Every facet is `Option`: `None` means the engine found no corpus token
+/// for it on this weapon, which is honest absence, not zero. The frontend
+/// must render absence as absence — a `None` critical multiplier is not
+/// "x0" and not "x2".
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeaponDamageDto {
+    /// The `EquipmentSelection.item_id` this breakdown belongs to.
+    pub weapon_item_id: String,
+    /// The resolved corpus record key (e.g. `Longsword (Base)`), from
+    /// whichever facet resolved it. `None` only if nothing resolved.
+    pub weapon_record_key: Option<String>,
+    pub base_dice: Option<DiceExpressionDto>,
+    /// The Strength modifier's contribution to this weapon's damage.
+    /// Bounded to `WeaponHandSlot::Primary` — `EquipmentSelection` has no
+    /// hand-slot field, so a genuine two-weapon-fighting off-hand weapon
+    /// is currently shown at its primary-hand fraction (see
+    /// `resolve_weapon_damage_breakdown`'s own doc comment).
+    pub str_damage_modifier: Option<i16>,
+    /// `OneHanded` / `TwoHanded` / `Light`, verbatim from the corpus
+    /// `WIELD:` token.
+    pub wield_category: Option<String>,
+    pub enhancement_attack_bonus: Option<i16>,
+    pub enhancement_damage_bonus: Option<i16>,
+    /// Inclusive `[low, high]` natural-roll threat bounds, e.g. `[19, 20]`
+    /// for a longsword.
+    pub critical_threat_range: Option<[u8; 2]>,
+    pub critical_multiplier: Option<u8>,
+    /// Constant damage bonuses from the character's feats. Gathered once
+    /// per character, not per weapon — this bounded slice does not model
+    /// per-weapon feat targeting.
+    pub feat_effects: Vec<WeaponFeatEffectDto>,
+}
+
+/// Projects the engine's per-weapon damage breakdown onto the wire.
+///
+/// Sums nothing: each facet crosses as its own field. See
+/// `LoadSavedCharacterResponse::weapon_damage`'s doc comment.
+pub(crate) fn map_weapon_damage_dto(
+    breakdowns: &[WeaponDamageBreakdown],
+) -> Vec<WeaponDamageDto> {
+    breakdowns
+        .iter()
+        .map(|breakdown| WeaponDamageDto {
+            weapon_item_id: breakdown.weapon_item_id.clone(),
+            weapon_record_key: breakdown
+                .base_dice
+                .as_ref()
+                .map(|dice| dice.weapon_record_key.clone())
+                .or_else(|| {
+                    breakdown
+                        .str_modifier
+                        .as_ref()
+                        .map(|str_mod| str_mod.weapon_record_key.clone())
+                }),
+            base_dice: breakdown.base_dice.as_ref().map(|dice| DiceExpressionDto {
+                count: dice.base_dice.count,
+                die_size: dice.base_dice.die_size,
+            }),
+            str_damage_modifier: breakdown
+                .str_modifier
+                .as_ref()
+                .map(|str_mod| str_mod.str_damage_modifier),
+            wield_category: breakdown
+                .str_modifier
+                .as_ref()
+                .map(|str_mod| format!("{:?}", str_mod.wield_category)),
+            enhancement_attack_bonus: breakdown
+                .weapon_enhancement
+                .as_ref()
+                .map(|enhancement| enhancement.attack_bonus),
+            enhancement_damage_bonus: breakdown
+                .weapon_enhancement
+                .as_ref()
+                .map(|enhancement| enhancement.damage_bonus),
+            critical_threat_range: breakdown
+                .critical_threat_range
+                .as_ref()
+                .map(|range| [range.critical_threat_range.0, range.critical_threat_range.1]),
+            critical_multiplier: breakdown
+                .critical_multiplier
+                .as_ref()
+                .map(|multiplier| multiplier.critical_multiplier),
+            feat_effects: breakdown
+                .feat_effects
+                .iter()
+                .map(|effect| WeaponFeatEffectDto {
+                    feat_key: effect.feat_key.clone(),
+                    damage_bonus: effect.damage_bonus,
+                })
+                .collect(),
+        })
+        .collect()
+}
+
+/// Wire form of `feat_effects::ChosenFeatTargets`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ChosenFeatTargetsDto {
+    pub feat_id: String,
+    /// `"Weapon"`, `"Skill"` or `"SpellSchool"` — the same vocabulary
+    /// `FeatCatalogEntryDto::chooser_target_kind` uses, so a caller can match
+    /// a held feat against its catalog entry without a second mapping.
+    pub target_kind: String,
+    pub targets: Vec<String>,
+}
+
+/// Projects the engine's resolved chooser targets onto the wire.
+///
+/// `pub(crate)` so `pf1_adapter`'s twin construction site calls this rather
+/// than reimplementing it — the same sharing the `map_spells_selected_dto`
+/// precedent established for exactly this pair of copy-paste call sites.
+pub(crate) fn map_chosen_feat_targets_dto(
+    character_input: &codex::rules_core::character_input::CharacterInput,
+) -> Vec<ChosenFeatTargetsDto> {
+    codex::rules_core::feat_effects::chosen_feat_targets(
+        &character_input.chosen.selected_feats,
+        &character_input.chosen.selected_choices,
+    )
+    .into_iter()
+    .map(|resolved| ChosenFeatTargetsDto {
+        feat_id: resolved.feat_id,
+        target_kind: format!("{:?}", resolved.target_kind),
+        targets: resolved.targets,
+    })
+    .collect()
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
 /// `rename_all` — matching the `Ge08BaselineArmorClass` precedent so the TS
-/// boundary can match on those exact strings.
+/// boundary can match on those exact strings. v0.6 alpha swarm (real
+/// render-staleness root cause, frontend-found): a bare
+/// `#[serde(rename_all = "camelCase")]` on this enum would ALSO camelCase
+/// (lowercase-first) the `"Saved"`/`"Blocked"` tag values themselves,
+/// breaking every `outcome.kind === 'Saved'` check across the frontend —
+/// that's exactly why it was never added despite `corpus_derived` staying
+/// snake_case on the wire ever since. The real fix is a per-field rename
+/// on just the one field that actually has an underscore (every other
+/// field here already happens to have none), not an enum-wide attribute.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind")]
 pub enum CreateCharacterResponse {
@@ -195,6 +656,7 @@ pub enum CreateCharacterResponse {
         // boundary is unchanged.
         summary: Box<CharacterSummaryDto>,
         snapshot: PilotSnapshotDto,
+        #[serde(rename = "corpusDerived")]
         corpus_derived: CorpusDerivedDto,
     },
     Blocked {
@@ -214,18 +676,22 @@ pub enum CreateCharacterResponse {
 // module's `#[tauri::command]` wrappers and its own `mod tests`, which
 // still call them unqualified via `use super::*`).
 pub(crate) use crate::pf1_adapter::{
-    add_equipment_selection_at_root, add_spell_selection_at_root, compose_character_input,
-    level_up_character_at_root, mutate_saved_character_at_root,
+    add_equipment_selection_at_root, add_feat_selection_at_root, add_spell_selection_at_root,
+    apply_attach_equipment_modifier, compose_character_input, level_up_character_at_root,
+    mutate_saved_character_at_root, record_and_prepare_spell_selection_at_root,
+    resolve_unified_pilot_snapshot, set_skill_allocations_at_root,
 };
 // `apply_level_up` / `apply_add_equipment_selection` / `apply_add_spell_selection`
-// are only referenced directly by this module's own `#[cfg(test)] mod tests`
-// (the non-test `#[tauri::command]` wrappers only ever call the `_at_root`
-// variants re-exported above) — `#[cfg(test)]` on the import itself avoids an
-// `unused_imports` warning on non-test builds while keeping `use super::*`
-// resolving them inside `mod tests` unchanged.
+// / `apply_add_feat_selection` / `apply_set_skill_allocations` are only
+// referenced directly by this module's own `#[cfg(test)] mod tests` (the
+// non-test `#[tauri::command]` wrappers only ever call the `_at_root`
+// variants re-exported above) — `#[cfg(test)]` on the import itself avoids
+// an `unused_imports` warning on non-test builds while keeping
+// `use super::*` resolving them inside `mod tests` unchanged.
 #[cfg(test)]
 pub(crate) use crate::pf1_adapter::{
-    apply_add_equipment_selection, apply_add_spell_selection, apply_level_up,
+    apply_add_equipment_selection, apply_add_feat_selection, apply_add_spell_selection,
+    apply_level_up, apply_record_and_prepare_spell_selection, apply_set_skill_allocations,
 };
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -281,6 +747,47 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
         selected_skill_modifiers: map_selected_skill_modifiers_dto(
             snapshot.skill.selected_modifier,
         ),
+        damage_reduction: snapshot.defense.damage_reduction,
+        companion: snapshot.companion.as_ref().map(map_animal_companion_dto),
+    }
+}
+
+fn map_animal_companion_dto(
+    companion: &codex::rules_core::pilot_view_model::PilotCompanionViewModel,
+) -> AnimalCompanionDto {
+    AnimalCompanionDto {
+        owner_class_label: companion.owner_class_label.clone(),
+        role_label: companion.role_label.clone(),
+        species: companion.species.clone(),
+        summary_detail: companion.summary_detail.clone(),
+        stats: companion
+            .stats
+            .iter()
+            .map(|stat| CompanionStatDto {
+                label: stat.label.clone(),
+                value: stat.value,
+                detail: stat.detail.clone(),
+            })
+            .collect(),
+        notes: companion.notes.clone(),
+        advancement_note: companion.advancement_note.clone(),
+    }
+}
+
+/// Maps one `ResolvedEquipment` to its DTO, recursing into
+/// `applied_modifiers` (v0.6 alpha swarm sub-task 6) -- a resolved
+/// modifier is structurally identical to a resolved top-level selection,
+/// so this one function handles both without a near-duplicate.
+/// `pub(crate)` — same reason as `map_spells_selected_dto`:
+/// `rule_system_adapter.rs`'s `TestPf1Delegate` test double reuses this
+/// rather than hand-rolling its own mirror a second time.
+pub(crate) fn map_resolved_equipment_dto(item: &ResolvedEquipment) -> ResolvedEquipmentDto {
+    ResolvedEquipmentDto {
+        item_id: item.item_id.clone(),
+        equipment_record_name: item.equipment_record_name.clone(),
+        equipment_record_key: item.equipment_record_key.clone(),
+        grounded: item.table_cell.is_some(),
+        applied_modifiers: item.applied_modifiers.iter().map(map_resolved_equipment_dto).collect(),
     }
 }
 
@@ -299,13 +806,60 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
         equipped_items: section
             .equipped_items
             .iter()
-            .map(|item| ResolvedEquipmentDto {
+            .map(map_resolved_equipment_dto)
+            .collect(),
+        equipment_effects: EquipmentEffectsDto {
+            per_item: section
+                .equipment_effects
+                .per_item
+                .iter()
+                .map(|effect| ResolvedEquipmentEffectDto {
+                    item_id: effect.item_id.clone(),
+                    equipment_record_key: effect.equipment_record_key.clone(),
+                    category: format!("{:?}", effect.category),
+                    armor_class_bonus: effect.armor_class_bonus,
+                    max_dex: effect.max_dex,
+                    spell_failure: effect.spell_failure,
+                    armor_check_penalty: effect.armor_check_penalty,
+                })
+                .collect(),
+            armor_class_delta: section.equipment_effects.armor_class_delta,
+            armor_check_penalty_total: section.equipment_effects.armor_check_penalty_total,
+            max_dex_cap: section.equipment_effects.max_dex_cap,
+            spell_failure_chance: section.equipment_effects.spell_failure_chance,
+            attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
+        },
+        encumbrance: map_encumbrance_dto(&section.encumbrance),
+        unresolved_spell_ids: section.unresolved_spell_ids.clone(),
+        unresolved_equipment_item_ids: section.unresolved_equipment_item_ids.clone(),
+    }
+}
+
+/// Flattens `EncumbranceComputation`'s nested `thresholds` into the flat
+/// wire shape the frontend consumes, and stringifies the load tier the same
+/// way `SchoolCoverageDto.school` already stringifies its enum.
+pub(crate) fn map_encumbrance_dto(
+    encumbrance: &codex::rules_core::encumbrance::EncumbranceComputation,
+) -> EncumbranceDto {
+    EncumbranceDto {
+        total_carried_weight_lbs: encumbrance.total_carried_weight_lbs,
+        total_carried_cost_gp: encumbrance.total_carried_cost_gp,
+        light_max_lbs: encumbrance.thresholds.light_max_lbs,
+        medium_max_lbs: encumbrance.thresholds.medium_max_lbs,
+        heavy_max_lbs: encumbrance.thresholds.heavy_max_lbs,
+        level: format!("{:?}", encumbrance.level),
+        load_max_dex_cap: encumbrance.load_max_dex_cap,
+        load_armor_check_penalty: encumbrance.load_armor_check_penalty,
+        per_item: encumbrance
+            .per_item
+            .iter()
+            .map(|item| CarriedItemDto {
                 item_id: item.item_id.clone(),
-                equipment_record_name: item.equipment_record_name.clone(),
-                equipment_record_key: item.equipment_record_key.clone(),
-                grounded: item.table_cell.is_some(),
+                weight_lbs: item.weight_lbs,
+                cost_gp: item.cost_gp,
             })
             .collect(),
+        unresolved_item_ids: encumbrance.unresolved_item_ids.clone(),
     }
 }
 
@@ -319,6 +873,21 @@ pub(crate) fn map_diagnostics_dto(
             id: diagnostic.id.clone(),
             message: diagnostic.message.clone(),
             claim_blocking: diagnostic.claim_blocking,
+        })
+        .collect()
+}
+
+// `pub(crate)` — same reason as `map_snapshot_dto` above. Reuses
+// `SpellSelectionImportDto` (already a general-purpose export/import
+// round-trip wire shape, not import-only despite the name) rather than
+// inventing a near-duplicate type for `LoadSavedCharacterResponse`.
+pub(crate) fn map_spells_selected_dto(spells: &[SpellSelection]) -> Vec<SpellSelectionImportDto> {
+    spells
+        .iter()
+        .map(|spell| SpellSelectionImportDto {
+            spell_id: spell.spell_id.clone(),
+            source_class_id: spell.source_class_id.clone(),
+            acquisition_mode: spell.acquisition_mode.into(),
         })
         .collect()
 }
@@ -372,9 +941,11 @@ pub(crate) fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> Character
 /// `CreateCharacterResponse::Saved`/`Blocked`, matching every other
 /// character-hub command's response shape).
 ///
-/// This table documents the full three-operation surface. As of this cycle
-/// all three rows are wired to callable `#[tauri::command]`s
-/// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`).
+/// This table documents the full six-operation surface. As of this cycle
+/// all six rows are wired to callable `#[tauri::command]`s
+/// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`,
+/// `set_skill_allocations`, `add_feat_selection`,
+/// `record_and_prepare_spell_selection`).
 /// Per the Wired Integration doctrine (`docs/governance/no-stub-mvp-doctrine.md`),
 /// the `wired` flag below is descriptive metadata this table's own
 /// dispatch-shape test asserts against, not a runtime dispatcher a caller
@@ -384,6 +955,9 @@ pub enum SavedCharacterMutationOp {
     LevelUpCharacter,
     AddEquipmentSelection,
     AddSpellSelection,
+    SetSkillAllocations,
+    AddFeatSelection,
+    RecordAndPrepareSpellSelection,
 }
 
 /// One row of the `mutate_saved_character` operation table.
@@ -404,7 +978,7 @@ pub struct SavedCharacterMutationOpDescriptor {
     pub wired: bool,
 }
 
-pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 3] = [
+pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 6] = [
     SavedCharacterMutationOpDescriptor {
         op: SavedCharacterMutationOp::LevelUpCharacter,
         name: "level_up_character",
@@ -427,31 +1001,69 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
             recomputes and re-saves.",
         wired: true,
     },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::SetSkillAllocations,
+        name: "set_skill_allocations",
+        description: "Replaces chosen.skill_allocations wholesale with the \
+            caller's full allocation set, then recomputes and re-saves.",
+        wired: true,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::AddFeatSelection,
+        name: "add_feat_selection",
+        description: "Appends an entry to chosen.selected_feats, then \
+            recomputes and re-saves.",
+        wired: true,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::RecordAndPrepareSpellSelection,
+        name: "record_and_prepare_spell_selection",
+        description: "Appends BOTH a Known and a Prepared entry for the \
+            same spell to chosen.spells_selected in one atomic mutation, \
+            then recomputes and re-saves -- breaks the Wizard spellbook \
+            bootstrap deadlock a single-mode add_spell_selection call \
+            cannot cross alone.",
+        wired: true,
+    },
 ];
 
 // ----- Tauri commands -----
 
-#[tauri::command]
-pub fn create_character(
-    app: tauri::AppHandle,
-    request: CreateCharacterRequest,
+/// `create_character`'s real implementation, split from the `#[tauri::command]`
+/// wrapper below so it is unit-testable against a real `SavedCharacterStore`
+/// fixture without an `AppHandle` -- mirrors every other command's own
+/// `_at_root` split (`level_up_character_at_root`, `purchase_equipment_at_root`,
+/// `recompute_character_at_root`, ...). `app_version` is passed explicitly
+/// (rather than an `AppHandle`) since it is the only piece of this function's
+/// original body that ever needed one.
+///
+/// v0.6 alpha swarm item 7 (risks-and-open-questions.md): once the build
+/// reaches `Computed` and saves, this also initializes the character's
+/// starting money balance via `money::starting_wealth_gp`, for any class
+/// that function recognizes -- today that means every character that gets
+/// this far at all, since `starting_wealth_gp` covers all 11 CRB classes
+/// and only Fighter/Wizard/Rogue currently reach `Computed` in the first
+/// place (a class outside that set never reaches this line, having already
+/// returned `Blocked` above). An unrecognized class id (`None`) leaves
+/// `money.json` uninitialized -- the existing "no file yet" convention
+/// already means a 0 balance, so this never fabricates a value for a class
+/// this table doesn't cover.
+pub(crate) fn create_character_at_root(
+    root: &Path,
+    request: &CreateCharacterRequest,
+    app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
-    let character_input = compose_character_input(&request);
-    let receipt = build_pilot_headless_receipt(&character_input);
+    let character_input = compose_character_input(request);
 
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: request.character_id.clone(),
@@ -459,7 +1071,7 @@ pub fn create_character(
         revision_kind: SavedCharacterRevisionKind::Authoritative,
         saved_at: request.saved_at.clone(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
-        app_or_runtime_version: app.package_info().version.to_string(),
+        app_or_runtime_version: app_version,
         content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
         game_system: GAME_SYSTEM_ID.to_owned(),
         latest_authoritative_revision_ref: format!("{}.rev.1", request.character_id),
@@ -467,14 +1079,27 @@ pub fn create_character(
         character_input,
     };
 
-    let root = resolve_character_root(&app, &request.character_id)?;
-    SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+
+    if let Some(starting_wealth_gp) = money::starting_wealth_gp(&request.class_id) {
+        let starting_copper = money::gp_to_copper(f64::from(starting_wealth_gp));
+        adjust_character_money_at_root(root, starting_copper as i64)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
+}
+
+#[tauri::command]
+pub fn create_character(
+    app: tauri::AppHandle,
+    request: CreateCharacterRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    create_character_at_root(&root, &request, app.package_info().version.to_string())
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -502,20 +1127,15 @@ pub fn clone_character(
     let mut character_input = source_envelope.character_input.clone();
     character_input.case_id = Some(request.new_character_id.clone());
 
-    let receipt = build_pilot_headless_receipt(&character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: request.new_character_id.clone(),
@@ -542,7 +1162,7 @@ pub fn clone_character(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
@@ -643,18 +1263,52 @@ pub fn load_saved_character(
     request: LoadSavedCharacterRequest,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    let envelope = SavedCharacterStore::load(&root).map_err(|err| err.message)?;
+    load_saved_character_at_root(&root)
+}
 
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let corpus_receipt =
-        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+/// The real body of `load_saved_character`, split out from the
+/// `AppHandle`-taking command so it is directly testable against a
+/// temp-dir character root — the same `*_at_root` convention
+/// `level_up_character_at_root` / `set_skill_allocations_at_root` already
+/// established in this module.
+pub(crate) fn load_saved_character_at_root(
+    root: &Path,
+) -> Result<LoadSavedCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    let (snapshot, diagnostics, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+            Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
+            Err(diagnostics) => (
+                None,
+                diagnostics,
+                compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
+            ),
+        };
+
+    // Both already computed above — `corpus_receipt.base` IS the
+    // `compute_pilot_base_chassis` output (explanations included), and
+    // `corpus_receipt.corpus_derived.equipment_effects` IS the resolved
+    // `EquippedActive` effect set. Reused rather than recomputed, matching
+    // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
+    let explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+        &envelope.character_input,
+        corpus_fixture_bundle(),
+        &corpus_receipt.corpus_derived.equipment_effects,
+        corpus_receipt.base.ability_modifiers.strength,
+    ));
 
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
-        snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
-        diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        snapshot: snapshot.as_ref().map(map_snapshot_dto),
+        diagnostics: map_diagnostics_dto(&diagnostics),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        selected_feats: envelope.character_input.chosen.selected_feats.clone(),
+        spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
+        chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
+        explanations,
+        weapon_damage,
     })
 }
 
@@ -663,19 +1317,239 @@ pub fn load_saved_character(
 pub struct LevelUpCharacterRequest {
     pub character_id: String,
     pub class_id: String,
+    /// Additional player choices this level-up records (a hit-die roll or
+    /// "take average" record, feat picks at feat-gaining levels, ...),
+    /// appended to `chosen.selected_choices` verbatim. Empty by default —
+    /// callers that only want the bare level increment (the pre-v0.6
+    /// behavior) omit this field entirely.
+    #[serde(default)]
+    pub additional_choices: Vec<SelectedChoiceDto>,
+    /// When present, replaces `chosen.skill_allocations` wholesale with
+    /// this level-up's skill-point spend (same semantics as
+    /// `set_skill_allocations`). `None`/omitted leaves the character's
+    /// existing skill allocations untouched.
+    #[serde(default)]
+    pub skill_allocations: Option<Vec<SkillAllocationDto>>,
     pub saved_at: String,
 }
 
-/// Loads the saved character, increments/adds the requested class's
-/// level, recomputes via the real engine, and re-saves — see
-/// `level_up_character_at_root` for the full semantics.
+/// Loads the saved character, increments/adds the requested class's level,
+/// records any additional level-up choices (hit-die roll, feat picks) and
+/// an optional skill-allocation update, recomputes via the real engine, and
+/// re-saves — see `level_up_character_at_root` for the full semantics.
 #[tauri::command]
 pub fn level_up_character(
     app: tauri::AppHandle,
     request: LevelUpCharacterRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    level_up_character_at_root(&root, &request.class_id, &request.saved_at)
+    let additional_choices = request
+        .additional_choices
+        .into_iter()
+        .map(|choice| SelectedChoice {
+            choice_set_id: choice.choice_set_id,
+            selection_id: choice.selection_id,
+        })
+        .collect();
+    let skill_allocations = request.skill_allocations.map(|allocations| {
+        allocations
+            .into_iter()
+            .map(|skill| SkillAllocation {
+                skill_id: skill.skill_id,
+                ranks: skill.ranks,
+            })
+            .collect()
+    });
+    level_up_character_at_root(
+        &root,
+        &request.class_id,
+        additional_choices,
+        skill_allocations,
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreviewLevelUpRequest {
+    pub character_id: String,
+    /// The class the next character level would be taken in — either one
+    /// the character already holds (levels up by one) or a brand-new class
+    /// (starts at class level 1).
+    pub class_id: String,
+}
+
+/// What taking the next level in `class_id` grants, straight from Epic 7's
+/// real per-class level-up engine
+/// (`level_up::compute_level_up_grants_for_class`).
+///
+/// This exists because the frontend used to answer the same question from
+/// a hand-authored `CLASS_FEATURES` table in `characterProgression.ts` —
+/// bare labels (`'Bravery +1'`, `'Bonus combat feat'`) with no magnitudes
+/// and no provenance, duplicating and drifting from the engine's own
+/// grounded class tables. That table is deleted; this command replaces it.
+///
+/// An empty `automatic_features` is a real answer, not a failure: the
+/// per-class level-up modules are individually gated (Fighter's, for
+/// instance, is bounded to Human Fighter inputs) and
+/// `compute_level_up_grants_for_class` returns an honestly-empty
+/// `LevelUpPlan` for any class id outside the eleven PF1 Core classes it
+/// grounds. The dialog renders that absence as absence rather than
+/// inventing a placeholder line.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreviewLevelUpResponse {
+    /// The class's own level before this transition (0 for a class the
+    /// character does not yet hold).
+    pub from_level: u8,
+    /// The class's own level after this transition.
+    pub to_level: u8,
+    /// The character's total level after this transition.
+    pub character_level: u8,
+    /// Grants that fire automatically at `to_level` — no player choice
+    /// needed.
+    pub automatic_features: Vec<LevelUpGrantDto>,
+    /// Open-ended "pick N from this list" grants.
+    pub pick_from_lists: Vec<LevelUpPickListDto>,
+    /// Named resource pools whose size changes across this transition.
+    pub resource_pool_changes: Vec<LevelUpResourcePoolDeltaDto>,
+    /// True when `to_level` crosses this class's PF1 capstone.
+    pub capstone_threshold: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpGrantDto {
+    pub name: String,
+    /// The engine's own effect descriptions, verbatim — same discipline as
+    /// `ExplanationDto::detail`.
+    pub effects: Vec<LevelUpGrantEffectDto>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpGrantEffectDto {
+    pub description: String,
+    pub value: i16,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpPickListDto {
+    /// `"Feat"`, `"Spell"` or `"RagePower"`.
+    pub category: String,
+    pub count: u8,
+    pub candidates: Vec<LevelUpPickCandidateDto>,
+    pub filter: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpPickCandidateDto {
+    pub id: String,
+    pub name: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpResourcePoolDeltaDto {
+    pub pool_id: String,
+    pub from_value: i16,
+    pub to_value: i16,
+}
+
+/// Previews what the next level in `class_id` grants, without persisting
+/// anything. Read-only twin of `level_up_character`.
+#[tauri::command]
+pub fn preview_level_up(
+    app: tauri::AppHandle,
+    request: PreviewLevelUpRequest,
+) -> Result<PreviewLevelUpResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    preview_level_up_at_root(&root, &request.class_id)
+}
+
+/// The real body of `preview_level_up` — see `load_saved_character_at_root`
+/// for why the `AppHandle` is split off.
+pub(crate) fn preview_level_up_at_root(
+    root: &Path,
+    class_id: &str,
+) -> Result<PreviewLevelUpResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let class_levels = &envelope.character_input.chosen.class_levels;
+
+    let from_level = class_levels
+        .iter()
+        .find(|held| held.class_id == class_id)
+        .map(|held| held.level)
+        .unwrap_or(0);
+    let to_level = from_level.saturating_add(1);
+    let character_level = class_levels
+        .iter()
+        .map(|held| held.level)
+        .fold(0u8, |sum, level| sum.saturating_add(level))
+        .saturating_add(1);
+
+    // `compute_level_up_grants_for_class`, not the top-level
+    // `compute_level_up_grants`: the latter dispatches on the character's
+    // *sole* class and returns an empty plan for any multiclass build, so
+    // it would silently blank the preview for exactly the characters the
+    // sheet already supports (see `pf1_adapter.rs`'s register-A2 note).
+    let plan: LevelUpPlan = compute_level_up_grants_for_class(
+        &envelope.character_input,
+        class_id,
+        from_level,
+        to_level,
+    );
+
+    Ok(PreviewLevelUpResponse {
+        from_level,
+        to_level,
+        character_level,
+        automatic_features: plan
+            .automatic_features
+            .iter()
+            .map(|grant| LevelUpGrantDto {
+                name: grant.name.clone(),
+                effects: grant
+                    .effects
+                    .iter()
+                    .map(|effect| LevelUpGrantEffectDto {
+                        description: effect.description.clone(),
+                        value: effect.value,
+                    })
+                    .collect(),
+            })
+            .collect(),
+        pick_from_lists: plan
+            .pick_from_lists
+            .iter()
+            .map(|list| LevelUpPickListDto {
+                category: format!("{:?}", list.category),
+                count: list.count,
+                candidates: list
+                    .candidates
+                    .iter()
+                    .map(|candidate| LevelUpPickCandidateDto {
+                        id: candidate.id.clone(),
+                        name: candidate.name.clone(),
+                    })
+                    .collect(),
+                filter: list.filter.clone(),
+            })
+            .collect(),
+        resource_pool_changes: plan
+            .resource_pool_change
+            .pools
+            .iter()
+            .map(|pool| LevelUpResourcePoolDeltaDto {
+                pool_id: pool.pool_id.clone(),
+                from_value: pool.from_value,
+                to_value: pool.to_value,
+            })
+            .collect(),
+        capstone_threshold: plan.capstone_threshold,
+    })
 }
 
 /// The wire-level projection of `ActiveState` for the `add_equipment_selection`
@@ -731,6 +1605,299 @@ pub fn add_equipment_selection(
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     add_equipment_selection_at_root(
+        &root,
+        &request.item_id,
+        request.active_state.into(),
+        &request.saved_at,
+    )
+}
+
+/// v0.6 alpha swarm (risks-and-open-questions.md item 9): the outcome of an
+/// atomic equipment purchase. A THIRD case beyond `CreateCharacterResponse`'s
+/// `Saved`/`Blocked` doesn't exist here on purpose -- `Blocked` already
+/// carries `diagnostics: Vec<DiagnosticDto>`, so an unaffordable purchase or
+/// an item with no known cost is represented as a `Blocked` response with
+/// one hand-authored diagnostic, the same wire shape frontend already
+/// handles for every other mutation command, rather than a new response
+/// shape to integrate.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum PurchaseEquipmentResponse {
+    Purchased {
+        summary: Box<CharacterSummaryDto>,
+        snapshot: PilotSnapshotDto,
+        // Same reasoning as `CreateCharacterResponse::Saved`'s own
+        // `corpus_derived` field: a per-field rename, not an enum-wide
+        // `rename_all`, which would also lowercase the `"Purchased"`/
+        // `"Blocked"` tag values themselves.
+        #[serde(rename = "corpusDerived")]
+        corpus_derived: CorpusDerivedDto,
+        money: CharacterMoneyDto,
+    },
+    Blocked {
+        diagnostics: Vec<DiagnosticDto>,
+    },
+}
+
+/// `purchase_equipment`'s real implementation: real correctness fix for
+/// risks-and-open-questions.md item 9 ("Money panel not coupled to
+/// equipment purchases... deliberately not built as two non-atomic
+/// mutations... risking a partial-apply correctness bug").
+///
+/// Sequencing (the actual transaction shape, chosen deliberately): resolve
+/// the item's real `cost_gp` (headless, no corpus needed --
+/// `equipment_cost_gp_headless_resolve`'s own doc comment explains why) and
+/// pre-check affordability against the CURRENT balance BEFORE mutating
+/// anything. Only once both checks pass does this call
+/// `add_equipment_selection_at_root` (the existing equipment mutation,
+/// unchanged); only if THAT reaches `Computed` and saves does this deduct
+/// the cost via `adjust_character_money_at_root`. This ordering means the
+/// only case where equipment is added without a successful matching charge
+/// is a true I/O failure on the money-file write immediately after an
+/// already-verified-affordable, already-persisted equipment save -- an
+/// honestly narrow residual window (same disk, same moment, would likely
+/// also have broken the equipment save itself), not the two-independent-
+/// frontend-calls-with-no-pre-check gap this fix actually closes. A full
+/// two-phase-commit / journaled rollback across the two separate files
+/// (`character_input.txt`, `money.json`) would be real engineering but is
+/// not proportionate to this codebase's current maturity level or this
+/// swarm's bar -- noted here rather than silently assumed away.
+///
+/// An item with no known `cost_gp` (a `(Base)` template record or a
+/// formula-priced equipment modifier) is treated the same as
+/// insufficient funds: `Blocked`, nothing mutated, never a free item.
+pub(crate) fn purchase_equipment_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let Some(cost_gp) =
+        codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id)
+    else {
+        return Ok(PurchaseEquipmentResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.unknown_cost".to_owned(),
+                message: format!(
+                    "'{item_id}' has no known gold-piece cost in the equipment catalog (a \
+                     template/base record with no independent price, or a formula-priced \
+                     equipment modifier), so affordability cannot be verified. The purchase \
+                     was not applied and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    };
+
+    let cost_copper = money::gp_to_copper(cost_gp);
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return Ok(PurchaseEquipmentResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.insufficient_funds".to_owned(),
+                message: format!(
+                    "'{item_id}' costs {cost_copper} cp but the character's balance is only \
+                     {balance_copper} cp. The purchase was not applied and no funds were \
+                     charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => {
+            Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
+        }
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+            let cost_signed = i64::try_from(cost_copper)
+                .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = adjust_character_money_at_root(root, -cost_signed)?;
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+        }
+    }
+}
+
+/// Same wire shape as `PurchaseEquipmentResponse` (`Attached`/`Blocked`,
+/// same field set) -- deliberately not reused verbatim so the two
+/// commands' response `kind` tags stay distinct on the wire
+/// (`"Attached"` vs `"Purchased"`), matching frontend's own
+/// per-command-outcome convention.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum AttachEquipmentModifierResponse {
+    Attached {
+        summary: Box<CharacterSummaryDto>,
+        snapshot: PilotSnapshotDto,
+        #[serde(rename = "corpusDerived")]
+        corpus_derived: CorpusDerivedDto,
+        money: CharacterMoneyDto,
+    },
+    Blocked {
+        diagnostics: Vec<DiagnosticDto>,
+    },
+}
+
+/// `attach_equipment_modifier`'s real implementation (v0.6 alpha swarm
+/// items 1+27 sub-task 6, frontend-proposed shape). Mirrors
+/// `purchase_equipment_at_root`'s atomic resolve-cost -> check-affordability
+/// -> mutate -> charge sequencing, with two deliberate differences:
+///
+/// 1. **Validates `modifier_item_id` against the real equipment catalog
+///    first** (`equipment_tables()`, the same check
+///    `append_to_character_at_root` already runs), before any cost or
+///    target-selection check -- a typo'd or fabricated modifier id must
+///    never silently attach.
+/// 2. **An unknown `cost_gp` is treated as free to attach, not blocked** --
+///    a deliberate deviation from `purchase_equipment_at_root`'s own
+///    "unknown cost = blocked, same as unaffordable" rule. Checked against
+///    the real static table before choosing this: the actual magical
+///    weapon/armor enhancement records (`"Special Ability ~ +1 ~
+///    Weapon"` through `~ +10 ~`) all resolve `cost_gp: None` (real PF1
+///    enhancement pricing is a bonus-squared formula, not a flat catalog
+///    price) -- mirroring `purchase_equipment`'s block-on-unknown-cost
+///    behavior here would block exactly the headline use case this
+///    command exists for. Only a modifier with a real, known `cost_gp`
+///    (e.g. Masterwork, `Some(0.0)` in the current table -- itself a
+///    known pre-existing pricing gap, not introduced here) is ever
+///    actually charged.
+///
+/// The target `item_id` must already exist in `equipment_selections` --
+/// checked via a read before any charge, so a not-found target is a
+/// `Blocked` response with zero side effects, never a charge with nothing
+/// to attach to.
+pub(crate) fn attach_equipment_modifier_at_root(
+    root: &Path,
+    item_id: &str,
+    modifier_item_id: &str,
+    saved_at: &str,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    let is_known_modifier = codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables()
+        .iter()
+        .any(|entry| entry.key == modifier_item_id);
+    if !is_known_modifier {
+        return Ok(AttachEquipmentModifierResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "equipment.attach_modifier.unknown_item".to_owned(),
+                message: format!(
+                    "'{modifier_item_id}' is not a recognized equipment catalog item. Nothing \
+                     was attached and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
+        .map_err(|err| err.message)?;
+    let target_exists = envelope
+        .character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .any(|selection| selection.item_id == item_id);
+    if !target_exists {
+        return Ok(AttachEquipmentModifierResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "equipment.attach_modifier.target_not_found".to_owned(),
+                message: format!(
+                    "'{item_id}' is not an equipped selection on this character. Nothing was \
+                     attached and no funds were charged."
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+
+    let cost_copper =
+        match codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(modifier_item_id) {
+            Some(cost_gp) => money::gp_to_copper(cost_gp),
+            None => 0,
+        };
+
+    if cost_copper > 0 {
+        let balance_copper = load_character_money_at_root(root)?.total_copper;
+        if balance_copper < cost_copper {
+            return Ok(AttachEquipmentModifierResponse::Blocked {
+                diagnostics: vec![DiagnosticDto {
+                    id: "money.equipment_attach_modifier.insufficient_funds".to_owned(),
+                    message: format!(
+                        "'{modifier_item_id}' costs {cost_copper} cp but the character's \
+                         balance is only {balance_copper} cp. Nothing was attached and no \
+                         funds were charged."
+                    ),
+                    claim_blocking: true,
+                }],
+            });
+        }
+    }
+
+    match mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_attach_equipment_modifier(character_input, item_id, modifier_item_id);
+    })? {
+        CreateCharacterResponse::Blocked { diagnostics } => {
+            Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
+        }
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+            let money = if cost_copper > 0 {
+                let cost_signed = i64::try_from(cost_copper)
+                    .map_err(|_| "attach cost overflows a signed 64-bit total".to_owned())?;
+                adjust_character_money_at_root(root, -cost_signed)?
+            } else {
+                load_character_money_at_root(root)?
+            };
+            Ok(AttachEquipmentModifierResponse::Attached { summary, snapshot, corpus_derived, money })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AttachEquipmentModifierRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub modifier_item_id: String,
+    pub saved_at: String,
+}
+
+/// See `attach_equipment_modifier_at_root` for the full transaction-shape
+/// reasoning (free-attach on unknown cost, target/modifier validation
+/// before any charge).
+#[tauri::command]
+pub fn attach_equipment_modifier(
+    app: tauri::AppHandle,
+    request: AttachEquipmentModifierRequest,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    attach_equipment_modifier_at_root(
+        &root,
+        &request.item_id,
+        &request.modifier_item_id,
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PurchaseEquipmentRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub active_state: ActiveStateDto,
+    pub saved_at: String,
+}
+
+/// Atomically resolves `item_id`'s real catalog cost, verifies the
+/// character can afford it, appends the equipment selection, and deducts
+/// the cost from the persisted money balance — or applies none of it and
+/// returns a `Blocked` diagnostic. See `purchase_equipment_at_root` for the
+/// full transaction-shape reasoning.
+#[tauri::command]
+pub fn purchase_equipment(
+    app: tauri::AppHandle,
+    request: PurchaseEquipmentRequest,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    purchase_equipment_at_root(
         &root,
         &request.item_id,
         request.active_state.into(),
@@ -797,6 +1964,113 @@ pub fn add_spell_selection(
         request.acquisition_mode.into(),
         &request.saved_at,
     )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RecordAndPrepareSpellSelectionRequest {
+    pub character_id: String,
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub saved_at: String,
+}
+
+/// Appends BOTH a `Known` and a `Prepared` entry for the same spell in one
+/// atomic mutation — breaks the Wizard spellbook bootstrap deadlock
+/// `add_spell_selection` alone cannot: `unmet_wizard_spellbook_conditions`
+/// requires a non-empty recorded set AND a non-empty prepared set
+/// simultaneously, but `add_spell_selection` only ever appends one spell in
+/// one mode per call, and `mutate_saved_character_at_root` discards any
+/// call that doesn't independently reach `Computed` — so a `Known`-only
+/// call is Blocked (nothing prepared yet) and never persists, and a
+/// `Prepared`-only call is *also* Blocked (the prepared spell isn't in the
+/// still-empty recorded set) and never persists either. See
+/// `apply_record_and_prepare_spell_selection`'s own doc comment for the
+/// full analysis.
+///
+/// Use this once, for the character's first spell. After that, the plain
+/// `add_spell_selection` (either mode) works normally for every subsequent
+/// spell — this command is not a general replacement for it.
+#[tauri::command]
+pub fn record_and_prepare_spell_selection(
+    app: tauri::AppHandle,
+    request: RecordAndPrepareSpellSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    record_and_prepare_spell_selection_at_root(
+        &root,
+        &request.spell_id,
+        &request.source_class_id,
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddFeatSelectionRequest {
+    pub character_id: String,
+    pub feat_id: String,
+    /// The target a chooser feat names -- a weapon, skill or school, without
+    /// its prefix (the prefix comes from the feat's own contract, so callers
+    /// never assemble selection ids). `None` for feats that take no target,
+    /// and also legitimate for a chooser feat whose target is not chosen yet.
+    ///
+    /// Defaults to `None` so a caller that predates chooser targets keeps
+    /// working unchanged.
+    #[serde(default)]
+    pub target: Option<String>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, appends the requested feat selection,
+/// recomputes via the real engine, and re-saves — see
+/// `add_feat_selection_at_root` for the full semantics.
+#[tauri::command]
+pub fn add_feat_selection(
+    app: tauri::AppHandle,
+    request: AddFeatSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    add_feat_selection_at_root(
+        &root,
+        &request.feat_id,
+        request.target.as_deref(),
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetSkillAllocationsRequest {
+    pub character_id: String,
+    /// The caller's complete skill-allocation set (not a delta) — reuses
+    /// the `SkillAllocationDto` shape already established for
+    /// import/export so the wire contract stays consistent across this
+    /// module's DTOs.
+    pub skill_allocations: Vec<SkillAllocationDto>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, replaces its skill allocations wholesale,
+/// recomputes via the real engine, and re-saves — see
+/// `set_skill_allocations_at_root` for the full semantics. Replaces rather
+/// than appends because `SkillAllocationDialog.onAccept` always sends its
+/// complete draft allocation, not an incremental change.
+#[tauri::command]
+pub fn set_skill_allocations(
+    app: tauri::AppHandle,
+    request: SetSkillAllocationsRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let skill_allocations = request
+        .skill_allocations
+        .into_iter()
+        .map(|skill| SkillAllocation {
+            skill_id: skill.skill_id,
+            ranks: skill.ranks,
+        })
+        .collect();
+    set_skill_allocations_at_root(&root, skill_allocations, &request.saved_at)
 }
 
 fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -922,6 +2196,418 @@ pub fn delete_character_portrait(
         std::fs::remove_file(&path).map_err(|err| format!("{}: {err}", path.display()))?;
     }
     Ok(())
+}
+
+// ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
+//
+// Bio fields (alignment/deity/sex/age/height/weight/hair/eyes) are pure
+// display flavor text -- no rules-engine calculation reads any of them.
+// Rather than adding a field to `ChosenCharacterState` (constructed as a
+// struct literal at ~70 call sites across this crate's own test suite,
+// mostly qa-owned `tests/**` -- a schema change there would break all of
+// them for data the compute engine never touches), bio is persisted as its
+// own sidecar file (`bio.json`) alongside the character's existing
+// envelope/input files, mirroring `save_character_portrait`/
+// `load_character_portrait`/`delete_character_portrait`'s own established
+// sidecar-file precedent (`portrait.png`) exactly -- same directory, same
+// "requires the character to already be saved" invariant, same shape.
+
+const BIO_FILE_NAME: &str = "bio.json";
+
+/// One character's bio/flavor fields. Every field defaults to an empty
+/// string (`#[serde(default)]`) so a bio file written before a future field
+/// is added, or a character with no bio file at all, still deserializes
+/// (via `Default`) rather than failing to load.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterBioDto {
+    #[serde(default)]
+    pub alignment: String,
+    #[serde(default)]
+    pub deity: String,
+    #[serde(default)]
+    pub sex: String,
+    #[serde(default)]
+    pub age: String,
+    #[serde(default)]
+    pub height: String,
+    #[serde(default)]
+    pub weight: String,
+    #[serde(default)]
+    pub hair: String,
+    #[serde(default)]
+    pub eyes: String,
+}
+
+/// Writes `bio` as `bio.json` in the character's root directory. Requires
+/// the character to already be saved -- mirrors
+/// `save_character_portrait`'s own "a portrait is never the first write to
+/// a character directory" invariant. Checks via
+/// `SavedCharacterStore::load` (not merely `root.exists()` -- the
+/// characters-root directory itself may already exist without a saved
+/// envelope in it, e.g. under this function's own test fixtures, whose
+/// `tempdir` helper always creates the directory) so a bio is never the
+/// first write to a character directory either. Split from the
+/// `#[tauri::command]` wrapper below so it is unit-testable without an
+/// `AppHandle`.
+fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let path = root.join(BIO_FILE_NAME);
+    let json = serde_json::to_string_pretty(bio)
+        .map_err(|err| format!("failed to serialize character bio: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// Reads `bio.json` from the character's root directory, or an all-empty
+/// `CharacterBioDto::default()` when no bio has ever been saved for this
+/// character -- never an error for the common "no bio yet" case, matching
+/// `load_character_portrait`'s own `Ok(None)`-for-absent shape (bio's
+/// equivalent "absent" value is the default-empty DTO, since every field is
+/// already optional-shaped as an empty string rather than an `Option`).
+fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
+    let path = root.join(BIO_FILE_NAME);
+    if !path.exists() {
+        return Ok(CharacterBioDto::default());
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    serde_json::from_str(&contents).map_err(|err| format!("{}: invalid bio JSON: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UpdateCharacterBioRequest {
+    pub character_id: String,
+    pub bio: CharacterBioDto,
+}
+
+/// Persists the caller's full bio field set as `bio.json` alongside the
+/// character's existing saved files. Requires the character to already be
+/// saved. Always the character's *complete* bio (not a delta) -- the
+/// frontend's bio editor already holds every field's current value, so it
+/// always sends the full set on save.
+#[tauri::command]
+pub fn update_character_bio(
+    app: tauri::AppHandle,
+    request: UpdateCharacterBioRequest,
+) -> Result<(), String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    save_character_bio_at_root(&root, &request.bio)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterBioRequest {
+    pub character_id: String,
+}
+
+/// Reads the character's persisted bio, or an all-empty `CharacterBioDto`
+/// when none has been saved yet (including when the character itself does
+/// not exist -- resolving a nonexistent root still yields a real path, and
+/// reading a bio file that isn't there is the same "nothing saved yet"
+/// case either way, so this command does not separately error on a missing
+/// character the way the mutation commands do).
+#[tauri::command]
+pub fn load_character_bio(
+    app: tauri::AppHandle,
+    request: LoadCharacterBioRequest,
+) -> Result<CharacterBioDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_bio_at_root(&root)
+}
+
+// ----- `load_character_money` / `adjust_character_money` (v0.6 alpha swarm) -----
+//
+// Persisted the same sidecar-file way as bio (a `money.json` file, not a
+// `ChosenCharacterState` field) -- the alpha bar's "money conversion" calc
+// is the denomination-conversion math itself (`codex::rules_core::money`),
+// which needs a canonical balance to convert, not a rules-engine-visible
+// character-build field the way skill/feat/equipment selections are. Only
+// the canonical `total_copper` is ever persisted; the pp/gp/sp/cp
+// breakdown in `CharacterMoneyDto` is always derived fresh from it via
+// `money::copper_to_denominations`, never stored redundantly (matching
+// `money.rs`'s own "never two numbers that could drift apart" doc
+// comment).
+
+const MONEY_FILE_NAME: &str = "money.json";
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct StoredMoney {
+    #[serde(default)]
+    total_copper: u64,
+}
+
+/// The wire response for both money commands: the canonical
+/// `total_copper` balance plus its derived platinum/gold/silver/copper
+/// breakdown, so the frontend never re-implements the conversion math.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterMoneyDto {
+    pub total_copper: u64,
+    pub platinum: u64,
+    pub gold: u64,
+    pub silver: u64,
+    pub copper: u64,
+}
+
+fn money_dto_from_total(total_copper: u64) -> CharacterMoneyDto {
+    let denominations = money::copper_to_denominations(total_copper);
+    CharacterMoneyDto {
+        total_copper,
+        platinum: denominations.platinum,
+        gold: denominations.gold,
+        silver: denominations.silver,
+        copper: denominations.copper,
+    }
+}
+
+/// Reads the character's persisted money balance, or a zero balance when
+/// no `money.json` has ever been saved for this character -- mirrors
+/// `load_character_bio_at_root`'s own "no error for the common absent
+/// case" shape.
+fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
+    let path = root.join(MONEY_FILE_NAME);
+    if !path.exists() {
+        return Ok(money_dto_from_total(0));
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    let stored: StoredMoney = serde_json::from_str(&contents)
+        .map_err(|err| format!("{}: invalid money JSON: {err}", path.display()))?;
+    Ok(money_dto_from_total(stored.total_copper))
+}
+
+/// Applies `delta_copper` (positive to add funds, negative to spend) to
+/// the character's persisted balance and returns the new total's
+/// denomination breakdown. Requires the character to already be saved
+/// (checked via `SavedCharacterStore::load`, same as `save_character_bio_at_root`).
+/// Fails honestly with an insufficient-funds error rather than silently
+/// allowing a negative balance -- PF1 characters cannot carry negative
+/// money.
+fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    let current_total_copper = load_character_money_at_root(root)?.total_copper;
+    let new_total = i64::try_from(current_total_copper)
+        .map_err(|_| "current balance overflows a signed 64-bit total".to_owned())?
+        + delta_copper;
+    if new_total < 0 {
+        return Err(format!(
+            "insufficient funds: balance is {current_total_copper} cp, requested change is \
+             {delta_copper} cp"
+        ));
+    }
+    let new_total_copper = new_total as u64;
+
+    let path = root.join(MONEY_FILE_NAME);
+    let json = serde_json::to_string_pretty(&StoredMoney { total_copper: new_total_copper })
+        .map_err(|err| format!("failed to serialize character money: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+
+    Ok(money_dto_from_total(new_total_copper))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterMoneyRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn load_character_money(
+    app: tauri::AppHandle,
+    request: LoadCharacterMoneyRequest,
+) -> Result<CharacterMoneyDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_money_at_root(&root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdjustCharacterMoneyRequest {
+    pub character_id: String,
+    /// Positive to add funds (e.g. selling an item, starting gold),
+    /// negative to spend (e.g. buying equipment at its `cost_gp`, converted
+    /// via `money::gp_to_copper`).
+    pub delta_copper: i64,
+}
+
+#[tauri::command]
+pub fn adjust_character_money(
+    app: tauri::AppHandle,
+    request: AdjustCharacterMoneyRequest,
+) -> Result<CharacterMoneyDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    adjust_character_money_at_root(&root, request.delta_copper)
+}
+
+// ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
+//
+// Max HP is a real, derived-from-the-build value (`durability::compute_max_hp`,
+// scoped to single-class Fighter/Wizard/Rogue -- see that module's own doc
+// comment for why multiclass is honestly out of scope rather than guessed
+// at). Current HP / nonlethal damage are live-tracking values persisted as
+// a `hp.json` sidecar (same pattern as bio/money): `current_hp` defaults to
+// the computed `max_hp` the first time a character is loaded (no file on
+// disk yet), then only ever changes via `adjust_character_hp`.
+
+const HP_FILE_NAME: &str = "hp.json";
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct StoredHp {
+    /// `None` (the field absent, or no file at all) means "never
+    /// initialized yet" -- distinct from `Some(0)`, a real character at 0
+    /// HP. Defaulted to the computed `max_hp` on first load, not before.
+    current_hp: Option<i16>,
+    #[serde(default)]
+    nonlethal_damage: i16,
+}
+
+fn durability_status_label(status: DurabilityStatus) -> &'static str {
+    match status {
+        DurabilityStatus::Normal => "Normal",
+        DurabilityStatus::Staggered => "Staggered",
+        DurabilityStatus::Disabled => "Disabled",
+        DurabilityStatus::Unconscious => "Unconscious",
+        DurabilityStatus::Dying => "Dying",
+        DurabilityStatus::Dead => "Dead",
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterDurabilityDto {
+    pub max_hp: i16,
+    pub current_hp: i16,
+    pub nonlethal_damage: i16,
+    /// One of `"Normal"` / `"Staggered"` / `"Disabled"` / `"Unconscious"` /
+    /// `"Dying"` / `"Dead"` -- see `durability::classify_durability`'s own
+    /// doc comment for the exact threshold rules.
+    pub status: String,
+}
+
+/// Computes `max_hp` from the saved character's real build (class levels +
+/// effective, racial-bonus-aware Constitution score, same
+/// `apply_human_ability_bonus` reuse `encumbrance`'s wiring in
+/// `contract.rs` already established) and reads persisted current-HP/
+/// nonlethal-damage from `hp.json`, defaulting `current_hp` to the freshly
+/// computed `max_hp` when no file exists yet. Fails honestly (rather than
+/// fabricating a value) when the build is multiclass or an unsupported
+/// class -- `compute_max_hp` returns `None` for exactly those cases.
+fn load_character_durability_at_root(root: &Path) -> Result<CharacterDurabilityDto, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    let mut discarded_explanations = Vec::new();
+    let effective_scores = apply_human_ability_bonus(&envelope.character_input, &mut discarded_explanations);
+    let constitution_score = effective_scores.constitution;
+    let constitution_modifier = ability_modifier(constitution_score);
+
+    let base_max_hp =
+        compute_max_hp(&envelope.character_input.chosen.class_levels, constitution_modifier)
+            .ok_or_else(|| {
+                "durability is only computed for a single-class Fighter, Wizard, or Rogue build \
+                 today; this character's class levels are not one of those"
+                    .to_owned()
+            })?;
+    // v0.6 alpha swarm item 17 (feat-effects engine): a grounded feat's real
+    // hit-point bonus (currently just Toughness's flat +3) is added on top
+    // of the class/Constitution-derived base, not folded into
+    // compute_max_hp itself -- feat effects are a per-character add-on, not
+    // part of the class hit-die table durability.rs owns.
+    // v0.6 alpha swarm task #11 Tier 0 (2026-07-27): a bonded Toad
+    // familiar's real +3 maximum hit points layers on here too, the same
+    // per-character add-on shape as the feat bonus above -- deliberately
+    // not folded into compute_max_hp, which owns only the class hit-die
+    // table.
+    let max_hp = base_max_hp
+        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats)
+        + codex::rules_core::pilot_compute::character_familiar_hp_bonus(
+            &envelope.character_input,
+        );
+
+    let path = root.join(HP_FILE_NAME);
+    let stored: StoredHp = if path.exists() {
+        let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+        serde_json::from_str(&contents)
+            .map_err(|err| format!("{}: invalid hp JSON: {err}", path.display()))?
+    } else {
+        StoredHp::default()
+    };
+    let current_hp = stored.current_hp.unwrap_or(max_hp);
+    let status = classify_durability(current_hp, stored.nonlethal_damage, constitution_score);
+
+    Ok(CharacterDurabilityDto {
+        max_hp,
+        current_hp,
+        nonlethal_damage: stored.nonlethal_damage,
+        status: durability_status_label(status).to_owned(),
+    })
+}
+
+/// Applies `delta_hp` (positive to heal, negative to take lethal damage)
+/// and/or `delta_nonlethal` (positive to take nonlethal damage, negative to
+/// recover from it) to the character's persisted HP state, clamping
+/// `current_hp` at the computed `max_hp` ceiling (healing cannot exceed
+/// max) and `nonlethal_damage` at a floor of 0 (cannot recover past no
+/// nonlethal damage). `current_hp` is allowed to go negative (dying/dead is
+/// a real, trackable state, not an error) but `adjust_character_hp` still
+/// requires the character to already be saved and be a durability-
+/// supported build, same as `load_character_durability_at_root`.
+fn adjust_character_hp_at_root(
+    root: &Path,
+    delta_hp: i16,
+    delta_nonlethal: i16,
+) -> Result<CharacterDurabilityDto, String> {
+    let current = load_character_durability_at_root(root)?;
+
+    let new_current_hp = (current.current_hp + delta_hp).min(current.max_hp);
+    let new_nonlethal_damage = (current.nonlethal_damage + delta_nonlethal).max(0);
+
+    let path = root.join(HP_FILE_NAME);
+    let json = serde_json::to_string_pretty(&StoredHp {
+        current_hp: Some(new_current_hp),
+        nonlethal_damage: new_nonlethal_damage,
+    })
+    .map_err(|err| format!("failed to serialize character hp: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+
+    load_character_durability_at_root(root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterDurabilityRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn load_character_durability(
+    app: tauri::AppHandle,
+    request: LoadCharacterDurabilityRequest,
+) -> Result<CharacterDurabilityDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_durability_at_root(&root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdjustCharacterHpRequest {
+    pub character_id: String,
+    /// Positive to heal, negative to take lethal damage.
+    #[serde(default)]
+    pub delta_hp: i16,
+    /// Positive to take nonlethal damage, negative to recover from it.
+    #[serde(default)]
+    pub delta_nonlethal: i16,
+}
+
+#[tauri::command]
+pub fn adjust_character_hp(
+    app: tauri::AppHandle,
+    request: AdjustCharacterHpRequest,
+) -> Result<CharacterDurabilityDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    adjust_character_hp_at_root(&root, request.delta_hp, request.delta_nonlethal)
 }
 
 // ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
@@ -1126,6 +2812,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                         ActiveStateDto::EquippedActive
                     ),
                     active_state: equipment.active_state.into(),
+                    applied_modifiers: Vec::new(),
                 })
                 .collect(),
             selected_choices: dto
@@ -1147,6 +2834,11 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                     acquisition_mode: spell.acquisition_mode.into(),
                 })
                 .collect(),
+            // v0.6 alpha swarm, risks item 8 (combat-time activation state):
+            // no DTO field exists for this yet -- out of scope for this
+            // backend-only slice, mirroring how `applied_modifiers` just
+            // above is also not yet carried through the import DTO.
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -1250,20 +2942,15 @@ fn import_character_from_json(
 
     let character_input = character_input_from_dto(parsed.character_input, fresh_character_id);
 
-    let receipt = build_pilot_headless_receipt(&character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        return Ok(CreateCharacterResponse::Blocked {
-            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
-        });
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
-
-    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+    let (snapshot, corpus_receipt) =
+        match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
+            Ok(result) => result,
+            Err(diagnostics) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: map_diagnostics_dto(&diagnostics),
+                });
+            }
+        };
 
     let envelope = SavedCharacterEnvelope {
         character_id: fresh_character_id.to_owned(),
@@ -1283,7 +2970,7 @@ fn import_character_from_json(
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
-        snapshot: map_snapshot_dto(snapshot),
+        snapshot: map_snapshot_dto(&snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
@@ -1381,6 +3068,32 @@ mod tests {
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
 
+    /// An empty-loadout `EncumbranceDto` for the *serialization-shape*
+    /// tests below, which assert camelCase key naming and tag placement and
+    /// care nothing about encumbrance values.
+    ///
+    /// The thresholds are the real Strength-10 row (`load.lst`
+    /// `LOAD:10|100`, so light 33 / medium 66 / heavy 100) rather than
+    /// zeroes, so this fixture never asserts a rules value that could not
+    /// actually occur. Carrying nothing is genuinely a light load with no
+    /// penalties. Production `CorpusDerivedDto`s are always built by
+    /// `map_corpus_derived_dto` from a real computation -- this helper is
+    /// reachable only from `#[cfg(test)]`.
+    fn empty_encumbrance_dto() -> EncumbranceDto {
+        EncumbranceDto {
+            total_carried_weight_lbs: 0.0,
+            total_carried_cost_gp: 0.0,
+            light_max_lbs: 33.0,
+            medium_max_lbs: 66.0,
+            heavy_max_lbs: 100.0,
+            level: "Light".to_owned(),
+            load_max_dex_cap: None,
+            load_armor_check_penalty: 0,
+            per_item: Vec::new(),
+            unresolved_item_ids: Vec::new(),
+        }
+    }
+
     const CURATED_RACE_IDS: [&str; 7] = [
         "race:human",
         "race:dwarf",
@@ -1392,13 +3105,15 @@ mod tests {
     ];
     const FIGHTER_CLASS_ID: &str = "class:fighter";
 
-    const GENERIC_DIAGNOSTIC_IDS: [&str; 4] = [
-        "class_chassis.unsupported",
-        "combat.baseline_unsupported",
-        "defense.total_save.unsupported",
-        "skill.selected_modifier.unsupported",
-    ];
-
+    // `GENERIC_DIAGNOSTIC_IDS` / `generic_ids()` / `generic_plus()` used to
+    // live here: the 4 chassis-wide diagnostics every unrecognized class
+    // tripped, plus a helper to assert "those 4, and additionally these
+    // named ones". Removed 2026-07-29 with Monk's choice-picker Path A
+    // closure -- Monk was the last class in this test still expecting them,
+    // so every remaining assertion below is either `BTreeSet::new()` (fully
+    // Computed) or a named-diagnostics-only set. They were deleted rather
+    // than `#[allow(dead_code)]`-ed: a helper no assertion uses cannot go
+    // stale in a way any test would catch.
     fn request_for(race_id: &str, level: u8) -> CreateCharacterRequest {
         request_for_class(race_id, FIGHTER_CLASS_ID, level)
     }
@@ -1433,16 +3148,6 @@ mod tests {
             .filter(|diagnostic| diagnostic.claim_blocking)
             .map(|diagnostic| diagnostic.id.clone())
             .collect()
-    }
-
-    fn generic_ids() -> BTreeSet<String> {
-        GENERIC_DIAGNOSTIC_IDS.iter().map(|id| id.to_string()).collect()
-    }
-
-    fn generic_plus(named: &[&str]) -> BTreeSet<String> {
-        let mut ids = generic_ids();
-        ids.extend(named.iter().map(|id| id.to_string()));
-        ids
     }
 
     #[test]
@@ -1560,36 +3265,107 @@ mod tests {
             "Human Fighter L1 is the golden path and must reach Computed with zero claim-blocking diagnostics"
         );
 
+        // v0.6 alpha swarm, risks item 8, third slice (2026-07-25): `table_class_id`
+        // now recognizes Paladin too (mirroring the Ranger widening), so the 4
+        // generic chassis-wide diagnostics no longer trip. Paladin's own
+        // `class_spell.paladin.partial_caster.unsupported` diagnostic is also no
+        // longer unconditional -- it's now a real validation
+        // (`unmet_paladin_prepared_spell_conditions`) that only fires on a genuine
+        // posture violation, and `compose_character_input` seeds no Paladin spell
+        // selections, so the (valid, empty) posture no longer trips it. Only the
+        // hybrid spell burden remains: the sibling
+        // `class_feature.hybrid.paladin.unsupported` diagnostic was retired
+        // (tranche/6) because it flatly claimed Smite Evil / lay on hands / divine
+        // grace / mercy were unimplemented while the per-class decomposition
+        // dispatched on the same input grounds those burdens for real (or as
+        // correct level-1 absences) -- see
+        // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+        //
+        // v0.6 alpha swarm (2026-07-28): the remaining hybrid SPELL diagnostic
+        // (`class_spell.hybrid.paladin.unsupported`) has now been retired too, so
+        // this set is empty and Human Paladin L1 joins Human Fighter L1 on the
+        // golden path. Paladins gain no spellcasting until class level 4 in PF1
+        // (`cr_classes.lst`'s `CLASS:Paladin` block has no `CAST:` row at all
+        // before level 4), so a level-1 Paladin's absent spell posture is the
+        // CORRECT computed answer, not a missing one -- and the per-class
+        // decomposition already grounds it (effective caster level 0, access
+        // ceiling 0, zero prepared spells). See
+        // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 1),
-            generic_plus(&[
-                "class_feature.hybrid.paladin.unsupported",
-                "class_spell.hybrid.paladin.unsupported",
-                "class_spell.paladin.partial_caster.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Paladin L1 now reaches Computed with zero claim-blocking diagnostics: \
+             having no spellcasting at level 1 is a satisfied PF1 condition, not a gap"
         );
 
+        // v0.6 alpha swarm, risks item 8 (2026-07-24): `table_class_id` now
+        // recognizes Ranger (`class-multiclass-breadth-scoping.md`'s
+        // recommended first slice), so Ranger no longer trips any of the 4
+        // generic chassis-wide diagnostics -- same shape as Wizard's own
+        // transition, below. A first version of this assertion here still
+        // named `class_spell.ranger.partial_caster.unsupported` because that
+        // diagnostic was unconditional at the time; the 2026-07-25 slice made
+        // it a real, conditional validation (mirrors the Paladin update just
+        // above), and `compose_character_input` seeds no Ranger spell
+        // selections, so a Human Ranger L1's (valid, empty) posture no longer
+        // trips it. Only the hybrid spell burden remains: the sibling
+        // `class_feature.hybrid.ranger.unsupported` diagnostic was retired
+        // (tranche/6) because it flatly claimed favored enemy / combat style /
+        // tracking were unimplemented while the per-class decomposition
+        // dispatched on the same input grounds Track and the Favored Enemy flat
+        // surface for real -- see
+        // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
+        //
+        // v0.6 alpha swarm (2026-07-28): the remaining hybrid SPELL diagnostic
+        // (`class_spell.hybrid.ranger.unsupported`) has now been retired too, so
+        // this set is empty and Human Ranger L1 joins Human Fighter L1 on the
+        // golden path. Rangers gain no spellcasting until class level 4 in PF1
+        // (`cr_classes.lst`'s `CLASS:Ranger` block has no `CAST:` row at all
+        // before level 4), so a level-1 Ranger's absent spell posture is the
+        // CORRECT computed answer, not a missing one. See
+        // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:ranger", 1),
-            generic_plus(&[
-                "class_feature.hybrid.ranger.unsupported",
-                "class_spell.hybrid.ranger.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Ranger L1 now reaches Computed with zero claim-blocking diagnostics: \
+             having no spellcasting at level 1 is a satisfied PF1 condition, not a gap"
         );
 
+        // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25):
+        // `table_class_id` now recognizes Barbarian too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The rage-execution
+        // burden is also no longer unconditional -- it's a real, conditional
+        // engine now (`ground_or_block_barbarian_rage`), and
+        // `compose_character_input` seeds no `class_ability_activations`
+        // for Barbarian, so the (valid, "not raging") posture no longer
+        // trips it either. Human Barbarian L1 reaches Computed with zero
+        // claim-blocking diagnostics, the same golden path as Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:barbarian", 1),
-            generic_plus(&[
-                "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Barbarian L1 (not raging) reaches Computed with zero claim-blocking \
+             diagnostics now that the rage-execution engine is real and conditional"
         );
 
+        // v0.6 alpha swarm, risks item 8, fifth slice (2026-07-25):
+        // `table_class_id` now recognizes Sorcerer too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The spell-posture
+        // diagnostic is also no longer unconditional -- it's a real
+        // validation now, and compose_character_input seeds no Sorcerer
+        // spell selections, so the (valid, empty) known-spell posture no
+        // longer trips it. The bloodline-power diagnostic used to remain
+        // here too, since compose_character_input seeded no bloodline or
+        // Arcane Bond choice for this bare fixture. Choice-picker Path A
+        // (2026-07-25) now seeds a canonical Arcane bloodline + familiar
+        // Arcane Bond choice for every Sorcerer, mirroring Wizard's own
+        // starter-spell precedent, so that diagnostic is genuinely cleared
+        // too -- Human Sorcerer L1 now reaches Computed with zero
+        // claim-blocking diagnostics, the same golden path as Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
-            generic_plus(&[
-                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
-                "class_spell.sorcerer.spontaneous.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Sorcerer L1 now reaches Computed with zero claim-blocking diagnostics, \
+             thanks to the seeded canonical bloodline + arcane bond choice"
         );
 
         // SD-21 Epic 6 gave Wizard a real compute_wizard_chassis (BAB + saves, via
@@ -1598,73 +3374,152 @@ mod tests {
         // defense.total_save.unsupported) that every other still-unsupported class
         // does. Epic 6b's E6b.1 cycle then widened compute_combat_baseline and
         // compute_selected_skill_modifiers to the same has_supported_class_chassis
-        // gate, so those two also no longer trip for Wizard at any input (not just the
-        // Epic 6b reproducer's specific one) -- this request has no chosen spellbook,
-        // so class_spell.wizard.prepared_spellbook.unsupported and
+        // gate, so those two also no longer trip for Wizard at any input. v0.6 alpha
+        // swarm (bootstrap-deadlock fix): compose_character_input now seeds one
+        // canonical starter spell (Known+Prepared) for every Wizard, so the
+        // previously-remaining class_spell.wizard.prepared_spellbook.unsupported and
         // class_feature.wizard.school_powers_and_opposed_school_cost.unsupported
-        // (Epic 6b's E6b.2/E6b.3) correctly remain: Epic 6b's Evocation-school
-        // grounding only clears them for a genuinely populated, in-budget spellbook.
+        // (Epic 6b's E6b.2/E6b.3) are now genuinely cleared by that seeded,
+        // in-budget spellbook -- Wizard L1 is now claim-blocking-diagnostic-free,
+        // same golden-path shape as Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
-            BTreeSet::from([
-                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_string(),
-                "class_spell.wizard.prepared_spellbook.unsupported".to_string(),
-            ])
+            BTreeSet::new(),
+            "Human Wizard L1 now reaches Computed with zero claim-blocking diagnostics, thanks \
+             to the seeded canonical starter spell"
         );
 
+        // v0.6 alpha swarm, risks item 8, Inspire Courage slice (2026-07-25):
+        // `table_class_id` now recognizes Bard too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The bardic-performance-
+        // execution burden is also no longer unconditional -- it's a real,
+        // conditional engine now (`ground_or_block_bard_bardic_performance`),
+        // and `compose_character_input` seeds no `class_ability_activations`
+        // for Bard, so the (valid, "not performing") posture no longer trips
+        // it either (the "other performances not modeled" diagnostic it
+        // pushes unconditionally is deliberately non-claim-blocking, so it
+        // never appears in this claim-blocking-only set). The known-spell/
+        // per-day spell-posture diagnostic is ALSO no longer unconditional
+        // (a later slice made it real/conditional, mirroring Sorcerer's own
+        // known-spell closure) -- compose_character_input seeds no Bard
+        // spell selections, so the (valid, empty) known-spell posture no
+        // longer trips it either. Human Bard L1 now reaches Computed with
+        // zero claim-blocking diagnostics, the same golden path as Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:bard", 1),
-            generic_plus(&[
-                "class_feature.bard.bardic_performance_execution.unsupported",
-                "class_spell.bard.spontaneous_known_and_per_day.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Bard L1 (not performing, valid empty known-spell posture) reaches Computed \
+             with zero claim-blocking diagnostics"
         );
 
         // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue
-        // pillar burden, so the named Rogue set is now empty: only the 4
-        // generic chassis diagnostics remain (like the non-Human classes).
+        // pillar burden, so the named Rogue set was already empty. v0.6 alpha
+        // swarm task 4 then widened compute_class_chassis's per-class
+        // dispatch (previously Fighter/Wizard only) to also recognize Rogue,
+        // the same way Epic 6 did for Wizard above -- so the 4 generic
+        // chassis-wide diagnostics (class_chassis.unsupported,
+        // combat.baseline_unsupported, defense.total_save.unsupported,
+        // skill.selected_modifier.unsupported) no longer trip for Rogue
+        // either. Human Rogue L1 now reaches a fully Computed receipt with
+        // zero claim-blocking diagnostics, the same golden-path shape as
+        // Fighter.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:rogue", 1),
-            generic_ids(),
-            "Human Rogue L1 must carry only the 4 generic diagnostics after trapfinding grounding"
+            BTreeSet::new(),
+            "Human Rogue L1 now reaches Computed with zero claim-blocking diagnostics, matching \
+             Fighter's golden path, since task 4 widened the generic chassis dispatch to Rogue"
         );
 
+        // v0.6 alpha swarm, choice-picker Path A (Monk's own closure): Monk
+        // used to sit here with the 4 generic chassis-wide diagnostics plus
+        // its one real feature gap, the level-1 bonus feat -- which fired
+        // only because nothing seeded `choice:monk_bonus_feat`, never
+        // because the engine couldn't compute it. `compose_character_input`
+        // now seeds the canonical `choice:monk_bonus_feat -> feat:dodge`
+        // (see `pf1_adapter.rs`'s `DODGE_FEAT_SELECTION` doc comment for why
+        // Dodge of the seven corpus options), and the fixed loadout already
+        // carries `feat:dodge` on `selected_feats`, so the engine's own
+        // genuinely-active cross-check passes and it emits the real
+        // `...bonus_feat.dodge_active` grounding record. Human Monk L1 now
+        // reaches Computed with zero claim-blocking diagnostics, the same
+        // golden path as Fighter/Rogue/Cleric above.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:monk", 1),
-            generic_plus(&["class_feature.monk.bounded_progression.bonus_feat.unsupported"])
+            BTreeSet::new(),
+            "Human Monk L1 now reaches Computed with zero claim-blocking diagnostics, thanks to \
+             the seeded canonical Dodge bonus feat"
         );
 
+        // v0.6 alpha swarm, risks item 8, sixth slice (2026-07-25):
+        // `table_class_id` now recognizes Cleric too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The spell-posture
+        // diagnostic is also no longer unconditional -- it's a real
+        // validation now, and compose_character_input seeds no Cleric
+        // spell selections, so the (valid, empty) prepared-spell posture no
+        // longer trips it. The domain-powers diagnostic used to remain
+        // here too, since compose_character_input seeded no domain choice
+        // for this bare fixture. Choice-picker Path A (2026-07-25) now
+        // seeds a canonical Good domain choice for every Cleric, mirroring
+        // Wizard's own starter-spell precedent, so that diagnostic is
+        // genuinely cleared too -- Human Cleric L1 now reaches Computed
+        // with zero claim-blocking diagnostics, the same golden path as
+        // Sorcerer/Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
-            generic_plus(&[
-                "class_feature.cleric.domain_powers.unsupported",
-                "class_spell.cleric.prepared_divine.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Cleric L1 now reaches Computed with zero claim-blocking diagnostics, \
+             thanks to the seeded canonical Good domain choice"
         );
 
+        // v0.6 alpha swarm, risks item 8, seventh slice (2026-07-25):
+        // `table_class_id` now recognizes Druid too, so the 4 generic
+        // chassis-wide diagnostics no longer trip. The spell-posture
+        // diagnostic is also no longer unconditional -- it's a real
+        // validation now, and compose_character_input seeds no Druid
+        // spell selections, so the (valid, empty) prepared-spell posture
+        // no longer trips it. The animal-companion/nature-bond diagnostic
+        // used to remain here too, since compose_character_input seeded no
+        // nature-bond choice for this bare fixture. Choice-picker Path A
+        // (2026-07-25) now seeds a canonical animal-companion nature-bond
+        // choice for every Druid (Wolf is automatic once the bond type is
+        // recognized, no species picker needed), so that diagnostic is
+        // genuinely cleared too -- Human Druid L1 now reaches Computed
+        // with zero claim-blocking diagnostics, the same golden path as
+        // Cleric/Sorcerer/Wizard/Bard.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
-            generic_plus(&[
-                "class_feature.druid.animal_companion.unsupported",
-                "class_spell.druid.prepared_divine.unsupported",
-            ])
+            BTreeSet::new(),
+            "Human Druid L1 now reaches Computed with zero claim-blocking diagnostics, thanks \
+             to the seeded canonical animal-companion nature-bond choice"
         );
 
-        // Proves the Human-only gate: a non-Human race on a partially-supported
-        // class collapses to the same 4 generic diagnostics as an unsupported class.
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) This
+        // previously proved the Human-only gate collapsed a non-Human Paladin to
+        // the 4 generic diagnostics. That's no longer true: `table_class_id`
+        // recognizes Paladin regardless of race (real BAB/save/HP via the generic
+        // table dispatch), the F6 hybrid diagnostics are Human-gated so they don't
+        // fire for a Dwarf, and the real spell-posture check is race-independent
+        // and valid (empty) here too -- so a non-Human Paladin L1 now reaches
+        // Computed with ZERO claim-blocking diagnostics, same as Fighter/Wizard/
+        // Rogue/Ranger's golden path.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:dwarf", "class:paladin", 1),
-            generic_ids(),
-            "non-Human Paladin must not receive any named Paladin diagnostic"
+            BTreeSet::new(),
+            "non-Human Paladin L1 now reaches Computed too -- table_class_id and the real \
+             spell-posture check are both race-independent"
         );
 
-        // Proves the SD13-E5 level-2 widening: lay on hands, divine grace, smite evil,
-        // and the effective-caster-level gate are all grounded at level 2, so only the
-        // still-unproven spell burden diagnostic remains claim-blocking.
+        // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) Previously
+        // proved only the spell burden remained claim-blocking at level 2. Now
+        // that burden is a real, conditional validation instead of an
+        // unconditional blocker, and a level-2 Paladin has no spells accessible
+        // yet (access ceiling 0) so there's nothing to violate -- Paladin level 2
+        // now reaches Computed with zero claim-blocking diagnostics too.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 2),
-            generic_plus(&["class_spell.paladin.partial_caster.unsupported"]),
-            "Paladin level 2 chassis is grounded; only the spell burden stays claim-blocking"
+            BTreeSet::new(),
+            "Paladin level 2 now reaches Computed: chassis is grounded, and the real spell \
+             posture is valid (no spells accessible yet, none prepared)"
         );
     }
 
@@ -1678,7 +3533,7 @@ mod tests {
     // ----- `mutate_saved_character` operation table (Criterion 16) -----
 
     #[test]
-    fn saved_character_mutation_operations_table_documents_three_ops_all_wired() {
+    fn saved_character_mutation_operations_table_documents_six_ops_all_wired() {
         let names: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
             .iter()
             .map(|descriptor| descriptor.name)
@@ -1689,8 +3544,11 @@ mod tests {
                 "level_up_character",
                 "add_equipment_selection",
                 "add_spell_selection",
+                "set_skill_allocations",
+                "add_feat_selection",
+                "record_and_prepare_spell_selection",
             ],
-            "the table must enumerate exactly these three ops, in this order"
+            "the table must enumerate exactly these six ops, in this order"
         );
 
         let wired: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
@@ -1704,8 +3562,11 @@ mod tests {
                 "level_up_character",
                 "add_equipment_selection",
                 "add_spell_selection",
+                "set_skill_allocations",
+                "add_feat_selection",
+                "record_and_prepare_spell_selection",
             ],
-            "all three ops are callable through real Tauri commands as of this cycle"
+            "all six ops are callable through real Tauri commands as of this cycle"
         );
 
         for descriptor in SAVED_CHARACTER_MUTATION_OPERATIONS.iter() {
@@ -1808,6 +3669,848 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- corpus_derived.equipment_effects (risks item 1, shape (c)) -----
+
+    /// A freshly created Fighter's fixed loadout already equips a real
+    /// Chain Shirt (`item:chain_shirt`, `EquippedActive`) -- this proves
+    /// the new `corpus_derived.equipment_effects` section carries the real,
+    /// corpus-resolved armor-check penalty for it end to end through the
+    /// actual creation command, not just a unit test on the lower-level
+    /// `compute_pilot_with_corpus` seam. The loadout's only other
+    /// `EquippedActive` item is the Longsword -- exactly one weapon, no
+    /// equipmods equipped -- so `attack_bonus_delta` must land on the
+    /// unambiguous real `Some(0)`, proving the bounded single-weapon slice
+    /// end to end too.
+    #[test]
+    fn create_character_at_root_surfaces_the_real_armor_check_penalty_for_the_fixed_loadout() {
+        let root = tempdir("create-character-equipment-effects");
+        let request = request_for("race:human", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { corpus_derived, .. } => {
+                assert_ne!(
+                    corpus_derived.equipment_effects.armor_check_penalty_total, 0,
+                    "the fixed loadout's real Chain Shirt must carry a real, nonzero ACCHECK"
+                );
+                assert!(
+                    corpus_derived.equipment_effects.armor_class_delta > 0,
+                    "the fixed loadout's real Chain Shirt must carry a real AC bonus"
+                );
+                assert_eq!(
+                    corpus_derived.equipment_effects.attack_bonus_delta,
+                    Some(0),
+                    "exactly one weapon (Longsword), no equipmods equipped: real, unambiguous zero"
+                );
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("Human Fighter level 1 must reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): a real equipment
+    /// selection outside the desktop app's tiny bundled demo corpus
+    /// (`corpus_fixtures.rs`, ~4 records total) must be traceable in
+    /// `corpus_derived.unresolvedEquipmentItemIds`, not silently vanish --
+    /// end to end through the real `add_equipment_selection` command
+    /// against the real bundled corpus, not a hand-built fixture.
+    #[test]
+    fn add_equipment_selection_surfaces_an_unresolvable_item_instead_of_silently_dropping_it() {
+        let root = tempdir("create-character-unresolved-equipment");
+        let request = request_for("race:human", 1);
+        create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        let response = add_equipment_selection_at_root(
+            &root,
+            "Wand of Cure Light Wounds",
+            ActiveState::EquippedActive,
+            "2026-07-24T00:00:00Z",
+        )
+        .expect("add call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { corpus_derived, .. } => {
+                // The fixed loadout's own `item:shield` (Absent) and
+                // `power_attack` (a synthetic feat-toggle id, never a real
+                // corpus item) are pre-existing, already-unresolvable
+                // entries unrelated to this test -- `contains`, not exact
+                // equality, so this doesn't assert on behavior this test
+                // isn't about.
+                assert!(
+                    corpus_derived
+                        .unresolved_equipment_item_ids
+                        .contains(&"Wand of Cure Light Wounds".to_string()),
+                    "an item outside the bundled demo corpus must be traceable, not silently \
+                     dropped: {:?}",
+                    corpus_derived.unresolved_equipment_item_ids
+                );
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("adding an inert extra item must not block an already-Computed build, got: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- create_character: starting wealth (risks item 7) -----
+
+    /// A freshly created Fighter is granted the operator-cited average
+    /// starting wealth (175 gp = 17,500 cp) atomically as part of creation,
+    /// not as a separate call the caller has to remember to make.
+    #[test]
+    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_fighter() {
+        let root = tempdir("create-character-starting-wealth-fighter");
+        let request = request_for("race:human", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("Human Fighter level 1 must reach Computed, got: {diagnostics:?}")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            17_500,
+            "175 gp (5d6 x 10, operator-cited average) = 17,500 cp"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The other two classes that currently reach `Computed` also get their
+    /// own correct, distinct starting wealth -- not a single hardcoded value
+    /// applied regardless of class.
+    #[test]
+    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_wizard_and_rogue() {
+        for (class_id, expected_copper) in [("class:wizard", 7_000_u64), ("class:rogue", 14_000_u64)] {
+            let root = tempdir(&format!("create-character-starting-wealth-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+
+            match response {
+                CreateCharacterResponse::Saved { .. } => {}
+                CreateCharacterResponse::Blocked { diagnostics } => {
+                    panic!("Human {class_id} level 1 must reach Computed, got: {diagnostics:?}")
+                }
+            }
+
+            assert_eq!(
+                load_character_money_at_root(&root).unwrap().total_copper,
+                expected_copper,
+                "{class_id}'s starting wealth"
+            );
+
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A build that does not reach `Computed` must never be granted starting
+    /// wealth -- proves the wealth grant is gated on the same successful-save
+    /// path as everything else, not a side effect that fires unconditionally.
+    ///
+    /// **Roster-independent by construction (2026-07-29).** This test used to
+    /// name ONE still-blocked class as its fixture, and had to be rewritten
+    /// every time that class was closed: Cleric until choice-picker Path A
+    /// seeded its canonical domain (2026-07-25), then Oracle until Path A
+    /// canonical narrowing seeded its Mystery/Curse pair (2026-07-29). The
+    /// churn was the signal -- the invariant under test was never about any
+    /// particular class. It now sweeps every class id `money::starting_wealth_gp`
+    /// recognizes, asserts the invariant on whichever of them are still
+    /// `Blocked`, and carries an explicit non-vacuity guard so it can never
+    /// quietly degrade into a no-op once the last one is closed.
+    #[test]
+    fn create_character_at_root_grants_no_wealth_when_the_build_is_blocked() {
+        // Every class id `money::starting_wealth_gp` returns `Some` for, in
+        // that function's own match order. Ten of these (Alchemist, Cavalier,
+        // Gunslinger, Inquisitor, Magus, Ninja, Oracle, Samurai, Summoner,
+        // Witch) are recognized for wealth purposes only -- exactly the
+        // population this invariant most needs to hold over.
+        let wealth_recognized_class_ids = [
+            "class:monk",
+            "class:druid",
+            "class:sorcerer",
+            "class:wizard",
+            "class:summoner",
+            "class:barbarian",
+            "class:bard",
+            "class:alchemist",
+            "class:oracle",
+            "class:samurai",
+            "class:witch",
+            "class:cleric",
+            "class:rogue",
+            "class:inquisitor",
+            "class:magus",
+            "class:ninja",
+            "class:fighter",
+            "class:paladin",
+            "class:ranger",
+            "class:cavalier",
+            "class:gunslinger",
+        ];
+
+        let mut blocked_classes_seen = Vec::new();
+        for class_id in wealth_recognized_class_ids {
+            assert!(
+                codex::rules_core::money::starting_wealth_gp(class_id).is_some(),
+                "{class_id} must still be a wealth-recognized id -- if this fails, \
+                 starting_wealth_gp's roster changed and this list is stale"
+            );
+
+            let root = tempdir(&format!("create-character-starting-wealth-blocked-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+
+            if let CreateCharacterResponse::Blocked { .. } = response {
+                blocked_classes_seen.push(class_id);
+                assert_eq!(
+                    load_character_money_at_root(&root).unwrap().total_copper,
+                    0,
+                    "{class_id} is Blocked, so it must never be granted wealth, fabricated or \
+                     otherwise"
+                );
+            }
+
+            std::fs::remove_dir_all(&root).ok();
+        }
+
+        assert!(
+            !blocked_classes_seen.is_empty(),
+            "every wealth-recognized class now reaches Computed, so this test proves nothing \
+             about the Blocked path any more -- replace it with a genuinely blocked fixture \
+             (e.g. an unsupported multiclass build) rather than deleting the invariant"
+        );
+    }
+
+    /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten
+    /// 2026-07-29** (the four spellcasting-shaped classes).
+    ///
+    /// This test used to assert the OPPOSITE: that Alchemist -- a non-CRB
+    /// class id `starting_wealth_gp` recognizes for wealth purposes --
+    /// still reached `Blocked`, because "nothing else in the
+    /// compute/chassis dispatch has ever heard of `class:alchemist`".
+    /// That stopped being true: Alchemist's prepared-extract posture and
+    /// its Discovery chooser are both grounded now, and
+    /// `compose_character_input` seeds both canonically, so a freshly
+    /// created Human Alchemist genuinely reaches `Computed`.
+    ///
+    /// The guard the old test provided is not lost -- it is the general
+    /// case, and `create_character_at_root_grants_no_wealth_when_the_build_is_blocked`
+    /// (Oracle) still holds it. What this test now proves is the other
+    /// half, and it is the stronger half: the first non-CRB class to
+    /// reach `Computed` through the real creation path gets its own
+    /// correct, class-distinct starting wealth, and the wealth table's
+    /// non-CRB entries are therefore live rather than dead data.
+    #[test]
+    fn create_character_at_root_grants_the_non_crb_starting_wealth_once_that_class_computes() {
+        let root = tempdir("create-character-starting-wealth-non-crb-computed");
+        let request = request_for_class("race:human", "class:alchemist", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                "Human Alchemist level 1 must now reach Computed from compose_character_input's \
+                 own canonical extract/Discovery seeds alone, got: {diagnostics:?}"
+            ),
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            10_500,
+            "105 gp (3d6 x 10, operator-cited average for Alchemist) = 10,500 cp"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Real end-to-end regression test for the Arcanist Path A colon-
+    /// convention bug (2026-07-25): frontend's own live-testing found that
+    /// `compose_character_input`'s seeded `EMPOWER_SPELL_METAMAGIC_SELECTION`
+    /// used to be the bare literal `"Empower Spell"` (zero colons), which
+    /// `SavedCharacterStore::save`'s own `validate_character_input` call
+    /// genuinely rejects -- a real `Err` from this exact
+    /// `create_character_at_root` path, past the point where the compute
+    /// engine had already reached `Computed`. Backend's own milestone test
+    /// (`arcanist_level1_reaches_computed_from_compose_character_input_alone`
+    /// in `pf1_adapter.rs`) only exercises the in-memory `CharacterInput`
+    /// via `build_pilot_headless_receipt`, never this real save path, so it
+    /// could not have caught this. Proves the fix (a `metamagic:`-
+    /// namespaced seed, translated back to the literal feat name before the
+    /// catalog lookup) by asserting the real save call succeeds AND reaches
+    /// `Saved`, not just that it doesn't panic.
+    #[test]
+    fn create_character_at_root_saves_a_fresh_arcanist_without_a_colon_convention_error() {
+        let root = tempdir("create-character-arcanist-colon-convention-fix");
+        let request = request_for_class("race:human", "class:arcanist", 1);
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect(
+                "a fresh Human Arcanist 1 must save without error -- this call used to fail with \
+                 a colon-segment validation error on the seeded Metamagic Knowledge choice",
+            );
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "a fresh Human Arcanist 1 is expected to reach Computed via \
+                     compose_character_input's own Path A seeding: {diagnostics:?}"
+                )
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Real end-to-end proof for the Cavalier/Inquisitor/Oracle Path A
+    /// seeding (2026-07-29): each of the three saves through the actual
+    /// `create_character_at_root` path, not merely through
+    /// `build_pilot_headless_receipt` on an in-memory input. That
+    /// distinction is not academic -- the Arcanist colon-convention bug
+    /// immediately above was a real failure that lived exactly in the gap
+    /// between "the engine reached Computed" and "the save call
+    /// succeeded", and every seed here likewise has to survive
+    /// `validate_character_input`'s own colon-segment rule.
+    #[test]
+    fn create_character_at_root_saves_a_fresh_cavalier_inquisitor_and_oracle() {
+        for class_id in ["class:cavalier", "class:inquisitor", "class:oracle"] {
+            let root = tempdir(&format!("create-character-path-a-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .unwrap_or_else(|error| {
+                    panic!("a fresh Human {class_id} 1 must save without error: {error:?}")
+                });
+
+            match response {
+                CreateCharacterResponse::Saved { .. } => {}
+                CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                    "a fresh Human {class_id} 1 is expected to reach Computed via \
+                     compose_character_input's own Path A seeding: {diagnostics:?}"
+                ),
+            }
+
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    // ----- purchase_equipment: atomic money-purchase coupling (risks item 9) -----
+
+    /// Golden path: an affordable real item is added AND its real catalog
+    /// cost is deducted from the balance, atomically, in one call.
+    #[test]
+    fn purchase_equipment_at_root_succeeds_and_deducts_the_real_catalog_cost() {
+        let root = tempdir("purchase-equipment-affordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000).expect("funding the character should succeed");
+
+        let response = purchase_equipment_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Purchased { money, .. } => {
+                // A dagger's real catalog cost is 2 gp = 200 cp.
+                assert_eq!(
+                    money.total_copper, 800,
+                    "1000 cp funded minus a dagger's real 200 cp cost must leave 800 cp"
+                );
+            }
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                panic!("an affordable real item must be purchased, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len + 1,
+            "the equipment must actually be added on the accepted path"
+        );
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An unaffordable item must be honestly rejected -- no equipment
+    /// added, no money charged. Proves the pre-flight affordability check
+    /// runs BEFORE the equipment mutation, not after.
+    #[test]
+    fn purchase_equipment_at_root_blocks_and_charges_nothing_when_unaffordable() {
+        let root = tempdir("purchase-equipment-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp; a dagger costs 200 cp -- unaffordable.
+
+        let response = purchase_equipment_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "money.equipment_purchase.insufficient_funds"),
+                    "must carry the real insufficient-funds diagnostic: {diagnostics:?}"
+                );
+            }
+            PurchaseEquipmentResponse::Purchased { .. } => {
+                panic!("an unaffordable item must never be silently purchased")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len,
+            "nothing should have been added on the rejected path"
+        );
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "nothing should have been charged on the rejected path"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An item with no known catalog cost (a `(Base)` template record) must
+    /// be treated the same as unaffordable -- never a free item.
+    #[test]
+    fn purchase_equipment_at_root_blocks_an_item_with_no_known_cost() {
+        let root = tempdir("purchase-equipment-unknown-cost");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        // The bare "Dagger" KEY resolves to the (Base) template record,
+        // which carries no independent cost_gp (None) -- a genuine corpus
+        // absence, not zero.
+        let response = purchase_equipment_at_root(
+            &root,
+            "Dagger",
+            ActiveState::EquippedActive,
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("purchase call should not error");
+
+        match response {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "money.equipment_purchase.unknown_cost"),
+                    "must carry the real unknown-cost diagnostic: {diagnostics:?}"
+                );
+            }
+            PurchaseEquipmentResponse::Purchased { .. } => {
+                panic!("an item with no known cost must never be treated as free")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when cost is unknown"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `attach_equipment_modifier` (v0.6 alpha swarm items 1+27 sub-task 6) -----
+
+    /// A real, known-but-formula-priced modifier (an actual magical weapon
+    /// enhancement -- the headline use case this command exists for)
+    /// attaches for free, since its real `cost_gp` is unknown (a formula,
+    /// not a flat catalog price) -- the deliberate deviation from
+    /// `purchase_equipment`'s block-on-unknown-cost rule this command's
+    /// own doc comment explains.
+    #[test]
+    fn attach_equipment_modifier_at_root_attaches_a_real_enhancement_for_free_when_cost_is_unknown() {
+        let root = tempdir("attach-modifier-free-enhancement");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp -- if this were charged at all, it would
+        // be Blocked as unaffordable, proving the free-attach path for
+        // real.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 0, "an unknown-cost modifier must attach for free");
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("a real enhancement with unknown cost must attach for free, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let longsword = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|selection| selection.item_id == "item:longsword")
+            .expect("item:longsword must still be present");
+        assert_eq!(
+            longsword.applied_modifiers,
+            vec!["Special Ability ~ +1 ~ Weapon".to_string()],
+            "the modifier must attach to the target selection's applied_modifiers, not a new top-level entry"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A modifier with a real, known `cost_gp` is still charged (not
+    /// treated as free just because it's a modifier) -- proves the
+    /// free-attach path is specifically for unknown cost, not blanket.
+    #[test]
+    fn attach_equipment_modifier_at_root_charges_a_modifier_with_a_known_cost() {
+        let root = tempdir("attach-modifier-known-cost");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 10_000).expect("funding should succeed");
+
+        // Masterwork (Item) resolves a real, known cost_gp of 50.
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Quality ~ Masterwork ~ Item",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 5_000, "10,000 cp minus a real 5,000 cp (50 gp) cost");
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an affordable known-cost modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A known-cost modifier the character cannot afford is `Blocked`,
+    /// same as any other charged mutation -- the free-attach deviation
+    /// only applies to genuinely unknown cost, never to unaffordability.
+    #[test]
+    fn attach_equipment_modifier_at_root_blocks_a_known_cost_modifier_when_unaffordable() {
+        let root = tempdir("attach-modifier-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance starts at 0 cp; Masterwork (Item) costs 5,000 cp.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Quality ~ Masterwork ~ Item",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "must carry the real insufficient-funds diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("an unaffordable modifier must never be silently attached")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let longsword = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .find(|selection| selection.item_id == "item:longsword")
+            .expect("item:longsword must still be present");
+        assert!(longsword.applied_modifiers.is_empty(), "nothing should have attached on the rejected path");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A `modifier_item_id` that is not a real catalog item at all must be
+    /// rejected before any cost/target check -- never silently attached.
+    #[test]
+    fn attach_equipment_modifier_at_root_rejects_an_unknown_modifier_item() {
+        let root = tempdir("attach-modifier-unknown-item");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "totally-fabricated-modifier-id",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "equipment.attach_modifier.unknown_item"),
+                    "must carry the real unknown-item diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("a fabricated modifier id must never be silently attached")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when the modifier item itself is unrecognized"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A target `item_id` that does not exist among the character's
+    /// `equipment_selections` must be `Blocked` before any charge -- a
+    /// not-found target is never silently a free no-op after money moves.
+    #[test]
+    fn attach_equipment_modifier_at_root_rejects_a_target_that_does_not_exist() {
+        let root = tempdir("attach-modifier-missing-target");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 1_000_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:greatsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics.iter().any(|d| d.id == "equipment.attach_modifier.target_not_found"),
+                    "must carry the real target-not-found diagnostic: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("attaching to a nonexistent target must never silently succeed")
+            }
+        }
+
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            1_000_000,
+            "nothing should have been charged when the target selection does not exist"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// End-to-end proof that an attached-but-corpus-unresolvable modifier
+    /// (the desktop app's bundled demo corpus has zero equipmods records)
+    /// surfaces honestly through the real `corpusDerived` response rather
+    /// than silently vanishing -- closes the loop this sub-task's
+    /// `unresolved_equipment_item_ids` extension exists for.
+    #[test]
+    fn attach_equipment_modifier_at_root_surfaces_the_real_corpus_resolution_gap() {
+        let root = tempdir("attach-modifier-corpus-gap");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Special Ability ~ +1 ~ Weapon",
+            "2026-07-23T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { corpus_derived, .. } => {
+                assert!(
+                    corpus_derived
+                        .unresolved_equipment_item_ids
+                        .contains(&"Special Ability ~ +1 ~ Weapon".to_string()),
+                    "the bundled demo corpus has no equipmods records, so the attached modifier \
+                     must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("the attach itself must succeed even though the modifier won't resolve, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Same wire-shape proof as `purchase_equipment`'s own precedent test:
+    /// the `corpusDerived` field must be camelCase (a per-field rename,
+    /// not an enum-wide `rename_all`, which would also lowercase the
+    /// `"Attached"`/`"Blocked"` tag values themselves).
+    #[test]
+    fn attach_equipment_modifier_response_attached_serializes_corpus_derived_as_camel_case_without_touching_the_tag()
+    {
+        let response = AttachEquipmentModifierResponse::Attached {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+                companion: None,
+            },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                    attack_bonus_delta: None,
+                },
+                encumbrance: empty_encumbrance_dto(),
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
+            },
+            money: money_dto_from_total(0),
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Attached"));
+        assert!(object.contains_key("corpusDerived"), "{object:?}");
+        assert!(!object.contains_key("corpus_derived"), "{object:?}");
+    }
+
+    // ----- `add_feat_selection` (v0.6 alpha swarm) -----
+
+    #[test]
+    fn apply_add_feat_selection_appends_to_selected_feats() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.selected_feats.len();
+
+        apply_add_feat_selection(&mut input, "feat:toughness");
+
+        assert_eq!(input.chosen.selected_feats.len(), starting_len + 1);
+        assert_eq!(
+            input.chosen.selected_feats.last(),
+            Some(&"feat:toughness".to_owned())
+        );
+    }
+
+    /// Mirrors `add_spell_selection_at_root_appends_and_persists_when_computed`'s
+    /// golden-path shape below.
+    #[test]
+    fn add_feat_selection_at_root_appends_and_persists_when_computed() {
+        let root = tempdir("add-feat-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.selected_feats.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T00:00:00Z")
+            .expect("add feat selection call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with an added feat selection must still reach \
+                     Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.selected_feats.len(), starting_len + 1);
+        assert_eq!(
+            reloaded.character_input.chosen.selected_feats.last(),
+            Some(&"feat:toughness".to_owned())
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn add_feat_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("add-feat-missing-character");
+
+        let result = add_feat_selection_at_root(&root, "feat:toughness", None, "2026-07-21T00:00:00Z");
+
+        assert!(
+            result.is_err(),
+            "adding a feat selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- `add_spell_selection` (Criterion 18) -----
 
     #[test]
@@ -1831,6 +4534,26 @@ mod tests {
         assert_eq!(added.spell_id, "Mage Armor");
         assert_eq!(added.source_class_id, "class:wizard");
         assert_eq!(added.acquisition_mode, AcquisitionMode::Known);
+    }
+
+    /// v0.6 alpha swarm item 3: the pure half of the Wizard spellbook
+    /// bootstrap fix -- see `apply_record_and_prepare_spell_selection`'s
+    /// own doc comment for the full deadlock analysis. The `_at_root`
+    /// golden-path proof lives in `pf1_adapter.rs`'s own test module
+    /// (that's where the deadlock reproduction against the real
+    /// persistence layer lives too).
+    #[test]
+    fn apply_record_and_prepare_spell_selection_appends_both_known_and_prepared_entries() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.spells_selected.len();
+
+        apply_record_and_prepare_spell_selection(&mut input, "evocation.0.light", "class:wizard");
+
+        assert_eq!(input.chosen.spells_selected.len(), starting_len + 2);
+        let added = &input.chosen.spells_selected[starting_len..];
+        assert!(added.iter().all(|s| s.spell_id == "evocation.0.light" && s.source_class_id == "class:wizard"));
+        assert!(added.iter().any(|s| s.acquisition_mode == AcquisitionMode::Known));
+        assert!(added.iter().any(|s| s.acquisition_mode == AcquisitionMode::Prepared));
     }
 
     /// The single most important regression guard for Criterion 18's spell
@@ -1906,6 +4629,718 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- `set_skill_allocations` (v0.6 alpha swarm, task 2) -----
+
+    #[test]
+    fn apply_set_skill_allocations_replaces_skill_allocations_wholesale() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        assert_eq!(
+            input.chosen.skill_allocations.len(),
+            3,
+            "the fixed demo loadout starts with three skill allocations"
+        );
+
+        apply_set_skill_allocations(
+            &mut input,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+        );
+
+        assert_eq!(
+            input.chosen.skill_allocations,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+            "the whole set must be replaced, not appended to"
+        );
+    }
+
+    /// The single most important regression guard for task 2: proves the
+    /// real load -> mutate -> recompute -> re-save -> return round trip
+    /// against a real `SavedCharacterStore` fixture on disk, mirroring
+    /// `add_equipment_selection_at_root`'s own golden path test. Re-orders
+    /// the supported Climb/Intimidate/Swim triple (rather than sending it
+    /// back unchanged) so the assertion actually proves replacement, not a
+    /// no-op.
+    #[test]
+    fn set_skill_allocations_at_root_replaces_and_persists_when_computed() {
+        let root = tempdir("set-skill-allocations-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:swim".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with a re-ordered but still-supported skill \
+                     triple must still reach Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded
+                .character_input
+                .chosen
+                .skill_allocations
+                .iter()
+                .map(|allocation| allocation.skill_id.as_str())
+                .collect::<Vec<_>>(),
+            vec!["skill:swim", "skill:intimidate", "skill:climb"],
+            "the on-disk envelope must reflect the caller's full replacement set/order"
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Mirrors `level_up_character_at_root`'s own "never persist an unproven
+    /// build" proof: an out-of-posture skill allocation must leave the
+    /// on-disk envelope exactly as it was, not silently apply.
+    #[test]
+    fn set_skill_allocations_at_root_does_not_persist_when_resulting_build_is_blocked() {
+        let root = tempdir("set-skill-allocations-blocked");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 2 }],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error even when blocked");
+
+        match response {
+            CreateCharacterResponse::Blocked { .. } => {}
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("rank 2 Climb alone is outside the supported posture and must not reach Computed")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.skill_allocations,
+            envelope.character_input.chosen.skill_allocations,
+            "a blocked mutation must leave the on-disk skill allocations untouched"
+        );
+        assert_eq!(
+            reloaded.saved_at, LEVEL_UP_TEST_SAVED_AT,
+            "a blocked mutation must not advance saved_at either"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn set_skill_allocations_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("set-skill-allocations-missing-character");
+
+        let result = set_skill_allocations_at_root(
+            &root,
+            vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 }],
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(
+            result.is_err(),
+            "setting skill allocations on a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
+
+    fn sample_bio() -> CharacterBioDto {
+        CharacterBioDto {
+            alignment: "Lawful Good".to_owned(),
+            deity: "Iomedae".to_owned(),
+            sex: "Female".to_owned(),
+            age: "27".to_owned(),
+            height: "5'8\"".to_owned(),
+            weight: "150 lbs".to_owned(),
+            hair: "Auburn".to_owned(),
+            eyes: "Green".to_owned(),
+        }
+    }
+
+    #[test]
+    fn load_character_bio_at_root_returns_all_empty_default_when_no_bio_file_exists_yet() {
+        let root = tempdir("bio-default");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let bio = load_character_bio_at_root(&root).expect("loading an absent bio should not error");
+
+        assert_eq!(bio, CharacterBioDto::default());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn update_character_bio_at_root_persists_and_round_trips_through_load() {
+        let root = tempdir("bio-round-trip");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        save_character_bio_at_root(&root, &sample_bio()).expect("saving a bio should not error");
+        let reloaded = load_character_bio_at_root(&root).expect("reloading the saved bio should not error");
+
+        assert_eq!(reloaded, sample_bio());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A second save fully replaces the first -- proves this is a real
+    /// overwrite, not an append or a write-once no-op.
+    #[test]
+    fn update_character_bio_at_root_overwrites_a_previously_saved_bio() {
+        let root = tempdir("bio-overwrite");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        save_character_bio_at_root(&root, &sample_bio()).expect("first save should not error");
+        let updated = CharacterBioDto { alignment: "Chaotic Neutral".to_owned(), ..sample_bio() };
+        save_character_bio_at_root(&root, &updated).expect("second save should not error");
+
+        let reloaded = load_character_bio_at_root(&root).expect("reload should not error");
+        assert_eq!(reloaded, updated);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn update_character_bio_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("bio-missing-character");
+
+        let result = save_character_bio_at_root(&root, &sample_bio());
+
+        assert!(result.is_err(), "saving a bio for a nonexistent saved character must fail");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `load_character_money` / `adjust_character_money` (v0.6 alpha swarm) -----
+
+    #[test]
+    fn load_character_money_at_root_returns_a_zero_balance_when_no_money_file_exists_yet() {
+        let root = tempdir("money-default");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let money = load_character_money_at_root(&root).expect("loading absent money should not error");
+
+        assert_eq!(
+            money,
+            CharacterMoneyDto { total_copper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 }
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_adds_funds_and_persists_the_new_total() {
+        let root = tempdir("money-add");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let money = adjust_character_money_at_root(&root, 1234).expect("adding funds should not error");
+
+        assert_eq!(
+            money,
+            CharacterMoneyDto { total_copper: 1234, platinum: 1, gold: 2, silver: 3, copper: 4 }
+        );
+        let reloaded = load_character_money_at_root(&root).expect("reload should not error");
+        assert_eq!(reloaded, money, "the balance must be persisted, not just returned in-memory");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Two consecutive adjustments accumulate against the persisted total,
+    /// not each other's in-memory return value -- proves the balance is
+    /// genuinely read-modify-write, not overwritten from a stale snapshot.
+    #[test]
+    fn adjust_character_money_at_root_accumulates_across_repeated_calls() {
+        let root = tempdir("money-accumulate");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        adjust_character_money_at_root(&root, 1000).expect("first adjustment should not error");
+        let after_second =
+            adjust_character_money_at_root(&root, -300).expect("second adjustment should not error");
+
+        assert_eq!(after_second.total_copper, 700);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_rejects_spending_more_than_the_current_balance() {
+        let root = tempdir("money-insufficient-funds");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 100).expect("seed funds should not error");
+
+        let result = adjust_character_money_at_root(&root, -200);
+
+        assert!(result.is_err(), "spending more than the current balance must fail honestly");
+        let reloaded = load_character_money_at_root(&root).expect("reload should not error");
+        assert_eq!(
+            reloaded.total_copper, 100,
+            "a rejected spend must not partially apply or corrupt the persisted balance"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_money_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("money-missing-character");
+
+        let result = adjust_character_money_at_root(&root, 100);
+
+        assert!(result.is_err(), "adjusting money for a nonexistent saved character must fail");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
+
+    #[test]
+    fn load_character_durability_at_root_defaults_current_hp_to_computed_max_hp() {
+        let root = tempdir("hp-default");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let durability =
+            load_character_durability_at_root(&root).expect("loading durability should not error");
+
+        // Fighter d10 level 1, CON mod +2 (score 14, unaffected by the fixture's
+        // Human ability-bonus target of strength): 10 + 2 = 12.
+        assert_eq!(durability.max_hp, 12);
+        assert_eq!(durability.current_hp, 12);
+        assert_eq!(durability.nonlethal_damage, 0);
+        assert_eq!(durability.status, "Normal");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// v0.6 alpha swarm item 17: the feat-effects engine's first real,
+    /// wired case. A Fighter with Toughness selected must show the correct
+    /// 15 HP (12 base + Toughness's real +3), not the pre-fix 12 QA found
+    /// (zero explanations mentioning the feat at all).
+    #[test]
+    fn load_character_durability_at_root_includes_toughnesss_real_plus_three_hp() {
+        let root = tempdir("hp-toughness");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.selected_feats.push("Toughness".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let durability =
+            load_character_durability_at_root(&root).expect("loading durability should not error");
+
+        assert_eq!(durability.max_hp, 15, "12 base + Toughness's real flat +3 = 15");
+        assert_eq!(
+            durability.current_hp, 15,
+            "current HP must default to the feat-inclusive max, not the pre-feat base"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_hp_at_root_persists_damage_and_clamps_healing_at_max_hp() {
+        let root = tempdir("hp-damage-heal");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let after_damage = adjust_character_hp_at_root(&root, -5, 0).expect("damage should not error");
+        assert_eq!(after_damage.current_hp, 7);
+
+        let after_overheal =
+            adjust_character_hp_at_root(&root, 100, 0).expect("healing should not error");
+        assert_eq!(after_overheal.current_hp, 12, "healing must clamp at max_hp, not exceed it");
+
+        let reloaded =
+            load_character_durability_at_root(&root).expect("reload should not error");
+        assert_eq!(reloaded.current_hp, 12, "the healed total must be persisted");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_hp_at_root_tracks_nonlethal_damage_and_reflects_status() {
+        let root = tempdir("hp-nonlethal");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let staggered =
+            adjust_character_hp_at_root(&root, 0, 12).expect("nonlethal damage should not error");
+        assert_eq!(
+            staggered.status, "Staggered",
+            "nonlethal damage exactly equal to current HP (12) is staggered"
+        );
+
+        let unconscious =
+            adjust_character_hp_at_root(&root, 0, 1).expect("more nonlethal damage should not error");
+        assert_eq!(unconscious.nonlethal_damage, 13);
+        assert_eq!(unconscious.status, "Unconscious");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_hp_at_root_reflects_dying_and_dead_thresholds() {
+        let root = tempdir("hp-dying-dead");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let dying = adjust_character_hp_at_root(&root, -13, 0).expect("lethal damage should not error");
+        assert_eq!(dying.current_hp, -1);
+        assert_eq!(dying.status, "Dying");
+
+        // -1 - 13 = -14, which equals -constitution_score (14) -> Dead.
+        let dead = adjust_character_hp_at_root(&root, -13, 0).expect("further lethal damage should not error");
+        assert_eq!(dead.current_hp, -14);
+        assert_eq!(dead.status, "Dead");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn adjust_character_hp_at_root_floors_nonlethal_recovery_at_zero() {
+        let root = tempdir("hp-nonlethal-floor");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        adjust_character_hp_at_root(&root, 0, 3).expect("nonlethal damage should not error");
+        let recovered =
+            adjust_character_hp_at_root(&root, 0, -100).expect("nonlethal recovery should not error");
+
+        assert_eq!(recovered.nonlethal_damage, 0, "nonlethal damage must floor at 0, not go negative");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn load_character_durability_at_root_fails_honestly_for_a_multiclass_build() {
+        let root = tempdir("hp-multiclass");
+        let mut envelope = level_up_test_envelope("race:human", 2);
+        envelope.character_input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: "class:rogue".to_owned(),
+            level: 1,
+        });
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let result = load_character_durability_at_root(&root);
+
+        assert!(
+            result.is_err(),
+            "durability for a multiclass build must fail honestly, not fabricate a value"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn load_character_durability_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("hp-missing-character");
+
+        let result = load_character_durability_at_root(&root);
+
+        assert!(
+            result.is_err(),
+            "loading durability for a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Render-staleness real root cause (v0.6 alpha swarm) -----
+    //
+    // Frontend traced the "Spells/Gear tab looks stale right after a
+    // mutation" bug to a real serde defect, not a React timing issue:
+    // CreateCharacterResponse's `Saved` variant serialized `corpus_derived`
+    // literally as `"corpus_derived"` on the wire (no `#[serde(tag =
+    // "kind")]`-level `rename_all`, since that would also camelCase the
+    // `"Saved"`/`"Blocked"` tag strings the frontend matches on) while the
+    // TS boundary's asserted-not-validated type declared `corpusDerived` --
+    // silently `undefined` at runtime, invisible to any Rust-side test that
+    // only checks struct field values rather than the actual JSON shape.
+    // These tests serialize a real response value and assert on the JSON
+    // keys directly -- the only way this exact bug class is actually
+    // caught.
+
+    #[test]
+    fn create_character_response_saved_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
+    ) {
+        let response = CreateCharacterResponse::Saved {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+                companion: None,
+            },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                    attack_bonus_delta: None,
+                },
+                encumbrance: empty_encumbrance_dto(),
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
+            },
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(
+            object.get("kind").and_then(|v| v.as_str()),
+            Some("Saved"),
+            "the kind tag must stay exactly \"Saved\" (PascalCase, untouched) so \
+             outcome.kind === 'Saved' checks on the frontend keep working: {object:?}"
+        );
+        assert!(
+            object.contains_key("corpusDerived"),
+            "corpus_derived must serialize as camelCase corpusDerived on the wire: {object:?}"
+        );
+        assert!(
+            !object.contains_key("corpus_derived"),
+            "corpus_derived must NOT also/still appear as snake_case on the wire: {object:?}"
+        );
+    }
+
+    /// v0.6 alpha swarm (QA finding, 2026-07-24): `EquipmentEffectsDto`'s
+    /// three `Option` fields must genuinely omit their key when `None`
+    /// (mirroring `PilotSnapshotDto.damage_reduction`'s own precedent), not
+    /// serialize as `"maxDexCap":null` -- a present key with a literal
+    /// `null` value defeats the frontend's `!== undefined` hide-checks
+    /// (`null !== undefined` is `true`), rendering garbled `"+null"`/
+    /// `"null%"` strings instead of hiding the field. Only one character
+    /// build (Chain Shirt + exactly one weapon) had been live-verified
+    /// before this bug was found, and it happened to resolve `Some(...)`
+    /// for all three fields -- any zero- or two-weapon build (a fresh
+    /// character, most Wizards, a dual-wielder) would have hit this.
+    #[test]
+    fn equipment_effects_dto_omits_its_optional_fields_when_none_and_includes_them_when_some() {
+        let with_none = EquipmentEffectsDto {
+            per_item: Vec::new(),
+            armor_class_delta: 4,
+            armor_check_penalty_total: -2,
+            max_dex_cap: None,
+            spell_failure_chance: None,
+            attack_bonus_delta: None,
+        };
+        let json = serde_json::to_string(&with_none).expect("serialization should succeed");
+        assert!(
+            !json.contains("maxDexCap") && !json.contains("spellFailureChance") && !json.contains("attackBonusDelta"),
+            "None fields must omit their key entirely, not serialize as null: {json}"
+        );
+        // The two non-Option fields are unaffected by this fix -- always present.
+        assert!(json.contains("\"armorClassDelta\":4"));
+        assert!(json.contains("\"armorCheckPenaltyTotal\":-2"));
+
+        let with_some = EquipmentEffectsDto {
+            per_item: Vec::new(),
+            armor_class_delta: 4,
+            armor_check_penalty_total: -2,
+            max_dex_cap: Some(4),
+            spell_failure_chance: Some(20.0),
+            attack_bonus_delta: Some(1),
+        };
+        let json = serde_json::to_string(&with_some).expect("serialization should succeed");
+        assert!(json.contains("\"maxDexCap\":4"));
+        assert!(json.contains("\"spellFailureChance\":20.0"));
+        assert!(json.contains("\"attackBonusDelta\":1"));
+    }
+
+    /// The encumbrance DTO must cross the IPC boundary with the real
+    /// engine numbers intact and in the camelCase shape the TypeScript
+    /// `EncumbranceDto` declares -- the boundary where this domain's
+    /// computation was previously discarded entirely.
+    ///
+    /// `loadMaxDexCap` specifically follows the `maxDexCap` precedent: a
+    /// light load imposes no cap, and that must omit the key rather than
+    /// serialize a literal `null`, which would defeat the frontend's
+    /// `!== undefined` check and render "+null".
+    #[test]
+    fn encumbrance_dto_serializes_real_engine_values_in_the_camel_case_wire_shape() {
+        use codex::rules_core::encumbrance::{
+            carrying_capacity_thresholds, CarriedItem, EncumbranceComputation, EncumbranceLevel,
+        };
+        use codex::rules_core::size::SizeCategory;
+
+        // A real Strength-6 medium load: Chain Shirt (25 lb / 100 gp) plus
+        // Longsword (4 lb / 15 gp), both real CRB corpus values, against
+        // load.lst's LOAD:6|60 row (light 20 / medium 40 / heavy 60).
+        let computation = EncumbranceComputation {
+            per_item: vec![
+                CarriedItem {
+                    item_id: "item:chain_shirt".to_owned(),
+                    weight_lbs: 25.0,
+                    cost_gp: Some(100.0),
+                },
+                CarriedItem {
+                    item_id: "item:longsword".to_owned(),
+                    weight_lbs: 4.0,
+                    cost_gp: Some(15.0),
+                },
+            ],
+            total_carried_weight_lbs: 29.0,
+            total_carried_cost_gp: 115.0,
+            thresholds: carrying_capacity_thresholds(6, SizeCategory::Medium),
+            level: EncumbranceLevel::Medium,
+            unresolved_item_ids: Vec::new(),
+            load_max_dex_cap: EncumbranceLevel::Medium.max_dex_cap(),
+            load_armor_check_penalty: EncumbranceLevel::Medium.armor_check_penalty(),
+        };
+
+        let json = serde_json::to_string(&map_encumbrance_dto(&computation))
+            .expect("serialization should succeed");
+
+        assert!(json.contains("\"totalCarriedWeightLbs\":29.0"), "{json}");
+        assert!(json.contains("\"totalCarriedCostGp\":115.0"), "{json}");
+        assert!(json.contains("\"lightMaxLbs\":20.0"), "{json}");
+        assert!(json.contains("\"mediumMaxLbs\":40.0"), "{json}");
+        assert!(json.contains("\"heavyMaxLbs\":60.0"), "{json}");
+        assert!(json.contains("\"level\":\"Medium\""), "{json}");
+        assert!(json.contains("\"loadMaxDexCap\":3"), "{json}");
+        assert!(json.contains("\"loadArmorCheckPenalty\":-3"), "{json}");
+        assert!(json.contains("\"weightLbs\":25.0") && json.contains("\"costGp\":100.0"), "{json}");
+    }
+
+    #[test]
+    fn encumbrance_dto_omits_the_load_max_dex_cap_under_a_light_load_rather_than_nulling_it() {
+        use codex::rules_core::encumbrance::{
+            carrying_capacity_thresholds, EncumbranceComputation, EncumbranceLevel,
+        };
+        use codex::rules_core::size::SizeCategory;
+
+        let computation = EncumbranceComputation {
+            per_item: Vec::new(),
+            total_carried_weight_lbs: 0.0,
+            total_carried_cost_gp: 0.0,
+            thresholds: carrying_capacity_thresholds(10, SizeCategory::Medium),
+            level: EncumbranceLevel::Light,
+            unresolved_item_ids: Vec::new(),
+            load_max_dex_cap: EncumbranceLevel::Light.max_dex_cap(),
+            load_armor_check_penalty: EncumbranceLevel::Light.armor_check_penalty(),
+        };
+
+        let json = serde_json::to_string(&map_encumbrance_dto(&computation))
+            .expect("serialization should succeed");
+
+        assert!(
+            !json.contains("loadMaxDexCap"),
+            "a light load imposes no cap; the key must be omitted, not null: {json}"
+        );
+        // The check penalty is a real, always-present `0` under a light
+        // load -- an absent key here would be wrong, unlike the cap above.
+        assert!(json.contains("\"loadArmorCheckPenalty\":0"), "{json}");
+    }
+
+    #[test]
+    fn purchase_equipment_response_purchased_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
+    ) {
+        let response = PurchaseEquipmentResponse::Purchased {
+            summary: Box::new(CharacterSummaryDto {
+                character_id: "c".to_owned(),
+                display_label: "d".to_owned(),
+                game_system: "pf1".to_owned(),
+                schema_version: 1,
+                saved_at: "2026-07-23T00:00:00Z".to_owned(),
+                race_id: "race:human".to_owned(),
+                class_summary: "class:fighter:1".to_owned(),
+            }),
+            snapshot: PilotSnapshotDto {
+                ability_modifiers: AbilityModifiersDto {
+                    strength: 0,
+                    dexterity: 0,
+                    constitution: 0,
+                    intelligence: 0,
+                    wisdom: 0,
+                    charisma: 0,
+                },
+                base_attack_bonus: 0,
+                base_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                baseline_melee_attack_bonus: 0,
+                baseline_armor_class: 0,
+                total_saves: BaseSavesDto { fortitude: 0, reflex: 0, will: 0 },
+                selected_skill_modifiers: SelectedSkillModifiersDto {
+                    climb: 0,
+                    intimidate: 0,
+                    swim: 0,
+                },
+                damage_reduction: None,
+                companion: None,
+            },
+            corpus_derived: CorpusDerivedDto {
+                school_coverage: Vec::new(),
+                equipped_items: Vec::new(),
+                equipment_effects: EquipmentEffectsDto {
+                    per_item: Vec::new(),
+                    armor_class_delta: 0,
+                    armor_check_penalty_total: 0,
+                    max_dex_cap: None,
+                    spell_failure_chance: None,
+                    attack_bonus_delta: None,
+                },
+                encumbrance: empty_encumbrance_dto(),
+                unresolved_spell_ids: Vec::new(),
+                unresolved_equipment_item_ids: Vec::new(),
+            },
+            money: money_dto_from_total(0),
+        };
+
+        let value = serde_json::to_value(&response).expect("response should serialize");
+        let object = value.as_object().expect("response should serialize as a JSON object");
+
+        assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Purchased"));
+        assert!(object.contains_key("corpusDerived"), "{object:?}");
+        assert!(!object.contains_key("corpus_derived"), "{object:?}");
+    }
+
     // ----- `level_up_character` (Criterion 17) -----
 
     fn tempdir(label: &str) -> PathBuf {
@@ -1967,6 +5402,59 @@ mod tests {
         assert_eq!(input.chosen.class_levels[1].level, 1);
     }
 
+    /// v0.6 alpha swarm: `compose_character_input`'s Wizard school-choice
+    /// seeding fix only covered fresh creation -- multiclassing Wizard onto
+    /// an existing character via `apply_level_up`'s new-class-entry branch
+    /// hit the same unconditional spellbook-posture block, unchanged.
+    /// Frontend verified this live before this fix landed.
+    #[test]
+    fn apply_level_up_seeds_the_canonical_wizard_school_choices_when_dipping_into_wizard() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+
+        apply_level_up(&mut input, "class:wizard");
+
+        assert!(
+            input.chosen.selected_choices.iter().any(|c| c.choice_set_id
+                == "choice:wizard_school_specialization"
+                && c.selection_id == "school:evocation"),
+            "multiclassing into Wizard must seed the canonical Evocation specialization: {:?}",
+            input.chosen.selected_choices
+        );
+        let opposed: Vec<&str> = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:wizard_opposed_schools")
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        assert_eq!(opposed.len(), 2, "must seed exactly two opposed schools: {opposed:?}");
+        assert!(opposed.contains(&"school:necromancy"));
+        assert!(opposed.contains(&"school:transmutation"));
+    }
+
+    /// A second consecutive level-up within Wizard (not a fresh dip) must
+    /// not re-seed the choices -- `wizard_has_canonical_specialization_selections`
+    /// requires *exactly* two opposed-school entries, so a duplicate pair
+    /// would silently break it.
+    #[test]
+    fn apply_level_up_does_not_reseed_wizard_choices_on_a_second_level_up_within_wizard() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        apply_level_up(&mut input, "class:wizard");
+        apply_level_up(&mut input, "class:wizard");
+
+        assert_eq!(input.chosen.class_levels[1].level, 2, "the second call must increment, not re-dip");
+        let opposed_count = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:wizard_opposed_schools")
+            .count();
+        assert_eq!(
+            opposed_count, 2,
+            "a second level-up within Wizard must not duplicate the seeded opposed schools"
+        );
+    }
+
     /// The single most important regression guard for Criterion 17: proves
     /// the real load -> mutate -> recompute -> re-save -> return round trip
     /// against a real `SavedCharacterStore` fixture on disk, not a mock.
@@ -1976,8 +5464,14 @@ mod tests {
         let envelope = level_up_test_envelope("race:human", 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
-            .expect("level up call should not error");
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("level up call should not error");
 
         match response {
             CreateCharacterResponse::Saved { summary, .. } => {
@@ -2014,8 +5508,14 @@ mod tests {
         let envelope = level_up_test_envelope("race:human", 20);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
-            .expect("level up call should not error even when the build is Blocked");
+        let response = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("level up call should not error even when the build is Blocked");
 
         match response {
             CreateCharacterResponse::Blocked { diagnostics } => {
@@ -2052,7 +5552,13 @@ mod tests {
     fn level_up_character_at_root_fails_honestly_when_nothing_is_saved_yet() {
         let root = tempdir("missing-character");
 
-        let result = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z");
+        let result = level_up_character_at_root(
+            &root,
+            FIGHTER_CLASS_ID,
+            Vec::new(),
+            None,
+            "2026-07-21T00:00:00Z",
+        );
 
         assert!(result.is_err(), "leveling up a nonexistent saved character must fail");
 
@@ -2400,5 +5906,361 @@ mod tests {
         let result = export_character_to_json(&root);
 
         assert!(result.is_err(), "exporting a nonexistent saved character must fail");
+    }
+
+    /// v0.6 alpha swarm: the animal companion / mount stat block is fully
+    /// computed in the engine and now reaches `PilotSnapshot.companion`
+    /// (`pilot_view_model.rs`), but a value that stops at the Tauri DTO
+    /// boundary is invisible to the player -- exactly the defect shape
+    /// `EquipmentEffects.per_item` had (fully populated, simply not
+    /// carried, leaving an "AC breakdown by source" panel sitting as a
+    /// placeholder over data that already existed). This proves the
+    /// boundary genuinely carries it.
+    #[test]
+    fn snapshot_dto_carries_a_real_animal_companion_across_the_boundary() {
+        // Deliberately `resolve_unified_pilot_snapshot`, not
+        // `PilotViewModel::from_receipt`: that is the function
+        // `load_saved_character` itself calls, and it assembles its own
+        // `PilotSnapshot` by hand rather than going through the view
+        // model. Testing the view model here would have proved nothing
+        // about what the live app actually receives.
+        let (snapshot, _corpus_receipt) = resolve_unified_pilot_snapshot(
+            &human_druid_with_animal_companion(),
+            corpus_fixture_bundle(),
+        )
+        .expect("a level-1 Druid with an animal companion resolves a snapshot");
+
+        let dto = map_snapshot_dto(&snapshot);
+
+        let companion = dto
+            .companion
+            .as_ref()
+            .expect("the Druid's real Wolf companion must cross the DTO boundary");
+        assert_eq!(companion.owner_class_label, "Druid");
+        assert_eq!(companion.species, "Wolf");
+        assert!(
+            companion
+                .stats
+                .iter()
+                .any(|stat| stat.label == "Armor Class" && stat.value == 12),
+            "the real computed values must survive the crossing: {:?}",
+            companion.stats
+        );
+        assert!(
+            companion.advancement_note.is_some(),
+            "the engine's honest not-grounded list must cross too -- a Computed load reports \
+             no diagnostics at all, so this is the player's only route to it"
+        );
+
+        // camelCase on the wire, and genuinely omitted (not `null`) for a
+        // companion-less class -- the same `skip_serializing_if` discipline
+        // `damage_reduction` and `EquipmentEffectsDto` already needed, for
+        // the same frontend `!== undefined` reason.
+        let json = serde_json::to_string(&dto).expect("serialization should succeed");
+        assert!(json.contains("\"companion\""), "companion must be on the wire: {json}");
+        assert!(json.contains("\"ownerClassLabel\":\"Druid\""), "camelCase on the wire: {json}");
+        assert!(json.contains("\"advancementNote\""), "camelCase on the wire: {json}");
+    }
+
+    #[test]
+    fn snapshot_dto_omits_the_companion_key_entirely_for_a_companionless_class() {
+        let result = codex::rules_core::character_input::load_character_input_fixture(
+            HUMAN_FIGHTER_LEVEL_1_FIXTURE,
+        );
+        let input = result.character_input.expect("valid fixture");
+        let (snapshot, _corpus_receipt) =
+            resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle())
+                .expect("a Human Fighter level 1 resolves a snapshot");
+
+        let json = serde_json::to_string(&map_snapshot_dto(&snapshot))
+            .expect("serialization should succeed");
+
+        assert!(
+            !json.contains("companion"),
+            "a Fighter has no companion -- the key must be absent, not a literal null the \
+             frontend's `!== undefined` checks would wave through into an empty stat block: \
+             {json}"
+        );
+    }
+
+    const HUMAN_FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// Mirrors the engine's own Druid-with-companion test input: the
+    /// deterministic Human fighter fixture with its class levels replaced
+    /// by Druid 1, plus the animal-companion nature bond.
+    fn human_druid_with_animal_companion() -> codex::rules_core::character_input::CharacterInput {
+        use codex::rules_core::character_input::{CharacterClassLevel, SelectedChoice};
+
+        let result = codex::rules_core::character_input::load_character_input_fixture(
+            HUMAN_FIGHTER_LEVEL_1_FIXTURE,
+        );
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel {
+            class_id: "class:druid".to_owned(),
+            level: 1,
+        }];
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:druid_nature_bond".to_owned(),
+            selection_id: "bond:animal_companion".to_owned(),
+        });
+        input
+    }
+
+    // ----- Receipt-to-Sheet slice 1: the explanation channel, the weapon
+    // line, and the engine-backed level-up preview -----
+
+    /// Saves `input` under a fresh temp root and returns that root, so the
+    /// `*_at_root` load/preview seams can be exercised without an
+    /// `AppHandle`.
+    fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
+        let root = tempdir(label).join("char-receipt-to-sheet");
+        let envelope = SavedCharacterEnvelope {
+            character_id: "char-receipt-to-sheet".to_owned(),
+            revision_id: "char-receipt-to-sheet.rev.1".to_owned(),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: LEVEL_UP_TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: "char-receipt-to-sheet.rev.1".to_owned(),
+            display_label: "Receipt To Sheet".to_owned(),
+            character_input: input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("envelope should save");
+        root
+    }
+
+    /// The scoping doc's headline acceptance case: a level-11 Rogue's
+    /// sneak-attack die count is computed, corpus-cited — and, before this
+    /// slice, dropped at the IPC boundary because
+    /// `LoadSavedCharacterResponse` had no field for it.
+    #[test]
+    fn load_saved_character_carries_a_level_11_rogues_sneak_attack_explanation_across_the_boundary()
+    {
+        let input = compose_character_input(&request_for_class("race:human", "class:rogue", 11));
+        let root = saved_root_for("rogue-11-sneak-attack", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved rogue should load");
+
+        let sneak_attack = response
+            .explanations
+            .iter()
+            .find(|explanation| explanation.id == "class_chassis.rogue.sneak_attack")
+            .expect("a level-11 Rogue must carry a sneak-attack explanation record");
+
+        assert_eq!(
+            sneak_attack.value, 6,
+            "PF1 Rogue sneak attack at level 11 is (11 + 1) / 2 = 6d6"
+        );
+        assert!(
+            sneak_attack.detail.contains("6d6"),
+            "the engine's own detail text must cross verbatim: {}",
+            sneak_attack.detail
+        );
+    }
+
+    /// `detail` must arrive byte-identical to what the engine produced —
+    /// the frontend renders it as rules prose, so any rewriting on the way
+    /// across would create a second, unverified source of it.
+    #[test]
+    fn load_saved_character_carries_every_explanation_detail_verbatim() {
+        let input = compose_character_input(&request_for_class("race:human", "class:rogue", 11));
+        let root = saved_root_for("verbatim-details", input.clone());
+
+        let response = load_saved_character_at_root(&root).expect("saved rogue should load");
+        let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+
+        assert_eq!(
+            response.explanations.len(),
+            engine.base.explanations.len(),
+            "no explanation record may be dropped at the boundary"
+        );
+        for (wire, engine_record) in response.explanations.iter().zip(&engine.base.explanations) {
+            assert_eq!(wire.id, engine_record.id);
+            assert_eq!(wire.value, engine_record.value);
+            assert_eq!(
+                wire.detail, engine_record.detail,
+                "detail for {} must cross verbatim",
+                engine_record.id
+            );
+        }
+    }
+
+    /// Class-feature records specifically — the set the sheet's Class
+    /// Features section renders — must be non-empty for a grounded build.
+    #[test]
+    fn load_saved_character_carries_class_feature_records_for_a_fighter() {
+        let input = compose_character_input(&request_for("race:human", 5));
+        let root = saved_root_for("fighter-class-features", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        let class_records: Vec<&str> = response
+            .explanations
+            .iter()
+            .map(|explanation| explanation.id.as_str())
+            .filter(|id| id.starts_with("class_feature.") || id.starts_with("class_chassis."))
+            .collect();
+
+        assert!(
+            class_records
+                .iter()
+                .any(|id| *id == "class_feature.fighter.bravery"),
+            "a level-5 Fighter must carry its Bravery record: {class_records:?}"
+        );
+        assert!(
+            class_records
+                .iter()
+                .any(|id| *id == "class_feature.fighter.armor_training"),
+            "a level-5 Fighter must carry its Armor Training record: {class_records:?}"
+        );
+        // `class_feature.fighter.weapon_training` is deliberately NOT
+        // asserted here: it is gated on the
+        // `choice:fighter_weapon_training_group` selection, which
+        // `compose_character_input` does not seed. Its absence is honest
+        // absence, and the sheet must render the records that exist rather
+        // than inventing the ones that do not.
+    }
+
+    /// The Weapons tab's acceptance case: an equipped longsword must
+    /// produce a real, populated breakdown on the wire. Before this slice
+    /// `damage_total.rs` computed all of this and nothing carried it.
+    #[test]
+    fn load_saved_character_carries_the_equipped_longswords_damage_breakdown() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        assert!(
+            input
+                .chosen
+                .equipment_selections
+                .iter()
+                .any(|selection| selection.item_id == "item:longsword"),
+            "the deterministic loadout is expected to equip a longsword"
+        );
+        let root = saved_root_for("longsword-breakdown", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        let longsword = response
+            .weapon_damage
+            .iter()
+            .find(|weapon| weapon.weapon_item_id == "item:longsword")
+            .expect("an equipped longsword must produce a weapon-damage row");
+
+        let base_dice = longsword.base_dice.expect("longsword carries a DAMAGE: token");
+        assert_eq!((base_dice.count, base_dice.die_size), (1, 8), "1d8");
+        assert_eq!(
+            longsword.critical_threat_range,
+            Some([19, 20]),
+            "CRITRANGE:2 means a threat on a natural 19-20"
+        );
+        assert_eq!(longsword.critical_multiplier, Some(2), "CRITMULT:x2");
+        assert_eq!(longsword.wield_category.as_deref(), Some("OneHanded"));
+        assert_eq!(
+            longsword.str_damage_modifier,
+            Some(4),
+            "STR 16 + the PF1 Standard Human +2 racial = 18 -> +4, applied in \
+             full for a one-handed weapon"
+        );
+        assert_eq!(
+            longsword.weapon_record_key.as_deref(),
+            Some("Longsword (Base)")
+        );
+    }
+
+    /// Honest absence, not a fabricated default: the Chain Shirt is
+    /// equipped too, and it is not a weapon — it must simply be absent
+    /// from `weapon_damage`, never present with zeroed facets.
+    #[test]
+    fn load_saved_character_omits_non_weapon_equipped_items_from_weapon_damage() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("non-weapon-omitted", input);
+
+        let response = load_saved_character_at_root(&root).expect("saved fighter should load");
+
+        assert!(
+            !response
+                .weapon_damage
+                .iter()
+                .any(|weapon| weapon.weapon_item_id == "item:chain_shirt"),
+            "armor must not appear as a weapon row: {:?}",
+            response
+                .weapon_damage
+                .iter()
+                .map(|weapon| &weapon.weapon_item_id)
+                .collect::<Vec<_>>()
+        );
+    }
+
+    /// The engine-backed replacement for the deleted frontend
+    /// `CLASS_FEATURES` table. The hand-authored table said Fighter level 2
+    /// grants `['Bravery +1', 'Bonus combat feat']` — two bare labels, no
+    /// magnitude, no citation. The engine's real answer for the same
+    /// transition is Bravery plus the base-attack-bonus and Fortitude-save
+    /// steps, each carrying its own value and table provenance.
+    ///
+    /// **The bonus combat feat is genuinely not in that answer**, and this
+    /// test pins that rather than papering over it:
+    /// `level_up/fighter.rs`'s own module doc records that
+    /// `pick_from_lists` stays empty for Fighter's ten Bonus Feat slots
+    /// (composing a real candidate list needs PF1 Combat-Feat eligibility
+    /// filtering plus per-candidate prerequisite evaluation — a documented,
+    /// bounded scope note left as that cycle's `next_required_uplift`), and
+    /// `class_feature.fighter.level_2_bonus_feat` only fires once
+    /// `choice:fighter_bonus_feat_2` has actually been selected, which is
+    /// after the level-up, not before it. Re-adding a hand-authored
+    /// `'Bonus combat feat'` string to cover the gap would be exactly the
+    /// uncited-rules-data debt this slice exists to remove.
+    #[test]
+    fn preview_level_up_reports_fighters_real_level_2_grants() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("preview-fighter-2", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        assert_eq!(preview.from_level, 1);
+        assert_eq!(preview.to_level, 2);
+        assert_eq!(preview.character_level, 2);
+
+        let names: Vec<&str> = preview
+            .automatic_features
+            .iter()
+            .map(|grant| grant.name.as_str())
+            .collect();
+        assert!(
+            names.iter().any(|name| name.contains("bravery")),
+            "Fighter's level-2 Bravery must be a reported grant: {names:?}"
+        );
+        assert!(
+            names
+                .iter()
+                .any(|name| name.contains("base_attack_bonus")),
+            "the level-2 base-attack-bonus step must be reported: {names:?}"
+        );
+        assert!(
+            preview.automatic_features.iter().all(|grant| !grant
+                .effects
+                .iter()
+                .any(|effect| effect.description.is_empty())),
+            "every reported grant effect must carry the engine's own description"
+        );
+    }
+
+    /// A class the character does not hold yet previews as a level-1 dip,
+    /// not as a level-up of something they have.
+    #[test]
+    fn preview_level_up_treats_an_unheld_class_as_a_fresh_level_1_dip() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-wizard-dip", input);
+
+        let preview =
+            preview_level_up_at_root(&root, "class:wizard").expect("preview should compute");
+
+        assert_eq!(preview.from_level, 0);
+        assert_eq!(preview.to_level, 1);
+        assert_eq!(preview.character_level, 4);
     }
 }

@@ -64,6 +64,15 @@ function honestGenericOnlySentence(context: CreateCharacterOutcomeContext): stri
   if (context.supportLevel === 'partial-human-only' && context.raceId !== 'race:human') {
     return `${context.classLabel} support today only covers Human. Pick Human to see what's computed, or choose a different class.`;
   }
+  // `human-diagnostics-only` classes never reach a savable build for any
+  // race, including Human — Human only swaps in named diagnostics instead
+  // of these 4 generic ones (see `verifiesBlockedOutcomeGroupsNamedDiagnostics`
+  // in the test file, which exercises that named-diagnostics path directly).
+  // This branch only fires for a non-Human pick, where even that detail is
+  // unavailable — the message must not imply switching to Human would help.
+  if (context.supportLevel === 'human-diagnostics-only') {
+    return `${context.classLabel} isn't computed by the engine for any race yet — not even Human. Human only surfaces more specific diagnostics about what's missing; it won't produce a savable build either. Choose a different class for a build that saves today.`;
+  }
   if (context.supportLevel === 'none') {
     return `${context.classLabel} isn't computed by the engine yet — no class-specific mechanics are implemented for it today.`;
   }

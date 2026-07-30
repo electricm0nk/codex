@@ -21,9 +21,10 @@
 //! probing for one specific known-missing prefix, this file enumerates
 //! EVERY real (non-diagnostic) explanation id
 //! `pilot_compute::explain_monk_level1_chassis` ever emits across Monk's
-//! full grounded level range (1..=12, `MAX_SUPPORTED_MONK_LEVEL`) directly
+//! full grounded level range (1..=20, `MAX_SUPPORTED_MONK_LEVEL` -- widened
+//! from 12 to 20 by task #49, 2026-07-28) directly
 //! from the public `compute_pilot_base_chassis` seam, then drives every
-//! adjacent level transition (1->2, 2->3, ..., 11->12) through the public
+//! adjacent level transition (1->2, 2->3, ..., 19->20) through the public
 //! `compute_monk_level_up_grants` entry point and asserts every one of
 //! those real ids surfaces SOMEWHERE in the resulting `LevelUpPlan`
 //! (either as an `automatic_features` grant's source id, or — for the ki
@@ -107,8 +108,13 @@ use codex::rules_core::level_up::monk::compute_monk_level_up_grants;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 
 /// Monk's own grounded ceiling (`MAX_SUPPORTED_MONK_LEVEL` in
-/// `pilot_compute.rs`; also cited by `monk.rs`'s own doc comment).
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 12;
+/// `pilot_compute.rs`; also cited by `monk.rs`'s own doc comment). Widened
+/// from 12 to 20 by task #49 (2026-07-28, the full PF1 Core Rulebook
+/// capstone range) -- re-run against the widened range rather than assumed
+/// still-clean, since a class module's explanation-id filter is exactly
+/// what SD-24 Epic 4 found silently dropping a later-landing grounding for
+/// Wizard.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 20;
 
 /// The filter-INCLUDED but structurally-never-diffing recognition id (see
 /// this file's own header comment's exclusion #1): passes
@@ -164,6 +170,7 @@ fn human_monk_input(level: u8) -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

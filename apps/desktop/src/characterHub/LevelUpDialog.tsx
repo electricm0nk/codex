@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CLASS_OPTIONS, describeClassSupportLevel } from './characterHubModel';
+import { CLASS_OPTIONS, canTakeAnotherLevelIn, describeClassSupportLevel } from './characterHubModel';
 import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterProgression';
+import {
+  previewLevelUp as previewLevelUpGrants,
+  type PreviewLevelUpResponse,
+} from '../boundary/previewLevelUp';
 
 /**
  * "Level up" popup: pick a class to take the next character level in and see
@@ -9,26 +13,64 @@ import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterPro
  * before committing. Patterned after ThemeBrowserModal's portal-based overlay
  * shell so it matches the rest of the app's modal conventions.
  *
- * Accepting calls `onAccept(classId)` and closes; the caller (see
- * `CharacterSheet`) is responsible for persisting the level-up via the
- * `level_up_character` Tauri command and refreshing the sheet on success.
+ * The class-feature half of that preview comes from the real engine
+ * (`preview_level_up` -> `level_up::compute_level_up_grants_for_class`),
+ * not from a hand-authored table. Every grant shown carries the engine's
+ * own name and its own effect descriptions, verbatim.
+ *
+ * Accepting calls `onAccept(classId)` and closes; the caller
+ * (`CharacterSheet`'s `handleLevelUpAccept`) persists the level-up via the
+ * real `level_up_character` Tauri command — including a recorded hit-die
+ * choice — and refreshes the sheet on success, or surfaces the engine's
+ * real diagnostics if the resulting build doesn't reach `Computed`.
  */
 
 export function LevelUpDialog(props: {
   open: boolean;
   onClose: () => void;
+  /** Needed to ask the engine what the next level actually grants. */
+  characterId: string;
   heldClasses: HeldClass[];
   intelligenceModifier: number;
   isHuman: boolean;
   onAccept: (classId: string) => void;
 }) {
   const [classId, setClassId] = useState<string>('');
+  /**
+   * The engine's grants for the currently selected class. `null` while the
+   * request is in flight or after it failed — rendered as an explicit
+   * "not available" line rather than as "this level grants nothing", which
+   * would be a different and false claim.
+   */
+  const [enginePlan, setEnginePlan] = useState<PreviewLevelUpResponse | null>(null);
+  const [enginePlanFailed, setEnginePlanFailed] = useState(false);
+
+  /**
+   * Only the classes whose *next* level this app actually claims to build.
+   * `levelOptions` (via `canTakeAnotherLevelIn`) is the same engine-dump-
+   * derived claim the creation picker makes, and leveling up is the other way
+   * into a level — so a class the dump reports `Blocked` past level 1 must not
+   * be reachable here either, and nothing may pass PF1's level-20 ceiling.
+   * Filtering rather than disabling: an option that can never be chosen is
+   * noise, and the character's current level is already shown in the sheet.
+   */
+  const levelableOptions = CLASS_OPTIONS.filter((option) =>
+    canTakeAnotherLevelIn(option.id, props.heldClasses.find((held) => held.classId === option.id)?.level ?? 0)
+  );
 
   useEffect(() => {
     if (!props.open) {
       return;
     }
-    setClassId((current) => current || props.heldClasses[0]?.classId || CLASS_OPTIONS[0].id);
+    setClassId((current) => {
+      if (current && levelableOptions.some((option) => option.id === current)) {
+        return current;
+      }
+      const firstHeldAndLevelable = props.heldClasses.find((held) =>
+        levelableOptions.some((option) => option.id === held.classId)
+      );
+      return firstHeldAndLevelable?.classId ?? levelableOptions[0]?.id ?? '';
+    });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         props.onClose();
@@ -38,6 +80,31 @@ export function LevelUpDialog(props: {
     return () => window.removeEventListener('keydown', onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.open]);
+
+  useEffect(() => {
+    if (!props.open || !classId) {
+      setEnginePlan(null);
+      setEnginePlanFailed(false);
+      return;
+    }
+    let cancelled = false;
+    setEnginePlan(null);
+    setEnginePlanFailed(false);
+    previewLevelUpGrants({ characterId: props.characterId, classId })
+      .then((plan) => {
+        if (!cancelled) {
+          setEnginePlan(plan);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setEnginePlanFailed(true);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.open, props.characterId, classId]);
 
   if (!props.open) {
     return null;
@@ -115,7 +182,7 @@ export function LevelUpDialog(props: {
               width: '100%',
             }}
           >
-            {CLASS_OPTIONS.map((option) => {
+            {levelableOptions.map((option) => {
               const held = props.heldClasses.find((entry) => entry.classId === option.id);
               return (
                 <option key={option.id} value={option.id}>
@@ -154,7 +221,59 @@ export function LevelUpDialog(props: {
                     {feature}
                   </li>
                 ))}
+                {/*
+                  The engine's real grants for this exact transition. Each
+                  carries the engine's own name and effect descriptions,
+                  verbatim — never a hand-authored label.
+                */}
+                {enginePlan?.automaticFeatures.map((grant) => (
+                  <li key={grant.name} style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>
+                    {grant.name}
+                    {grant.effects.map((effect) => (
+                      <span key={effect.description} style={{ color: 'var(--color-text-faint)', display: 'block', fontSize: '0.72rem' }}>
+                        {effect.description}
+                      </span>
+                    ))}
+                  </li>
+                ))}
+                {enginePlan?.pickFromLists.map((list) => (
+                  <li key={`${list.category}-${list.count}`} style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>
+                    Pick {list.count} {list.category}
+                    {list.filter ? ` — ${list.filter}` : ''}
+                  </li>
+                ))}
+                {enginePlan?.resourcePoolChanges.map((pool) => (
+                  <li key={pool.poolId} style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>
+                    {pool.poolId}: {pool.fromValue} &rarr; {pool.toValue}
+                  </li>
+                ))}
+                {enginePlan?.capstoneThreshold ? (
+                  <li style={{ color: 'var(--color-accent)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>
+                    Capstone level
+                  </li>
+                ) : null}
               </ul>
+              {/*
+                Three genuinely different states, kept apart. "Not yet
+                loaded" and "could not be read" are not the same as "the
+                engine grounds no class features for this transition", and
+                only the last of the three is a statement about the rules.
+              */}
+              {enginePlanFailed ? (
+                <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>
+                  Class features for this level could not be read from the rules engine.
+                </p>
+              ) : enginePlan === null ? (
+                <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>
+                  Reading class features from the rules engine&hellip;
+                </p>
+              ) : enginePlan.automaticFeatures.length === 0 &&
+                enginePlan.pickFromLists.length === 0 &&
+                enginePlan.resourcePoolChanges.length === 0 ? (
+                <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>
+                  The rules engine grounds no class features for this class at this level.
+                </p>
+              ) : null}
             </div>
           ) : null}
         </div>

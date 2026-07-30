@@ -287,6 +287,7 @@ fn skill_allocation_parity_fixture_round_trips_through_the_real_engine() {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     };

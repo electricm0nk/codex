@@ -242,15 +242,25 @@ fn bard_level13_still_claim_blocks_the_performance_execution_burden() {
     let input = load(BARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_feature.bard.bardic_performance_execution.unsupported"
-                && d.claim_blocking),
-        "level-13 Bard must still claim-block on the bardic performance-execution burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.bard.bardic_performance_execution.rounds_exceeded")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let not_performing = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.bard.bardic_performance_execution.not_performing");
+            assert!(
+                not_performing.is_some(),
+                "level-13 Bard must ground an honest not-performing record when no \
+                 bardic-performance posture violation exists: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: the level-12 fixture is unaffected by this widening -----
@@ -291,9 +301,15 @@ fn bard_level_21_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
+            .any(|e| (e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"),
+                || e.id == "class_chassis.spell_baseline.bard")
+                // (v0.6 alpha swarm, risks item 8) bardic-performance-
+                // execution's not-performing explanation is checked
+                // unconditionally, regardless of level bound or
+                // single-class status (mirrors the spell-posture
+                // classes' and Barbarian's gate-ordering fix)
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
         "level-21 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
@@ -330,8 +346,14 @@ fn multiclass_bard_level13_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id.starts_with("class_feature.bard.")),
+            .any(|e| (e.id.starts_with("class_chassis.bard.")
+                || e.id.starts_with("class_feature.bard."))
+                // (v0.6 alpha swarm, risks item 8) bardic-performance-
+                // execution's not-performing explanation is checked
+                // unconditionally, regardless of level bound or
+                // single-class status (mirrors the spell-posture
+                // classes' and Barbarian's gate-ordering fix)
+                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"),
         "multiclass Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );

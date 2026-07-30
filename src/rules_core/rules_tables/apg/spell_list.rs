@@ -179,9 +179,28 @@ impl Pf1SchoolId {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SpellListEntry {
-    /// The spell's `name` is its identity in `apg_spells.lst` (no `KEY:`
-    /// token on spell rows), or — for a `.COPY=` variant record — the
-    /// variant's own display name (see this module's doc comment).
+    /// The record's identity in `apg_spells.lst`: its `KEY:` token when
+    /// the row carries one, else its display name (most rows carry no
+    /// `KEY:`), or — for a `.COPY=` variant record — the variant's own
+    /// display name (see this module's doc comment).
+    ///
+    /// Exactly 9 rows in this file carry a `KEY:` token, all of them the
+    /// Summoner-archetype summon spells (`apg_spells.lst:649`+), whose
+    /// KEY is archetype-qualified — `KEY:Summoner Summon Monster I` for
+    /// the row displayed as `Summon Monster I`. Those are genuinely
+    /// different records from CRB's own `Summon Monster I` (they carry
+    /// their own `DURATION:` formula keyed to
+    /// `ConjurationSummonersCharmBonus`), so storing the display name
+    /// here — as this table originally did — collided all 9 with the CRB
+    /// record and made a selection carrying that name unresolvable
+    /// between the two. The `KEY:` token is stored instead; see
+    /// `tests/spell_cross_book_identity.rs`.
+    ///
+    /// This field is the record's *identity*, not its lookup surface:
+    /// those 9 rows are still reachable by their display name through
+    /// [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`].
+    /// Do not read a qualified `key` as "this record can only be found
+    /// under its archetype name".
     pub key: &'static str,
     /// `None` when the corpus record has no `SCHOOL:` token (a real,
     /// documented gap — see this module's doc comment).
@@ -2127,63 +2146,63 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         // `.COPY=` variants (Reptiles Only / Summons 1d3 Shadows), which
         // inherit this now-corrected `full_text: true` via the base's
         // fields per this module's own `.COPY=` fallback rule.
-        key: "Summon Monster I",
+        key: "Summoner Summon Monster I",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell summons an extraplanar creature [typically an outsider, elemental, or magical beast native to another plane]. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. The spell conjures one of the creatures from the 1st Level list on Table 10-5. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned monster cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities. Creatures cannot be summoned into an environment that cannot support them. Creatures summoned using this spell cannot use spells or spell-like abilities that duplicate spells with expensive material components [such as wish]. When you use a summoning spell to summon a creature with an alignment or elemental subtype, it is a spell of that type. Creatures on Table 10-5 marked with an \"*\" are summoned with the celestial template, if you are good, and the fiendish template, if you are evil. If you are neutral, you may choose which template to apply to the creature. Creatures marked with an \"*\" always have an alignment that matches yours, regardless of their usual alignment. Summoning these creatures makes the summoning spell's type match your alignment. [Table Not Included]"),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster II",
+        key: "Summoner Summon Monster II",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster III",
+        key: "Summoner Summon Monster III",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster IV",
+        key: "Summoner Summon Monster IV",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster V",
+        key: "Summoner Summon Monster V",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster VI",
+        key: "Summoner Summon Monster VI",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster VII",
+        key: "Summoner Summon Monster VII",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster VIII",
+        key: "Summoner Summon Monster VIII",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
-        key: "Summon Monster IX",
+        key: "Summoner Summon Monster IX",
         school: Some(Pf1SchoolId::Conjuration),
         level: None,
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
@@ -2405,13 +2424,56 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
     }
 }
 
-/// Resolves an APG spell by name, scoped to `RuleSetId::Apg`. Returns
-/// `None` for any other rule set (cross-book invariant, mirrors
-/// `apg::class_chassis_resolve`), and `None` when the key isn't in
-/// `SPELL_LIST`.
-pub fn spell_resolve(key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
+/// The `(KEY:` token, display name`)` pair for each of the 9
+/// `apg_spells.lst` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`apg_spells.lst:649`-`657`), e.g. `:651` is
+/// `Summon Monster III<TAB>KEY:Summoner Summon Monster III`. Every other
+/// ingested APG row carries no `KEY:` token at all, so its display name
+/// *is* its key and it needs no entry here.
+///
+/// Sibling of `acg::spell_list::ARCHETYPE_QUALIFIED_KEYS`; see that
+/// constant's doc comment for why both name columns are real. Note that
+/// the bare `Summon Monster <roman>` display name is unambiguous within
+/// APG: the book's other ingested `Summon Monster` records are the
+/// `.COPY=`-derived variants, which all carry a distinguishing
+/// parenthetical (`Summon Monster V (Summons 1d3 Shadows)`,
+/// `Summon Monster III (Reptiles Only)`, `Summon Monster VII (Reptiles
+/// Only)`), and the many bare `Summon Monster <roman>.MOD` rows are
+/// modifiers, not ingested records.
+pub const ARCHETYPE_QUALIFIED_KEYS: &[(&str, &str)] = &[
+    ("Summoner Summon Monster I", "Summon Monster I"),
+    ("Summoner Summon Monster II", "Summon Monster II"),
+    ("Summoner Summon Monster III", "Summon Monster III"),
+    ("Summoner Summon Monster IV", "Summon Monster IV"),
+    ("Summoner Summon Monster V", "Summon Monster V"),
+    ("Summoner Summon Monster VI", "Summon Monster VI"),
+    ("Summoner Summon Monster VII", "Summon Monster VII"),
+    ("Summoner Summon Monster VIII", "Summon Monster VIII"),
+    ("Summoner Summon Monster IX", "Summon Monster IX"),
+];
+
+/// Resolves an APG spell by either of its two corpus name columns, scoped
+/// to `RuleSetId::Apg`. Returns `None` for any other rule set (cross-book
+/// invariant, mirrors `apg::class_chassis_resolve`), and `None` when
+/// `name_or_key` names no APG record.
+///
+/// A record's `KEY:` token always resolves. So does its display name,
+/// when the two differ — the 9 rows in [`ARCHETYPE_QUALIFIED_KEYS`] —
+/// because a caller may hold only the name a selection carries, with no
+/// archetype context. The KEY is tried first, so an exact record key can
+/// never be shadowed by another record's display name; within APG the
+/// question is moot, since no display name in that table is also a record
+/// key (asserted by `tests/spell_cross_book_identity.rs`).
+pub fn spell_resolve(name_or_key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
     if rule_set != RuleSetId::Apg {
         return None;
     }
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == name_or_key) {
+        return Some(entry);
+    }
+    let key = ARCHETYPE_QUALIFIED_KEYS
+        .iter()
+        .find(|(_, display)| *display == name_or_key)
+        .map(|(key, _)| *key)?;
     SPELL_LIST.iter().find(|entry| entry.key == key)
 }

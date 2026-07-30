@@ -148,11 +148,23 @@ export function ItemPickerModal(props: {
           {entries && filtered.length === 0 ? (
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.85rem', padding: '1rem', textAlign: 'center' }}>No matches.</p>
           ) : null}
-          {filtered.map((entry) => {
+          {filtered.map((entry, index) => {
             const active = selectedKey === entry.key;
             return (
               <button
-                key={entry.key}
+                // A compound key, not just `entry.key` — the real feat
+                // corpus has at least one genuine duplicate key (two
+                // separate "Combat Expertise" records with differing
+                // effect formulas but the same `key`/name; see
+                // src/rules_core/rules_tables/crb/feat_data/combat.rs).
+                // Two list items sharing a bare key confuses React's
+                // reconciler across re-filters — reproduced live as stale,
+                // extra rows persisting after narrowing the search (a "1 of
+                // 185" count with 2-3 rows actually rendered). `index` is
+                // always unique within one `.map()` call regardless of
+                // upstream data duplication, so this can't recur even if
+                // another catalog entry collides the same way.
+                key={`${entry.key}::${index}`}
                 type="button"
                 onClick={() => setSelectedKey(entry.key)}
                 onDoubleClick={() => {

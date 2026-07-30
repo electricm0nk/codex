@@ -40,8 +40,9 @@ jobs:
 
       # SD16: derive a monotonically increasing build version so every
       # release is distinguishable by version, not only by its SHA suffix.
-      # The repo keeps "0.0.0" as the committed placeholder; the publish
-      # lane owns the real version. GITHUB_RUN_NUMBER increments on every
+      # The repo keeps "0.<tranche>.0" as the committed placeholder (see the
+      # tranche note below); the publish lane owns the build position of the
+      # real version. GITHUB_RUN_NUMBER increments on every
       # run of this workflow, so versions are strictly increasing per
       # channel lane. The stamp happens BEFORE `tauri build` so the built
       # app self-reports the same version the release tag and the update
@@ -56,19 +57,31 @@ jobs:
       # update-manifest `version` field all consistent across platforms.
       #
       # SD22-E9: tranche-base position bumped 0.4 -> 0.5 (self-healed by the
-      # Epic 9 closure-readiness eval). tranche/5 (SD-22) is the current
-      # active tranche lane's repo version files (0.5.<build>); this stamp
-      # had drifted one tranche behind since SD-21's tranche/4-1 lane. Bump
-      # the leading digit alongside the next tranche promotion (i.e. when a
-      # new tranche/N branch is cut for the next bundle — not automatically
-      # at a bundle's own closure while still on the same tranche branch; an
-      # Epic 7 cycle briefly bumped this to 0.6 in error and it was reverted).
+      # Epic 9 closure-readiness eval). This stamp had drifted one tranche
+      # behind since SD-21's tranche/4-1 lane. Bump the leading digit
+      # alongside the next tranche promotion (i.e. when a new tranche/N
+      # branch is cut for the next bundle — not automatically at a bundle's
+      # own closure while still on the same tranche branch; an SD-22 Epic 7
+      # cycle briefly bumped this to 0.6 in error and it was reverted).
+      #
+      # tranche/6: bumped 0.5 -> 0.6 for the v0.6 alpha cut. Unlike the
+      # reverted Epic 7 bump, this one IS a real tranche promotion —
+      # tranche/6 was cut fresh from develop and is the live branch, and the
+      # repo version files moved to 0.6.0 with it. The stamp's tranche digit
+      # must always equal the repo version files' tranche digit; the two are
+      # kept in lockstep by src/sd21/buildVersionTriple.test.ts, which parses
+      # this line and compares the relationship rather than two independent
+      # literals (the previous form asserted each side's prefix separately
+      # and so blessed the 0.6.0-repo / 0.5.<build>-stamp mismatch).
+      #
+      # Only the tranche prefix is written here. The build number is always
+      # ${GITHUB_RUN_NUMBER} — never hardcode one.
       - name: Stamp build version
         id: stamp_version
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.5.${GITHUB_RUN_NUMBER}"
+          VERSION="0.6.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
@@ -177,7 +190,7 @@ jobs:
       # SD16-F-WINDOWS: pull the stamped-sources artifact produced by
       # the top-level `stamp` job so this job (and the new windows job)
       # see the same `version` in package.json + tauri.conf.json. The
-      # stamp job holds the authoritative 0.0.${GITHUB_RUN_NUMBER} value;
+      # stamp job holds the authoritative 0.<tranche>.${GITHUB_RUN_NUMBER} value;
       # both publish jobs consume ${{ needs.stamp.outputs.version }}.
       - name: Download stamped sources
         uses: actions/download-artifact@v8

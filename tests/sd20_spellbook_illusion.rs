@@ -87,6 +87,7 @@ fn wizard_input_with_color_spray_prepared(intelligence: i16) -> CharacterInput {
                 source_class_id: "class:wizard".to_string(),
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

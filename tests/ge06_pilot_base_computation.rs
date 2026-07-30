@@ -131,18 +131,29 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
     // narrow class chassis must refuse to fabricate Fighter values and must emit
     // a claim-blocking diagnostic instead.
     //
-    // The negative-control class is `class:rogue:1`. As of the SD13-E3 Rogue
-    // chassis-recognition slice, every core-roster class now emits its own
-    // bounded, non-fabricating `class_chassis.*` recognition record (mirroring
-    // the earlier Wizard-vs-Rogue collision this comment used to document), so
-    // this test no longer asserts the absence of every `class_chassis.*`
-    // explanation. It asserts the narrower, still-true claim: no FIGHTER-shaped
-    // chassis value is fabricated for a non-Fighter input.
+    // The negative-control class is a SYNTHETIC id, not a real class.
+    //
+    // It has been substituted three times as the roster widened underneath
+    // it -- `class:cleric:1`, then `class:barbarian:1`, then
+    // `class:monk:1`, each losing negative-control status the moment
+    // `table_class_id` learned it. Monk was the LAST real class missing
+    // from that mapping (v0.6 alpha swarm, Monk/Summoner chassis
+    // recognition closure, 2026-07-29), so all 27 base classes are now
+    // recognized and NO real class can serve here again. A synthetic id
+    // exercises the same unsupported-chassis branch permanently instead of
+    // queueing up a fourth silent promotion. As of the
+    // SD13-E3 Rogue chassis-recognition slice, every core-roster class now
+    // emits its own bounded, non-fabricating `class_chassis.*` recognition
+    // record (mirroring the earlier Wizard-vs-Rogue collision this comment
+    // used to document), so this test no longer asserts the absence of every
+    // `class_chassis.*` explanation. It asserts the narrower, still-true
+    // claim: no FIGHTER-shaped chassis value is fabricated for a
+    // non-Fighter input.
     let result = load_character_input_fixture(
         "case_id=non-fighter\n\
          source_package_id=pf1.core_rulebook\n\
          race_id=race:human\n\
-         class_level=class:rogue:1\n\
+         class_level=class:not_a_real_pf1_class:1\n\
          ability=strength:16\n\
          ability=dexterity:14\n\
          ability=constitution:14\n\

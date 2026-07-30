@@ -177,13 +177,14 @@ fn computed_receipt_exposes_explicit_human_race_seam() {
 #[test]
 fn broken_prerequisite_yields_blocked_receipt() {
     // Mutate one supported prerequisite in memory: replace the Fighter level-1
-    // chassis with a Rogue level-1 chassis. The integrated receipt must report a
+    // chassis with a Cleric level-1 chassis. The integrated receipt must report a
     // blocked posture with claim-blocking diagnostics rather than a counterfeit
-    // success state.
+    // success state. (Was Rogue level-1 -- see ge06_failure_classifier.rs for why
+    // that stopped being an unsupported negative control.)
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:cleric:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

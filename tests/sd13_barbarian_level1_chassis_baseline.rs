@@ -35,7 +35,9 @@
 //! control, the Paladin/Ranger blocked hybrid negative controls, and the
 //! Human race/interaction truth.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    ActiveState, CharacterInput, ClassAbilityActivation, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -123,14 +125,18 @@ fn barbarian_level1_leaves_direct_chassis_recognition_evidence() {
         "barbarian chassis recognition must name the class:barbarian:1 identity: {}",
         chassis.detail
     );
-    // It is recognition only; it must not fabricate a Fighter-style computed chassis.
+    // (v0.6 alpha swarm, risks item 8) Barbarian is now recognized by
+    // table_class_id (full BAB), so the integrated base_attack_bonus field
+    // and the generic class-chassis explanation ARE real: 1 * 1 = 1 at
+    // level 1. This is no longer a "recognition only, no fabrication" case
+    // for the integrated field -- it's genuinely computed.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "barbarian baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "barbarian is now recognized by table_class_id; level 1 full BAB is +1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "barbarian baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "barbarian is now recognized by table_class_id and must surface its base-attack chassis explanation"
     );
 
     // Ability modifiers remain class-independent and still compute (STR 16 -> +3).
@@ -187,12 +193,15 @@ fn barbarian_level1_grounds_base_attack_base_save_and_fast_movement() {
         computation.diagnostics
     );
 
-    // The grounded records are standalone: they must not leak into the integrated
-    // base-attack-bonus/base-saves fields, which stay owned by the (unsupported for
-    // Barbarian) Fighter-shaped chassis compute path.
+    // (v0.6 alpha swarm, risks item 8) The standalone barbarian-namespaced
+    // record above and the integrated base_attack_bonus field are two
+    // separate computations that now happen to agree (both real full-BAB
+    // formulas): the integrated field is no longer "unsupported for
+    // Barbarian" -- table_class_id recognizes Barbarian too.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "the standalone barbarian base-attack explanation must not be wired into the integrated base_attack_bonus field"
+        computation.base_attack_bonus, 1,
+        "barbarian is now recognized by table_class_id; the integrated base_attack_bonus field \
+         is genuinely computed (full BAB), independent of the standalone record above"
     );
 }
 
@@ -279,8 +288,8 @@ fn barbarian_level1_claim_blocks_rage_rounds_per_day_at_low_constitution() {
         blocked.message
     );
 
-    // The flat rage constants and the rage-execution blocker are unaffected by
-    // Constitution: they still ground / claim-block exactly as on the Con 16 fixture.
+    // The flat rage constants are unaffected by Constitution: they still ground
+    // exactly as on the Con 16 fixture.
     for id in [
         "class_chassis.barbarian.rage.strength_morale_bonus",
         "class_chassis.barbarian.rage.constitution_morale_bonus",
@@ -289,9 +298,25 @@ fn barbarian_level1_claim_blocks_rage_rounds_per_day_at_low_constitution() {
     ] {
         explanation(&computation, id);
     }
-    claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
+
+    // (v0.6 alpha swarm, risks item 8) The old unconditional
+    // "rage_execution.unsupported" diagnostic is retired outright -- Rage
+    // execution is now a real, conditional engine (ground_or_block_barbarian_rage).
+    // This fixture has no class_ability_activations entry for rage, a genuinely
+    // valid "not currently raging" posture, so it grounds an honest explanation,
+    // not a claim-blocking diagnostic.
+    let not_raging = explanation(&computation, "class_feature.barbarian.rage_execution.not_raging");
+    assert_eq!(
+        not_raging.value, 0,
+        "the not-raging record carries no fabricated mechanical value"
+    );
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.starts_with("class_feature.barbarian.rage_execution")),
+        "a genuinely valid not-raging posture must not claim-block on rage execution: {:?}",
+        computation.diagnostics
     );
 }
 
@@ -323,24 +348,46 @@ fn barbarian_level1_grounds_flat_rage_constants_as_values_only() {
         computation.ability_modifiers.constitution, 3,
         "the +4 morale Constitution rage constant must not be applied to the integrated Constitution modifier"
     );
+    // (v0.6 alpha swarm, risks item 8) base_attack_bonus is genuinely 1 now
+    // (Barbarian's real full-BAB formula via table_class_id), not a rage
+    // constant leaking in -- the rage constants themselves stay unapplied
+    // to any integrated total (proven above via the ability modifiers).
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "the rage constants must not be wired into the integrated base_attack_bonus field"
+        computation.base_attack_bonus, 1,
+        "the integrated base_attack_bonus field reflects barbarian's real full-BAB formula, not \
+         a fabricated rage-constant leak"
     );
 }
 
-// ----- Still blocked: the rage-state execution engine -----
+// ----- Still blocked: a genuine rage-execution posture violation -----
 
 #[test]
-fn barbarian_level1_stays_blocked_on_rage_execution() {
-    let input = load(BARBARIAN_FIXTURE);
+fn barbarian_level1_stays_blocked_on_a_genuine_rage_execution_violation() {
+    // (v0.6 alpha swarm, risks item 8) The old unconditional
+    // "rage_execution.unsupported" diagnostic is retired outright -- Rage
+    // execution is now a real, conditional engine
+    // (ground_or_block_barbarian_rage), mirroring the spell-posture classes'
+    // shape: a bare fixture (not raging) is a genuinely valid PF1 posture
+    // and grounds no claim-blocking diagnostic at all (see
+    // `barbarian_level1_claim_blocks_rage_rounds_per_day_at_low_constitution`'s
+    // own not-raging assertion). This test's purpose -- proving Rage still
+    // claim-blocks on a genuine posture violation -- now needs a real
+    // violation injected: an active rage activation whose rounds_consumed_today
+    // exceeds the grounded rounds-per-day budget (4 + Con modifier +3 = 7 at
+    // level 1 on this fixture).
+    let mut input = load(BARBARIAN_FIXTURE);
+    input.chosen.class_ability_activations.push(ClassAbilityActivation {
+        ability_id: "rage".to_owned(),
+        active_state: ActiveState::EquippedActive,
+        rounds_consumed_today: Some(8),
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     let rage_execution = claim_blocking(
         &computation,
-        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
+        "class_feature.barbarian.rage_execution.rounds_exceeded",
     );
-    for token in ["activation", "round", "fatigue", "temporary"] {
+    for token in ["rounds consumed", "exceeding", "rounds-per-day budget"] {
         assert!(
             rage_execution.message.contains(token),
             "barbarian rage-execution blocker must name the '{token}' burden: {}",
@@ -348,9 +395,16 @@ fn barbarian_level1_stays_blocked_on_rage_execution() {
         );
     }
 
-    // The integrated posture is still blocked overall (the Fighter-shaped chassis
-    // compute path still claim-blocks Barbarian, and rage execution remains
-    // claim-blocking), never a counterfeit computed success.
+    // No rage bonus/penalty is fabricated for an over-budget activation.
+    assert!(
+        !has_explanation(&computation, "class_feature.barbarian.rage_execution.active"),
+        "an over-budget rage activation must not ground the active-rage explanation record"
+    );
+
+    // The integrated posture is still blocked overall (the generic GE-06
+    // combat-baseline gate already claim-blocks this fixture regardless, and
+    // the rage-execution violation adds a second, genuine claim-blocking
+    // reason), never a counterfeit computed success.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -527,22 +581,25 @@ fn barbarian_level_2_was_later_widened_into_the_supported_tranche() {
         "level-2 Barbarian is supported since the SD13-E5 level-2 slice: {:?}",
         computation.explanations
     );
-    // No named Barbarian pillar diagnostic remains at level 2 (only the still-named
-    // rage-execution burden, which is a diagnostic by design, not a pillar gap).
+    // (v0.6 alpha swarm, risks item 8) No named Barbarian pillar diagnostic
+    // remains at level 2 at all: rage execution is now conditional
+    // (ground_or_block_barbarian_rage), and this bare fixture's genuinely
+    // valid "not raging" posture grounds an honest explanation, not a
+    // diagnostic -- see `barbarian_level1_stays_blocked_on_a_genuine_rage_
+    // execution_violation` for the real, conditional rage-execution blocker.
     assert!(
         computation
             .diagnostics
             .iter()
-            .filter(|d| d.id.starts_with("class_feature.barbarian."))
-            .all(|d| d.id == "class_feature.barbarian.bounded_progression.rage_execution.unsupported"),
-        "level-2 Barbarian must not surface any named barbarian burden diagnostic beyond the \
-         still-unproven rage-execution engine: {:?}",
+            .all(|d| !d.id.starts_with("class_feature.barbarian.")),
+        "level-2 Barbarian must not surface any named barbarian burden diagnostic on this \
+         genuinely valid (not-raging) posture: {:?}",
         computation.diagnostics
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 Barbarian must still be claim-blocked by the generic chassis diagnostics and \
-         the rage-execution diagnostic"
+        "level-2 Barbarian must still be claim-blocked by the generic chassis diagnostics \
+         (the GE-06 combat-baseline/selected-skill gates)"
     );
 }
 

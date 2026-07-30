@@ -181,14 +181,35 @@ fn sorcerer_level10_still_claim_blocks_arcane_bond_and_spontaneous_spell_burdens
          progression burden (which also names the bloodline burdens): {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported" && d.claim_blocking),
-        "level-10 Sorcerer must still claim-block on the spontaneous spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported")
+    {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            // (v0.6 alpha swarm, risks item 8) class_spell.sorcerer.spontaneous.unsupported
+            // is no longer unconditional -- it's a real, conditional validation of
+            // AcquisitionMode::Known selections. This fixture predates spells_selected
+            // (zero known spells), so the posture is genuinely valid and the blocker
+            // correctly does not fire -- confirmed via the real known-spell count being
+            // honestly 0, not fabricated.
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.sorcerer.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the spell blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- The chassis recognition record is still present at level 9 -----

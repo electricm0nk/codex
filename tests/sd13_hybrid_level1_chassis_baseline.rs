@@ -16,7 +16,7 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
+    ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
@@ -58,26 +58,11 @@ fn explanation<'a>(
         })
 }
 
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
-}
+// (A `claim_blocking` helper used to live here. Both blanket hybrid burden
+// diagnostics this file pinned have since been retired -- the class-feature one
+// first, then the later-spell one on 2026-07-28 -- so every remaining assertion
+// in this file checks for a diagnostic's ABSENCE and the helper had no callers
+// left. See `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.)
 
 fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
     computation.explanations.iter().any(|e| e.id == id)
@@ -98,14 +83,22 @@ fn paladin_level1_leaves_direct_chassis_recognition_evidence() {
         "paladin chassis recognition must name the class:paladin:1 identity: {}",
         chassis.detail
     );
-    // It is recognition only; it must not fabricate a Fighter-style computed chassis.
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) Paladin's base
+    // attack bonus is now genuinely integrated via the table-driven
+    // `compute_generic_table_chassis` dispatch (`table_class_id` widened to
+    // recognize Paladin) -- the value 1 is Paladin's real full-BAB progression
+    // at level 1, not a fabricated absence, and the integrated explanation now
+    // legitimately exists alongside the standalone
+    // `class_chassis.hybrid_baseline.paladin` recognition record above.
+    // Mirrors the identical Ranger-widening flip just below.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "hybrid baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "paladin level 1's real full-BAB progression (classlevel) is 1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "hybrid baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "paladin base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 
     // Ability modifiers remain class-independent and still compute (CHA 14 -> +2).
@@ -123,13 +116,22 @@ fn ranger_level1_leaves_direct_chassis_recognition_evidence() {
         "ranger chassis recognition must name the class:ranger:1 identity: {}",
         chassis.detail
     );
+    // (v0.6 swarm update, risks item 8) Ranger's base attack bonus is now
+    // genuinely integrated via the table-driven `compute_generic_table_chassis`
+    // dispatch (`table_class_id` widened to recognize Ranger) -- the value 1 is
+    // Ranger's real full-BAB progression at level 1, not a fabricated absence,
+    // and the integrated explanation now legitimately exists alongside the
+    // standalone `class_chassis.hybrid_baseline.ranger` recognition record
+    // above. Mirrors the identical Rogue-widening flip in
+    // `sd13_rogue_level1_chassis_baseline.rs`.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "hybrid baseline must not fabricate a base attack bonus"
+        computation.base_attack_bonus, 1,
+        "ranger level 1's real full-BAB progression (classlevel) is 1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "hybrid baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "ranger base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 
     // Ability modifiers remain class-independent and still compute (STR 16 -> +3).
@@ -143,26 +145,44 @@ fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The non-spell class-feature burden must be named explicitly, not hidden behind a
-    // generic "unsupported hybrid" label.
-    let feature = claim_blocking(&computation, "class_feature.hybrid.paladin.unsupported");
-    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
-        assert!(
-            feature.message.contains(token),
-            "paladin feature blocker must name the '{token}' burden: {}",
-            feature.message
-        );
-    }
-
-    // The later spell burden must be named explicitly and stay claim-blocking.
-    let spell = claim_blocking(&computation, "class_spell.hybrid.paladin.unsupported");
+    // The former non-spell class-feature blanket blocker
+    // (`class_feature.hybrid.paladin.unsupported`) is retired: the per-class
+    // decomposition (`explain_paladin_level1_chassis_and_spell_burden_separation`)
+    // dispatched for this exact input already grounds Smite Evil for real and
+    // grounds lay on hands / divine grace / mercy as correct level-1 absences, so
+    // re-asserting a blanket "not implemented" claim here would contradict those
+    // grounded records. See `tests/hybrid_diagnostic_grounded_contradiction.rs`.
     assert!(
-        spell.message.contains("spell"),
-        "paladin spell blocker must name the later spell burden: {}",
-        spell.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.paladin.unsupported"),
+        "the retired non-spell class-feature blanket blocker must not reappear: {:?}",
+        computation.diagnostics
     );
 
-    // The integrated posture is blocked, never a counterfeit computed success.
+    // The later hybrid spell blanket blocker is retired too (v0.6 alpha swarm,
+    // 2026-07-28). Paladins gain no spellcasting until class level 4 in PF1
+    // (`cr_classes.lst`'s `CLASS:Paladin` block carries no `CAST:` row before
+    // level 4), so a level-1 Paladin's absent spell posture is a satisfied
+    // condition rather than an unimplemented gap -- and the per-class
+    // decomposition already grounds it for real. See
+    // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_spell.hybrid.paladin.unsupported"),
+        "the retired hybrid spell blanket blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
+
+    // This narrower SD13 fixture is NOT the GE-06 loadout, so it still carries
+    // its own unrelated `combat.baseline_unsupported` /
+    // `skill.selected_modifier.unsupported` blockers; the integrated posture
+    // therefore stays blocked here, on those grounds and not on spellcasting.
+    // (On the real GE-06 app loadout a level-1 Paladin now reaches Computed --
+    // that is what the v06 test above pins.)
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -180,22 +200,36 @@ fn ranger_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let feature = claim_blocking(&computation, "class_feature.hybrid.ranger.unsupported");
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "ranger feature blocker must name the '{token}' burden: {}",
-            feature.message
-        );
-    }
-
-    let spell = claim_blocking(&computation, "class_spell.hybrid.ranger.unsupported");
+    // The former non-spell class-feature blanket blocker
+    // (`class_feature.hybrid.ranger.unsupported`) is retired: the per-class
+    // decomposition (`explain_ranger_level1_chassis_and_class_feature_separation`)
+    // dispatched for this exact input already grounds Track and the Favored Enemy
+    // flat surface for real, so re-asserting a blanket "not implemented" claim here
+    // would contradict those grounded records. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`.
     assert!(
-        spell.message.contains("spell"),
-        "ranger spell blocker must name the later spell burden: {}",
-        spell.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.ranger.unsupported"),
+        "the retired non-spell class-feature blanket blocker must not reappear: {:?}",
+        computation.diagnostics
     );
 
+    // The later hybrid spell blanket blocker is retired too (v0.6 alpha swarm,
+    // 2026-07-28) -- mirrors the Paladin case above; Rangers likewise have no
+    // `CAST:` row before class level 4.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_spell.hybrid.ranger.unsupported"),
+        "the retired hybrid spell blanket blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
+
+    // Still blocked here only on this narrower fixture's own unrelated GE-06
+    // combat/skill blockers, not on spellcasting.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 

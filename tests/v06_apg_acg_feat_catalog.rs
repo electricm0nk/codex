@@ -1,0 +1,455 @@
+//! v0.6: APG and ACG feat catalogs.
+//!
+//! Before this cycle the engine's only feat catalog was CRB's 185 records
+//! (`rules_tables::crb::feats::feat_tables()`), and
+//! `rules_tables::{apg,acg}` carried no feat table at all — so a player
+//! building an APG or ACG class could not take a single feat from that
+//! class's own book. This test is the structural proof for the two new
+//! catalogs, mirroring `sd19_feat_catalog.rs`'s pattern for CRB: real
+//! per-book counts, real pinned records, no fabricated fields, and a
+//! `CORPUS_ROOT`-gated cross-check against the live PCGen corpus so drift
+//! is caught rather than silently trusted.
+//!
+//! It also pins the two properties that only appear once more than one
+//! book is in play: keys stay globally unique across books (so no book's
+//! record shadows another's), and `feats_all::all_feat_tables()` — the
+//! single aggregate the Tauri feat picker reads — carries every record
+//! from all three books tagged with the book it came from.
+
+use std::path::PathBuf;
+
+use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_tables::acg::feats as acg_feats;
+use codex::rules_core::rules_tables::apg::feats as apg_feats;
+use codex::rules_core::rules_tables::crb::feats::{FeatCategory, FeatEffectBonus};
+use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+
+#[test]
+fn apg_feat_catalog_has_the_real_per_category_corpus_counts() {
+    // `apg_feats.lst` carries 221 non-comment records. 37 are `.MOD` lines
+    // (they modify a base record rather than declaring one) leaving 184
+    // real declarations; of those, 172 carry a `TYPE:` facet this catalog
+    // can honestly classify. See `apg::feats`'s own doc comment for the
+    // 12 excluded records and why each is excluded.
+    let all = apg_feats::feat_tables();
+    assert_eq!(all.len(), 172, "expected 172 classifiable APG feat records");
+
+    let count_of = |category: FeatCategory| all.iter().filter(|f| f.category == category).count();
+    assert_eq!(count_of(FeatCategory::General), 69);
+    assert_eq!(count_of(FeatCategory::Combat), 81);
+    assert_eq!(count_of(FeatCategory::Metamagic), 19);
+    assert_eq!(count_of(FeatCategory::Teamwork), 3);
+    // The APG has no Item Creation or Panache feat records at all — an
+    // honest zero, not a gap in this ingest.
+    assert_eq!(count_of(FeatCategory::ItemCreation), 0);
+    assert_eq!(count_of(FeatCategory::Panache), 0);
+}
+
+#[test]
+fn acg_feat_catalog_has_the_real_per_category_corpus_counts() {
+    // `acg_feats.lst` carries 173 non-comment records, 39 of them `.MOD`
+    // lines, leaving 134 real declarations of which 129 are classifiable.
+    // See `acg::feats`'s own doc comment for the 5 exclusions.
+    let all = acg_feats::feat_tables();
+    assert_eq!(all.len(), 129, "expected 129 classifiable ACG feat records");
+
+    let count_of = |category: FeatCategory| all.iter().filter(|f| f.category == category).count();
+    assert_eq!(count_of(FeatCategory::General), 62);
+    assert_eq!(count_of(FeatCategory::Combat), 59);
+    assert_eq!(count_of(FeatCategory::Teamwork), 4);
+    assert_eq!(count_of(FeatCategory::Panache), 4);
+    assert_eq!(count_of(FeatCategory::Metamagic), 0);
+    assert_eq!(count_of(FeatCategory::ItemCreation), 0);
+}
+
+#[test]
+fn pinned_apg_feats_carry_their_real_corpus_fields() {
+    let all = apg_feats::feat_tables();
+    let find = |key: &str| {
+        all.iter()
+            .find(|f| f.key == key)
+            .unwrap_or_else(|| panic!("'{key}' must be in the APG catalog"))
+    };
+
+    // A Teamwork feat: the whole reason `FeatCategory::Teamwork` exists —
+    // `TYPE:Teamwork` with no Combat/General facet, so under CRB's
+    // four-category rule it would have been silently dropped.
+    let allied = find("Allied Spellcaster");
+    assert_eq!(allied.category, FeatCategory::Teamwork);
+    assert_eq!(
+        allied.description,
+        Some(
+            "With the aid of an ally, you are skilled at piercing the protections \
+             of other creatures with your spells."
+        )
+    );
+    assert_eq!(
+        allied.prerequisites,
+        Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"] as &[&str])
+    );
+
+    // A Metamagic feat with no prerequisite token at all — recorded as
+    // `None`, never as an empty list that would read as "not gathered yet".
+    let bouncing = find("Bouncing Spell");
+    assert_eq!(bouncing.category, FeatCategory::Metamagic);
+    assert_eq!(
+        bouncing.description,
+        Some("You can direct a failed spell against a different target.")
+    );
+    assert_eq!(bouncing.prerequisites, None);
+
+    // A General feat carrying both a real `BONUS:` token and a real
+    // prerequisite chain.
+    let extra_hex = find("Extra Hex");
+    assert_eq!(extra_hex.category, FeatCategory::General);
+    assert_eq!(
+        extra_hex.effect,
+        Some(&[FeatEffectBonus {
+            qualifiers: &["ABILITYPOOL", "Witch Hex", "1"]
+        }] as &[FeatEffectBonus])
+    );
+
+    // The base `Elemental Focus` feat (`TYPE:General`) is present; the four
+    // `TYPE:ElementalFocus` per-element DC-support records are not feats
+    // and are excluded.
+    let elemental_focus = find("Elemental Focus");
+    assert_eq!(elemental_focus.category, FeatCategory::General);
+    assert!(
+        !all.iter().any(|f| f.key == "Elemental Focus (Acid)"),
+        "the per-element DC-support helper records are not player-facing feats"
+    );
+}
+
+#[test]
+fn pinned_acg_feats_carry_their_real_corpus_fields() {
+    let all = acg_feats::feat_tables();
+    let find = |key: &str| {
+        all.iter()
+            .find(|f| f.key == key)
+            .unwrap_or_else(|| panic!("'{key}' must be in the ACG catalog"))
+    };
+
+    let extra_panache = find("Extra Panache");
+    assert_eq!(extra_panache.category, FeatCategory::Panache);
+    assert_eq!(
+        extra_panache.description,
+        Some("You have more panache than the ordinary swashbuckler.")
+    );
+    assert_eq!(
+        extra_panache.effect,
+        Some(&[
+            FeatEffectBonus {
+                qualifiers: &["VAR", "PanachePoints", "2"]
+            },
+            FeatEffectBonus {
+                qualifiers: &["VAR", "Panache_Cap", "2"]
+            },
+        ] as &[FeatEffectBonus])
+    );
+
+    let pack_flanking = find("Pack Flanking");
+    assert_eq!(pack_flanking.category, FeatCategory::Teamwork);
+    assert_eq!(
+        pack_flanking.prerequisites,
+        Some(&[
+            "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
+            "PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion",
+            "PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]",
+        ] as &[&str])
+    );
+
+    let extra_exploit = find("Extra Arcanist Exploit");
+    assert_eq!(extra_exploit.category, FeatCategory::General);
+    assert_eq!(
+        extra_exploit.description,
+        Some("Your repertoire of arcanist exploits expands.")
+    );
+
+    // `Witch Hex` / `Shaman Hex` (`TYPE:Hex Selection`) and the three
+    // `TYPE:Evolved Companion` records are selection/companion-source
+    // plumbing, not feats, and carry no player-facing description.
+    for plumbing in ["Witch Hex", "Shaman Hex", "Animal Companion of Nature Bond Class Feature"] {
+        assert!(
+            !all.iter().any(|f| f.key == plumbing),
+            "'{plumbing}' is corpus plumbing, not a feat"
+        );
+    }
+}
+
+#[test]
+fn every_apg_and_acg_record_has_a_real_key_name_and_description() {
+    // No fabricated fields: every ingested record must carry a non-empty
+    // key and name, and its `DESC:` text when the corpus record has one.
+    //
+    // Exactly one record across both books genuinely has no `DESC:`
+    // token: APG's `VISIBLE:DISPLAY` "Elemental Fist" base variant (its
+    // two `VISIBLE:EXPORT` siblings, distinct `KEY:`s, do carry the
+    // text). That absence is recorded as `None` rather than filled in
+    // from a sibling record, the same way CRB records the 8
+    // "Heighten Spell +N" records' missing `DESC:`. An earlier version of
+    // this test asserted no such record existed and failed — the data was
+    // right and the assertion was wrong.
+    let mut missing_description: Vec<&str> = Vec::new();
+    for (book, table) in [("APG", apg_feats::feat_tables()), ("ACG", acg_feats::feat_tables())] {
+        for entry in table {
+            assert!(!entry.key.is_empty(), "{book} entry with empty key");
+            assert!(!entry.name.is_empty(), "{book} entry '{}' has empty name", entry.key);
+            match entry.description {
+                Some(text) => assert!(
+                    !text.is_empty(),
+                    "{book} entry '{}' has an empty description string; absence must be None",
+                    entry.key
+                ),
+                None => missing_description.push(entry.key),
+            }
+            // An empty effect/prereq slice would be indistinguishable from
+            // "no data gathered yet"; absence is always None.
+            assert!(entry.effect.is_none_or(|e| !e.is_empty()));
+            assert!(entry.prerequisites.is_none_or(|p| !p.is_empty()));
+        }
+    }
+    assert_eq!(missing_description, vec!["Elemental Fist"]);
+}
+
+#[test]
+fn feat_keys_never_collide_across_books() {
+    // A recent bug had 18 spell keys collide across books, one book's
+    // record silently shadowing another's. Feats do not have that problem
+    // today — the three corpus files share no feat key — and this test
+    // keeps it that way rather than assuming it.
+    let mut seen: Vec<(&str, RuleSetId)> = Vec::new();
+    for book in all_feat_tables() {
+        for entry in book.entries {
+            if let Some((_, other)) = seen.iter().find(|(key, _)| *key == entry.key) {
+                // CRB's two real "Combat Expertise" corpus variants are a
+                // known within-book duplicate preserved verbatim (see
+                // `sd19_feat_catalog.rs`); a *cross-book* collision is not.
+                assert_eq!(
+                    *other, book.rule_set,
+                    "feat key '{}' appears in two different books",
+                    entry.key
+                );
+            }
+            seen.push((entry.key, book.rule_set));
+        }
+    }
+}
+
+#[test]
+fn the_aggregate_catalog_spans_all_three_books() {
+    let books = all_feat_tables();
+    assert_eq!(books.len(), 3);
+
+    let entries_for = |rule_set: RuleSetId| {
+        books
+            .iter()
+            .find(|b| b.rule_set == rule_set)
+            .unwrap_or_else(|| panic!("{rule_set:?} must be in the aggregate catalog"))
+            .entries
+            .len()
+    };
+    assert_eq!(entries_for(RuleSetId::Crb), 185);
+    assert_eq!(entries_for(RuleSetId::Apg), 172);
+    assert_eq!(entries_for(RuleSetId::Acg), 129);
+
+    let total: usize = books.iter().map(|b| b.entries.len()).sum();
+    assert_eq!(total, 486, "185 CRB + 172 APG + 129 ACG");
+}
+
+#[test]
+fn crb_records_gained_their_real_prerequisite_tokens() {
+    // `feat_prereqs/general.rs`'s doc comment named the missing
+    // `PRE*`-family tokens on the table store as the blocker for a real
+    // per-feat prerequisite chain, citing three CRB records by name. Those
+    // tokens are now transcribed verbatim.
+    use codex::rules_core::rules_tables::crb::feats::feat_tables;
+    let all = feat_tables();
+    let find = |key: &str| all.iter().find(|f| f.key == key).expect(key);
+
+    assert_eq!(
+        find("Greater Spell Focus").prerequisites,
+        Some(&["PREABILITY:1,CATEGORY=FEAT,Spell Focus"] as &[&str])
+    );
+    assert_eq!(
+        find("Improved Great Fortitude").prerequisites,
+        Some(&["PREABILITY:1,CATEGORY=FEAT,Great Fortitude"] as &[&str])
+    );
+    assert!(
+        find("Leadership")
+            .prerequisites
+            .is_some_and(|p| p.contains(&"PRELEVEL:MIN=7")),
+        "Leadership's real PRELEVEL:MIN=7 token must be transcribed"
+    );
+
+    // Adding the field must not have disturbed the existing 185.
+    assert_eq!(all.len(), 185);
+}
+
+fn corpus_root() -> Option<PathBuf> {
+    match std::env::var("CORPUS_ROOT") {
+        Ok(value) => {
+            let path = PathBuf::from(value);
+            if path.is_dir() { Some(path) } else { None }
+        }
+        Err(_) => None,
+    }
+}
+
+/// Minimal inline re-derivation of the `TYPE:`-facet classification rule
+/// `apg::feats` / `acg::feats` document, applied straight to the raw
+/// corpus text — deliberately not sharing code with the offline
+/// generator, so this test actually fails if the transcribed data drifts
+/// from the live corpus. Mirrors `sd19_feat_catalog.rs`'s own
+/// `facet_category`, widened to the two categories only the APG/ACG
+/// corpus uses.
+fn facet_category(type_value: &str) -> Option<&'static str> {
+    for facet in type_value.split('.') {
+        match facet {
+            "General" => return Some("General"),
+            "Combat" => return Some("Combat"),
+            "ItemCreation" => return Some("ItemCreation"),
+            "Metamagic" => return Some("Metamagic"),
+            "Teamwork" => return Some("Teamwork"),
+            "Panache" => return Some("Panache"),
+            _ => {}
+        }
+    }
+    None
+}
+
+/// One classifiable corpus record, re-derived straight from the raw
+/// `.lst` line.
+struct CorpusRecord {
+    key: String,
+    name: String,
+    category: &'static str,
+    description: Option<String>,
+    has_bonus: bool,
+    prerequisite_count: usize,
+}
+
+/// Every real (non-comment, non-`.MOD`) classifiable record in a feats
+/// `.lst`, in file order.
+fn classifiable_corpus_records(text: &str) -> Vec<CorpusRecord> {
+    let mut records = Vec::new();
+    for line in text.lines() {
+        if line.trim().is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let fields: Vec<&str> = line.split('\t').filter(|f| !f.is_empty()).collect();
+        let Some(name) = fields.first().map(|f| f.trim()) else {
+            continue;
+        };
+        if name.is_empty() || name.starts_with("SOURCE") || name.contains(".MOD") {
+            continue;
+        }
+        let Some(type_value) = fields.iter().skip(1).find_map(|f| f.trim().strip_prefix("TYPE:"))
+        else {
+            continue;
+        };
+        let Some(category) = facet_category(type_value) else {
+            continue;
+        };
+        records.push(CorpusRecord {
+            key: fields
+                .iter()
+                .skip(1)
+                .find_map(|f| f.strip_prefix("KEY:"))
+                .unwrap_or(name)
+                .to_string(),
+            name: name.to_string(),
+            category,
+            description: fields
+                .iter()
+                .skip(1)
+                .find_map(|f| f.strip_prefix("DESC:"))
+                .map(|d| d.to_string()),
+            has_bonus: fields.iter().skip(1).any(|f| f.starts_with("BONUS:")),
+            prerequisite_count: fields
+                .iter()
+                .skip(1)
+                .filter(|f| f.starts_with("PRE") || f.starts_with("!PRE"))
+                .count(),
+        });
+    }
+    records
+}
+
+#[test]
+fn apg_and_acg_catalogs_match_the_live_corpus() {
+    let Some(root) = corpus_root() else {
+        eprintln!(
+            "CORPUS_ROOT not set or not a directory; skipping (set \
+             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+        );
+        return;
+    };
+
+    let cases: [(&str, &[codex::rules_core::rules_tables::crb::feats::FeatTableEntry], usize); 2] = [
+        (
+            "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
+            apg_feats::feat_tables(),
+            172,
+        ),
+        (
+            "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
+            acg_feats::feat_tables(),
+            129,
+        ),
+    ];
+
+    for (relative, catalog, expected) in cases {
+        let path = root.join(relative);
+        if !path.is_file() {
+            eprintln!("corpus file not present at {}; skipping", path.display());
+            continue;
+        }
+        let text = std::fs::read_to_string(&path).expect("feats .lst must be readable");
+        let corpus = classifiable_corpus_records(&text);
+        assert_eq!(
+            corpus.len(),
+            expected,
+            "live corpus classifiable-record count for {relative} drifted from the \
+             {expected} this catalog was generated from; regenerate feat_data/"
+        );
+
+        // Field-level, per record, keyed on the corpus `KEY:` (which is
+        // globally unique within each of these two books). This is the
+        // check that would actually catch a transcription slip: a
+        // description belonging to the wrong row, a dropped `BONUS:`
+        // token, or a lost prerequisite.
+        for record in &corpus {
+            let entry = catalog
+                .iter()
+                .find(|entry| entry.key == record.key)
+                .unwrap_or_else(|| {
+                    panic!("corpus record '{}' is classifiable but missing from {relative}'s catalog", record.key)
+                });
+            assert_eq!(entry.name, record.name, "'{}' display name drifted", record.key);
+            assert_eq!(
+                format!("{:?}", entry.category),
+                record.category,
+                "'{}' category drifted",
+                record.key
+            );
+            assert_eq!(
+                entry.description.map(str::to_owned),
+                record.description,
+                "'{}' DESC: text drifted from the live corpus",
+                record.key
+            );
+            assert_eq!(
+                entry.effect.is_some(),
+                record.has_bonus,
+                "'{}' BONUS: presence disagrees with the live corpus",
+                record.key
+            );
+            assert_eq!(
+                entry.prerequisites.map_or(0, <[&str]>::len),
+                record.prerequisite_count,
+                "'{}' PRE-token count disagrees with the live corpus",
+                record.key
+            );
+        }
+    }
+}

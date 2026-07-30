@@ -202,7 +202,7 @@ fn cleric_level17_touch_of_good_stays_put_and_other_facets_carry_over() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 8,
@@ -213,7 +213,7 @@ fn cleric_level17_touch_of_good_stays_put_and_other_facets_carry_over() {
 
     let tog_uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(tog_uses.value, 7, "Touch of Good's uses per day must stay 7 at level 17");
 
@@ -246,18 +246,30 @@ fn cleric_level17_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
         computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking),
+            .any(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking),
         "level-17 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking),
-        "level-17 Cleric must still claim-block on the prepared divine spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: level 16 truth is unchanged by this widening -----
@@ -278,7 +290,7 @@ fn cleric_level16_truth_is_unchanged_by_this_slice() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(bonus.value, 8, "Cleric level 16 Touch of Good bonus must stay 8");
 }
@@ -314,8 +326,14 @@ fn multiclass_cleric_level17_is_not_promoted_by_this_slice() {
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")),
+            .any(|e| (e.id.starts_with("class_chassis.cleric.")
+                || e.id.starts_with("class_feature.cleric."))
+                // (v0.6 alpha swarm, risks item 8, Good domain closure)
+                // Touch of Good's not-active explanation is checked
+                // unconditionally, regardless of level bound or
+                // single-class status (mirrors every other class's
+                // gate-ordering fix)
+                && e.id != "class_feature.domain.good_touch_of_good_not_active"),
         "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );

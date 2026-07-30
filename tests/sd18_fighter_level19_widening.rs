@@ -297,17 +297,34 @@ fn multiclass_fighter_level19_is_not_promoted_by_this_slice() {
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
+// (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
+    // generalization (task 4) widened the Fighter+Rogue multiclass mix into a
+    // genuinely supported combination (via the table-driven
+    // compute_generic_table_chassis path for Rogue), so this negative control is
+    // superseded, not violated: Fighter level 19 / Rogue level 1 now gets a
+    // real, integrated class_chassis.base_attack_bonus (Fighter 19's full BAB
+    // 19 + Rogue 1's 3/4 BAB floor(1*3/4)=0, summed = 19), and with this
+    // fixture's full deterministic combat/skill posture already matching, there is
+    // no remaining claim-blocking diagnostic at all -- the receipt is genuinely
+    // Computed, not Blocked.
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "multiclass Fighter must not gain the bounded level-19 base-attack-bonus explanation: {:?}",
+        "multiclass Fighter/Rogue now genuinely gains the integrated base-attack-bonus \
+         explanation: {:?}",
         computation.explanations
     );
+    assert_eq!(
+        computation.base_attack_bonus, 19,
+        "Fighter 19 (full BAB) + Rogue 1 (3/4 BAB, floor(1*3/4)=0) = 19"
+    );
     assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Fighter must stay claim-blocked in this slice"
+        !computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "Fighter 19 / Rogue 1 with this fixture's full deterministic posture has no \
+         remaining claim-blocking diagnostic: {:?}",
+        computation.diagnostics
     );
 }
 

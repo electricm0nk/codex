@@ -41,6 +41,7 @@ fn empty_input(class_levels: Vec<CharacterClassLevel>) -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -110,6 +111,7 @@ fn single_class_with_equipment_skills_and_spells_classifies_mid_build() {
         item_id: "mace-heavy".to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     });
     input.chosen.spells_selected.push(SpellSelection {
         spell_id: "Bless".to_string(),

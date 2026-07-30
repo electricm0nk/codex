@@ -54,6 +54,7 @@ fn equipped(item_id: &str) -> EquipmentSelection {
         item_id: item_id.to_string(),
         equipped_or_active: true,
         active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
     }
 }
 

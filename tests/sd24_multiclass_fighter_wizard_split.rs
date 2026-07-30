@@ -35,7 +35,7 @@ use codex::rules_core::character_input::{
 };
 use codex::rules_core::level_up::fighter::compute_fighter_level_up_grants;
 use codex::rules_core::level_up::wizard::compute_wizard_level_up_grants;
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
+use codex::rules_core::pilot_compute::{BaseSaves, compute_pilot_base_chassis};
 
 const FIGHTER4_WIZARD1_SPLIT_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter4_wizard1_sd24_multiclass_split_input.txt"
@@ -216,10 +216,17 @@ fn fighter_level_up_grants_stay_empty_for_the_wizard_side_of_the_split() {
     );
 }
 
-// ----- Negative control: an unsupported multiclass mix stays claim-blocked -----
+// ----- (v0.6 swarm update): Fighter+Rogue is now a supported multiclass mix -----
 
 #[test]
-fn multiclass_fighter_rogue_mix_is_still_unsupported() {
+fn multiclass_fighter_rogue_mix_is_now_supported() {
+    // Was `multiclass_fighter_rogue_mix_is_still_unsupported`, pinning the
+    // pre-v0.6-swarm truth that only Fighter+Wizard was a recognized
+    // multiclass pair. The v0.6 alpha swarm's multiclass BAB/save-stacking
+    // generalization (task 4) widened `table_class_id` to also recognize
+    // Rogue via the table-driven `compute_generic_table_chassis` path, so
+    // Fighter+Rogue is now genuinely supported too -- renamed and flipped
+    // rather than left with a stale, misleading name.
     let mut input = load(FIGHTER4_WIZARD1_SPLIT_FIXTURE);
     input.chosen.class_levels = vec![
         CharacterClassLevel {
@@ -234,20 +241,37 @@ fn multiclass_fighter_rogue_mix_is_still_unsupported() {
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        computation
+        !computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "class_chassis.unsupported" && d.claim_blocking),
-        "Fighter+Rogue is not a supported multiclass mix (only Fighter+Wizard \
-         is); it must stay claim-blocked: {:?}",
+            .any(|d| d.id == "class_chassis.unsupported"),
+        "Fighter+Rogue is now a supported multiclass mix, so class_chassis.unsupported must not \
+         fire: {:?}",
         computation.diagnostics
     );
+    assert_eq!(
+        computation.base_attack_bonus, 4,
+        "Fighter 4 (full BAB) + Rogue 1 (3/4 BAB, floor(1*3/4)=0) = 4"
+    );
+    assert_eq!(
+        computation.base_saves,
+        BaseSaves {
+            fortitude: 4,
+            reflex: 3,
+            will: 1,
+        },
+        "Fortitude: Fighter4 good (4/2+2=4.0) + Rogue1 poor (1/3=0.333) = 4.333 -> 4; \
+         Reflex: Fighter4 poor (4/3=1.333) + Rogue1 good (1/2+2=2.5) = 3.833 -> 3; \
+         Will: Fighter4 poor (4/3=1.333) + Rogue1 poor (1/3=0.333) = 1.667 -> 1"
+    );
 
+    // Fighter's own level-up grant plan is unrelated to class-mix recognition: with
+    // from_level == to_level (4 -> 4), no level transition occurred, so no grants
+    // are expected regardless of which second class is in the mix.
     let fighter_plan = compute_fighter_level_up_grants(&input, 4, 4);
     assert!(
         fighter_plan.automatic_features.is_empty(),
-        "Fighter+Rogue must not be recognized by Fighter's own widened gate \
-         either: {:?}",
+        "no level transition occurred (4 -> 4), so no automatic features should be granted: {:?}",
         fighter_plan.automatic_features
     );
 }

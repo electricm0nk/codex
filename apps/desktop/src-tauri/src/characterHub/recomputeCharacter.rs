@@ -28,11 +28,10 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
-use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::saved_character::local_store::SavedCharacterStore;
 
-use crate::pf1_adapter::Pf1Adapter;
+use crate::corpus_fixtures::corpus_fixture_bundle;
+use crate::pf1_adapter::{resolve_unified_pilot_snapshot, Pf1Adapter};
 use crate::rule_system_adapter::RuleSystemAdapter;
 use crate::stub_adapter::StubAdapter;
 
@@ -77,6 +76,13 @@ pub struct CharacterSnapshotDto {
     pub baseline_melee_attack_bonus: i16,
     pub baseline_armor_class: i16,
     pub total_saves: BaseSavesDto,
+    /// Mirrors `crate::character_hub::PilotSnapshotDto::damage_reduction`
+    /// exactly (same source field, `PilotDefenseViewModel::damage_reduction`,
+    /// same `skip_serializing_if` shape) — without this, the Defense tab's
+    /// DR display would go stale on a manual "Recompute" refresh even though
+    /// every other derived-stat field here already refreshes correctly.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub damage_reduction: Option<i16>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -118,30 +124,24 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
         }
     };
 
-    let receipt = build_pilot_headless_receipt(&envelope.character_input);
-    if receipt.status != HeadlessReceiptStatus::Computed {
-        let blocking_messages: Vec<String> = receipt
-            .computation
-            .diagnostics
-            .iter()
-            .filter(|diagnostic| diagnostic.claim_blocking)
-            .map(|diagnostic| diagnostic.message.clone())
-            .collect();
-        return RecomputeCharacterResponse {
-            success: false,
-            character: None,
-            error: Some(format!(
-                "character_not_computable: {}",
-                blocking_messages.join("; ")
-            )),
-        };
-    }
-
-    let view_model = PilotViewModel::from_receipt(&receipt);
-    let snapshot = view_model
-        .snapshot
-        .as_ref()
-        .expect("Computed status guarantees a snapshot");
+    let snapshot = match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+        Ok((snapshot, _corpus_receipt)) => snapshot,
+        Err(diagnostics) => {
+            let blocking_messages: Vec<String> = diagnostics
+                .iter()
+                .filter(|diagnostic| diagnostic.claim_blocking)
+                .map(|diagnostic| diagnostic.message.clone())
+                .collect();
+            return RecomputeCharacterResponse {
+                success: false,
+                character: None,
+                error: Some(format!(
+                    "character_not_computable: {}",
+                    blocking_messages.join("; ")
+                )),
+            };
+        }
+    };
 
     RecomputeCharacterResponse {
         success: true,
@@ -160,6 +160,7 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
                 reflex: snapshot.defense.total_save.reflex,
                 will: snapshot.defense.total_save.will,
             },
+            damage_reduction: snapshot.defense.damage_reduction,
         }),
         error: None,
     }
@@ -289,21 +290,25 @@ mod tests {
                         item_id: "item:longsword".to_owned(),
                         equipped_or_active: true,
                         active_state: ActiveState::EquippedActive,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "item:chain_shirt".to_owned(),
                         equipped_or_active: true,
                         active_state: ActiveState::EquippedActive,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "item:shield".to_owned(),
                         equipped_or_active: false,
                         active_state: ActiveState::Absent,
+                        applied_modifiers: Vec::new(),
                     },
                     EquipmentSelection {
                         item_id: "power_attack".to_owned(),
                         equipped_or_active: false,
                         active_state: ActiveState::SelectedInactive,
+                        applied_modifiers: Vec::new(),
                     },
                 ],
                 selected_choices: vec![
@@ -336,6 +341,7 @@ mod tests {
                         acquisition_mode: AcquisitionMode::Granted,
                     },
                 ],
+                class_ability_activations: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
@@ -421,9 +427,52 @@ mod tests {
             "Fighter level 1 base attack bonus is +1 (cr_classes.lst:139 BASEAB|classlevel)"
         );
         assert_eq!(character.base_saves.fortitude, 2, "Fighter level 1 good Fortitude save is +2");
+        assert_eq!(
+            character.damage_reduction, None,
+            "Fighter has no grounded DR explanation, so this must be absent, not fabricated"
+        );
         assert!(response.error.is_none());
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `damage_reduction` mirrors `PilotSnapshotDto`'s own field exactly
+    /// (`crate::character_hub`) -- same source (`PilotDefenseViewModel::
+    /// damage_reduction`), same wire shape. There is no live path to
+    /// exercise a non-`None` value through `recompute_character_at_root`
+    /// today (every class the compute engine actually reaches `Computed`
+    /// for -- Fighter/Wizard/Rogue -- has no grounded DR explanation; only
+    /// Barbarian's does, and Barbarian never reaches `Computed`), so this
+    /// proves the wire shape directly against a hand-built `CharacterSnapshotDto`
+    /// instead: a real `Some` value serializes as `"damageReduction"` (proving
+    /// `#[serde(rename_all = "camelCase")]` alone is sufficient here -- unlike
+    /// `PilotSnapshotDto`'s sibling `corpusDerived` field, this name has no
+    /// internal word boundary collision with an enum tag, so no per-field
+    /// `#[serde(rename = ...)]` is needed), and `None` omits the key
+    /// entirely rather than serializing as `null`.
+    #[test]
+    fn damage_reduction_serializes_as_camel_case_when_present_and_is_omitted_when_absent() {
+        let with_dr = CharacterSnapshotDto {
+            character_id: "char-dr-present".to_owned(),
+            base_attack_bonus: 5,
+            base_saves: BaseSavesDto { fortitude: 4, reflex: 1, will: 1 },
+            baseline_melee_attack_bonus: 7,
+            baseline_armor_class: 14,
+            total_saves: BaseSavesDto { fortitude: 4, reflex: 1, will: 1 },
+            damage_reduction: Some(3),
+        };
+        let json = serde_json::to_string(&with_dr).expect("serialization should succeed");
+        assert!(
+            json.contains("\"damageReduction\":3"),
+            "a present DR value must serialize under the camelCase key: {json}"
+        );
+
+        let without_dr = CharacterSnapshotDto { damage_reduction: None, ..with_dr };
+        let json = serde_json::to_string(&without_dr).expect("serialization should succeed");
+        assert!(
+            !json.contains("damageReduction"),
+            "an absent DR value must omit the key entirely, not serialize null: {json}"
+        );
     }
 
     /// The direct regression guard for Criterion 7.2's RED text: a level

@@ -35,19 +35,27 @@
 //! carry (its own doc comment: "Named per-level features ... are
 //! deliberately out of scope for this bootstrap").
 //!
-//! **Not grounded anywhere in this codebase, so not surfaced here either**
-//! (documented, not fabricated, mirroring Paladin's own Aura of Good /
-//! Divine Bond boundary): Bloodline Arcana, Arcane Bond (or any other
-//! bloodline power), the bloodline bonus spells/feats at 3rd+ level, and
-//! the level-20 bloodline capstone power are all named-but-unproven in
-//! `pilot_compute.rs`'s own `class_feature.sorcerer.
-//! arcane_bond_and_bloodline_progression.unsupported` diagnostic (grepped
-//! and confirmed still claim-blocking) — the PF1 Core Rulebook Sorcerer
-//! class table's level-19/20 "Special" column reads bloodline-specific
-//! text ("Bloodline feat", "Bloodline feat, bloodline spell") that
-//! `pilot_compute.rs`'s own doc comment explicitly declines to prove
-//! ("No spell math is fabricated and no Sorcerer level 20 is proven" at
-//! the bloodline-power grain). `capstone_threshold` still flags the
+//! **Bloodline progression** (paragraph corrected 2026-07-29; it previously
+//! said the whole bloodline progression was "not grounded anywhere in this
+//! codebase", citing the `class_feature.sorcerer.
+//! arcane_bond_and_bloodline_progression.unsupported` diagnostic as "grepped
+//! and confirmed still claim-blocking" — both statements have since become
+//! false and were verified against live code, not against this comment).
+//! For the canonical Arcane bloodline, `pilot_compute.rs`'s
+//! `ground_sorcerer_arcane_bloodline_progression` now grounds the whole
+//! 3rd-level-and-above progression from the corpus: the nine bonus spells,
+//! the bonus-feat pool at 7th/13th/19th, and the 3rd/9th/15th/20th-level
+//! bloodline powers (Metamagic Adept, New Arcana, School Power, Arcane
+//! Apotheosis), so the PF1 Core Rulebook Sorcerer class table's
+//! bloodline-specific level-19/20 "Special" column text ("Bloodline feat",
+//! "Bloodline feat, bloodline spell") is proven for that bloodline and the
+//! diagnostic no longer fires for it. Still **not** grounded, and so still
+//! not surfaced here (documented, not fabricated, mirroring Paladin's own
+//! Aura of Good / Divine Bond boundary): every other CRB bloodline's
+//! progression, for which that diagnostic remains claim-blocking, and the
+//! player sub-choices within the Arcane progression itself (which bloodline
+//! feat, which New Arcana spells, which School Power school), which carry a
+//! separate non-claim-blocking diagnostic. `capstone_threshold` still flags the
 //! transition crossing PF1's universal character-level cap (every class
 //! reaches level 20), but no separate named "capstone" grant is
 //! fabricated for it — the ordinary base-attack / base-save /

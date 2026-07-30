@@ -28,7 +28,9 @@
 //! accepted Paladin level-1 truth (unchanged), the F6 hybrid baseline, the
 //! Ranger negative control, and the Fighter negative control.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, HeadlessReceiptStatus, PilotBaseChassisComputation,
     build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -242,7 +244,20 @@ fn paladin_level2_smite_evil_scales_correctly() {
 
 #[test]
 fn paladin_level2_partial_caster_spell_burden_stays_claim_blocking() {
-    let input = load(PALADIN_LEVEL2_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: at level 2 no
+    // paladin spell level is accessible yet (spells begin at level 4), so a
+    // bare fixture with zero prepared spells has a genuinely valid (empty)
+    // posture and the blocker would not fire at all. This test is
+    // specifically about the blocker staying claim-blocking, so a genuinely
+    // invalid preparation (Bless, a real paladin spell, but not yet
+    // accessible at level 2) is added to make it fire for real.
+    let mut input = load(PALADIN_LEVEL2_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Bless".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     let spell = computation

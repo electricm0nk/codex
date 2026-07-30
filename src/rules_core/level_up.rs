@@ -306,6 +306,7 @@ mod multiclass_dispatch_tests {
                 equipment_selections: Vec::new(),
                 selected_choices: Vec::new(),
                 spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }

@@ -275,14 +275,26 @@ fn paladin_level15_spell_level_access_stays_four() {
         "the 4th-level total spells-per-day record must stay grounded at level 15"
     );
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == PARTIAL_CASTER_BLOCKER_ID && d.claim_blocking),
-        "level-15 Paladin must still claim-block on the partial-caster spell burden: {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional: it's a real, conditional validation of
+    // AcquisitionMode::Prepared selections. This fixture predates
+    // spells_selected (zero prepared), so the posture is genuinely valid and
+    // the blocker correctly does not fire -- the real "no spell slots are
+    // fabricated" guarantee now comes from the daily-preparation record's own
+    // count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 15: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- The FIFTH mercy slot is newly recognized at level 15 (repeat-grant level) -----

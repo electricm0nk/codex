@@ -339,15 +339,35 @@ fn sorcerer_level20_still_recognizes_the_spell_bearing_baseline_and_claim_blocks
          burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported" && d.claim_blocking),
-        "level-20 Sorcerer must still claim-block on the spontaneous which-spells-known / \
-         casting-execution burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported")
+    {
+        Some(spell_blocker) => assert!(
+            spell_blocker.claim_blocking,
+            "if the spell blocker fires at all, it must be claim-blocking"
+        ),
+        None => {
+            // (v0.6 alpha swarm, risks item 8) class_spell.sorcerer.spontaneous.unsupported
+            // is no longer unconditional -- it's a real, conditional validation of
+            // AcquisitionMode::Known selections. This fixture predates spells_selected
+            // (zero known spells), so the posture is genuinely valid and the blocker
+            // correctly does not fire -- confirmed via the real known-spell count being
+            // honestly 0, not fabricated.
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.sorcerer.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the spell blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- No new bloodline-feat/bloodline-power/bloodline-spell record is fabricated at level 20 -----

@@ -120,10 +120,16 @@ pub fn lizardfolk() -> MonsterStatBlock {
 
 /// Source: `b1_races.lst:414`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,50`, `RACETYPE:Animal`, `CR:1`, `SOURCEPAGE:p.278`. The
-/// real row carries no `NATURALATTACKS:` token — its Bite attack is
-/// granted via `ABILITY:Internal|AUTOMATIC|Bite`, a cross-reference into
-/// a shared ability definition this cycle's parser does not resolve
-/// (out of scope; see this module's field-coverage boundary note).
+/// real row carries no `NATURALATTACKS:` token.
+///
+/// **Bite dice are grounded, not transcribed.** The row names the attack
+/// via `ABILITY:Internal|AUTOMATIC|Bite`, but resolving that reference
+/// (to `core_essentials/ce_abilities_race.lst:249`) yields a mechanical
+/// marker with no dice. `1d6` is corroborated by aonprd + d20pfsrd (both
+/// "bite +2 (1d6+1 plus trip)"), for the plain Bestiary 1 wolf — not the
+/// dire wolf and not the wolf animal companion. Full citation in
+/// `super::natural_attack_provenance` — **read it before reverting this
+/// to an empty list.**
 pub fn wolf() -> MonsterStatBlock {
     MonsterStatBlock {
         name: "Wolf".to_string(),
@@ -133,6 +139,6 @@ pub fn wolf() -> MonsterStatBlock {
         race_type: "Animal".to_string(),
         race_subtype: None,
         source_page: "p.278".to_string(),
-        natural_attacks: vec![],
+        natural_attacks: vec![NaturalAttack { name: "Bite".to_string(), damage_dice: "1d6".to_string() }],
     }
 }

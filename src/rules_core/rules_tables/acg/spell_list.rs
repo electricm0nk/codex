@@ -87,11 +87,27 @@ impl Pf1SchoolId {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SpellListEntry {
-    /// The spell's `name` is its identity in `acg_spells.lst` (no `KEY:`
-    /// token on `CLASSES:`-bearing spell rows; the 9 Naturalist variants
-    /// do carry a `KEY:` token, but this field stores the display name to
-    /// match the rest of the table, matching `apg::spell_list`'s own
-    /// precedent).
+    /// The record's identity in `acg_spells.lst`: its `KEY:` token when
+    /// the row carries one, else its display name (no `KEY:` token on
+    /// `CLASSES:`-bearing spell rows).
+    ///
+    /// Exactly 9 rows in this file carry a `KEY:` token — the Naturalist
+    /// archetype's summon spells (`acg_spells.lst:785`+), whose KEY is
+    /// archetype-qualified: `KEY:Naturalist Summon Nature's Ally I` for
+    /// the row displayed as `Summon Nature's Ally I`. Those are genuinely
+    /// different records from CRB's own `Summon Nature's Ally I` (they
+    /// carry their own `DURATION:` formula keyed to
+    /// `ConjurationNaturalistsCharmBonus`), so storing the display name
+    /// here — as this table originally did — collided all 9 with the CRB
+    /// record and made a selection carrying that name unresolvable
+    /// between the two. The `KEY:` token is stored instead; see
+    /// `tests/spell_cross_book_identity.rs`.
+    ///
+    /// This field is the record's *identity*, not its lookup surface:
+    /// those 9 rows are still reachable by their display name through
+    /// [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`].
+    /// Do not read a qualified `key` as "this record can only be found
+    /// under its archetype name".
     pub key: &'static str,
     pub school: Pf1SchoolId,
     /// Minimum spell level across the real record's `CLASSES:`/`DOMAINS:`
@@ -240,15 +256,15 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     SpellListEntry { key: "Whip of Centipedes", school: Pf1SchoolId::Conjuration, level: 5, description: "This spell functions as whip of spiders, except it summons centipedes, and any creature you strike with the whip takes swarm damage as if it were attacked by a centipede swarm (2d6 points of damage plus poison and distraction, Bestiary 43). If you transform the whip into a centipede swarm, it has 10 hit points." },
     SpellListEntry { key: "Whip of Spiders", school: Pf1SchoolId::Conjuration, level: 2, description: "You summon hundreds of Diminutive spiders, which cling together in the form of a whip made for a creature of your size. You can wield this object as if it were an actual whip, except you make a melee touch attack with it instead of a regular attack. Any creature you strike with the whip takes swarm damage as if it were attacked by a spider swarm (1d6 points of damage plus poison and distraction, Bestiary 258). The swarm whip is able to damage creatures with armor or natural armor, even if a normal whip could not. It cannot be used to make bull rush, grapple, or trip attacks, and (unlike a swarm) is subject to a miss chance for concealment and cover. The whip is immune to all weapon damage, is never staggered or reduced to a dying state by damage, and is immune to any spell or effect that targets a specific number of creatures (including single-target spells such as disintegrate). The whip takes half again as much damage from spells or effects that affect an area, but since it is considered part of your gear, it takes damage only if you fail a saving throw on a 1 or if it is specifically targeted by an opponent. The whip does not have a swarm's susceptibility to high winds. As a standard action, you can transform the whip into a spider swarm (all squares of the swarm must be within 15 feet of you); thereafter it functions as summon swarm. The spider swarm has 3 hit points and persists in that form for 2 rounds or until the end of this spell's duration, whichever comes first." },
     SpellListEntry { key: "Widen Auras", school: Pf1SchoolId::Transmutation, level: 2, description: "The range of your antipaladin or paladin auras doubles. For example, if you're a paladin, your aura of courage affects allies within 20 feet instead of within 10 feet." },
-    SpellListEntry { key: "Summon Nature's Ally I", school: Pf1SchoolId::Conjuration, level: 1, description: "This spell summons an extraplanar creature [typically an outsider, elemental, or magical beast native to another plane]. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. The spell conjures one of the creatures from the 1st Level list on Table 10-5. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned Nature's Ally cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities. Creatures cannot be summoned into an environment that cannot support them. Creatures summoned using this spell cannot use spells or spell-like abilities that duplicate spells with expensive material components [such as wish]. When you use a summoning spell to summon a creature with an alignment or elemental subtype, it is a spell of that type. Creatures on Table 10-5 marked with an \"*\" are summoned with the celestial template, if you are good, and the fiendish template, if you are evil. If you are neutral, you may choose which template to apply to the creature. Creatures marked with an \"*\" always have an alignment that matches yours, regardless of their usual alignment. Summoning these creatures makes the summoning spell's type match your alignment. [Table Not Included]" },
-    SpellListEntry { key: "Summon Nature's Ally II", school: Pf1SchoolId::Conjuration, level: 2, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list." },
-    SpellListEntry { key: "Summon Nature's Ally III", school: Pf1SchoolId::Conjuration, level: 3, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list." },
-    SpellListEntry { key: "Summon Nature's Ally IV", school: Pf1SchoolId::Conjuration, level: 4, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
-    SpellListEntry { key: "Summon Nature's Ally V", school: Pf1SchoolId::Conjuration, level: 5, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
-    SpellListEntry { key: "Summon Nature's Ally VI", school: Pf1SchoolId::Conjuration, level: 6, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
-    SpellListEntry { key: "Summon Nature's Ally VII", school: Pf1SchoolId::Conjuration, level: 7, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
-    SpellListEntry { key: "Summon Nature's Ally VIII", school: Pf1SchoolId::Conjuration, level: 8, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
-    SpellListEntry { key: "Summon Nature's Ally IX", school: Pf1SchoolId::Conjuration, level: 9, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally I", school: Pf1SchoolId::Conjuration, level: 1, description: "This spell summons an extraplanar creature [typically an outsider, elemental, or magical beast native to another plane]. It appears where you designate and acts immediately, on your turn. It attacks your opponents to the best of its ability. If you can communicate with the creature, you can direct it not to attack, to attack particular enemies, or to perform other actions. The spell conjures one of the creatures from the 1st Level list on Table 10-5. You choose which kind of creature to summon, and you can choose a different one each time you cast the spell. A summoned Nature's Ally cannot summon or otherwise conjure another creature, nor can it use any teleportation or planar travel abilities. Creatures cannot be summoned into an environment that cannot support them. Creatures summoned using this spell cannot use spells or spell-like abilities that duplicate spells with expensive material components [such as wish]. When you use a summoning spell to summon a creature with an alignment or elemental subtype, it is a spell of that type. Creatures on Table 10-5 marked with an \"*\" are summoned with the celestial template, if you are good, and the fiendish template, if you are evil. If you are neutral, you may choose which template to apply to the creature. Creatures marked with an \"*\" always have an alignment that matches yours, regardless of their usual alignment. Summoning these creatures makes the summoning spell's type match your alignment. [Table Not Included]" },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally II", school: Pf1SchoolId::Conjuration, level: 2, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally III", school: Pf1SchoolId::Conjuration, level: 3, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally IV", school: Pf1SchoolId::Conjuration, level: 4, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 4th-level list, 1d3 creatures of the same kind from the 3rd-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally V", school: Pf1SchoolId::Conjuration, level: 5, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally VI", school: Pf1SchoolId::Conjuration, level: 6, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally VII", school: Pf1SchoolId::Conjuration, level: 7, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally VIII", school: Pf1SchoolId::Conjuration, level: 8, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 8th-level list, 1d3 creatures of the same kind from the 7th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
+    SpellListEntry { key: "Naturalist Summon Nature's Ally IX", school: Pf1SchoolId::Conjuration, level: 9, description: "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 9th-level list, 1d3 creatures of the same kind from the 8th-level list, or 1d4+1 creatures of the same kind from a lower-level list." },
     SpellListEntry { key: "Summon Monster V (fire elementals only)", school: Pf1SchoolId::Conjuration, level: 5, description: "This spell functions like summon monster I, except that you can only summon Fire Elementals." },
 ];
 
@@ -285,13 +301,52 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
     }
 }
 
-/// Resolves an ACG spell by name, scoped to `RuleSetId::Acg`. Returns
-/// `None` for any other rule set (cross-book invariant, mirrors
-/// `acg::class_chassis_resolve`), and `None` when the key isn't in
-/// `SPELL_LIST`.
-pub fn spell_resolve(key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
+/// The `(KEY:` token, display name`)` pair for each of the 9
+/// `acg_spells.lst` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`acg_spells.lst:785`-`793`), e.g. `:787` is
+/// `Summon Nature's Ally III<TAB>KEY:Naturalist Summon Nature's Ally III`.
+/// Every other ingested ACG row carries no `KEY:` token at all, so its
+/// display name *is* its key and it needs no entry here.
+///
+/// This exists because the two columns serve different jobs and both are
+/// real: the KEY is the record's cross-book identity (see [`SpellListEntry::key`]),
+/// while the display name is what a selection actually carries. It is a
+/// literal transcription of the corpus, not a derived rule — nothing here
+/// assumes the KEY is the display name with an archetype word glued on.
+pub const ARCHETYPE_QUALIFIED_KEYS: &[(&str, &str)] = &[
+    ("Naturalist Summon Nature's Ally I", "Summon Nature's Ally I"),
+    ("Naturalist Summon Nature's Ally II", "Summon Nature's Ally II"),
+    ("Naturalist Summon Nature's Ally III", "Summon Nature's Ally III"),
+    ("Naturalist Summon Nature's Ally IV", "Summon Nature's Ally IV"),
+    ("Naturalist Summon Nature's Ally V", "Summon Nature's Ally V"),
+    ("Naturalist Summon Nature's Ally VI", "Summon Nature's Ally VI"),
+    ("Naturalist Summon Nature's Ally VII", "Summon Nature's Ally VII"),
+    ("Naturalist Summon Nature's Ally VIII", "Summon Nature's Ally VIII"),
+    ("Naturalist Summon Nature's Ally IX", "Summon Nature's Ally IX"),
+];
+
+/// Resolves an ACG spell by either of its two corpus name columns, scoped
+/// to `RuleSetId::Acg`. Returns `None` for any other rule set (cross-book
+/// invariant, mirrors `acg::class_chassis_resolve`), and `None` when
+/// `name_or_key` names no ACG record.
+///
+/// A record's `KEY:` token always resolves. So does its display name,
+/// when the two differ — the 9 rows in [`ARCHETYPE_QUALIFIED_KEYS`] —
+/// because a caller may hold only the name a selection carries, with no
+/// archetype context. The KEY is tried first, so an exact record key can
+/// never be shadowed by another record's display name; within ACG the
+/// question is moot, since no display name in that table is also a record
+/// key (asserted by `tests/spell_cross_book_identity.rs`).
+pub fn spell_resolve(name_or_key: &str, rule_set: RuleSetId) -> Option<&'static SpellListEntry> {
     if rule_set != RuleSetId::Acg {
         return None;
     }
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == name_or_key) {
+        return Some(entry);
+    }
+    let key = ARCHETYPE_QUALIFIED_KEYS
+        .iter()
+        .find(|(_, display)| *display == name_or_key)
+        .map(|(key, _)| *key)?;
     SPELL_LIST.iter().find(|entry| entry.key == key)
 }

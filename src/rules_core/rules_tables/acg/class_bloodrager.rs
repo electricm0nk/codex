@@ -54,3 +54,7 @@ pub fn class_table() -> Vec<ClassTableRow> {
         })
         .collect()
 }
+
+/// `HD:10` on the real `CLASS:Bloodrager` record (Bloodrager HD:10 in
+/// `advanced_class_guide/acg_classes.lst`).
+pub const HIT_DIE: u8 = 10;

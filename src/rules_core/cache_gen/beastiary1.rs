@@ -68,6 +68,9 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::rules_tables::beastiary1::equipment_tables::EquipmentTableEntry;
+use crate::rules_core::rules_tables::beastiary1::natural_attack_provenance::{
+    self, AttackSource as ProvenanceSource,
+};
 use crate::rules_core::rules_tables::beastiary1::{self, MonsterId, MonsterStatBlock, NaturalAttack};
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -127,6 +130,58 @@ pub enum Source {
     SameBookFallback { fallback_basis: String },
 }
 
+/// Provenance for a **single field**, where the record-level [`Source`]
+/// cannot tell the whole truth.
+///
+/// `decisions.md §11.2`'s discriminated union is a *record*-level shape:
+/// it assumes one provenance kind per record. Twelve Bestiary 1 monsters
+/// break that assumption — their chassis fields and their attack *names*
+/// really do come from their own `b1_races.lst` row (`lst_token`), but
+/// their attack *damage dice* do not exist anywhere in the corpus and are
+/// grounded from published values instead.
+///
+/// Emitting the whole record as `web_second_source` would be wrong (and
+/// would misattribute the CR/size/speed/type/page fields); leaving it as
+/// a bare `lst_token` would silently imply the dice came from that line.
+/// `§11.3` anticipated exactly this and directs the generator to "flag
+/// anything it can't confidently attribute rather than guessing" — this
+/// field is that flag. The record-level `source` stays truthfully
+/// `lst_token`, and this array narrows the claim for the affected
+/// fields.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind", rename_all = "snake_case")]
+pub enum FieldSource {
+    LstToken {
+        path: String,
+        sha256: String,
+        line: u32,
+        record_key: String,
+    },
+    WebSecondSource {
+        /// At least two independent agreeing sources, allowed domains
+        /// only (`§11.5`).
+        urls: Vec<String>,
+        fetched_at: String,
+        identity_match_basis: String,
+    },
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct FieldProvenance {
+    /// JSON pointer-ish path of the field this describes, e.g.
+    /// `natural_attacks[1].damage_dice`.
+    pub field: String,
+    /// The value at `field`, duplicated so the citation is readable
+    /// without cross-indexing.
+    pub value: String,
+    /// The real token on the monster's own row that *names* this attack
+    /// (only the dice needed grounding).
+    pub corpus_name_token: String,
+    /// Verbatim published "Melee" text the dice were read from.
+    pub published_melee_text: String,
+    pub source: FieldSource,
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct CacheRecord<T: Serialize> {
     pub population: Population,
@@ -134,6 +189,12 @@ pub struct CacheRecord<T: Serialize> {
     pub ingested_at: String,
     pub data: T,
     pub source: Source,
+    /// Present only on records where some field's provenance differs
+    /// from the record-level `source` (the 12 grounded monsters). Absent
+    /// everywhere else, so equipment records and the 29 fully
+    /// corpus-transcribed monsters are byte-identical to before.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub field_provenance: Option<Vec<FieldProvenance>>,
 }
 
 // ---------------------------------------------------------------------
@@ -177,6 +238,10 @@ pub struct EquipmentData {
 
 const BOOK_DIR: &str = "pathfinder/paizo/roleplaying_game/bestiary";
 const MONSTERS_FILE: &str = "b1_races.lst";
+/// Carries the `Crocodile ~ Tail Slap` record, the one cross-file
+/// `NATURALATTACKS:` token this book's grounded attacks recover from the
+/// real corpus (see `rules_tables::beastiary1::natural_attack_provenance`).
+const RACE_ABILITIES_FILE: &str = "b1_abilities_race.lst";
 
 fn book_dir(corpus_root: &Path) -> PathBuf {
     corpus_root.join(BOOK_DIR)
@@ -274,6 +339,12 @@ fn generate_monsters(
     let sha256 = sha256_file(&path)?;
     let monster_dir = out_dir.join("monster");
 
+    // Hashed once up front: only the Crocodile Tail Slap provenance row
+    // cites it, but the citation must carry a real, checkable sha256
+    // like every other `lst_token` citation in this cache.
+    let race_abilities_path = book_dir(corpus_root).join(RACE_ABILITIES_FILE);
+    let race_abilities_sha256 = sha256_file(&race_abilities_path)?;
+
     for &monster_id in MonsterId::ALL {
         let stat_block: MonsterStatBlock = beastiary1::monster_resolve(monster_id, RuleSetId::Bestiary1)
             .unwrap_or_else(|| panic!("{monster_id:?}: MonsterId::ALL must resolve for RuleSetId::Bestiary1"));
@@ -303,12 +374,54 @@ fn generate_monsters(
             .map(|a: &NaturalAttack| NaturalAttackData { name: a.name.clone(), damage_dice: a.damage_dice.clone() })
             .collect();
 
+        // Narrow the provenance claim for any attack whose dice are not
+        // transcribed from this monster's own row. Built from the same
+        // `natural_attack_provenance` table the shipped Rust tables and
+        // `tests/v06_beastiary1_natural_attack_grounding.rs` use, so the
+        // JSON citation cannot drift from the value it describes.
+        let monster_key = format!("beastiary1:monster:{slug}");
+        let grounded = natural_attack_provenance::provenance_for(&monster_key);
+        let field_provenance: Option<Vec<FieldProvenance>> = if grounded.is_empty() {
+            None
+        } else {
+            Some(
+                grounded
+                    .iter()
+                    .filter_map(|g| {
+                        let index = stat_block.natural_attacks.iter().position(|a| a.name == g.attack_name)?;
+                        let source = match g.source {
+                            ProvenanceSource::LstToken { path: p, line, record_key } => FieldSource::LstToken {
+                                path: format!("{BOOK_DIR}/{}", p.rsplit('/').next().unwrap_or(p)),
+                                sha256: race_abilities_sha256.clone(),
+                                line,
+                                record_key: record_key.to_string(),
+                            },
+                            ProvenanceSource::WebSecondSource { urls, fetched_at, identity_match_basis } => {
+                                FieldSource::WebSecondSource {
+                                    urls: urls.iter().map(|u| (*u).to_string()).collect(),
+                                    fetched_at: fetched_at.to_string(),
+                                    identity_match_basis: identity_match_basis.to_string(),
+                                }
+                            }
+                        };
+                        Some(FieldProvenance {
+                            field: format!("natural_attacks[{index}].damage_dice"),
+                            value: g.damage_dice.to_string(),
+                            corpus_name_token: g.corpus_name_token.to_string(),
+                            published_melee_text: g.published_melee_text.to_string(),
+                            source,
+                        })
+                    })
+                    .collect(),
+            )
+        };
+
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
             ingested_at: ingested_at.to_string(),
             data: MonsterData {
-                id: format!("beastiary1:monster:{slug}"),
+                id: monster_key.clone(),
                 name: stat_block.name.clone(),
                 challenge_rating: stat_block.challenge_rating,
                 size: stat_block.size.clone(),
@@ -319,6 +432,7 @@ fn generate_monsters(
                 natural_attacks,
             },
             source,
+            field_provenance,
         };
         write_json(&monster_dir, &slug, &record)?;
         report.monsters_written += 1;
@@ -402,6 +516,10 @@ fn generate_equipment(
                 description: entry.description.map(|d| d.to_string()),
             },
             source,
+            // Equipment provenance is fully expressible at record level
+            // (each record's description has exactly one source), so no
+            // record here needs the per-field narrowing.
+            field_provenance: None,
         };
         let slug = slugify(entry.key);
         write_json(&equipment_dir, &slug, &record)?;

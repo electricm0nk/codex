@@ -55,11 +55,36 @@
 //! its value stays constant across the whole range rather than merely
 //! assuming it.
 //!
-//! **Verified negative finding:** unlike Wizard, Druid has no
-//! `ground_druid_prepared_spellbook`-shaped later grounding anywhere in
-//! `pilot_compute.rs` — grepping the file for `"class_spell.druid"` turns
-//! up exactly one hit, `class_spell.druid.prepared_divine.unsupported`,
-//! which is pushed to `diagnostics` (not `explanations`; see
+//! **UPDATE (v0.6 alpha swarm, risks item 8, 2026-07-25): the "verified
+//! negative finding" below was true when this file was written but is now
+//! STALE and a real gap exists.** The seventh slice
+//! (`explain_druid_level1_spell_baseline`'s real prepared-divine spell
+//! grounding) added exactly the `ground_druid_prepared_spellbook`-shaped
+//! later grounding this file's audit method was designed to catch:
+//! `ground_druid_prepared_spells` now pushes real, level-rising
+//! `class_spell.druid.daily_preparation` /
+//! `class_spell.druid.total_spells_per_day.spell_level_N` explanations
+//! onto `.explanations` once the prepared-spell posture is valid (verified
+//! directly: `total_spells_per_day.spell_level_0` rises 3 -> 4 from druid
+//! level 1 -> 2). `druid.rs`'s `is_druid_pillar_id` filter does NOT match
+//! the `"class_spell.druid."` prefix, so these real, changing facts are
+//! silently dropped from every `LevelUpPlan` — the exact SD-24 Wizard bug
+//! shape, now real. This is a genuine production defect in
+//! `level_up/druid.rs`, outside this QA pass's `tests/**` scope; tracked
+//! and being fixed separately (assigned to backend, confirmed by the
+//! lead). The two tests below are fixed only to reflect the parts of this
+//! file's premise that remain true (the diagnostic/explanation Vec
+//! separation, and the two now-three flat/level-1-only exclusions); they
+//! do NOT widen this audit to formally prove the `class_spell.druid.*`
+//! gap, so as not to duplicate the RED test backend is building for the
+//! actual fix.
+//!
+//! **Original (now partially stale) negative finding, kept for history:**
+//! unlike Wizard, Druid has no `ground_druid_prepared_spellbook`-shaped
+//! later grounding anywhere in `pilot_compute.rs` — grepping the file for
+//! `"class_spell.druid"` turns up exactly one hit,
+//! `class_spell.druid.prepared_divine.unsupported`, which is pushed to
+//! `diagnostics` (not `explanations`; see
 //! `tests/sd13_druid_level1_spell_baseline.rs`'s own
 //! `druid_level1_stays_blocked_on_prepared_divine_spell_posture_burden`
 //! test, which keeps this diagnostic claim-blocking) and so is never even
@@ -67,9 +92,10 @@
 //! `.explanations` field). Every real explanation id
 //! `explain_druid_level1_spell_baseline` emits uses only the two prefixes
 //! `druid.rs`'s `is_druid_pillar_id` already matches
-//! (`"class_chassis.druid."` and `"class_feature.druid."`). This test
-//! passes cleanly on the as-shipped module — that is the audit's real,
-//! verified result, not a skipped check.
+//! (`"class_chassis.druid."` and `"class_feature.druid."`) -- this part
+//! remains true; what changed is that a NEW family of real ids
+//! (`"class_spell.druid."`) now also exists and is NOT one of the two
+//! matched prefixes.
 
 use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
@@ -91,6 +117,21 @@ const RECOGNITION_ONLY_ID: &str = "class_chassis.spell_baseline.druid";
 /// but is flat and granted starting at level 1, so it can never appear as
 /// a grant within the `from_level >= 1` sweep this codebase models.
 const FLAT_LEVEL_ONE_ID: &str = "class_chassis.druid.nature_sense";
+
+/// (v0.6 alpha swarm, risks item 8) Two more ids in the identical
+/// structural category as `FLAT_LEVEL_ONE_ID`, surfaced once the seventh
+/// slice's prepared-divine spell grounding started emitting real
+/// `class_chassis.druid.*` spell-math records: both are pure functions of
+/// the Wisdom modifier alone (a flat bonus-spells-per-day lookup and the
+/// `10 + spell level + Wisdom modifier` save DC formula), constant at
+/// every druid level once 1st-level spells are accessible (from level 1
+/// onward), so neither can ever appear as a grant within the
+/// `from_level >= 1` sweep -- verified, not assumed (see
+/// `flat_level_one_spell_math_ids_are_verified_constant_across_the_whole_range`).
+const FLAT_LEVEL_ONE_SPELL_MATH_IDS: [&str; 2] = [
+    "class_chassis.druid.bonus_spells_per_day.spell_level_1",
+    "class_chassis.druid.spell_save_dc.spell_level_1",
+];
 
 fn human_druid_input(level: u8) -> CharacterInput {
     CharacterInput {
@@ -115,6 +156,7 @@ fn human_druid_input(level: u8) -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -175,6 +217,7 @@ fn every_real_druid_explanation_id_survives_the_level_up_filter_except_the_docum
         .filter(|id| {
             id.as_str() != RECOGNITION_ONLY_ID
                 && id.as_str() != FLAT_LEVEL_ONE_ID
+                && !FLAT_LEVEL_ONE_SPELL_MATH_IDS.contains(&id.as_str())
                 && !granted_ids.contains(id.as_str())
         })
         .collect();
@@ -240,34 +283,91 @@ fn the_flat_nature_sense_id_passes_the_filter_but_is_verified_constant_across_th
 }
 
 #[test]
+fn the_flat_level_one_spell_math_ids_are_verified_constant_across_the_whole_range() {
+    // Confirms FLAT_LEVEL_ONE_SPELL_MATH_IDS's exclusion above is legitimate,
+    // mirroring the nature-sense proof above: both ids are pure functions of
+    // the Wisdom modifier alone (bonus_spells_per_day.spell_level_1's flat
+    // ability-modifier lookup; spell_save_dc.spell_level_1's `10 + 1 +
+    // Wisdom modifier` formula), so once 1st-level spells are accessible
+    // (from druid level 1 onward, a fixed fact independent of level), their
+    // values never change and their absence from granted_ids is structural,
+    // not a filter drop.
+    for &id in FLAT_LEVEL_ONE_SPELL_MATH_IDS.iter() {
+        let mut values = Vec::new();
+        for level in 1..=MAX_SUPPORTED_DRUID_LEVEL {
+            let input = human_druid_input(level);
+            let computation = compute_pilot_base_chassis(&input);
+            let explanation = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("expected {id} present at every level, missing at level {level}"));
+            values.push(explanation.value);
+        }
+        assert!(
+            values.iter().all(|&v| v == values[0]),
+            "{id} must be constant across levels 1..=15 to justify excluding it from the 'must \
+             eventually be granted' requirement above: {values:?}"
+        );
+    }
+}
+
+#[test]
 fn the_unsupported_prepared_divine_spell_diagnostic_is_never_read_as_an_explanation() {
-    // Direct negative control for this audit's own verified finding: the
-    // one `"class_spell.druid"`-prefixed id anywhere in pilot_compute.rs
-    // (`class_spell.druid.prepared_divine.unsupported`) is a claim-
-    // blocking diagnostic, not an explanation -- druid.rs's
-    // `druid_chassis_explanations` only ever reads `.explanations`, so
-    // this id structurally cannot reach `is_druid_pillar_id` at all,
-    // unlike Wizard's real `class_spell.wizard.*` explanations which DID
-    // reach (and were then dropped by) the pre-fix filter.
+    // Direct negative control, narrowed (v0.6 alpha swarm, risks item 8):
+    // the `class_spell.druid.prepared_divine.unsupported` DIAGNOSTIC id
+    // itself must never appear as an EXPLANATION id -- diagnostics and
+    // explanations are separate Vecs and must stay that way, regardless of
+    // whether the diagnostic currently fires. This narrower claim survives
+    // the seventh slice unchanged; the broader original premise ("no
+    // class_spell.druid.*-prefixed explanation exists anywhere") does NOT
+    // survive it -- `ground_druid_prepared_spells` now pushes real
+    // `class_spell.druid.daily_preparation` /
+    // `class_spell.druid.total_spells_per_day.*` explanations once the
+    // posture is valid (see this file's header comment update). Uses a
+    // bare fixture (a genuinely valid posture, so the diagnostic does not
+    // fire here) to prove the real spell-math explanations coexist with
+    // the diagnostic's absence without the diagnostic id itself leaking in.
     let input = human_druid_input(1);
     let computation = compute_pilot_base_chassis(&input);
+
+    const PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID: &str =
+        "class_spell.druid.prepared_divine.unsupported";
 
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_spell.druid")),
-        "no class_spell.druid.*-prefixed explanation should exist anywhere in this codebase \
-         (Druid's prepared divine spell posture has no later grounding, unlike Wizard's SD-21 \
-         E6b.2 ground_wizard_prepared_spellbook): {:?}",
+            .any(|e| e.id == PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID),
+        "the prepared-divine-spell diagnostic id must never appear in .explanations, regardless \
+         of whether real class_spell.druid.* spell-math explanations also exist: {:?}",
         computation.explanations
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported" && d.claim_blocking),
-        "the prepared divine spell posture must stay a claim-blocking diagnostic: {:?}",
-        computation.diagnostics
-    );
+
+    // (v0.6 alpha swarm, risks item 8) The bare fixture is a genuinely valid
+    // posture, so the diagnostic correctly does not fire here -- if absent,
+    // confirm no spell is fabricated merely because it stopped firing.
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == PREPARED_DIVINE_UNSUPPORTED_DIAGNOSTIC_ID)
+    {
+        Some(diagnostic) => assert!(
+            diagnostic.claim_blocking,
+            "if the prepared divine spell posture diagnostic fires, it must be claim-blocking"
+        ),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.druid.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }

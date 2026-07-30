@@ -168,24 +168,28 @@ fn paladin_level10_blocker_stays_and_stops_deferring_the_dc_arithmetic() {
     let input = load(PALADIN_LEVEL10_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID)
-        .expect("the partial-caster blocker must still exist at level 10");
-    assert!(blocker.claim_blocking, "the blocker must stay claim-blocking");
-    assert!(
-        !blocker.message.contains("spell save \\
-             DCs are deferred")
-            && !blocker.message.contains("and spell save DCs are deferred"),
-        "the blocker must stop deferring the now-grounded base DC arithmetic: {}",
-        blocker.message
-    );
-    assert!(
-        blocker.message.contains("partial") && blocker.message.contains("level - 3"),
-        "the blocker must keep the tokens its level-1 sibling pins: {}",
-        blocker.message
-    );
+    // (v0.6 alpha swarm, risks item 8, 2026-07-25) `PARTIAL_CASTER_BLOCKER_ID`
+    // is no longer unconditional, and its message shape changed entirely
+    // (it's a real, conditional validation now, not a static deferred-work
+    // list). PALADIN_LEVEL10_FIXTURE predates spells_selected (zero
+    // prepared), so the posture is genuinely valid and the blocker
+    // correctly does not fire -- the real "DC arithmetic is grounded, no
+    // slots fabricated" guarantee now comes from the daily-preparation
+    // record's own count being honestly 0.
+    match computation.diagnostics.iter().find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID) {
+        Some(blocker) => assert!(blocker.claim_blocking, "the blocker must stay claim-blocking"),
+        None => {
+            let daily_prep = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.paladin.daily_preparation")
+                .expect("the daily-preparation record must exist when the posture is valid");
+            assert_eq!(
+                daily_prep.value, 0,
+                "no spells are fabricated at paladin level 10: {daily_prep:?}"
+            );
+        }
+    }
 }
 
 // ----- Negative control: no leak onto other classes -----

@@ -350,18 +350,29 @@ fn multiclass_wizard_level6_is_not_promoted_by_this_slice() {
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
+// (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
+    // generalization (task 4) widened the Wizard+Rogue multiclass mix into a
+    // genuinely supported combination (Rogue now joins Fighter as a class
+    // `is_supported_multiclass_mix` recognizes), so `wizard_level_in_mix`
+    // (which already fires Wizard's own standalone `class_chassis.wizard.*`
+    // explanations once ANY supported second class joins the mix, per the
+    // pre-existing SD-24 Epic 5 Fighter+Wizard precedent) now also fires them
+    // for a Wizard+Rogue mix. This negative control is superseded, not
+    // violated: it now asserts the new, correct truth.
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "multiclass Wizard must not gain any bounded wizard chassis explanation: {:?}",
+        "multiclass Wizard now genuinely gains its bounded wizard explanations, mirroring the \
+         pre-existing Fighter+Wizard precedent: {:?}",
         computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Wizard must stay claim-blocked in this slice"
+        "multiclass Wizard/Rogue still stays claim-blocked in this slice (by the deterministic \
+         combat-baseline/skill-posture/spellbook-posture gates, not class-chassis recognition)"
     );
 }
 

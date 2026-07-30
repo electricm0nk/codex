@@ -34,7 +34,9 @@
 //! to pass), the Sorcerer F7 baseline truth, and the Human race / interaction
 //! seam.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    AcquisitionMode, CharacterInput, SpellSelection, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
     PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
@@ -168,20 +170,46 @@ fn paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers() {
         );
     }
 
-    // The accepted F6 hybrid pair and the partial-caster spell burden remain
-    // claim-blocking: this slice grounds level gates, not the hybrid chassis
-    // pair and not the spell surface.
-    for id in [
-        F6_HYBRID_PALADIN_FEATURE_ID,
-        F6_HYBRID_PALADIN_SPELL_ID,
-        PALADIN_PARTIAL_CASTER_ID,
-    ] {
-        let diag = claim_blocking(&computation, id);
+    // Both F6 hybrid blanket blockers are now retired. The non-spell class-feature
+    // one went first -- it flatly claimed Smite Evil / lay on hands / divine grace /
+    // mercy were unimplemented, which this exact per-class decomposition (dispatched
+    // on the same input) contradicts by grounding Smite Evil for real and lay on
+    // hands / divine grace / mercy as correct level-1 absences. The later-spell one
+    // followed (2026-07-28) for the identical reason: Paladins have no `CAST:` row
+    // in `cr_classes.lst` before class level 4, and this same function already
+    // grounds the level-1 spell posture (effective caster level 0, access ceiling 0,
+    // zero prepared spells), so the blanket "out of scope" claim was false. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs` and
+    // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
+    for retired in [F6_HYBRID_PALADIN_FEATURE_ID, F6_HYBRID_PALADIN_SPELL_ID] {
         assert!(
-            !diag.message.is_empty(),
-            "remaining paladin blocker '{id}' must carry a non-empty message"
+            !has_diagnostic(&computation, retired),
+            "the retired F6 hybrid blocker '{retired}' must not reappear: {:?}",
+            computation.diagnostics
         );
     }
+
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: at level 1 no
+    // paladin spell level is accessible at all, so a bare fixture with zero
+    // prepared spells has a genuinely valid (empty) posture and the blocker
+    // correctly does not fire here -- this slice still grounds no spell
+    // surface, it just no longer claims a burden that isn't genuinely
+    // violated. A genuinely invalid preparation (an off-list spell) still
+    // trips it, proving the blocker isn't simply retired outright.
+    let mut invalid_input = input;
+    invalid_input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Magic Missile".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
+    let invalid_computation = compute_pilot_base_chassis(&invalid_input);
+    let diag = claim_blocking(&invalid_computation, PALADIN_PARTIAL_CASTER_ID);
+    assert!(
+        !diag.message.is_empty(),
+        "the partial-caster blocker must still fire and carry a non-empty message when the \
+         posture is genuinely violated"
+    );
 }
 
 #[test]
@@ -328,7 +356,20 @@ fn paladin_smite_evil_uses_per_day_attack_and_damage_bonus_are_grounded() {
 
 #[test]
 fn paladin_partial_caster_blocker_is_separate_and_partial_caster_specific() {
-    let input = load(PALADIN_FIXTURE);
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // PALADIN_PARTIAL_CASTER_ID is no longer unconditional: a bare level-1
+    // fixture (zero prepared spells, nothing accessible yet anyway) has a
+    // genuinely valid posture, so the blocker would not fire at all. This
+    // test is specifically about the blocker's MESSAGE content, so a
+    // genuinely invalid preparation (an off-list spell) is added to make it
+    // fire for real, mirroring the same construction used in
+    // `paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers`.
+    let mut input = load(PALADIN_FIXTURE);
+    input.chosen.spells_selected.push(SpellSelection {
+        spell_id: "Magic Missile".to_owned(),
+        source_class_id: "class:paladin".to_owned(),
+        acquisition_mode: AcquisitionMode::Prepared,
+    });
     let computation = compute_pilot_base_chassis(&input);
 
     let spell = claim_blocking(&computation, PALADIN_PARTIAL_CASTER_ID);
@@ -430,18 +471,40 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
 
 #[test]
 fn paladin_f6_hybrid_blockers_remain_intact_under_separation() {
-    // The F6 hybrid blocker ids must keep being claim-blocking. This slice is
-    // an extension, never a downgrade, of the F6 acceptance surface.
+    // Both F6 hybrid blanket blockers are retired, each superseded by grounded
+    // per-class records on this same input rather than merely dropped: the
+    // class-feature one by Smite Evil / the level-gate records, and the
+    // later-spell one (2026-07-28) by the partial-caster spell posture this
+    // very file pins below. This slice remains an extension, never a downgrade,
+    // of the F6 acceptance surface -- what F6 asserted as an unmet burden is now
+    // asserted as a computed value. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs` and
+    // `tests/v06_hybrid_level1_no_spellcasting_is_computed.rs`.
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    for retired in [F6_HYBRID_PALADIN_FEATURE_ID, F6_HYBRID_PALADIN_SPELL_ID] {
+        assert!(
+            !has_diagnostic(&computation, retired),
+            "the retired F6 hybrid blocker '{retired}' must not reappear: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    // The burden the retired spell blocker used to assert is now a grounded
+    // computed value, not an absence: this is what makes the retirement an
+    // extension rather than a downgrade.
     assert!(
-        has_diagnostic(&computation, F6_HYBRID_PALADIN_FEATURE_ID),
-        "F6 hybrid class-feature blocker must remain claim-blocking"
-    );
-    assert!(
-        has_diagnostic(&computation, F6_HYBRID_PALADIN_SPELL_ID),
-        "F6 hybrid spell blocker must remain claim-blocking"
+        has_explanation(
+            &computation,
+            "class_chassis.paladin.partial_caster.effective_caster_level"
+        ) && has_explanation(
+            &computation,
+            "class_chassis.paladin.partial_caster.spell_level_access"
+        ),
+        "the retired spell blocker must be superseded by grounded partial-caster \
+         records, not merely dropped: {:?}",
+        computation.explanations
     );
 
     // The F6 chassis recognition explanation must still be present so the F6

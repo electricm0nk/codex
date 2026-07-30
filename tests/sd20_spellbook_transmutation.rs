@@ -91,6 +91,7 @@ fn wizard_input_with_enlarge_person_prepared(intelligence: i16) -> CharacterInpu
                 source_class_id: "class:wizard".to_string(),
                 acquisition_mode: AcquisitionMode::Prepared,
             }],
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }

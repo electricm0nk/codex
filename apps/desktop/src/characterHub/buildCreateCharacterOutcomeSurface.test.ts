@@ -7,12 +7,18 @@ const PALADIN_HUMAN_CONTEXT = {
   raceId: 'race:human',
   classId: 'class:paladin',
   classLabel: 'Paladin',
-  supportLevel: 'partial-human-only' as const,
+  supportLevel: 'human-diagnostics-only' as const,
 };
 const PALADIN_DWARF_CONTEXT = {
   raceId: 'race:dwarf',
   classId: 'class:paladin',
   classLabel: 'Paladin',
+  supportLevel: 'human-diagnostics-only' as const,
+};
+const WIZARD_DWARF_CONTEXT = {
+  raceId: 'race:dwarf',
+  classId: 'class:wizard',
+  classLabel: 'Wizard',
   supportLevel: 'partial-human-only' as const,
 };
 const ROGUE_CONTEXT = { raceId: 'race:human', classId: 'class:rogue', classLabel: 'Rogue', supportLevel: 'none' as const };
@@ -21,7 +27,8 @@ async function main() {
   verifiesSavedOutcome();
   verifiesBlockedOutcomeGroupsNamedDiagnostics();
   verifiesBlockedOutcomeForUnsupportedClassShowsHonestSentence();
-  verifiesBlockedOutcomeForWrongRaceShowsHumanOnlySentence();
+  verifiesBlockedOutcomeForWrongRaceOnGenuinelyPartialClassShowsHumanOnlySentence();
+  verifiesBlockedOutcomeForWrongRaceOnHumanDiagnosticsOnlyClassNeverImpliesHumanWorks();
   verifiesClaimBlockingFilterExcludesNonBlockingDiagnostics();
 }
 
@@ -39,7 +46,28 @@ function verifiesSavedOutcome() {
         totalSaves: { fortitude: 4, reflex: 2, will: 0 },
         selectedSkillModifiers: { climb: 5, intimidate: -1, swim: 5 },
       },
-      corpusDerived: { schoolCoverage: [], equippedItems: [] },
+      corpusDerived: {
+        schoolCoverage: [],
+        equippedItems: [],
+        equipmentEffects: { perItem: [], armorClassDelta: 0, armorCheckPenaltyTotal: 0 },
+        // Nothing equipped: a real empty loadout at the Strength-10
+        // load.lst row (LOAD:10|100 -> 33 / 66 / 100), which is genuinely a
+        // light load with no penalties. These tests assert refresh/surface
+        // plumbing, not encumbrance values.
+        encumbrance: {
+          totalCarriedWeightLbs: 0,
+          totalCarriedCostGp: 0,
+          lightMaxLbs: 33,
+          mediumMaxLbs: 66,
+          heavyMaxLbs: 100,
+          level: 'Light',
+          loadArmorCheckPenalty: 0,
+          perItem: [],
+          unresolvedItemIds: [],
+        },
+        unresolvedSpellIds: [],
+        unresolvedEquipmentItemIds: [],
+      },
     },
     FIGHTER_CONTEXT
   );
@@ -117,7 +145,35 @@ function verifiesBlockedOutcomeForUnsupportedClassShowsHonestSentence() {
   );
 }
 
-function verifiesBlockedOutcomeForWrongRaceShowsHumanOnlySentence() {
+function verifiesBlockedOutcomeForWrongRaceOnGenuinelyPartialClassShowsHumanOnlySentence() {
+  const surface = buildCreateCharacterOutcomeSurface(
+    {
+      kind: 'Blocked',
+      diagnostics: [
+        { id: 'class_chassis.unsupported', message: 'The base chassis is not yet computed.', claimBlocking: true },
+        { id: 'combat.baseline_unsupported', message: 'Baseline combat stats are not yet computed.', claimBlocking: true },
+        { id: 'defense.total_save.unsupported', message: 'Total saves are not yet computed.', claimBlocking: true },
+        { id: 'skill.selected_modifier.unsupported', message: 'Selected skill modifiers are not yet computed.', claimBlocking: true },
+      ],
+    },
+    WIZARD_DWARF_CONTEXT
+  );
+
+  assertEqual(surface.diagnosticGroups.length, 1, 'generic-only outcome should collapse to one honest group');
+  assert(
+    surface.diagnosticGroups[0].messages[0].toLowerCase().includes('pick human'),
+    'a genuinely partial-human-only class picked with a non-Human race should say picking Human would show a computed build'
+  );
+}
+
+/**
+ * Paladin (like the other 7 `human-diagnostics-only` classes) never reaches
+ * a savable build for ANY race, including Human — Human only swaps in named
+ * diagnostics instead of the generic 4. The wrong-race fallback sentence
+ * must not tell the tester "pick Human" as if that would produce a working
+ * build, unlike the genuinely `partial-human-only` case above.
+ */
+function verifiesBlockedOutcomeForWrongRaceOnHumanDiagnosticsOnlyClassNeverImpliesHumanWorks() {
   const surface = buildCreateCharacterOutcomeSurface(
     {
       kind: 'Blocked',
@@ -132,10 +188,9 @@ function verifiesBlockedOutcomeForWrongRaceShowsHumanOnlySentence() {
   );
 
   assertEqual(surface.diagnosticGroups.length, 1, 'generic-only outcome should collapse to one honest group');
-  assert(
-    surface.diagnosticGroups[0].messages[0].toLowerCase().includes('human'),
-    'a partial-human-only class picked with a non-Human race should explicitly say Human is required'
-  );
+  const message = surface.diagnosticGroups[0].messages[0].toLowerCase();
+  assert(message.includes('not even human'), 'the sentence should be explicit that Human never computes either');
+  assert(!message.includes('pick human'), 'the sentence must not tell the tester to pick Human to get a working build');
 }
 
 function verifiesClaimBlockingFilterExcludesNonBlockingDiagnostics() {

@@ -40,8 +40,21 @@ export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresD
   { name: 'Use Magic Device', ability: 'charisma' },
 ];
 
-/** PF1 core rulebook class skill lists, by class id (see characterHubModel's CLASS_OPTIONS). */
+/**
+ * Class skill lists by class id — one entry per class in `characterHubModel`'s
+ * `CLASS_OPTIONS`. A selectable class missing from here is not a harmless gap:
+ * `isClassSkill` would report every skill as cross-class, so the Skills tab
+ * would quietly show the wrong ranks-to-bonus math rather than showing nothing.
+ */
 const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
+  // ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
+  // Profession, Spellcraft, Use Magic Device. Same list as Wizard plus Use
+  // Magic Device, which Wizard does not get.
+  'class:arcanist': new Set([
+    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
+    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
+    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft', 'Use Magic Device',
+  ]),
   'class:barbarian': new Set([
     'Acrobatics', 'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Nature)', 'Perception', 'Ride', 'Survival', 'Swim',
   ]),
@@ -89,6 +102,30 @@ const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
     'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft',
   ]),
 };
+
+/**
+ * Maps a `SKILLS` display name to the `skill:<snake_case>` wire id the
+ * `set_skill_allocations` Tauri command expects (`SkillAllocation.skill_id`
+ * in `character_input.rs`). Only 5 ids are actually recognized by the
+ * compute engine today (`skill:climb`, `skill:swim`, `skill:intimidate`,
+ * `skill:diplomacy`, `skill:disable_device` — see
+ * `src/rules_core/skill_allocation.rs`'s `skill_key_ability_modifier`), and
+ * those 5 confirm this exact convention (lowercase, spaces/parens to
+ * underscores). The other 30 ids are this same convention extended by
+ * inference, not confirmed against any canonical backend list — backend
+ * flagged the same uncertainty from their side when they shipped the
+ * command. Unrecognized ids are inert on the backend (no modifier
+ * fabricated, no rejection), so sending them is safe either way.
+ */
+export function skillIdFor(skillName: string): string {
+  const normalized = skillName
+    .toLowerCase()
+    .replace(/[()]/g, '')
+    .trim()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return `skill:${normalized}`;
+}
 
 /** Whether `skillName` is a class skill for any class the character holds (multiclass union). */
 export function isClassSkill(heldClasses: HeldClass[], skillName: string): boolean {

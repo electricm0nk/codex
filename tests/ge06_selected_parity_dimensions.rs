@@ -43,10 +43,11 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
         .collect();
     assert_eq!(
         dimension_ids.len(),
-        9,
-        "Expected exactly 9 selected dimensions"
+        10,
+        "Expected exactly 10 selected dimensions"
     );
     assert!(dimension_ids.contains(&"character.identity"));
+    assert!(dimension_ids.contains(&"combat.base_attack_bonus"));
     assert!(dimension_ids.contains(&"combat.baseline_melee_attack_bonus"));
     assert!(dimension_ids.contains(&"defense.baseline_armor_class"));
     assert!(dimension_ids.contains(&"defense.total_save.fortitude"));
@@ -77,6 +78,9 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
     // applied before ability modifiers are derived, raising Strength from +3 to the
     // correct +4, which raises this Strength-derived total from 5 to 6.
+    let base_attack_bonus = find_dimension("combat.base_attack_bonus");
+    assert_eq!(base_attack_bonus.value_i16, Some(1));
+
     let melee_bonus = find_dimension("combat.baseline_melee_attack_bonus");
     assert_eq!(melee_bonus.value_i16, Some(6));
 

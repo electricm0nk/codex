@@ -208,7 +208,7 @@ fn cleric_level5_touch_of_good_bonus_stays_two() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 2,
@@ -219,7 +219,7 @@ fn cleric_level5_touch_of_good_bonus_stays_two() {
 
     let uses = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
+        "class_feature.domain.good_touch_of_good_uses_per_day",
     );
     assert_eq!(
         uses.value, 7,
@@ -255,18 +255,30 @@ fn cleric_level5_still_claim_blocks_domain_powers_and_prepared_divine_burdens() 
         computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking),
+            .any(|d| d.id == "class_feature.cleric.healing_domain.rebuke_death.unsupported" && d.claim_blocking),
         "level-5 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking),
-        "level-5 Cleric must still claim-block on the prepared divine spell posture burden: {:?}",
-        computation.diagnostics
-    );
+    match computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_spell.cleric.prepared_divine.unsupported")
+    {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let prepared_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.cleric.daily_preparation")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                prepared_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- The chassis recognition record is still present at level 5 -----
@@ -304,7 +316,7 @@ fn cleric_level4_truth_is_unchanged_by_this_widening() {
 
     let bonus = explanation(
         &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
+        "class_feature.domain.good_touch_of_good_bonus",
     );
     assert_eq!(
         bonus.value, 2,

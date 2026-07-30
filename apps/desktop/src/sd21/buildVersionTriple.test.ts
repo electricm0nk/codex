@@ -31,14 +31,30 @@ function readCargoTomlVersion(): string {
   return match![1];
 }
 
-function readWorkflowStampVersion(): string {
-  const text = readFileSync(
+const RUN_NUMBER_EXPANSION = '${GITHUB_RUN_NUMBER}';
+
+function readWorkflowText(): string {
+  return readFileSync(
     join(repoRoot, '.github', 'workflows', 'publish-tester-release.yml'),
     'utf8'
   );
-  const match = text.match(/VERSION="([^"]*\$\{GITHUB_RUN_NUMBER\}[^"]*)"/);
-  assert(match !== null, 'publish-tester-release.yml must stamp a VERSION containing GITHUB_RUN_NUMBER');
-  return match![1];
+}
+
+function readWorkflowStampVersion(): string {
+  const text = readWorkflowText();
+  const matches = [...text.matchAll(/VERSION="([^"]*\$\{GITHUB_RUN_NUMBER\}[^"]*)"/g)];
+  assert(
+    matches.length > 0,
+    'publish-tester-release.yml must stamp a VERSION containing GITHUB_RUN_NUMBER'
+  );
+  // A second stamping site would let two lanes drift apart the same way the
+  // stamp and the repo files did; the publish lane has exactly one stamp.
+  assertEqual(
+    matches.length,
+    1,
+    'publish-tester-release.yml must define exactly one GITHUB_RUN_NUMBER-based VERSION stamp'
+  );
+  return matches[0][1];
 }
 
 function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
@@ -50,25 +66,57 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: this branch was promoted from tranche/4-1 to tranche/5 (SD-22
-  // E8.27) and stays at tranche-base 5 while tranche/5 remains the active
-  // branch — the tranche digit only advances when a new tranche/N branch is
-  // cut for the next bundle, not automatically at a bundle's own closure
-  // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
-  // rule; SD-22's Epic 7 closure-epilogue cycle initially bumped this to
-  // tranche=6 in error and it was reverted). Each anchor here only holds
-  // until the next tranche promotion lands — update alongside the version
-  // bump, not as a follow-on fix.
-  assert(pkg.startsWith('0.5.'), `version "${pkg}" must keep major=0, tranche=5 on tranche/5`);
+  // Anchor: this branch was promoted from tranche/5 to tranche/6 (v0.6 alpha
+  // release swarm, cut fresh from develop) and stays at tranche-base 6 while
+  // tranche/6 remains the active branch — the tranche digit only advances
+  // when a new tranche/N branch is cut for the next bundle, not automatically
+  // at a bundle's own closure (../SD-22/decisions.md §2 + ../SD-21/decisions.md
+  // §18's tranche-promotion rule; SD-22's Epic 7 closure-epilogue cycle once
+  // bumped this to tranche=6 in error and it was reverted — this time the
+  // bump to tranche=6 is intentional, driven by a real tranche/6 cut). Each
+  // anchor here only holds until the next tranche promotion lands — update
+  // alongside the version bump, not as a follow-on fix.
+  assert(pkg.startsWith('0.6.'), `version "${pkg}" must keep major=0, tranche=6 on tranche/6`);
 }
 
-function verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme() {
+// The invariant is a *relationship*, not two independent literals: the
+// workflow's publish-time stamp must reuse the repo version files' own
+// `<major>.<tranche>` position and contribute only the build position, which
+// GITHUB_RUN_NUMBER supplies. Asserting each side's prefix separately is what
+// let the defect through — the repo files moved to 0.6.0 for the tranche/6
+// cut while the stamp stayed at 0.5.<build>, and because each assertion only
+// looked at its own file, the pair of them blessed the mismatch. Derive the
+// expected stamp from package.json so a future tranche promotion can only
+// ever move both together.
+function verifiesWorkflowStampTrancheAgreesWithRepoVersionFiles() {
+  const pkg = readPackageJsonVersion();
   const stamp = readWorkflowStampVersion();
-  assert(
-    stamp.startsWith('0.5.'),
-    `workflow stamp "${stamp}" must use the current 0.5.<build> shape, not a stale or legacy scheme`
+
+  const parts = pkg.split('.');
+  assertEqual(parts.length, 3, `package.json version "${pkg}" must have three segments`);
+  const [major, tranche] = parts;
+
+  assertEqual(
+    stamp,
+    `${major}.${tranche}.${RUN_NUMBER_EXPANSION}`,
+    `workflow stamp "${stamp}" must reuse package.json's major.tranche (${major}.${tranche}) ` +
+      'and take its build position from GITHUB_RUN_NUMBER'
+  );
+}
+
+// Companion to the relationship check: the build position is owned by the run
+// counter, so no literal build number may be stamped. This closes the escape
+// hatch where someone "fixes" a stamp mismatch by pinning a triple.
+function verifiesWorkflowNeverStampsAHardcodedBuildNumber() {
+  const hardcoded = [...readWorkflowText().matchAll(/VERSION="(\d+\.\d+\.\d+)"/g)].map((m) => m[1]);
+  assertEqual(
+    hardcoded.length,
+    0,
+    `publish-tester-release.yml must not stamp a hardcoded version triple (found: ${hardcoded.join(', ')}); ` +
+      'the build position comes from GITHUB_RUN_NUMBER'
   );
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();
-verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme();
+verifiesWorkflowStampTrancheAgreesWithRepoVersionFiles();
+verifiesWorkflowNeverStampsAHardcodedBuildNumber();

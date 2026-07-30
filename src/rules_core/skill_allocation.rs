@@ -228,6 +228,48 @@ const FIGHTER_CLASS_ID: &str = "class:fighter";
 /// comment's "Class-skill data source" section for the citation.
 const GROUNDED_FIGHTER_CLASS_SKILLS: &[&str] = &["skill:climb", "skill:intimidate", "skill:swim"];
 
+/// v0.6 alpha swarm: Wizard and Rogue both now reach `Computed` for real
+/// characters (this file's own recognition was still Fighter-only). Matches
+/// `pilot_compute.rs`'s `ROGUE_CLASS_ID`/`WIZARD_CLASS_ID` values (verified
+/// by reading their source; not imported, only matched by value, same
+/// convention as `FIGHTER_CLASS_ID` above).
+const ROGUE_CLASS_ID: &str = "class:rogue";
+const WIZARD_CLASS_ID: &str = "class:wizard";
+
+/// The bounded, cited Rogue class-skill posture -- verified against the
+/// real PCGen corpus, `cr_abilities_class.lst:2838` ("Rogue Core Class
+/// Skills ... CSKILL:Acrobatics|Appraise|Bluff|Climb|TYPE=Craft|Diplomacy|
+/// Disable Device|Disguise|Escape Artist|Intimidate|Knowledge
+/// (Dungeoneering)|Knowledge (Local)|Linguistics|Perception|TYPE=Perform|
+/// TYPE=Profession|Sense Motive|Sleight of Hand|Stealth|Swim|Use Magic
+/// Device"): every one of this module's five bounded, recognized skills
+/// (Climb, Intimidate, Swim, Diplomacy, Disable Device) is confirmed a
+/// genuine Rogue class skill, so Rogue's grounded contribution here is
+/// the module's full bounded skill universe.
+const GROUNDED_ROGUE_CLASS_SKILLS: &[&str] = &[
+    "skill:climb",
+    "skill:intimidate",
+    "skill:swim",
+    "skill:diplomacy",
+    "skill:disable_device",
+];
+
+/// Wizard's real class-skill list -- verified against the real PCGen
+/// corpus, `cr_abilities_class.lst:2565` ("The wizard's class skills are
+/// Appraise (Int), Craft (Int), Fly (Dex), Knowledge (all) (Int),
+/// Linguistics (Int), Profession (Wis), and Spellcraft (Int)"): checked,
+/// not assumed, and confirmed to have ZERO overlap with this module's five
+/// bounded, recognized skills (Climb, Intimidate, Swim, Diplomacy, Disable
+/// Device). Wizard is therefore intentionally grounded with an EMPTY
+/// class-skill contribution -- this is a real, checked finding ("Wizard
+/// genuinely has none of these five as class skills"), not an omission.
+/// Recognizing Wizard here (even with nothing to contribute) still matters:
+/// it flips `has_grounded_class_skill_posture` in `allocate_skill_ranks`
+/// from "unknown, don't guess" to "known, confirmed cross-class" for a
+/// Wizard's allocations in this bounded skill set -- see that function's
+/// own doc comment.
+const GROUNDED_WIZARD_CLASS_SKILLS: &[&str] = &[];
+
 /// PF1 core rule: flat trained bonus for any class skill with at least 1
 /// rank invested. A system-wide constant, not per-class/per-book table
 /// data — see the module doc comment's closing section.
@@ -367,25 +409,45 @@ fn class_skill_max_ranks(character_level: u16) -> u8 {
 
 /// The character's class-skill set: the union, across every class the
 /// character has levels in, of that class's grounded class-skill
-/// posture. Only Fighter has a grounded posture as of this cycle (see
-/// the module doc comment); every other class contributes nothing.
+/// posture. v0.6 alpha swarm: widened from Fighter-only to also recognize
+/// Rogue (real contribution: all five bounded skills) and Wizard
+/// (grounded, but a genuinely empty contribution -- see
+/// `GROUNDED_WIZARD_CLASS_SKILLS`'s own doc comment) now that both reach
+/// `Computed` for real characters. Every other class still contributes
+/// nothing, same bounded-caution philosophy as before.
 fn class_skill_set(input: &CharacterInput) -> Vec<SkillId> {
-    let has_fighter = input
-        .chosen
-        .class_levels
-        .iter()
-        .any(|class_level| class_level.class_id == FIGHTER_CLASS_ID);
-
-    let mut class_skills: Vec<SkillId> = if has_fighter {
-        GROUNDED_FIGHTER_CLASS_SKILLS
-            .iter()
-            .map(|skill_id| (*skill_id).to_string())
-            .collect()
-    } else {
-        Vec::new()
-    };
+    let mut class_skills: Vec<SkillId> = Vec::new();
+    for class_level in &input.chosen.class_levels {
+        let grounded: &[&str] = match class_level.class_id.as_str() {
+            FIGHTER_CLASS_ID => GROUNDED_FIGHTER_CLASS_SKILLS,
+            ROGUE_CLASS_ID => GROUNDED_ROGUE_CLASS_SKILLS,
+            WIZARD_CLASS_ID => GROUNDED_WIZARD_CLASS_SKILLS,
+            _ => &[],
+        };
+        for skill_id in grounded {
+            if !class_skills.iter().any(|existing| existing == skill_id) {
+                class_skills.push((*skill_id).to_string());
+            }
+        }
+    }
     class_skills.sort();
     class_skills
+}
+
+/// Whether the character has at least one class with a *grounded*
+/// class-skill posture (Fighter, Rogue, or Wizard) -- see
+/// `class_skill_set`'s own doc comment for what "grounded" means for each.
+/// Only then do we have real PF1 evidence of whether a given skill is
+/// cross-class rather than simply unknown; a build with no grounded
+/// class-skill posture at all gets no cross-class treatment, same
+/// bounded-caution philosophy `class_skill_set` already follows.
+fn has_grounded_class_skill_posture(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.iter().any(|class_level| {
+        matches!(
+            class_level.class_id.as_str(),
+            FIGHTER_CLASS_ID | ROGUE_CLASS_ID | WIZARD_CLASS_ID
+        )
+    })
 }
 
 /// Computes per-skill rank totals for every skill the character both
@@ -405,16 +467,13 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     let class_cap = class_skill_max_ranks(level);
     // The cross-class half-cap is only knowable for a skill when the
     // character has at least one class with a *grounded* class-skill
-    // posture (Fighter, this cycle) — only then do we have real PF1
-    // evidence that a given skill is cross-class rather than simply
-    // unknown. A build with no grounded class-skill posture at all (e.g.
-    // an ungrounded "wizard" class id) gets no cross-class treatment,
-    // same bounded-caution philosophy `class_skill_set` already follows.
-    let has_grounded_class_skill_posture = input
-        .chosen
-        .class_levels
-        .iter()
-        .any(|class_level| class_level.class_id == FIGHTER_CLASS_ID);
+    // posture (Fighter, Rogue, or Wizard as of the v0.6 alpha swarm --
+    // see `has_grounded_class_skill_posture`'s own doc comment) -- only
+    // then do we have real PF1 evidence that a given skill is cross-class
+    // rather than simply unknown. A build with no grounded class-skill
+    // posture at all gets no cross-class treatment, same bounded-caution
+    // philosophy `class_skill_set` already follows.
+    let has_grounded_class_skill_posture = has_grounded_class_skill_posture(input);
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
@@ -522,5 +581,131 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         cross_class_penalty_applied,
         untrained_use,
         diagnostics,
+    }
+}
+
+/// v0.6 alpha swarm: this module's class-skill recognition was still
+/// Fighter-only even though Wizard and Rogue both now reach `Computed` for
+/// real characters. Confirmed empirically before fixing: a level-1 Wizard
+/// allocating 5 ranks to the cross-class skill Diplomacy (real cross-class
+/// cap at level 1 is `ceil((1+1)/2) = 1`) got the raw, uncapped 5 ranks
+/// back with `cross_class_penalty_applied: false` and no diagnostic --
+/// PF1's cross-class rank cap was silently unenforced for any class this
+/// module didn't recognize. Ground Rogue's real class-skill list (all five
+/// of this module's bounded skills, per `cr_abilities_class.lst:2838`) and
+/// Wizard's (a checked, genuinely empty intersection, per
+/// `cr_abilities_class.lst:2565`) to close this for both.
+#[cfg(test)]
+mod wizard_and_rogue_class_skill_grounding_tests {
+    use super::allocate_skill_ranks;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+    };
+
+    fn single_class_with_skill(class_id: &str, level: u8, skill_id: &str, ranks: u8) -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: class_id.to_owned(), level }],
+                ability_scores: AbilityScores {
+                    strength: 10,
+                    dexterity: 10,
+                    constitution: 10,
+                    intelligence: 16,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: vec![SkillAllocation {
+                    skill_id: skill_id.to_owned(),
+                    ranks,
+                }],
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn wizard_cross_class_over_allocation_is_now_capped_and_flagged() {
+        // Real gap this test guards: before grounding Wizard, this exact
+        // scenario returned the raw, uncapped 5 ranks with
+        // cross_class_penalty_applied: false and no diagnostic.
+        let input = single_class_with_skill("class:wizard", 1, "skill:diplomacy", 5);
+        let totals = allocate_skill_ranks(&input);
+
+        let diplomacy = totals
+            .totals
+            .get("skill:diplomacy")
+            .expect("recognized skill must be present");
+        assert_eq!(diplomacy.ranks, 1, "cross-class cap at level 1 is ceil((1+1)/2) = 1");
+        assert_eq!(diplomacy.class_skill_bonus, 0, "Wizard has no class-skill bonus on Diplomacy");
+        assert!(totals.class_skills.is_empty(), "Wizard's grounded class-skill list is empty");
+        assert!(totals.cross_class_penalty_applied);
+        assert!(
+            totals
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "skill_allocation.cross_class_max_rank_exceeded"),
+            "the over-allocation must now be flagged: {:?}",
+            totals.diagnostics
+        );
+    }
+
+    #[test]
+    fn wizard_within_cross_class_cap_is_not_flagged() {
+        let input = single_class_with_skill("class:wizard", 1, "skill:diplomacy", 1);
+        let totals = allocate_skill_ranks(&input);
+
+        assert!(
+            totals.diagnostics.is_empty(),
+            "an in-budget allocation must not be flagged: {:?}",
+            totals.diagnostics
+        );
+    }
+
+    #[test]
+    fn rogue_gets_the_class_skill_bonus_on_all_five_bounded_skills() {
+        for skill_id in ["skill:climb", "skill:intimidate", "skill:swim", "skill:diplomacy", "skill:disable_device"]
+        {
+            let input = single_class_with_skill("class:rogue", 1, skill_id, 1);
+            let totals = allocate_skill_ranks(&input);
+
+            let total = totals
+                .totals
+                .get(skill_id)
+                .unwrap_or_else(|| panic!("{skill_id} should be recognized"));
+            assert_eq!(
+                total.class_skill_bonus, 3,
+                "{skill_id} is a real Rogue class skill and must get the +3 trained bonus"
+            );
+            assert!(
+                totals.class_skills.iter().any(|s| s == skill_id),
+                "{skill_id} must appear in Rogue's grounded class_skills list"
+            );
+        }
+    }
+
+    #[test]
+    fn rogue_class_skill_over_allocation_uses_the_wider_class_cap_not_the_cross_class_cap() {
+        // Class-skill cap at level 1 is level + 3 = 4; cross-class cap
+        // would be ceil((1+1)/2) = 1. Allocate 4 ranks -- legal for a
+        // class skill, would be flagged if Rogue's grounding were missing
+        // and this fell through to the cross-class path instead.
+        let input = single_class_with_skill("class:rogue", 1, "skill:climb", 4);
+        let totals = allocate_skill_ranks(&input);
+
+        let climb = totals.totals.get("skill:climb").expect("recognized skill must be present");
+        assert_eq!(climb.ranks, 4, "4 ranks is within the class-skill cap (level + 3 = 4)");
+        assert!(
+            totals.diagnostics.is_empty(),
+            "a legal class-skill allocation must not be flagged: {:?}",
+            totals.diagnostics
+        );
     }
 }

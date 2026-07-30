@@ -74,6 +74,7 @@ fn base_input() -> CharacterInput {
             equipment_selections: Vec::new(),
             selected_choices: Vec::new(),
             spells_selected: Vec::new(),
+            class_ability_activations: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
@@ -136,6 +137,7 @@ fn every_real_corpus_item_resolves_reaches_equipped_items_and_grounds_through_ta
             item_id: identity.to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
         });
     }
 

@@ -193,16 +193,25 @@ fn bard_level10_spontaneous_blocker_stays_claim_blocked() {
     let input = load(BARD_LEVEL10_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == SPONTANEOUS_BLOCKER_ID && d.claim_blocking),
-        "the spontaneous known/per-day blocker must stay claim-blocking at level 10 — the \
-         grounded base counts are a strict subset of the posture it defers (the CHA-modified \
-         totals, spells KNOWN, bonus slots, and DCs all stay unproven): {:?}",
-        computation.diagnostics
-    );
+    // (v0.6 alpha swarm, risks item 8, known-spell closure) SPONTANEOUS_BLOCKER_ID
+    // is no longer unconditional -- this fixture has zero known spells, a
+    // genuinely valid posture, so the blocker correctly does not fire here.
+    match computation.diagnostics.iter().find(|d| d.id == SPONTANEOUS_BLOCKER_ID) {
+        Some(blocker) => assert!(blocker.claim_blocking, "if the blocker fires, it must be claim-blocking"),
+        None => {
+            let known_count = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_spell.bard.known_spells")
+                .map(|e| e.value)
+                .unwrap_or(-1);
+            assert_eq!(
+                known_count, 0,
+                "no spells are fabricated merely because the blocker stopped firing: {:?}",
+                computation.diagnostics
+            );
+        }
+    }
 }
 
 // ----- Negative control: no leak onto other classes -----

@@ -187,17 +187,21 @@ fn paladin_base_attack_and_saves_are_not_wired_into_integrated_totals() {
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported
-    // for Paladin) is untouched: no fabricated base_attack_bonus field, and no
-    // supported Fighter-style base-attack chassis explanation leaks in.
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25) Paladin's base
+    // attack bonus is now genuinely integrated via the table-driven
+    // `compute_generic_table_chassis` dispatch (`table_class_id` widened to
+    // recognize Paladin) -- the value 1 is Paladin's real full-BAB
+    // progression at level 1, not a fabricated absence, and the integrated
+    // explanation now legitimately exists alongside the standalone record
+    // asserted above.
     assert_eq!(
-        computation.base_attack_bonus, 0,
-        "the standalone paladin base-attack explanation must not be wired into the integrated \
-         base_attack_bonus field"
+        computation.base_attack_bonus, 1,
+        "paladin level 1's real full-BAB progression (classlevel) is now genuinely integrated"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "paladin baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "paladin base-attack bonus is now a genuinely integrated chassis explanation, not a \
+         standalone-only record"
     );
 }
 
@@ -240,21 +244,38 @@ fn paladin_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_block
         "class_chassis.paladin.partial_caster.effective_caster_level"
     ));
 
-    // Both claim-blocking burdens (the combined hybrid class-feature burden, gated
-    // to fire only at the hybrid baseline level 1, and the partial-caster spell
-    // burden) still fire; this slice grounds no spell math.
-    let feature_blocker = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == "class_feature.hybrid.paladin.unsupported")
-        .expect("hybrid paladin class-feature blocker must still fire at level 1");
-    assert!(feature_blocker.claim_blocking);
-    let spell_blocker = computation
+    // The former hybrid class-feature blocker (`class_feature.hybrid.paladin.
+    // unsupported`) is retired: it flatly claimed Smite Evil / lay on hands /
+    // divine grace / mercy were unimplemented, which the grounded records
+    // asserted immediately above (Smite Evil's real numbers, the lay on hands /
+    // divine grace / mercy level-gate absences) contradict. See
+    // `tests/hybrid_diagnostic_grounded_contradiction.rs`. Only the partial-caster
+    // spell burden still fires; this slice grounds no spell math.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.hybrid.paladin.unsupported"),
+        "the retired hybrid class-feature blocker must not reappear: {:?}",
+        computation.diagnostics
+    );
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // `class_spell.paladin.partial_caster.unsupported` is no longer
+    // unconditional: at level 1 no paladin spell level is accessible at all
+    // (spells begin at level 4), so a bare fixture with zero prepared spells
+    // has a genuinely valid (empty) posture, and the blocker correctly does
+    // not fire.
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.paladin.partial_caster.unsupported")
-        .expect("paladin partial-caster spell blocker must still fire");
-    assert!(spell_blocker.claim_blocking);
+    {
+        Some(spell_blocker) => assert!(spell_blocker.claim_blocking),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(daily_prep.value, 0, "no spells are fabricated at paladin level 1");
+        }
+    }
 }
 
 #[test]
@@ -285,16 +306,25 @@ fn paladin_level2_base_attack_and_saves_do_not_disturb_existing_pillars_or_block
         "class_chassis.paladin.partial_caster.effective_caster_level"
     ));
 
-    // The partial-caster spell burden still fires at level 2; this slice grounds no
-    // spell math. (The hybrid class-feature/spell blockers from
-    // `explain_hybrid_level1_chassis` are gated to level 1 only, so they do not fire
-    // here -- unaffected by this slice, unchanged from before.)
-    let spell_blocker = computation
+    // (v0.6 alpha swarm, risks item 8, third slice, 2026-07-25)
+    // `class_spell.paladin.partial_caster.unsupported` is no longer
+    // unconditional: at level 2 no paladin spell level is accessible yet
+    // (spells begin at level 4), so a bare fixture with zero prepared spells
+    // has a genuinely valid (empty) posture, and the blocker correctly does
+    // not fire. (The hybrid class-feature/spell blockers from
+    // `explain_hybrid_level1_chassis` are gated to level 1 only, so they do
+    // not fire here -- unaffected by this slice, unchanged from before.)
+    match computation
         .diagnostics
         .iter()
         .find(|d| d.id == "class_spell.paladin.partial_caster.unsupported")
-        .expect("paladin partial-caster spell blocker must still fire");
-    assert!(spell_blocker.claim_blocking);
+    {
+        Some(spell_blocker) => assert!(spell_blocker.claim_blocking),
+        None => {
+            let daily_prep = explanation(&computation, "class_spell.paladin.daily_preparation");
+            assert_eq!(daily_prep.value, 0, "no spells are fabricated at paladin level 2");
+        }
+    }
 }
 
 // ----- Negative control (retired): Paladin level 3 was later widened into the -----

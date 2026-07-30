@@ -1,0 +1,45 @@
+# Task #49 deterministic Human Monk level 20 capstone fixture.
+# Extends the accepted deterministic PF1 Core Rulebook Human Monk chassis
+# (tests/fixtures/.../pf1_human_monk_level12_sd18_widening_deterministic_input.txt)
+# to level 20 as chosen input only. It names selections; it contains no
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture of every earlier Monk fixture,
+# changing only the class level.
+#
+# Level 20 is the first level at which the whole Monk capstone band is
+# reachable, so this single fixture exercises every feature the cap
+# widening admits at once: Diamond Soul (13), Quivering Palm (15),
+# Timeless Body (17), Tongue of the Sun and Moon (17), Empty Body (19)
+# and Perfect Self (20), plus Abundant Step (12, a pre-existing gap
+# rather than one the widening admits).
+#
+# It also pins the three formulas whose upper bands only exist above the
+# old level-12 ceiling: the unarmed strike die at its final 2d10 band,
+# the Flurry of Blows fourth attack (15th level onward), and Slow Fall's
+# genuinely unlimited "any distance" case, which the feature's own rule
+# text states outright rather than continuing the 10-ft progression.
+#
+# It deliberately avoids every Monk burden surface that remains unbuilt:
+# no execution of what the recognized bonus feat actually does, no
+# ki-power execution, no ki-strike damage-reduction-bypass resolution,
+# no fall-damage engine, no teleportation-resolution engine for Abundant
+# Step, no save-or-die resolution for Quivering Palm, and no
+# creature-type engine for Perfect Self's Outsider clause.
+case_id=pf1-crb-human-monk-level20
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:20
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

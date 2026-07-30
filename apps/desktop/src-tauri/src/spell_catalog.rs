@@ -1,26 +1,97 @@
-//! SD-19 spell catalog browser — Tauri command adapter over the full CRB
-//! spell list (`rules_tables::crb::spell_list::SPELL_LIST`, all 652 real
-//! corpus records across all 9 PF1 strict schools).
+//! Spell catalog browser — Tauri command adapter over every ingested PF1
+//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297)
+//! and `acg::spell_list` (144), 1093 in total.
+//!
+//! This adapter previously served CRB alone. The APG and ACG tables were
+//! fully ingested — with school, level and real corpus spell text — but
+//! reached no user-facing surface at all: not this catalog browser, not
+//! the Character Sheet's Add Spell picker (which calls `list_spells`), and
+//! so not a character's own spell list either. 441 real spells, 40% of
+//! everything ingested, were invisible.
 //!
 //! Distinct from the Character Sheet's Spells tab: this is a standalone
 //! catalog view of every real spell record the engine knows about, not
-//! what one character has selected. Built to satisfy the operator's full
-//! "UI-surfacing" bar for the SD-19 remaining-school matrix rows —
-//! literal display of every spell in every school, not just a
-//! per-character sample. Mirrors `equipment_catalog.rs` exactly.
+//! what one character has selected. Mirrors `equipment_catalog.rs`.
+//!
+//! **Optional fields are absences, never placeholders.** CRB's and ACG's
+//! tables carry a school, level and description on every record. APG's
+//! table types those three as `Option`, and as ingested, 16 of its records
+//! carry no school, 41 no level and 12 no description. Those arrive here
+//! as `null` rather than an invented value, and the UI must render the
+//! absence rather than a plausible-looking default.
+//!
+//! Those three counts are properties of `apg::spell_list` as ingested, and
+//! are asserted below as such — they are deliberately NOT presented as
+//! counts of gaps in `apg_spells.lst` itself, because they do not match
+//! it. Re-derived from the raw file, the APG rows genuinely lacking a
+//! `SCHOOL:` token number ~4-6 (plain records) or 21 (counting the 17
+//! `.COPY=` delta records, which carry no fields of their own and inherit
+//! from their base); neither is 16. The same mismatch holds for the level
+//! and description counts. So the ingest is doing something in between —
+//! partially resolving `.COPY=` inheritance, and/or folding `.MOD` rows
+//! into the tally — and until that is traced, the honest statement is what
+//! this adapter can actually verify: how many records it serves without
+//! each field. Tracking as an open ingest-fidelity question; it does not
+//! affect this adapter's correctness, which is to pass absences through
+//! rather than invent values.
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+use codex::rules_core::rules_tables::{acg, apg, crb};
+
+/// Which ingested book a catalog entry came from. Short codes are the wire
+/// form; the frontend maps them to display labels.
+const BOOK_CRB: &str = "CRB";
+const BOOK_APG: &str = "APG";
+const BOOK_ACG: &str = "ACG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogEntryDto {
+    /// The record's corpus identity — its `KEY:` token when the row
+    /// carries one, else its display name. Unique across all three books;
+    /// see `tests/spell_cross_book_identity.rs`.
     pub key: String,
-    /// The `Pf1SchoolId` variant name verbatim (e.g. "Abjuration").
-    pub school: String,
-    pub level: u8,
-    pub description: String,
+    /// `"CRB"`, `"APG"` or `"ACG"`.
+    pub book: String,
+    /// The `Pf1SchoolId` variant name verbatim (e.g. "Abjuration"), or
+    /// `None` for an APG record whose corpus row has no `SCHOOL:` token.
+    pub school: Option<String>,
+    /// `None` for an APG record whose corpus row has no `CLASSES:` token,
+    /// so no spell level can be derived without inventing one.
+    pub level: Option<u8>,
+    /// `None` for an APG record the corpus supplies no `DESC:` text for.
+    pub description: Option<String>,
+}
+
+fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_CRB.to_string(),
+        school: Some(format!("{:?}", entry.school)),
+        level: Some(entry.level),
+        description: Some(entry.description.to_string()),
+    }
+}
+
+fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_APG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(|text| text.to_string()),
+    }
+}
+
+fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ACG.to_string(),
+        school: Some(format!("{:?}", entry.school)),
+        level: Some(entry.level),
+        description: Some(entry.description.to_string()),
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -29,24 +100,17 @@ pub struct SpellCatalogResponse {
     pub entries: Vec<SpellCatalogEntryDto>,
 }
 
-fn map_catalog_entry(
-    entry: &codex::rules_core::rules_tables::crb::spell_list::SpellListEntry,
-) -> SpellCatalogEntryDto {
-    SpellCatalogEntryDto {
-        key: entry.key.to_string(),
-        school: format!("{:?}", entry.school),
-        level: entry.level,
-        description: entry.description.to_string(),
-    }
-}
-
-/// Build the full catalog response. A thin, testable wrapper behind the
-/// Tauri command below (mirroring `equipment_catalog`'s own
-/// command/pure-fn split).
+/// Build the full catalog response across every ingested book. A thin,
+/// testable wrapper behind the Tauri command below (mirroring
+/// `equipment_catalog`'s own command/pure-fn split).
 pub fn build_spell_catalog() -> SpellCatalogResponse {
-    SpellCatalogResponse {
-        entries: SPELL_LIST.iter().map(map_catalog_entry).collect(),
-    }
+    let entries = crb::spell_list::SPELL_LIST
+        .iter()
+        .map(map_crb_entry)
+        .chain(apg::spell_list::SPELL_LIST.iter().map(map_apg_entry))
+        .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
+        .collect();
+    SpellCatalogResponse { entries }
 }
 
 #[tauri::command]
@@ -57,8 +121,8 @@ pub fn list_spell_catalog() -> SpellCatalogResponse {
 /// Filter criteria for `list_spells`. Every field is optional and
 /// `None`/empty matches everything — an all-`None` filter is equivalent to
 /// the unfiltered `list_spell_catalog` response. Kept deliberately narrow
-/// (substring name match, exact school match) rather than an exhaustive
-/// query DSL; widen only if a real caller needs more.
+/// (substring name match, exact school/book match) rather than an
+/// exhaustive query DSL; widen only if a real caller needs more.
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogFilter {
@@ -66,8 +130,12 @@ pub struct SpellCatalogFilter {
     /// identity/name — see `SpellCatalogEntryDto::key`'s doc comment).
     pub name_contains: Option<String>,
     /// Exact match against the `Pf1SchoolId` variant name verbatim (e.g.
-    /// "Evocation"), as projected onto `SpellCatalogEntryDto::school`.
+    /// "Evocation"). A record whose corpus row has no `SCHOOL:` token
+    /// matches no school filter — it is genuinely unknown, so it is not
+    /// swept into any school.
     pub school: Option<String>,
+    /// Exact match against `"CRB"`, `"APG"` or `"ACG"`.
+    pub book: Option<String>,
 }
 
 /// Narrows the full catalog to the entries matching `filter`. A thin,
@@ -88,7 +156,11 @@ pub fn filter_spell_catalog(filter: &SpellCatalogFilter) -> SpellCatalogResponse
             None => true,
         })
         .filter(|entry| match &filter.school {
-            Some(school) => &entry.school == school,
+            Some(school) => entry.school.as_deref() == Some(school.as_str()),
+            None => true,
+        })
+        .filter(|entry| match &filter.book {
+            Some(book) => &entry.book == book,
             None => true,
         })
         .collect();
@@ -96,11 +168,8 @@ pub fn filter_spell_catalog(filter: &SpellCatalogFilter) -> SpellCatalogResponse
     SpellCatalogResponse { entries }
 }
 
-/// Returns the CRB spell catalog narrowed by `filter` — see
+/// Returns the spell catalog narrowed by `filter` — see
 /// `SpellCatalogFilter`'s own doc comment for the supported fields.
-/// Distinct from `list_spell_catalog` (kept unfiltered so the existing
-/// `loadSpellCatalog` desktop boundary caller is untouched this cycle); this
-/// command is the new, additive filtered surface Criterion 19 asks for.
 #[tauri::command]
 pub fn list_spells(filter: SpellCatalogFilter) -> SpellCatalogResponse {
     filter_spell_catalog(&filter)
@@ -110,16 +179,29 @@ pub fn list_spells(filter: SpellCatalogFilter) -> SpellCatalogResponse {
 mod tests {
     use super::*;
 
-    #[test]
-    fn catalog_contains_all_nine_schools_and_expected_counts() {
-        let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 652);
+    fn book_entries(book: &str) -> Vec<SpellCatalogEntryDto> {
+        build_spell_catalog()
+            .entries
+            .into_iter()
+            .filter(|entry| entry.book == book)
+            .collect()
+    }
 
+    #[test]
+    fn the_catalog_serves_every_ingested_book_not_only_crb() {
+        let response = build_spell_catalog();
+        assert_eq!(response.entries.len(), 1093);
+        assert_eq!(book_entries(BOOK_CRB).len(), 652);
+        assert_eq!(book_entries(BOOK_APG).len(), 297);
+        assert_eq!(book_entries(BOOK_ACG).len(), 144);
+    }
+
+    #[test]
+    fn crb_school_counts_match_the_real_corpus() {
+        let crb = book_entries(BOOK_CRB);
         let counts = |school: &str| {
-            response
-                .entries
-                .iter()
-                .filter(|e| e.school == school)
+            crb.iter()
+                .filter(|e| e.school.as_deref() == Some(school))
                 .count()
         };
         assert_eq!(counts("Abjuration"), 73);
@@ -134,12 +216,62 @@ mod tests {
     }
 
     #[test]
-    fn every_entry_has_a_non_empty_key_and_description() {
-        let response = build_spell_catalog();
-        for entry in &response.entries {
+    fn every_entry_has_a_non_empty_key_and_a_known_book() {
+        for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!(!entry.description.is_empty());
+            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG].contains(&entry.book.as_str()));
         }
+    }
+
+    #[test]
+    fn no_key_is_served_twice_so_a_selection_resolves_unambiguously() {
+        let entries = build_spell_catalog().entries;
+        let mut keys: Vec<String> = entries.iter().map(|entry| entry.key.clone()).collect();
+        keys.sort();
+        let total = keys.len();
+        keys.dedup();
+        assert_eq!(keys.len(), total, "the catalog serves a duplicate spell key");
+    }
+
+    #[test]
+    fn crb_and_acg_records_are_always_fully_populated() {
+        for entry in book_entries(BOOK_CRB)
+            .iter()
+            .chain(book_entries(BOOK_ACG).iter())
+        {
+            assert!(entry.school.is_some(), "{} has no school", entry.key);
+            assert!(entry.level.is_some(), "{} has no level", entry.key);
+            assert!(
+                entry.description.as_deref().is_some_and(|d| !d.is_empty()),
+                "{} has no description",
+                entry.key
+            );
+        }
+    }
+
+    #[test]
+    fn apg_records_missing_a_field_are_served_with_that_field_null() {
+        // Transcribed from `apg::spell_list` as ingested — a pin on what
+        // this adapter serves, NOT a claim about how many rows
+        // `apg_spells.lst` omits each field on (see this module's doc
+        // comment: the raw-file figures differ and the gap is untraced).
+        // If the ingest changes, re-derive these; do not relax them.
+        let apg = book_entries(BOOK_APG);
+        assert_eq!(apg.iter().filter(|e| e.school.is_none()).count(), 16);
+        assert_eq!(apg.iter().filter(|e| e.level.is_none()).count(), 41);
+        assert_eq!(apg.iter().filter(|e| e.description.is_none()).count(), 12);
+    }
+
+    #[test]
+    fn the_archetype_summon_records_are_served_under_their_corpus_key() {
+        let entries = build_spell_catalog().entries;
+        let has = |key: &str| entries.iter().any(|entry| entry.key == key);
+        // The CRB spell and the two archetype variants are three distinct
+        // records and all reach the catalog under distinct names.
+        assert!(has("Summon Monster I"));
+        assert!(has("Summoner Summon Monster I"));
+        assert!(has("Summon Nature's Ally I"));
+        assert!(has("Naturalist Summon Nature's Ally I"));
     }
 
     #[test]
@@ -153,6 +285,7 @@ mod tests {
         let response = filter_spell_catalog(&SpellCatalogFilter {
             name_contains: Some("fireball".to_owned()),
             school: None,
+            book: None,
         });
 
         assert!(
@@ -170,15 +303,31 @@ mod tests {
     }
 
     #[test]
-    fn filter_spell_catalog_matches_school_exactly() {
+    fn filter_spell_catalog_matches_school_exactly_across_books() {
         let response = filter_spell_catalog(&SpellCatalogFilter {
             name_contains: None,
             school: Some("Evocation".to_owned()),
+            book: None,
         });
 
-        assert_eq!(response.entries.len(), 87);
+        // Now spans all three books, so strictly more than CRB's own 87.
+        assert!(response.entries.len() > 87);
         for entry in &response.entries {
-            assert_eq!(entry.school, "Evocation");
+            assert_eq!(entry.school.as_deref(), Some("Evocation"));
+        }
+    }
+
+    #[test]
+    fn filter_spell_catalog_narrows_to_one_book() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: None,
+            school: None,
+            book: Some(BOOK_APG.to_owned()),
+        });
+
+        assert_eq!(response.entries.len(), 297);
+        for entry in &response.entries {
+            assert_eq!(entry.book, BOOK_APG);
         }
     }
 
@@ -187,15 +336,16 @@ mod tests {
         let response = filter_spell_catalog(&SpellCatalogFilter {
             name_contains: Some("flame".to_owned()),
             school: Some("Evocation".to_owned()),
+            book: None,
         });
 
         assert!(
             !response.entries.is_empty(),
-            "the real CRB corpus has Evocation spells with 'flame' in the name (e.g. Flame \
+            "the real corpus has Evocation spells with 'flame' in the name (e.g. Flame \
              Blade, Flame Strike)"
         );
         for entry in &response.entries {
-            assert_eq!(entry.school, "Evocation");
+            assert_eq!(entry.school.as_deref(), Some("Evocation"));
             assert!(entry.key.to_lowercase().contains("flame"));
         }
     }
