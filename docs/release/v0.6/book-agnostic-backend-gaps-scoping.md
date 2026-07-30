@@ -183,13 +183,90 @@ book-by-book, feature-by-feature, as each future-state book comes up for real in
 deferring cleanly (named gap, not silently dropped, matching how ARG/PU's exclusions were handled)
 rather than blocking all 17 remaining books on one big interpreter landing first.
 
+## Finding 4 — The desktop app doesn't load the real corpus at all, for any book
+
+**Severity: Foundational — this is the actual precondition for "reaches the end user through the
+UI," found while scoping full ARG/PU integration (operator directive 2026-07-30: SD-27's real
+definition of done is full engine + UI reachability, not just data ingestion).**
+
+Every live character build in the desktop app (`character_hub.rs`, `characterHub/
+recomputeCharacter.rs`, `pf1_adapter.rs`) passes `corpus_fixtures::corpus_fixture_bundle()` as its
+`SourcePackageContent` — a **hand-picked ~4-record fixture** (2 spells, 2 equipment items), loaded
+from raw LST text snippets bundled as Tauri resources
+(`apps/desktop/src-tauri/resources/corpus_fixtures/`). Its own doc comment states plainly: *"The
+desktop app has no mechanism to ship or point at the full PCGen corpus... Exhaustive corpus
+coverage is out of scope"* — an SD-19-era MVP scoping decision, never revisited.
+
+**This means `data/corpus/`'s ~5,000 records (all 6 already-ingested books — CRB/APG/ACG/
+Bestiary/ARG/PU) never reach a live character build today, regardless of SD-27.** Every
+book-agnostic resolver fix in this doc (Finding 1, PRs #344/#345) is real and correct, but
+currently unreachable by an actual user — the corpus-loading layer itself never gets past those 4
+fixture records.
+
+**Why this isn't a quick generalize-the-loader fix:** the real corpus (`data/corpus/`) is Shape B
+v1 JSON — a deliberately thin projection (`key`/`category`/`name`/`cost_gp`/`weight_lbs`/
+`description` for equipment; no `ACCHECK`/`MAXDEX`/`SPELLFAILURE`/`BONUS` chains at all). The
+*raw* LST text `corpus_fixtures.rs` bundles today has the full mechanical detail, but was never
+reviewed for the PI-redaction discipline Shape B v1's `license`/`pi_field`/`pi_marker` fields exist
+to enforce — bundling raw LST text at scale would bypass that review entirely (real licensing
+risk, not just an engineering shortcut).
+
+**Operator-confirmed fix direction (2026-07-30): extend Shape B v1's schema, not bundle raw LST.**
+Landed so far: `RawToken`/`RawBonusChain` + an extended `EquipmentCacheData` in `shape_b_v1.rs`
+(additive, `#[serde(default)]`, tested against a real on-disk record — see commit `4a37da11`).
+Pure game-mechanic tokens (`WT`, `ACCHECK`, `BONUS:COMBAT|AC`, ...) are OGL-open content, not PI,
+so this doesn't reopen the licensing question — PI risk stays confined to prose/name fields, still
+governed by the existing `license`/`pi_field`/`pi_marker` machinery unchanged.
+
+**What's still open, found while wiring this through:** each book's codegen turns out to be an
+**independently-evolved pipeline**, not 3 copies of one struct as first estimated:
+
+| Book | Codegen | Reads from | Schema shape |
+|---|---|---|---|
+| CRB | `src/bin/sd26_gen_core_rulebook_cache.rs` | raw LST directly | now-extended `EquipmentCacheData` (shape_b_v1.rs) |
+| APG | `src/rules_core/cache_gen/apg.rs` | pre-compiled `apg::equipment_tables::EQUIPMENT_TABLE` | its own `EquipmentData` (different field names, e.g. `weight` not `weight_lbs`) |
+| ACG | `src/rules_core/cache_gen/acg.rs` | its own pre-compiled table | own local shape, not yet inspected in depth |
+| Bestiary | `src/rules_core/cache_gen/beastiary1.rs` | its own pre-compiled table | own local shape, not yet inspected in depth |
+| ARG | `src/bin/sd27_gen_book_cache.rs` | raw LST directly | local copy, byte-identical to CRB's pre-extension shape |
+| PU | `src/bin/sd27_gen_book_cache.rs` | raw LST directly | shares ARG's local copy |
+
+APG's (and likely ACG's/Bestiary's) codegen reads from an **already-reduced, pre-compiled Rust
+table** that is itself just as thin as Shape B — getting real ACCHECK/MAXDEX/BONUS data for those
+3 books means tracing back to wherever those compiled tables are built and extending that layer
+too, not just the JSON-emission step. CRB/ARG/PU read raw LST directly, so they're more
+straightforward — extend their codegen to populate the new fields from the `EquipmentRecord`
+they already parse, then re-run.
+
+**Remaining work, roughly in dependency order:**
+1. Wire `raw_tokens`/`raw_bonus_chains` population into CRB/ARG/PU's codegen (straightforward —
+   they already have the parsed `EquipmentRecord` in hand) and regenerate those 3 books' equipment
+   records.
+2. Investigate APG/ACG/Bestiary's compiled-table layer to find where to add the same data, or
+   decide those 3 books route through a different mechanism (e.g. re-deriving from real LST at
+   codegen time instead of their current compiled-table intermediate).
+3. Build the real desktop corpus loader: read `data/corpus/<book>/**/*.json`, reconstruct
+   `EquipmentRecord`-shaped values from `raw_tokens`/`raw_bonus_chains` (so `encumbrance.rs`/
+   `equipment_effects.rs` and every future book-agnostic resolver work unchanged, reading
+   `record.tokens`/`bonus_chains` exactly as they do from LST-parsed fixtures today).
+4. Wire the loader into `character_hub.rs`/`recomputeCharacter.rs`/`pf1_adapter.rs`, replacing
+   `corpus_fixtures.rs`'s 4-record bundle.
+5. The same treatment (thin JSON schema → needs raw-token equivalent) will very likely recur for
+   spell and feat content-kinds once the feat resolver (Finding elsewhere in this doc) and full
+   spell reachability are tackled — this isn't equipment-specific, it's how Shape B v1 was scoped
+   for every content kind.
+
 ## Sequencing recommendation
 
 1. **Finding 1 (equipment weight)** — small, isolated, no design decision needed, no partition
-   conflict. Safe to build immediately as its own cycle.
+   conflict. **Done** — PR #344 (weight/cost) and PR #345 (AC/max-dex/spell-failure/weapon-mods),
+   both built, tested, open against `develop`.
 2. **Findings 2+3 (race roster, class-ability-formula content-kind)** — scope together as one
    design pass before building either; they're the same underlying schema question, and Finding
-   2's real fix depends on Finding 3's answer.
-3. Recommend routing 2+3's design pass alongside — not blocking — the paused v0.6 class-breadth
+   2's real fix depends on Finding 3's answer. Not yet started.
+3. **Finding 4 (desktop corpus reachability)** — now recognized as the actual precondition for
+   Findings 1-3 mattering to a real user at all. Schema groundwork landed (`shape_b_v1.rs`); codegen
+   wiring, corpus regeneration, and the real loader are substantial remaining work, per-book (CRB/
+   ARG/PU straightforward; APG/ACG/Bestiary need their compiled-table layer investigated first).
+4. Recommend routing 2+3's design pass alongside — not blocking — the paused v0.6 class-breadth
    closure, since it's the same category of "generic engine vs. per-thing hardcoding" question
    the operator is already reviewing there.
