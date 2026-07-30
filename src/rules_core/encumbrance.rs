@@ -7,9 +7,14 @@
 //! capacity" hit was a doc-comment disclaimer or corpus flavor text, never
 //! computation). `equipment_effects.rs`'s per-item stats (AC bonus, max
 //! Dex, spell failure) were already real and wired before this task; this
-//! file adds the missing weight/capacity pillar alongside it, following the
-//! same corpus-resolution pattern (`equipment_id_resolve` +
-//! `rules_tables::crb::equipment_tables()` lookup by key).
+//! file adds the missing weight/capacity pillar alongside it, using
+//! `equipment_id_resolve` (book-agnostic) plus each resolved record's own
+//! `WT:`/`COST:` tokens (`weight_and_cost_from_record`, below) -- originally
+//! this instead re-looked-up weight and cost in the CRB-only compiled
+//! `equipment_tables()` static table, which silently dropped both for any
+//! non-Core-Rulebook item (real bug found by SD-27's Advanced Race Guide
+//! PCGen parity run; see `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md`
+//! finding 1).
 //!
 //! PF1's Table: Carrying Capacity (Strength score -> light/medium/heavy
 //! load maximum weight in pounds) is not present in this repo's *ingested*
@@ -52,12 +57,28 @@
 //! race-to-size fact, read from each race record's own
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
+use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
-use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
-use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
+use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
+
+/// Real weight (`WT:`) and cost (`COST:`) in pounds/gp for a resolved
+/// equipment record, read directly off its own raw tokens rather than a
+/// second lookup in `rules_tables::crb::equipment_tables()` -- a compiled
+/// static table that only ever covered Core Rulebook. The LST parser that
+/// produces `EquipmentRecord.tokens` is book-agnostic, so both tokens are
+/// present for every book's records already; only the compiled table this
+/// replaces was CRB-only. `None` for either means the record itself carries
+/// no such token (a real data gap, e.g. a formula-priced modifier for cost),
+/// not a book-scoping gap.
+fn weight_and_cost_from_record(record: &EquipmentRecord) -> (Option<f64>, Option<f64>) {
+    let token_value = |key: &str| {
+        record.tokens.iter().find(|token| token.key == key).and_then(|token| token.value.parse::<f64>().ok())
+    };
+    (token_value("WT"), token_value("COST"))
+}
 
 /// Max light/medium/heavy load in pounds for one Strength score, per PF1's
 /// Table: Carrying Capacity (see module doc comment for the cited source).
@@ -250,8 +271,9 @@ fn classify_encumbrance(total_weight_lbs: f64, thresholds: &CarryingCapacityThre
 }
 
 /// One resolved carried item's contribution to the loadout's total weight
-/// and total gp value. Both are read from the same `equipment_tables()`
-/// entry, so cost costs no second corpus resolution.
+/// and total gp value. Both are read from the same resolved record's own
+/// `WT:`/`COST:` tokens (`weight_and_cost_from_record`), so cost costs no
+/// second corpus resolution.
 #[derive(Debug, Clone, PartialEq)]
 pub struct CarriedItem {
     pub item_id: String,
@@ -260,9 +282,8 @@ pub struct CarriedItem {
     /// genuine corpus absence, never a fabricated zero -- a `(Base)`
     /// template record with no independent price, or an equipment modifier
     /// whose cost is a formula over the base item rather than a fixed
-    /// number (see `EquipmentTableEntry::cost_gp`). An item priced `None`
-    /// still contributes its weight; it simply cannot contribute to
-    /// `EncumbranceComputation::total_carried_cost_gp`.
+    /// number. An item priced `None` still contributes its weight; it
+    /// simply cannot contribute to `EncumbranceComputation::total_carried_cost_gp`.
     pub cost_gp: Option<f64>,
 }
 
@@ -273,12 +294,12 @@ pub struct CarriedItem {
 /// or `ActiveState::SelectedInactive` (both represent items the character
 /// actually possesses/carries; `Absent` means not carried at all -- mirrors
 /// `ActiveState`'s own doc comment). Each selection is resolved to a real
-/// corpus record via the same `equipment_id_resolve` + `equipment_tables()`
-/// key lookup `equipment_effects::compute_equipment_effects` already
-/// establishes, then that record's `weight_lbs` (parsed from the corpus's
-/// own `WT:` token, `rules_tables::crb::equipment_tables`) is added to the
-/// total. An item that does not resolve to a corpus record, or resolves but
-/// carries no `weight_lbs` value, is recorded in `unresolved_item_ids`
+/// corpus record via `equipment_id_resolve` (already book-agnostic -- it
+/// searches the whole loaded corpus, not just Core Rulebook), then that
+/// record's own `WT:` token is read directly (`weight_and_cost_from_record`)
+/// rather than re-looked-up in the CRB-only compiled static table this used
+/// to use. An item that does not resolve to a corpus record, or resolves but
+/// carries no `WT:` token, is recorded in `unresolved_item_ids`
 /// rather than silently contributing a fabricated zero -- so a caller can
 /// tell "this loadout weighs exactly 0 lbs" apart from "this loadout's
 /// weight could not be fully verified."
@@ -349,19 +370,18 @@ pub fn compute_encumbrance(
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let key = equipment_key_token(record).unwrap_or(&record.name).to_string();
-        let table_entry = equipment_tables().iter().find(|entry| entry.key == key);
+        let (weight, cost) = weight_and_cost_from_record(record);
 
         // Weight is what makes an item *carried* for encumbrance purposes,
         // so a record with no `WT:` token is unresolved. Cost is
         // supplementary: a real corpus absence there (a formula-priced
         // modifier, an unpriced `(Base)` template) must not evict an item
         // whose weight is perfectly well known.
-        let Some(weight_lbs) = table_entry.and_then(|entry| entry.weight_lbs) else {
+        let Some(weight_lbs) = weight else {
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let cost_gp = table_entry.and_then(|entry| entry.cost_gp);
+        let cost_gp = cost;
 
         total_carried_weight_lbs += weight_lbs;
         total_carried_cost_gp += cost_gp.unwrap_or(0.0);
@@ -464,6 +484,40 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
         assert_eq!(computation.thresholds, carrying_capacity_thresholds(10, SizeCategory::Medium));
         // 24 lbs total is within Strength 10's light max (33 lbs).
         assert_eq!(computation.level, EncumbranceLevel::Light);
+    }
+
+    /// Regression test for the real bug found by SD-27's Advanced Race Guide
+    /// PCGen parity run: a non-Core-Rulebook item (here, ARG's own Dogslicer,
+    /// verbatim `COST:8 WT:1` from `arg_equip_arms_armor.lst`) resolves
+    /// through `equipment_id_resolve` (already book-agnostic) but weight and
+    /// cost were both silently dropped when a second, CRB-only lookup ran
+    /// against `rules_tables::crb::equipment_tables()`. Reading both directly
+    /// off the resolved record's own tokens (`weight_and_cost_from_record`)
+    /// fixes this for every book, not just ARG. See
+    /// `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` finding 1.
+    #[test]
+    fn compute_encumbrance_resolves_weight_and_cost_for_a_non_crb_book_item() {
+        const ARG_FIXTURE_TEXT: &str = "\
+Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tWT:1\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d4\n";
+        let result = parse_equipment_entries("arg_equip_arms_armor.lst", ARG_FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "arg_equip_arms_armor.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+
+        let equipment_selections = vec![selection("Dogslicer", ActiveState::EquippedActive)];
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
+
+        assert!(computation.unresolved_item_ids.is_empty(), "{:?}", computation.unresolved_item_ids);
+        assert_eq!(computation.total_carried_weight_lbs, 1.0, "Dogslicer's real WT:1 must be counted");
+        assert_eq!(computation.total_carried_cost_gp, 8.0, "Dogslicer's real COST:8 must be counted");
+        assert_eq!(
+            computation.per_item,
+            vec![CarriedItem { item_id: "Dogslicer".to_owned(), weight_lbs: 1.0, cost_gp: Some(8.0) }]
+        );
     }
 
     #[test]
