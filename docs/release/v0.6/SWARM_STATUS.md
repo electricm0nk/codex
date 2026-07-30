@@ -1797,7 +1797,7 @@ Task #49 is now a genuine staffing gap: featmate on session-limit cooldown (rese
 
 <!-- AUTO-HEARTBEAT-START -->
 ## Auto Heartbeat (mechanical, cron-driven every 5 min -- lead does not hand-edit this section)
-Last mechanical check: 2026-07-30T07:50:03
-Latest commit on tranche/6: 0ac4d11b chore(v0.6): auto-heartbeat refresh [skip lead-review] (4 minutes ago) (2026-07-30T07:46:14-04:00)
+Last mechanical check: 2026-07-30T09:40:02
+Latest commit on tranche/6: cb1773a8 fix(v0.6): stop character creation claiming a Dodge feat no slot granted (2 hours ago) (2026-07-30T08:05:00-04:00) -- STALE: no commit on tranche/6 in 95m, worth checking the swarm is still alive
 Last inbox activity (mtime proxy): backend=unknown frontend=unknown qa=unknown lead=unknown
 <!-- AUTO-HEARTBEAT-END -->
