@@ -14,6 +14,11 @@ mod feat_catalog;
 mod ge08_workbench;
 mod pf1_adapter;
 mod race_catalog;
+/// Test-only: the reach gate, which fails when ingested content has no
+/// consumer carrying it to a player. Compiled out of the shipping binary
+/// because it is a verification surface, not a runtime one.
+#[cfg(test)]
+mod reach_gate;
 mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;
