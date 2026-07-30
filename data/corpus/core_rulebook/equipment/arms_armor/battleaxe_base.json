@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Battleaxe (Base)",
     "category": "arms_armor",
-    "name": "Battleaxe",
     "cost_gp": 10.0,
-    "weight_lbs": 6.0,
-    "description": null
+    "description": null,
+    "key": "Battleaxe (Base)",
+    "name": "Battleaxe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Battleaxe (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Battleaxe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.OneHanded.Slashing.Axe.Weapon Group Axes"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 6.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 163,
-    "record_key": "Battleaxe (Base)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 163,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Battleaxe (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Material ~ Darkleaf Cloth ~ Item",
     "category": "equipmods",
-    "name": "Darkleaf Cloth",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Material ~ Darkleaf Cloth ~ Item",
+    "name": "Darkleaf Cloth",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Darkleaf Cloth ~ Item"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Instruments.Tools.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "WT*375"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Darkleaf"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor,Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
-    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
-    "line": 8,
-    "record_key": "Material ~ Darkleaf Cloth ~ Item"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Material ~ Darkleaf Cloth ~ Item",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  }
 }

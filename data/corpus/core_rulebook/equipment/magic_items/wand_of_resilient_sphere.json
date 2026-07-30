@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Wand of Resilient Sphere",
     "category": "magic_items",
-    "name": "Wand",
     "cost_gp": null,
-    "weight_lbs": 0.0625,
-    "description": "Force globe protects but traps one subject."
+    "description": "Force globe protects but traps one subject.",
+    "key": "Wand of Resilient Sphere",
+    "name": "Wand",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wand of Resilient Sphere"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Wand of Resilient Sphere"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wand.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.0625"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Resilient Sphere]SPELLLEVEL[4]CASTERLEVEL[7]CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation [force]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wand, resilient sphere"
+      },
+      {
+        "key": "SPROP",
+        "value": "Force globe protects but traps one subject."
+      },
+      {
+        "key": "DESC",
+        "value": "Force globe protects but traps one subject."
+      }
+    ],
+    "weight_lbs": 0.0625
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 954,
-    "record_key": "Wand of Resilient Sphere"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 954,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Wand of Resilient Sphere",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

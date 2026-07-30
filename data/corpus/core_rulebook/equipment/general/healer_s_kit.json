@@ -1,23 +1,67 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Healer's Kit",
     "category": "general",
-    "name": "Healer's Kit",
     "cost_gp": 50.0,
-    "weight_lbs": 1.0,
-    "description": "This collection of bandages and herbs provides a +2 circumstance bonus on Heal checks. A healer's kit is exhausted after 10 uses."
+    "description": "This collection of bandages and herbs provides a +2 circumstance bonus on Heal checks. A healer's kit is exhausted after 10 uses.",
+    "key": "Healer's Kit",
+    "name": "Healer's Kit",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Heal",
+          "2",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Healer's Kit"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Healer's Kit"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Masterwork"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 10 Maximum|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "DESC",
+        "value": "This collection of bandages and herbs provides a +2 circumstance bonus on Heal checks. A healer's kit is exhausted after 10 uses."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 206,
-    "record_key": "Healer's Kit"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Healer's Kit",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

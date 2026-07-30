@@ -1,23 +1,115 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Rod (Alertness)",
     "category": "magic_items",
-    "name": "Rod",
     "cost_gp": 85000.0,
-    "weight_lbs": 4.0,
-    "description": "This rod is indistinguishable from a +1 light mace. It has eight flanges on its mace-like head. The rod bestows a +1 insight bonus on initiative checks. If grasped firmly, the rod enables the holder to use detect evil, detect good, detect chaos, detect law, detect magic, discern lies, light, or see invisibility. Each different use is a standard action.\nIf the head of a rod of alertness is planted in the ground and the possessor wills it to alertness (a standard action), the rod senses any creatures within 120 feet who intend to harm the possessor. At the same time, the rod creates the effect of a prayer spell upon all creatures friendly to the possessor in a 20-foot radius. Immediately thereafter, the rod sends forth a mental alert to these friendly creatures, warning them of any unfriendly creatures within the 120-foot radius. These effects last for 10 minutes, and the rod can perform this function once per day. Last, the rod can be used to simulate the casting of an animate objects spell, utilizing any 11 (or fewer) Small objects located roughly around the perimeter of a 5-foot-radius circle centered on the rod when planted in the ground. Objects remain animated for 11 rounds. The rod can perform this function once per day."
+    "description": "This rod is indistinguishable from a +1 light mace. It has eight flanges on its mace-like head. The rod bestows a +1 insight bonus on initiative checks. If grasped firmly, the rod enables the holder to use detect evil, detect good, detect chaos, detect law, detect magic, discern lies, light, or see invisibility. Each different use is a standard action.\nIf the head of a rod of alertness is planted in the ground and the possessor wills it to alertness (a standard action), the rod senses any creatures within 120 feet who intend to harm the possessor. At the same time, the rod creates the effect of a prayer spell upon all creatures friendly to the possessor in a 20-foot radius. Immediately thereafter, the rod sends forth a mental alert to these friendly creatures, warning them of any unfriendly creatures within the 120-foot radius. These effects last for 10 minutes, and the rod can perform this function once per day. Last, the rod can be used to simulate the casting of an animate objects spell, utilizing any 11 (or fewer) Small objects located roughly around the perimeter of a 5-foot-radius circle centered on the rod when planted in the ground. Objects remain animated for 11 rounds. The rod can perform this function once per day.",
+    "key": "Rod (Alertness)",
+    "name": "Rod",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "1",
+          "TYPE=Insight"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Alertness)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Alertness"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mace (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Weapon.Resizable.Melee.Simple.Light.Finesseable.Bludgeoning.Mace.Hammer.Weapon Group Hammers"
+      },
+      {
+        "key": "COST",
+        "value": "85000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.486"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate abjuration, divination, enchantment, and evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|42,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Rod, alarm, animate objects, detect chaos, detect evil, detect good, detect law, detect magic, discern lies, light, prayer, see invisibility"
+      },
+      {
+        "key": "DESC",
+        "value": "This rod is indistinguishable from a +1 light mace. It has eight flanges on its mace-like head. The rod bestows a +1 insight bonus on initiative checks. If grasped firmly, the rod enables the holder to use detect evil, detect good, detect chaos, detect law, detect magic, discern lies, light, or see invisibility. Each different use is a standard action.&nl;If the head of a rod of alertness is planted in the ground and the possessor wills it to alertness (a standard action), the rod senses any creatures within 120 feet who intend to harm the possessor. At the same time, the rod creates the effect of a prayer spell upon all creatures friendly to the possessor in a 20-foot radius. Immediately thereafter, the rod sends forth a mental alert to these friendly creatures, warning them of any unfriendly creatures within the 120-foot radius. These effects last for 10 minutes, and the rod can perform this function once per day. Last, the rod can be used to simulate the casting of an animate objects spell, utilizing any 11 (or fewer) Small objects located roughly around the perimeter of a 5-foot-radius circle centered on the rod when planted in the ground. Objects remain animated for 11 rounds. The rod can perform this function once per day."
+      }
+    ],
+    "weight_lbs": 4.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 450,
-    "record_key": "Rod (Alertness)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 450,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Alertness)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

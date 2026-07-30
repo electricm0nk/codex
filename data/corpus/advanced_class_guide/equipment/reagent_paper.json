@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Reagent Paper",
     "category": "General",
-    "name": "Reagent Paper",
     "cost_gp": 1.0,
-    "weight": null,
-    "description": "+2 bonus on Craft (alchemy) or Spellcraft to identify liquids"
+    "description": "+2 bonus on Craft (alchemy) or Spellcraft to identify liquids",
+    "key": "Reagent Paper",
+    "name": "Reagent Paper",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 bonus on Craft (alchemy) or Spellcraft to identify liquids"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 221,
-    "record_key": "Reagent Paper"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 221,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Reagent Paper",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

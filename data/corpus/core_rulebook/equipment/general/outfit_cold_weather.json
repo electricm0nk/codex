@@ -1,23 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Outfit (Cold-Weather)",
     "category": "general",
-    "name": "Cold-Weather Outfit",
     "cost_gp": 8.0,
-    "weight_lbs": 7.0,
-    "description": "This outfit includes a wool coat, linen shirt, wool cap, heavy cloak, thick pants or skirt, and boots. This outfit grants a +5 circumstance bonus on Fortitude saving throws against exposure to cold weather."
+    "description": "This outfit includes a wool coat, linen shirt, wool cap, heavy cloak, thick pants or skirt, and boots. This outfit grants a +5 circumstance bonus on Fortitude saving throws against exposure to cold weather.",
+    "key": "Outfit (Cold-Weather)",
+    "name": "Cold-Weather Outfit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Outfit (Cold-Weather)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Outfit (Cold-Weather)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Clothing.Resizable.Starting"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "7"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 circumstance bonus on Fortitude saves vs. cold weather"
+      },
+      {
+        "key": "DESC",
+        "value": "This outfit includes a wool coat, linen shirt, wool cap, heavy cloak, thick pants or skirt, and boots. This outfit grants a +5 circumstance bonus on Fortitude saving throws against exposure to cold weather."
+      }
+    ],
+    "weight_lbs": 7.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 254,
-    "record_key": "Outfit (Cold-Weather)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 254,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Outfit (Cold-Weather)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

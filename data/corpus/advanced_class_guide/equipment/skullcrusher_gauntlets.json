@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Skullcrusher Gauntlets",
     "category": "MagicItems",
-    "name": "Skullcrusher Gauntlets",
     "cost_gp": 15302.0,
-    "weight": 6.0,
-    "description": "1/day make single attack as full-round action to deal 4d6 force damage and target must save (Fort DC 15) or fall unconscious until the end of its next turn, staggered if save is made"
+    "description": "1/day make single attack as full-round action to deal 4d6 force damage and target must save (Fort DC 15) or fall unconscious until the end of its next turn, staggered if save is made",
+    "key": "Skullcrusher Gauntlets",
+    "name": "Skullcrusher Gauntlets",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "15302"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day make single attack as full-round action to deal 4d6 force damage and target must save (Fort DC 15) or fall unconscious until the end of its next turn, staggered if save is made"
+      }
+    ],
+    "weight": 6.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 415,
-    "record_key": "Skullcrusher Gauntlets"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 415,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Skullcrusher Gauntlets",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

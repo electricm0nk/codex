@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Waterskin (Filled)",
     "category": "general",
-    "name": "Waterskin, Filled",
     "cost_gp": 1.0,
-    "weight_lbs": 4.0,
-    "description": null
+    "description": null,
+    "key": "Waterskin (Filled)",
+    "name": "Waterskin, Filled",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waterskin (Filled)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Waterskin, Filled"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Waterskin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ],
+    "weight_lbs": 4.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 184,
-    "record_key": "Waterskin (Filled)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 184,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Waterskin (Filled)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

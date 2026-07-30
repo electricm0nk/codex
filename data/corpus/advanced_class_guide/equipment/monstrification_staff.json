@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Monstrification Staff",
     "category": "MagicItems",
-    "name": "Monstrification Staff",
     "cost_gp": 12000.0,
-    "weight": 4.0,
-    "description": null
+    "description": null,
+    "key": "Monstrification Staff",
+    "name": "Monstrification Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Staff"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      }
+    ],
+    "weight": 4.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 307,
-    "record_key": "Monstrification Staff"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 307,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Monstrification Staff",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

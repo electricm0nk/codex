@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Masking Scent (magical beast)",
     "category": "General",
-    "name": "Masking Scent (magical beast)",
     "cost_gp": 100.0,
-    "weight": null,
-    "description": "Change your scent to a specific magical beast's"
+    "description": "Change your scent to a specific magical beast's",
+    "key": "Masking Scent (magical beast)",
+    "name": "Masking Scent (magical beast)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPROP",
+        "value": "Change your scent to a specific magical beast's"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 217,
-    "record_key": "Masking Scent (magical beast)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 217,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Masking Scent (magical beast)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

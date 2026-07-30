@@ -1,23 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Lock (Good)",
     "category": "general",
-    "name": "Lock, Good",
     "cost_gp": 80.0,
-    "weight_lbs": 1.0,
-    "description": "The DC to open a lock with the Disable Device skill depends on the lock's quality: simple (DC 20), average (DC 25), good (DC 30), or superior (DC 40)."
+    "description": "The DC to open a lock with the Disable Device skill depends on the lock's quality: simple (DC 20), average (DC 25), good (DC 30), or superior (DC 40).",
+    "key": "Lock (Good)",
+    "name": "Lock, Good",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lock (Good)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Lock, Good"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Good Lock"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "80"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "DESC",
+        "value": "The DC to open a lock with the Disable Device skill depends on the lock's quality: simple (DC 20), average (DC 25), good (DC 30), or superior (DC 40)."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 143,
-    "record_key": "Lock (Good)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 143,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Lock (Good)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Amulet of the Blooded (Draconic Acid)",
     "category": "MagicItems",
-    "name": "Amulet of the Blooded (Draconic Acid)",
     "cost_gp": 12000.0,
-    "weight": 1.0,
-    "description": "increase effective level of bloodline abilities by 2; gain acid resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 acid damage, 60-ft. line, Reflex DC 13 half)"
+    "description": "increase effective level of bloodline abilities by 2; gain acid resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 acid damage, 60-ft. line, Reflex DC 13 half)",
+    "key": "Amulet of the Blooded (Draconic Acid)",
+    "name": "Amulet of the Blooded (Draconic Acid)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.222"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase effective level of bloodline abilities by 2|PREABILITY:1,CATEGORY=Special Ability,Bloodline ~ Draconic"
+      },
+      {
+        "key": "SPROP",
+        "value": "gain acid resistance 5, +1 natural armor bonus to AC; 1/day breath weapon (4d6 acid damage, 60-ft. line, Reflex DC 13 half)|!PREABILITY:1,CATEGORY=Special Ability,Bloodline ~ Draconic"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 318,
-    "record_key": "Amulet of the Blooded (Draconic Acid)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Amulet of the Blooded (Draconic Acid)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

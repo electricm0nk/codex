@@ -1,23 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ink (1 oz Vial)",
     "category": "general",
-    "name": "Ink, 1 oz. Vial",
     "cost_gp": 8.0,
-    "weight_lbs": null,
-    "description": "Ink in colors other than black costs twice as much."
+    "description": "Ink in colors other than black costs twice as much.",
+    "key": "Ink (1 oz Vial)",
+    "name": "Ink, 1 oz. Vial",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ink (1 oz Vial)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ink, 1 oz. Vial"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ink"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Writing.Liquid.Vial"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "Ink in colors other than black costs twice as much."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 133,
-    "record_key": "Ink (1 oz Vial)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 133,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Ink (1 oz Vial)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

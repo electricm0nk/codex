@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Tail Attachment (Spiked)",
     "category": "arms_armor",
-    "name": "Tail Attachment (Spiked)",
     "cost_gp": 3.0,
-    "weight_lbs": 2.0,
-    "description": "This narrow spike tapers to a sharp point."
+    "description": "This narrow spike tapers to a sharp point.",
+    "key": "Tail Attachment (Spiked)",
+    "name": "Tail Attachment (Spiked)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tail Attachment, Spiked"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kobold Tail Attachment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.KoboldTailAttachment.Piercing.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SPROP",
+        "value": "This narrow spike tapers to a sharp point.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 2.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 41,
-    "record_key": "Tail Attachment (Spiked)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Tail Attachment (Spiked)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

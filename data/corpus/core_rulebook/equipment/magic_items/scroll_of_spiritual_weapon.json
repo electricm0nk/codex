@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Spiritual Weapon",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": null,
-    "weight_lbs": 0.01,
-    "description": "Magic weapon attacks on its own."
+    "description": "Magic weapon attacks on its own.",
+    "key": "Scroll of Spiritual Weapon",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Spiritual Weapon"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Spiritual Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Divine.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Spiritual Weapon]SPELLLEVEL[2]CASTERLEVEL[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint evocation [force]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|75 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, spiritual weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Magic weapon attacks on its own."
+      },
+      {
+        "key": "DESC",
+        "value": "Magic weapon attacks on its own."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1428,
-    "record_key": "Scroll of Spiritual Weapon"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1428,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Spiritual Weapon",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

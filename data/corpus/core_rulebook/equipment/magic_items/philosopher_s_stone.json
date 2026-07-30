@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Philosopher's Stone",
     "category": "magic_items",
-    "name": "Philosopher's Stone",
     "cost_gp": 0.0,
-    "weight_lbs": 3.0,
-    "description": "This rare substance appears to be an ordinary, sooty piece of blackish rock. If the stone is broken open (break DC 20), a cavity is revealed at the stone's heart. This cavity is lined with a magical type of quicksilver that enables any character with at least 10 ranks in Craft (alchemy) to transmute base metals (iron and lead) into silver and gold. A single philosopher's stone can turn up to 5,000 pounds of iron into silver (worth 25,000 gp), or up to 1,000 pounds of lead into gold (worth 50,000 gp). However, the quicksilver becomes unstable once the stone is opened and loses its potency within 24 hours, so all transmutations must take place within that period.\nThe quicksilver found in the center of the stone may also be put to another use. If mixed with any cure potion while the substance is still potent, it creates a special oil of life that acts as a true resurrection spell for any dead body it is sprinkled upon."
+    "description": "This rare substance appears to be an ordinary, sooty piece of blackish rock. If the stone is broken open (break DC 20), a cavity is revealed at the stone's heart. This cavity is lined with a magical type of quicksilver that enables any character with at least 10 ranks in Craft (alchemy) to transmute base metals (iron and lead) into silver and gold. A single philosopher's stone can turn up to 5,000 pounds of iron into silver (worth 25,000 gp), or up to 1,000 pounds of lead into gold (worth 50,000 gp). However, the quicksilver becomes unstable once the stone is opened and loses its potency within 24 hours, so all transmutations must take place within that period.\nThe quicksilver found in the center of the stone may also be put to another use. If mixed with any cure potion while the substance is still potent, it creates a special oil of life that acts as a true resurrection spell for any dead body it is sprinkled upon.",
+    "key": "Philosopher's Stone",
+    "name": "Philosopher's Stone",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Philosopher's Stone"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Philosopher's Stone"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.545"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Destruction|The philosopher's stone can be destroyed by being placed in the heel of a titan's boot for at least 1 entire week."
+      },
+      {
+        "key": "DESC",
+        "value": "This rare substance appears to be an ordinary, sooty piece of blackish rock. If the stone is broken open (break DC 20), a cavity is revealed at the stone's heart. This cavity is lined with a magical type of quicksilver that enables any character with at least 10 ranks in Craft (alchemy) to transmute base metals (iron and lead) into silver and gold. A single philosopher's stone can turn up to 5,000 pounds of iron into silver (worth 25,000 gp), or up to 1,000 pounds of lead into gold (worth 50,000 gp). However, the quicksilver becomes unstable once the stone is opened and loses its potency within 24 hours, so all transmutations must take place within that period.&nl;The quicksilver found in the center of the stone may also be put to another use. If mixed with any cure potion while the substance is still potent, it creates a special oil of life that acts as a true resurrection spell for any dead body it is sprinkled upon."
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1600,
-    "record_key": "Philosopher's Stone"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1600,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Philosopher's Stone",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

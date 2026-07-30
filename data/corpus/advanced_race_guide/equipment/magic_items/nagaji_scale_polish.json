@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Nagaji Scale Polish",
     "category": "magic_items",
-    "name": "Nagaji Scale Polish",
     "cost_gp": 1400.0,
-    "weight_lbs": 0.5,
-    "description": "Any caster may casts spells into the jar. The creature that applies the paste to its scales gains the ability to cast the imbued spells (assuming it meets the prerequisite). Only a reptilian creature can use the polish."
+    "description": "Any caster may casts spells into the jar. The creature that applies the paste to its scales gains the ability to cast the imbued spells (assuming it meets the prerequisite). Only a reptilian creature can use the polish.",
+    "key": "Nagaji Scale Polish",
+    "name": "Nagaji Scale Polish",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable.Racial.Nagaji"
+      },
+      {
+        "key": "COST",
+        "value": "1400"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      },
+      {
+        "key": "SPROP",
+        "value": "Any caster may casts spells into the jar. The creature that applies the paste to its scales gains the ability to cast the imbued spells (assuming it meets the prerequisite). Only a reptilian creature can use the polish."
+      }
+    ],
+    "weight_lbs": 0.5
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 65,
-    "record_key": "Nagaji Scale Polish"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 65,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Nagaji Scale Polish",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

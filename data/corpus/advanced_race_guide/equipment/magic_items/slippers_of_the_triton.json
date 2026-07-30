@@ -1,23 +1,60 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Slippers of the Triton",
     "category": "magic_items",
-    "name": "Slippers of the Triton",
     "cost_gp": 56000.0,
-    "weight_lbs": 1.0,
-    "description": "Grant water breathing, swim speed of 30 ft or +10 foot enhancement if wearer already has a swim speed."
+    "description": "Grant water breathing, swim speed of 30 ft or +10 foot enhancement if wearer already has a swim speed.",
+    "key": "Slippers of the Triton",
+    "name": "Slippers of the Triton",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE.Swim",
+          "10",
+          "TYPE=Enhancement",
+          "PREMOVE:1,Swim=1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "56000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.178"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Breathing"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grant water breathing, swim speed of 30 ft or +10 foot enhancement if wearer already has a swim speed."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 82,
-    "record_key": "Slippers of the Triton"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 82,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Slippers of the Triton",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

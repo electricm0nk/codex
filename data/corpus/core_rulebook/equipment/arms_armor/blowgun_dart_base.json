@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Blowgun Dart (Base)",
     "category": "arms_armor",
-    "name": "Blowgun Dart",
     "cost_gp": 0.05,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Blowgun Dart (Base)",
+    "name": "Blowgun Dart",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Blowgun Dart (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Dart"
+      },
+      {
+        "key": "COST",
+        "value": "0.05"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 15,
-    "record_key": "Blowgun Dart (Base)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Blowgun Dart (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

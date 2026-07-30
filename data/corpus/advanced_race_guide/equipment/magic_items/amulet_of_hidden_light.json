@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Amulet of Hidden Light",
     "category": "magic_items",
-    "name": "Amulet of Hidden Light",
     "cost_gp": 9000.0,
-    "weight_lbs": null,
-    "description": "Can, on command, shed light as a sunrod. Unlike a normal light source, creatures outside this area cannot see the amulet's light."
+    "description": "Can, on command, shed light as a sunrod. Unlike a normal light source, creatures outside this area cannot see the amulet's light.",
+    "key": "Amulet of Hidden Light",
+    "name": "Amulet of Hidden Light",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "9000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can, on command, shed light as a sunrod. Unlike a normal light source, creatures outside this area cannot see the amulet's light."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 14,
-    "record_key": "Amulet of Hidden Light"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Amulet of Hidden Light",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

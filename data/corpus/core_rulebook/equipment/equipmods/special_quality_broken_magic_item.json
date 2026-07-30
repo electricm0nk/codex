@@ -1,23 +1,81 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Broken ~ Magic Item",
     "category": "equipmods",
-    "name": "Broken",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Quality ~ Broken ~ Magic Item",
+    "name": "Broken",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WAND",
+          "-BASECOST*.25"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.STAFF",
+          "-BASECOST*.25"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Broken ~ Magic Item"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrokenCondition.Wand.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Broken"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.566"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wand,Staff"
+      },
+      {
+        "key": "SPROP",
+        "value": "Uses twice the charges as normal."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 62,
-    "record_key": "Special Quality ~ Broken ~ Magic Item"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 62,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Broken ~ Magic Item",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

@@ -1,23 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Earthbind Rod",
     "category": "arms_armor",
-    "name": "Earthbind Rod",
     "cost_gp": 26500.0,
-    "weight_lbs": 5.0,
-    "description": "Grants its wielder a +4 circumstance bonus to its CMD against bull rush, grapple, overrun, reposition, and trip combat maneuvers, but only if the wielder is an oread, has the earth subtype, or is standing on earth or stone. Three times per day, when the wielder hits a creature with this rod, as long as the target of this attack is standing on stone or earth, the wielder can attempt to entangle that creature (Fortitude DC 18 negates) for 1d4 rounds."
+    "description": "Grants its wielder a +4 circumstance bonus to its CMD against bull rush, grapple, overrun, reposition, and trip combat maneuvers, but only if the wielder is an oread, has the earth subtype, or is standing on earth or stone. Three times per day, when the wielder hits a creature with this rod, as long as the target of this attack is standing on stone or earth, the wielder can attempt to entangle that creature (Fortitude DC 18 negates) for 1d4 rounds.",
+    "key": "Earthbind Rod",
+    "name": "Earthbind Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mace (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Weapon.Resizable.Melee.Light.Finesseable.Simple.Specific.Bludgeoning.Mace.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "26500"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grants its wielder a +4 circumstance bonus to its CMD against bull rush, grapple, overrun, reposition, and trip combat maneuvers, but only if the wielder is an oread, has the earth subtype, or is standing on earth or stone. Three times per day, when the wielder hits a creature with this rod, as long as the target of this attack is standing on stone or earth, the wielder can attempt to entangle that creature (Fortitude DC 18 negates) for 1d4 rounds."
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 43,
-    "record_key": "Earthbind Rod"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Earthbind Rod",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

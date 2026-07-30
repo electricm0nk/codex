@@ -1,23 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Mandolin (Base)",
     "category": "general",
-    "name": "Mandolin",
     "cost_gp": 5.0,
-    "weight_lbs": 3.0,
-    "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
+    "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use.",
+    "key": "Mandolin (Base)",
+    "name": "Mandolin",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perform (String Instruments)",
+          "2",
+          "TYPE=Circumstance",
+          "PRETYPE:1,Masterwork"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mandolin (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Mandolin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Instrument.String.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "DESC",
+        "value": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 243,
-    "record_key": "Mandolin (Base)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 243,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Mandolin (Base)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

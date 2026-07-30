@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Storyteller's Dust",
     "category": "MagicItems",
-    "name": "Storyteller's Dust",
     "cost_gp": 600.0,
-    "weight": null,
-    "description": "create 10-foot cube manipulatable minor image above fire, lasts 2 hours, +2 Performance checks to tell a story using the image"
+    "description": "create 10-foot cube manipulatable minor image above fire, lasts 2 hours, +2 Performance checks to tell a story using the image",
+    "key": "Storyteller's Dust",
+    "name": "Storyteller's Dust",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "600"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "create 10-foot cube manipulatable minor image above fire, lasts 2 hours, +2 Performance checks to tell a story using the image"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 438,
-    "record_key": "Storyteller's Dust"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 438,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Storyteller's Dust",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

@@ -1,23 +1,75 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Amorphous ~ Armor",
     "category": "Equipmods",
-    "name": "Amorphous",
     "cost_gp": 4500.0,
-    "weight": null,
-    "description": "1/day take form of viscous liquid"
+    "description": "1/day take form of viscous liquid",
+    "key": "Special Ability ~ Amorphous ~ Armor",
+    "name": "Amorphous",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "5",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Grapple",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Amorphous ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Material ~ Cloth,EQMOD=Material ~ Leather,EQMOD=Material ~ Rope,HideArmor"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day take form of viscous liquid"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
-    "line": 10,
-    "record_key": "Special Ability ~ Amorphous ~ Armor"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Amorphous ~ Armor",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  }
 }

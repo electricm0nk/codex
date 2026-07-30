@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Training Harness",
     "category": "general",
-    "name": "Training Harness",
     "cost_gp": 10.0,
-    "weight_lbs": 10.0,
-    "description": "A training harness provides a +2 bonus on Handle Animal checks made with an animal wearing it."
+    "description": "A training harness provides a +2 bonus on Handle Animal checks made with an animal wearing it.",
+    "key": "Training Harness",
+    "name": "Training Harness",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Handle Animal",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Mount.Racial.Human"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.76"
+      },
+      {
+        "key": "SPROP",
+        "value": "A training harness provides a +2 bonus on Handle Animal checks made with an animal wearing it."
+      }
+    ],
+    "weight_lbs": 10.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 78,
-    "record_key": "Training Harness"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 78,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Training Harness",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

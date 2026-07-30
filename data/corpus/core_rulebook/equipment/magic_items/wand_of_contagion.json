@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Wand of Contagion",
     "category": "magic_items",
-    "name": "Wand",
     "cost_gp": null,
-    "weight_lbs": 0.0625,
-    "description": "Infects subject with chosen disease."
+    "description": "Infects subject with chosen disease.",
+    "key": "Wand of Contagion",
+    "name": "Wand",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wand of Contagion"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Wand of Contagion"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wand.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.0625"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Contagion]SPELLLEVEL[3]CASTERLEVEL[5]CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint necromancy [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|5,625 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wand, contagion"
+      },
+      {
+        "key": "SPROP",
+        "value": "Infects subject with chosen disease."
+      },
+      {
+        "key": "DESC",
+        "value": "Infects subject with chosen disease."
+      }
+    ],
+    "weight_lbs": 0.0625
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 798,
-    "record_key": "Wand of Contagion"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 798,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Wand of Contagion",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

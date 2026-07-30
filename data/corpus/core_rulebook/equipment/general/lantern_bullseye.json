@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Lantern (Bullseye)",
     "category": "general",
-    "name": "Lantern, Bullseye",
     "cost_gp": 12.0,
-    "weight_lbs": 3.0,
-    "description": "A bullseye lantern provides normal light in a 60-foot cone and increases the light level by one step in the area beyond that, out to a 120-foot cone (darkness becomes dim light and dim light becomes normal light). A bullseye lantern does not increase the light level in normal light or bright light. A lantern burns for 6 hours on one pint of oil. You can carry a lantern in one hand."
+    "description": "A bullseye lantern provides normal light in a 60-foot cone and increases the light level by one step in the area beyond that, out to a 120-foot cone (darkness becomes dim light and dim light becomes normal light). A bullseye lantern does not increase the light level in normal light or bright light. A lantern burns for 6 hours on one pint of oil. You can carry a lantern in one hand.",
+    "key": "Lantern (Bullseye)",
+    "name": "Lantern, Bullseye",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Lantern (Bullseye)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Lantern, Bullseye"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Bullseye Lantern"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Normal Illumination|60 ft. cone"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Increases light level by 1 step|120 ft. cone"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|6 hr./pint"
+      },
+      {
+        "key": "DESC",
+        "value": "A bullseye lantern provides normal light in a 60-foot cone and increases the light level by one step in the area beyond that, out to a 120-foot cone (darkness becomes dim light and dim light becomes normal light). A bullseye lantern does not increase the light level in normal light or bright light. A lantern burns for 6 hours on one pint of oil. You can carry a lantern in one hand."
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 139,
-    "record_key": "Lantern (Bullseye)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 139,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Lantern (Bullseye)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

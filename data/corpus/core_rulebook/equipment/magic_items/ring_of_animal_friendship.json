@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Animal Friendship",
     "category": "magic_items",
-    "name": "Ring of Animal Friendship",
     "cost_gp": 10800.0,
-    "weight_lbs": null,
-    "description": "A ring of animal friendship always bears some sort of animal-like design in its craftsmanship. On command, this ring affects an animal as if the wearer had cast charm animal."
+    "description": "A ring of animal friendship always bears some sort of animal-like design in its craftsmanship. On command, this ring affects an animal as if the wearer had cast charm animal.",
+    "key": "Ring of Animal Friendship",
+    "name": "Ring of Animal Friendship",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Animal Friendship"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Animal Friendship"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "10800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.478"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring of Animal Friendship|TIMES=ATWILL|CASTERLEVEL=3|Charm Animal"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|5,400 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, charm animal"
+      },
+      {
+        "key": "DESC",
+        "value": "A ring of animal friendship always bears some sort of animal-like design in its craftsmanship. On command, this ring affects an animal as if the wearer had cast charm animal."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 361,
-    "record_key": "Ring of Animal Friendship"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 361,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Animal Friendship",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Silent Image",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": null,
-    "weight_lbs": 0.01,
-    "description": "Creates minor illusion of your design."
+    "description": "Creates minor illusion of your design.",
+    "key": "Scroll of Silent Image",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Silent Image"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Silent Image"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Arcane.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Silent Image]SPELLLEVEL[1]CASTERLEVEL[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion (figment)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|12 gp 5 sp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, silent image"
+      },
+      {
+        "key": "SPROP",
+        "value": "Creates minor illusion of your design."
+      },
+      {
+        "key": "DESC",
+        "value": "Creates minor illusion of your design."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1017,
-    "record_key": "Scroll of Silent Image"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1017,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Silent Image",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Oil of Bless Weapon",
     "category": "magic_items",
-    "name": "Potion",
     "cost_gp": null,
-    "weight_lbs": 0.0,
-    "description": "This transmutation makes a weapon strike true against evil foes. Duration 1 minute."
+    "description": "This transmutation makes a weapon strike true against evil foes. Duration 1 minute.",
+    "key": "Oil of Bless Weapon",
+    "name": "Potion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oil of Bless Weapon"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Oil of Bless Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Single Use|SPELLNAME[Bless Weapon]SPELLLEVEL[1]CASTERLEVEL[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.477"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|25 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Brew Potion, bless weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "This transmutation makes a weapon strike true against evil foes. Duration 1 minute."
+      },
+      {
+        "key": "DESC",
+        "value": "This transmutation makes a weapon strike true against evil foes. Duration 1 minute."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 581,
-    "record_key": "Oil of Bless Weapon"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 581,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Oil of Bless Weapon",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

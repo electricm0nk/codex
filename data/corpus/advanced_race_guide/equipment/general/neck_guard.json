@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Neck Guard",
     "category": "general",
-    "name": "Neck Guard",
     "cost_gp": 10.0,
-    "weight_lbs": 0.25,
-    "description": "Provides a +1 armor bonus to AC against vampire bites or similar attacks that specifically target the wearer's throat. Provides no additional bonus when worn with heavy armor."
+    "description": "Provides a +1 armor bonus to AC against vampire bites or similar attacks that specifically target the wearer's throat. Provides no additional bonus when worn with heavy armor.",
+    "key": "Neck Guard",
+    "name": "Neck Guard",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Clothing.Resizable.Amulet.Racial.Dhampir"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "0.25"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      },
+      {
+        "key": "SPROP",
+        "value": "Provides a +1 armor bonus to AC against vampire bites or similar attacks that specifically target the wearer's throat. Provides no additional bonus when worn with heavy armor."
+      }
+    ],
+    "weight_lbs": 0.25
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 55,
-    "record_key": "Neck Guard"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Neck Guard",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

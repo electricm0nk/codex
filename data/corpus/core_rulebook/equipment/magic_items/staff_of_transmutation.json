@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Transmutation",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 82000.0,
-    "weight_lbs": 5.0,
-    "description": "This staff is generally carved from or decorated with petrified wood or fossilized bone, each etched with tiny but complex runes. It allows use of the following spells:\n* Alter self (1 charge)\n* Blink (1 charge)\n* Expeditious retreat (1 charge)\n* Baleful polymorph (2 charges)\n* Polymorph (2 charges)\n* Disintegrate (3 charges)"
+    "description": "This staff is generally carved from or decorated with petrified wood or fossilized bone, each etched with tiny but complex runes. It allows use of the following spells:\n* Alter self (1 charge)\n* Blink (1 charge)\n* Expeditious retreat (1 charge)\n* Baleful polymorph (2 charges)\n* Polymorph (2 charges)\n* Disintegrate (3 charges)",
+    "key": "Staff of Transmutation",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Transmutation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Transmutation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.495"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|41,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, alter self, baleful polymorph, blink, disintegrate, expeditious retreat, polymorph"
+      },
+      {
+        "key": "DESC",
+        "value": "This staff is generally carved from or decorated with petrified wood or fossilized bone, each etched with tiny but complex runes. It allows use of the following spells:&nl;* Alter self (1 charge)&nl;* Blink (1 charge)&nl;* Expeditious retreat (1 charge)&nl;* Baleful polymorph (2 charges)&nl;* Polymorph (2 charges)&nl;* Disintegrate (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 442,
-    "record_key": "Staff of Transmutation"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 442,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Transmutation",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Wand of Ventriloquism",
     "category": "magic_items",
-    "name": "Wand",
     "cost_gp": null,
-    "weight_lbs": 0.0625,
-    "description": "You can make your voice seem to issue from someplace else."
+    "description": "You can make your voice seem to issue from someplace else.",
+    "key": "Wand of Ventriloquism",
+    "name": "Wand",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wand of Ventriloquism"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Wand of Ventriloquism"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wand.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.0625"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Ventriloquism]SPELLLEVEL[1]CASTERLEVEL[1]CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion (figment)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|375 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wand, ventriloquism"
+      },
+      {
+        "key": "SPROP",
+        "value": "You can make your voice seem to issue from someplace else."
+      },
+      {
+        "key": "DESC",
+        "value": "You can make your voice seem to issue from someplace else."
+      }
+    ],
+    "weight_lbs": 0.0625
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 708,
-    "record_key": "Wand of Ventriloquism"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 708,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Wand of Ventriloquism",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

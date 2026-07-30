@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Meteor Swarm",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": null,
-    "weight_lbs": 0.01,
-    "description": "Four exploding spheres each deal 6d6 fire damage."
+    "description": "Four exploding spheres each deal 6d6 fire damage.",
+    "key": "Scroll of Meteor Swarm",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Meteor Swarm"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Meteor Swarm"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Arcane.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Meteor Swarm]SPELLLEVEL[9]CASTERLEVEL[17]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation [fire]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1912 gp 5 sp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, meteor swarm"
+      },
+      {
+        "key": "SPROP",
+        "value": "Four exploding spheres each deal 6d6 fire damage."
+      },
+      {
+        "key": "DESC",
+        "value": "Four exploding spheres each deal 6d6 fire damage."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1344,
-    "record_key": "Scroll of Meteor Swarm"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1344,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Meteor Swarm",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

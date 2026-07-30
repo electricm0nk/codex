@@ -1,23 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Elemental Command (Fire)",
     "category": "magic_items",
-    "name": "Ring of Fire Elemental Command",
     "cost_gp": 200000.0,
-    "weight_lbs": null,
-    "description": "All four kinds of elemental command rings are very powerful. Each appears to be nothing more than a lesser magic ring until fully activated (by meeting a special condition, such as single-handedly slaying an elemental of the appropriate type or exposure to a sacred material of the appropriate element), but each has certain other powers as well as the following common properties.\nElementals of the plane to which the ring is attuned can't attack the wearer, or even approach within 5 feet of him. If the wearer desires, he may forego this protection and instead attempt to charm the elemental (as charm monster, Will DC 17 negates). If the charm attempt fails, however, absolute protection is lost and no further attempt at charming can be made.\nCreatures from the plane to which the ring is attuned who attack the wearer take a -1 penalty on their attack rolls. The ring wearer makes applicable saving throws against the extraplanar creature's attacks with a +2 resistance bonus. He gains a +4 morale bonus on all attack rolls against such creatures. Any weapon he uses bypasses the damage reduction of such creatures, regardless of any qualities the weapon may or may not have.\nThe wearer of the ring is able to converse with creatures from the plane to which his ring is attuned. These creatures recognize that he wears the ring, and show a healthy respect for the wearer if alignments are similar. If alignments are opposed, creatures fear the wearer if he is strong. If he is weak, they hate and desire to slay him.\nThe possessor of a ring of elemental command takes a saving throw penalty as follows:\nFire: -2 against water- or cold-based effects.\n\nIn addition to the powers described above, each specific ring gives its wearer the following abilities according to its kind.\nRing of Elemental Command (Fire)\n* Resist energy (fire) (as a major ring of energy resistance [fire])\n* Burning hands (unlimited use)\n* Flaming sphere (twice per day)\n* Pyrotechnics (twice per day)\n* Wall of fire (once per day)\n* Flame strike (twice per week)\nThe ring appears to be a major ring of energy resistance (fire) until the established condition is met."
+    "description": "All four kinds of elemental command rings are very powerful. Each appears to be nothing more than a lesser magic ring until fully activated (by meeting a special condition, such as single-handedly slaying an elemental of the appropriate type or exposure to a sacred material of the appropriate element), but each has certain other powers as well as the following common properties.\nElementals of the plane to which the ring is attuned can't attack the wearer, or even approach within 5 feet of him. If the wearer desires, he may forego this protection and instead attempt to charm the elemental (as charm monster, Will DC 17 negates). If the charm attempt fails, however, absolute protection is lost and no further attempt at charming can be made.\nCreatures from the plane to which the ring is attuned who attack the wearer take a -1 penalty on their attack rolls. The ring wearer makes applicable saving throws against the extraplanar creature's attacks with a +2 resistance bonus. He gains a +4 morale bonus on all attack rolls against such creatures. Any weapon he uses bypasses the damage reduction of such creatures, regardless of any qualities the weapon may or may not have.\nThe wearer of the ring is able to converse with creatures from the plane to which his ring is attuned. These creatures recognize that he wears the ring, and show a healthy respect for the wearer if alignments are similar. If alignments are opposed, creatures fear the wearer if he is strong. If he is weak, they hate and desire to slay him.\nThe possessor of a ring of elemental command takes a saving throw penalty as follows:\nFire: -2 against water- or cold-based effects.\n\nIn addition to the powers described above, each specific ring gives its wearer the following abilities according to its kind.\nRing of Elemental Command (Fire)\n* Resist energy (fire) (as a major ring of energy resistance [fire])\n* Burning hands (unlimited use)\n* Flaming sphere (twice per day)\n* Pyrotechnics (twice per day)\n* Wall of fire (once per day)\n* Flame strike (twice per week)\nThe ring appears to be a major ring of energy resistance (fire) until the established condition is met.",
+    "key": "Ring of Elemental Command (Fire)",
+    "name": "Ring of Fire Elemental Command",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Elemental Command (Fire)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Elemental Command (Fire)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "200000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.479"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=ATWILL|CASTERLEVEL=15|Burning Hands,11+CHA|Resist Energy"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=2|CASTERLEVEL=15|Flaming Sphere,12+CHA|Pyrotechnics,12+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|CASTERLEVEL=15|Wall of Fire"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring of Fire Elemental Command|TIMES=2|TIMEUNIT=Week|CASTERLEVEL=15|Flame Strike,15+CHA"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|100,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, summon monster VI, all appropriate spells"
+      },
+      {
+        "key": "DESC",
+        "value": "All four kinds of elemental command rings are very powerful. Each appears to be nothing more than a lesser magic ring until fully activated (by meeting a special condition, such as single-handedly slaying an elemental of the appropriate type or exposure to a sacred material of the appropriate element), but each has certain other powers as well as the following common properties.&nl;Elementals of the plane to which the ring is attuned can't attack the wearer, or even approach within 5 feet of him. If the wearer desires, he may forego this protection and instead attempt to charm the elemental (as charm monster, Will DC 17 negates). If the charm attempt fails, however, absolute protection is lost and no further attempt at charming can be made.&nl;Creatures from the plane to which the ring is attuned who attack the wearer take a -1 penalty on their attack rolls. The ring wearer makes applicable saving throws against the extraplanar creature's attacks with a +2 resistance bonus. He gains a +4 morale bonus on all attack rolls against such creatures. Any weapon he uses bypasses the damage reduction of such creatures, regardless of any qualities the weapon may or may not have.&nl;The wearer of the ring is able to converse with creatures from the plane to which his ring is attuned. These creatures recognize that he wears the ring, and show a healthy respect for the wearer if alignments are similar. If alignments are opposed, creatures fear the wearer if he is strong. If he is weak, they hate and desire to slay him.&nl;The possessor of a ring of elemental command takes a saving throw penalty as follows:&nl;Fire: -2 against water- or cold-based effects.&nl;&nl;In addition to the powers described above, each specific ring gives its wearer the following abilities according to its kind.&nl;Ring of Elemental Command (Fire)&nl;* Resist energy (fire) (as a major ring of energy resistance [fire])&nl;* Burning hands (unlimited use)&nl;* Flaming sphere (twice per day)&nl;* Pyrotechnics (twice per day)&nl;* Wall of fire (once per day)&nl;* Flame strike (twice per week)&nl;The ring appears to be a major ring of energy resistance (fire) until the established condition is met."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 370,
-    "record_key": "Ring of Elemental Command (Fire)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 370,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Elemental Command (Fire)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

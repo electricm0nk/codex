@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Hat of Disguise",
     "category": "magic_items",
-    "name": "Hat of Disguise",
     "cost_gp": 1800.0,
-    "weight_lbs": 0.0,
-    "description": "This apparently normal hat allows its wearer to alter her appearance as with a disguise self spell. As part of the disguise, the hat can be changed to appear as a comb, ribbon, headband, cap, coif, hood, helmet, and so on."
+    "description": "This apparently normal hat allows its wearer to alter her appearance as with a disguise self spell. As part of the disguise, the hat can be changed to appear as a comb, ribbon, headband, cap, coif, hood, helmet, and so on.",
+    "key": "Hat of Disguise",
+    "name": "Hat of Disguise",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hat of Disguise"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Hat of Disguise"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Head.Hat"
+      },
+      {
+        "key": "COST",
+        "value": "1800"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.516"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|head"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|900 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, disguise self"
+      },
+      {
+        "key": "DESC",
+        "value": "This apparently normal hat allows its wearer to alter her appearance as with a disguise self spell. As part of the disguise, the hat can be changed to appear as a comb, ribbon, headband, cap, coif, hood, helmet, and so on."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 186,
-    "record_key": "Hat of Disguise"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Hat of Disguise",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Elemental Flux",
     "category": "general",
-    "name": "Elemental Flux",
     "cost_gp": 20.0,
-    "weight_lbs": 1.0,
-    "description": "Adding at least 1 hit point worth of suli blood to it creates an alchemical splash weapon. The splash weapon works like a flask of acid, except the damage is a random energy type. The activated flux retains its power for 24 hours before becoming inert material."
+    "description": "Adding at least 1 hit point worth of suli blood to it creates an alchemical splash weapon. The splash weapon works like a flask of acid, except the damage is a random energy type. The activated flux retains its power for 24 hours before becoming inert material.",
+    "key": "Elemental Flux",
+    "name": "Elemental Flux",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Flask.Racial.Suli"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "SPROP",
+        "value": "Adding at least 1 hit point worth of suli blood to it creates an alchemical splash weapon. The splash weapon works like a flask of acid, except the damage is a random energy type. The activated flux retains its power for 24 hours before becoming inert material."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 35,
-    "record_key": "Elemental Flux"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Elemental Flux",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

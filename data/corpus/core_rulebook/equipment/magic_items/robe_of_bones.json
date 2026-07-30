@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of Bones",
     "category": "magic_items",
-    "name": "Robe of Bones",
     "cost_gp": 2400.0,
-    "weight_lbs": 1.0,
-    "description": "This sinister item functions much like a robe of useful items for the serious necromancer. It appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small embroidered figures representing undead creatures. Only the wearer of the robe can see the embroidery, recognize them for the creatures they become, and detach them. One figure can be detached each round. Detaching a figure causes it to become an actual undead creature (see the list below). The skeleton or zombie is not under the control of the wearer of the robe, but may be subsequently commanded, rebuked, turned, or destroyed. A newly created robe of bones always has two embroidered figures of each of the following undead (see the Pathfinder RPG Bestiary):\n* Human skeleton\n* Wolf skeleton\n* Heavy horse skeleton\n* Fast goblin zombie\n* Tough human zombie\n* Plague ogre zombie"
+    "description": "This sinister item functions much like a robe of useful items for the serious necromancer. It appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small embroidered figures representing undead creatures. Only the wearer of the robe can see the embroidery, recognize them for the creatures they become, and detach them. One figure can be detached each round. Detaching a figure causes it to become an actual undead creature (see the list below). The skeleton or zombie is not under the control of the wearer of the robe, but may be subsequently commanded, rebuked, turned, or destroyed. A newly created robe of bones always has two embroidered figures of each of the following undead (see the Pathfinder RPG Bestiary):\n* Human skeleton\n* Wolf skeleton\n* Heavy horse skeleton\n* Fast goblin zombie\n* Tough human zombie\n* Plague ogre zombie",
+    "key": "Robe of Bones",
+    "name": "Robe of Bones",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of Bones"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of Bones"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "2400"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.527"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate necromancy [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|6th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,200 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, animate dead"
+      },
+      {
+        "key": "DESC",
+        "value": "This sinister item functions much like a robe of useful items for the serious necromancer. It appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small embroidered figures representing undead creatures. Only the wearer of the robe can see the embroidery, recognize them for the creatures they become, and detach them. One figure can be detached each round. Detaching a figure causes it to become an actual undead creature (see the list below). The skeleton or zombie is not under the control of the wearer of the robe, but may be subsequently commanded, rebuked, turned, or destroyed. A newly created robe of bones always has two embroidered figures of each of the following undead (see the Pathfinder RPG Bestiary):&nl;* Human skeleton&nl;* Wolf skeleton&nl;* Heavy horse skeleton&nl;* Fast goblin zombie&nl;* Tough human zombie&nl;* Plague ogre zombie"
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 311,
-    "record_key": "Robe of Bones"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 311,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of Bones",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

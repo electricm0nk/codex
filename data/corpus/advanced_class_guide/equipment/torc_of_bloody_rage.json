@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Torc of Bloody Rage",
     "category": "MagicItems",
-    "name": "Torc of Bloody Rage",
     "cost_gp": 8000.0,
-    "weight": 1.0,
-    "description": "1/day enter rage (as spell) for 6 rounds, except fatigued for 12 rounds afterwards, or gain 3 additional rounds of rage"
+    "description": "1/day enter rage (as spell) for 6 rounds, except fatigued for 12 rounds afterwards, or gain 3 additional rounds of rage",
+    "key": "Torc of Bloody Rage",
+    "name": "Torc of Bloody Rage",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day enter rage (as spell) for 6 rounds, except fatigued for 12 rounds afterwards, or gain 3 additional rounds of rage"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 446,
-    "record_key": "Torc of Bloody Rage"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 446,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Torc of Bloody Rage",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

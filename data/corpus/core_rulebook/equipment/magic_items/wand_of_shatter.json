@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Wand of Shatter",
     "category": "magic_items",
-    "name": "Wand",
     "cost_gp": null,
-    "weight_lbs": 0.0625,
-    "description": "Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature."
+    "description": "Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature.",
+    "key": "Wand of Shatter",
+    "name": "Wand",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wand of Shatter"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Wand of Shatter"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wand.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.0625"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Shatter]SPELLLEVEL[2]CASTERLEVEL[3]CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint evocation [sonic]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wand, shatter"
+      },
+      {
+        "key": "SPROP",
+        "value": "Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature."
+      },
+      {
+        "key": "DESC",
+        "value": "Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature."
+      }
+    ],
+    "weight_lbs": 0.0625
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 772,
-    "record_key": "Wand of Shatter"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 772,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Wand of Shatter",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

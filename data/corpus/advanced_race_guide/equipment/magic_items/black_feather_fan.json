@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Black Feather Fan",
     "category": "magic_items",
-    "name": "Black Feather Fan",
     "cost_gp": 10000.0,
-    "weight_lbs": 1.0,
-    "description": "The bearer can create a Gust of Wind, Whispering Wind, or Wind Wall up to 3 times per day, in any combination."
+    "description": "The bearer can create a Gust of Wind, Whispering Wind, or Wind Wall up to 3 times per day, in any combination.",
+    "key": "Black Feather Fan",
+    "name": "Black Feather Fan",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.166"
+      },
+      {
+        "key": "SPROP",
+        "value": "The bearer can create a Gust of Wind, Whispering Wind, or Wind Wall up to 3 times per day, in any combination."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 19,
-    "record_key": "Black Feather Fan"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Black Feather Fan",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

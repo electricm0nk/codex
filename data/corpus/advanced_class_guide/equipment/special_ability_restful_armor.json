@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Restful ~ Armor",
     "category": "Equipmods",
-    "name": "Restful",
     "cost_gp": 4500.0,
-    "weight": null,
-    "description": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor"
+    "description": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor",
+    "key": "Special Ability ~ Restful ~ Armor",
+    "name": "Restful",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Restful ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "Only need 2 hours of uninterrupted sleep, and heals as in comfortable bed; not fatigued by sleeping in this armor"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
-    "line": 16,
-    "record_key": "Special Ability ~ Restful ~ Armor"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Restful ~ Armor",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  }
 }

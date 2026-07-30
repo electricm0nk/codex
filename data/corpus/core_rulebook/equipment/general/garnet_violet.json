@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Garnet (Violet)",
     "category": "general",
-    "name": "Violet Garnet",
     "cost_gp": 500.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Garnet (Violet)",
+    "name": "Violet Garnet",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Garnet (Violet)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Garnet, Violet"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gem"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.400"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 385,
-    "record_key": "Garnet (Violet)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 385,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Garnet (Violet)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Oil of Taggit)",
     "category": "general",
-    "name": "Poison, Oil of Taggit",
     "cost_gp": 90.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Oil of Taggit)",
+    "name": "Poison, Oil of Taggit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Oil of Taggit)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Oil of Taggit"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Oil of Taggit"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "90"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 15; Onset 1 min; Effect unconsciousness for 1d3 hours; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 15"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 minute"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|unconsciousness for 1d3 hours"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 516,
-    "record_key": "Poison (Oil of Taggit)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 516,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Oil of Taggit)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

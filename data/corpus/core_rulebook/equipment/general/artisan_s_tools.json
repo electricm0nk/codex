@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Artisan's Tools",
     "category": "general",
-    "name": "Artisan's Tools",
     "cost_gp": 5.0,
-    "weight_lbs": 5.0,
-    "description": "These special tools include the items needed to pursue any craft. Without them, you have to use improvised tools (-2 penalty on Craft checks), if you can do the job at all.\nMasterwork artisan's tools are the perfect tools for the job, so you get a +2 circumstance bonus on Craft checks made with them."
+    "description": "These special tools include the items needed to pursue any craft. Without them, you have to use improvised tools (-2 penalty on Craft checks), if you can do the job at all.\nMasterwork artisan's tools are the perfect tools for the job, so you get a +2 circumstance bonus on Craft checks made with them.",
+    "key": "Artisan's Tools",
+    "name": "Artisan's Tools",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Artisan's Tools"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Artisan's Tools"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Artisan"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "MODS",
+        "value": "REQUIRED"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "These special tools include the items needed to pursue any craft. Without them, you have to use improvised tools (-2 penalty on Craft checks), if you can do the job at all.&nl;Masterwork artisan's tools are the perfect tools for the job, so you get a +2 circumstance bonus on Craft checks made with them."
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 203,
-    "record_key": "Artisan's Tools"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 203,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Artisan's Tools",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

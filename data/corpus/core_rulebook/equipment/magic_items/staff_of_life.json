@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Life",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 109400.0,
-    "weight_lbs": 5.0,
-    "description": "A staff of life is made of thick polished oak shod in gold and decorated with sinuous runes. This staff allows use of the following spells:\n* Heal (1 charge)\n* Raise dead (5 charges)"
+    "description": "A staff of life is made of thick polished oak shod in gold and decorated with sinuous runes. This staff allows use of the following spells:\n* Heal (1 charge)\n* Raise dead (5 charges)",
+    "key": "Staff of Life",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Life"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Life"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "109400"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.494"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|79,700 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, heal, raise dead"
+      },
+      {
+        "key": "DESC",
+        "value": "A staff of life is made of thick polished oak shod in gold and decorated with sinuous runes. This staff allows use of the following spells:&nl;* Heal (1 charge)&nl;* Raise dead (5 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 436,
-    "record_key": "Staff of Life"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 436,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Life",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

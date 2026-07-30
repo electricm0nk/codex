@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Sickle",
     "category": "arms_armor",
-    "name": "Sickle (Base)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Sickle",
+    "name": "Sickle (Base)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sickle"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Sickle"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Sickle (Base)"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 204,
-    "record_key": "Sickle"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Sickle",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

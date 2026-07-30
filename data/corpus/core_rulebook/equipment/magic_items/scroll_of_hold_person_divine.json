@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Hold Person (Divine)",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": null,
-    "weight_lbs": 0.01,
-    "description": "Paralyzes one humanoid for 1 round/level."
+    "description": "Paralyzes one humanoid for 1 round/level.",
+    "key": "Scroll of Hold Person (Divine)",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Hold Person (Divine)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Hold Person (Divine)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Divine.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Hold Person]SPELLLEVEL[2]CASTERLEVEL[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint enchantment (compulsion) [mind-affecting]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|75 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, hold person"
+      },
+      {
+        "key": "SPROP",
+        "value": "Paralyzes one humanoid for 1 round/level."
+      },
+      {
+        "key": "DESC",
+        "value": "Paralyzes one humanoid for 1 round/level."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1417,
-    "record_key": "Scroll of Hold Person (Divine)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1417,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Hold Person (Divine)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

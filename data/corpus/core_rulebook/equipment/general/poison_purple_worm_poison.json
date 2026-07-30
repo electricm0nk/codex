@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Purple Worm Poison)",
     "category": "general",
-    "name": "Poison, Purple Worm Poison",
     "cost_gp": 700.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Purple Worm Poison)",
+    "name": "Poison, Purple Worm Poison",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Purple Worm Poison)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Purple Worm Poison"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Purple Worm Poison"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "700"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Injury; Fort DC 24; Freq 1 rnd (6); Effect 1d3 Str dmg; Cure 2 consecutive saves"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, injury"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 24"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Str damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|2 consecutive saves"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 517,
-    "record_key": "Poison (Purple Worm Poison)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 517,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Purple Worm Poison)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

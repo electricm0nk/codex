@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of Useful Items",
     "category": "magic_items",
-    "name": "Robe of Useful Items",
     "cost_gp": 7000.0,
-    "weight_lbs": 1.0,
-    "description": "This appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small cloth patches of various shapes. Only the wearer of the robe can see these patches, recognize them for what items they become, and detach them. One patch can be detached each round. Detaching a patch causes it to become an actual item, as indicated below. A newly created robe of useful items always has two each of the following patches:\n* Dagger\n* Bullseye lantern (full and lit)\n* Mirror (a highly polished 2-foot-by-4-foot steel mirror)\n* Pole (10-foot length)\n* Hempen rope (50-foot coil)\n* Sack\nIn addition, the robe has several other patches. Roll 4d4 for the number of other patches and then roll for each patch on the table below to determine its nature.\nd%% / Result\n01-08 / Bag of 100 gold pieces\n09-15 / Coffer, silver (6 in. by 6 in. by 1 ft.), 500 gp value\n16-22 / Door, iron (up to 10 ft. wide and 10 ft. high and barred on one side--must be placed upright, attaches and hinges itself )\n23-30 / Gems, 10 (100 gp value each)\n31-44 / Ladder, wooden (24 ft. long)\n45-51 / Mule (with saddle bags)\n52-59 / Pit, open (10 ft. by 10 ft. by 10 ft.)\n60-68 / Potion of cure serious wounds\n69-75 / Rowboat (12 ft. long)\n76-83 / Minor scroll of one randomly determined spell\n84-90 / War dogs, pair (treat as riding dogs)\n91-96 / Window (2 ft. by 4 ft., up to 2 ft. deep)\n97-100 / Portable ram\nMultiple items of the same kind are permissible. Once removed, a patch cannot be replaced."
+    "description": "This appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small cloth patches of various shapes. Only the wearer of the robe can see these patches, recognize them for what items they become, and detach them. One patch can be detached each round. Detaching a patch causes it to become an actual item, as indicated below. A newly created robe of useful items always has two each of the following patches:\n* Dagger\n* Bullseye lantern (full and lit)\n* Mirror (a highly polished 2-foot-by-4-foot steel mirror)\n* Pole (10-foot length)\n* Hempen rope (50-foot coil)\n* Sack\nIn addition, the robe has several other patches. Roll 4d4 for the number of other patches and then roll for each patch on the table below to determine its nature.\nd%% / Result\n01-08 / Bag of 100 gold pieces\n09-15 / Coffer, silver (6 in. by 6 in. by 1 ft.), 500 gp value\n16-22 / Door, iron (up to 10 ft. wide and 10 ft. high and barred on one side--must be placed upright, attaches and hinges itself )\n23-30 / Gems, 10 (100 gp value each)\n31-44 / Ladder, wooden (24 ft. long)\n45-51 / Mule (with saddle bags)\n52-59 / Pit, open (10 ft. by 10 ft. by 10 ft.)\n60-68 / Potion of cure serious wounds\n69-75 / Rowboat (12 ft. long)\n76-83 / Minor scroll of one randomly determined spell\n84-90 / War dogs, pair (treat as riding dogs)\n91-96 / Window (2 ft. by 4 ft., up to 2 ft. deep)\n97-100 / Portable ram\nMultiple items of the same kind are permissible. Once removed, a patch cannot be replaced.",
+    "key": "Robe of Useful Items",
+    "name": "Robe of Useful Items",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of Useful Items"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of Useful Items"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "7000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.528"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, fabricate"
+      },
+      {
+        "key": "DESC",
+        "value": "This appears to be an unremarkable robe, but a character who dons it notes that it is adorned with small cloth patches of various shapes. Only the wearer of the robe can see these patches, recognize them for what items they become, and detach them. One patch can be detached each round. Detaching a patch causes it to become an actual item, as indicated below. A newly created robe of useful items always has two each of the following patches:&nl;* Dagger&nl;* Bullseye lantern (full and lit)&nl;* Mirror (a highly polished 2-foot-by-4-foot steel mirror)&nl;* Pole (10-foot length)&nl;* Hempen rope (50-foot coil)&nl;* Sack&nl;In addition, the robe has several other patches. Roll 4d4 for the number of other patches and then roll for each patch on the table below to determine its nature.&nl;d%% / Result&nl;01-08 / Bag of 100 gold pieces&nl;09-15 / Coffer, silver (6 in. by 6 in. by 1 ft.), 500 gp value&nl;16-22 / Door, iron (up to 10 ft. wide and 10 ft. high and barred on one side--must be placed upright, attaches and hinges itself )&nl;23-30 / Gems, 10 (100 gp value each)&nl;31-44 / Ladder, wooden (24 ft. long)&nl;45-51 / Mule (with saddle bags)&nl;52-59 / Pit, open (10 ft. by 10 ft. by 10 ft.)&nl;60-68 / Potion of cure serious wounds&nl;69-75 / Rowboat (12 ft. long)&nl;76-83 / Minor scroll of one randomly determined spell&nl;84-90 / War dogs, pair (treat as riding dogs)&nl;91-96 / Window (2 ft. by 4 ft., up to 2 ft. deep)&nl;97-100 / Portable ram&nl;Multiple items of the same kind are permissible. Once removed, a patch cannot be replaced."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 317,
-    "record_key": "Robe of Useful Items"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 317,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of Useful Items",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

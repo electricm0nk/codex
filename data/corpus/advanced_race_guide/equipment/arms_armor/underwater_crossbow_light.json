@@ -1,23 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Underwater Crossbow (Light)",
     "category": "arms_armor",
-    "name": "Underwater Crossbow (Light)",
     "cost_gp": 70.0,
-    "weight_lbs": 4.0,
-    "description": "An underwater crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet.; 20 ft increment underwater"
+    "description": "An underwater crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet.; 20 ft increment underwater",
+    "key": "Underwater Crossbow (Light)",
+    "name": "Underwater Crossbow (Light)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Underwater Crossbow, Light"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Simple.Ranged.Standard.Piercing.Container.Projectile.Crossbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Bolt"
+      },
+      {
+        "key": "COST",
+        "value": "70"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "RANGE",
+        "value": "80"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "SPROP",
+        "value": "An underwater crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet.|PRERULE:1,DisplayWeaponDetails"
+      },
+      {
+        "key": "SPROP",
+        "value": "20 ft increment underwater|!PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 4.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 47,
-    "record_key": "Underwater Crossbow (Light)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Underwater Crossbow (Light)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

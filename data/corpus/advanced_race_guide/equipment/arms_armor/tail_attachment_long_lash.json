@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Tail Attachment (Long Lash)",
     "category": "arms_armor",
-    "name": "Tail Attachment (Long Lash)",
     "cost_gp": 15.0,
-    "weight_lbs": 1.0,
-    "description": "This slender cord has tiny bits of glass and stone embedded in its length."
+    "description": "This slender cord has tiny bits of glass and stone embedded in its length.",
+    "key": "Tail Attachment (Long Lash)",
+    "name": "Tail Attachment (Long Lash)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tail Attachment, Long Lash"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kobold Tail Attachment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.KoboldTailAttachment.Slashing.Reach.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SPROP",
+        "value": "This slender cord has tiny bits of glass and stone embedded in its length.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 38,
-    "record_key": "Tail Attachment (Long Lash)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Tail Attachment (Long Lash)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

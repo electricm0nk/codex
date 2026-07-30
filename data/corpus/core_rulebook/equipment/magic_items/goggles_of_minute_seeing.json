@@ -1,23 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Goggles of Minute Seeing",
     "category": "magic_items",
-    "name": "Goggles of Minute Seeing",
     "cost_gp": 2500.0,
-    "weight_lbs": 0.0,
-    "description": "The lenses of this item are made of special crystal. When placed over the eyes of the wearer, the lenses enable her to see much better than normal at distances of 1 foot or less, granting her a +5 competence bonus on Disable Device checks. Both lenses must be worn for the magic to be effective."
+    "description": "The lenses of this item are made of special crystal. When placed over the eyes of the wearer, the lenses enable her to see much better than normal at distances of 1 foot or less, granting her a +5 competence bonus on Disable Device checks. Both lenses must be worn for the magic to be effective.",
+    "key": "Goggles of Minute Seeing",
+    "name": "Goggles of Minute Seeing",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Disable Device",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Goggles of Minute Seeing"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Goggles of Minute Seeing"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Eyes.Goggles"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.515"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint divination"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|eyes"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, true seeing"
+      },
+      {
+        "key": "DESC",
+        "value": "The lenses of this item are made of special crystal. When placed over the eyes of the wearer, the lenses enable her to see much better than normal at distances of 1 foot or less, granting her a +5 competence bonus on Disable Device checks. Both lenses must be worn for the magic to be effective."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 175,
-    "record_key": "Goggles of Minute Seeing"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 175,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Goggles of Minute Seeing",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

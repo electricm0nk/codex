@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Iron Flask",
     "category": "magic_items",
-    "name": "Iron Flask",
     "cost_gp": 170000.0,
-    "weight_lbs": 1.0,
-    "description": "These special containers are typically inlaid with runes of silver and stoppered by a brass plug bearing a seal engraved with sigils, glyphs, and special symbols. When the user speaks the command word, he can force any creature from another plane into the container, provided that creature fails a DC 19 Will save. The range of this effect is 60 feet. Only one creature at a time can be so contained. Loosing the stopper frees the captured creature.\nThe command word can be used only once per day.\nIf the individual freeing the captured creature speaks the command word, the creature can be forced to serve for 1 hour. If freed without the command word, the creature acts according to its natural inclinations. (It usually attacks the user, unless it perceives a good reason not to.) Any attempt to force the same creature into the flask a second time provides it a +2 bonus on its saving throw and makes it hostile. A newly discovered bottle might contain any of the following:\nd%% / Contents\n01-50 / Empty\n51-54 / Large air elemental\n55-58 / Invisible stalker\n59-62 / Large earth elemental\n63-66 / Xorn\n67-70 / Large fire elemental\n71-74 / Salamander\n75-78 / Large water elemental\n79-82 / Xill\n83-85 / Yeth hound\n86 / Demon (shadow)\n87 / Demon (vrock)\n88 / Demon (hezrou)\n89 / Demon (glabrezu)\n90 / Demon (succubus)\n91 / Devil (osyluth)\n92 / Devil (barbazu)\n93 / Devil (erinyes)\n94 / Devil (cornugon)\n95 / Agathion (avoral)\n96 / Azata (ghaele)\n97 / Archon (trumpet)\n98 / Rakshasa\n99 / Demon (balor)\n100 / Devil (pit fiend)"
+    "description": "These special containers are typically inlaid with runes of silver and stoppered by a brass plug bearing a seal engraved with sigils, glyphs, and special symbols. When the user speaks the command word, he can force any creature from another plane into the container, provided that creature fails a DC 19 Will save. The range of this effect is 60 feet. Only one creature at a time can be so contained. Loosing the stopper frees the captured creature.\nThe command word can be used only once per day.\nIf the individual freeing the captured creature speaks the command word, the creature can be forced to serve for 1 hour. If freed without the command word, the creature acts according to its natural inclinations. (It usually attacks the user, unless it perceives a good reason not to.) Any attempt to force the same creature into the flask a second time provides it a +2 bonus on its saving throw and makes it hostile. A newly discovered bottle might contain any of the following:\nd%% / Contents\n01-50 / Empty\n51-54 / Large air elemental\n55-58 / Invisible stalker\n59-62 / Large earth elemental\n63-66 / Xorn\n67-70 / Large fire elemental\n71-74 / Salamander\n75-78 / Large water elemental\n79-82 / Xill\n83-85 / Yeth hound\n86 / Demon (shadow)\n87 / Demon (vrock)\n88 / Demon (hezrou)\n89 / Demon (glabrezu)\n90 / Demon (succubus)\n91 / Devil (osyluth)\n92 / Devil (barbazu)\n93 / Devil (erinyes)\n94 / Devil (cornugon)\n95 / Agathion (avoral)\n96 / Azata (ghaele)\n97 / Archon (trumpet)\n98 / Rakshasa\n99 / Demon (balor)\n100 / Devil (pit fiend)",
+    "key": "Iron Flask",
+    "name": "Iron Flask",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Iron Flask"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Iron Flask"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "170000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 1|CHARGES[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.521"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|85,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, trap the soul"
+      },
+      {
+        "key": "DESC",
+        "value": "These special containers are typically inlaid with runes of silver and stoppered by a brass plug bearing a seal engraved with sigils, glyphs, and special symbols. When the user speaks the command word, he can force any creature from another plane into the container, provided that creature fails a DC 19 Will save. The range of this effect is 60 feet. Only one creature at a time can be so contained. Loosing the stopper frees the captured creature.&nl;The command word can be used only once per day.&nl;If the individual freeing the captured creature speaks the command word, the creature can be forced to serve for 1 hour. If freed without the command word, the creature acts according to its natural inclinations. (It usually attacks the user, unless it perceives a good reason not to.) Any attempt to force the same creature into the flask a second time provides it a +2 bonus on its saving throw and makes it hostile. A newly discovered bottle might contain any of the following:&nl;d%% / Contents&nl;01-50 / Empty&nl;51-54 / Large air elemental&nl;55-58 / Invisible stalker&nl;59-62 / Large earth elemental&nl;63-66 / Xorn&nl;67-70 / Large fire elemental&nl;71-74 / Salamander&nl;75-78 / Large water elemental&nl;79-82 / Xill&nl;83-85 / Yeth hound&nl;86 / Demon (shadow)&nl;87 / Demon (vrock)&nl;88 / Demon (hezrou)&nl;89 / Demon (glabrezu)&nl;90 / Demon (succubus)&nl;91 / Devil (osyluth)&nl;92 / Devil (barbazu)&nl;93 / Devil (erinyes)&nl;94 / Devil (cornugon)&nl;95 / Agathion (avoral)&nl;96 / Azata (ghaele)&nl;97 / Archon (trumpet)&nl;98 / Rakshasa&nl;99 / Demon (balor)&nl;100 / Devil (pit fiend)"
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 245,
-    "record_key": "Iron Flask"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 245,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Iron Flask",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

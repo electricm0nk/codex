@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Potion of Fox's Cunning",
     "category": "magic_items",
-    "name": "Potion",
     "cost_gp": null,
-    "weight_lbs": 0.0,
-    "description": "+4 enhancement bonus to Intelligence for 3 minutes"
+    "description": "+4 enhancement bonus to Intelligence for 3 minutes",
+    "key": "Potion of Fox's Cunning",
+    "name": "Potion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Potion of Fox's Cunning"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Potion of Fox's Cunning"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Single Use|SPELLNAME[Fox's Cunning]SPELLLEVEL[2]CASTERLEVEL[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.477"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|150 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Brew Potion, fox's cunning"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 enhancement bonus to Intelligence for 3 minutes"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 enhancement bonus to Intelligence for 3 minutes"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|INT|4|TYPE=Enhancement"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 510,
-    "record_key": "Potion of Fox's Cunning"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 510,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Potion of Fox's Cunning",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

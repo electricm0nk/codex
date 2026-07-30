@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Rod (Lordly Might)",
     "category": "magic_items",
-    "name": "Rod",
     "cost_gp": 70000.0,
-    "weight_lbs": 10.0,
-    "description": "This rod has functions that are spell-like, and it can also be used as a magic weapon of various sorts. In addition, it has several more mundane uses. The rod of lordly might is metal, thicker than other rods, with a flanged ball at one end and six stud-like buttons along its length. Pushing any of the rod's buttons is an action equivalent to drawing a weapon, and the rod weighs 10 pounds.\nThe following spell-like functions of the rod can each be used once per day.\n* Hold person upon a touched creature, if the wielder so commands (Will DC 14 negates). The wielder must choose to use this power (a free action) and then succeed on a melee touch attack to activate the power. If the attack fails, the effect is lost.\n* Fear upon all enemies viewing it, if the wielder so desires (10- foot maximum range, Will DC 16 partial). Invoking this power is a standard action.\n* Deal 2d4 hit points of damage to an opponent on a successful touch attack (Will DC 17 half ) and cure the wielder of the same amount of damage. The wielder must choose to use this power before attacking, as with hold person.\nThe following functions of the rod have no limit on the number of times they can be employed.\n* In its normal form, the rod can be used as a +2 light mace.\n* When button 1 is pushed, the rod becomes a +1 flaming longsword. A blade springs from the ball, with the ball itself becoming the sword's hilt. The weapon stretches to an overall length of 4 feet.\n* When button 2 is pushed, the rod becomes a +4 battleaxe. A wide blade springs forth at the ball, and the whole lengthens to 4 feet.\n* When button 3 is pushed, the rod becomes a +3 shortspear or +3 longspear. The spear blade springs forth, and the handle can be lengthened up to 12 feet (wielder's choice) for an overall length ranging from 6 feet to 15 feet. At its 15-foot length, the rod is suitable for use as a lance.\nThe following other functions of the rod also have no limit on the number of times they can be employed.\n* Climbing pole/ladder. When button 4 is pushed, a spike that can anchor in stone is extruded from the ball, while the other end sprouts three sharp hooks. The rod lengthens to anywhere between 5 and 50 feet in a single round, stopping when button 4 is pushed again. Horizontal bars 3 inches long fold out from the sides, 1 foot apart, in staggered progression. The rod is firmly held by the spike and hooks and can bear up to 4,000 pounds. The wielder can retract the pole by pushing button 5.\n* The ladder function can be used to force open doors. The wielder plants the rod's base 30 feet or less from the portal to be forced and in line with it, then pushes button 4. The force exerted has a Strength modifier of +12.\n* When button 6 is pushed, the rod indicates magnetic north and gives the wielder knowledge of his approximate depth beneath the surface or height above it."
+    "description": "This rod has functions that are spell-like, and it can also be used as a magic weapon of various sorts. In addition, it has several more mundane uses. The rod of lordly might is metal, thicker than other rods, with a flanged ball at one end and six stud-like buttons along its length. Pushing any of the rod's buttons is an action equivalent to drawing a weapon, and the rod weighs 10 pounds.\nThe following spell-like functions of the rod can each be used once per day.\n* Hold person upon a touched creature, if the wielder so commands (Will DC 14 negates). The wielder must choose to use this power (a free action) and then succeed on a melee touch attack to activate the power. If the attack fails, the effect is lost.\n* Fear upon all enemies viewing it, if the wielder so desires (10- foot maximum range, Will DC 16 partial). Invoking this power is a standard action.\n* Deal 2d4 hit points of damage to an opponent on a successful touch attack (Will DC 17 half ) and cure the wielder of the same amount of damage. The wielder must choose to use this power before attacking, as with hold person.\nThe following functions of the rod have no limit on the number of times they can be employed.\n* In its normal form, the rod can be used as a +2 light mace.\n* When button 1 is pushed, the rod becomes a +1 flaming longsword. A blade springs from the ball, with the ball itself becoming the sword's hilt. The weapon stretches to an overall length of 4 feet.\n* When button 2 is pushed, the rod becomes a +4 battleaxe. A wide blade springs forth at the ball, and the whole lengthens to 4 feet.\n* When button 3 is pushed, the rod becomes a +3 shortspear or +3 longspear. The spear blade springs forth, and the handle can be lengthened up to 12 feet (wielder's choice) for an overall length ranging from 6 feet to 15 feet. At its 15-foot length, the rod is suitable for use as a lance.\nThe following other functions of the rod also have no limit on the number of times they can be employed.\n* Climbing pole/ladder. When button 4 is pushed, a spike that can anchor in stone is extruded from the ball, while the other end sprouts three sharp hooks. The rod lengthens to anywhere between 5 and 50 feet in a single round, stopping when button 4 is pushed again. Horizontal bars 3 inches long fold out from the sides, 1 foot apart, in staggered progression. The rod is firmly held by the spike and hooks and can bear up to 4,000 pounds. The wielder can retract the pole by pushing button 5.\n* The ladder function can be used to force open doors. The wielder plants the rod's base 30 feet or less from the portal to be forced and in line with it, then pushes button 4. The force exerted has a Strength modifier of +12.\n* When button 6 is pushed, the rod indicates magnetic north and gives the wielder knowledge of his approximate depth beneath the surface or height above it.",
+    "key": "Rod (Lordly Might)",
+    "name": "Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Lordly Might)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Lordly Might"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "70000"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.487"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong enchantment, evocation, necromancy, and transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|19th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|35,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, Craft Rod, bull's strength, fear, flame blade, hold person, inflict light wounds"
+      },
+      {
+        "key": "DESC",
+        "value": "This rod has functions that are spell-like, and it can also be used as a magic weapon of various sorts. In addition, it has several more mundane uses. The rod of lordly might is metal, thicker than other rods, with a flanged ball at one end and six stud-like buttons along its length. Pushing any of the rod's buttons is an action equivalent to drawing a weapon, and the rod weighs 10 pounds.&nl;The following spell-like functions of the rod can each be used once per day.&nl;* Hold person upon a touched creature, if the wielder so commands (Will DC 14 negates). The wielder must choose to use this power (a free action) and then succeed on a melee touch attack to activate the power. If the attack fails, the effect is lost.&nl;* Fear upon all enemies viewing it, if the wielder so desires (10- foot maximum range, Will DC 16 partial). Invoking this power is a standard action.&nl;* Deal 2d4 hit points of damage to an opponent on a successful touch attack (Will DC 17 half ) and cure the wielder of the same amount of damage. The wielder must choose to use this power before attacking, as with hold person.&nl;The following functions of the rod have no limit on the number of times they can be employed.&nl;* In its normal form, the rod can be used as a +2 light mace.&nl;* When button 1 is pushed, the rod becomes a +1 flaming longsword. A blade springs from the ball, with the ball itself becoming the sword's hilt. The weapon stretches to an overall length of 4 feet.&nl;* When button 2 is pushed, the rod becomes a +4 battleaxe. A wide blade springs forth at the ball, and the whole lengthens to 4 feet.&nl;* When button 3 is pushed, the rod becomes a +3 shortspear or +3 longspear. The spear blade springs forth, and the handle can be lengthened up to 12 feet (wielder's choice) for an overall length ranging from 6 feet to 15 feet. At its 15-foot length, the rod is suitable for use as a lance.&nl;The following other functions of the rod also have no limit on the number of times they can be employed.&nl;* Climbing pole/ladder. When button 4 is pushed, a spike that can anchor in stone is extruded from the ball, while the other end sprouts three sharp hooks. The rod lengthens to anywhere between 5 and 50 feet in a single round, stopping when button 4 is pushed again. Horizontal bars 3 inches long fold out from the sides, 1 foot apart, in staggered progression. The rod is firmly held by the spike and hooks and can bear up to 4,000 pounds. The wielder can retract the pole by pushing button 5.&nl;* The ladder function can be used to force open doors. The wielder plants the rod's base 30 feet or less from the portal to be forced and in line with it, then pushes button 4. The force exerted has a Strength modifier of +12.&nl;* When button 6 is pushed, the rod indicates magnetic north and gives the wielder knowledge of his approximate depth beneath the surface or height above it."
+      }
+    ],
+    "weight_lbs": 10.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 455,
-    "record_key": "Rod (Lordly Might)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 455,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Lordly Might)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

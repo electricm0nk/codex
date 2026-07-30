@@ -1,23 +1,25 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:37:02Z",
   "data": {
-    "key": "Formula Book",
     "category": "General",
-    "name": "Formula Book",
     "cost_gp": null,
-    "weight": null,
-    "description": null
+    "description": null,
+    "key": "Formula Book",
+    "name": "Formula Book",
+    "raw_bonus_chains": [],
+    "raw_tokens": [],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
-    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd",
-    "line": 97,
-    "record_key": "Formula Book"
-  },
+  "ingested_at": "2026-07-22T23:37:02Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
+    "record_key": "Formula Book",
+    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
+  }
 }

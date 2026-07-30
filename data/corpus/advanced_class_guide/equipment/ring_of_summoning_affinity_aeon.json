@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Summoning Affinity (Aeon)",
     "category": "MagicItems",
-    "name": "Ring of Summoning Affinity (Aeon)",
     "cost_gp": 7800.0,
-    "weight": null,
-    "description": "add to summon monster list: paracletus (3rd), theletos (6th), akhana (9th); 1/day summon paracletus"
+    "description": "add to summon monster list: paracletus (3rd), theletos (6th), akhana (9th); 1/day summon paracletus",
+    "key": "Ring of Summoning Affinity (Aeon)",
+    "name": "Ring of Summoning Affinity (Aeon)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "7800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon monster list: paracletus (3rd), theletos (6th), akhana (9th); 1/day summon paracletus"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 279,
-    "record_key": "Ring of Summoning Affinity (Aeon)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 279,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Summoning Affinity (Aeon)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Abjuration",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 82000.0,
-    "weight_lbs": 5.0,
-    "description": "Usually carved from the heartwood of an ancient oak or other large tree, this staff allows use of the following spells:\n* Dispel magic (1 charge)\n* Resist energy (1 charge)\n* Shield (1 charge)\n* Dismissal (2 charges)\n* Lesser globe of invulnerability (2 charges)\n* Repulsion (3 charges)"
+    "description": "Usually carved from the heartwood of an ancient oak or other large tree, this staff allows use of the following spells:\n* Dispel magic (1 charge)\n* Resist energy (1 charge)\n* Shield (1 charge)\n* Dismissal (2 charges)\n* Lesser globe of invulnerability (2 charges)\n* Repulsion (3 charges)",
+    "key": "Staff of Abjuration",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Abjuration"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Abjuration"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.492"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|41,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, dismissal, dispel magic, lesser globe of invulnerability, repulsion, resist energy, shield"
+      },
+      {
+        "key": "DESC",
+        "value": "Usually carved from the heartwood of an ancient oak or other large tree, this staff allows use of the following spells:&nl;* Dispel magic (1 charge)&nl;* Resist energy (1 charge)&nl;* Shield (1 charge)&nl;* Dismissal (2 charges)&nl;* Lesser globe of invulnerability (2 charges)&nl;* Repulsion (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 423,
-    "record_key": "Staff of Abjuration"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 423,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Abjuration",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

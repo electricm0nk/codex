@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Saddle (Pack)",
     "category": "general",
-    "name": "Saddle, Pack",
     "cost_gp": 5.0,
-    "weight_lbs": 15.0,
-    "description": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry."
+    "description": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry.",
+    "key": "Saddle (Pack)",
+    "name": "Saddle, Pack",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saddle (Pack)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Saddle, Pack"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pack Saddle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Container.Mount.Saddle.Resizable"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Any"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "DESC",
+        "value": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry."
+      }
+    ],
+    "weight_lbs": 15.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 298,
-    "record_key": "Saddle (Pack)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 298,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Saddle (Pack)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

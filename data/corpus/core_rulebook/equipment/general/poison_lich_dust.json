@@ -1,23 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Lich Dust)",
     "category": "general",
-    "name": "Poison, Lich Dust",
     "cost_gp": 400.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Lich Dust)",
+    "name": "Poison, Lich Dust",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Lich Dust)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Lich Dust"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Lich Dust"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 17; Onset 10 min; Freq 1 min (6); Effect 1d3 Str dmg; Cure 2 consecutive saves"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 17"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|10 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Str damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|2 consecutive saves"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 511,
-    "record_key": "Poison (Lich Dust)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 511,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Lich Dust)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

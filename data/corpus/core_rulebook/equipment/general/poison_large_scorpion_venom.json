@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Large Scorpion Venom)",
     "category": "general",
-    "name": "Poison, Large Scorpion Venom",
     "cost_gp": 200.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Large Scorpion Venom)",
+    "name": "Poison, Large Scorpion Venom",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Large Scorpion Venom)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Large Scorpion Venom"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Large Scorpion Venom"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "200"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Injury; Fort DC 17; Freq 1 rnd (6); Effect 1d2 Str dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, injury"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 17"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d2 Str damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 510,
-    "record_key": "Poison (Large Scorpion Venom)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 510,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Large Scorpion Venom)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

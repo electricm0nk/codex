@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Bracers of Sworn Vengeance",
     "category": "magic_items",
-    "name": "Bracers of Sworn Vengeance",
     "cost_gp": 25000.0,
-    "weight_lbs": 1.0,
-    "description": "Once per day, as an immediate action when the wearer takes hit point damage from a target, she may cry out, \"Death to those who wrong me!\", swearing vengeance against the attacker. The wearer gains a +1 competence bonus on weapon attack rolls made against the target of his sworn vengeance, and deals an additional 2d6 points of damage on successful weapon attack rolls."
+    "description": "Once per day, as an immediate action when the wearer takes hit point damage from a target, she may cry out, \"Death to those who wrong me!\", swearing vengeance against the attacker. The wearer gains a +1 competence bonus on weapon attack rolls made against the target of his sworn vengeance, and deals an additional 2d6 points of damage on successful weapon attack rolls.",
+    "key": "Bracers of Sworn Vengeance",
+    "name": "Bracers of Sworn Vengeance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Bracer"
+      },
+      {
+        "key": "COST",
+        "value": "25000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.28"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, as an immediate action when the wearer takes hit point damage from a target, she may cry out, \"Death to those who wrong me!\", swearing vengeance against the attacker. The wearer gains a +1 competence bonus on weapon attack rolls made against the target of his sworn vengeance, and deals an additional 2d6 points of damage on successful weapon attack rolls."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 23,
-    "record_key": "Bracers of Sworn Vengeance"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Bracers of Sworn Vengeance",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

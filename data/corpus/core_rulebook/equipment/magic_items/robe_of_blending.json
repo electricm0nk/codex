@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of Blending",
     "category": "magic_items",
-    "name": "Robe of Blending",
     "cost_gp": 8400.0,
-    "weight_lbs": 1.0,
-    "description": "Once per day this simple wool robe allows you to assume the form of another humanoid creature, as if using alter self. This change lasts for 1 hour, although you can end it prematurely as a free action. While in this form, you also gain the ability to speak and understand the basic racial languages of your chosen form. For example, if you take the form of an orc, you can speak and understand Orc."
+    "description": "Once per day this simple wool robe allows you to assume the form of another humanoid creature, as if using alter self. This change lasts for 1 hour, although you can end it prematurely as a free action. While in this form, you also gain the ability to speak and understand the basic racial languages of your chosen form. For example, if you take the form of an orc, you can speak and understand Orc.",
+    "key": "Robe of Blending",
+    "name": "Robe of Blending",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of Blending"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of Blending"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "8400"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.527"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|4,200 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, alter self, tongues"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day this simple wool robe allows you to assume the form of another humanoid creature, as if using alter self. This change lasts for 1 hour, although you can end it prematurely as a free action. While in this form, you also gain the ability to speak and understand the basic racial languages of your chosen form. For example, if you take the form of an orc, you can speak and understand Orc."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 312,
-    "record_key": "Robe of Blending"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 312,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of Blending",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

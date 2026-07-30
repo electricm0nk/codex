@@ -1,23 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Gloves of Swimming and Climbing",
     "category": "magic_items",
-    "name": "Gloves of Swimming and Climbing",
     "cost_gp": 6250.0,
-    "weight_lbs": 0.0,
-    "description": "These apparently normal lightweight gloves grant a +5 competence bonus on Swim checks and Climb checks. Both gloves must be worn for the magic to be effective."
+    "description": "These apparently normal lightweight gloves grant a +5 competence bonus on Swim checks and Climb checks. Both gloves must be worn for the magic to be effective.",
+    "key": "Gloves of Swimming and Climbing",
+    "name": "Gloves of Swimming and Climbing",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Swim,Climb",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gloves of Swimming and Climbing"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Gloves of Swimming and Climbing"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Hands.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "6250"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.515"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|hands"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,125 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, bull's strength, cat's grace"
+      },
+      {
+        "key": "DESC",
+        "value": "These apparently normal lightweight gloves grant a +5 competence bonus on Swim checks and Climb checks. Both gloves must be worn for the magic to be effective."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 174,
-    "record_key": "Gloves of Swimming and Climbing"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 174,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Gloves of Swimming and Climbing",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

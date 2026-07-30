@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Ancestral Blood Magic",
     "category": "MagicItems",
-    "name": "Ring of Ancestral Blood Magic",
     "cost_gp": 4000.0,
-    "weight": null,
-    "description": "3/day when bloodraging, can cast a bonus spell without spending a spell slot but expending rounds of bloodrage equal to the spell level"
+    "description": "3/day when bloodraging, can cast a bonus spell without spending a spell slot but expending rounds of bloodrage equal to the spell level",
+    "key": "Ring of Ancestral Blood Magic",
+    "name": "Ring of Ancestral Blood Magic",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day when bloodraging, can cast a bonus spell without spending a spell slot but expending rounds of bloodrage equal to the spell level"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 269,
-    "record_key": "Ring of Ancestral Blood Magic"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 269,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Ancestral Blood Magic",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

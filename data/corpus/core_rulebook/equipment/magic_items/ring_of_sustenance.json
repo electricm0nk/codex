@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Sustenance",
     "category": "magic_items",
-    "name": "Ring of Sustenance",
     "cost_gp": 2500.0,
-    "weight_lbs": null,
-    "description": "This ring continually provides its wearer with life-sustaining nourishment. The ring also refreshes the body and mind, so that its wearer needs only sleep 2 hours per day to gain the benefit of 8 hours of sleep. This allows a spellcaster that requires rest to prepare spells to do so after only 2 hours, but this does not allow a spellcaster to prepare spells more than once per day. The ring must be worn for a full week before it begins to work. If it is removed, the owner must wear it for another week to reattune it to himself."
+    "description": "This ring continually provides its wearer with life-sustaining nourishment. The ring also refreshes the body and mind, so that its wearer needs only sleep 2 hours per day to gain the benefit of 8 hours of sleep. This allows a spellcaster that requires rest to prepare spells to do so after only 2 hours, but this does not allow a spellcaster to prepare spells more than once per day. The ring must be worn for a full week before it begins to work. If it is removed, the owner must wear it for another week to reattune it to himself.",
+    "key": "Ring of Sustenance",
+    "name": "Ring of Sustenance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Sustenance"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Sustenance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.483"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, create food and water"
+      },
+      {
+        "key": "DESC",
+        "value": "This ring continually provides its wearer with life-sustaining nourishment. The ring also refreshes the body and mind, so that its wearer needs only sleep 2 hours per day to gain the benefit of 8 hours of sleep. This allows a spellcaster that requires rest to prepare spells to do so after only 2 hours, but this does not allow a spellcaster to prepare spells more than once per day. The ring must be worn for a full week before it begins to work. If it is removed, the owner must wear it for another week to reattune it to himself."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 408,
-    "record_key": "Ring of Sustenance"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 408,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Sustenance",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

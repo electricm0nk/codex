@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Chime of Opening",
     "category": "magic_items",
-    "name": "Chime of Opening",
     "cost_gp": 3000.0,
-    "weight_lbs": 1.0,
-    "description": "A chime of opening is a hollow mithral tube about 1 foot long. When struck, it sends forth magical vibrations that cause locks, lids, doors, valves, and portals to open. The device functions against normal bars, shackles, chains, bolts, and so on. A chime of opening also automatically dispels a hold portal spell or even an arcane lock cast by a wizard of lower than 15th level.\nThe chime must be pointed at the item or gate to be loosed or opened (which must be visible and known to the user). The chime is then struck and a clear tone rings forth. The wielder can make a caster level check against the lock or binding, using the chime's caster level of 11th. The DC of this check is equal to the Disable Device DC to open the lock or binding. Each sounding only opens one form of locking, so if a chest is chained, padlocked, locked, and arcane locked, it takes four successful uses of a chime of opening to get it open. A silence spell negates the power of the device. A brandnew chime can be used a total of 10 times before it cracks and becomes useless."
+    "description": "A chime of opening is a hollow mithral tube about 1 foot long. When struck, it sends forth magical vibrations that cause locks, lids, doors, valves, and portals to open. The device functions against normal bars, shackles, chains, bolts, and so on. A chime of opening also automatically dispels a hold portal spell or even an arcane lock cast by a wizard of lower than 15th level.\nThe chime must be pointed at the item or gate to be loosed or opened (which must be visible and known to the user). The chime is then struck and a clear tone rings forth. The wielder can make a caster level check against the lock or binding, using the chime's caster level of 11th. The DC of this check is equal to the Disable Device DC to open the lock or binding. Each sounding only opens one form of locking, so if a chest is chained, padlocked, locked, and arcane locked, it takes four successful uses of a chime of opening to get it open. A silence spell negates the power of the device. A brandnew chime can be used a total of 10 times before it cracks and becomes useless.",
+    "key": "Chime of Opening",
+    "name": "Chime of Opening",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chime of Opening"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Chime of Opening"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 10 Maximum|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.506"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, knock"
+      },
+      {
+        "key": "DESC",
+        "value": "A chime of opening is a hollow mithral tube about 1 foot long. When struck, it sends forth magical vibrations that cause locks, lids, doors, valves, and portals to open. The device functions against normal bars, shackles, chains, bolts, and so on. A chime of opening also automatically dispels a hold portal spell or even an arcane lock cast by a wizard of lower than 15th level.&nl;The chime must be pointed at the item or gate to be loosed or opened (which must be visible and known to the user). The chime is then struck and a clear tone rings forth. The wielder can make a caster level check against the lock or binding, using the chime's caster level of 11th. The DC of this check is equal to the Disable Device DC to open the lock or binding. Each sounding only opens one form of locking, so if a chest is chained, padlocked, locked, and arcane locked, it takes four successful uses of a chime of opening to get it open. A silence spell negates the power of the device. A brandnew chime can be used a total of 10 times before it cracks and becomes useless."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 100,
-    "record_key": "Chime of Opening"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 100,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Chime of Opening",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

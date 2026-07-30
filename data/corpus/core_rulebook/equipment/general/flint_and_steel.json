@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Flint and Steel",
     "category": "general",
-    "name": "Flint and Steel",
     "cost_gp": 1.0,
-    "weight_lbs": null,
-    "description": "Lighting a torch with flint and steel is a full-round action, and lighting any other fire with them takes at least that long."
+    "description": "Lighting a torch with flint and steel is a full-round action, and lighting any other fire with them takes at least that long.",
+    "key": "Flint and Steel",
+    "name": "Flint and Steel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Flint and Steel"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Flint and Steel"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "Lighting a torch with flint and steel is a full-round action, and lighting any other fire with them takes at least that long."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 129,
-    "record_key": "Flint and Steel"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 129,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Flint and Steel",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Fire Ink",
     "category": "general",
-    "name": "Fire Ink",
     "cost_gp": 1.0,
-    "weight_lbs": null,
-    "description": "Once applied, the ink glows as a candle for 24 hours. Four or more doses applied to the same part of the body glow as a torch for 24 hours. The alchemical reaction of the ink to the target's skin and body heat is painful and irritating, giving the target the sickened condition while the glow lasts. A DC 15 Heal check can temporarily soothe these sensations, negating the sickened condition for 1 hour. Creatures immune or resistant to fire are immune to this sickening effect."
+    "description": "Once applied, the ink glows as a candle for 24 hours. Four or more doses applied to the same part of the body glow as a torch for 24 hours. The alchemical reaction of the ink to the target's skin and body heat is painful and irritating, giving the target the sickened condition while the glow lasts. A DC 15 Heal check can temporarily soothe these sensations, negating the sickened condition for 1 hour. Creatures immune or resistant to fire are immune to this sickening effect.",
+    "key": "Fire Ink",
+    "name": "Fire Ink",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Racial.Ifrit"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once applied, the ink glows as a candle for 24 hours. Four or more doses applied to the same part of the body glow as a torch for 24 hours. The alchemical reaction of the ink to the target's skin and body heat is painful and irritating, giving the target the sickened condition while the glow lasts. A DC 15 Heal check can temporarily soothe these sensations, negating the sickened condition for 1 hour. Creatures immune or resistant to fire are immune to this sickening effect."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 39,
-    "record_key": "Fire Ink"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Fire Ink",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

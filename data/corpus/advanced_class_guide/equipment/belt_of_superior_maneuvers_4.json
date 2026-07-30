@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Belt of Superior Maneuvers +4",
     "category": "MagicItems",
-    "name": "Belt of Superior Maneuvers +4",
     "cost_gp": 32000.0,
-    "weight": null,
-    "description": "3/day +4 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day"
+    "description": "3/day +4 enhancement bonus on and against one combat maneuver; one additional use of martial flexibility per day",
+    "key": "Belt of Superior Maneuvers +4",
+    "name": "Belt of Superior Maneuvers +4",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "32000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day +4 enhancement bonus on and against one combat maneuver"
+      },
+      {
+        "key": "SPROP",
+        "value": "one additional use of martial flexibility per day|PRECLASS:1,Brawler=1"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 346,
-    "record_key": "Belt of Superior Maneuvers +4"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 346,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Belt of Superior Maneuvers +4",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

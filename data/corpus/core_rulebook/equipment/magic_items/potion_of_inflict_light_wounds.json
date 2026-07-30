@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Potion of Inflict Light Wounds",
     "category": "magic_items",
-    "name": "Potion",
     "cost_gp": null,
-    "weight_lbs": 0.0,
-    "description": "Inflicts 1d8+1 points of damage"
+    "description": "Inflicts 1d8+1 points of damage",
+    "key": "Potion of Inflict Light Wounds",
+    "name": "Potion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Potion of Inflict Light Wounds"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Potion of Inflict Light Wounds"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Single Use|SPELLNAME[Inflict Light Wounds]SPELLLEVEL[1]CASTERLEVEL[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.477"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint necromancy"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|25 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Brew Potion, inflict light wounds"
+      },
+      {
+        "key": "SPROP",
+        "value": "Inflicts 1d8+1 points of damage"
+      },
+      {
+        "key": "DESC",
+        "value": "Inflicts 1d8+1 points of damage"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 522,
-    "record_key": "Potion of Inflict Light Wounds"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 522,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Potion of Inflict Light Wounds",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

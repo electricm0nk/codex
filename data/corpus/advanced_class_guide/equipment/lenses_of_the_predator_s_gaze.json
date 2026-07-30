@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Lenses of the Predator's Gaze",
     "category": "MagicItems",
-    "name": "Lenses of the Predator's Gaze",
     "cost_gp": 8000.0,
-    "weight": null,
-    "description": "target creature as standard action, if target not already target of wearer's studied target class feature, get +1 on Bluff, Knowledge, Perception, Sense Motive, Survival, weapon attack rolls and damage rolls against that creature; as free action, increase effective slayer level by 5 for studied target class feature"
+    "description": "target creature as standard action, if target not already target of wearer's studied target class feature, get +1 on Bluff, Knowledge, Perception, Sense Motive, Survival, weapon attack rolls and damage rolls against that creature; as free action, increase effective slayer level by 5 for studied target class feature",
+    "key": "Lenses of the Predator's Gaze",
+    "name": "Lenses of the Predator's Gaze",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Eyes"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "target creature as standard action, if target not already target of wearer's studied target class feature, get +1 on Bluff, Knowledge, Perception, Sense Motive, Survival, weapon attack rolls and damage rolls against that creature"
+      },
+      {
+        "key": "SPROP",
+        "value": "as free action, increase effective slayer level by 5 for studied target class feature|PREABILITY:1,CATEGORY=Special Ability,Slayer ~ Studied Target"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 387,
-    "record_key": "Lenses of the Predator's Gaze"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 387,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Lenses of the Predator's Gaze",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

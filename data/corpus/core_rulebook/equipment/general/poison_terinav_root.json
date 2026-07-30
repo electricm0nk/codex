@@ -1,23 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Terinav Root)",
     "category": "general",
-    "name": "Poison, Terinav Root",
     "cost_gp": 400.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Terinav Root)",
+    "name": "Poison, Terinav Root",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Terinav Root)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Terinav Root"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Terinav Root"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Contact; Fort DC 16; Onset 1 min; Freq 1 min (6); Effect 1d3 Dex dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, contact"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 16"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 minute"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Dex damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 523,
-    "record_key": "Poison (Terinav Root)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 523,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Terinav Root)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

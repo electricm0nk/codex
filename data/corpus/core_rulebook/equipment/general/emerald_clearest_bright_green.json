@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Emerald (Clearest Bright Green)",
     "category": "general",
-    "name": "Clearest Bright Green Emerald",
     "cost_gp": 5000.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Emerald (Clearest Bright Green)",
+    "name": "Clearest Bright Green Emerald",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Emerald (Clearest Bright Green)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Emerald, Clearest Bright Green"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gem"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.400"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 398,
-    "record_key": "Emerald (Clearest Bright Green)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 398,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Emerald (Clearest Bright Green)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

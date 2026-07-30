@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Holly and Mistletoe",
     "category": "general",
-    "name": "Holly and Mistletoe",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "Druids commonly use these plants as divine focuses when casting spells."
+    "description": "Druids commonly use these plants as divine focuses when casting spells.",
+    "key": "Holly and Mistletoe",
+    "name": "Holly and Mistletoe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Holly and Mistletoe"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Holly and Mistletoe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Spell Component.Divine Focus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "Druids commonly use these plants as divine focuses when casting spells."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 207,
-    "record_key": "Holly and Mistletoe"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Holly and Mistletoe",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Stink Ink (Arcane)",
     "category": "general",
-    "name": "Stink Ink (Arcane)",
     "cost_gp": 5.0,
-    "weight_lbs": 1.0,
-    "description": "Like normal stink ink, the arcane version can only be read by creatures with the scent ability (although read magic works normally on spells and arcane formulae inscribed with stink ink). Using arcane stink ink to inscribe a spell or formula into a book costs +10% of the normal amount"
+    "description": "Like normal stink ink, the arcane version can only be read by creatures with the scent ability (although read magic works normally on spells and arcane formulae inscribed with stink ink). Using arcane stink ink to inscribe a spell or formula into a book costs +10% of the normal amount",
+    "key": "Stink Ink (Arcane)",
+    "name": "Stink Ink (Arcane)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Stink Ink, Arcane"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Writing.Liquid.Vial.Racial.Ratfolk"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "Like normal stink ink, the arcane version can only be read by creatures with the scent ability (although read magic works normally on spells and arcane formulae inscribed with stink ink). Using arcane stink ink to inscribe a spell or formula into a book costs +10% of the normal amount"
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 74,
-    "record_key": "Stink Ink (Arcane)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 74,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Stink Ink (Arcane)",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

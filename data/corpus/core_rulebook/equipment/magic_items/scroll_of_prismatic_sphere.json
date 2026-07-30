@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Prismatic Sphere",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": null,
-    "weight_lbs": 0.01,
-    "description": "As prismatic wall, but surrounds on all sides."
+    "description": "As prismatic wall, but surrounds on all sides.",
+    "key": "Scroll of Prismatic Sphere",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Prismatic Sphere"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Prismatic Sphere"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Arcane.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Prismatic Sphere]SPELLLEVEL[9]CASTERLEVEL[17]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1912 gp 5 sp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, prismatic sphere"
+      },
+      {
+        "key": "SPROP",
+        "value": "As prismatic wall, but surrounds on all sides."
+      },
+      {
+        "key": "DESC",
+        "value": "As prismatic wall, but surrounds on all sides."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1346,
-    "record_key": "Scroll of Prismatic Sphere"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1346,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Prismatic Sphere",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

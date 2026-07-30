@@ -1,23 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Darts (Blowgun/10)",
     "category": "arms_armor",
-    "name": "Blowgun Dart (Base)",
     "cost_gp": 0.5,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Darts (Blowgun/10)",
+    "name": "Blowgun Dart (Base)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Darts (Blowgun/10)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dart, Blowgun (10)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "10 Blowgun Darts"
+      },
+      {
+        "key": "TYPE",
+        "value": "Stack"
+      },
+      {
+        "key": "COST",
+        "value": "0.5"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Blowgun Dart (Base)"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 27,
-    "record_key": "Darts (Blowgun/10)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 27,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Darts (Blowgun/10)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

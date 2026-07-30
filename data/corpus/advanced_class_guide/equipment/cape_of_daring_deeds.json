@@ -1,23 +1,59 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Cape of Daring Deeds",
     "category": "MagicItems",
-    "name": "Cape of Daring Deeds",
     "cost_gp": 9000.0,
-    "weight": 2.0,
-    "description": "can change color; when using derring-do 1st level swashbuckler deed, add additional die on natural 5 or 6; +2 resistance bonus on saves, +4 for 1 round when charmed life swashbuckler class feature used"
+    "description": "can change color; when using derring-do 1st level swashbuckler deed, add additional die on natural 5 or 6; +2 resistance bonus on saves, +4 for 1 round when charmed life swashbuckler class feature used",
+    "key": "Cape of Daring Deeds",
+    "name": "Cape of Daring Deeds",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "2",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "9000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPROP",
+        "value": "can change color; when using derring-do 1st level swashbuckler deed, add additional die on natural 5 or 6; +2 resistance bonus on saves, +4 for 1 round when charmed life swashbuckler class feature used"
+      }
+    ],
+    "weight": 2.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 358,
-    "record_key": "Cape of Daring Deeds"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 358,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Cape of Daring Deeds",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

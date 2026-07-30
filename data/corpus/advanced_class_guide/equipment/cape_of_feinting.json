@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Cape of Feinting",
     "category": "MagicItems",
-    "name": "Cape of Feinting",
     "cost_gp": 14000.0,
-    "weight": 1.0,
-    "description": "3/day spend a standard action to purposely miss opponent, opponent loses Dexterity AC until wearer's next turn; also dazed if swashbuckler is using the cape or swashbuckler performs superior feint deed, if the foe fails a DC 13 Will save"
+    "description": "3/day spend a standard action to purposely miss opponent, opponent loses Dexterity AC until wearer's next turn; also dazed if swashbuckler is using the cape or swashbuckler performs superior feint deed, if the foe fails a DC 13 Will save",
+    "key": "Cape of Feinting",
+    "name": "Cape of Feinting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "14000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day spend a standard action to purposely miss opponent, opponent loses Dexterity AC until wearer's next turn; also dazed if swashbuckler is using the cape or swashbuckler performs superior feint deed, if the foe fails a DC 13 Will save"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 359,
-    "record_key": "Cape of Feinting"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 359,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Cape of Feinting",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

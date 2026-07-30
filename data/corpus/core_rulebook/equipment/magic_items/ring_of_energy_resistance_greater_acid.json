@@ -1,23 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Energy Resistance (Greater/Acid)",
     "category": "magic_items",
-    "name": "Ring of Greater Energy Resistance (Acid)",
     "cost_gp": 44000.0,
-    "weight_lbs": null,
-    "description": "This ring continually protects the wearer from damage from one type of energy--acid, cold, electricity, fire, or sonic (chosen by the creator of the item; determine randomly if found as part of a treasure hoard). Each time the wearer would normally take such damage, subtract the ring's resistance value from the damage dealt.\nA greater ring of energy resistance grants 30 points of resistance."
+    "description": "This ring continually protects the wearer from damage from one type of energy--acid, cold, electricity, fire, or sonic (chosen by the creator of the item; determine randomly if found as part of a treasure hoard). Each time the wearer would normally take such damage, subtract the ring's resistance value from the damage dealt.\nA greater ring of energy resistance grants 30 points of resistance.",
+    "key": "Ring of Energy Resistance (Greater/Acid)",
+    "name": "Ring of Greater Energy Resistance (Acid)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "AcidResistanceBonus",
+          "30",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Energy Resistance (Greater/Acid)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Energy Resistance, Greater (Acid)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "44000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.480"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|22,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, resist energy"
+      },
+      {
+        "key": "DESC",
+        "value": "This ring continually protects the wearer from damage from one type of energy--acid, cold, electricity, fire, or sonic (chosen by the creator of the item; determine randomly if found as part of a treasure hoard). Each time the wearer would normally take such damage, subtract the ring's resistance value from the damage dealt.&nl;A greater ring of energy resistance grants 30 points of resistance."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 374,
-    "record_key": "Ring of Energy Resistance (Greater/Acid)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 374,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Energy Resistance (Greater/Acid)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

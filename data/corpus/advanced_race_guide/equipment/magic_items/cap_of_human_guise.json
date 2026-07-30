@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Cap of Human Guise",
     "category": "magic_items",
-    "name": "Cap of Human Guise",
     "cost_gp": 800.0,
-    "weight_lbs": null,
-    "description": "Allows its wearer to alter her appearance as with a disguise self spell, except she can only appear as a plainly dressed Small human child, adult halfling, or adult gnome."
+    "description": "Allows its wearer to alter her appearance as with a disguise self spell, except she can only appear as a plainly dressed Small human child, adult halfling, or adult gnome.",
+    "key": "Cap of Human Guise",
+    "name": "Cap of Human Guise",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows its wearer to alter her appearance as with a disguise self spell, except she can only appear as a plainly dressed Small human child, adult halfling, or adult gnome."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 26,
-    "record_key": "Cap of Human Guise"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Cap of Human Guise",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

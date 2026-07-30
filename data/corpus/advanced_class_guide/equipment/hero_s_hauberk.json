@@ -1,23 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Hero's Hauberk",
     "category": "ArmsArmor",
-    "name": "Hero's Hauberk",
     "cost_gp": 100.0,
-    "weight": 25.0,
-    "description": "DR 1/- of armor stacks with wearer's DR; gain light fortification when raging or maintaining raging song; +1 luck bonus on all ability and skill checks, and the total penalties to attack rolls, ability and skill checks, and saving throws are reduced by 1, while maintaining bardic performance"
+    "description": "DR 1/- of armor stacks with wearer's DR; gain light fortification when raging or maintaining raging song; +1 luck bonus on all ability and skill checks, and the total penalties to attack rolls, ability and skill checks, and saving throws are reduced by 1, while maintaining bardic performance",
+    "key": "Hero's Hauberk",
+    "name": "Hero's Hauberk",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Chain Shirt"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Specific.Enhancement"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Adamantine ~ Armor / Heavy.Special Ability ~ Enhancement Cost|500.Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "4"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      },
+      {
+        "key": "SPROP",
+        "value": "DR 1/- of armor stacks with wearer's DR; gain light fortification when raging or maintaining raging song; +1 luck bonus on all ability and skill checks, and the total penalties to attack rolls, ability and skill checks, and saving throws are reduced by 1, while maintaining bardic performance"
+      }
+    ],
+    "weight": 25.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 244,
-    "record_key": "Hero's Hauberk"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 244,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Hero's Hauberk",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

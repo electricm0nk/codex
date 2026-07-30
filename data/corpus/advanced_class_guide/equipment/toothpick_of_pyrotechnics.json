@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Toothpick of Pyrotechnics",
     "category": "MagicItems",
-    "name": "Toothpick of Pyrotechnics",
     "cost_gp": 400.0,
-    "weight": null,
-    "description": "creates a flash and a cloud of smoke; creatures within 20 feet must save (Fort DC:13) or be blinded for 1d4+1 rounds; 20 foot smoke cloud lasts for 3 rounds"
+    "description": "creates a flash and a cloud of smoke; creatures within 20 feet must save (Fort DC:13) or be blinded for 1d4+1 rounds; 20 foot smoke cloud lasts for 3 rounds",
+    "key": "Toothpick of Pyrotechnics",
+    "name": "Toothpick of Pyrotechnics",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "creates a flash and a cloud of smoke; creatures within 20 feet must save (Fort DC:13) or be blinded for 1d4+1 rounds; 20 foot smoke cloud lasts for 3 rounds"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 444,
-    "record_key": "Toothpick of Pyrotechnics"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 444,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Toothpick of Pyrotechnics",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

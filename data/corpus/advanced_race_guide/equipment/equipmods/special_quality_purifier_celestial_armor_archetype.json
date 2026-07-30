@@ -1,23 +1,71 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Special Quality ~ Purifier Celestial Armor ~ Archetype",
     "category": "equipmods",
-    "name": "Purifier Celestial",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": "No benefit.; The purifier's armor takes on a golden or silvery sheen and becomes light as a feather."
+    "description": "No benefit.; The purifier's armor takes on a golden or silvery sheen and becomes light as a feather.",
+    "key": "Special Quality ~ Purifier Celestial Armor ~ Archetype",
+    "name": "Purifier Celestial",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2",
+          "PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Purifier Celestial Armor ~ Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Purifier Celestial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Purifier"
+      },
+      {
+        "key": "SPROP",
+        "value": "No benefit.|!PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
+      },
+      {
+        "key": "SPROP",
+        "value": "The purifier's armor takes on a golden or silvery sheen and becomes light as a feather.|PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
-    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
-    "line": 16,
-    "record_key": "Special Quality ~ Purifier Celestial Armor ~ Archetype"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Special Quality ~ Purifier Celestial Armor ~ Archetype",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  }
 }

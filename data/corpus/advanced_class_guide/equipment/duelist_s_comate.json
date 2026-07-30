@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Duelist's Comate",
     "category": "ArmsArmor",
-    "name": "Duelist's Comate",
     "cost_gp": 20.0,
-    "weight": 2.0,
-    "description": "3/day surprise attack with pommel (1d6+2 bludgeoning, 20/x2 crit)"
+    "description": "3/day surprise attack with pommel (1d6+2 bludgeoning, 20/x2 crit)",
+    "key": "Duelist's Comate",
+    "name": "Duelist's Comate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGEMULT:2",
+          "-0.5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rapier"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Finesseable.Piercing.Sword.BladeLight.MeleePiercing.Specific.Weapon Group Blades Light.InspiredOK.Weapon Group Melee OneHanded Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Countering ~ Melee.Special Ability ~ Dueling ~ Melee.Special Ability ~ Enhancement Cost|3000.Special Ability ~ +2 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day surprise attack with pommel (1d6+2 bludgeoning, 20/x2 crit)"
+      }
+    ],
+    "weight": 2.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 261,
-    "record_key": "Duelist's Comate"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 261,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Duelist's Comate",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

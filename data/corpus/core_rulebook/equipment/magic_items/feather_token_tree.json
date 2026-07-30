@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Feather Token (Tree)",
     "category": "magic_items",
-    "name": "Feather Token (Tree)",
     "cost_gp": 400.0,
-    "weight_lbs": 0.0,
-    "description": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.\nTree: A token that causes a great oak to spring into being (5-footdiameter trunk, 60-foot height, 40-foot top diameter). This is an instantaneous effect."
+    "description": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.\nTree: A token that causes a great oak to spring into being (5-footdiameter trunk, 60-foot height, 40-foot top diameter). This is an instantaneous effect.",
+    "key": "Feather Token (Tree)",
+    "name": "Feather Token (Tree)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feather Token (Tree)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Feather Token (Tree)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.512"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|200 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, major creation"
+      },
+      {
+        "key": "DESC",
+        "value": "Each of these items is a small feather that has a power to suit a special need. The kinds of tokens are described below. Each token is usable once. A particular feather token has no specific features to identify it unless its magic aura is viewed--even tokens with identical powers can be wildly different in appearance.&nl;Tree: A token that causes a great oak to spring into being (5-footdiameter trunk, 60-foot height, 40-foot top diameter). This is an instantaneous effect."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 158,
-    "record_key": "Feather Token (Tree)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Feather Token (Tree)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Natural Attunement (Drake)",
     "category": "MagicItems",
-    "name": "Ring of Natural Attunement (Drake)",
     "cost_gp": 12880.0,
-    "weight": null,
-    "description": "add to summon nature's ally list: forest drake (4th), shadow drake (4th), flame drake (5th), frost drake (6th), desert drake (9th); 1/day summon shadow drake"
+    "description": "add to summon nature's ally list: forest drake (4th), shadow drake (4th), flame drake (5th), frost drake (6th), desert drake (9th); 1/day summon shadow drake",
+    "key": "Ring of Natural Attunement (Drake)",
+    "name": "Ring of Natural Attunement (Drake)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "12880"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon nature's ally list: forest drake (4th), shadow drake (4th), flame drake (5th), frost drake (6th), desert drake (9th); 1/day summon shadow drake"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 274,
-    "record_key": "Ring of Natural Attunement (Drake)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 274,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Natural Attunement (Drake)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

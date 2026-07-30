@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "One-Way Window",
     "category": "MagicItems",
-    "name": "One-Way Window",
     "cost_gp": 7500.0,
-    "weight": 1.0,
-    "description": "set against solid surface to become a one-way window (penetrate 1 foot wood, 6 inches stone, 1 inch metal). No visible evidence of the of the window appears on the opposite side of surface and no items, light, sound, spells, or spell effects can pass through the window and divination magic does not function."
+    "description": "set against solid surface to become a one-way window (penetrate 1 foot wood, 6 inches stone, 1 inch metal). No visible evidence of the of the window appears on the opposite side of surface and no items, light, sound, spells, or spell effects can pass through the window and divination magic does not function.",
+    "key": "One-Way Window",
+    "name": "One-Way Window",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "7500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "set against solid surface to become a one-way window (penetrate 1 foot wood, 6 inches stone, 1 inch metal). No visible evidence of the of the window appears on the opposite side of surface and no items, light, sound, spells, or spell effects can pass through the window and divination magic does not function."
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 391,
-    "record_key": "One-Way Window"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 391,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "One-Way Window",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

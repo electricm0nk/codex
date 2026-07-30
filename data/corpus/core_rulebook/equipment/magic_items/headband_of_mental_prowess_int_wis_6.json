@@ -1,23 +1,90 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Headband of Mental Prowess (INT/WIS) +6",
     "category": "magic_items",
-    "name": "Headband of Mental Prowess +6 (Int, Wis)",
     "cost_gp": 90000.0,
-    "weight_lbs": 1.0,
-    "description": "This simple copper headband has a small yellow gem set so that when it rests upon the forehead of the wearer, the yellow gem sits perched on the wearer's brow as if it were a third eye in the middle of his forehead. Often, the headband contains additional designs to further accentuate the appearance of a third, crystal eye.\nThe headband grants the wearer an enhancement bonus to two mental ability scores (Intelligence, Wisdom, or Charisma) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. These bonuses are chosen when the headband is created and cannot be changed. If the headband grants a bonus to Intelligence, it also grants skill ranks as a headband of vast intelligence."
+    "description": "This simple copper headband has a small yellow gem set so that when it rests upon the forehead of the wearer, the yellow gem sits perched on the wearer's brow as if it were a third eye in the middle of his forehead. Often, the headband contains additional designs to further accentuate the appearance of a third, crystal eye.\nThe headband grants the wearer an enhancement bonus to two mental ability scores (Intelligence, Wisdom, or Charisma) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. These bonuses are chosen when the headband is created and cannot be changed. If the headband grants a bonus to Intelligence, it also grants skill ranks as a headband of vast intelligence.",
+    "key": "Headband of Mental Prowess (INT/WIS) +6",
+    "name": "Headband of Mental Prowess +6 (Int, Wis)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Headband of Intellect Skill Choice",
+          "3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT,WIS",
+          "6",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Headband of Mental Prowess (INT/WIS) +6"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Headband of Mental Prowess +6 (Int, Wis)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband.Intelligence"
+      },
+      {
+        "key": "COST",
+        "value": "90000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.517"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|headband"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|45,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, fox's cunning, owl's wisdom"
+      },
+      {
+        "key": "DESC",
+        "value": "This simple copper headband has a small yellow gem set so that when it rests upon the forehead of the wearer, the yellow gem sits perched on the wearer's brow as if it were a third eye in the middle of his forehead. Often, the headband contains additional designs to further accentuate the appearance of a third, crystal eye.&nl;The headband grants the wearer an enhancement bonus to two mental ability scores (Intelligence, Wisdom, or Charisma) of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. These bonuses are chosen when the headband is created and cannot be changed. If the headband grants a bonus to Intelligence, it also grants skill ranks as a headband of vast intelligence."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 195,
-    "record_key": "Headband of Mental Prowess (INT/WIS) +6"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Headband of Mental Prowess (INT/WIS) +6",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

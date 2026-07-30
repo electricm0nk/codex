@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Ability ~ Reflecting ~ Shield",
     "category": "equipmods",
-    "name": "Reflecting",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ Reflecting ~ Shield",
+    "name": "Reflecting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Reflecting ~ Shield"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "5"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.464"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ShieldEnhancement,Shield"
+      },
+      {
+        "key": "SPROP",
+        "value": "reflect spell (as Spell Turning spell) 1/day"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 336,
-    "record_key": "Special Ability ~ Reflecting ~ Shield"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 336,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Reflecting ~ Shield",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

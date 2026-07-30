@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Fire",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 18950.0,
-    "weight_lbs": 5.0,
-    "description": "Crafted from bronzewood with brass bindings, this staff allows use of the following spells:\n* Burning hands (1 charge)\n* Fireball (2 charges)\n* Wall of fire (3 charges)"
+    "description": "Crafted from bronzewood with brass bindings, this staff allows use of the following spells:\n* Burning hands (1 charge)\n* Fireball (2 charges)\n* Wall of fire (3 charges)",
+    "key": "Staff of Fire",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Fire"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Fire"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "18950"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.494"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|8th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|9,475 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, burning hands, fireball, wall of fire"
+      },
+      {
+        "key": "DESC",
+        "value": "Crafted from bronzewood with brass bindings, this staff allows use of the following spells:&nl;* Burning hands (1 charge)&nl;* Fireball (2 charges)&nl;* Wall of fire (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 431,
-    "record_key": "Staff of Fire"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 431,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Fire",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

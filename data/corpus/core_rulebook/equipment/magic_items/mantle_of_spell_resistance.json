@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Mantle of Spell Resistance",
     "category": "magic_items",
-    "name": "Mantle of Spell Resistance",
     "cost_gp": 90000.0,
-    "weight_lbs": 0.0,
-    "description": "This garment, worn over normal clothing or armor, grants the wearer spell resistance 21."
+    "description": "This garment, worn over normal clothing or armor, grants the wearer spell resistance 21.",
+    "key": "Mantle of Spell Resistance",
+    "name": "Mantle of Spell Resistance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mantle of Spell Resistance"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Mantle of Spell Resistance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Chest.Mantle"
+      },
+      {
+        "key": "COST",
+        "value": "90000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.522"
+      },
+      {
+        "key": "SR",
+        "value": "21"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|chest"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|45,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, spell resistance"
+      },
+      {
+        "key": "DESC",
+        "value": "This garment, worn over normal clothing or armor, grants the wearer spell resistance 21."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 250,
-    "record_key": "Mantle of Spell Resistance"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 250,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Mantle of Spell Resistance",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

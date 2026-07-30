@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Spell Dodging ~ Armor",
     "category": "Equipmods",
-    "name": "Spell Dodging",
     "cost_gp": null,
-    "weight": null,
-    "description": "+4 dodge AC against attack rolls from spells, spell-like abilities, and attacks of summoned creatures"
+    "description": "+4 dodge AC against attack rolls from spells, spell-like abilities, and attacks of summoned creatures",
+    "key": "Special Ability ~ Spell Dodging ~ Armor",
+    "name": "Spell Dodging",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spell Dodging ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,ArmorEnhancement,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 dodge AC against attack rolls from spells, spell-like abilities, and attacks of summoned creatures"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
-    "line": 18,
-    "record_key": "Special Ability ~ Spell Dodging ~ Armor"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Spell Dodging ~ Armor",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  }
 }

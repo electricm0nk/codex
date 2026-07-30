@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Answering ~ Amulet of Mighty Fists",
     "category": "Equipmods",
-    "name": "Answering",
     "cost_gp": null,
-    "weight": null,
-    "description": "Enhancement bonus increases by 4 (to a max of 5) when wielder is using the opportune parry and riposte deed"
+    "description": "Enhancement bonus increases by 4 (to a max of 5) when wielder is using the opportune parry and riposte deed",
+    "key": "Special Ability ~ Answering ~ Amulet of Mighty Fists",
+    "name": "Answering",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Answering ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Enhancement bonus increases by 4 (to a max of 5) when wielder is using the opportune parry and riposte deed"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
-    "line": 54,
-    "record_key": "Special Ability ~ Answering ~ Amulet of Mighty Fists"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Answering ~ Amulet of Mighty Fists",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
+  }
 }

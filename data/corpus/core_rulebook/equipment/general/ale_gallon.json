@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ale (Gallon)",
     "category": "general",
-    "name": "Gallon of Ale",
     "cost_gp": 0.2,
-    "weight_lbs": 8.0,
-    "description": null
+    "description": null,
+    "key": "Ale (Gallon)",
+    "name": "Gallon of Ale",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ale (Gallon)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ale, Gallon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Liquid.Food.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0.2"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ],
+    "weight_lbs": 8.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 267,
-    "record_key": "Ale (Gallon)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 267,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Ale (Gallon)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

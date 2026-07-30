@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Symbol of Stunning (Arcane)",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": 5000.0,
-    "weight_lbs": 0.01,
-    "description": "Triggered rune stuns creatures."
+    "description": "Triggered rune stuns creatures.",
+    "key": "Scroll of Symbol of Stunning (Arcane)",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Symbol of Stunning (Arcane)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Symbol of Stunning (Arcane)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Arcane.Consumable.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Symbol of Stunning]SPELLLEVEL[7]CASTERLEVEL[13]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong enchantment (compulsion) [mind-affecting]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6137 gp 5 sp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, symbol of stunning"
+      },
+      {
+        "key": "SPROP",
+        "value": "Triggered rune stuns creatures."
+      },
+      {
+        "key": "DESC",
+        "value": "Triggered rune stuns creatures."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1290,
-    "record_key": "Scroll of Symbol of Stunning (Arcane)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1290,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Symbol of Stunning (Arcane)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Candle",
     "category": "general",
-    "name": "Candle",
     "cost_gp": 0.01,
-    "weight_lbs": null,
-    "description": "A candle dimly illuminates a small area, increasing the light level in a 5-foot radius by one step (darkness becomes dim light and dim light becomes normal light). A candle cannot increase the light level above normal light. A candle burns for 1 hour."
+    "description": "A candle dimly illuminates a small area, increasing the light level in a 5-foot radius by one step (darkness becomes dim light and dim light becomes normal light). A candle cannot increase the light level above normal light. A candle burns for 1 hour.",
+    "key": "Candle",
+    "name": "Candle",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Candle"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Candle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Consumable.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Increases light level by one step|5 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|1 hr."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Increases light level by one step|5 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|1 hr."
+      },
+      {
+        "key": "DESC",
+        "value": "A candle dimly illuminates a small area, increasing the light level in a 5-foot radius by one step (darkness becomes dim light and dim light becomes normal light). A candle cannot increase the light level above normal light. A candle burns for 1 hour."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 117,
-    "record_key": "Candle"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Candle",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

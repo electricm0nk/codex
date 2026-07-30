@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Bag of Tricks (Tan)",
     "category": "magic_items",
-    "name": "Bag of Tricks (Tan)",
     "cost_gp": 16000.0,
-    "weight_lbs": null,
-    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Grizzly Bear\n31-60 Lion\n61-80 Heavy Horse\n81-90 Tiger\n91-100 Rhinoceros"
+    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Grizzly Bear\n31-60 Lion\n61-80 Heavy Horse\n81-90 Tiger\n91-100 Rhinoceros",
+    "key": "Bag of Tricks (Tan)",
+    "name": "Bag of Tricks (Tan)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bag of Tricks (Tan)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bag of Tricks (Tan)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.501"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|8,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, summon nature's ally V"
+      },
+      {
+        "key": "DESC",
+        "value": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.&nl;The heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.&nl;Animals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.&nl;d%% Animal&nl;01-30 Grizzly Bear&nl;31-60 Lion&nl;61-80 Heavy Horse&nl;81-90 Tiger&nl;91-100 Rhinoceros"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 34,
-    "record_key": "Bag of Tricks (Tan)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bag of Tricks (Tan)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

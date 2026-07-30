@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Tail Attachment (Pounder)",
     "category": "arms_armor",
-    "name": "Tail Attachment (Pounder)",
     "cost_gp": 1.0,
-    "weight_lbs": 4.0,
-    "description": "This squat ball is made from some sort of dull metal."
+    "description": "This squat ball is made from some sort of dull metal.",
+    "key": "Tail Attachment (Pounder)",
+    "name": "Tail Attachment (Pounder)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tail Attachment, Pounder"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kobold Tail Attachment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.KoboldTailAttachment.Bludgeoning.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SPROP",
+        "value": "This squat ball is made from some sort of dull metal.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 4.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 39,
-    "record_key": "Tail Attachment (Pounder)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Tail Attachment (Pounder)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Banquet (Per Person)",
     "category": "general",
-    "name": "Banquet, Per Person",
     "cost_gp": 10.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Banquet (Per Person)",
+    "name": "Banquet, Per Person",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banquet (Per Person)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Banquet"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Food.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 269,
-    "record_key": "Banquet (Per Person)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 269,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Banquet (Per Person)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

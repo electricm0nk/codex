@@ -1,23 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Boots of Elvenkind",
     "category": "magic_items",
-    "name": "Boots of Elvenkind",
     "cost_gp": 2500.0,
-    "weight_lbs": 1.0,
-    "description": "These soft boots enable the wearer to move nimbly about in virtually any surroundings, granting a +5 competence bonus on Acrobatics checks."
+    "description": "These soft boots enable the wearer to move nimbly about in virtually any surroundings, granting a +5 competence bonus on Acrobatics checks.",
+    "key": "Boots of Elvenkind",
+    "name": "Boots of Elvenkind",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Acrobatics",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boots of Elvenkind"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Boots of Elvenkind"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Feet.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.504"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|feet"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, creator must be an elf"
+      },
+      {
+        "key": "DESC",
+        "value": "These soft boots enable the wearer to move nimbly about in virtually any surroundings, granting a +5 competence bonus on Acrobatics checks."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 61,
-    "record_key": "Boots of Elvenkind"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Boots of Elvenkind",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

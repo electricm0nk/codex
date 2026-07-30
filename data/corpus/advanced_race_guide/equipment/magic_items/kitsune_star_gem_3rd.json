@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Kitsune Star Gem (3rd)",
     "category": "magic_items",
-    "name": "Kitsune Star Gem (3rd)",
     "cost_gp": 6750.0,
-    "weight_lbs": null,
-    "description": "Acts as pearl of power, except it only allows a kitsune to recover a spent use of a spell-like ability of the appropriate spell level."
+    "description": "Acts as pearl of power, except it only allows a kitsune to recover a spent use of a spell-like ability of the appropriate spell level.",
+    "key": "Kitsune Star Gem (3rd)",
+    "name": "Kitsune Star Gem (3rd)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Racial.Kitsune"
+      },
+      {
+        "key": "COST",
+        "value": "6750"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.193"
+      },
+      {
+        "key": "SPROP",
+        "value": "Acts as pearl of power, except it only allows a kitsune to recover a spent use of a spell-like ability of the appropriate spell level."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 58,
-    "record_key": "Kitsune Star Gem (3rd)"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Kitsune Star Gem (3rd)",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

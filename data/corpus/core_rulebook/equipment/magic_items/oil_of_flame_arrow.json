@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Oil of Flame Arrow",
     "category": "magic_items",
-    "name": "Potion",
     "cost_gp": null,
-    "weight_lbs": 0.0,
-    "description": "Turn up to 50 projectiles into fiery projectiles. Duration 30 minutes."
+    "description": "Turn up to 50 projectiles into fiery projectiles. Duration 30 minutes.",
+    "key": "Oil of Flame Arrow",
+    "name": "Potion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Oil of Flame Arrow"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Oil of Flame Arrow"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Single Use|SPELLNAME[Flame Arrow]SPELLLEVEL[3]CASTERLEVEL[5]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.477"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation [fire]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|375 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Brew Potion, flame arrow"
+      },
+      {
+        "key": "SPROP",
+        "value": "Turn up to 50 projectiles into fiery projectiles. Duration 30 minutes."
+      },
+      {
+        "key": "DESC",
+        "value": "Turn up to 50 projectiles into fiery projectiles. Duration 30 minutes."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 584,
-    "record_key": "Oil of Flame Arrow"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 584,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Oil of Flame Arrow",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

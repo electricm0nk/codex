@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Saddle (Exotic/Pack)",
     "category": "general",
-    "name": "Saddle, Exotic Pack",
     "cost_gp": 15.0,
-    "weight_lbs": 20.0,
-    "description": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry. An exotic saddle is designed for an unusual mount."
+    "description": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry. An exotic saddle is designed for an unusual mount.",
+    "key": "Saddle (Exotic/Pack)",
+    "name": "Saddle, Exotic Pack",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saddle (Exotic/Pack)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Saddle, Exotic Pack"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Exotic Pack Saddle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Container.Mount.Saddle.Resizable"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Any"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "DESC",
+        "value": "A pack saddle holds gear and supplies, but not a rider. It holds as much gear as the mount can carry. An exotic saddle is designed for an unusual mount."
+      }
+    ],
+    "weight_lbs": 20.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 301,
-    "record_key": "Saddle (Exotic/Pack)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 301,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Saddle (Exotic/Pack)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

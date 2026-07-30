@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Swarming Insects",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 22800.0,
-    "weight_lbs": 5.0,
-    "description": "Made of twisted darkwood covered with knots and nodules resembling crawling insects (which occasionally seem to move), this staff allows use of the following spells:\n* Summon swarm (1 charge)\n* Insect plague (3 charges)"
+    "description": "Made of twisted darkwood covered with knots and nodules resembling crawling insects (which occasionally seem to move), this staff allows use of the following spells:\n* Summon swarm (1 charge)\n* Insect plague (3 charges)",
+    "key": "Staff of Swarming Insects",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Swarming Insects"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Swarming Insects"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "22800"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.495"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|11,400 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, insect plague, summon swarm"
+      },
+      {
+        "key": "DESC",
+        "value": "Made of twisted darkwood covered with knots and nodules resembling crawling insects (which occasionally seem to move), this staff allows use of the following spells:&nl;* Summon swarm (1 charge)&nl;* Insect plague (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 441,
-    "record_key": "Staff of Swarming Insects"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 441,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Swarming Insects",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

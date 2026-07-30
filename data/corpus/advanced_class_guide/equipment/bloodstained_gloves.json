@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Bloodstained Gloves",
     "category": "MagicItems",
-    "name": "Bloodstained Gloves",
     "cost_gp": 8000.0,
-    "weight": 5.0,
-    "description": "if soaked in blood of recently killed creature, gain +1 insight bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour; if soaked in blood of recently killed creature, gain insight bonus equal to studied target bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour"
+    "description": "if soaked in blood of recently killed creature, gain +1 insight bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour; if soaked in blood of recently killed creature, gain insight bonus equal to studied target bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour",
+    "key": "Bloodstained Gloves",
+    "name": "Bloodstained Gloves",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPROP",
+        "value": "if soaked in blood of recently killed creature, gain +1 insight bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour|!PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "SPROP",
+        "value": "if soaked in blood of recently killed creature, gain insight bonus equal to studied target bonus on attack and damage against that same type (or subtype for humanoids and outsiders) for 1 hour|PRECLASS:1,Slayer=1"
+      }
+    ],
+    "weight": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 348,
-    "record_key": "Bloodstained Gloves"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 348,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Bloodstained Gloves",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

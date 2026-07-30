@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Masterwork ~ Armor",
     "category": "equipmods",
-    "name": "Masterwork (Armor or Shield)",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Quality ~ Masterwork ~ Armor",
+    "name": "Masterwork (Armor or Shield)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.ARMOR",
+          "150"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHIELD",
+          "150"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=Masterwork"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterworkQuality.Armor.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Masterwork"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Armor,Shield"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Masterwork,Mithral,Adamantine,Darkwood"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 20,
-    "record_key": "Special Quality ~ Masterwork ~ Armor"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Masterwork ~ Armor",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

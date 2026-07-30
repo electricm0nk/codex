@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Demon Armor Claw Attack",
     "category": "arms_armor",
-    "name": "Demon Armor Claw Attack",
     "cost_gp": -2300.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Demon Armor Claw Attack",
+    "name": "Demon Armor Claw Attack",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Demon Armor Claw Attack"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Demon Armor Claw Attack"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Unarmed Strike"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Simple.Unarmed.Piercing.Slashing"
+      },
+      {
+        "key": "COST",
+        "value": "-2300"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 136,
-    "record_key": "Demon Armor Claw Attack"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 136,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Demon Armor Claw Attack",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

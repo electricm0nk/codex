@@ -1,23 +1,109 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Half-Plate (Base)",
     "category": "arms_armor",
-    "name": "Half-Plate",
     "cost_gp": 600.0,
-    "weight_lbs": 50.0,
-    "description": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm."
+    "description": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm.",
+    "key": "Half-Plate (Base)",
+    "name": "Half-Plate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "8",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-4",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "7",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-7",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Plate (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Half-Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "600"
+      },
+      {
+        "key": "WT",
+        "value": "50"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "40"
+      },
+      {
+        "key": "DESC",
+        "value": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 50.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
-    "line": 47,
-    "record_key": "Half-Plate (Base)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Half-Plate (Base)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
+  }
 }

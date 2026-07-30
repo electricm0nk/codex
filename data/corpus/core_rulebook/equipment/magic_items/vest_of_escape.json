@@ -1,23 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Vest of Escape",
     "category": "magic_items",
-    "name": "Vest of Escape",
     "cost_gp": 5200.0,
-    "weight_lbs": 0.0,
-    "description": "Hidden within secret pockets of this simple silk vest are magic lockpicks that provide a +4 competence bonus on Disable Device checks. The vest also grants its wearer a +6 competence bonus on Escape Artist checks."
+    "description": "Hidden within secret pockets of this simple silk vest are magic lockpicks that provide a +4 competence bonus on Disable Device checks. The vest also grants its wearer a +6 competence bonus on Escape Artist checks.",
+    "key": "Vest of Escape",
+    "name": "Vest of Escape",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Disable Device",
+          "4",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "6",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vest of Escape"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Vest of Escape"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Chest.Shirt"
+      },
+      {
+        "key": "COST",
+        "value": "5200"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.532"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration and transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|4th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|chest"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,600 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, knock, grease"
+      },
+      {
+        "key": "DESC",
+        "value": "Hidden within secret pockets of this simple silk vest are magic lockpicks that provide a +4 competence bonus on Disable Device checks. The vest also grants its wearer a +6 competence bonus on Escape Artist checks."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 352,
-    "record_key": "Vest of Escape"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 352,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Vest of Escape",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

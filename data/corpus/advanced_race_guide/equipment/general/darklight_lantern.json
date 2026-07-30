@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Darklight Lantern",
     "category": "general",
-    "name": "Darklight Lantern",
     "cost_gp": 20.0,
-    "weight_lbs": 3.0,
-    "description": "When shadowcloy is used as its fuel, this lantern creates a strange, hazy darkness that decreases the light level for 30 feet around it by one step. Unlike when shadowcloy is thrown at a single target, this haze does not decrease natural darkness to supernatural darkness. One flask of shadowcloy fuels a darklight lantern for 1 minute."
+    "description": "When shadowcloy is used as its fuel, this lantern creates a strange, hazy darkness that decreases the light level for 30 feet around it by one step. Unlike when shadowcloy is thrown at a single target, this haze does not decrease natural darkness to supernatural darkness. One flask of shadowcloy fuels a darklight lantern for 1 minute.",
+    "key": "Darklight Lantern",
+    "name": "Darklight Lantern",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Racial.Fetchling"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.111"
+      },
+      {
+        "key": "SPROP",
+        "value": "When shadowcloy is used as its fuel, this lantern creates a strange, hazy darkness that decreases the light level for 30 feet around it by one step. Unlike when shadowcloy is thrown at a single target, this haze does not decrease natural darkness to supernatural darkness. One flask of shadowcloy fuels a darklight lantern for 1 minute."
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 32,
-    "record_key": "Darklight Lantern"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Darklight Lantern",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

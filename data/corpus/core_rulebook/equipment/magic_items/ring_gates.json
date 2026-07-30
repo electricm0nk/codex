@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring Gates",
     "category": "magic_items",
-    "name": "Ring Gates",
     "cost_gp": 40000.0,
-    "weight_lbs": 1.0,
-    "description": "These always come in pairs--two iron rings, each about 18 inches in diameter. The rings must be on the same plane of existence and within 100 miles of each other to function. Whatever is put through one ring comes out the other, and up to 100 pounds of material can be transferred each day. (Objects only partially pushed through and then retracted do not count.) This useful device allows for instantaneous transport of items or messages, and even attacks. A character can reach through to grab things near the other ring, or even stab a weapon through if so desired. Alternatively, a character could stick his head through to look around. A spellcaster could even cast a spell through a ring gate. A Small character can make a DC 13 Escape Artist check to slip through. Creatures of Tiny, Diminutive, or Fine size can pass through easily. Each ring has an \"entry side\" and an \"exit side,\" both marked with appropriate symbols."
+    "description": "These always come in pairs--two iron rings, each about 18 inches in diameter. The rings must be on the same plane of existence and within 100 miles of each other to function. Whatever is put through one ring comes out the other, and up to 100 pounds of material can be transferred each day. (Objects only partially pushed through and then retracted do not count.) This useful device allows for instantaneous transport of items or messages, and even attacks. A character can reach through to grab things near the other ring, or even stab a weapon through if so desired. Alternatively, a character could stick his head through to look around. A spellcaster could even cast a spell through a ring gate. A Small character can make a DC 13 Escape Artist check to slip through. Creatures of Tiny, Diminutive, or Fine size can pass through easily. Each ring has an \"entry side\" and an \"exit side,\" both marked with appropriate symbols.",
+    "key": "Ring Gates",
+    "name": "Ring Gates",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring Gates"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring Gates"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "40000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.526"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|20,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, gate"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "These always come in pairs--two iron rings, each about 18 inches in diameter. The rings must be on the same plane of existence and within 100 miles of each other to function. Whatever is put through one ring comes out the other, and up to 100 pounds of material can be transferred each day. (Objects only partially pushed through and then retracted do not count.) This useful device allows for instantaneous transport of items or messages, and even attacks. A character can reach through to grab things near the other ring, or even stab a weapon through if so desired. Alternatively, a character could stick his head through to look around. A spellcaster could even cast a spell through a ring gate. A Small character can make a DC 13 Escape Artist check to slip through. Creatures of Tiny, Diminutive, or Fine size can pass through easily. Each ring has an \"entry side\" and an \"exit side,\" both marked with appropriate symbols."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 305,
-    "record_key": "Ring Gates"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 305,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring Gates",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

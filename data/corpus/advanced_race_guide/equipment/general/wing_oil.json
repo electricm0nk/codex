@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Wing Oil",
     "category": "general",
-    "name": "Wing Oil",
     "cost_gp": 1.0,
-    "weight_lbs": null,
-    "description": "Gives a feathered creature a +1 bonus on all saving throws to resist the effects of cold weather. Its effects last 24 hours."
+    "description": "Gives a feathered creature a +1 bonus on all saving throws to resist the effects of cold weather. Its effects last 24 hours.",
+    "key": "Wing Oil",
+    "name": "Wing Oil",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Flask.Racial.Tengu"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.165"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gives a feathered creature a +1 bonus on all saving throws to resist the effects of cold weather. Its effects last 24 hours."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 86,
-    "record_key": "Wing Oil"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Wing Oil",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

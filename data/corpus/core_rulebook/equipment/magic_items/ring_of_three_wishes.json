@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Three Wishes",
     "category": "magic_items",
-    "name": "Ring of Three Wishes",
     "cost_gp": 120000.0,
-    "weight_lbs": null,
-    "description": "This ring is set with three rubies. Each ruby stores a wish spell, activated by the ring. When a wish is used, that ruby disappears. For a randomly generated ring, roll 1d3 to determine the remaining number of rubies. When all the wishes are used, the ring becomes a nonmagical item."
+    "description": "This ring is set with three rubies. Each ruby stores a wish spell, activated by the ring. When a wish is used, that ruby disappears. For a randomly generated ring, roll 1d3 to determine the remaining number of rubies. When all the wishes are used, the ring becomes a nonmagical item.",
+    "key": "Ring of Three Wishes",
+    "name": "Ring of Three Wishes",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Three Wishes"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Three Wishes"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "120000"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 3 Maximum|CHARGES[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.483"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong universal or evocation (if miracle is used)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|97,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, wish or miracle"
+      },
+      {
+        "key": "DESC",
+        "value": "This ring is set with three rubies. Each ruby stores a wish spell, activated by the ring. When a wish is used, that ruby disappears. For a randomly generated ring, roll 1d3 to determine the remaining number of rubies. When all the wishes are used, the ring becomes a nonmagical item."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 412,
-    "record_key": "Ring of Three Wishes"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 412,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Three Wishes",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

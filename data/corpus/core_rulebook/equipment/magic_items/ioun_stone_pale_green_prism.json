@@ -1,23 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ioun Stone (Pale green Prism)",
     "category": "magic_items",
-    "name": "Pale green Prism Ioun Stone",
     "cost_gp": 30000.0,
-    "weight_lbs": 0.0,
-    "description": "These crystalline stones always float in the air and must be within 3 feet of their owner to be of any use. When a character first acquires a stone, she must hold it and then release it, whereupon it takes up a circling orbit 1d3 feet from her head. Thereafter, a stone must be grasped or netted to separate it from its owner. The owner may voluntarily seize and stow a stone (to keep it safe while she is sleeping, for example), but she loses the benefits of the stone during that time. Ioun stones have AC 24, 10 hit points, and hardness 5. The powers of each stone vary depending on its color and shape (see the table).\nRegeneration from the pearly white ioun stone works like a ring of regeneration. It only cures damage taken while the character is using the stone. The pale lavender and lavender-and-green stones work like a rod of absorption, but absorbing a spell requires a readied action, and these stones cannot be used to empower spells. Stored spells in the vibrant purple stone must be placed by a spellcaster but can be used by anyone (see ring of minor spell storing)."
+    "description": "These crystalline stones always float in the air and must be within 3 feet of their owner to be of any use. When a character first acquires a stone, she must hold it and then release it, whereupon it takes up a circling orbit 1d3 feet from her head. Thereafter, a stone must be grasped or netted to separate it from its owner. The owner may voluntarily seize and stow a stone (to keep it safe while she is sleeping, for example), but she loses the benefits of the stone during that time. Ioun stones have AC 24, 10 hit points, and hardness 5. The powers of each stone vary depending on its color and shape (see the table).\nRegeneration from the pearly white ioun stone works like a ring of regeneration. It only cures damage taken while the character is using the stone. The pale lavender and lavender-and-green stones work like a rod of absorption, but absorbing a spell requires a readied action, and these stones cannot be used to empower spells. Stored spells in the vibrant purple stone must be placed by a spellcaster but can be used by anyone (see ring of minor spell storing).",
+    "key": "Ioun Stone (Pale green Prism)",
+    "name": "Pale green Prism Ioun Stone",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "TOHIT",
+          "1",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "TYPE.Base",
+          "1",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ioun Stone (Pale green Prism)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ioun Stone, Pale green Prism"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Ioun"
+      },
+      {
+        "key": "COST",
+        "value": "30000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.520"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|15,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, creator must be 12th level"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1 to ability checks"
+      },
+      {
+        "key": "DESC",
+        "value": "These crystalline stones always float in the air and must be within 3 feet of their owner to be of any use. When a character first acquires a stone, she must hold it and then release it, whereupon it takes up a circling orbit 1d3 feet from her head. Thereafter, a stone must be grasped or netted to separate it from its owner. The owner may voluntarily seize and stow a stone (to keep it safe while she is sleeping, for example), but she loses the benefits of the stone during that time. Ioun stones have AC 24, 10 hit points, and hardness 5. The powers of each stone vary depending on its color and shape (see the table).&nl;Regeneration from the pearly white ioun stone works like a ring of regeneration. It only cures damage taken while the character is using the stone. The pale lavender and lavender-and-green stones work like a rod of absorption, but absorbing a spell requires a readied action, and these stones cannot be used to empower spells. Stored spells in the vibrant purple stone must be placed by a spellcaster but can be used by anyone (see ring of minor spell storing)."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 238,
-    "record_key": "Ioun Stone (Pale green Prism)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 238,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ioun Stone (Pale green Prism)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

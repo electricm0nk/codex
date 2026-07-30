@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Whistle of Calling",
     "category": "MagicItems",
-    "name": "Whistle of Calling",
     "cost_gp": 6300.0,
-    "weight": null,
-    "description": "1/day attuned mount or animal companion within 1 mile teleported to safe space within 30 feet"
+    "description": "1/day attuned mount or animal companion within 1 mile teleported to safe space within 30 feet",
+    "key": "Whistle of Calling",
+    "name": "Whistle of Calling",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Instrument"
+      },
+      {
+        "key": "COST",
+        "value": "6300"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day attuned mount or animal companion within 1 mile teleported to safe space within 30 feet"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 452,
-    "record_key": "Whistle of Calling"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 452,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Whistle of Calling",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

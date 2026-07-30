@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Samsaran Life Wheel",
     "category": "general",
-    "name": "Samsaran Life Wheel",
     "cost_gp": 25.0,
-    "weight_lbs": 0.5,
-    "description": "If a samsaran meditates with her wheel for at least 10 minutes about a Knowledge (history) question relating to her own history or the histories of her past lives, she gains a +1 insight bonus on the check."
+    "description": "If a samsaran meditates with her wheel for at least 10 minutes about a Knowledge (history) question relating to her own history or the histories of her past lives, she gains a +1 insight bonus on the check.",
+    "key": "Samsaran Life Wheel",
+    "name": "Samsaran Life Wheel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Tools.Racial.Samsaran"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      },
+      {
+        "key": "SPROP",
+        "value": "If a samsaran meditates with her wheel for at least 10 minutes about a Knowledge (history) question relating to her own history or the histories of her past lives, she gains a +1 insight bonus on the check."
+      }
+    ],
+    "weight_lbs": 0.5
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
-    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0",
-    "line": 61,
-    "record_key": "Samsaran Life Wheel"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Samsaran Life Wheel",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
 }

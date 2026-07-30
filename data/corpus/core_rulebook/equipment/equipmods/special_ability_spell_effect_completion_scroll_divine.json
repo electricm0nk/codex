@@ -1,23 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Ability ~ Spell Effect / Completion / Scroll / Divine",
     "category": "equipmods",
-    "name": "Spell Effect (Single Use/Completion/Divine)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ Spell Effect / Completion / Scroll / Divine",
+    "name": "Spell Effect (Single Use/Completion/Divine)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Divine"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "SPELL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Scroll.Divine"
+      },
+      {
+        "key": "COST",
+        "value": "(25*(max((%SPELLLEVEL),(1/2)))*%CASTERLEVEL)+%SPELLCOST+(5*%SPELLXPCOST)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic.Consumable.Divine"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Scroll"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Arcane"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Divine|0|9"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 205,
-    "record_key": "Special Ability ~ Spell Effect / Completion / Scroll / Divine"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 205,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Spell Effect / Completion / Scroll / Divine",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Glowing Gourd",
     "category": "MagicItems",
-    "name": "Glowing Gourd",
     "cost_gp": 4250.0,
-    "weight": 8.0,
-    "description": "sheds light as candle; when smashed 40-foot radius area affected by hallow with attached remove fear"
+    "description": "sheds light as candle; when smashed 40-foot radius area affected by hallow with attached remove fear",
+    "key": "Glowing Gourd",
+    "name": "Glowing Gourd",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "4250"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPROP",
+        "value": "sheds light as candle; when smashed 40-foot radius area affected by hallow with attached remove fear"
+      }
+    ],
+    "weight": 8.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 372,
-    "record_key": "Glowing Gourd"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 372,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Glowing Gourd",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

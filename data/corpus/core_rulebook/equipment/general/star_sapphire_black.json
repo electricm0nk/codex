@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Star Sapphire (Black)",
     "category": "general",
-    "name": "Black Star Sapphire",
     "cost_gp": 1000.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Star Sapphire (Black)",
+    "name": "Black Star Sapphire",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Star Sapphire (Black)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Star Sapphire, Black"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gem"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.400"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 397,
-    "record_key": "Star Sapphire (Black)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 397,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Star Sapphire (Black)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

@@ -1,23 +1,112 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe (Monk's)",
     "category": "magic_items",
-    "name": "Monk's Robe",
     "cost_gp": 13000.0,
-    "weight_lbs": 1.0,
-    "description": "This simple brown robe, when worn, confers great ability in unarmed combat. If the wearer has levels in monk, her AC and unarmed damage is treated as a monk of five levels higher. If donned by a character with the Stunning Fist feat, the robe lets her make one additional stunning attack per day. If the character is not a monk, she gains the AC and unarmed damage of a 5th-level monk (although she does not add her Wisdom bonus to her AC). This AC bonus functions just like the monk's AC bonus."
+    "description": "This simple brown robe, when worn, confers great ability in unarmed combat. If the wearer has levels in monk, her AC and unarmed damage is treated as a monk of five levels higher. If donned by a character with the Stunning Fist feat, the robe lets her make one additional stunning attack per day. If the character is not a monk, she gains the AC and unarmed damage of a 5th-level monk (although she does not add her Wisdom bonus to her AC). This AC bonus functions just like the monk's AC bonus.",
+    "key": "Robe (Monk's)",
+    "name": "Monk's Robe",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "UDAM",
+          "CLASS.Monk",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkACLVL",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "StunningFistAttack",
+          "1",
+          "PREABILITY:1,CATEGORY=FEAT,Stunning Fist"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MonkUnarmedDamageLVL",
+          "5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe (Monk's)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe, Monk's"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "13000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.528"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Monk ~ AC Bonus|!PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage|!PRECLASS:1,Monk=1"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, righteous might or transformation"
+      },
+      {
+        "key": "DESC",
+        "value": "This simple brown robe, when worn, confers great ability in unarmed combat. If the wearer has levels in monk, her AC and unarmed damage is treated as a monk of five levels higher. If donned by a character with the Stunning Fist feat, the robe lets her make one additional stunning attack per day. If the character is not a monk, she gains the AC and unarmed damage of a 5th-level monk (although she does not add her Wisdom bonus to her AC). This AC bonus functions just like the monk's AC bonus."
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 314,
-    "record_key": "Robe (Monk's)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 314,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe (Monk's)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

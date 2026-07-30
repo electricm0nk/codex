@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Amulet of the Spirits (Waves)",
     "category": "MagicItems",
-    "name": "Amulet of the Spirits (Waves)",
     "cost_gp": 10000.0,
-    "weight": 1.0,
-    "description": "increase effective level of mystery or spirit powers by 2; 1/day activate ward of mist (blur until 2 attacks miss because of concealment); 1/day cause creature within 30 ft. to be etangled for 1 round by cold damage for 1 minute"
+    "description": "increase effective level of mystery or spirit powers by 2; 1/day activate ward of mist (blur until 2 attacks miss because of concealment); 1/day cause creature within 30 ft. to be etangled for 1 round by cold damage for 1 minute",
+    "key": "Amulet of the Spirits (Waves)",
+    "name": "Amulet of the Spirits (Waves)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase effective level of mystery or spirit powers by 2|PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Waves,Spirit Bond ~ Waves"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day activate ward of mist (blur until 2 attacks miss because of concealment); 1/day cause creature within 30 ft. to be etangled for 1 round by cold damage for 1 minute|!PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Waves,Spirit Bond ~ Waves"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 335,
-    "record_key": "Amulet of the Spirits (Waves)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 335,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Amulet of the Spirits (Waves)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

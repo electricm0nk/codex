@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Evocation",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 82000.0,
-    "weight_lbs": 5.0,
-    "description": "This smooth hickory or yew staff allows use of the following spells:\n* Fireball (1 charge)\n* Magic missile (1 charge)\n* Shatter (1 charge)\n* Ice storm (2 charges)\n* Wall of force (2 charges)\n* Chain lightning (3 charges)"
+    "description": "This smooth hickory or yew staff allows use of the following spells:\n* Fireball (1 charge)\n* Magic missile (1 charge)\n* Shatter (1 charge)\n* Ice storm (2 charges)\n* Wall of force (2 charges)\n* Chain lightning (3 charges)",
+    "key": "Staff of Evocation",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Evocation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Evocation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.493"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|41,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, chain lightning, fireball, ice storm, magic missile, shatter, wall of force"
+      },
+      {
+        "key": "DESC",
+        "value": "This smooth hickory or yew staff allows use of the following spells:&nl;* Fireball (1 charge)&nl;* Magic missile (1 charge)&nl;* Shatter (1 charge)&nl;* Ice storm (2 charges)&nl;* Wall of force (2 charges)&nl;* Chain lightning (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 430,
-    "record_key": "Staff of Evocation"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 430,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Evocation",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

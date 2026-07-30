@@ -1,23 +1,63 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Intelligent Item ~ Purpose / Slay Creature Type",
     "category": "equipmods",
-    "name": "Int Item / Defeat/slay a particular creature type (see the bane special ability for choices)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Intelligent Item ~ Purpose / Slay Creature Type",
+    "name": "Int Item / Defeat/slay a particular creature type (see the bane special ability for choices)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2",
+          "TYPE=Purpose"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Purpose / Slay Creature Type"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "DedicatedPurpose"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,EQMOD=Intelligent Item ~ Base,EQMOD=Intelligent Item ~ Purpose"
+      },
+      {
+        "key": "SPROP",
+        "value": "Defeat/slay a particular creature type (see the bane special ability for choices)"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 441,
-    "record_key": "Intelligent Item ~ Purpose / Slay Creature Type"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 441,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item ~ Purpose / Slay Creature Type",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

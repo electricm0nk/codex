@@ -1,23 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Antitoxin (Vial)",
     "category": "general",
-    "name": "Antitoxin",
     "cost_gp": 50.0,
-    "weight_lbs": null,
-    "description": "If you drink a vial of antitoxin, you get a +5 alchemical bonus on Fortitude saving throws against poison for 1 hour."
+    "description": "If you drink a vial of antitoxin, you get a +5 alchemical bonus on Fortitude saving throws against poison for 1 hour.",
+    "key": "Antitoxin (Vial)",
+    "name": "Antitoxin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Antitoxin (Vial)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Antitoxin"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Vial.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|Vials of"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Single|Vial of"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 alchemical bonus to Fortitude saves against poison for 1 hour"
+      },
+      {
+        "key": "DESC",
+        "value": "If you drink a vial of antitoxin, you get a +5 alchemical bonus on Fortitude saving throws against poison for 1 hour."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 191,
-    "record_key": "Antitoxin (Vial)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 191,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Antitoxin (Vial)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

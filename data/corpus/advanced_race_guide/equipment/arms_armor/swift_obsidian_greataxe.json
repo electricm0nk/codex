@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Swift Obsidian Greataxe",
     "category": "arms_armor",
-    "name": "Swift Obsidian Greataxe",
     "cost_gp": 11320.0,
-    "weight_lbs": 12.0,
-    "description": "When the wielder charges an enemy, he receives a +10 foot enhancement bonus to his speed that round. Once per day, he can command the axe to grant all allies within 30 feet a +10 foot enhancement bonus to base speed for 1 round."
+    "description": "When the wielder charges an enemy, he receives a +10 foot enhancement bonus to his speed that round. Once per day, he can command the axe to grant all allies within 30 feet a +10 foot enhancement bonus to base speed for 1 round.",
+    "key": "Swift Obsidian Greataxe",
+    "name": "Swift Obsidian Greataxe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greataxe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Standard.Slashing.Axe"
+      },
+      {
+        "key": "COST",
+        "value": "11320"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d12"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.58"
+      },
+      {
+        "key": "SPROP",
+        "value": "When the wielder charges an enemy, he receives a +10 foot enhancement bonus to his speed that round. Once per day, he can command the axe to grant all allies within 30 feet a +10 foot enhancement bonus to base speed for 1 round.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ],
+    "weight_lbs": 12.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
-    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566",
-    "line": 32,
-    "record_key": "Swift Obsidian Greataxe"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Swift Obsidian Greataxe",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
 }

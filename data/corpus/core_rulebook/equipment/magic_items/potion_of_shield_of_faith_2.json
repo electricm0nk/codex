@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Potion of Shield of Faith +2",
     "category": "magic_items",
-    "name": "Potion",
     "cost_gp": null,
-    "weight_lbs": 0.0,
-    "description": "+2 deflection bonus to AC for 1 minutes"
+    "description": "+2 deflection bonus to AC for 1 minutes",
+    "key": "Potion of Shield of Faith +2",
+    "name": "Potion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Potion of Shield of Faith +2"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Potion of Shield of Faith +2"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Single Use|SPELLNAME[Shield of Faith]SPELLLEVEL[1]CASTERLEVEL[1]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.477"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|1st"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|25 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Brew Potion, shield of faith"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 deflection bonus to AC for 1 minutes"
+      },
+      {
+        "key": "DESC",
+        "value": "+2 deflection bonus to AC for 1 minutes"
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 569,
-    "record_key": "Potion of Shield of Faith +2"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 569,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Potion of Shield of Faith +2",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

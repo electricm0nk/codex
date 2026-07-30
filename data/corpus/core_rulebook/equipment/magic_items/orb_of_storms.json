@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Orb of Storms",
     "category": "magic_items",
-    "name": "Orb of Storms",
     "cost_gp": 48000.0,
-    "weight_lbs": 6.0,
-    "description": "This glass sphere is 8 inches in diameter. The possessor can call forth all manner of weather, even supernaturally destructive storms. Once per day, she can call upon the orb to use a control weather spell. Once per month, she can conjure a storm of vengeance. The possessor of the orb is continually protected by an endure elements effect."
+    "description": "This glass sphere is 8 inches in diameter. The possessor can call forth all manner of weather, even supernaturally destructive storms. Once per day, she can call upon the orb to use a control weather spell. Once per month, she can conjure a storm of vengeance. The possessor of the orb is continually protected by an endure elements effect.",
+    "key": "Orb of Storms",
+    "name": "Orb of Storms",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orb of Storms"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Orb of Storms"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "48000"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.524"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Orb of Storms|TIMES=1|CASTERLEVEL=18|Control Weather"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Orb of Storms|TIMES=1|TIMEUNIT=Month|CASTERLEVEL=18|Storm of Vengeance"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|18th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|24,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, control weather, endure elements, storm of vengeance"
+      },
+      {
+        "key": "DESC",
+        "value": "This glass sphere is 8 inches in diameter. The possessor can call forth all manner of weather, even supernaturally destructive storms. Once per day, she can call upon the orb to use a control weather spell. Once per month, she can conjure a storm of vengeance. The possessor of the orb is continually protected by an endure elements effect."
+      }
+    ],
+    "weight_lbs": 6.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 280,
-    "record_key": "Orb of Storms"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 280,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Orb of Storms",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

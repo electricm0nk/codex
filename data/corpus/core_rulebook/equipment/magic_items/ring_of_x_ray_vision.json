@@ -1,23 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of X-Ray Vision",
     "category": "magic_items",
-    "name": "Ring of X-Ray Vision",
     "cost_gp": 25000.0,
-    "weight_lbs": null,
-    "description": "On command, this ring gives its wearer the ability to see into and through solid matter. Vision range is 20 feet, with the viewer seeing as if he were looking at something in normal light even if there is no illumination. X-ray vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances or a thin sheet of lead blocks the vision. Using the ring is exhausting, causing the wearer 1 point of Constitution damage per minute after the first 10 minutes of use in a single day. The ring must be used in 1-minute increments."
+    "description": "On command, this ring gives its wearer the ability to see into and through solid matter. Vision range is 20 feet, with the viewer seeing as if he were looking at something in normal light even if there is no illumination. X-ray vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances or a thin sheet of lead blocks the vision. Using the ring is exhausting, causing the wearer 1 point of Constitution damage per minute after the first 10 minutes of use in a single day. The ring must be used in 1-minute increments.",
+    "key": "Ring of X-Ray Vision",
+    "name": "Ring of X-Ray Vision",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of X-Ray Vision"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of X-Ray Vision"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "25000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.484"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate divination"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|6th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|12,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, true seeing"
+      },
+      {
+        "key": "DESC",
+        "value": "On command, this ring gives its wearer the ability to see into and through solid matter. Vision range is 20 feet, with the viewer seeing as if he were looking at something in normal light even if there is no illumination. X-ray vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances or a thin sheet of lead blocks the vision. Using the ring is exhausting, causing the wearer 1 point of Constitution damage per minute after the first 10 minutes of use in a single day. The ring must be used in 1-minute increments."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 418,
-    "record_key": "Ring of X-Ray Vision"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 418,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of X-Ray Vision",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

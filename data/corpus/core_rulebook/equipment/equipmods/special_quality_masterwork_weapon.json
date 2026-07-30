@@ -1,23 +1,90 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Masterwork ~ Weapon",
     "category": "equipmods",
-    "name": "Masterwork (Weapon)",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Quality ~ Masterwork ~ Weapon",
+    "name": "Masterwork (Weapon)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "300"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=Masterwork"
+      },
+      {
+        "key": "TYPE",
+        "value": "MasterworkQuality.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Masterwork"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.149"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Shield"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Masterwork,Mithral,Adamantine,Darkwood"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 18,
-    "record_key": "Special Quality ~ Masterwork ~ Weapon"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Masterwork ~ Weapon",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

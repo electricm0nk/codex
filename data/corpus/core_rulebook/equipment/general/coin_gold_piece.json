@@ -1,23 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Coin (Gold Piece)",
     "category": "general",
-    "name": "Gold Piece",
     "cost_gp": 1.0,
-    "weight_lbs": 0.02,
-    "description": "The most common coin is the gold piece (gp). A gold piece is worth 10 silver pieces (sp).\nThe standard coin weighs about a third of an ounce (50 to the pound)."
+    "description": "The most common coin is the gold piece (gp). A gold piece is worth 10 silver pieces (sp).\nThe standard coin weighs about a third of an ounce (50 to the pound).",
+    "key": "Coin (Gold Piece)",
+    "name": "Gold Piece",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Coin (Gold Piece)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Coin, Gold Piece"
+      },
+      {
+        "key": "TYPE",
+        "value": "Coin"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "0.02"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Abbreviation|gp"
+      },
+      {
+        "key": "DESC",
+        "value": "The most common coin is the gold piece (gp). A gold piece is worth 10 silver pieces (sp).&nl;The standard coin weighs about a third of an ounce (50 to the pound)."
+      }
+    ],
+    "weight_lbs": 0.02
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 334,
-    "record_key": "Coin (Gold Piece)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 334,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Coin (Gold Piece)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

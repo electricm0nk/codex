@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Dust of Dryness",
     "category": "magic_items",
-    "name": "Dust of Dryness",
     "cost_gp": 850.0,
-    "weight_lbs": 0.0,
-    "description": "This special dust has many uses. If it is thrown into water, a volume of as much as 100 gallons is instantly transformed into nothingness, and the dust becomes a marble-sized pellet, floating or resting where it was thrown. If this pellet is hurled, it breaks and releases the same volume of water. The dust affects only water (fresh, salt, alkaline), not other liquids.\nIf the dust is employed against an outsider with the elemental and water subtypes, the creature must make a DC 18 Fortitude save or be destroyed. The dust deals 5d6 points of damage to the creature even if its saving throw succeeds."
+    "description": "This special dust has many uses. If it is thrown into water, a volume of as much as 100 gallons is instantly transformed into nothingness, and the dust becomes a marble-sized pellet, floating or resting where it was thrown. If this pellet is hurled, it breaks and releases the same volume of water. The dust affects only water (fresh, salt, alkaline), not other liquids.\nIf the dust is employed against an outsider with the elemental and water subtypes, the creature must make a DC 18 Fortitude save or be destroyed. The dust deals 5d6 points of damage to the creature even if its saving throw succeeds.",
+    "key": "Dust of Dryness",
+    "name": "Dust of Dryness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dust of Dryness"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dust of Dryness"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "850"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.510"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|425 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, control water"
+      },
+      {
+        "key": "DESC",
+        "value": "This special dust has many uses. If it is thrown into water, a volume of as much as 100 gallons is instantly transformed into nothingness, and the dust becomes a marble-sized pellet, floating or resting where it was thrown. If this pellet is hurled, it breaks and releases the same volume of water. The dust affects only water (fresh, salt, alkaline), not other liquids.&nl;If the dust is employed against an outsider with the elemental and water subtypes, the creature must make a DC 18 Fortitude save or be destroyed. The dust deals 5d6 points of damage to the creature even if its saving throw succeeds."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 134,
-    "record_key": "Dust of Dryness"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 134,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Dust of Dryness",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

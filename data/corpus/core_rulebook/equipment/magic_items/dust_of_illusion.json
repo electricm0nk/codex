@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Dust of Illusion",
     "category": "magic_items",
-    "name": "Dust of Illusion",
     "cost_gp": 1200.0,
-    "weight_lbs": 0.0,
-    "description": "This unremarkable powder resembles chalk dust or powdered graphite. Stare at it, however, and the dust changes color and form. Put dust of illusion on a creature, and that creature is affected as if by a disguise self glamer, with the individual who sprinkles the dust envisioning the illusion desired. An unwilling target is allowed a DC 11 Reflex save to avoid the dust. The glamer lasts for 2 hours."
+    "description": "This unremarkable powder resembles chalk dust or powdered graphite. Stare at it, however, and the dust changes color and form. Put dust of illusion on a creature, and that creature is affected as if by a disguise self glamer, with the individual who sprinkles the dust envisioning the illusion desired. An unwilling target is allowed a DC 11 Reflex save to avoid the dust. The glamer lasts for 2 hours.",
+    "key": "Dust of Illusion",
+    "name": "Dust of Illusion",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dust of Illusion"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dust of Illusion"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1200"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.510"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|6th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|600 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, disguise self"
+      },
+      {
+        "key": "DESC",
+        "value": "This unremarkable powder resembles chalk dust or powdered graphite. Stare at it, however, and the dust changes color and form. Put dust of illusion on a creature, and that creature is affected as if by a disguise self glamer, with the individual who sprinkles the dust envisioning the illusion desired. An unwilling target is allowed a DC 11 Reflex save to avoid the dust. The glamer lasts for 2 hours."
+      }
+    ],
+    "weight_lbs": 0.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 135,
-    "record_key": "Dust of Illusion"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 135,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Dust of Illusion",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

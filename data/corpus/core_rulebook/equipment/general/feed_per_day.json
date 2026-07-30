@@ -1,23 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Feed (Per Day)",
     "category": "general",
-    "name": "Feed",
     "cost_gp": 0.05,
-    "weight_lbs": 10.0,
-    "description": "Horses, donkeys, mules, and ponies can graze to sustain themselves, but providing feed for them is better. If you have a riding dog, you have to feed it meat."
+    "description": "Horses, donkeys, mules, and ponies can graze to sustain themselves, but providing feed for them is better. If you have a riding dog, you have to feed it meat.",
+    "key": "Feed (Per Day)",
+    "name": "Feed",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feed (Per Day)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Feed, Per Day"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Mount.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0.05"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "Horses, donkeys, mules, and ponies can graze to sustain themselves, but providing feed for them is better. If you have a riding dog, you have to feed it meat."
+      }
+    ],
+    "weight_lbs": 10.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 290,
-    "record_key": "Feed (Per Day)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 290,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Feed (Per Day)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

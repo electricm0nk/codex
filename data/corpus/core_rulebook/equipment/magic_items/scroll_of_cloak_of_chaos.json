@@ -1,23 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Cloak of Chaos",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": 500.0,
-    "weight_lbs": 0.01,
-    "description": "+4 to AC, +4 resistance, and SR 25 against lawful spells."
+    "description": "+4 to AC, +4 resistance, and SR 25 against lawful spells.",
+    "key": "Scroll of Cloak of Chaos",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Cloak of Chaos"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Cloak of Chaos"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Divine.Consumable.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Cloak of Chaos]SPELLLEVEL[8]CASTERLEVEL[15]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration [chaotic]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, cloak of chaos"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 to AC, +4 resistance, and SR 25 against lawful spells."
+      },
+      {
+        "key": "DESC",
+        "value": "+4 to AC, +4 resistance, and SR 25 against lawful spells."
+      }
+    ],
+    "weight_lbs": 0.01
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 1568,
-    "record_key": "Scroll of Cloak of Chaos"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1568,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Cloak of Chaos",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

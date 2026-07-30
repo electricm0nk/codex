@@ -1,23 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Special Ability ~ Cruel ~ Weapon",
     "category": "equipmods",
-    "name": "Cruel",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "When the wielder strikes a creature that is frightened, shaken, or panicked, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes."
+    "description": "When the wielder strikes a creature that is frightened, shaken, or panicked, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes.",
+    "key": "Special Ability ~ Cruel ~ Weapon",
+    "name": "Cruel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Cruel ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "SPROP",
+        "value": "When the wielder strikes a creature that is frightened, shaken, or panicked, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
-    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
-    "line": 20,
-    "record_key": "Special Ability ~ Cruel ~ Weapon"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Special Ability ~ Cruel ~ Weapon",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  }
 }

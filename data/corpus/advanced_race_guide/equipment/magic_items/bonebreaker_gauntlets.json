@@ -1,23 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Bonebreaker Gauntlets",
     "category": "magic_items",
-    "name": "Bonebreaker Gauntlets",
     "cost_gp": 6000.0,
-    "weight_lbs": 2.0,
-    "description": "Once per day, as part of a melee attack, the wearer can activate the gauntlets to inflict a horrific injury on an opponent. If the attack hits, the target must make a DC 14 Will save. If the save fails, the gauntlets reduce the target's Strength, Dexterity, or Constitution (wearer's choice) by -6."
+    "description": "Once per day, as part of a melee attack, the wearer can activate the gauntlets to inflict a horrific injury on an opponent. If the attack hits, the target must make a DC 14 Will save. If the save fails, the gauntlets reduce the target's Strength, Dexterity, or Constitution (wearer's choice) by -6.",
+    "key": "Bonebreaker Gauntlets",
+    "name": "Bonebreaker Gauntlets",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, as part of a melee attack, the wearer can activate the gauntlets to inflict a horrific injury on an opponent. If the attack hits, the target must make a DC 14 Will save. If the save fails, the gauntlets reduce the target's Strength, Dexterity, or Constitution (wearer's choice) by -6."
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, as part of a melee attack, the wearer can activate the gauntlets to inflict a horrific injury on an opponent. If the attack hits, the target must make a DC 14 Will save. If the save fails, the gauntlets reduce the target's Strength, Dexterity, or Constitution (wearer's choice) by -6."
+      }
+    ],
+    "weight_lbs": 2.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 20,
-    "record_key": "Bonebreaker Gauntlets"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Bonebreaker Gauntlets",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

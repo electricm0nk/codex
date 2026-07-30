@@ -1,23 +1,71 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Ability ~ +1 ~ Amulet of Mighty Fists",
     "category": "equipmods",
-    "name": "+1 to Hit and Damage",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ +1 ~ Amulet of Mighty Fists",
+    "name": "+1 to Hit and Damage",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPONPROF=TYPE.Natural",
+          "TOHIT,DAMAGE",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "0+1"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ +1 ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=+1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Ability ~ +2 ~ Amulet of Mighty Fists,Special Ability ~ +3 ~ Amulet of Mighty Fists,Special Ability ~ +4 ~ Amulet of Mighty Fists,Special Ability ~ +5 ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
-    "line": 265,
-    "record_key": "Special Ability ~ +1 ~ Amulet of Mighty Fists"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 265,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ +1 ~ Amulet of Mighty Fists",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  }
 }

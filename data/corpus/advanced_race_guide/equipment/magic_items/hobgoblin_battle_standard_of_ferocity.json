@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Hobgoblin Battle Standard of Ferocity",
     "category": "magic_items",
-    "name": "Hobgoblin Battle Standard of Ferocity",
     "cost_gp": 60000.0,
-    "weight_lbs": 3.0,
-    "description": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner. Allies gain a +2 morale bonus on attack rolls, weapon damage rolls, and saving throws against mind-affecting effects as long as they are within 60 feet of the banner."
+    "description": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner. Allies gain a +2 morale bonus on attack rolls, weapon damage rolls, and saving throws against mind-affecting effects as long as they are within 60 feet of the banner.",
+    "key": "Hobgoblin Battle Standard of Ferocity",
+    "name": "Hobgoblin Battle Standard of Ferocity",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Racial.Hobgoblin"
+      },
+      {
+        "key": "COST",
+        "value": "60000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPROP",
+        "value": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner. Allies gain a +2 morale bonus on attack rolls, weapon damage rolls, and saving throws against mind-affecting effects as long as they are within 60 feet of the banner."
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 48,
-    "record_key": "Hobgoblin Battle Standard of Ferocity"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 48,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Hobgoblin Battle Standard of Ferocity",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

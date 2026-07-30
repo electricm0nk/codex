@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Rod (Maximize/Greater)",
     "category": "magic_items",
-    "name": "Rod",
     "cost_gp": 121500.0,
-    "weight_lbs": 5.0,
-    "description": "The wielder can cast up to three spells per day that are maximized as though using the Maximize Spell feat."
+    "description": "The wielder can cast up to three spells per day that are maximized as though using the Maximize Spell feat.",
+    "key": "Rod (Maximize/Greater)",
+    "name": "Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Maximize/Greater)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Metamagic Rod, Greater Maximize"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "121500"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Uses per Day / 3|CHARGES[3]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.485"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong (no school)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|60,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Rod, Maximize Spell feat"
+      },
+      {
+        "key": "DESC",
+        "value": "The wielder can cast up to three spells per day that are maximized as though using the Maximize Spell feat."
+      }
+    ],
+    "weight_lbs": 5.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 480,
-    "record_key": "Rod (Maximize/Greater)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 480,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Maximize/Greater)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

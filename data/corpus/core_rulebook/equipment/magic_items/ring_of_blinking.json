@@ -1,23 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Blinking",
     "category": "magic_items",
-    "name": "Ring of Blinking",
     "cost_gp": 27000.0,
-    "weight_lbs": null,
-    "description": "On command, this ring makes the wearer blink, as the blink spell."
+    "description": "On command, this ring makes the wearer blink, as the blink spell.",
+    "key": "Ring of Blinking",
+    "name": "Ring of Blinking",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Blinking"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Blinking"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "27000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.478"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring of Blinking|TIMES=ATWILL|CASTERLEVEL=7|Blink"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|13,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, blink"
+      },
+      {
+        "key": "DESC",
+        "value": "On command, this ring makes the wearer blink, as the blink spell."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 362,
-    "record_key": "Ring of Blinking"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 362,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Blinking",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Swordmaster's Flair (White Lace Kerchief)",
     "category": "MagicItems",
-    "name": "Swordmaster's Flair (White Lace Kerchief)",
     "cost_gp": 2500.0,
-    "weight": null,
-    "description": "when in off-hand, can spend 1 panache point to pinpoint an unseen adjacent enemy and gain benefits of Blind-Fight for 1 round; 1/day use without panache"
+    "description": "when in off-hand, can spend 1 panache point to pinpoint an unseen adjacent enemy and gain benefits of Blind-Fight for 1 round; 1/day use without panache",
+    "key": "Swordmaster's Flair (White Lace Kerchief)",
+    "name": "Swordmaster's Flair (White Lace Kerchief)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "when in off-hand, can spend 1 panache point to pinpoint an unseen adjacent enemy and gain benefits of Blind-Fight for 1 round; 1/day use without panache"
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 442,
-    "record_key": "Swordmaster's Flair (White Lace Kerchief)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 442,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Swordmaster's Flair (White Lace Kerchief)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

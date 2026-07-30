@@ -1,23 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Ring of Swarming Stabs",
     "category": "magic_items",
-    "name": "Ring of Swarming Stabs",
     "cost_gp": 6000.0,
-    "weight_lbs": null,
-    "description": "Twice per day, when the wearer is flanking an opponent, he can as a swift action deal an additional 1d6 points of sneak attack damage on a successful melee attack against that opponent."
+    "description": "Twice per day, when the wearer is flanking an opponent, he can as a swift action deal an additional 1d6 points of sneak attack damage on a successful melee attack against that opponent.",
+    "key": "Ring of Swarming Stabs",
+    "name": "Ring of Swarming Stabs",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "SPROP",
+        "value": "Twice per day, when the wearer is flanking an opponent, he can as a swift action deal an additional 1d6 points of sneak attack damage on a successful melee attack against that opponent."
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 74,
-    "record_key": "Ring of Swarming Stabs"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 74,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Ring of Swarming Stabs",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

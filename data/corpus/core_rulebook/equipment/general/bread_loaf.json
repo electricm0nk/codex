@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Bread (Loaf)",
     "category": "general",
-    "name": "Loaf of Bread",
     "cost_gp": 0.02,
-    "weight_lbs": 0.5,
-    "description": null
+    "description": null,
+    "key": "Bread (Loaf)",
+    "name": "Loaf of Bread",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bread (Loaf)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bread, Loaf"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Food.Resizable.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0.02"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ],
+    "weight_lbs": 0.5
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
-    "line": 270,
-    "record_key": "Bread (Loaf)"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 270,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Bread (Loaf)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  }
 }

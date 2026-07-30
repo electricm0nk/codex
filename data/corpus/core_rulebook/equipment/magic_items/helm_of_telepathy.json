@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Helm of Telepathy",
     "category": "magic_items",
-    "name": "Helm of Telepathy",
     "cost_gp": 27000.0,
-    "weight_lbs": 3.0,
-    "description": "This pale metal or ivory helm covers much of the head when worn. The wearer can use detect thoughts at will. Furthermore, he can send a telepathic message to anyone whose surface thoughts he is reading (allowing two-way communication). Once per day, the wearer of the helm can implant a suggestion (as the spell, Will DC 14 negates) along with his telepathic message."
+    "description": "This pale metal or ivory helm covers much of the head when worn. The wearer can use detect thoughts at will. Furthermore, he can send a telepathic message to anyone whose surface thoughts he is reading (allowing two-way communication). Once per day, the wearer of the helm can implant a suggestion (as the spell, Will DC 14 negates) along with his telepathic message.",
+    "key": "Helm of Telepathy",
+    "name": "Helm of Telepathy",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Helm of Telepathy"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Helm of Telepathy"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Head.Helm"
+      },
+      {
+        "key": "COST",
+        "value": "27000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.518"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Helm of Telepathy|TIMES=ATWILL|CASTERLEVEL=5|Detect Thoughts"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint divination and enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|head"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|13,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, detect thoughts, suggestion"
+      },
+      {
+        "key": "DESC",
+        "value": "This pale metal or ivory helm covers much of the head when worn. The wearer can use detect thoughts at will. Furthermore, he can send a telepathic message to anyone whose surface thoughts he is reading (allowing two-way communication). Once per day, the wearer of the helm can implant a suggestion (as the spell, Will DC 14 negates) along with his telepathic message."
+      }
+    ],
+    "weight_lbs": 3.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 210,
-    "record_key": "Helm of Telepathy"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 210,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Helm of Telepathy",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

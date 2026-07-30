@@ -1,23 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Material ~ Darkleaf Cloth ~ Armor / Light",
     "category": "equipmods",
-    "name": "Darkleaf Cloth",
     "cost_gp": 750.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Material ~ Darkleaf Cloth ~ Armor / Light",
+    "name": "Darkleaf Cloth",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-10"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Darkleaf Cloth ~ Armor / Light"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "750"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Darkleaf"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Light"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Material ~ Leather,Nonmetal"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
-    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7",
-    "line": 6,
-    "record_key": "Material ~ Darkleaf Cloth ~ Armor / Light"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Material ~ Darkleaf Cloth ~ Armor / Light",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  }
 }

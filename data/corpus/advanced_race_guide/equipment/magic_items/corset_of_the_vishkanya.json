@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
   "data": {
-    "key": "Corset of the Vishkanya",
     "category": "magic_items",
-    "name": "Corset of the Vishkanya",
     "cost_gp": 3000.0,
-    "weight_lbs": 1.0,
-    "description": "The wearer can compress herself to fit through tight spaces as though affected by a Squeeze spell for up to 10 rounds per day. While using the corset's magic, she gains a +5 bonus on Escape Artist checks."
+    "description": "The wearer can compress herself to fit through tight spaces as though affected by a Squeeze spell for up to 10 rounds per day. While using the corset's magic, she gains a +5 bonus on Escape Artist checks.",
+    "key": "Corset of the Vishkanya",
+    "name": "Corset of the Vishkanya",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Bodywear.Slot_Body"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wearer can compress herself to fit through tight spaces as though affected by a Squeeze spell for up to 10 rounds per day. While using the corset's magic, she gains a +5 bonus on Escape Artist checks."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Escape Artist|5"
+      }
+    ],
+    "weight_lbs": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
-    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17",
-    "line": 33,
-    "record_key": "Corset of the Vishkanya"
-  },
+  "ingested_at": "2026-07-27T21:26:32Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Corset of the Vishkanya",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
 }

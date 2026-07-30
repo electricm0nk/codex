@@ -1,23 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Figurine of Wondrous Power (Tin Imp)",
     "category": "MagicItems",
-    "name": "Figurine of Wondrous Power (Tin Imp)",
     "cost_gp": 13000.0,
-    "weight": 1.0,
-    "description": "can be used 48 hours per week but need not be continuous"
+    "description": "can be used 48 hours per week but need not be continuous",
+    "key": "Figurine of Wondrous Power (Tin Imp)",
+    "name": "Figurine of Wondrous Power (Tin Imp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Figurine of Wondrous Power, [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "13000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "SPROP",
+        "value": "can be used 48 hours per week but need not be continuous"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 443,
-    "record_key": "Figurine of Wondrous Power (Tin Imp)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 443,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Figurine of Wondrous Power (Tin Imp)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

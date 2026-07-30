@@ -1,23 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Cups of Rapport",
     "category": "MagicItems",
-    "name": "Cups of Rapport",
     "cost_gp": 8000.0,
-    "weight": 1.0,
-    "description": "master and mark cups; after 5 minutes of drinking, user of master cup gets +5 bonus on Bluff, Diplomacy, and Sense Motive against user of mark cup, bonus lasts 1 hour or until users move more than 15 feet away from each other"
+    "description": "master and mark cups; after 5 minutes of drinking, user of master cup gets +5 bonus on Bluff, Diplomacy, and Sense Motive against user of mark cup, bonus lasts 1 hour or until users move more than 15 feet away from each other",
+    "key": "Cups of Rapport",
+    "name": "Cups of Rapport",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPROP",
+        "value": "master and mark cups; after 5 minutes of drinking, user of master cup gets +5 bonus on Bluff, Diplomacy, and Sense Motive against user of mark cup, bonus lasts 1 hour or until users move more than 15 feet away from each other"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 362,
-    "record_key": "Cups of Rapport"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 362,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Cups of Rapport",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }

@@ -1,23 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Hand of the Mage",
     "category": "magic_items",
-    "name": "Hand of the Mage",
     "cost_gp": 900.0,
-    "weight_lbs": 2.0,
-    "description": "This mummified elf hand hangs by a golden chain around a character's neck (taking up space as a magic necklace would). It allows the wearer to utilize the spell mage hand at will."
+    "description": "This mummified elf hand hangs by a golden chain around a character's neck (taking up space as a magic necklace would). It allows the wearer to utilize the spell mage hand at will.",
+    "key": "Hand of the Mage",
+    "name": "Hand of the Mage",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hand of the Mage"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Hand of the Mage"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Neck"
+      },
+      {
+        "key": "COST",
+        "value": "900"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.516"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Hand of the Mage|TIMES=ATWILL|CASTERLEVEL=2|Mage Hand"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|2nd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|neck"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|450 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, mage hand"
+      },
+      {
+        "key": "DESC",
+        "value": "This mummified elf hand hangs by a golden chain around a character's neck (taking up space as a magic necklace would). It allows the wearer to utilize the spell mage hand at will."
+      }
+    ],
+    "weight_lbs": 2.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
-    "line": 183,
-    "record_key": "Hand of the Mage"
-  },
+  "ingested_at": "2026-07-22T23:36:36Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Hand of the Mage",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  }
 }

@@ -1,23 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Stalking Armor (Desert)",
     "category": "ArmsArmor",
-    "name": "Stalking Armor (Desert)",
     "cost_gp": 25.0,
-    "weight": 20.0,
-    "description": "+5 bonus on Stealth and Perception when in desert terrain"
+    "description": "+5 bonus on Stealth and Perception when in desert terrain",
+    "key": "Stalking Armor (Desert)",
+    "name": "Stalking Armor (Desert)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "3",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Studded Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Specific.Enhancement"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather|Material ~ Steel.Special Ability ~ Enhancement Cost|4400.Special Ability ~ +2 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "15"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 bonus on Stealth and Perception when in desert terrain"
+      }
+    ],
+    "weight": 20.0
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
-    "line": 247,
-    "record_key": "Stalking Armor (Desert)"
-  },
+  "ingested_at": "2026-07-23T00:03:45Z",
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 247,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Stalking Armor (Desert)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  }
 }
