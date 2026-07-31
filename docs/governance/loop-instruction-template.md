@@ -55,7 +55,11 @@ Standing policy (pulled from the operator's global model-selection tiering — s
   - Everything else (real implementation, TDD cycles, audits, remediation) → Sonnet.
 - **Concurrency shape:** decided explicitly per epic in §3 below, at authoring time — not derived live by whichever model launches the bundle.
 
-### 2.1 Execution boundary — the launching session is always the orchestrator, never the executor
+### 2.1 Agent environment setup
+
+Every dispatched agent should have `RETRO_ACTOR` set to its role name (e.g. `RETRO_ACTOR=apg-acg-feats`). Without this, the retrospective log's by-actor breakdown falls back to opaque worktree directory names, which become meaningless after the run ends. The `scripts/retro.py` tool resolves actor identity in this order: `--actor` flag → `$RETRO_ACTOR` → worktree name → git config. For per-role agents running in predictable worktrees, `RETRO_ACTOR` in the dispatch call preserves role identity for retrospective analysis.
+
+### 2.2 Execution boundary — the launching session is always the orchestrator, never the executor
 
 The session that plans, scopes, or launches a bundle is the orchestrator. §6's per-cycle procedure — steps 1 through 9, especially step 3 ("implement the criterion TDD-style") — describes what happens **inside a dispatched `agent()`/`Workflow` call**, never what the orchestrating session does with its own `Edit`/`Write`/`Bash` tool calls. This holds with no exceptions: not for a "quick" one-file fix, not mid-investigation when the context is already loaded, not because Plan Mode approval already authorized the underlying change (approval authorizes the *work*, not a shortcut around the *mechanism*).
 
@@ -95,7 +99,7 @@ On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 a
 
 ## 6. Per-cycle procedure
 
-**This procedure runs inside a dispatched `agent()`/`Workflow` call — see §2.1.** The orchestrating session never performs steps 1–9 itself with its own tool calls.
+**This procedure runs inside a dispatched `agent()`/`Workflow` call — see §2.2.** The orchestrating session never performs steps 1–9 itself with its own tool calls.
 
 1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase).
 2. `BASE_BRANCH=$(git merge-base HEAD origin/develop)` — define this before either grep block below, not between them.
@@ -118,7 +122,7 @@ On non-fast-forward rejection, repeat up to 5 times. If it still fails after 5 a
 5. Write the cycle receipt to `artifacts/<epic>/<cycle-id>_cycle_receipt.md` (schema in §7).
 6. Commit, then push via §5's retry protocol.
 7. Update the shared progress doc in place via §5's protocol.
-8. Mint the kanban card as a done-receipt, from inside this dispatched agent (per §2.1's corollary; per the bundle's assignee/daemon-hazard doctrine if one applies). `--board` is a global flag that must precede the subcommand: `hermes kanban --board <slug> create <title> ...`, then `hermes kanban --board <slug> complete <id>`.
+8. Mint the kanban card as a done-receipt, from inside this dispatched agent (per §2.2's corollary; per the bundle's assignee/daemon-hazard doctrine if one applies). `--board` is a global flag that must precede the subcommand: `hermes kanban --board <slug> create <title> ...`, then `hermes kanban --board <slug> complete <id>`.
 9. Report: criterion, files touched, commit SHA(s), dual-audit results, RED→GREEN evidence, receipt path, kanban card ID, discoveries, next-cycle plan.
 
 ## 7. Per-cycle receipt schema
