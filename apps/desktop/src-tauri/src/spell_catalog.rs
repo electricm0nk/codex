@@ -1,6 +1,16 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
-//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297)
-//! and `acg::spell_list` (144), 1093 in total.
+//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
+//! `acg::spell_list` (144) and `advanced_race_guide::spell_list` (92),
+//! 1185 in total.
+//!
+//! Pathfinder Unchained is deliberately absent, and that absence is real
+//! rather than an oversight: `pu_spells.lst` is 224 lines and every single
+//! one is a `#`-commented-out row, so the book defines no spell of its own
+//! and there is no `pathfinder_unchained::spell_list` module to chain.
+//! Re-verified against the raw corpus rather than taken from the ingest
+//! notes: `grep -v '^\s*#' pu_spells.lst | grep -vc '^\s*$'` returns 0.
+//! Inventing a PU spell surface here would mean serving records the corpus
+//! does not contain.
 //!
 //! This adapter previously served CRB alone. The APG and ACG tables were
 //! fully ingested — with school, level and real corpus spell text — but
@@ -37,22 +47,23 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::{acg, apg, crb};
+use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
 const BOOK_CRB: &str = "CRB";
 const BOOK_APG: &str = "APG";
 const BOOK_ACG: &str = "ACG";
+const BOOK_ARG: &str = "ARG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogEntryDto {
     /// The record's corpus identity — its `KEY:` token when the row
-    /// carries one, else its display name. Unique across all three books;
+    /// carries one, else its display name. Unique across all four books;
     /// see `tests/spell_cross_book_identity.rs`.
     pub key: String,
-    /// `"CRB"`, `"APG"` or `"ACG"`.
+    /// `"CRB"`, `"APG"`, `"ACG"` or `"ARG"`.
     pub book: String,
     /// The `Pf1SchoolId` variant name verbatim (e.g. "Abjuration"), or
     /// `None` for an APG record whose corpus row has no `SCHOOL:` token.
@@ -94,6 +105,20 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
     }
 }
 
+/// ARG's table types `school`, `level` and `description` non-optionally,
+/// exactly as CRB's and ACG's do, so like those two this map invents
+/// nothing by wrapping in `Some` — every ARG record genuinely carries all
+/// three (pinned by `crb_acg_and_arg_records_are_always_fully_populated`).
+fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ARG.to_string(),
+        school: Some(format!("{:?}", entry.school)),
+        level: Some(entry.level),
+        description: Some(entry.description.to_string()),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -109,6 +134,11 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
         .map(map_crb_entry)
         .chain(apg::spell_list::SPELL_LIST.iter().map(map_apg_entry))
         .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
+        .chain(
+            advanced_race_guide::spell_list::SPELL_LIST
+                .iter()
+                .map(map_arg_entry),
+        )
         .collect();
     SpellCatalogResponse { entries }
 }
@@ -134,7 +164,7 @@ pub struct SpellCatalogFilter {
     /// matches no school filter — it is genuinely unknown, so it is not
     /// swept into any school.
     pub school: Option<String>,
-    /// Exact match against `"CRB"`, `"APG"` or `"ACG"`.
+    /// Exact match against `"CRB"`, `"APG"`, `"ACG"` or `"ARG"`.
     pub book: Option<String>,
 }
 
@@ -190,10 +220,11 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1093);
+        assert_eq!(response.entries.len(), 1185);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
+        assert_eq!(book_entries(BOOK_ARG).len(), 92);
     }
 
     #[test]
@@ -219,7 +250,7 @@ mod tests {
     fn every_entry_has_a_non_empty_key_and_a_known_book() {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG].contains(&entry.book.as_str()));
+            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG].contains(&entry.book.as_str()));
         }
     }
 
@@ -234,10 +265,11 @@ mod tests {
     }
 
     #[test]
-    fn crb_and_acg_records_are_always_fully_populated() {
+    fn crb_acg_and_arg_records_are_always_fully_populated() {
         for entry in book_entries(BOOK_CRB)
             .iter()
             .chain(book_entries(BOOK_ACG).iter())
+            .chain(book_entries(BOOK_ARG).iter())
         {
             assert!(entry.school.is_some(), "{} has no school", entry.key);
             assert!(entry.level.is_some(), "{} has no level", entry.key);
@@ -310,7 +342,7 @@ mod tests {
             book: None,
         });
 
-        // Now spans all three books, so strictly more than CRB's own 87.
+        // Now spans all four books, so strictly more than CRB's own 87.
         assert!(response.entries.len() > 87);
         for entry in &response.entries {
             assert_eq!(entry.school.as_deref(), Some("Evocation"));
@@ -329,6 +361,76 @@ mod tests {
         for entry in &response.entries {
             assert_eq!(entry.book, BOOK_APG);
         }
+    }
+
+    #[test]
+    fn arg_school_counts_match_the_real_ingested_table() {
+        // Derived from `advanced_race_guide::spell_list::SPELL_LIST` as
+        // served by this adapter, not from any planning figure. The nine
+        // school variants sum to ARG's whole 92; `Universal` is absent
+        // from `arg_spells.lst` (the variant exists only for cross-book
+        // schema parity), so it is pinned at 0 rather than omitted.
+        let arg = book_entries(BOOK_ARG);
+        let counts = |school: &str| {
+            arg.iter()
+                .filter(|e| e.school.as_deref() == Some(school))
+                .count()
+        };
+        assert_eq!(counts("Abjuration"), 9);
+        assert_eq!(counts("Conjuration"), 10);
+        assert_eq!(counts("Divination"), 4);
+        assert_eq!(counts("Enchantment"), 8);
+        assert_eq!(counts("Evocation"), 8);
+        assert_eq!(counts("Illusion"), 9);
+        assert_eq!(counts("Necromancy"), 7);
+        assert_eq!(counts("Transmutation"), 37);
+        assert_eq!(counts("Universal"), 0);
+        assert_eq!(
+            counts("Abjuration")
+                + counts("Conjuration")
+                + counts("Divination")
+                + counts("Enchantment")
+                + counts("Evocation")
+                + counts("Illusion")
+                + counts("Necromancy")
+                + counts("Transmutation")
+                + counts("Universal"),
+            arg.len(),
+            "an ARG record landed outside the nine PF1 schools"
+        );
+    }
+
+    #[test]
+    fn filter_spell_catalog_narrows_to_arg() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: None,
+            school: None,
+            book: Some(BOOK_ARG.to_owned()),
+        });
+
+        assert_eq!(response.entries.len(), 92);
+        for entry in &response.entries {
+            assert_eq!(entry.book, BOOK_ARG);
+        }
+    }
+
+    #[test]
+    fn a_real_arg_spell_reaches_the_catalog_with_its_corpus_text() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Aboleth's Lung")
+            .expect("ARG's `Aboleth's Lung` record must reach the catalog");
+        assert_eq!(entry.book, BOOK_ARG);
+        assert_eq!(entry.school.as_deref(), Some("Transmutation"));
+        assert_eq!(entry.level, Some(2));
+        assert!(
+            entry
+                .description
+                .as_deref()
+                .is_some_and(|text| text.contains("breathe water")),
+            "the ARG record must carry its real corpus text, not a placeholder"
+        );
     }
 
     #[test]
