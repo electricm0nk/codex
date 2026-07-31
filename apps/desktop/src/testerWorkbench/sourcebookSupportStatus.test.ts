@@ -52,6 +52,31 @@ function verifiesEveryIngestedBookNamesItsRealContribution() {
   }
 }
 
+/**
+ * SD-27 landed the Bestiary 1 race catalog: `race_catalog.rs` now serves
+ * 11 Bestiary 1 races as 106 racial-default trait rows through
+ * `list_race_catalog`, and the Race Traits screen browses them. Its own
+ * test `every_book_code_is_a_declared_one_and_every_declared_code_is_present`
+ * pins the 106, and
+ * `catalog_serves_every_in_scope_race_with_its_real_default_trait_count`
+ * pins the 11. Until this row names them, the Support Debt panel tells a
+ * tester Bestiary 1 contributes equipment alone — an understatement of
+ * shipped, browsable content, which is the exact defect this module exists
+ * to prevent.
+ */
+function verifiesBestiary1NamesTheRacesItNowContributes() {
+  const b1 = INGESTED_SOURCEBOOKS.find((book) => book.name === 'Bestiary 1');
+  assert(b1 !== undefined, 'Bestiary 1 must be listed as ingested');
+  assert(
+    /\brace/i.test(b1!.contributes),
+    `Bestiary 1's races reach the Race Traits catalog, so its row must name them; it reads "${b1!.contributes}"`
+  );
+  assert(
+    b1!.contributes.includes('11') && b1!.contributes.includes('106'),
+    `Bestiary 1's row must carry the real derived counts (11 races, 106 racial trait rows); it reads "${b1!.contributes}"`
+  );
+}
+
 function verifiesOnlyBooksWithNoContentRemainNotStarted() {
   assertEqual(
     NOT_STARTED_SOURCEBOOKS.join(' | '),
@@ -81,6 +106,7 @@ function main() {
   verifiesNoIngestedBookIsListedAsNotStarted();
   verifiesTheApgAndAcgAreListedAsIngested();
   verifiesEveryIngestedBookNamesItsRealContribution();
+  verifiesBestiary1NamesTheRacesItNowContributes();
   verifiesOnlyBooksWithNoContentRemainNotStarted();
   verifiesRenderedRowsCoverBothListsExactly();
 }

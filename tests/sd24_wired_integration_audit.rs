@@ -224,6 +224,19 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
         trimmed.starts_with("//") || trimmed.starts_with("*") || trimmed.starts_with("/**")
     };
 
+    // Bucket E (SD-27 race ingestion): `src/bin/ingest_races.rs`'s handling of
+    // `SOURCEPAGE:p.xx` — the literal string PCGen leaves on the race chassis
+    // rows where a real page citation belongs (`decisions.md` §25). Like
+    // bucket D this is the *opposite* of the forbidden pattern: the ingest
+    // detects that upstream placeholder and refuses to store it as a citation,
+    // and these three lines are its tally `println!` and two assertion
+    // messages proving it never leaks. Scoped by path *and* by the
+    // distinctive `p.xx` literal, so an ordinary "placeholder" stub marker in
+    // this same file still fails.
+    let is_pcgen_pxx_source_page_token = |line: &str| {
+        line.starts_with("src/bin/ingest_races.rs:") && line.contains("p.xx")
+    };
+
     let unexplained: Vec<&String> = hits
         .iter()
         .filter(|line| {
@@ -231,6 +244,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
                 && !is_documented_deferred_finding(line)
                 && !is_reviewed_comment_prose(line)
                 && !is_anti_fabrication_explanation_text(line)
+                && !is_pcgen_pxx_source_page_token(line)
         })
         .collect();
 

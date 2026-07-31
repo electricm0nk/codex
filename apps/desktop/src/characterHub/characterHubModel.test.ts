@@ -1,8 +1,11 @@
 import {
   CLASS_OPTIONS,
   MAX_CLASS_LEVEL,
+  RACE_OPTIONS,
+  UNKNOWN_RACE_TRAIT,
   canTakeAnotherLevelIn,
   clampLevelForClass,
+  deriveRaceTraits,
   describeClassSupportLevel,
   getLevelOptionsForClass,
 } from './characterHubModel';
@@ -106,7 +109,58 @@ const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
   'class:warpriest': 8,
 };
 
+/**
+ * The Character Sheet prints Vision and Size under the fixed caption
+ * "Vision and Size are calculated from race and aren't editable". It used to
+ * read them as `race?.size ?? 'Medium'` / `race?.vision ?? 'Normal'` against
+ * `RACE_OPTIONS`, which carries only the 7 Core Rulebook races. Any saved
+ * character whose `raceId` is outside that list — a clone, a sheet written
+ * by a later build, or any race added once SD-27 widens coverage past the
+ * CRB 7 — therefore had "Medium" and "Normal" asserted for it as a
+ * calculated result. For a kobold or a svirfneblin (both Small, both with
+ * darkvision) that is a wrong rules value presented as a derived one.
+ *
+ * `deriveRaceTraits` must instead say it does not know.
+ */
+function verifiesKnownRacesStillReportTheirRealSizeAndVision() {
+  for (const option of RACE_OPTIONS) {
+    const traits = deriveRaceTraits(option.id);
+    assertEqual(traits.size, option.size, `${option.label} keeps its real size`);
+    assertEqual(traits.vision, option.vision, `${option.label} keeps its real vision`);
+  }
+}
+
+function verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision() {
+  // Bestiary 1 races SD-27 brings into the race catalog. Neither is Medium
+  // and neither has normal vision, so the old defaults were not merely
+  // vague — they were wrong.
+  for (const raceId of ['race:kobold', 'race:svirfneblin', 'race:tengu']) {
+    const traits = deriveRaceTraits(raceId);
+    assertEqual(traits.size, UNKNOWN_RACE_TRAIT, `${raceId} reports an unknown size rather than "Medium"`);
+    assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, `${raceId} reports unknown vision rather than "Normal"`);
+  }
+}
+
+function verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted() {
+  for (const raceId of [null, undefined, '']) {
+    const traits = deriveRaceTraits(raceId);
+    assertEqual(traits.size, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no size');
+    assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no vision');
+  }
+}
+
+function verifiesTheUnknownMarkerIsNotItselfARulesValue() {
+  const sizes = new Set(RACE_OPTIONS.map((option) => option.size));
+  const visions = new Set(RACE_OPTIONS.map((option) => option.vision));
+  assert(!sizes.has(UNKNOWN_RACE_TRAIT as never), 'the unknown marker is not a real PF1 size');
+  assert(!visions.has(UNKNOWN_RACE_TRAIT), 'the unknown marker is not a real PF1 vision string');
+}
+
 async function main() {
+  verifiesKnownRacesStillReportTheirRealSizeAndVision();
+  verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision();
+  verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted();
+  verifiesTheUnknownMarkerIsNotItselfARulesValue();
   verifiesEveryEngineComputedClassOffersAllTwentyLevels();
   verifiesEveryEngineComputedClassIsActuallyOffered();
   verifiesEveryOfferedClassCarriesItsCorpusHitDie();

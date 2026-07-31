@@ -8,27 +8,83 @@ const panel: CSSProperties = {
   borderRadius: 10,
 };
 
-/** Races in the same "corpus-natural order" the SD-19 loop uses. */
-const RACE_ORDER = ['Human', 'Dwarf', 'Elf', 'Gnome', 'HalfElf', 'HalfOrc', 'Halfling'] as const;
-
-const RACE_LABELS: Record<string, string> = {
-  Human: 'Human',
-  Dwarf: 'Dwarf',
-  Elf: 'Elf',
-  Gnome: 'Gnome',
+/**
+ * Display labels for `RaceId` variant names whose variant spelling is not
+ * the name a player reads. Only the two hyphenated CRB races qualify: every
+ * other variant name the adapter emits (`Dwarf`, `Svirfneblin`, `Tengu`, …)
+ * is already its own display name.
+ *
+ * Deliberately an *override* map rather than a roster. The screen used to
+ * carry a seven-entry `RACE_ORDER` list and a matching label table, so any
+ * race the adapter started serving beyond those seven would have had no
+ * filter button at all — the same defect that left 204 of 690 feat rows
+ * under raw wire codes in the item picker. Anything not listed here falls
+ * back to its raw variant name, which is visible and plain, never invented.
+ */
+export const RACE_LABEL_OVERRIDES: Record<string, string> = {
   HalfElf: 'Half-Elf',
   HalfOrc: 'Half-Orc',
-  Halfling: 'Halfling',
 };
+
+export function raceLabel(raceId: string): string {
+  return RACE_LABEL_OVERRIDES[raceId] ?? raceId;
+}
+
+export interface RaceFacet {
+  raceId: string;
+  label: string;
+  count: number;
+}
+
+/**
+ * One filter facet per race the adapter actually served, in the order the
+ * rows arrived (`race_traits()` groups its rows by race, so this is the
+ * catalog's own corpus-natural order rather than a frontend opinion).
+ */
+export function deriveRaceFacets(entries: readonly RaceCatalogEntryDto[]): RaceFacet[] {
+  const facets: RaceFacet[] = [];
+  const byRaceId = new Map<string, RaceFacet>();
+  for (const entry of entries) {
+    const existing = byRaceId.get(entry.raceId);
+    if (existing) {
+      existing.count += 1;
+      continue;
+    }
+    const facet: RaceFacet = { raceId: entry.raceId, label: raceLabel(entry.raceId), count: 1 };
+    byRaceId.set(entry.raceId, facet);
+    facets.push(facet);
+  }
+  return facets;
+}
+
+/**
+ * The screen's one-line description of its own contents, derived from the
+ * loaded rows. It counts rows and races only. `RaceCatalogEntryDto.book`
+ * does carry each row's real sourcebook, so a book breakdown here would be
+ * derivable rather than invented — it is simply not built yet, and the
+ * sentence deliberately claims nothing about books rather than pinning a
+ * roster the way the old "all 7 CRB races" wording did.
+ */
+export function describeRaceCatalog(entries: readonly RaceCatalogEntryDto[]): string {
+  const rowCount = entries.length;
+  const raceCount = new Set(entries.map((entry) => entry.raceId)).size;
+  const rowWord = rowCount === 1 ? 'trait row' : 'trait rows';
+  const raceWord = raceCount === 1 ? 'race' : 'races';
+  return `${rowCount} ${rowWord} across ${raceCount} ${raceWord}`;
+}
 
 const MAX_RENDERED_ROWS = 200;
 
 /**
- * Full race trait catalog browser — every real corpus-grounded trait row
- * across all 7 CRB races (49 trait rows: ability modifiers/bonus, size,
- * speed, senses, and each race's named special traits), not a per-character
- * sample. Distinct from the Character Sheet, which only shows one
- * character's own chosen race.
+ * Full race trait catalog browser — every real corpus-grounded trait row the
+ * adapter serves (ability modifiers/bonus, size, speed, senses, and each
+ * race's named special traits), not a per-character sample. Distinct from
+ * the Character Sheet, which only shows one character's own chosen race.
+ *
+ * The race list, the per-race counts and the summary line are all derived
+ * from the rows that actually loaded, so the screen cannot claim a race or a
+ * count the data does not back — the same rule `EquipmentCatalogScreen`
+ * already follows for books and categories.
  */
 export function RaceCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<RaceCatalogEntryDto[] | null>(null);
@@ -44,13 +100,7 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
       });
   }, []);
 
-  const raceCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const entry of entries ?? []) {
-      counts[entry.raceId] = (counts[entry.raceId] ?? 0) + 1;
-    }
-    return counts;
-  }, [entries]);
+  const facets = useMemo(() => deriveRaceFacets(entries ?? []), [entries]);
 
   const filtered = useMemo(() => {
     if (!entries) return [];
@@ -89,8 +139,8 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real corpus-grounded racial trait the engine knows about — {totalCount} trait rows across all 7
-            CRB races. Not what any one character has selected.
+            Every real corpus-grounded racial trait the engine knows about — {describeRaceCatalog(entries)}. Not
+            what any one character has selected.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -101,14 +151,14 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
             >
               All ({totalCount})
             </button>
-            {RACE_ORDER.map((race) => (
+            {facets.map((facet) => (
               <button
-                key={race}
+                key={facet.raceId}
                 type="button"
-                onClick={() => setRaceId(race)}
-                style={raceButtonStyle(raceId === race)}
+                onClick={() => setRaceId(facet.raceId)}
+                style={raceButtonStyle(raceId === facet.raceId)}
               >
-                {RACE_LABELS[race]} ({raceCounts[race] ?? 0})
+                {facet.label} ({facet.count})
               </button>
             ))}
           </div>
@@ -150,7 +200,7 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
                   <span>
                     <span style={{ fontWeight: 700 }}>{entry.traitName}</span>
                     <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                      {RACE_LABELS[entry.raceId] ?? entry.raceId}
+                      {raceLabel(entry.raceId)}
                     </span>
                   </span>
                   {entry.value !== 0 ? (

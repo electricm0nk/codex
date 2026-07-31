@@ -137,6 +137,36 @@ export const RACE_OPTIONS: RaceOption[] = [
 ];
 
 /**
+ * What the sheet prints for a race-derived field it has no profile for.
+ *
+ * Not a PF1 value, and deliberately not a plausible one. The Character
+ * Sheet's Details panel tells the player "Vision and Size are calculated
+ * from race", so anything printed there is read as a derived rules fact.
+ * `RACE_OPTIONS` covers the 7 Core Rulebook races; a saved character with
+ * any other `raceId` — a sheet from a later build, or any race added as the
+ * catalog widens past the CRB 7 — must not be handed "Medium"/"Normal" as
+ * though they had been calculated.
+ */
+export const UNKNOWN_RACE_TRAIT = 'Unknown';
+
+export interface RaceDerivedTraits {
+  size: string;
+  vision: string;
+}
+
+/**
+ * Size and vision for a saved character's `raceId`, or `UNKNOWN_RACE_TRAIT`
+ * for each when this build carries no profile for that race. Never guesses.
+ */
+export function deriveRaceTraits(raceId: string | null | undefined): RaceDerivedTraits {
+  const race = RACE_OPTIONS.find((option) => option.id === raceId);
+  if (!race) {
+    return { size: UNKNOWN_RACE_TRAIT, vision: UNKNOWN_RACE_TRAIT };
+  }
+  return { size: race.size, vision: race.vision };
+}
+
+/**
  * `full` — reaches `Computed` for any race in `RACE_OPTIONS`.
  * `partial-human-only` — reaches `Computed` for `race:human` only; every
  * other race falls back to the same 4 generic diagnostics as a `none`

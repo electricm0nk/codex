@@ -19,7 +19,10 @@
 //! resolver's own no-alternates-selected resolution, not a re-implementation
 //! of its protocol here.
 //!
-//! ARG's 156 *alternate* racial traits are deliberately **not** rows. An
+//! ARG's 153 *alternate* racial traits are deliberately **not** rows (156 is
+//! its corpus record count; 153 of those classify as `Alternate`, as
+//! `arg_contributes_no_rows_but_its_alternates_are_loaded_and_counted`
+//! derives). An
 //! alternate is a selection that replaces named standard traits
 //! (`decisions.md §26`); rendered as a flat catalog row next to the trait it
 //! replaces it would read as a trait the race additionally has — e.g. Dwarf

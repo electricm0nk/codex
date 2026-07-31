@@ -71,7 +71,7 @@ import {
   type LevelEntry,
   type WeaponProficiency,
 } from './characterProgression';
-import { AGE_OPTIONS, ALIGNMENT_OPTIONS, RACE_OPTIONS } from './characterHubModel';
+import { AGE_OPTIONS, ALIGNMENT_OPTIONS, deriveRaceTraits } from './characterHubModel';
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
@@ -615,8 +615,9 @@ function DetailsPanel(props: {
         <CalculatedBioField label="Size" value={props.size} />
       </div>
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
-        Vision and Size are calculated from race and aren't editable. The other fields save automatically
-        when you leave the field.
+        Vision and Size are calculated from race and aren't editable — a race this build has no profile for
+        reads "Unknown" rather than a guessed value. The other fields save automatically when you leave the
+        field.
       </p>
     </div>
   );
@@ -2533,9 +2534,11 @@ export function CharacterSheet(props: {
   const currentBenefits = buildLevelEntries(heldClasses);
   const nextBenefits = buildNextEntries(heldClasses);
 
-  const race = RACE_OPTIONS.find((entry) => entry.id === props.detail?.summary.raceId);
-  const size = race?.size ?? 'Medium';
-  const vision = race?.vision ?? 'Normal';
+  // A race this build carries no profile for reports `Unknown` for both,
+  // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
+  // captions these as calculated from race, so a guess reads as a rules
+  // fact. See `deriveRaceTraits`.
+  const { size, vision } = deriveRaceTraits(props.detail?.summary.raceId);
   const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
   const hp = maxHitPoints(heldClasses, abilities.constitution);
   const cmb = baseAttackBonus + abilities.strength;
