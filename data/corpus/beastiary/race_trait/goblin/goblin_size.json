@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Goblin ~ Size",
+    "name": "Small",
+    "race_key": "Goblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Goblin Racial Trait",
+      "Goblin Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Goblin_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Goblins are Small and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, and a +4 size bonus on Stealth checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Goblin ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Goblin Racial Trait.Goblin Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Goblin_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Goblins are Small and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, and a +4 size bonus on Stealth checks."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_race.lst",
+    "sha256": "d06f0378d15b44dbd07d7b6cd1e566dc98a7acaeb4997f0fe1218bda7d4c7402",
+    "line": 16,
+    "record_key": "Goblin ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

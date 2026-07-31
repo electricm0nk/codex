@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Orc ~ Ability Scores",
+    "name": "+4 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "Orc Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Orc_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Orcs are brutal and savage.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.Orc Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Orc_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs are brutal and savage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR",
+          "4",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT,WIS,CHA",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_abilities_race.lst",
+    "sha256": "9dc0958a94afe60d800eda483674be0837856c6f62556e53291454d690863ab5",
+    "line": 14,
+    "record_key": "Orc ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Drow ~ Vision",
+    "name": "Darkvision",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "Drow Racial Default",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Drow_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "Drow can see in the dark up to 120 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.Drow Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Drow_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Drow can see in the dark up to 120 feet."
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (120)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_race.lst",
+    "sha256": "c7e61fc9b3213d4d6c074685d5e9e4876ed2dce76f4d225ff23f76224027cc8f",
+    "line": 18,
+    "record_key": "Drow ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

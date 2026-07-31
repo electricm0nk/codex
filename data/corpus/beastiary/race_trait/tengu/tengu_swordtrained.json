@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tengu ~ Swordtrained",
+    "name": "Swordtrained",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "Tengu Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tengu_ReplaceSwordtrained",
+    "sets_replace_flags": [],
+    "description": "Tengus are automatically proficient with swordlike weapons (including bastard swords, daggers, elven curve blades, falchions, greatswords, kukris, longswords, punching daggers, rapiers, scimitars, short swords, and two-bladed swords).",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Swordtrained"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.Tengu Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tengu_ReplaceSwordtrained=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tengus are automatically proficient with swordlike weapons (including bastard swords, daggers, elven curve blades, falchions, greatswords, kukris, longswords, punching daggers, rapiers, scimitars, short swords, and two-bladed swords)."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|TYPE=Sword|TYPE=SwordLike|TYPE=Tengu"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "BastardSwordExoticUse,KatanaExoticUse",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_race.lst",
+    "sha256": "96ecac0ad8fd92fc4bc2b89e0cb1e4bee96de0f78b6ebf8ce4d7464d34f92dfd",
+    "line": 21,
+    "record_key": "Tengu ~ Swordtrained"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

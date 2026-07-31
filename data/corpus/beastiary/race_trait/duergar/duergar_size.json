@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Duergar ~ Size",
+    "name": "Medium",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "Duergar Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Duergar_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Duergar are Medium creatures and have no bonuses or penalties due to their size.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.Duergar Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Duergar_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar are Medium creatures and have no bonuses or penalties due to their size."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_race.lst",
+    "sha256": "7a492c53ce8b6c58373d1a0f1901123598f3b1e6bc86ed60ee7d66cd052a2b41",
+    "line": 16,
+    "record_key": "Duergar ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tengu ~ Ability Scores",
+    "name": "+2 Dexterity, +2 Wisdom, -2 Constitution",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "Tengu Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tengu_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Tengus are fast and observant, but relatively fragile.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.Tengu Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tengu_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tengus are fast and observant, but relatively fragile."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "DEX,WIS",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "CON",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_race.lst",
+    "sha256": "96ecac0ad8fd92fc4bc2b89e0cb1e4bee96de0f78b6ebf8ce4d7464d34f92dfd",
+    "line": 14,
+    "record_key": "Tengu ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

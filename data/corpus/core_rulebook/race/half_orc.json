@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Half-Orc",
+    "name": "Half-Orc",
+    "base_size": "M",
+    "base_move_walk": 30,
+    "race_type": "Humanoid",
+    "type_tokens": [
+      "Humanoid",
+      "Base",
+      "PC"
+    ],
+    "legs": 2,
+    "hands": 2,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "RACE|Human|Orc"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Half-Orc"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid.Base.PC"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Orc|Human"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_races.lst",
+    "sha256": "7e507ca945669f0801a89665f72fca399bd76ccac6568318eaf7a3b6bf072fd4",
+    "line": 6,
+    "record_key": "Half-Orc"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

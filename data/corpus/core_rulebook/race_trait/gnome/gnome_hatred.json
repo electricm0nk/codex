@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Gnome ~ Hatred",
+    "name": "Hatred",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "Gnome Racial Default",
+      "SpecialAttack",
+      "Special Attack"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gnome_ReplaceHatred",
+    "sets_replace_flags": [],
+    "description": "Gnomes receive a +%1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.|Gnome_Hatred_AttackBonus",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Hatred"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.Gnome Racial Default.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gnome_ReplaceHatred=true"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Gnome_Hatred_AttackBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes receive a +%1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.|Gnome_Hatred_AttackBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.|Gnome_Hatred_AttackBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+%1 on attack rolls against goblinoid and reptilian humanoids|Gnome_Hatred_AttackBonus"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Gnome_Hatred_AttackBonus",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f",
+    "line": 24,
+    "record_key": "Gnome ~ Hatred"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
