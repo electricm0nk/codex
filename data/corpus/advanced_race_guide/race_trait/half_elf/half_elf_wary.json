@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Half-Elf ~ Wary",
+    "name": "Wary",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceKeenSenses"
+    ],
+    "description": "Many half-elves have spent their long lives moving from place to place, often driven out by the hostility of others. Such experiences have made them wary of others' motivations. Half-elves with this trait gain a +1 racial bonus on Sense Motive and Bluff checks. This racial trait replaces the keen senses racial trait.",
+    "source_page": "p.42",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Wary"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Wary],[!PREABILITY:1,CATEGORY=Special Ability,HalfElf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many half-elves have spent their long lives moving from place to place, often driven out by the hostility of others. Such experiences have made them wary of others' motivations. Half-elves with this trait gain a +1 racial bonus on Sense Motive and Bluff checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the keen senses racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Wary"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Sense Motive,Bluff",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 161,
+    "record_key": "Half-Elf ~ Wary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

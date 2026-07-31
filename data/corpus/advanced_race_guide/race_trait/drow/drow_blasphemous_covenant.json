@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Drow ~ Blasphemous Covenant",
+    "name": "Blasphemous Covenant",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Drow_ReplaceKeenSenses",
+      "Drow_ReplacePoisonUse"
+    ],
+    "description": "Since their twisted beginnings, the drow have consorted with demons. Some drow have strong ties with these creatures and may call upon ancient and obscene associations to sway demonic cooperation. Drow with this racial trait gain a +2 bonus on Diplomacy checks made against unbound creatures with the demon subtype. Furthermore, demons conjured with any summon spell gain +2 hit points per Hit Die. Lastly, the cost of bribes or offerings for any planar ally spell cast by these drow to summon a demon is reduced by 20%%. This racial trait replaces keen senses and poison use.",
+    "source_page": "p.102",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Blasphemous Covenant"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Drow ~ Blasphemous Covenant],[!PREFACT:1,ABILITIES,Drow_ReplaceKeenSenses=True,Drow_ReplacePoisonUse=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Since their twisted beginnings, the drow have consorted with demons. Some drow have strong ties with these creatures and may call upon ancient and obscene associations to sway demonic cooperation. Drow with this racial trait gain a +2 bonus on Diplomacy checks made against unbound creatures with the demon subtype. Furthermore, demons conjured with any summon spell gain +2 hit points per Hit Die. Lastly, the cost of bribes or offerings for any planar ally spell cast by these drow to summon a demon is reduced by 20%%."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and poison use.|!PREABILITY:1,CATEGORY=Special Ability,Drow ~ Blasphemous Covenant"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 bonus on Diplomacy checks made against unbound creatures with the demon subtype."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Demons conjured with any summon spell gain +2 hit points per Hit Die."
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceKeenSenses|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplacePoisonUse|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 426,
+    "record_key": "Drow ~ Blasphemous Covenant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Gnome ~ Pyromaniac",
+    "name": "Pyromaniac",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceGnomeMagic",
+      "Gnome_ReplaceIllusionResistance"
+    ],
+    "description": "Gnomes with this racial trait are treated as one level higher when casting spells with the fire descriptor, using granted powers of the Fire domain, using the bloodline powers of the fire elemental bloodline or the revelations of the oracle's flame mystery, and determining the damage of alchemist bombs that deal fire damage (this ability does not give gnomes early access to level-based powers; it only affects the powers they could use without this ability). Gnomes with Charisma scores of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, flare, prestidigitation, produce flame. The caster level for these effects is equal to the gnome's level; the DCs are Charisma-based. This racial trait replaces gnome magic and illusion resistance.",
+    "source_page": "p.33",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Pyromaniac"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Pyromaniac],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes with this racial trait are treated as one level higher when casting spells with the fire descriptor, using granted powers of the Fire domain, using the bloodline powers of the fire elemental bloodline or the revelations of the oracle's flame mystery, and determining the damage of alchemist bombs that deal fire damage (this ability does not give gnomes early access to level-based powers; it only affects the powers they could use without this ability). Gnomes with Charisma scores of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, flare, prestidigitation, produce flame. The caster level for these effects is equal to the gnome's level; the DCs are Charisma-based."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces gnome magic and illusion resistance.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Pyromaniac"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Dancing Lights|Racial SLA ~ Flare|Racial SLA ~ Prestidigitation|Racial SLA ~ Produce Flame|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceGnomeMagic|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceIllusionResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Fire",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Sorcerer_Elemental_BloodlineLVL",
+          "1",
+          "PREABILITY:1,CATEGORY=Special Ability,Sorcerer Elemental Bloodline (Fire)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "OracleMysteryLevel",
+          "1",
+          "PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Flame Mystery"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 131,
+    "record_key": "Gnome ~ Pyromaniac"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

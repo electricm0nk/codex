@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Gnome ~ Eternal Hope",
+    "name": "Eternal Hope",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceDefensiveTraining",
+      "Gnome_ReplaceHatred"
+    ],
+    "description": "Gnomes rarely lose hope and are always confident that even hopeless situations will work out. Gnomes with this racial trait receive a +2 racial bonus on saving throws against fear and despair effects. Once per day, after rolling a 1 on a d20, the gnome may reroll and use the second result. This racial trait replaces defensive training and hatred.",
+    "source_page": "p.32",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Eternal Hope"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Eternal Hope],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes rarely lose hope and are always confident that even hopeless situations will work out. Gnomes with this racial trait receive a +2 racial bonus on saving throws against fear and despair effects. Once per day, after rolling a 1 on a d20, the gnome may reroll and use the second result."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training and hatred.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Eternal Hope"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Once per day, after rolling a 1 on a d20, you may reroll and use the second result."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against fear and despair effects."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Despair,SaveBonus_vs_Fear",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 124,
+    "record_key": "Gnome ~ Eternal Hope"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

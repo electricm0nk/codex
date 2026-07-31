@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Half-Orc ~ Shaman's Apprentice",
+    "name": "Shaman's Apprentice",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceIntimidating"
+    ],
+    "description": "Only the most stalwart survive the years of harsh treatment that an apprenticeship to an orc shaman entails. Half-orcs with this trait gain Endurance as a bonus feat. This racial trait replaces the intimidating trait.",
+    "source_page": "p.52",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Shaman's Apprentice"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Shaman's Apprentice],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceIntimidating=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Only the most stalwart survive the years of harsh treatment that an apprenticeship to an orc shaman entails. Half-orcs with this trait gain Endurance as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the intimidating trait.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Shaman's Apprentice"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Endurance"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 204,
+    "record_key": "Half-Orc ~ Shaman's Apprentice"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

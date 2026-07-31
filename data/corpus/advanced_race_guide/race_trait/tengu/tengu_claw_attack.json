@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Tengu ~ Claw Attack",
+    "name": "Claw Attack",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tengu_ReplaceSwordtrained"
+    ],
+    "description": "Tengus with this racial trait have learned to use their claws as natural weapons. They gain two claw attacks as primary natural attacks that deal 1d3 points of damage, and are treated as having the Improved Unarmed Strike feat for the purpose of qualifying for other feats. This racial trait replaces swordtrained.",
+    "source_page": "p.163",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Claw Attack"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Claw Attack],[!PREFACT:1,ABILITIES,Tengu_ReplaceSwordtrained=True]"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Feat|Improved Unarmed Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "Tengus with this racial trait have learned to use their claws as natural weapons. They gain two claw attacks as primary natural attacks that deal 1d3 points of damage, and are treated as having the Improved Unarmed Strike feat for the purpose of qualifying for other feats."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces swordtrained.|!PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Claw Attack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "FACT",
+        "value": "Tengu_ReplaceSwordtrained|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPONPROF=Claw",
+          "DAMAGESIZE",
+          "-1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 717,
+    "record_key": "Tengu ~ Claw Attack"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

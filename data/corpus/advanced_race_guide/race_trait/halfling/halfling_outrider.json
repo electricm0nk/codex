@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Halfling ~ Outrider",
+    "name": "Outrider",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceSureFooted"
+    ],
+    "description": "Some halflings specialize in mounted combat. Halflings with this racial trait gain a +2 bonus on Handle Animal and Ride checks. This racial trait replaces sure-footed.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Outrider"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Outrider],[!PREFACT:1,ABILITIES,Halfling_ReplaceSureFooted=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some halflings specialize in mounted combat. Halflings with this racial trait gain a +2 bonus on Handle Animal and Ride checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sure-footed.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Outrider"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceSureFooted|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Handle Animal,Ride",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 232,
+    "record_key": "Halfling ~ Outrider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

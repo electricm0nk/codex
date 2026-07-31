@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Halfling ~ Adaptable Luck",
+    "name": "Adaptable Luck",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceHalflingLuck"
+    ],
+    "description": "Some halflings have greater control over their innate luck. This ability gives them more options for how they can apply their good fortune from day to day, but also narrows its scope. Three %1 times per day, a halfling can gain a +%1 luck bonus on an ability check, attack roll, saving throw, or skill check. If halflings choose to use the ability before they make the roll or check, they gain the full +%1 bonus; if they choose to do so afterward, they only gain a +%2 bonus. Using adaptive luck in this way is not an action. This racial trait replaces halfling luck.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Adaptable Luck"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck],[!PREFACT:1,ABILITIES,Halfling_ReplaceHalflingLuck=true]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Halfling_AdaptableLuck_Times|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Halfling_AdaptableLuck_Bonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Some halflings have greater control over their innate luck. This ability gives them more options for how they can apply their good fortune from day to day, but also narrows its scope."
+      },
+      {
+        "key": "DESC",
+        "value": "Three|PREVARLTEQ:Halfling_AdaptableLuck_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "%1|Halfling_AdaptableLuck_Times|PREVARGTEQ:Halfling_AdaptableLuck_Times,4"
+      },
+      {
+        "key": "DESC",
+        "value": "times per day, a halfling can gain a +%1 luck bonus on an ability check, attack roll, saving throw, or skill check. If halflings choose to use the ability before they make the roll or check, they gain the full +%1 bonus; if they choose to do so afterward, they only gain a +%2 bonus. Using adaptive luck in this way is not an action.|Halfling_AdaptableLuck_Bonus|Halfling_AdaptableLuck_Bonus-1"
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces halfling luck.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|Halfling_AdaptableLuck_Times"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceHalflingLuck|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Halfling_AdaptableLuck_Times",
+          "3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Halfling_AdaptableLuck_Bonus",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 227,
+    "record_key": "Halfling ~ Adaptable Luck"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Feral ~ Languages",
+    "name": "Languages",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Feral orcs begin play speaking no languages. Orcs with high Intelligence scores can choose from among the following bonus languages: Dwarven, Giant, Gnoll, Goblin, Undercommon.",
+    "source_page": "p.138",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Feral ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Feral orcs begin play speaking no languages. Orcs with high Intelligence scores can choose from among the following bonus languages: Dwarven, Giant, Gnoll, Goblin, Undercommon."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Common|Bonus Language ~ Dwarven|Bonus Language ~ Giant|Bonus Language ~ Gnoll|Bonus Language ~ Goblin|Bonus Language ~ Orc|Bonus Language ~ Undercommon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 606,
+    "record_key": "Feral ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

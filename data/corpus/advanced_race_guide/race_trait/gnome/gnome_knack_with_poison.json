@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Gnome ~ Knack With Poison",
+    "name": "Knack With Poison",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceObsessive",
+      "Gnome_ReplaceIllusionResistance"
+    ],
+    "description": "Some gnomes have an instinctive understanding of poisons and their uses. Gnomes gain a +2 racial bonus on Fortitude saves against poison and a +2 bonus on Craft (alchemy) checks to make poison. The bonus on Fortitude saving throws against poisons increases to +4 if the gnome accidentally poisons himself when applying or readying the substance. This racial trait replaces illusion resistance and obsessive.",
+    "source_page": "p.32",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Knack With Poison"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Knack With Poison],[!PREFACT:1,ABILITIES,Gnome_ReplaceObsessive=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes have an instinctive understanding of poisons and their uses. Gnomes gain a +2 racial bonus on Fortitude saves against poison and a +2 bonus on Craft (alchemy) checks to make poison. The bonus on Fortitude saving throws against poisons increases to +4 if the gnome accidentally poisons himself when applying or readying the substance."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces illusion resistance and obsessive.|PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Knack With Poison"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on Fortitude saves against poison."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceObsessive|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceIllusionResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Craft (Alchemy)=to make poison",
+          "2",
+          "Type=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FortSave_vs_Poison",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 128,
+    "record_key": "Gnome ~ Knack With Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Drow ~ Surface Infiltrator",
+    "name": "Surface Infiltrator",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Drow_ReplaceVision",
+      "Drow_ReplaceLightBlindness"
+    ],
+    "description": "Some drow dwell close to the surface lands, either because they serve drow causes or they were exiled. Drow with this racial trait gain low-light vision, allowing them to see twice as far as humans in conditions of dim light. This racial trait replaces the darkvision and light blindness racial traits.",
+    "source_page": "p.103",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Surface Infiltrator"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Drow ~ Surface Infiltrator],[!PREFACT:1,ABILITIES,Drow_ReplaceVision=True,Drow_ReplaceLightBlindness=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some drow dwell close to the surface lands, either because they serve drow causes or they were exiled. Drow with this racial trait gain low-light vision, allowing them to see twice as far as humans in conditions of dim light."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the darkvision and light blindness racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Drow ~ Surface Infiltrator"
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceVision|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceLightBlindness|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 429,
+    "record_key": "Drow ~ Surface Infiltrator"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Hobgoblin ~ Slave Hunter",
+    "name": "Slave Hunter",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Hobgoblin_ReplaceSneaky"
+    ],
+    "description": "Hobgoblin slavers excel at tracking down runaway slaves and surviving in filthy conditions. Hobgoblins with this racial trait gain a +2 racial bonus on Survival checks and a +2 racial bonus on Fortitude saves against disease. This racial trait replaces sneaky.",
+    "source_page": "p.121",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Slave Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Slave Hunter],[!PREFACT:1,ABILITIES,Hobgoblin_ReplaceSneaky=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hobgoblin slavers excel at tracking down runaway slaves and surviving in filthy conditions. Hobgoblins with this racial trait gain a +2 racial bonus on Survival checks and a +2 racial bonus on Fortitude saves against disease."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Slave Hunter"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on Fortitude saves against disease."
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Survival"
+      },
+      {
+        "key": "FACT",
+        "value": "Hobgoblin_ReplaceSneaky|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Survival",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Disease",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 519,
+    "record_key": "Hobgoblin ~ Slave Hunter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Halfling ~ Warslinger",
+    "name": "Warslinger",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceSureFooted"
+    ],
+    "description": "Halflings are experts at the use of the sling. Halflings with this racial trait can reload a sling as a free action. Reloading a sling still requires two hands and provokes attacks of opportunity. This racial trait replaces sure-footed.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Warslinger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Warslinger],[!PREFACT:1,ABILITIES,Halfling_ReplaceSureFooted=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Halflings are experts at the use of the sling. Halflings with this racial trait can reload a sling as a free action. Reloading a sling still requires two hands and provokes attacks of opportunity."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sure-footed.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Warslinger"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Reload a sling as a free action."
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceSureFooted|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 239,
+    "record_key": "Halfling ~ Warslinger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

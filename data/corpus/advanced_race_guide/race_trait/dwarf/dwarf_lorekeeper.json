@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Dwarf ~ Lorekeeper",
+    "name": "Lorekeeper",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceGreed"
+    ],
+    "description": "Dwarves keep extensive records about their history and the world around them. Dwarves with this racial trait receive a +2 racial bonus on Knowledge (history) checks that pertain to dwarves or their enemies. They can make such skill checks untrained. This racial trait replaces greed.",
+    "source_page": "p.12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Lorekeeper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Lorekeeper],[!PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves keep extensive records about their history and the world around them. Dwarves with this racial trait receive a +2 racial bonus on Knowledge (history) checks that pertain to dwarves or their enemies. They can make such skill checks untrained."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces greed.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Lorekeeper"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on Knowledge (history) skill checks that pertain to dwarves or their enemies. They can make such skill checks untrained."
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceGreed|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Knowledge (History)=pertaining to dwarves or their enemies",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 37,
+    "record_key": "Dwarf ~ Lorekeeper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

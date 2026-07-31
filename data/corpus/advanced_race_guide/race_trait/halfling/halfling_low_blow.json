@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Halfling ~ Low Blow",
+    "name": "Low Blow",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceKeenSenses"
+    ],
+    "description": "Some halflings train extensively in the art of attacking larger creatures. Halflings with this racial trait gain a +1 bonus on critical confirmation rolls against opponents larger than themselves. This racial trait replaces keen senses.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Low Blow"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Low Blow],[!PREFACT:1,ABILITIES,Halfling_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some halflings train extensively in the art of attacking larger creatures. Halflings with this racial trait gain a +1 bonus on critical confirmation rolls against opponents larger than themselves."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Low Blow"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 bonus on critical confirmation rolls against opponents larger than yourself."
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 231,
+    "record_key": "Halfling ~ Low Blow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

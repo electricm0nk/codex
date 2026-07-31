@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Aasimar ~ Deathless Spirit",
+    "name": "Deathless Spirit",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Aasimar_ReplaceCelestialResistance"
+    ],
+    "description": "Particularly strong-willed aasimars possess celestial spirits capable of resisting the powers of death. They gain resistance 5 against negative energy damage. They do not lose hit points when they gain a negative level, and they gain a +2 racial bonus on saving throws against death effects, energy drain, negative energy, and spells or spell-like abilities of the necromancy school. This racial trait replaces celestial resistance.",
+    "source_page": "p.84",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Deathless Spirit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Deathless Spirit],[!PREFACT:1,ABILITIES,Aasimar_ReplaceCelestialResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Particularly strong-willed aasimars possess celestial spirits capable of resisting the powers of death. They gain resistance 5 against negative energy damage. They do not lose hit points when they gain a negative level, and they gain a +2 racial bonus on saving throws against death effects, energy drain, negative energy, and spells or spell-like abilities of the necromancy school."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces celestial resistance.|!PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Deathless Spirit"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.84"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against death effects, energy drain, negative energy, and spells or spell-like abilities of the necromancy school."
+      },
+      {
+        "key": "ASPECT",
+        "value": "AllSaveBonus|+2 vs. death effects, energy drain, negative energy, and necromancy spells or spell-like abilities"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceCelestialResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "HP",
+          "CURRENTMAX",
+          "5*(NegLevels)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegativeEnergyResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 325,
+    "record_key": "Aasimar ~ Deathless Spirit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

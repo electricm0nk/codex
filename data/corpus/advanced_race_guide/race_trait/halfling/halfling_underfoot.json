@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Halfling ~ Underfoot",
+    "name": "Underfoot",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceHalflingLuck"
+    ],
+    "description": "Halflings must train hard to effectively fight bigger opponents. Halflings with this racial trait gain a +1 dodge bonus to AC against foes larger than themselves and a +1 bonus on Reflex saving throws to avoid trample attacks. This racial trait replaces halfling luck.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Underfoot"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Underfoot],[!PREFACT:1,ABILITIES,Halfling_ReplaceHalflingLuck=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Halflings must train hard to effectively fight bigger opponents. Halflings with this racial trait gain a +1 dodge bonus to AC against foes larger than themselves and a +1 bonus on Reflex saving throws to avoid trample attacks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces halfling luck.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Underfoot"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+1 dodge bonus to AC vs. larger foes)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RefSaveBonus|+1 vs. trample attacks"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceHalflingLuck|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 237,
+    "record_key": "Halfling ~ Underfoot"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

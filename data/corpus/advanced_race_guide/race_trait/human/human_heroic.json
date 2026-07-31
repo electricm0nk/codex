@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Human ~ Heroic",
+    "name": "Heroic",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceBonusFeat"
+    ],
+    "description": "Some humans are born heroes. In campaigns that use the optional hero point system (Advanced Player's Guide 322-325), each time these humans gain a level, they gain 2 hero points instead of 1. If they take the Blood of Heroes feat, they gain 3 hero points each level instead of 2. This racial trait replaces the bonus feat trait.",
+    "source_page": "p.72",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Heroic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Heroic],[!PREFACT:1,ABILITIES,Human_ReplaceBonusFeat=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some humans are born heroes. In campaigns that use the optional hero point system (Advanced Player's Guide 322-325), each time these humans gain a level, they gain 2 hero points instead of 1. If they take the Blood of Heroes feat, they gain 3 hero points each level instead of 2."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the bonus feat trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Heroic"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceBonusFeat|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 269,
+    "record_key": "Human ~ Heroic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

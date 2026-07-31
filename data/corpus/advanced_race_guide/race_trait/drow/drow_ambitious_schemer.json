@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Drow ~ Ambitious Schemer",
+    "name": "Ambitious Schemer",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Drow_ReplaceKeenSenses"
+    ],
+    "description": "Seduction and treachery are tools for advancement in drow society, even for the martially inclined. Drow with this racial trait may choose either Bluff or Diplomacy as a class skill, and gain a +2 bonus on such skill checks. This racial trait replaces keen sight.",
+    "source_page": "p.102",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Ambitious Schemer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Drow ~ Ambitious Schemer],[!PREFACT:1,ABILITIES,Drow_ReplaceKeenSenses=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Seduction and treachery are tools for advancement in drow society, even for the martially inclined. Drow with this racial trait may choose either Bluff or Diplomacy as a class skill, and gain a +2 bonus on such skill checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen sight.|!PREABILITY:1,CATEGORY=Special Ability,Drow ~ Ambitious Schemer"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|Bluff|Diplomacy"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.102"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 %1|%LIST"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "LIST",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 424,
+    "record_key": "Drow ~ Ambitious Schemer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

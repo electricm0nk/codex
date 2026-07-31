@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Drow ~ Darklands Stalker",
+    "name": "Darklands Stalker",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Drow_ReplaceSpellLikeAbilities"
+    ],
+    "description": "The lands outside of drow cities, from rough-hewn tunnels to rocky caverns, are treacherous to navigate. Drow with this racial trait may move through difficult terrain without penalty while underground. In addition, drow with a Dexterity of 13 or higher gain Nimble Moves as a bonus feat. This racial trait replaces the spell-like abilities racial trait.",
+    "source_page": "p.103",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Darklands Stalker"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Drow ~ Darklands Stalker],[!PREFACT:1,ABILITIES,Drow_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The lands outside of drow cities, from rough-hewn tunnels to rocky caverns, are treacherous to navigate. Drow with this racial trait may move through difficult terrain without penalty while underground. In addition, drow with a Dexterity of 13 or higher gain Nimble Moves as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like abilities racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Drow ~ Darklands Stalker"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Nimble Moves|PRESTAT:1,DEX=13"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.103"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|You may move through difficult terrain without penalty while underground."
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceSpellLikeAbilities|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 427,
+    "record_key": "Drow ~ Darklands Stalker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

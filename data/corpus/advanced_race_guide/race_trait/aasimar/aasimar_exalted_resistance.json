@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Aasimar ~ Exalted Resistance",
+    "name": "Exalted Resistance",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Aasimar_ReplaceCelestialResistance"
+    ],
+    "description": "An aasimar with this racial trait gains spell resistance equal to 5 + her level against spells and spell-like abilities with the evil descriptor, as well as any spells and spell-like abilities cast by evil outsiders. This racial trait replaces celestial resistance.",
+    "source_page": "p.85",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Exalted Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Exalted Resistance],[!PREFACT:1,ABILITIES,Aasimar_ReplaceCelestialResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "An aasimar with this racial trait gains spell resistance equal to 5 + her level against spells and spell-like abilities with the evil descriptor, as well as any spells and spell-like abilities cast by evil outsiders."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces celestial resistance.|!PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Exalted Resistance"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|%1 spell resistance against spells and spell-like abilities with the evil descriptor, as well as any spells and spell-like abilities cast by evil outsiders.|5+TL"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceCelestialResistance|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 326,
+    "record_key": "Aasimar ~ Exalted Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

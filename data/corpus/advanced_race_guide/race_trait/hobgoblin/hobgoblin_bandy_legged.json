@@ -1,0 +1,106 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Hobgoblin ~ Bandy-Legged",
+    "name": "Bandy-Legged",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Hobgoblin_ReplaceSpeed"
+    ],
+    "description": "Bandy-legged hobgoblins have an even more exaggerated stature than other hobgoblins, with bowed legs and massive shoulders. Hobgoblins with this racial trait gain a +2 racial bonus on Climb and Ride checks, and a +2 racial bonus to their CMD against bull rush or trip attempts while on solid ground. The base speed of bandy-legged hobgoblins is reduced to 20 feet.",
+    "source_page": "p.120",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Bandy-Legged"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Hobgoblin ~ Bandy-Legged],[!PREFACT:1,ABILITIES,Hobgoblin_ReplaceSpeed=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Bandy-legged hobgoblins have an even more exaggerated stature than other hobgoblins, with bowed legs and massive shoulders. Hobgoblins with this racial trait gain a +2 racial bonus on Climb and Ride checks, and a +2 racial bonus to their CMD against bull rush or trip attempts while on solid ground. The base speed of bandy-legged hobgoblins is reduced to 20 feet.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Bandy-Legged"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.120"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Climb, +2 Ride"
+      },
+      {
+        "key": "FACT",
+        "value": "Hobgoblin_ReplaceSpeed|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb,Ride",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "20"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_BullRush,CMD_Trip",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 512,
+    "record_key": "Hobgoblin ~ Bandy-Legged"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

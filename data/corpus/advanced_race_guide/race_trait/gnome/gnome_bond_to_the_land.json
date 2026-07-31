@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Gnome ~ Bond to the Land",
+    "name": "Bond to the Land",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceHatred",
+      "Gnome_ReplaceDefensiveTraining"
+    ],
+    "description": "Some gnomes have strong ties to specific kinds of terrain, as a holdover from their fey origins. These gnomes gain a +2 dodge bonus to AC when in a specific terrain type selected from the ranger list of favored terrains. This choice is made at character creation, and cannot be changed. This racial trait replaces defensive training and hatred.",
+    "source_page": "p.32",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Bond to the Land"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Bond to the Land],[!PREFACT:1,ABILITIES,Gnome_ReplaceHatred=true,Gnome_ReplaceDefensiveTraining=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes have strong ties to specific kinds of terrain, as a holdover from their fey origins. These gnomes gain a +2 dodge bonus to AC when in a specific terrain type selected from the ranger list of favored terrains. This choice is made at character creation, and cannot be changed."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training and hatred.|PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Bond to the Land"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Cold|Desert|Forest|Jungle|Mountain|Plains|Ethereal Plane|First World|Shadow Plane|Negative Energy Plane|Positive Energy Plane|Plane of Air|Plane of Earth|Plane of Fire|Plane of Water|Astral Plane|Heaven|Nirvana|Elysium|Axis|Boneyard|Maelstrom|Hell|Abaddon|Abyss|Swamp|Underground|Urban|Water"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+2 dodge bonus to AC when in %1 environments)|%LIST"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 122,
+    "record_key": "Gnome ~ Bond to the Land"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

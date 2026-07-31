@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Elf ~ Urbanite",
+    "name": "Urbanite",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceKeenSenses"
+    ],
+    "description": "Elves who live in cities for more than a century can grow to know the ebb and flow of social situations just as their forest-dwelling cousins know the rules of the wild. Elves with this racial trait gain a +2 racial bonus on Diplomacy checks made to gather information and Sense Motive checks made to get a hunch about a social situation. This racial trait replaces keen senses.",
+    "source_page": "p.22",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Urbanite"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Urbanite],[!PREFACT:1,ABILITIES,Elf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves who live in cities for more than a century can grow to know the ebb and flow of social situations just as their forest-dwelling cousins know the rules of the wild. Elves with this racial trait gain a +2 racial bonus on Diplomacy checks made to gather information and Sense Motive checks made to get a hunch about a social situation."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Urbanite"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Diplomacy=to gather information",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Sense Motive=to get a hunch about a social situation",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 85,
+    "record_key": "Elf ~ Urbanite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

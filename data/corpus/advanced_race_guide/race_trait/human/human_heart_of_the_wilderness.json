@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Human ~ Heart of the Wilderness",
+    "name": "Heart of the Wilderness",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Heart Trait",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceSkilled"
+    ],
+    "description": "Humans raised in the wild learn the hard way that only the strong survive. They gain a racial bonus equal to half their character level on Survival checks. They also gain a +5 racial bonus on Constitution checks to stabilize when dying and add half their character level to their Constitution score when determining the negative hit point total necessary to kill them. This racial trait replaces skilled.",
+    "source_page": "p.72",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Heart of the Wilderness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Heart Trait.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Wilderness],[!PREFACT:1,ABILITIES,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans raised in the wild learn the hard way that only the strong survive. They gain a racial bonus equal to half their character level on Survival checks. They also gain a +5 racial bonus on Constitution checks to stabilize when dying and add half their character level to their Constitution score when determining the negative hit point total necessary to kill them."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces skilled.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Heart of the Wilderness"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Survival",
+          "TL/2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 268,
+    "record_key": "Human ~ Heart of the Wilderness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

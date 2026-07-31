@@ -1,0 +1,94 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Orc ~ Feral",
+    "name": "Feral",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Orc_ReplaceWeaponFamiliarity",
+      "Orc_ReplaceLanguages"
+    ],
+    "description": "Orcs have the ability to fend for themselves long before they master the rudiments of their language and culture. Having needed to hunt bugs and tiny animals for food to survive while still infants, feral orcs fight all the harder to survive when at the brink of death. Orcs with this racial trait gain Survival as a class skill and gain a +1 racial bonus on melee weapon attack and damage rolls when at negative hit points. This racial trait replaces the orc's weapon familiarity and automatic languages. Feral orcs without additional languages due to high Intelligence scores or ranks in Linguistics can only communicate with grunts and gestures.",
+    "source_page": "p.138",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Feral"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Orc ~ Feral],[!PREFACT:1,ABILITIES,Orc_ReplaceWeaponFamiliarity=True,Orc_ReplaceLanguages=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs have the ability to fend for themselves long before they master the rudiments of their language and culture. Having needed to hunt bugs and tiny animals for food to survive while still infants, feral orcs fight all the harder to survive when at the brink of death. Orcs with this racial trait gain Survival as a class skill and gain a +1 racial bonus on melee weapon attack and damage rolls when at negative hit points."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the orc's weapon familiarity and automatic languages.|!PREABILITY:1,CATEGORY=Special Ability,Orc ~ Feral"
+      },
+      {
+        "key": "DESC",
+        "value": "Feral orcs without additional languages due to high Intelligence scores or ranks in Linguistics can only communicate with grunts and gestures."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Survival"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Orc Racial Trait|AUTOMATIC|Feral ~ Languages"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on melee weapon attack and damage rolls when at negative hit points."
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceWeaponFamiliarity|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceLanguages|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 600,
+    "record_key": "Orc ~ Feral"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

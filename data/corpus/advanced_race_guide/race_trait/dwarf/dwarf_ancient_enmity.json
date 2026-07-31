@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:09:24Z",
+  "data": {
+    "key": "Dwarf ~ Ancient Enmity",
+    "name": "Ancient Enmity",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialAttack",
+      "Special Attack"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceHatred"
+    ],
+    "description": "Dwarves have long been in conflict with elves, especially the hated drow. Dwarves with this racial trait receive a +1 racial bonus on attack rolls against humanoid creatures of the elf subtype. This racial trait replaces hatred.",
+    "source_page": "p.11",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Ancient Enmity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Ancient Enmity],[!PREFACT:1,ABILITIES,Dwarf_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves have long been in conflict with elves, especially the hated drow. Dwarves with this racial trait receive a +1 racial bonus on attack rolls against humanoid creatures of the elf subtype."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces hatred.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Ancient Enmity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls against humanoid creatures of the elf subtype."
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against elf humanoids"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHatred|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 33,
+    "record_key": "Dwarf ~ Ancient Enmity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}
