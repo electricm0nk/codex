@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Improve Trap",
+    "school": "Transmutation",
+    "level": 2,
+    "description": "When this spell is cast upon a trap, it improves one specific element of the trap chosen at the time of casting. The caster can improve the trap in any of the following ways (each one raises the trap's CR by +1). Increase DC of the Perception check required to locate the trap by +5. Increase DC of the Disable Device check required to disarm trap by +5. Increase the trap's attack bonus or saving throw by +2. To cast this on a trap, you must know that the trap exists and its precise location. A trap can only have one improvement from this spell at a time. A second casting changes the improvement on the trap, but does not add another improvement."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 117,
+    "record_key": "Improve Trap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

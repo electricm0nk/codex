@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Pitcher (Clay)",
     "category": "general",
-    "name": "Pitcher, Clay",
     "cost_gp": 0.02,
-    "weight_lbs": 5.0,
-    "description": null
+    "description": null,
+    "key": "Pitcher (Clay)",
+    "name": "Pitcher, Clay",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pitcher (Clay)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Pitcher, Clay"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pitcher"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Container.General"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "4|Liquid"
+      },
+      {
+        "key": "COST",
+        "value": "0.02"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 160,
-    "record_key": "Pitcher (Clay)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Pitcher (Clay)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Firewood (Per Day)",
     "category": "general",
-    "name": "Firewood, Per Day",
     "cost_gp": 0.01,
-    "weight_lbs": 20.0,
-    "description": null
+    "description": null,
+    "key": "Firewood (Per Day)",
+    "name": "Firewood, Per Day",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Firewood (Per Day)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Firewood, Per Day"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Firewood"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      }
+    ],
+    "weight_lbs": 20.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 125,
-    "record_key": "Firewood (Per Day)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Firewood (Per Day)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

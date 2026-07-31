@@ -1,41 +1,74 @@
 # SD-27 — References Index
 
-## 1. Repo-local doctrine (REPO-LOCAL CANONICAL)
+> **Corrected 2026-07-27.** Every entry below was resolved against the live repo. Entries that do not
+> exist repo-locally are now stated as such, with where they actually live — the previous version cited
+> five `docs/governance/*.md` files and five `~/.hermes/...` skill paths that resolve nowhere on this
+> machine as written.
+
+## 1. Repo-local doctrine (REPO-LOCAL CANONICAL — verified present)
 
 - `docs/governance/loop-instruction-template.md` — canonical loop-instruction template (operator-pinned 2026-07-21).
 - `docs/governance/no-stub-mvp-doctrine.md` — wired-integration parent doctrine.
-- `docs/governance/identifier-discipline.md` — identifier-discipline sibling doctrine.
-- `docs/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions; carries the 21 `book_stub` entries SD-26 registered (entries #0005 + #0012 marked out-of-scope per operator directive 2026-07-27).
-- `docs/governance/ogl-pi-blacklist.md` (new, cycle 2.0.5) — the per-field PI blacklist; the 5th dual-audit (PI-blacklist grep) enforces it.
-- `docs/governance/spec-domain-lifecycle.md` — spec-domain lifecycle routing.
+- `docs/governance/wired-integration-stubs-registry.md` — operator-granted stub exceptions; carries the **21** `book_stub` entries SD-26 registered (`#0003`–`#0023`). Entries `#0005` (beginner_box) and `#0012` (core_essentials) are out-of-scope per operator directive 2026-07-27 but still present.
 
-## 2. Skills (Hermes-profile-scoped)
+**Not repo-local** — these were previously listed here as if they were:
 
-- `~/.hermes/profiles/god-emporer/skills/devops/release-package-promotion/SKILL.md` — workspace → repo publish; copy-with-normalize posture for SD-27 (the workspace copy remains the operator's editor-of-record).
-- `~/.hermes/profiles/god-emporer/skills/devops/wired-integration-discipline/SKILL.md` — dual-audit gate partner; the four-check audit is per-cycle.
-- `~/.hermes/profiles/god-emporer/skills/devops/identifier-discipline/SKILL.md` — dual-audit gate partner.
-- `~/.hermes/profiles/god-emporer/skills/devops/kanban-claude-code-execution-receipt/SKILL.md` — receipt schema (the durable proof a slice was executed).
-- `~/.hermes/profiles/god-emporer/skills/orchestration/workflow-orchestrated-dispatch/SKILL.md` — the canonical dispatch shape; `Workflow` orchestrator at `scripts/workflow-dispatch.sh`.
+- `docs/governance/identifier-discipline.md` — **does not exist.** The doctrine is the machine-local skill `identifier-discipline`; the runnable gate is vendored at `scripts/identifier-discipline-audit.sh`.
+- `docs/governance/spec-domain-lifecycle.md` — **does not exist.** The doctrine is the skill `spec-domain-lifecycle-routing`.
+- `docs/governance/ogl-pi-blacklist.md` — **does not exist yet, by design.** Cycle 2.0.5 creates it; it is an output, not a prerequisite.
 
-## 3. Sibling bundles (REPO-LOCAL)
+## 2. Repo-local runnable gates
 
-- `../docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/` — Tier-1 launch-gate dependency. SD-26 ships the Shape B v0 schema + the Stubs Registry `book_stub` kind + the 21 future-state book stubs. SD-27 consumes all three and adds the v1 license-aware schema bump (cycle 2.0.5).
-- `../docs/release/SD-25-ui-evaluation-defect-closure/` — closed predecessor; Tier-1 launch-gate dependency for SD-26 (which is SD-27's).
-- `../docs/release/SD-24-beta-readiness-and-multiclass/` — closed predecessor.
-- `../docs/release/SD-23-character-mutation-and-wired-integration/` — closed; canonical cycle-receipt shape.
+- `scripts/sd27-workflow.py` — dispatch-state driver + the only sanctioned writer to the reporting JSON. Contract: `loop-instruction.md §8`.
+- `scripts/identifier-discipline-audit.sh` — identifier-discipline half of the dual-audit gate → `OK_NO_BUNDLE_TAGS`.
+- `scripts/wired-integration-audit.sh` — four-check wired-integration audit → `AUDIT PASSED`.
+- `scripts/architecture-truth-up.sh` — E4.2 architecture truth-up gate.
+- `scripts/graphify-update.sh` — E4.2 graphify gate. Replaces the previously-cited `graphify cluster-only`; no `graphify` binary is on PATH.
+- `scripts/pcgen-run-character.sh`, `scripts/pcgen-normalize-output.py` — SD-26's PCGen pipeline, consumed unmodified by E3.x.
+- `src/oracle_validation/comparator.rs` — SD-26's parity comparator, consumed unmodified.
+- `src/bin/sd26_gen_core_rulebook_cache.rs` — the codegen precedent `src/bin/sd27_gen_book_cache.rs` is modelled on.
 
-## 4. Cross-cutting operator directives (Honcho duracons, 2026-07-25 / 2026-07-27)
+## 3. Machine-local skills (EXTERNAL — real, but outside this repo)
 
-- **2026-07-25 17:39:26** — operator pin: shape cross for SD-26 (and inherited by SD-27); JSON cache is repo-resident at `data/corpus/<book>/`.
-- **2026-07-25 18:00:00** — operator pin: SD-27 ships only 2 future-state books (Advanced Race Guide, Adventurer's Guide) per the "tune, then go wide" model; the other 19 future-state books are deferred to SD-28+.
-- **2026-07-25 (subsequent, OGL review)** — operator pin: per-record `license` field on every Shape B v1 record; 5th dual-audit (PI-blacklist grep); redaction-to-marker policy (`"PI"` → `"PI-REDACTED"` with `[redacted PI]` value).
-- **2026-07-25 18:30:00** — operator pin: per-cycle tier model; Sonnet default, free/discounted model operator-authorized for per-book cycle bodies (E2.1-2.2, E3.1-3.2).
-- **2026-07-25 19:00:00** — operator pin: SD-27 does not author class engines; v0.6 owns the chassis breadth work (Fighter/Wizard/Rogue + 8 remaining CRB classes).
-- **2026-07-27 (this turn)** — operator pin: Beginner Box and Core Essentials removed from scope (redundant to other tomes; will not be brought in). Their registry slots (#0005 and #0012) and stub manifests, if they exist on disk, are out-of-scope and may be deleted by the closure epilogue with operator authorization. Bundle book-count: 21 → 19 future-state; surface count: 22 → 20 (19 stubs + 1 decisions.md); all-23-books verify (4 in-scope + 2 in-scope future-state + 17 deferred).
+These resolve under **`$HERMES_HOME/profiles/god-emporer/skills/`** — on this host
+`/home/todd/hermes-home/.hermes/profiles/god-emporer/skills/`. They are **not** at `~/.hermes/...` as
+previously cited, and they are **not** repo-local. No cycle depends on them being present: the runnable
+halves of the two audit skills are vendored into `scripts/` (§2).
 
-## 5. External
+- `orchestration/workflow-orchestrated-dispatch/SKILL.md` — the canonical dispatch shape.
+- `devops/wired-integration-discipline/SKILL.md` — dual-audit gate partner; the four-check audit is per-cycle.
+- `devops/identifier-discipline/SKILL.md` — dual-audit gate partner. Inline-only; ships no script.
+- `devops/kanban-claude-code-execution-receipt/SKILL.md` — receipt schema.
+- `devops/release-package-promotion/SKILL.md` — workspace → repo publish.
+- `dual-canonical-doctrine/SKILL.md` — workspace-citation + repo-local canonical pattern.
+- `release-swarm-observer/scripts/pf1e_dashboard_producer_orchestrator_helper.py` — **the sanctioned dashboard writer.** `scripts/sd27-workflow.py` delegates to it; nothing else may write that JSON.
+- `release-swarm-observer/scripts/pf1e_dashboard_producer.py` — regenerates the dashboard from v0.6 markdown; preserves manifest `items`/`stats`, reseeds `scope`/`workchannel`.
 
-- `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/` — 25 PF1 book directories (4 in-scope + 19 future-state, after the 2 scope-removals; was 4 + 21 before 2026-07-27).
+## 4. Sibling bundles (REPO-LOCAL)
+
+- `../../SD-26-ingest-strategy-and-rule-system-plumbing/` — Tier-1 launch-gate dependency. Ships the Shape B v0 schema, the `book_stub` registry kind, and the 21 future-state book stubs. SD-27 consumes all three and adds the v1 license-aware schema bump (cycle 2.0.5).
+- `../../SD-25-ui-evaluation-defect-closure/` — closed predecessor; Tier-1 launch-gate dependency for SD-26.
+- `../../SD-24-beta-readiness-and-multiclass/` — closed predecessor.
+- `../../SD-23-character-mutation-and-wired-integration/` — closed; canonical cycle-receipt shape.
+- `../../v0.6/` — active sidecar; the file-touch partition exists because of it.
+
+## 5. Cross-cutting operator directives
+
+- **2026-07-25 17:39:26** — shape cross for SD-26 (inherited by SD-27); JSON cache is repo-resident at `data/corpus/<book>/`.
+- **2026-07-25 18:00:00** — SD-27 ships only 2 future-state books per the "tune, then go wide" model; the rest deferred.
+- **2026-07-25 (OGL review)** — per-record `license` field on every Shape B v1 record; 5th dual-audit (PI-blacklist grep); redaction-to-marker policy (`"PI"` → `"PI-REDACTED"` with `[redacted PI]` value).
+- **2026-07-25 18:30:00** — per-cycle tier model; Sonnet default, free/discounted operator-authorized for per-book cycle bodies.
+- **2026-07-25 19:00:00** — SD-27 does not author class engines; v0.6 owns chassis breadth.
+- **2026-07-27** — Beginner Box and Core Essentials removed from scope (redundant to other tomes). Bundle book-count: 21 → 19 future-state. Their stubs and registry slots remain on disk, out-of-scope rather than deleted.
+- **2026-07-27** — the in-scope pair is **Advanced Race Guide + Pathfinder Unchained**, matching the operator's `SD-27 (ARG + PU)` dashboard workchannel. Adventurer's Guide is routed to SD-30. An earlier draft of this bundle named ARG + Adventurer's Guide throughout; that pairing is superseded.
+
+## 6. External (outside the repo)
+
+- `$PCGEN_DATA_ROOT/` (default `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`) — the PF1 book directories. Verified present 2026-07-27: `advanced_race_guide` (23 `.lst`), `pathfinder_unchained` (11 `.lst`). `scripts/sd27-workflow.py preflight` asserts both.
 - `~/workspace/repos/pcgen/gradlew` + `code/testsuite/base-xml.ftl` — PCGen Gradle headless route.
-- `tests/fixtures/rules_core/pf1_*_level*_*.txt` — ~30 deterministic character inputs (cache inputs).
-- `tests/fixtures/oracle_validation/pf1_human_fighter_level1_golden_fixture.txt` — SD-26's pilot case for E2 verification; SD-27's E3.x cycles mirror this pattern for ARG and AG.
+- `$PF1E_JSON_PATH` (default `/home/todd/hermes-home/swarm-observer/PF1e-dashboard.json`) — the operator's reporting dashboard; manifest `sd27_book_pre_build`.
+
+## 7. Repo-local test fixtures
+
+- `tests/fixtures/rules_core/pf1_*_level*_*.txt` — deterministic character inputs (cache inputs).
+- `tests/fixtures/oracle_validation/pf1_human_fighter_level1_golden_fixture.txt` — SD-26's pilot case for E2 verification; SD-27's E3.x cycles mirror this pattern for ARG and PU.

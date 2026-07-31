@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Cheat Sheath",
     "category": "General",
-    "name": "Cheat Sheath",
     "cost_gp": 100.0,
-    "weight": 2.0,
-    "description": "Gives +2 bonus on Spellcraft to learn a spell, prepare a spell from a borrowed spellbook, identify magic item properties, decipher scrolls"
+    "description": "Gives +2 bonus on Spellcraft to learn a spell, prepare a spell from a borrowed spellbook, identify magic item properties, decipher scrolls",
+    "key": "Cheat Sheath",
+    "name": "Cheat Sheath",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gives +2 bonus on Spellcraft to learn a spell, prepare a spell from a borrowed spellbook, identify magic item properties, decipher scrolls"
+      }
+    ],
+    "weight": 2.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 167,
-    "record_key": "Cheat Sheath"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Cheat Sheath",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

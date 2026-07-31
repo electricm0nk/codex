@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Scavenger Beetle Colony",
     "category": "General",
-    "name": "Scavenger Beetle Colony",
     "cost_gp": 3.0,
-    "weight": 1.0,
-    "description": "Break down dead corpse to bones in 1d4 days; needs 1/4 lb. meat per day"
+    "description": "Break down dead corpse to bones in 1d4 days; needs 1/4 lb. meat per day",
+    "key": "Scavenger Beetle Colony",
+    "name": "Scavenger Beetle Colony",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "SPROP",
+        "value": "Break down dead corpse to bones in 1d4 days; needs 1/4 lb. meat per day"
+      }
+    ],
+    "weight": 1.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 185,
-    "record_key": "Scavenger Beetle Colony"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Scavenger Beetle Colony",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

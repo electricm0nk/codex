@@ -1,20 +1,79 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Tireless Tracking Hide",
     "category": "ArmsArmor",
-    "name": "Tireless Tracking Hide",
     "cost_gp": 15.0,
-    "weight": 25.0,
-    "description": "can hustle for 8 hours without growing fatigued, replenished after a full night's rest"
+    "description": "can hustle for 8 hours without growing fatigued, replenished after a full night's rest",
+    "key": "Tireless Tracking Hide",
+    "name": "Tireless Tracking Hide",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Hide"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Nonmetal.Specific.Enhancement"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|10000.Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "4"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      },
+      {
+        "key": "SPROP",
+        "value": "can hustle for 8 hours without growing fatigued, replenished after a full night's rest"
+      }
+    ],
+    "weight": 25.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 256,
-    "record_key": "Tireless Tracking Hide"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Tireless Tracking Hide",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

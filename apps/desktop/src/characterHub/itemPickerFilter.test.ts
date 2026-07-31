@@ -4,14 +4,15 @@ import {
   mapFeatCatalogEntries,
   mapSpellCatalogEntries,
 } from './itemPickerFilter';
+import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const EQUIPMENT_ENTRIES = [
-  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15 },
-  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250 },
-  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50 },
+const EQUIPMENT_ENTRIES: EquipmentCatalogEntryDto[] = [
+  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, book: 'CRB' },
+  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, book: 'CRB' },
+  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, book: 'CRB' },
 ];
 
 const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
@@ -35,6 +36,11 @@ const FEAT_ENTRIES: FeatCatalogEntryDto[] = [
   { key: 'Extra Hex', category: 'General', name: 'Extra Hex', description: 'You have learned the secrets of a new hex.', source: 'Apg', chooserTargetKind: null },
   { key: 'Elemental Fist', category: 'Combat', name: 'Elemental Fist', description: null, source: 'Apg', chooserTargetKind: null },
   { key: 'Extra Panache', category: 'Panache', name: 'Extra Panache', description: 'You have more panache than the ordinary swashbuckler.', source: 'Acg', chooserTargetKind: null },
+  // `Angel Wings` (ARG) and `Champion of Tyranny` (PU) are the two records
+  // `feat_catalog.rs`'s `the_picker_offers_the_newly_ingested_books_records`
+  // names by hand; both books were ingested after this mapper was written.
+  { key: 'Angel Wings', category: 'General', name: 'Angel Wings', description: 'You have a pair of feathered wings.', source: 'Arg', chooserTargetKind: null },
+  { key: 'Champion of Tyranny', category: 'Alignment', name: 'Champion of Tyranny', description: null, source: 'Pu', chooserTargetKind: null },
 ];
 
 /**
@@ -75,7 +81,7 @@ function verifiesEquipmentMappingUsesFriendlyCategoryLabel() {
 }
 
 function verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant() {
-  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null }]);
+  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, book: 'CRB' }]);
   assertEqual(mapped.detail, 'SomeNewCategory', 'unmapped categories fall back to the raw variant string, never a fabricated label');
 }
 
@@ -115,9 +121,9 @@ function verifiesFilterOverSpellEntriesMatchesBySchool() {
 }
 
 /**
- * The feat catalog spans CRB, APG and ACG since the APG/ACG ingest, so a
- * feat row has to name its book the same way a spell row does — otherwise
- * a player cannot tell "Extra Hex" (APG) from a core feat.
+ * The feat catalog spans CRB, APG, ACG, ARG and PU, so a feat row has to
+ * name its book the same way a spell row does — otherwise a player cannot
+ * tell "Extra Hex" (APG) from a core feat.
  */
 function verifiesFeatMappingLeadsWithTheBookThenCategoryThenDescription() {
   const [mapped] = mapFeatCatalogEntries([FEAT_ENTRIES[1]]);
@@ -136,6 +142,30 @@ function verifiesFeatMappingOmitsADescriptionTheCorpusDoesNotHave() {
     mapped.detail,
     'APG · Combat',
     'a record whose corpus row has no DESC: shows only book and category, never fabricated text'
+  );
+}
+
+/**
+ * Every book `list_feat_catalog` can actually serve needs a label. Its
+ * `source` is a `RuleSetId` variant name (`"Arg"`, `"Pu"`), not the book
+ * code a player recognises, and 204 of the catalog's 690 records are ARG
+ * (187) or PU (17) — pinned by `feat_catalog.rs`'s
+ * `catalog_spans_every_ingested_book_with_their_real_counts`. Without a
+ * label those rows reach the picker as a raw wire variant sitting beside
+ * properly-coded CRB/APG/ACG rows.
+ */
+function verifiesFeatMappingLabelsEveryBookTheCatalogActuallyServes() {
+  const [arg] = mapFeatCatalogEntries([FEAT_ENTRIES[4]]);
+  assertEqual(
+    arg.detail,
+    'ARG · General · You have a pair of feathered wings.',
+    'an Advanced Race Guide feat names its book as ARG, not the raw RuleSetId variant "Arg"'
+  );
+  const [pu] = mapFeatCatalogEntries([FEAT_ENTRIES[5]]);
+  assertEqual(
+    pu.detail,
+    'PU · Alignment',
+    'a Pathfinder Unchained feat names its book as PU, not the raw RuleSetId variant "Pu"'
   );
 }
 
@@ -174,6 +204,7 @@ function main() {
   verifiesFilterOverSpellEntriesMatchesBySchool();
   verifiesFeatMappingLeadsWithTheBookThenCategoryThenDescription();
   verifiesFeatMappingOmitsADescriptionTheCorpusDoesNotHave();
+  verifiesFeatMappingLabelsEveryBookTheCatalogActuallyServes();
   verifiesFeatMappingFallsBackToTheRawBookForAnUnknownVariant();
   verifiesFilterOverFeatEntriesMatchesByBook();
 }

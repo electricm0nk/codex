@@ -684,6 +684,13 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Apg => "advanced_players_guide",
         RuleSetId::Acg => "advanced_class_guide",
         RuleSetId::Bestiary1 => "bestiary_1",
+        // SD-27. Unlike `bestiary` -> `bestiary_1`, these two engine ids are
+        // spelled exactly like their corpus directories, so `engine_book_for`
+        // joins them without a rename. They are listed here because
+        // `all_feat_tables()` now yields their tables — without these arms the
+        // whole root-crate bin set, this generator included, fails to compile.
+        RuleSetId::Arg => "advanced_race_guide",
+        RuleSetId::Pu => "pathfinder_unchained",
     }
 }
 

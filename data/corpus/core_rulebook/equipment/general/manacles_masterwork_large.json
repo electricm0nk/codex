@@ -1,20 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Manacles (Masterwork/Large)",
     "category": "general",
-    "name": "Manacles, Large Masterwork",
     "cost_gp": 500.0,
-    "weight_lbs": 8.0,
-    "description": "Manacles can bind a Medium creature. A manacled creature can use the Escape Artist skill to slip free (DC 35 for masterwork manacles). Breaking the manacles requires a Strength check (DC 28 for masterwork manacles). Manacles have hardness 10 and 10 hit points.\nMost manacles have locks; add the cost of the lock you want to the cost of the manacles.\nFor the same cost, you can buy manacles for a Small creature. For a Large creature, manacles cost 10 times the indicated amount, and for a Huge creature, 100 times the indicated amount. Gargantuan, Colossal, Tiny, Diminutive, and Fine creatures can be held only by specially made manacles, which cost at least 100 times the indicated amount."
+    "description": "Manacles can bind a Medium creature. A manacled creature can use the Escape Artist skill to slip free (DC 35 for masterwork manacles). Breaking the manacles requires a Strength check (DC 28 for masterwork manacles). Manacles have hardness 10 and 10 hit points.\nMost manacles have locks; add the cost of the lock you want to the cost of the manacles.\nFor the same cost, you can buy manacles for a Small creature. For a Large creature, manacles cost 10 times the indicated amount, and for a Huge creature, 100 times the indicated amount. Gargantuan, Colossal, Tiny, Diminutive, and Fine creatures can be held only by specially made manacles, which cost at least 100 times the indicated amount.",
+    "key": "Manacles (Masterwork/Large)",
+    "name": "Manacles, Large Masterwork",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Manacles (Masterwork/Large)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Manacles, Large Masterwork"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Large Masterwork Manacles"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Masterwork"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "Manacles can bind a Medium creature. A manacled creature can use the Escape Artist skill to slip free (DC 35 for masterwork manacles). Breaking the manacles requires a Strength check (DC 28 for masterwork manacles). Manacles have hardness 10 and 10 hit points.&nl;Most manacles have locks; add the cost of the lock you want to the cost of the manacles.&nl;For the same cost, you can buy manacles for a Small creature. For a Large creature, manacles cost 10 times the indicated amount, and for a Huge creature, 100 times the indicated amount. Gargantuan, Colossal, Tiny, Diminutive, and Fine creatures can be held only by specially made manacles, which cost at least 100 times the indicated amount."
+      }
+    ],
+    "weight_lbs": 8.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 151,
-    "record_key": "Manacles (Masterwork/Large)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Manacles (Masterwork/Large)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

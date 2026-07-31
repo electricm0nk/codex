@@ -1,20 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of Stars",
     "category": "magic_items",
-    "name": "Robe of Stars",
     "cost_gp": 58000.0,
-    "weight_lbs": 1.0,
-    "description": "This garment is typically black or dark blue and embroidered with small white or silver stars. The robe has three magical powers.\n* It enables its wearer to travel physically to the Astral Plane, along with all that she is wearing or carrying.\n* It gives its wearer a +1 luck bonus on all saving throws.\n* Its wearer can use up to six of the embroidered stars on the chest portion of the robe as +5 shuriken. The robe grants its wearer proficiency with such weapons. Each shuriken disappears after it is used. The stars are replenished once per month."
+    "description": "This garment is typically black or dark blue and embroidered with small white or silver stars. The robe has three magical powers.\n* It enables its wearer to travel physically to the Astral Plane, along with all that she is wearing or carrying.\n* It gives its wearer a +1 luck bonus on all saving throws.\n* Its wearer can use up to six of the embroidered stars on the chest portion of the robe as +5 shuriken. The robe grants its wearer proficiency with such weapons. Each shuriken disappears after it is used. The stars are replenished once per month.",
+    "key": "Robe of Stars",
+    "name": "Robe of Stars",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of Stars"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of Stars"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "58000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.528"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|29,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, magic missile, astral projection or plane shift"
+      },
+      {
+        "key": "DESC",
+        "value": "This garment is typically black or dark blue and embroidered with small white or silver stars. The robe has three magical powers.&nl;* It enables its wearer to travel physically to the Astral Plane, along with all that she is wearing or carrying.&nl;* It gives its wearer a +1 luck bonus on all saving throws.&nl;* Its wearer can use up to six of the embroidered stars on the chest portion of the robe as +5 shuriken. The robe grants its wearer proficiency with such weapons. Each shuriken disappears after it is used. The stars are replenished once per month."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 316,
-    "record_key": "Robe of Stars"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of Stars",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

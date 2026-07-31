@@ -8,6 +8,7 @@ mod characterHub;
 mod class_catalog;
 mod class_spell_levels;
 mod corpus_fixtures;
+mod corpus_full;
 mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;

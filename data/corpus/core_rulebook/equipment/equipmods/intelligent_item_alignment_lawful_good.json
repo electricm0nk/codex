@@ -1,20 +1,71 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Intelligent Item ~ Alignment / Lawful Good",
     "category": "equipmods",
-    "name": "Int Item / Align (LG)",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Intelligent Item ~ Alignment / Lawful Good",
+    "name": "Int Item / Align (LG)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1+var(\"IntItemNegativeLevel\")",
+          "!PREALIGN:LG"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Alignment / Lawful Good"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ItemAlign"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Alignment / Chaotic Good,Intelligent Item ~ Alignment / Chaotic Neutral,Intelligent Item ~ Alignment / Chaotic Evil,Intelligent Item ~ Alignment / Neutral Evil,Intelligent Item ~ Alignment / Lawful Evil,Intelligent Item ~ Alignment / Lawful Neutral,Intelligent Item ~ Alignment / Neutral Good,Intelligent Item ~ Alignment / True Neutral"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item ~ Align (LG)"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 413,
-    "record_key": "Intelligent Item ~ Alignment / Lawful Good"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item ~ Alignment / Lawful Good",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

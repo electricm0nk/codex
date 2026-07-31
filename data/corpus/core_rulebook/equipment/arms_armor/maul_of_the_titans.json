@@ -1,20 +1,100 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Maul of the Titans",
     "category": "arms_armor",
-    "name": "Maul of the Titans",
     "cost_gp": 25305.0,
-    "weight_lbs": 160.0,
-    "description": "This mallet is 8 feet long. If used as a weapon, it is the equivalent of a +3 greatclub and deals triple damage against inanimate objects. The wielder must have a Strength of at least 18 to wield it properly. Otherwise, she takes a -4 penalty on attack rolls."
+    "description": "This mallet is 8 feet long. If used as a weapon, it is the equivalent of a +3 greatclub and deals triple damage against inanimate objects. The wielder must have a Strength of at least 18 to wield it properly. Otherwise, she takes a -4 penalty on attack rolls.",
+    "key": "Maul of the Titans",
+    "name": "Maul of the Titans",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT,DAMAGE",
+          "3",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-4",
+          "TYPE=StrengthPenalty",
+          "PREVARLT:PreStatScore_STR,18"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Maul of the Titans"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Maul of the Titans"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greatclub"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Tool.Weapon.Melee.Martial.TwoHanded.Bludgeoning.Club.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "25305"
+      },
+      {
+        "key": "WT",
+        "value": "160"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.523"
+      },
+      {
+        "key": "SPROP",
+        "value": "deals triple damage against inanimate objects"
+      },
+      {
+        "key": "DESC",
+        "value": "This mallet is 8 feet long. If used as a weapon, it is the equivalent of a +3 greatclub and deals triple damage against inanimate objects. The wielder must have a Strength of at least 18 to wield it properly. Otherwise, she takes a -4 penalty on attack rolls."
+      }
+    ],
+    "weight_lbs": 160.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
     "line": 287,
-    "record_key": "Maul of the Titans"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Maul of the Titans",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
   }
 }

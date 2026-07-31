@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Powdered Amber (500 gp)",
     "category": "general",
-    "name": "Powdered Amber (worth 500 gp)",
     "cost_gp": 500.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Powdered Amber (500 gp)",
+    "name": "Powdered Amber (worth 500 gp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Powdered Amber (500 gp)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Powdered Amber (worth 500 gp)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Component.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Material Component for Sepia Snake Sigil"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 467,
-    "record_key": "Powdered Amber (500 gp)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Powdered Amber (500 gp)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

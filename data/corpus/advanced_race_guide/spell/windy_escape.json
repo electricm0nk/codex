@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Windy Escape",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "You respond to an attack by briefly becoming vaporous and insubstantial, allowing the attack to pass harmlessly through you. You gain DR 10/magic against this attack and are immune to any poison, sneak attacks, or critical hit effect from that attack. You cannot use windy escape against an attack of opportunity you provoked by casting a spell, using a spelllike ability, or using any other magical ability that provokes an attack of opportunity when used."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 150,
+    "record_key": "Windy Escape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

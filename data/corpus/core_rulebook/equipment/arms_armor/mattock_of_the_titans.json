@@ -1,20 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Mattock of the Titans",
     "category": "arms_armor",
-    "name": "Mattock of the Titans",
     "cost_gp": 23348.0,
-    "weight_lbs": 120.0,
-    "description": "This digging tool is 10 feet long. Any creature of at least Huge size can use it to loosen or tumble earth or earthen ramparts (a 10-foot cube every 10 minutes). It also smashes rock (a 10- foot cube per hour). If used as a weapon, it is the equivalent of a Gargantuan +3 adamantine warhammer, dealing 4d6 points of base damage."
+    "description": "This digging tool is 10 feet long. Any creature of at least Huge size can use it to loosen or tumble earth or earthen ramparts (a 10-foot cube every 10 minutes). It also smashes rock (a 10- foot cube per hour). If used as a weapon, it is the equivalent of a Gargantuan +3 adamantine warhammer, dealing 4d6 points of base damage.",
+    "key": "Mattock of the Titans",
+    "name": "Mattock of the Titans",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT,DAMAGE",
+          "3",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Mattock of the Titans"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Mattock of the Titans"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Warhammer"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Tool.Weapon.Melee.Martial.OneHanded.Bludgeoning.Hammer.Metal.Adamantine.Masterwork"
+      },
+      {
+        "key": "COST",
+        "value": "23348"
+      },
+      {
+        "key": "WT",
+        "value": "120"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "4d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.523"
+      },
+      {
+        "key": "DESC",
+        "value": "This digging tool is 10 feet long. Any creature of at least Huge size can use it to loosen or tumble earth or earthen ramparts (a 10-foot cube every 10 minutes). It also smashes rock (a 10- foot cube per hour). If used as a weapon, it is the equivalent of a Gargantuan +3 adamantine warhammer, dealing 4d6 points of base damage."
+      }
+    ],
+    "weight_lbs": 120.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
     "line": 286,
-    "record_key": "Mattock of the Titans"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Mattock of the Titans",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
   }
 }

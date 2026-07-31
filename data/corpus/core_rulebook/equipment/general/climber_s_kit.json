@@ -1,20 +1,63 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Climber's Kit",
     "category": "general",
-    "name": "Climber's Kit",
     "cost_gp": 80.0,
-    "weight_lbs": 5.0,
-    "description": "These crampons, pitons, ropes, and tools give you a +2 circumstance bonus on Climb checks."
+    "description": "These crampons, pitons, ropes, and tools give you a +2 circumstance bonus on Climb checks.",
+    "key": "Climber's Kit",
+    "name": "Climber's Kit",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb",
+          "2",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Climber's Kit"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Climber's Kit"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Masterwork.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "80"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "DESC",
+        "value": "These crampons, pitons, ropes, and tools give you a +2 circumstance bonus on Climb checks."
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 204,
-    "record_key": "Climber's Kit"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Climber's Kit",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

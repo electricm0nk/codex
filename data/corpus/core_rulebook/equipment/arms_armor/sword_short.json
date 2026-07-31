@@ -17,5 +17,8 @@
     "line": 220,
     "record_key": "Sword (Short)",
     "inherited_from_record_key": "Short Sword (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

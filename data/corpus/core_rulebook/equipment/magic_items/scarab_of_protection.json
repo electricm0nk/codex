@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scarab of Protection",
     "category": "magic_items",
-    "name": "Scarab of Protection",
     "cost_gp": 38000.0,
-    "weight_lbs": 0.0,
-    "description": "This device appears to be a silver medallion in the shape of a beetle. If it is held for 1 round, an inscription appears on its surface letting the holder know that it is a protective device.\nThe scarab's possessor gains spell resistance 20. The scarab can also absorb energy-draining attacks, death effects, and negative energy effects. Upon absorbing 12 such attacks, the scarab turns to powder and is destroyed."
+    "description": "This device appears to be a silver medallion in the shape of a beetle. If it is held for 1 round, an inscription appears on its surface letting the holder know that it is a protective device.\nThe scarab's possessor gains spell resistance 20. The scarab can also absorb energy-draining attacks, death effects, and negative energy effects. Upon absorbing 12 such attacks, the scarab turns to powder and is destroyed.",
+    "key": "Scarab of Protection",
+    "name": "Scarab of Protection",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scarab of Protection"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scarab of Protection"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Neck.Scarab"
+      },
+      {
+        "key": "COST",
+        "value": "38000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 12 Maximum|CHARGES[12]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.529"
+      },
+      {
+        "key": "SR",
+        "value": "20"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration and necromancy"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|18th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|neck"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|19,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, death ward, spell resistance"
+      },
+      {
+        "key": "DESC",
+        "value": "This device appears to be a silver medallion in the shape of a beetle. If it is held for 1 round, an inscription appears on its surface letting the holder know that it is a protective device.&nl;The scarab's possessor gains spell resistance 20. The scarab can also absorb energy-draining attacks, death effects, and negative energy effects. Upon absorbing 12 such attacks, the scarab turns to powder and is destroyed."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 322,
-    "record_key": "Scarab of Protection"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scarab of Protection",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

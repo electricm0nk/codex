@@ -17,5 +17,8 @@
     "line": 53,
     "record_key": "Chain Shirt",
     "inherited_from_record_key": "Chain Shirt (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

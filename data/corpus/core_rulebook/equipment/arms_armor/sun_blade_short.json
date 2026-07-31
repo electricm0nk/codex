@@ -17,5 +17,8 @@
     "line": 278,
     "record_key": "Sun Blade (Short)",
     "inherited_from_record_key": "Sun Blade (Bastard)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

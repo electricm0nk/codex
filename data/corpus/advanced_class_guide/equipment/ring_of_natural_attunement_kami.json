@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Natural Attunement (Kami)",
     "category": "MagicItems",
-    "name": "Ring of Natural Attunement (Kami)",
     "cost_gp": 7800.0,
-    "weight": null,
-    "description": "add to summon nature's ally list: shikigami (3rd), kodama (5th), zuishin (7th), toshigami (9th); 1/day summon shikigami"
+    "description": "add to summon nature's ally list: shikigami (3rd), kodama (5th), zuishin (7th), toshigami (9th); 1/day summon shikigami",
+    "key": "Ring of Natural Attunement (Kami)",
+    "name": "Ring of Natural Attunement (Kami)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "7800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon nature's ally list: shikigami (3rd), kodama (5th), zuishin (7th), toshigami (9th); 1/day summon shikigami"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 275,
-    "record_key": "Ring of Natural Attunement (Kami)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Natural Attunement (Kami)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

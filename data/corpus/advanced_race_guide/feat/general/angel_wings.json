@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Angel Wings",
+    "category": "general",
+    "name": "Angel Wings",
+    "description": "Feathered wings sprout from your back.",
+    "effect": [
+      [
+        "VAR",
+        "Maneuverability",
+        "3"
+      ],
+      [
+        "VAR",
+        "Maneuverability",
+        "-1",
+        "PREVARLT:ENCUMBERANCE,1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.MEDIUM]\"),1,var(\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\"),1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 202,
+    "record_key": "Angel Wings"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

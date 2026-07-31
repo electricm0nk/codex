@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ale (Mug)",
     "category": "general",
-    "name": "Mug of Ale",
     "cost_gp": 0.04,
-    "weight_lbs": 1.0,
-    "description": null
+    "description": null,
+    "key": "Ale (Mug)",
+    "name": "Mug of Ale",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ale (Mug)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ale, Mug"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Food.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0.04"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 268,
-    "record_key": "Ale (Mug)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Ale (Mug)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

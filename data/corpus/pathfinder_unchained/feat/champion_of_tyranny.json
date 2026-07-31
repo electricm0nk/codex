@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "data": {
+    "key": "Champion of Tyranny",
+    "category": "Alignment",
+    "name": "Champion of Tyranny",
+    "description": "You must beat down the masses to have true order.",
+    "source_page": "p.99"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 14,
+    "record_key": "Champion of Tyranny"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

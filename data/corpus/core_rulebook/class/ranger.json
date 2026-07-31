@@ -16,5 +16,8 @@
     "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
     "line": 206,
     "record_key": "CLASS:Ranger"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

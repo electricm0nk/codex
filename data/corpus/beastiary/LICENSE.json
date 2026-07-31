@@ -1,0 +1,26 @@
+{
+  "book": "beastiary",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
+    "product_identity_source": "Paizo Pathfinder Roleplaying Game Bestiary, OGL §15 Product Identity section",
+    "product_identity_note": "Per docs/governance/ogl-pi-blacklist.md §2.1's per-book override note: within Bestiary 1 itself, classic SRD monster species names (e.g. \"Ankheg\", \"Dark Creeper\") are presumptively Open Game Content, not Product Identity, matching the original d20 SRD's declaration -- this book's monster `name`/`id` fields are therefore classified OGL, not PI, unlike a non-bestiary context where a named creature could be PI. Named deities, unique NPCs, and unique places would still be Product Identity if present; none were found in this book's free-text `description` fields during this pass."
+  },
+  "redaction_policy": {
+    "marker": "[redacted PI]",
+    "schema_preserving": true,
+    "pi_field_recorded": true,
+    "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+    "blacklist_version_reviewed": "2026-07-27"
+  },
+  "redistribution_posture": "ogl-notice-attached",
+  "classified_at": "2026-07-27T20:38:09Z",
+  "classified_by_cycle": "E2.0.9",
+  "screening_method_note": "This is a heuristic first-pass screen against a bounded, documented term list (the 20 canonical Golarion core deity names) run over every free-text `description` value in this book's records (monster records carry no free-text field at all -- only mechanical stat-block fields, verified by enumerating all data keys across all 41 monster/*.json). It is NOT an exhaustive human legal review, and no claim of exhaustive PI-freedom is made for the 4 equipment `description` values screened, beyond: no substring match against the documented term list was found.",
+  "records_processed": 45,
+  "records_redacted": 0,
+  "operator_sign_off": {
+    "signed_off": false,
+    "signed_off_at": null,
+    "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header."
+  }
+}

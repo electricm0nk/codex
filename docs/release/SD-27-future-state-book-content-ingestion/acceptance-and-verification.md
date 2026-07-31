@@ -1,18 +1,65 @@
 # SD-27 — Acceptance and Verification
 
+## 0. The verification command (2026-07-30)
+
+> **Merge note (2026-07-30 cross-copy merge):** this section and bullet 5a below were merged in from the planning-tree copy. That copy also replaces every per-criterion `cargo test --workspace --locked → all green` line in §2 below with `./scripts/verify.sh → exit 0`; those per-criterion replacements are rewrites of existing verification commands, not additions, and were left out of this merge for separate operator review (see the merge report and `decisions.md §21`). Until that follow-up lands, §2's `cargo test --workspace --locked` lines below remain the criteria of record, notwithstanding the blanket claim immediately below.
+
+**Every "→ all green" in this file now means `./scripts/verify.sh` exiting `0`,
+with its exit code captured directly and never through a pipe.**
+
+`cargo test --workspace --locked` — the command this file previously named
+throughout — **is not a whole-repo run.** The repo root has no `[workspace]`
+table, so `--workspace` from the root never reaches `apps/desktop/src-tauri`,
+a separate and bin-only cargo crate. That crate shipped un-compilable twice
+under exactly this command. Three further structural false-greens are recorded
+in `scripts/verify.sh --help`, which is the rationale of record:
+
+1. `cargo test` fail-fasts — a "green"-looking run had executed 124 of 488
+   suites. `--no-fail-fast` is mandatory and the *number of suites executed* is
+   asserted, not just the summary line.
+2. Piping a command to `grep`/`tail` returns the **pipe's** exit status. That
+   produced a false green on a full sweep that had failed.
+3. The frontend runner reports `0/0 test files passed.` and exits `0` when
+   `node_modules` is absent.
+
+Per-class integration suites were also once absent from the checklist, and 34
+failing tests merged under sign-off. They are inside the `root-full` stage now.
+That is why the acceptance condition is "run the script", not "run the parts
+that seem relevant".
+
+`scripts/verify-baselines.env` carries the recorded green-tree numbers: test
+counts are **floors**, clippy warnings a **ceiling**. A baseline that has to
+move moves in its own reviewable commit carrying `--show-actuals` output.
+A floor that dropped means tests were deleted — that is the finding, not the fix.
+
+Three further conditions apply to any cycle that ingests a book, per
+`docs/governance/book-ingestion-playbook.md`:
+
+- **Pre-ingest:** `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`
+  is run *before* ingest code is written, and its output is recorded in the
+  cycle receipt.
+- **Citation audit:** `cargo run --locked --bin v06_corpus_trap_report -- --audit`
+  exits `0`.
+- **Reach:** where a cycle writes `src/rules_core/rules_tables/<book>/` — which
+  SD-27's own E2.x Operations step 3 does — `./scripts/verify.sh --only reach`
+  passes with a claim for the book's families. See §1 item 5a and the scope note
+  there.
+
 ## 1. Bundle-level acceptance
 
 The bundle is closure-ready when:
 
 1. **Every criterion has a `complete` or `blocked` status in `progress.md`'s status matrix.** Per `loop-instruction-template.md §5`.
-2. **Every cycle has a per-cycle receipt at `artifacts/epic_<n>/<cycle>_receipt.md`** with the canonical six-section shape.
+2. **Every cycle has a per-cycle receipt at `artifacts/epic_<n>/<cycle>-cycle_receipt.md`** with the canonical six-section shape.
 3. **Every cycle has passed the dual-audit gate** (identifier-discipline + wired-integration four-check).
-4. **The bundle label resolution is propagated across all 20 surfaces** (19 `data/stubs/*.json` + 1 `decisions.md:102`).
+4. **The bundle label resolution is propagated across all 20 surfaces** (the 19 in-universe `data/stubs/*.json` + SD-26's `decisions.md:102`). `data/stubs/` holds 21 files; `beginner_box.json` and `core_essentials.json` are descoped and excluded by name.
 5. **The bundle's combined diff passes the `cargo test --workspace --locked` clean check.**
-6. **The bundle's combined diff passes the architecture-truth-up script clean check.**
+5a. **Every book this bundle ingested passes the reach gate, or has an `OPEN_FINDINGS` entry naming its remedy.** *Scope caveat, flagged 2026-07-27-era decisions vs 2026-07-30 tooling:* SD-27 is recorded as content-only (`README.md §1`: "does not introduce new engine work"; `technical-design.md:156`: "No new engines"), and nothing in the package's six process files mentions a player surface, IPC or the desktop app. But `loop-instruction.md:243` and `epic-breakdown.md:53` both have the per-book cycle **generate `src/rules_core/rules_tables/<book>/`**, which is precisely the tree `reach_gate.rs` scans. **The operator resolves this**; the two live options are (a) the reach claim lands in the same cycle, or (b) an `OPEN_FINDINGS` entry with a named remedy and a bundle of record. What is not available is a green gate by omission.
+6. **The bundle's combined diff passes `bash scripts/architecture-truth-up.sh`.**
 7. **The bundle's combined diff passes the four-check wired-integration audit clean check.**
 7a. **The bundle's combined diff passes the 5th dual-audit (PI-blacklist grep) clean check.** Per the OGL/PI license-stripping doctrine, every Shape B record's PI-tagged fields are redacted; the audit grep returns 0 defects.
-8. **The bundle's PR is opened from `tranche/7` to `develop`, ready for operator merge.**
+8. **All 8 reporting-manifest items read `complete`** — `python3 scripts/sd27-workflow.py status` shows `{'complete': 8}`, each with an `output_path` pointing at a real receipt. Per `loop-instruction.md §8`, a cycle that ran but did not report is incomplete.
+9. **The bundle's PR is opened from `tranche/7` to `develop`, ready for operator merge.**
 
 ## 2. Per-criterion acceptance
 
@@ -20,17 +67,23 @@ The bundle is closure-ready when:
 
 - **Acceptance:** `artifacts/epic_1/identifier-audit-cycle_receipt.md` exists with the canonical six-section shape.
 - **Acceptance:** the cycle's audit raised zero new identifier-discipline violations.
-- **Verification:** `bash scripts/identifier-discipline-audit.sh` → exit 0 with zero violations.
+- **Verification:** `BASE_BRANCH=<cycle base> bash scripts/identifier-discipline-audit.sh` → exit 0, prints `OK_NO_BUNDLE_TAGS`. The audit is diff-scoped; against the long-lived integration branch it reports the whole branch's history, not the cycle's.
 
 ### 2.2 E2.0 — Label Resolution
 
 - **Acceptance:** `artifacts/epic_2/label-resolution-cycle_receipt.md` exists with the canonical six-section shape.
-- **Acceptance:** `data/stubs/*.json` (19 files) carry the resolved `planned_resolution_bundle` value.
-- **Acceptance:** `docs/governance/wired-integration-stubs-registry.md` (19 entries) carry the resolved `Remediation cycle` value.
+- **Acceptance:** the 19 in-universe `data/stubs/*.json` files carry the resolved `planned_resolution_bundle` value.
+- **Acceptance:** the 19 in-universe `docs/governance/wired-integration-stubs-registry.md` entries carry the resolved `Remediation cycle` value. (The registry holds 21 `book_stub` entries, `#0003`-`#0023`; `#0005` beginner_box and `#0012` core_essentials are descoped.)
 - **Acceptance:** `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/decisions.md:102` carries the resolved value.
-- **Acceptance:** `docs/release/v0.6/risks-and-open-questions.md Q2` records the resolution.
-- **Verification:** `grep -n planned_resolution_bundle data/stubs/*.json | sort | uniq -c | wc -l` → 19 (all 19 entries have the same value).
-- **Verification:** `grep -n "Remediation cycle" docs/governance/wired-integration-stubs-registry.md | grep -c "<resolved-value>"` → 19.
+- **Acceptance:** `docs/release/v0.6/risks-and-open-questions.md` §"Open questions" item 2 (line 102) records the resolution. There is no `Q2` label in that file — it uses a numbered list under `## Open questions`.
+- **Verification:** every in-universe stub carries one identical value —
+  ```bash
+  ls data/stubs/*.json | grep -vE '(beginner_box|core_essentials)\.json$' \
+    | xargs grep -h planned_resolution_bundle | sort -u | wc -l   # -> 1
+  ls data/stubs/*.json | grep -vE '(beginner_box|core_essentials)\.json$' | wc -l  # -> 19
+  ```
+  A bare `grep … data/stubs/*.json | wc -l` returns **21**, not 19 — the two descoped stubs are still on disk.
+- **Verification:** `grep -c "Remediation cycle.*<resolved-value>" docs/governance/wired-integration-stubs-registry.md` → 19.
 
 ### 2.2.5 E2.0.5 — Shape B v1 license-stripping pre-flight
 
@@ -67,7 +120,7 @@ Same acceptance/verification as 2.2.6 but for `data/corpus/advanced_class_guide/
 
 ### 2.2.9 E2.0.9 — Bestiary 1 license retro-fit
 
-Same acceptance/verification as 2.2.6 but for `data/corpus/beastiary1/`. Receipt: `artifacts/epic_2/2.0.9-beastiary1-license-retrofit-cycle_receipt.md`.
+Same acceptance/verification as 2.2.6 but for `data/corpus/beastiary/`. **The corpus directory is `beastiary`, with no trailing digit** — only `src/rules_core/rules_tables/beastiary1/` carries one. Verified on disk 2026-07-27. Receipt: `artifacts/epic_2/2.0.9-beastiary-license-retrofit-cycle_receipt.md`.
 
 ### 2.2.10 E2.0.10 — All-23-books license-conformance verify
 
@@ -81,20 +134,22 @@ Same acceptance/verification as 2.2.6 but for `data/corpus/beastiary1/`. Receipt
 - **Verification:** `cargo test --workspace --locked` → all green.
 - **Verification:** the 5th audit grep returns 0 defects across all 23 books.
 
-### 2.3 E2.x — Per-book cache cycle (2 cycles in scope; 19 deferred to SD-28+)
+### 2.3 E2.x — Per-book pre-build + verify cycles (4 cycles in scope: ARG + PU × pre-build/verify; 17 books deferred to SD-28+)
 
-- **Acceptance:** `artifacts/epic_2/<book>_cache-cycle_receipt.md` exists with the canonical six-section shape.
+- **Acceptance:** `artifacts/epic_2/<book>_pre_build-cycle_receipt.md` and `artifacts/epic_2/<book>_verify-cycle_receipt.md` exist with the canonical six-section shape. (Cycle IDs are `pre_build` / `verify` / `parity`, matching `epic-breakdown.md`, `loop-instruction.md`, `progress.md` and `scripts/sd27-workflow.py` — an earlier `<book>_cache` naming here made receipt paths ambiguous.)
 - **Acceptance:** `data/corpus/<book>/{content_kind}/{content_id}.json` files exist per Shape B schema.
 - **Acceptance:** `data/stubs/<book>.json` carries real `content_kind_counts` (not `null`).
 - **Acceptance:** `docs/governance/wired-integration-stubs-registry.md` entry for `<book>` reads `Status: "Resolved"`.
 - **Acceptance:** `tests/sd27_<book>_cache_shape.rs` passes Shape B key-set + key-order conformance.
 - **Verification:** `cargo test --workspace --locked` → all green (including `tests/sd27_<book>_cache_shape.rs`).
-- **Verification:** `bash scripts/identifier-discipline-audit.sh` → exit 0.
-- **Verification:** `bash scripts/wired-integration-audit.sh` → exit 0.
+- **Verification:** `BASE_BRANCH=<cycle base> bash scripts/identifier-discipline-audit.sh` → exit 0 (`OK_NO_BUNDLE_TAGS`).
+- **Verification:** `BASE_BRANCH=<cycle base> bash scripts/wired-integration-audit.sh` → exit 0 (`AUDIT PASSED`).
+- **Verification:** `python3 scripts/sd27-workflow.py status` shows this book's `pre_build` and `verify` items `complete`, each with a real `output_path`.
 
-### 2.4 E3.x — Per-book parity baseline cycle (2 cycles in scope; 19 deferred to SD-28+)
+### 2.4 E3.x — Per-book parity baseline cycle (2 cycles in scope: ARG + PU; 17 books deferred to SD-28+)
 
 - **Acceptance:** `artifacts/epic_3/<book>_parity-cycle_receipt.md` exists with the canonical six-section shape.
+- **Acceptance:** the item `sd27.<book>.parity` reads `complete` in the reporting manifest.
 - **Acceptance:** `data/corpus/<book>/_parity/pf_<book>_human_<class>_level1.pcg` exists.
 - **Acceptance:** `data/corpus/<book>/_parity/pf_<book>_human_<class>_level1.json` exists (normalized PCGen output).
 - **Acceptance:** the comparator's per-dimension match/mismatch table is recorded in the receipt.
@@ -111,21 +166,21 @@ Same acceptance/verification as 2.2.6 but for `data/corpus/beastiary1/`. Receipt
 ### 2.6 E4.2 — Architecture Closure
 
 - **Acceptance:** `artifacts/epic_4/architecture-closure-cycle_receipt.md` exists with the canonical six-section shape.
-- **Acceptance:** `architecture-truth-up` script clean against the bundle's combined diff.
+- **Acceptance:** the architecture truth-up gate is clean against the bundle's combined diff.
 - **Acceptance:** graphify-update succeeded (green exit).
-- **Verification:** `bash scripts/architecture-truth-up.sh` → exit 0.
-- **Verification:** `graphify cluster-only` → exit 0.
+- **Verification:** `bash scripts/architecture-truth-up.sh` → exit 0. (Both closure gates refuse to run on a dirty working tree; commit first, or pass `--force` deliberately.)
+- **Verification:** `bash scripts/graphify-update.sh` → exit 0. There is no `graphify` binary on PATH; this wrapper drives the vendored cluster-only gate and accepts `--graphify-cli` / `--dry-run`.
 
 ### 2.7 E4.3 — Release Notes
 
-- **Acceptance:** `release-notes.md` is populated with the canonical 7-section shape.
-- **Acceptance:** the per-book resolution table is complete.
-- **Verification:** manual review.
+- **Acceptance:** `release-notes.md` is populated with the canonical 7-section shape — it ships as an unpopulated template and every section must be replaced.
+- **Acceptance:** the per-book resolution table covers both in-scope books (ARG, PU).
+- **Verification:** manual review; `grep -c 'written at E4.3' release-notes.md` → 0.
 
 ### 2.8 E4.4 — Version Bump
 
 - **Acceptance:** build version is `0.6.1` (post-SD-27-promotion).
-- **Acceptance:** all four version-anchor files are updated (`apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`, plus the `0.5.` anchor in `buildVersionTriple.test.ts:44-47`).
+- **Acceptance:** all four version-anchor surfaces are updated: `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`, plus the tranche assertion in `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts:49`. Note: that assertion currently reads `pkg.startsWith('0.6.')`, **not** `0.5.`, and two files share the `buildVersionTriple.test.ts` basename — the `src/sd21/` one carries no version anchor. A `0.6.0 → 0.6.1` bump leaves the `0.6.` assertion satisfied and needs no test edit.
 - **Verification:** `cargo test --workspace --locked` → all green.
 
 ### 2.9 E4.5 — PR + Merge
@@ -147,5 +202,6 @@ Same acceptance/verification as 2.2.6 but for `data/corpus/beastiary1/`. Receipt
 - `./progress.md` — live cycle log.
 - `./release-notes.md` — bundle summary at closure.
 - `./artifacts/` — per-cycle receipt structure.
-- `documents/governance/repo-root-AGENTS.md` — repo-local governance rules.
-- `loop-instruction-template.md` (governance) — the canonical template.
+- `AGENTS.md` — repo-root governance rules (there is no `documents/governance/` tree).
+- `docs/governance/loop-instruction-template.md` — the canonical template.
+- `scripts/sd27-workflow.py` — dispatch-state driver + reporting writer; `loop-instruction.md §8` is its contract.

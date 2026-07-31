@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Gem of Seeing",
     "category": "magic_items",
-    "name": "Gem of Seeing",
     "cost_gp": 75000.0,
-    "weight_lbs": 0.0,
-    "description": "This finely cut and polished stone is indistinguishable from an ordinary jewel in appearance. When it is gazed through, a gem of seeing enables the user to see as though she were affected by the true seeing spell. A gem of seeing can be used for as many as 30 minutes a day, in increments of 5 minutes. These increments do not need to be consecutive."
+    "description": "This finely cut and polished stone is indistinguishable from an ordinary jewel in appearance. When it is gazed through, a gem of seeing enables the user to see as though she were affected by the true seeing spell. A gem of seeing can be used for as many as 30 minutes a day, in increments of 5 minutes. These increments do not need to be consecutive.",
+    "key": "Gem of Seeing",
+    "name": "Gem of Seeing",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gem of Seeing"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Gem of Seeing"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "75000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.514"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate divination"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|37,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, true seeing"
+      },
+      {
+        "key": "DESC",
+        "value": "This finely cut and polished stone is indistinguishable from an ordinary jewel in appearance. When it is gazed through, a gem of seeing enables the user to see as though she were affected by the true seeing spell. A gem of seeing can be used for as many as 30 minutes a day, in increments of 5 minutes. These increments do not need to be consecutive."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 171,
-    "record_key": "Gem of Seeing"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Gem of Seeing",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Rod of Interminable Hexes",
     "category": "MagicItems",
-    "name": "Rod of Interminable Hexes",
     "cost_gp": 11000.0,
-    "weight": 5.0,
-    "description": "3/day double duration of hex (not advanced or grand) with duration longer than 1 round"
+    "description": "3/day double duration of hex (not advanced or grand) with duration longer than 1 round",
+    "key": "Rod of Interminable Hexes",
+    "name": "Rod of Interminable Hexes",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "11000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day double duration of hex (not advanced or grand) with duration longer than 1 round"
+      }
+    ],
+    "weight": 5.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 298,
-    "record_key": "Rod of Interminable Hexes"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Rod of Interminable Hexes",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

@@ -17,5 +17,8 @@
     "line": 222,
     "record_key": "Musical Instrument (Mandolin)",
     "inherited_from_record_key": "Mandolin (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

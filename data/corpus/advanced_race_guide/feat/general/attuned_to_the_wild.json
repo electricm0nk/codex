@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Attuned to the Wild",
+    "category": "general",
+    "name": "Attuned to the Wild",
+    "description": "You share a strong mystic connection with one type of wilderness terrain.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 31,
+    "record_key": "Attuned to the Wild"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -17,5 +17,8 @@
     "line": 24,
     "record_key": "Bolts (Crossbow/10)",
     "inherited_from_record_key": "Bolt (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

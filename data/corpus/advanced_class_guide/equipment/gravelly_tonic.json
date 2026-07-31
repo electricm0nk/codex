@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Gravelly Tonic",
     "category": "General",
-    "name": "Gravelly Tonic",
     "cost_gp": 50.0,
-    "weight": null,
-    "description": "+5 bonus on Intimidate"
+    "description": "+5 bonus on Intimidate",
+    "key": "Gravelly Tonic",
+    "name": "Gravelly Tonic",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 bonus on Intimidate"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Intimidate|5|TYPE=Alchemical"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 211,
-    "record_key": "Gravelly Tonic"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Gravelly Tonic",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

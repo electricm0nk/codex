@@ -103,6 +103,14 @@ Stop and report the blocker instead of guessing when any of the following is tru
 - verification failed
 - required authoritative inputs are missing
 
+## Retrospective Logging
+
+When you catch an error, hit an incident, defer work, or redo something, emit a one-line event to the retrospective log via `scripts/retro.py`. The log is append-only and survives the run — git does not.
+
+- **Correction:** `scripts/retro.py correction --subject <who-was-wrong> --claimed <claimed-value> --actual <real-value> --verified-by <command-or-check>`. The `--verified-by` field is required; an unverified correction is just a competing assertion.
+- **Incident, deferral, rework:** use the corresponding type (`incident`, `deferral`, `rework`) — run `python3 scripts/retro.py help <type>` for required fields.
+- **Reference:** `docs/retro/schema.json` (the contract); `docs/governance/book-ingestion-playbook.md` (per-book cycle procedure).
+
 ## Practical Default
 
 Be conservative, exact, and auditable.

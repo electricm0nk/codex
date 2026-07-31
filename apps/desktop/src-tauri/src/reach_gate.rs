@@ -81,7 +81,9 @@ use codex::rules_core::rules_tables::apg::ApgClassId;
 use codex::rules_core::rules_tables::crb::class_tables::ClassId;
 use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::rules_tables::{acg, apg, crb, RuleSetId};
+use codex::rules_core::rules_tables::{
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, RuleSetId,
+};
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
 
@@ -298,6 +300,21 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
 /// recognize. An unrecognized type is not skipped: a new kind of ingested
 /// content is precisely the event this gate exists for, and defaulting it to
 /// "probably fine" would reintroduce the whole defect class on book 5.
+///
+/// **Known blind spot, stated rather than papered over.** This reads
+/// column-zero `pub const NAME: &[Type]` declarations only, so a book whose
+/// records live inline inside an accessor function body is invisible to it.
+/// `pathfinder_unchained` is exactly that shape today — its records sit inside
+/// `pub fn equipment_tables()` and `pub fn feat_tables()`, and it is also
+/// absent from `corpus_ingest_diagnostic` (which reports `crb`, `apg`, `acg`
+/// and `beastiary1`), so **neither** discovery source sees PU and this gate
+/// asserts nothing about it in either direction. That is not benign: PU's
+/// records do in fact reach `list_feat_catalog` and `list_equipment_catalog`
+/// today, but a future PU family that reached nothing would not fail here.
+/// A `reach_of` arm for a PU family would be an unexecuted claim — nothing
+/// iterates it — which is why none is declared. Remedy: teach this scanner the
+/// accessor-function shape (or add PU to the ingest diagnostic), then declare
+/// PU's claims so they are actually executed.
 fn scanned_inventory() -> (BTreeSet<Family>, Vec<String>) {
     let root = repo_root().join("src/rules_core/rules_tables");
     let mut families = BTreeSet::new();
@@ -410,6 +427,10 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("crb", "feats") => Some(feats_reach(RuleSetId::Crb, "Crb")),
         ("apg", "feats") => Some(feats_reach(RuleSetId::Apg, "Apg")),
         ("acg", "feats") => Some(feats_reach(RuleSetId::Acg, "Acg")),
+        // ARG joined `feats_all::all_feat_tables()` after the APG/ACG
+        // widening, so the same command now carries its records too. This
+        // claim replaces the OPEN_FINDINGS entry that recorded the gap.
+        ("advanced_race_guide", "feats") => Some(feats_reach(RuleSetId::Arg, "Arg")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -436,11 +457,61 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // ARG joined `build_spell_catalog` in the SD-27 widening, so the same
+        // command now carries its records. SpellCatalogScreen.tsx's default
+        // "All books" view renders every entry the response carries, so an ARG
+        // row reaches the player with its school, level and text even though
+        // the screen's `BOOK_ORDER` chip row does not yet offer an ARG filter
+        // (a completeness gap in the filter UI, not a reach gap).
+        ("advanced_race_guide", "spells") => Some(spells_reach(
+            "ARG",
+            arg::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
-        // Equipment: `list_equipment_catalog` / `list_equipment` serve the CRB
-        // table, rendered by apps/desktop/src/equipmentCatalog/
-        // EquipmentCatalogScreen.tsx with category and cost.
-        ("crb", "equipment") => Some(crb_equipment_reach()),
+        // Equipment: `list_equipment_catalog` / `list_equipment` serve every
+        // ingested book's table since the SD-27 widening of
+        // `build_equipment_catalog`, rendered by apps/desktop/src/
+        // equipmentCatalog/EquipmentCatalogScreen.tsx, which filters by
+        // category and search only — never by book — so every book's rows
+        // appear with their category label and cost.
+        ("crb", "equipment") => Some(equipment_reach(
+            "CRB",
+            crb::equipment_tables::equipment_tables()
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("apg", "equipment") => Some(equipment_reach(
+            "APG",
+            apg::equipment_tables::EQUIPMENT_TABLE
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("acg", "equipment") => Some(equipment_reach(
+            "ACG",
+            acg::equipment_tables::equipment_tables()
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("beastiary1", "equipment") => Some(equipment_reach(
+            "B1",
+            beastiary1::equipment_tables::EQUIPMENT_TABLE
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("advanced_race_guide", "equipment") => Some(equipment_reach(
+            "ARG",
+            arg::equipment_tables::equipment_tables()
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -552,16 +623,17 @@ fn spells_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
     )
 }
 
-fn crb_equipment_reach() -> Reach {
-    let ingested: BTreeSet<String> = crb::equipment_tables::equipment_tables()
-        .iter()
-        .map(|entry| entry.key.to_owned())
-        .collect();
-
+/// Equipment reach for one book, judged against the real
+/// `list_equipment_catalog` response filtered to that book's wire code.
+///
+/// Filtering by `wire_book` rather than scanning the whole response is what
+/// makes the claim per-book honest: a key that only another book serves must
+/// not count as this book's record arriving.
+fn equipment_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
     let response = crate::equipment_catalog::build_equipment_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();
-    for entry in &response.entries {
+    for entry in response.entries.iter().filter(|e| e.book == wire_book) {
         // `key` frequently equals `name` for equipment records, so the name is
         // not payload beyond identity. The category chip and the cost are what
         // the catalog screen adds.
@@ -724,29 +796,6 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// Each entry states the remedy, so this reads as a work queue rather than a
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
-    (
-        "apg",
-        "equipment",
-        "APG's 338 ingested equipment records reach no surface. `equipment_catalog.rs` reads \
-         `crb::equipment_tables::equipment_tables()` alone, so neither the Equipment Catalog \
-         screen nor the sheet's Add Equipment picker can offer them. Remedy: widen \
-         `build_equipment_catalog` across all books and tag each DTO with its book, exactly the \
-         way `spell_catalog.rs` and `feat_catalog.rs` were already widened for this same defect.",
-    ),
-    (
-        "acg",
-        "equipment",
-        "ACG's 269 ingested equipment records reach no surface, for the same reason and with the \
-         same remedy as the APG entry above.",
-    ),
-    (
-        "beastiary1",
-        "equipment",
-        "Bestiary 1's 4 ingested equipment records reach no surface, and are not even counted by \
-         `corpus_ingest_diagnostic`'s `beastiary1_counts` (which reports monsters only) — this \
-         family is visible to the gate solely through the source scan. Same remedy as the APG \
-         entry, plus adding the count to the diagnostic.",
-    ),
     (
         "beastiary1",
         "monsters",
@@ -1182,3 +1231,4 @@ mod tests {
         }
     }
 }
+

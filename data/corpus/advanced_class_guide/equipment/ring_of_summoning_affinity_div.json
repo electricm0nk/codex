@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Summoning Affinity (Div)",
     "category": "MagicItems",
-    "name": "Ring of Summoning Affinity (Div)",
     "cost_gp": 9100.0,
-    "weight": null,
-    "description": "add to summon monster list: doru (3rd), aghash (4th), pairaka (6th), ghawwas (7th), shira (8th), sepid (9th); 1/day summon doru"
+    "description": "add to summon monster list: doru (3rd), aghash (4th), pairaka (6th), ghawwas (7th), shira (8th), sepid (9th); 1/day summon doru",
+    "key": "Ring of Summoning Affinity (Div)",
+    "name": "Ring of Summoning Affinity (Div)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "9100"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon monster list: doru (3rd), aghash (4th), pairaka (6th), ghawwas (7th), shira (8th), sepid (9th); 1/day summon doru"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 285,
-    "record_key": "Ring of Summoning Affinity (Div)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Summoning Affinity (Div)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

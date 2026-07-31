@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Gloves of Marking",
     "category": "MagicItems",
-    "name": "Gloves of Marking",
     "cost_gp": 7200.0,
-    "weight": 1.0,
-    "description": "when wielding a slashing or piercing weapon and using Weapon Finesse, wearer can mark a creature when confirming a critical instead of dealing additional damage; wielder and allies get +2 morale bonus on attack and melee damage against marked creature for 1 minute, marked creature must save (Will DC %) or be shaken for 1 minute."
+    "description": "when wielding a slashing or piercing weapon and using Weapon Finesse, wearer can mark a creature when confirming a critical instead of dealing additional damage; wielder and allies get +2 morale bonus on attack and melee damage against marked creature for 1 minute, marked creature must save (Will DC %) or be shaken for 1 minute.",
+    "key": "Gloves of Marking",
+    "name": "Gloves of Marking",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "7200"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPROP",
+        "value": "when wielding a slashing or piercing weapon and using Weapon Finesse, wearer can mark a creature when confirming a critical instead of dealing additional damage; wielder and allies get +2 morale bonus on attack and melee damage against marked creature for 1 minute, marked creature must save (Will DC %) or be shaken for 1 minute.|10+TL/2+DEX"
+      }
+    ],
+    "weight": 1.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 371,
-    "record_key": "Gloves of Marking"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Gloves of Marking",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

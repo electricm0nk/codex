@@ -17,5 +17,8 @@
     "line": 336,
     "record_key": "Shuriken",
     "inherited_from_record_key": "Shuriken (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

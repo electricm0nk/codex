@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 6000.0,
+    "description": "Changes shape to match its bearer's holy symbol within an hour of coming into her possession. After that transformation is complete, when this symbol is used by a halfling with the luck or adaptable luck racial trait to channel energy in order to heal, it also grants those healed a +1 luck bonus on saving throws for a number of rounds equal to the number of dice healed by the channel energy.",
+    "key": "Symbol of Luck",
+    "name": "Symbol of Luck",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.68"
+      },
+      {
+        "key": "SPROP",
+        "value": "Changes shape to match its bearer's holy symbol within an hour of coming into her possession. After that transformation is complete, when this symbol is used by a halfling with the luck or adaptable luck racial trait to channel energy in order to heal, it also grants those healed a +1 luck bonus on saving throws for a number of rounds equal to the number of dice healed by the channel energy."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 86,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Symbol of Luck",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

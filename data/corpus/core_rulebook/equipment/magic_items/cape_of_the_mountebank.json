@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Cape of the Mountebank",
     "category": "magic_items",
-    "name": "Cape of the Mountebank",
     "cost_gp": 10800.0,
-    "weight_lbs": 1.0,
-    "description": "On command, this bright red and gold cape allows the wearer to use the magic of the dimension door spell once per day. When he disappears, he leaves behind a cloud of smoke, appearing in a similar fashion at his destination."
+    "description": "On command, this bright red and gold cape allows the wearer to use the magic of the dimension door spell once per day. When he disappears, he leaves behind a cloud of smoke, appearing in a similar fashion at his destination.",
+    "key": "Cape of the Mountebank",
+    "name": "Cape of the Mountebank",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cape of the Mountebank"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cape of the Mountebank"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "10800"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Cape of the Mountebank|TIMES=1|CASTERLEVEL=9|Dimension Door"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|shoulders"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|5,400 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, dimension door"
+      },
+      {
+        "key": "DESC",
+        "value": "On command, this bright red and gold cape allows the wearer to use the magic of the dimension door spell once per day. When he disappears, he leaves behind a cloud of smoke, appearing in a similar fashion at his destination."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 94,
-    "record_key": "Cape of the Mountebank"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Cape of the Mountebank",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

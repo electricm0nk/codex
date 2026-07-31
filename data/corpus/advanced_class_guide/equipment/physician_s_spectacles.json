@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Physician's Spectacles",
     "category": "MagicItems",
-    "name": "Physician's Spectacles",
     "cost_gp": 4900.0,
-    "weight": null,
-    "description": "constant detect poison and diagnose disease; 1/day delay poison by touch"
+    "description": "constant detect poison and diagnose disease; 1/day delay poison by touch",
+    "key": "Physician's Spectacles",
+    "name": "Physician's Spectacles",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Eyes"
+      },
+      {
+        "key": "COST",
+        "value": "4900"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SPROP",
+        "value": "constant detect poison and diagnose disease; 1/day delay poison by touch"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 393,
-    "record_key": "Physician's Spectacles"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Physician's Spectacles",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

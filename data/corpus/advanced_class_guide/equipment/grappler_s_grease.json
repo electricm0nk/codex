@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Grappler's Grease",
     "category": "General",
-    "name": "Grappler's Grease",
     "cost_gp": 5.0,
-    "weight": 0.5,
-    "description": "Gain +4 to CMD against Grapple; 1 minute to apply, lasts 10 minutes"
+    "description": "Gain +4 to CMD against Grapple; 1 minute to apply, lasts 10 minutes",
+    "key": "Grappler's Grease",
+    "name": "Grappler's Grease",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 5 Maximum|CHARGES[5]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain +4 to CMD against Grapple; 1 minute to apply, lasts 10 minutes"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|CMD_Grapple|4"
+      }
+    ],
+    "weight": 0.5
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 175,
-    "record_key": "Grappler's Grease"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Grappler's Grease",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

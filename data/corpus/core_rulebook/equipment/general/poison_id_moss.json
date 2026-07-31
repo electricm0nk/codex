@@ -1,20 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Id Moss)",
     "category": "general",
-    "name": "Poison, Id Moss",
     "cost_gp": 125.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Id Moss)",
+    "name": "Poison, Id Moss",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Id Moss)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Id Moss"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Id Moss"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "125"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.559"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 14; Onset 10 min; Freq 1 min (6); Effect 1d3 Int dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 14"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|10 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Int damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 507,
-    "record_key": "Poison (Id Moss)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Id Moss)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

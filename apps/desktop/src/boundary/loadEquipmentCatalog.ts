@@ -2,21 +2,51 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 
 /**
- * Read-only desktop boundary over the full CRB equipment catalog.
+ * Read-only desktop boundary over the full cross-book equipment catalog.
  *
  * Invokes the `list_equipment_catalog` Tauri command, which returns every
- * real corpus record in `rules_tables::crb::equipment_tables` (all ~2,977
- * records across all 4 core-rulebook categories) verbatim — not a
- * per-character sample. Distinct from `loadSavedCharacterDetail`'s Gear
- * tab data, which reflects only what one character has equipped.
+ * real corpus record across all six ingested books verbatim — CRB (2977),
+ * APG (338), ACG (269), Bestiary 1 (4), ARG (200) and Pathfinder Unchained
+ * (42), 3830 in total — not a per-character sample. Those per-book totals
+ * are pinned by `equipment_catalog.rs`'s
+ * `catalog_spans_every_ingested_book_with_their_real_counts`. Distinct from
+ * `loadSavedCharacterDetail`'s Gear tab data, which reflects only what one
+ * character has equipped.
  */
 
+/**
+ * One of the wire codes `equipment_catalog.rs` exports as
+ * `EQUIPMENT_CATALOG_BOOKS`: `"CRB"`, `"APG"`, `"ACG"`, `"B1"`, `"ARG"` or
+ * `"PU"`. Left as `string` rather than a closed union so a book added on the
+ * Rust side arrives intact instead of failing to type — the screen falls back
+ * to rendering the raw code when it has no label for one.
+ */
+export type EquipmentBookDto = string;
+
 export interface EquipmentCatalogEntryDto {
+  /**
+   * The record's corpus identity — its `KEY:` token when the row carries
+   * one, else its display name. Unique across books, but **not** unique
+   * within CRB: 316 CRB keys appear twice (e.g. `Holy Symbol (Silver)`), a
+   * pre-existing property of `crb::equipment_tables` pinned by
+   * `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned`.
+   * So `key` alone is not a safe React list key here.
+   */
   key: string;
-  /** The `EquipmentCategory` variant name verbatim, e.g. "ArmsArmor". */
+  /**
+   * The `EquipmentCategory` variant name verbatim, e.g. "ArmsArmor".
+   * Always `"Equipmods"` for `PU`, whose only ingested equipment content is
+   * `pu_equipmods.lst` and which has no category enum of its own.
+   */
   category: string;
   name: string;
+  /**
+   * `null` where the corpus row carries no flat gp cost — genuinely absent,
+   * never a fabricated 0. All 42 PU rows are `null` for this reason.
+   */
   costGp: number | null;
+  /** Which ingested book this record came from. */
+  book: EquipmentBookDto;
 }
 
 export interface EquipmentCatalogResponse {

@@ -17,5 +17,8 @@
     "line": 222,
     "record_key": "Flail",
     "inherited_from_record_key": "Light Flail (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

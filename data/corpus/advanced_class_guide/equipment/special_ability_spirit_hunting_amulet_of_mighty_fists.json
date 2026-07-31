@@ -1,20 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists",
     "category": "Equipmods",
-    "name": "Spirit-Hunting",
     "cost_gp": null,
-    "weight": null,
-    "description": "+2 enhancement, +2d6 damage against foe with %CHOICE mystery or spirit"
+    "description": "+2 enhancement, +2d6 damage against foe with %CHOICE mystery or spirit",
+    "key": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists",
+    "name": "Spirit-Hunting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 enhancement, +2d6 damage against foe with %CHOICE mystery or spirit"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITY|Special Ability|TYPE=Oracle Mysteries|TYPE=ShamanSpirit|TITLE=Designated Foe"
+      },
+      {
+        "key": "SELECT",
+        "value": "1"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
     "line": 74,
-    "record_key": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Spirit-Hunting ~ Amulet of Mighty Fists",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
   }
 }

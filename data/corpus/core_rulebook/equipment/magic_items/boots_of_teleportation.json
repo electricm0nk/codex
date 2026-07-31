@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Boots of Teleportation",
     "category": "magic_items",
-    "name": "Boots of Teleportation",
     "cost_gp": 49000.0,
-    "weight_lbs": 3.0,
-    "description": "Any character wearing this footwear may teleport three times per day, exactly as if he had cast the spell of the same name."
+    "description": "Any character wearing this footwear may teleport three times per day, exactly as if he had cast the spell of the same name.",
+    "key": "Boots of Teleportation",
+    "name": "Boots of Teleportation",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boots of Teleportation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Boots of Teleportation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Feet.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "49000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Boots of Teleportation|TIMES=3|CASTERLEVEL=9|Teleport"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|feet"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|24,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, teleport"
+      },
+      {
+        "key": "DESC",
+        "value": "Any character wearing this footwear may teleport three times per day, exactly as if he had cast the spell of the same name."
+      }
+    ],
+    "weight_lbs": 3.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 65,
-    "record_key": "Boots of Teleportation"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Boots of Teleportation",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

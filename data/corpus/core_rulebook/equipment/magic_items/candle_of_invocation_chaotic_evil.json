@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Candle of Invocation (Chaotic-Evil)",
     "category": "magic_items",
-    "name": "Candle of Invocation (Chaotic Evil)",
     "cost_gp": 8400.0,
-    "weight_lbs": 0.5,
-    "description": "Each of these special tapers is dedicated to one of the nine alignments. Simply burning the candle generates a favorable aura for the individual if the candle's alignment matches that of the character. Characters of the same alignment as the burning candle add a +2 morale bonus on attack rolls, saving throws, and skill checks while within 30 feet of the flame.\nA cleric whose alignment matches the candle's operates as if two levels higher for purposes of determining spells per day if he burns the candle during or just prior to his spell preparation time. He can even cast spells normally unavailable to him as if he were of that higher level, but only so long as the candle continues to burn. Except in special cases (see below), a candle burns for 4 hours. It is possible to extinguish the candle simply by blowing it out, so users often place it in a lantern to protect it from drafts and the like. Doing this doesn't interfere with its magical properties.\nIn addition, burning a candle also allows the owner to cast a gate spell, the respondent being of the same alignment as the candle, but the taper is immediately consumed in the process."
+    "description": "Each of these special tapers is dedicated to one of the nine alignments. Simply burning the candle generates a favorable aura for the individual if the candle's alignment matches that of the character. Characters of the same alignment as the burning candle add a +2 morale bonus on attack rolls, saving throws, and skill checks while within 30 feet of the flame.\nA cleric whose alignment matches the candle's operates as if two levels higher for purposes of determining spells per day if he burns the candle during or just prior to his spell preparation time. He can even cast spells normally unavailable to him as if he were of that higher level, but only so long as the candle continues to burn. Except in special cases (see below), a candle burns for 4 hours. It is possible to extinguish the candle simply by blowing it out, so users often place it in a lantern to protect it from drafts and the like. Doing this doesn't interfere with its magical properties.\nIn addition, burning a candle also allows the owner to cast a gate spell, the respondent being of the same alignment as the candle, but the taper is immediately consumed in the process.",
+    "key": "Candle of Invocation (Chaotic-Evil)",
+    "name": "Candle of Invocation (Chaotic Evil)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Candle of Invocation (Chaotic-Evil)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Candle of Invocation (Chaotic Evil)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "8400"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|17th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|4,200 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, gate, creator must be same alignment as candle created"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 morale bonus on attack rolls, saving throws, and skill checks while within 30 feet of the flame if chaotic-evil."
+      },
+      {
+        "key": "DESC",
+        "value": "Each of these special tapers is dedicated to one of the nine alignments. Simply burning the candle generates a favorable aura for the individual if the candle's alignment matches that of the character. Characters of the same alignment as the burning candle add a +2 morale bonus on attack rolls, saving throws, and skill checks while within 30 feet of the flame.&nl;A cleric whose alignment matches the candle's operates as if two levels higher for purposes of determining spells per day if he burns the candle during or just prior to his spell preparation time. He can even cast spells normally unavailable to him as if he were of that higher level, but only so long as the candle continues to burn. Except in special cases (see below), a candle burns for 4 hours. It is possible to extinguish the candle simply by blowing it out, so users often place it in a lantern to protect it from drafts and the like. Doing this doesn't interfere with its magical properties.&nl;In addition, burning a candle also allows the owner to cast a gate spell, the respondent being of the same alignment as the candle, but the taper is immediately consumed in the process."
+      }
+    ],
+    "weight_lbs": 0.5
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 91,
-    "record_key": "Candle of Invocation (Chaotic-Evil)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Candle of Invocation (Chaotic-Evil)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

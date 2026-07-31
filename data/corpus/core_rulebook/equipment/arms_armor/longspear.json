@@ -17,5 +17,8 @@
     "line": 209,
     "record_key": "Longspear",
     "inherited_from_record_key": "Longspear (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

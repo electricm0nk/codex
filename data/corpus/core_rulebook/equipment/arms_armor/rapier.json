@@ -17,5 +17,8 @@
     "line": 225,
     "record_key": "Rapier",
     "inherited_from_record_key": "Rapier (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Saddle (Riding)",
     "category": "general",
-    "name": "Saddle, Riding",
     "cost_gp": 10.0,
-    "weight_lbs": 25.0,
-    "description": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle."
+    "description": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle.",
+    "key": "Saddle (Riding)",
+    "name": "Saddle, Riding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saddle (Riding)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Saddle, Riding"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Riding Saddle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Mount.Saddle.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle."
+      }
+    ],
+    "weight_lbs": 25.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 299,
-    "record_key": "Saddle (Riding)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Saddle (Riding)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

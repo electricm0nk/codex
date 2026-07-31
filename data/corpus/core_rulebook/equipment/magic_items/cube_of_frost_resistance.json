@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Cube of Frost Resistance",
     "category": "magic_items",
-    "name": "Cube of Frost Resistance",
     "cost_gp": 27000.0,
-    "weight_lbs": 2.0,
-    "description": "This cube is activated or deactivated by pressing one side. When activated, it creates a cube-shaped area 10 feet on a side centered on the possessor (or on the cube itself, if the item is later placed on a surface). The temperature within this area is always at least 65° F. The field absorbs all cold-based attacks. However, if the field is subjected to more than 50 points of cold damage in 1 round (from one or multiple attacks), it collapses and cannot be reactivated for 1 hour. If the field absorbs more than 100 points of cold damage in a 10-round period, the cube is destroyed."
+    "description": "This cube is activated or deactivated by pressing one side. When activated, it creates a cube-shaped area 10 feet on a side centered on the possessor (or on the cube itself, if the item is later placed on a surface). The temperature within this area is always at least 65° F. The field absorbs all cold-based attacks. However, if the field is subjected to more than 50 points of cold damage in 1 round (from one or multiple attacks), it collapses and cannot be reactivated for 1 hour. If the field absorbs more than 100 points of cold damage in a 10-round period, the cube is destroyed.",
+    "key": "Cube of Frost Resistance",
+    "name": "Cube of Frost Resistance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cube of Frost Resistance"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cube of Frost Resistance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "27000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.508"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|13,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, protection from energy"
+      },
+      {
+        "key": "DESC",
+        "value": "This cube is activated or deactivated by pressing one side. When activated, it creates a cube-shaped area 10 feet on a side centered on the possessor (or on the cube itself, if the item is later placed on a surface). The temperature within this area is always at least 65° F. The field absorbs all cold-based attacks. However, if the field is subjected to more than 50 points of cold damage in 1 round (from one or multiple attacks), it collapses and cannot be reactivated for 1 hour. If the field absorbs more than 100 points of cold damage in a 10-round period, the cube is destroyed."
+      }
+    ],
+    "weight_lbs": 2.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 124,
-    "record_key": "Cube of Frost Resistance"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Cube of Frost Resistance",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

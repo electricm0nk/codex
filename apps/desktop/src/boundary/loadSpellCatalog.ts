@@ -5,19 +5,23 @@ import { formatError, hasTauriRuntime } from './runtime';
  * Read-only desktop boundary over the full spell catalog.
  *
  * Invokes the `list_spell_catalog` Tauri command, which returns every real
- * corpus record across all three ingested books verbatim — CRB (652), APG
- * (297) and ACG (144), 1093 in total — not a per-character sample.
- * Distinct from the Character Sheet's Spells tab data, which reflects only
- * what one character has selected.
+ * corpus record across all four ingested books verbatim — CRB (652), APG
+ * (297), ACG (144) and ARG (92), 1185 in total — not a per-character
+ * sample. Those counts are pinned Rust-side by
+ * `the_catalog_serves_every_ingested_book_not_only_crb` in
+ * `spell_catalog.rs`. Pathfinder Unchained is absent because its
+ * `pu_spells.lst` is entirely commented out, so the book defines no spell
+ * of its own. Distinct from the Character Sheet's Spells tab data, which
+ * reflects only what one character has selected.
  */
 
-/** `"CRB"`, `"APG"` or `"ACG"` — see `spell_catalog.rs`. */
+/** `"CRB"`, `"APG"`, `"ACG"` or `"ARG"` — see `spell_catalog.rs`. */
 export type SpellBookDto = string;
 
 export interface SpellCatalogEntryDto {
   /**
    * The record's corpus identity — its `KEY:` token when the corpus row
-   * carries one, else its display name. Unique across all three books, so
+   * carries one, else its display name. Unique across all four books, so
    * it is safe to use as a resolution key and a React list key.
    */
   key: string;

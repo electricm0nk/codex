@@ -1,20 +1,83 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Belt of Incredible Dexterity +4",
     "category": "magic_items",
-    "name": "Belt of Incredible Dexterity +4",
     "cost_gp": 16000.0,
-    "weight_lbs": 1.0,
-    "description": "This belt has a large silver buckle, usually depicting the image of a tiger. The belt grants the wearer an enhancement bonus to Dexterity of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn."
+    "description": "This belt has a large silver buckle, usually depicting the image of a tiger. The belt grants the wearer an enhancement bonus to Dexterity of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn.",
+    "key": "Belt of Incredible Dexterity +4",
+    "name": "Belt of Incredible Dexterity +4",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "DEX",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Belt of Incredible Dexterity +4"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Belt of Incredible Dexterity +4"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.502"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|8th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|belt"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|8,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, cat's grace"
+      },
+      {
+        "key": "DESC",
+        "value": "This belt has a large silver buckle, usually depicting the image of a tiger. The belt grants the wearer an enhancement bonus to Dexterity of +2, +4, or +6. Treat this as a temporary ability bonus for the first 24 hours the belt is worn."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 42,
-    "record_key": "Belt of Incredible Dexterity +4"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Belt of Incredible Dexterity +4",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

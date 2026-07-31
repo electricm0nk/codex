@@ -25,6 +25,9 @@
     "line": 401,
     "record_key": "Vargouille"
   },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",

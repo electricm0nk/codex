@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-30T00:05:00Z",
   "data": {
-    "key": "Poison (Black Smear)",
     "category": "General",
-    "name": "Poison (Black Smear)",
     "cost_gp": 0.0,
-    "weight": 0.0,
-    "description": "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save"
+    "description": "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save",
+    "key": "Poison (Black Smear)",
+    "name": "Poison (Black Smear)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.54"
+      },
+      {
+        "key": "SPROP",
+        "value": "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save"
+      }
+    ],
+    "weight": 0.0
   },
+  "ingested_at": "2026-07-30T00:05:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_general.lst",
-    "sha256": "1cc0b06e54f23593747d694ee4dd5f2ded0a1a559d1ca549fcd035be24a1c295",
     "line": 7,
-    "record_key": "Poison (Black Smear)"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_general.lst",
+    "record_key": "Poison (Black Smear)",
+    "sha256": "1cc0b06e54f23593747d694ee4dd5f2ded0a1a559d1ca549fcd035be24a1c295"
   }
 }

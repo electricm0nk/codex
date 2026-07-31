@@ -1,20 +1,66 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Everburning Torch",
     "category": "general",
-    "name": "Everburning Torch",
     "cost_gp": 110.0,
-    "weight_lbs": 1.0,
-    "description": "This otherwise normal torch has a continual flame spell cast on it. This causes it to shed light like an ordinary torch, but it does not emit heat or deal fire damage if used as a weapon."
+    "description": "This otherwise normal torch has a continual flame spell cast on it. This causes it to shed light like an ordinary torch, but it does not emit heat or deal fire damage if used as a weapon.",
+    "key": "Everburning Torch",
+    "name": "Everburning Torch",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Everburning Torch"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Everburning Torch"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Magic.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "110"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Bright Illumination|20 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Shadowy Illumination|40 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|Permanent"
+      },
+      {
+        "key": "DESC",
+        "value": "This otherwise normal torch has a continual flame spell cast on it. This causes it to shed light like an ordinary torch, but it does not emit heat or deal fire damage if used as a weapon."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 192,
-    "record_key": "Everburning Torch"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Everburning Torch",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

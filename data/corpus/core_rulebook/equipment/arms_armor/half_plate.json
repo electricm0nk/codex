@@ -17,5 +17,8 @@
     "line": 60,
     "record_key": "Half-Plate",
     "inherited_from_record_key": "Half-Plate (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

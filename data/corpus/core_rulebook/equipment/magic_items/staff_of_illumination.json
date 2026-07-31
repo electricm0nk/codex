@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Illumination",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 51500.0,
-    "weight_lbs": 5.0,
-    "description": "This staff is usually sheathed in silver and decorated with sunbursts. It allows use of the following spells:\n* Dancing lights (1 charge)\n* Flare (1 charge)\n* Daylight (2 charges)\n* Sunburst (3 charges)"
+    "description": "This staff is usually sheathed in silver and decorated with sunbursts. It allows use of the following spells:\n* Dancing lights (1 charge)\n* Flare (1 charge)\n* Daylight (2 charges)\n* Sunburst (3 charges)",
+    "key": "Staff of Illumination",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Illumination"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Illumination"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "51500"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.494"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|20,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, dancing lights, daylight, flare, sunburst"
+      },
+      {
+        "key": "DESC",
+        "value": "This staff is usually sheathed in silver and decorated with sunbursts. It allows use of the following spells:&nl;* Dancing lights (1 charge)&nl;* Flare (1 charge)&nl;* Daylight (2 charges)&nl;* Sunburst (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 434,
-    "record_key": "Staff of Illumination"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Illumination",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

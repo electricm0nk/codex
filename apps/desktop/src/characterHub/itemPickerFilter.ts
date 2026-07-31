@@ -53,7 +53,7 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
     // `SpellCatalogEntryDto`'s doc comment) — `key` is the spell's real
     // corpus identity and doubles as the display name.
     name: entry.key,
-    // Book first, since the catalog now spans CRB, APG and ACG and a
+    // Book first, since the catalog spans CRB, APG, ACG and ARG and a
     // player picking a spell needs to know which book it comes from.
     // `school`/`level` are omitted rather than defaulted when the corpus
     // row genuinely lacks them (a real `apg_spells.lst` gap), so the
@@ -63,7 +63,7 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
     // that is what the catalog record's own field is: the MINIMUM across
     // every class named in its corpus `CLASSES:` tag. Hideous Laughter is
     // `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it reads 1 here even for a
-    // Wizard who learns it at 2. This picker browses all 1093 records
+    // Wizard who learns it at 2. This picker browses all 1185 records
     // across every class, so it has no one class to answer for — unlike
     // the Spells tab, which resolves each row against its own
     // `sourceClassId` via `list_class_spell_levels` (see
@@ -79,11 +79,22 @@ export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPic
   }));
 }
 
-/** Friendly book labels for `RuleSetId` variants — mirrors the spell catalog's own `book` strings. */
+/**
+ * Friendly book labels for `RuleSetId` variants — mirrors the spell
+ * catalog's own `book` strings. Every variant `list_feat_catalog` can
+ * actually emit needs an entry: a missing one reaches the player as the raw
+ * `RuleSetId` variant name (`Arg`, `Pu`) sitting beside properly-coded
+ * CRB/APG/ACG rows. `feat_catalog.rs` serves Crb 185, Apg 172, Acg 129, Arg
+ * 187 and Pu 17 (690 total), so ARG and PU alone are 204 of the picker's
+ * rows. `Bestiary1` is deliberately absent: that book contributes equipment
+ * but no feats.
+ */
 const FEAT_SOURCE_LABELS: Record<string, string> = {
   Crb: 'CRB',
   Apg: 'APG',
   Acg: 'ACG',
+  Arg: 'ARG',
+  Pu: 'PU',
 };
 
 export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
@@ -91,7 +102,7 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
     key: entry.key,
     name: entry.name,
     // Book first, then category, then the corpus description — the
-    // catalog now spans CRB, APG and ACG, and a player picking a feat
+    // catalog spans CRB, APG, ACG, ARG and PU, and a player picking a feat
     // needs to know which book it comes from, exactly as
     // `mapSpellCatalogEntries` already does. An unknown/future book falls
     // back to the raw variant string rather than a fabricated label, and

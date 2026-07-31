@@ -17,5 +17,8 @@
     "line": 94,
     "record_key": "Barding (Leather)",
     "inherited_from_record_key": "Leather Barding (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

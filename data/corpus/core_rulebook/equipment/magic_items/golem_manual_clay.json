@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Golem Manual (Clay)",
     "category": "magic_items",
-    "name": "Golem Manual (Clay)",
     "cost_gp": 12000.0,
-    "weight_lbs": 5.0,
-    "description": "A golem manual contains information, incantations, and magical power that help a character to craft a golem (see the Pathfinder RPG Bestiary). The instructions therein grant a +5 competence bonus on skill checks made to craft the golem's body. Each manual also holds the prerequisite spells needed for a specific golem (although these spells can only be used to create a golem and cannot be copied), effectively granting the builder use of the Craft Construct feat during the construction of the golem, and an increase to her caster level for the purpose of crafting a golem.\nThe spells included in a golem manual require a spell trigger activation and can be activated only to assist in the construction of a golem. The cost of the book does not include the cost of constructing the golem's body. Once the golem is finished, the writing in the manual fades and the book is consumed in flames. When the book's ashes are sprinkled upon the golem, it becomes fully animated.\nClay Golem Manual: The book contains animate objects, bless, commune, prayer, and resurrection. The reader may treat her caster level as two levels higher than normal for the purpose of crafting a clay golem."
+    "description": "A golem manual contains information, incantations, and magical power that help a character to craft a golem (see the Pathfinder RPG Bestiary). The instructions therein grant a +5 competence bonus on skill checks made to craft the golem's body. Each manual also holds the prerequisite spells needed for a specific golem (although these spells can only be used to create a golem and cannot be copied), effectively granting the builder use of the Craft Construct feat during the construction of the golem, and an increase to her caster level for the purpose of crafting a golem.\nThe spells included in a golem manual require a spell trigger activation and can be activated only to assist in the construction of a golem. The cost of the book does not include the cost of constructing the golem's body. Once the golem is finished, the writing in the manual fades and the book is consumed in flames. When the book's ashes are sprinkled upon the golem, it becomes fully animated.\nClay Golem Manual: The book contains animate objects, bless, commune, prayer, and resurrection. The reader may treat her caster level as two levels higher than normal for the purpose of crafting a clay golem.",
+    "key": "Golem Manual (Clay)",
+    "name": "Golem Manual (Clay)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Golem Manual (Clay)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Golem Manual (Clay)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.515"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|Moderate conjuration, divination, enchantment, and transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Construct, creator must be caster level 11th, animate objects, commune, prayer, resurrection"
+      },
+      {
+        "key": "DESC",
+        "value": "A golem manual contains information, incantations, and magical power that help a character to craft a golem (see the Pathfinder RPG Bestiary). The instructions therein grant a +5 competence bonus on skill checks made to craft the golem's body. Each manual also holds the prerequisite spells needed for a specific golem (although these spells can only be used to create a golem and cannot be copied), effectively granting the builder use of the Craft Construct feat during the construction of the golem, and an increase to her caster level for the purpose of crafting a golem.&nl;The spells included in a golem manual require a spell trigger activation and can be activated only to assist in the construction of a golem. The cost of the book does not include the cost of constructing the golem's body. Once the golem is finished, the writing in the manual fades and the book is consumed in flames. When the book's ashes are sprinkled upon the golem, it becomes fully animated.&nl;Clay Golem Manual: The book contains animate objects, bless, commune, prayer, and resurrection. The reader may treat her caster level as two levels higher than normal for the purpose of crafting a clay golem."
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 177,
-    "record_key": "Golem Manual (Clay)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Golem Manual (Clay)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

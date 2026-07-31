@@ -17,5 +17,8 @@
     "line": 207,
     "record_key": "Morningstar",
     "inherited_from_record_key": "Morningstar (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

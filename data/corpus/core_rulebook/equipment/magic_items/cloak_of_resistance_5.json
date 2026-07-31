@@ -1,20 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Cloak of Resistance +5",
     "category": "magic_items",
-    "name": "Cloak of Resistance +5",
     "cost_gp": 25000.0,
-    "weight_lbs": 1.0,
-    "description": "These garments offer magic protection in the form of a +1 to +5 resistance bonus on all saving throws (Fortitude, Reflex, and Will)."
+    "description": "These garments offer magic protection in the form of a +1 to +5 resistance bonus on all saving throws (Fortitude, Reflex, and Will).",
+    "key": "Cloak of Resistance +5",
+    "name": "Cloak of Resistance +5",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FortitudeSave_ResistanceBonus,ReflexSave_ResistanceBonus,WillSave_ResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cloak of Resistance +5"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cloak of Resistance +5"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "25000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.507"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|shoulders"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|12,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, resistance, creator's caster level must be at least three times the cloak's bonus"
+      },
+      {
+        "key": "DESC",
+        "value": "These garments offer magic protection in the form of a +1 to +5 resistance bonus on all saving throws (Fortitude, Reflex, and Will)."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 115,
-    "record_key": "Cloak of Resistance +5"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Cloak of Resistance +5",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

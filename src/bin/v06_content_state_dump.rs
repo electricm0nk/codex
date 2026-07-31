@@ -582,6 +582,9 @@ fn main() {
             RuleSetId::Apg => "advanced_players_guide",
             RuleSetId::Acg => "advanced_class_guide",
             RuleSetId::Bestiary1 => "bestiary_1",
+            // SD-27: `all_feat_tables()` now yields ARG and PU tables too.
+            RuleSetId::Arg => "advanced_race_guide",
+            RuleSetId::Pu => "pathfinder_unchained",
         };
         let records = table.entries.len();
         let wired_here = table

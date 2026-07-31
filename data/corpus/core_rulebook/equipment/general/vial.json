@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Vial",
     "category": "general",
-    "name": "Vial",
     "cost_gp": 1.0,
-    "weight_lbs": null,
-    "description": "A vial is made out of glass or steel and holds 1 ounce of liquid."
+    "description": "A vial is made out of glass or steel and holds 1 ounce of liquid.",
+    "key": "Vial",
+    "name": "Vial",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vial"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Vial"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Container.General.Vial"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|Liquid=1|Spell Component=1|Poison=1"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "DESC",
+        "value": "A vial is made out of glass or steel and holds 1 ounce of liquid."
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 181,
-    "record_key": "Vial"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Vial",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

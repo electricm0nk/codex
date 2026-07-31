@@ -1,20 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Striped Toadstool)",
     "category": "general",
-    "name": "Poison, Striped Toadstool",
     "cost_gp": 180.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Striped Toadstool)",
+    "name": "Poison, Striped Toadstool",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Striped Toadstool)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Striped Toadstool"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Striped Toadstool"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "180"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 11; Onset 10 min; Freq 1 min (4); Effect 1d3 Wis dmg and 1 Int dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 11"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|10 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 4 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Wis damage and 1 Int damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 521,
-    "record_key": "Poison (Striped Toadstool)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Striped Toadstool)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

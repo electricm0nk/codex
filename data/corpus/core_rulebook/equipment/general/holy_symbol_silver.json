@@ -17,5 +17,8 @@
     "line": 210,
     "record_key": "Holy Symbol (Silver)",
     "inherited_from_record_key": "Holy Symbol"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

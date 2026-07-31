@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Rowboat",
     "category": "general",
-    "name": "Rowboat",
     "cost_gp": 50.0,
-    "weight_lbs": 100.0,
-    "description": null
+    "description": null,
+    "key": "Rowboat",
+    "name": "Rowboat",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rowboat"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Transportation.Vehicle.Ships.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "600|Any"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "100"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      }
+    ],
+    "weight_lbs": 100.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 313,
-    "record_key": "Rowboat"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Rowboat",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

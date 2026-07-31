@@ -15,5 +15,8 @@
     "url": "https://www.d20pfsrd.com/bestiary/monster-listings/humanoids/dark-creeper/",
     "fetched_at": "2026-07-22T09:14:38-04:00",
     "identity_match_basis": "name (\"Rag Armor\") + category (armor) + the corpus's own PRERACE:1,Dark Creeper qualifier + Bestiary 1 source page p.53, all matching the Dark Creeper monster's own \"Rag Armor\" (Ex) special quality"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

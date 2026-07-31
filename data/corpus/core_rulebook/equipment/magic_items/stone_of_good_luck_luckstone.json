@@ -1,20 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Stone of Good Luck (Luckstone)",
     "category": "magic_items",
-    "name": "Stone of Good Luck",
     "cost_gp": 20000.0,
-    "weight_lbs": 0.0,
-    "description": "This small bit of agate grants its possessor a +1 luck bonus on saving throws, ability checks, and skill checks."
+    "description": "This small bit of agate grants its possessor a +1 luck bonus on saving throws, ability checks, and skill checks.",
+    "key": "Stone of Good Luck (Luckstone)",
+    "name": "Stone of Good Luck",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "1+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "1+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "TYPE.Strength,TYPE.Dexterity,TYPE.Intelligence,TYPE.Wisdom,TYPE.Charisma",
+          "1+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Stone of Good Luck (Luckstone)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Stone of Good Luck (Luckstone)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.530"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Equipment|AUTOMATIC|Stone of Good Luck ~ Ability Bonus"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, divine favor"
+      },
+      {
+        "key": "DESC",
+        "value": "This small bit of agate grants its possessor a +1 luck bonus on saving throws, ability checks, and skill checks."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 329,
-    "record_key": "Stone of Good Luck (Luckstone)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Stone of Good Luck (Luckstone)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

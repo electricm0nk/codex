@@ -1,20 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Black Lotus Extract)",
     "category": "general",
-    "name": "Poison, Black Lotus Extract",
     "cost_gp": 4500.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Black Lotus Extract)",
+    "name": "Poison, Black Lotus Extract",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Black Lotus Extract)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Black Lotus Extract"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Black Lotus Extract"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "4500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.558"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Contact; Fort DC 20; Onset 1 min; Freq 1 rnd (6); Effect 1d6 Con dmg; Cure 2 consecutive save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, contact"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 20"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 minute"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d6 Con damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|2 consecutive saves"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 496,
-    "record_key": "Poison (Black Lotus Extract)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Black Lotus Extract)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Cipher Ring (Extra)",
     "category": "General",
-    "name": "Cipher Ring (Extra)",
     "cost_gp": 4.0,
-    "weight": null,
-    "description": "Create or decode written message keyed to ring (DC 25 Linguistics without ring)"
+    "description": "Create or decode written message keyed to ring (DC 25 Linguistics without ring)",
+    "key": "Cipher Ring (Extra)",
+    "name": "Cipher Ring (Extra)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.203"
+      },
+      {
+        "key": "SPROP",
+        "value": "Create or decode written message keyed to ring (DC 25 Linguistics without ring)"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 169,
-    "record_key": "Cipher Ring (Extra)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Cipher Ring (Extra)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

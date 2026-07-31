@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ruby Dust (500 gp)",
     "category": "general",
-    "name": "Ruby Dust (worth 500 gp)",
     "cost_gp": 500.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Ruby Dust (500 gp)",
+    "name": "Ruby Dust (worth 500 gp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ruby Dust (500 gp)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ruby Dust (worth 500 gp)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Component.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Material Component for Forcecage"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 477,
-    "record_key": "Ruby Dust (500 gp)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Ruby Dust (500 gp)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

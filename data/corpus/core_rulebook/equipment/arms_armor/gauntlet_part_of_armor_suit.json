@@ -17,5 +17,8 @@
     "line": 198,
     "record_key": "Gauntlet (Part of Armor Suit)",
     "inherited_from_record_key": "Gauntlet (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

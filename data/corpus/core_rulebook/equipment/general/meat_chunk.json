@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Meat (Chunk)",
     "category": "general",
-    "name": "Chunk of Meat",
     "cost_gp": 0.3,
-    "weight_lbs": 0.5,
-    "description": null
+    "description": null,
+    "key": "Meat (Chunk)",
+    "name": "Chunk of Meat",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Meat (Chunk)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Meat, Chunk"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Food.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "0.3"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.159"
+      }
+    ],
+    "weight_lbs": 0.5
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 278,
-    "record_key": "Meat (Chunk)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Meat (Chunk)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

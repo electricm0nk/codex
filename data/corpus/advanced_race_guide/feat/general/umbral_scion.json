@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Umbral Scion",
+    "category": "general",
+    "name": "Umbral Scion",
+    "description": "New spell-like abilities are unlocked for you as you rise to ascendency among the drow people.",
+    "effect": [
+      [
+        "ABILITYPOOL",
+        "Umbral Scion Spell",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 279,
+    "record_key": "Umbral Scion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

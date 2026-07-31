@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 12000.0,
+    "description": "In the hands of a casual wielder, these items simply appear to be magically enhanced masterwork tools for a specific Craft skill (determined randomly), granting a +4 circumstance bonus on such skill checks. However, in the hands of a craftsman with 6 or more ranks in the selected Craft skill, the wielder can perform 2,000 gp worth of work in a single hour, but only once each day. Only a single skill check is required to successfully complete the item, made on the last day of crafting and gaining the +4 circumstance bonus granted by the tools.",
+    "key": "Amazing Tools of Manufacture",
+    "name": "Amazing Tools of Manufacture",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "SPROP",
+        "value": "In the hands of a casual wielder, these items simply appear to be magically enhanced masterwork tools for a specific Craft skill (determined randomly), granting a +4 circumstance bonus on such skill checks. However, in the hands of a craftsman with 6 or more ranks in the selected Craft skill, the wielder can perform 2,000 gp worth of work in a single hour, but only once each day. Only a single skill check is required to successfully complete the item, made on the last day of crafting and gaining the +4 circumstance bonus granted by the tools."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Amazing Tools of Manufacture",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

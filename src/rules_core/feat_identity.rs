@@ -34,8 +34,13 @@
 //! whole-string equality, never a prefix match, so a longer feat whose name
 //! begins with a grounded key (`"Acrobatic Steps"` vs. `"Acrobatic"`) still
 //! does not match. `folding_never_merges_two_distinct_catalog_feats` below
-//! proves the stronger property over the live 486-record catalog: no two
-//! distinct feat keys fold together.
+//! proves the stronger property over the live 690-record catalog: no two
+//! distinct feat keys fold together. One key string does appear in two books
+//! -- `Endurance`, which Pathfinder Unchained re-lists from the Core Rulebook
+//! -- but those are one feat under one identity, not two the fold merged; see
+//! `rules_tables::feats_all`'s own
+//! `cross_book_key_collisions_are_exactly_the_known_set` for the corpus
+//! evidence.
 
 /// One feat identifier's comparable characters, lazily and without allocating.
 ///
@@ -168,7 +173,7 @@ mod tests {
                 }
             }
         }
-        assert_eq!(checked, 486, "the whole ingested feat catalog must be checked");
+        assert_eq!(checked, 690, "the whole ingested feat catalog must be checked");
     }
 
     /// A longer feat whose name merely begins with a grounded key must not

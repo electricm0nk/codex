@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Gem of Brightness",
     "category": "magic_items",
-    "name": "Gem of Brightness",
     "cost_gp": 13000.0,
-    "weight_lbs": 0.0,
-    "description": "This crystal appears to be a long, rough prism. Upon utterance of a command word, though, the gem's facets suddenly grow highly polished as the crystal emits bright light of one of three sorts.\n* One command word causes the gem to shed light as a hooded lantern. This use of the gem does not expend any charges, and it continues to emit light until this command word is spoken a second time to extinguish the illumination.\n* Another command word causes the gem of brightness to send out a bright ray 1 foot in diameter and 50 feet long. This strikes as a ranged touch attack, and any creature struck by this beam is blinded for 1d4 rounds unless it makes a DC 14 Fortitude save. This use of the gem expends 1 charge.\n* The third command word causes the gem to flare in a blinding flash of light that fills a 30-foot cone. Although this glare lasts but a moment, any creature within the cone must make a DC 14 Fortitude save or be blinded for 1d4 rounds. This use expends 5 charges.\nA newly created gem of brightness has 50 charges. When all its charges are expended, the gem becomes nonmagical and its facets grow cloudy with a fine network of cracks."
+    "description": "This crystal appears to be a long, rough prism. Upon utterance of a command word, though, the gem's facets suddenly grow highly polished as the crystal emits bright light of one of three sorts.\n* One command word causes the gem to shed light as a hooded lantern. This use of the gem does not expend any charges, and it continues to emit light until this command word is spoken a second time to extinguish the illumination.\n* Another command word causes the gem of brightness to send out a bright ray 1 foot in diameter and 50 feet long. This strikes as a ranged touch attack, and any creature struck by this beam is blinded for 1d4 rounds unless it makes a DC 14 Fortitude save. This use of the gem expends 1 charge.\n* The third command word causes the gem to flare in a blinding flash of light that fills a 30-foot cone. Although this glare lasts but a moment, any creature within the cone must make a DC 14 Fortitude save or be blinded for 1d4 rounds. This use expends 5 charges.\nA newly created gem of brightness has 50 charges. When all its charges are expended, the gem becomes nonmagical and its facets grow cloudy with a fine network of cracks.",
+    "key": "Gem of Brightness",
+    "name": "Gem of Brightness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gem of Brightness"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Gem of Brightness"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "13000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 50 Maximum|CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.514"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|6th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, daylight"
+      },
+      {
+        "key": "DESC",
+        "value": "This crystal appears to be a long, rough prism. Upon utterance of a command word, though, the gem's facets suddenly grow highly polished as the crystal emits bright light of one of three sorts.&nl;* One command word causes the gem to shed light as a hooded lantern. This use of the gem does not expend any charges, and it continues to emit light until this command word is spoken a second time to extinguish the illumination.&nl;* Another command word causes the gem of brightness to send out a bright ray 1 foot in diameter and 50 feet long. This strikes as a ranged touch attack, and any creature struck by this beam is blinded for 1d4 rounds unless it makes a DC 14 Fortitude save. This use of the gem expends 1 charge.&nl;* The third command word causes the gem to flare in a blinding flash of light that fills a 30-foot cone. Although this glare lasts but a moment, any creature within the cone must make a DC 14 Fortitude save or be blinded for 1d4 rounds. This use expends 5 charges.&nl;A newly created gem of brightness has 50 charges. When all its charges are expended, the gem becomes nonmagical and its facets grow cloudy with a fine network of cracks."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 170,
-    "record_key": "Gem of Brightness"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Gem of Brightness",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

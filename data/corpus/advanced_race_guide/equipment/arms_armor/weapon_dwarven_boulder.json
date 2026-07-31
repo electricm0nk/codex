@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": null,
+    "description": null,
+    "key": "Weapon (Dwarven Boulder)",
+    "name": "Weapon (Dwarven Boulder)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Weapon (Dwarven Boulder)"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Helmet (Dwarven Boulder)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Dwarven.Bludgeoning.Exotic"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Weapon (Dwarven Boulder)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
+}

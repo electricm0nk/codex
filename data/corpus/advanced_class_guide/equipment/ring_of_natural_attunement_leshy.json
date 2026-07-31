@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Natural Attunement (Leshy)",
     "category": "MagicItems",
-    "name": "Ring of Natural Attunement (Leshy)",
     "cost_gp": 2800.0,
-    "weight": null,
-    "description": "add to summon nature's ally list: leaf leshy (1st), gourd leshy (2nd), fungus leshy (3rd), seaweed leshy (5th) 1/day summon leaf leshy"
+    "description": "add to summon nature's ally list: leaf leshy (1st), gourd leshy (2nd), fungus leshy (3rd), seaweed leshy (5th) 1/day summon leaf leshy",
+    "key": "Ring of Natural Attunement (Leshy)",
+    "name": "Ring of Natural Attunement (Leshy)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "2800"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon nature's ally list: leaf leshy (1st), gourd leshy (2nd), fungus leshy (3rd), seaweed leshy (5th) 1/day summon leaf leshy"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 276,
-    "record_key": "Ring of Natural Attunement (Leshy)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Natural Attunement (Leshy)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

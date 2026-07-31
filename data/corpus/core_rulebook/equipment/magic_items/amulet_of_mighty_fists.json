@@ -1,20 +1,130 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Amulet of Mighty Fists",
     "category": "magic_items",
-    "name": "Amulet of Mighty Fists",
     "cost_gp": 0.0,
-    "weight_lbs": 0.0,
-    "description": "This amulet grants an enhancement bonus of +1 to +5 on attack and damage rolls with unarmed attacks and natural weapons.\nAlternatively, this amulet can grant melee weapon special abilities, so long as they can be applied to unarmed attacks. See Table 15-9 for a list of abilities. Special abilities count as additional bonuses for determining the market value of the item, but do not modify attack or damage bonuses. An amulet of mighty fists cannot have a modified bonus (enhancement bonus plus special ability bonus equivalents) higher than +5. An amulet of mighty fists does not need to have a +1 enhancement bonus to grant a melee weapon special ability."
+    "description": "This amulet grants an enhancement bonus of +1 to +5 on attack and damage rolls with unarmed attacks and natural weapons.\nAlternatively, this amulet can grant melee weapon special abilities, so long as they can be applied to unarmed attacks. See Table 15-9 for a list of abilities. Special abilities count as additional bonuses for determining the market value of the item, but do not modify attack or damage bonuses. An amulet of mighty fists cannot have a modified bonus (enhancement bonus plus special ability bonus equivalents) higher than +5. An amulet of mighty fists does not need to have a +1 enhancement bonus to grant a melee weapon special ability.",
+    "key": "Amulet of Mighty Fists",
+    "name": "Amulet of Mighty Fists",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MightyFistValue",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Amulet of Mighty Fists",
+          "4000",
+          "PRETYPE:1,EQMODTYPE=Amulet of Mighty Fists"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Amulet of Mighty Fists",
+          "12000",
+          "PRETYPE:1,EQMODTYPE=Amulet of Mighty Fists"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Amulet of Mighty Fists",
+          "20000",
+          "PRETYPE:1,EQMODTYPE=Amulet of Mighty Fists"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Amulet of Mighty Fists",
+          "28000",
+          "PRETYPE:1,EQMODTYPE=Amulet of Mighty Fists"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Amulet of Mighty Fists",
+          "36000",
+          "PRETYPE:1,EQMODTYPE=Amulet of Mighty Fists"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Neck.Amulet.Amulet of Mighty Fists"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MightyFistValue|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AmuletMightyFistPool|0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "MODS",
+        "value": "REQUIRED"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|neck"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,000 gp (+1), 8,000 gp (+2), 18,000 gp (+3), 32,000 gp (+4), 50,000 gp (+5)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, greater magic fang, creator's caster level must be at least three times the amulet's bonus, plus any requirements of the melee weapon special abilities"
+      },
+      {
+        "key": "DESC",
+        "value": "This amulet grants an enhancement bonus of +1 to +5 on attack and damage rolls with unarmed attacks and natural weapons.&nl;Alternatively, this amulet can grant melee weapon special abilities, so long as they can be applied to unarmed attacks. See Table 15-9 for a list of abilities. Special abilities count as additional bonuses for determining the market value of the item, but do not modify attack or damage bonuses. An amulet of mighty fists cannot have a modified bonus (enhancement bonus plus special ability bonus equivalents) higher than +5. An amulet of mighty fists does not need to have a +1 enhancement bonus to grant a melee weapon special ability."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 10,
-    "record_key": "Amulet of Mighty Fists"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Amulet of Mighty Fists",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

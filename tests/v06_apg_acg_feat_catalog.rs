@@ -11,10 +11,15 @@
 //! is caught rather than silently trusted.
 //!
 //! It also pins the two properties that only appear once more than one
-//! book is in play: keys stay globally unique across books (so no book's
-//! record shadows another's), and `feats_all::all_feat_tables()` — the
-//! single aggregate the Tauri feat picker reads — carries every record
-//! from all three books tagged with the book it came from.
+//! book is in play: which feat keys repeat across books (so no book's
+//! record shadows another's unnoticed), and that
+//! `feats_all::all_feat_tables()` — the single aggregate the Tauri feat
+//! picker reads — carries every record from every ingested book tagged
+//! with the book it came from. The aggregate has since widened past the
+//! three books this file was written for, to Advanced Race Guide and
+//! Pathfinder Unchained; the aggregate-level assertions below cover all
+//! five, while the per-category and corpus-cross-check tests stay APG/ACG
+//! -specific, which is what this file is for.
 
 use std::path::PathBuf;
 
@@ -212,33 +217,40 @@ fn every_apg_and_acg_record_has_a_real_key_name_and_description() {
 }
 
 #[test]
-fn feat_keys_never_collide_across_books() {
+fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     // A recent bug had 18 spell keys collide across books, one book's
-    // record silently shadowing another's. Feats do not have that problem
-    // today — the three corpus files share no feat key — and this test
-    // keeps it that way rather than assuming it.
+    // record silently shadowing another's. Feats had no cross-book repeat
+    // at all while the aggregate was CRB/APG/ACG. Pathfinder Unchained
+    // introduces exactly one — `Endurance`, which it re-lists from the
+    // Core Rulebook under its Wound Threshold rules rather than defining
+    // anew (see `rules_tables::feats_all`'s own "Key collisions" section
+    // for the two corpus rows). This test pins that set exactly, so a
+    // genuinely different feat arriving under an existing key fails here
+    // instead of shadowing one silently.
     let mut seen: Vec<(&str, RuleSetId)> = Vec::new();
+    let mut cross_book: Vec<(&str, RuleSetId, RuleSetId)> = Vec::new();
     for book in all_feat_tables() {
         for entry in book.entries {
             if let Some((_, other)) = seen.iter().find(|(key, _)| *key == entry.key) {
                 // CRB's two real "Combat Expertise" corpus variants are a
                 // known within-book duplicate preserved verbatim (see
-                // `sd19_feat_catalog.rs`); a *cross-book* collision is not.
-                assert_eq!(
-                    *other, book.rule_set,
-                    "feat key '{}' appears in two different books",
-                    entry.key
-                );
+                // `sd19_feat_catalog.rs`); only cross-book repeats are
+                // collected here.
+                if *other != book.rule_set {
+                    cross_book.push((entry.key, *other, book.rule_set));
+                }
             }
             seen.push((entry.key, book.rule_set));
         }
     }
+
+    assert_eq!(cross_book, vec![("Endurance", RuleSetId::Crb, RuleSetId::Pu)]);
 }
 
 #[test]
-fn the_aggregate_catalog_spans_all_three_books() {
+fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 3);
+    assert_eq!(books.len(), 5);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -251,9 +263,11 @@ fn the_aggregate_catalog_spans_all_three_books() {
     assert_eq!(entries_for(RuleSetId::Crb), 185);
     assert_eq!(entries_for(RuleSetId::Apg), 172);
     assert_eq!(entries_for(RuleSetId::Acg), 129);
+    assert_eq!(entries_for(RuleSetId::Arg), 187);
+    assert_eq!(entries_for(RuleSetId::Pu), 17);
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 486, "185 CRB + 172 APG + 129 ACG");
+    assert_eq!(total, 690, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU");
 }
 
 #[test]

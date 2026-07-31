@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Herbs and Oils (2000 gp)",
     "category": "general",
-    "name": "Herbs and Oils (worth 2,000 gp)",
     "cost_gp": 2000.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Herbs and Oils (2000 gp)",
+    "name": "Herbs and Oils (worth 2,000 gp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Herbs and Oils (2000 gp)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Herbs and Oils (worth 2,000 gp)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Component.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "2000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Material Component for Awaken"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 442,
-    "record_key": "Herbs and Oils (2000 gp)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Herbs and Oils (2000 gp)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

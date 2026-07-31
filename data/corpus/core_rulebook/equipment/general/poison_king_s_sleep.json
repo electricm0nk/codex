@@ -1,20 +1,86 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (King's Sleep)",
     "category": "general",
-    "name": "Poison, King's Sleep",
     "cost_gp": 5000.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (King's Sleep)",
+    "name": "Poison, King's Sleep",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (King's Sleep)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, King's Sleep"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "King's Sleep"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ingested; Fort DC 19; Onset 1 day; Freq 1 day; Effect 1 Con drain; Cure 2 consecutive saves"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, ingested"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 19"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 day"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/day"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1 Con drain"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|2 consecutive saves"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 509,
-    "record_key": "Poison (King's Sleep)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (King's Sleep)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

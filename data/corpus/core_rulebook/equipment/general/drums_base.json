@@ -1,20 +1,72 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Drums (Base)",
     "category": "general",
-    "name": "Drums",
     "cost_gp": 5.0,
-    "weight_lbs": 3.0,
-    "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
+    "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use.",
+    "key": "Drums (Base)",
+    "name": "Drums",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perform (Percussion Instruments)",
+          "2",
+          "TYPE=Circumstance",
+          "PRETYPE:1,Masterwork"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drums (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Drums"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Instrument.Percussion.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "DESC",
+        "value": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": 3.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 238,
-    "record_key": "Drums (Base)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Drums (Base)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

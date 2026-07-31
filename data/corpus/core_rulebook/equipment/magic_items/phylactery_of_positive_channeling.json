@@ -1,20 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Phylactery of Positive Channeling",
     "category": "magic_items",
-    "name": "Phylactery of Positive Channeling",
     "cost_gp": 11000.0,
-    "weight_lbs": 0.0,
-    "description": "This item allows channelers of positive energy to increase the amount of damage dealt to undead creatures by +2d6. This also increases the amount of damage healed by living creatures."
+    "description": "This item allows channelers of positive energy to increase the amount of damage dealt to undead creatures by +2d6. This also increases the amount of damage healed by living creatures.",
+    "key": "Phylactery of Positive Channeling",
+    "name": "Phylactery of Positive Channeling",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ClericChannelPositiveEnergyDice",
+          "2",
+          "PREABILITY:1,CATEGORY=Special Ability,Cleric ~ Channel Positive Energy"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Paladin_ChannelPositiveEnergy_Dice",
+          "2",
+          "PREABILITY:1,CATEGORY=Special Ability,Channel Positive Energy ~ Paladin"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Phylactery of Positive Channeling"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Phylactery of Positive Channeling"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband.Phylactery"
+      },
+      {
+        "key": "COST",
+        "value": "11000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.526"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate necromancy [good]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|headband"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|5,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, creator must be a 10th-level cleric"
+      },
+      {
+        "key": "DESC",
+        "value": "This item allows channelers of positive energy to increase the amount of damage dealt to undead creatures by +2d6. This also increases the amount of damage healed by living creatures."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 299,
-    "record_key": "Phylactery of Positive Channeling"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Phylactery of Positive Channeling",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

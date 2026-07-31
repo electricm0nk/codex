@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Salve of Slipperiness",
     "category": "magic_items",
-    "name": "Salve of Slipperiness",
     "cost_gp": 1000.0,
-    "weight_lbs": 0.0,
-    "description": "This substance provides a +20 competence bonus on all Escape Artist checks and combat maneuver checks made to escape from a grapple. The salve also grants a +10 competence bonus to the wearer's Combat Maneuver Defense for the purpose of avoiding grapple attempts. In addition, such obstructions as webs (magical or otherwise) do not affect an anointed individual. Magic ropes and the like do not avail against this salve. If it is smeared on a floor or on steps, the area should be treated as a long-lasting grease spell. The salve requires 8 hours to wear off normally, or it can be wiped off with an alcohol solution (even wine).\nSalve of slipperiness is needed to coat the inside of a container meant to hold sovereign glue."
+    "description": "This substance provides a +20 competence bonus on all Escape Artist checks and combat maneuver checks made to escape from a grapple. The salve also grants a +10 competence bonus to the wearer's Combat Maneuver Defense for the purpose of avoiding grapple attempts. In addition, such obstructions as webs (magical or otherwise) do not affect an anointed individual. Magic ropes and the like do not avail against this salve. If it is smeared on a floor or on steps, the area should be treated as a long-lasting grease spell. The salve requires 8 hours to wear off normally, or it can be wiped off with an alcohol solution (even wine).\nSalve of slipperiness is needed to coat the inside of a container meant to hold sovereign glue.",
+    "key": "Salve of Slipperiness",
+    "name": "Salve of Slipperiness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Salve of Slipperiness"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Salve of Slipperiness"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.529"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|6th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, grease"
+      },
+      {
+        "key": "DESC",
+        "value": "This substance provides a +20 competence bonus on all Escape Artist checks and combat maneuver checks made to escape from a grapple. The salve also grants a +10 competence bonus to the wearer's Combat Maneuver Defense for the purpose of avoiding grapple attempts. In addition, such obstructions as webs (magical or otherwise) do not affect an anointed individual. Magic ropes and the like do not avail against this salve. If it is smeared on a floor or on steps, the area should be treated as a long-lasting grease spell. The salve requires 8 hours to wear off normally, or it can be wiped off with an alcohol solution (even wine).&nl;Salve of slipperiness is needed to coat the inside of a container meant to hold sovereign glue."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Escape Artist|20"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|VAR|CMB_Grapple_DEF|10|TYPE=Competence"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 320,
-    "record_key": "Salve of Slipperiness"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Salve of Slipperiness",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

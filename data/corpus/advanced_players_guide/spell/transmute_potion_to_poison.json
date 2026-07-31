@@ -16,5 +16,8 @@
     "line": 2094,
     "record_key": "Transmute Potion to Poison",
     "original_ingest_defect": "same-line .MOD-stanza concatenation (with Transmogrify.MOD); prior parser did not recognize this record's DESC: text as its own full-text source"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

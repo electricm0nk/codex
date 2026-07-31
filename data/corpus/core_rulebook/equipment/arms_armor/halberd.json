@@ -17,5 +17,8 @@
     "line": 236,
     "record_key": "Halberd",
     "inherited_from_record_key": "Halberd (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

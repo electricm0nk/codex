@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 13170.0,
+    "description": "Allows the wielder to use feather fall on himself once per day. A creature wearing celestial armor while wielding a celestial shield may command the armor to provide overland flight rather than fly once per day.",
+    "key": "Celestial Shield",
+    "name": "Celestial Shield",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Heavy.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "13170"
+      },
+      {
+        "key": "WT",
+        "value": "7"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Blinding ~ Shield.Special Ability ~ +2 ~ Shield"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "0"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows the wielder to use feather fall on himself once per day. A creature wearing celestial armor while wielding a celestial shield may command the armor to provide overland flight rather than fly once per day."
+      }
+    ],
+    "weight_lbs": 7.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Celestial Shield",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  }
+}

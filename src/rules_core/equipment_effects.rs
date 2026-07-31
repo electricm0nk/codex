@@ -313,14 +313,33 @@ fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePack
     total
 }
 
-/// Whether `record` is a real weapon -- carries a `DAMAGE:` corpus token.
-/// The same signal `damage_total.rs`'s own `resolve_base_damage_dice` uses
-/// to identify a weapon (re-declared here rather than imported, to avoid a
-/// circular module dependency: `damage_total.rs` already imports
-/// `EquipmentEffects` from this file). Armor, shields, and every other
-/// non-weapon item carry no `DAMAGE:` token at all.
+/// Whether `record` is an actively-wielded weapon for the single-weapon
+/// to-hit/attack-bonus ambiguity check above -- carries a `DAMAGE:` corpus
+/// token AND is not a shield.
+///
+/// **Real correction (2026-07-30, found via wiring the real corpus into
+/// the desktop app for the first time):** this doc comment used to claim
+/// "armor, shields, and every other non-weapon item carry no `DAMAGE:`
+/// token at all" -- true only of the tiny 4-record desktop fixture bundle
+/// this codebase tested against until now. A real corpus shield (e.g. CRB's
+/// `Heavy Wooden Shield (Base)`) carries a genuine `DAMAGE:1d4` token for
+/// its shield-bash attack, per PF1's own published rules (`SPROP`: "You can
+/// bash an opponent with a heavy shield"). Counting a worn-but-not-bashing
+/// shield as a second "weapon" made every standard armor+shield+one-weapon
+/// loadout falsely ambiguous the moment real shield data reached this path.
+/// A shield bash is a distinct, optional combat choice most builds never
+/// make -- not the default state of wearing a shield -- so a record whose
+/// `TYPE:` token's first segment is `Shield` is excluded here, matching
+/// `EquipmentCategory`'s own `arms_armor` grouping (armor and shields
+/// share a category; only shields carry this specific ambiguity).
 fn is_weapon_record(record: &EquipmentRecord) -> bool {
-    record.tokens.iter().any(|token| token.key == "DAMAGE")
+    let has_damage = record.tokens.iter().any(|token| token.key == "DAMAGE");
+    let is_shield = record
+        .tokens
+        .iter()
+        .find(|token| token.key == "TYPE")
+        .is_some_and(|token| token.value.split('.').next() == Some("Shield"));
+    has_damage && !is_shield
 }
 
 /// `arms_armor::compute_arms_armor_effect` reads `MAXDEX:`/`SPELLFAILURE:`/
@@ -507,6 +526,41 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
         let effects = compute_equipment_effects(&equipped_items, &corpus);
 
         assert_eq!(effects.attack_bonus_delta, None, "no weapon at all -- nothing to attach a bonus to");
+    }
+
+    /// Regression test for the real bug found by wiring the real corpus into
+    /// the desktop app: a standard armor+shield+one-weapon loadout used to
+    /// resolve as "2+ weapons, ambiguous" the moment a shield's own real
+    /// `DAMAGE:` bash-attack token reached this path (the tiny desktop
+    /// fixture bundle never carried a real shield record, so this was never
+    /// exercised before). A shield must not count toward the single-weapon
+    /// ambiguity check.
+    #[test]
+    fn a_shield_with_a_real_bash_damage_token_does_not_count_as_a_second_weapon() {
+        const SHIELD_FIXTURE_TEXT: &str = "\
+Heavy Wooden Shield\tKEY:Heavy Wooden Shield (Base)\tTYPE:Shield.Heavy.Weapon.Resizable.Melee.ShieldBash.Close.Weapon Group Close.Nonmetal\tCOST:7\tWT:10\tACCHECK:-2\tDAMAGE:1d4\tBONUS:COMBAT|AC|2|TYPE=Shield|PREVAREQ:DisableShieldBonus,0\n";
+        let result = parse_equipment_entries("cr_equip_arms_armor.lst", SHIELD_FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let mut corpus = corpus_with_fixture();
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+
+        let equipped_items = vec![equipped("Longsword (Base)"), equipped("Heavy Wooden Shield (Base)")];
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(
+            effects.attack_bonus_delta,
+            Some(0),
+            "exactly one real weapon (the Longsword) -- the shield's own bash-damage token must not count as a second"
+        );
+        let shield = effects
+            .per_item
+            .iter()
+            .find(|item| item.item_id == "Heavy Wooden Shield (Base)")
+            .expect("shield must resolve");
+        assert_eq!(shield.armor_class_bonus, Some(2), "the shield's own real AC bonus still resolves");
     }
 }
 

@@ -195,11 +195,21 @@ mod tests {
     ///
     /// Two classes have such keys, by a documented ruling rather than an
     /// oversight (team lead, 2026-07-27; see
-    /// `acg::bloodrager_spell_list`'s doc comment): 73 of Bloodrager's 200
-    /// entries and 21 of Shaman's are `.MOD` grafts whose base records
-    /// live in Ultimate Magic / Ultimate Combat / the Advanced Race Guide,
-    /// none of which this repo ingests. They are genuinely on those
-    /// classes' PF1 spell lists; only the record is missing.
+    /// `acg::bloodrager_spell_list`'s doc comment): they are `.MOD` grafts
+    /// whose base records live in Ultimate Magic / Ultimate Combat / the
+    /// Advanced Race Guide. They are genuinely on those classes' PF1
+    /// spell lists; only the record is missing.
+    ///
+    /// **The gap shrank on 2026-07-31, and that is the whole point of the
+    /// pin.** It was 73 of Bloodrager's 200 entries and 21 of Shaman's
+    /// while the catalog served CRB+APG+ACG only. `spell_catalog.rs` then
+    /// chained `advanced_race_guide::spell_list`'s 92 records, and since
+    /// ARG's keys are the *only* delta between the old catalog and the new
+    /// one, the 23 Bloodrager and 6 Shaman keys that started joining are
+    /// necessarily ARG base records — one of the three books the ruling
+    /// above named as un-ingested, now ingested. 50 and 15 remain, and
+    /// those are the Ultimate Magic / Ultimate Combat remainder. Re-derive
+    /// rather than relax these when another book lands.
     ///
     /// Every OTHER dispatched class joins completely, which is the part
     /// the frontend actually depends on.
@@ -222,7 +232,7 @@ mod tests {
                 gaps.push((class_id, missing));
             }
         }
-        assert_eq!(gaps, vec![("class:bloodrager", 73), ("class:shaman", 21)]);
+        assert_eq!(gaps, vec![("class:bloodrager", 50), ("class:shaman", 15)]);
     }
 
     #[test]

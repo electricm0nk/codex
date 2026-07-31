@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Blouse of the Boastful Bastard",
     "category": "MagicItems",
-    "name": "Blouse of the Boastful Bastard",
     "cost_gp": 8000.0,
-    "weight": null,
-    "description": "Regain 1 panache point when taking damage from critical hit"
+    "description": "Regain 1 panache point when taking damage from critical hit",
+    "key": "Blouse of the Boastful Bastard",
+    "name": "Blouse of the Boastful Bastard",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Shirt"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPROP",
+        "value": "Regain 1 panache point when taking damage from critical hit"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 350,
-    "record_key": "Blouse of the Boastful Bastard"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Blouse of the Boastful Bastard",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

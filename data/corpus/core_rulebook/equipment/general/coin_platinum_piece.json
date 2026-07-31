@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Coin (Platinum Piece)",
     "category": "general",
-    "name": "Platinum Piece",
     "cost_gp": 10.0,
-    "weight_lbs": 0.02,
-    "description": "In addition to copper, silver, and gold coins, there are also platinum pieces (pp), which are each worth 10 gp.\nThe standard coin weighs about a third of an ounce (50 to the pound)."
+    "description": "In addition to copper, silver, and gold coins, there are also platinum pieces (pp), which are each worth 10 gp.\nThe standard coin weighs about a third of an ounce (50 to the pound).",
+    "key": "Coin (Platinum Piece)",
+    "name": "Platinum Piece",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Coin (Platinum Piece)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Coin, Platinum Piece"
+      },
+      {
+        "key": "TYPE",
+        "value": "Coin"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "0.02"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Abbreviation|pp"
+      },
+      {
+        "key": "DESC",
+        "value": "In addition to copper, silver, and gold coins, there are also platinum pieces (pp), which are each worth 10 gp.&nl;The standard coin weighs about a third of an ounce (50 to the pound)."
+      }
+    ],
+    "weight_lbs": 0.02
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 335,
-    "record_key": "Coin (Platinum Piece)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Coin (Platinum Piece)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

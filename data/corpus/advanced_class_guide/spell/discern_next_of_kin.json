@@ -6,7 +6,7 @@
     "key": "Discern Next of Kin",
     "school": "Divination",
     "level": 1,
-    "description": "You can scan the thoughts of one individual and learn the names and locations of the target's living relatives, as well as the attitude of the target toward those relatives (and vice versa). You learn about one relative per round you concentrate on the target. For example, you might learn that the target's father's name is Jarn, the father lives on a nearby farm, and the target and his father don't get along. Since this spell reads the target's mind, you can learn only what the target knows or believes.",
+    "description": "[redacted PI]",
     "full_text": true
   },
   "source": {
@@ -15,5 +15,8 @@
     "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 47,
     "record_key": "Discern Next of Kin"
-  }
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted"
 }

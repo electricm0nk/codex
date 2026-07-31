@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 3500.0,
+    "description": "In rocky or mountainous areas, the wearer gains a +5 competence bonus on Stealth checks. Once per day, the wearer can create an area of fog equivalent to Obscuring Mist.",
+    "key": "Stonemist Cloak",
+    "name": "Stonemist Cloak",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "3500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "SPROP",
+        "value": "In rocky or mountainous areas, the wearer gains a +5 competence bonus on Stealth checks. Once per day, the wearer can create an area of fog equivalent to Obscuring Mist."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 85,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Stonemist Cloak",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Preyfinder",
     "category": "MagicItems",
-    "name": "Preyfinder",
     "cost_gp": 85000.0,
-    "weight": null,
-    "description": "can see and track creature that blood was taken from; +1 insight bonus on all attack and damage rolls against quarry, or 1/day use own blood to gain a +2 morale bonus on all attack rolls, saves, and skill checks for 1 minute"
+    "description": "can see and track creature that blood was taken from; +1 insight bonus on all attack and damage rolls against quarry, or 1/day use own blood to gain a +2 morale bonus on all attack rolls, saves, and skill checks for 1 minute",
+    "key": "Preyfinder",
+    "name": "Preyfinder",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "85000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SPROP",
+        "value": "can see and track creature that blood was taken from"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1 insight bonus on all attack and damage rolls against quarry, or 1/day use own blood to gain a +2 morale bonus on all attack rolls, saves, and skill checks for 1 minute|PREMULT:2,[PRECLASS:1,Slayer=1],[PREABILITY:1,CATEGORY=Special Ability,Slayer ~ Studied Target]"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 397,
-    "record_key": "Preyfinder"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Preyfinder",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

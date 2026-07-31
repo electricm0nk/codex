@@ -15,5 +15,8 @@
     "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/defending/",
     "fetched_at": "2026-07-22",
     "identity_match_basis": "name"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

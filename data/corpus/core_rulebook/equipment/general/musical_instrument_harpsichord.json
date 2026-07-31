@@ -17,5 +17,8 @@
     "line": 212,
     "record_key": "Musical Instrument (Harpsichord)",
     "inherited_from_record_key": "Harpsichord (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

@@ -17,5 +17,8 @@
     "line": 254,
     "record_key": "Urgrosh (Dwarven)",
     "inherited_from_record_key": "Dwarven Urgrosh (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

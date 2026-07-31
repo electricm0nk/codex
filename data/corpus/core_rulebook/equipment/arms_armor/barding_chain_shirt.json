@@ -17,5 +17,8 @@
     "line": 96,
     "record_key": "Barding (Chain Shirt)",
     "inherited_from_record_key": "Chain Shirt Barding (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }
