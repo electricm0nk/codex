@@ -410,6 +410,10 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("crb", "feats") => Some(feats_reach(RuleSetId::Crb, "Crb")),
         ("apg", "feats") => Some(feats_reach(RuleSetId::Apg, "Apg")),
         ("acg", "feats") => Some(feats_reach(RuleSetId::Acg, "Acg")),
+        // ARG joined `feats_all::all_feat_tables()` after the APG/ACG
+        // widening, so the same command now carries its records too. This
+        // claim replaces the OPEN_FINDINGS entry that recorded the gap.
+        ("advanced_race_guide", "feats") => Some(feats_reach(RuleSetId::Arg, "Arg")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -770,18 +774,11 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ),
     (
         "advanced_race_guide",
-        "feats",
-        "ARG's 187 ingested feat records reach no surface, for the same reason and with the same \
-         remedy as `feat_catalog.rs` was presumably already widened for (per the APG-equipment \
-         entry's own note that `spell_catalog.rs`/`feat_catalog.rs` were widened for this defect \
-         — ARG was never included in that widening, since it postdates it).",
-    ),
-    (
-        "advanced_race_guide",
         "spells",
-        "ARG's 92 ingested spell records reach no surface, same gap as the feats entry above — \
-         ARG postdates whatever pass widened `spell_catalog.rs` to be book-generic for the \
-         original 4 in-scope books.",
+        "ARG's 92 ingested spell records reach no surface — ARG postdates whatever pass widened \
+         `spell_catalog.rs` to be book-generic for the original 4 in-scope books. The sibling \
+         feats gap this entry used to point at is closed: ARG's feat records now reach \
+         `list_feat_catalog`, proven by the reach claim in `reach_of`.",
     ),
 ];
 
