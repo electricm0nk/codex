@@ -255,18 +255,89 @@ they already parse, then re-run.
    spell reachability are tackled — this isn't equipment-specific, it's how Shape B v1 was scoped
    for every content kind.
 
+## Finding 4 update (2026-07-30, same day) — real progress, plus a new blocker found
+
+Landed for real, in dependency order:
+
+1. **`shape_b_v1.rs` schema extension** (`RawToken`/`RawBonusChain` + extended `EquipmentCacheData`,
+   commit `4a37da11`) — additive, tested against real on-disk data.
+2. **`src/bin/enrich_equipment_raw_tokens.rs`** (commit `094acde1`) — book-agnostic enrichment tool.
+   Re-locates each on-disk record's real LST source line from its own existing citation and copies
+   real tokens/bonus chains onto it. **A real data-loss bug was caught and reverted** before this
+   landed: the first version round-tripped through a typed Rust struct and silently dropped every
+   field it didn't know about (APG/ACG/Bestiary's `weight` field, a different name than CRB's
+   `weight_lbs`; PU's `equip_type`/`plus` fields). Rewritten to operate on raw `serde_json::Value`,
+   only ever inserting the 2 new keys. Re-run clean: 2,918 enriched, 598 legitimately un-citable, 0
+   misses, across all 6 books.
+3. **`src/rules_core/corpus_loader.rs`** (commit `cc6177ae`) — real, book-agnostic loader.
+   Reconstructs `EquipmentRecord`-shaped values from the enriched JSON so every existing resolver
+   works unchanged. Proven in a real 6-book integration test.
+4. **`apps/desktop/src-tauri/src/corpus_full.rs`** — desktop-side wiring of the loader, proven
+   correct in isolation (its own tests pass: thousands of real records load, a real ARG item
+   resolves with real mechanical data through the actual `codex-desktop` binary).
+
+**Wiring `corpus_full.rs` into the live desktop call sites (`character_hub.rs`,
+`pf1_adapter.rs`, `characterHub/recomputeCharacter.rs`) was attempted and reverted** — it
+surfaced a real, previously-invisible **Finding 5** (below), and landing it live would have shipped
+36 known test failures. The loader itself stays real, tested, and committed; the call-site swap is
+deferred until Finding 5 is resolved.
+
+**One real, standalone fix did land**: `equipment_effects.rs`'s `is_weapon_record` incorrectly
+counted a shield's own real shield-bash `DAMAGE:` token as a second wielded weapon (PF1 rule: a
+shield bash is a distinct, optional combat choice, not the default state of wearing a shield). The
+tiny desktop fixture bundle never carried a real shield record, so this was never exercised before.
+Fixed to exclude records whose `TYPE:` first segment is `Shield`. Genuinely correct and useful on
+its own, independent of Finding 5.
+
+## Finding 5 — `equipment_id_resolve`'s normalized-name fallback collides on real, distinct items
+
+**Severity: Architectural, pre-existing, only now exercised.** Found while investigating why the
+desktop's canonical "Human Fighter, Longsword + Chain Shirt" test character stopped reaching
+`Computed` once the real corpus loaded: `equipment_id_resolve`'s 3rd-tier fallback (normalize name
+— lowercase, strip the parenthetical qualifier, replace spaces with underscores) is the *only*
+tier the legacy `"item:longsword"`-style fixture item-ID namespace ever matches through, and it is
+genuinely ambiguous at scale:
+
+- **The specific bug hit**: two real, independently-cited CRB records both normalize to
+  `"longsword"` — `longsword_base.json` (the real stat block: `key: "Longsword (Base)"`,
+  `name: "Longsword"`, real `DAMAGE:1d8`) and `longsword.json` (a thin `lst_inherited_copy`
+  reference row: `key: "Longsword"`, `name: "Longsword (Base)"` — fields inverted from the first,
+  `cost_gp`/`weight_lbs` both `null`). `equipment_id_resolve`'s `.find()` returns whichever the
+  corpus happens to iterate first — no tie-break rule exists — and it returned the thin one,
+  making the "required Longsword" stop registering as a weapon at all.
+- **Real scale, checked systematically** (`data/corpus/*/equipment/**/*.json`, all 6 books): 1,676
+  distinct normalized names, **277 groups with 2+ colliding records**. In most (136 of 277), the
+  pattern matches the Longsword case exactly — one real `lst_token` record plus one or more thin
+  `lst_inherited_copy`/`web_second_source` duplicates. But **141 groups collide between two or
+  more *genuinely real*, independently-purchasable items** — e.g. "Diamond Dust (100 gp)" through
+  "(25,000 gp)" (8 real price tiers, all normalizing to `diamond_dust`), "Heavy Horse" vs. "Heavy
+  Horse (Combat Trained)". The parenthetical qualifier this fallback strips is often the *only*
+  thing distinguishing two real, distinct items.
+- **Pre-existing, not introduced this session.** Both colliding Longsword records have existed
+  since SD-22's original CRB ingestion. The tiny 4-record desktop fixture bundle never had enough
+  real items to collide, so this was invisible until real corpus data reached the resolver for the
+  first time today.
+
+**Operator directive (2026-07-30): stop here for this session.** The real, verified deliverables
+(Findings 1's two PRs, the schema extension, the enrichment tool + enriched corpus, the proven
+loader, the shield fix) stand as-is. Wiring the loader into live desktop call sites is explicitly
+deferred, not abandoned, pending a real design decision on this resolver-ambiguity question —
+options sketched (not decided): prefer records with real data over thin duplicates when normalized
+names collide (fixes 136 of 277 groups, not the 141 multi-real-item ones); thread the parenthetical
+qualifier through so real distinct items stay distinguishable; or require callers to migrate off
+the legacy fixture-namespace fallback entirely for anything beyond the original desktop fixtures.
+
 ## Sequencing recommendation
 
-1. **Finding 1 (equipment weight)** — small, isolated, no design decision needed, no partition
-   conflict. **Done** — PR #344 (weight/cost) and PR #345 (AC/max-dex/spell-failure/weapon-mods),
-   both built, tested, open against `develop`.
+1. **Finding 1 (equipment weight + AC/max-dex/spell-failure/weapon-mods)** — **Done.** PR #344 and
+   PR #345, both built, tested, open against `develop`.
 2. **Findings 2+3 (race roster, class-ability-formula content-kind)** — scope together as one
    design pass before building either; they're the same underlying schema question, and Finding
    2's real fix depends on Finding 3's answer. Not yet started.
-3. **Finding 4 (desktop corpus reachability)** — now recognized as the actual precondition for
-   Findings 1-3 mattering to a real user at all. Schema groundwork landed (`shape_b_v1.rs`); codegen
-   wiring, corpus regeneration, and the real loader are substantial remaining work, per-book (CRB/
-   ARG/PU straightforward; APG/ACG/Bestiary need their compiled-table layer investigated first).
-4. Recommend routing 2+3's design pass alongside — not blocking — the paused v0.6 class-breadth
+3. **Finding 4 (desktop corpus reachability)** — schema, enrichment, and loader all real and
+   committed; live wiring blocked on Finding 5.
+4. **Finding 5 (resolver-ambiguity)** — real, scaled, pre-existing, newly discovered. Needs its own
+   design pass before Finding 4's live wiring can land. Not started.
+5. Recommend routing 2+3's design pass alongside — not blocking — the paused v0.6 class-breadth
    closure, since it's the same category of "generic engine vs. per-thing hardcoding" question
    the operator is already reviewing there.
