@@ -23,20 +23,45 @@ const SCHOOL_ORDER = [
 
 const MAX_RENDERED_ROWS = 200;
 
-/** Display labels for the wire's short book codes. */
-const BOOK_LABELS: Record<string, string> = {
+/**
+ * Display labels for the wire's short book codes. Every code
+ * `build_spell_catalog` can serve needs an entry here: a code with no label
+ * reaches the user as a raw wire code, which names nothing a player can
+ * recognise.
+ */
+export const BOOK_LABELS: Record<string, string> = {
   CRB: 'Core Rulebook',
   APG: "Advanced Player's Guide",
   ACG: 'Advanced Class Guide',
+  ARG: 'Advanced Race Guide',
 };
 
-const BOOK_ORDER = ['CRB', 'APG', 'ACG'] as const;
+/**
+ * The served books in the order `spell_catalog.rs`'s `build_spell_catalog`
+ * chains them (CRB -> APG -> ACG -> ARG), so the filter row reads in the
+ * same order the rows themselves arrive.
+ */
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG'] as const;
 
 /**
- * Full spell catalog browser — every real corpus record across all three
- * ingested books (CRB 652, APG 297, ACG 144), not a per-character sample.
- * Distinct from the Character Sheet's Spells tab, which only shows what
- * one character has selected.
+ * Renders book codes as a prose list of their display labels, so the
+ * screen's own copy can never name a different set of books than the filter
+ * row offers. An unlabelled code falls through as its wire code rather than
+ * being dropped — naming it awkwardly is honest; omitting it is not.
+ */
+export function formatBookList(codes: readonly string[]): string {
+  const labels = codes.map((code) => BOOK_LABELS[code] ?? code);
+  if (labels.length <= 1) return labels.join('');
+  return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`;
+}
+
+/**
+ * Full spell catalog browser — every real corpus record across all four
+ * ingested books (CRB 652, APG 297, ACG 144, ARG 92; 1185 in total), not a
+ * per-character sample. Counts are pinned Rust-side by
+ * `the_catalog_serves_every_ingested_book_not_only_crb` in
+ * `spell_catalog.rs`. Distinct from the Character Sheet's Spells tab, which
+ * only shows what one character has selected.
  */
 export function SpellCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<SpellCatalogEntryDto[] | null>(null);
@@ -111,9 +136,8 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real corpus record the engine knows about — {totalCount} spells across the Core
-            Rulebook, Advanced Player&rsquo;s Guide and Advanced Class Guide. Not what any one
-            character has selected.
+            Every real corpus record the engine knows about — {totalCount} spells across the{' '}
+            {formatBookList(BOOK_ORDER)}. Not what any one character has selected.
             {schoollessCount > 0 ? (
               <>
                 {' '}
@@ -188,7 +212,7 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
 
           <div style={{ ...panel, maxHeight: 480, overflowY: 'auto', padding: visible.length ? '0.25rem 1rem' : '1rem' }}>
             {visible.map((entry) => (
-              // `key` is unique across all three books (see
+              // `key` is unique across all four books (see
               // `tests/spell_cross_book_identity.rs`), so it alone is a
               // safe React key.
               <div
