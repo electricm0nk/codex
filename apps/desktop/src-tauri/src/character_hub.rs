@@ -31,7 +31,8 @@ use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan
 use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
-    ComputationExplanation, HeadlessReceiptStatus,
+    race_alternate_trait_selection_id, ComputationExplanation, HeadlessReceiptStatus,
+    RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
 };
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
@@ -363,6 +364,25 @@ pub struct CreateCharacterRequest {
     pub ability_scores: AbilityScoresDto,
     pub ability_bonus_target: String,
     pub saved_at: String,
+    /// The ARG alternate racial traits the player chose for this race, as
+    /// corpus record keys (`"Dwarf ~ Saltbeard"`) — exactly the keys
+    /// `race_trait_picker`'s `listAlternateRacialTraits` /
+    /// `resolveRaceAlternateSelection` commands emit and take, so the picker
+    /// round-trips its own identifiers unchanged.
+    ///
+    /// SD-27: before this field, ARG's 153 alternate racial traits were
+    /// browse-only — the picker resolved a swap live and correctly, and then
+    /// had nowhere to send it, because `CreateCharacterRequest` had no field
+    /// for a selection and `ChosenCharacterState` therefore never received
+    /// one. `#[serde(default)]` so a caller that sends no selection (and every
+    /// pre-existing saved payload) keeps working unchanged.
+    ///
+    /// Validated at creation against the real on-disk corpus by
+    /// [`resolve_alternate_trait_choices`] — an unknown key, a key belonging to
+    /// another race, or a pair that violates ARG's own `PREMULT` mutual-
+    /// exclusion guard blocks the save rather than being silently dropped.
+    #[serde(default)]
+    pub selected_alternate_trait_keys: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -462,6 +482,14 @@ pub struct LoadSavedCharacterResponse {
     /// would be needed to build one honestly is unknown. The sheet
     /// renders the breakdown as separate columns; it does not add them up.
     pub weapon_damage: Vec<WeaponDamageDto>,
+    /// The ARG alternate racial traits this character actually holds, read back
+    /// out of its persisted `chosen.selected_choices` (SD-27).
+    ///
+    /// Same shape of gap, and same fix, as `selected_feats` and
+    /// `spells_selected`: without this the frontend has no way to know a loaded
+    /// character's racial-trait choices, so the picker would reopen empty and
+    /// the sheet would show a Dwarf with darkvision 90 and no reason why.
+    pub selected_alternate_trait_keys: Vec<String>,
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1049,12 +1077,136 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 /// `money.json` uninitialized -- the existing "no file yet" convention
 /// already means a 0 balance, so this never fabricates a value for a class
 /// this table doesn't cover.
+/// Turns a creation request's chosen alternate racial traits into the
+/// `SelectedChoice` entries the engine reads, or into blocking diagnostics.
+///
+/// **Validation is the real picker's, not a second opinion.** Everything here
+/// comes from one `race_trait_picker::build_race_selection` call — the same
+/// command the picker screen drives, which itself calls `RaceCorpus::resolve`,
+/// the single implementation of `decisions.md §26`'s protocol. This function
+/// decides nothing about which traits are legal together; it only refuses to
+/// persist a selection the resolver already reported a problem with.
+///
+/// Four ways a selection is refused, each with the resolver's own finding
+/// carried verbatim rather than paraphrased:
+///
+/// * the race is not in the loaded corpus (`errors`),
+/// * a key matches no alternate for that race — a typo, or a trait belonging to
+///   a different race (`unmatchedSelections`),
+/// * two chosen alternates violate each other's ARG `PREMULT` self-exclusion
+///   guard (`conflictingSelections`),
+/// * a chosen alternate's replace-flag suppresses and grants nothing in the
+///   loaded books (`inertFlags`) — the standard trait it claims to replace
+///   would silently stay, so the character would quietly get both. That is the
+///   9-Aasimar-alternate upstream gap `race_trait_picker` documents; refusing
+///   the save is the honest answer until the `globalvar` files are ingested.
+///
+/// Refusing rather than dropping matters: a silently-ignored selection is
+/// exactly the failure `unresolved_spell_ids` / `unresolved_equipment_item_ids`
+/// were both added to stop.
+fn resolve_alternate_trait_choices(
+    race_id: &str,
+    selected_alternate_trait_keys: &[String],
+) -> Result<Vec<SelectedChoice>, Vec<DiagnosticDto>> {
+    if selected_alternate_trait_keys.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    let resolution = crate::race_trait_picker::build_race_selection(&crate::race_trait_picker::RaceSelectionRequest {
+        race_key: race_id.to_owned(),
+        selected_alternate_keys: selected_alternate_trait_keys.to_vec(),
+    });
+
+    let mut diagnostics: Vec<DiagnosticDto> = Vec::new();
+    for error in &resolution.errors {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.unresolved_race".to_owned(),
+            message: error.clone(),
+            claim_blocking: true,
+        });
+    }
+    for key in &resolution.unmatched_selections {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.unmatched_selection".to_owned(),
+            message: format!(
+                "alternate racial trait {key:?} matches no ARG alternate for race {race_id:?}; \
+                 nothing was replaced, so the character was not saved"
+            ),
+            claim_blocking: true,
+        });
+    }
+    for conflict in &resolution.conflicting_selections {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.mutually_exclusive".to_owned(),
+            message: format!(
+                "{} and {} cannot both be taken: ARG's own PREMULT self-exclusion guard on {} \
+                 names {}, which {} sets (arg_abilities_race.lst)",
+                conflict.name, conflict.blocked_by_name, conflict.name, conflict.flag,
+                conflict.blocked_by_name
+            ),
+            claim_blocking: true,
+        });
+    }
+    for flag in &resolution.inert_flags {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.inert_flag".to_owned(),
+            message: format!(
+                "the chosen alternate racial trait fires replace-flag {flag}, which suppresses \
+                 and grants nothing in the loaded books, so the standard trait it claims to \
+                 replace would still apply and the character would hold both; refused rather \
+                 than saved with a swap that did not happen"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    if !diagnostics.is_empty() {
+        return Err(diagnostics);
+    }
+
+    Ok(selected_alternate_trait_keys
+        .iter()
+        .map(|key| SelectedChoice {
+            choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+            selection_id: race_alternate_trait_selection_id(key),
+        })
+        .collect())
+}
+
+/// Every alternate racial trait key a saved character holds, read back out of
+/// its persisted `selected_choices` in selection order.
+///
+/// The read half of the round-trip: `load_saved_character` needs it so the
+/// sheet and the picker can show a loaded character's real choices instead of
+/// re-deriving them (the gap `selected_feats` and `spells_selected` were each
+/// added to close).
+pub(crate) fn read_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == RACE_ALTERNATE_TRAIT_CHOICE_ID)
+        .map(|choice| {
+            choice
+                .selection_id
+                .strip_prefix(RACE_ALTERNATE_TRAIT_SELECTION_PREFIX)
+                .unwrap_or(choice.selection_id.as_str())
+                .to_owned()
+        })
+        .collect()
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
-    let character_input = compose_character_input(request);
+    let mut character_input = compose_character_input(request);
+    match resolve_alternate_trait_choices(&request.race_id, &request.selected_alternate_trait_keys) {
+        Ok(choices) => character_input.chosen.selected_choices.extend(choices),
+        Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
+    }
+    let character_input = character_input;
 
     let (snapshot, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
@@ -1216,6 +1368,10 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         },
         ability_bonus_target: "strength".to_owned(),
         saved_at: DEFAULT_CHARACTER_SAVED_AT.to_owned(),
+        // The starter character takes no alternate racial trait: it is a plain
+        // Human Fighter, and seeding a swap nobody chose would be exactly the
+        // fabricated-default this file's other seeds are each argued down to.
+        selected_alternate_trait_keys: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -1310,6 +1466,7 @@ pub(crate) fn load_saved_character_at_root(
         chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
         explanations,
         weapon_damage,
+        selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
     })
 }
 
@@ -1673,8 +1830,20 @@ pub(crate) fn purchase_equipment_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
+    // `key` straight off `build_equipment_catalog()`, so the by-key lookup
+    // is tried first -- it names the exact row the user picked, including
+    // for the one cross-book identity collision (`"Wooden"`) where the
+    // free-form resolver deliberately keeps CRB's answer. The free-form
+    // resolver remains the fallback for ids that are not catalog keys at
+    // all, notably the legacy `"item:longsword"` fixture namespace that
+    // seeded characters still carry.
     let Some(cost_gp) =
-        codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id)
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id)
+            .map_or_else(
+                || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
+                |row| row.cost_gp,
+            )
     else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
@@ -1745,10 +1914,34 @@ pub enum AttachEquipmentModifierResponse {
 /// -> mutate -> charge sequencing, with two deliberate differences:
 ///
 /// 1. **Validates `modifier_item_id` against the real equipment catalog
-///    first** (`equipment_tables()`, the same check
-///    `append_to_character_at_root` already runs), before any cost or
-///    target-selection check -- a typo'd or fabricated modifier id must
-///    never silently attach.
+///    first**, before any cost or target-selection check -- a typo'd or
+///    fabricated modifier id must never silently attach.
+///
+///    **SD-27 dead-affordance fix.** This check read
+///    `crb::equipment_tables()` alone while the Attach Modifier picker that
+///    feeds it is served by `build_equipment_catalog()`, which has spanned
+///    all six ingested books since the catalog widening. The picker offered
+///    763 `Equipmods` rows and this command accepted only CRB's 658, so
+///    **105 rows (ACG 48, ARG 15, PU 42) were offered and then refused**
+///    with "is not a recognized equipment catalog item" -- the exact dead
+///    affordance `docs/governance/no-stub-mvp-doctrine.md` forbids.
+///    Recognition now runs against
+///    `equipment_resolver::equipment_catalog_row_by_key`, the same six-book
+///    row set the picker is built from.
+///
+///    **Recognition and price come from one lookup, deliberately.** 20 of
+///    those 105 refused rows carry a real, non-zero flat price (ACG's
+///    4,500 gp `Amorphous`, ARG's 500 gp `Material ~ Whipwood`, ...).
+///    Widening recognition while leaving the CRB-only cost path in place
+///    would have attached those for free -- silent mispricing, strictly
+///    worse than an honest refusal. So the single `equipment_catalog_row_by_key`
+///    call below supplies **both** answers from the same row, which is
+///    also what makes them impossible to drift apart. It is not
+///    interchangeable with `equipment_cost_gp_headless_resolve` here:
+///    the picker hands this command a catalog `key`, and for the one
+///    genuine cross-book identity collision (`"Wooden"` is APG's `KEY:`
+///    at 20 gp and a CRB row's `name` at 1 gp) only the by-key lookup
+///    answers with the row the user actually picked.
 /// 2. **An unknown `cost_gp` is treated as free to attach, not blocked** --
 ///    a deliberate deviation from `purchase_equipment_at_root`'s own
 ///    "unknown cost = blocked, same as unaffordable" rule. Checked against
@@ -1773,10 +1966,9 @@ pub(crate) fn attach_equipment_modifier_at_root(
     modifier_item_id: &str,
     saved_at: &str,
 ) -> Result<AttachEquipmentModifierResponse, String> {
-    let is_known_modifier = codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables()
-        .iter()
-        .any(|entry| entry.key == modifier_item_id);
-    if !is_known_modifier {
+    let Some(modifier_row) =
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(modifier_item_id)
+    else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "equipment.attach_modifier.unknown_item".to_owned(),
@@ -1787,7 +1979,7 @@ pub(crate) fn attach_equipment_modifier_at_root(
                 claim_blocking: true,
             }],
         });
-    }
+    };
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
@@ -1810,11 +2002,12 @@ pub(crate) fn attach_equipment_modifier_at_root(
         });
     }
 
-    let cost_copper =
-        match codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(modifier_item_id) {
-            Some(cost_gp) => money::gp_to_copper(cost_gp),
-            None => 0,
-        };
+    // Same row that satisfied recognition above -- see this function's doc
+    // comment for why price must not come from a second, independent lookup.
+    let cost_copper = match modifier_row.cost_gp {
+        Some(cost_gp) => money::gp_to_copper(cost_gp),
+        None => 0,
+    };
 
     if cost_copper > 0 {
         let balance_copper = load_character_money_at_root(root)?.total_copper;
@@ -3590,6 +3783,218 @@ mod tests {
         );
     }
 
+    // -----------------------------------------------------------------
+    // SD-27: ARG alternate racial traits survive creation, save and load.
+    // -----------------------------------------------------------------
+
+    fn request_with_alternates(
+        race_id: &str,
+        alternates: &[&str],
+    ) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            selected_alternate_trait_keys: alternates.iter().map(|key| (*key).to_string()).collect(),
+            ..request_for(race_id, 1)
+        }
+    }
+
+    fn saved_or_panic(response: CreateCharacterResponse) -> Box<CharacterSummaryDto> {
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => summary,
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("this build must be creatable, got: {diagnostics:?}")
+            }
+        }
+    }
+
+    /// **The persistence half of the SD-27 alternate-racial-trait closure**,
+    /// through the same `create_character` path the UI button calls: a Dwarf
+    /// takes `Dwarf ~ Minesight`, is persisted, read back, and the choice is
+    /// still there — carried on `chosen.selected_choices`, which
+    /// `SavedCharacterStore` already round-trips, so this needed no schema
+    /// change.
+    #[test]
+    fn a_chosen_alternate_racial_trait_survives_creation_save_and_load() {
+        let root = tempdir("create-character-arg-alternate-trait");
+        let request = request_with_alternates("race:dwarf", &["Dwarf ~ Minesight"]);
+        let summary = saved_or_panic(
+            create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        assert_eq!(summary.race_id, "race:dwarf");
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Dwarf must load back");
+        assert_eq!(
+            loaded.selected_alternate_trait_keys,
+            vec!["Dwarf ~ Minesight".to_string()],
+            "the choice must survive the round trip, not be silently dropped"
+        );
+
+        // ...and it reaches the engine: the standard 60 ft darkvision record is
+        // gone and Minesight's own 90 ft record is in its place. The sheet
+        // renders `explanations` verbatim, so this is the number the player
+        // sees change.
+        let ids: BTreeSet<&str> = loaded.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(!ids.contains("race.dwarf.trait_bundle.senses"), "the standard darkvision must stop");
+        let minesight = loaded
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.dwarf.alternate_trait.minesight.senses")
+            .expect("Minesight's own record must be on the loaded sheet");
+        assert_eq!(minesight.value, 90);
+    }
+
+    /// A Dwarf who chose nothing is byte-identical to the pre-SD-27 build:
+    /// no selection persisted, and the standard 60 ft darkvision intact. The
+    /// opt-in half of the guard.
+    #[test]
+    fn a_dwarf_who_chose_no_alternate_persists_none_and_keeps_the_standard_trait() {
+        let root = tempdir("create-character-no-alternate-trait");
+        saved_or_panic(
+            create_character_at_root(&root, &request_for("race:dwarf", 1), "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert!(loaded.selected_alternate_trait_keys.is_empty());
+        assert!(loaded.explanations.iter().any(|e| e.id == "race.dwarf.trait_bundle.senses"));
+        assert!(loaded
+            .explanations
+            .iter()
+            .all(|e| e.id != "race.dwarf.alternate_trait.minesight.senses"));
+    }
+
+    /// **A top-level sheet number moving because of a racial-trait choice.**
+    /// A Half-Elf Fighter 1 who takes `Dual Minded` (ARG p.42,
+    /// `BONUS:SAVE|Will|2`) saves and loads with Will +3 where the same build
+    /// without it has +1 — on `snapshot.total_saves`, which the sheet prints at
+    /// the top of the page.
+    #[test]
+    fn dual_minded_moves_a_saved_half_elfs_total_will_save_on_the_loaded_sheet() {
+        let plain_root = tempdir("create-character-half-elf-plain");
+        saved_or_panic(
+            create_character_at_root(&plain_root, &request_for("race:half-elf", 1), "test-version".to_owned())
+                .expect("create"),
+        );
+        let plain = load_saved_character_at_root(&plain_root).expect("loads");
+
+        let swapped_root = tempdir("create-character-half-elf-dual-minded");
+        saved_or_panic(
+            create_character_at_root(
+                &swapped_root,
+                &request_with_alternates("race:half-elf", &["Half-Elf ~ Dual Minded"]),
+                "test-version".to_owned(),
+            )
+            .expect("create"),
+        );
+        let swapped = load_saved_character_at_root(&swapped_root).expect("loads");
+
+        let will = |response: &LoadSavedCharacterResponse| {
+            response.snapshot.as_ref().expect("a computed build has a snapshot").total_saves.will
+        };
+        assert_eq!(will(&plain), 1, "Fighter 1 base Will +0, Wisdom 12 (+1)");
+        assert_eq!(will(&swapped), 3, "+2 from Dual Minded");
+        assert_eq!(swapped.selected_alternate_trait_keys, vec!["Half-Elf ~ Dual Minded".to_string()]);
+    }
+
+    /// A selection the corpus does not recognize is refused at creation, with
+    /// the resolver's own finding, rather than silently dropped into a saved
+    /// character that quietly does not have the trait.
+    #[test]
+    fn an_alternate_trait_key_that_is_not_this_races_blocks_the_save_rather_than_vanishing() {
+        let root = tempdir("create-character-wrong-race-alternate-trait");
+        let response = create_character_at_root(
+            &root,
+            // A real ARG alternate — but a Half-Elf's, offered to a Dwarf.
+            &request_with_alternates("race:dwarf", &["Half-Elf ~ Dual Minded"]),
+            "test-version".to_owned(),
+        )
+        .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("a trait belonging to another race must not be accepted")
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                let diagnostic = diagnostics
+                    .iter()
+                    .find(|d| d.id == "race.alternate_trait.unmatched_selection")
+                    .expect("the refusal must name why");
+                assert!(diagnostic.claim_blocking);
+                assert!(diagnostic.message.contains("Half-Elf ~ Dual Minded"));
+            }
+        }
+        assert!(load_saved_character_at_root(&root).is_err(), "nothing may have been persisted");
+    }
+
+    /// Two alternates that ARG's own `PREMULT` guard excludes from each other
+    /// are refused together, naming the shared flag — the picker disables the
+    /// second option, and this is the backend saying no to a caller that
+    /// submits it anyway.
+    #[test]
+    fn two_mutually_exclusive_alternates_are_refused_with_the_flag_that_excludes_them() {
+        let root = tempdir("create-character-conflicting-alternate-traits");
+        let response = create_character_at_root(
+            &root,
+            // Both fire Dwarf_ReplaceStonecunning; Sky Sentinel's guard names it.
+            &request_with_alternates("race:dwarf", &["Dwarf ~ Saltbeard", "Dwarf ~ Sky Sentinel"]),
+            "test-version".to_owned(),
+        )
+        .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { .. } => panic!("an illegal pair must not be accepted"),
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                let diagnostic = diagnostics
+                    .iter()
+                    .find(|d| d.id == "race.alternate_trait.mutually_exclusive")
+                    .expect("the refusal must name the guard");
+                assert!(diagnostic.claim_blocking);
+                assert!(diagnostic.message.contains("Dwarf_Replace"), "{}", diagnostic.message);
+            }
+        }
+    }
+
+    /// Every key the picker offers for a race is one `create_character`
+    /// accepts for that race. A menu item the creation path refuses would be a
+    /// dead affordance — the failure `docs/governance/no-stub-mvp-doctrine.md`
+    /// names directly.
+    ///
+    /// Run over the 7 CRB races' alternates only: those are the races whose
+    /// Fighter 1 build this deterministic fixture reaches `Computed` for
+    /// without further seeding, so a `Blocked` here is unambiguously the
+    /// racial-trait path's fault rather than an unrelated chassis gate.
+    #[test]
+    fn every_alternate_the_picker_offers_for_a_crb_race_is_one_creation_accepts() {
+        let menu = crate::race_trait_picker::build_alternate_racial_traits();
+        assert!(menu.diagnostics.is_empty(), "{:?}", menu.diagnostics);
+        let mut accepted = 0usize;
+        for race in &menu.races {
+            let race_id = format!("race:{}", race.race_key.to_lowercase());
+            if !["race:dwarf", "race:elf", "race:gnome", "race:half-elf", "race:half-orc", "race:halfling", "race:human"]
+                .contains(&race_id.as_str())
+            {
+                continue;
+            }
+            for alternate in &race.alternates {
+                let root = tempdir(&format!("arg-alt-{}", accepted));
+                let response = create_character_at_root(
+                    &root,
+                    &request_with_alternates(&race_id, &[alternate.key.as_str()]),
+                    "test-version".to_owned(),
+                )
+                .expect("create call should not error");
+                match response {
+                    CreateCharacterResponse::Saved { .. } => {}
+                    CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                        "the picker offers {} for {race_id} but creation refused it: {diagnostics:?}",
+                        alternate.key
+                    ),
+                }
+                let loaded = load_saved_character_at_root(&root).expect("loads");
+                assert_eq!(loaded.selected_alternate_trait_keys, vec![alternate.key.clone()]);
+                accepted += 1;
+            }
+        }
+        assert_eq!(accepted, 93, "the 7 CRB races' ARG alternates: 17+13+12+9+14+13+15");
+    }
+
     /// **The full end-to-end proof**, through the same `create_character`
     /// path the button in the UI calls: a Bestiary 1 Goblin is created,
     /// persisted to disk, read back, and the carrying capacity that survives
@@ -3732,6 +4137,7 @@ mod tests {
                 charisma: 8,
             },
             ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -5045,6 +5451,314 @@ mod tests {
         assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Attached"));
         assert!(object.contains_key("corpusDerived"), "{object:?}");
         assert!(!object.contains_key("corpus_derived"), "{object:?}");
+    }
+
+    // ----- SD-27: the Attach Modifier dead-affordance invariant -----
+    //
+    // 57 rows was the reported figure; the real, derived figure is 105
+    // (ACG 48 + ARG 15 + PU 42) -- ACG's own equipmods were refused by the
+    // same CRB-only check and had been missed. Every count in this section
+    // was produced by running the catalog, never taken from a brief.
+
+    /// The offered set: exactly what the Gear tab's "Attach Modifier"
+    /// picker asks the backend for -- `buildItemPickerConfig`'s `modifier`
+    /// branch calls `listEquipment({ category: 'Equipmods' })` and sends
+    /// the chosen row's `key` as `modifierItemId`.
+    fn offered_modifier_rows() -> Vec<crate::equipment_catalog::EquipmentCatalogEntryDto> {
+        crate::equipment_catalog::filter_equipment_catalog(
+            &crate::equipment_catalog::EquipmentCatalogFilter {
+                name_contains: None,
+                category: Some("Equipmods".to_owned()),
+                book: None,
+            },
+        )
+        .entries
+    }
+
+    /// **The invariant that stops this defect class returning: every row
+    /// the picker OFFERS is a row attach ACCEPTS.**
+    ///
+    /// This is a pure check of the same `equipment_catalog_row_by_key`
+    /// recognition gate `attach_equipment_modifier_at_root` runs (calling
+    /// the full command 763 times would be a save+recompute per row); the
+    /// end-to-end tests below then drive the real command for one row from
+    /// each of the newly reachable books plus a CRB control.
+    #[test]
+    fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
+        let offered = offered_modifier_rows();
+        assert_eq!(offered.len(), 763, "the picker's real offered-row count");
+
+        let refused: Vec<&str> = offered
+            .iter()
+            .filter(|entry| {
+                codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&entry.key)
+                    .is_none()
+            })
+            .map(|entry| entry.key.as_str())
+            .collect();
+
+        assert!(
+            refused.is_empty(),
+            "{} of {} offered modifier rows would be refused as 'not a recognized equipment \
+             catalog item' -- a dead affordance. First offenders: {:?}",
+            refused.len(),
+            offered.len(),
+            refused.iter().take(5).collect::<Vec<_>>()
+        );
+    }
+
+    /// Recognition alone is only half the fix: 20 of the 105 newly
+    /// recognized rows carry a real, non-zero flat price, and attaching
+    /// those for free would be silent mispricing -- strictly worse than the
+    /// honest refusal it replaces. This pins that **every** newly reachable
+    /// row charges exactly the price the picker displayed for it.
+    ///
+    /// It also pins, rather than hides, the one place that is *not* true.
+    /// Two CRB rows -- `Holy Symbol (Wooden)` and `Holy Symbol (Silver)` --
+    /// carry the same `KEY:` in two different categories, so the row the
+    /// `Equipmods` picker displays (1 gp / 25 gp) is not the first row in
+    /// the full table for that key (which has no cost, and so attaches
+    /// free). That is **pre-existing shipped behaviour**: the CRB-only
+    /// `equipment_cost_gp_headless_resolve` this gate replaced took the
+    /// first full-table match too, and produced the identical answer. It is
+    /// a real, separate defect in `crb::equipment_tables`'s 316 duplicate
+    /// keys, not fixable from this file -- disambiguating it means changing
+    /// the `key` the catalog puts on the wire.
+    #[test]
+    fn every_offered_modifier_row_charges_the_price_the_picker_displayed() {
+        let offered = offered_modifier_rows();
+        let mut divergent: Vec<(&str, &str)> = Vec::new();
+        let mut priced_non_crb = 0usize;
+
+        for entry in &offered {
+            let row = codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&entry.key)
+                .expect("recognition is pinned by the test above");
+
+            // Compare against the FIRST offered row for this key: CRB
+            // carries 316 duplicate keys, so the filtered list holds both
+            // members of each pair and only the first is reachable by key.
+            let displayed = offered
+                .iter()
+                .find(|candidate| candidate.key == entry.key)
+                .expect("the key came from this very list")
+                .cost_gp;
+
+            if row.cost_gp != displayed {
+                divergent.push((row.book, entry.key.as_str()));
+            }
+            if row.book != "CRB" && row.cost_gp.unwrap_or(0.0) > 0.0 {
+                priced_non_crb += 1;
+            }
+        }
+
+        divergent.sort_unstable();
+        divergent.dedup();
+        assert_eq!(
+            divergent,
+            vec![("CRB", "Holy Symbol (Silver)"), ("CRB", "Holy Symbol (Wooden)")],
+            "the display-vs-charge divergence set must stay exactly these two pre-existing CRB \
+             duplicate-key rows"
+        );
+        assert!(
+            divergent.iter().all(|(book, _)| *book == "CRB"),
+            "the widening must not add a single new display-vs-charge divergence"
+        );
+        assert_eq!(
+            priced_non_crb, 20,
+            "the 20 newly-reachable rows carrying a real non-zero price (ACG 11 + ARG 9) are \
+             exactly the rows a recognition-only fix would have attached for free"
+        );
+    }
+
+    /// The rules-core book codes and the desktop catalog's book codes must
+    /// stay the same set: a book present in one and not the other is
+    /// silently either an unofferable row or an unrecognizable one.
+    #[test]
+    fn the_catalog_and_the_resolver_agree_on_the_book_set() {
+        use codex::rules_core::equipment_resolver::equipment_catalog_rows;
+        let resolver_books: std::collections::BTreeSet<&str> =
+            equipment_catalog_rows().iter().map(|row| row.book).collect();
+        let catalog_books: std::collections::BTreeSet<&str> =
+            crate::equipment_catalog::EQUIPMENT_CATALOG_BOOKS.iter().copied().collect();
+        assert_eq!(resolver_books, catalog_books);
+    }
+
+    /// End-to-end through the real command: ARG's `Material ~ Whipwood`
+    /// was refused on screen as unrecognized. It must now attach **and be
+    /// charged its real `arg_equipmods.lst` `COST:500`** -- 50,000 cp.
+    /// Attaching it for free would be silent mispricing, strictly worse
+    /// than the refusal this replaces.
+    #[test]
+    fn a_previously_refused_arg_modifier_attaches_and_is_charged_its_real_corpus_cost() {
+        let root = tempdir("attach-modifier-arg-whipwood");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 60_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Whipwood",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(
+                    money.total_copper, 10_000,
+                    "60,000 cp minus ARG's real 500 gp (50,000 cp) Whipwood price"
+                );
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an offered ARG modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["Material ~ Whipwood".to_string()],
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The affordability path works for the newly reachable books too: the
+    /// same ARG modifier is `Blocked` -- with the real price in the
+    /// message, not a recognition error -- when the character cannot
+    /// afford it, and nothing is charged or attached.
+    #[test]
+    fn a_previously_refused_arg_modifier_blocks_on_price_when_unaffordable() {
+        let root = tempdir("attach-modifier-arg-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 3_500).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Whipwood",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "must fail on price, not on recognition: {diagnostics:?}"
+                );
+                assert!(
+                    diagnostics.iter().any(|d| d.message.contains("50000 cp")),
+                    "the real ARG price must appear in the message: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("an unaffordable modifier must never attach")
+            }
+        }
+
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 3_500);
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded.character_input.chosen.equipment_selections[0]
+            .applied_modifiers
+            .is_empty());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// End-to-end through the real command: PU's `ABP ~ +3 Attunement ~
+    /// Armor` was refused on screen. `pu_equipmods.lst` carries no `COST:`
+    /// token on any of its 42 rows, so this attaches free -- and that is
+    /// the corpus truth, identical to how CRB's own formula-priced `+1`
+    /// enhancement has always behaved, not a fabricated zero.
+    #[test]
+    fn a_previously_refused_pu_modifier_attaches_free_because_its_corpus_row_has_no_cost_token() {
+        let root = tempdir("attach-modifier-pu-abp");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance stays at 0 cp: any charge at all would Block here, so a
+        // successful attach proves the free path for real.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "ABP ~ +3 Attunement ~ Armor",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 0);
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an offered PU modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        assert_eq!(
+            codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(
+                "ABP ~ +3 Attunement ~ Armor"
+            )
+            .and_then(|row| row.cost_gp),
+            None,
+            "free because the corpus row genuinely has no COST: token, not because the price \
+             lookup failed to find the row"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["ABP ~ +3 Attunement ~ Armor".to_string()],
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// **CRB control.** The modifier that was already correctly failing on
+    /// price still fails on price, with the identical diagnostic id and the
+    /// identical 100,000 cp figure observed on screen before the change.
+    #[test]
+    fn the_crb_control_modifier_still_blocks_on_exactly_the_same_price() {
+        let root = tempdir("attach-modifier-crb-control");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 3_500).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Mithril ~ Armor / Light",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "{diagnostics:?}"
+                );
+                assert!(
+                    diagnostics.iter().any(|d| d.message.contains(
+                        "costs 100000 cp but the character's balance is only 3500 cp"
+                    )),
+                    "the CRB row's message must be byte-identical to the pre-change behaviour: \
+                     {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("the CRB control must still block on price")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
     }
 
     // ----- `add_feat_selection` (v0.6 alpha swarm) -----

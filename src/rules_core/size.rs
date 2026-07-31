@@ -146,12 +146,17 @@ impl SizeCategory {
     /// so exactly one of these applies and the non-stacking rule is
     /// satisfied structurally rather than by a max() over a list.
     ///
-    /// The engine currently applies this to Armor Class only. **Attack rolls
-    /// take the identical modifier in real PF1 and do not yet receive it**
-    /// (`pilot_compute::compute_combat_baseline`'s
-    /// `combat.baseline_melee_attack_bonus`); that is named here rather than
-    /// silently implied, so the next reader finds the gap stated instead of
-    /// having to rediscover it.
+    /// The engine applies this to **Armor Class, touch Armor Class and attack
+    /// rolls**, on both compute paths
+    /// (`pilot_compute::compute_combat_baseline` and
+    /// `pilot_compute_corpus::compute_combat_baseline_from_corpus`). The
+    /// attack-roll half was a stated gap here until SD-27 closed it; the note
+    /// is updated rather than deleted so the record of what was open, and when
+    /// it shut, survives.
+    ///
+    /// Flat-footed Armor Class also takes it, and is still computed in the
+    /// desktop view rather than the engine -- a genuinely remaining gap, named
+    /// here for the same reason the attack-roll one was.
     pub fn armor_class_size_modifier(self) -> i16 {
         match self {
             SizeCategory::Fine => 8,
@@ -189,6 +194,11 @@ impl SizeCategory {
     /// the same fact negated", which is the kind of unstated assumption this
     /// repo has repeatedly been burned by. The test below pins both
     /// independently against the published values.
+    ///
+    /// Applied since SD-27 by `pilot_compute::combat_maneuver_bonus` and
+    /// `combat_maneuver_defense`, which both engine paths call -- before that
+    /// nothing called this function at all, and CMB/CMD were computed in React
+    /// with no size term.
     pub fn special_size_modifier(self) -> i16 {
         match self {
             SizeCategory::Fine => -8,

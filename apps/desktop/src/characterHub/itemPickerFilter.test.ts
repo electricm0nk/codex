@@ -1,4 +1,5 @@
 import {
+  describeFeatCatalogCoverage,
   filterItemPickerEntries,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
@@ -192,6 +193,40 @@ function verifiesFilterOverFeatEntriesMatchesByBook() {
   assertEqual(result[0].key, 'Extra Panache', 'the matching entry is the ACG panache feat');
 }
 
+/**
+ * The Feats tab's caption used to read "Add feats from the real CRB feat
+ * catalog" long after four more books landed. The replacement is derived from
+ * the response so it cannot go stale the same way; these pin that it counts
+ * what it was actually handed.
+ */
+function verifiesCatalogCoverageNamesEveryBookInTheResponse() {
+  const sentence = describeFeatCatalogCoverage(FEAT_ENTRIES);
+  assertEqual(
+    sentence,
+    'Add feats from the real feat catalog: 6 feats across 5 books (CRB, APG, ACG, ARG, PU).',
+    'the caption counts the records it was handed and names each book once, in response order'
+  );
+}
+
+function verifiesCatalogCoverageFallsBackToTheRawBookForAnUnknownVariant() {
+  const sentence = describeFeatCatalogCoverage([
+    { key: 'Future Feat', category: 'General', name: 'Future Feat', description: null, source: 'Um', chooserTargetKind: null },
+  ]);
+  assertEqual(
+    sentence,
+    'Add feats from the real feat catalog: 1 feat across 1 book (Um).',
+    'an unknown/future book is still counted, under its raw RuleSetId variant'
+  );
+}
+
+function verifiesCatalogCoverageRefusesToDescribeAnEmptyResponse() {
+  assertEqual(
+    describeFeatCatalogCoverage([]),
+    null,
+    'an empty response means the catalog failed to load or is empty; the caption must not guess which'
+  );
+}
+
 function main() {
   verifiesFilterMatchesEntryNameCaseInsensitively();
   verifiesFilterMatchesEntryDetailToo();
@@ -207,6 +242,9 @@ function main() {
   verifiesFeatMappingLabelsEveryBookTheCatalogActuallyServes();
   verifiesFeatMappingFallsBackToTheRawBookForAnUnknownVariant();
   verifiesFilterOverFeatEntriesMatchesByBook();
+  verifiesCatalogCoverageNamesEveryBookInTheResponse();
+  verifiesCatalogCoverageFallsBackToTheRawBookForAnUnknownVariant();
+  verifiesCatalogCoverageRefusesToDescribeAnEmptyResponse();
 }
 
 main();

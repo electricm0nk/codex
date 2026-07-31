@@ -6854,13 +6854,37 @@ pub(crate) const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 pub(crate) const UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID: &str =
     "defense.size_modifier.unknown_race";
 
-/// The character's creature size and its PF1 Table 8-1 modifier to Armor Class.
+/// Every size-derived term the combat baseline needs, resolved **once** per
+/// computation so a single unknown race raises exactly one diagnostic rather
+/// than one per consumer.
 ///
-/// Returns `(size_modifier, size_label)`. `size_label` is the human-readable
-/// size name for the explanation string, or `"unknown"` when the race does not
-/// resolve -- in which case the modifier is 0 **and** a claim-blocking
-/// diagnostic is pushed, so the assumption is visible rather than laundered
-/// into a plausible-looking total.
+/// The two magnitudes are different PF1 columns, not one value reused: Table
+/// 8-1's *Size Modifier* (Armor Class, and attack rolls, which take the
+/// identical value) and the *special size modifier* the CMB/CMD text calls for,
+/// which runs in the opposite direction. See `size.rs`, which transcribes both
+/// against the published table and pins them independently.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) struct CombatSizeModifiers {
+    /// PF1 Table 8-1's size modifier: applies to Armor Class (and therefore
+    /// touch AC) **and** to attack rolls.
+    pub(crate) armor_class_and_attack: i16,
+    /// The special size modifier: applies to CMB and CMD.
+    pub(crate) special: i16,
+    /// Human-readable size name for the explanation strings, or `"unknown"`.
+    pub(crate) label: &'static str,
+    /// The resolved category itself, or `None` for an unresolvable race.
+    /// Needed because CMB's ability-modifier term is size-*dependent*, not just
+    /// size-*modified*: Tiny and smaller creatures substitute Dexterity for
+    /// Strength, which no scalar modifier can express.
+    pub(crate) category: Option<SizeCategory>,
+}
+
+/// The character's creature size, resolved into the two PF1 size-modifier
+/// columns the combat baseline consumes.
+///
+/// When the race does not resolve, both modifiers are 0 **and** a
+/// claim-blocking diagnostic is pushed, so the assumption is visible rather
+/// than laundered into a plausible-looking total.
 ///
 /// # Why the size comes from `race_resolver` and not `rules_tables::crb`
 ///
@@ -6872,25 +6896,225 @@ pub(crate) const UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID: &str =
 /// knew only the 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1
 /// ones -- using it here would have silently left Goblin, Kobold and
 /// Svirfneblin on Medium arithmetic, which is the very defect being fixed.
-fn armor_class_size_modifier(
+fn combat_size_modifiers(
     input: &CharacterInput,
     diagnostics: &mut Vec<ComputationDiagnostic>,
-) -> (i16, &'static str) {
+) -> CombatSizeModifiers {
     match race_size_for_race_token(&input.chosen.race_id) {
-        Some(size) => (size.armor_class_size_modifier(), size_label(size)),
+        Some(size) => CombatSizeModifiers {
+            armor_class_and_attack: size.armor_class_size_modifier(),
+            special: size.special_size_modifier(),
+            label: size_label(size),
+            category: Some(size),
+        },
         None => {
             diagnostics.push(ComputationDiagnostic {
                 id: UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID.to_owned(),
                 message: format!(
                     "race {:?} resolves to no ingested race, so its creature size is unknown; \
-                     the Armor Class size modifier could not be applied and the armor class \
-                     below is not real data",
+                     the size modifiers to Armor Class, touch AC, attack rolls, CMB and CMD \
+                     could not be applied and the combat totals below are not real data",
                     input.chosen.race_id
                 ),
                 claim_blocking: true,
             });
-            (0, "unknown")
+            CombatSizeModifiers {
+                armor_class_and_attack: 0,
+                special: 0,
+                label: "unknown",
+                category: None,
+            }
         }
+    }
+}
+
+/// PF1's Combat Maneuver Defense base, as the Core Rulebook prints it:
+/// `CMD = 10 + BAB + Str modifier + Dex modifier + special size modifier`.
+///
+/// Deliberately its own constant rather than a reuse of `ARMOR_CLASS_BASE`.
+/// Both happen to be 10, but they are two separate published formulas; tying
+/// them together would encode "these are the same fact", which is exactly the
+/// unstated assumption `size.rs` refuses to make between its own two columns.
+pub(crate) const COMBAT_MANEUVER_DEFENSE_BASE: i16 = 10;
+
+/// PF1's Combat Maneuver Bonus: `BAB + Strength modifier + special size
+/// modifier`.
+///
+/// # The Tiny-or-smaller substitution is real and is applied
+///
+/// The Core Rulebook's CMB entry states that creatures of size Tiny or smaller
+/// use their **Dexterity** modifier in place of Strength. No currently
+/// creatable race is Tiny or smaller (the 18 in-scope races are 13 Medium and 5
+/// Small), so this branch is unreachable from the UI today -- it is written
+/// anyway, and pinned by a unit test, because the alternative is a function
+/// that is silently wrong the moment a Tiny race is ingested. That is the same
+/// reasoning `size.rs::load_capacity_ratio` gives for transcribing all nine
+/// `SIZEMULT:` rows rather than the two that are reachable.
+///
+/// # Named boundary, not silently omitted
+///
+/// Real PF1 CMB also takes the Improved/Greater maneuver feats, a size-changing
+/// effect, and any circumstance bonus. None of those is modelled anywhere in
+/// this engine, so none is summed here; the explanation string states the terms
+/// it actually contains rather than implying completeness.
+pub(crate) fn combat_maneuver_bonus(
+    base_attack_bonus: i16,
+    strength_modifier: i16,
+    dexterity_modifier: i16,
+    size: Option<SizeCategory>,
+    special_size_modifier: i16,
+) -> i16 {
+    // `None` is an unresolvable race, which the caller has already raised a
+    // claim-blocking diagnostic for. Strength is used so the shape of the
+    // formula is unchanged; the number is not claimed to be real either way.
+    let ability_modifier = match size {
+        Some(SizeCategory::Fine | SizeCategory::Diminutive | SizeCategory::Tiny) => {
+            dexterity_modifier
+        }
+        _ => strength_modifier,
+    };
+    base_attack_bonus + ability_modifier + special_size_modifier
+}
+
+/// PF1's Combat Maneuver Defense: `10 + BAB + Str modifier + Dex modifier +
+/// special size modifier`, exactly as the Core Rulebook prints the formula.
+///
+/// # Two boundaries, both stated rather than guessed
+///
+/// 1. **The AC bonuses CMD also receives are not folded in.** The CRB adds that
+///    circumstance, deflection, dodge, insight, luck, morale, profane and
+///    sacred bonuses to Armor Class apply to CMD as well. This engine grounds
+///    several of those (Dodge's +1, Brawler's AC Bonus, Inquisitor's Protection
+///    judgment). They are deliberately **not** summed here: the defect this
+///    cycle closes is the missing *size* term, and folding in a second,
+///    unmeasured correction at the same time would make it impossible to say
+///    which change moved a number. The explanation string names the terms it
+///    contains, so nothing is implied that is not computed.
+/// 2. **The Dexterity modifier is the raw ability modifier**, not the
+///    armor-capped contribution touch AC uses. That is what the published
+///    formula prints ("Dex modifier"), and it is what this repo's UI already
+///    computed, so this cycle does not move it. Whether an armor's `MAXDEX`
+///    limits CMD is a separate published question this codebase has no
+///    authority on yet; it is named here rather than silently decided.
+pub(crate) fn combat_maneuver_defense(
+    base_attack_bonus: i16,
+    strength_modifier: i16,
+    dexterity_modifier: i16,
+    special_size_modifier: i16,
+) -> i16 {
+    COMBAT_MANEUVER_DEFENSE_BASE
+        + base_attack_bonus
+        + strength_modifier
+        + dexterity_modifier
+        + special_size_modifier
+}
+
+/// PF1 touch Armor Class: the character's **own** Armor Class total with the
+/// contributors a touch attack ignores removed.
+///
+/// Derived by subtraction, not recomputed from scratch, and that is the whole
+/// point. Touch AC is not an independent statistic -- it is the same Armor
+/// Class, minus armor, shield and natural armor. Computing it separately is
+/// precisely how the shipped sheet ended up displaying `AC 19` beside
+/// `TOUCH 14` with a 4-point armor bonus, a self-contradiction that no amount
+/// of correct-looking arithmetic in the touch formula would have caught.
+/// Expressed this way, the two cannot disagree.
+///
+/// `excluded` is the caller's own sum of its armor + shield + natural-armor
+/// terms. Each call site knows which of its terms are which; this function
+/// deliberately does not try to re-derive that from a total it cannot see
+/// inside.
+pub(crate) fn touch_armor_class(armor_class: i16, excluded: i16) -> i16 {
+    armor_class - excluded
+}
+
+/// SD-27 `decisions.md §28` defect 1: the three formulas above, pinned against
+/// the published PF1 arithmetic on their own, independent of any fixture.
+///
+/// `tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs` pins the same
+/// three through the real compute path across all 18 in-scope races. These
+/// unit tests exist for the branch that file *cannot* reach: no creatable race
+/// is Tiny or smaller, so CMB's Dexterity substitution has no integration
+/// coverage and would otherwise ship unproven.
+#[cfg(test)]
+mod combat_maneuver_and_touch_formula_tests {
+    use super::*;
+
+    /// The Goblin Fighter 1 measured on screen (STR 14 -> +2, DEX 18 -> +4,
+    /// BAB +1, Chain Shirt): the exact case that exposed the defect. PF1's
+    /// correct values are CMB +2 and CMD 16; the sheet was showing +3 and 17.
+    #[test]
+    fn the_measured_small_goblin_fighter_matches_the_published_pf1_values() {
+        let size = SizeCategory::Small;
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+            2,
+            "Small Goblin Fighter 1: BAB +1 + STR +2 + special size -1 = +2"
+        );
+        assert_eq!(
+            combat_maneuver_defense(1, 2, 4, size.special_size_modifier()),
+            16,
+            "Small Goblin Fighter 1: 10 + BAB +1 + STR +2 + DEX +4 + special size -1 = 16"
+        );
+        // AC 19 with a +4 armor bonus is touch 15, not 14 -- the contradiction
+        // the sheet was displaying.
+        assert_eq!(touch_armor_class(19, 4), 15);
+    }
+
+    /// The same character at Medium size is the regression half: Medium is
+    /// PF1's +0 baseline and must produce exactly the pre-fix arithmetic.
+    #[test]
+    fn medium_is_the_unchanged_baseline_on_both_maneuver_formulas() {
+        let size = SizeCategory::Medium;
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+            3
+        );
+        assert_eq!(combat_maneuver_defense(1, 2, 4, size.special_size_modifier()), 17);
+    }
+
+    /// The branch no creatable race reaches: PF1's CMB entry substitutes
+    /// Dexterity for Strength at Tiny and smaller. Written and pinned rather
+    /// than deferred, so a later Tiny ingest does not silently compute a
+    /// Strength-based CMB.
+    #[test]
+    fn tiny_and_smaller_creatures_substitute_dexterity_for_strength_on_cmb() {
+        for size in [SizeCategory::Tiny, SizeCategory::Diminutive, SizeCategory::Fine] {
+            assert_eq!(
+                combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+                1 + 4 + size.special_size_modifier(),
+                "{size:?} is Tiny or smaller: CMB uses the Dexterity modifier (+4), not Strength"
+            );
+        }
+        // Small is NOT Tiny-or-smaller, and must keep using Strength -- the
+        // off-by-one-category error this test exists to catch.
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(SizeCategory::Small), -1),
+            2,
+            "Small still uses Strength: the substitution begins at Tiny"
+        );
+        // CMD has no such substitution in PF1: it sums BOTH abilities at every
+        // size, so a Tiny creature's CMD is unaffected by the CMB rule.
+        assert_eq!(combat_maneuver_defense(1, 2, 4, -2), 15);
+    }
+
+    /// An unresolvable race yields `None`, which must not be treated as
+    /// Tiny-or-smaller by accident (a `matches!`-style catch-all written the
+    /// other way round would do exactly that).
+    #[test]
+    fn an_unknown_size_falls_back_to_strength_rather_than_the_tiny_substitution() {
+        assert_eq!(combat_maneuver_bonus(1, 2, 4, None, 0), 3);
+    }
+
+    /// Touch AC is the Armor Class minus its excluded contributors, and
+    /// nothing else -- including when that makes it lower than 10, which is a
+    /// real PF1 state (penalties apply to touch attacks) and must not be
+    /// clamped into looking healthy.
+    #[test]
+    fn touch_armor_class_subtracts_and_does_not_clamp() {
+        assert_eq!(touch_armor_class(17, 4), 13);
+        assert_eq!(touch_armor_class(10, 0), 10);
+        assert_eq!(touch_armor_class(8, 0), 8);
     }
 }
 
@@ -7489,6 +7713,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
 
+    explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -7820,6 +8046,27 @@ fn explain_human_pilot_race_seam(
 }
 
 const DWARF_RACE_ID: &str = "race:dwarf";
+/// Each PF1 Core Dwarf standard racial trait's own replace-flag, verbatim from
+/// the `!PREFACT:1,ABILITIES,<flag>=True` gate the corpus row declares
+/// (`core_essentials/races/dwarf/dwarf_abilities_race.lst`; the ingested
+/// records' `suppressed_by_flag`). `decisions.md §26`: a standard trait applies
+/// **iff** no selected alternate has set its flag, so these are the exact
+/// strings that decide whether each record below is emitted.
+/// `tests/sd27_alternate_racial_trait_reachability.rs` pins every one of them
+/// against the on-disk corpus, so a renamed flag is a failing test rather than
+/// a record that silently stops swapping.
+const DWARF_REPLACE_VISION_FLAG: &str = "Dwarf_ReplaceVision";
+const DWARF_REPLACE_STONECUNNING_FLAG: &str = "Dwarf_ReplaceStonecunning";
+const DWARF_REPLACE_GREED_FLAG: &str = "Dwarf_ReplaceGreed";
+const DWARF_REPLACE_HARDY_FLAG: &str = "Dwarf_ReplaceHardy";
+const DWARF_REPLACE_STABILITY_FLAG: &str = "Dwarf_ReplaceStability";
+const DWARF_REPLACE_DEFENSIVE_TRAINING_FLAG: &str = "Dwarf_ReplaceDefensiveTraining";
+/// ARG's `Dwarf ~ Minesight` (`arg_abilities_race.lst:39`, ARG p.12): the one
+/// Dwarf alternate that replaces a standard trait this engine grounds a
+/// *number* for, and replaces it with a different number —
+/// `VISION:Darkvision (90)` against the CRB row's `Darkvision (60)`.
+const DWARF_MINESIGHT_TRAIT_KEY: &str = "Dwarf ~ Minesight";
+const DWARF_MINESIGHT_DARKVISION_FEET: i16 = 90;
 const DWARF_SIZE_CATEGORY: &str = "Medium";
 const DWARF_BASE_SPEED_FEET: i16 = 20;
 const DWARF_DARKVISION_FEET: i16 = 60;
@@ -8003,17 +8250,51 @@ fn explain_dwarf_race_seam(
     // ----- senses -----
     // Recognition record for Darkvision 60 ft, distinct from Human's bounded
     // no-special-senses classification.
-    explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.senses".to_owned(),
-        value: DWARF_DARKVISION_FEET,
-        detail: format!(
-            "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
-             {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
-             ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
-             Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
-             computed low-light or perception-derived effect to any chassis output"
-        ),
-    });
+    //
+    // SD-27 (alternate racial traits reach compute): the CRB `Dwarf ~ Vision`
+    // row declares `!PREFACT:1,ABILITIES,Dwarf_ReplaceVision=True`, so it stops
+    // applying the moment a selected ARG alternate sets that flag. Two
+    // alternates do — `Dwarf ~ Minesight` and `Dwarf ~ Surface Survivalist` —
+    // and Minesight replaces the sense with a *different range*, so this is the
+    // one place on the Dwarf seam where a player's choice changes a grounded
+    // number rather than only removing one.
+    if replaced_by_alternate_trait(input, DWARF_REPLACE_VISION_FLAG) {
+        if selected_alternate_trait_keys(input).iter().any(|key| key == DWARF_MINESIGHT_TRAIT_KEY) {
+            explanations.push(ComputationExplanation {
+                id: "race.dwarf.alternate_trait.minesight.senses".to_owned(),
+                value: DWARF_MINESIGHT_DARKVISION_FEET,
+                detail: format!(
+                    "Dwarf alternate racial trait — Minesight (Advanced Race Guide p.12): the \
+                     chosen alternate replaces the standard Dwarf darkvision, increasing its \
+                     range from {DWARF_DARKVISION_FEET} ft to \
+                     {DWARF_MINESIGHT_DARKVISION_FEET} ft \
+                     (arg_abilities_race.lst:39 KEY:Dwarf ~ Minesight, VISION:Darkvision \
+                     ({DWARF_MINESIGHT_DARKVISION_FEET}); the standard row it replaces is \
+                     dwarf_abilities_race.lst's Dwarf ~ Vision, gated \
+                     !PREFACT:1,ABILITIES,{DWARF_REPLACE_VISION_FLAG}=True, which Minesight \
+                     sets). The standard {DWARF_DARKVISION_FEET} ft record is therefore NOT \
+                     emitted for this character. Minesight's own drawbacks — automatically \
+                     dazzled in bright light, and a -2 penalty on saving throws against \
+                     effects with the light descriptor — are carried in the trait's corpus \
+                     description and are deliberately not folded into any save total, for the \
+                     same reason Dwarf Hardy is not: they are conditional on what the save is \
+                     against, and BaseSaves has no by-source dimension"
+                ),
+            });
+        }
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "race.dwarf.trait_bundle.senses".to_owned(),
+            value: DWARF_DARKVISION_FEET,
+            detail: format!(
+                "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
+                 {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
+                 ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
+                 Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
+                 computed low-light or perception-derived effect to any chassis output"
+            ),
+        });
+    }
 
     // ----- Stonecunning (SD18 dwarf-stonecunning cycle) -----
     // Grounded flat +2 situational bonus on Perception checks to potentially
@@ -8028,22 +8309,24 @@ fn explain_dwarf_race_seam(
     // not a check-execution engine. Distinct from Greed (a separate +2
     // Appraise racial trait for assessing nonmagical precious-metal/gemstone
     // goods), which remains unground.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_STONECUNNING_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
-        value: DWARF_STONECUNNING_PERCEPTION_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
-             {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
-             notice unusual stonework, such as traps and hidden doors located in stone walls or \
-             floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
-             stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
-             Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
-             situational-bonus-magnitude recognition record naming the Stonecunning identity on \
-             the deterministic pilot seam; no Perception-check-total or stonework-detection \
-             engine exists anywhere in this codebase, so no check resolution is fabricated from \
-             this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
+            value: DWARF_STONECUNNING_PERCEPTION_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
+                 {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
+                 notice unusual stonework, such as traps and hidden doors located in stone walls or \
+                 floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
+                 stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
+                 Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
+                 situational-bonus-magnitude recognition record naming the Stonecunning identity on \
+                 the deterministic pilot seam; no Perception-check-total or stonework-detection \
+                 engine exists anywhere in this codebase, so no check resolution is fabricated from \
+                 this record"
+            ),
+        });
+    }
 
     // ----- Greed (SD18 dwarf-greed cycle) -----
     // Grounded flat +2 situational bonus on Appraise checks made to
@@ -8056,22 +8339,24 @@ fn explain_dwarf_race_seam(
     // Appraise-check-total or goods-valuation engine exists anywhere in
     // this codebase, so this names only the flat situational-bonus
     // magnitude, not a check-execution engine.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_GREED_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.greed".to_owned(),
-        value: DWARF_GREED_APPRAISE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
-             {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
-             price of nonmagical goods that contain precious metals or gemstones \
-             (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
-             metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
-             dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
-             gemstones). This is a bounded flat situational-bonus-magnitude recognition \
-             record naming the Greed identity on the deterministic pilot seam; no \
-             Appraise-check-total or goods-valuation engine exists anywhere in this \
-             codebase, so no check resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.greed".to_owned(),
+            value: DWARF_GREED_APPRAISE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
+                 {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
+                 price of nonmagical goods that contain precious metals or gemstones \
+                 (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
+                 metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
+                 dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
+                 gemstones). This is a bounded flat situational-bonus-magnitude recognition \
+                 record naming the Greed identity on the deterministic pilot seam; no \
+                 Appraise-check-total or goods-valuation engine exists anywhere in this \
+                 codebase, so no check resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // ----- Hardy (SD18 dwarf-hardy cycle) -----
     // Bundles two distinct save categories, both grounded honestly, mirroring
@@ -8094,28 +8379,30 @@ fn explain_dwarf_race_seam(
     // correct, for the reason now stated instead: Hardy is conditional on what
     // the save is AGAINST, and `BaseSaves` is three by-category scalars with no
     // by-source dimension, so adding it would apply it to every save.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_HARDY_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.hardy".to_owned(),
-        value: DWARF_HARDY_SAVE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
-             {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
-             flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
-             spell-like abilities (dwarf_abilities_race.lst:25 \
-             BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
-             BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
-             bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
-             identity on the deterministic pilot seam, mirroring the already-grounded Elf \
-             Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
-             this character's integrated save totals, which do exist (`total_saves`, surfaced \
-             as the `defense.total_save.*` records, and already folding in unconditional feat \
-             save bonuses): both halves of Hardy are conditional on what the saving throw is \
-             against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
-             with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
-             would wrongly apply it to every save of that category. The magnitude is therefore \
-             reported standalone, and no check resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.hardy".to_owned(),
+            value: DWARF_HARDY_SAVE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
+                 {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
+                 flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
+                 spell-like abilities (dwarf_abilities_race.lst:25 \
+                 BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
+                 BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
+                 bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
+                 identity on the deterministic pilot seam, mirroring the already-grounded Elf \
+                 Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
+                 this character's integrated save totals, which do exist (`total_saves`, surfaced \
+                 as the `defense.total_save.*` records, and already folding in unconditional feat \
+                 save bonuses): both halves of Hardy are conditional on what the saving throw is \
+                 against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
+                 with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
+                 would wrongly apply it to every save of that category. The magnitude is therefore \
+                 reported standalone, and no check resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // ----- Stability (SD18 dwarf-stability cycle) -----
     // Bundles two distinct combat-maneuver-defense categories, both grounded
@@ -8132,23 +8419,25 @@ fn explain_dwarf_race_seam(
     // CMD-bonus magnitude, not a Combat-Maneuver-Defense-total engine: no
     // such engine exists anywhere in this codebase, so no check resolution
     // is fabricated from this record.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_STABILITY_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.stability".to_owned(),
-        value: DWARF_STABILITY_CMD_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
-             {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
-             resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
-             bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
-             while standing on the ground (dwarf_abilities_race.lst:26 \
-             BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
-             is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
-             identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
-             Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
-             engine exists anywhere in this codebase, so no check resolution is fabricated \
-             from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.stability".to_owned(),
+            value: DWARF_STABILITY_CMD_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
+                 {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
+                 resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
+                 bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
+                 while standing on the ground (dwarf_abilities_race.lst:26 \
+                 BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
+                 is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
+                 identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
+                 Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
+                 engine exists anywhere in this codebase, so no check resolution is fabricated \
+                 from this record"
+            ),
+        });
+    }
 
     // ----- Defensive Training (SD18 dwarf-defensive-training cycle) -----
     // Grounded flat +4 dodge bonus to Armor Class against monsters of the
@@ -8159,21 +8448,23 @@ fn explain_dwarf_race_seam(
     // Armor-Class-total or giant-subtype-detection engine exists anywhere in
     // this codebase, so this names only the flat dodge-bonus magnitude, not
     // a check-execution engine.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_DEFENSIVE_TRAINING_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
-        value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
-             {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
-             monsters of the giant subtype (dwarf_abilities_race.lst:22 \
-             BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
-             This is a bounded flat dodge-bonus-magnitude recognition record naming the \
-             Defensive Training identity on the deterministic pilot seam, mirroring the \
-             already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
-             giant-subtype-detection engine exists anywhere in this codebase, so no check \
-             resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
+            value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
+                 {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
+                 monsters of the giant subtype (dwarf_abilities_race.lst:22 \
+                 BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
+                 This is a bounded flat dodge-bonus-magnitude recognition record naming the \
+                 Defensive Training identity on the deterministic pilot seam, mirroring the \
+                 already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
+                 giant-subtype-detection engine exists anywhere in this codebase, so no check \
+                 resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // Bounded honesty: nine named dimensions are now grounded (ability
     // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
@@ -8614,6 +8905,49 @@ const HALF_ELF_RACE_ID: &str = "race:half-elf";
 const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
 const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
 const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
+/// ARG's `Half-Elf ~ Dual Minded` (`arg_abilities_race.lst:158`, ARG p.42).
+///
+/// The one alternate racial trait across all 153 whose declared bonus lands on
+/// a **saving throw** this engine totals: its whole mechanical body is
+/// `BONUS:SAVE|Will|2`, with no situational qualifier and no PCGen variable,
+/// against `compute_total_saves`' real `total_saves.will`. The only other ten
+/// that reach a computed total at all are skill bonuses, handled by
+/// [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`].
+///
+/// Derived by scanning every ARG alternate's `raw_bonus_chains` against the
+/// engine's computed-total surface, not asserted —
+/// `tests/sd27_alternate_racial_trait_reachability.rs` re-runs that scan and
+/// pins the whole set of eleven.
+///
+/// **It stacks, unlike the ten skill bonuses.** The corpus chain carries no
+/// `TYPE=` token at all, so this is an untyped bonus and PF1's
+/// same-type-does-not-stack rule does not apply to it; it is added, not
+/// maximised.
+///
+/// The standard trait it replaces is `Half-Elf ~ Adaptability` (a Skill Focus
+/// bonus feat), which this engine grounds no record for, so this is a pure
+/// addition rather than a swap of one number for another.
+const HALF_ELF_DUAL_MINDED_TRAIT_KEY: &str = "Half-Elf ~ Dual Minded";
+const HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS: i16 = 2;
+
+/// `Half-Elf ~ Dual Minded`'s +2 on all Will saving throws, or 0.
+///
+/// Race-gated by construction: the trait key is a Half-Elf record, and this
+/// additionally requires `race_id == race:half-elf` so a selection copied onto
+/// another race can never contribute. Unconditional once held — the corpus
+/// chain carries no situational qualifier — so it layers into
+/// `compute_total_saves` exactly the way `feat_effects::save_bonuses_from_feats`
+/// already does for Iron Will.
+fn half_elf_dual_minded_will_save_bonus(input: &CharacterInput) -> i16 {
+    if input.chosen.race_id != HALF_ELF_RACE_ID {
+        return 0;
+    }
+    if selected_alternate_trait_keys(input).iter().any(|key| key == HALF_ELF_DUAL_MINDED_TRAIT_KEY) {
+        HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS
+    } else {
+        0
+    }
+}
 
 /// SD13-E2/SD18 Half-Elf racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
@@ -9252,6 +9586,214 @@ fn explain_human_trait_bundle(
              skill-modifier computation, so the bounded fighter-posture skill totals remain \
              grounded by the canonical rank-1 posture rather than by the unbounded Human extra \
              skill-rank rule"
+        ),
+    });
+}
+
+/// The choice-set id under which a chosen ARG alternate racial trait is
+/// persisted on `ChosenCharacterState::selected_choices`.
+///
+/// Reuses the engine's existing general choice channel rather than adding a
+/// field to `ChosenCharacterState`: a `SelectedChoice` already round-trips
+/// through `SavedCharacterStore`'s serializer, through `clone_character`, and
+/// through `apply_level_up`, so a persisted alternate racial trait survives
+/// save/load/clone/level-up with no schema change. The selection id is the
+/// corpus record key verbatim (`"Dwarf ~ Saltbeard"`) — the same string
+/// `RaceCorpus::resolve` and `race_trait_picker`'s command surface take, so
+/// the picker round-trips it unchanged.
+///
+/// The set is repeatable: a character may hold several alternates at once, so
+/// readers must scan every matching entry rather than use `choice_selection`,
+/// which returns only the first.
+pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
+
+/// The namespace every alternate-racial-trait selection id carries.
+///
+/// **Not decoration.** `SavedCharacterStore`'s serializer rejects any
+/// `SelectedChoice::selection_id` with fewer than two colon-segments, because
+/// its line grammar splits `choice=<set>:<selection>` on colons — so a bare
+/// corpus key (`"Dwarf ~ Minesight"`) cannot be persisted at all. Prefixing it
+/// gives the same `feat:` / `school:` / `bond:` shape every other selection id
+/// in this engine already has, and the key survives verbatim after the first
+/// colon (the corpus keys contain no colon of their own, verified across all
+/// 156 ingested records by
+/// `tests/sd27_alternate_racial_trait_reachability.rs`).
+pub const RACE_ALTERNATE_TRAIT_SELECTION_PREFIX: &str = "race_trait:";
+
+/// Wraps a corpus alternate-racial-trait key into the persisted selection id.
+pub fn race_alternate_trait_selection_id(trait_key: &str) -> String {
+    format!("{RACE_ALTERNATE_TRAIT_SELECTION_PREFIX}{trait_key}")
+}
+
+/// Every alternate racial trait key this character has taken, in selection
+/// order, deduplicated, with the storage namespace stripped back off.
+///
+/// A selection recorded without the prefix is read as-is rather than dropped:
+/// the engine's job here is to see every choice that was made, and an
+/// unrecognized key is reported by `explain_selected_alternate_racial_traits`
+/// rather than silently skipped.
+pub(crate) fn selected_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for choice in &input.chosen.selected_choices {
+        if choice.choice_set_id != RACE_ALTERNATE_TRAIT_CHOICE_ID {
+            continue;
+        }
+        let key = choice
+            .selection_id
+            .strip_prefix(RACE_ALTERNATE_TRAIT_SELECTION_PREFIX)
+            .unwrap_or(choice.selection_id.as_str())
+            .to_owned();
+        if !out.contains(&key) {
+            out.push(key);
+        }
+    }
+    out
+}
+
+/// Whether one of this character's chosen alternate racial traits fires the
+/// named `<Race>_Replace<Trait>` flag — i.e. whether the standard trait whose
+/// `!PREFACT:1,ABILITIES,<flag>=True` gate names it has been replaced.
+///
+/// This is `decisions.md §26`'s protocol applied to the engine's own
+/// hand-modelled records. Every standard racial trait this file grounds is now
+/// gated on its own corpus-declared flag, so a swap the player made in the
+/// picker really does stop the standard trait's effect from applying.
+///
+/// The flag lookup is `race_resolver::alternate_traits_fire_flag`, a pure
+/// function over a table pinned against the on-disk corpus — this file may not
+/// read the filesystem (see `RACE_SIZES`' own doc comment for the same
+/// constraint and the same resolution).
+fn replaced_by_alternate_trait(input: &CharacterInput, flag: &str) -> bool {
+    crate::rules_core::race_resolver::alternate_traits_fire_flag(
+        &selected_alternate_trait_keys(input),
+        flag,
+    )
+}
+
+/// Every ARG alternate racial trait that declares a plain-integer
+/// `BONUS:SKILL` on one of the three skills `compute_selected_skill_modifiers`
+/// actually totals, as `(trait key, owning race id, Climb, Intimidate, Swim)`.
+///
+/// # This list is a measurement, not a selection
+///
+/// `tests/sd27_alternate_racial_trait_reachability.rs` re-derives it by
+/// scanning all 153 alternates' `raw_bonus_chains` against the engine's own
+/// computed-total surface, and fails if the two disagree in either direction.
+/// It is short because the *engine* is narrow, not because the content is:
+/// every other alternate's declared number is situational
+/// (`BONUS:SITUATION|Perception=to notice flying creatures|2`), aimed at a
+/// skill this codebase computes no total for (Perception, Fly, Linguistics,
+/// Profession, Handle Animal), or formula-valued (`TL/2`,
+/// `1+Global_LuckBonus`) and so out of reach under `decisions.md §24`'s
+/// no-interpreter ruling. Widen the engine's totals and this table grows —
+/// the test will say by how much and name the traits.
+///
+/// # Why the values are read out of multi-skill chains
+///
+/// A chain names every skill it covers: `Goblin ~ Tree Runner` is
+/// `BONUS:SKILL|Acrobatics,Climb|4|TYPE=Racial`, and Acrobatics has no total
+/// here, so only the Climb half lands. `Gnome ~ Explorer`'s
+/// `Climb,%LIST` likewise contributes its Climb half; the `%LIST` half is a
+/// player-chosen skill this engine models no chooser for, and is deliberately
+/// not guessed at.
+const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &[
+    // (trait key, race id, Climb, Intimidate, Swim)
+    ("Elf ~ Spirit of the Waters", "race:elf", 0, 0, 4),
+    ("Gnome ~ Explorer", "race:gnome", 2, 0, 0),
+    ("Goblin ~ Tree Runner", "race:goblin", 4, 0, 0),
+    ("Half-Elf ~ Water Child", "race:half-elf", 0, 0, 4),
+    ("Half-Orc ~ Forest Walker", "race:half-orc", 2, 0, 0),
+    ("Half-Orc ~ Rock Climber", "race:half-orc", 1, 0, 0),
+    ("Hobgoblin ~ Bandy-Legged", "race:hobgoblin", 2, 0, 0),
+    ("Hobgoblin ~ Fearsome", "race:hobgoblin", 0, 4, 0),
+    ("Human ~ Heart of the Mountain", "race:human", 2, 0, 0),
+    ("Human ~ Heart of the Sea", "race:human", 0, 0, 2),
+];
+
+/// The Climb / Intimidate / Swim racial bonus this character's chosen
+/// alternate racial traits contribute.
+///
+/// **The highest applies, not the sum.** All ten corpus chains carry
+/// `TYPE=Racial`, and PF1's stacking rule for two same-typed named bonuses is
+/// that only the largest counts. This matters for a real pair a player can
+/// legally hold: `Half-Orc ~ Forest Walker` (+2 Climb, replaces vision) and
+/// `Half-Orc ~ Rock Climber` (+1 Climb, replaces Intimidating) fire different
+/// flags, so ARG's own `PREMULT` guard does not exclude them from each other —
+/// a Half-Orc may take both, and gets +2, not +3.
+///
+/// Race-gated by construction: a trait key is matched only against its owning
+/// race, so a selection copied onto another race contributes nothing.
+fn alternate_trait_selected_skill_bonuses(input: &CharacterInput) -> SelectedSkillModifiers {
+    let selected = selected_alternate_trait_keys(input);
+    let mut best = SelectedSkillModifiers::default();
+    for (key, race_id, climb, intimidate, swim) in ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES {
+        if input.chosen.race_id != *race_id || !selected.iter().any(|chosen| chosen == key) {
+            continue;
+        }
+        best.climb = best.climb.max(*climb);
+        best.intimidate = best.intimidate.max(*intimidate);
+        best.swim = best.swim.max(*swim);
+    }
+    best
+}
+
+/// Names every alternate racial trait this character has taken, and the
+/// standard-trait replace-flags those choices fired.
+///
+/// Runs for every race, including the eleven with no hand-modelled seam of
+/// their own: a chosen alternate is a real, persisted player decision, and a
+/// sheet that shows nothing for it is the "selection vanished" failure this
+/// repo has already shipped twice (`unresolved_spell_ids`,
+/// `unresolved_equipment_item_ids`).
+///
+/// The record carries `value = 0` deliberately. Which *numbers* change is
+/// decided per trait by the race seams above (today: Dwarf Minesight's
+/// darkvision range, Half-Elf Dual Minded's Will save, and the removal of every
+/// standard-trait record whose flag fired); summing anything here would be a
+/// fabricated aggregate.
+///
+/// A selection key the pinned table does not know raises a **claim-blocking**
+/// diagnostic rather than being dropped: a saved character naming a trait this
+/// engine cannot place has an unknown racial trait bundle, and every number
+/// derived from it is unproven.
+fn explain_selected_alternate_racial_traits(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let selected = selected_alternate_trait_keys(input);
+    if selected.is_empty() {
+        return;
+    }
+
+    let unknown = crate::rules_core::race_resolver::unknown_alternate_trait_keys(&selected);
+    if !unknown.is_empty() {
+        diagnostics.push(ComputationDiagnostic {
+            id: "race.alternate_trait.unknown".to_owned(),
+            message: format!(
+                "chosen alternate racial trait(s) {unknown:?} name no record this engine knows; \
+                 the ARG alternate-trait table covers the 153 selectable records across the 18 \
+                 in-scope races (decisions.md §25.3), so nothing was replaced for these and the \
+                 character's racial trait bundle is not fully grounded"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    let fired = crate::rules_core::race_resolver::replace_flags_fired_by(&selected);
+    explanations.push(ComputationExplanation {
+        id: "race.alternate_trait.selected".to_owned(),
+        value: 0,
+        detail: format!(
+            "Alternate racial traits chosen for {}: {}. Firing replace-flag(s) {}, each of which \
+             suppresses the standard racial trait whose \
+             !PREFACT:1,ABILITIES,<flag>=True gate names it (decisions.md §26 — the swap is a \
+             relationship the PCGen corpus declares, not one this engine invents). This record \
+             names the selection itself and carries no mechanical value (+0); the numbers that \
+             actually change are emitted by the affected per-trait records",
+            input.chosen.race_id,
+            selected.join(", "),
+            if fired.is_empty() { "(none)".to_owned() } else { fired.join(", ") }
         ),
     });
 }
@@ -23673,9 +24215,8 @@ fn ground_unchained_barbarian_class_features(
         ),
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported".to_owned(),
-        message:
+    push_deferred_class_features(
+        "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported",
             "class:unchained_barbarian grounds every Unchained Barbarian magnitude this book \
              states as a formula token: the chassis (borrowed unchanged from the Core Rulebook \
              Barbarian, which the corpus record confirms it does not override), Rage's rounds \
@@ -23691,9 +24232,49 @@ fn ground_unchained_barbarian_class_features(
              cannot evaluate; (4) Tireless Rage and Mighty Rage carry no numeric token of their \
              own beyond the tier bumps already applied above, and Weapon and Armor Proficiency \
              is a proficiency-lane fact this engine models per-item, not per-class"
-                .to_owned(),
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
+}
+
+/// Emits one class's "these features are named but this engine computes
+/// nothing for them" record on **both** receipt channels.
+///
+/// Until this existed, the four Pathfinder Unchained classes pushed that
+/// record on the diagnostic channel only, and it reached no player. The
+/// Character Sheet's "Class Features & Special Abilities" section
+/// (`CharacterSheet.tsx` -> `classFeaturesModel.ts`) has always had a
+/// dedicated "Not computed" lane for exactly this — a record whose id ends in
+/// `.unsupported`, rendered with its detail text and deliberately without its
+/// filler-zero value, so the sheet never flattens "not computed" into "0" —
+/// but it reads `LoadSavedCharacterResponse.explanations`, and nothing in this
+/// engine had ever emitted an `.unsupported` *explanation*. The lane was
+/// therefore dead code and the deferral invisible: 23 of Unchained Rogue's,
+/// Barbarian's, Monk's and Summoner's 64 ingested class features compute
+/// nothing (including the Rogue's headline Debilitating Injury) and the sheet
+/// said nothing at all.
+///
+/// The diagnostic is kept as well as, not replaced by, the explanation: it is
+/// what `pf1_adapter`'s creation path and the headless receipt consumers read,
+/// and dropping it would silently change the mutation-blocking surface. Both
+/// carry the identical text, from one source, so the two channels cannot
+/// drift into telling different stories.
+///
+/// `value: 0` is the filler zero `classFeaturesModel.ts` documents and
+/// discards; nothing downstream renders it as a magnitude.
+fn push_deferred_class_features(
+    id: &str,
+    message: String,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: id.to_owned(),
+        message: message.clone(),
         claim_blocking: false,
     });
+    explanations.push(ComputationExplanation { id: id.to_owned(), value: 0, detail: message });
 }
 
 /// Grounds the Unchained Monk's named features
@@ -23838,9 +24419,8 @@ fn ground_unchained_monk_class_features(
         });
     }
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.pu.unchained_monk.other_features_deferred.unsupported".to_owned(),
-        message:
+    push_deferred_class_features(
+        "class_feature.pu.unchained_monk.other_features_deferred.unsupported",
             "class:unchained_monk grounds every Unchained Monk magnitude this book states as a \
              formula token: its own chassis (d10 hit die, FULL base attack bonus, good Fortitude \
              and Reflex and POOR Will -- all four genuinely different from the Core Rulebook \
@@ -23860,9 +24440,10 @@ fn ground_unchained_monk_class_features(
              Body, Flawless Mind and Perfect Self's Outsider-type clause carry no numeric token \
              and need engines this repo does not have; (6) archetype suppression flags \
              (`Monk_CF_*`) are not implemented, so every progression above is the unsuppressed one"
-                .to_owned(),
-        claim_blocking: false,
-    });
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
 }
 
 /// Grounds the Unchained Rogue's named features
@@ -23986,9 +24567,8 @@ fn ground_unchained_rogue_class_features(
         ),
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.pu.unchained_rogue.other_features_deferred.unsupported".to_owned(),
-        message:
+    push_deferred_class_features(
+        "class_feature.pu.unchained_rogue.other_features_deferred.unsupported",
             "class:unchained_rogue grounds every Unchained Rogue magnitude this book states as a \
              formula token: the chassis (borrowed unchanged from the Core Rulebook Rogue, which \
              the corpus record confirms it does not override), Sneak Attack dice, Trapfinding, \
@@ -24004,9 +24584,10 @@ fn ground_unchained_rogue_class_features(
              resolution, and Danger Sense's dodge bonus no trap encounter to apply against; (4) \
              Evasion, Improved Uncanny Dodge's qualitative clause, and the weapon/armor \
              proficiency rows carry no numeric token"
-                .to_owned(),
-        claim_blocking: false,
-    });
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
 }
 
 /// Grounds the Unchained Summoner's named features
@@ -24093,9 +24674,8 @@ fn ground_unchained_summoner_class_features(
         ),
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.pu.unchained_summoner.other_features_deferred.unsupported".to_owned(),
-        message:
+    push_deferred_class_features(
+        "class_feature.pu.unchained_summoner.other_features_deferred.unsupported",
             "class:unchained_summoner grounds every Unchained Summoner magnitude this book states \
              as a formula token: the chassis (borrowed unchanged from the Advanced Player's Guide \
              Summoner, which the corpus record confirms it does not override -- the one of the \
@@ -24115,9 +24695,10 @@ fn ground_unchained_summoner_class_features(
              Senses, Shield Ally, Maker's Call, Transposition, Aspect, Greater Shield Ally, Life \
              Bond, Greater Aspect, Merge Forms and Twin Eidolon state their effects in prose with \
              no formula token, so nothing is computed for them"
-                .to_owned(),
-        claim_blocking: false,
-    });
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
 }
 
 /// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
@@ -39934,6 +40515,14 @@ fn compute_total_saves(
     // Applies to REFLEX ONLY, unlike the all-three-saves bonuses above.
     let sidestep_secret_reflex_bonus =
         active_oracle_sidestep_secret_reflex_bonus(input, ability_modifiers).unwrap_or(0);
+    // SD-27 (alternate racial traits reach compute): ARG's `Half-Elf ~ Dual
+    // Minded` grants an unconditional +2 on all Will saving throws
+    // (`arg_abilities_race.lst:158`, `BONUS:SAVE|Will|2`). Race-gated and
+    // selection-gated by `half_elf_dual_minded_will_save_bonus` construction,
+    // 0 for every character who did not take it. See that function's own doc
+    // comment for why this is the only one of the 153 alternates that layers
+    // onto a total this engine computes.
+    let dual_minded_will_bonus = half_elf_dual_minded_will_save_bonus(input);
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
@@ -39953,7 +40542,8 @@ fn compute_total_saves(
             + inspired_rage_will_bonus
             + bloodrage_will_bonus
             + touch_of_good_save_bonus
-            + purity_judgment_save_bonus,
+            + purity_judgment_save_bonus
+            + dual_minded_will_bonus,
     };
 
     let class_label = class_summary_label(input);
@@ -39993,7 +40583,8 @@ fn compute_total_saves(
              while actively, validly singing) + Bloodrager Bloodrage morale bonus (+{}, only \
              while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+{}, \
              self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only while \
-             actively, validly judging Purity) = {}",
+             actively, validly judging Purity) + Half-Elf Dual Minded alternate racial trait \
+             (+{}, Advanced Race Guide p.42, only for a Half-Elf who took it) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
@@ -40002,6 +40593,7 @@ fn compute_total_saves(
             bloodrage_will_bonus,
             touch_of_good_save_bonus,
             purity_judgment_save_bonus,
+            dual_minded_will_bonus,
             total_saves.will
         ),
     });
@@ -40330,6 +40922,21 @@ fn compute_selected_skill_modifiers(
     // 0 for every non-Barbarian, non-Skald, or not-currently-raging
     // character.
     let raging_climber_swimmer_bonus = active_rage_powers_level(input, ability_modifiers);
+    // SD-27 (alternate racial traits reach compute): the racial skill bonus a
+    // chosen ARG alternate declares, for the ten of 153 whose `BONUS:SKILL`
+    // names Climb, Intimidate or Swim with a plain integer. Race-gated and
+    // selection-gated by `alternate_trait_selected_skill_bonuses`
+    // construction, all zeroes for every character who took none — and the
+    // highest of two same-typed racial bonuses rather than their sum; see that
+    // function's own doc comment.
+    let alternate_trait_skill_bonuses = alternate_trait_selected_skill_bonuses(input);
+    let alternate_trait_skill_detail = |bonus: i16| {
+        if bonus > 0 {
+            format!(" + alternate racial trait bonus ({bonus:+}, racial)")
+        } else {
+            String::new()
+        }
+    };
     let raging_climber_swimmer_detail = if raging_climber_swimmer_bonus > 0 {
         format!(" + Raging Climber/Raging Swimmer enhancement bonus ({raging_climber_swimmer_bonus:+}, while raging)")
     } else {
@@ -40343,15 +40950,17 @@ fn compute_selected_skill_modifiers(
         + armor_check_penalty
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.climb
-        + raging_climber_swimmer_bonus;
+        + raging_climber_swimmer_bonus
+        + alternate_trait_skill_bonuses.climb;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
-             + feat bonus (+{}, Athletic if selected){raging_climber_swimmer_detail} = {climb}",
-            ability_modifiers.strength, feat_skill_bonuses.climb
+             + feat bonus (+{}, Athletic if selected){raging_climber_swimmer_detail}{} = {climb}",
+            ability_modifiers.strength, feat_skill_bonuses.climb,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.climb)
         ),
     });
 
@@ -40361,16 +40970,18 @@ fn compute_selected_skill_modifiers(
         + intimidate_class_skill_bonus
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.intimidate
-        + stern_gaze_intimidate_bonus;
+        + stern_gaze_intimidate_bonus
+        + alternate_trait_skill_bonuses.intimidate;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
             "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
              {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} + feat bonus \
-             (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail} = \
+             (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail}{} = \
              {intimidate}",
-            ability_modifiers.charisma, feat_skill_bonuses.intimidate
+            ability_modifiers.charisma, feat_skill_bonuses.intimidate,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.intimidate)
         ),
     });
 
@@ -40387,7 +40998,8 @@ fn compute_selected_skill_modifiers(
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.swim
         + flight_hex_swim_bonus
-        + raging_climber_swimmer_bonus;
+        + raging_climber_swimmer_bonus
+        + alternate_trait_skill_bonuses.swim;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
@@ -40395,8 +41007,9 @@ fn compute_selected_skill_modifiers(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
-             (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail} = {swim}",
-            ability_modifiers.strength, feat_skill_bonuses.swim
+             (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail}{} = {swim}",
+            ability_modifiers.strength, feat_skill_bonuses.swim,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.swim)
         ),
     });
 
@@ -41197,6 +41810,12 @@ fn compute_combat_baseline(
         return (0, 0);
     }
 
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): resolved ONCE, up here,
+    // because four separate cells below need a size term -- Armor Class, touch
+    // AC, attack rolls, and CMB/CMD. Resolving it per-consumer would push the
+    // unknown-race diagnostic four times for the same single unknown.
+    let size = combat_size_modifiers(input, diagnostics);
+
     // Baseline melee attack bonus: Fighter BAB + STR modifier + Weapon Focus
     // (Longsword) + Weapon Training (from level 5, Heavy Blades). Power Attack is
     // selected but inactive, contributing 0. The posture check above guarantees a
@@ -41288,9 +41907,17 @@ fn compute_combat_baseline(
         });
     }
 
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): attack rolls take PF1
+    // Table 8-1's size modifier -- the SAME column and the same magnitude as
+    // Armor Class, not the CMB/CMD "special" one. `size.rs`'s
+    // `armor_class_size_modifier` doc comment named this gap explicitly
+    // ("Attack rolls take the identical modifier in real PF1 and do not yet
+    // receive it") rather than leaving it to be rediscovered; this closes it,
+    // and that doc comment is updated in the same change.
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
+        + size.armor_class_and_attack
         + weapon_training_bonus
         + inspire_courage_attack_bonus
         + touch_of_good_attack_bonus
@@ -41336,8 +41963,11 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
-             Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}) \
+             + {} size modifier ({:+}, PF1 Table 8-1 -- attack rolls take the same size modifier as Armor Class)\
+             {weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
+             Power Attack is selected but inactive (+0) = {melee_attack_bonus}",
+            size.label, size.armor_class_and_attack
         ),
     });
 
@@ -41468,7 +42098,8 @@ fn compute_combat_baseline(
     // do not stack with each other; a creature has exactly one size, so exactly
     // one value is summed and non-stacking holds structurally rather than by
     // de-duplicating a list.
-    let (size_armor_class_modifier, size_label) = armor_class_size_modifier(input, diagnostics);
+    let size_armor_class_modifier = size.armor_class_and_attack;
+    let size_label = size.label;
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -41507,6 +42138,90 @@ fn compute_combat_baseline(
              (+{draconic_dragon_resistances_natural_armor_bonus}, only for a Draconic-bloodline \
              Sorcerer at 3rd level or higher); shield \
              is absent (+0) = {armor_class}"
+        ),
+    });
+
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and CMD.
+    //
+    // None of the three existed in this engine at all. They were computed in
+    // React, in `apps/desktop/src/characterHub/CharacterSheet.tsx`, as
+    // `10 + dexMod` / `bab + str` / `10 + bab + str + dexMod` -- three rules
+    // formulas living in a view, none of them aware of creature size, and one
+    // of them (touch) able to contradict the engine's own Armor Class on the
+    // same panel. Grounding them here is the fix; the sheet now renders what
+    // the engine computed.
+    //
+    // Which of this function's terms a touch attack ignores, stated per term
+    // rather than inferred:
+    //   EXCLUDED -- armor bonus (Chain Shirt), Alchemist Mutagen's natural
+    //     armor bonus, Sorcerer Draconic Dragon Resistances' natural armor
+    //     bonus. PF1 touch AC ignores armor, shield and natural armor.
+    //   INCLUDED -- the Dexterity contribution (still subject to the armor's
+    //     MAXDEX, which limits the Dexterity bonus to Armor Class generally),
+    //     the size modifier, Dodge's dodge bonus, Brawler's AC Bonus (also a
+    //     dodge bonus), Inquisitor Protection judgment's sacred/profane bonus,
+    //     Oracle Nature's Whispers' Charisma-for-Dexterity substitution, and
+    //     every Rage/Inspired Rage/Bloodrage/Challenge PENALTY (penalties are
+    //     never ignored by a touch attack).
+    // There is no shield term to exclude: this posture requires the shield
+    // absent, contributing 0.
+    let excluded_from_touch = CHAIN_SHIRT_ARMOR_BONUS
+        + alchemist_mutagen_ac_bonus_value
+        + draconic_dragon_resistances_natural_armor_bonus;
+    let touch_armor_class_total = touch_armor_class(armor_class, excluded_from_touch);
+    explanations.push(ComputationExplanation {
+        id: "defense.touch_armor_class".to_owned(),
+        value: touch_armor_class_total,
+        detail: format!(
+            "Touch armor class: the armor class above ({armor_class}) with the contributors a \
+             touch attack ignores removed -- Chain Shirt armor bonus (-{CHAIN_SHIRT_ARMOR_BONUS}), \
+             Alchemist Mutagen natural armor (-{alchemist_mutagen_ac_bonus_value}), Sorcerer \
+             Draconic Bloodline natural armor (-{draconic_dragon_resistances_natural_armor_bonus}); \
+             shield is absent (-0). The Dexterity contribution (+{dexterity_contribution}), the \
+             {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) and every \
+             dodge/sacred/ability bonus and penalty are all retained = {touch_armor_class_total}"
+        ),
+    });
+
+    let combat_maneuver_bonus_total = combat_maneuver_bonus(
+        base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        size.category,
+        size.special,
+    );
+    explanations.push(ComputationExplanation {
+        id: "combat.combat_maneuver_bonus".to_owned(),
+        value: combat_maneuver_bonus_total,
+        detail: format!(
+            "Combat Maneuver Bonus: {class_label} base attack bonus (+{base_attack_bonus}) + \
+             Strength modifier (+{strength_modifier}) + {size_label} special size modifier \
+             ({:+}) = {combat_maneuver_bonus_total}. The special size modifier runs OPPOSITE to \
+             Table 8-1's Armor Class column: being smaller makes a creature worse at combat \
+             maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is \
+             modelled by this engine, so none is summed here",
+            size.special
+        ),
+    });
+
+    let combat_maneuver_defense_total = combat_maneuver_defense(
+        base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        size.special,
+    );
+    explanations.push(ComputationExplanation {
+        id: "defense.combat_maneuver_defense".to_owned(),
+        value: combat_maneuver_defense_total,
+        detail: format!(
+            "Combat Maneuver Defense: base {COMBAT_MANEUVER_DEFENSE_BASE} + {class_label} base \
+             attack bonus (+{base_attack_bonus}) + Strength modifier (+{strength_modifier}) + \
+             Dexterity modifier (+{dexterity_modifier}) + {size_label} special size modifier \
+             ({:+}) = {combat_maneuver_defense_total}. These are exactly the terms PF1's published \
+             CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses \
+             to Armor Class that also apply to CMD in real PF1 are NOT folded in here yet, and \
+             are named rather than silently implied",
+            size.special
         ),
     });
 

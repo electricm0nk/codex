@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
+  "ingested_at": "2026-07-31T21:43:42Z",
   "data": {
     "key": "Escaping Ward",
     "school": "Abjuration",
     "level": 2,
-    "description": "This ward grants you extra maneuverability when you avoid attacks against larger foes. While affected by this spell, when you are attacked and missed by a creature that is at least one size category larger than you, you can, as an immediate action, move up to %1 feet away from the attacking creature. This movement does not provoke attacks of opportunity.|(1+CASTERLEVEL/5)*5"
+    "description": "This ward grants you extra maneuverability when you avoid attacks against larger foes. While affected by this spell, when you are attacked and missed by a creature that is at least one size category larger than you, you can, as an immediate action, move up to feet away from the attacking creature. This movement does not provoke attacks of opportunity."
   },
   "source": {
     "kind": "lst_token",

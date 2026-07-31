@@ -18,6 +18,7 @@ pub mod feat_prereqs;
 pub mod level_up;
 pub mod money;
 pub mod party_cr;
+pub mod pcgen_desc;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;

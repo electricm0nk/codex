@@ -534,8 +534,23 @@ fn reach_of(family: &Family) -> Option<Reach> {
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
-        // apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx.
-        ("crb", "races") => Some(races_reach()),
+        // apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx. The same corpus
+        // backs `character_hub`'s creation roster, so a race claimed here is a
+        // race a player can actually make.
+        //
+        // Bestiary 1's eleven races became visible to this gate only when
+        // `corpus_ingest_diagnostic` started reporting a per-book race count
+        // (SD-27, 2026-07-31). They were already reaching a player — the gate
+        // simply had no `beastiary1`/`races` family to ask about, because the
+        // panel it derives families from reported none.
+        ("crb", "races") => Some(races_reach(
+            "CRB",
+            RaceId::ALL.iter().map(|id| format!("{id:?}")).collect(),
+        )),
+        ("beastiary1", "races") => Some(races_reach(
+            "B1",
+            crate::race_catalog::ingested_race_ids_for_book("beastiary"),
+        )),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -684,19 +699,20 @@ fn equipment_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
     )
 }
 
-fn races_reach() -> Reach {
-    let ingested: BTreeSet<String> = RaceId::ALL
-        .iter()
-        .map(|id| format!("{id:?}"))
-        .collect();
-
+/// One book's races claim.
+///
+/// `book_code` is the catalog's wire code (`"CRB"`, `"B1"`) and narrows the
+/// served rows to that book's own; `ingested` is the set the book is asserted
+/// to declare, supplied by the caller from a source *other* than the catalog
+/// so the two sides of the claim stay independent.
+fn races_reach(book_code: &str, ingested: BTreeSet<String>) -> Reach {
     // One race contributes many trait rows, so a race counts as reaching the
     // player once any of its rows carries both a trait name and its derivation
     // prose, and counts as bare only if it appears with no such row at all.
     let response = crate::race_catalog::build_race_catalog();
     let mut with_payload = BTreeSet::new();
     let mut seen = BTreeSet::new();
-    for entry in &response.entries {
+    for entry in response.entries.iter().filter(|entry| entry.book == book_code) {
         seen.insert(entry.race_id.clone());
         if !entry.trait_name.trim().is_empty() && !entry.detail.trim().is_empty() {
             with_payload.insert(entry.race_id.clone());
@@ -860,10 +876,19 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          `Unchained Rogue ~ Sneak Attack`, so nothing can join the two without a hand-written \
          mapping — which would be exactly the unexecuted claim this file forbids. Each class does \
          emit a non-claim-blocking `class_feature.pu.<class>.other_features_deferred.unsupported` \
-         row naming its own remainder, so the deferred set is visible to a player even though it \
-         is opaque to this gate. Remedy: carry the corpus feature key on the receipt explanation \
-         (or a `feature_key` field beside `id`), then declare a real per-record claim here and \
-         delete this entry.",
+         row naming its own remainder, which the character sheet's \"Not computed\" lane renders. \
+         CORRECTION (2026-07-31): that last sentence used to read \"so the deferred set is visible \
+         to a player\", and it was false when written. The record was pushed on the DIAGNOSTIC \
+         channel only; the sheet reads `LoadSavedCharacterResponse.explanations`, and a \
+         non-claim-blocking diagnostic never reaches the frontend at all, because diagnostics \
+         travel only on a Blocked outcome. Driven on screen by the SD-27 verify agent: an \
+         Unchained Monk 10 Actions tab jumped straight from its grounded rows to UNIVERSAL LEVEL \
+         BENEFITS with no \"Not computed\" section. `pilot_compute::push_deferred_class_features` \
+         now emits the record on BOTH channels with one shared text, and \
+         `tests/sd27_pu_deferred_features_reach_the_character_sheet.rs` pins it per class, so the \
+         sentence above is now true and stays checkable. Remedy for the finding itself is \
+         unchanged: carry the corpus feature key on the receipt explanation (or a `feature_key` \
+         field beside `id`), then declare a real per-record claim here and delete this entry.",
     ),
 ];
 

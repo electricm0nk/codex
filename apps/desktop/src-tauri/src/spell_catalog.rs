@@ -47,6 +47,7 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -75,13 +76,37 @@ pub struct SpellCatalogEntryDto {
     pub description: Option<String>,
 }
 
+/// Renders one table description into the prose this catalog is allowed to
+/// serve.
+///
+/// The four `spell_list` tables hold each record's `DESC:` token as the
+/// corpus writes it — prose plus, where the book states a caster-level
+/// formula, a `%N` reference and its `|`-delimited argument tail. That is the
+/// right thing for a corpus transcription to store and the wrong thing to put
+/// in front of a player: before this, ARG's "Absorbing Inhalation" reached the
+/// Spell Catalog screen (and the Character Sheet's Add Spell picker, which
+/// calls `list_spells`) reading *"contained within you for up to %1 rounds"*
+/// and ending *"you suffer the cloud's effects|CASTERLEVEL"*.
+///
+/// Derived over the four tables rather than assumed: 79 of the 1173 served
+/// descriptions carried PCGen syntax — 63 CRB, 3 APG, 0 ACG, 13 ARG. 21 of
+/// CRB's are its inline rulebook tables' ` | ` column separators, which are
+/// real prose and are preserved; the rest are `%%` escapes (49 records) and
+/// ARG's 10 caster-level `%N` references.
+///
+/// [`render_pcgen_desc`] owns the treatment and the reasoning about what may
+/// and may not be substituted; this is only the point of application.
+fn serve_description(raw: &str) -> String {
+    render_pcgen_desc(raw).text
+}
+
 fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
     SpellCatalogEntryDto {
         key: entry.key.to_string(),
         book: BOOK_CRB.to_string(),
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
-        description: Some(entry.description.to_string()),
+        description: Some(serve_description(entry.description)),
     }
 }
 
@@ -91,7 +116,7 @@ fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         book: BOOK_APG.to_string(),
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
-        description: entry.description.map(|text| text.to_string()),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -101,7 +126,7 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         book: BOOK_ACG.to_string(),
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
-        description: Some(entry.description.to_string()),
+        description: Some(serve_description(entry.description)),
     }
 }
 
@@ -115,7 +140,7 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
         book: BOOK_ARG.to_string(),
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
-        description: Some(entry.description.to_string()),
+        description: Some(serve_description(entry.description)),
     }
 }
 
@@ -453,5 +478,78 @@ mod tests {
             assert_eq!(entry.school.as_deref(), Some("Evocation"));
             assert!(entry.key.to_lowercase().contains("flame"));
         }
+    }
+
+    /// The production guard `src/bin/ingest_race_traits_arg.rs` already
+    /// carries for racial traits, ported to the surface that actually serves
+    /// spell text to a player.
+    ///
+    /// Before this, 79 of the 1173 served descriptions carried raw PCGen
+    /// `DESC:` syntax — ARG's "Absorbing Inhalation" ended
+    /// `…the cloud's effects|CASTERLEVEL` and read `for up to %1 rounds` in
+    /// the middle of the sentence. A future book that lands a leaking table
+    /// now fails this test instead of reaching a screen.
+    #[test]
+    fn no_served_spell_description_carries_raw_pcgen_syntax() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let response = build_spell_catalog();
+        let leaks: Vec<String> = response
+            .entries
+            .iter()
+            .filter_map(|entry| {
+                let description = entry.description.as_deref()?;
+                let leak = leaked_pcgen_syntax(description)?;
+                Some(format!("{} ({}): {leak}", entry.key, entry.book))
+            })
+            .collect();
+        assert!(leaks.is_empty(), "served spell descriptions leaking PCGen syntax: {leaks:#?}");
+    }
+
+    /// The one record the defect was reported against, pinned end to end so a
+    /// regression names itself.
+    #[test]
+    fn absorbing_inhalation_reads_as_prose_rather_than_as_a_pcgen_token() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("Absorbing Inhalation".to_owned()),
+            school: None,
+            book: Some("ARG".to_owned()),
+        });
+        let entry = response
+            .entries
+            .first()
+            .expect("Absorbing Inhalation is a real ARG spell record");
+        let description = entry.description.as_deref().expect("ARG records always carry description text");
+
+        assert!(
+            description.ends_with("you suffer the cloud's effects"),
+            "the `|CASTERLEVEL` argument tail must not survive: {description}"
+        );
+        assert!(
+            !description.contains("%1"),
+            "the `%1` caster-level reference must not survive: {description}"
+        );
+        assert!(
+            description.contains("contained within you for up to rounds"),
+            "the caster-level formula is dropped, not guessed, and the sentence closes up: {description}"
+        );
+    }
+
+    /// The reason this catalog does not reuse the race-trait binary's
+    /// "any `|` is an argument tail" rule: CRB spell text renders rulebook
+    /// tables inline.
+    #[test]
+    fn a_crb_prose_table_survives_the_render_intact() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("Power Word Stun".to_owned()),
+            school: None,
+            book: Some("CRB".to_owned()),
+        });
+        let entry = response.entries.first().expect("Power Word Stun is a real CRB record");
+        let description = entry.description.as_deref().expect("CRB records always carry description text");
+        assert!(
+            description.contains("Hit Points | Duration"),
+            "the inline rulebook table's column separators are prose and must survive: {description}"
+        );
     }
 }

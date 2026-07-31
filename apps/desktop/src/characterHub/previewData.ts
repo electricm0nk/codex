@@ -35,6 +35,9 @@ export function buildPreviewListSurface(): CharacterHubListSurface {
 
 export function buildPreviewDetail(): LoadSavedCharacterResponse {
   return {
+    // The preview character takes no alternate racial trait. Inventing one
+    // would put a swap on a sample sheet that no engine resolved.
+    selectedAlternateTraitKeys: [],
     summary: {
       characterId: PREVIEW_CHARACTER_ID,
       displayLabel: 'Aldric Ironhand',

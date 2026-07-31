@@ -27,10 +27,31 @@
 //! seven fails this module's own test suite until it is added here. That
 //! guard, not the one-time correction, is the fix.
 //!
+//! # SD-27 (2026-07-31): the panel could not tell you which book a race came from
+//!
+//! `races` was a Core Rulebook row only, read from `RaceId::ALL`, because that
+//! is the only race roster with a `rules_tables` representation. Bestiary 1
+//! showed `monsters: 41` and no race count whatsoever — while 18 races were
+//! creatable in the app and **11 of them were Bestiary 1's**. Read literally,
+//! the panel said Bestiary 1 shipped no playable race.
+//!
+//! `races` is now reported per book, derived from the same on-disk race corpus
+//! the race catalog and the character-creation roster read, so the panel and
+//! the creation screen cannot disagree about what exists. See
+//! [`race_counts_by_diagnostic_book`] for why that one row is corpus-derived
+//! rather than table-derived, and what it does when the corpus is unreachable.
+//!
+//! That does widen the caption's "landed in `rules_tables`" boundary by
+//! exactly one content kind, deliberately and only where the alternative was a
+//! false statement: a `rules_tables`-only race count cannot be honest, because
+//! for eleven of the eighteen races there is no `rules_tables` row to count.
+//!
 //! ## What this panel is still not counting, stated rather than left implicit
 //!
 //! ARG's **156 alternate/default racial-trait records are not a row here**,
-//! and that is a boundary, not an oversight. They have no `rules_tables`
+//! and that is a boundary, not an oversight. (Distinct from the `races` row
+//! added above: ARG contributes 0 *races*, which is reported, and 156 racial
+//! *traits*, which are not.) They have no `rules_tables`
 //! module: they were ingested straight to
 //! `data/corpus/advanced_race_guide/race_trait/` and are read at runtime by
 //! `race_resolver::load_race_corpus` (the path `race_catalog.rs` and
@@ -75,6 +96,8 @@ use codex::rules_core::rules_tables::crb::{
 };
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 
+use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
+
 /// One book's real ingested-corpus status. Field set is deliberately
 /// bounded to the sketch scope named above.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -112,10 +135,80 @@ pub struct BookIngestStatus {
 /// copy of this list a second/third time.
 const ALL_BESTIARY1_MONSTERS: &[MonsterId] = MonsterId::ALL;
 
+/// Real creatable-race counts, per book, derived from the same on-disk race
+/// corpus the race catalog and character creation both read.
+///
+/// # Why this is not a `rules_tables` count like every other row here
+///
+/// It cannot be. Only the Core Rulebook's seven races have a `rules_tables`
+/// representation (`RaceId::ALL`); Bestiary 1's eleven were ingested straight
+/// to `data/corpus/beastiary/race/` and are read at runtime by
+/// `race_resolver::load_race_corpus`, which is the path `race_catalog.rs` and
+/// `character_hub`'s creation roster use to put them on screen. So this panel
+/// reported CRB `races: 7` and, for Bestiary 1, `monsters: 41` and no race
+/// count at all — while 18 races were creatable in the app and 11 of them were
+/// Bestiary 1's. A tester reading the panel would conclude Bestiary 1 shipped
+/// no playable race.
+///
+/// Reading the live corpus rather than `RaceId::ALL` also makes the two agree
+/// by construction rather than by coincidence;
+/// `crb_race_count_agrees_with_the_compiled_race_id_table` pins that.
+///
+/// Every book in `RACE_CORPUS_BOOKS` gets an entry here, including a genuine
+/// zero for ARG (`decisions.md §25.2` — all 37 rows in `arg_races.lst` are
+/// `.MOD` reprints of chassis owned by other books). `book_status` is what
+/// decides not to *render* a zero, so this map stays a straight measurement
+/// and the presentation rule lives in one place.
+///
+/// Returns an empty map when the corpus cannot be loaded at all (a packaged
+/// build with no `data/corpus/` alongside it). Callers then omit the `races`
+/// row rather than report a fabricated zero — the same graceful-degradation
+/// shape `last_ingested_at` already uses for an unreachable git history.
+fn race_counts_by_diagnostic_book() -> BTreeMap<String, u32> {
+    let mut counts: BTreeMap<String, u32> = BTreeMap::new();
+    let catalog = build_race_catalog();
+    if catalog.entries.is_empty() {
+        // No on-disk corpus (a packaged build). The Core Rulebook's seven
+        // races are additionally compiled into this binary as `RaceId::ALL`,
+        // so that one row is still answerable and is answered; the books whose
+        // races exist only as corpus JSON honestly report nothing rather than
+        // a fabricated zero.
+        counts.insert("crb".to_string(), RaceId::ALL.len() as u32);
+        return counts;
+    }
+    for book in RACE_CORPUS_BOOKS {
+        counts.insert(diagnostic_book_id(&book_code(book)), 0);
+    }
+    let mut seen: BTreeMap<String, std::collections::BTreeSet<String>> = BTreeMap::new();
+    for entry in &catalog.entries {
+        seen.entry(diagnostic_book_id(&entry.book))
+            .or_default()
+            .insert(entry.race_id.clone());
+    }
+    for (book_id, races) in seen {
+        counts.insert(book_id, races.len() as u32);
+    }
+    counts
+}
+
+/// Maps a race-catalog wire book code (`"CRB"`, `"B1"`, `"ARG"`) onto this
+/// panel's own book identifier. An unrecognized code passes through verbatim
+/// rather than being silently re-attributed, so a newly ingested book shows up
+/// as itself and trips
+/// `tests::every_book_landed_in_rules_tables_is_reported` instead of quietly
+/// landing in the wrong row.
+fn diagnostic_book_id(race_catalog_book_code: &str) -> String {
+    match race_catalog_book_code {
+        "CRB" => "crb".to_string(),
+        "B1" => "beastiary1".to_string(),
+        "ARG" => "advanced_race_guide".to_string(),
+        other => other.to_string(),
+    }
+}
+
 fn crb_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("classes".to_string(), ClassId::ALL.len() as u32);
-    counts.insert("races".to_string(), RaceId::ALL.len() as u32);
     counts.insert(
         "feats".to_string(),
         crb_feats::feat_tables().len() as u32,
@@ -234,7 +327,23 @@ fn last_commit_iso_date(repo_relative_dir: &str) -> Option<String> {
     }
 }
 
-fn book_status(book_id: &str, repo_relative_dir: &str, counts: BTreeMap<String, u32>) -> BookIngestStatus {
+/// The race count is passed in rather than looked up per book so the whole
+/// panel reads the corpus once, and so this stays a pure function the tests can
+/// drive with a known map.
+fn book_status(
+    book_id: &str,
+    repo_relative_dir: &str,
+    mut counts: BTreeMap<String, u32>,
+    race_counts: &BTreeMap<String, u32>,
+) -> BookIngestStatus {
+    // A zero is dropped rather than reported. This panel's own contract —
+    // pinned by `every_book_is_populated_with_real_nonzero_counts` — is that a
+    // content-kind row means real records; ARG genuinely declares zero races
+    // (`decisions.md §25.2`), and a `races: 0` row would be the one row on the
+    // screen that means something different from all the others.
+    if let Some(races) = race_counts.get(book_id).filter(|races| **races > 0) {
+        counts.insert("races".to_string(), *races);
+    }
     let total: u32 = counts.values().sum();
     BookIngestStatus {
         book_id: book_id.to_string(),
@@ -248,24 +357,28 @@ fn book_status(book_id: &str, repo_relative_dir: &str, counts: BTreeMap<String, 
 /// Tauri command below, mirroring `class_catalog::build_class_catalog`'s
 /// command/pure-fn split.
 pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
+    let races = race_counts_by_diagnostic_book();
     vec![
-        book_status("crb", "src/rules_core/rules_tables/crb", crb_counts()),
-        book_status("apg", "src/rules_core/rules_tables/apg", apg_counts()),
-        book_status("acg", "src/rules_core/rules_tables/acg", acg_counts()),
+        book_status("crb", "src/rules_core/rules_tables/crb", crb_counts(), &races),
+        book_status("apg", "src/rules_core/rules_tables/apg", apg_counts(), &races),
+        book_status("acg", "src/rules_core/rules_tables/acg", acg_counts(), &races),
         book_status(
             "beastiary1",
             "src/rules_core/rules_tables/beastiary1",
             beastiary1_counts(),
+            &races,
         ),
         book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
+            &races,
         ),
         book_status(
             "pathfinder_unchained",
             "src/rules_core/rules_tables/pathfinder_unchained",
             pathfinder_unchained_counts(),
+            &races,
         ),
     ]
 }
@@ -372,6 +485,11 @@ mod tests {
         let response = build_corpus_ingest_diagnostic();
         let crb = response.iter().find(|b| b.book_id == "crb").expect("crb present");
         assert_eq!(crb.content_kind_counts["classes"], ClassId::ALL.len() as u32);
+        // `races` is now read off the on-disk race corpus rather than off
+        // `RaceId::ALL` (see `race_counts_by_diagnostic_book`). Keeping this
+        // assertion turns it into the agreement pin between the two sources:
+        // the compiled table and the corpus must answer the same for CRB, or
+        // one of them has drifted.
         assert_eq!(crb.content_kind_counts["races"], RaceId::ALL.len() as u32);
         assert_eq!(
             crb.content_kind_counts["feats"],
@@ -560,5 +678,102 @@ mod tests {
             );
         }
     }
-}
 
+    /// The defect: the panel showed CRB `races: 7` and, for Bestiary 1,
+    /// `monsters: 41` with no race count at all — while 18 races were
+    /// creatable and 11 of them were Bestiary 1's.
+    #[test]
+    fn every_book_that_declares_races_reports_how_many_it_declares() {
+        let response = build_corpus_ingest_diagnostic();
+        let races = |book_id: &str| -> Option<u32> {
+            response
+                .iter()
+                .find(|book| book.book_id == book_id)
+                .and_then(|book| book.content_kind_counts.get("races").copied())
+        };
+
+        assert_eq!(races("crb"), Some(7), "the Core Rulebook's seven races");
+        assert_eq!(
+            races("beastiary1"),
+            Some(11),
+            "Bestiary 1's eleven races reached the creation screen long before they \
+             reached this panel"
+        );
+        assert_eq!(
+            races("advanced_race_guide"),
+            None,
+            "ARG declares zero races of its own (`decisions.md §25.2`), and this panel's \
+             convention is that a content-kind row means real records — so the honest \
+             rendering of zero here is no row, not `races: 0`"
+        );
+    }
+
+    /// The number the panel reports must be the number a player can actually
+    /// create, so the two surfaces cannot drift apart.
+    #[test]
+    fn the_panels_race_total_equals_the_race_catalogs_own_creatable_total() {
+        let response = build_corpus_ingest_diagnostic();
+        let panel_total: u32 = response
+            .iter()
+            .filter_map(|book| book.content_kind_counts.get("races").copied())
+            .sum();
+
+        let catalog = build_race_catalog();
+        let creatable: BTreeSet<&str> =
+            catalog.entries.iter().map(|entry| entry.race_id.as_str()).collect();
+
+        assert_eq!(
+            panel_total as usize,
+            creatable.len(),
+            "the panel's per-book race counts must sum to exactly the races the catalog serves"
+        );
+        assert_eq!(panel_total, 18, "18 in-scope races today: CRB's 7 plus Bestiary 1's 11");
+    }
+
+    /// A book with no race content must not grow a misleading `races: 0` row —
+    /// only the books the race corpus is actually searched for get one.
+    #[test]
+    fn books_the_race_corpus_does_not_cover_carry_no_race_row_at_all() {
+        let response = build_corpus_ingest_diagnostic();
+        for book_id in ["apg", "acg", "pathfinder_unchained"] {
+            let book = response
+                .iter()
+                .find(|book| book.book_id == book_id)
+                .unwrap_or_else(|| panic!("{book_id} present"));
+            assert!(
+                !book.content_kind_counts.contains_key("races"),
+                "{book_id} is not a race corpus book; a `races` row here would be an \
+                 unmeasured zero dressed as a measurement"
+            );
+        }
+    }
+
+    /// `book_status` is pure over the race map, so the "corpus unreachable"
+    /// branch is a real, driven case rather than an untested `if`.
+    #[test]
+    fn a_book_with_no_entry_in_the_race_map_reports_no_race_row() {
+        let status = book_status(
+            "beastiary1",
+            "src/rules_core/rules_tables/beastiary1",
+            beastiary1_counts(),
+            &BTreeMap::new(),
+        );
+        assert!(
+            !status.content_kind_counts.contains_key("races"),
+            "an unreachable corpus must omit the row, never report a fabricated zero"
+        );
+        assert_eq!(status.content_kind_counts["monsters"], 41);
+    }
+
+    #[test]
+    fn the_race_catalog_book_codes_map_onto_this_panels_book_ids() {
+        assert_eq!(diagnostic_book_id("CRB"), "crb");
+        assert_eq!(diagnostic_book_id("B1"), "beastiary1");
+        assert_eq!(diagnostic_book_id("ARG"), "advanced_race_guide");
+        assert_eq!(
+            diagnostic_book_id("UM"),
+            "UM",
+            "an unrecognized book passes through verbatim rather than landing in the wrong row"
+        );
+    }
+}

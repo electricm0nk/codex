@@ -79,6 +79,13 @@ export interface CreateCharacterFormFields {
   level: number;
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
+  /**
+   * ARG alternate racial trait corpus keys the player chose for this race.
+   * Optional so every existing caller and test composes unchanged; an absent
+   * field means "took none", which is a real and common answer rather than a
+   * placeholder.
+   */
+  selectedAlternateTraitKeys?: readonly string[];
 }
 
 export interface ComposeCreateCharacterRequestDependencies {
@@ -104,5 +111,6 @@ export function composeCreateCharacterRequest(
     abilityScores: { ...fields.abilityScores },
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),
+    selectedAlternateTraitKeys: [...(fields.selectedAlternateTraitKeys ?? [])],
   };
 }

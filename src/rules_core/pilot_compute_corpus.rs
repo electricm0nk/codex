@@ -33,8 +33,8 @@ use crate::rules_core::feat_identity;
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
-    compute_pilot_base_chassis, equipped_weapon_stat_block, fighter_armor_training,
-    fighter_level_in_mix,
+    combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
+    equipped_weapon_stat_block, fighter_armor_training, fighter_level_in_mix, touch_armor_class,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
@@ -362,6 +362,17 @@ pub fn compute_pilot_with_corpus(
 pub struct CorpusAwareCombatBaseline {
     pub melee_attack_bonus: i16,
     pub armor_class: i16,
+    /// SD-27, `decisions.md §28` defect 1: PF1 touch Armor Class -- `armor_class`
+    /// above with the contributors a touch attack ignores removed. On this path
+    /// that is the whole resolved armor+shield delta, since the corpus-aware
+    /// formula grounds no natural-armor term.
+    pub touch_armor_class: i16,
+    /// PF1 Combat Maneuver Bonus. See `pilot_compute::combat_maneuver_bonus`,
+    /// which is the single owner of the formula both paths call.
+    pub combat_maneuver_bonus: i16,
+    /// PF1 Combat Maneuver Defense. See
+    /// `pilot_compute::combat_maneuver_defense`, likewise shared.
+    pub combat_maneuver_defense: i16,
 }
 
 pub fn compute_combat_baseline_from_corpus(
@@ -475,12 +486,36 @@ pub fn compute_combat_baseline_from_corpus(
         return Err(unmet);
     }
 
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): resolved once, ahead of
+    // both the attack bonus and the Armor Class, because PF1 gives them the
+    // SAME size modifier (Table 8-1) and CMB/CMD the opposite-signed special
+    // one. The unresolvable-race case refuses rather than assuming Medium --
+    // this function's existing contract for an unknown fact, matching the
+    // unknown-proficiency case above.
+    let Some(size) = race_size_for_race_token(&chosen.race_id) else {
+        return Err(vec![format!(
+            "race {:?} resolves to no ingested race, so its creature size -- and its size \
+             modifiers to Armor Class, touch AC, attack rolls, CMB and CMD -- are unknown",
+            chosen.race_id
+        )]);
+    };
+    let size_armor_class_modifier = size.armor_class_size_modifier();
+
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = base.ability_modifiers.strength;
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    // The size modifier is applied HERE TOO, not only in
+    // `pilot_compute::compute_combat_baseline`, for exactly the reason the
+    // nonproficiency penalty above states: this is the path
+    // `resolve_unified_pilot_snapshot` gates on, so it is the number the
+    // player's sheet reads, while
+    // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
+    // pins the two paths equal. One-sided application would both leave the
+    // shipped sheet wrong and break that parity test.
     let melee_attack_bonus = base.base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
+        + size_armor_class_modifier
         + weapon_training_bonus
         + attack_bonus_delta
         + nonproficiency_penalty;
@@ -514,28 +549,56 @@ pub fn compute_combat_baseline_from_corpus(
     //
     // Same stacking position and same modifier-type reasoning as the hardcoded
     // path: after the Dexterity contribution, its own PF1 modifier type, one
-    // size per creature so non-stacking holds structurally.
-    //
-    // The unresolvable-race case is an `unmet` condition rather than an assumed
-    // Medium, matching this function's existing contract for the unknown
-    // proficiency case: refuse to produce a number rather than guess.
-    let size_armor_class_modifier = match race_size_for_race_token(&chosen.race_id) {
-        Some(size) => size.armor_class_size_modifier(),
-        None => {
-            return Err(vec![format!(
-                "race {:?} resolves to no ingested race, so its creature size -- and its size \
-                 modifier to Armor Class -- is unknown",
-                chosen.race_id
-            )]);
-        }
-    };
+    // size per creature so non-stacking holds structurally. `size` and
+    // `size_armor_class_modifier` are resolved once, above the attack bonus,
+    // because attack rolls take the identical Table 8-1 value.
     let armor_class = ARMOR_CLASS_BASE
         + effects.armor_class_delta
         + dexterity_contribution
         + size_armor_class_modifier
         + dodge_armor_class_bonus;
 
-    Ok(CorpusAwareCombatBaseline { melee_attack_bonus, armor_class })
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC / CMB / CMD on
+    // the path the shipped sheet reads. All three used to be computed in React
+    // (`CharacterSheet.tsx`), size-blind, with touch AC able to contradict this
+    // very Armor Class on the same panel.
+    //
+    // Touch AC is derived by SUBTRACTION from `armor_class` above -- see
+    // `pilot_compute::touch_armor_class` for why that shape rather than a
+    // parallel formula. `effects.armor_class_delta` is the whole excluded set
+    // here: it is `compute_equipment_effects`' summed armor + shield bonus, and
+    // this path grounds no natural-armor term at all (unlike the hardcoded
+    // path's Mutagen / Dragon Resistances contributions). The Dexterity
+    // contribution, the size modifier and Dodge are all retained, which is
+    // correct for a touch attack.
+    let touch = touch_armor_class(armor_class, effects.armor_class_delta);
+    // Shared formulas, deliberately not re-derived: `pilot_compute` owns both,
+    // so the two engine paths cannot drift into two different CMB/CMD rules the
+    // way they nearly did on the nonproficiency penalty. `dexterity_modifier`
+    // is the RAW ability modifier resolved above, not the MAXDEX-capped
+    // `dexterity_contribution` -- see `pilot_compute::combat_maneuver_defense`
+    // for why that distinction is deliberate and stated rather than guessed.
+    let cmb = combat_maneuver_bonus(
+        base.base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        Some(size),
+        size.special_size_modifier(),
+    );
+    let cmd = combat_maneuver_defense(
+        base.base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        size.special_size_modifier(),
+    );
+
+    Ok(CorpusAwareCombatBaseline {
+        melee_attack_bonus,
+        armor_class,
+        touch_armor_class: touch,
+        combat_maneuver_bonus: cmb,
+        combat_maneuver_defense: cmd,
+    })
 }
 
 /// v0.6 alpha swarm items 1+27 sub-task 4: real, corpus-resolved
@@ -858,6 +921,131 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
                 combat.armor_class, headless.computation.baseline_armor_class,
                 "{race}: the corpus-aware and hardcoded paths must not disagree"
             );
+        }
+    }
+
+    /// SD-27 `decisions.md §28` defect 1, the other four cells: **touch AC,
+    /// CMB, CMD and the melee attack bonus**, pinned on the path the shipped
+    /// sheet reads.
+    ///
+    /// `tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs` pins the same
+    /// four on the hardcoded `pilot_compute::compute_combat_baseline`. This one
+    /// matters for the same reason its Armor Class sibling above does: this is
+    /// the function `resolve_unified_pilot_snapshot` gates on, so it produces
+    /// the numbers a player actually sees.
+    ///
+    /// Pins all 18 in-scope races per §28's standing guard, and asserts the two
+    /// engine paths agree per race and per cell -- the divergence guard that
+    /// caught the nonproficiency penalty being applied on only one path.
+    #[test]
+    fn touch_cmb_cmd_and_attack_all_carry_the_size_modifier_on_the_corpus_aware_path() {
+        use crate::rules_core::size::SizeCategory;
+
+        // Same 18-race table as the sibling test above, restated rather than
+        // shared so neither copy can drift silently.
+        let races: &[(&str, SizeCategory)] = &[
+            ("Dwarf", SizeCategory::Medium),
+            ("Elf", SizeCategory::Medium),
+            ("Gnome", SizeCategory::Small),
+            ("Half-Elf", SizeCategory::Medium),
+            ("Half-Orc", SizeCategory::Medium),
+            ("Halfling", SizeCategory::Small),
+            ("Human", SizeCategory::Medium),
+            ("Aasimar", SizeCategory::Medium),
+            ("Drow", SizeCategory::Medium),
+            ("Duergar", SizeCategory::Medium),
+            ("Goblin", SizeCategory::Small),
+            ("Hobgoblin", SizeCategory::Medium),
+            ("Kobold", SizeCategory::Small),
+            ("Merfolk", SizeCategory::Medium),
+            ("Orc", SizeCategory::Medium),
+            ("Svirfneblin", SizeCategory::Small),
+            ("Tengu", SizeCategory::Medium),
+            ("Tiefling", SizeCategory::Medium),
+        ];
+
+        // Strength is +3 (score 16) and Dexterity +2 (score 14) for all 18
+        // races here: unlike the shared deterministic fixture,
+        // `fixed_posture_fixture` carries no `choice:human_ability_bonus`, so
+        // `apply_human_ability_bonus` has nothing to apply and Human is not a
+        // special case on this path. Verified empirically -- an earlier draft
+        // of this test assumed Human's +2 applied here and failed, naming it.
+        //
+        // Values with no size term applied, i.e. what this path produced for
+        // every race, Small and Medium alike, before this cycle:
+        const MELEE_BEFORE_SIZE: i16 = 5; // BAB +1 + STR +3 + Weapon Focus +1
+        const TOUCH_BEFORE_SIZE: i16 = 13; // 10 + DEX +2 + Dodge +1, armor removed
+        const CMB_BEFORE_SIZE: i16 = 4; // BAB +1 + STR +3
+        const CMD_BEFORE_SIZE: i16 = 16; // 10 + BAB +1 + STR +3 + DEX +2
+
+        let corpus = corpus_with_fixture();
+        for (race, size) in races {
+            let fixture = fixed_posture_fixture("class:fighter", 1)
+                .replace("race_id=race:human", &format!("race_id=race:{}", race.to_lowercase()));
+            let input = load(&fixture);
+            let headless = build_pilot_headless_receipt(&input);
+            let combat =
+                compute_combat_baseline_from_corpus(&headless.computation, &input, &corpus)
+                    .unwrap_or_else(|unmet| panic!("{race} must compute, unmet: {unmet:?}"));
+
+            let attack_column = size.armor_class_size_modifier();
+            let special_column = size.special_size_modifier();
+
+            assert_eq!(
+                combat.melee_attack_bonus,
+                MELEE_BEFORE_SIZE + attack_column,
+                "{race} is {size:?}: attack rolls take PF1 Table 8-1's size modifier, the same \
+                 column and magnitude as Armor Class"
+            );
+            assert_eq!(
+                combat.touch_armor_class,
+                TOUCH_BEFORE_SIZE + attack_column,
+                "{race} is {size:?}: touch AC takes Table 8-1's size modifier"
+            );
+            assert_eq!(
+                combat.combat_maneuver_bonus,
+                CMB_BEFORE_SIZE + special_column,
+                "{race} is {size:?}: CMB takes the special size modifier, which runs opposite"
+            );
+            assert_eq!(
+                combat.combat_maneuver_defense,
+                CMD_BEFORE_SIZE + special_column,
+                "{race} is {size:?}: CMD takes the special size modifier"
+            );
+
+            // Touch AC and Armor Class are the same statistic with contributors
+            // removed, so they can never contradict each other -- the exact
+            // self-contradiction the shipped sheet was displaying (AC 19 beside
+            // TOUCH 14 with a 4-point armor bonus).
+            assert_eq!(
+                combat.touch_armor_class,
+                combat.armor_class - 4,
+                "{race}: touch AC must be this path's own Armor Class minus the Chain Shirt's \
+                 real resolved +4, not an independently computed number"
+            );
+
+            // And the two engine paths must agree, per race, on every cell.
+            assert_eq!(
+                combat.melee_attack_bonus, headless.computation.baseline_melee_attack_bonus,
+                "{race}: the corpus-aware and hardcoded melee attack bonuses must not disagree"
+            );
+            for (id, corpus_value) in [
+                ("defense.touch_armor_class", combat.touch_armor_class),
+                ("combat.combat_maneuver_bonus", combat.combat_maneuver_bonus),
+                ("defense.combat_maneuver_defense", combat.combat_maneuver_defense),
+            ] {
+                let hardcoded = headless
+                    .computation
+                    .explanations
+                    .iter()
+                    .find(|e| e.id == id)
+                    .unwrap_or_else(|| panic!("{race} must produce a {id} explanation"))
+                    .value;
+                assert_eq!(
+                    corpus_value, hardcoded,
+                    "{race}: the corpus-aware and hardcoded {id} must not disagree"
+                );
+            }
         }
     }
 

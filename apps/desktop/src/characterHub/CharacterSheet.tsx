@@ -34,7 +34,12 @@ import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
-import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import {
+  describeFeatCatalogCoverage,
+  mapEquipmentCatalogEntries,
+  mapFeatCatalogEntries,
+  mapSpellCatalogEntries,
+} from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import {
   describeSpellAcquisition,
@@ -97,6 +102,35 @@ import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto
 
 function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
+}
+
+/**
+ * Renders a cell the engine did not compute as an honest em dash rather than a
+ * fabricated number — the convention `deriveRaceTraits` already established for
+ * an unknown race's size and vision.
+ *
+ * SD-27 `decisions.md §28` defect 1: touch AC, CMB and CMD used to be computed
+ * *here*, in the view, so there was no such thing as "the engine did not
+ * compute it" — this file always produced a number, and for every Small
+ * character it produced the wrong one. They are engine values now, so their
+ * absence is a real state and must read as absent.
+ */
+function fmtOrAbsent(value: number | null, signed: boolean): string {
+  if (value === null) {
+    return '—';
+  }
+  return signed ? fmt(value) : `${value}`;
+}
+
+/**
+ * Reads one `ComputationExplanation` magnitude by its stable engine id.
+ *
+ * `null` — never a defaulted 0 — when the engine emitted no such record: a
+ * blocked build has no computed value, and 0 is a real, different answer.
+ */
+function engineValue(explanations: readonly ExplanationDto[], id: string): number | null {
+  const record = explanations.find((explanation) => explanation.id === id);
+  return record ? record.value : null;
 }
 
 
@@ -332,12 +366,18 @@ function AbilitiesPanel(props: { abilities: AbilityScoresDto }) {
   );
 }
 
-function ArmorClassPanel(props: { ac: number; touch: number; flatFooted: number }) {
+/**
+ * `touch` is the engine's `defense.touch_armor_class`, not a value derived
+ * here. This panel used to compute it as `10 + dexMod`, which is why it could
+ * display `AC 19` beside `TOUCH 14` with a 4-point armor bonus — two numbers
+ * that cannot both be true. See SD-27 `decisions.md §28`.
+ */
+function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number }) {
   return (
     <StatBox title="Armor Class">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="AC" value={props.ac} emphasize />
-        <StatTile label="Touch" value={props.touch} />
+        <StatTile label="Touch" value={fmtOrAbsent(props.touch, false)} />
         <StatTile label="Flat-Footed" value={props.flatFooted} />
       </div>
     </StatBox>
@@ -391,14 +431,21 @@ function SpeedPanel(props: { land: string }) {
   );
 }
 
-function AttackPanel(props: { baseAttackBonus: number; cmb: number; cmd: number }) {
+/**
+ * `cmb`/`cmd` are the engine's `combat.combat_maneuver_bonus` /
+ * `defense.combat_maneuver_defense`. They used to be computed here as
+ * `bab + str` and `10 + bab + str + dexMod` — two PF1 formulas living in a
+ * React component, neither aware of creature size, so every Small character's
+ * CMB and CMD were a point too high. See SD-27 `decisions.md §28`.
+ */
+function AttackPanel(props: { baseAttackBonus: number; cmb: number | null; cmd: number | null }) {
   return (
     <StatBox title="Attack">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="BAB" value={fmt(props.baseAttackBonus)} />
         <StatTile label="Spell Res." value="—" />
-        <StatTile label="CMB" value={fmt(props.cmb)} />
-        <StatTile label="CMD" value={props.cmd} />
+        <StatTile label="CMB" value={fmtOrAbsent(props.cmb, true)} />
+        <StatTile label="CMD" value={fmtOrAbsent(props.cmd, false)} />
       </div>
     </StatBox>
   );
@@ -1591,10 +1638,14 @@ function ActionsTab(props: {
  * Deflect Arrows — see `pilot_compute.rs` around line 24487) carry no
  * numeric magnitude anywhere in the rules engine at all; the description
  * text rendered here is their complete, correct mechanical representation.
- * A selected feat that resolves to no catalog entry (a non-CRB feat, since
- * today's catalog is CRB-only — see `feat_catalog.rs`'s own doc comment —
- * or any other genuine mismatch) falls back to the raw string rather than
- * being hidden or shown blank.
+ * A selected feat that resolves to no catalog entry falls back to the raw
+ * string rather than being hidden or shown blank.
+ *
+ * The catalog is **not** CRB-only, and this doc comment used to say it was.
+ * `feat_catalog.rs` serves 690 feats across 5 books (CRB 185, APG 172, ACG
+ * 129, ARG 187, PU 17); the tab's own caption now derives that sentence from
+ * the response via `describeFeatCatalogCoverage` rather than asserting a book
+ * list that goes stale the next time a book lands.
  */
 function FeatsTab(props: {
   selectedFeats: string[];
@@ -1602,12 +1653,16 @@ function FeatsTab(props: {
   onAddFeat: () => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
+  // Derived from the same response the picker rows come from, so the caption
+  // and the rows can never disagree about which books are in the catalog.
+  const [catalogCoverage, setCatalogCoverage] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
     listFeats({ nameContains: null, category: null })
       .then((response) => {
         if (!cancelled) {
           setCatalog(mapFeatCatalogEntries(response.entries));
+          setCatalogCoverage(describeFeatCatalogCoverage(response.entries));
         }
       })
       .catch(() => {
@@ -1632,7 +1687,7 @@ function FeatsTab(props: {
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Add feats from the real CRB feat catalog.
+        {catalogCoverage ?? 'Add feats from the real feat catalog.'}
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
@@ -2134,6 +2189,9 @@ export function CharacterSheet(props: {
         snapshot: outcome.snapshot,
         diagnostics: [],
         corpusDerived: outcome.corpusDerived,
+        // The mutation did not touch racial traits, so the character's
+        // existing choices carry through unchanged rather than being reset.
+        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
@@ -2186,6 +2244,9 @@ export function CharacterSheet(props: {
         snapshot: outcome.snapshot,
         diagnostics: [],
         corpusDerived: outcome.corpusDerived,
+        // The mutation did not touch racial traits, so the character's
+        // existing choices carry through unchanged rather than being reset.
+        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
@@ -2372,6 +2433,13 @@ export function CharacterSheet(props: {
         return;
       }
       setRecomputed(response.character);
+      // `recompute_character` returns AC and the melee attack bonus but no
+      // explanation records, and since SD-27 (`decisions.md §28`) touch AC, CMB
+      // and CMD are read off explanations. Without this, Recompute would move
+      // the AC tile while the Touch tile beside it kept the pre-recompute
+      // number — reintroducing, on one panel, exactly the self-contradiction
+      // this cycle removed.
+      await refreshEngineRecords();
       setStatusMessage('Recomputed derived stats from the current on-disk build.');
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -2559,7 +2627,12 @@ export function CharacterSheet(props: {
   const ac = recomputed?.baselineArmorClass ?? snapshot?.baselineArmorClass ?? 10;
   const saves = recomputed?.totalSaves ?? snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
   const dexMod = abilities.dexterity;
-  const touch = 10 + dexMod;
+  // SD-27 `decisions.md §28` defect 1: touch AC comes from the engine
+  // (`defense.touch_armor_class`), which derives it by removing the
+  // contributors a touch attack ignores from the very Armor Class shown beside
+  // it. It used to be `10 + dexMod` right here — size-blind, and free to
+  // contradict `ac` on the same panel.
+  const touch = engineValue(engineRecords.explanations, 'defense.touch_armor_class');
   const flatFooted = ac - Math.max(0, dexMod);
 
   const heldClasses = parseHeldClasses(props.row.classSummary);
@@ -2578,11 +2651,28 @@ export function CharacterSheet(props: {
   // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
   // captions these as calculated from race, so a guess reads as a rules
   // fact. See `deriveRaceTraits`.
-  const { size, vision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
+  const { size, vision: standardVision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
+  // SD-27: `deriveRaceTraits` reads the race *roster*, which describes the
+  // unmodified race and knows nothing about a chosen alternate racial trait. A
+  // Dwarf who took ARG's Minesight has 90 ft darkvision, and this cell used to
+  // keep saying 60 while the engine's own record said 90 — the sheet
+  // contradicting itself on the same page. The engine's record wins where it
+  // has one, exactly as touch AC / CMB / CMD already do; `??` falls through to
+  // the roster for every character who replaced no vision trait.
+  const alternateVisionFt = engineValue(
+    engineRecords.explanations,
+    'race.dwarf.alternate_trait.minesight.senses'
+  );
+  const vision = alternateVisionFt === null ? standardVision : `Darkvision ${alternateVisionFt} ft.`;
   const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
   const hp = maxHitPoints(heldClasses, abilities.constitution);
-  const cmb = baseAttackBonus + abilities.strength;
-  const cmd = 10 + baseAttackBonus + abilities.strength + dexMod;
+  // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
+  // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
+  // by both compute paths). They were `baseAttackBonus + abilities.strength`
+  // and `10 + baseAttackBonus + abilities.strength + dexMod` here, with no
+  // special size modifier, so every Small character read a point high on both.
+  const cmb = engineValue(engineRecords.explanations, 'combat.combat_maneuver_bonus');
+  const cmd = engineValue(engineRecords.explanations, 'defense.combat_maneuver_defense');
 
   // Weapon proficiency is the union across all held classes.
   const weaponProficiency = heldClasses.reduce<WeaponProficiency>(
@@ -2851,6 +2941,21 @@ export function CharacterSheet(props: {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <NavCard label="Race" value={props.row.raceLabel} />
+                {/* SD-27: the ARG alternate racial traits this character
+                    actually holds, read off its persisted selection. One card
+                    per trait, and nothing at all when none were taken — an
+                    empty "Alternate Racial Traits" heading would imply the
+                    race has none to offer, which is a different claim. The
+                    numbers these traits change are on the stat rows above and
+                    in the engine's own explanation records; this says which
+                    choice produced them. */}
+                {(props.detail?.selectedAlternateTraitKeys ?? []).map((traitKey) => (
+                  <NavCard
+                    key={traitKey}
+                    label="Alternate Racial Trait"
+                    value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
+                  />
+                ))}
                 <NavCard label="Class" value={classLabel} />
               </div>
 

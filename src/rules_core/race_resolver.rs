@@ -653,6 +653,290 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
         .map(|(_, size)| *size)
 }
 
+
+/// Every ARG alternate racial trait's `<Race>_Replace<Trait>` flag set, keyed
+/// by the corpus record key a player selects.
+///
+/// # Why this is a hand-written table and not a corpus read
+///
+/// Exactly the situation [`RACE_SIZES`] documents, for exactly the same
+/// reason: its consumer is `pilot_compute`, a pure function over an
+/// already-loaded [`CharacterInput`](crate::rules_core::character_input::CharacterInput)
+/// that may not touch the filesystem, while [`RaceCorpus`] is a separate
+/// disk-backed load. `decisions.md §24` prescribes a small hand-modelled
+/// function whose values were verified against the corpus and are pinned by a
+/// test that re-derives them from the real on-disk records — here
+/// [`the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`]
+/// and `tests/sd27_alternate_racial_trait_reachability.rs`. If the corpus and
+/// this table ever disagree, that test fails and names the trait.
+///
+/// # What the values are
+///
+/// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
+/// all 153 records [`RaceCorpus::alternate_traits`] classifies as
+/// [`TraitRole::Alternate`] across the 18 in-scope races. The three records
+/// that are *not* standalone choices — `Feral ~ Languages` and
+/// `Scion of Humanity ~ Languages` (both [`TraitRole::Unclassified`]) and
+/// `Saltbeard ~ Dwarf ~ Greed` ([`TraitRole::FlagGranted`]) — are deliberately
+/// absent: a player never selects them, they are granted or dropped by the
+/// resolver, and putting them here would offer them as menu items.
+const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
+    // ---- Aasimar ----
+    ("Aasimar ~ Celestial Crusader", &["Aasimar_ReplaceCelestialResistance", "Aasimar_ReplaceSkilled"]),
+    ("Aasimar ~ Deathless Spirit", &["Aasimar_ReplaceCelestialResistance"]),
+    ("Aasimar ~ Exalted Resistance", &["Aasimar_ReplaceCelestialResistance"]),
+    ("Aasimar ~ Halo", &["Aasimar_ReplaceVision"]),
+    ("Aasimar ~ Heavenborn", &["Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Immortal Spark", &["Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Incorruptible", &["Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Scion of Humanity", &["Aasimar_ReplaceLanguages"]),
+    ("Aasimar ~ Truespeaker", &["Aasimar_ReplaceSkilled"]),
+    // ---- Drow ----
+    ("Drow ~ Ambitious Schemer", &["Drow_ReplaceKeenSenses"]),
+    ("Drow ~ Ancestral Grudge", &["Drow_ReplacePoisonUse"]),
+    ("Drow ~ Blasphemous Covenant", &["Drow_ReplaceKeenSenses", "Drow_ReplacePoisonUse"]),
+    ("Drow ~ Darklands Stalker", &["Drow_ReplaceSpellLikeAbilities"]),
+    ("Drow ~ Seducer", &["Drow_ReplaceDrowImmunities"]),
+    ("Drow ~ Surface Infiltrator", &["Drow_ReplaceVision", "Drow_ReplaceLightBlindness"]),
+    // ---- Duergar ----
+    ("Duergar ~ Blood Enmity", &["Duergar_ReplaceSLAInvisibility"]),
+    ("Duergar ~ Daysighted", &["Duergar_ReplaceLightSensitivity", "Duergar_ReplaceVision"]),
+    ("Duergar ~ Deep Magic", &["Duergar_ReplaceSpellLikeAbilities"]),
+    ("Duergar ~ Dwarf Traits (Replaces Duergar Immunities)", &["Duergar_ReplaceDuergarImmunities"]),
+    ("Duergar ~ Dwarf Traits (Replaces Stability)", &["Duergar_ReplaceStability"]),
+    // ---- Dwarf ----
+    ("Dwarf ~ Ancient Enmity", &["Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Craftsman", &["Dwarf_ReplaceGreed"]),
+    ("Dwarf ~ Deep Warrior", &["Dwarf_ReplaceDefensiveTraining"]),
+    ("Dwarf ~ Giant Hunter", &["Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Lorekeeper", &["Dwarf_ReplaceGreed"]),
+    ("Dwarf ~ Magic Resistant", &["Dwarf_ReplaceHardy"]),
+    ("Dwarf ~ Minesight", &["Dwarf_ReplaceVision"]),
+    ("Dwarf ~ Mountaineer", &["Dwarf_ReplaceStability"]),
+    ("Dwarf ~ Relentless", &["Dwarf_ReplaceStability"]),
+    ("Dwarf ~ Rock Stepper", &["Dwarf_ReplaceStonecunning"]),
+    (
+        "Dwarf ~ Saltbeard",
+        &[
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred",
+        "Dwarf_ReplaceStonecunning",
+        "Dwarf_ReplaceGreed"
+        ],
+    ),
+    (
+        "Dwarf ~ Sky Sentinel",
+        &[
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred",
+        "Dwarf_ReplaceStonecunning"
+        ],
+    ),
+    ("Dwarf ~ Stonesinger", &["Dwarf_ReplaceStonecunning"]),
+    ("Dwarf ~ Stubborn", &["Dwarf_ReplaceHardy"]),
+    ("Dwarf ~ Surface Survivalist", &["Dwarf_ReplaceVision"]),
+    (
+        "Dwarf ~ Wyrmscourged",
+        &[
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred",
+        "Dwarf_ReplaceStonecunning"
+        ],
+    ),
+    ("Dwarf ~ Xenophobic", &["Dwarf_ReplaceLanguages"]),
+    // ---- Elf ----
+    ("Elf ~ Arcane Focus", &["Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Darkvision", &["Elf_ReplaceVision"]),
+    ("Elf ~ Desert Runner", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Dreamspeaker", &["Elf_ReplaceElvenImmunities"]),
+    ("Elf ~ Elemental Resistance", &["Elf_ReplaceElvenImmunities"]),
+    ("Elf ~ Envoy", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Eternal Grudge", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Fleet-Footed", &["Elf_ReplaceWeaponFamiliarity", "Elf_ReplaceKeenSenses"]),
+    ("Elf ~ Lightbringer", &["Elf_ReplaceElvenImmunities", "Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Silent Hunter", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Spirit of the Waters", &["Elf_ReplaceElvenMagic", "Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Urbanite", &["Elf_ReplaceKeenSenses"]),
+    ("Elf ~ Woodcraft", &["Elf_ReplaceElvenMagic"]),
+    // ---- Gnome ----
+    ("Gnome ~ Academician", &["Gnome_ReplaceObsessive"]),
+    ("Gnome ~ Bond to the Land", &["Gnome_ReplaceHatred", "Gnome_ReplaceDefensiveTraining"]),
+    ("Gnome ~ Darkvision", &["Gnome_ReplaceVision", "Gnome_ReplaceKeenSenses"]),
+    ("Gnome ~ Eternal Hope", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred"]),
+    ("Gnome ~ Explorer", &["Gnome_ReplaceHatred", "Gnome_ReplaceObsessive"]),
+    ("Gnome ~ Fell Magic", &["Gnome_ReplaceGnomeMagic"]),
+    ("Gnome ~ Gift of Tongues", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred"]),
+    ("Gnome ~ Knack With Poison", &["Gnome_ReplaceObsessive", "Gnome_ReplaceIllusionResistance"]),
+    ("Gnome ~ Magical Linguist", &["Gnome_ReplaceGnomeMagic", "Gnome_ReplaceIllusionResistance"]),
+    ("Gnome ~ Master Tinker", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred"]),
+    ("Gnome ~ Pyromaniac", &["Gnome_ReplaceGnomeMagic", "Gnome_ReplaceIllusionResistance"]),
+    ("Gnome ~ Warden of Nature", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred"]),
+    // ---- Goblin ----
+    ("Goblin ~ Cave Crawler", &["Goblin_ReplaceSpeed"]),
+    ("Goblin ~ City Scavenger", &["Goblin_ReplaceSkilled"]),
+    ("Goblin ~ Eat Anything", &["Goblin_ReplaceSkilled"]),
+    ("Goblin ~ Hard Head Big Teeth", &["Goblin_ReplaceSkilled"]),
+    ("Goblin ~ Over-Sized Ears", &["Goblin_ReplaceSkilled"]),
+    ("Goblin ~ Tree Runner", &["Goblin_ReplaceSkilled"]),
+    ("Goblin ~ Weapon Familiarity", &["Goblin_ReplaceSkilled"]),
+    // ---- Half-Elf ----
+    ("Half-Elf ~ Ancestral Arms", &["HalfElf_ReplaceAdaptability"]),
+    ("Half-Elf ~ Arcane Training", &["HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Drow Magic", &["HalfElf_ReplaceAdaptability", "HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Drow-Blooded", &["HalfElf_ReplaceVision"]),
+    ("Half-Elf ~ Dual Minded", &["HalfElf_ReplaceAdaptability"]),
+    ("Half-Elf ~ Integrated", &["HalfElf_ReplaceAdaptability"]),
+    ("Half-Elf ~ Sociable", &["HalfElf_ReplaceAdaptability"]),
+    ("Half-Elf ~ Wary", &["HalfElf_ReplaceKeenSenses"]),
+    ("Half-Elf ~ Water Child", &["HalfElf_ReplaceAdaptability", "HalfElf_ReplaceMultitalented"]),
+    // ---- Half-Orc ----
+    ("Half-Orc ~ Acute Darkvision", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Beastmaster", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Bestial", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Cavewight", &["HalfOrc_ReplaceIntimidating"]),
+    ("Half-Orc ~ Chain Fighter", &["HalfOrc_ReplaceWeaponFamiliarity"]),
+    ("Half-Orc ~ City-Raised", &["HalfOrc_ReplaceWeaponFamiliarity"]),
+    ("Half-Orc ~ Forest Walker", &["HalfOrc_ReplaceVision"]),
+    ("Half-Orc ~ Gatecrasher", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Rock Climber", &["HalfOrc_ReplaceIntimidating"]),
+    ("Half-Orc ~ Sacred Tattoo", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Scavenger", &["HalfOrc_ReplaceIntimidating"]),
+    ("Half-Orc ~ Shaman's Apprentice", &["HalfOrc_ReplaceIntimidating"]),
+    ("Half-Orc ~ Skilled", &["HalfOrc_ReplaceVision"]),
+    ("Half-Orc ~ Toothy", &["HalfOrc_ReplaceOrcFerocity"]),
+    // ---- Halfling ----
+    ("Halfling ~ Adaptable Luck", &["Halfling_ReplaceHalflingLuck"]),
+    ("Halfling ~ Craven", &["Halfling_ReplaceFearless", "Halfling_ReplaceHalflingLuck"]),
+    ("Halfling ~ Fleet of Foot", &["Halfling_ReplaceSpeed", "Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Ingratiating", &["Halfling_ReplaceKeenSenses", "Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Low Blow", &["Halfling_ReplaceKeenSenses"]),
+    ("Halfling ~ Outrider", &["Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Polyglot", &["Halfling_ReplaceKeenSenses"]),
+    ("Halfling ~ Practicality", &["Halfling_ReplaceSureFooted", "Halfling_ReplaceFearless"]),
+    ("Halfling ~ Shiftless", &["Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Swift as Shadows", &["Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Underfoot", &["Halfling_ReplaceHalflingLuck"]),
+    ("Halfling ~ Wanderlust", &["Halfling_ReplaceFearless", "Halfling_ReplaceHalflingLuck"]),
+    ("Halfling ~ Warslinger", &["Halfling_ReplaceSureFooted"]),
+    // ---- Hobgoblin ----
+    ("Hobgoblin ~ Bandy-Legged", &["Hobgoblin_ReplaceSpeed"]),
+    ("Hobgoblin ~ Battle-Hardened", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Engineer", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Fearsome", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Magehunter", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Pit Boss", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Scarred", &["Hobgoblin_ReplaceVision"]),
+    ("Hobgoblin ~ Slave Hunter", &["Hobgoblin_ReplaceSneaky"]),
+    ("Hobgoblin ~ Unfit", &["Hobgoblin_ReplaceSneaky"]),
+    // ---- Human ----
+    ("Human ~ Adoptive Parentage", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Dual Talent", &["Human_ReplaceAbilityScores", "Human_ReplaceBonusFeat", "Human_ReplaceSkilled"]),
+    ("Human ~ Eye for Talent", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Focused Study", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Heart of the Fields", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Mountain", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Sea", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Slums", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Snows", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Streets", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Sun", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heart of the Wilderness", &["Human_ReplaceSkilled"]),
+    ("Human ~ Heroic", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Mixed Heritage", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Silver Tongued", &["Human_ReplaceSkilled"]),
+    // ---- Kobold ----
+    ("Kobold ~ Beast Bond", &["Kobold_ReplaceCrafty"]),
+    ("Kobold ~ Dragon-Scaled", &["Kobold_ReplaceArmor"]),
+    ("Kobold ~ Gliding Wings", &["Kobold_ReplaceCrafty"]),
+    ("Kobold ~ Jester", &["Kobold_ReplaceCrafty"]),
+    // ---- Merfolk ----
+    ("Merfolk ~ Darkvision", &["Merfolk_ReplaceVision"]),
+    ("Merfolk ~ Seasinger", &["Merfolk_ReplaceVision"]),
+    ("Merfolk ~ Strongtail", &["Merfolk_ReplaceSpeed"]),
+    // ---- Orc ----
+    ("Orc ~ Dayrunner", &["Orc_ReplaceLightSensitivity"]),
+    ("Orc ~ Feral", &["Orc_ReplaceWeaponFamiliarity", "Orc_ReplaceLanguages"]),
+    ("Orc ~ Smeller", &["Orc_ReplaceWeaponFamiliarity", "Orc_ReplaceFerocity"]),
+    ("Orc ~ Squalid", &["Orc_ReplaceFerocity"]),
+    // ---- Svirfneblin ----
+    ("Svirfneblin ~ Healthy", &["Svirfneblin_ReplaceFortunate"]),
+    ("Svirfneblin ~ Stoneseer", &["Svirfneblin_ReplaceSvirfneblinMagic"]),
+    // ---- Tengu ----
+    ("Tengu ~ Carrion Sense", &["Tengu_ReplaceGiftedLinguist"]),
+    ("Tengu ~ Claw Attack", &["Tengu_ReplaceSwordtrained"]),
+    ("Tengu ~ Exotic Weapon Training", &["Tengu_ReplaceSwordtrained"]),
+    ("Tengu ~ Glide", &["Tengu_ReplaceGiftedLinguist"]),
+    // ---- Tiefling ----
+    ("Tiefling ~ Beguiling Liar", &["Tiefling_ReplaceSkilled"]),
+    ("Tiefling ~ Fiendish Sprinter", &["Tiefling_ReplaceSkilled"]),
+    ("Tiefling ~ Maw or Claw", &["Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Prehensile Tail", &["Tiefling_ReplaceFiendishSorcery"]),
+    ("Tiefling ~ Scaled Skin", &["Tiefling_ReplaceFiendishResistance"]),
+    ("Tiefling ~ Soul Seer", &["Tiefling_ReplaceFiendishSorcery", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Vestigial Wings", &["Tiefling_ReplaceSkilled"]),
+
+];
+
+/// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
+/// fires, sorted and deduplicated.
+///
+/// This is the pure, filesystem-free half of the `decisions.md §26` protocol:
+/// `RaceCorpus::resolve` answers the same question by reading the corpus, and
+/// this answers it from the pinned table so `pilot_compute` can gate a
+/// standard trait's hand-modelled record on its own declared flag.
+///
+/// A key this table does not know contributes nothing and is reported by
+/// [`unknown_alternate_trait_keys`] rather than silently ignored — a saved
+/// character naming a trait the engine cannot place must be visible.
+pub fn replace_flags_fired_by(selected_alternate_keys: &[String]) -> Vec<&'static str> {
+    let mut out: Vec<&'static str> = Vec::new();
+    for key in selected_alternate_keys {
+        let Some((_, flags)) = ALTERNATE_TRAIT_REPLACE_FLAGS.iter().find(|(k, _)| *k == key.as_str()) else {
+            continue;
+        };
+        for flag in *flags {
+            if !out.contains(flag) {
+                out.push(flag);
+            }
+        }
+    }
+    out.sort_unstable();
+    out
+}
+
+/// Whether any of the selected alternates fires `flag`.
+///
+/// The single predicate every hand-modelled standard-trait record gates on.
+/// `flag` is the standard row's own `!PREFACT:1,ABILITIES,<flag>=True`
+/// payload — i.e. `RaceTraitCacheData::suppressed_by_flag`, which
+/// `tests/sd27_alternate_racial_trait_reachability.rs` pins against the corpus
+/// for every gate the engine declares.
+pub fn alternate_traits_fire_flag(selected_alternate_keys: &[String], flag: &str) -> bool {
+    selected_alternate_keys.iter().any(|key| {
+        ALTERNATE_TRAIT_REPLACE_FLAGS
+            .iter()
+            .any(|(candidate, flags)| *candidate == key.as_str() && flags.contains(&flag))
+    })
+}
+
+/// Selection keys that name no alternate racial trait this table knows.
+///
+/// Never silently dropped: a typo, a trait from an un-ingested book, or a
+/// character saved against a later corpus all land here, and the caller is
+/// expected to raise them.
+pub fn unknown_alternate_trait_keys(selected_alternate_keys: &[String]) -> Vec<String> {
+    selected_alternate_keys
+        .iter()
+        .filter(|key| !ALTERNATE_TRAIT_REPLACE_FLAGS.iter().any(|(k, _)| *k == key.as_str()))
+        .cloned()
+        .collect()
+}
+
+/// Every alternate racial trait key a player may select, sorted.
+pub fn selectable_alternate_trait_keys() -> Vec<&'static str> {
+    ALTERNATE_TRAIT_REPLACE_FLAGS.iter().map(|(key, _)| *key).collect()
+}
+
 /// The LST file and line a record was ingested from. `CorpusSource` also
 /// models web and same-book-fallback provenance, neither of which carries an
 /// LST citation — those return `("", 0)` rather than a fabricated path.
@@ -1198,6 +1482,66 @@ mod tests {
         // A race outside the ingested 18 stays an honest absence.
         assert_eq!(race_size_for_race_token("race:dhampir"), None);
         assert_eq!(race_size_for_race_token(""), None);
+    }
+
+    /// The hand-modelled alternate-trait flag table and the corpus must agree
+    /// for every one of the 153 selectable alternates, in both directions.
+    /// `decisions.md §24` allows the table; this is what keeps it honest, the
+    /// same way `the_hand_modelled_race_size_table_matches_the_corpus...` keeps
+    /// [`RACE_SIZES`] honest.
+    #[test]
+    fn the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate() {
+        let corpus = all_books();
+        let mut corpus_rows: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
+        for race_key in corpus.race_keys() {
+            for record in corpus.alternate_traits(race_key) {
+                corpus_rows.insert(
+                    record.data.key.as_str(),
+                    record.data.sets_replace_flags.iter().map(String::as_str).collect(),
+                );
+            }
+        }
+        assert_eq!(corpus_rows.len(), 153, "153 selectable alternates");
+        assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
+        for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
+            let from_corpus = corpus_rows.get(key).unwrap_or_else(|| panic!("{key} is a real alternate"));
+            assert_eq!(&flags.to_vec(), from_corpus, "{key}: table flags disagree with the corpus");
+        }
+        // The three dependent rows a chosen alternate grants or drops are
+        // deliberately absent — a player never selects one.
+        for dependent in ["Feral ~ Languages", "Scion of Humanity ~ Languages", "Saltbeard ~ Dwarf ~ Greed"] {
+            assert!(
+                !ALTERNATE_TRAIT_REPLACE_FLAGS.iter().any(|(key, _)| *key == dependent),
+                "{dependent} is not a standalone choice and must not be offered"
+            );
+        }
+    }
+
+    /// The three pure predicates the engine gates on, exercised against real
+    /// corpus keys — including the "an unknown key changes nothing but is
+    /// reported" posture.
+    #[test]
+    fn the_pure_flag_predicates_answer_the_same_question_the_disk_backed_resolver_does() {
+        let corpus = all_books();
+        let saltbeard = vec!["Dwarf ~ Saltbeard".to_string()];
+        assert_eq!(
+            replace_flags_fired_by(&saltbeard),
+            corpus
+                .resolve("Dwarf", &["Dwarf ~ Saltbeard"])
+                .expect("resolves")
+                .fired_flags
+                .iter()
+                .map(String::as_str)
+                .collect::<Vec<&str>>()
+        );
+        assert!(alternate_traits_fire_flag(&saltbeard, "Dwarf_ReplaceGreed"));
+        assert!(!alternate_traits_fire_flag(&saltbeard, "Dwarf_ReplaceHardy"));
+        assert!(unknown_alternate_trait_keys(&saltbeard).is_empty());
+
+        let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
+        assert!(replace_flags_fired_by(&typo).is_empty());
+        assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
+        assert_eq!(selectable_alternate_trait_keys().len(), 153);
     }
 
     #[test]

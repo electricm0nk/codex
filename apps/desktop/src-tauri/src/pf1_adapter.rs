@@ -54,13 +54,13 @@ use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
-    PilotBaseChassisComputation, SelectedSkillModifiers,
+    ComputationExplanation, PilotBaseChassisComputation, SelectedSkillModifiers,
 };
 #[cfg(test)]
 use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
 use codex::rules_core::pilot_compute_corpus::{
     compute_combat_baseline_from_corpus, compute_pilot_with_corpus,
-    compute_selected_skill_modifiers_from_corpus, CorpusPilotReceipt,
+    compute_selected_skill_modifiers_from_corpus, CorpusAwareCombatBaseline, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
     PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
@@ -1074,7 +1074,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     corpus: &SourcePackageContent,
 ) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
     let receipt = build_pilot_headless_receipt(character_input);
-    let corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
+    let mut corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
 
     let other_diagnostics_present = receipt.computation.diagnostics.iter().any(|diagnostic| {
         diagnostic.claim_blocking
@@ -1127,6 +1127,25 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 // just above ended up duplicated.
                 companion: PilotCompanionViewModel::from_receipt(&receipt),
             };
+            // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and
+            // CMD travel to the sheet on the explanation channel
+            // (`character_hub::load_saved_character_at_root` maps
+            // `corpus_receipt.base.explanations` straight onto the wire), so
+            // the corpus-aware values must be substituted into it here --
+            // exactly the substitution this function already performs one field
+            // up, where `combat.melee_attack_bonus`/`combat.armor_class`
+            // replace the receipt's own hardcoded pair.
+            //
+            // Without it the sheet would render the hardcoded path's numbers
+            // beside the corpus path's Armor Class. The two agree for every
+            // build the app creates today (both paths are pinned equal by
+            // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`),
+            // but the hardcoded path requires an exact Chain-Shirt/no-shield
+            // loadout and produces NO explanation at all once a player equips
+            // something else -- while this corpus path still computes. Reading
+            // the widened path is what keeps a real equipped shield from
+            // silently blanking three cells.
+            upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
             Ok((snapshot, corpus_receipt))
         }
         (combat_result, skills_result) => {
@@ -1166,6 +1185,66 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             }
             Err(diagnostics)
         }
+    }
+}
+
+/// The three explanation ids `resolve_unified_pilot_snapshot` re-points at the
+/// corpus-aware combat baseline, paired with the value to substitute.
+///
+/// They are ids, not a struct field, because that is the channel that actually
+/// reaches the sheet: `PilotSnapshot` (owned by `rules_core::pilot_view_model`)
+/// has no touch/CMB/CMD field, while `LoadSavedCharacterResponse.explanations`
+/// already carries every `ComputationExplanation` the engine emits and
+/// `CharacterSheet.tsx` already reads it.
+fn upsert_corpus_aware_combat_explanations(
+    corpus_receipt: &mut CorpusPilotReceipt,
+    combat: &CorpusAwareCombatBaseline,
+) {
+    let substitutions: [(&str, i16); 3] = [
+        ("defense.touch_armor_class", combat.touch_armor_class),
+        ("combat.combat_maneuver_bonus", combat.combat_maneuver_bonus),
+        (
+            "defense.combat_maneuver_defense",
+            combat.combat_maneuver_defense,
+        ),
+    ];
+
+    for (id, value) in substitutions {
+        // Update in place when the hardcoded path emitted the record, so the
+        // engine's own corpus-cited derivation prose survives and only the
+        // number is re-pointed. `CharacterSheet.tsx` renders `detail` verbatim
+        // as a rules citation, so replacing it with adapter-authored prose
+        // would manufacture a second, unverified source of rules text -- the
+        // hand-authored-rules-data debt `no-stub-mvp-doctrine.md` forbids.
+        if let Some(existing) = corpus_receipt
+            .base
+            .explanations
+            .iter_mut()
+            .find(|explanation| explanation.id == id)
+        {
+            existing.value = value;
+            continue;
+        }
+        // The hardcoded path is blocked (a loadout it does not recognize) but
+        // this widened one computed. Emitting the record here is the only way
+        // the cell reaches the sheet at all; the detail says plainly which path
+        // produced it and which terms it contains, rather than borrowing prose
+        // that describes a different formula.
+        corpus_receipt
+            .base
+            .explanations
+            .push(ComputationExplanation {
+                id: id.to_owned(),
+                value,
+                detail: format!(
+                    "{id} = {value}, computed by the corpus-aware combat baseline \
+                     (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
+                     character's actual resolved equipment loadout. The fixed-posture path \
+                     (pilot_compute::compute_combat_baseline) did not recognize this loadout and \
+                     emitted no record of its own, so its derivation prose is deliberately not \
+                     reused here -- it describes a different formula"
+                ),
+            });
     }
 }
 
@@ -1664,12 +1743,127 @@ mod tests {
                 charisma: 8,
             },
             ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }
 
     fn wizard_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: WIZARD_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    /// SD-27 `decisions.md §28` defect 1, reproduced exactly as it was measured
+    /// on screen: a Fighter 1 with STR 14, DEX 18, wearing the Chain Shirt and
+    /// carrying Weapon Focus. Only `race_id` varies between the Small and
+    /// Medium cases below, so creature size is the single independent variable.
+    fn measured_screen_build(character_id: &str, race_id: &str) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            race_id: race_id.to_owned(),
+            ability_scores: AbilityScoresDto {
+                strength: 14,
+                dexterity: 18,
+                constitution: 14,
+                intelligence: 10,
+                wisdom: 12,
+                charisma: 8,
+            },
+            ..request_for(character_id, 1)
+        }
+    }
+
+    /// The five cells, read the way the desktop sheet reads them: Armor Class
+    /// and the melee attack bonus off the `PilotSnapshot`, and touch AC / CMB /
+    /// CMD off the explanation records that travel to the UI on
+    /// `LoadSavedCharacterResponse.explanations`.
+    fn measured_cells(request: &CreateCharacterRequest) -> (i16, i16, i16, i16, i16) {
+        let input = compose_character_input(request);
+        let (snapshot, corpus_receipt) =
+            resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle())
+                .unwrap_or_else(|diagnostics| {
+                    panic!("{} must reach Computed: {diagnostics:?}", request.race_id)
+                });
+        let explanation = |id: &str| -> i16 {
+            corpus_receipt
+                .base
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| {
+                    panic!("{} must carry a {id} explanation to the sheet", request.race_id)
+                })
+                .value
+        };
+        (
+            snapshot.defense.baseline_armor_class,
+            explanation("defense.touch_armor_class"),
+            explanation("combat.combat_maneuver_bonus"),
+            explanation("defense.combat_maneuver_defense"),
+            snapshot.combat.baseline_melee_attack_bonus,
+        )
+    }
+
+    /// The defect, closed end to end. Measured on screen for a Goblin Fighter 1
+    /// (STR 14, DEX 18, BAB +1, Chain Shirt, Weapon Focus):
+    ///
+    /// ```text
+    /// cell     was    PF1 correct
+    /// AC       19     19   <- already fixed; must not regress
+    /// TOUCH    14     15
+    /// CMB      +3     +2
+    /// CMD      17     16
+    /// MELEE    +4     +5
+    /// ```
+    ///
+    /// Asserted through `resolve_unified_pilot_snapshot` rather than against
+    /// the engine directly, because the adapter is where the corpus-aware
+    /// numbers are substituted onto the channel the sheet actually reads -- a
+    /// fix that stopped at the engine would leave every one of these tests
+    /// green and the shipped sheet unchanged.
+    #[test]
+    fn the_measured_small_goblin_fighter_reaches_the_sheet_with_pf1s_own_numbers() {
+        let (armor_class, touch, cmb, cmd, melee) =
+            measured_cells(&measured_screen_build("goblin-size-cells", "race:goblin"));
+
+        assert_eq!(armor_class, 19, "AC was already correct and must not regress");
+        assert_eq!(touch, 15, "touch AC: 19 - the Chain Shirt's 4, not an independent 10 + DEX");
+        assert_eq!(cmb, 2, "CMB: BAB +1 + STR +2 + special size -1");
+        assert_eq!(cmd, 16, "CMD: 10 + BAB +1 + STR +2 + DEX +4 + special size -1");
+        assert_eq!(melee, 5, "melee: BAB +1 + STR +2 + Weapon Focus +1 + size +1");
+    }
+
+    /// The regression half. The identical build at Medium size must produce the
+    /// pre-fix arithmetic on all five cells -- Medium is PF1's +0 baseline on
+    /// both size columns, so no Medium character's sheet may move by a point.
+    /// Hobgoblin rather than Human: Human's `choice:human_ability_bonus` would
+    /// change Strength and stop size from being the only variable.
+    #[test]
+    fn the_same_build_at_medium_size_is_byte_identical_to_the_pre_fix_values() {
+        let (armor_class, touch, cmb, cmd, melee) =
+            measured_cells(&measured_screen_build("hobgoblin-size-cells", "race:hobgoblin"));
+
+        assert_eq!(armor_class, 18);
+        assert_eq!(touch, 14);
+        assert_eq!(cmb, 3);
+        assert_eq!(cmd, 17);
+        assert_eq!(melee, 4);
+    }
+
+    /// Touch AC must never contradict the Armor Class shown beside it. The
+    /// shipped sheet displayed `AC 19` and `TOUCH 14` on one panel with a
+    /// 4-point armor bonus; that is arithmetically impossible and is exactly
+    /// what an independently-computed touch formula lets through.
+    #[test]
+    fn touch_armor_class_never_contradicts_the_armor_class_on_the_same_panel() {
+        const CHAIN_SHIRT_ARMOR_BONUS: i16 = 4;
+        for race in ["race:goblin", "race:hobgoblin", "race:halfling", "race:dwarf"] {
+            let (armor_class, touch, _, _, _) =
+                measured_cells(&measured_screen_build("touch-consistency", race));
+            assert_eq!(
+                touch,
+                armor_class - CHAIN_SHIRT_ARMOR_BONUS,
+                "{race}: touch AC is the same Armor Class with the armor bonus removed"
+            );
+        }
     }
 
     fn arcanist_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {

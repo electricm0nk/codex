@@ -117,6 +117,42 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
   }));
 }
 
+/**
+ * One sentence describing what the Add Feat picker actually serves, derived
+ * from the catalog response itself.
+ *
+ * The Feats tab's caption used to read *"Add feats from the real CRB feat
+ * catalog."* — true when `feat_catalog.rs` served CRB alone, and false from
+ * the moment APG, ACG, ARG and PU landed: the catalog serves 690 feats across
+ * 5 books, and 204 of them (ARG's 187 and PU's 17) sat behind a caption
+ * telling the player they were not there.
+ *
+ * The point of deriving it is that the replacement cannot rot the same way. A
+ * sixth book's feats change this sentence by being in the response, with
+ * nobody editing a string. `FEAT_SOURCE_LABELS` is reused so the caption names
+ * books exactly as the picker's own rows label them, and an unknown/future
+ * book falls back to its raw `RuleSetId` variant rather than being dropped
+ * from the count of books.
+ *
+ * Returns `null` for an empty response — the catalog failed to load or is
+ * genuinely empty, and a caption is not the place to guess which.
+ */
+export function describeFeatCatalogCoverage(entries: readonly FeatCatalogEntryDto[]): string | null {
+  if (entries.length === 0) {
+    return null;
+  }
+  const books: string[] = [];
+  for (const entry of entries) {
+    const label = FEAT_SOURCE_LABELS[entry.source] ?? entry.source;
+    if (!books.includes(label)) {
+      books.push(label);
+    }
+  }
+  const bookWord = books.length === 1 ? 'book' : 'books';
+  const featWord = entries.length === 1 ? 'feat' : 'feats';
+  return `Add feats from the real feat catalog: ${entries.length} ${featWord} across ${books.length} ${bookWord} (${books.join(', ')}).`;
+}
+
 /** Case-insensitive substring match against either the name or the detail line. */
 export function filterItemPickerEntries(entries: ItemPickerEntry[], searchTerm: string): ItemPickerEntry[] {
   const term = searchTerm.trim().toLowerCase();

@@ -30,6 +30,18 @@ export interface CreateCharacterRequest {
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   savedAt: string;
+  /**
+   * ARG alternate racial traits chosen for this race, as corpus record keys
+   * ("Dwarf ~ Saltbeard") — the same identifiers
+   * `loadAlternateRacialTraits` serves and `resolveRaceAlternateSelection`
+   * takes, so the picker round-trips its own keys unchanged.
+   *
+   * The backend re-validates every key against the real corpus before
+   * persisting, and returns `Blocked` (never a quiet drop) for a key that
+   * matches no alternate for the race or that violates ARG's own mutual-
+   * exclusion guard.
+   */
+  selectedAlternateTraitKeys: string[];
 }
 
 export interface BaseSavesDto {

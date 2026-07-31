@@ -66,6 +66,17 @@ export interface LoadSavedCharacterResponse {
    * `WeaponDamageDto`.
    */
   weaponDamage: WeaponDamageDto[];
+  /**
+   * The ARG alternate racial traits this character actually holds, as corpus
+   * record keys ("Dwarf ~ Minesight"), read back out of its persisted
+   * `chosen.selected_choices` (SD-27).
+   *
+   * Same shape of gap, and same fix, as `selectedFeats` and `spellsSelected`:
+   * without it nothing in the frontend can tell a loaded character's racial-
+   * trait choices, so the sheet would show a Dwarf with 90 ft darkvision and
+   * no way to say why.
+   */
+  selectedAlternateTraitKeys: string[];
 }
 
 /** Mirrors `ExplanationDto` in `character_hub.rs`. */

@@ -27,6 +27,20 @@ import {
 } from './composeCreateCharacterRequest';
 import { loadRaceRosterSurface, type RaceRosterSurface } from './raceRoster';
 import { createCharacterRuntime } from './characterHubRuntime';
+import {
+  buildAlternateTraitRows,
+  creationSelectionWarnings,
+  describeCreationSelection,
+  retainSelectionsValidForRace,
+} from './alternateTraitSelection';
+import {
+  loadAlternateRacialTraitsRuntime,
+  resolveRaceAlternateSelectionRuntime,
+} from '../raceCatalog/alternateTraitPickerRuntime';
+import type {
+  AlternateRacialTraitsResponse,
+  RaceSelectionResponse,
+} from '../boundary/loadAlternateRacialTraits';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import {
   ABILITY_SCORE_METHOD_OPTIONS,
@@ -267,6 +281,14 @@ function CreateCharacterFields(props: {
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<CreateCharacterOutcomeSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // SD-27: ARG's alternate racial traits, taken at creation. The menu is the
+  // same `race_trait_picker` payload the Race Traits screen browses; the live
+  // resolution is the same `RaceCorpus::resolve` call. Nothing about which
+  // trait replaces what, or which pairs are illegal, is decided here.
+  const [alternateMenu, setAlternateMenu] = useState<AlternateRacialTraitsResponse | null>(null);
+  const [alternateMenuError, setAlternateMenuError] = useState<string | null>(null);
+  const [selectedAlternateTraitKeys, setSelectedAlternateTraitKeys] = useState<string[]>([]);
+  const [alternateResolution, setAlternateResolution] = useState<RaceSelectionResponse | null>(null);
 
   const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
@@ -362,10 +384,73 @@ function CreateCharacterFields(props: {
     setWeightLb(rollWeight(nextBody));
   }
 
+  // The alternate-racial-trait menu, loaded once. A failure is shown rather
+  // than swallowed: the rest of the form still works, and the player is told
+  // why the trait list is absent instead of concluding this race has none.
+  useEffect(() => {
+    let live = true;
+    loadAlternateRacialTraitsRuntime()
+      .then((menu) => {
+        if (live) {
+          setAlternateMenu(menu);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setAlternateMenuError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  // Every change of race or selection is re-resolved by the engine, so the
+  // "replaces X" line and the mutual lock-out the player sees are the
+  // resolver's own answers for this exact selection — never a frontend guess.
+  useEffect(() => {
+    let live = true;
+    const raceKey = raceId.replace(/^race:/, '');
+    resolveRaceAlternateSelectionRuntime(raceKey, selectedAlternateTraitKeys)
+      .then((resolved) => {
+        if (live) {
+          setAlternateResolution(resolved);
+        }
+      })
+      .catch(() => {
+        if (live) {
+          setAlternateResolution(null);
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, [raceId, selectedAlternateTraitKeys]);
+
+  const alternateTraitRows = buildAlternateTraitRows(
+    alternateMenu,
+    raceId,
+    selectedAlternateTraitKeys,
+    alternateResolution
+  );
+  const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
+
+  function toggleAlternateTrait(key: string) {
+    setSelectedAlternateTraitKeys((current) =>
+      current.includes(key) ? current.filter((existing) => existing !== key) : [...current, key]
+    );
+  }
+
   function handleRaceChange(nextRaceId: string) {
     const nextRace = races.find((option) => option.id === nextRaceId) ?? races[0];
     setRaceId(nextRaceId);
     setAllocation({ ...ZERO_ALLOCATION });
+    // A Dwarf's trait cannot be carried onto an Elf: the backend would refuse
+    // the save, and refusing is a worse answer than clearing the choice at the
+    // moment it stops applying.
+    setSelectedAlternateTraitKeys((current) =>
+      retainSelectionsValidForRace(alternateMenu, nextRaceId, current)
+    );
     reroll(nextRace, sex);
   }
 
@@ -430,7 +515,15 @@ function CreateCharacterFields(props: {
       // entirely, which cost Half-Elf and Half-Orc their +2.
       const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, classId, level, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
+        {
+          displayLabel,
+          raceId,
+          classId,
+          level,
+          abilityScores: finalAbilityScores,
+          abilityBonusTarget: deriveAbilityBonusTarget(),
+          selectedAlternateTraitKeys,
+        },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -605,6 +698,105 @@ function CreateCharacterFields(props: {
               <input id="character-hair" style={INPUT_STYLE} value={hair} onChange={(event) => setHair(event.target.value)} />
             </LabeledField>
           </div>
+
+          {/* Alternate racial traits (Advanced Race Guide).
+
+              Every fact rendered here comes from the backend: which traits
+              exist, what each replaces, and which are locked out by the
+              current selection. `create_character` re-validates the submitted
+              keys against the corpus and returns `Blocked` rather than
+              persisting a swap that did not happen. */}
+          <p
+            style={{
+              ...LABEL_STYLE,
+              borderTop: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              paddingTop: '1rem',
+            }}
+          >
+            Alternate Racial Traits
+          </p>
+          {alternateMenuError !== null ? (
+            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
+              Alternate racial traits are unavailable: {alternateMenuError}
+            </p>
+          ) : alternateMenu === null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
+              Loading alternate racial traits…
+            </p>
+          ) : alternateTraitRows.length === 0 ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
+              The Advanced Race Guide offers no alternate racial traits for {selectedRace.label}.
+            </p>
+          ) : (
+            <>
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.5rem' }}>
+                {describeCreationSelection(selectedAlternateTraitKeys, alternateResolution)}
+              </p>
+              <div
+                style={{
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 8,
+                  maxHeight: 220,
+                  overflowY: 'auto',
+                  padding: '0.35rem 0.5rem',
+                }}
+              >
+                {alternateTraitRows.map((row) => (
+                  <label
+                    key={row.alternate.key}
+                    style={{
+                      alignItems: 'flex-start',
+                      cursor: row.disabledReason === null ? 'pointer' : 'not-allowed',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      opacity: row.disabledReason === null ? 1 : 0.55,
+                      padding: '0.3rem 0',
+                    }}
+                    title={row.disabledReason ?? row.alternate.description}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={row.selected}
+                      disabled={row.disabledReason !== null}
+                      onChange={() => toggleAlternateTrait(row.alternate.key)}
+                      style={{ marginTop: '0.2rem' }}
+                    />
+                    <span style={{ minWidth: 0 }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{row.alternate.name}</span>
+                      <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+                        {' '}
+                        · {row.alternate.book}
+                        {row.alternate.sourcePage === null ? '' : ` ${row.alternate.sourcePage}`}
+                      </span>
+                      <span
+                        style={{
+                          color: 'var(--color-text-muted)',
+                          display: 'block',
+                          fontSize: '0.72rem',
+                        }}
+                      >
+                        {row.disabledReason ??
+                          (row.alternate.replaces.length > 0
+                            ? `Replaces ${row.alternate.replaces.map((link) => link.name).join(', ')}`
+                            : `Replaces nothing in the loaded books (${row.alternate.setsFlags.join(', ')})`)}
+                      </span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {alternateTraitWarnings.map((warning) => (
+                <p
+                  key={warning}
+                  style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}
+                >
+                  {warning}
+                </p>
+              ))}
+            </>
+          )}
         </div>
 
         {/* Right column: ability scores panel */}

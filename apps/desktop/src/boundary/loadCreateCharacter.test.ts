@@ -18,6 +18,7 @@ async function testNoRuntimeThrowsDescriptiveError() {
       abilityScores: { strength: 16, dexterity: 14, constitution: 14, intelligence: 10, wisdom: 12, charisma: 8 },
       abilityBonusTarget: 'strength',
       savedAt: '2026-07-24T00:00:00Z',
+      selectedAlternateTraitKeys: [],
     });
   } catch (cause) {
     thrown = cause;

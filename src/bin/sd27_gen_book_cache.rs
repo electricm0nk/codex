@@ -239,6 +239,33 @@ fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Op
     (License::Ogl, None, None, value.to_string())
 }
 
+/// Renders one spell's raw `DESC:` token into the prose a corpus record may
+/// carry, and **fails the run** if PCGen syntax survives.
+///
+/// The `spell_list` tables store each description exactly as the corpus
+/// writes it — prose plus, where the book states a caster-level formula, a
+/// `%N` reference and its `|`-delimited argument tail. Writing that straight
+/// into `data/corpus/advanced_race_guide/spell/*.json` is what shipped
+/// `Absorbing Inhalation` reading *"for up to %1 rounds"* and ending
+/// *"…the cloud's effects|CASTERLEVEL"*. 13 of ARG's 92 spell records carried
+/// a leak of this class; `advanced_players_guide` carried 3 more.
+///
+/// `render_pcgen_desc` owns the treatment (`%%` de-escapes, an integer-literal
+/// `%N` substitutes, a formula `%N` is dropped and reported — never guessed,
+/// because `decisions.md §24` rules out a formula interpreter). The
+/// `leaked_pcgen_syntax` panic is the port of the production guard
+/// `src/bin/ingest_races.rs` and `src/bin/ingest_race_traits_arg.rs` already
+/// carry: a future leak stops this generator instead of reaching a screen.
+fn render_player_facing_description(record_key: &str, raw: &str) -> String {
+    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
+        panic!(
+            "record {record_key:?}: rendered description still carries {leak}. Raw token: {raw:?}"
+        );
+    }
+    rendered.text
+}
+
 #[derive(serde::Serialize)]
 struct FeatCacheData {
     key: String,
@@ -449,7 +476,8 @@ fn gen_advanced_race_guide() {
     for entry in advanced_race_guide::spell_list::SPELL_LIST {
         match arg_find_citation_line(&spells_index, entry.key) {
             Some(line_no) => {
-                let (license, pi_field, pi_marker, stored_desc) = classify_field("description", entry.description);
+                let rendered = render_player_facing_description(entry.key, entry.description);
+                let (license, pi_field, pi_marker, stored_desc) = classify_field("description", &rendered);
                 let data = advanced_race_guide::json_cache::SpellCacheData {
                     key: entry.key.to_string(),
                     school: format!("{:?}", entry.school),

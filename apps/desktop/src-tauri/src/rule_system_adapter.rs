@@ -148,7 +148,7 @@ mod tests {
     use crate::character_hub::{
         compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
         map_explanations_dto, map_resolved_equipment_dto, map_snapshot_dto,
-        map_spells_selected_dto, map_weapon_damage_dto, AbilityScoresDto,
+        map_spells_selected_dto, map_weapon_damage_dto, read_alternate_trait_keys, AbilityScoresDto,
         CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
         EquipmentEffectsDto, ResolvedEquipmentEffectDto, SchoolCoverageDto,
     };
@@ -359,6 +359,7 @@ mod tests {
                     &corpus_receipt.corpus_derived.equipment_effects,
                     corpus_receipt.base.ability_modifiers.strength,
                 )),
+                selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
             })
         }
     }
@@ -394,6 +395,7 @@ mod tests {
                 charisma: 8,
             },
             ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);

@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
+  "ingested_at": "2026-07-31T21:43:42Z",
   "data": {
     "key": "Spawn Ward",
     "school": "Necromancy",
     "level": 5,
-    "description": "The target becomes resistant to the effects of energy drain and blood drain attacks made by undead creatures, and cannot be made into undead spawn if killed while the spell is in effect. If the attacking undead's Hit Dice is less than or equal to %1, the blood drain or energy drain has no effect. If the attacking undead's Hit Dice are greater than %1, the undead must make a Fortitude save (against the DC of the spell) with each attack for those special abilities to have any effect. The spell only prevents the Constitution damage from blood drain and negative levels from energy drain, but not any other effects of these attacks.|CASTERLEVEL"
+    "description": "The target becomes resistant to the effects of energy drain and blood drain attacks made by undead creatures, and cannot be made into undead spawn if killed while the spell is in effect. If the attacking undead's Hit Dice is less than or equal to , the blood drain or energy drain has no effect. If the attacking undead's Hit Dice are greater than , the undead must make a Fortitude save (against the DC of the spell) with each attack for those special abilities to have any effect. The spell only prevents the Constitution damage from blood drain and negative levels from energy drain, but not any other effects of these attacks."
   },
   "source": {
     "kind": "lst_token",
