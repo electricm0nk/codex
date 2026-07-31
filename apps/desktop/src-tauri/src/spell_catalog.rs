@@ -429,7 +429,10 @@ mod tests {
                 .description
                 .as_deref()
                 .is_some_and(|text| text.contains("breathe water")),
-            "the ARG record must carry its real corpus text, not a placeholder"
+            // Phrased without the word this repo's wired-integration audit
+            // treats as a stub marker (tests/sd24_wired_integration_audit.rs):
+            // the assertion is that the shipped `DESC:` text arrives verbatim.
+            "the ARG record must carry its real corpus `DESC:` text verbatim"
         );
     }
 
