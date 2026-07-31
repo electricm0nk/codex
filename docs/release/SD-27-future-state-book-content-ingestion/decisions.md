@@ -298,3 +298,29 @@ receipt the figure came from, or delete it.
 **This repo copy is authoritative on this point. The planning-tree copy is stale and must not be treated as current.** For the record of what the disagreement was: the planning-tree copy at `~/workspace/programs/codex/requirements/SD-27-future-state-book-content-ingestion/` names Advanced Race Guide + Adventurer's Guide as the pairing, with Pathfinder Unchained deferred to SD-28+ — the opposite of this file — and propagates that through its own `scope-draft.md`, `content-unit-inventory.md`, and `acceptance-and-verification.md`. The 2026-07-30 merge that added §21/§22 here deliberately left this file's ARG+PU pairing untouched rather than guess, and raised the conflict instead; that was the right call, and the ruling above confirms this side was correct.
 
 No corrective work follows from this ruling. Every SD-27 doc in this directory already reads ARG+PU (verified by grep 2026-07-31: `release-notes.md`, `progress.md`, `loop-instruction.md`, `scope-draft.md`, `content-unit-inventory.md` and this file all route Adventurer's Guide out), and every build artifact that exists — `data/corpus/pathfinder_unchained/` (59 records), `src/rules_core/rules_tables/pathfinder_unchained/`, `RuleSetId::Pu`, PU's PCGen parity test, and PU's rows in the live feat (17) and equipment (42) catalogs — is PU's. Adventurer's Guide has no corpus directory, no `rules_tables` module, and no records anywhere in this repo, so nothing needs unwinding.
+
+## 23. Race ingestion scope (operator ruling, 2026-07-31)
+
+**23.1 — ARG's races are ingested via the shared `core_essentials` race library, not from ARG's own directory.**
+
+Verified against the real corpus before the ruling was sought: `advanced_race_guide/arg_races.lst`
+carries **39 real (non-comment) lines, 37 of them `.MOD`** — it *modifies* race records rather than
+declaring them. The actual race chassis lives in
+`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/races/`, which holds
+**51 race directories**. `docs/work-inventory.json` independently classifies `core_essentials` as
+`scope: shared_library` with an `included_by` naming nine books, Core Rulebook and Bestiary 1 among
+them. So "ingest ARG's races" is not a thing that can be done inside ARG's own directory.
+
+**Operator ruling: ingest the shared library once, then apply ARG's `.MOD` layer on top.** This
+matches how the corpus is actually structured rather than fighting it, and the one-time cost serves
+every including book instead of only ARG.
+
+**Known, accepted consequence:** Core Rulebook's 7 races are presently hardcoded as a 7-variant
+`RaceId` enum in `src/rules_core/rules_tables/crb/race_tables.rs`, consumed by exactly one call site
+(`pilot_compute.rs`'s flat `"race:human" => RaceId::Human` match). Ingesting the shared library
+replaces that with corpus-driven data — a real change to already-shipped CRB behavior. It is to be
+done under test, with CRB's existing 7 races' resolved traits pinned before and after so any drift
+is a caught failure rather than a silent regression.
+
+This ruling resolves the "race roster" half of
+`docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` Finding 2.
