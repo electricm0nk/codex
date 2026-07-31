@@ -518,7 +518,7 @@ left to be done for that thing to be utilized by a user."* Two open defects cann
 
 **Ruling: `pilot_compute.rs` and `rules_tables/<book>/` are in scope for SD-27 from this point.** §8's
 partition is recorded as **spent**, not wrong — it was correct for the concurrency it was written for.
-The remaining §8 prohibitions (`docs/release/v0.6/`, `src/oracle_validation/`) stand: those are другой
+The remaining §8 prohibitions (`docs/release/v0.6/`, `src/oracle_validation/`) stand: those are a different
 concern entirely, and nothing in the reachability work needs them.
 
 **Standing guard, unchanged:** `pilot_compute.rs` is the engine's most load-bearing file. Every change to
