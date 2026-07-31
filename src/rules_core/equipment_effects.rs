@@ -662,3 +662,102 @@ Keen (ARG)\tKEY:Special Ability ~ Keen ~ Weapon (ARG)\tTYPE:Weapon\tCOST:0\tBONU
         assert_eq!(effects.per_item[0].to_hit_bonus, Some(1));
     }
 }
+
+/// Regression tests for the real bug found by SD-27's Advanced Race Guide
+/// PCGen parity work: `compute_equipment_effects` gated every per-item effect
+/// (AC bonus, max Dex, spell failure, armor check penalty, weapon
+/// enhancement to-hit) behind a category lookup in the CRB-only compiled
+/// `rules_tables::crb::equipment_tables()` store. A non-CRB item's key was
+/// never in that table, so the item was `continue`'d out of the loop before
+/// any of the per-category resolvers (which are all already book-agnostic --
+/// see `arms_armor.rs`/`general.rs`/`magic_items.rs`/`equipmods.rs`'s own
+/// doc comments) ever ran. See
+/// `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` finding 1.
+#[cfg(test)]
+mod book_agnostic_resolution_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::character_input::ActiveState;
+    use crate::rules_core::source_content::SourceRef;
+
+    fn equipped(item_id: &str) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }
+    }
+
+    fn equipped_with_modifiers(item_id: &str, applied_modifiers: &[&str]) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: applied_modifiers.iter().map(|id| id.to_string()).collect(),
+        }
+    }
+
+    /// Not a literal single verbatim ARG record (no clean single-line
+    /// arms_armor example exists in the real ARG source -- the book adds
+    /// exotic weapons and accessories, not new base armor), but real,
+    /// verified CRB armor token grammar (matches this file's own
+    /// `Chain Shirt (Base)` fixture exactly), tagged as coming from
+    /// `advanced_race_guide` to exercise the book-agnostic path
+    /// specifically. Stated plainly rather than implied as verbatim.
+    const ARG_ARMOR_FIXTURE_TEXT: &str = "\
+Reinforced Leather (ARG)\tKEY:Reinforced Leather (ARG)\tTYPE:Armor.Light\tCOST:120\tWT:18\tACCHECK:-1\tMAXDEX:5\tSPELLFAILURE:15\tBONUS:COMBAT|AC|3|TYPE=Armor\n";
+
+    // Real ARG equipmods token grammar, verbatim shape from
+    // `arg_equipmods.lst`'s own `BONUS:WEAPON|...|TYPE=Enhancement` records.
+    const ARG_EQUIPMOD_FIXTURE_TEXT: &str = "\
+Longsword (ARG)\tKEY:Longsword (ARG)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n\
+Keen (ARG)\tKEY:Special Ability ~ Keen ~ Weapon (ARG)\tTYPE:Weapon\tCOST:0\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n";
+
+    fn arg_corpus(text: &str, source_file: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries(source_file, text);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: source_file.to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    #[test]
+    fn a_non_crb_armor_item_resolves_all_four_arms_armor_stats() {
+        let corpus = arg_corpus(ARG_ARMOR_FIXTURE_TEXT, "arg_equip_arms_armor.lst");
+        let equipped_items = vec![equipped("Reinforced Leather (ARG)")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item.len(), 1, "the item must not be silently dropped");
+        let item = &effects.per_item[0];
+        assert_eq!(item.armor_class_bonus, Some(3));
+        assert_eq!(item.max_dex, Some(5));
+        assert_eq!(item.spell_failure, Some(15.0));
+        assert_eq!(item.armor_check_penalty, Some(-1));
+        assert_eq!(item.category, EquipmentCategory::ArmsArmor);
+        assert_eq!(effects.armor_class_delta, 3);
+        assert_eq!(effects.max_dex_cap, Some(5));
+        assert_eq!(effects.spell_failure_chance, Some(15.0));
+        assert_eq!(effects.armor_check_penalty_total, -1);
+    }
+
+    #[test]
+    fn a_non_crb_equipment_modifier_still_applies_its_tohit_bonus() {
+        let corpus = arg_corpus(ARG_EQUIPMOD_FIXTURE_TEXT, "arg_equipmods.lst");
+        let equipped_items = vec![equipped_with_modifiers(
+            "Longsword (ARG)",
+            &["Special Ability ~ Keen ~ Weapon (ARG)"],
+        )];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.attack_bonus_delta, Some(1), "a non-CRB weapon modifier must still apply");
+        assert_eq!(effects.per_item[0].to_hit_bonus, Some(1));
+    }
+}
