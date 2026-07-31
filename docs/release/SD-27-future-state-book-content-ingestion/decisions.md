@@ -434,3 +434,51 @@ rather than a silently-doubled bonus. Standard traits are additionally self-iden
 *_races.lst` carry a placeholder `SOURCEPAGE:p.xx` rather than a real page. The trait rows carry real
 citations (`SOURCEPAGE:p.21` for Dwarf). Provenance therefore comes off the trait rows; the chassis
 row's page is not trustworthy and must not be transcribed as though it were.
+
+## 27. §26 CORRECTED — two published numbers were wrong (2026-07-31)
+
+Both errors are mine, were caught by the ingestion agents, and are re-verified here by command
+rather than accepted on the agents' word.
+
+**27.1 — "625 replace-flag settings" conflated *mentions* with *settings*.** The real figures:
+
+| measure | count | command |
+|---|---:|---|
+| flags actually **set** | **271** | `grep -oE "FACT:[A-Za-z]+_Replace[A-Za-z]+\|True" \| wc -l` |
+| flags **mentioned** anywhere | 625 | `grep -oE "[A-Za-z]+_Replace[A-Za-z]+" \| wc -l` |
+| `PREFACT` clauses **reading** flags | 257 | `grep -oE "!?PREFACT:[^\t]*_Replace[^\t]*" \| wc -l` |
+
+The setting token is `FACT:<Race>_Replace<Trait>|True`, always trailing. §26's 625 counted every textual
+mention — a flag set once and then read by several sibling traits' mutual-exclusion guards was counted
+each time. §26's per-Dwarf breakdown is wrong for the same reason; set-vs-mentioned, verified:
+`ReplaceHatred` 5 set / 11 mentioned, `ReplaceStonecunning` 5 / 10, `ReplaceDefensiveTraining` 4 / 9,
+`ReplaceGreed` 3 / 7, `ReplaceHardy` 2 / 6, `ReplaceStability` 2 / 6, `ReplaceVision` 2 / 5,
+`ReplaceLanguages` 1 / 2.
+
+*(An agent reported the mention count as 627 and called 625 wrong. It is not — 625 reproduces exactly
+under the pattern §26 used; 627 comes from a looser `[A-Za-z]*` pattern matching two additional
+degenerate spans. The arithmetic was never the defect. **The label was.**)*
+
+**§26's protocol description remains correct** — standard traits are gated by
+`!PREFACT:1,ABILITIES,<Flag>=True`, alternates set the flag, and the engine models a declared
+relationship rather than an invented one. Only the counts were wrong.
+
+**27.2 — "the trait rows carry real citations" is false, and generalised from the worst possible
+sample.** Across the 18 in-scope races' 175 standard trait rows: **143 carry the placeholder
+`SOURCEPAGE:p.xx`; only 32 carry a real page** — Dwarf `p.21` (12), Half-Orc `p.24`/`p.25` (9),
+Aasimar `p.7` (9), Duergar `p.117` (2). Dwarf is one of just **4 races out of 18** with genuine
+citations, and §26 inferred the general rule from it.
+
+Transcribing `SOURCEPAGE:` verbatim would therefore have manufactured **143 false citations**.
+`src/bin/ingest_races.rs` maps `p.xx` → `null`, so a populated `source_page` always means a real page,
+with the raw token still preserved in `raw_tokens`; a test pins this.
+
+**The §25/§26 rule that the chassis row's page is untrustworthy still stands — it was simply not
+specific enough.** The honest statement is: *placeholder pages are pervasive across both chassis and
+trait rows; a page is trustworthy only when it is not `p.xx`, and that must be checked per row rather
+than assumed per content-kind.*
+
+**Process note.** §26 was written from Dwarf alone because Dwarf was the exemplar I had open. Both
+defects are the same failure — publishing a general rule from a single unverified sample — and both
+were caught only because the ingestion agents were instructed to derive counts by command instead of
+trusting the brief. That instruction earned its keep here.
