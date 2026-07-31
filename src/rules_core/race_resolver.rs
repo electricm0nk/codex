@@ -1,0 +1,999 @@
+//! Real, book-agnostic `data/corpus/<book>/race/` + `race_trait/` loader and
+//! racial-trait resolver.
+//!
+//! Built 2026-07-31 for SD-27 (`decisions.md §25`, `§26`). Modelled directly on
+//! this module's sibling [`corpus_loader`](crate::rules_core::corpus_loader):
+//! same [`BookCorpusRoot`] input type (re-used, not re-declared), same
+//! "walk the book's subdirectory, skip `LICENSE.json` and `_parity/`,
+//! push a diagnostic instead of aborting on a bad record" shape.
+//!
+//! # What this resolves, and why it is transcription rather than invention
+//!
+//! PCGen already encodes the alternate-racial-trait swap declaratively
+//! (`decisions.md §26`). A standard racial trait is gated on a *negated*
+//! fact check naming its own replace-flag:
+//!
+//! ```text
+//! Greed  KEY:Dwarf ~ Greed  TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality
+//!        !PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True
+//! ```
+//!
+//! and ARG's alternates are what set those flags (`FACT:Dwarf_ReplaceHatred|True`).
+//! The resolution rule is therefore exactly the one `decisions.md §26` states:
+//!
+//! > a standard trait applies **iff** no selected alternate trait has set its
+//! > `suppressed_by_flag`
+//!
+//! This module implements that and nothing more clever. It does not interpret
+//! `BONUS:` formulas (`decisions.md §24` rules those out) — it hands back each
+//! resolved trait's raw tokens and bonus chains so downstream, hand-modelled
+//! per-feature functions read them exactly as they read a raw-LST-parsed
+//! record today.
+//!
+//! # The four roles a corpus trait can have
+//!
+//! Classification is read off the record, never assumed. In precedence order:
+//!
+//! | role | corpus signal | included when |
+//! |---|---|---|
+//! | [`TraitRole::Default`] | `is_racial_default` (`TYPE:...<Race> Racial Default...`) | always, unless its `suppressed_by_flag` fired |
+//! | [`TraitRole::Alternate`] | `sets_replace_flags` non-empty | only when the caller selects it |
+//! | [`TraitRole::FlagGranted`] | a *positive* `PREFACT:1,ABILITIES,X=True` token | when `X` fired (and its own suppressor did not) |
+//! | [`TraitRole::Unclassified`] | none of the above | **never** — surfaced via [`RaceCorpus::unclassified_traits`] |
+//!
+//! `FlagGranted` is not a category anyone invented either: ARG's
+//! `###Block: Replacement Racial Traits` rows carry a positive `PREFACT`
+//! naming the very flag their parent alternate sets. `Saltbeard ~ Dwarf ~ Greed`
+//! is gated `PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True`, and
+//! `Dwarf ~ Saltbeard` sets that flag — so selecting Saltbeard suppresses the
+//! CRB `Greed` and grants the seagoing one, in one motion, with no bespoke
+//! wiring.
+//!
+//! `Unclassified` exists so that a row with no readable gate is *visible*
+//! rather than silently included (which would double a bonus) or silently
+//! dropped (which would lose content). Two real records land there today —
+//! see [`RaceCorpus::unclassified_traits`].
+//!
+//! # Book attribution
+//!
+//! A record's book is the corpus directory it was loaded from, which per
+//! `decisions.md §25.2` is its *true* source book. `core_essentials/` appears
+//! only inside [`RaceChassisRecord::source_path`], where it is the genuine
+//! read location, and never as attribution.
+
+use std::collections::{BTreeMap, BTreeSet};
+use std::fs;
+use std::path::{Path, PathBuf};
+
+use crate::rules_core::corpus_loader::BookCorpusRoot;
+use crate::rules_core::shape_b_v1::{
+    validate_license, CorpusRecordV1, CorpusSource, RaceCacheData, RaceTraitCacheData, RawBonusChain, RawToken,
+};
+use crate::rules_core::size::SizeCategory;
+
+/// Why one corpus file was skipped. A malformed record must not take down a
+/// whole book's real data, and must not vanish silently either — every skip
+/// lands here and [`RaceCorpus::diagnostics`] exposes the list.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RaceCorpusDiagnostic {
+    pub path: String,
+    pub message: String,
+}
+
+/// Which end of the replace-flag protocol a trait record sits on. See the
+/// module docs' table for the corpus signal behind each.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TraitRole {
+    /// A standard racial trait: applies by default, suppressible.
+    Default,
+    /// An ARG alternate: applies only when the caller selects it, and fires
+    /// the flags in `sets_replace_flags` when it does.
+    Alternate,
+    /// Replacement content granted *by* a flag rather than chosen directly.
+    FlagGranted,
+    /// No readable gate. Never auto-applied; see the module docs.
+    Unclassified,
+}
+
+/// One `data/corpus/<book>/race/<slug>.json` record, plus where it came from.
+#[derive(Debug, Clone)]
+pub struct RaceChassisRecord {
+    pub book_id: String,
+    pub data: RaceCacheData,
+    /// The real LST path the record was ingested from, verbatim from
+    /// `CorpusSource.path` (this is the one place `core_essentials/` legitimately
+    /// appears — it is where the file physically lives).
+    pub source_path: String,
+    pub source_line: u32,
+    /// The corpus JSON file this record was read from.
+    pub corpus_path: PathBuf,
+}
+
+/// One `data/corpus/<book>/race_trait/<race>/<slug>.json` record, plus the
+/// role classification derived from it.
+#[derive(Debug, Clone)]
+pub struct RaceTraitRecord {
+    pub book_id: String,
+    pub role: TraitRole,
+    /// From a *positive* `PREFACT:1,ABILITIES,X=True` token: this trait is
+    /// granted only when flag `X` has fired.
+    pub requires_flag: Option<String>,
+    pub data: RaceTraitCacheData,
+    pub source_path: String,
+    pub source_line: u32,
+    pub corpus_path: PathBuf,
+}
+
+impl RaceTraitRecord {
+    fn key(&self) -> &str {
+        &self.data.key
+    }
+}
+
+/// Every race chassis and racial trait from a set of books, indexed by race.
+#[derive(Debug, Clone, Default)]
+pub struct RaceCorpus {
+    chassis: BTreeMap<String, RaceChassisRecord>,
+    traits: BTreeMap<String, Vec<RaceTraitRecord>>,
+    diagnostics: Vec<RaceCorpusDiagnostic>,
+}
+
+/// Where a resolved race's effective walk speed came from.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SpeedSource {
+    /// The chassis row's own `MOVE:Walk,N`.
+    Chassis,
+    /// A resolved trait's `MOVE:Walk,N`, which overrides the chassis. This is
+    /// not a nicety: Goblin's and Hobgoblin's chassis rows carry
+    /// `MOVE:Walk,0` and their real 30 ft. lives only on their `Normal Speed`
+    /// trait.
+    Trait(String),
+    /// No `MOVE:Walk` anywhere — speed is unknown, not defaulted.
+    Unknown,
+}
+
+/// One suppression that fired, with both ends named so a caller can explain
+/// the swap rather than just observe a missing trait.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Suppression {
+    pub suppressed_trait_key: String,
+    pub flag: String,
+    pub set_by_trait_key: String,
+}
+
+/// One trait that survived resolution, flattened for downstream reading.
+#[derive(Debug, Clone)]
+pub struct ResolvedTrait {
+    pub key: String,
+    pub name: String,
+    pub book_id: String,
+    pub role: TraitRole,
+    pub type_tokens: Vec<String>,
+    pub description: Option<String>,
+    pub source_page: Option<String>,
+    pub raw_tokens: Vec<RawToken>,
+    pub raw_bonus_chains: Vec<RawBonusChain>,
+}
+
+impl ResolvedTrait {
+    /// Every integer that appears as a bare numeric qualifier in this trait's
+    /// `BONUS:` chains, in source order, deduplicated.
+    ///
+    /// This is a *reading*, not an interpretation: it does not decide what the
+    /// number bonuses, does not sum anything, and does not resolve PCGen
+    /// variables. `BONUS:SITUATION|Perception=...|Dwarf_StoneCunning_SkillBonus`
+    /// contributes nothing; the companion
+    /// `BONUS:VAR|Dwarf_StoneCunning_SkillBonus|2` contributes `2`. Callers that
+    /// need a specific mechanical effect must hand-model it per
+    /// `decisions.md §24` and read [`raw_bonus_chains`](Self::raw_bonus_chains)
+    /// directly.
+    pub fn declared_bonus_magnitudes(&self) -> Vec<i32> {
+        let mut out: Vec<i32> = Vec::new();
+        for chain in &self.raw_bonus_chains {
+            for qualifier in &chain.qualifiers {
+                if let Ok(value) = qualifier.parse::<i32>()
+                    && !out.contains(&value)
+                {
+                    out.push(value);
+                }
+            }
+        }
+        out
+    }
+
+    /// This trait's `MOVE:Walk,N` in feet, if it declares one.
+    pub fn declared_walk_speed_ft(&self) -> Option<i32> {
+        self.raw_tokens.iter().filter(|t| t.key == "MOVE").find_map(|t| walk_speed_from_move(&t.value))
+    }
+}
+
+/// A race resolved against a specific set of chosen alternate traits.
+#[derive(Debug, Clone)]
+pub struct ResolvedRace {
+    pub race_key: String,
+    pub name: String,
+    pub book_id: String,
+    /// Parsed from the chassis' `FACT:BaseSize|<code>`. `None` — never a
+    /// defaulted Medium — when the code is absent or unrecognized.
+    pub size: Option<SizeCategory>,
+    pub race_type: Option<String>,
+    /// The chassis row's own `MOVE:Walk`, before any trait override. Exposed
+    /// alongside [`walk_speed_ft`](Self::walk_speed_ft) so the Goblin/Hobgoblin
+    /// `MOVE:Walk,0` case is visible rather than quietly corrected.
+    pub chassis_walk_speed_ft: Option<i32>,
+    pub walk_speed_ft: Option<i32>,
+    pub speed_source: SpeedSource,
+    /// Every trait that applies, sorted by key.
+    pub traits: Vec<ResolvedTrait>,
+    /// The union of the replace-flags the selected alternates set, sorted.
+    pub fired_flags: Vec<String>,
+    pub suppressions: Vec<Suppression>,
+    /// Selection keys that matched no alternate trait for this race. A typo
+    /// in a saved character must be reported, not silently ignored.
+    pub unmatched_selections: Vec<String>,
+    /// Flags that fired but suppressed nothing and granted nothing — an
+    /// alternate whose swap target is missing from the loaded books. Empty
+    /// when every selected alternate's counterpart is present.
+    pub inert_flags: Vec<String>,
+}
+
+/// Loads every race chassis and racial trait from every given book's corpus
+/// directory. A book with no `race/` or `race_trait/` subdirectory contributes
+/// nothing and is not an error — books are wired in incrementally.
+pub fn load_race_corpus(roots: &[BookCorpusRoot<'_>]) -> RaceCorpus {
+    let mut corpus = RaceCorpus::default();
+    for root in roots {
+        corpus.load_chassis_dir(root);
+        corpus.load_trait_dir(root);
+    }
+    for records in corpus.traits.values_mut() {
+        records.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+    }
+    corpus
+}
+
+impl RaceCorpus {
+    fn load_chassis_dir(&mut self, root: &BookCorpusRoot<'_>) {
+        let dir = root.dir.join("race");
+        if !dir.is_dir() {
+            return;
+        }
+        for path in find_json_files(&dir) {
+            let Some(record) = self.read_record::<RaceCacheData>(&path) else { continue };
+            let key = record.data.key.clone();
+            let (source_path, source_line) = lst_citation(&record.source);
+            let chassis = RaceChassisRecord {
+                book_id: root.book_id.to_string(),
+                source_path,
+                source_line,
+                data: record.data,
+                corpus_path: path.clone(),
+            };
+            if let Some(previous) = self.chassis.insert(key.clone(), chassis) {
+                self.diagnostics.push(RaceCorpusDiagnostic {
+                    path: path.display().to_string(),
+                    message: format!(
+                        "duplicate chassis for race {key:?}; already loaded from {}",
+                        previous.corpus_path.display()
+                    ),
+                });
+            }
+        }
+    }
+
+    fn load_trait_dir(&mut self, root: &BookCorpusRoot<'_>) {
+        let dir = root.dir.join("race_trait");
+        if !dir.is_dir() {
+            return;
+        }
+        for path in find_json_files(&dir) {
+            let Some(record) = self.read_record::<RaceTraitCacheData>(&path) else { continue };
+            let requires_flag = positive_prefact_flag(&record.data.raw_tokens);
+            let role = classify(&record.data, requires_flag.is_some());
+            let race_key = record.data.race_key.clone();
+            let (source_path, source_line) = lst_citation(&record.source);
+            self.traits.entry(race_key).or_default().push(RaceTraitRecord {
+                book_id: root.book_id.to_string(),
+                role,
+                requires_flag,
+                source_path,
+                source_line,
+                data: record.data,
+                corpus_path: path,
+            });
+        }
+    }
+
+    /// Reads one corpus file as a real, typed `CorpusRecordV1<T>` and license-
+    /// validates it. Any failure becomes a diagnostic and `None` — never a
+    /// panic and never a silently-dropped file.
+    fn read_record<T: serde::de::DeserializeOwned>(&mut self, path: &Path) -> Option<CorpusRecordV1<T>> {
+        let text = match fs::read_to_string(path) {
+            Ok(text) => text,
+            Err(err) => {
+                self.push_diag(path, format!("failed to read file: {err}"));
+                return None;
+            }
+        };
+        let record = match serde_json::from_str::<CorpusRecordV1<T>>(&text) {
+            Ok(record) => record,
+            Err(err) => {
+                self.push_diag(path, format!("not a valid CorpusRecordV1 payload: {err}"));
+                return None;
+            }
+        };
+        if let Err(err) = validate_license(&record) {
+            self.push_diag(path, format!("license validation failed: {err}"));
+            return None;
+        }
+        Some(record)
+    }
+
+    fn push_diag(&mut self, path: &Path, message: String) {
+        self.diagnostics.push(RaceCorpusDiagnostic { path: path.display().to_string(), message });
+    }
+
+    pub fn diagnostics(&self) -> &[RaceCorpusDiagnostic] {
+        &self.diagnostics
+    }
+
+    /// Every race key that has a chassis record, sorted.
+    pub fn race_keys(&self) -> Vec<&str> {
+        self.chassis.keys().map(String::as_str).collect()
+    }
+
+    pub fn chassis(&self, race_key: &str) -> Option<&RaceChassisRecord> {
+        self.chassis.get(race_key)
+    }
+
+    /// Every trait record for a race, standard and alternate, across every
+    /// loaded book, sorted by key.
+    pub fn traits_for(&self, race_key: &str) -> Vec<&RaceTraitRecord> {
+        self.traits.get(race_key).map(|v| v.iter().collect()).unwrap_or_default()
+    }
+
+    pub fn default_traits(&self, race_key: &str) -> Vec<&RaceTraitRecord> {
+        self.traits_for(race_key).into_iter().filter(|t| t.role == TraitRole::Default).collect()
+    }
+
+    /// The alternate traits a player may choose for a race — the selectable
+    /// menu. Keyed by [`RaceTraitCacheData::key`], which is what
+    /// [`RaceCorpus::resolve`] takes.
+    pub fn alternate_traits(&self, race_key: &str) -> Vec<&RaceTraitRecord> {
+        self.traits_for(race_key).into_iter().filter(|t| t.role == TraitRole::Alternate).collect()
+    }
+
+    /// Every trait, across every loaded race, that carries no readable gate:
+    /// not a racial default, sets no replace-flag, and has no positive
+    /// `PREFACT`. These are never auto-applied. They are exposed because
+    /// "we found content we cannot place" is a fact a caller is entitled to,
+    /// not something to swallow.
+    pub fn unclassified_traits(&self) -> Vec<&RaceTraitRecord> {
+        let mut out: Vec<&RaceTraitRecord> =
+            self.traits.values().flatten().filter(|t| t.role == TraitRole::Unclassified).collect();
+        out.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        out
+    }
+
+    /// Matches a loose race identifier — a bare key (`"Half-Elf"`), a
+    /// `race:`-prefixed character-input token (`"race:half-elf"`), or either
+    /// in any case — to a loaded race key. `None` when nothing matches; a
+    /// caller that wants a fallback must choose one at its own call site.
+    pub fn resolve_key(&self, needle: &str) -> Option<&str> {
+        let needle = needle.trim().strip_prefix("race:").unwrap_or(needle.trim());
+        self.chassis.keys().find(|key| key.eq_ignore_ascii_case(needle)).map(String::as_str)
+    }
+
+    /// Resolves a race's effective trait set against a chosen set of alternate
+    /// traits, implementing `decisions.md §26`'s protocol.
+    ///
+    /// `selected_alternate_keys` are [`RaceTraitCacheData::key`] values, e.g.
+    /// `"Dwarf ~ Saltbeard"`. Pass `&[]` for the plain default race.
+    ///
+    /// `None` only when the race has no chassis record.
+    pub fn resolve(&self, race_key: &str, selected_alternate_keys: &[&str]) -> Option<ResolvedRace> {
+        let chassis = self.chassis.get(race_key)?;
+        let records = self.traits_for(race_key);
+
+        // 1. Match the selections, and fire their flags.
+        let selected: BTreeSet<&str> = selected_alternate_keys.iter().copied().collect();
+        let mut fired: BTreeMap<String, String> = BTreeMap::new(); // flag -> setting trait key
+        let mut matched: BTreeSet<&str> = BTreeSet::new();
+        for record in &records {
+            if record.role == TraitRole::Alternate && selected.contains(record.key()) {
+                matched.insert(record.key());
+                for flag in &record.data.sets_replace_flags {
+                    fired.entry(flag.clone()).or_insert_with(|| record.key().to_string());
+                }
+            }
+        }
+        let unmatched_selections: Vec<String> =
+            selected.iter().filter(|k| !matched.contains(*k)).map(|k| (*k).to_string()).collect();
+
+        // 2. Apply the protocol, per role.
+        let mut applied: Vec<&RaceTraitRecord> = Vec::new();
+        let mut suppressions: Vec<Suppression> = Vec::new();
+        let mut used_flags: BTreeSet<String> = BTreeSet::new();
+        for record in &records {
+            // A suppressor fires regardless of role: a flag-granted
+            // replacement can itself be replaced.
+            if let Some(flag) = &record.data.suppressed_by_flag
+                && let Some(setter) = fired.get(flag)
+                && record.role != TraitRole::Alternate
+            {
+                used_flags.insert(flag.clone());
+                suppressions.push(Suppression {
+                    suppressed_trait_key: record.key().to_string(),
+                    flag: flag.clone(),
+                    set_by_trait_key: setter.clone(),
+                });
+                continue;
+            }
+            let include = match record.role {
+                TraitRole::Default => true,
+                TraitRole::Alternate => matched.contains(record.key()),
+                TraitRole::FlagGranted => {
+                    let required = record.requires_flag.as_deref().unwrap_or_default();
+                    let granted = fired.contains_key(required);
+                    if granted {
+                        used_flags.insert(required.to_string());
+                    }
+                    granted
+                }
+                TraitRole::Unclassified => false,
+            };
+            if include {
+                applied.push(record);
+            }
+        }
+
+        let inert_flags: Vec<String> = fired.keys().filter(|f| !used_flags.contains(*f)).cloned().collect();
+
+        let traits: Vec<ResolvedTrait> = applied
+            .iter()
+            .map(|record| ResolvedTrait {
+                key: record.data.key.clone(),
+                name: record.data.name.clone(),
+                book_id: record.book_id.clone(),
+                role: record.role,
+                type_tokens: record.data.type_tokens.clone(),
+                description: record.data.description.clone(),
+                source_page: record.data.source_page.clone(),
+                raw_tokens: record.data.raw_tokens.clone(),
+                raw_bonus_chains: record.data.raw_bonus_chains.clone(),
+            })
+            .collect();
+
+        // 3. Speed: the chassis value, overridden by any resolved trait that
+        //    declares its own `MOVE:Walk`.
+        let chassis_walk_speed_ft = chassis.data.base_move_walk;
+        let mut walk_speed_ft = chassis_walk_speed_ft;
+        let mut speed_source = if chassis_walk_speed_ft.is_some() { SpeedSource::Chassis } else { SpeedSource::Unknown };
+        for resolved in &traits {
+            if let Some(ft) = resolved.declared_walk_speed_ft() {
+                walk_speed_ft = Some(ft);
+                speed_source = SpeedSource::Trait(resolved.key.clone());
+            }
+        }
+
+        Some(ResolvedRace {
+            race_key: chassis.data.key.clone(),
+            name: chassis.data.name.clone(),
+            book_id: chassis.book_id.clone(),
+            size: chassis.data.base_size.as_deref().and_then(SizeCategory::from_base_size_code),
+            race_type: chassis.data.race_type.clone(),
+            chassis_walk_speed_ft,
+            walk_speed_ft,
+            speed_source,
+            traits,
+            fired_flags: fired.keys().cloned().collect(),
+            suppressions,
+            unmatched_selections,
+            inert_flags,
+        })
+    }
+}
+
+/// The LST file and line a record was ingested from. `CorpusSource` also
+/// models web and same-book-fallback provenance, neither of which carries an
+/// LST citation — those return `("", 0)` rather than a fabricated path.
+fn lst_citation(source: &CorpusSource) -> (String, u32) {
+    match source {
+        CorpusSource::LstToken { path, line, .. }
+        | CorpusSource::LstInheritedCopy { path, line, .. }
+        | CorpusSource::LstCorrectedIngest { path, line, .. } => (path.clone(), *line),
+        CorpusSource::WebSecondSource { .. } | CorpusSource::SameBookFallback { .. } => (String::new(), 0),
+    }
+}
+
+/// Reads a *positive* `PREFACT:1,ABILITIES,<flag>=True` token — the gate on
+/// ARG's replacement-content rows. The negated form is stored under the
+/// distinct `!PREFACT` key by the ingest tools and is deliberately not matched
+/// here; its payload already lives in
+/// [`RaceTraitCacheData::suppressed_by_flag`].
+fn positive_prefact_flag(raw_tokens: &[RawToken]) -> Option<String> {
+    raw_tokens
+        .iter()
+        .filter(|t| t.key == "PREFACT")
+        .find_map(|t| first_ability_flag(&t.value))
+}
+
+/// `1,ABILITIES,Dwarf_ReplaceGreed=True` -> `Dwarf_ReplaceGreed`.
+fn first_ability_flag(value: &str) -> Option<String> {
+    let mut parts = value.split(',');
+    if parts.next()? != "1" {
+        return None;
+    }
+    if !parts.next()?.eq_ignore_ascii_case("ABILITIES") {
+        return None;
+    }
+    let clause = parts.next()?;
+    let (flag, _) = clause.split_once('=')?;
+    Some(flag.to_string())
+}
+
+/// `Walk,20` / `Walk,15,Swim,30` -> `20` / `15`. `None` when the token names
+/// no walk movement at all.
+fn walk_speed_from_move(value: &str) -> Option<i32> {
+    let parts: Vec<&str> = value.split(',').collect();
+    parts
+        .windows(2)
+        .find(|pair| pair[0].trim().eq_ignore_ascii_case("Walk"))
+        .and_then(|pair| pair[1].trim().parse::<i32>().ok())
+}
+
+fn classify(data: &RaceTraitCacheData, has_positive_gate: bool) -> TraitRole {
+    if data.is_racial_default {
+        TraitRole::Default
+    } else if !data.sets_replace_flags.is_empty() {
+        TraitRole::Alternate
+    } else if has_positive_gate {
+        TraitRole::FlagGranted
+    } else {
+        TraitRole::Unclassified
+    }
+}
+
+/// Same traversal rule as [`corpus_loader`](crate::rules_core::corpus_loader):
+/// recurse, skip `_parity/` and `LICENSE.json`, take `*.json`. Duplicated
+/// rather than shared because that module's copy is private and this cycle's
+/// write scope does not include editing it.
+fn find_json_files(dir: &Path) -> Vec<PathBuf> {
+    let mut out = Vec::new();
+    let mut stack = vec![dir.to_path_buf()];
+    while let Some(current) = stack.pop() {
+        let Ok(entries) = fs::read_dir(&current) else { continue };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let file_name = entry.file_name();
+            let file_name = file_name.to_string_lossy();
+            if path.is_dir() {
+                if file_name == "_parity" {
+                    continue;
+                }
+                stack.push(path);
+            } else if file_name == "LICENSE.json" {
+                continue;
+            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
+                out.push(path);
+            }
+        }
+    }
+    out.sort();
+    out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn crb() -> BookCorpusRoot<'static> {
+        BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }
+    }
+    fn arg() -> BookCorpusRoot<'static> {
+        BookCorpusRoot { book_id: "advanced_race_guide", dir: Path::new("data/corpus/advanced_race_guide") }
+    }
+    fn b1() -> BookCorpusRoot<'static> {
+        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") }
+    }
+
+    fn all_books() -> RaceCorpus {
+        let roots = [crb(), b1(), arg()];
+        let corpus = load_race_corpus(&roots);
+        assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
+        corpus
+    }
+
+    /// Every in-scope race's chassis loads through the real typed
+    /// `CorpusRecordV1<RaceCacheData>` (not an untyped `Value` probe) and
+    /// license-validates. 18 races per `decisions.md §25.3`.
+    #[test]
+    fn all_eighteen_in_scope_races_load_from_the_real_on_disk_corpus() {
+        let corpus = all_books();
+        assert_eq!(corpus.race_keys().len(), 18, "18 in-scope races: CRB 7 + Bestiary 1's 11");
+        assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
+        assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
+        // ARG contributes traits, never a race chassis (decisions.md §25.2:
+        // ARG declares zero races of its own).
+        assert!(
+            corpus.chassis.values().all(|c| c.book_id != "advanced_race_guide"),
+            "ARG must contribute no race chassis"
+        );
+    }
+
+    /// A book root that does not exist contributes nothing and does not panic.
+    #[test]
+    fn a_nonexistent_book_dir_contributes_nothing_without_panicking() {
+        let roots = [BookCorpusRoot { book_id: "nope", dir: Path::new("data/corpus/nope") }];
+        let corpus = load_race_corpus(&roots);
+        assert!(corpus.race_keys().is_empty());
+        assert!(corpus.diagnostics().is_empty());
+    }
+
+    /// The unmodified default race: every racial default applies, nothing is
+    /// suppressed, no flag fires.
+    #[test]
+    fn with_no_selection_every_racial_default_applies_and_nothing_is_suppressed() {
+        let corpus = all_books();
+        let dwarf = corpus.resolve("Dwarf", &[]).expect("Dwarf resolves");
+        assert_eq!(dwarf.traits.len(), 12, "Dwarf's 12 CRB racial defaults");
+        assert!(dwarf.traits.iter().all(|t| t.role == TraitRole::Default));
+        assert!(dwarf.suppressions.is_empty());
+        assert!(dwarf.fired_flags.is_empty());
+        assert_eq!(dwarf.size, Some(SizeCategory::Medium));
+        assert_eq!(dwarf.walk_speed_ft, Some(20));
+    }
+
+    /// The protocol itself, end to end on one real swap: selecting ARG's
+    /// `Dwarf ~ Ancient Enmity` fires `Dwarf_ReplaceHatred`, which removes the
+    /// CRB `Hatred` standard trait and nothing else.
+    #[test]
+    fn a_selected_alternate_suppresses_exactly_the_standard_trait_its_flag_names() {
+        let corpus = all_books();
+        let base = corpus.resolve("Dwarf", &[]).expect("Dwarf resolves");
+        assert!(base.traits.iter().any(|t| t.name == "Hatred"), "Hatred is a Dwarf default");
+
+        let swapped = corpus.resolve("Dwarf", &["Dwarf ~ Ancient Enmity"]).expect("Dwarf resolves");
+        assert!(!swapped.traits.iter().any(|t| t.key == "Dwarf ~ Hatred"), "Hatred must be suppressed");
+        assert!(
+            swapped.traits.iter().any(|t| t.key == "Dwarf ~ Ancient Enmity"),
+            "the chosen alternate must apply"
+        );
+        assert_eq!(swapped.fired_flags, vec!["Dwarf_ReplaceHatred".to_string()]);
+        assert_eq!(
+            swapped.suppressions,
+            vec![Suppression {
+                suppressed_trait_key: "Dwarf ~ Hatred".to_string(),
+                flag: "Dwarf_ReplaceHatred".to_string(),
+                set_by_trait_key: "Dwarf ~ Ancient Enmity".to_string(),
+            }]
+        );
+        assert!(swapped.inert_flags.is_empty());
+        // Net effect: one out, one in.
+        assert_eq!(swapped.traits.len(), base.traits.len());
+    }
+
+    /// `FlagGranted` replacement content, which is the half a naive
+    /// "suppress and stop" implementation loses. ARG's Saltbeard sets four
+    /// flags at once; one of them, `Dwarf_ReplaceGreed`, also *grants*
+    /// `Saltbeard ~ Dwarf ~ Greed` — a positive `PREFACT` row nobody selects
+    /// directly.
+    #[test]
+    fn a_flag_that_grants_replacement_content_brings_it_in_without_being_selected() {
+        let corpus = all_books();
+        let saltbeard = corpus.resolve("Dwarf", &["Dwarf ~ Saltbeard"]).expect("Dwarf resolves");
+        assert_eq!(
+            saltbeard.fired_flags,
+            vec![
+                "Dwarf_ReplaceDefensiveTraining".to_string(),
+                "Dwarf_ReplaceGreed".to_string(),
+                "Dwarf_ReplaceHatred".to_string(),
+                "Dwarf_ReplaceStonecunning".to_string(),
+            ]
+        );
+        let suppressed: Vec<&str> =
+            saltbeard.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+        assert_eq!(
+            suppressed,
+            vec!["Dwarf ~ Defensive Training", "Dwarf ~ Greed", "Dwarf ~ Hatred", "Dwarf ~ Stonecunning"]
+        );
+        // The seagoing Greed replaces the suppressed one, un-selected.
+        let granted = saltbeard
+            .traits
+            .iter()
+            .find(|t| t.key == "Saltbeard ~ Dwarf ~ Greed")
+            .expect("the flag-granted replacement Greed must apply");
+        assert_eq!(granted.role, TraitRole::FlagGranted);
+        assert!(granted
+            .description
+            .as_deref()
+            .unwrap_or_default()
+            .contains("under the water"));
+        // And it is absent when Saltbeard is not chosen.
+        let base = corpus.resolve("Dwarf", &[]).expect("resolves");
+        assert!(!base.traits.iter().any(|t| t.key == "Saltbeard ~ Dwarf ~ Greed"));
+        assert!(base.traits.iter().any(|t| t.key == "Dwarf ~ Greed"));
+    }
+
+    /// Loading CRB alone — without ARG — still resolves the default race
+    /// correctly. The resolver is book-agnostic in both directions: it does
+    /// not require the alternate-trait book to be present.
+    #[test]
+    fn a_race_resolves_from_its_own_book_alone_without_the_alternate_trait_book() {
+        let roots = [crb()];
+        let corpus = load_race_corpus(&roots);
+        let human = corpus.resolve("Human", &[]).expect("Human resolves");
+        assert_eq!(human.traits.len(), 6);
+        assert!(corpus.alternate_traits("Human").is_empty(), "no ARG loaded, so no alternates");
+        // ...and a selection that cannot be matched is reported, not ignored.
+        let with_bad = corpus.resolve("Human", &["Human ~ Heart of the Fields"]).expect("resolves");
+        assert_eq!(with_bad.unmatched_selections, vec!["Human ~ Heart of the Fields".to_string()]);
+        assert_eq!(with_bad.traits.len(), 6, "an unmatched selection changes nothing");
+    }
+
+    /// Goblin and Hobgoblin chassis rows carry `MOVE:Walk,0`; their real
+    /// 30 ft. lives only on their `Normal Speed` trait. The resolver must let
+    /// the trait win, and must say which one won.
+    #[test]
+    fn a_speed_trait_overrides_a_chassis_that_declares_zero_walk_speed() {
+        let corpus = all_books();
+        for race in ["Goblin", "Hobgoblin"] {
+            let resolved = corpus.resolve(race, &[]).expect("resolves");
+            assert_eq!(resolved.chassis_walk_speed_ft, Some(0), "{race} chassis really says 0");
+            assert_eq!(resolved.walk_speed_ft, Some(30), "{race} real speed comes off its Speed trait");
+            assert_eq!(resolved.speed_source, SpeedSource::Trait(format!("{race} ~ Speed")));
+        }
+        // And an alternate that replaces the speed slot changes it again.
+        let bandy = corpus.resolve("Hobgoblin", &["Hobgoblin ~ Bandy-Legged"]).expect("resolves");
+        assert_eq!(bandy.walk_speed_ft, Some(20));
+        assert_eq!(bandy.speed_source, SpeedSource::Trait("Hobgoblin ~ Bandy-Legged".to_string()));
+        assert!(!bandy.traits.iter().any(|t| t.key == "Hobgoblin ~ Speed"), "the 30 ft. trait is suppressed");
+    }
+
+    /// A race whose chassis declares a real speed and whose speed trait agrees
+    /// still reports the trait as the source — the override is unconditional,
+    /// not a "only when the chassis looks wrong" special case.
+    #[test]
+    fn the_speed_trait_is_the_source_even_when_it_agrees_with_the_chassis() {
+        let corpus = all_books();
+        let dwarf = corpus.resolve("Dwarf", &[]).expect("resolves");
+        assert_eq!(dwarf.chassis_walk_speed_ft, Some(20));
+        assert_eq!(dwarf.walk_speed_ft, Some(20));
+        assert_eq!(dwarf.speed_source, SpeedSource::Trait("Dwarf ~ Speed".to_string()));
+    }
+
+    /// The two records the corpus carries that have no readable gate. Pinned
+    /// by name so that "2 unplaceable rows" stays a reviewed number: if the
+    /// ingest ever produces a third, this fails and someone looks at it.
+    #[test]
+    fn exactly_two_corpus_traits_carry_no_readable_gate_and_are_never_auto_applied() {
+        let corpus = all_books();
+        let unclassified: Vec<(&str, &str)> = corpus
+            .unclassified_traits()
+            .iter()
+            .map(|t| (t.data.race_key.as_str(), t.data.key.as_str()))
+            .collect();
+        assert_eq!(
+            unclassified,
+            vec![("Orc", "Feral ~ Languages"), ("Aasimar", "Scion of Humanity ~ Languages")]
+        );
+        // Neither appears in an unmodified resolution.
+        for (race, key) in &unclassified {
+            let resolved = corpus.resolve(race, &[]).expect("resolves");
+            assert!(!resolved.traits.iter().any(|t| &t.key == key), "{key} must not auto-apply");
+        }
+    }
+
+    /// Role classification over the whole corpus, as a derived census. These
+    /// numbers come from the loader itself; if the ingest changes shape, this
+    /// is where it shows up.
+    #[test]
+    fn the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers() {
+        let corpus = all_books();
+        let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
+        assert_eq!(count(TraitRole::Default), 173);
+        assert_eq!(count(TraitRole::Alternate), 153);
+        assert_eq!(count(TraitRole::FlagGranted), 3);
+        assert_eq!(count(TraitRole::Unclassified), 2);
+        assert_eq!(corpus.traits.values().flatten().count(), 331, "175 standard + 156 ARG alternates");
+    }
+
+    /// **A real corpus gap, pinned rather than asserted away.**
+    ///
+    /// Every replace-flag an alternate fires should be claimed by some trait
+    /// in the loaded books — otherwise the alternate applies, the standard
+    /// trait it is supposed to replace stays, and the character silently gets
+    /// both. Six flags are unclaimed today, and the reason is not a bug in
+    /// this resolver or in the ingest tools' logic: those six standard traits
+    /// declare their gate in a *different file and a different token* than the
+    /// two the ingest reads.
+    ///
+    /// PCGen has two spellings of the same protocol. The common one, which the
+    /// corpus captures, puts the gate on the standard trait row itself in
+    /// `<race>_abilities_race.lst`:
+    ///
+    /// ```text
+    /// Greed  KEY:Dwarf ~ Greed  !PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True
+    /// ```
+    ///
+    /// The rarer one inverts it, in `<race>_abilities_globalvar*.lst` — a file
+    /// the chassis ingest does not read — where a `.MOD` row *grants* the
+    /// standard trait only while the variable is still `0`
+    /// (verified 2026-07-31 in the PCGen checkout,
+    /// `core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst:8`
+    /// and `core_essentials/races/duergar/duergar_abilities_globalvar.lst:19`):
+    ///
+    /// ```text
+    /// CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+    ///     ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Vision|PREVAREQ:Aasimar_ReplaceVision,0
+    /// ```
+    ///
+    /// Aasimar's 9 standard trait rows carry no `!PREFACT` at all, which is
+    /// why all five Aasimar flags land here; `Duergar_ReplaceSLAInvisibility`
+    /// is the sixth. Closing the gap means ingesting the `globalvar` files —
+    /// a change to the ingest tools, which this cycle does not own.
+    ///
+    /// The consequence is bounded and stated: **no Core Rulebook race is
+    /// affected** (asserted below), so the mandatory CRB pin is unaffected;
+    /// the exposure is 9 Aasimar alternates and 1 Duergar alternate in
+    /// Bestiary 1. At runtime the resolver reports each occurrence in
+    /// [`ResolvedRace::inert_flags`] rather than quietly doubling a bonus —
+    /// see the test below.
+    #[test]
+    fn the_six_flags_whose_suppression_edge_lives_in_an_un_ingested_file_are_pinned() {
+        let corpus = all_books();
+        let claimed: BTreeSet<&str> = corpus
+            .traits
+            .values()
+            .flatten()
+            .filter_map(|t| t.data.suppressed_by_flag.as_deref().or(t.requires_flag.as_deref()))
+            .collect();
+        let mut orphan_flags: BTreeSet<&str> = BTreeSet::new();
+        let mut affected_races: BTreeSet<&str> = BTreeSet::new();
+        let mut affected_alternates: BTreeSet<&str> = BTreeSet::new();
+        for record in corpus.traits.values().flatten() {
+            for flag in &record.data.sets_replace_flags {
+                if !claimed.contains(flag.as_str()) {
+                    orphan_flags.insert(flag.as_str());
+                    affected_races.insert(record.data.race_key.as_str());
+                    affected_alternates.insert(record.data.key.as_str());
+                }
+            }
+        }
+        assert_eq!(
+            orphan_flags.iter().copied().collect::<Vec<_>>(),
+            vec![
+                "Aasimar_ReplaceCelestialResistance",
+                "Aasimar_ReplaceLanguages",
+                "Aasimar_ReplaceSkilled",
+                "Aasimar_ReplaceSpellLikeAbility",
+                "Aasimar_ReplaceVision",
+                "Duergar_ReplaceSLAInvisibility",
+            ],
+            "the known gap must not grow; a new orphan flag is a new defect"
+        );
+        assert_eq!(affected_races.iter().copied().collect::<Vec<_>>(), vec!["Aasimar", "Duergar"]);
+        assert_eq!(affected_alternates.len(), 10, "9 Aasimar alternates + 1 Duergar alternate");
+        // The bound that matters for the SD-27 mandatory guard.
+        for race in ["Human", "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling"] {
+            assert!(!affected_races.contains(race), "no CRB race may be affected, but {race} is");
+        }
+        // Total flags in play, derived: 74 distinct, 6 of them unclaimed.
+        let all_flags: BTreeSet<&str> = corpus
+            .traits
+            .values()
+            .flatten()
+            .flat_map(|t| t.data.sets_replace_flags.iter().map(String::as_str))
+            .collect();
+        assert_eq!(all_flags.len(), 74);
+    }
+
+    /// The runtime half of the gap above: when a swap has no counterpart in
+    /// the loaded corpus, the resolver *says so* via `inert_flags` instead of
+    /// silently leaving the standard trait in place. A caller can refuse to
+    /// build such a character; it cannot be misled into thinking the swap
+    /// happened.
+    #[test]
+    fn a_swap_with_no_counterpart_is_reported_as_an_inert_flag_not_silently_dropped() {
+        let corpus = all_books();
+        let halo = corpus.resolve("Aasimar", &["Aasimar ~ Halo"]).expect("Aasimar resolves");
+        assert!(halo.traits.iter().any(|t| t.key == "Aasimar ~ Halo"), "the alternate applies");
+        assert_eq!(halo.fired_flags, vec!["Aasimar_ReplaceVision".to_string()]);
+        assert_eq!(
+            halo.inert_flags,
+            vec!["Aasimar_ReplaceVision".to_string()],
+            "the flag fired but suppressed nothing — reported, not hidden"
+        );
+        assert!(halo.suppressions.is_empty());
+        // The un-suppressed standard trait is still there, which is exactly
+        // what `inert_flags` is warning about.
+        assert!(halo.traits.iter().any(|t| t.key == "Aasimar ~ Vision"));
+
+        // Contrast: a CRB swap with a real counterpart reports no inert flag.
+        let dwarf = corpus.resolve("Dwarf", &["Dwarf ~ Ancient Enmity"]).expect("resolves");
+        assert!(dwarf.inert_flags.is_empty());
+    }
+
+    /// Selecting every alternate a race offers at once is not a realistic
+    /// character, but it is the maximal stress on the protocol: it must not
+    /// panic, must not duplicate a trait, and must leave every selection
+    /// matched.
+    #[test]
+    fn selecting_every_alternate_at_once_stays_consistent_for_all_eighteen_races() {
+        let corpus = all_books();
+        for race in corpus.race_keys() {
+            let keys: Vec<String> =
+                corpus.alternate_traits(race).iter().map(|t| t.data.key.clone()).collect();
+            let refs: Vec<&str> = keys.iter().map(String::as_str).collect();
+            let resolved = corpus.resolve(race, &refs).expect("resolves");
+            assert!(resolved.unmatched_selections.is_empty(), "{race}: {:?}", resolved.unmatched_selections);
+            let mut seen: BTreeSet<&str> = BTreeSet::new();
+            for t in &resolved.traits {
+                assert!(seen.insert(t.key.as_str()), "{race}: duplicate resolved trait {}", t.key);
+            }
+            // Every chosen alternate survives; every flag it fired is real.
+            for key in &refs {
+                assert!(resolved.traits.iter().any(|t| &t.key == key), "{race}: {key} must apply");
+            }
+        }
+    }
+
+    /// `resolve_key` accepts the shapes real call sites already have.
+    #[test]
+    fn resolve_key_matches_bare_keys_input_tokens_and_case_variants() {
+        let corpus = all_books();
+        assert_eq!(corpus.resolve_key("Half-Elf"), Some("Half-Elf"));
+        assert_eq!(corpus.resolve_key("race:half-elf"), Some("Half-Elf"));
+        assert_eq!(corpus.resolve_key("  race:HALF-ORC "), Some("Half-Orc"));
+        assert_eq!(corpus.resolve_key("race:tiefling"), Some("Tiefling"));
+        assert_eq!(corpus.resolve_key("race:dhampir"), None, "a B2 race is not ingested");
+        assert_eq!(corpus.resolve_key(""), None);
+    }
+
+    /// A malformed corpus file becomes a diagnostic, not a panic and not a
+    /// silent skip. Written to a temp dir so no real corpus file is touched.
+    #[test]
+    fn a_malformed_record_produces_a_diagnostic_instead_of_taking_down_the_load() {
+        let dir = std::env::temp_dir().join(format!("codex_race_resolver_{}", std::process::id()));
+        let race_dir = dir.join("race");
+        fs::create_dir_all(&race_dir).expect("temp dir");
+        fs::write(race_dir.join("broken.json"), "{ not json").expect("write");
+        // ...and a well-formed-JSON-but-wrong-shape record.
+        fs::write(race_dir.join("wrong_shape.json"), r#"{"population":"in_scope"}"#).expect("write");
+        let roots = [BookCorpusRoot { book_id: "temp", dir: &dir }];
+        let corpus = load_race_corpus(&roots);
+        assert_eq!(corpus.diagnostics().len(), 2, "{:?}", corpus.diagnostics());
+        assert!(corpus.race_keys().is_empty());
+        fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn move_and_prefact_token_parsing_reads_the_real_token_forms() {
+        assert_eq!(walk_speed_from_move("Walk,20"), Some(20));
+        assert_eq!(walk_speed_from_move("Walk,15,Swim,30"), Some(15));
+        assert_eq!(walk_speed_from_move("Walk,0"), Some(0));
+        assert_eq!(walk_speed_from_move("Swim,50"), None, "no walk component");
+        assert_eq!(first_ability_flag("1,ABILITIES,Dwarf_ReplaceGreed=True"), Some("Dwarf_ReplaceGreed".into()));
+        assert_eq!(first_ability_flag("1,ABILITIES,Dwarf_ReplaceGreed=true"), Some("Dwarf_ReplaceGreed".into()));
+        assert_eq!(first_ability_flag("1,SOMETHINGELSE,X=True"), None);
+        assert_eq!(first_ability_flag("garbage"), None);
+    }
+
+    /// `declared_bonus_magnitudes` reads numbers, it does not interpret them.
+    /// Pinned against a real record: Stonecunning's magnitude lives on its
+    /// companion `BONUS:VAR` chain, not on the `BONUS:SITUATION` that names a
+    /// variable.
+    #[test]
+    fn declared_bonus_magnitudes_reads_real_chains_including_the_indirect_var_form() {
+        let corpus = all_books();
+        let dwarf = corpus.resolve("Dwarf", &[]).expect("resolves");
+        let stonecunning = dwarf.traits.iter().find(|t| t.name == "Stonecunning").expect("Stonecunning");
+        assert_eq!(stonecunning.declared_bonus_magnitudes(), vec![2]);
+        let ability = dwarf
+            .traits
+            .iter()
+            .find(|t| t.type_tokens.iter().any(|tt| tt == "Racial Ability Scores"))
+            .expect("ability scores trait");
+        assert_eq!(ability.declared_bonus_magnitudes(), vec![2, -2]);
+    }
+}
