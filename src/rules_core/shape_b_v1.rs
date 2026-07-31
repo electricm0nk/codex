@@ -277,6 +277,91 @@ pub struct EquipmentCacheData {
     pub raw_bonus_chains: Vec<RawBonusChain>,
 }
 
+/// `data/corpus/<book>/race/<slug>.json` payload, v1 — the race *chassis*
+/// row from a `*_races.lst` file (`decisions.md §25`).
+///
+/// **Provenance warning, and why `source_page` is absent here.** The chassis
+/// rows in `core_essentials/races/*/*_races.lst` carry a placeholder
+/// `SOURCEPAGE:p.xx`, not a real page (verified 2026-07-31, `decisions.md
+/// §26`). Transcribing that as though it were a citation would manufacture
+/// false provenance, so this payload deliberately has no page field: a race's
+/// real citation comes off its *trait* rows ([`RaceTraitCacheData::source_page`],
+/// e.g. Dwarf's `p.21`), which do carry genuine ones.
+///
+/// **Book attribution.** `core_essentials/` is PCGen's physical storage for
+/// race files shared across books, not a book in its own right, and it is out
+/// of project scope (`decisions.md §1`, §25.2). The `book` a record is filed
+/// under is therefore its *true* source per `advanced_race_guide.pcc`'s own
+/// section comments — Core Rulebook for the 7 core races, Bestiary 1 for its
+/// 11 — never `core_essentials`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RaceCacheData {
+    /// The race's PCGen key (e.g. `"Dwarf"`).
+    pub key: String,
+    pub name: String,
+    /// `FACT:BaseSize|M` → `"M"`.
+    pub base_size: Option<String>,
+    /// `MOVE:Walk,20` → `20`.
+    pub base_move_walk: Option<i32>,
+    /// `RACETYPE:Humanoid`.
+    pub race_type: Option<String>,
+    /// `TYPE:Humanoid.Base.PC` split on `.`.
+    pub type_tokens: Vec<String>,
+    /// `LEGS:2` / `HANDS:2`.
+    pub legs: Option<i32>,
+    pub hands: Option<i32>,
+    #[serde(default)]
+    pub raw_tokens: Vec<RawToken>,
+}
+
+/// `data/corpus/<book>/race_trait/<race>/<slug>.json` payload, v1 — one
+/// racial trait, standard *or* alternate.
+///
+/// **This type models PCGen's replace-flag protocol directly** rather than
+/// inventing a swap mechanic (`decisions.md §26`). A standard trait declares
+/// the flag that suppresses it; an alternate trait declares the flags it
+/// sets. Resolution is then: a standard trait applies iff no selected
+/// alternate has set its [`suppressed_by_flag`](Self::suppressed_by_flag).
+///
+/// The two halves live on one struct because they are two ends of one
+/// relationship, and keeping them together makes an unmatched flag — an
+/// alternate that replaces a standard trait nothing declares, or vice versa —
+/// a checkable defect rather than a silent no-op.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RaceTraitCacheData {
+    /// `KEY:Dwarf ~ Greed` → `"Dwarf ~ Greed"`.
+    pub key: String,
+    pub name: String,
+    /// The owning race's key (e.g. `"Dwarf"`), so traits resolve per race
+    /// without re-parsing the key string.
+    pub race_key: String,
+    /// `CATEGORY:Special Ability`.
+    pub category: Option<String>,
+    /// `TYPE:` split on `.` — carries `"Dwarf Racial Default"` on the
+    /// standard set, which is how the default roster is read from the corpus
+    /// instead of assumed.
+    pub type_tokens: Vec<String>,
+    /// True when [`type_tokens`](Self::type_tokens) contains a
+    /// `"<Race> Racial Default"` marker.
+    pub is_racial_default: bool,
+    /// From `!PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True` →
+    /// `Some("Dwarf_ReplaceGreed")`. Set on standard traits: the flag whose
+    /// presence suppresses this trait.
+    pub suppressed_by_flag: Option<String>,
+    /// The `<Race>_Replace<Trait>` flags this trait *sets*. Populated on
+    /// ARG's alternate traits; empty on standard ones.
+    #[serde(default)]
+    pub sets_replace_flags: Vec<String>,
+    pub description: Option<String>,
+    /// `SOURCEPAGE:p.21`. Genuine on trait rows, unlike the chassis row —
+    /// see [`RaceCacheData`].
+    pub source_page: Option<String>,
+    #[serde(default)]
+    pub raw_tokens: Vec<RawToken>,
+    #[serde(default)]
+    pub raw_bonus_chains: Vec<RawBonusChain>,
+}
+
 /// Validates a v1 record's license annotation per `decisions.md §17`'s
 /// "Validation: every record has a license field" output requirement,
 /// plus the 5th-audit's PI/marker consistency rule (added 2.0.6+, but
