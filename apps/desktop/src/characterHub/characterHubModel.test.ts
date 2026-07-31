@@ -1,15 +1,27 @@
 import {
   CLASS_OPTIONS,
   MAX_CLASS_LEVEL,
-  RACE_OPTIONS,
   UNKNOWN_RACE_TRAIT,
   canTakeAnotherLevelIn,
   clampLevelForClass,
   deriveRaceTraits,
   describeClassSupportLevel,
   getLevelOptionsForClass,
+  type RaceOption,
 } from './characterHubModel';
 import { assert, assertEqual } from '../testSupport/asserts';
+
+/**
+ * A stand-in for the roster the backend serves, so this file can test
+ * `deriveRaceTraits`' contract without a Tauri runtime. The real roster's
+ * agreement with the corpus is proved where the corpus is: in
+ * `raceCreationCoverage.test.ts` and in `character_hub::tests`.
+ */
+const ROSTER: RaceOption[] = [
+  { id: 'race:human', label: 'Human', book: 'CRB', abilityAdjustments: {}, floatingBonusPoints: 2, size: 'Medium', vision: 'Normal', baseSpeedFt: 30, body: null },
+  { id: 'race:gnome', label: 'Gnome', book: 'CRB', abilityAdjustments: { constitution: 2, charisma: 2, strength: -2 }, floatingBonusPoints: 0, size: 'Small', vision: 'Low-light vision', baseSpeedFt: 20, body: null },
+  { id: 'race:goblin', label: 'Goblin', book: 'B1', abilityAdjustments: { dexterity: 4, strength: -2, charisma: -2 }, floatingBonusPoints: 0, size: 'Small', vision: 'Darkvision 60 ft.', baseSpeedFt: 30, body: null },
+];
 
 /**
  * `levelOptions` is the app's honest claim about which levels of a class a
@@ -113,18 +125,18 @@ const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
  * The Character Sheet prints Vision and Size under the fixed caption
  * "Vision and Size are calculated from race and aren't editable". It used to
  * read them as `race?.size ?? 'Medium'` / `race?.vision ?? 'Normal'` against
- * `RACE_OPTIONS`, which carries only the 7 Core Rulebook races. Any saved
- * character whose `raceId` is outside that list — a clone, a sheet written
- * by a later build, or any race added once SD-27 widens coverage past the
- * CRB 7 — therefore had "Medium" and "Normal" asserted for it as a
- * calculated result. For a kobold or a svirfneblin (both Small, both with
- * darkvision) that is a wrong rules value presented as a derived one.
+ * a hardcoded seven-entry table of the Core Rulebook races. Any saved
+ * character whose `raceId` was outside that list — a clone, a sheet written
+ * by a later build, or any of the eleven Bestiary 1 races — therefore had
+ * "Medium" and "Normal" asserted for it as a calculated result. For a kobold
+ * or a svirfneblin (both Small, both with darkvision) that is a wrong rules
+ * value presented as a derived one.
  *
  * `deriveRaceTraits` must instead say it does not know.
  */
 function verifiesKnownRacesStillReportTheirRealSizeAndVision() {
-  for (const option of RACE_OPTIONS) {
-    const traits = deriveRaceTraits(option.id);
+  for (const option of ROSTER) {
+    const traits = deriveRaceTraits(option.id, ROSTER);
     assertEqual(traits.size, option.size, `${option.label} keeps its real size`);
     assertEqual(traits.vision, option.vision, `${option.label} keeps its real vision`);
   }
@@ -135,7 +147,7 @@ function verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision() {
   // and neither has normal vision, so the old defaults were not merely
   // vague — they were wrong.
   for (const raceId of ['race:kobold', 'race:svirfneblin', 'race:tengu']) {
-    const traits = deriveRaceTraits(raceId);
+    const traits = deriveRaceTraits(raceId, ROSTER);
     assertEqual(traits.size, UNKNOWN_RACE_TRAIT, `${raceId} reports an unknown size rather than "Medium"`);
     assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, `${raceId} reports unknown vision rather than "Normal"`);
   }
@@ -143,15 +155,15 @@ function verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision() {
 
 function verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted() {
   for (const raceId of [null, undefined, '']) {
-    const traits = deriveRaceTraits(raceId);
+    const traits = deriveRaceTraits(raceId, ROSTER);
     assertEqual(traits.size, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no size');
     assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no vision');
   }
 }
 
 function verifiesTheUnknownMarkerIsNotItselfARulesValue() {
-  const sizes = new Set(RACE_OPTIONS.map((option) => option.size));
-  const visions = new Set(RACE_OPTIONS.map((option) => option.vision));
+  const sizes = new Set(ROSTER.map((option) => option.size));
+  const visions = new Set(ROSTER.map((option) => option.vision));
   assert(!sizes.has(UNKNOWN_RACE_TRAIT as never), 'the unknown marker is not a real PF1 size');
   assert(!visions.has(UNKNOWN_RACE_TRAIT), 'the unknown marker is not a real PF1 vision string');
 }

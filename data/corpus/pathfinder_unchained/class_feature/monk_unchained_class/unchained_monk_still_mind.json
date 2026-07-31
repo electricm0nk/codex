@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Monk ~ Still Mind",
+    "name": "Still Mind",
+    "class_key": "Monk ~ Unchained Class",
+    "base_class_key": "Monk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Monk Class Feature",
+      "SpecialQuality",
+      "Extraordinary",
+      "Still Mind"
+    ],
+    "min_level": 4,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 4th level, a monk gains a +2 bonus on saving throws against enchantment spells and effects.",
+    "source_page": "p.18",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Monk ~ Still Mind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Still Mind"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Monk ~ Still Mind"
+      },
+      {
+        "key": "DESC",
+        "value": "At 4th level, a monk gains a +2 bonus on saving throws against enchantment spells and effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.18"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 469,
+    "record_key": "Unchained Monk ~ Still Mind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

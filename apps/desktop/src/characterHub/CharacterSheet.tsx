@@ -71,7 +71,8 @@ import {
   type LevelEntry,
   type WeaponProficiency,
 } from './characterProgression';
-import { AGE_OPTIONS, ALIGNMENT_OPTIONS, deriveRaceTraits } from './characterHubModel';
+import { AGE_OPTIONS, ALIGNMENT_OPTIONS, deriveRaceTraits, type RaceOption } from './characterHubModel';
+import { loadRaceRosterSurface } from './raceRoster';
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
@@ -366,11 +367,22 @@ function InitiativeHpPanel(props: { initiative: number; hp: number }) {
   );
 }
 
-function SpeedPanel() {
+/**
+ * `land` is the race's real base land speed, read off the same
+ * corpus-derived roster the creation picker is built from.
+ *
+ * It used to be the literal string `"30 ft."` for every character, which was
+ * already wrong for Dwarf, Gnome and Halfling (20 ft.) among the races that
+ * shipped, and is wrong for Duergar and Svirfneblin (20 ft.) and Merfolk
+ * (5 ft.) among the Bestiary 1 races creation now offers. The other three
+ * movement modes stay `—`: no ingested race declares a fly, swim or climb
+ * speed, and this panel will not invent one.
+ */
+function SpeedPanel(props: { land: string }) {
   return (
     <StatBox title="Speed">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Land" value="30 ft." />
+        <StatTile label="Land" value={props.land} />
         <StatTile label="Fly" value="—" />
         <StatTile label="Swim" value="—" />
         <StatTile label="Climb" value="—" />
@@ -1800,6 +1812,34 @@ export function CharacterSheet(props: {
   // that has never saved one) whenever the sheet opens on a different
   // character. A load failure just leaves the blank default up rather than
   // breaking the sheet — bio is pure flavor text, not load-bearing.
+  /**
+   * The corpus-derived race roster, for the Details panel's Size/Vision and
+   * the Speed panel's Land.
+   *
+   * The panel captions those as "calculated from race", so they must be the
+   * race's real values or an honest `Unknown` — never a default. Before the
+   * roster arrives (and if the backend cannot serve it) this stays empty and
+   * `deriveRaceTraits` reports `Unknown`, which is true at that moment.
+   */
+  const [raceRoster, setRaceRoster] = useState<RaceOption[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadRaceRosterSurface()
+      .then((surface) => {
+        if (!cancelled) {
+          setRaceRoster(surface.options);
+        }
+      })
+      .catch(() => {
+        // Leaving the roster empty makes every race-derived field read
+        // `Unknown`, which is the honest reading when the roster could not
+        // be loaded. Nothing here is worth blocking the sheet over.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     loadCharacterBio(props.row.characterId)
@@ -2538,7 +2578,7 @@ export function CharacterSheet(props: {
   // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
   // captions these as calculated from race, so a guess reads as a rules
   // fact. See `deriveRaceTraits`.
-  const { size, vision } = deriveRaceTraits(props.detail?.summary.raceId);
+  const { size, vision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
   const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
   const hp = maxHitPoints(heldClasses, abilities.constitution);
   const cmb = baseAttackBonus + abilities.strength;
@@ -2861,7 +2901,7 @@ export function CharacterSheet(props: {
             </div>
             <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
               <SavingThrowsPanel saves={saves} />
-              <SpeedPanel />
+              <SpeedPanel land={landSpeed} />
             </div>
           </div>
 

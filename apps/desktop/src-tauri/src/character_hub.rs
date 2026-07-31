@@ -12,6 +12,7 @@
 //! today; every other class/level combination returns real claim-blocking
 //! diagnostics from the engine, verbatim.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use base64::Engine as _;
@@ -3062,11 +3063,600 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
     std::fs::write(&path, contents.as_bytes()).map_err(|err| format!("{}: {err}", path.display()))
 }
 
+// ---------------------------------------------------------------------------
+// Race-creation roster
+// ---------------------------------------------------------------------------
+
+/// The per-race chassis character creation needs, read out of the real race
+/// corpus rather than hand-maintained beside it.
+///
+/// # Why this exists
+///
+/// `RACE_OPTIONS` in `characterHubModel.ts` was a hand-written table of the
+/// 7 Core Rulebook races. The corpus carries **18** (CRB's 7 + Bestiary 1's
+/// 11), every one of them with a complete creation chassis — asserted field
+/// by field, per race, by `raceCreationCoverage.test.ts` against the same
+/// on-disk records this reads. The 11 Bestiary 1 races were ingested,
+/// resolvable, and browsable in the Race Trait Catalog, but no player could
+/// make one.
+///
+/// A hand-maintained mirror of corpus facts is also how the identical table
+/// one layer down (`rules_tables::crb::race_tables`) silently drifted from
+/// the corpus on four races' ability modifiers: `BONUS:STAT|CON,WIS|2`
+/// states two ability grants in one token and a transcription read only up
+/// to the comma. Deriving removes the class of defect rather than re-checking
+/// for it.
+///
+/// # What is derived, and why that is not formula interpretation
+///
+/// `decisions.md §24` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula
+/// interpreter and requires each feature to be a hand-modelled,
+/// corpus-verified pure function with a test. Every field below is exactly
+/// that: [`fixed_ability_adjustments`] reads the ability codes and magnitude
+/// off a `BONUS:STAT` chain's own qualifiers, [`vision_reading`] reads a
+/// `VISION:` token's own declared range, size and speed come from
+/// [`ResolvedRace`]'s already-modelled chassis-then-trait-override rule.
+/// Nothing is summed across traits, no PCGen variable is resolved, and no
+/// `PREREQ:` is evaluated.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RaceCreationChassisDto {
+    /// The `race:<slug>` token the rest of the engine identifies a race by —
+    /// what `CreateCharacterRequest::race_id` carries, what
+    /// `compose_character_input` threads into `CharacterInput`, and what
+    /// `race_resolver::race_size_for_race_token` resolves for carrying
+    /// capacity. Derived as the corpus race key lowercased, which reproduces
+    /// the 7 previously hardcoded ids exactly (`Half-Elf` -> `race:half-elf`).
+    pub race_id: String,
+    /// The corpus race key verbatim, e.g. `Half-Elf`, `Svirfneblin`.
+    pub label: String,
+    /// The short book code, from `race_catalog::book_code` so this cannot
+    /// drift from the codes the Race Trait Catalog labels the same race with.
+    pub book: String,
+    /// `"Small"` or `"Medium"` — [`ResolvedRace::size`], i.e. the race's
+    /// `~ Size` trait's `TEMPLATE:SIZE_<code>` over the chassis'
+    /// `FACT:BaseSize`. Never the chassis token alone: Aasimar and Tiefling
+    /// carry `FACT:BaseSize|S` and are Medium creatures.
+    pub size: String,
+    /// The race's senses as the Character Sheet prints them, e.g.
+    /// `Darkvision 60 ft.`, `Low-light vision`, `Darkvision 120 ft.,
+    /// Low-light vision`, or `Normal` for a race that declares no `VISION:`
+    /// token at all.
+    pub vision: String,
+    /// Base land speed in feet — [`ResolvedRace::walk_speed_ft`]. Not the
+    /// chassis row's `MOVE:Walk` alone: Goblin's and Hobgoblin's chassis rows
+    /// say `MOVE:Walk,0` and their `~ Speed` traits override it to 30.
+    pub base_speed_ft: i32,
+    /// Fixed racial ability modifiers, keyed by the same ability names
+    /// `AbilityScoresDto` uses. Only non-zero entries appear. The frontend
+    /// bakes these into the submitted scores (see
+    /// `applyRacialAbilityAdjustments`), so a wrong value here is a wrong
+    /// character.
+    pub ability_adjustments: BTreeMap<String, i16>,
+    /// Points the player distributes freely — PF1's "+2 to one ability
+    /// score" races. `0` for a race with no such pool.
+    pub floating_bonus_points: u8,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RaceCreationRosterResponse {
+    /// Every race with a complete creation chassis, ordered CRB first then
+    /// Bestiary 1, alphabetically within each book.
+    pub races: Vec<RaceCreationChassisDto>,
+    /// Corpus files that could not be read, plus one entry naming each race
+    /// that had to be withheld and the field it was missing. Empty in a
+    /// healthy checkout. A race is **dropped rather than defaulted**: an
+    /// offered race with a guessed size would compute a wrong carrying
+    /// capacity and say nothing about it.
+    pub diagnostics: Vec<String>,
+}
+
+/// PCGen's `BONUS:STAT` ability codes, mapped to the ability names
+/// `AbilityScoresDto` / `characterHubModel.ABILITY_KEYS` use on the wire.
+const STAT_CODE_TO_ABILITY: &[(&str, &str)] = &[
+    ("STR", "strength"),
+    ("DEX", "dexterity"),
+    ("CON", "constitution"),
+    ("INT", "intelligence"),
+    ("WIS", "wisdom"),
+    ("CHA", "charisma"),
+];
+
+/// The `TYPE:` token PCGen tags a race's ability-modifier row with.
+const RACIAL_ABILITY_SCORES_TYPE: &str = "Racial Ability Scores";
+
+/// The race's ability-modifier trait, if it declares one.
+fn racial_ability_scores_trait(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Option<&codex::rules_core::race_resolver::ResolvedTrait> {
+    race.traits
+        .iter()
+        .find(|resolved| resolved.type_tokens.iter().any(|t| t == RACIAL_ABILITY_SCORES_TYPE))
+}
+
+/// The fixed ability modifiers a `Racial Ability Scores` row declares.
+///
+/// Reads `BONUS:STAT|<codes>|<magnitude>` chains only. `<codes>` is
+/// comma-separated and frequently names more than one ability — Goblin's
+/// `BONUS:STAT|STR,CHA|-2` grants **both** — so every code in the list is
+/// credited. An unrecognized code is reported by the caller rather than
+/// dropped.
+fn fixed_ability_adjustments(
+    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
+) -> Result<BTreeMap<String, i16>, String> {
+    let mut out: BTreeMap<String, i16> = BTreeMap::new();
+    for chain in &ability_trait.raw_bonus_chains {
+        if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
+            continue;
+        }
+        let (Some(codes), Some(raw_magnitude)) = (chain.qualifiers.get(1), chain.qualifiers.get(2))
+        else {
+            return Err(format!("{}: a BONUS:STAT chain is missing its codes or magnitude", ability_trait.key));
+        };
+        let magnitude: i16 = raw_magnitude
+            .parse()
+            .map_err(|_| format!("{}: BONUS:STAT magnitude {raw_magnitude:?} is not an integer", ability_trait.key))?;
+        for code in codes.split(',') {
+            let code = code.trim();
+            let ability = STAT_CODE_TO_ABILITY
+                .iter()
+                .find(|(stat, _)| *stat == code)
+                .map(|(_, ability)| *ability)
+                .ok_or_else(|| format!("{}: unknown BONUS:STAT ability code {code:?}", ability_trait.key))?;
+            *out.entry(ability.to_owned()).or_insert(0) += magnitude;
+        }
+    }
+    out.retain(|_, delta| *delta != 0);
+    Ok(out)
+}
+
+/// The freely-distributed "+2 to one ability score" points a
+/// `Racial Ability Scores` row grants.
+///
+/// PCGen splits the fact across two places: the *number of picks* is
+/// machine-readable (`BONUS:ABILITYPOOL|Ability Bonus|1`) but the *magnitude
+/// per pick* appears only in the row's own display name. That is stated here
+/// rather than hidden, and the name is matched strictly — a row that does not
+/// have the shape yields an error naming it, never a guessed magnitude.
+fn floating_ability_bonus_points(
+    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
+) -> Result<u8, String> {
+    let picks: u8 = ability_trait
+        .raw_bonus_chains
+        .iter()
+        .filter(|chain| {
+            chain.qualifiers.first().map(String::as_str) == Some("ABILITYPOOL")
+                && chain.qualifiers.get(1).map(String::as_str) == Some("Ability Bonus")
+        })
+        .map(|chain| chain.qualifiers.get(2).and_then(|n| n.parse::<u8>().ok()).unwrap_or(0))
+        .sum();
+    if picks == 0 {
+        return Ok(0);
+    }
+    let magnitude = ability_trait
+        .name
+        .strip_prefix('+')
+        .and_then(|rest| rest.strip_suffix(" to One Ability Score"))
+        .and_then(|n| n.parse::<u8>().ok())
+        .ok_or_else(|| {
+            format!(
+                "{}: an ability-pool row must state its magnitude in its own name, got {:?}",
+                ability_trait.key, ability_trait.name
+            )
+        })?;
+    Ok(picks * magnitude)
+}
+
+/// The race's senses, rendered the way the Character Sheet's Details panel
+/// prints them, from the `VISION:` tokens on its resolved traits.
+///
+/// A race with no `VISION:` token honestly has normal vision. An
+/// unrecognized token yields an error naming it rather than being silently
+/// skipped — a dropped sense is a rules fact the player would never learn was
+/// missing.
+fn vision_reading(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Result<String, String> {
+    let mut readings: Vec<String> = Vec::new();
+    for resolved in &race.traits {
+        for token in resolved.raw_tokens.iter().filter(|t| t.key == "VISION") {
+            let value = token.value.trim();
+            let reading = if let Some(range) =
+                value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
+            {
+                range
+                    .parse::<u16>()
+                    .map(|feet| format!("Darkvision {feet} ft."))
+                    .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
+            } else if value == "Low-Light Vision" {
+                "Low-light vision".to_owned()
+            } else {
+                return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
+            };
+            if !readings.contains(&reading) {
+                readings.push(reading);
+            }
+        }
+    }
+    Ok(if readings.is_empty() { "Normal".to_owned() } else { readings.join(", ") })
+}
+
+/// Builds one race's creation chassis, or the reason it cannot be offered.
+fn race_creation_chassis(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Result<RaceCreationChassisDto, String> {
+    let size = race
+        .size
+        .ok_or_else(|| format!("{}: declares no readable creature size", race.race_key))?;
+    let base_speed_ft = race
+        .walk_speed_ft
+        .ok_or_else(|| format!("{}: declares no readable base land speed", race.race_key))?;
+    let vision = vision_reading(race)?;
+    let (ability_adjustments, floating_bonus_points) = match racial_ability_scores_trait(race) {
+        Some(ability_trait) => {
+            (fixed_ability_adjustments(ability_trait)?, floating_ability_bonus_points(ability_trait)?)
+        }
+        None => (BTreeMap::new(), 0),
+    };
+    if ability_adjustments.is_empty() && floating_bonus_points == 0 {
+        return Err(format!(
+            "{}: states neither a fixed ability modifier nor a floating ability pool",
+            race.race_key
+        ));
+    }
+
+    Ok(RaceCreationChassisDto {
+        race_id: format!("race:{}", race.race_key.to_lowercase()),
+        label: race.race_key.clone(),
+        book: crate::race_catalog::book_code(&race.book_id),
+        size: format!("{size:?}"),
+        vision,
+        base_speed_ft,
+        ability_adjustments,
+        floating_bonus_points,
+    })
+}
+
+/// Builds the full creation roster from the real on-disk race corpus.
+///
+/// A race whose chassis cannot be read completely is **withheld and named in
+/// `diagnostics`**, so one gap costs that race and not the other 17.
+pub fn build_race_creation_roster() -> RaceCreationRosterResponse {
+    let corpus = match crate::race_catalog::race_corpus() {
+        Ok(corpus) => corpus,
+        Err(message) => {
+            return RaceCreationRosterResponse { races: Vec::new(), diagnostics: vec![message.clone()] }
+        }
+    };
+
+    let mut diagnostics: Vec<String> = corpus
+        .diagnostics()
+        .iter()
+        .map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message))
+        .collect();
+
+    let mut races: Vec<RaceCreationChassisDto> = Vec::new();
+    for race_key in corpus.race_keys() {
+        let Some(resolved) = corpus.resolve(race_key, &[]) else {
+            diagnostics.push(format!("{race_key}: could not be resolved against the loaded race corpus"));
+            continue;
+        };
+        match race_creation_chassis(&resolved) {
+            Ok(chassis) => races.push(chassis),
+            Err(reason) => diagnostics.push(format!("withheld from character creation — {reason}")),
+        }
+    }
+
+    // The 7 Core Rulebook races first (the roster creation already offered,
+    // in the order it offered them), then Bestiary 1's, alphabetically within
+    // each book. A book this list does not name sorts last rather than being
+    // dropped.
+    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOKS.iter().position(|b| *b == book).unwrap_or(usize::MAX);
+    races.sort_by(|a, b| book_rank(&a.book).cmp(&book_rank(&b.book)).then_with(|| a.label.cmp(&b.label)));
+
+    RaceCreationRosterResponse { races, diagnostics }
+}
+
+/// Serves the corpus-derived race roster the creation form builds its race
+/// picker from.
+#[tauri::command]
+pub fn list_race_creation_roster() -> RaceCreationRosterResponse {
+    build_race_creation_roster()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
+
+    // ----- Race-creation roster (the 7 -> 18 widening) -----
+
+    fn roster_race(race_id: &str) -> RaceCreationChassisDto {
+        build_race_creation_roster()
+            .races
+            .into_iter()
+            .find(|race| race.race_id == race_id)
+            .unwrap_or_else(|| panic!("{race_id} must be offered by the creation roster"))
+    }
+
+    /// The widening itself. The roster is built from the corpus, so its size
+    /// is a derived fact — 18 records on disk, 18 creatable races. Every id
+    /// is asserted, not just the count, so a race silently swapping for
+    /// another cannot pass.
+    #[test]
+    fn creation_roster_offers_every_ingested_race_not_just_the_core_seven() {
+        let roster = build_race_creation_roster();
+        assert!(
+            roster.diagnostics.is_empty(),
+            "a healthy checkout serves every race with no diagnostics: {:?}",
+            roster.diagnostics
+        );
+
+        let ids: Vec<&str> = roster.races.iter().map(|race| race.race_id.as_str()).collect();
+        assert_eq!(
+            ids,
+            vec![
+                // The 7 the form offered before this widening.
+                "race:dwarf",
+                "race:elf",
+                "race:gnome",
+                "race:half-elf",
+                "race:half-orc",
+                "race:halfling",
+                "race:human",
+                // The 11 Bestiary 1 races that reached creation nowhere.
+                "race:aasimar",
+                "race:drow",
+                "race:duergar",
+                "race:goblin",
+                "race:hobgoblin",
+                "race:kobold",
+                "race:merfolk",
+                "race:orc",
+                "race:svirfneblin",
+                "race:tengu",
+                "race:tiefling",
+            ]
+        );
+    }
+
+    /// Every id the roster emits must be one the compute engine's own race
+    /// seams recognize. `race_size_for_race_token` returning `None` is
+    /// exactly what silently handed Goblin a Medium creature's carrying
+    /// capacity, so a roster entry the size seam cannot resolve is a race
+    /// that would be creatable and wrong.
+    #[test]
+    fn every_offered_race_id_resolves_in_the_engines_own_size_seam() {
+        for race in build_race_creation_roster().races {
+            let size = codex::rules_core::race_resolver::race_size_for_race_token(&race.race_id)
+                .unwrap_or_else(|| panic!("{} must resolve a real creature size", race.race_id));
+            assert_eq!(
+                format!("{size:?}"),
+                race.size,
+                "{}: the roster's size must be the engine's own",
+                race.race_id
+            );
+        }
+    }
+
+    /// One row of the shipped-values pin below:
+    /// `(race_id, size, vision, base_speed_ft, floating_ability_bonuses,
+    /// fixed_ability_adjustments)`.
+    type ShippedRaceRow = (
+        &'static str,
+        &'static str,
+        &'static str,
+        i32,
+        u8,
+        &'static [(&'static str, i16)],
+    );
+
+    /// The 7 races creation already offered keep exactly the values the
+    /// hand-maintained `RACE_OPTIONS` table shipped. This is the regression
+    /// pin for the swap: corpus-driven must not mean different.
+    #[test]
+    fn the_seven_previously_offered_races_keep_their_shipped_values() {
+        let expected: [ShippedRaceRow; 7] = [
+            ("race:human", "Medium", "Normal", 30, 2, &[]),
+            ("race:dwarf", "Medium", "Darkvision 60 ft.", 20, 0, &[("charisma", -2), ("constitution", 2), ("wisdom", 2)]),
+            ("race:elf", "Medium", "Low-light vision", 30, 0, &[("constitution", -2), ("dexterity", 2), ("intelligence", 2)]),
+            ("race:gnome", "Small", "Low-light vision", 20, 0, &[("charisma", 2), ("constitution", 2), ("strength", -2)]),
+            ("race:half-elf", "Medium", "Low-light vision", 30, 2, &[]),
+            ("race:half-orc", "Medium", "Darkvision 60 ft.", 30, 2, &[]),
+            ("race:halfling", "Small", "Normal", 20, 0, &[("charisma", 2), ("dexterity", 2), ("strength", -2)]),
+        ];
+        for (race_id, size, vision, speed, floating, adjustments) in expected {
+            let race = roster_race(race_id);
+            assert_eq!(race.size, size, "{race_id} size");
+            assert_eq!(race.vision, vision, "{race_id} vision");
+            assert_eq!(race.base_speed_ft, speed, "{race_id} speed");
+            assert_eq!(race.floating_bonus_points, floating, "{race_id} floating ability points");
+            let expected_adjustments: BTreeMap<String, i16> =
+                adjustments.iter().map(|(k, v)| ((*k).to_owned(), *v)).collect();
+            assert_eq!(race.ability_adjustments, expected_adjustments, "{race_id} ability adjustments");
+        }
+    }
+
+    /// The Bestiary 1 end-to-end case the widening exists for. Goblin is
+    /// Small — the exact race whose size was defaulted to Medium at both
+    /// encumbrance call sites until the size fix — so its roster entry is
+    /// pinned field by field against
+    /// `data/corpus/beastiary/race_trait/goblin/`.
+    #[test]
+    fn goblin_is_creatable_with_its_real_bestiary_1_chassis() {
+        let goblin = roster_race("race:goblin");
+        assert_eq!(goblin.label, "Goblin");
+        assert_eq!(goblin.book, "B1");
+        assert_eq!(goblin.size, "Small");
+        assert_eq!(goblin.vision, "Darkvision 60 ft.");
+        // The chassis row says `MOVE:Walk,0`; `Goblin ~ Speed`'s own
+        // `MOVE:Walk,30` overrides it. A roster reading the chassis alone
+        // would offer a Goblin that cannot move.
+        assert_eq!(goblin.base_speed_ft, 30);
+        assert_eq!(goblin.floating_bonus_points, 0);
+        assert_eq!(
+            goblin.ability_adjustments,
+            BTreeMap::from([
+                ("charisma".to_owned(), -2),
+                ("dexterity".to_owned(), 4),
+                ("strength".to_owned(), -2),
+            ]),
+            "Goblin ~ Ability Scores states +4 Dex in one BONUS:STAT chain and -2 Str/-2 Cha in a \
+             second two-ability one"
+        );
+    }
+
+    /// `BONUS:STAT|STR,CHA|-2` names two abilities in one token. Reading
+    /// only up to the comma is the transcription defect that silently
+    /// drifted `race_tables.rs` from the corpus on four races, so the
+    /// multi-ability chains are pinned explicitly across every race that
+    /// has one.
+    #[test]
+    fn multi_ability_bonus_stat_chains_credit_every_ability_they_name() {
+        assert_eq!(roster_race("race:orc").ability_adjustments.len(), 4);
+        assert_eq!(
+            roster_race("race:svirfneblin").ability_adjustments,
+            BTreeMap::from([
+                ("charisma".to_owned(), -4),
+                ("dexterity".to_owned(), 2),
+                ("strength".to_owned(), -2),
+                ("wisdom".to_owned(), 2),
+            ])
+        );
+    }
+
+    /// Aasimar and Tiefling carry `FACT:BaseSize|S` on their chassis rows and
+    /// are Medium creatures; Merfolk's 5 ft. swim-bound land speed is the
+    /// roster's extreme non-30 value. Both are cases where a plausible
+    /// default would have been silently wrong.
+    #[test]
+    fn the_roster_reports_sizes_and_speeds_a_default_would_have_got_wrong() {
+        assert_eq!(roster_race("race:aasimar").size, "Medium");
+        assert_eq!(roster_race("race:tiefling").size, "Medium");
+        assert_eq!(roster_race("race:merfolk").base_speed_ft, 5);
+        assert_eq!(roster_race("race:duergar").base_speed_ft, 20);
+        // Svirfneblin declares both vision kinds; neither may be dropped.
+        assert_eq!(roster_race("race:svirfneblin").vision, "Darkvision 120 ft., Low-light vision");
+        assert_eq!(roster_race("race:drow").vision, "Darkvision 120 ft.");
+    }
+
+    /// **The end-to-end proof.** A Goblin created through the same
+    /// `compose_character_input` the `create_character` command uses must
+    /// reach `Computed`, and its carrying capacity must be the Small
+    /// column, not the Medium one. `SIZEMULT:S|0.75` — so a Small creature's
+    /// thresholds are three quarters of a Medium creature's at the same
+    /// Strength, computed on the untruncated heavy load.
+    #[test]
+    fn a_created_goblin_computes_and_gets_a_small_creatures_carrying_capacity() {
+        let goblin_input = compose_character_input(&request_for("race:goblin", 1));
+        assert_eq!(
+            build_pilot_headless_receipt(&goblin_input).status,
+            HeadlessReceiptStatus::Computed,
+            "a level-1 Goblin Fighter must reach a fully computed build, or creation would \
+             refuse to persist it: {:?}",
+            claim_blocking_diagnostic_ids("race:goblin", FIGHTER_CLASS_ID, 1)
+        );
+        let goblin = compute_pilot_with_corpus(&goblin_input, corpus_fixture_bundle());
+
+        // Same Strength, same loadout, Medium race: the only difference is
+        // size, so the ratio isolates it.
+        let hobgoblin = compute_pilot_with_corpus(
+            &compose_character_input(&request_for("race:hobgoblin", 1)),
+            corpus_fixture_bundle(),
+        );
+        assert_eq!(
+            roster_race("race:hobgoblin").size,
+            "Medium",
+            "the control race must be Medium for this comparison to isolate size"
+        );
+
+        // Both requests carry the same Strength 16 (`request_for` is
+        // race-blind), so the thresholds differ by creature size and nothing
+        // else. `load.lst`'s Strength-16 heavy load is 230 lb.
+        //   Medium (no SIZEMULT row, the baseline): 230/3=76, 460/3=153, 230
+        //   Small   (SIZEMULT:S|0.75, applied to the load value *before* the
+        //            per-tier truncation): 690/12=57, 1380/12=115, 690/4=172
+        // Those are exactly PF1's published Small and Medium columns for
+        // Strength 16.
+        let small = &goblin.corpus_derived.encumbrance.thresholds;
+        let medium = &hobgoblin.corpus_derived.encumbrance.thresholds;
+        assert_eq!((medium.light_max_lbs, medium.medium_max_lbs, medium.heavy_max_lbs), (76.0, 153.0, 230.0));
+        assert_eq!(
+            (small.light_max_lbs, small.medium_max_lbs, small.heavy_max_lbs),
+            (57.0, 115.0, 172.0),
+            "a Small Goblin must not be handed a Medium creature's carrying capacity"
+        );
+    }
+
+    /// **The full end-to-end proof**, through the same `create_character`
+    /// path the button in the UI calls: a Bestiary 1 Goblin is created,
+    /// persisted to disk, read back, and the carrying capacity that survives
+    /// the round trip is the Small one.
+    ///
+    /// Distinct from
+    /// `a_created_goblin_computes_and_gets_a_small_creatures_carrying_capacity`,
+    /// which stops at the compute seam. `create_character_at_root` refuses to
+    /// persist anything that is not `Computed`, so reaching a saved envelope
+    /// at all is itself part of the claim.
+    #[test]
+    fn a_goblin_created_through_the_real_command_persists_a_small_creatures_carrying_capacity() {
+        let root = tempdir("create-character-bestiary-1-goblin");
+        let response =
+            create_character_at_root(&root, &request_for("race:goblin", 1), "test-version".to_owned())
+                .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => {
+                assert_eq!(summary.race_id, "race:goblin", "the Bestiary 1 race reaches the saved envelope");
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("a Goblin Fighter level 1 must be creatable, got: {diagnostics:?}")
+            }
+        }
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Goblin must load back");
+        assert_eq!(loaded.summary.race_id, "race:goblin");
+        assert_eq!(
+            (
+                loaded.corpus_derived.encumbrance.light_max_lbs,
+                loaded.corpus_derived.encumbrance.medium_max_lbs,
+                loaded.corpus_derived.encumbrance.heavy_max_lbs,
+            ),
+            (57.0, 115.0, 172.0),
+            "PF1's Small column at Strength 16; the Medium column would be 76/153/230"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The claim-blocking size diagnostic must fire for a race the engine
+    /// cannot resolve — and must *not* fire for any race the roster offers.
+    /// Without this, a roster entry that outran the engine's size seam would
+    /// look identical to one that did not.
+    #[test]
+    fn no_offered_race_trips_the_unknown_size_diagnostic_and_an_unoffered_one_does() {
+        use codex::rules_core::contract::UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID;
+        for race in build_race_creation_roster().races {
+            let receipt = compute_pilot_with_corpus(
+                &compose_character_input(&request_for(&race.race_id, 1)),
+                corpus_fixture_bundle(),
+            );
+            assert!(
+                !receipt.base.diagnostics.iter().any(|d| d.id == UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID),
+                "{} is offered for creation, so its size must be real data",
+                race.race_id
+            );
+        }
+        let unknown = compute_pilot_with_corpus(
+            &compose_character_input(&request_for("race:dhampir", 1)),
+            corpus_fixture_bundle(),
+        );
+        assert!(
+            unknown.base.diagnostics.iter().any(|d| d.id == UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID),
+            "an un-ingested race must report its guessed size rather than computing quietly"
+        );
+    }
 
     /// An empty-loadout `EncumbranceDto` for the *serialization-shape*
     /// tests below, which assert camelCase key naming and tag placement and
@@ -3094,15 +3684,23 @@ mod tests {
         }
     }
 
-    const CURATED_RACE_IDS: [&str; 7] = [
-        "race:human",
-        "race:dwarf",
-        "race:elf",
-        "race:gnome",
-        "race:half-elf",
-        "race:half-orc",
-        "race:halfling",
-    ];
+    /// Every race a player can actually pick, read off the roster the
+    /// creation form's picker is built from rather than re-listed here.
+    ///
+    /// This was a hardcoded 7-entry array of the Core Rulebook races. Derived
+    /// instead, it cannot fall behind the roster: the moment a race becomes
+    /// creatable it also becomes something
+    /// `compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+    /// has to prove computes, which is the whole point of that test.
+    fn curated_race_ids() -> Vec<String> {
+        let roster = build_race_creation_roster();
+        assert!(
+            roster.races.len() >= 7,
+            "the creation roster must never shrink below the 7 Core Rulebook races: {:?}",
+            roster.diagnostics
+        );
+        roster.races.into_iter().map(|race| race.race_id).collect()
+    }
     const FIGHTER_CLASS_ID: &str = "class:fighter";
 
     // `GENERIC_DIAGNOSTIC_IDS` / `generic_ids()` / `generic_plus()` used to
@@ -3225,6 +3823,7 @@ mod tests {
         assert_eq!(input.chosen.race_id, "race:half-orc");
     }
 
+
     #[test]
     fn compose_character_input_threads_the_requested_class_id() {
         let input = compose_character_input(&request_for_class("race:human", "class:paladin", 1));
@@ -3238,9 +3837,9 @@ mod tests {
     /// showing "Blocked" for what users were told was the supported path.
     #[test]
     fn compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3() {
-        for race_id in CURATED_RACE_IDS {
+        for race_id in curated_race_ids() {
             for level in 1..=3u8 {
-                let input = compose_character_input(&request_for(race_id, level));
+                let input = compose_character_input(&request_for(&race_id, level));
                 let receipt = build_pilot_headless_receipt(&input);
                 assert_eq!(
                     receipt.status,

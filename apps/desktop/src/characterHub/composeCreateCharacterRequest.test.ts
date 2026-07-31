@@ -1,4 +1,8 @@
-import { applyRacialAbilityAdjustments, composeCreateCharacterRequest } from './composeCreateCharacterRequest';
+import {
+  applyFloatingAbilityAllocation,
+  applyRacialAbilityAdjustments,
+  composeCreateCharacterRequest,
+} from './composeCreateCharacterRequest';
 import { assertEqual } from '../testSupport/asserts';
 
 async function main() {
@@ -8,6 +12,64 @@ async function main() {
   verifiesDwarfAdjustmentsAreBakedIntoSubmittedScores();
   verifiesGnomeAdjustmentsAreBakedIntoSubmittedScores();
   verifiesHalflingAdjustmentsAreBakedIntoSubmittedScores();
+  verifiesTheFloatingAbilityAllocationReachesTheSubmittedScoresForNonHumanRaces();
+  verifiesHumansFloatingAllocationIsLeftToTheBackendSoItIsNotAppliedTwice();
+}
+
+const ZERO_ALLOCATION = { strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0 };
+
+/**
+ * The sibling of `verifiesRacialAdjustmentsAreBakedIntoSubmittedScores`,
+ * and the same defect one field over.
+ *
+ * PF1's "+2 to one ability score" races are Human, Half-Elf and Half-Orc —
+ * derived by command from the corpus, not recalled: only their
+ * `Racial Ability Scores` rows carry `BONUS:ABILITYPOOL|Ability Bonus|1`.
+ * The creation form has always offered a stepper to distribute those points
+ * and shown them in the on-screen calculated score.
+ *
+ * They reached the engine for **Human only**. `compose_character_input`
+ * (`pf1_adapter.rs`) pushes the `choice:human_ability_bonus` slot when
+ * `race_id == "race:human"` and for no other race, and
+ * `apply_human_ability_bonus` (`pilot_compute.rs`) returns the scores
+ * untouched for every other race. Verified by running the engine rather than
+ * by reading it: with a submitted Strength of 16 and `abilityBonusTarget:
+ * "strength"`, Human computes at 18 and Half-Elf and Half-Orc both compute
+ * at 16. So the stepper was a live control that silently changed nothing for
+ * two of the three races that have it.
+ *
+ * `pilot_compute.rs` is off-limits to this cycle (`decisions.md §8`), so the
+ * fix is the one the frontend already applies to *fixed* racial adjustments:
+ * bake it into the submitted score for every race the backend does not
+ * handle itself.
+ */
+function verifiesTheFloatingAbilityAllocationReachesTheSubmittedScoresForNonHumanRaces() {
+  const raw = { strength: 16, dexterity: 14, constitution: 14, intelligence: 10, wisdom: 12, charisma: 8 };
+  const allocation = { ...ZERO_ALLOCATION, charisma: 2 };
+
+  const halfElf = applyFloatingAbilityAllocation(raw, allocation, 'race:half-elf');
+  assertEqual(halfElf.charisma, 10, 'Half-Elf spends its +2 on Charisma and submits 10, not 8');
+  assertEqual(halfElf.strength, 16, 'and nothing else moves');
+
+  const halfOrc = applyFloatingAbilityAllocation(raw, { ...ZERO_ALLOCATION, strength: 2 }, 'race:half-orc');
+  assertEqual(halfOrc.strength, 18, 'Half-Orc spends its +2 on Strength');
+
+  // A race with no floating pool allocates nothing, so this is a no-op for
+  // the other 15 races whatever it is handed.
+  const goblin = applyFloatingAbilityAllocation(raw, ZERO_ALLOCATION, 'race:goblin');
+  assertEqual(goblin.dexterity, 14, 'a race with no floating pool submits its scores unchanged');
+}
+
+/**
+ * Human is the deliberate exception, and must stay one: its floating +2 is
+ * applied server-side from `abilityBonusTarget`
+ * (`race.human.ability_bonus_applied`). Baking it in here as well would
+ * award +4.
+ */
+function verifiesHumansFloatingAllocationIsLeftToTheBackendSoItIsNotAppliedTwice() {
+  const raw = { strength: 16, dexterity: 14, constitution: 14, intelligence: 10, wisdom: 12, charisma: 8 };
+  const human = applyFloatingAbilityAllocation(raw, { ...ZERO_ALLOCATION, strength: 2 }, 'race:human');
+  assertEqual(human.strength, 16, 'Human submits the PRE-bonus base score; the engine adds the +2');
 }
 
 function verifiesRequestShapeFromFormFields() {

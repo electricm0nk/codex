@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Barbarian ~ Tireless Rage",
+    "name": "Tireless Rage",
+    "class_key": "Barbarian ~ Unchained Class",
+    "base_class_key": "Barbarian",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "SpecialQuality",
+      "Extraordinary",
+      "Rage",
+      "Tireless Rage"
+    ],
+    "min_level": 17,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "You are no longer fatigued at the end of your rage. If you enters a rage again within 1 minute of ending a rage, you don't gain any temporary hit points from your rage.",
+    "source_page": "p.13",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Barbarian ~ Tireless Rage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality.Extraordinary.Rage.Tireless Rage"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Barbarian ~ Tireless Rage"
+      },
+      {
+        "key": "DESC",
+        "value": "You are no longer fatigued at the end of your rage. If you enters a rage again within 1 minute of ending a rage, you don't gain any temporary hit points from your rage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 295,
+    "record_key": "Unchained Barbarian ~ Tireless Rage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

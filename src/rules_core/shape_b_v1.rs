@@ -362,6 +362,180 @@ pub struct RaceTraitCacheData {
     pub raw_bonus_chains: Vec<RawBonusChain>,
 }
 
+/// One class feature a [`ClassVariantCacheData`] grants, with the level it
+/// comes online at — transcribed off the grant row, never inferred.
+///
+/// PCGen states a variant's whole level progression declaratively, one
+/// `.MOD` row per feature:
+///
+/// ```text
+/// CATEGORY=Class|Monk ~ Unchained Class.MOD    ABILITY:Unchained Monk Class Feature|AUTOMATIC|Unchained Monk ~ Ki Pool|PREVAREQ:Monk_CF_KiPool,0|PREVARGTEQ:Monk_CFP_Level,3
+/// ```
+///
+/// (The gap after `.MOD` is a single literal TAB in the corpus file --
+/// PCGen `.lst` rows are tab-delimited. It is shown as four spaces here
+/// because a tab in a doc comment renders unpredictably.)
+///
+/// Reading `3` off `PREVARGTEQ:Monk_CFP_Level,3` is transcription of a
+/// same-row integer literal, so `decisions.md §24`'s ban on a formula
+/// interpreter is not engaged.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ClassFeatureGrant {
+    /// The granted ability's key, e.g. `"Unchained Monk ~ Ki Pool"`.
+    pub feature_key: String,
+    /// The ability category the grant names, e.g.
+    /// `"Unchained Monk Class Feature"`.
+    pub feature_category: String,
+    /// `PREVARGTEQ:<Class>_CFP_Level,<n>` → `n`. `None` when the grant row
+    /// states no level at all — Unchained Barbarian's Weapon and Armor
+    /// Proficiency genuinely carries none upstream, and inventing the
+    /// book's "1st level" here would be fabricating corpus data.
+    pub min_level: Option<u8>,
+    /// The `.MOD` target that carries this grant. Unchained Barbarian
+    /// splits its progression across two sub-selections
+    /// (`Barbarian ~ Unchained Class Full` and
+    /// `Barbarian ~ Unchained Ex-Class`), so which one granted a feature is
+    /// content, not bookkeeping.
+    pub granted_by_key: String,
+    /// `PREVAREQ:<Class>_CF_<Feature>,0` → `"Monk_CF_KiPool"`. The archetype
+    /// suppression variable: the grant applies only while the variable is 0,
+    /// i.e. while no archetype has replaced the feature.
+    pub suppressed_by_var: Option<String>,
+}
+
+/// `data/corpus/<book>/class/<slug>.json` payload, v1 — a **class variant**
+/// declared as a `CATEGORY:CLASS` selection ability over a base class
+/// declared in another book.
+///
+/// **Why this is not `rules_tables::crb::json_cache::ClassCacheData`.**
+/// Pathfinder Unchained's `.pcc` declares **no `CLASS:` file at all**
+/// (verified 2026-07-31). Its four "Unchained classes" are not `CLASS`
+/// objects: each is an `ABILITY` in `CATEGORY:CLASS` that plugs into the
+/// base class's own selection pool (`ABILITYCATEGORY:<Class> Class
+/// Selection`, declared by `core_rulebook/cr_abilitycategories.lst`) and
+/// swaps the base class's features out for its own. A record shaped like a
+/// full class chassis would therefore have to invent a hit die, a BAB
+/// column and a save column the book does not state — the same failure mode
+/// `decisions.md §25` caught for ARG's races.
+///
+/// The chassis fields here are consequently all `Option`, and populated
+/// **only** where PU genuinely overrides the base class. In practice that is
+/// Unchained Monk alone: it carries a `TEMPLATE:` that raises the hit die and
+/// `BONUS:COMBAT|BASEAB|...|TYPE=Base.REPLACE` plus `BONUS:SAVE|BASE...`
+/// clauses that replace the BAB and save columns. The other three inherit
+/// their base class's chassis unchanged and leave every field `None`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ClassVariantCacheData {
+    /// `KEY:Monk ~ Unchained Class` → `"Monk ~ Unchained Class"`.
+    pub key: String,
+    /// The unkeyed display name, e.g. `"Unchained Monk"`.
+    pub name: String,
+    /// The base class this variant replaces the features of, e.g. `"Monk"`.
+    /// Read off the `TYPE:<Class> Class Selection` token, not off the key
+    /// string.
+    pub base_class_key: String,
+    /// The corpus book directory the base class is already ingested under —
+    /// `"core_rulebook"` for Barbarian/Monk/Rogue, `"advanced_players_guide"`
+    /// for Summoner. A variant whose base class is not ingested must not be
+    /// written at all (`decisions.md §25.3`'s rule, applied to classes).
+    pub base_class_book: String,
+    /// `CATEGORY:CLASS`.
+    pub category: Option<String>,
+    /// `TYPE:Monk Class Selection.AltMonkChoice` split on `.`.
+    pub type_tokens: Vec<String>,
+    /// From the `TEMPLATE:` this row applies, whose `HITDIE:10|CLASS=Monk`
+    /// states the override. `None` where the variant applies no such
+    /// template.
+    pub hit_die: Option<u32>,
+    /// The template name the [`hit_die`](Self::hit_die) came off, so the
+    /// override is traceable to the row that states it.
+    pub hit_die_template: Option<String>,
+    /// BAB progression in the same `level`-relative notation the existing
+    /// class records use (`"level*3/4"`), derived by substituting `level`
+    /// for a `classlevel("<BaseClass>",...)` call and keeping the arithmetic
+    /// tail byte-identical. Populated only from a
+    /// `BONUS:COMBAT|BASEAB|...` clause on this row; `None` otherwise.
+    pub bab: Option<String>,
+    /// True when the BAB clause carries `TYPE=Base.REPLACE`, i.e. it
+    /// *replaces* the base class's column rather than stacking on it.
+    #[serde(default)]
+    pub bab_replaces_base: bool,
+    /// Save progressions, same notation and same derivation as
+    /// [`bab`](Self::bab), from `BONUS:SAVE|BASE.<Save>|...` clauses.
+    pub save_fort: Option<String>,
+    pub save_ref: Option<String>,
+    pub save_will: Option<String>,
+    /// The variant's class-skill list, resolved from the
+    /// `ABILITY:Internal|AUTOMATIC|Class Skills ~ <name>` grant to that
+    /// internal row's `CSKILL:` token. Empty where the variant states its
+    /// class skills on a class *feature* row instead (Unchained Rogue and
+    /// Unchained Summoner both do — see
+    /// [`ClassFeatureCacheData::class_skills`]).
+    #[serde(default)]
+    pub class_skills: Vec<String>,
+    /// Every feature this variant grants, in source order.
+    #[serde(default)]
+    pub feature_grants: Vec<ClassFeatureGrant>,
+    pub description: Option<String>,
+    /// `SOURCEPAGE:p.27`, `None` when absent or when the value is PCGen's
+    /// `p.xx` placeholder (`decisions.md §27.2`).
+    pub source_page: Option<String>,
+    #[serde(default)]
+    pub raw_tokens: Vec<RawToken>,
+    #[serde(default)]
+    pub raw_bonus_chains: Vec<RawBonusChain>,
+}
+
+/// `data/corpus/<book>/class_feature/<class>/<slug>.json` payload, v1 — one
+/// class feature belonging to a [`ClassVariantCacheData`].
+///
+/// This is **ingestion only**: the row's mechanics are preserved verbatim in
+/// [`raw_tokens`](Self::raw_tokens) / [`raw_bonus_chains`](Self::raw_bonus_chains)
+/// and the player-facing prose is rendered from `DESC:`. Turning a feature
+/// into a working rule is the hand-modelled pure function `decisions.md §24`
+/// mandates, and deliberately does not happen here.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ClassFeatureCacheData {
+    /// `KEY:Unchained Monk ~ Ki Pool` → `"Unchained Monk ~ Ki Pool"`.
+    pub key: String,
+    /// The unkeyed display name, e.g. `"Ki Pool"`.
+    pub name: String,
+    /// The owning variant's key, e.g. `"Monk ~ Unchained Class"`.
+    pub class_key: String,
+    /// The underlying base class's key, e.g. `"Monk"`.
+    pub base_class_key: String,
+    /// `CATEGORY:Special Ability`.
+    pub category: Option<String>,
+    /// `TYPE:Unchained Monk Class Feature.ClassFeatures.SpecialQuality` split
+    /// on `.`.
+    pub type_tokens: Vec<String>,
+    /// The level this feature is granted at, joined from the variant's grant
+    /// row. `None` when no grant row references the feature, or when the
+    /// grant row states no level — never defaulted to 1.
+    pub min_level: Option<u8>,
+    /// True when a grant row references this feature. A feature the corpus
+    /// declares but never grants is a real corpus fact, not an error, and is
+    /// recorded as such rather than dropped.
+    #[serde(default)]
+    pub is_granted: bool,
+    /// `VISIBLE:NO` marks PCGen's internal bookkeeping rows (the two
+    /// "Uncanny Dodge Tracker" abilities). Carried so a UI can exclude them
+    /// instead of showing a player a tracker.
+    pub visible: Option<String>,
+    /// `CSKILL:` on the feature row, split on `|`. Unchained Rogue and
+    /// Unchained Summoner state their class-skill lists here rather than on
+    /// the variant row.
+    #[serde(default)]
+    pub class_skills: Vec<String>,
+    pub description: Option<String>,
+    /// `SOURCEPAGE:p.14`, `None` when absent or `p.xx`.
+    pub source_page: Option<String>,
+    #[serde(default)]
+    pub raw_tokens: Vec<RawToken>,
+    #[serde(default)]
+    pub raw_bonus_chains: Vec<RawBonusChain>,
+}
+
 /// Validates a v1 record's license annotation per `decisions.md §17`'s
 /// "Validation: every record has a license field" output requirement,
 /// plus the 5th-audit's PI/marker consistency rule (added 2.0.6+, but

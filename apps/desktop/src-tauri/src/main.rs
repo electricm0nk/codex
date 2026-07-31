@@ -39,7 +39,7 @@ use character_hub::{
     delete_character, delete_character_portrait, export_character, export_character_json,
     import_character, level_up_character, list_saved_characters, load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
-    load_saved_character, preview_level_up, purchase_equipment,
+    list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
@@ -192,6 +192,7 @@ fn main() {
             list_class_catalog,
             list_class_spell_levels,
             list_race_catalog,
+            list_race_creation_roster,
             list_alternate_racial_traits,
             resolve_race_alternate_selection,
             corpus_ingest_diagnostic

@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Barbarian ~ Uncanny Dodge Tracker",
+    "name": "Unchained Barbarian ~ Uncanny Dodge Tracker",
+    "class_key": "Barbarian ~ Unchained Class",
+    "base_class_key": "Barbarian",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Barbarian Class Feature"
+    ],
+    "min_level": 2,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Barbarian Class Feature"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeLVL",
+          "1",
+          "PREVARGTEQ:BarbarianLVL,2",
+          "PREVAREQ:Barbarian_CF_UncannyDodge,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeLVL",
+          "1",
+          "PREVARGTEQ:BarbarianLVL,5",
+          "PREVAREQ:Barbarian_CF_ImprovedUncannyDodge,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeFlankingLevel",
+          "BarbarianLVL",
+          "TYPE=EachClass.REPLACE",
+          "PREVARGTEQ:BarbarianLVL,2",
+          "PREVAREQ:Barbarian_CF_UncannyDodge,0"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 301,
+    "record_key": "Unchained Barbarian ~ Uncanny Dodge Tracker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

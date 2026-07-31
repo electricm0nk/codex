@@ -37,5 +37,22 @@
 //! "no established schema, high hallucination risk" exclusion. Not
 //! attempted here; see this cycle's own report for the full reasoning.
 
+// `src/bin/sd27_gen_book_cache.rs` pulls this `mod.rs` in with `#[path]`
+// (see that file's own doc comment for why). That binary uses only
+// `feat_tables` and `equipment_tables`, so inside it the four class-feature
+// modules below (barbarian, monk, rogue, summoner) are genuinely unreferenced
+// and `dead_code` fires on every item. Through the library crate -- the path
+// the tests and any future `pilot_compute` integration use -- they are
+// ordinary `pub` items and the lint never applies. The allow is scoped to
+// these four registrations rather than blanketed inside the files, so real
+// dead code inside them would still be reported anywhere it could matter.
+#[allow(dead_code)]
+pub mod barbarian_features;
 pub mod equipment_tables;
 pub mod feat_tables;
+#[allow(dead_code)]
+pub mod monk_features;
+#[allow(dead_code)]
+pub mod rogue_features;
+#[allow(dead_code)]
+pub mod summoner_features;

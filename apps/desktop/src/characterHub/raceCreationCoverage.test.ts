@@ -4,21 +4,22 @@
  *
  * # Why this file exists
  *
- * `RACE_OPTIONS` in `characterHubModel.ts` offers 7 races. The corpus
- * carries 18 (Core Rulebook's 7 + Bestiary 1's 11). A previous assessment
- * said widening creation "needs per-race data nobody has". This file tests
- * that claim field by field instead of inheriting it, against the real
- * on-disk corpus JSON — the same records
- * `codex::rules_core::race_resolver` reads, not a fixture.
+ * Creation offered 7 races from a hardcoded `RACE_OPTIONS` table in
+ * `characterHubModel.ts`. The corpus carries 18 (Core Rulebook's 7 +
+ * Bestiary 1's 11). A previous assessment said widening creation "needs
+ * per-race data nobody has". This file tested that claim field by field
+ * instead of inheriting it, against the real on-disk corpus JSON — the same
+ * records `codex::rules_core::race_resolver` reads, not a fixture — and
+ * found the claim false for every field except height/weight.
  *
- * It also pins the 7 shipped `RACE_OPTIONS` entries against those records.
- * `RACE_OPTIONS` is a hand-maintained mirror of corpus facts with, until
- * now, no cross-check at all — and the identical shape one layer down
- * (`rules_tables/crb/race_tables.rs`) had silently drifted from the corpus
- * on four races' ability modifiers for months, because PCGen states two
- * ability grants in one token (`BONUS:STAT|CON,WIS|2`) and a hand
- * transcription read only up to the comma. This is the check that would
- * have caught it here.
+ * **The table is now gone.** `list_race_creation_roster`
+ * (`character_hub.rs`) derives all 18 from these records, so there is no
+ * hand-maintained mirror left to drift. What this file still pins is the
+ * derivation: the identical shape one layer down
+ * (`rules_tables/crb/race_tables.rs`) silently drifted from the corpus on
+ * four races' ability modifiers for months, because PCGen states two ability
+ * grants in one token (`BONUS:STAT|CON,WIS|2`) and a hand transcription read
+ * only up to the comma.
  *
  * # What creation actually consumes
  *
@@ -53,8 +54,9 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { ABILITY_KEYS, RACE_OPTIONS } from './characterHubModel';
+import { ABILITY_KEYS } from './characterHubModel';
 import type { AbilityKey } from './characterHubModel';
+import { RACE_BODY_PROFILES } from './raceRoster';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /** `apps/desktop/src/characterHub/` → the repo root. */
@@ -297,38 +299,49 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
 }
 
 /**
- * **The pin.** Every field creation reads off `RACE_OPTIONS` for the 7
- * shipped races must match what the corpus says — derived from the
- * machine-readable tokens, never from a display string.
+ * **The pin.** Every field creation reads must resolve, from the corpus, for
+ * every race the creation roster offers — derived from the machine-readable
+ * tokens, never from a display string.
+ *
+ * This used to compare the corpus against `RACE_OPTIONS`, a hand-written
+ * seven-entry table in `characterHubModel.ts`. That table is gone: the
+ * roster is now served by `list_race_creation_roster` from these same
+ * records, so there is no second copy left to drift. What is still worth
+ * pinning here is the derivation itself — that reading a `BONUS:STAT` chain
+ * credits every ability it names, which is the exact defect that silently
+ * drifted `race_tables.rs` from the corpus on four races.
  */
-function verifiesEveryShippedRaceOptionMatchesTheCorpus() {
+function verifiesTheAbilityDerivationCreditsEveryAbilityAMultiStatChainNames() {
   const traits = loadStandardTraits();
-  const chassis = loadChassis();
-  for (const option of RACE_OPTIONS) {
-    const raceKey = option.label; // `RACE_OPTIONS` labels are the corpus race keys.
-    assert(
-      chassis.some((c) => c.key === raceKey),
-      `${option.label} must have a corpus chassis record`
-    );
-    const defaults = defaultTraitsFor(traits, raceKey);
-    assert(defaults.length > 0, `${option.label} must have corpus racial defaults`);
-
-    const corpusAdjustments = corpusAbilityAdjustments(defaults);
+  // Corpus-verified expectations, each read off the named record's own
+  // `raw_bonus_chains` (`data/corpus/<book>/race_trait/<race>/*_ability_scores.json`).
+  const expected: Record<string, Partial<Record<AbilityKey, number>>> = {
+    // `BONUS:STAT|CON,WIS|2` + `BONUS:STAT|CHA|-2` — two abilities in one token.
+    Dwarf: { constitution: 2, wisdom: 2, charisma: -2 },
+    // `BONUS:STAT|DEX|4` + `BONUS:STAT|STR,CHA|-2`.
+    Goblin: { dexterity: 4, strength: -2, charisma: -2 },
+    // Four abilities across two chains.
+    Orc: { strength: 4, intelligence: -2, wisdom: -2, charisma: -2 },
+    Svirfneblin: { dexterity: 2, wisdom: 2, strength: -2, charisma: -4 },
+    // Floating-pool races state no fixed modifier at all.
+    Human: {},
+    'Half-Elf': {},
+  };
+  for (const [raceKey, adjustments] of Object.entries(expected)) {
+    const derived = corpusAbilityAdjustments(defaultTraitsFor(traits, raceKey));
     for (const ability of ABILITY_KEYS) {
-      assertEqual(
-        option.abilityAdjustments[ability] ?? 0,
-        corpusAdjustments[ability] ?? 0,
-        `${option.label} ${ability} racial adjustment (RACE_OPTIONS vs corpus BONUS:STAT)`
-      );
+      assertEqual(derived[ability] ?? 0, adjustments[ability] ?? 0, `${raceKey} ${ability} racial adjustment`);
     }
-    assertEqual(
-      option.floatingBonusPoints,
-      corpusFloatingBonusPoints(defaults),
-      `${option.label} floating ability points`
-    );
-    assertEqual(option.size, corpusEffectiveSize(defaults), `${option.label} size`);
-    assertEqual(option.vision, corpusVision(defaults), `${option.label} vision`);
   }
+  // Only Human, Half-Elf and Half-Orc carry a floating pool. Derived across
+  // all 18 rather than asserted for three, so a fourth appearing is a failure
+  // rather than an invisible change.
+  const floating = loadChassis()
+    .filter((race) => corpusFloatingBonusPoints(defaultTraitsFor(traits, race.key)) > 0)
+    .map((race) => race.key)
+    .sort()
+    .join(', ');
+  assertEqual(floating, 'Half-Elf, Half-Orc, Human', 'races with a floating ability pool');
 }
 
 /**
@@ -341,8 +354,7 @@ function verifiesEveryShippedRaceOptionMatchesTheCorpus() {
 function verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces() {
   const traits = loadStandardTraits();
   const chassis = loadChassis();
-  const offered = new Set(RACE_OPTIONS.map((option) => option.label));
-  let notYetOffered = 0;
+  let withFullCreationData = 0;
 
   for (const race of chassis) {
     const defaults = defaultTraitsFor(traits, race.key);
@@ -361,11 +373,9 @@ function verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces() {
     // Throws on an unrecognized VISION token rather than guessing.
     corpusVision(defaults);
 
-    if (!offered.has(race.key)) {
-      notYetOffered += 1;
-    }
+    withFullCreationData += 1;
   }
-  assertEqual(notYetOffered, 11, 'Bestiary 1 races carrying full creation data that creation does not yet offer');
+  assertEqual(withFullCreationData, 18, 'races carrying a complete creation chassis');
 }
 
 /**
@@ -423,16 +433,23 @@ function verifiesTheCorpusCarriesNoHeightOrWeightProfileForAnyRace() {
     }
   }
   assertEqual(carriers.length, 0, 'no corpus race record carries a height/weight profile');
-  // And every shipped option nonetheless has one, i.e. it came from
-  // somewhere other than the corpus.
-  for (const option of RACE_OPTIONS) {
-    assert(option.body.male.baseHeightInches > 0, `${option.label} carries a hand-entered body profile`);
+  // And the profiles that ship nonetheless have real numbers, i.e. they came
+  // from somewhere other than the corpus. Pinned to exactly the 7 Core
+  // Rulebook races so the hand-entered set cannot quietly grow to cover the
+  // 11 races the corpus has no body data for.
+  assertEqual(
+    Object.keys(RACE_BODY_PROFILES).sort().join(' '),
+    'race:dwarf race:elf race:gnome race:half-elf race:half-orc race:halfling race:human',
+    'hand-entered body profiles'
+  );
+  for (const [raceId, profile] of Object.entries(RACE_BODY_PROFILES)) {
+    assert(profile.male.baseHeightInches > 0, `${raceId} carries a hand-entered body profile`);
   }
 }
 
 function main() {
   verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces();
-  verifiesEveryShippedRaceOptionMatchesTheCorpus();
+  verifiesTheAbilityDerivationCreditsEveryAbilityAMultiStatChainNames();
   verifiesTheCorpusSuppliesEveryRulesBearingFieldForAllEighteenRaces();
   verifiesTheChassisBaseSizeTokenIsNotTheEffectiveSizeForEveryRace();
   verifiesTheCorpusCarriesNoHeightOrWeightProfileForAnyRace();

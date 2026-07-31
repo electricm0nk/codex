@@ -26,8 +26,7 @@ use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
-use crate::rules_core::rules_tables::crb::race_tables::race_size_for_race_id;
-use crate::rules_core::size::SizeCategory;
+use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::feat_identity;
@@ -183,7 +182,7 @@ pub fn compute_pilot_with_corpus(
     input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> CorpusPilotReceipt {
-    let base = compute_pilot_base_chassis(input);
+    let mut base = compute_pilot_base_chassis(input);
 
     let mut school_coverage: BTreeMap<Pf1SchoolId, SchoolCoverage> = BTreeMap::new();
     let mut unresolved_spell_ids = Vec::new();
@@ -290,11 +289,13 @@ pub fn compute_pilot_with_corpus(
     let mut discarded_explanations = Vec::new();
     let effective_ability_scores = apply_human_ability_bonus(input, &mut discarded_explanations);
     // Creature size scales carrying capacity, matching
-    // `contract::to_pilot_receipt`'s own encumbrance wiring exactly
-    // (including its unrecognized-race fallback to Medium, the
-    // unmultiplied `load.lst` baseline and the pre-existing behaviour for
-    // every race).
-    let size = race_size_for_race_id(&input.chosen.race_id).unwrap_or(SizeCategory::Medium);
+    // `contract::to_pilot_receipt`'s own encumbrance wiring exactly -- the
+    // same shared `encumbrance_size_for_race` seam, so the two receipts
+    // cannot drift apart on size again. An unresolvable race pushes that
+    // seam's claim-blocking diagnostic onto `base` rather than silently
+    // computing at Medium.
+    let (size, size_diagnostic) = encumbrance_size_for_race(&input.chosen.race_id);
+    base.diagnostics.extend(size_diagnostic);
     let encumbrance = compute_encumbrance(
         &input.chosen.equipment_selections,
         corpus,

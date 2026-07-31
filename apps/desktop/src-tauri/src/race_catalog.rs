@@ -78,7 +78,11 @@ pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1];
 /// newly ingested book shows up as itself (and trips
 /// `every_book_code_is_a_declared_one_and_every_declared_code_is_present`)
 /// instead of being mis-attributed to one of the books above.
-fn book_code(book_id: &str) -> String {
+///
+/// `pub(crate)` so `character_hub`'s race-creation roster labels its races
+/// with the *same* book codes this catalog emits rather than carrying a
+/// second copy of the mapping that could drift from this one.
+pub(crate) fn book_code(book_id: &str) -> String {
     match book_id {
         "core_rulebook" => BOOK_CRB.to_string(),
         "beastiary" => BOOK_B1.to_string(),
@@ -153,7 +157,11 @@ fn corpus_root_dir() -> Result<PathBuf, String> {
 
 /// Loads the real race corpus once per process, mirroring
 /// `corpus_full::full_corpus_bundle`'s own caching shape.
-fn race_corpus() -> &'static Result<RaceCorpus, String> {
+///
+/// `pub(crate)` so `character_hub`'s race-creation roster reads the *same*
+/// cached corpus this catalog browser reads, rather than loading a second
+/// copy that could answer differently.
+pub(crate) fn race_corpus() -> &'static Result<RaceCorpus, String> {
     static CORPUS: OnceLock<Result<RaceCorpus, String>> = OnceLock::new();
     CORPUS.get_or_init(|| {
         let corpus_root = corpus_root_dir()?;

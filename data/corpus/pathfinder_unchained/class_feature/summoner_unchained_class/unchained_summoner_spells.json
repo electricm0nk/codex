@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Summoner ~ Spells",
+    "name": "Spells",
+    "class_key": "Summoner ~ Unchained Class",
+    "base_class_key": "Summoner",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Summoner Class Feature",
+      "SpecialQuality"
+    ],
+    "min_level": 1,
+    "is_granted": true,
+    "visible": "DISPLAY",
+    "class_skills": [],
+    "description": "A summoner casts arcane spells drawn from the summoner spell list. (The unchained summoner's spell list on page 39 is different from that presented in the Advanced Player's Guide.) He can cast any spell he knows without preparing it ahead of time. To learn or cast a spell, a summoner must have a Charisma score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a summoner's spell is 10 + the spell level + the summoner's Charisma modifier. A summoner can cast only a certain number of spells of each spell level each day. His base daily spell allotment is given on Table 1-4: Summoner. In addition, he gains bonus spells per day if he has a high Charisma score (see Table 1-3: Ability Modifiers and Bonus Spells on page 17 of the Core Rulebook). A summoner's selection of spells is limited. A summoner begins play knowing four 0-level spells and two 1st-level spells of the summoner's choice. At each new summoner level, he gains one or more new spells as indicated on Table 1-5: Summoner Spells Known. (Unlike spells per day, the number of spells a summoner knows is not affected by his Charisma score. The numbers on Table 1-5 are fixed.) Upon reaching 5th level, and at every third summoner level thereafter (8th, 11th, and so on), a summoner can choose to learn a new spell in place of one he already knows. In effect, the summoner \"loses\" the old spell in exchange for the new one. The new spell's level must be the same as that of the spell being exchanged, and it must be at least 1 level lower than the highest-level summoner spell the summoner can cast. A summoner can swap out only a single spell at any given level and must choose whether or not to swap the spell at the same time that he gains new spells known. A summoner doesn't need to prepare his spells in advance. He can cast any spell he knows at any time, assuming he has not yet used up his allotment of spells per day for the level.",
+    "source_page": "p.25",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Summoner ~ Spells"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Summoner Class Feature.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnchainedSummoner|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A summoner casts arcane spells drawn from the summoner spell list. (The unchained summoner's spell list on page 39 is different from that presented in the Advanced Player's Guide.) He can cast any spell he knows without preparing it ahead of time. To learn or cast a spell, a summoner must have a Charisma score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a summoner's spell is 10 + the spell level + the summoner's Charisma modifier. A summoner can cast only a certain number of spells of each spell level each day. His base daily spell allotment is given on Table 1-4: Summoner. In addition, he gains bonus spells per day if he has a high Charisma score (see Table 1-3: Ability Modifiers and Bonus Spells on page 17 of the Core Rulebook). A summoner's selection of spells is limited. A summoner begins play knowing four 0-level spells and two 1st-level spells of the summoner's choice. At each new summoner level, he gains one or more new spells as indicated on Table 1-5: Summoner Spells Known. (Unlike spells per day, the number of spells a summoner knows is not affected by his Charisma score. The numbers on Table 1-5 are fixed.) Upon reaching 5th level, and at every third summoner level thereafter (8th, 11th, and so on), a summoner can choose to learn a new spell in place of one he already knows. In effect, the summoner \"loses\" the old spell in exchange for the new one. The new spell's level must be the same as that of the spell being exchanged, and it must be at least 1 level lower than the highest-level summoner spell the summoner can cast. A summoner can swap out only a single spell at any given level and must choose whether or not to swap the spell at the same time that he gains new spells known. A summoner doesn't need to prepare his spells in advance. He can cast any spell he knows at any time, assuming he has not yet used up his allotment of spells per day for the level."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "UnchainedSummoner",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 729,
+    "record_key": "Unchained Summoner ~ Spells"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

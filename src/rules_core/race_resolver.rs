@@ -138,6 +138,44 @@ pub struct RaceCorpus {
     diagnostics: Vec<RaceCorpusDiagnostic>,
 }
 
+/// Where a resolved race's effective creature size came from.
+///
+/// Exists for the same reason [`SpeedSource`] does: the chassis row is not
+/// the whole truth, and a caller is entitled to know which row won.
+///
+/// # `FACT:BaseSize` is not the race's default size
+///
+/// This is not an inference from the data — PCGen states it in the field's own
+/// definition (`core_essentials/ce__datacontrols.lst:22`):
+///
+/// ```text
+/// FACTDEF:RACE|BaseSize  DATAFORMAT:SIZEADJUSTMENT  REQUIRED:YES  VISIBLE:YES
+///     EXPLANATION:All Races must have a Size - in the case of multiple sizes,
+///                 use the SMALLEST allowed.
+/// ```
+///
+/// So for a race with more than one legal size, `FACT:BaseSize` is the
+/// **smallest allowed**, and the *default* is whatever the race's own
+/// automatic `~ Size` racial trait applies via `TEMPLATE:SIZE_<code>`.
+/// Reading `FACT:BaseSize` as "the race's size" is a misreading of a field
+/// whose own `EXPLANATION:` says otherwise, and it is what made Aasimar and
+/// Tiefling — both of which have an opt-in Small variant granted by other
+/// books, and are Medium by default — resolve as Small.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SizeSource {
+    /// The chassis row's own `FACT:BaseSize|<code>`. Correct only for a race
+    /// with a single legal size (which is 16 of the 18 in-scope races).
+    Chassis,
+    /// A resolved trait's `TEMPLATE:SIZE_<code>`, which overrides the
+    /// chassis. Not a nicety: **Aasimar's and Tiefling's chassis rows both
+    /// carry `FACT:BaseSize|S` and both races are Medium**, with the real
+    /// `TEMPLATE:SIZE_M` on their `~ Size` racial-default trait.
+    Trait(String),
+    /// Neither a readable `FACT:BaseSize` nor a readable `TEMPLATE:SIZE_` —
+    /// size is unknown, not defaulted.
+    Unknown,
+}
+
 /// Where a resolved race's effective walk speed came from.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SpeedSource {
@@ -205,6 +243,27 @@ impl ResolvedTrait {
     pub fn declared_walk_speed_ft(&self) -> Option<i32> {
         self.raw_tokens.iter().filter(|t| t.key == "MOVE").find_map(|t| walk_speed_from_move(&t.value))
     }
+
+    /// The creature size this trait's `TEMPLATE:SIZE_<code>` assigns, if it
+    /// carries one.
+    ///
+    /// This is transcription, not interpretation (`decisions.md §24`): PCGen's
+    /// `SIZE_*` templates are defined in
+    /// `core_essentials/ce_templates.lst:924-933` and each one's entire body
+    /// *is* a size assignment —
+    /// `SIZE_S  SIZE:S  VISIBLE:NO`, `SIZE_M  SIZE:M  VISIBLE:NO`, and so on
+    /// for `F D T S M L H G C`, using the same single-letter code set as
+    /// `FACT:BaseSize`. Reading `SIZE_M` off the row that declares it is
+    /// reading a constant off the row that defines it.
+    ///
+    /// `SIZE_C+` (which maps to the non-`SizeCategory` code `P`) and any
+    /// other unrecognized suffix yield `None` rather than a guess.
+    pub fn declared_size(&self) -> Option<SizeCategory> {
+        self.raw_tokens
+            .iter()
+            .filter(|t| t.key == "TEMPLATE")
+            .find_map(|t| size_from_size_template(&t.value))
+    }
 }
 
 /// A race resolved against a specific set of chosen alternate traits.
@@ -213,9 +272,17 @@ pub struct ResolvedRace {
     pub race_key: String,
     pub name: String,
     pub book_id: String,
-    /// Parsed from the chassis' `FACT:BaseSize|<code>`. `None` — never a
-    /// defaulted Medium — when the code is absent or unrecognized.
+    /// The race's real creature size: the chassis' `FACT:BaseSize|<code>`,
+    /// overridden by any resolved trait's `TEMPLATE:SIZE_<code>`. `None` —
+    /// never a defaulted Medium — when neither is present or readable.
     pub size: Option<SizeCategory>,
+    /// The chassis row's own `FACT:BaseSize`, before any trait override.
+    /// Exposed alongside [`size`](Self::size) for the same reason
+    /// [`chassis_walk_speed_ft`](Self::chassis_walk_speed_ft) is: the
+    /// Aasimar/Tiefling `FACT:BaseSize|S`-but-actually-Medium case stays
+    /// visible rather than being quietly corrected.
+    pub chassis_size: Option<SizeCategory>,
+    pub size_source: SizeSource,
     pub race_type: Option<String>,
     /// The chassis row's own `MOVE:Walk`, before any trait override. Exposed
     /// alongside [`walk_speed_ft`](Self::walk_speed_ft) so the Goblin/Hobgoblin
@@ -476,11 +543,31 @@ impl RaceCorpus {
             }
         }
 
+        // 4. Size: exactly the same rule, on exactly the same grounds. The
+        //    chassis' `FACT:BaseSize` is a starting point — by its own
+        //    `FACTDEF` it is "the SMALLEST allowed" size, not the default one
+        //    (see `SizeSource`) — and any resolved trait's
+        //    `TEMPLATE:SIZE_<code>` overrides it. Aasimar and Tiefling are the
+        //    two races where this changes the answer: both chassis rows say
+        //    `S` because each has an opt-in Small variant in another book,
+        //    and both races are Medium by default.
+        let chassis_size = chassis.data.base_size.as_deref().and_then(SizeCategory::from_base_size_code);
+        let mut size = chassis_size;
+        let mut size_source = if chassis_size.is_some() { SizeSource::Chassis } else { SizeSource::Unknown };
+        for resolved in &traits {
+            if let Some(declared) = resolved.declared_size() {
+                size = Some(declared);
+                size_source = SizeSource::Trait(resolved.key.clone());
+            }
+        }
+
         Some(ResolvedRace {
             race_key: chassis.data.key.clone(),
             name: chassis.data.name.clone(),
             book_id: chassis.book_id.clone(),
-            size: chassis.data.base_size.as_deref().and_then(SizeCategory::from_base_size_code),
+            size,
+            chassis_size,
+            size_source,
             race_type: chassis.data.race_type.clone(),
             chassis_walk_speed_ft,
             walk_speed_ft,
@@ -492,6 +579,78 @@ impl RaceCorpus {
             inert_flags,
         })
     }
+}
+
+/// Every in-scope race's real creature size, keyed by its corpus race key.
+///
+/// # Why this is a hand-written table and not a corpus read
+///
+/// Its two consumers — `contract::to_pilot_receipt` and
+/// `pilot_compute_corpus::compute_pilot_with_corpus` — are pure functions over
+/// an already-loaded `SourcePackageContent`. Neither may touch the filesystem,
+/// and `RaceCorpus` is a separate, disk-backed load. So this is the shape
+/// `decisions.md §24` prescribes for exactly this situation: a small
+/// hand-modelled pure function whose values were verified against the corpus,
+/// pinned by a test that re-derives them from the real on-disk records
+/// (`tests/sd27_race_size_resolution.rs`). If the corpus and this table ever
+/// disagree, that test fails and names the race.
+///
+/// # Where each value comes from
+///
+/// The race's `~ Size` racial-default trait row's `TEMPLATE:SIZE_<code>` in
+/// `core_essentials/races/<race>/<race>_abilities_race.lst`, which is what
+/// [`RaceCorpus::resolve`] reports as the race's size. That is *not* always the
+/// chassis row's `FACT:BaseSize` — which by its own `FACTDEF` is the smallest
+/// *allowed* size rather than the default one (see [`SizeSource`]):
+/// **Aasimar and Tiefling carry `FACT:BaseSize|S` and are Medium creatures.**
+/// Human is the one in-scope race whose `~ Size` row carries no template, and
+/// its chassis `FACT:BaseSize|M` is then the declaration.
+///
+/// This deliberately supersedes
+/// `rules_tables::crb::race_tables::race_size_for_race_id`, which knew only the
+/// 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1 ones —
+/// silently giving Goblin, Kobold and Svirfneblin (all Small) a Medium
+/// creature's carrying capacity at both of its call sites.
+const RACE_SIZES: &[(&str, SizeCategory)] = &[
+    // Core Rulebook's 7.
+    ("Dwarf", SizeCategory::Medium),       // TEMPLATE:SIZE_M
+    ("Elf", SizeCategory::Medium),         // TEMPLATE:SIZE_M
+    ("Gnome", SizeCategory::Small),        // TEMPLATE:SIZE_S
+    ("Half-Elf", SizeCategory::Medium),    // TEMPLATE:SIZE_M
+    ("Half-Orc", SizeCategory::Medium),    // TEMPLATE:SIZE_M
+    ("Halfling", SizeCategory::Small),     // TEMPLATE:SIZE_S
+    ("Human", SizeCategory::Medium),       // no template; chassis FACT:BaseSize|M
+    // Bestiary 1's 11.
+    ("Aasimar", SizeCategory::Medium),     // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
+    ("Drow", SizeCategory::Medium),        // TEMPLATE:SIZE_M
+    ("Duergar", SizeCategory::Medium),     // TEMPLATE:SIZE_M
+    ("Goblin", SizeCategory::Small),       // TEMPLATE:SIZE_S
+    ("Hobgoblin", SizeCategory::Medium),   // TEMPLATE:SIZE_M
+    ("Kobold", SizeCategory::Small),       // TEMPLATE:SIZE_S
+    ("Merfolk", SizeCategory::Medium),     // TEMPLATE:SIZE_M
+    ("Orc", SizeCategory::Medium),         // TEMPLATE:SIZE_M
+    ("Svirfneblin", SizeCategory::Small),  // TEMPLATE:SIZE_S
+    ("Tengu", SizeCategory::Medium),       // TEMPLATE:SIZE_M
+    ("Tiefling", SizeCategory::Medium),    // TEMPLATE:SIZE_M, over a chassis FACT:BaseSize|S
+];
+
+/// Creature size for a loose race identifier — a `race:<slug>` character-input
+/// token, a bare corpus race key, or either in any case, matched by exactly the
+/// rule [`RaceCorpus::resolve_key`] uses.
+///
+/// `None` for a race this repo has not ingested. **Deliberately not defaulted
+/// to Medium here**: a caller that needs a fallback must choose one at its own
+/// call site and say so, so the assumption stays visible instead of being
+/// laundered through this function. See
+/// `contract::encumbrance_size_for_race`, which does exactly that and emits a
+/// claim-blocking diagnostic when it has to.
+pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
+    let needle = race_id.trim();
+    let needle = needle.strip_prefix("race:").unwrap_or(needle);
+    RACE_SIZES
+        .iter()
+        .find(|(key, _)| key.eq_ignore_ascii_case(needle))
+        .map(|(_, size)| *size)
 }
 
 /// The LST file and line a record was ingested from. `CorpusSource` also
@@ -530,6 +689,19 @@ fn first_ability_flag(value: &str) -> Option<String> {
     let clause = parts.next()?;
     let (flag, _) = clause.split_once('=')?;
     Some(flag.to_string())
+}
+
+/// `SIZE_M` -> [`SizeCategory::Medium`]. Any `TEMPLATE:` payload that is not
+/// one of `ce_templates.lst`'s nine `SIZE_<code>` rows yields `None` — a race
+/// trait carries plenty of other templates, and `SIZE_C+` (whose body is
+/// `SIZE:P`, a code `SizeCategory` does not model) must not be mistaken for
+/// Colossal.
+fn size_from_size_template(value: &str) -> Option<SizeCategory> {
+    let code = value.trim().strip_prefix("SIZE_")?;
+    if code.len() != 1 {
+        return None;
+    }
+    SizeCategory::from_base_size_code(code)
 }
 
 /// `Walk,20` / `Walk,15,Swim,30` -> `20` / `15`. `None` when the token names
@@ -965,6 +1137,67 @@ mod tests {
         assert_eq!(corpus.diagnostics().len(), 2, "{:?}", corpus.diagnostics());
         assert!(corpus.race_keys().is_empty());
         fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The size half of the "chassis row is not the whole truth" pattern
+    /// this module already handles for speed. Aasimar's and Tiefling's
+    /// chassis rows carry `FACT:BaseSize|S`; both races are Medium, and the
+    /// declaration that says so is `TEMPLATE:SIZE_M` on their own
+    /// `~ Size` racial-default trait.
+    #[test]
+    fn a_size_trait_template_overrides_a_chassis_base_size_that_disagrees() {
+        let corpus = all_books();
+        for race in ["Aasimar", "Tiefling"] {
+            let resolved = corpus.resolve(race, &[]).expect("resolves");
+            assert_eq!(resolved.chassis_size, Some(SizeCategory::Small), "{race} chassis really says S");
+            assert_eq!(resolved.size, Some(SizeCategory::Medium), "{race} is Medium");
+            assert_eq!(resolved.size_source, SizeSource::Trait(format!("{race} ~ Size")));
+        }
+        // Human's `~ Size` row carries no template at all, so its chassis
+        // `FACT:BaseSize|M` is the declaration -- the chassis is still a
+        // real source, not a discarded one.
+        let human = corpus.resolve("Human", &[]).expect("resolves");
+        assert_eq!(human.size, Some(SizeCategory::Medium));
+        assert_eq!(human.size_source, SizeSource::Chassis);
+    }
+
+    /// `TEMPLATE:` is a busy token; only the nine `SIZE_<code>` rows of
+    /// `ce_templates.lst` may be read as a size, and `SIZE_C+` (body
+    /// `SIZE:P`) is not one of them.
+    #[test]
+    fn only_a_real_size_template_token_is_read_as_a_size() {
+        assert_eq!(size_from_size_template("SIZE_M"), Some(SizeCategory::Medium));
+        assert_eq!(size_from_size_template("SIZE_S"), Some(SizeCategory::Small));
+        assert_eq!(size_from_size_template("SIZE_C"), Some(SizeCategory::Colossal));
+        assert_eq!(size_from_size_template("SIZE_C+"), None, "its body is SIZE:P, not a modelled code");
+        assert_eq!(size_from_size_template("Dragon Size Tracker"), None);
+        assert_eq!(size_from_size_template("SIZE_"), None);
+        assert_eq!(size_from_size_template("Half-Orc Language Template"), None);
+        assert_eq!(size_from_size_template(""), None);
+    }
+
+    /// The hand-modelled token table and the corpus must agree for every
+    /// race, or one of them is lying. `decisions.md §24` allows the table;
+    /// this is the verification that keeps it honest.
+    #[test]
+    fn the_hand_modelled_race_size_table_matches_the_corpus_for_all_eighteen_races() {
+        let corpus = all_books();
+        assert_eq!(RACE_SIZES.len(), 18);
+        for key in corpus.race_keys() {
+            let resolved = corpus.resolve(key, &[]).expect("resolves");
+            assert_eq!(
+                race_size_for_race_token(key),
+                resolved.size,
+                "{key}: RACE_SIZES disagrees with the corpus"
+            );
+        }
+        // The token forms real character inputs actually carry.
+        assert_eq!(race_size_for_race_token("race:goblin"), Some(SizeCategory::Small));
+        assert_eq!(race_size_for_race_token("race:half-elf"), Some(SizeCategory::Medium));
+        assert_eq!(race_size_for_race_token("race:tiefling"), Some(SizeCategory::Medium));
+        // A race outside the ingested 18 stays an honest absence.
+        assert_eq!(race_size_for_race_token("race:dhampir"), None);
+        assert_eq!(race_size_for_race_token(""), None);
     }
 
     #[test]
