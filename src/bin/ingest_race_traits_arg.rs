@@ -41,6 +41,22 @@
 //! laundered into `suppressed_by_flag`, which is reserved for a *standalone*
 //! `!PREFACT` gate (the shape standard traits use).
 //!
+//! **`DESC:` rendering.** PCGen's description syntax is not prose: a segment
+//! carries a `|`-delimited tail of substitution arguments and prerequisite
+//! gates, `%N` references argument N, and `%%` is a literal-percent escape.
+//! This binary originally stored only the leading segment, which shipped
+//! *"Three %1 times per day ... a +%1 luck bonus"* and *"reduced by 20%%"* to
+//! the Race Traits panel. It now renders descriptions the same way
+//! `src/bin/ingest_races.rs` already renders the Core Rulebook and Bestiary
+//! traits: gates are evaluated against the row's own `DEFINE:`/`BONUS:VAR`
+//! literals, `%N` is substituted from those literals, and `%%` collapses to
+//! one sign. An argument that is not a same-row literal — ARG has exactly one,
+//! `Halfling_AdaptableLuck_Bonus-1`, which is an *expression* and so
+//! unreadable without the formula interpreter `decisions.md §24` forbids — is
+//! **dropped and reported, never guessed**. [`leaked_pcgen_syntax`] is a
+//! production guard: any description still carrying PCGen syntax fails the run
+//! instead of reaching a screen.
+//!
 //! Run with `cargo run --bin ingest_race_traits_arg`. `PCGEN_CORPUS_ROOT` may
 //! point at a local PCGen `data/` checkout; it defaults to
 //! `$HOME/workspace/repos/pcgen/data`.
@@ -155,6 +171,9 @@ struct TraitRow {
     suppressed_by_flag: Option<String>,
     sets_replace_flags: Vec<String>,
     description: Option<String>,
+    /// `DESC:` arguments that are not same-row literals. Dropped from the
+    /// player-facing prose and reported by the run, never guessed.
+    unresolved_desc_args: Vec<String>,
     source_page: Option<String>,
     raw_tokens: Vec<RawToken>,
     raw_bonus_chains: Vec<RawBonusChain>,
@@ -179,12 +198,292 @@ fn prefact_flag(clause_value: &str) -> Option<String> {
     Some(flag.trim().to_string())
 }
 
-/// `DESC:` values carry optional trailing `|`-delimited arguments: PCGen
-/// prerequisite clauses (`|!PREABILITY:...`) and `%n` substitution arguments
-/// (`|Halfling_AdaptableLuck_Times`). Only the leading segment is prose. The
-/// full untouched value is still preserved in `raw_tokens`, so nothing is lost.
-fn desc_prose(value: &str) -> &str {
-    value.split('|').next().unwrap_or(value).trim()
+// ---------------------------------------------------------------------
+// `DESC:` rendering
+//
+// Ported from `src/bin/ingest_races.rs`, which already gives the 175
+// Core Rulebook / Bestiary standard traits their player-facing prose.
+// This binary shipped without it and put raw PCGen syntax on screen.
+// Behaviour is deliberately identical, with one addition this book needs
+// and that book never hit: the `%%` literal-percent escape.
+// ---------------------------------------------------------------------
+
+/// Every variable this row defines *and finishes* on its own, with its
+/// resolved integer value — or `None` where the row names the variable
+/// but its value depends on something the row does not itself state.
+///
+/// PCGen seeds a row-local variable with `DEFINE:<Var>|<base>` and adds
+/// to it with `BONUS:VAR|<Var>|<value>`. Where both are integer literals
+/// on the same row the variable is a constant written across two tokens:
+/// `Halfling ~ Adaptable Luck` carries `DEFINE:Halfling_AdaptableLuck_Bonus|0`
+/// and `BONUS:VAR|Halfling_AdaptableLuck_Bonus|2`, so the value is 2 and
+/// reading it is transcription, not evaluation. `decisions.md §24`'s ban
+/// on a formula interpreter is therefore not engaged.
+///
+/// The instant any contribution stops being a same-row literal — a
+/// formula (`BONUS:VAR|X|OtherVar`), a conditional bonus (a trailing
+/// `PRE...` qualifier), or a base declared elsewhere in the corpus — the
+/// variable is marked unresolvable and **no value is guessed**.
+fn same_row_vars(parsed: &[Field]) -> BTreeMap<String, Option<i64>> {
+    let mut vars: BTreeMap<String, Option<i64>> = BTreeMap::new();
+
+    for f in parsed.iter().filter(|f| f.key == "DEFINE") {
+        let Some((name, base)) = f.value.split_once('|') else { continue };
+        vars.insert(name.trim().to_string(), base.trim().parse::<i64>().ok());
+    }
+
+    for f in parsed.iter().filter(|f| f.key == "BONUS") {
+        let quals: Vec<&str> = f.value.split('|').collect();
+        if !quals.first().map(|q| q.eq_ignore_ascii_case("VAR")).unwrap_or(false) {
+            continue;
+        }
+        let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
+        let conditional = quals[3..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
+        let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
+        for name in names.split(',') {
+            let name = name.trim().to_string();
+            match vars.get_mut(&name) {
+                // Never `DEFINE`d here: the base lives in another file,
+                // so this row cannot resolve the variable by itself.
+                None => {
+                    vars.insert(name, None);
+                }
+                Some(slot) => {
+                    *slot = match (*slot, amount) {
+                        (Some(current), Some(add)) => Some(current + add),
+                        _ => None,
+                    };
+                }
+            }
+        }
+    }
+
+    vars
+}
+
+/// True when a `DESC:` argument is a prerequisite gate rather than a
+/// substitution argument. PCGen prerequisites are upper-case and always
+/// carry a colon (`PREVARGTEQ:Halfling_AdaptableLuck_Times,4`); variable
+/// names never contain one.
+fn is_prerequisite_arg(arg: &str) -> bool {
+    arg.contains(':') && (arg.starts_with("PRE") || arg.starts_with("!PRE"))
+}
+
+/// Evaluates one `PREVAR<CMP>:<lhs>,<rhs>[,<lhs>,<rhs>...]` gate against
+/// the row's own variable table, honouring a leading `!` as negation and
+/// requiring every pair to hold.
+///
+/// This compares two same-row constants; it is not formula evaluation.
+/// Anything undecidable — an unknown comparison, a prerequisite kind this
+/// does not model, an operand defined elsewhere — is an `Err`, never a
+/// coin flip: a gate decides what the rules text *says* ("Three" vs a
+/// variable count), so guessing it would ship a false statement rather
+/// than merely an incomplete one.
+fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result<bool, String> {
+    let (negated, body) = match token.strip_prefix('!') {
+        Some(rest) => (true, rest),
+        None => (false, token),
+    };
+    let (head, args) = body.split_once(':').ok_or_else(|| format!("malformed DESC gate {token:?}"))?;
+    let cmp = head.strip_prefix("PREVAR").ok_or_else(|| format!("unmodelled DESC gate kind {token:?}"))?;
+
+    let operand = |raw: &str| -> Result<i64, String> {
+        let raw = raw.trim();
+        if let Ok(n) = raw.parse::<i64>() {
+            return Ok(n);
+        }
+        vars.get(raw)
+            .copied()
+            .flatten()
+            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} is not a same-row literal"))
+    };
+
+    let parts: Vec<&str> = args.split(',').collect();
+    if parts.is_empty() || !parts.len().is_multiple_of(2) {
+        return Err(format!("DESC gate {token:?} is not a list of <operand>,<value> pairs"));
+    }
+
+    let mut all = true;
+    for pair in parts.chunks(2) {
+        let (lhs, rhs) = (operand(pair[0])?, operand(pair[1])?);
+        all &= match cmp {
+            "EQ" => lhs == rhs,
+            "NEQ" => lhs != rhs,
+            "LT" => lhs < rhs,
+            "LTEQ" => lhs <= rhs,
+            "GT" => lhs > rhs,
+            "GTEQ" => lhs >= rhs,
+            other => return Err(format!("DESC gate {token:?}: unmodelled comparison {other:?}")),
+        };
+    }
+    Ok(negated != all)
+}
+
+/// Collapses every whitespace run to a single space and trims the ends.
+/// Applied only where a placeholder was removed, so prose that needed no
+/// edit stays byte-identical to the source.
+fn collapse_whitespace(text: &str) -> String {
+    let mut out = String::new();
+    let mut last_was_space = false;
+    for ch in text.chars() {
+        if ch.is_whitespace() {
+            if !last_was_space {
+                out.push(' ');
+            }
+            last_was_space = true;
+        } else {
+            out.push(ch);
+            last_was_space = false;
+        }
+    }
+    out.trim().to_string()
+}
+
+/// Renders one `DESC:` segment's prose: `%%` becomes a literal `%`, and
+/// every `%N` becomes argument N's resolved literal. Returns the rendered
+/// text and the names of any arguments that would not resolve.
+///
+/// Two different PCGen constructs share the `%` sign and must not be
+/// conflated:
+///
+/// * `%%` is an **escape**. `arg_abilities_race.lst` writes
+///   `reduced by 20%%` and `(50%% or fewer hit points)`; the player must
+///   see one sign. Nothing is looked up and nothing can be lost.
+/// * `%N` is an **argument reference** into the segment's `|`-delimited
+///   tail.
+///
+/// An unresolvable argument is **dropped, never guessed**: the
+/// placeholder goes, the `+`/`-` sign that introduced it goes with it,
+/// and the whitespace is closed up so the sentence still reads. The raw
+/// argument tail is not emitted under any branch — that is the whole
+/// point of this function.
+fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, Option<i64>>) -> (String, Vec<String>) {
+    let chars: Vec<char> = prose.chars().collect();
+    let mut out = String::new();
+    let mut unresolved: Vec<String> = Vec::new();
+    let mut dropped_any = false;
+    let mut i = 0;
+
+    while i < chars.len() {
+        // The escape is checked first: `%%` is never an argument
+        // reference, and `%%1` would otherwise be misread as one.
+        if chars[i] == '%' && chars.get(i + 1) == Some(&'%') {
+            out.push('%');
+            i += 2;
+            continue;
+        }
+        if chars[i] == '%'
+            && let Some(digit) = chars.get(i + 1).and_then(|c| c.to_digit(10))
+            && digit >= 1
+        {
+            let arg = args.get(digit as usize - 1).copied();
+            let value = arg.and_then(|name| {
+                let name = name.trim();
+                name.parse::<i64>().ok().or_else(|| vars.get(name).copied().flatten())
+            });
+            match value {
+                Some(v) => out.push_str(&v.to_string()),
+                None => {
+                    if let Some(name) = arg {
+                        unresolved.push(name.to_string());
+                    }
+                    while out.ends_with('+') || out.ends_with('-') {
+                        out.pop();
+                    }
+                    dropped_any = true;
+                }
+            }
+            i += 2;
+            continue;
+        }
+        out.push(chars[i]);
+        i += 1;
+    }
+
+    let text = if dropped_any { collapse_whitespace(&out) } else { out };
+    (text, unresolved)
+}
+
+/// One row's rendered player-facing description, plus the arguments that
+/// could not be resolved (reported by the binary rather than swallowed).
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct RenderedDescription {
+    text: Option<String>,
+    unresolved_args: Vec<String>,
+}
+
+/// Turns a row's `DESC:` tokens into the prose the player actually sees.
+///
+/// PCGen's format is `DESC:<prose>|<arg1>|<arg2>...`, where `%1` in the
+/// prose stands for arg 1's resolved value and where an argument that
+/// looks like a prerequisite gates the whole segment instead. A row may
+/// carry several `DESC:` tokens (`Halfling ~ Adaptable Luck` carries
+/// five, two of them mutually exclusive gates); the surviving segments
+/// concatenate, in source order, into one description.
+///
+/// Storing the leading segment instead — which is what this binary used
+/// to do — put PCGen substitution syntax on screen verbatim, e.g.
+/// *"Three %1 times per day ... a +%1 luck bonus"* and *"reduced by 20%%"*.
+fn render_description(parsed: &[Field]) -> Result<RenderedDescription, String> {
+    let vars = same_row_vars(parsed);
+    let mut segments: Vec<String> = Vec::new();
+    let mut unresolved_args: Vec<String> = Vec::new();
+    let mut saw_desc = false;
+
+    for f in parsed.iter().filter(|f| f.key == "DESC") {
+        saw_desc = true;
+        let mut parts = f.value.split('|');
+        let prose = parts.next().unwrap_or_default();
+        let (gates, args): (Vec<&str>, Vec<&str>) = parts.partition(|p| is_prerequisite_arg(p));
+
+        let mut applies = true;
+        for gate in &gates {
+            // `!PREABILITY` guards are the "you already have this" shape
+            // and are not variable comparisons; they never suppress the
+            // segment for ingest purposes, and are preserved verbatim in
+            // `raw_tokens`. Only `PREVAR` gates are evaluated.
+            if !gate.trim_start_matches('!').starts_with("PREVAR") {
+                continue;
+            }
+            // Every gate is evaluated even once one has failed, so an
+            // undecidable gate is surfaced rather than masked by a
+            // neighbour that happened to be decided first.
+            applies &= eval_prevar_gate(gate, &vars)?;
+        }
+        if !applies {
+            continue;
+        }
+
+        let (text, mut unresolved) = substitute_placeholders(prose.trim(), &args, &vars);
+        unresolved_args.append(&mut unresolved);
+        if !text.is_empty() {
+            segments.push(text);
+        }
+    }
+
+    let joined = segments.join(" ");
+    let text = if !saw_desc || joined.is_empty() { None } else { Some(joined) };
+    Ok(RenderedDescription { text, unresolved_args })
+}
+
+/// The PCGen syntax that must never reach a player: an unsubstituted
+/// `%<digit>` argument reference, an unresolved `%%` literal-percent
+/// escape, or a raw `|` argument tail. Used as a production guard on
+/// every description this binary writes.
+fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
+    if text.contains('|') {
+        return Some("raw '|' argument tail");
+    }
+    if text.contains("%%") {
+        return Some("unescaped '%%' literal-percent escape");
+    }
+    let chars: Vec<char> = text.chars().collect();
+    for (i, c) in chars.iter().enumerate() {
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
+            return Some("unsubstituted '%N' argument reference");
+        }
+    }
+    None
 }
 
 fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
@@ -251,11 +550,7 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     // guard, not a suppression gate.
     let suppressed_by_flag = parsed.iter().filter(|f| f.key == "!PREFACT").find_map(|f| prefact_flag(&f.value));
 
-    let description = {
-        let parts: Vec<&str> =
-            parsed.iter().filter(|f| f.key == "DESC").map(|f| desc_prose(&f.value)).filter(|s| !s.is_empty()).collect();
-        if parts.is_empty() { None } else { Some(parts.join(" ")) }
-    };
+    let rendered = render_description(&parsed).unwrap_or_else(|e| panic!("line {line_number}: {e}"));
 
     let source_page = parsed.iter().find(|f| f.key == "SOURCEPAGE").map(|f| f.value.clone());
 
@@ -286,7 +581,8 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         is_racial_default,
         suppressed_by_flag,
         sets_replace_flags,
-        description,
+        description: rendered.text,
+        unresolved_desc_args: rendered.unresolved_args,
         source_page,
         raw_tokens,
         raw_bonus_chains,
@@ -337,8 +633,23 @@ fn main() {
     let mut defaults_seen: Vec<String> = Vec::new();
     let mut gated_alternates: Vec<(String, String)> = Vec::new();
     let mut written_paths: BTreeSet<PathBuf> = BTreeSet::new();
+    let mut unresolved_desc_args: Vec<String> = Vec::new();
+    let mut leaks: Vec<String> = Vec::new();
 
     for row in &rows {
+        // Production guard: a description carrying PCGen syntax fails the
+        // run loudly rather than reaching a screen. `%1` on the Race
+        // Traits panel is the defect this exists to make impossible.
+        if let Some(desc) = row.description.as_deref()
+            && let Some(leak) = leaked_pcgen_syntax(desc)
+        {
+            leaks.push(format!("{LST_RELATIVE}:{}: {} would ship a {leak}: {desc}", row.line_number, row.key));
+        }
+        for arg in &row.unresolved_desc_args {
+            unresolved_desc_args
+                .push(format!("{} -> DESC arg {arg:?} is not a same-row literal (dropped, not guessed)", row.key));
+        }
+
         if row.is_racial_default {
             defaults_seen.push(row.key.clone());
         }
@@ -414,9 +725,23 @@ fn main() {
         println!("    {k} <- {flag}");
     }
 
+    println!("\n  DESC args that are not same-row literals (dropped, never guessed) : {}", unresolved_desc_args.len());
+    for line in &unresolved_desc_args {
+        println!("    {line}");
+    }
+
     assert_eq!(written, rows.len(), "every in-scope row must produce exactly one record");
     let on_disk = count_json(&out_root);
     assert_eq!(on_disk, written, "records written to disk must match records emitted");
+
+    // Last, and fatal: nothing PCGen-shaped may survive into a served
+    // description.
+    if !leaks.is_empty() {
+        for line in &leaks {
+            eprintln!("LEAK  {line}");
+        }
+        panic!("{} description(s) carry PCGen syntax; refusing to ship them", leaks.len());
+    }
 }
 
 fn count_json(dir: &Path) -> usize {
@@ -608,10 +933,154 @@ mod tests {
     }
 
     #[test]
-    fn desc_prose_drops_pcgen_argument_and_prerequisite_segments() {
-        assert_eq!(desc_prose("Plain text."), "Plain text.");
-        assert_eq!(desc_prose("Replaces greed.|!PREABILITY:1,CATEGORY=Special Ability,X"), "Replaces greed.");
-        assert_eq!(desc_prose("%1 times per day|Halfling_AdaptableLuck_Times"), "%1 times per day");
+    fn description_drops_pcgen_argument_and_prerequisite_segments() {
+        let row = parse_row(1, "X\tKEY:Dwarf ~ X\tTYPE:Dwarf Racial Trait\tDESC:Plain text.")
+            .expect("row is a racial trait");
+        assert_eq!(row.description.as_deref(), Some("Plain text."));
+
+        let row = parse_row(
+            1,
+            concat!(
+                "X\tKEY:Dwarf ~ X\tTYPE:Dwarf Racial Trait\t",
+                "DESC:Replaces greed.|!PREABILITY:1,CATEGORY=Special Ability,X"
+            ),
+        )
+        .expect("row is a racial trait");
+        assert_eq!(row.description.as_deref(), Some("Replaces greed."));
+    }
+
+    /// `arg_abilities_race.lst:716` (`Tengu ~ Carrion Sense`), verbatim
+    /// except for the elided tab padding. The only PCGen syntax it carries
+    /// is `%%`, which is the *literal-percent escape* — the player must see
+    /// `50%`, one sign, and never `50%%`.
+    const CARRION_SENSE: &str = concat!(
+        "Carrion Sense\t",
+        "KEY:Tengu ~ Carrion Sense\t",
+        "CATEGORY:Special Ability\t",
+        "TYPE:RacialTraits.Tengu Racial Trait.SpecialQuality.Special Quality.Sense\t",
+        "PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Carrion Sense],",
+        "[!PREFACT:1,ABILITIES,Tengu_ReplaceGiftedLinguist=True]\t",
+        "DESC:Tengus with this racial trait have a limited scent ability, which only ",
+        "functions for corpses and badly wounded creatures (50%% or fewer hit points).\t",
+        "DESC:This racial trait replaces gifted linguist.",
+        "|!PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Carrion Sense\t",
+        "COST:0\t",
+        "SOURCEPAGE:p.163\t",
+        "FACT:Tengu_ReplaceGiftedLinguist|True",
+    );
+
+    /// `arg_abilities_race.lst:227` (`Halfling ~ Adaptable Luck`), verbatim
+    /// except for a shortened first `DESC:` and the elided tab padding. It is
+    /// the hardest row in the file: five `DESC:` segments, two of them gated
+    /// on `PREVAR` comparisons over row-local variables, one `%N` argument
+    /// that resolves off same-row literals (`Halfling_AdaptableLuck_Bonus`
+    /// = `DEFINE 0` + `BONUS:VAR 2` = 2) and one that does **not**
+    /// (`Halfling_AdaptableLuck_Bonus-1` is an expression, not a literal).
+    const ADAPTABLE_LUCK: &str = concat!(
+        "Adaptable Luck\t",
+        "KEY:Halfling ~ Adaptable Luck\t",
+        "CATEGORY:Special Ability\t",
+        "TYPE:RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality\t",
+        "PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck],",
+        "[!PREFACT:1,ABILITIES,Halfling_ReplaceHalflingLuck=true]\t",
+        "DEFINE:Halfling_AdaptableLuck_Times|0\t",
+        "DEFINE:Halfling_AdaptableLuck_Bonus|0\t",
+        "DESC:Some halflings have greater control over their innate luck.\t",
+        "DESC:Three|PREVARLTEQ:Halfling_AdaptableLuck_Times,3\t",
+        "DESC:%1|Halfling_AdaptableLuck_Times|PREVARGTEQ:Halfling_AdaptableLuck_Times,4\t",
+        "DESC:times per day, a halfling can gain a +%1 luck bonus on an ability check, ",
+        "attack roll, saving throw, or skill check. If halflings choose to use the ability ",
+        "before they make the roll or check, they gain the full +%1 bonus; if they choose ",
+        "to do so afterward, they only gain a +%2 bonus. Using adaptive luck in this way is ",
+        "not an action.|Halfling_AdaptableLuck_Bonus|Halfling_AdaptableLuck_Bonus-1\t",
+        "DESC:This racial trait replaces halfling luck.",
+        "|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck\t",
+        "BONUS:VAR|Halfling_AdaptableLuck_Times|3\t",
+        "BONUS:VAR|Halfling_AdaptableLuck_Bonus|2\t",
+        "COST:0\t",
+        "SOURCEPAGE:p.21\t",
+        "FACT:Halfling_ReplaceHalflingLuck|True",
+    );
+
+    #[test]
+    fn literal_percent_escape_renders_as_a_single_percent_sign() {
+        let row = parse_row(716, CARRION_SENSE).expect("row is a racial trait");
+        let desc = row.description.expect("description");
+        assert!(desc.contains("(50% or fewer hit points)"), "got {desc:?}");
+        assert!(!desc.contains("%%"), "the escape must not survive: {desc:?}");
+        assert_eq!(leaked_pcgen_syntax(&desc), None);
+    }
+
+    #[test]
+    fn adaptable_luck_resolves_what_the_row_states_and_drops_only_what_it_does_not() {
+        let row = parse_row(227, ADAPTABLE_LUCK).expect("row is a racial trait");
+        let desc = row.description.expect("description");
+        assert_eq!(
+            desc,
+            concat!(
+                "Some halflings have greater control over their innate luck. ",
+                "Three times per day, a halfling can gain a +2 luck bonus on an ability check, ",
+                "attack roll, saving throw, or skill check. If halflings choose to use the ability ",
+                "before they make the roll or check, they gain the full +2 bonus; if they choose ",
+                "to do so afterward, they only gain a bonus. Using adaptive luck in this way is ",
+                "not an action. This racial trait replaces halfling luck.",
+            )
+        );
+        // The `%1`-only segment is gated on `Times >= 4`; the row's own
+        // literals make Times 3, so that segment is dropped whole and the
+        // "Three" segment (`Times <= 3`) is what survives.
+        assert!(!desc.contains("Three 3 times"), "gates must not both fire: {desc:?}");
+        assert_eq!(leaked_pcgen_syntax(&desc), None);
+        // The one argument that is an expression rather than a literal is
+        // reported, never guessed.
+        assert_eq!(row.unresolved_desc_args, vec!["Halfling_AdaptableLuck_Bonus-1"]);
+    }
+
+    #[test]
+    fn leaked_pcgen_syntax_names_every_shape_that_must_never_reach_a_player() {
+        assert_eq!(leaked_pcgen_syntax("Clean prose with 50% of something."), None);
+        assert_eq!(leaked_pcgen_syntax("A +%1 bonus."), Some("unsubstituted '%N' argument reference"));
+        assert_eq!(leaked_pcgen_syntax("reduced by 20%%."), Some("unescaped '%%' literal-percent escape"));
+        assert_eq!(leaked_pcgen_syntax("Text.|Some_Var"), Some("raw '|' argument tail"));
+    }
+
+    /// The property the player actually experiences: nothing PCGen-shaped
+    /// survives into a served description. Scoped to the one book this
+    /// binary writes.
+    #[test]
+    fn no_committed_arg_trait_description_leaks_pcgen_syntax() {
+        use codex::rules_core::shape_b_v1::CorpusRecordV1;
+
+        let trait_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
+        let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
+            .expect("race_trait dir must exist")
+            .filter_map(Result::ok)
+            .map(|e| e.path())
+            .collect();
+        race_dirs.sort();
+
+        let mut checked = 0usize;
+        let mut with_description = 0usize;
+        for race_dir in race_dirs {
+            let mut files: Vec<PathBuf> =
+                fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+            files.sort();
+            for path in files {
+                let record: CorpusRecordV1<RaceTraitCacheData> =
+                    serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
+                checked += 1;
+                let Some(desc) = record.data.description.as_deref() else { continue };
+                with_description += 1;
+                assert_eq!(
+                    leaked_pcgen_syntax(desc),
+                    None,
+                    "{path:?}: served description carries PCGen syntax: {desc}"
+                );
+                assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+            }
+        }
+        assert_eq!(checked, 156, "156 ARG alternate racial trait records");
+        assert_eq!(with_description, 156, "every one of them carries a DESC:");
     }
 
     #[test]

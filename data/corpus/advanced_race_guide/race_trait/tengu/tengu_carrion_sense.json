@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-31T15:09:24Z",
+  "ingested_at": "2026-07-31T18:13:11Z",
   "data": {
     "key": "Tengu ~ Carrion Sense",
     "name": "Carrion Sense",
@@ -19,7 +19,7 @@
     "sets_replace_flags": [
       "Tengu_ReplaceGiftedLinguist"
     ],
-    "description": "Many tengus have a natural ability to sniff out carrion. While their sense of smell isn't as keen as that of other species, it is particularly attuned to the scent of injuries or death. Tengus with this racial trait have a limited scent ability, which only functions for corpses and badly wounded creatures (50%% or fewer hit points). This racial trait replaces gifted linguist.",
+    "description": "Many tengus have a natural ability to sniff out carrion. While their sense of smell isn't as keen as that of other species, it is particularly attuned to the scent of injuries or death. Tengus with this racial trait have a limited scent ability, which only functions for corpses and badly wounded creatures (50% or fewer hit points). This racial trait replaces gifted linguist.",
     "source_page": "p.163",
     "raw_tokens": [
       {
