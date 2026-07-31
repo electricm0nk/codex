@@ -81,8 +81,9 @@ use codex::rules_core::rules_tables::apg::ApgClassId;
 use codex::rules_core::rules_tables::crb::class_tables::ClassId;
 use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, RuleSetId,
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -304,17 +305,25 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
 /// **Known blind spot, stated rather than papered over.** This reads
 /// column-zero `pub const NAME: &[Type]` declarations only, so a book whose
 /// records live inline inside an accessor function body is invisible to it.
-/// `pathfinder_unchained` is exactly that shape today — its records sit inside
-/// `pub fn equipment_tables()` and `pub fn feat_tables()`, and it is also
-/// absent from `corpus_ingest_diagnostic` (which reports `crb`, `apg`, `acg`
-/// and `beastiary1`), so **neither** discovery source sees PU and this gate
-/// asserts nothing about it in either direction. That is not benign: PU's
-/// records do in fact reach `list_feat_catalog` and `list_equipment_catalog`
-/// today, but a future PU family that reached nothing would not fail here.
-/// A `reach_of` arm for a PU family would be an unexecuted claim — nothing
-/// iterates it — which is why none is declared. Remedy: teach this scanner the
-/// accessor-function shape (or add PU to the ingest diagnostic), then declare
-/// PU's claims so they are actually executed.
+/// `pathfinder_unchained` is exactly that shape — its records sit inside
+/// `pub fn equipment_tables()` and `pub fn feat_tables()` — so this scanner
+/// still does not see PU.
+///
+/// **The second half of that blind spot is closed (SD-27, 2026-07-31.)** PU
+/// used to be absent from `corpus_ingest_diagnostic` as well, leaving
+/// *neither* discovery source able to see it and this gate asserting nothing
+/// about the book in either direction. The diagnostic now reports it (and
+/// `advanced_race_guide`), so PU's families reach `full_inventory` through
+/// source 1, and the remedy this comment used to name — "add PU to the ingest
+/// diagnostic, then declare PU's claims so they are actually executed" — has
+/// been carried out for `classes`, `feats` and `equipment`, whose claims are
+/// declared in `reach_of` and executed against live IPC responses.
+/// `class_features` is the one family with no executable claim; it has an
+/// OPEN_FINDINGS entry stating exactly why.
+///
+/// Teaching this scanner the accessor-function shape is still worth doing:
+/// two independent sources is the property that makes the inventory hard to
+/// fool, and PU currently rests on one.
 fn scanned_inventory() -> (BTreeSet<Family>, Vec<String>) {
     let root = repo_root().join("src/rules_core/rules_tables");
     let mut families = BTreeSet::new();
@@ -431,6 +440,9 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // widening, so the same command now carries its records too. This
         // claim replaces the OPEN_FINDINGS entry that recorded the gap.
         ("advanced_race_guide", "feats") => Some(feats_reach(RuleSetId::Arg, "Arg")),
+        // PU joined `feats_all::all_feat_tables()` alongside ARG; the same
+        // command carries its 17 records under the `Pu` wire source.
+        ("pathfinder_unchained", "feats") => Some(feats_reach(RuleSetId::Pu, "Pu")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -512,6 +524,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        ("pathfinder_unchained", "equipment") => Some(equipment_reach(
+            "PU",
+            pu::equipment_tables::equipment_tables()
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -550,7 +569,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|id| format!("class:{}", id.name()))
                 .collect(),
         )),
+        // Pathfinder Unchained's four replacement classes joined CLASS_OPTIONS
+        // in the SD-27 wiring, under their own `class:unchained_*` ids so a
+        // selection can never resolve the class they replace.
+        ("pathfinder_unchained", "classes") => Some(classes_reach(
+            PuClassId::ALL
+                .iter()
+                .map(|id| format!("class:{}", id.name()))
+                .collect(),
+        )),
 
+        // `pathfinder_unchained/class_features` is deliberately absent: no
+        // claim can be executed for it today, and a claim nobody executes is
+        // the thing this gate exists to refuse. See its OPEN_FINDINGS entry.
         _ => None,
     }
 }
@@ -780,7 +811,15 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 // Open findings
 // ---------------------------------------------------------------------------
 
-/// Ingested families that genuinely reach no player surface today.
+/// Ingested families this gate cannot certify as reaching the player.
+///
+/// Usually that means the family reaches nothing at all (Bestiary 1's
+/// monsters). It can also mean the records reach a surface but no automated
+/// check can prove *which* of them do — `pathfinder_unchained/class_features`
+/// is that case, and its entry says so in its first sentence. Both belong
+/// here because the gate's rule is all-or-nothing by design: it refuses
+/// partial credit, so anything short of a fully executed claim is a written
+/// finding. Read the entry, never the label alone.
 ///
 /// **This list is pinned in both directions and is not a suppression list.**
 /// `unsurfaced_families_are_exactly_the_recorded_findings` computes the
@@ -805,6 +844,26 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          count — its companion stat block is computed by `pilot_compute`'s own \
          `ground_*_companion_stat_block`, not read from these tables. Remedy: a monster catalog \
          command and browser, mirroring `spell_catalog.rs` + SpellCatalogScreen.tsx.",
+    ),
+    (
+        "pathfinder_unchained",
+        "class_features",
+        "Read the reach state precisely, because a one-line label overstates it: PU's 64 ingested \
+         class-feature records DO influence a real player surface — the character sheet's \"Class \
+         Features & Special Abilities\" section (CharacterSheet.tsx, via classFeaturesModel.ts) \
+         renders the engine's `class_feature.pu.*` receipt rows, and pf1_adapter's \
+         `every_unchained_class_reaches_computed_through_the_real_creation_path` proves each of \
+         the four classes grounds at least one of its own. What cannot be claimed is WHICH of the \
+         64 that covers, and the gate refuses partial credit. The blocker is an identity mismatch, \
+         not a missing screen: `pilot_compute` names its receipt rows semantically \
+         (`class_feature.pu.unchained_rogue.sneak_attack_dice`) while the corpus record is keyed \
+         `Unchained Rogue ~ Sneak Attack`, so nothing can join the two without a hand-written \
+         mapping — which would be exactly the unexecuted claim this file forbids. Each class does \
+         emit a non-claim-blocking `class_feature.pu.<class>.other_features_deferred.unsupported` \
+         row naming its own remainder, so the deferred set is visible to a player even though it \
+         is opaque to this gate. Remedy: carry the corpus feature key on the receipt explanation \
+         (or a `feature_key` field beside `id`), then declare a real per-record claim here and \
+         delete this entry.",
     ),
 ];
 

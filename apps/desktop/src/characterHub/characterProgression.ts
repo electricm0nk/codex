@@ -21,6 +21,21 @@ const CLASS_SKILL_POINTS: Record<string, number> = {
   'class:rogue': 8,
   'class:sorcerer': 2,
   'class:wizard': 2,
+  /*
+   * Pathfinder Unchained (SD-27, 2026-07-31). Each is its base class's
+   * value, and that is a corpus fact rather than a copy: none of the four
+   * `data/corpus/pathfinder_unchained/class/*.json` records carries a
+   * `STARTSKILLPTS` token, i.e. the selection ability overrides no skill
+   * ranks per level, so the base `CLASS:` record's own value stands.
+   *
+   * `class:unchained_summoner` is deliberately absent: the APG Summoner it
+   * replaces is itself absent from this table and falls through to the
+   * default of 2, which is its correct value. Adding one and not the other
+   * would make the pair disagree for no reason.
+   */
+  'class:unchained_barbarian': 4,
+  'class:unchained_monk': 4,
+  'class:unchained_rogue': 8,
 };
 
 /*
@@ -61,7 +76,18 @@ export interface WeaponProficiency {
 // PF1 martial-weapon classes. Exotic weapons always require a feat, so no class
 // grants them by default. Restricted-list casters (wizard, druid, monk) are
 // approximated as simple-proficient at the category level.
-const MARTIAL_WEAPON_CLASSES = new Set(['class:fighter', 'class:barbarian', 'class:paladin', 'class:ranger']);
+// `class:unchained_barbarian` joins the set on the same evidence as the
+// rest: its own corpus proficiency record grants `Weapon Prof ~ Simple`
+// AND `Weapon Prof ~ Martial` (SD-27, 2026-07-31). The other three
+// Unchained classes are deliberately absent -- the Unchained Monk and
+// Rogue and Summoner grant no Martial tier, exactly like their namesakes.
+const MARTIAL_WEAPON_CLASSES = new Set([
+  'class:fighter',
+  'class:barbarian',
+  'class:paladin',
+  'class:ranger',
+  'class:unchained_barbarian',
+]);
 
 export function classWeaponProficiency(classId: string): WeaponProficiency {
   return { simple: true, martial: MARTIAL_WEAPON_CLASSES.has(classId), exotic: false };

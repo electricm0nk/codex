@@ -30,6 +30,7 @@ use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::equipment_resolver::equipment_id_resolve;
 use crate::rules_core::feat_identity;
+use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
     compute_pilot_base_chassis, equipped_weapon_stat_block, fighter_armor_training,
@@ -501,9 +502,37 @@ pub fn compute_combat_baseline_from_corpus(
     } else {
         0
     };
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): the creature's PF1
+    // Table 8-1 size modifier to Armor Class. Applied HERE TOO, not only in
+    // `pilot_compute::compute_combat_baseline` -- and for exactly the reason
+    // the nonproficiency penalty above states: this is the path
+    // `resolve_unified_pilot_snapshot` / `create_character` actually gate on,
+    // so it is the one a player's sheet reads, while
+    // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
+    // pins the two paths equal. Applying it on one path only would both leave
+    // the shipped sheet wrong and break that parity test.
+    //
+    // Same stacking position and same modifier-type reasoning as the hardcoded
+    // path: after the Dexterity contribution, its own PF1 modifier type, one
+    // size per creature so non-stacking holds structurally.
+    //
+    // The unresolvable-race case is an `unmet` condition rather than an assumed
+    // Medium, matching this function's existing contract for the unknown
+    // proficiency case: refuse to produce a number rather than guess.
+    let size_armor_class_modifier = match race_size_for_race_token(&chosen.race_id) {
+        Some(size) => size.armor_class_size_modifier(),
+        None => {
+            return Err(vec![format!(
+                "race {:?} resolves to no ingested race, so its creature size -- and its size \
+                 modifier to Armor Class -- is unknown",
+                chosen.race_id
+            )]);
+        }
+    };
     let armor_class = ARMOR_CLASS_BASE
         + effects.armor_class_delta
         + dexterity_contribution
+        + size_armor_class_modifier
         + dodge_armor_class_bonus;
 
     Ok(CorpusAwareCombatBaseline { melee_attack_bonus, armor_class })
@@ -759,6 +788,97 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
                 "{class_id} level {level}: swim must match the hardcoded value exactly"
             );
         }
+    }
+
+    /// SD-27 `decisions.md §28` defect 1, pinned on **this** path specifically.
+    ///
+    /// `tests/sd27_size_modifiers_to_armor_class.rs` pins the same fix on the
+    /// hardcoded `pilot_compute::compute_combat_baseline`. This one matters
+    /// independently, and arguably more: `compute_combat_baseline_from_corpus`
+    /// is what `resolve_unified_pilot_snapshot` / `create_character` gate on,
+    /// so it is the path whose number a player actually sees on the sheet
+    /// (`pf1_adapter.rs`'s `baseline_armor_class: combat.armor_class`). A fix
+    /// applied to only one of the two paths would leave the shipped sheet
+    /// wrong while every hardcoded-path test went green.
+    ///
+    /// Pins all 18 in-scope races, per §28's standing guard -- the 13 Medium
+    /// ones are the regression half: they must be byte-identical to the
+    /// pre-size-modifier value.
+    #[test]
+    fn the_size_modifier_reaches_the_corpus_aware_path_the_shipped_sheet_reads() {
+        use crate::rules_core::size::SizeCategory;
+
+        // (race, size). Same table as the integration test, restated here
+        // rather than shared so neither copy can drift silently.
+        let races: &[(&str, SizeCategory)] = &[
+            ("Dwarf", SizeCategory::Medium),
+            ("Elf", SizeCategory::Medium),
+            ("Gnome", SizeCategory::Small),
+            ("Half-Elf", SizeCategory::Medium),
+            ("Half-Orc", SizeCategory::Medium),
+            ("Halfling", SizeCategory::Small),
+            ("Human", SizeCategory::Medium),
+            ("Aasimar", SizeCategory::Medium),
+            ("Drow", SizeCategory::Medium),
+            ("Duergar", SizeCategory::Medium),
+            ("Goblin", SizeCategory::Small),
+            ("Hobgoblin", SizeCategory::Medium),
+            ("Kobold", SizeCategory::Small),
+            ("Merfolk", SizeCategory::Medium),
+            ("Orc", SizeCategory::Medium),
+            ("Svirfneblin", SizeCategory::Small),
+            ("Tengu", SizeCategory::Medium),
+            ("Tiefling", SizeCategory::Medium),
+        ];
+
+        // `10 (base) + 4 (Chain Shirt) + 2 (DEX within MAXDEX 4) + 1 (Dodge)`
+        // -- the value this path produced for every race, Small and Medium
+        // alike, before the size modifier existed.
+        const ARMOR_CLASS_BEFORE_SIZE: i16 = 17;
+
+        let corpus = corpus_with_fixture();
+        for (race, size) in races {
+            let fixture = fixed_posture_fixture("class:fighter", 1)
+                .replace("race_id=race:human", &format!("race_id=race:{}", race.to_lowercase()));
+            let input = load(&fixture);
+            let headless = build_pilot_headless_receipt(&input);
+            let combat =
+                compute_combat_baseline_from_corpus(&headless.computation, &input, &corpus)
+                    .unwrap_or_else(|unmet| panic!("{race} must compute, unmet: {unmet:?}"));
+
+            let expected = ARMOR_CLASS_BEFORE_SIZE + size.armor_class_size_modifier();
+            assert_eq!(
+                combat.armor_class, expected,
+                "{race} is {size:?}: the corpus-aware armor class the shipped sheet reads must \
+                 be {expected}"
+            );
+            // And the two paths must still agree exactly, per race -- the
+            // divergence guard the parity test above enforces for classes.
+            assert_eq!(
+                combat.armor_class, headless.computation.baseline_armor_class,
+                "{race}: the corpus-aware and hardcoded paths must not disagree"
+            );
+        }
+    }
+
+    /// A race the engine has never ingested has no known creature size, so its
+    /// Armor Class size modifier is unknowable. This path must refuse to
+    /// produce a number rather than quietly assume Medium -- the same contract
+    /// it already applies to an unknown weapon proficiency.
+    #[test]
+    fn an_unresolvable_race_refuses_an_armor_class_rather_than_assuming_medium() {
+        let corpus = corpus_with_fixture();
+        let fixture = fixed_posture_fixture("class:fighter", 1)
+            .replace("race_id=race:human", "race_id=race:nonexistent_homebrew");
+        let input = load(&fixture);
+        let headless = build_pilot_headless_receipt(&input);
+
+        let unmet = compute_combat_baseline_from_corpus(&headless.computation, &input, &corpus)
+            .expect_err("an unresolvable race must not yield an armor class");
+        assert!(
+            unmet.iter().any(|m| m.contains("creature size")),
+            "the refusal must name the unknown creature size: {unmet:?}"
+        );
     }
 
     /// The real widening: a Fighter wearing a different real armor record

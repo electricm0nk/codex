@@ -59,8 +59,16 @@ use sha2::{Digest, Sha256};
 
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
-#[path = "../rules_core/rules_tables/pathfinder_unchained/mod.rs"]
-mod pathfinder_unchained;
+// SD-27 task "wire PU's 4 Unchained classes" (2026-07-31): the `#[path]`
+// include this line used to carry is gone. It existed only because the
+// authoring cycle could not touch `rules_tables/mod.rs` to add
+// `pub mod pathfinder_unchained;` (see this file's own doc comment above,
+// which explicitly invited a later cycle to undo it). That line has since
+// landed, so the module is on the library's public surface and is imported
+// here like any other. Nothing about the generated cache changes -- it is
+// the same source file, reached by the ordinary module path instead of a
+// second, duplicate compilation of it into this binary crate.
+use codex::rules_core::rules_tables::pathfinder_unchained;
 
 #[path = "../rules_core/rules_tables/advanced_race_guide/mod.rs"]
 mod advanced_race_guide;

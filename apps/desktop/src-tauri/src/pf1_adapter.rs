@@ -2145,6 +2145,141 @@ mod tests {
         );
     }
 
+    // ----- Pathfinder Unchained classes (SD-27, 2026-07-31) -----
+
+    /// The real app creation path, for all four Unchained classes.
+    ///
+    /// `v06_class_state_dump` already sweeps these through the same engine,
+    /// but it builds its input from a fixture. This test builds it the way
+    /// the running app does — `compose_character_input` over a real
+    /// `CreateCharacterRequest`, exactly what the Create Character form
+    /// sends — so "a player can select this and get output" is proved at
+    /// the boundary the player actually crosses, not one adjacent to it.
+    ///
+    /// No per-class seeding is needed and that is a finding, not an
+    /// oversight: unlike Wizard's school, Cleric's domain or Oracle's
+    /// mystery, none of the four Unchained classes has a choice-gated
+    /// feature that blocks its chassis, so `compose_character_input`'s
+    /// fixed loadout is sufficient on its own.
+    #[test]
+    fn every_unchained_class_reaches_computed_through_the_real_creation_path() {
+        for class_id in [
+            "class:unchained_barbarian",
+            "class:unchained_monk",
+            "class:unchained_rogue",
+            "class:unchained_summoner",
+        ] {
+            for level in [1u8, 10, 20] {
+                let request = CreateCharacterRequest {
+                    class_id: class_id.to_owned(),
+                    ..request_for(&format!("{class_id}-{level}"), level)
+                };
+                let character_input = compose_character_input(&request);
+                let receipt = build_pilot_headless_receipt(&character_input);
+                assert_eq!(
+                    receipt.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} level {level} must compute through the real creation path; \
+                     diagnostics: {:?}",
+                    receipt.computation.diagnostics
+                );
+
+                // A class that computes but grounds nothing of its own would
+                // pass the status check while being an empty shell, so the
+                // receipt must also carry that class's own feature records.
+                let own_records = receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .filter(|e| {
+                        e.id.starts_with(&format!(
+                            "class_feature.pu.{}.",
+                            class_id.trim_start_matches("class:")
+                        ))
+                    })
+                    .count();
+                assert!(
+                    own_records > 0,
+                    "{class_id} level {level} must ground its own Pathfinder Unchained \
+                     class features, not merely a chassis"
+                );
+
+                // And the replacement relationship must be on the receipt.
+                assert!(
+                    receipt.computation.explanations.iter().any(|e| e.id
+                        == format!(
+                            "class_chassis.pu.{}.replaces",
+                            class_id.trim_start_matches("class:")
+                        )),
+                    "{class_id} level {level} must record which class it replaces"
+                );
+            }
+        }
+    }
+
+    /// The pair must not collide: creating an Unchained Rogue must not
+    /// produce a CRB Rogue's records, and vice versa. Checked on the one
+    /// pair where the numbers are identical (so only the ids and the feature
+    /// records can tell them apart) and on the one pair where they are not.
+    #[test]
+    fn an_unchained_class_never_resolves_its_namesakes_records() {
+        let unchained = compose_character_input(&CreateCharacterRequest {
+            class_id: "class:unchained_rogue".to_owned(),
+            ..request_for("pu-rogue-collision", 10)
+        });
+        let crb = compose_character_input(&CreateCharacterRequest {
+            class_id: "class:rogue".to_owned(),
+            ..request_for("crb-rogue-collision", 10)
+        });
+
+        let pu_receipt = build_pilot_headless_receipt(&unchained);
+        let crb_receipt = build_pilot_headless_receipt(&crb);
+
+        let has = |receipt: &codex::rules_core::pilot_compute::PilotHeadlessReceipt,
+                   prefix: &str| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with(prefix))
+        };
+
+        assert!(has(&pu_receipt, "class_feature.pu.unchained_rogue."));
+        assert!(
+            !has(&crb_receipt, "class_feature.pu.unchained_rogue."),
+            "a Core Rulebook Rogue must never pick up Unchained Rogue records"
+        );
+        assert!(
+            !has(&pu_receipt, "class_chassis.pu.unchained_monk."),
+            "one Unchained class must never pick up another's records"
+        );
+
+        // The Monk pair, where the chassis itself differs.
+        let pu_monk = build_pilot_headless_receipt(&compose_character_input(
+            &CreateCharacterRequest {
+                class_id: "class:unchained_monk".to_owned(),
+                ..request_for("pu-monk-collision", 10)
+            },
+        ));
+        let crb_monk = build_pilot_headless_receipt(&compose_character_input(
+            &CreateCharacterRequest {
+                class_id: "class:monk".to_owned(),
+                ..request_for("crb-monk-collision", 10)
+            },
+        ));
+        let bab = |receipt: &codex::rules_core::pilot_compute::PilotHeadlessReceipt| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_chassis.base_attack_bonus")
+                .expect("chassis explanation")
+                .value
+        };
+        assert_eq!(bab(&pu_monk), 10, "Unchained Monk 10 has full base attack bonus");
+        assert_eq!(bab(&crb_monk), 7, "CRB Monk 10 has three-quarter base attack bonus");
+    }
+
     // ----- Wizard bootstrap-deadlock fix (v0.6 alpha swarm, item 10) -----
     //
     // Even after the school-choice seeding above, a freshly composed Wizard

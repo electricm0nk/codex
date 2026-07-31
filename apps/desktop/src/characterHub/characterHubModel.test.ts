@@ -29,8 +29,12 @@ const ROSTER: RaceOption[] = [
  * `cargo run --bin v06_class_state_dump`, which sweeps every class over
  * levels 1-20 through the real `build_pilot_headless_receipt` pipeline under
  * the exact posture `compose_character_input` produces. The run of
- * 2026-07-29 reports **all 27 classes `Computed` at every level 1-20**
- * (`computed_count: 27`, every row `levels_blocked: []`).
+ * 2026-07-31 reports **all 31 classes `Computed` at every level 1-20**
+ * (`class_count: 31`, `computed_count: 31`, `blocked_count: 0`, every row
+ * `levels_blocked: []`). That run was diffed against the same dump taken in
+ * a clean worktree at the pre-change HEAD: the 27 classes that were already
+ * there are byte-identical, and the 4 Pathfinder Unchained classes are the
+ * only additions.
  *
  * These tests pin exactly that. A class either offers the full 1-20 range
  * because the engine computes it there, or it offers only level 1 (the "let
@@ -72,6 +76,12 @@ const FULLY_COMPUTED_CLASS_IDS = [
   'class:slayer',
   'class:swashbuckler',
   'class:warpriest',
+  // Pathfinder Unchained. Four REPLACEMENTS for four of the classes above,
+  // present alongside them under distinct ids (SD-27, 2026-07-31).
+  'class:unchained_barbarian',
+  'class:unchained_monk',
+  'class:unchained_rogue',
+  'class:unchained_summoner',
 ];
 
 /**
@@ -119,6 +129,17 @@ const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
   'class:slayer': 10,
   'class:swashbuckler': 10,
   'class:warpriest': 8,
+  // Pathfinder Unchained. Three of the four deliberately equal the class
+  // they replace — their corpus record overrides no chassis field. The
+  // Unchained Monk does NOT: `pu_templates.lst:5`'s
+  // `Monk ~ Unchained HD  HITDIE:10|CLASS=Monk` gives it a d10, against the
+  // operator-ruled d8 above. That divergence is the single loudest reason
+  // these are separate classes and not aliases, and the assertion that the
+  // pair differs lives in `sd27_pu_class_wiring_pin.rs`.
+  'class:unchained_barbarian': 12,
+  'class:unchained_monk': 10,
+  'class:unchained_rogue': 8,
+  'class:unchained_summoner': 8,
 };
 
 /**

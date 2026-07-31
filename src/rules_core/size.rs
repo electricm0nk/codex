@@ -15,29 +15,46 @@
 //! second, unowned source of truth for it (the concern its own doc comment
 //! raised when it deliberately stopped short of fixing this).
 //!
-//! # Deliberately minimal
+//! # Scope
 //!
-//! Per `docs/governance/no-stub-mvp-doctrine.md`, this is a size model
-//! sized to its one real consumer -- carrying capacity -- not a general
-//! size subsystem. PF1 also scales weapon damage dice, AC, attack rolls,
-//! CMB/CMD, Fly checks, and Stealth by size; **none of that is applied
-//! anywhere**, and this module deliberately offers no helper that would
-//! make it look available. Each of those needs its own corpus verification
-//! and each would change shipped numbers, so they are named as deferred
-//! rather than half-built.
+//! Per `docs/governance/no-stub-mvp-doctrine.md`, this module carries only
+//! the size facts that a real consumer applies today:
+//!
+//!  - **carrying capacity** (`load_capacity_ratio`), and
+//!  - **PF1's Table 8-1 size modifiers** (`armor_class_size_modifier`,
+//!    `special_size_modifier`, `stealth_size_modifier`), added by SD-27 for
+//!    the defect recorded at `docs/release/SD-27-.../decisions.md §28`: no
+//!    race had a size modifier to AC, touch AC, CMB or CMD, so a Small
+//!    character's sheet showed a Medium character's arithmetic.
+//!
+//! PF1 also scales weapon damage dice and Fly checks by size. Neither is
+//! applied anywhere, and this module deliberately offers no helper that
+//! would make them look available -- they are named as deferred rather than
+//! half-built.
 //!
 //! # Sources
 //!
-//! Two different corpus facts meet here, and they come from two different
-//! files -- neither is inferred:
+//! Three facts meet here, from three different places -- none is inferred:
 //!
-//!  - **Which size a creature is**: `FACT:BaseSize|<code>` on the creature's
-//!    own race record. See `rules_tables::crb::race_tables::race_size`.
+//!  - **Which size a creature is**: the race's `~ Size` racial-default
+//!    trait row's `TEMPLATE:SIZE_<code>`, falling back to the chassis'
+//!    `FACT:BaseSize|<code>`. Owned by `race_resolver::RACE_SIZES` /
+//!    `race_resolver::race_size_for_race_token`, which is the authority --
+//!    **not** `rules_tables::crb::race_tables::race_size`, which knew only
+//!    the 7 hardcoded CRB races.
 //!  - **What that size multiplies capacity by**: `SIZEMULT:<code>|<value>`
 //!    in the PCGen Pathfinder game mode's
 //!    `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
 //!    -- the same file `encumbrance.rs`'s `LOAD:` table comes from.
 //!    Transcribed in `SizeCategory::load_capacity_ratio` below.
+//!  - **What that size modifies on the sheet**: PF1 Core Rulebook Table 8-1,
+//!    "Size Modifiers". Transcribed in full below. This one is *not* read
+//!    out of the corpus: PCGen encodes it as `BONUS:COMBAT|AC|...` /
+//!    `BONUS:COMBAT|TOHIT|...` rows spread across the game mode's size
+//!    adjustment definitions, and this repo has no ingested game-mode
+//!    surface at all. Per `decisions.md §24` it is therefore hand-modelled
+//!    as a small pure function with the published table pinned by tests,
+//!    which is the same treatment every class feature in this repo gets.
 
 /// A PF1 creature size category.
 ///
@@ -108,6 +125,115 @@ impl SizeCategory {
         }
     }
 
+    /// This size's modifier to **Armor Class** -- and therefore to touch AC
+    /// and flat-footed AC, both of which are the same Armor Class with
+    /// contributors removed rather than separate statistics -- and to
+    /// attack rolls.
+    ///
+    /// PF1 Core Rulebook Table 8-1, "Size Modifiers", column *Size Modifier*:
+    ///
+    /// ```text
+    /// Fine +8   Diminutive +4   Tiny +2   Small +1   Medium +0
+    /// Large -1  Huge -2         Gargantuan -4        Colossal -8
+    /// ```
+    ///
+    /// # This is a size modifier, not a bonus of some other type
+    ///
+    /// It occupies its own PF1 modifier type: it never stacks with another
+    /// size modifier, it is not a dodge bonus (so it is *not* lost when the
+    /// creature is denied its Dexterity), and it is not an armor, natural
+    /// armor, deflection, or untyped bonus. A creature has exactly one size,
+    /// so exactly one of these applies and the non-stacking rule is
+    /// satisfied structurally rather than by a max() over a list.
+    ///
+    /// The engine currently applies this to Armor Class only. **Attack rolls
+    /// take the identical modifier in real PF1 and do not yet receive it**
+    /// (`pilot_compute::compute_combat_baseline`'s
+    /// `combat.baseline_melee_attack_bonus`); that is named here rather than
+    /// silently implied, so the next reader finds the gap stated instead of
+    /// having to rediscover it.
+    pub fn armor_class_size_modifier(self) -> i16 {
+        match self {
+            SizeCategory::Fine => 8,
+            SizeCategory::Diminutive => 4,
+            SizeCategory::Tiny => 2,
+            SizeCategory::Small => 1,
+            SizeCategory::Medium => 0,
+            SizeCategory::Large => -1,
+            SizeCategory::Huge => -2,
+            SizeCategory::Gargantuan => -4,
+            SizeCategory::Colossal => -8,
+        }
+    }
+
+    /// This size's **special size modifier**, which is what CMB and CMD use
+    /// in place of the ordinary size modifier.
+    ///
+    /// PF1 Core Rulebook, Combat Maneuver Bonus / Combat Maneuver Defense:
+    /// both are computed with the *special size modifier*, which runs in the
+    /// opposite direction to the Armor Class one -- being bigger helps you
+    /// grapple, and being smaller helps you dodge arrows.
+    ///
+    /// ```text
+    /// Fine -8   Diminutive -4   Tiny -2   Small -1   Medium +0
+    /// Large +1  Huge +2         Gargantuan +4        Colossal +8
+    /// ```
+    ///
+    /// # Why this is its own function and not `-armor_class_size_modifier()`
+    ///
+    /// For the nine PF1 sizes the two tables happen to be exact negations,
+    /// so deriving one from the other would compile and pass. It is written
+    /// out anyway because the identity is a coincidence of the published
+    /// numbers, not a rule -- Table 8-1 and the CMB/CMD text are two
+    /// separate statements in the book. Deriving it would encode "these are
+    /// the same fact negated", which is the kind of unstated assumption this
+    /// repo has repeatedly been burned by. The test below pins both
+    /// independently against the published values.
+    pub fn special_size_modifier(self) -> i16 {
+        match self {
+            SizeCategory::Fine => -8,
+            SizeCategory::Diminutive => -4,
+            SizeCategory::Tiny => -2,
+            SizeCategory::Small => -1,
+            SizeCategory::Medium => 0,
+            SizeCategory::Large => 1,
+            SizeCategory::Huge => 2,
+            SizeCategory::Gargantuan => 4,
+            SizeCategory::Colossal => 8,
+        }
+    }
+
+    /// This size's racial modifier to **Stealth** checks.
+    ///
+    /// PF1 Core Rulebook Table 8-1, column *Size Modifier to Stealth*. Note
+    /// that this scales by 4 per size *category*, which is a different
+    /// progression from [`armor_class_size_modifier`](Self::armor_class_size_modifier)
+    /// -- it is not four times that column (Fine is +16, not +32):
+    ///
+    /// ```text
+    /// Fine +16  Diminutive +12  Tiny +8   Small +4   Medium +0
+    /// Large -4  Huge -8         Gargantuan -12       Colossal -16
+    /// ```
+    ///
+    /// **Not applied by any consumer yet.** It is transcribed here with its
+    /// siblings because splitting one published table across two cycles is
+    /// exactly how the partial-transcription errors this module's own header
+    /// warns about get made, and because `skill_allocation`'s Stealth total
+    /// is the next thing that will need it.
+    pub fn stealth_size_modifier(self) -> i16 {
+        match self {
+            SizeCategory::Fine => 16,
+            SizeCategory::Diminutive => 12,
+            SizeCategory::Tiny => 8,
+            SizeCategory::Small => 4,
+            SizeCategory::Medium => 0,
+            SizeCategory::Large => -4,
+            SizeCategory::Huge => -8,
+            SizeCategory::Gargantuan => -12,
+            SizeCategory::Colossal => -16,
+        }
+    }
+
     /// Parses a race record's `FACT:BaseSize|<code>` payload.
     ///
     /// Codes are PCGen's own single letters. `None` for anything else,
@@ -159,6 +285,82 @@ mod tests {
                 "{size:?} must equal load.lst's own SIZEMULT decimal"
             );
             assert!(denominator > 0, "{size:?} must not carry a zero/negative denominator");
+        }
+    }
+
+    /// PF1 Core Rulebook Table 8-1 transcribed a second time, as one literal
+    /// row per size, and checked against all three accessors at once. Written
+    /// as a whole-table literal rather than three spot checks so a swapped
+    /// pair of rows cannot pass, and so the two columns that are exact
+    /// negations of each other are each pinned against the *book* rather than
+    /// against each other.
+    #[test]
+    fn size_modifiers_match_table_8_1_row_for_row() {
+        // (size, AC/attack modifier, special size modifier, Stealth modifier)
+        let table_8_1 = [
+            (SizeCategory::Fine, 8, -8, 16),
+            (SizeCategory::Diminutive, 4, -4, 12),
+            (SizeCategory::Tiny, 2, -2, 8),
+            (SizeCategory::Small, 1, -1, 4),
+            (SizeCategory::Medium, 0, 0, 0),
+            (SizeCategory::Large, -1, 1, -4),
+            (SizeCategory::Huge, -2, 2, -8),
+            (SizeCategory::Gargantuan, -4, 4, -12),
+            (SizeCategory::Colossal, -8, 8, -16),
+        ];
+        for (size, armor_class, special, stealth) in table_8_1 {
+            assert_eq!(
+                size.armor_class_size_modifier(),
+                armor_class,
+                "{size:?} Armor Class size modifier must match Table 8-1"
+            );
+            assert_eq!(
+                size.special_size_modifier(),
+                special,
+                "{size:?} special size modifier (CMB/CMD) must match the published value"
+            );
+            assert_eq!(
+                size.stealth_size_modifier(),
+                stealth,
+                "{size:?} Stealth size modifier must match Table 8-1"
+            );
+        }
+    }
+
+    /// Medium is PF1's unmodified baseline, and every value this repo ships
+    /// today was computed as though every creature were Medium. If Medium
+    /// ever stops being zero on all three columns, every previously-correct
+    /// Medium character's sheet silently changes -- so it gets its own
+    /// named guard rather than living only inside the table above.
+    #[test]
+    fn medium_is_zero_on_every_size_modifier_column() {
+        assert_eq!(SizeCategory::Medium.armor_class_size_modifier(), 0);
+        assert_eq!(SizeCategory::Medium.special_size_modifier(), 0);
+        assert_eq!(SizeCategory::Medium.stealth_size_modifier(), 0);
+    }
+
+    /// The two directions are opposite, and that is the whole point of the
+    /// "special" size modifier: a Small creature is harder to hit (+1 AC) and
+    /// worse at combat maneuvers (-1 CMB/CMD). Pinning the relationship
+    /// catches a copy-paste that gave CMB the Armor Class column's sign.
+    #[test]
+    fn the_special_size_modifier_runs_opposite_to_the_armor_class_one() {
+        for size in [
+            SizeCategory::Fine,
+            SizeCategory::Diminutive,
+            SizeCategory::Tiny,
+            SizeCategory::Small,
+            SizeCategory::Medium,
+            SizeCategory::Large,
+            SizeCategory::Huge,
+            SizeCategory::Gargantuan,
+            SizeCategory::Colossal,
+        ] {
+            assert_eq!(
+                size.special_size_modifier(),
+                -size.armor_class_size_modifier(),
+                "{size:?}'s special size modifier must be the opposite of its AC one"
+            );
         }
     }
 

@@ -233,8 +233,21 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // messages proving it never leaks. Scoped by path *and* by the
     // distinctive `p.xx` literal, so an ordinary "placeholder" stub marker in
     // this same file still fails.
+    //
+    // Widened 2026-07-31 to the Pathfinder Unchained feature tables, which
+    // carry the identical guard against the identical upstream token:
+    // `rogue_features.rs` and `summoner_features.rs` each assert
+    // `assert_ne!(page, "p.xx", ...)` over their ingested records, i.e. they
+    // FAIL if PCGen's own placeholder is ever stored as a real page
+    // citation. This test was red on the branch before that widening,
+    // reported against those two lines, and the red was a false positive of
+    // exactly bucket E's already-reviewed shape rather than a new stub. The
+    // `p.xx` literal requirement is unchanged, so an ordinary "placeholder"
+    // stub marker in either of those files still fails.
     let is_pcgen_pxx_source_page_token = |line: &str| {
-        line.starts_with("src/bin/ingest_races.rs:") && line.contains("p.xx")
+        let in_scoped_path = line.starts_with("src/bin/ingest_races.rs:")
+            || line.starts_with("src/rules_core/rules_tables/pathfinder_unchained/");
+        in_scoped_path && line.contains("p.xx")
     };
 
     let unexplained: Vec<&String> = hits

@@ -127,8 +127,14 @@ use super::rules_tables::apg::{self, ApgClassId};
 use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::apg::inquisitor_spell_list;
 use super::rules_tables::apg::witch_spell_list;
+use super::rules_tables::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
+use super::rules_tables::pathfinder_unchained::{
+    barbarian_features, monk_features, rogue_features, summoner_features,
+};
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
+use crate::rules_core::race_resolver::race_size_for_race_token;
+use crate::rules_core::size::SizeCategory;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::bard_spell_list;
@@ -6835,6 +6841,74 @@ const CHAIN_SHIRT_MAX_DEX: i16 = 4;
 pub(crate) const DODGE_AC_BONUS: i16 = 1;
 pub(crate) const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 
+/// Raised when a character's `race_id` resolves to no ingested race, so its
+/// creature size -- and therefore its size modifier to Armor Class -- is
+/// unknown.
+///
+/// Claim-blocking, deliberately, and for the same reason
+/// `contract::encumbrance_size_for_race` already blocks on the identical
+/// condition: an Armor Class computed at an assumed size is not real data, and
+/// this repo's recorded failure mode is wrong numbers that survived because
+/// nothing failed loudly. All 18 creatable races resolve, so no character a
+/// player can actually build reaches this.
+pub(crate) const UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID: &str =
+    "defense.size_modifier.unknown_race";
+
+/// The character's creature size and its PF1 Table 8-1 modifier to Armor Class.
+///
+/// Returns `(size_modifier, size_label)`. `size_label` is the human-readable
+/// size name for the explanation string, or `"unknown"` when the race does not
+/// resolve -- in which case the modifier is 0 **and** a claim-blocking
+/// diagnostic is pushed, so the assumption is visible rather than laundered
+/// into a plausible-looking total.
+///
+/// # Why the size comes from `race_resolver` and not `rules_tables::crb`
+///
+/// `race_resolver::race_size_for_race_token` is the authority per
+/// `decisions.md §25.5`: it covers all 18 in-scope races and reads each one's
+/// `~ Size` racial-default trait `TEMPLATE:SIZE_<code>`, which is *not* always
+/// the chassis' `FACT:BaseSize` (Aasimar and Tiefling carry `FACT:BaseSize|S`
+/// and are Medium creatures). `rules_tables::crb::race_tables::race_size_for_race_id`
+/// knew only the 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1
+/// ones -- using it here would have silently left Goblin, Kobold and
+/// Svirfneblin on Medium arithmetic, which is the very defect being fixed.
+fn armor_class_size_modifier(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> (i16, &'static str) {
+    match race_size_for_race_token(&input.chosen.race_id) {
+        Some(size) => (size.armor_class_size_modifier(), size_label(size)),
+        None => {
+            diagnostics.push(ComputationDiagnostic {
+                id: UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID.to_owned(),
+                message: format!(
+                    "race {:?} resolves to no ingested race, so its creature size is unknown; \
+                     the Armor Class size modifier could not be applied and the armor class \
+                     below is not real data",
+                    input.chosen.race_id
+                ),
+                claim_blocking: true,
+            });
+            (0, "unknown")
+        }
+    }
+}
+
+/// The PF1 size-category name, for explanation strings.
+fn size_label(size: SizeCategory) -> &'static str {
+    match size {
+        SizeCategory::Fine => "Fine",
+        SizeCategory::Diminutive => "Diminutive",
+        SizeCategory::Tiny => "Tiny",
+        SizeCategory::Small => "Small",
+        SizeCategory::Medium => "Medium",
+        SizeCategory::Large => "Large",
+        SizeCategory::Huge => "Huge",
+        SizeCategory::Gargantuan => "Gargantuan",
+        SizeCategory::Colossal => "Colossal",
+    }
+}
+
 // Grounded selected-skill contributors (source evidence only; not oracle-checked):
 //   cr_skills.lst:10   Climb      -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Climb|3|TYPE=ClassSkill
 //   cr_skills.lst:42   Intimidate -> KEYSTAT:CHA (no ACHECK), BONUS:SKILL|Intimidate|3|TYPE=ClassSkill
@@ -9437,6 +9511,10 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_witch_single_class(input)
         || is_supported_shaman_single_class(input)
         || is_supported_summoner_single_class(input)
+        // SD-27 (2026-07-31): all four Pathfinder Unchained classes at once
+        // -- see `is_supported_pu_single_class` for why this one gate is
+        // broad where the sixteen APG/ACG gates above are per-class.
+        || is_supported_pu_single_class(input)
 }
 
 /// Prose listing of every chassis `has_supported_class_chassis` accepts,
@@ -9460,7 +9538,9 @@ pub(crate) fn supported_class_chassis_description() -> String {
          1-{MAX_SUPPORTED_WIZARD_LEVEL}, a supported multiclass mix, a supported generic \
          single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, \
          Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, \
-         Investigator, Witch, Shaman, or Summoner chassis"
+         Investigator, Witch, Shaman, or Summoner chassis, or a supported \
+         single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or \
+         Unchained Summoner chassis (Pathfinder Unchained)"
     )
 }
 
@@ -9729,6 +9809,35 @@ fn is_supported_skald_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Skald, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// SD-27 (Pathfinder Unchained class wiring, 2026-07-31): whether `input`
+/// is a single-class Unchained Barbarian / Monk / Rogue / Summoner at a
+/// level within `pu::class_chassis::class_chassis_resolve`'s declared
+/// ceiling.
+///
+/// **Deliberately a broad `from_class_id_str(...).is_some()` where the ten
+/// ACG and six APG gates above are each an exact single-variant match.**
+/// That difference is intentional and is the opposite of a widening
+/// mistake, so it is stated rather than left to be noticed: those books
+/// were wired one class at a time, so a broad check would have silently
+/// admitted classes whose features nothing grounded. Pathfinder Unchained
+/// declares exactly four classes and this change wires **all four** at
+/// once -- each one gets its own `ground_unchained_*_class_features` call
+/// in `compute_pu_class_chassis`, so there is no fifth PU class for a
+/// broad check to let through. `PuClassId::ALL.len() == 4` is asserted in
+/// `rules_tables::pathfinder_unchained::class_chassis`'s own tests, and
+/// `pu_gate_admits_exactly_the_four_unchained_classes` below re-checks the
+/// admitted set from this side of the seam, so adding a fifth variant
+/// without wiring it fails loudly instead of leaking through here.
+fn is_supported_pu_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    let Some(pu_class_id) = PuClassId::from_class_id_str(&class_level.class_id) else {
+        return false;
+    };
+    pu_class_chassis::class_chassis_resolve(pu_class_id, class_level.level, RuleSetId::Pu).is_some()
 }
 
 /// Whether `input` is a single class, other than Fighter/Wizard (which have
@@ -23259,9 +23368,756 @@ fn compute_class_chassis(
             explanations,
             diagnostics,
         )
+    } else if let Some(pu_class_id) = PuClassId::from_class_id_str(&class_level.class_id) {
+        // Deliberately NOT registered with `table_class_id` -- same reasoning
+        // as the APG and ACG branches above, and it matters more here: the
+        // four Unchained classes are replacements for CRB/APG classes, and
+        // registering them with the generic CRB table would be the one edit
+        // that could make `class:unchained_rogue` resolve CRB Rogue rows.
+        // See `compute_pu_class_chassis`'s own doc comment.
+        compute_pu_class_chassis(
+            pu_class_id,
+            &class_level.class_id,
+            class_level.level,
+            input,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        )
     } else {
         None
     }
+}
+
+/// SD-27 (Pathfinder Unchained class wiring, 2026-07-31): compute the
+/// base-attack-bonus / base-save chassis pillar for one of the four
+/// Unchained classes, then ground that class's own named features.
+///
+/// Structurally identical to `compute_apg_class_chassis` /
+/// `compute_acg_class_chassis` — same explanation ids, same
+/// `class_chassis.unsupported` diagnostic shape, same "chassis first, then
+/// per-class grounding" order — so nothing downstream has to learn a new
+/// path. It is only ever called from `compute_class_chassis`'s
+/// single-class-only section (multiclass returns early there), and
+/// `PuClassId::from_class_id_str` is deliberately NOT registered with
+/// `table_class_id`, so an Unchained class inside a multiclass mix never
+/// reaches here and never resolves a CRB row by accident.
+///
+/// **Three of the four chassis rows are the base class's own row, byte for
+/// byte, and that is a corpus fact rather than a shortcut**: the ingested
+/// `class` record for the Unchained Barbarian, Rogue and Summoner carries
+/// `null` for `hit_die`, `bab` and all three save columns, i.e. the
+/// selection ability overrides no chassis field. The Unchained Monk is the
+/// one that does override (d10 / full BAB / poor Will). All of that lives
+/// in `rules_tables::pathfinder_unchained::class_chassis`, which owns the
+/// sourcing and pins it; this function only reads the row it returns.
+fn compute_pu_class_chassis(
+    class_id: PuClassId,
+    class_id_str: &str,
+    level: u8,
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    let Some(row) = pu_class_chassis::class_chassis_resolve(class_id, level, RuleSetId::Pu) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {class_id_str} Pathfinder Unchained \
+                 class_chassis_resolve row at level {level} (exceeds this class's real MAXLEVEL \
+                 ceiling), so no chassis values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return None;
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_id_str} level {level} base attack bonus from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "{class_id_str} level {level} base Fortitude save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "{class_id_str} level {level} base Reflex save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "{class_id_str} level {level} base Will save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.will
+        ),
+    });
+
+    // The replacement relationship, recorded on every Unchained character's
+    // own receipt rather than only in a doc comment: a reader of the sheet
+    // can see which class this one stands in for. Value is the class's
+    // level, matching the "standalone flat fact" idiom the ACG/APG feature
+    // groundings already use for non-numeric statements.
+    explanations.push(ComputationExplanation {
+        id: format!("class_chassis.pu.{}.replaces", class_id.name()),
+        value: i16::from(level),
+        detail: format!(
+            "{class_id_str} ({}) is Pathfinder Unchained's replacement for {}, not an addition \
+             to it: PCGen declares it as the `{}` selection ability in that class's single-slot \
+             selection pool, so a character holds one or the other and never both. Both remain \
+             separately selectable in this engine under distinct class ids",
+            class_id.display_name(),
+            class_id.replaces_class_id(),
+            class_id.corpus_key(),
+        ),
+    });
+
+    match class_id {
+        PuClassId::UnchainedBarbarian => {
+            ground_unchained_barbarian_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+        PuClassId::UnchainedMonk => {
+            ground_unchained_monk_class_features(
+                level,
+                base_attack_bonus,
+                ability_modifiers,
+                explanations,
+                diagnostics,
+            );
+        }
+        PuClassId::UnchainedRogue => {
+            ground_unchained_rogue_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+        PuClassId::UnchainedSummoner => {
+            ground_unchained_summoner_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+    }
+
+    // `input` is threaded through for signature symmetry with
+    // `compute_apg_class_chassis`/`compute_acg_class_chassis` and because
+    // the class-skill groundings below read nothing else from it today.
+    // Touched explicitly so the parameter is genuinely used rather than
+    // silently underscore-prefixed away, which would hide the fact that no
+    // Unchained feature is choice-gated yet.
+    debug_assert_eq!(input.chosen.class_levels.len(), 1);
+
+    Some((base_attack_bonus, base_saves))
+}
+
+/// Grounds the Unchained Barbarian's named features
+/// (`rules_tables::pathfinder_unchained::barbarian_features`).
+///
+/// Every magnitude below is that module's own pure function, called with
+/// this character's real level and ability modifiers. Nothing is recomputed
+/// here, and nothing is emitted for a feature the character has not reached
+/// — each function returns `None` below its grant level and this function
+/// simply pushes no record in that case, which is the same "absent means
+/// not yet granted" contract the ACG/APG groundings use.
+fn ground_unchained_barbarian_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(rounds) = barbarian_features::rage_rounds_per_day(level, ability_modifiers.constitution) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_rounds_per_day".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: {rounds} rounds per day \
+                 (2 + Constitution modifier {} + 2 x level)",
+                ability_modifiers.constitution
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::rage_morale_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: a +{bonus} morale bonus on melee attack \
+                 rolls, melee and thrown damage rolls, and Will saves while raging. This is the \
+                 sharpest divergence from the Core Rulebook Barbarian, which instead raises \
+                 Strength and Constitution by 4 and Will by 2"
+            ),
+        });
+    }
+    if let Some(penalty) = barbarian_features::rage_armor_class_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_armor_class_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: a {penalty} penalty to Armor Class while \
+                 raging. Grounded as a standalone magnitude -- rage is an activated state and no \
+                 activation model exists here, so it is deliberately NOT folded into the \
+                 character's resting Armor Class total"
+            ),
+        });
+    }
+    // Single-class only (`compute_class_chassis` routes multiclass away
+    // before this function can be reached), so character level == class
+    // level here. The two arguments stay distinct anyway, because the
+    // corpus makes the multiplicand total level and the multiplier class
+    // level, and collapsing them would be wrong the day multiclass lands.
+    if let Some(temp_hp) = barbarian_features::rage_temporary_hit_points(level, level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_temporary_hit_points".to_owned(),
+            value: temp_hp,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: {temp_hp} temporary hit points while \
+                 raging (character level x 2, rising to x3 at level 11 and x4 at level 20). A \
+                 standalone magnitude: this engine tracks max and current hit points but has no \
+                 temporary-hit-point total to add it to, so nothing consumes it yet"
+            ),
+        });
+    }
+    if let Some(powers) = barbarian_features::rage_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_powers_known".to_owned(),
+            value: powers,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage Powers: a pool of {powers} (level / 2). \
+                 The 54 Unchained Rage Powers this pool is spent on are not modelled anywhere in \
+                 this repo, so this is the size of the pool and not a claim that a catalogue of \
+                 choices exists"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::danger_sense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.danger_sense_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Danger Sense: +{bonus} (level / 3) on Reflex \
+                 saves to avoid traps and on Perception checks to notice them"
+            ),
+        });
+    }
+    if let Some(dr) = barbarian_features::damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Unchained Barbarian level {level} Damage Reduction: {dr}/- ((level - 4) / 3)"
+            ),
+        });
+    }
+    if let Some(feet) = barbarian_features::fast_movement_bonus_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.fast_movement_bonus_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Barbarian level {level} Fast Movement: +{feet} feet to base land speed \
+                 when carrying no more than a medium load and wearing no heavy armor. The \
+                 load/armor condition is stated, not silently applied -- this engine has no \
+                 encumbrance model, so the magnitude is grounded and the condition is not"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::indomitable_will_save_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.indomitable_will_save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Indomitable Will: +{bonus} on Will saves \
+                 against enchantment spells and effects while raging. Conditional on raging, so \
+                 it is NOT added to the character's resting Will save total"
+            ),
+        });
+    }
+    if let Some(flanking_level) = barbarian_features::uncanny_dodge_flanking_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.uncanny_dodge_flanking_level".to_owned(),
+            value: flanking_level,
+            detail: format!(
+                "Unchained Barbarian level {level} Uncanny Dodge: counts as a level-{flanking_level} \
+                 defender for the rule that only a rogue of at least four levels higher can flank \
+                 them"
+            ),
+        });
+    }
+    let tier = barbarian_features::uncanny_dodge_tier(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_barbarian.uncanny_dodge_tier".to_owned(),
+        value: i16::from(tier),
+        detail: format!(
+            "Unchained Barbarian level {level} Uncanny Dodge tier {tier}: 0 below level 2, 1 at \
+             levels 2-4 (Uncanny Dodge), 2 from level 5 (Improved Uncanny Dodge)"
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported".to_owned(),
+        message:
+            "class:unchained_barbarian grounds every Unchained Barbarian magnitude this book \
+             states as a formula token: the chassis (borrowed unchanged from the Core Rulebook \
+             Barbarian, which the corpus record confirms it does not override), Rage's rounds \
+             per day, morale bonus, Armor Class penalty and temporary hit points, the Rage Power \
+             pool size, Danger Sense, Damage Reduction, Fast Movement, Indomitable Will, and the \
+             Uncanny Dodge flanking level and tier. This diagnostic is NOT claim-blocking; it \
+             carries the honest remainder. What is missing: (1) the 54 Unchained Rage Powers \
+             themselves -- the pool size is real, the catalogue of choices is not ingested; (2) \
+             APPLICATION rather than magnitude -- Rage is an activated state with no activation \
+             model here, so the morale bonus, Armor Class penalty, temporary hit points and \
+             Indomitable Will are derived correctly but deliberately not folded into any resting \
+             total; (3) Fast Movement's encumbrance/heavy-armor condition, which this engine \
+             cannot evaluate; (4) Tireless Rage and Mighty Rage carry no numeric token of their \
+             own beyond the tier bumps already applied above, and Weapon and Armor Proficiency \
+             is a proficiency-lane fact this engine models per-item, not per-class"
+                .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+/// Grounds the Unchained Monk's named features
+/// (`rules_tables::pathfinder_unchained::monk_features`).
+///
+/// `total_base_attack_bonus` is the chassis row's own value, passed in
+/// rather than recomputed, because Flurry of Blows keys off base attack
+/// bonus and not off level — the one Unchained Monk magnitude that would be
+/// wrong if it were derived from the class level directly.
+fn ground_unchained_monk_class_features(
+    level: u8,
+    total_base_attack_bonus: i16,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let ac_from_level = monk_features::armor_class_bonus_from_level(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.armor_class_bonus_level_component".to_owned(),
+        value: ac_from_level,
+        detail: format!(
+            "Unchained Monk level {level} AC Bonus, level component: +{ac_from_level} \
+             (min(level / 4, 5))"
+        ),
+    });
+    let ac_bonus = monk_features::armor_class_bonus(level, ability_modifiers.wisdom);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.armor_class_bonus".to_owned(),
+        value: ac_bonus,
+        detail: format!(
+            "Unchained Monk level {level} AC Bonus: +{ac_bonus} to Armor Class and CMD when \
+             unarmored and unencumbered (level component +{ac_from_level} plus max(Wisdom \
+             modifier {}, 0)). Grounded as a standalone magnitude: the unarmored/unencumbered \
+             condition is a real gate this engine cannot evaluate, so it is stated and NOT \
+             silently folded into the character's Armor Class total",
+            ability_modifiers.wisdom
+        ),
+    });
+    if let Some(feats) = monk_features::bonus_feats_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.bonus_feats_known".to_owned(),
+            value: feats,
+            detail: format!(
+                "Unchained Monk level {level} Bonus Feat: {feats} bonus feats \
+                 (1 + max((level + 2) / 4, 0)). The Unchained Monk bonus-feat list is not \
+                 ingested, so this is the count of picks and not a catalogue of options"
+            ),
+        });
+    }
+    let flurry = monk_features::flurry_attack_count(total_base_attack_bonus);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.flurry_attack_count".to_owned(),
+        value: flurry,
+        detail: format!(
+            "Unchained Monk level {level} Flurry of Blows: {flurry} attacks at a total base \
+             attack bonus of {total_base_attack_bonus} \
+             (2 + (bab>=6) + 2 x (bab>=11) + (bab>=16)). The Unchained Monk reaches 6 where the \
+             Core Rulebook Monk stops at 4"
+        ),
+    });
+    if let Some(feet) = monk_features::fast_movement_bonus_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.fast_movement_bonus_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Monk level {level} Fast Movement: +{feet} feet to base land speed \
+                 (10 x (level / 3)) when unarmored and unencumbered. The condition is stated, \
+                 not silently applied"
+            ),
+        });
+    }
+    // The corpus makes the ki stat a choice (Wisdom, Charisma or
+    // Intelligence, behind `BONUS:ABILITYPOOL|Ki Pool Stat Choice`). No
+    // picker for it exists, and Wisdom is the plain Unchained Monk's stat,
+    // so Wisdom is passed and the substitution is named in the record
+    // rather than hidden.
+    if let Some(ki) = monk_features::ki_points(level, ability_modifiers.wisdom) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.ki_points".to_owned(),
+            value: ki,
+            detail: format!(
+                "Unchained Monk level {level} Ki Pool: {ki} ki points (level / 2 + ki-stat \
+                 modifier). The ki stat is a corpus-declared choice of Wisdom, Charisma or \
+                 Intelligence; no picker for it exists in this engine, so the plain Unchained \
+                 Monk's Wisdom modifier {} is used and the substitution is recorded here rather \
+                 than assumed silently",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+    if let Some(powers) = monk_features::ki_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.ki_powers_known".to_owned(),
+            value: powers,
+            detail: format!(
+                "Unchained Monk level {level} Ki Powers: a pool of {powers} ((level - 2) / 2). \
+                 The 31 ki powers this pool is spent on are not ingested"
+            ),
+        });
+    }
+    if let Some(strikes) = monk_features::style_strikes_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.style_strikes_known".to_owned(),
+            value: strikes,
+            detail: format!(
+                "Unchained Monk level {level} Style Strike: {strikes} style strikes known \
+                 ((level - 1) / 4). The 10 style strikes this pool is spent on are not ingested"
+            ),
+        });
+    }
+    if let Some(bonus) = monk_features::still_mind_save_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.still_mind_save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Monk level {level} Still Mind: +{bonus} on saving throws against \
+                 enchantment spells and effects. Conditional on the effect's school, which this \
+                 engine does not resolve at save time, so it is NOT added to any resting save \
+                 total"
+            ),
+        });
+    }
+    if let Some(dr) = monk_features::perfect_self_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.perfect_self_damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Unchained Monk level {level} Perfect Self: damage reduction {dr}/chaotic"
+            ),
+        });
+    }
+    if let Some(monk_level) = monk_features::stunning_fist_monk_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.stunning_fist_monk_level".to_owned(),
+            value: monk_level,
+            detail: format!(
+                "Unchained Monk level {level} Stunning Fist: contributes an effective monk level \
+                 of {monk_level}. The save DC and uses per day live on the shared Core Rulebook \
+                 Stunning Fist FEAT record (already grounded in rules_core::feat_effects), not on \
+                 this class row -- feat-lane content stays in the feat lane"
+            ),
+        });
+    }
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.pu.unchained_monk.other_features_deferred.unsupported".to_owned(),
+        message:
+            "class:unchained_monk grounds every Unchained Monk magnitude this book states as a \
+             formula token: its own chassis (d10 hit die, FULL base attack bonus, good Fortitude \
+             and Reflex and POOR Will -- all four genuinely different from the Core Rulebook \
+             Monk's), the AC Bonus and its level component, the bonus-feat count, the Flurry of \
+             Blows attack count, Fast Movement, the Ki Pool, the ki-power and style-strike pool \
+             sizes, Still Mind, Perfect Self's damage reduction, and Stunning Fist's effective \
+             monk level. This diagnostic is NOT claim-blocking; it carries the honest remainder. \
+             What is missing: (1) the 31 ki powers, 10 style strikes and the Unchained Monk \
+             bonus-feat list -- pool sizes are real, the option catalogues are not ingested; (2) \
+             the ki-stat choice has no picker, so Wisdom is used and said so; (3) APPLICATION -- \
+             the AC Bonus is gated on being unarmored and unencumbered, and Fast Movement the \
+             same, neither of which this engine can evaluate, so both are standalone magnitudes \
+             rather than contributions to a total; (4) unarmed strike damage is deliberately not \
+             restated here -- the corpus grants the SAME shared Core Rulebook record, which this \
+             engine already grounds, and a second copy would be a competing source of truth; (5) \
+             Evasion, Improved Evasion, Purity of Body, Tongue of the Sun and Moon, Timeless \
+             Body, Flawless Mind and Perfect Self's Outsider-type clause carry no numeric token \
+             and need engines this repo does not have; (6) archetype suppression flags \
+             (`Monk_CF_*`) are not implemented, so every progression above is the unsuppressed one"
+                .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+/// Grounds the Unchained Rogue's named features
+/// (`rules_tables::pathfinder_unchained::rogue_features`).
+fn ground_unchained_rogue_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(dice) = rogue_features::sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.sneak_attack_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Unchained Rogue level {level} Sneak Attack: {dice}d{} ((level + 1) / 2). A \
+                 standalone magnitude -- this engine has no attack-resolution or damage total to \
+                 add the dice to",
+                rogue_features::SNEAK_ATTACK_DIE_SIZE
+            ),
+        });
+    }
+    if let Some(bonus) = rogue_features::trapfinding_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.trapfinding_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Rogue level {level} Trapfinding: +{bonus} (max(level / 2, 1)) on \
+                 Perception checks to locate traps and on Disable Device checks"
+            ),
+        });
+    }
+    if let Some(bonus) = rogue_features::danger_sense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.danger_sense_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Rogue level {level} Danger Sense: +{bonus} (level / 3) on Reflex saves \
+                 to avoid traps, as a dodge bonus to Armor Class against traps, AND on Perception \
+                 checks to avoid being surprised. That third clause is what makes it Danger Sense \
+                 rather than the Core Rulebook Rogue's Trap Sense"
+            ),
+        });
+    }
+    if let Some(talents) = rogue_features::rogue_talents_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.rogue_talents_known".to_owned(),
+            value: i16::from(talents),
+            detail: format!(
+                "Unchained Rogue level {level} Rogue Talents: a pool of {talents} (level / 2). \
+                 The talent catalogue is not ingested for this book, so this is the size of the \
+                 pool and not a claim that the options exist"
+            ),
+        });
+    }
+    if let Some(choices) = rogue_features::finesse_training_weapon_choices(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.finesse_training_weapon_choices".to_owned(),
+            value: i16::from(choices),
+            detail: format!(
+                "Unchained Rogue level {level} Finesse Training: {choices} weapon choices \
+                 ((level + 5) / 8) that add Dexterity instead of Strength to damage. Absent \
+                 entirely from the Core Rulebook Rogue -- one of the features that makes this a \
+                 different class rather than a re-skin"
+            ),
+        });
+    }
+    if let Some(unlocks) = rogue_features::rogues_edge_skill_unlocks(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.rogues_edge_skill_unlocks".to_owned(),
+            value: i16::from(unlocks),
+            detail: format!(
+                "Unchained Rogue level {level} Rogue's Edge: {unlocks} skill unlocks (level / 5). \
+                 Absent entirely from the Core Rulebook Rogue. The skill-unlock content itself is \
+                 not ingested"
+            ),
+        });
+    }
+    if let Some(dc) = rogue_features::master_strike_dc(level, ability_modifiers.intelligence) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.master_strike_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Unchained Rogue level {level} Master Strike: save DC {dc} \
+                 (10 + level / 2 + Intelligence modifier {}). A standalone magnitude -- there is \
+                 no saving-throw resolution here for it to be rolled against",
+                ability_modifiers.intelligence
+            ),
+        });
+    }
+    if let Some(flanking_level) = rogue_features::uncanny_dodge_flanking_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.uncanny_dodge_flanking_level".to_owned(),
+            value: i16::from(flanking_level),
+            detail: format!(
+                "Unchained Rogue level {level} Uncanny Dodge: counts as a level-{flanking_level} \
+                 defender for the flanking comparison"
+            ),
+        });
+    }
+    if let Some(steps) = rogue_features::uncanny_dodge_tracker_steps(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.uncanny_dodge_tracker_steps".to_owned(),
+            value: i16::from(steps),
+            detail: format!(
+                "Unchained Rogue level {level} Uncanny Dodge Tracker: {steps} satisfied step(s) \
+                 -- Uncanny Dodge, then Improved Uncanny Dodge"
+            ),
+        });
+    }
+    let class_skills = rogue_features::class_skills();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_rogue.class_skill_count".to_owned(),
+        value: class_skills.len() as i16,
+        detail: format!(
+            "Unchained Rogue class skills, verbatim from the book's own CSKILL: token \
+             ({} entries): {}. TYPE= entries are PCGen skill-type selectors, preserved as \
+             written rather than expanded",
+            class_skills.len(),
+            class_skills.join(", ")
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.pu.unchained_rogue.other_features_deferred.unsupported".to_owned(),
+        message:
+            "class:unchained_rogue grounds every Unchained Rogue magnitude this book states as a \
+             formula token: the chassis (borrowed unchanged from the Core Rulebook Rogue, which \
+             the corpus record confirms it does not override), Sneak Attack dice, Trapfinding, \
+             Danger Sense, the Rogue Talent pool, Finesse Training's weapon choices, Rogue's Edge \
+             skill unlocks, Master Strike's save DC, the Uncanny Dodge flanking level and tracker \
+             steps, and the class-skill list. This diagnostic is NOT claim-blocking; it carries \
+             the honest remainder. What is missing: (1) Debilitating Injury, which is real, is \
+             one of the class's headline features, and carries NO numeric magnitude on its corpus \
+             row -- its penalties live in prose only, so nothing is computed for it and nothing \
+             is invented; (2) the rogue-talent and skill-unlock catalogues are not ingested -- \
+             the pool sizes are real, the option lists are not; (3) APPLICATION rather than \
+             magnitude -- Sneak Attack dice have no damage total, Master Strike's DC no save \
+             resolution, and Danger Sense's dodge bonus no trap encounter to apply against; (4) \
+             Evasion, Improved Uncanny Dodge's qualitative clause, and the weapon/armor \
+             proficiency rows carry no numeric token"
+                .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+/// Grounds the Unchained Summoner's named features
+/// (`rules_tables::pathfinder_unchained::summoner_features`).
+fn ground_unchained_summoner_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(companion_level) = summoner_features::eidolon_companion_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.eidolon_companion_level".to_owned(),
+            value: i16::from(companion_level),
+            detail: format!(
+                "Unchained Summoner level {level} Eidolon: effective companion level \
+                 {companion_level} (1:1 with class level)"
+            ),
+        });
+    }
+    if let Some(pool) = summoner_features::eidolon_evolution_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.eidolon_evolution_pool".to_owned(),
+            value: i16::from(pool),
+            detail: format!(
+                "Unchained Summoner level {level} Eidolon: an evolution pool of {pool} (a base of \
+                 1 plus one point at each of 14 level thresholds). This is the SHARPEST \
+                 divergence from the Advanced Player's Guide Summoner, whose pool starts at 3 and \
+                 takes double steps -- the two are separate functions in separate modules on \
+                 separate rule sets precisely so they cannot be confused"
+            ),
+        });
+    }
+    if let Some(spell_level) = summoner_features::summon_monster_spell_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.summon_monster_spell_level".to_owned(),
+            value: spell_level,
+            detail: format!(
+                "Unchained Summoner level {level} Summon Monster: casts summon monster \
+                 {spell_level} as a spell-like ability (min((level + 1) / 2, 9))"
+            ),
+        });
+    }
+    if let Some(uses) =
+        summoner_features::summon_monster_uses_per_day(level, ability_modifiers.charisma)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.summon_monster_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Unchained Summoner level {level} Summon Monster: {uses} uses per day \
+                 (max(Charisma modifier {}, 0) + 3). The max(...,0) is a genuine Unchained change \
+                 -- the Advanced Player's Guide Summoner writes plain CHA + 3, so a negative \
+                 Charisma modifier reduces a chained summoner below 3 uses and cannot reduce an \
+                 unchained one",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+    if let Some(marker) = summoner_features::unchained_summoner_marker(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.unchained_summoner_marker".to_owned(),
+            value: i16::from(marker),
+            detail:
+                "The UnchainedSummoner flag is set. In the corpus this is the switch that swaps \
+                 the entire summoner spell list: every Advanced Player's Guide / Ultimate Magic / \
+                 Ultimate Combat / Mythic Adventures summoner spell row is gated on \
+                 StandardSummoner, which holding this class drives to 0, and only the Unchained \
+                 rows remain. It is grounded here so the replacement is checkable rather than \
+                 merely documented"
+                    .to_owned(),
+        });
+    }
+    let class_skills = summoner_features::class_skills();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_summoner.class_skill_count".to_owned(),
+        value: class_skills.len() as i16,
+        detail: format!(
+            "Unchained Summoner class skills, verbatim from the book's own CSKILL: token \
+             ({} entries): {}. Note TYPE=Knowledge -- this class gets every Knowledge skill, \
+             where the Unchained Rogue's row names only two",
+            class_skills.len(),
+            class_skills.join(", ")
+        ),
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.pu.unchained_summoner.other_features_deferred.unsupported".to_owned(),
+        message:
+            "class:unchained_summoner grounds every Unchained Summoner magnitude this book states \
+             as a formula token: the chassis (borrowed unchanged from the Advanced Player's Guide \
+             Summoner, which the corpus record confirms it does not override -- the one of the \
+             four Unchained classes whose base class is not the Core Rulebook), the eidolon's \
+             companion level and evolution pool, the Summon Monster spell level and uses per day, \
+             the spell-list swap flag, and the class-skill list. This diagnostic is NOT \
+             claim-blocking; it carries the honest remainder. THE LARGEST MISSING PIECE IS \
+             SPELLCASTING: this class has its own 202-spell list (12/35/39/39/27/23/27 at levels \
+             0-6) declared in the book, and none of it is transcribed, so an Unchained Summoner \
+             computes with no spells known, no spells per day and no spell DCs. That is a real \
+             gap and is stated rather than filled with the Advanced Player's Guide list, which \
+             would be the WRONG list -- the corpus explicitly switches it off. Note also that 46 \
+             of those 202 spells are defined only in Ultimate Magic and Ultimate Combat, neither \
+             of which is an ingested book, so the list cannot be completed here even in \
+             principle. Also missing: the 13 eidolon subtypes are named slots with no contents \
+             ingested; the evolution catalogue the pool is spent on is not ingested; and Bond \
+             Senses, Shield Ally, Maker's Call, Transposition, Aspect, Greater Shield Ally, Life \
+             Bond, Greater Aspect, Merge Forms and Twin Eidolon state their effects in prose with \
+             no formula token, so nothing is computed for them"
+                .to_owned(),
+        claim_blocking: false,
+    });
 }
 
 /// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
@@ -40593,9 +41449,30 @@ fn compute_combat_baseline(
     } else {
         0
     };
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): the creature's PF1 size
+    // modifier to Armor Class. Until this landed, every race computed a Medium
+    // creature's Armor Class -- a live Goblin Fighter 1 read 18 where PF1's
+    // Small value at those stats is 19 -- and the defect PRE-DATES the 18-race
+    // widening: Gnome and Halfling shipped with it.
+    //
+    // Placed here, immediately after the Dexterity contribution and ahead of
+    // every conditional class term, because that is where PF1 stacks it:
+    //   AC = 10 + armor + shield + Dex + SIZE + natural + deflection + dodge + misc
+    // Position is not arithmetically load-bearing in a flat sum, but the term
+    // order is the sheet's published order and the explanation string below is
+    // read by users, so it is put where a player would look for it.
+    //
+    // It is its own PF1 modifier type -- not a dodge bonus (so it is kept out
+    // of `dodge_armor_class_bonus`, and is NOT lost when the creature is denied
+    // its Dexterity), not armor, not natural armor, not untyped. Size modifiers
+    // do not stack with each other; a creature has exactly one size, so exactly
+    // one value is summed and non-stacking holds structurally rather than by
+    // de-duplicating a list.
+    let (size_armor_class_modifier, size_label) = armor_class_size_modifier(input, diagnostics);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
+        + size_armor_class_modifier
         + dodge_armor_class_bonus
         + rage_armor_class_penalty
         + inspired_rage_armor_class_penalty
@@ -40613,6 +41490,7 @@ fn compute_combat_baseline(
         detail: format!(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
+             + {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) \
              + Dodge (+{dodge_armor_class_bonus}, only for a character actually carrying \
              {DODGE_FEAT_ID}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \

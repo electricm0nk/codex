@@ -137,6 +137,12 @@ const ORACLE_CLASS_ID: &str = "class:oracle";
 const SAMURAI_CLASS_ID: &str = "class:samurai";
 const SUMMONER_CLASS_ID: &str = "class:summoner";
 const WITCH_CLASS_ID: &str = "class:witch";
+// Pathfinder Unchained (SD-27, 2026-07-31). Distinct id strings from the
+// four classes they replace, so no comparison here can confuse the two.
+const UNCHAINED_BARBARIAN_CLASS_ID: &str = "class:unchained_barbarian";
+const UNCHAINED_MONK_CLASS_ID: &str = "class:unchained_monk";
+const UNCHAINED_ROGUE_CLASS_ID: &str = "class:unchained_rogue";
+const UNCHAINED_SUMMONER_CLASS_ID: &str = "class:unchained_summoner";
 
 /// Average starting wealth in gold pieces for a PF1 Core Rulebook class id
 /// (v0.6 alpha swarm item 7, resolved 2026-07-24). The operator (Todd
@@ -180,6 +186,23 @@ pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
         | NINJA_CLASS_ID => Some(140),
         FIGHTER_CLASS_ID | PALADIN_CLASS_ID | RANGER_CLASS_ID | CAVALIER_CLASS_ID
         | GUNSLINGER_CLASS_ID => Some(175),
+        // SD-27 (2026-07-31), Pathfinder Unchained's four classes. Each
+        // returns its BASE class's value from the same table above, and the
+        // reason is a corpus fact rather than an assumption: an Unchained
+        // class is a `CATEGORY:CLASS` selection ability layered over the
+        // base `CLASS:` record, and none of the four carries any token
+        // touching starting wealth (their `raw_tokens` in
+        // `data/corpus/pathfinder_unchained/class/*.json` are proficiency,
+        // feature-grant and skill tokens only). The book changes what the
+        // class DOES, not what it starts with.
+        //
+        // Written as four explicit arms rather than folded into the rows
+        // above, so that a future errata to one side of a pair cannot
+        // silently move the other.
+        UNCHAINED_MONK_CLASS_ID => Some(35),
+        UNCHAINED_SUMMONER_CLASS_ID => Some(70),
+        UNCHAINED_BARBARIAN_CLASS_ID => Some(105),
+        UNCHAINED_ROGUE_CLASS_ID => Some(140),
         _ => None,
     }
 }
@@ -261,6 +284,31 @@ mod starting_wealth_tests {
         assert_eq!(starting_wealth_gp("class:samurai"), Some(105));
         assert_eq!(starting_wealth_gp("class:summoner"), Some(70));
         assert_eq!(starting_wealth_gp("class:witch"), Some(105));
+    }
+
+    /// SD-27: each Unchained class starts with exactly what the class it
+    /// replaces starts with, and the pair is asserted side by side so a
+    /// future edit to one that forgets the other fails here.
+    #[test]
+    fn each_unchained_class_starts_with_its_base_classs_wealth() {
+        for (unchained, base) in [
+            ("class:unchained_barbarian", "class:barbarian"),
+            ("class:unchained_monk", "class:monk"),
+            ("class:unchained_rogue", "class:rogue"),
+            ("class:unchained_summoner", "class:summoner"),
+        ] {
+            assert_eq!(
+                starting_wealth_gp(unchained),
+                starting_wealth_gp(base),
+                "{unchained} must match {base}"
+            );
+        }
+        // Pinned as literals too, so the test cannot pass by both sides
+        // becoming `None` together.
+        assert_eq!(starting_wealth_gp("class:unchained_barbarian"), Some(105));
+        assert_eq!(starting_wealth_gp("class:unchained_monk"), Some(35));
+        assert_eq!(starting_wealth_gp("class:unchained_rogue"), Some(140));
+        assert_eq!(starting_wealth_gp("class:unchained_summoner"), Some(70));
     }
 
     #[test]

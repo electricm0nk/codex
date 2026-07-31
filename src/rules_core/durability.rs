@@ -51,6 +51,9 @@ use crate::rules_core::pilot_compute::table_class_id;
 use crate::rules_core::rules_tables::acg::{self, AcgClassId};
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
 use crate::rules_core::rules_tables::crb::class_tables::hit_die_for;
+use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::{
+    self as pu_class_chassis, PuClassId,
+};
 
 /// Half the die size, rounded up — the PF1 Core Rulebook's own named
 /// non-rolling default for hit points gained after 1st level (e.g. a d10
@@ -75,12 +78,21 @@ pub fn compute_max_hp(class_levels: &[CharacterClassLevel], constitution_modifie
     // `AcgClassId::from_class_id_str` is registered with `table_class_id`,
     // so this stays single-class-only by the same `[class_level]`
     // destructure above, not a new multiclass path.
+    // SD-27 (2026-07-31) added the Pathfinder Unchained tier at the end of
+    // the same chain. Three of the four Unchained classes deliberately
+    // return their base class's die (the corpus record overrides nothing);
+    // the Unchained Monk returns d10 against the Core Rulebook Monk's
+    // operator-ruled d8, which is a real, visible HP difference and is
+    // pinned by `unchained_monk_hp_uses_its_own_d10_not_the_crb_monks_d8`.
     let hit_die_size = match table_class_id(&class_level.class_id).and_then(hit_die_for) {
         Some(hit_die_size) => hit_die_size,
         None => match ApgClassId::from_class_id_str(&class_level.class_id) {
             Some(apg_class_id) => apg::hit_die_for(apg_class_id),
-            None => AcgClassId::from_class_id_str(&class_level.class_id)
-                .map(acg::hit_die_for)?,
+            None => match AcgClassId::from_class_id_str(&class_level.class_id) {
+                Some(acg_class_id) => acg::hit_die_for(acg_class_id),
+                None => PuClassId::from_class_id_str(&class_level.class_id)
+                    .map(pu_class_chassis::hit_die_for)?,
+            },
         },
     };
 

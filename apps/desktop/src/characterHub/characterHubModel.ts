@@ -436,6 +436,39 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:slayer', label: 'Slayer', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:swashbuckler', label: 'Swashbuckler', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:warpriest', label: 'Warpriest', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  /*
+   * Pathfinder Unchained (`pathfinder_unchained/pu_abilities_class.lst`),
+   * added SD-27 2026-07-31.
+   *
+   * These four are REPLACEMENTS for the CRB Barbarian / Monk / Rogue and
+   * the APG Summoner, not additions to them. PCGen models each as a
+   * selection ability in that class's single-slot pool, so a campaign
+   * picks one of the pair and a character never holds both. Both members
+   * stay in this list because the *app* has no campaign-level rules
+   * toggle: the player picks the version their table uses. They are kept
+   * apart on three axes and none of them is cosmetic — a distinct `id`
+   * (`class:unchained_*`, which is what is persisted to disk), a distinct
+   * `label`, and a distinct engine path
+   * (`rules_tables::pathfinder_unchained`, rule set `Pu`).
+   *
+   * `hitDie` is the engine's own value per class, not the base class's by
+   * assumption: three of the four genuinely borrow it (their corpus record
+   * overrides no chassis field) and the Unchained Monk does not — d10
+   * here against the CRB Monk's d8 above. That row is the reason this
+   * table could not simply alias the four.
+   *
+   * All four are `full` on the same evidence every other row uses:
+   * `cargo run --bin v06_class_state_dump` reports 31/31 classes reaching
+   * `Computed` at every level 1-20, with the original 27 byte-identical to
+   * their pre-change dump. Their remaining feature gaps are carried as
+   * non-claim-blocking `class_feature.pu.*.other_features_deferred`
+   * diagnostics on the character's own receipt — most notably the
+   * Unchained Summoner's 202-spell list, which is NOT transcribed.
+   */
+  { id: 'class:unchained_barbarian', label: 'Unchained Barbarian', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 12 },
+  { id: 'class:unchained_monk', label: 'Unchained Monk', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:unchained_rogue', label: 'Unchained Rogue', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:unchained_summoner', label: 'Unchained Summoner', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];
