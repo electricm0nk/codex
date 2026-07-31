@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { RaceCatalogEntryDto } from '../boundary/loadRaceCatalog';
 import { loadRaceCatalogRuntime } from './raceCatalogRuntime';
+import { AlternateTraitPicker } from './AlternateTraitPicker';
 
 const panel: CSSProperties = {
   backgroundColor: 'var(--color-surface)',
@@ -76,6 +77,22 @@ export function describeRaceCatalog(entries: readonly RaceCatalogEntryDto[]): st
 const MAX_RENDERED_ROWS = 200;
 
 /**
+ * The two things this screen can show. "Standard" is the flat catalog of every
+ * racial default trait; "alternates" is the Advanced Race Guide's swap picker.
+ *
+ * They live behind one landing-page entry on purpose: an alternate racial trait
+ * is only meaningful next to the standard trait it replaces, so putting the
+ * picker anywhere other than beside that list would separate the two halves of
+ * the same rule.
+ */
+export type RaceCatalogView = 'standard' | 'alternates';
+
+export const RACE_CATALOG_VIEWS: readonly { view: RaceCatalogView; label: string }[] = [
+  { view: 'standard', label: 'Standard traits' },
+  { view: 'alternates', label: 'Alternate racial traits (ARG)' },
+];
+
+/**
  * Full race trait catalog browser — every real corpus-grounded trait row the
  * adapter serves (ability modifiers/bonus, size, speed, senses, and each
  * race's named special traits), not a per-character sample. Distinct from
@@ -91,6 +108,7 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [raceId, setRaceId] = useState<string | 'All'>('All');
   const [query, setQuery] = useState('');
+  const [view, setView] = useState<RaceCatalogView>('standard');
 
   useEffect(() => {
     loadRaceCatalogRuntime()
@@ -132,7 +150,17 @@ export function RaceCatalogScreen(props: { onClose: () => void }) {
         </button>
       </div>
 
-      {error ? (
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+        {RACE_CATALOG_VIEWS.map((tab) => (
+          <button key={tab.view} type="button" onClick={() => setView(tab.view)} style={raceButtonStyle(view === tab.view)}>
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {view === 'alternates' ? (
+        <AlternateTraitPicker />
+      ) : error ? (
         <p style={{ color: 'var(--color-danger, #d33)', margin: 0 }}>{error}</p>
       ) : !entries ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0 }}>Loading catalog…</p>

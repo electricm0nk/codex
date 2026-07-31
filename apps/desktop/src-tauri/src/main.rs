@@ -15,6 +15,7 @@ mod feat_catalog;
 mod ge08_workbench;
 mod pf1_adapter;
 mod race_catalog;
+mod race_trait_picker;
 /// Test-only: the reach gate, which fails when ingested content has no
 /// consumer carrying it to a player. Compiled out of the shipping binary
 /// because it is a verification surface, not a runtime one.
@@ -51,6 +52,7 @@ use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use race_catalog::list_race_catalog;
+use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
 use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use update::transaction::{
@@ -190,6 +192,8 @@ fn main() {
             list_class_catalog,
             list_class_spell_levels,
             list_race_catalog,
+            list_alternate_racial_traits,
+            resolve_race_alternate_selection,
             corpus_ingest_diagnostic
         ])
         .run(tauri::generate_context!())

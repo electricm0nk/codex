@@ -233,42 +233,66 @@ fn every_hardcoded_named_trait_exists_in_the_corpus_with_the_same_magnitude() {
     assert_eq!(checked, 49 - 28, "every non-generic hardcoded row must have been checked");
 }
 
-/// **The one real drift, pinned rather than hidden.**
+/// Dimension 5: ability modifiers. **This was the one real drift, and it
+/// is now closed — so this pins agreement, not divergence.**
 ///
-/// The hardcoded table's ability-modifier prose omits the *secondary* `+2`
-/// that four of the seven races actually get. PF1's Dwarf is
-/// `+2 Con, +2 Wis, -2 Cha`; the table says only `+2 Constitution / -2
-/// Charisma`. Elf, Gnome and Halfling are wrong the same way. The corpus
-/// carries PCGen's own `BONUS:STAT|CON,WIS|2` — two stats in one token —
-/// which is where the missing half went: a transcription that read only
-/// the first stat of the pair.
+/// ## What was wrong, and which side was right
 ///
-/// This is a genuine defect in shipped behaviour, and fixing
-/// `race_tables.rs` is out of this cycle's write scope, so it is pinned
-/// here from both sides. Any change to either path fails this test, which
-/// is exactly what a caught regression looks like.
+/// The hardcoded table's ability-modifier prose omitted the *secondary*
+/// `+2` that four of the seven races actually get, because PCGen states
+/// both in one token (`BONUS:STAT|CON,WIS|2`) and the original
+/// transcription read only the first stat of the pair. Elf's row went
+/// further and explicitly declared the missing `+2 Intelligence` an
+/// out-of-scope "alternate variant", which is wrong about the rule rather
+/// than merely incomplete.
+///
+/// The corpus was right on all four. Established against the real PCGen
+/// checkout, not against this repo's own ingest (which would be circular)
+/// — `core_essentials/races/<race>/<race>_abilities_race.lst:18`:
+///
+/// ```text
+/// Dwarf     +2 Constitution, +2 Wisdom, -2 Charisma      BONUS:STAT|CON,WIS|2  BONUS:STAT|CHA|-2
+/// Elf       +2 Dexterity, +2 Intelligence, -2 Constitution BONUS:STAT|DEX,INT|2 BONUS:STAT|CON|-2
+/// Gnome     +2 Constitution, +2 Charisma, -2 Strength    BONUS:STAT|CON,CHA|2  BONUS:STAT|STR|-2
+/// Halfling  +2 Dexterity, +2 Charisma, -2 Strength       BONUS:STAT|DEX,CHA|2  BONUS:STAT|STR|-2
+/// ```
+///
+/// `pilot_compute.rs`'s own per-race seams (`DWARF_WIS_ADJUSTMENT`,
+/// `ELF_INT_ADJUSTMENT`, `GNOME_CHA_ADJUSTMENT`,
+/// `HALFLING_CHA_ADJUSTMENT`) had already been corrected to the same
+/// three-stat reading, so `race_tables.rs` was the last stale statement of
+/// this fact in the engine.
+///
+/// ## What this test now does
+///
+/// It does **not** compare the table against a literal expected string —
+/// that would only re-encode a transcription, which is the exact failure
+/// mode being fixed. It derives the grant clause from the corpus'
+/// machine-readable `BONUS:STAT` chains and requires three independent
+/// statements of the same fact to agree:
+///
+/// 1. the chains (`BONUS:STAT|CON,WIS|2` + `BONUS:STAT|CHA|-2`),
+/// 2. PCGen's own display name for the row (`+2 Constitution, +2 Wisdom,
+///    -2 Charisma`), and
+/// 3. `race_tables.rs`'s prose grant clause.
+///
+/// A future edit to any one of the three that disagrees with the other two
+/// fails here.
 #[test]
-fn ability_modifier_drift_between_the_two_paths_is_pinned_from_both_sides() {
+fn ability_modifier_rows_agree_with_the_corpus_for_every_fixed_modifier_race() {
     let corpus = crb_corpus();
-    // (race key, hardcoded row name, hardcoded prose prefix, corpus BONUS:STAT payloads)
-    let expected: &[(&str, &str, &str, &[&str])] = &[
-        ("Dwarf", "Ability Modifiers", "+2 Constitution / -2 Charisma", &["CON,WIS", "CHA"]),
-        ("Elf", "Ability Modifiers", "+2 Dexterity / -2 Constitution", &["DEX,INT", "CON"]),
-        ("Gnome", "Ability Modifiers", "+2 Constitution / -2 Strength", &["CON,CHA", "STR"]),
-        ("Halfling", "Ability Modifiers", "+2 Dexterity / -2 Strength", &["DEX,CHA", "STR"]),
-    ];
-    for (key, row_name, prose_prefix, stats) in expected {
-        let token = RACE_ROW.iter().find(|(_, k)| k == key).expect("row").0;
+    // The four races whose ability adjustment is fixed rather than a player
+    // choice. Named explicitly so the set cannot silently shrink; the
+    // other three are asserted to be the player-choice shape below.
+    let fixed_modifier_races = ["Dwarf", "Elf", "Gnome", "Halfling"];
+
+    for key in fixed_modifier_races {
+        let token = RACE_ROW.iter().find(|(_, k)| *k == key).expect("row").0;
         let race_id = race_id_from_token(token).expect("shipped token");
         let hardcoded = race_traits()
             .iter()
-            .find(|t| t.race_id == race_id && t.trait_name == *row_name)
-            .unwrap_or_else(|| panic!("{key} must have an {row_name} row"));
-        assert!(
-            hardcoded.detail.starts_with(prose_prefix),
-            "{key}: hardcoded ability prose changed; it now reads {:?}",
-            hardcoded.detail
-        );
+            .find(|t| t.race_id == race_id && t.trait_name == "Ability Modifiers")
+            .unwrap_or_else(|| panic!("{key} must have an Ability Modifiers row"));
 
         let resolved = corpus.resolve(key, &[]).unwrap_or_else(|| panic!("{key} must resolve"));
         let ability = resolved
@@ -276,59 +300,68 @@ fn ability_modifier_drift_between_the_two_paths_is_pinned_from_both_sides() {
             .iter()
             .find(|t| t.type_tokens.iter().any(|tt| tt == "Racial Ability Scores"))
             .unwrap_or_else(|| panic!("{key} must have a corpus ability-score trait"));
-        let corpus_stats: Vec<&str> = ability
-            .raw_bonus_chains
-            .iter()
-            .filter(|c| c.qualifiers.first().map(String::as_str) == Some("STAT"))
-            .filter_map(|c| c.qualifiers.get(1).map(String::as_str))
-            .collect();
-        assert_eq!(&corpus_stats, stats, "{key}: corpus BONUS:STAT stat lists");
-        // The specific defect: the corpus' first STAT token names two
-        // ability scores; the hardcoded prose names one.
-        let first = corpus_stats.first().expect("a positive STAT chain");
-        assert!(first.contains(','), "{key}: corpus grants two ability scores in one token");
-        let second_stat = first.split(',').nth(1).expect("a second stat");
-        // Compare against the row's *grant clause* only — the text before the
-        // parenthesised citation. Elf's row goes on to mention Intelligence in
-        // its trailing prose, but only to declare it out of scope (see below),
-        // which is not the same as granting it.
-        let grant_clause = hardcoded.detail.split(" (").next().unwrap_or(hardcoded.detail);
+
+        // (1) Derive the grant from the machine-readable chains alone.
+        let mut derived: Vec<String> = Vec::new();
+        for chain in &ability.raw_bonus_chains {
+            if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
+                continue;
+            }
+            let stats = chain.qualifiers.get(1).expect("a STAT chain names its stats");
+            let magnitude: i32 = chain
+                .qualifiers
+                .get(2)
+                .expect("a STAT chain carries a magnitude")
+                .parse()
+                .expect("the magnitude is numeric");
+            for stat in stats.split(',') {
+                derived.push(format!("{magnitude:+} {}", long_stat_name(stat)));
+            }
+        }
         assert!(
-            !grant_clause.contains(long_stat_name(second_stat)),
-            "{key}: the hardcoded grant clause {grant_clause:?} now names {second_stat}; if \
-             race_tables.rs was corrected, this divergence pin should be retired, not edited to \
-             keep passing",
+            derived.len() >= 3,
+            "{key}: PF1 grants three ability adjustments; the corpus chains derived {derived:?}"
+        );
+        let derived = derived.join(", ");
+
+        // (2) PCGen's own display name for the same row.
+        assert_eq!(
+            ability.name, derived,
+            "{key}: the corpus trait name and its own BONUS:STAT chains disagree"
+        );
+
+        // (3) The shipped table's grant clause — the text before the
+        //     parenthesised citation.
+        let grant_clause = hardcoded.detail.split(" (").next().unwrap_or(hardcoded.detail);
+        assert_eq!(
+            grant_clause, derived,
+            "{key}: race_tables.rs's Ability Modifiers row disagrees with the corpus. Fix the \
+             row, never this assertion — the row is a transcription and this is what checks it"
         );
     }
 
-    // Elf is the sharpest case and is pinned verbatim: the hardcoded row does
-    // not merely omit the +2 Intelligence, it explicitly declares it an
-    // out-of-scope "alternate variant". PF1's Elf is `+2 Dex, +2 Int, -2 Con`
-    // in the base race, and PCGen's own `BONUS:STAT|DEX,INT|2` (pinned above)
-    // agrees. The prose is wrong about the rule, not just incomplete.
-    let elf = race_traits()
-        .iter()
-        .find(|t| t.race_id == RaceId::Elf && t.trait_name == "Ability Modifiers")
-        .expect("Elf Ability Modifiers row");
-    assert!(
-        elf.detail.contains("The alternate +2 Intelligence Elf variant is out of scope."),
-        "Elf's misstatement is pinned verbatim; it now reads {:?}",
-        elf.detail
-    );
     // The other three races take a player-chosen `+2 to One Ability Score`
-    // and are NOT part of this drift — asserted so the drift set stays
-    // exactly four races.
+    // and were never part of this drift — asserted so the fixed-modifier
+    // set stays exactly four races.
     for key in ["Human", "Half-Elf", "Half-Orc"] {
         let resolved = corpus.resolve(key, &[]).unwrap_or_else(|| panic!("{key} must resolve"));
         assert!(
             resolved.traits.iter().any(|t| t.name == "+2 to One Ability Score"),
             "{key} takes a player-chosen ability bonus in the corpus too"
         );
+        let token = RACE_ROW.iter().find(|(_, k)| *k == key).expect("row").0;
+        let race_id = race_id_from_token(token).expect("shipped token");
+        assert!(
+            race_traits()
+                .iter()
+                .any(|t| t.race_id == race_id && t.trait_name == "Ability Bonus"),
+            "{key}'s shipped row is the player-choice `Ability Bonus` shape, not a fixed pair"
+        );
     }
 }
 
 fn long_stat_name(code: &str) -> &'static str {
-    match code {
+    match code.trim() {
         "STR" => "Strength",
         "DEX" => "Dexterity",
         "CON" => "Constitution",

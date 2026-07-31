@@ -17,6 +17,28 @@
 //! Half-Orc's ability-bonus target) carry `value: 0` and a detail noting the
 //! choice explicitly, mirroring how `pilot_compute.rs` treats them as
 //! recognition-only records rather than fabricating a specific selection.
+//!
+//! # The four ability-modifier rows are re-derived, not transcribed
+//! (correction, 2026-07-31)
+//!
+//! Dwarf, Elf, Gnome and Halfling each got the *first* stat of PCGen's
+//! paired positive adjustment and silently dropped the second, because
+//! PCGen states both in one token (`BONUS:STAT|CON,WIS|2`) and the original
+//! transcription read only up to the comma. Dwarf read `+2 Constitution /
+//! -2 Charisma`; Elf went further and declared its missing `+2
+//! Intelligence` an out-of-scope "alternate variant", which is wrong about
+//! the rule rather than merely incomplete. All four are now the real
+//! three-stat adjustment, re-derived from the source rows themselves
+//! (`core_essentials/races/<race>/<race>_abilities_race.lst:18`) rather
+//! than from the seams — the same reason the `race_size` correction below
+//! gives: a transcription is what this table exists to check, so it must
+//! not be checked against another transcription. `pilot_compute.rs`'s own
+//! `DWARF_WIS_ADJUSTMENT` / `ELF_INT_ADJUSTMENT` / `GNOME_CHA_ADJUSTMENT` /
+//! `HALFLING_CHA_ADJUSTMENT` were already correct; this table was the last
+//! stale statement of the fact in the engine.
+//! `tests/sd27_crb_race_corpus_pin.rs` now pins all three independent
+//! statements (PCGen's `BONUS:STAT` chains, PCGen's own display name, and
+//! the prose below) to each other.
 
 use crate::rules_core::size::SizeCategory;
 
@@ -97,7 +119,7 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Dwarf,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Constitution / -2 Charisma (cr_races.lst race:dwarf STAT:CON|+2, STAT:CHA|-2).",
+        detail: "+2 Constitution, +2 Wisdom, -2 Charisma (core_essentials/races/dwarf/dwarf_abilities_race.lst:18, \"Dwarf ~ Ability Scores\": BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
@@ -152,7 +174,7 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Elf,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Dexterity / -2 Constitution (cr_races.lst race:elf STAT:DEX|+2, STAT:CON|-2). The alternate +2 Intelligence Elf variant is out of scope.",
+        detail: "+2 Dexterity, +2 Intelligence, -2 Constitution (core_essentials/races/elf/elf_abilities_race.lst:18, \"Elf ~ Ability Scores\": BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
@@ -195,7 +217,7 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Gnome,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Constitution / -2 Strength (cr_races.lst race:gnome STAT:CON|+2, STAT:STR|-2).",
+        detail: "+2 Constitution, +2 Charisma, -2 Strength (core_essentials/races/gnome/gnome_abilities_race.lst:18, \"Gnome ~ Ability Scores\": BONUS:STAT|CON,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
@@ -312,7 +334,7 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Halfling,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Dexterity / -2 Strength (cr_races.lst race:halfling STAT:DEX|+2, STAT:STR|-2).",
+        detail: "+2 Dexterity, +2 Charisma, -2 Strength (core_essentials/races/halfling/halfling_abilities_race.lst:18, \"Halfling ~ Ability Scores\": BONUS:STAT|DEX,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
