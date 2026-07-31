@@ -401,3 +401,36 @@ it is what makes ARG *the Advanced Race Guide*. SD-27 delivers it for the 18 in-
 `apps/desktop/src-tauri/src/race_catalog.rs` (93 lines), which imports that CRB table directly. The
 §23 commitment to pin CRB's existing 7 races before/after the corpus-driven swap carries forward
 unchanged — that is still the guard against silently regressing shipped behaviour.
+
+## 26. The ART swap mechanic is an explicit PCGen protocol, not an invented one
+
+**Finding, verified 2026-07-31.** Task #5 was scoped as "design and build the Alternate Racial Traits
+swap/choice engine," on the assumption the mutual-exclusion mechanic would have to be designed. It
+does not. PCGen already encodes it declaratively, and the engine's job is faithful transcription.
+
+**The protocol.** Every standard racial trait is gated on a negated fact-check naming its own
+replace-flag. From `core_essentials/races/dwarf/dwarf_abilities_race.lst`:
+
+```
+Greed  KEY:Dwarf ~ Greed  CATEGORY:Special Ability
+       TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality
+       !PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True
+       BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2|TYPE=Racial
+```
+
+Read: *Greed applies unless `Dwarf_ReplaceGreed` is set.* ARG's alternate racial traits are precisely
+what set those flags — `arg_abilities_race.lst` contains **625 replace-flag settings spanning 36
+races** (Dwarf alone: 9 `ReplaceDefensiveTraining`, 11 `ReplaceHatred`, 10 `ReplaceStonecunning`, 7
+`ReplaceGreed`, 6 each `ReplaceHardy`/`ReplaceStability`, 5 `ReplaceVision`, 2 `ReplaceLanguages`).
+
+**Why this matters.** The swap is a data relationship already stated in the corpus, so the engine
+models a protocol rather than guessing at one, and every swap is verifiable against the source line
+that declares it. It also confirms §24's hand-modelling ruling is the right shape here: each trait is
+a small pure function plus a declared replace-flag, and a trait that fails to swap is a failing test
+rather than a silently-doubled bonus. Standard traits are additionally self-identifying via
+`TYPE:...Dwarf Racial Default...`, so the default set is readable from the corpus, not assumed.
+
+**Corpus-quality note, recorded not fixed:** the race chassis rows in `core_essentials/races/*/
+*_races.lst` carry a placeholder `SOURCEPAGE:p.xx` rather than a real page. The trait rows carry real
+citations (`SOURCEPAGE:p.21` for Dwarf). Provenance therefore comes off the trait rows; the chassis
+row's page is not trustworthy and must not be transcribed as though it were.
