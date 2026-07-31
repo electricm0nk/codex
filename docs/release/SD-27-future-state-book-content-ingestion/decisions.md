@@ -324,3 +324,32 @@ is a caught failure rather than a silent regression.
 
 This ruling resolves the "race roster" half of
 `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` Finding 2.
+
+## 24. Formula-token content is hand-modelled per feature (operator ruling, 2026-07-31)
+
+**24.1 — No formula interpreter. Each feature is a hand-written, corpus-verified pure function.**
+
+PU's 4 Unchained classes (`pu_abilities_class.lst`, 1,344 real lines, 424 of them `.MOD`, 62 distinct
+named features) and ARG's Alternate Racial Traits (`arg_abilities_race.lst`, 2,214 lines) are both
+PCGen `BONUS:`/`DEFINE:`/`PREREQ:` formula-token content — the content-kind no book in this repo has
+ever ingested. Across the 17 still-deferred books the same shape totals roughly 17,000 lines.
+
+**Operator ruling: follow the pattern v0.6 already proved at scale**, not a generic interpreter.
+Every one of the 27 existing classes was built this way — `warpriest_fervor_uses_per_day`,
+`slayer_sneak_attack_dice`, `monk_scorpion_style_dc` and their siblings are small pure functions
+whose formulas were verified byte-exact against the corpus and pinned by tests. PU's 62 features get
+the same treatment.
+
+**Why, explicitly:** an interpreter is the highest-risk option for *silently* wrong answers, and this
+codebase's own history is a list of wrong numbers that survived because nothing failed loudly. A
+hand-modelled formula that is wrong is a failing test; a misinterpreted token is a plausible number
+nobody checks. The cost — linear growth with content — is accepted deliberately in exchange for that
+property. Prior cycles' repeated decision to stop short of an interpreter is upheld, not overturned.
+
+**24.2 — This supersedes the bundle's "no new engine work" framing.** `README.md §1` and
+`technical-design.md:156` describe SD-27 as content ingestion with "no new engine work, new class
+chassis, or new rule mechanics." The operator's 2026-07-30 directive redefined SD-27's definition of
+done as full player reachability for both books — races, classes, equipment, spells and feats — which
+necessarily includes class-feature grounding and an ART choice mechanic. **The operator's directive
+governs; the content-only framing is superseded on this point.** This also resolves the contradiction
+recorded at `artifacts/cross-bundle-findings-2026-07-30.md` item 1.2.
