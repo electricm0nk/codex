@@ -1,0 +1,14 @@
+# The event log is append-only, and a merge of two append-only files is the
+# concatenation of both. `union` is one of git's built-in low-level merge
+# drivers, so this needs no configuration on anyone's machine.
+#
+# Sharding one file per actor already removes almost all contention: two agents
+# with different names never touch the same file. This covers the remainder --
+# the same actor emitting from two worktrees, or a shard modified on both a
+# tranche branch and develop -- where the correct resolution is always "keep
+# both lines" and asking a human to hand-merge JSONL would be a good way to
+# lose an event.
+#
+# Losing a line here is not like losing a line in source: a dropped event is a
+# finding that silently never happened, and nothing downstream can notice.
+*.jsonl merge=union
