@@ -353,3 +353,51 @@ done as full player reachability for both books — races, classes, equipment, s
 necessarily includes class-feature grounding and an ART choice mechanic. **The operator's directive
 governs; the content-only framing is superseded on this point.** This also resolves the contradiction
 recorded at `artifacts/cross-bundle-findings-2026-07-30.md` item 1.2.
+
+## 25. §23 CORRECTED — core_essentials stays out of scope; races attribute to their true source book
+
+**25.1 — §23 was wrong, and is superseded by this section.** §23 directed ingesting the
+`core_essentials` race library "as a shared library in its own right." That directly contradicts §1,
+which records Core Essentials as **removed from project scope on 2026-07-27** as redundant to other
+tomes. The operator caught the contradiction. §23's *conclusion* is withdrawn; its verified corpus
+facts (arg_races.lst is 39 real lines / 37 `.MOD`; the chassis is not in ARG's own directory) stand
+and are the basis for what follows.
+
+**25.2 — ARG declares zero races of its own. All 37 are reprints.** `advanced_race_guide.pcc`
+enumerates every race it pulls in, and PCGen's own section comments state each one's provenance. The
+counts sum exactly to arg_races.lst's 37 `.MOD` lines, so this is a complete accounting, not a sample:
+
+| PCC section | Races | True source book | Ingested here? |
+|---|---:|---|---|
+| `# Core Races` | 7 | Core Rulebook | **yes** |
+| `# B1 races` | 11 | Bestiary 1 | **yes** |
+| `# B2 races` | 7 | Bestiary 2 | no — SD-28 |
+| `# B3 races` | 5 | Bestiary 3 | no — SD-28 |
+| `# B4 races` | 5 | Bestiary 4 | no — SD-28 |
+| `#ISWG races` | 2 | Inner Sea World Guide | no — unscheduled |
+
+`core_essentials/races/` is **where PCGen physically stores shared race files, not a book**. The
+operator's characterisation is exactly right: it is a reprint aggregation, and several of the books
+it reprints are not ingested yet. Provenance therefore attaches to the true source book named in
+PCGen's comments — never to `core_essentials`, which acquires no corpus directory, no `RuleSetId`
+variant, and no `data/stubs/` entry.
+
+**25.3 — In-scope for SD-27: the 18 races whose source book is already ingested** (Core Rulebook's 7,
+Bestiary 1's 11). Their chassis is read out of `core_essentials/races/<name>/` and filed under
+`data/corpus/core_rulebook/race/` and `data/corpus/beastiary/race/` respectively.
+
+**Deferred to SD-28, with a real reason rather than a punt:** the other 19. Ingesting a B2/B3/B4/ISWG
+race here would mean creating that book's first content while the book itself is unregistered —
+inventing provenance for a tome nobody has audited. They land when their source book lands.
+
+**25.4 — ARG's genuine own contribution is fully in scope and is the point of the book.** Not races:
+the `.MOD` layer over all 37, plus `arg_abilities_race.lst` — **1,359 real lines**, of which 595 are
+`CATEGORY:Special Ability` and 82 `CATEGORY:Choice`. That is the Alternate Racial Traits corpus, and
+it is what makes ARG *the Advanced Race Guide*. SD-27 delivers it for the 18 in-scope races.
+
+**25.5 — Zero race content is currently ingested for any book.** Verified 2026-07-31: no
+`data/corpus/*/race/` directory exists anywhere. Core Rulebook's 7 races live *only* as a hardcoded
+7-variant `RaceId` enum in `src/rules_core/rules_tables/crb/race_tables.rs` (512 lines), surfaced by
+`apps/desktop/src-tauri/src/race_catalog.rs` (93 lines), which imports that CRB table directly. The
+§23 commitment to pin CRB's existing 7 races before/after the corpus-driven swap carries forward
+unchanged — that is still the guard against silently regressing shipped behaviour.
