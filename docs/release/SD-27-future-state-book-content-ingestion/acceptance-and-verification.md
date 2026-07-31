@@ -1,5 +1,50 @@
 # SD-27 — Acceptance and Verification
 
+## 0. The verification command (2026-07-30)
+
+> **Merge note (2026-07-30 cross-copy merge):** this section and bullet 5a below were merged in from the planning-tree copy. That copy also replaces every per-criterion `cargo test --workspace --locked → all green` line in §2 below with `./scripts/verify.sh → exit 0`; those per-criterion replacements are rewrites of existing verification commands, not additions, and were left out of this merge for separate operator review (see the merge report and `decisions.md §21`). Until that follow-up lands, §2's `cargo test --workspace --locked` lines below remain the criteria of record, notwithstanding the blanket claim immediately below.
+
+**Every "→ all green" in this file now means `./scripts/verify.sh` exiting `0`,
+with its exit code captured directly and never through a pipe.**
+
+`cargo test --workspace --locked` — the command this file previously named
+throughout — **is not a whole-repo run.** The repo root has no `[workspace]`
+table, so `--workspace` from the root never reaches `apps/desktop/src-tauri`,
+a separate and bin-only cargo crate. That crate shipped un-compilable twice
+under exactly this command. Three further structural false-greens are recorded
+in `scripts/verify.sh --help`, which is the rationale of record:
+
+1. `cargo test` fail-fasts — a "green"-looking run had executed 124 of 488
+   suites. `--no-fail-fast` is mandatory and the *number of suites executed* is
+   asserted, not just the summary line.
+2. Piping a command to `grep`/`tail` returns the **pipe's** exit status. That
+   produced a false green on a full sweep that had failed.
+3. The frontend runner reports `0/0 test files passed.` and exits `0` when
+   `node_modules` is absent.
+
+Per-class integration suites were also once absent from the checklist, and 34
+failing tests merged under sign-off. They are inside the `root-full` stage now.
+That is why the acceptance condition is "run the script", not "run the parts
+that seem relevant".
+
+`scripts/verify-baselines.env` carries the recorded green-tree numbers: test
+counts are **floors**, clippy warnings a **ceiling**. A baseline that has to
+move moves in its own reviewable commit carrying `--show-actuals` output.
+A floor that dropped means tests were deleted — that is the finding, not the fix.
+
+Three further conditions apply to any cycle that ingests a book, per
+`docs/governance/book-ingestion-playbook.md`:
+
+- **Pre-ingest:** `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`
+  is run *before* ingest code is written, and its output is recorded in the
+  cycle receipt.
+- **Citation audit:** `cargo run --locked --bin v06_corpus_trap_report -- --audit`
+  exits `0`.
+- **Reach:** where a cycle writes `src/rules_core/rules_tables/<book>/` — which
+  SD-27's own E2.x Operations step 3 does — `./scripts/verify.sh --only reach`
+  passes with a claim for the book's families. See §1 item 5a and the scope note
+  there.
+
 ## 1. Bundle-level acceptance
 
 The bundle is closure-ready when:
@@ -9,6 +54,7 @@ The bundle is closure-ready when:
 3. **Every cycle has passed the dual-audit gate** (identifier-discipline + wired-integration four-check).
 4. **The bundle label resolution is propagated across all 20 surfaces** (the 19 in-universe `data/stubs/*.json` + SD-26's `decisions.md:102`). `data/stubs/` holds 21 files; `beginner_box.json` and `core_essentials.json` are descoped and excluded by name.
 5. **The bundle's combined diff passes the `cargo test --workspace --locked` clean check.**
+5a. **Every book this bundle ingested passes the reach gate, or has an `OPEN_FINDINGS` entry naming its remedy.** *Scope caveat, flagged 2026-07-27-era decisions vs 2026-07-30 tooling:* SD-27 is recorded as content-only (`README.md §1`: "does not introduce new engine work"; `technical-design.md:156`: "No new engines"), and nothing in the package's six process files mentions a player surface, IPC or the desktop app. But `loop-instruction.md:243` and `epic-breakdown.md:53` both have the per-book cycle **generate `src/rules_core/rules_tables/<book>/`**, which is precisely the tree `reach_gate.rs` scans. **The operator resolves this**; the two live options are (a) the reach claim lands in the same cycle, or (b) an `OPEN_FINDINGS` entry with a named remedy and a bundle of record. What is not available is a green gate by omission.
 6. **The bundle's combined diff passes `bash scripts/architecture-truth-up.sh`.**
 7. **The bundle's combined diff passes the four-check wired-integration audit clean check.**
 7a. **The bundle's combined diff passes the 5th dual-audit (PI-blacklist grep) clean check.** Per the OGL/PI license-stripping doctrine, every Shape B record's PI-tagged fields are redacted; the audit grep returns 0 defects.
