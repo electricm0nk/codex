@@ -188,6 +188,15 @@ The bundle's verification stack:
 - Bundle-level: `bash scripts/architecture-truth-up.sh` clean against the bundle's combined diff.
 - Bundle-level: `python3 scripts/sd27-workflow.py status` shows 6/6 items `complete`.
 
+> **Merge note (2026-07-30 cross-copy merge):** the paragraph below and the two new hard-stop bullets in §8 were merged in from the planning-tree copy. That copy's own §7 replaces the `cargo test --workspace --locked` / `wired-integration-audit.sh` / `architecture-truth-up.sh` / `sd27-workflow.py status` bullets above with a `./scripts/verify.sh`-centric checklist; that replacement is a rewrite of existing verification criteria, not an addition, and was left out of this merge for separate operator review (see the merge report and `decisions.md §21`).
+
+**Counting discipline.** Every figure a cycle publishes names the command that
+produced it. No cycle quotes a remembered count, including one from this
+package: nearly every count in this project's history was wrong on first pass
+(396 missing feats where 301 was real; 207 bonus-bearing where 166 was real;
+180 `BONUS:VAR` records where 86 was real, one record having carried 66 tokens).
+`content-unit-inventory.md` §0 and §5 are the contract and the reconciliation.
+
 ## 8. Hard-stop conditions
 
 The bundle stops and reports the blocker instead of guessing when:
@@ -198,3 +207,5 @@ The bundle stops and reports the blocker instead of guessing when:
 - A per-book cycle's PCGen parity baseline produces a >2-dimension mismatch against the comparator's normalization library — sd-26's 7-of-9 baseline is the worst-case ceiling; >2 mismatches is a corpus-content quality issue, not a per-book cycle issue.
 - v0.6's class-skill / equipment-attachment / feat-effects work causes a discrete change to `data/corpus/<book>/` for any of the 4 in-scope books that conflicts with SD-27's per-book ingestion. The bundle's partition is the binding; v0.6's overlap is the trigger.
 - The CG-03 (Human ability-modifier bug) baseline shift causes a per-book parity cycle to fail with a "9-of-9 expected" assertion that the operator never signed off on. The 7-of-9 baseline is the cycle's assertion; the bundle's full-completion criterion is match-rate-at-cycle-close, not 9-of-9.
+- **A per-book cycle's `src/rules_core/rules_tables/<book>/` module trips the reach gate** and the bundle's recorded content-only scope gives no answer for where those records reach a player. The cycle reports; the operator picks between a reach claim in-cycle and an `OPEN_FINDINGS` entry with a named remedy. See `loop-instruction.md §8.4`.
+- **A figure derived by a cycle disagrees with a figure recorded in this package.** The cycle investigates which is wrong and reports; it does not overwrite either on the assumption that the newer derivation wins. Two such disagreements are already recorded at `content-unit-inventory.md §5` and are the operator's to resolve.

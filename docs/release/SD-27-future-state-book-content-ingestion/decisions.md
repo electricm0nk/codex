@@ -211,3 +211,86 @@ The deterministic half of dispatch — the manifest seed, the claim/complete sta
 **Reasoning:** The dashboard already carried an `sd27_book_pre_build` manifest with `managed_by: "orchestrator"` and `items: []`, and the sanctioned writer's own docstring states its public surface is what *"the loop-instruction imports"* — but this bundle documented none of it. The gap mattered because the writer fails **silently** in the unreachable case: `read_json()` returns `None` and `list_pending_items()` converts that to `[]`, so a misconfigured run reports "nothing to do" and looks successful while writing nothing.
 
 **Consequence:** `scripts/sd27-workflow.py` hard-fails on an unreachable or corrupt dashboard rather than proceeding, and `preflight` is a launch gate. All mutation goes through the orchestrator helper's API — never a direct file write, which the producer would discard on its next tick anyway.
+
+## 21. Repo tooling supersedes parts of this bundle's hand-composed process (2026-07-30)
+
+> **Merge note (2026-07-30 cross-copy merge):** this section and §22 were merged in from the planning-tree copy at `programs/codex/requirements/SD-27-future-state-book-content-ingestion/`, which had diverged from this file's §1-§20 in ways that could not be safely auto-merged (see the merge report). Numbered §18/§19 there, renumbered here to avoid colliding with this file's existing §18-§20.
+
+**Decision (process only — no scope change, no epic added, no criterion changed).**
+Four tools landed on `tranche/6` after this package was authored. Where a tool
+now enforces something this package described in prose, the package points at
+the tool.
+
+| Superseded | By | Where recorded |
+|---|---|---|
+| `cargo test --workspace --locked` as the bundle-level check | `./scripts/verify.sh` | `acceptance-and-verification.md §0`, `loop-instruction.md §8.1`, `technical-requirements.md §2.2a`, `scope-draft.md §7` |
+| Hand-maintained per-book corpus figures | `v06_work_inventory` → `docs/work-inventory.json` | `content-unit-inventory.md §0` |
+| Per-book corpus-trap rediscovery | `v06_corpus_trap_report` (pre-ingest) and its `--audit` mode | `loop-instruction.md §8.2`, `§3.3.1` Operations 0/0b |
+| "did the ingest reach anyone" left implicit | `reach_gate.rs` | `loop-instruction.md §8.4` — **carries an unresolved scope question, see §22** |
+
+**Why `--workspace` was never sufficient**, since this package named it six
+times: the repo root has no `[workspace]` table, so `--workspace` from the root
+never reaches `apps/desktop/src-tauri`. That crate is separate and bin-only, and
+it shipped un-compilable twice under exactly that command. Three further
+structural false-greens are in `scripts/verify.sh --help`.
+
+**Authority:** `scripts/verify.sh`, `scripts/verify-baselines.env`,
+`src/pcgen_import/corpus_traps.rs`, `src/bin/v06_corpus_trap_report.rs`,
+`src/bin/v06_work_inventory.rs`, `apps/desktop/src-tauri/src/reach_gate.rs`,
+`docs/governance/book-ingestion-playbook.md`.
+
+## 22. Conflicts flagged for operator resolution (2026-07-30)
+
+These are **recorded decisions that the new tooling puts under tension**.
+Recorded decisions have precedence; none is overridden here.
+
+**22.1 — Content-only scope vs. the reach gate.** §12 and `README.md §1` record
+SD-27 as content ingestion with no engine work, and `technical-design.md:156`
+records "No new engines". Nothing in the package's process files mentions a
+player surface, IPC or the desktop app. But `loop-instruction.md:243` and
+`epic-breakdown.md:53` both have the per-book cycle **generate
+`src/rules_core/rules_tables/<book>/`** — the exact tree `reach_gate.rs` scans
+for `pub const <NAME>: &[<RecordType>]` slices. Either the generated module is
+the "thin layer over LST reader" `technical-design.md §2.3` describes, with
+`sd27_gen_book_cache` as its only consumer (in which case an `OPEN_FINDINGS`
+entry with a named remedy is the honest outcome), or it declares real record
+slices (in which case a reach claim belongs in the same cycle). **Operator picks.**
+
+**22.2 — §8's partition says "must not touch `src/rules_core/rules_tables/<book>/`
+for any book", but the per-book cycles are required to write it.** §8's
+"Must not touch" list reads `src/rules_core/rules_tables/<book>/` for **any**
+book, with the parenthetical "license-stripping is shape-b-only, does not modify
+the rules-engine" — so the intent is plainly to scope that clause to the
+license-stripping cycles (2.0.5-2.0.10). Meanwhile `loop-instruction.md:243`
+makes generating that tree step 3 of E2.1, and the partition audit command at
+`loop-instruction.md:399` **explicitly allows** `^src/rules_core/rules_tables/<book>/`.
+The three surfaces are readable as consistent only by inferring the scope of
+§8's clause. **A cycle that reads §8 literally will refuse work the loop
+instruction requires.** Recommend the operator tighten §8's wording to
+"...for the 4 in-scope books" or "...in the license-stripping cycles";
+nothing is changed here.
+
+**22.3 — `core_essentials` is a shared library, not an unused tome.** The
+2026-07-27 directive removed Beginner Box and Core Essentials as "redundant to
+other tomes". The generator confirms Beginner Box (`out_of_scope`, included by
+nothing) but classifies Core Essentials as `shared_library`, included by nine
+books — among them the Core Rulebook, Bestiary 1, and this bundle's own in-scope
+Advanced Race Guide. The directive is not contradicted (its content does arrive,
+through the tomes that include it), but the two books were removed under one
+rationale that fits only one of them. Detail at `content-unit-inventory.md §5`
+Flag 1. **Operator decides whether the directive's wording needs to distinguish
+them.**
+
+**22.4 — "23 books" vs "25 books" is used inconsistently.** Criterion 2.0.10's
+heading (`loop-instruction.md:174`) says "All-25-books" while its body (lines
+182-210) and `acceptance-and-verification.md §2.2.10` say 23. Both totals are
+derivable — 25 corpus directories, of which 23 carry a bundle of record — but the
+criterion means one of them. Detail at `content-unit-inventory.md §5` Flag 2.
+
+**22.5 — ACG's measured ceiling is stated two ways inside this package.**
+`content-unit-inventory.md §1.4` says ACG was "not touched by SD-25's pass —
+verify real ceiling independently"; `technical-design.md:41` states a measured
+`ACG equipment 98.1%`. One is wrong. Whoever resolves it should cite the SD-26
+receipt the figure came from, or delete it.
+
+**22.6 — The two copies of this bundle's planning docs disagree on which second book is in scope.** This file's own §1/§4/§8/§9 above name Advanced Race Guide + Pathfinder Unchained as the two in-scope future-state books, with Adventurer's Guide explicitly routed to SD-30. The planning-tree copy this section was merged from instead names Advanced Race Guide + Adventurer's Guide, with Pathfinder Unchained deferred to SD-28+ — the opposite pairing, propagated through that copy's `scope-draft.md`, `content-unit-inventory.md`, and `acceptance-and-verification.md` as well. The 2026-07-30 merge that added §21/§22 to this file left the ARG+PU pairing above untouched rather than guess which side is current. **The operator resolves which book is actually in scope** before either copy is treated as authoritative on this point.
