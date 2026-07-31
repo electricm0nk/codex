@@ -230,6 +230,263 @@ fn raw_bonus_chains(row: &LstRow) -> Vec<RawBonusChain> {
 }
 
 // ---------------------------------------------------------------------
+// `DESC:` rendering
+// ---------------------------------------------------------------------
+
+/// Every variable this row defines *and finishes* on its own, with its
+/// resolved integer value — or `None` where the row names the variable
+/// but its value depends on something the row does not itself state.
+///
+/// PCGen seeds a row-local variable with `DEFINE:<Var>|<base>` and adds
+/// to it with `BONUS:VAR|<Var>|<value>`. Where both are integer literals
+/// on the same row, the variable is a constant written across two tokens:
+/// Dwarf's Defensive Training row carries `DEFINE:RacialDefensiveTrainingBonus|0`
+/// and `BONUS:VAR|RacialDefensiveTrainingBonus|4`, so the value is 4 and
+/// reading it is transcription, not evaluation. `decisions.md §24`'s ban
+/// on a formula interpreter is therefore not engaged.
+///
+/// The instant any contribution stops being a same-row literal — a
+/// formula (`BONUS:VAR|X|OtherVar`), a conditional bonus (a trailing
+/// `PRE...` qualifier), or a base declared elsewhere in the corpus — the
+/// variable is marked unresolvable and **no value is guessed**.
+fn same_row_vars(row: &LstRow) -> BTreeMap<String, Option<i64>> {
+    let mut vars: BTreeMap<String, Option<i64>> = BTreeMap::new();
+
+    for (_, value) in row.tokens().filter(|(k, _)| *k == "DEFINE") {
+        let Some((name, base)) = value.split_once('|') else { continue };
+        vars.insert(name.trim().to_string(), base.trim().parse::<i64>().ok());
+    }
+
+    for (_, value) in row.tokens().filter(|(k, _)| *k == "BONUS") {
+        let quals: Vec<&str> = value.split('|').collect();
+        if !quals.first().map(|q| q.eq_ignore_ascii_case("VAR")).unwrap_or(false) {
+            continue;
+        }
+        let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
+        let conditional = quals[3..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
+        let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
+        for name in names.split(',') {
+            let name = name.trim().to_string();
+            match vars.get_mut(&name) {
+                // Never `DEFINE`d here: the base lives in another file,
+                // so this row cannot resolve the variable by itself.
+                None => {
+                    vars.insert(name, None);
+                }
+                Some(slot) => {
+                    *slot = match (*slot, amount) {
+                        (Some(current), Some(add)) => Some(current + add),
+                        _ => None,
+                    };
+                }
+            }
+        }
+    }
+
+    vars
+}
+
+/// True when a `DESC:` argument is a prerequisite gate rather than a
+/// substitution argument. PCGen prerequisites are upper-case and always
+/// carry a colon (`PREVARLTEQ:Orc_OrcFerocity_Times,1`); variable names
+/// never contain one.
+fn is_prerequisite_arg(arg: &str) -> bool {
+    arg.contains(':') && (arg.starts_with("PRE") || arg.starts_with("!PRE"))
+}
+
+/// Evaluates one `PREVAR<CMP>:<lhs>,<rhs>[,<lhs>,<rhs>...]` gate against
+/// the row's own variable table, honouring a leading `!` as negation and
+/// requiring every pair to hold.
+///
+/// This compares two same-row constants; it is not formula evaluation.
+/// An operand must be an integer literal or a variable [`same_row_vars`]
+/// already resolved to one. Anything undecidable — an unknown comparison,
+/// a prerequisite kind this does not model, an operand defined elsewhere —
+/// is an `Err`, never a coin flip: a gate decides what the rules text
+/// *says* ("Once" vs "Twice per day"), so guessing it would ship a false
+/// statement rather than merely an incomplete one.
+fn eval_prevar_gate(token: &str, vars: &BTreeMap<String, Option<i64>>) -> Result<bool, String> {
+    let (negated, body) = match token.strip_prefix('!') {
+        Some(rest) => (true, rest),
+        None => (false, token),
+    };
+    let (head, args) = body.split_once(':').ok_or_else(|| format!("malformed DESC gate {token:?}"))?;
+    let cmp = head.strip_prefix("PREVAR").ok_or_else(|| format!("unmodelled DESC gate kind {token:?}"))?;
+
+    let operand = |raw: &str| -> Result<i64, String> {
+        let raw = raw.trim();
+        if let Ok(n) = raw.parse::<i64>() {
+            return Ok(n);
+        }
+        vars.get(raw)
+            .copied()
+            .flatten()
+            .ok_or_else(|| format!("DESC gate {token:?}: {raw:?} is not a same-row literal"))
+    };
+
+    let parts: Vec<&str> = args.split(',').collect();
+    if parts.is_empty() || !parts.len().is_multiple_of(2) {
+        return Err(format!("DESC gate {token:?} is not a list of <operand>,<value> pairs"));
+    }
+
+    let mut all = true;
+    for pair in parts.chunks(2) {
+        let (lhs, rhs) = (operand(pair[0])?, operand(pair[1])?);
+        all &= match cmp {
+            "EQ" => lhs == rhs,
+            "NEQ" => lhs != rhs,
+            "LT" => lhs < rhs,
+            "LTEQ" => lhs <= rhs,
+            "GT" => lhs > rhs,
+            "GTEQ" => lhs >= rhs,
+            other => return Err(format!("DESC gate {token:?}: unmodelled comparison {other:?}")),
+        };
+    }
+    Ok(negated != all)
+}
+
+/// Collapses every whitespace run to a single space and trims the ends.
+/// Applied only where a placeholder was removed, so prose that needed no
+/// edit stays byte-identical to the source.
+fn collapse_whitespace(text: &str) -> String {
+    let mut out = String::new();
+    let mut last_was_space = false;
+    for ch in text.chars() {
+        if ch.is_whitespace() {
+            if !last_was_space {
+                out.push(' ');
+            }
+            last_was_space = true;
+        } else {
+            out.push(ch);
+            last_was_space = false;
+        }
+    }
+    out.trim().to_string()
+}
+
+/// Replaces every `%N` in one `DESC:` segment with argument N's resolved
+/// literal, returning the rendered text and the names of any arguments
+/// that would not resolve.
+///
+/// An unresolvable argument is **dropped, never guessed**: the
+/// placeholder goes, the `+`/`-` sign that introduced it goes with it,
+/// and the whitespace is closed up so the sentence still reads. The raw
+/// argument tail is not emitted under any branch — that is the whole
+/// point of this function.
+fn substitute_placeholders(prose: &str, args: &[&str], vars: &BTreeMap<String, Option<i64>>) -> (String, Vec<String>) {
+    let chars: Vec<char> = prose.chars().collect();
+    let mut out = String::new();
+    let mut unresolved: Vec<String> = Vec::new();
+    let mut dropped_any = false;
+    let mut i = 0;
+
+    while i < chars.len() {
+        if chars[i] == '%'
+            && let Some(digit) = chars.get(i + 1).and_then(|c| c.to_digit(10))
+            && digit >= 1
+        {
+            let arg = args.get(digit as usize - 1).copied();
+            let value = arg.and_then(|name| {
+                let name = name.trim();
+                name.parse::<i64>().ok().or_else(|| vars.get(name).copied().flatten())
+            });
+            match value {
+                Some(v) => out.push_str(&v.to_string()),
+                None => {
+                    if let Some(name) = arg {
+                        unresolved.push(name.to_string());
+                    }
+                    while out.ends_with('+') || out.ends_with('-') {
+                        out.pop();
+                    }
+                    dropped_any = true;
+                }
+            }
+            i += 2;
+            continue;
+        }
+        out.push(chars[i]);
+        i += 1;
+    }
+
+    let text = if dropped_any { collapse_whitespace(&out) } else { out };
+    (text, unresolved)
+}
+
+/// One row's rendered player-facing description, plus the arguments that
+/// could not be resolved (reported by the binary rather than swallowed).
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct RenderedDescription {
+    text: Option<String>,
+    unresolved_args: Vec<String>,
+}
+
+/// Turns a row's `DESC:` tokens into the prose the player actually sees.
+///
+/// PCGen's format is `DESC:<prose>|<arg1>|<arg2>...`, where `%1` in the
+/// prose stands for arg 1's resolved value, and where an argument that
+/// looks like a prerequisite gates the whole segment instead. A row may
+/// carry several `DESC:` tokens (Half-Orc's Orc Ferocity carries four);
+/// the surviving segments concatenate, in source order, into one
+/// description.
+///
+/// Storing the raw token instead — which is what this binary used to do —
+/// put PCGen substitution syntax on screen verbatim, e.g. *"Dwarves get a
+/// +%1 dodge bonus to AC against monsters of the giant
+/// subtype.|RacialDefensiveTrainingBonus"*.
+fn render_description(row: &LstRow) -> Result<RenderedDescription, String> {
+    let vars = same_row_vars(row);
+    let mut segments: Vec<String> = Vec::new();
+    let mut unresolved_args: Vec<String> = Vec::new();
+    let mut saw_desc = false;
+
+    for (_, value) in row.tokens().filter(|(k, _)| *k == "DESC") {
+        saw_desc = true;
+        let mut parts = value.split('|');
+        let prose = parts.next().unwrap_or_default();
+        let (gates, args): (Vec<&str>, Vec<&str>) = parts.partition(|p| is_prerequisite_arg(p));
+
+        let mut applies = true;
+        for gate in &gates {
+            // Every gate is evaluated even once one has failed, so an
+            // undecidable gate is surfaced rather than masked by a
+            // neighbour that happened to be decided first.
+            applies &= eval_prevar_gate(gate, &vars)?;
+        }
+        if !applies {
+            continue;
+        }
+
+        let (text, mut unresolved) = substitute_placeholders(prose, &args, &vars);
+        unresolved_args.append(&mut unresolved);
+        if !text.is_empty() {
+            segments.push(text);
+        }
+    }
+
+    let joined = segments.join(" ");
+    let text = if !saw_desc || joined.is_empty() { None } else { Some(joined) };
+    Ok(RenderedDescription { text, unresolved_args })
+}
+
+/// The PCGen substitution syntax that must never reach a player: an
+/// unsubstituted `%<digit>` placeholder, or a raw `|` argument tail.
+/// Used as a production guard on every description this binary writes.
+fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
+    if text.contains('|') {
+        return Some("raw '|' argument tail");
+    }
+    let chars: Vec<char> = text.chars().collect();
+    for (i, c) in chars.iter().enumerate() {
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
+            return Some("unsubstituted '%N' argument reference");
+        }
+    }
+    None
+}
+
+// ---------------------------------------------------------------------
 // Chassis (`<name>_races.lst`)
 // ---------------------------------------------------------------------
 
@@ -357,6 +614,7 @@ fn parse_trait(row: &LstRow, race_key: &str) -> Result<RaceTraitCacheData, Strin
     let key = row.first("KEY").ok_or_else(|| format!("line {}: standard trait row has no KEY: token", row.line_no))?;
     let types = type_tokens(row);
     let flags = replace_flags(row);
+    let rendered = render_description(row).map_err(|e| format!("line {}: {e}", row.line_no))?;
     Ok(RaceTraitCacheData {
         key: key.to_string(),
         name: row.name().to_string(),
@@ -370,7 +628,9 @@ fn parse_trait(row: &LstRow, race_key: &str) -> Result<RaceTraitCacheData, Strin
         // The tool reports every such row.
         suppressed_by_flag: flags.first().cloned(),
         sets_replace_flags: Vec::new(),
-        description: row.first("DESC").map(str::to_string),
+        // Player-facing prose, not the raw token: `%N` is substituted
+        // from the row's own literals and any argument tail is stripped.
+        description: rendered.text,
         source_page: source_page(row),
         raw_tokens: raw_tokens_excluding_bonus(row),
         raw_bonus_chains: raw_bonus_chains(row),
@@ -491,6 +751,8 @@ fn main() {
     let mut placeholder_page_traits = 0usize;
     let mut real_page_traits = 0usize;
     let mut non_default_traits: Vec<String> = Vec::new();
+    let mut unresolved_desc_args: Vec<String> = Vec::new();
+    let mut rewritten_descriptions: Vec<String> = Vec::new();
 
     for spec in IN_SCOPE_RACES {
         let dir = races_root.join(spec.dir);
@@ -602,6 +864,28 @@ fn main() {
                 placeholder_page_traits += 1;
             }
 
+            // `DESC:` rendering: report every argument that would not
+            // resolve, and refuse to ship a description that still
+            // carries PCGen substitution syntax.
+            if let Ok(rendered) = render_description(&row) {
+                for arg in rendered.unresolved_args {
+                    unresolved_desc_args
+                        .push(format!("{} -> DESC arg {arg:?} is not a same-row literal (dropped, not guessed)", data.key));
+                }
+            }
+            let raw_desc = row.first("DESC").unwrap_or_default();
+            if let Some(desc) = data.description.as_deref() {
+                if desc != raw_desc {
+                    rewritten_descriptions.push(format!("{}\n      raw: {raw_desc}\n      out: {desc}", data.key));
+                }
+                if let Some(leak) = leaked_pcgen_syntax(desc) {
+                    errors.push(format!(
+                        "{abilities_rel}:{}: {} would ship a {leak} to the player: {desc}",
+                        row.line_no, data.key
+                    ));
+                }
+            }
+
             let desc = data.description.clone().unwrap_or_default();
             let hits = pi_hits(&[&data.key, &data.name, &desc]);
             if !hits.is_empty() {
@@ -659,6 +943,14 @@ fn main() {
     }
     println!("trait rows naming >1 replace flag (first stored, full token kept in raw_tokens): {}", multi_flag_rows.len());
     for t in &multi_flag_rows {
+        println!("  {t}");
+    }
+    println!("descriptions rewritten from the raw DESC: token: {}", rewritten_descriptions.len());
+    for t in &rewritten_descriptions {
+        println!("  {t}");
+    }
+    println!("DESC args that would not resolve to a same-row literal: {}", unresolved_desc_args.len());
+    for t in &unresolved_desc_args {
         println!("  {t}");
     }
 
@@ -1011,6 +1303,266 @@ mod tests {
         // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11).
         assert_eq!(races, 18, "18 in-scope race chassis records");
         assert_eq!(traits, 175, "175 standard racial trait records");
+    }
+
+    // -----------------------------------------------------------------
+    // DESC rendering
+    // -----------------------------------------------------------------
+
+    /// The real Dwarf Defensive Training row, field-for-field from
+    /// `core_essentials/races/dwarf/dwarf_abilities_race.lst` line 22
+    /// (`ASPECT:` tokens included — they carry the same `%1`, and are the
+    /// alternative phrasing the brief asked to be weighed).
+    fn dwarf_defensive_training_line() -> String {
+        padded_line(&[
+            "Defensive Training",
+            "KEY:Dwarf ~ Defensive Training",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality.Defensive",
+            "!PREFACT:1,ABILITIES,Dwarf_ReplaceDefensiveTraining=True",
+            "DEFINE:RacialDefensiveTrainingBonus|0",
+            "DESC:Dwarves get a +%1 dodge bonus to AC against monsters of the giant subtype.|RacialDefensiveTrainingBonus",
+            "BONUS:VAR|RacialDefensiveTrainingBonus|4",
+            "SOURCEPAGE:p.21",
+            "ASPECT:CombatBonus|+%1 dodge bonus to AC against monsters of the giant subtype.|RacialDefensiveTrainingBonus",
+        ])
+    }
+
+    /// The real Half-Orc Orc Ferocity row from
+    /// `core_essentials/races/half_orc/halforc_abilities_race.lst` line 24:
+    /// four `DESC:` tokens, three of them gated by a `PREVAR*` clause on a
+    /// variable this same row sets to 1.
+    fn orc_ferocity_line() -> String {
+        padded_line(&[
+            "Orc Ferocity",
+            "KEY:Half-Orc ~ Orc Ferocity",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Half-Orc Racial Trait.Half-Orc Racial Default.SpecialQuality.Defensive",
+            "!PREFACT:1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true",
+            "DEFINE:Orc_OrcFerocity_Times|0",
+            "DESC:Once|PREVARLTEQ:Orc_OrcFerocity_Times,1",
+            "DESC:Twice|PREVAREQ:Orc_OrcFerocity_Times,2",
+            "DESC:%1 times|Orc_OrcFerocity_Times|Orc_OrcFerocity_Times|PREVARGTEQ:Orc_OrcFerocity_Times,3",
+            "DESC:per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying.",
+            "BONUS:VAR|Orc_OrcFerocity_Times|1",
+            "SOURCEPAGE:p.25",
+        ])
+    }
+
+    #[test]
+    fn same_row_vars_resolve_define_base_plus_bonus_var_literal() {
+        let vars = same_row_vars(&one_row(&dwarf_defensive_training_line()));
+        assert_eq!(vars.get("RacialDefensiveTrainingBonus"), Some(&Some(4)));
+    }
+
+    /// A `BONUS:VAR` whose value is another variable is a formula, and
+    /// `decisions.md §24` forbids interpreting one. The honest result is
+    /// "unresolvable", never a guessed number.
+    #[test]
+    fn same_row_vars_refuse_a_non_literal_bonus_var_formula() {
+        let row = one_row(&padded_line(&[
+            "Humanoid (Dwarf)",
+            "DEFINE:FavoredHumanoidDwarf|0",
+            "BONUS:VAR|FavoredHumanoidDwarf|FavoredBaseBonus",
+        ]));
+        assert_eq!(same_row_vars(&row).get("FavoredHumanoidDwarf"), Some(&None));
+    }
+
+    /// A variable the row only *reads* (no `DEFINE:` of its own) is
+    /// defined somewhere else entirely, so this row cannot resolve it.
+    #[test]
+    fn same_row_vars_refuse_a_variable_this_row_never_defines() {
+        let row = one_row(&padded_line(&["X", "BONUS:VAR|SomeGlobal|2"]));
+        assert_eq!(same_row_vars(&row).get("SomeGlobal"), Some(&None));
+    }
+
+    /// A conditional `BONUS:VAR` does not apply unconditionally, so its
+    /// contribution cannot be folded into a flat literal.
+    #[test]
+    fn same_row_vars_refuse_a_conditional_bonus_var() {
+        let row =
+            one_row(&padded_line(&["X", "DEFINE:Foo|0", "BONUS:VAR|Foo|2|PRELEVEL:MIN=5"]));
+        assert_eq!(same_row_vars(&row).get("Foo"), Some(&None));
+    }
+
+    #[test]
+    fn prevar_gate_evaluates_the_closed_comparison_family_against_same_row_literals() {
+        let vars: BTreeMap<String, Option<i64>> = [("T".to_string(), Some(1i64))].into_iter().collect();
+        for (token, expected) in [
+            ("PREVAREQ:T,1", true),
+            ("PREVAREQ:T,2", false),
+            ("PREVARNEQ:T,2", true),
+            ("PREVARLT:T,2", true),
+            ("PREVARLT:T,1", false),
+            ("PREVARLTEQ:T,1", true),
+            ("PREVARGT:T,0", true),
+            ("PREVARGTEQ:T,3", false),
+            ("!PREVAREQ:T,1", false),
+        ] {
+            assert_eq!(eval_prevar_gate(token, &vars), Ok(expected), "{token}");
+        }
+        // Both pairs must hold.
+        assert_eq!(eval_prevar_gate("PREVARGTEQ:T,1,T,2", &vars), Ok(false));
+        // Undecidable rather than guessed.
+        assert!(eval_prevar_gate("PREVAREQ:Unknown,1", &vars).is_err());
+        assert!(eval_prevar_gate("PREVARSOMETHING:T,1", &vars).is_err());
+    }
+
+    /// The defect this change exists to fix, pinned on the real row:
+    /// the player must see the resolved `+4`, never `%1` and never the
+    /// `|RacialDefensiveTrainingBonus` argument tail.
+    #[test]
+    fn defensive_training_renders_the_resolved_bonus_not_the_raw_desc() {
+        let row = one_row(&dwarf_defensive_training_line());
+        let rendered = render_description(&row).expect("Defensive Training must render");
+        assert!(rendered.unresolved_args.is_empty());
+        assert_eq!(
+            rendered.text.as_deref(),
+            Some("Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.")
+        );
+        let data = parse_trait(&row, "Dwarf").expect("row must parse");
+        assert_eq!(
+            data.description.as_deref(),
+            Some("Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.")
+        );
+    }
+
+    /// Four `DESC:` tokens, three `PREVAR*`-gated on a variable this row
+    /// sets to 1: only `Once` survives, and it joins the ungated tail into
+    /// one sentence. `%1 times` is dropped whole because its gate
+    /// (`Times >= 3`) is false — not because the argument was stripped.
+    #[test]
+    fn orc_ferocity_renders_the_gated_segment_that_actually_applies() {
+        let row = one_row(&orc_ferocity_line());
+        let rendered = render_description(&row).expect("Orc Ferocity must render");
+        assert!(rendered.unresolved_args.is_empty());
+        assert_eq!(
+            rendered.text.as_deref(),
+            Some(
+                "Once per day, when a half-orc is brought below 0 hit points but not killed, \
+                 he can fight on for one more round as if disabled. At the end of his next turn, \
+                 unless brought to above 0 hit points, he immediately falls unconscious and begins dying."
+            )
+        );
+    }
+
+    /// When the argument is a formula rather than a literal, no value is
+    /// invented: the placeholder and its argument tail are both removed,
+    /// the sign that introduced it goes with them, and the row is reported.
+    #[test]
+    fn unresolvable_desc_argument_is_dropped_never_guessed() {
+        let row = one_row(&padded_line(&[
+            "Made Up",
+            "DEFINE:Foo|0",
+            "BONUS:VAR|Foo|SomeOtherVariable",
+            "DESC:You gain a +%1 bonus on Bluff checks.|Foo",
+        ]));
+        let rendered = render_description(&row).expect("row must render");
+        assert_eq!(rendered.unresolved_args, vec!["Foo".to_string()]);
+        let text = rendered.text.expect("prose survives");
+        assert_eq!(text, "You gain a bonus on Bluff checks.");
+        assert!(!text.contains('%'));
+        assert!(!text.contains('|'));
+    }
+
+    /// A `%N` with no matching argument at all is still never shown.
+    #[test]
+    fn placeholder_with_no_argument_is_dropped() {
+        let row = one_row(&padded_line(&["X", "DESC:A +%1 bonus applies."]));
+        let rendered = render_description(&row).unwrap();
+        assert_eq!(rendered.text.as_deref(), Some("A bonus applies."));
+    }
+
+    /// A description with nothing to substitute must come through
+    /// byte-identical — the cleanup may not reflow untouched prose.
+    #[test]
+    fn plain_description_passes_through_unchanged() {
+        let row = one_row(&dwarf_greed_line());
+        assert_eq!(
+            render_description(&row).unwrap().text.as_deref(),
+            Some(
+                "Dwarves receive a +2 racial bonus on Appraise skill checks made to determine \
+                 the price of nonmagical goods that contain precious metals or gemstones."
+            )
+        );
+    }
+
+    /// An undecidable gate is a hard error, not a coin flip: including or
+    /// dropping a gated segment changes what the rules text *says*
+    /// ("Once" vs "Twice per day"), so the run fails loudly instead.
+    #[test]
+    fn undecidable_desc_gate_is_an_error_not_a_guess() {
+        let row = one_row(&padded_line(&["X", "DESC:Once|PREVARLTEQ:SomeGlobalVar,1"]));
+        assert!(render_description(&row).is_err());
+    }
+
+    /// The property the player actually experiences: nothing PCGen-shaped
+    /// survives into a served description. Scoped to the two books this
+    /// binary writes.
+    #[test]
+    fn no_committed_trait_description_leaks_pcgen_substitution_syntax() {
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus");
+        let mut checked = 0usize;
+        let mut with_description = 0usize;
+
+        for book in ["core_rulebook", "beastiary"] {
+            let trait_root = root.join(book).join("race_trait");
+            let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
+                .expect("race_trait dir must exist")
+                .filter_map(Result::ok)
+                .map(|e| e.path())
+                .collect();
+            race_dirs.sort();
+            for race_dir in race_dirs {
+                let mut files: Vec<PathBuf> =
+                    fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+                files.sort();
+                for path in files {
+                    let record: CorpusRecordV1<RaceTraitCacheData> =
+                        serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
+                    checked += 1;
+                    let Some(desc) = record.data.description.as_deref() else { continue };
+                    with_description += 1;
+                    let chars: Vec<char> = desc.chars().collect();
+                    for (i, c) in chars.iter().enumerate() {
+                        assert!(
+                            !(*c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit)),
+                            "{path:?}: served description carries an unsubstituted '%N' argument reference: {desc}"
+                        );
+                    }
+                    assert!(
+                        !desc.contains('|'),
+                        "{path:?}: served description carries a raw PCGen argument tail: {desc}"
+                    );
+                    assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+                }
+            }
+        }
+
+        assert_eq!(checked, 175, "175 standard racial trait records");
+        assert_eq!(with_description, 175, "every one of them carries a DESC:");
+    }
+
+    /// The two rows named in the defect report, pinned verbatim so a
+    /// regression names itself.
+    #[test]
+    fn the_two_reported_rows_render_exactly_as_specified() {
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/core_rulebook/race_trait");
+        let read = |rel: &str| -> String {
+            let record: CorpusRecordV1<RaceTraitCacheData> =
+                serde_json::from_str(&fs::read_to_string(root.join(rel)).unwrap()).unwrap();
+            record.data.description.expect("record must carry a description")
+        };
+        assert_eq!(
+            read("dwarf/dwarf_defensive_training.json"),
+            "Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype."
+        );
+        assert_eq!(
+            read("half_orc/half_orc_orc_ferocity.json"),
+            "Once per day, when a half-orc is brought below 0 hit points but not killed, \
+             he can fight on for one more round as if disabled. At the end of his next turn, \
+             unless brought to above 0 hit points, he immediately falls unconscious and begins dying."
+        );
     }
 
     #[test]

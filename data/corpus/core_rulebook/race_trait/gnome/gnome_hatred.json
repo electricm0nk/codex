@@ -17,7 +17,7 @@
     "is_racial_default": true,
     "suppressed_by_flag": "Gnome_ReplaceHatred",
     "sets_replace_flags": [],
-    "description": "Gnomes receive a +%1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.|Gnome_Hatred_AttackBonus",
+    "description": "Gnomes receive a +1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.",
     "source_page": null,
     "raw_tokens": [
       {

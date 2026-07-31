@@ -16,7 +16,7 @@
     "is_racial_default": true,
     "suppressed_by_flag": "Elf_ReplaceKeenSenses",
     "sets_replace_flags": [],
-    "description": "Elves receive a +%1 racial bonus on Perception skill checks.|KeenSensesBonus",
+    "description": "Elves receive a +2 racial bonus on Perception skill checks.",
     "source_page": null,
     "raw_tokens": [
       {

@@ -17,7 +17,7 @@
     "is_racial_default": true,
     "suppressed_by_flag": "HalfOrc_ReplaceOrcFerocity",
     "sets_replace_flags": [],
-    "description": "Once|PREVARLTEQ:Orc_OrcFerocity_Times,1",
+    "description": "Once per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying.",
     "source_page": "p.25",
     "raw_tokens": [
       {

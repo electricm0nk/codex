@@ -18,7 +18,7 @@
     "is_racial_default": true,
     "suppressed_by_flag": "Gnome_ReplaceGnomeMagic",
     "sets_replace_flags": [],
-    "description": "Gnomes add +%1 to the DC of any saving throws against illusion spells that they cast. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, ghost sound, prestidigitation, and speak with animals. The caster level for these effects is equal to the gnome's level. The DC for these spells is equal to 10 + the spell's level + the gnome's Charisma modifier.|Gnome_GnomeMagic_IllusionDCBonus",
+    "description": "Gnomes add +1 to the DC of any saving throws against illusion spells that they cast. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, ghost sound, prestidigitation, and speak with animals. The caster level for these effects is equal to the gnome's level. The DC for these spells is equal to 10 + the spell's level + the gnome's Charisma modifier.",
     "source_page": null,
     "raw_tokens": [
       {

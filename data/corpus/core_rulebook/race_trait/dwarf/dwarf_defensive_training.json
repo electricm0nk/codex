@@ -17,7 +17,7 @@
     "is_racial_default": true,
     "suppressed_by_flag": "Dwarf_ReplaceDefensiveTraining",
     "sets_replace_flags": [],
-    "description": "Dwarves get a +%1 dodge bonus to AC against monsters of the giant subtype.|RacialDefensiveTrainingBonus",
+    "description": "Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.",
     "source_page": "p.21",
     "raw_tokens": [
       {
