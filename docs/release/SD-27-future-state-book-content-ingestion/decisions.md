@@ -482,3 +482,45 @@ than assumed per content-kind.*
 defects are the same failure — publishing a general rule from a single unverified sample — and both
 were caught only because the ingestion agents were instructed to derive counts by command instead of
 trusting the brief. That instruction earned its keep here.
+
+## 28. §8's file-touch partition is spent; `pilot_compute.rs` is in scope (2026-07-31)
+
+**§8 forbids touching `src/rules_core/pilot_compute.rs` and `src/rules_core/rules_tables/<book>/`. Both
+prohibitions have outlived their stated reason and no longer bind SD-27.**
+
+**Why §8 said it.** §8 is dated 2026-07-25 and opens with its own rationale verbatim: *"SD-27 cycles share
+the live repo with v0.6's active class/race breadth work."* It is a **concurrency partition** — a rule for
+keeping simultaneous cycles from colliding — not a judgement that these files are unsafe. The
+`rules_tables/<book>/` line carries its own scope note for the same reason: *"license-stripping is
+shape-b-only, does not modify the rules-engine"*, i.e. it constrains the license-stripping cycles
+specifically.
+
+**Why it no longer applies.** v0.6 closed. Its work merged to `develop` and SD-27's own tranche PR #342
+merged as `88a0011e`. There is no concurrent cycle to collide with; this branch is the only writer. A
+partition with nothing to partition against is not a safety property, it is a stale constraint.
+
+**It is also already overtaken in practice.** The PU class work landed
+`rules_tables/pathfinder_unchained/{barbarian,monk,rogue,summoner}_features.rs` — squarely inside the
+`rules_tables/<book>/` line — because §24's hand-modelling ruling *directs* that content there. §24 and
+§8 cannot both be obeyed; §24 is later, operator-pinned, and specific to this content.
+
+**Why it must lift now.** The operator's definition of done is player reachability: *"all data is
+ingested, compute is available, and can reach the end user through the ui. there is not a single thing
+left to be done for that thing to be utilized by a user."* Two open defects cannot be closed without
+`pilot_compute.rs`:
+
+1. **Size modifiers to AC / touch AC / CMB / CMD do not exist for any race.** A live Goblin fighter shows
+   AC 18 / touch 14 / CMB +3 / CMD 17; PF1's Small values at those stats are **19 / 15 / +2 / 16**. This
+   is wrong arithmetic on a player's sheet, and it **pre-dates** the 18-race widening — Gnome and Halfling
+   shipped with it.
+2. **PU's 4 Unchained classes are grounded but unwired.** 4 class + 64 class_feature records and 69
+   passing library tests exist; no player can select one, and no sheet changes because of them.
+
+**Ruling: `pilot_compute.rs` and `rules_tables/<book>/` are in scope for SD-27 from this point.** §8's
+partition is recorded as **spent**, not wrong — it was correct for the concurrency it was written for.
+The remaining §8 prohibitions (`docs/release/v0.6/`, `src/oracle_validation/`) stand: those are другой
+concern entirely, and nothing in the reachability work needs them.
+
+**Standing guard, unchanged:** `pilot_compute.rs` is the engine's most load-bearing file. Every change to
+it lands with a test pinning the before/after per affected race or class, so drift is a caught failure
+rather than a silent recomputation — the same discipline §25.5 imposed on the CRB race swap.
