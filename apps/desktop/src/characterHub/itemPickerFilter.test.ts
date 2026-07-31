@@ -4,14 +4,15 @@ import {
   mapFeatCatalogEntries,
   mapSpellCatalogEntries,
 } from './itemPickerFilter';
+import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const EQUIPMENT_ENTRIES = [
-  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15 },
-  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250 },
-  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50 },
+const EQUIPMENT_ENTRIES: EquipmentCatalogEntryDto[] = [
+  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, book: 'CRB' },
+  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, book: 'CRB' },
+  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, book: 'CRB' },
 ];
 
 const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
@@ -75,7 +76,7 @@ function verifiesEquipmentMappingUsesFriendlyCategoryLabel() {
 }
 
 function verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant() {
-  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null }]);
+  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, book: 'CRB' }]);
   assertEqual(mapped.detail, 'SomeNewCategory', 'unmapped categories fall back to the raw variant string, never a fabricated label');
 }
 
