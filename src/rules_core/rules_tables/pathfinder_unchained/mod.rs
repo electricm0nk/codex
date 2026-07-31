@@ -9,10 +9,14 @@
 //! Advanced Race Guide) SD-27 resolves out of stub state
 //! (`decisions.md §1`). Per `technical-design.md §2.3`, this is a
 //! deliberately thin layer -- "just enough to populate the JSON cache" --
-//! not a full rules-engine chassis. PU carries no wired `pilot_compute`
-//! integration and is not added to `rules_tables::RuleSetId`; this
-//! bundle's own partition explicitly does not touch
-//! `src/rules_core/pilot_compute.rs` (`decisions.md §8`).
+//! not a full rules-engine chassis. PU still carries no wired
+//! `pilot_compute` integration — this bundle's own partition explicitly
+//! does not touch `src/rules_core/pilot_compute.rs` (`decisions.md §8`) —
+//! but it is no longer unregistered: a later cycle owning
+//! `rules_tables/mod.rs` added `pub mod pathfinder_unchained;` and the
+//! `RuleSetId::Pu` variant, so this module is reachable through the
+//! `codex` library's public module tree as well as through
+//! `src/bin/sd27_gen_book_cache.rs`'s `#[path]` include.
 //!
 //! **Scope, confirmed against the real corpus this cycle (not taken on
 //! faith):** `pu_equipmods.lst` (42 real records, `equipment_tables`)

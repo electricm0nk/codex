@@ -28,20 +28,19 @@
 //! new formula-parsing architecture with no precedent to follow — genuinely
 //! out of this cycle's bounded scope, not corner-cutting.
 //!
-//! **Not wired into the shared `rules_tables::RuleSetId` enum.** SD-27's
-//! per-cycle file-touch partition (`docs/release/SD-27-future-state-book-content-ingestion/loop-instruction.md`
-//! §6) allow-lists `src/rules_core/rules_tables/advanced_race_guide/` but
-//! does NOT allow-list `src/rules_core/rules_tables/mod.rs` — this module
-//! is compiled only via `#[path]` inclusion into
-//! `src/bin/sd27_gen_book_cache.rs` (mirroring
-//! `rules_tables::pathfinder_unchained::mod`'s identical, already-landed
-//! precedent for this same cycle pair), not exposed through the `codex`
-//! library's public module tree or the `RuleSetId` enum. A future
-//! `pilot_compute` integration cycle is free to register it properly when
-//! it also touches `rules_tables/mod.rs`. ARG contributes no player class
-//! of its own either way (its content is spells/equipment/feats layered
-//! onto existing classes/races), so unlike `rules_tables::acg::mod`,
-//! there is no `class_chassis_resolve` here.
+//! **Registered in the shared module tree.** Originally landed compiled
+//! only via `#[path]` inclusion into `src/bin/sd27_gen_book_cache.rs`,
+//! because SD-27's per-cycle file-touch partition
+//! (`docs/release/SD-27-future-state-book-content-ingestion/loop-instruction.md`
+//! §6) allow-listed `src/rules_core/rules_tables/advanced_race_guide/` but
+//! not `src/rules_core/rules_tables/mod.rs`. A later cycle that did own
+//! `rules_tables/mod.rs` registered this module as
+//! `pub mod advanced_race_guide;` and added the `RuleSetId::Arg` variant,
+//! so it is now reachable through the `codex` library's public module tree
+//! as well as through the generator binary's `#[path]` include. ARG
+//! contributes no player class of its own either way (its content is
+//! spells/equipment/feats layered onto existing classes/races), so unlike
+//! `rules_tables::acg::mod`, there is no `class_chassis_resolve` here.
 
 pub mod equipment_data;
 pub mod equipment_tables;
