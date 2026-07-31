@@ -46,6 +46,19 @@
 #   scripts/verify.sh --show-actuals   # also print measured numbers in baseline format
 #   scripts/verify.sh -j 4             # cargo build parallelism (default 2)
 #
+# RETROSPECTIVE EVENT
+# -------------------
+# Every run emits one `verification` event to the retrospective log (see
+# `scripts/retro.py` and `docs/retro/schema.json`), pass or fail. It is emitted
+# here rather than typed by whoever ran the command because a run nobody chose
+# to record is exactly the one worth having: the stage that failed, got fixed
+# in two minutes, and would never have seemed worth writing down. It is also
+# what makes the denominator honest — a near-miss count means nothing without
+# the number of runs behind it.
+#
+# The emission cannot affect this script's result. It happens after the
+# summary, its status is discarded, and `RETRO_DISABLE=1` turns it off.
+#
 # Baselines live in scripts/verify-baselines.env, which documents how each
 # number is compared and how to re-measure it deliberately.
 #
@@ -609,6 +622,87 @@ if (( SHOW_ACTUALS == 1 )); then
     say "MEASURED (scripts/verify-baselines.env format):"
     for a in "${ACTUALS[@]}"; do say "  $a"; done
 fi
+
+# ---------------------------------------------------------------------------
+# Retrospective event
+#
+# Runs after every stage has finished and its own status is discarded, so it
+# is incapable of turning a FAIL into a PASS or the reverse — the one property
+# that matters, given point 3 above. Every way it could go wrong (no python3,
+# no emitter, a bad schema) collapses to a no-op: a missing event is a gap in
+# a retrospective, whereas a verify.sh that fails because its logging failed
+# would be a gate nobody trusts.
+# ---------------------------------------------------------------------------
+
+RESULT=PASS
+(( ${#FAIL_NAMES[@]} > 0 )) && RESULT=FAIL
+
+emit_retro_event() {
+    [[ -z "${RETRO_DISABLE:-}" ]] || return 0
+    local emitter="$SCRIPT_DIR/retro.py"
+    [[ -f "$emitter" ]] || return 0
+    command -v python3 >/dev/null 2>&1 || return 0
+
+    local passed_csv="" failed_csv=""
+    (( ${#PASS_NAMES[@]} > 0 )) && passed_csv=$(IFS=,; printf '%s' "${PASS_NAMES[*]}")
+    (( ${#FAIL_NAMES[@]} > 0 )) && failed_csv=$(IFS=,; printf '%s' "${FAIL_NAMES[*]}")
+
+    # `--mode=` and not `--mode `: MODE_LABEL is literally "--only" for an
+    # --only run, and a separate argument beginning with a dash is read as the
+    # next flag rather than as this one's value. The whole emission then fails
+    # with a usage error that the `|| true` below swallows in silence.
+    local args=(
+        "$emitter" verification
+        --source verify.sh
+        --derived
+        --mode="$MODE_LABEL"
+        --result "$RESULT"
+        --log-dir "$LOG_DIR"
+        --duration-seconds "$SECONDS"
+        --quiet
+    )
+    [[ -n "$passed_csv" ]] && args+=(--stages-passed "$passed_csv")
+    [[ -n "$failed_csv" ]] && args+=(--stages-failed "$failed_csv")
+
+    python3 "${args[@]}" >/dev/null 2>&1 || true
+}
+
+# Disk pressure, observed at the moment it is most likely to be true.
+#
+# The disk has hit 100% twice on this box, once livelocking a partition
+# resize, and a full test sweep building ~490 binaries is the single largest
+# consumer on it. Nobody remembers to record that afterwards, and by the time
+# anyone looks the space has usually been reclaimed — so the one honest place
+# to notice is here, right after the build that caused it.
+#
+# `dedupe_key` is per day per filesystem: a hundred verify runs on a bad day
+# produce one event, not a hundred, so the count means "days under pressure"
+# rather than "times anyone happened to run the gate".
+emit_disk_pressure_event() {
+    [[ -z "${RETRO_DISABLE:-}" ]] || return 0
+    local emitter="$SCRIPT_DIR/retro.py"
+    [[ -f "$emitter" ]] || return 0
+    command -v python3 >/dev/null 2>&1 || return 0
+    command -v df >/dev/null 2>&1 || return 0
+
+    local threshold=${RETRO_DISK_THRESHOLD:-90}
+    local used_pct mount
+    read -r used_pct mount < <(df -P "$REPO_ROOT" 2>/dev/null | awk 'NR==2 { gsub(/%/, "", $5); print $5, $6 }')
+    [[ "$used_pct" =~ ^[0-9]+$ ]] || return 0
+    (( used_pct >= threshold )) || return 0
+
+    python3 "$emitter" incident \
+        --source verify.sh --derived \
+        --impact "$mount at ${used_pct}% used after a verify run" \
+        --detected-by "df, at the end of scripts/verify.sh" \
+        --recurrence-key disk-pressure \
+        --dedupe-key "disk-pressure:$(date -u +%Y-%m-%d):$mount" \
+        --used-percent "$used_pct" \
+        --quiet >/dev/null 2>&1 || true
+}
+
+emit_retro_event
+emit_disk_pressure_event
 
 # Only the full gate is a complete verification. Say so, so a --quick pass is
 # never mistaken for one.
