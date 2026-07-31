@@ -757,6 +757,32 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          `ground_*_companion_stat_block`, not read from these tables. Remedy: a monster catalog \
          command and browser, mirroring `spell_catalog.rs` + SpellCatalogScreen.tsx.",
     ),
+    (
+        "advanced_race_guide",
+        "equipment",
+        "ARG's 200 ingested equipment records (SD-27) reach no surface, for the same reason and \
+         with the same remedy as the APG entry above — `equipment_catalog.rs` reads \
+         `crb::equipment_tables::equipment_tables()` alone. Confirmed 2026-07-30 while wiring a \
+         real desktop-side corpus loader for this same gap at the compute-engine layer \
+         (`docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` finding 4) — that work fixed \
+         `encumbrance.rs`/`equipment_effects.rs`'s own CRB-only resolution but does not touch \
+         `equipment_catalog.rs`, a separate UI-catalog consumer with the identical defect.",
+    ),
+    (
+        "advanced_race_guide",
+        "feats",
+        "ARG's 187 ingested feat records reach no surface, for the same reason and with the same \
+         remedy as `feat_catalog.rs` was presumably already widened for (per the APG-equipment \
+         entry's own note that `spell_catalog.rs`/`feat_catalog.rs` were widened for this defect \
+         — ARG was never included in that widening, since it postdates it).",
+    ),
+    (
+        "advanced_race_guide",
+        "spells",
+        "ARG's 92 ingested spell records reach no surface, same gap as the feats entry above — \
+         ARG postdates whatever pass widened `spell_catalog.rs` to be book-generic for the \
+         original 4 in-scope books.",
+    ),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
