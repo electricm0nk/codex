@@ -100,6 +100,70 @@ annotated `OGL` but matching PSPF PI patterns), the affected records
 drop from the per-cycle scope. A retrofit bundle may revisit; SD-28
 records the dropped records as cycle findings, not blockers.
 
+## Class 4 — Measured inheritance from tranche/7 (SD-28-specific, derived 2026-08-01)
+
+Three findings from the tranche/7 retrospective that are **about this bundle specifically**, each
+derived by command rather than routed by assumption. Sources: `docs/retro/tranche-7-retrospective.md`,
+`../SD-29-bestiary-line-book-ingestion/forward-scope-register.md §7`.
+
+### C4.1 — SD-28 is likely LARGER than SD-27, not smaller
+
+The bundle's own doctrine says *"size alone is never a stop reason"* (`decisions.md §24`,
+`loop-instruction.md`). That rule is right, and it has never been given the size.
+
+Per-book real (non-comment, non-blank) `.lst` row counts show a **12× spread** across the six books —
+`ultimate_magic` ~4,756 rows against `ultimate_campaign` ~397 — and roughly **5,450 `abilities_class`
+rows**, which is §24-shaped hand-model content, one pure function and one test each.
+
+**Consequence for planning:** SD-27's per-book cycle shape was sized against ARG (479 records) and PU
+(59). Applying that cadence unchanged to `ultimate_magic` will under-provision it by roughly an order
+of magnitude. **Re-derive the counts at dispatch** (`v06_work_inventory`, `v06_corpus_trap_report`) and
+size cycles per book, not per bundle.
+
+### C4.2 — The 46-spell Unchained Summoner gap is entirely SD-28's to close
+
+SD-27 left the Unchained Summoner unable to cast: its 202-entry spell list has a **46-spell gap**,
+per-level 12/35/39/39/27/23/27 with the gap at zero for level 0.
+
+**All 46 come from `ultimate_combat` (26) or `ultimate_magic` (18)** — two of them also in Mythic
+Adventures. **None requires a Bestiary-line book**, so this does **not** wait on SD-29 and SD-30 is not
+a prerequisite either. The other four Ultimate books are not prerequisites for it.
+
+**Readiness:** whichever cycle lands `ultimate_magic` + `ultimate_combat` spells should close this in
+the same pass and re-run SD-27's Unchained Summoner surface, rather than leaving it to a follow-up.
+
+### C4.3 — Settle the magnitude predicate BEFORE publishing any coverage ratio
+
+There is no stable predicate for *"this record carries a computed magnitude"*. Magnitude rows carry no
+corpus key, only prose that usually repeats the record's name, so four reasonable variants of the
+name-substring test returned **48 / 49 / 51 / 52 on one unchanged tree** during SD-27.
+
+SD-28, SD-29 and SD-30 will each want to publish a "% of records reaching a player" figure. Without a
+shared predicate, **all three will publish defensible, non-comparable numbers** — and so will any
+comparison against SD-27's.
+
+The fix is small: an optional `source_record` on `ComputationExplanation`, so a magnitude row names the
+corpus record it came from instead of being matched by prose. **Whichever bundle dispatches first
+should land it** — it is cheaper than the argument the three bundles will otherwise have about their
+own numbers.
+
+This is SD-27 `decisions.md §27.1` recurring one layer up: *625 mentions vs 271 settings — the
+arithmetic was never the defect, the label was.*
+
+### C4.4 — The ingest pipeline is four binaries with three private copies of one treatment
+
+There is no single ingestion pipeline. `src/bin/ingest_races.rs`, `ingest_race_traits_arg.rs`,
+`ingest_pu_classes.rs` and `cache_gen/apg.rs` each carry their own partial copy of the PCGen
+description treatment; only `codex::rules_core::pcgen_desc::render_pcgen_desc` is sanctioned. SD-27
+paid this defect three times in three places.
+
+**Readiness, and it is cheap if done once before book #1:** route every ingest binary's description
+path through `render_pcgen_desc` and give each a `leaked_pcgen_syntax` production guard. Six books ×
+four binaries is where SD-28 pays it repeatedly instead.
+
+Ownership is shared with SD-29 (`forward-scope-register.md §7.4`) and SD-30: **whichever bundle
+dispatches first pays it; the others re-verify rather than re-implement.**
+
 ## Review trigger
 
 Reopen SD-28's forward-scope register when:
