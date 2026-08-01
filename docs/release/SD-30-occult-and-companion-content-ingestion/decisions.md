@@ -45,7 +45,9 @@
 
 **Why superseded.** SD-30's tranche-base is 10, not 6. First concrete value is `0.10.<build>` per Decision §15.
 
-## Decision 2 — Branch and board
+## Decision 2 (original text — SUPERSEDED, see §14) — Branch and board
+
+> **Retained as the audit record of what was originally proposed. The values below are superseded and must not be acted on** — SD-30's branch is `tranche/10` and its build target `0.10.<build>`, per §14/§15. Heading disambiguated 2026-08-01; text unchanged.
 
 **Status:** Pending operator confirmation.
 
@@ -55,7 +57,9 @@
 
 **Alternative:** SD-30 could split per-book across sub-tranches (e.g., `tranche/6-2-oa`, `tranche/6-2-oo`, `tranche/6-2-ha`). Operator preference.
 
-## Decision 3 — Build version target
+## Decision 3 (original text — SUPERSEDED, see §15) — Build version target
+
+> **Retained as the audit record of what was originally proposed. The values below are superseded and must not be acted on** — SD-30's branch is `tranche/10` and its build target `0.10.<build>`, per §14/§15. Heading disambiguated 2026-08-01; text unchanged.
 
 **Status:** Pending operator confirmation.
 
