@@ -71,6 +71,15 @@ each book.
    8 below), and every repo test combined. See
    `docs/retro/tranche-7-retrospective.md` §3 and §0 for the reproduction
    command.
+1c. **Preflight** the disk. `./scripts/verify.sh --only preflight-disk` (fast —
+   no build). Refuse to start the bounded work below if it fails; run
+   `scripts/reclaim.sh` (no flags — dry run) to see what it would reclaim,
+   then `scripts/reclaim.sh --apply` and re-check. Disk exhaustion is this
+   program's second-largest recorded orchestration failure mode
+   (`docs/retro/tranche-7-retrospective.md` §4.1, 5 of 34 incidents,
+   including `/home` at 100% used, 0 bytes available) and a ~490-binary
+   `root-full` build (cycle mechanics step 4 below) is exactly what tips a
+   box over. See `decisions.md` Decision 31.
 2. **Claim** the highest-priority ready card on `kanban.md` (per `decisions.md §13` + §14a).
 3. **Do** the bounded work (TDD per the repo's `AGENTS.md`: failing test → smallest change → green → refactor). **The player surface is part of the bounded work, not a follow-on** — see `decisions.md` Decision 11.
 4. **Verify** with `./scripts/verify.sh` (full, not `--quick`), exit code captured
@@ -87,6 +96,15 @@ each book.
 8. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
    or narrowly avoided. See "Retrospective log" below — this step is part of
    the cycle, not an optional courtesy.
+9. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
+   only when disk pressure is already visible. The script is dry-run-safe by
+   default and its safety guards (never touches a target dir a live build is
+   using, never removes a worktree with uncommitted or unpushed work, never
+   touches this repo's own checkout or the `pcgen` oracle) make `--apply`
+   the correct default for a routine cycle-end, not a special case. See
+   `decisions.md` Decision 31 — this is the executable counterpart to the
+   `CARGO_TARGET_DIR` cleanup rule that this program has, until now, had only
+   as a written instruction nobody automated.
 
 ## Retrospective log
 

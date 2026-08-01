@@ -94,8 +94,13 @@ ONLY_STAGES=()
 
 # Stage sets. `quick` is everything that does not build the ~490-binary root
 # sweep or run clippy over the whole tree — on a 4-core box those two dominate.
-ALL_STAGES=(root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+# `preflight-disk` is first in BOTH sets deliberately: disk exhaustion is this
+# repo's #2 recorded incident class (docs/retro/tranche-7-retrospective.md
+# §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
+# over — it must fail loudly before that build starts, not be discovered by
+# `ld terminated with signal 7 [Bus error]` partway through it.
+ALL_STAGES=(preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -217,6 +222,78 @@ check_floor() {
         note "$var baseline is stale: $baseline_n recorded, $actual_n measured. Update $BASELINES_FILE."
     fi
     return 0
+}
+
+# ---------------------------------------------------------------------------
+# Stage: preflight-disk
+#
+# Fires FIRST in both stage sets, before any build starts. `root-full` builds
+# ~490 test binaries and is exactly what has repeatedly tipped this box over
+# (docs/retro/tranche-7-retrospective.md §4.1: `/tmp` tmpfs at 91% -> `ld
+# terminated with signal 7 [Bus error]`; `/` at 91%, 98%, 98%; `/home` at
+# 100%, 0 bytes available). The disk-pressure event this script already emits
+# at the very end (`emit_disk_pressure_event` below) only ever *records* that
+# after the fact — it cannot stop a build already in flight from failing on
+# ENOSPC/SIGBUS partway through. This stage is the check that runs before any
+# of that time is spent, checking both the repo's own filesystem and the
+# filesystem the scratch log dir lives on (mktemp defaults to /tmp, a
+# tmpfs — the exact partition that hit 91% and produced the Bus error above).
+# ---------------------------------------------------------------------------
+
+PREFLIGHT_DISK_MIN_FREE_GB=${PREFLIGHT_DISK_MIN_FREE_GB:-20}
+PREFLIGHT_DISK_MAX_PERCENT=${PREFLIGHT_DISK_MAX_PERCENT:-90}
+
+# Prints "used_pct avail_kb mount" for the filesystem containing `path`, or
+# nothing if `df` can't be read. Never piped to the caller's exit-status path.
+df_stats_for() {
+    local path="$1" line
+    line=$(df -Pk "$path" 2>/dev/null | awk 'NR==2 { gsub(/%/, "", $5); print $5, $4, $6 }')
+    printf '%s' "$line"
+}
+
+check_disk_budget() {
+    local label="$1" path="$2" used avail_kb mount avail_gb
+    read -r used avail_kb mount < <(df_stats_for "$path")
+    if [[ ! "$used" =~ ^[0-9]+$ || ! "$avail_kb" =~ ^[0-9]+$ ]]; then
+        printf '    %s (%s, mounted at %s): could not read df output — skipping this check\n' \
+            "$label" "$path" "${mount:-?}"
+        return 0
+    fi
+    avail_gb=$(( avail_kb / 1024 / 1024 ))
+    printf '    %s (%s, mounted at %s): %s%% used, %sG available\n' \
+        "$label" "$path" "$mount" "$used" "$avail_gb"
+    if (( used >= PREFLIGHT_DISK_MAX_PERCENT || avail_gb < PREFLIGHT_DISK_MIN_FREE_GB )); then
+        return 1
+    fi
+    return 0
+}
+
+run_preflight_disk() {
+    stage_start "preflight-disk — disk budget check before any build starts"
+    local ok=0
+
+    check_disk_budget "repo filesystem" "$REPO_ROOT" || ok=1
+    # LOG_DIR (see "Logs" above) is already created by the time any stage
+    # runs — check the filesystem it actually landed on, which is /tmp by
+    # default (a tmpfs, and the exact partition that hit 91% and produced
+    # the Bus error this stage exists to head off).
+    check_disk_budget "scratch-log filesystem" "$LOG_DIR" || ok=1
+
+    if (( ok != 0 )); then
+        printf '    FAIL: disk budget below floor (max %s%% used, min %sG free).\n' \
+            "$PREFLIGHT_DISK_MAX_PERCENT" "$PREFLIGHT_DISK_MIN_FREE_GB"
+        printf '    A full sweep builds ~490 test binaries and needs real headroom; this is\n'
+        printf '    exactly the condition that produced "ld terminated with signal 7 [Bus\n'
+        printf '    error]" and aborted builds in this repo before (tranche-7-retrospective\n'
+        printf '    §4.1). Reclaim space before re-running:\n'
+        printf '        scripts/reclaim.sh --apply\n'
+        printf '    (dry-run first with no flags to see what it would remove). Override the\n'
+        printf '    floor deliberately with PREFLIGHT_DISK_MIN_FREE_GB / PREFLIGHT_DISK_MAX_PERCENT\n'
+        printf '    if this box'"'"'s real headroom is genuinely different.\n'
+        stage_fail preflight-disk "below the disk budget floor — see scripts/reclaim.sh"
+        return
+    fi
+    stage_pass preflight-disk "disk budget OK"
 }
 
 # ---------------------------------------------------------------------------
@@ -588,6 +665,7 @@ say "logs:  $LOG_DIR"
 
 for stage in "${SELECTED[@]}"; do
     case "$stage" in
+        preflight-disk)      run_preflight_disk ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;
