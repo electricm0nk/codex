@@ -82,6 +82,8 @@ function resolution(overrides: Partial<RaceSelectionResponse> = {}): RaceSelecti
     unmatchedSelections: [],
     blockedAlternates: [],
     conflictingSelections: [],
+    renderedTraitDescriptions: [],
+    displayValueFeats: [],
     errors: [],
     ...overrides,
   };

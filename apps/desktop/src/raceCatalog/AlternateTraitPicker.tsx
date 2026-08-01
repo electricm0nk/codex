@@ -4,22 +4,28 @@ import type {
   RacePickerDto,
   RaceSelectionResponse,
 } from '../boundary/loadAlternateRacialTraits';
+import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
 import {
   alternateTraitPickerAvailable,
   loadAlternateRacialTraitsRuntime,
+  loadCharacterContextsRuntime,
+  loadHeldFeatsRuntime,
   resolveRaceAlternateSelectionRuntime,
   NO_RUNTIME_MESSAGE,
 } from './alternateTraitPickerRuntime';
 import {
   blocksByAlternateKey,
   describeBlock,
+  describeCharacterContext,
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  descriptionsByTraitKey,
   orderRacesByAlternateCount,
   selectionWarnings,
   suppressionsByTraitKey,
   toggleSelection,
+  traitDescription,
 } from './alternateTraitPickerModel';
 
 const panel: CSSProperties = {
@@ -46,6 +52,21 @@ const muted: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.75
  * - the lock-outs come from ARG's own `PREMULT` self-exclusion guard.
  *
  * This component chooses layout and wording. It does not decide rules.
+ *
+ * # Whose numbers are these?
+ *
+ * A racial trait's prose *states magnitudes* — "three times per day", "a +1
+ * bonus on attack rolls" — and feats a character holds change several of them.
+ * Every description below is therefore the engine's rendering of the corpus
+ * row's own `DESC:` tokens against a character's display values, never the
+ * stored prose (which has its numbers collapsed at ingest, and for
+ * `Halfling ~ Adaptable Luck` lost outright).
+ *
+ * The "showing numbers for" selector is how the character reaches the engine:
+ * it loads a **saved** character and passes that character's real persisted
+ * `selectedFeats`. With no character chosen the screen shows the racial base
+ * and says so. Nothing here computes a display value, and nothing invents a
+ * character to demonstrate one.
  */
 export function AlternateTraitPicker() {
   const [menu, setMenu] = useState<AlternateRacialTraitsResponse | null>(null);
@@ -54,6 +75,10 @@ export function AlternateTraitPicker() {
   const [selectedByRace, setSelectedByRace] = useState<Record<string, string[]>>({});
   const [selection, setSelection] = useState<RaceSelectionResponse | null>(null);
   const [selectionError, setSelectionError] = useState<string | null>(null);
+  const [characters, setCharacters] = useState<CharacterSummaryDto[]>([]);
+  const [characterId, setCharacterId] = useState<string>('');
+  const [heldFeats, setHeldFeats] = useState<string[]>([]);
+  const [characterError, setCharacterError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!alternateTraitPickerAvailable()) {
@@ -69,7 +94,41 @@ export function AlternateTraitPicker() {
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown alternate racial traits failure');
       });
+    loadCharacterContextsRuntime()
+      .then(setCharacters)
+      .catch((cause: unknown) => {
+        // A failure to list characters must not blank the catalogue: the base
+        // numbers are still true and still worth showing. It is reported on the
+        // selector's own line rather than swallowed.
+        setCharacterError(cause instanceof Error ? cause.message : 'Unknown saved-character listing failure');
+      });
   }, []);
+
+  // The chosen character's real persisted feats. Cleared the moment the
+  // selection changes, so the screen never shows one character's numbers under
+  // another's name while the load is in flight.
+  useEffect(() => {
+    if (!characterId) {
+      setHeldFeats([]);
+      setCharacterError(null);
+      return;
+    }
+    let current = true;
+    setHeldFeats([]);
+    setCharacterError(null);
+    loadHeldFeatsRuntime(characterId)
+      .then((feats) => {
+        if (current) setHeldFeats(feats);
+      })
+      .catch((cause: unknown) => {
+        if (current) {
+          setCharacterError(cause instanceof Error ? cause.message : 'Unknown character load failure');
+        }
+      });
+    return () => {
+      current = false;
+    };
+  }, [characterId]);
 
   const races = useMemo(() => orderRacesByAlternateCount(menu?.races ?? []), [menu]);
   const race: RacePickerDto | null = useMemo(
@@ -88,7 +147,7 @@ export function AlternateTraitPicker() {
     let current = true;
     setSelection(null);
     setSelectionError(null);
-    resolveRaceAlternateSelectionRuntime(raceKey, selected)
+    resolveRaceAlternateSelectionRuntime(raceKey, selected, heldFeats)
       .then((response) => {
         if (current) setSelection(response);
       })
@@ -98,11 +157,16 @@ export function AlternateTraitPicker() {
     return () => {
       current = false;
     };
-  }, [raceKey, selected]);
+  }, [raceKey, selected, heldFeats]);
 
   const suppressed = useMemo(() => suppressionsByTraitKey(selection), [selection]);
   const blocked = useMemo(() => blocksByAlternateKey(selection), [selection]);
   const warnings = useMemo(() => selectionWarnings(selection), [selection]);
+  const rendered = useMemo(() => descriptionsByTraitKey(selection), [selection]);
+  const characterLabel = useMemo(
+    () => characters.find((candidate) => candidate.characterId === characterId)?.displayLabel ?? null,
+    [characters, characterId],
+  );
 
   function onToggle(key: string) {
     if (!raceKey) return;
@@ -133,6 +197,45 @@ export function AlternateTraitPicker() {
           Corpus finding: {finding}
         </p>
       ))}
+
+      <div style={{ alignItems: 'baseline', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <label htmlFor="art-character-context" style={{ ...muted, fontWeight: 600 }}>
+          Showing numbers for
+        </label>
+        <select
+          id="art-character-context"
+          value={characterId}
+          onChange={(event) => setCharacterId(event.target.value)}
+          disabled={characters.length === 0}
+          style={{
+            backgroundColor: 'var(--color-surface-2)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 6,
+            color: 'var(--color-text)',
+            fontSize: '0.8rem',
+            padding: '0.25rem 0.5rem',
+          }}
+        >
+          <option value="">No character — the book&apos;s printed values</option>
+          {characters.map((candidate) => (
+            <option key={candidate.characterId} value={candidate.characterId}>
+              {candidate.displayLabel}
+            </option>
+          ))}
+        </select>
+        <span style={muted}>{describeCharacterContext(characterLabel, selection)}</span>
+      </div>
+      {characters.length === 0 && !characterError ? (
+        <p style={{ ...muted, margin: '0 0 0.5rem' }}>
+          No saved characters yet, so only the printed values can be shown. Create one to see the numbers their
+          feats give them.
+        </p>
+      ) : null}
+      {characterError ? (
+        <p style={{ color: 'var(--color-danger, #d33)', fontSize: '0.75rem', margin: '0 0 0.5rem' }}>
+          {characterError}
+        </p>
+      ) : null}
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
         {races.map((candidate) => (
@@ -182,6 +285,11 @@ export function AlternateTraitPicker() {
                       Replaced by {swap.setByTraitName} (flag {swap.flag})
                     </p>
                   ) : null}
+                  <TraitProse
+                    text={traitDescription(rendered, standard.key, standard.description)}
+                    row={rendered.get(standard.key)}
+                    dimmed={swap !== undefined}
+                  />
                 </div>
               );
             })}
@@ -241,7 +349,10 @@ export function AlternateTraitPicker() {
                   <p style={{ ...muted, color: 'var(--color-accent)', margin: '0.2rem 0 0' }}>
                     {describeReplacement(alternate)}
                   </p>
-                  <p style={{ ...muted, margin: '0.2rem 0 0' }}>{alternate.description}</p>
+                  <TraitProse
+                    text={traitDescription(rendered, alternate.key, alternate.description)}
+                    row={rendered.get(alternate.key)}
+                  />
                   {block ? (
                     <p style={{ color: 'var(--color-danger, #d33)', fontSize: '0.72rem', margin: '0.2rem 0 0' }}>
                       {describeBlock(block)}
@@ -253,6 +364,47 @@ export function AlternateTraitPicker() {
           </div>
         </div>
       </div>
+    </>
+  );
+}
+
+/**
+ * One trait's prose, plus the two things the engine says *about* that prose and
+ * this screen must not hide.
+ *
+ * - `movedByFeats` marks a sentence whose number the selected character's feats
+ *   changed from the printed one. Without the mark a player reading "5 times
+ *   per day" has no way to tell it apart from the book's own text.
+ * - `droppedArgs` names `DESC:` arguments the engine could not resolve. No
+ *   shipped record reports one today (derived, not assumed —
+ *   `race_trait_picker.rs` prints the live count), and the branch stays because
+ *   the alternative to showing it is a silently incomplete sentence.
+ */
+function TraitProse({
+  text,
+  row,
+  dimmed = false,
+}: {
+  text: string;
+  row?: { movedByFeats: boolean; droppedArgs: string[] };
+  dimmed?: boolean;
+}) {
+  return (
+    <>
+      <p style={{ ...muted, margin: '0.2rem 0 0', opacity: dimmed ? 0.6 : 1 }}>
+        {text}
+        {row?.movedByFeats ? (
+          <span style={{ color: 'var(--color-accent)', fontWeight: 700, marginLeft: '0.35rem' }}>
+            ← your feats changed this value
+          </span>
+        ) : null}
+      </p>
+      {row && row.droppedArgs.length > 0 ? (
+        <p style={{ color: 'var(--color-danger, #d33)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+          This engine cannot state {row.droppedArgs.join(', ')} for this trait, so the sentence above is missing
+          that magnitude rather than guessing it.
+        </p>
+      ) : null}
     </>
   );
 }

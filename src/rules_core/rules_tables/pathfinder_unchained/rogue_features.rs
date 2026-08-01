@@ -384,6 +384,23 @@ pub fn rogues_edge_skill_unlocks(level: u8) -> Option<u8> {
 /// Granted only at 20th (`:229`), so this returns `None` below that: a
 /// "Master Strike DC" for a 7th-level rogue is not a smaller number, it is not
 /// a thing.
+///
+/// # The corpus row states `MasterStrikeLVL` twice, and this reads it once
+///
+/// `:586` carries `BONUS:VAR|MasterStrikeLVL|RogueLVL` **two times**, byte for
+/// byte (verified 2026-08-01 by tokenising the row: its token list is
+/// `DEFINE:MasterStrikeLVL|0`, `BONUS:VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT`,
+/// `BONUS:VAR|MasterStrikeLVL|RogueLVL`, `BONUS:VAR|MasterStrikeLVL|RogueLVL`).
+/// Taken literally that doubles the variable and yields `10 + level + INT` — a
+/// DC of 30 rather than 20 for a 20th-level rogue with `INT +0`.
+///
+/// The duplicate is read as a data-entry repeat, not as a rule, on the row's own
+/// evidence: Pathfinder Unchained's published Master Strike DC is
+/// *"10 + 1/2 the rogue's level + the rogue's Intelligence modifier"*, and the
+/// `/2` in the same row's own `MasterStrikeDC` token exists precisely to halve a
+/// single `RogueLVL`. Doubling it back would make that `/2` meaningless. This
+/// note exists because the disagreement is real and a future reader who
+/// re-derives the formula from the row will meet it.
 pub fn master_strike_dc(level: u8, int_modifier: i16) -> Option<i16> {
     active_level(UnchainedRogueFeature::MasterStrike, level).map(|level| 10 + i16::from(level) / 2 + int_modifier)
 }

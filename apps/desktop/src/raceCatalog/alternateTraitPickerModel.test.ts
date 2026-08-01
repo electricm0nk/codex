@@ -1,9 +1,12 @@
 import {
   blocksByAlternateKey,
   describeBlock,
+  describeCharacterContext,
   describePicker,
   describeReplacement,
   describeSelectionOutcome,
+  descriptionsByTraitKey,
+  traitDescription,
   orderRacesByAlternateCount,
   selectionWarnings,
   suppressionsByTraitKey,
@@ -82,6 +85,8 @@ function selectionResponse(overrides: Partial<RaceSelectionResponse> = {}): Race
     unmatchedSelections: [],
     blockedAlternates: [],
     conflictingSelections: [],
+    renderedTraitDescriptions: [],
+    displayValueFeats: [],
     errors: [],
     ...overrides,
   };
@@ -251,5 +256,65 @@ assertEqual(RACE_CATALOG_VIEWS[1].view, 'alternates', 'the picker is one click f
  */
 assert(NO_RUNTIME_MESSAGE.includes('resolved by the'), 'the browser message explains why, not just that');
 assert(!NO_RUNTIME_MESSAGE.includes('coming soon'), 'no promise stands in for the reason');
+
+// --- rendered descriptions are shown, never re-derived --------------------
+
+/**
+ * The payload shapes below are copied from a real
+ * `resolve_race_alternate_selection` response — the same three sentences
+ * `race_trait_picker.rs`'s
+ * `the_payload_renders_a_different_sentence_for_a_character_holding_the_feats`
+ * pins against the on-disk corpus. They are inputs to pure view functions; the
+ * screen never assembles a sentence of its own, which is exactly what these
+ * assertions check.
+ */
+const luckBase = 'Three times per day, a halfling can gain a +2 luck bonus…';
+const luckBoth = '5 times per day, a halfling can gain a +4 luck bonus…';
+
+const withCharacter = selectionResponse({
+  displayValueFeats: ['Fortunate One', 'Adaptive Fortune'],
+  renderedTraitDescriptions: [
+    { key: 'Halfling ~ Adaptable Luck', name: 'Adaptable Luck', text: luckBoth, droppedArgs: [], movedByFeats: true },
+    { key: 'Halfling ~ Keen Senses', name: 'Keen Senses', text: 'Halflings receive a +2 bonus on Perception checks.', droppedArgs: [], movedByFeats: false },
+  ],
+});
+
+const byKey = descriptionsByTraitKey(withCharacter);
+assertEqual(byKey.size, 2, 'every rendered row is indexed');
+assertEqual(
+  traitDescription(byKey, 'Halfling ~ Adaptable Luck', luckBase),
+  luckBoth,
+  "the character's rendered sentence wins over the menu's printed one",
+);
+assertEqual(
+  traitDescription(byKey, 'Halfling ~ Unseen Trait', luckBase),
+  luckBase,
+  'a trait the engine did not render falls back to the menu prose, never to a blank',
+);
+assertEqual(
+  traitDescription(descriptionsByTraitKey(null), 'Halfling ~ Adaptable Luck', luckBase),
+  luckBase,
+  'before the resolution returns the screen shows the printed value, not nothing',
+);
+
+// --- the context line credits only what the engine says moved -------------
+
+assert(
+  describeCharacterContext(null, withCharacter).includes('as the book prints it'),
+  'with no character the screen says whose numbers these are',
+);
+const credited = describeCharacterContext('Bilbo', withCharacter);
+assert(credited.includes('Fortunate One, Adaptive Fortune'), 'the feats that moved a value are named');
+assert(credited.includes('1 trait'), 'the count of changed sentences is derived from the payload');
+assertEqual(
+  describeCharacterContext('Bilbo', selectionResponse()),
+  "Showing Bilbo's numbers. None of their feats changes a racial trait's stated value.",
+  'a character whose feats moved nothing is told so, not implied to have changed something',
+);
+assertEqual(
+  describeCharacterContext('Bilbo', null),
+  "Reading Bilbo's feats…",
+  'before the engine answers, the screen claims nothing about what did or did not move',
+);
 
 console.log('alternateTraitPickerModel: all assertions passed');

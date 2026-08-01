@@ -4,6 +4,8 @@ import {
   type AlternateRacialTraitsResponse,
   type RaceSelectionResponse,
 } from '../boundary/loadAlternateRacialTraits';
+import { loadListSavedCharacters, type CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
+import { loadSavedCharacterDetail } from '../boundary/loadSavedCharacterDetail';
 import { hasTauriRuntime } from '../boundary/runtime';
 
 /**
@@ -41,9 +43,40 @@ export async function loadAlternateRacialTraitsRuntime(): Promise<AlternateRacia
 export async function resolveRaceAlternateSelectionRuntime(
   raceKey: string,
   selectedAlternateKeys: readonly string[],
+  heldFeats: readonly string[] = [],
 ): Promise<RaceSelectionResponse> {
   if (!hasTauriRuntime()) {
     throw new Error(NO_RUNTIME_MESSAGE);
   }
-  return resolveRaceAlternateSelection(raceKey, selectedAlternateKeys);
+  return resolveRaceAlternateSelection(raceKey, selectedAlternateKeys, heldFeats);
+}
+
+/**
+ * The saved characters this screen can show numbers *for*.
+ *
+ * A racial trait's description states magnitudes — "three times per day", "a +1
+ * bonus" — and several of those magnitudes are raised by feats the character
+ * holds. Without a character in hand the screen can only show the racial base,
+ * which is a true answer for the book and the wrong one for the player.
+ *
+ * The roster comes from `list_saved_characters` and the feats from
+ * `load_saved_character`'s own `selected_feats`, so the context is a real
+ * persisted character. **Nothing here fabricates a character to demonstrate
+ * the feature**: with none saved, the screen says so and shows the base.
+ */
+export async function loadCharacterContextsRuntime(): Promise<CharacterSummaryDto[]> {
+  if (!hasTauriRuntime()) {
+    return [];
+  }
+  const response = await loadListSavedCharacters();
+  return [...response.characters].sort((left, right) => left.displayLabel.localeCompare(right.displayLabel));
+}
+
+/** One saved character's real persisted feat list, verbatim. */
+export async function loadHeldFeatsRuntime(characterId: string): Promise<string[]> {
+  if (!hasTauriRuntime()) {
+    throw new Error(NO_RUNTIME_MESSAGE);
+  }
+  const detail = await loadSavedCharacterDetail({ characterId });
+  return detail.selectedFeats;
 }

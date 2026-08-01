@@ -19,6 +19,19 @@ import { formatError, hasTauriRuntime } from './runtime';
  * The frontend never decides whether a trait applies. Every suppression the
  * screen renders is one the engine reported. No count or roster is pinned
  * here: the screen derives everything from what arrives.
+ *
+ * # Descriptions carry numbers, and the numbers depend on the character
+ *
+ * Every `description` below is *rendered* by the engine from the corpus row's
+ * own `DESC:` tokens — not transcribed from the stored prose, whose numbers
+ * were collapsed (and, for `Halfling ~ Adaptable Luck`, lost) at ingest time.
+ *
+ * `resolveRaceAlternateSelection` therefore takes the character's held feats.
+ * They change no *resolution* — a feat fires no replace-flag and blocks no
+ * alternate — only the magnitudes the sentences state, which is why they are a
+ * separate argument rather than part of the selection request. Pass a
+ * character's real `selectedFeats` from `loadSavedCharacterDetail`, or nothing
+ * at all to get the racial base.
  */
 
 /** A standard trait an alternate swaps out, or a replacement row it brings in. */
@@ -104,6 +117,25 @@ export interface AppliedTraitDto {
   description: string;
 }
 
+/**
+ * One trait's description rendered against a specific character's display
+ * values. Emitted for every trait the race declares — standard, alternate and
+ * flag-granted — whether or not it is currently selected.
+ */
+export interface RenderedTraitDescriptionDto {
+  key: string;
+  name: string;
+  /** The prose to show, rendered from the record's own `DESC:` tokens. */
+  text: string;
+  /**
+   * `DESC:` arguments the engine could not resolve and therefore dropped.
+   * Carried so an incomplete description is visibly incomplete, never guessed.
+   */
+  droppedArgs: string[];
+  /** True when the held feats changed this sentence from its racial base. */
+  movedByFeats: boolean;
+}
+
 export interface RaceSelectionResponse {
   raceId: string;
   raceKey: string;
@@ -120,6 +152,17 @@ export interface RaceSelectionResponse {
   blockedAlternates: BlockedAlternateDto[];
   /** Selections that violate each other's guard. */
   conflictingSelections: BlockedAlternateDto[];
+  /**
+   * Every trait this race declares, its description rendered against the held
+   * feats passed to the call. Sorted by key.
+   */
+  renderedTraitDescriptions: RenderedTraitDescriptionDto[];
+  /**
+   * The subset of the held feats that actually moved a display value, derived
+   * by the engine one feat at a time. The screen's evidence for *why* a number
+   * differs from the book's printed one.
+   */
+  displayValueFeats: string[];
   /** Non-empty only when the request could not be served. */
   errors: string[];
 }
@@ -139,6 +182,7 @@ export async function loadAlternateRacialTraits(): Promise<AlternateRacialTraits
 export async function resolveRaceAlternateSelection(
   raceKey: string,
   selectedAlternateKeys: readonly string[],
+  heldFeats: readonly string[] = [],
 ): Promise<RaceSelectionResponse> {
   if (!hasTauriRuntime()) {
     throw new Error('Tauri runtime not available for resolving an alternate racial trait selection');
@@ -147,6 +191,7 @@ export async function resolveRaceAlternateSelection(
   try {
     return await invoke<RaceSelectionResponse>('resolve_race_alternate_selection', {
       request: { raceKey, selectedAlternateKeys: [...selectedAlternateKeys] },
+      heldFeats: [...heldFeats],
     });
   } catch (cause: unknown) {
     throw new Error(`Failed to resolve alternate racial trait selection: ${formatError(cause)}`);

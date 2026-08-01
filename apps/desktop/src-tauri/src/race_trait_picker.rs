@@ -57,6 +57,53 @@
 //! declares nothing, and cross-checks it against the row on the 166 rows where
 //! both speak. See [`AlternateTraitDto::unmatched_flags`] for the state this
 //! module now pins in both directions.
+//!
+//! # Descriptions are *rendered*, never transcribed
+//!
+//! Every description this module emits comes from
+//! [`RaceTraitRecord::render_description`] against a
+//! [`codex::rules_core::pcgen_desc::PcgenDisplayValues`] table, not from the
+//! stored `data.description` string. The two differ in exactly the way that
+//! matters: the stored string is the *already-collapsed* result of resolving a
+//! row against itself at ingest time, so its number is baked in and its gate
+//! branches are already chosen. Re-rendering from the row's own `DESC:` tokens
+//! is what lets a **character's feats** change both.
+//!
+//! Until 2026-08-01 that renderer had **zero consumers** — the exact
+//! producer-with-no-consumer shape `decisions.md §29.1` records — and
+//! `Halfling ~ Adaptable Luck` reached the screen reading *"Three times per
+//! day… they only gain a bonus"*, byte-identical to the raw corpus prose with
+//! its numbers missing. This module is that renderer's consumer.
+//!
+//! **How the character reaches here: the held feats travel with the call**, as
+//! [`resolve_race_alternate_selection`]'s `held_feats` argument — not a
+//! character id, and deliberately *not* a field of [`RaceSelectionRequest`].
+//! Four reasons, and the first is decisive:
+//!
+//! 1. The renderer's actual input is a feat list
+//!    ([`display_value_deltas_from_feats`]), so a character id would have to be
+//!    resolved to one anyway — by this module, which would then need an
+//!    `AppHandle` and the saved-character store to do it. Every function here
+//!    is deliberately `AppHandle`-free and unit-testable against the real
+//!    on-disk corpus; taking a character id would end that.
+//! 2. The feats are already on the wire. `load_saved_character` returns
+//!    `selected_feats` verbatim (its own doc calls that out as the field the
+//!    Feat picker needed), so the frontend hands over a character's *real*
+//!    persisted feats rather than anything a screen invented.
+//! 3. **The feats are not part of the selection and must not look like they
+//!    are.** Which traits apply is a race-and-selection question; a feat
+//!    changes no suppression, fires no flag and blocks no alternate. Keeping
+//!    them a sibling argument rather than a `RaceSelectionRequest` field says
+//!    that in the type — and leaves the two non-UI callers of
+//!    [`build_race_selection`] (`character_hub::resolve_alternate_trait_choices`,
+//!    which validates a save, and `reach_gate`) validating exactly what they
+//!    did before.
+//! 4. It keeps the seam honest in the other direction: a caller with no
+//!    character sends no feats and gets the racial base, which is what the
+//!    character-free menu command returns too — and
+//!    `every_menu_row_has_a_rendered_description_and_none_leaks_pcgen_syntax`
+//!    pins the two renderings equal so one trait never shows two sentences
+//!    depending on which call answered first.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::PathBuf;
@@ -65,6 +112,7 @@ use std::sync::OnceLock;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
+use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole};
 
 use crate::ge08_workbench::codex_repo_root;
@@ -239,6 +287,34 @@ pub struct BlockedAlternateDto {
     pub blocked_by_name: String,
 }
 
+/// One racial trait's description, rendered against a specific character's
+/// display values rather than transcribed from the corpus record.
+///
+/// Emitted for **every** trait record the race declares — standard, alternate
+/// and flag-granted alike, selected or not. Restricting it to the applied set
+/// would leave the alternates column showing the racial base for a trait whose
+/// number the player's feats have already changed, which is the same
+/// wrong-sentence-on-screen defect one step smaller.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RenderedTraitDescriptionDto {
+    pub key: String,
+    pub name: String,
+    /// The prose to show. Rendered from the record's own `DESC:` tokens.
+    pub text: String,
+    /// `DESC:` arguments this engine could not resolve to a literal and
+    /// therefore dropped. Carried so a partially-resolvable description is
+    /// visibly incomplete rather than silently guessed — `Aasimar ~ Deathless
+    /// Spirit`'s negative-level magnitude is the standing example.
+    pub dropped_args: Vec<String>,
+    /// True when the held feats changed this sentence from its racial base.
+    ///
+    /// Derived by rendering the same record twice — once with the character's
+    /// deltas and once with none — and comparing, so it cannot claim a move
+    /// that did not happen.
+    pub moved_by_feats: bool,
+}
+
 /// A trait that survived resolution.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -272,6 +348,16 @@ pub struct RaceSelectionResponse {
     /// options never produces one; a saved character or a scripted caller can,
     /// and it must be reported rather than silently accepted.
     pub conflicting_selections: Vec<BlockedAlternateDto>,
+    /// Every trait record this race declares, with its description rendered
+    /// against [`RaceSelectionRequest::held_feats`]. Sorted by key.
+    pub rendered_trait_descriptions: Vec<RenderedTraitDescriptionDto>,
+    /// The subset of the held feats that actually moved a display value,
+    /// derived one feat at a time rather than assumed from the list.
+    ///
+    /// This is the screen's evidence for *why* a number differs from the book's
+    /// printed one. A feat absent from this list changed nothing here, and
+    /// saying otherwise would be a claim the engine cannot support.
+    pub display_value_feats: Vec<String>,
     /// Non-empty only when the request could not be served (unknown race), and
     /// never a silent empty payload.
     pub errors: Vec<String>,
@@ -488,6 +574,41 @@ fn preability_guard_findings(corpus: &RaceCorpus) -> Vec<String> {
     )]
 }
 
+/// One record's description, rendered against a character's display values.
+///
+/// The single place this module turns a corpus record into player-facing
+/// prose. Nothing else may read `record.data.description`: that string is the
+/// ingest-time collapse of the row against itself, and serving it is precisely
+/// how the numbers stopped reaching the screen.
+fn render_trait_description(record: &RaceTraitRecord, deltas: &FeatDisplayValueDeltas) -> RenderedTraitDescriptionDto {
+    let rendered = record.render_description(&record.display_values_with(deltas));
+    let moved_by_feats = if deltas.is_zero() {
+        false
+    } else {
+        rendered.text != record.render_description(&record.display_values_with(&FeatDisplayValueDeltas::default())).text
+    };
+    RenderedTraitDescriptionDto {
+        key: record.data.key.clone(),
+        name: record.data.name.clone(),
+        text: rendered.text,
+        dropped_args: rendered.dropped_args,
+        moved_by_feats,
+    }
+}
+
+/// The held feats that really move a display value, one feat at a time.
+///
+/// Derived rather than filtered against a hardcoded roster, so a feat added to
+/// [`display_value_deltas_from_feats`] later appears here without this function
+/// changing — and a feat that moves nothing never appears at all.
+fn display_value_feats(held_feats: &[String]) -> Vec<String> {
+    held_feats
+        .iter()
+        .filter(|feat| !display_value_deltas_from_feats(std::slice::from_ref(*feat)).is_zero())
+        .cloned()
+        .collect()
+}
+
 fn describe_role(role: TraitRole) -> &'static str {
     match role {
         TraitRole::Default => "default",
@@ -498,6 +619,10 @@ fn describe_role(role: TraitRole) -> &'static str {
 }
 
 fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
+    // The menu is a catalogue with no character in hand, so it renders every
+    // description against the racial base — the same call the resolve command
+    // makes with an empty feat list, never the stored `data.description`.
+    let no_feats = FeatDisplayValueDeltas::default();
     let mut races: Vec<RacePickerDto> = Vec::new();
     for race_key in corpus.race_keys() {
         let Some(chassis) = corpus.chassis(race_key) else { continue };
@@ -510,7 +635,7 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
                 key: record.data.key.clone(),
                 name: record.data.name.clone(),
                 book: book_code(&record.book_id),
-                description: record.data.description.clone().unwrap_or_default(),
+                description: render_trait_description(record, &no_feats).text,
                 suppressed_by_flag: record.data.suppressed_by_flag.clone(),
             })
             .collect();
@@ -524,7 +649,7 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
                     key: record.data.key.clone(),
                     name: record.data.name.clone(),
                     book: book_code(&record.book_id),
-                    description: record.data.description.clone().unwrap_or_default(),
+                    description: render_trait_description(record, &no_feats).text,
                     source_page: record.data.source_page.clone(),
                     sets_flags: record.data.sets_replace_flags.clone(),
                     replaces,
@@ -557,7 +682,16 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
 /// Resolves one race against a chosen alternate set, by calling
 /// [`RaceCorpus::resolve`] — the single implementation of `decisions.md §26`'s
 /// protocol — and reporting exactly what it did.
-fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -> RaceSelectionResponse {
+///
+/// `held_feats` is the character's own feat list; it changes no *resolution*
+/// (which traits apply is a race-and-selection question, not a feat one) and
+/// only the *numbers the descriptions state*.
+fn resolve_selection(
+    corpus: &RaceCorpus,
+    race_key: &str,
+    selected: &[String],
+    held_feats: &[String],
+) -> RaceSelectionResponse {
     let Some(resolved_key) = corpus.resolve_key(race_key) else {
         return RaceSelectionResponse {
             race_id: String::new(),
@@ -571,6 +705,8 @@ fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -
             unmatched_selections: Vec::new(),
             blocked_alternates: Vec::new(),
             conflicting_selections: Vec::new(),
+            rendered_trait_descriptions: Vec::new(),
+            display_value_feats: Vec::new(),
             errors: vec![format!("no race in the loaded corpus matches {race_key:?}")],
         };
     };
@@ -590,6 +726,8 @@ fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -
             unmatched_selections: Vec::new(),
             blocked_alternates: Vec::new(),
             conflicting_selections: Vec::new(),
+            rendered_trait_descriptions: Vec::new(),
+            display_value_feats: Vec::new(),
             errors: vec![format!("race {resolved_key:?} has no chassis record")],
         };
     };
@@ -660,6 +798,17 @@ fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -
         }
     }
 
+    // Every trait record this race declares, rendered for this character. Built
+    // over `siblings` rather than over the applied set, so an alternate the
+    // player has not ticked yet still shows the number *they* would get.
+    let deltas = display_value_deltas_from_feats(held_feats);
+    let rendered_trait_descriptions: Vec<RenderedTraitDescriptionDto> =
+        siblings.iter().map(|record| render_trait_description(record, &deltas)).collect();
+    let rendered_by_key: BTreeMap<&str, &RenderedTraitDescriptionDto> =
+        rendered_trait_descriptions.iter().map(|row| (row.key.as_str(), row)).collect();
+
+    // The applied list reads the same rendering rather than the resolver's
+    // stored prose — one sentence per trait, whichever list shows it.
     let applied_traits: Vec<AppliedTraitDto> = race
         .traits
         .iter()
@@ -668,7 +817,10 @@ fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -
             name: resolved.name.clone(),
             book: book_code(&resolved.book_id),
             role: describe_role(resolved.role).to_string(),
-            description: resolved.description.clone().unwrap_or_default(),
+            description: rendered_by_key
+                .get(resolved.key.as_str())
+                .map(|row| row.text.clone())
+                .unwrap_or_else(|| resolved.description.clone().unwrap_or_default()),
         })
         .collect();
 
@@ -684,6 +836,8 @@ fn resolve_selection(corpus: &RaceCorpus, race_key: &str, selected: &[String]) -
         unmatched_selections: race.unmatched_selections.clone(),
         blocked_alternates,
         conflicting_selections,
+        display_value_feats: display_value_feats(held_feats),
+        rendered_trait_descriptions,
         errors: Vec::new(),
     }
 }
@@ -706,10 +860,26 @@ pub fn build_alternate_racial_traits() -> AlternateRacialTraitsResponse {
     MENU.get_or_init(menu_or_error).clone()
 }
 
-/// Resolves a race against a selection. Not cached: the selection is the input.
+/// Resolves a race against a selection, with no character in hand: every
+/// description renders its racial base.
+///
+/// This is the shape the two non-UI callers want —
+/// `character_hub::resolve_alternate_trait_choices` validates whether a save is
+/// legal, and `reach_gate` counts what reaches a player — neither of which is
+/// asking what a *particular* character's sentence says.
 pub fn build_race_selection(request: &RaceSelectionRequest) -> RaceSelectionResponse {
+    build_race_selection_for_feats(request, &[])
+}
+
+/// Resolves a race against a selection *for one character*, whose held feats
+/// set the numbers its trait descriptions state. Not cached: both the selection
+/// and the feat list are inputs.
+pub fn build_race_selection_for_feats(
+    request: &RaceSelectionRequest,
+    held_feats: &[String],
+) -> RaceSelectionResponse {
     match race_corpus() {
-        Ok(corpus) => resolve_selection(corpus, &request.race_key, &request.selected_alternate_keys),
+        Ok(corpus) => resolve_selection(corpus, &request.race_key, &request.selected_alternate_keys, held_feats),
         Err(err) => RaceSelectionResponse {
             race_id: String::new(),
             race_key: request.race_key.clone(),
@@ -722,6 +892,8 @@ pub fn build_race_selection(request: &RaceSelectionRequest) -> RaceSelectionResp
             unmatched_selections: Vec::new(),
             blocked_alternates: Vec::new(),
             conflicting_selections: Vec::new(),
+            rendered_trait_descriptions: Vec::new(),
+            display_value_feats: Vec::new(),
             errors: vec![format!("race corpus unavailable: {err}")],
         },
     }
@@ -732,14 +904,21 @@ pub fn list_alternate_racial_traits() -> AlternateRacialTraitsResponse {
     build_alternate_racial_traits()
 }
 
+/// `held_feats` is the character's own persisted feat list, or absent when the
+/// screen has no character selected. It changes only the numbers the returned
+/// descriptions state — never which traits apply.
 #[tauri::command]
-pub fn resolve_race_alternate_selection(request: RaceSelectionRequest) -> RaceSelectionResponse {
-    build_race_selection(&request)
+pub fn resolve_race_alternate_selection(
+    request: RaceSelectionRequest,
+    held_feats: Option<Vec<String>>,
+) -> RaceSelectionResponse {
+    build_race_selection_for_feats(&request, &held_feats.unwrap_or_default())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
 
     /// Every count below was derived by running this module against the real
     /// on-disk corpus:
@@ -893,7 +1072,7 @@ mod tests {
                 }
                 // The menu's own claim, and the resolver's answer to it.
                 let resolved =
-                    resolve_selection(corpus, &race.race_key, std::slice::from_ref(&alternate.key));
+                    resolve_selection(corpus, &race.race_key, std::slice::from_ref(&alternate.key), &[]);
                 assert!(
                     resolved.inert_flags.is_empty(),
                     "{} is offered and `create_character` would refuse it: {:?}",
@@ -965,13 +1144,13 @@ mod tests {
     #[test]
     fn selecting_saltbeard_suppresses_the_four_standard_traits_and_swaps_in_its_own_greed() {
         let corpus = race_corpus().as_ref().expect("corpus");
-        let before = resolve_selection(corpus, "Dwarf", &[]);
+        let before = resolve_selection(corpus, "Dwarf", &[], &[]);
         assert!(before.errors.is_empty());
         assert_eq!(before.applied_traits.len(), 12, "Dwarf's 12 racial defaults");
         assert!(before.suppressions.is_empty());
         assert!(before.applied_traits.iter().any(|applied| applied.key == "Dwarf ~ Greed"));
 
-        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()]);
+        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()], &[]);
         assert!(after.errors.is_empty());
         assert!(after.unmatched_selections.is_empty());
         assert!(after.inert_flags.is_empty());
@@ -998,10 +1177,10 @@ mod tests {
     #[test]
     fn selecting_an_alternate_blocks_every_sibling_whose_guard_names_a_fired_flag() {
         let corpus = race_corpus().as_ref().expect("corpus");
-        let open = resolve_selection(corpus, "Dwarf", &[]);
+        let open = resolve_selection(corpus, "Dwarf", &[], &[]);
         assert!(open.blocked_alternates.is_empty(), "nothing is blocked before a selection");
 
-        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()]);
+        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()], &[]);
         let blocked: BTreeSet<&str> = after.blocked_alternates.iter().map(|b| b.key.as_str()).collect();
         assert!(!blocked.is_empty(), "Saltbeard locks out its rivals");
         assert!(!blocked.contains("Dwarf ~ Saltbeard"), "an alternate never blocks itself");
@@ -1030,10 +1209,10 @@ mod tests {
     #[test]
     fn two_alternates_that_exclude_each_other_are_reported_as_conflicting() {
         let corpus = race_corpus().as_ref().expect("corpus");
-        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()]);
+        let after = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string()], &[]);
         let rival = after.blocked_alternates.first().expect("at least one rival").key.clone();
 
-        let both = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string(), rival.clone()]);
+        let both = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeard".to_string(), rival.clone()], &[]);
         let pair: BTreeSet<&str> = both
             .conflicting_selections
             .iter()
@@ -1054,11 +1233,11 @@ mod tests {
     #[test]
     fn a_bad_selection_or_race_reports_rather_than_returning_a_quiet_empty_payload() {
         let corpus = race_corpus().as_ref().expect("corpus");
-        let typo = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeerd".to_string()]);
+        let typo = resolve_selection(corpus, "Dwarf", &["Dwarf ~ Saltbeerd".to_string()], &[]);
         assert_eq!(typo.unmatched_selections, vec!["Dwarf ~ Saltbeerd"]);
         assert_eq!(typo.applied_traits.len(), 12, "the race still resolves plainly");
 
-        let unknown = resolve_selection(corpus, "Balor", &[]);
+        let unknown = resolve_selection(corpus, "Balor", &[], &[]);
         assert_eq!(unknown.applied_traits.len(), 0);
         assert_eq!(unknown.errors.len(), 1);
         assert!(unknown.errors[0].contains("Balor"));
@@ -1074,7 +1253,7 @@ mod tests {
         let menu = menu();
         for race in &menu.races {
             for alternate in &race.alternates {
-                let response = resolve_selection(corpus, &race.race_key, std::slice::from_ref(&alternate.key));
+                let response = resolve_selection(corpus, &race.race_key, std::slice::from_ref(&alternate.key), &[]);
                 assert!(response.errors.is_empty(), "{} resolves: {:?}", race.race_key, response.errors);
                 assert!(
                     response.unmatched_selections.is_empty(),
@@ -1108,9 +1287,218 @@ mod tests {
     #[test]
     fn a_loose_race_identifier_reaches_the_same_race_as_the_menu_key() {
         let corpus = race_corpus().as_ref().expect("corpus");
-        let loose = resolve_selection(corpus, "race:half-elf", &[]);
+        let loose = resolve_selection(corpus, "race:half-elf", &[], &[]);
         assert!(loose.errors.is_empty());
         assert_eq!(loose.race_key, "Half-Elf");
         assert_eq!(loose.race_id, "HalfElf");
+    }
+
+    // -----------------------------------------------------------------------
+    // Display values reach the payload
+    // -----------------------------------------------------------------------
+
+    fn rendered<'a>(response: &'a RaceSelectionResponse, key: &str) -> &'a RenderedTraitDescriptionDto {
+        response
+            .rendered_trait_descriptions
+            .iter()
+            .find(|row| row.key == key)
+            .unwrap_or_else(|| panic!("{key} has a rendered description in the payload"))
+    }
+
+    fn held(names: &[&str]) -> Vec<String> {
+        names.iter().map(|name| (*name).to_string()).collect()
+    }
+
+    /// One record's character-free rendered text, straight off the corpus.
+    fn by_key_all(corpus: &RaceCorpus, race: &str, key: &str) -> String {
+        let record = corpus
+            .traits_for(race)
+            .into_iter()
+            .find(|record| record.data.key == key)
+            .unwrap_or_else(|| panic!("{key} is a loaded record"));
+        render_trait_description(record, &FeatDisplayValueDeltas::default()).text
+    }
+
+    /// **The consumer.** `decisions.md §29.1`'s producer-with-no-consumer trap,
+    /// closed at the only seam that reaches a player: the same corpus record
+    /// must render a *different sentence* for a different character, through
+    /// the shipped Tauri payload rather than only in the engine's own test.
+    ///
+    /// A baked constant cannot pass this — the assertions are before/after
+    /// pairs over one record, per `decisions.md §28`'s standing guard, and the
+    /// word "Three" has to *disappear* because a `PREVARLTEQ:...,3` gate stops
+    /// applying rather than because a number was substituted.
+    #[test]
+    fn the_payload_renders_a_different_sentence_for_a_character_holding_the_feats() {
+        let corpus = race_corpus().as_ref().expect("corpus");
+        let luck = |feats: &[&str]| {
+            let response = resolve_selection(corpus, "Halfling", &[], &held(feats));
+            assert!(response.errors.is_empty(), "{:?}", response.errors);
+            rendered(&response, "Halfling ~ Adaptable Luck").clone()
+        };
+
+        let base = luck(&[]);
+        assert!(base.text.contains("Three times per day"), "racial base: {}", base.text);
+        assert!(base.text.contains("gain the full +2 bonus"), "{}", base.text);
+        assert!(base.text.contains("only gain a +1 bonus"), "{}", base.text);
+        assert!(!base.moved_by_feats, "no feat held, nothing moved");
+
+        let fortunate = luck(&["Fortunate One"]);
+        assert!(fortunate.text.contains("4 times per day"), "3 + 1 = 4: {}", fortunate.text);
+        assert!(!fortunate.text.contains("Three"), "the PREVARLTEQ gate stops applying: {}", fortunate.text);
+        assert!(fortunate.text.contains("gain the full +2 bonus"), "Fortunate One adds no bonus");
+        assert!(fortunate.moved_by_feats);
+
+        let both = luck(&["Fortunate One", "Adaptive Fortune"]);
+        assert!(both.text.contains("5 times per day"), "3 + 1 + 1 = 5: {}", both.text);
+        assert!(both.text.contains("gain the full +4 bonus"), "2 + 2 = 4: {}", both.text);
+        assert!(both.text.contains("only gain a +3 bonus"), "{}", both.text);
+        assert!(both.moved_by_feats);
+
+        assert_ne!(base.text, fortunate.text);
+        assert_ne!(fortunate.text, both.text);
+
+        // Every one of the three is free of leaked PCGen syntax and drops
+        // nothing — a half-rendered sentence would satisfy the `contains`
+        // assertions above while shipping `%1` to a player.
+        for row in [&base, &fortunate, &both] {
+            assert!(row.dropped_args.is_empty(), "{:?}", row.dropped_args);
+            assert_eq!(leaked_pcgen_syntax(&row.text), None, "{}", row.text);
+        }
+    }
+
+    /// The Core Rulebook half of the same seam: a *standard* trait's stated
+    /// magnitude moves for a gnome holding Great Hatred, and the trait is not
+    /// an ARG row at all.
+    #[test]
+    fn a_standard_traits_stated_bonus_moves_in_the_payload_for_a_character_holding_great_hatred() {
+        let corpus = race_corpus().as_ref().expect("corpus");
+        let base = resolve_selection(corpus, "Gnome", &[], &[]);
+        let with_feat = resolve_selection(corpus, "Gnome", &[], &held(["Great Hatred"].as_slice()));
+
+        let before = rendered(&base, "Gnome ~ Hatred");
+        let after = rendered(&with_feat, "Gnome ~ Hatred");
+        assert!(before.text.contains("receive a +1 bonus on attack rolls"), "{}", before.text);
+        assert!(after.text.contains("receive a +2 bonus on attack rolls"), "{}", after.text);
+        assert!(!before.moved_by_feats && after.moved_by_feats);
+
+        // Only the number moved; the corpus's own sentence is otherwise intact.
+        assert_eq!(before.text.replace("+1 bonus", "+N"), after.text.replace("+2 bonus", "+N"));
+
+        // The applied-traits list a player reads carries the same rendered
+        // text, not the raw corpus prose.
+        let applied = with_feat
+            .applied_traits
+            .iter()
+            .find(|row| row.key == "Gnome ~ Hatred")
+            .expect("Gnome ~ Hatred applies");
+        assert_eq!(applied.description, after.text);
+
+        // The feats that moved a display value are reported, so the screen can
+        // say *why* the number is what it is rather than just showing it.
+        assert_eq!(with_feat.display_value_feats, vec!["Great Hatred"]);
+        assert!(base.display_value_feats.is_empty());
+    }
+
+    /// A held feat that moves no display variable is not reported as though it
+    /// did, and changes no sentence.
+    #[test]
+    fn an_ordinary_feat_moves_no_sentence_and_is_not_reported_as_a_display_value_feat() {
+        let corpus = race_corpus().as_ref().expect("corpus");
+        let plain = resolve_selection(corpus, "Halfling", &[], &[]);
+        let dodging = resolve_selection(corpus, "Halfling", &[], &held(["Dodge", "Toughness"].as_slice()));
+
+        assert!(dodging.display_value_feats.is_empty());
+        assert_eq!(
+            plain.rendered_trait_descriptions, dodging.rendered_trait_descriptions,
+            "feats this engine renders no value for must change no prose"
+        );
+        assert!(dodging.rendered_trait_descriptions.iter().all(|row| !row.moved_by_feats));
+    }
+
+    /// Every rendered description in both payloads is real, leak-free prose,
+    /// and every trait the menu offers has one. Counts derived here, never
+    /// asserted from a brief.
+    #[test]
+    fn every_menu_row_has_a_rendered_description_and_none_leaks_pcgen_syntax() {
+        let menu = menu();
+        let corpus = race_corpus().as_ref().expect("corpus");
+        let mut checked = 0usize;
+        let mut dropping = 0usize;
+
+        for race in &menu.races {
+            let response = resolve_selection(corpus, &race.race_key, &[], &[]);
+            let by_key: BTreeMap<&str, &RenderedTraitDescriptionDto> =
+                response.rendered_trait_descriptions.iter().map(|row| (row.key.as_str(), row)).collect();
+
+            for (key, description) in race
+                .standard_traits
+                .iter()
+                .map(|row| (row.key.as_str(), row.description.as_str()))
+                .chain(race.alternates.iter().map(|row| (row.key.as_str(), row.description.as_str())))
+            {
+                assert!(!description.trim().is_empty(), "{key} has prose");
+                assert_eq!(leaked_pcgen_syntax(description), None, "{key} menu prose: {description}");
+                // The character-free menu and a character-free resolution are
+                // the same rendering of the same record, so they must agree
+                // exactly — otherwise the screen shows two different sentences
+                // for one trait depending on which call answered first.
+                let row = by_key.get(key).unwrap_or_else(|| panic!("{key} resolves a description"));
+                assert_eq!(row.text, description, "{key}");
+                assert!(!row.moved_by_feats, "no feats held");
+                checked += 1;
+            }
+            dropping += response.rendered_trait_descriptions.iter().filter(|r| !r.dropped_args.is_empty()).count();
+
+            // `resolve_selection` falls back to the resolver's stored prose for
+            // an applied trait with no rendered entry. That path must stay
+            // unreachable — a trait reaching the screen through it would be the
+            // one row still showing the un-rendered text, silently.
+            for applied in &response.applied_traits {
+                let row = by_key
+                    .get(applied.key.as_str())
+                    .unwrap_or_else(|| panic!("{} applied without a rendered description", applied.key));
+                assert_eq!(applied.description, row.text, "{}", applied.key);
+            }
+        }
+
+        // Derived here, not carried from a doc. `decisions.md §27.2`'s "175
+        // standard trait rows" counts every non-alternate record; this menu's
+        // left-hand column is `TraitRole::Default` only, and the 2 the
+        // difference names are `TraitRole::FlagGranted` rows — content granted
+        // *by* an alternate, which is never offered as a menu choice and
+        // appears on screen only once its granting alternate is selected.
+        let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
+        let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
+        assert_eq!((standard, alternates), (173, 153));
+        assert_eq!(checked, standard + alternates);
+        assert_eq!(checked, 326);
+
+        // What rendering changed for a player *with no character*, measured
+        // against the stored `data.description` this module used to transcribe.
+        // Derived, and printed rather than pinned at a number a later ingest
+        // could legitimately move.
+        let mut changed: Vec<String> = Vec::new();
+        for race_key in corpus.race_keys() {
+            for record in corpus.traits_for(race_key) {
+                let stored = record.data.description.clone().unwrap_or_default();
+                let rendered = render_trait_description(record, &FeatDisplayValueDeltas::default()).text;
+                if stored != rendered {
+                    changed.push(record.data.key.clone());
+                }
+            }
+        }
+        // Exactly one, and it is the record the defect was reported against.
+        // Its stored prose is the ingest-time collapse of a row whose `%N`
+        // arguments the ingest could not finish, so it shipped reading "Three
+        // times per day… they only gain a bonus" with the magnitudes simply
+        // absent. Rendering restores them for every player, character or not.
+        assert_eq!(changed, vec!["Halfling ~ Adaptable Luck"]);
+        let luck = &by_key_all(corpus, "Halfling", "Halfling ~ Adaptable Luck");
+        assert!(luck.contains("they gain the full +2 bonus"), "{luck}");
+        assert!(luck.contains("they only gain a +1 bonus"), "{luck}");
+        // Reported rather than pinned: widening what the engine can resolve
+        // must not fail here, and neither must a record quietly guessing.
+        println!("trait rows still reporting an unresolved DESC argument: {dropping}");
     }
 }

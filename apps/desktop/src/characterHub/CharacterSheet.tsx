@@ -1607,6 +1607,15 @@ function GearTab(props: {
  * PF1 general rules keyed to character level, not entries from any class
  * table.
  */
+/**
+ * Width of the class-attribution gutter on every Class Features row, and the
+ * indent its derivation paragraph hangs from. One constant because the two must
+ * agree — they were separate literals, and widening one to fit a real class
+ * label ("Unchained Summoner", not "rogue") would otherwise leave the paragraph
+ * indented to the old column.
+ */
+const CLASS_FEATURE_GUTTER = '9.5rem';
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
@@ -1635,13 +1644,23 @@ function ActionsTab(props: {
           {surface.features.map((row) => (
             <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
               <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
-                {row.classToken ? (
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80, textTransform: 'capitalize' }}>
-                    {row.classToken}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80 }}>Chassis</span>
-                )}
+                {/*
+                  The held class's own label, never the raw id token: an
+                  Unchained Summoner's rows read "Unchained Summoner", not
+                  "unchained_summoner". `Chassis` stays the honest fallback for
+                  the pre-namespacing `class_chassis.base_attack_bonus` family,
+                  which names no class at all.
+                */}
+                <span
+                  style={{
+                    color: 'var(--color-text-muted)',
+                    flexShrink: 0,
+                    fontSize: '0.72rem',
+                    width: CLASS_FEATURE_GUTTER,
+                  }}
+                >
+                  {row.classLabel ?? 'Chassis'}
+                </span>
                 <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{row.label}</span>
                 <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800 }}>{row.value}</span>
               </div>
@@ -1652,7 +1671,13 @@ function ActionsTab(props: {
                 *count* of 6 means 6d6) it is the only place the full
                 expression appears.
               */}
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.2rem 0 0 calc(80px + 0.6rem)' }}>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: `0.2rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                }}
+              >
                 {row.detail}
               </p>
             </div>
@@ -1671,8 +1696,26 @@ function ActionsTab(props: {
           </p>
           {surface.notComputed.map((notice) => (
             <div key={notice.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
-              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{notice.label}</span>
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+                <span
+                  style={{
+                    color: 'var(--color-text-muted)',
+                    flexShrink: 0,
+                    fontSize: '0.72rem',
+                    width: CLASS_FEATURE_GUTTER,
+                  }}
+                >
+                  {notice.classLabel ?? 'Chassis'}
+                </span>
+                <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{notice.label}</span>
+              </div>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                }}
+              >
                 {notice.detail}
               </p>
             </div>

@@ -4,6 +4,7 @@ import type {
   BlockedAlternateDto,
   RacePickerDto,
   RaceSelectionResponse,
+  RenderedTraitDescriptionDto,
   SuppressionDto,
 } from '../boundary/loadAlternateRacialTraits';
 
@@ -128,6 +129,74 @@ export function describeSelectionOutcome(selection: RaceSelectionResponse | null
     .map((suppression) => `${suppression.suppressedTraitName} (by ${suppression.setByTraitName})`)
     .join(', ');
   return `${applied} ${traitWord} apply. Replaced: ${replaced}.`;
+}
+
+// --- rendered descriptions -------------------------------------------------
+
+/**
+ * Trait key → the description the engine rendered for the current character.
+ *
+ * Empty until the resolve call returns, which is why every reader pairs it with
+ * a fallback rather than rendering a blank cell.
+ */
+export function descriptionsByTraitKey(
+  selection: RaceSelectionResponse | null,
+): Map<string, RenderedTraitDescriptionDto> {
+  const index = new Map<string, RenderedTraitDescriptionDto>();
+  for (const rendered of selection?.renderedTraitDescriptions ?? []) {
+    index.set(rendered.key, rendered);
+  }
+  return index;
+}
+
+/**
+ * The prose to put on screen for one trait.
+ *
+ * Prefers the engine's per-character rendering and falls back to the menu's own
+ * description — which is the *same renderer* run with no feats, so the fallback
+ * is the racial base rather than a different kind of text. **The fallback is
+ * never a locally-assembled sentence**: this screen has no way to compute a
+ * display value and must not appear to.
+ */
+export function traitDescription(
+  rendered: Map<string, RenderedTraitDescriptionDto>,
+  key: string,
+  menuDescription: string,
+): string {
+  return rendered.get(key)?.text ?? menuDescription;
+}
+
+/**
+ * The line stating whose numbers are on screen, and why they differ from the
+ * book's printed ones.
+ *
+ * `displayValueFeats` is the engine's own list of held feats that actually
+ * moved a value — so a character holding twelve feats is credited for the one
+ * that changed the sentence, and a character whose feats changed nothing is
+ * told exactly that instead of being implied to have altered something.
+ */
+export function describeCharacterContext(
+  characterLabel: string | null,
+  selection: RaceSelectionResponse | null,
+): string {
+  if (!characterLabel) {
+    return 'Showing each trait as the book prints it. Pick a saved character to see the numbers their feats give them.';
+  }
+  if (!selection) {
+    // "None of their feats moved anything" is a claim only the engine can
+    // make, and it has not answered yet. Saying it here would be a guess that
+    // happens to be right most of the time — the worst kind.
+    return `Reading ${characterLabel}'s feats…`;
+  }
+  const moved = selection.displayValueFeats;
+  if (moved.length === 0) {
+    return `Showing ${characterLabel}'s numbers. None of their feats changes a racial trait's stated value.`;
+  }
+  const changed = selection.renderedTraitDescriptions.filter((row) => row.movedByFeats).length;
+  const traitWord = changed === 1 ? 'trait' : 'traits';
+  return `Showing ${characterLabel}'s numbers. ${moved.join(', ')} ${
+    moved.length === 1 ? 'raises' : 'raise'
+  } the value stated by ${changed} ${traitWord}.`;
 }
 
 /**
