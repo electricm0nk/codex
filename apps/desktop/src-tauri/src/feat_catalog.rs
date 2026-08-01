@@ -132,7 +132,23 @@ fn map_catalog_entry(
         // `category_names_match_the_debug_form_of_every_variant`.
         category: entry.category.to_string(),
         name: entry.name.to_string(),
-        description: entry.description.map(|d| d.to_string()),
+        // Rendered, not copied. The Add Feat picker folds this straight
+        // into its `detail` line (`itemPickerFilter::mapFeatCatalogEntries`),
+        // so the raw corpus `DESC:` token reached the player verbatim.
+        //
+        // 17 of the 681 served descriptions carried PCGen syntax; partitioned
+        // by their first-detected leak that is 13 an unsubstituted `%N`
+        // ("%1 times per day"), 3 an undecoded `&nl;`, and ACG's
+        // `Twinned Feint` a trailing
+        // `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint`. The remaining 664 are
+        // returned byte-identical — `render_pcgen_desc` rewrites nothing in
+        // prose that carries no PCGen syntax, which
+        // `feat_descriptions_are_rendered_and_otherwise_byte_identical` pins.
+        // `render_pcgen_desc` owns the treatment; this module does not
+        // re-decide it.
+        description: entry
+            .description
+            .map(|d| codex::rules_core::pcgen_desc::render_pcgen_desc(d).text),
         source: source.to_string(),
         chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
             .map(|contract| format!("{:?}", contract.target_kind)),
@@ -261,6 +277,79 @@ pub fn list_feats(filter: FeatCatalogFilter) -> FeatCatalogResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The rendering `map_catalog_entry` now applies, pinned on both sides.
+    ///
+    /// The Add Feat picker was showing raw PCGen `DESC:` tokens. This asserts
+    /// two things at once: the leaking records really are rewritten, and the
+    /// rewrite touches **nothing else** — a renderer that reflowed all 681
+    /// descriptions would pass a leak check while quietly changing every feat
+    /// a player reads.
+    #[test]
+    fn feat_descriptions_are_rendered_and_otherwise_byte_identical() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+        use std::collections::BTreeMap;
+
+        let raw_by_key: BTreeMap<(String, &str), &str> = all_feat_tables()
+            .iter()
+            .flat_map(|table| {
+                table.entries.iter().filter_map(move |entry| {
+                    entry
+                        .description
+                        .map(|d| ((format!("{:?}", table.rule_set), entry.key), d))
+                })
+            })
+            .collect();
+
+        let mut with_description = 0usize;
+        let mut changed: Vec<&str> = Vec::new();
+        let mut raw_leaks = 0usize;
+        let catalog = build_feat_catalog();
+        for entry in &catalog.entries {
+            let Some(served) = entry.description.as_deref() else { continue };
+            with_description += 1;
+            let raw = raw_by_key[&(entry.source.clone(), entry.key.as_str())];
+            if leaked_pcgen_syntax(raw).is_some() {
+                raw_leaks += 1;
+            }
+            if served != raw {
+                changed.push(entry.key.as_str());
+            }
+            assert_eq!(
+                leaked_pcgen_syntax(served),
+                None,
+                "served feat {:?} still leaks",
+                entry.key
+            );
+        }
+
+        assert_eq!(with_description, 681, "9 of the 690 records carry no DESC: token");
+        assert_eq!(raw_leaks, 17, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 17, "exactly the leaking records are rewritten");
+        assert_eq!(
+            changed,
+            vec![
+                "Arcane Strike",
+                "Stunning Fist",
+                "Unfettered Familiar",
+                "Battle Cry",
+                "Befuddling Strike",
+                "Dazing Fist",
+                "Draining Strike",
+                "Faerie's Strike",
+                "Grasping Strike",
+                "Gruesome Slaughter",
+                "Paralyzing Strike",
+                "Raging Concentration",
+                "Recovered Rage",
+                "Staggering Fist",
+                "Twinned Feint",
+                "Winter's Strike",
+                "Wounded Paw Gambit",
+            ]
+        );
+    }
 
     #[test]
     fn catalog_spans_every_ingested_book_with_their_real_counts() {

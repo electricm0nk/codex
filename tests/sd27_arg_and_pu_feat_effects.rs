@@ -34,15 +34,25 @@
 //! # What the split does NOT say
 //!
 //! "Has an unconditional `BONUS:`" is an **upper bound** on "should be wired",
-//! not the wiring list. ARG's 49 such feats include 11 whose only token is
-//! `BONUS:ABILITYPOOL|<pool>|1` (a further *choice*, not a magnitude), 3 whose
-//! token is `BONUS:SITUATION|<skill>=<circumstance>|N` (PCGen's own token for a
-//! situational bonus — Echoes of Stone's Perception bonus *underground*), and a
+//! not the wiring list. ARG's 49 such feats include 11 carrying a
+//! `BONUS:ABILITYPOOL|<pool>|1` (a further *choice*, not a magnitude) and a
 //! long tail of `BONUS:VAR|<internal>` increments to PCGen bookkeeping
 //! variables for spell-like-ability uses per day, racial luck budgets and fly
-//! maneuverability — none of which this engine models, so none of which has
+//! manoeuvrability — none of which this engine models, so none of which has
 //! anything to land on. `feat_effects`' own SD-27 section header records that
 //! reasoning per category.
+//!
+//! **Correction, 2026-08-01.** This header previously counted "3 feats whose
+//! token is `BONUS:SITUATION`" and filed them as legitimately inert. Both
+//! halves were wrong, and both are now pinned by
+//! `args_situation_tokens_are_three_across_two_feats` below rather than
+//! restated: it is **3 tokens across 2 feats**, and they are not inert — this
+//! engine already grounds the Core Rulebook dwarf's own `BONUS:SITUATION`
+//! tokens, so ARG's land in exactly the same place. Two `BONUS:VAR` deferrals
+//! (`DefiantLuckTimes`, `ImprovisationBonus`) and one movement token
+//! (Stretched Wings' `BONUS:MOVEADD|TYPE.Fly|40`, misfiled as manoeuvrability)
+//! were wrong for the same reason: the category was read off the token's shape
+//! rather than off what the corpus does with it.
 //!
 //! # The standing guard (§28)
 //!
@@ -547,5 +557,323 @@ fn the_wiring_folds_across_both_real_feat_id_shapes_and_no_further() {
         value(&compute(&with_feats(baseline(), &["Aquatic Ancestry Mastery"])), ID),
         None,
         "a longer feat that merely begins with the key must not match"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// 2026-08-01 — the second pass over the deferral list.
+//
+// The first pass wired 17 of ARG's 49 unconditionally-bonused feats and
+// deferred 32. Re-deriving that deferral list by command (rather than
+// re-reading the report that produced it) found two of its reasons wrong:
+//
+// * `BONUS:SITUATION` was deferred as "the corpus classifies these as
+//   situational". It does — and this engine already grounds exactly that shape
+//   for the Core Rulebook dwarf (`race.dwarf.stonecunning.perception_bonus`,
+//   `race.dwarf.greed.appraise_bonus`), so being situational was never the bar.
+// * "`BONUS:VAR` increments a base this engine does not model" holds for the
+//   halfling/suli/fetchling budgets and fails for `DefiantLuckTimes` and
+//   `ImprovisationBonus`, whose `DEFINE:` sits on the ARG feat record itself.
+//   And Stretched Wings was filed under fly manoeuvrability while its other
+//   token is a plain `BONUS:MOVEADD|TYPE.Fly|40`.
+//
+// Eight feats moved from unwired to wired as a result (seven of which move a
+// number on their own; Bestow Luck only in the company its own prerequisite
+// requires). Each assertion below
+// differences the same character with and without the feat, so a producer that
+// exists but is never consumed fails here.
+// ---------------------------------------------------------------------------
+
+/// Echoes of Stone's two `BONUS:SITUATION` tokens, grounded with their
+/// circumstances stated — the same shape the dwarf's Stonecunning and Greed
+/// records already take.
+#[test]
+fn echoes_of_stone_grounds_both_four_point_situational_bonuses_with_their_circumstance() {
+    let with = compute(&with_feats(input_for_race("human"), &["Echoes of Stone"]));
+
+    assert_eq!(
+        value(&with, "feat.arg_situational_skill_bonus.echoes_of_stone.perception"),
+        Some(4)
+    );
+    assert_eq!(
+        value(&with, "feat.arg_situational_skill_bonus.echoes_of_stone.survival"),
+        Some(4)
+    );
+
+    let detail = with
+        .explanations
+        .iter()
+        .find(|e| e.id == "feat.arg_situational_skill_bonus.echoes_of_stone.perception")
+        .map(|e| e.detail.clone())
+        .expect("the record must exist");
+    assert!(
+        detail.contains("underground"),
+        "a situational bonus must carry its circumstance, or the sheet reads it as a \
+         flat bonus that always applies: {detail}"
+    );
+
+    let without = compute(&input_for_race("human"));
+    assert_eq!(
+        value(&without, "feat.arg_situational_skill_bonus.echoes_of_stone.perception"),
+        None
+    );
+}
+
+/// Carrion Feeder grounds its one tokened bonus and no more. Its `BENEFIT:`
+/// prose also promises a +2 on saves against disease and ingested poison, which
+/// carries no `BONUS:` token at all — grounding it would be inventing a number
+/// from prose, the failure this bundle exists to avoid.
+#[test]
+fn carrion_feeder_grounds_its_survival_bonus_and_invents_no_save_bonus() {
+    let with = compute(&with_feats(input_for_race("tengu"), &["Carrion Feeder"]));
+    assert_eq!(
+        value(&with, "feat.arg_situational_skill_bonus.carrion_feeder.survival"),
+        Some(2)
+    );
+
+    let without = compute(&input_for_race("tengu"));
+    for save in ["defense.total_save.fortitude", "defense.total_save.reflex", "defense.total_save.will"] {
+        assert_eq!(value(&with, save), value(&without, save), "{save} must not move");
+    }
+}
+
+/// Improvisation `+2`, Improved Improvisation `+4` — both writing the one
+/// `ImprovisationBonus` variable whose `DEFINE:` is on the Improvisation record
+/// itself.
+///
+/// The three computed skill totals must not move: the feat applies only to
+/// skills with no ranks and this engine's deterministic posture pins
+/// Climb/Intimidate/Swim at rank 1, so folding it in would contradict the
+/// feat's own text.
+#[test]
+fn improvisation_grounds_two_then_four_and_moves_no_ranked_skill_total() {
+    const ID: &str = "feat.arg_standalone.improvisation_untrained_skill_bonus";
+    let without = compute(&baseline());
+    let basic = compute(&with_feats(baseline(), &["Improvisation"]));
+    let improved = compute(&with_feats(baseline(), &["Improvisation", "Improved Improvisation"]));
+
+    assert_eq!(value(&without, ID), None);
+    assert_eq!(value(&basic, ID), Some(2));
+    assert_eq!(value(&improved, ID), Some(4));
+
+    for skill in [
+        "skill.selected_modifier.climb",
+        "skill.selected_modifier.intimidate",
+        "skill.selected_modifier.swim",
+    ] {
+        assert_eq!(
+            value(&improved, skill),
+            value(&without, skill),
+            "{skill} is held at rank 1 by the deterministic posture, so a bonus that \
+             applies only to skills with NO ranks must leave it alone"
+        );
+    }
+}
+
+/// Stretched Wings' `BONUS:MOVEADD|TYPE.Fly|40`, reconciled against its prose's
+/// "increases to 60 feet" by the wing-clipped strix's corpus `MOVE:Fly,20`.
+#[test]
+fn stretched_wings_grounds_forty_feet_of_fly_speed_and_no_manoeuvrability_number() {
+    let with = compute(&with_feats(baseline(), &["Stretched Wings"]));
+    assert_eq!(
+        value(&with, "feat.arg_standalone.stretched_wings_fly_speed"),
+        Some(40)
+    );
+    assert_eq!(
+        value(&compute(&baseline()), "feat.arg_standalone.stretched_wings_fly_speed"),
+        None
+    );
+
+    // The record must say what it is NOT claiming: the companion
+    // `BONUS:VAR|Maneuverability|1` has no dimension here to land in.
+    let detail = with
+        .explanations
+        .iter()
+        .find(|e| e.id == "feat.arg_standalone.stretched_wings_fly_speed")
+        .map(|e| e.detail.clone())
+        .expect("the record must exist");
+    assert!(detail.to_lowercase().contains("manoeuvrab") || detail.to_lowercase().contains("maneuverab"));
+}
+
+/// Defiant Luck 1/day, 2/day with Bestow Luck. Bestow Luck alone claims
+/// nothing: there is no ability for its extra use to attach to.
+#[test]
+fn defiant_luck_grounds_one_use_per_day_and_two_with_bestow_luck() {
+    const ID: &str = "feat.arg_standalone.defiant_luck_uses_per_day";
+    assert_eq!(value(&compute(&baseline()), ID), None);
+    assert_eq!(value(&compute(&with_feats(baseline(), &["Defiant Luck"])), ID), Some(1));
+    assert_eq!(
+        value(&compute(&with_feats(baseline(), &["Defiant Luck", "Bestow Luck"])), ID),
+        Some(2)
+    );
+    assert_eq!(value(&compute(&with_feats(baseline(), &["Bestow Luck"])), ID), None);
+}
+
+/// Fiend Sight's darkvision, stated absolutely by the record's own
+/// `VISION:Darkvision (120')` over the 60-foot base its
+/// `PREVISION:1,Darkvision=60` prerequisite fixes.
+#[test]
+fn fiend_sight_grounds_a_hundred_and_twenty_foot_darkvision() {
+    const ID: &str = "feat.arg_standalone.fiend_sight_darkvision_feet";
+    assert_eq!(value(&compute(&input_for_race("tiefling")), ID), None);
+    assert_eq!(
+        value(&compute(&with_feats(input_for_race("tiefling"), &["Fiend Sight"])), ID),
+        Some(120)
+    );
+    // STACK:YES MULT:YES, capped at two picks by PREVARLT:FiendSightTier,2 —
+    // the second pick grants *see in darkness*, a capability, not more range.
+    assert_eq!(
+        value(
+            &compute(&with_feats(input_for_race("tiefling"), &["Fiend Sight", "Fiend Sight"])),
+            ID
+        ),
+        Some(120)
+    );
+}
+
+/// The six new records must fold across the real catalog string a player's
+/// "Add Feat" click sends and the engine's `feat:` token shape alike — the same
+/// property `the_wiring_folds_across_both_real_feat_id_shapes_and_no_further`
+/// pins for Aquatic Ancestry.
+#[test]
+fn the_newly_wired_feats_fold_across_both_real_feat_id_shapes() {
+    for (catalog_key, token, id, expected) in [
+        (
+            "Improvisation",
+            "feat:improvisation",
+            "feat.arg_standalone.improvisation_untrained_skill_bonus",
+            2i16,
+        ),
+        (
+            "Stretched Wings",
+            "feat:stretched_wings",
+            "feat.arg_standalone.stretched_wings_fly_speed",
+            40,
+        ),
+        (
+            "Defiant Luck",
+            "feat:defiant_luck",
+            "feat.arg_standalone.defiant_luck_uses_per_day",
+            1,
+        ),
+        (
+            "Fiend Sight",
+            "feat:fiend_sight",
+            "feat.arg_standalone.fiend_sight_darkvision_feet",
+            120,
+        ),
+        (
+            "Echoes of Stone",
+            "feat:echoes_of_stone",
+            "feat.arg_situational_skill_bonus.echoes_of_stone.perception",
+            4,
+        ),
+        (
+            "Carrion Feeder",
+            "feat:carrion_feeder",
+            "feat.arg_situational_skill_bonus.carrion_feeder.survival",
+            2,
+        ),
+    ] {
+        assert_eq!(
+            value(&compute(&with_feats(baseline(), &[catalog_key])), id),
+            Some(expected),
+            "{catalog_key}: the catalog key the Feat picker sends"
+        );
+        assert_eq!(
+            value(&compute(&with_feats(baseline(), &[token])), id),
+            Some(expected),
+            "{catalog_key}: the engine token shape compose_character_input seeds"
+        );
+    }
+}
+
+/// The corrected `BONUS:SITUATION` census, re-derived from the shipped catalog
+/// rather than restated: **3 tokens across 2 feats**, not 3 feats.
+///
+/// This is the assertion that would have caught the original miscount. It also
+/// pins the two feat keys, so a catalog change that renames or drops either
+/// fails here rather than silently orphaning a grounded record.
+#[test]
+fn args_situation_tokens_are_three_across_two_feats() {
+    let mut tokens = 0usize;
+    let mut feats_with: Vec<&str> = Vec::new();
+    for entry in arg_feats::feat_tables() {
+        let Some(bonuses) = entry.effect else { continue };
+        let count = bonuses.iter().filter(|b| b.qualifiers.first() == Some(&"SITUATION")).count();
+        if count > 0 {
+            tokens += count;
+            feats_with.push(entry.key);
+        }
+    }
+    assert_eq!(tokens, 3, "ARG's BONUS:SITUATION token count");
+    assert_eq!(
+        feats_with,
+        vec!["Carrion Feeder", "Echoes of Stone"],
+        "the feats carrying them — 2, not the 3 originally reported"
+    );
+}
+
+/// The ledger this cycle is accountable to, derived rather than declared: of
+/// ARG's 49 unconditionally-bonused feats, how many now reach a grounded
+/// record or a computed total.
+///
+/// Asserted by *running the real pipeline for every one of the 49 catalog
+/// keys*, so a feat claimed wired but producing nothing fails here — the exact
+/// failure mode this bundle's history is made of.
+#[test]
+fn twenty_four_of_args_forty_nine_unconditionally_bonused_feats_now_move_a_number() {
+    let unconditionally_bonused: Vec<&str> = arg_feats::feat_tables()
+        .iter()
+        .filter(|entry| {
+            entry
+                .effect
+                .is_some_and(|bonuses| bonuses.iter().any(|b| !bonus_is_conditioned(b.qualifiers)))
+        })
+        .map(|entry| entry.key)
+        .collect();
+    assert_eq!(unconditionally_bonused.len(), 49);
+
+    // "Moves a number" = the full (id, value) set of the deterministic fixture
+    // differs with the feat held. A new record and a changed value both count;
+    // a producer nobody consumes counts as neither.
+    let fingerprint = |input: &CharacterInput| -> Vec<(String, i16)> {
+        compute(input).explanations.iter().map(|e| (e.id.clone(), e.value)).collect()
+    };
+    let baseline_fingerprint = fingerprint(&baseline());
+    let moving: Vec<&str> = unconditionally_bonused
+        .iter()
+        .copied()
+        .filter(|key| fingerprint(&with_feats(baseline(), &[key])) != baseline_fingerprint)
+        .collect();
+
+    assert_eq!(
+        moving.len(),
+        24,
+        "17 wired in the first pass + 7 in the second. Feats that move a number: {moving:?}"
+    );
+    for key in [
+        "Echoes of Stone",
+        "Carrion Feeder",
+        "Improvisation",
+        "Improved Improvisation",
+        "Stretched Wings",
+        "Defiant Luck",
+        "Fiend Sight",
+    ] {
+        assert!(moving.contains(&key), "{key} was wired this cycle and must move a number");
+    }
+
+    // Bestow Luck is the 8th feat wired this cycle and correctly does NOT
+    // appear above: alone it is not a legal character and there is no Defiant
+    // Luck ability for its extra use to attach to, so it claims nothing. It
+    // moves a number only in the company its own prerequisite requires.
+    assert!(!moving.contains(&"Bestow Luck"));
+    assert_eq!(
+        value(
+            &compute(&with_feats(baseline(), &["Defiant Luck", "Bestow Luck"])),
+            "feat.arg_standalone.defiant_luck_uses_per_day"
+        ),
+        Some(2)
     );
 }

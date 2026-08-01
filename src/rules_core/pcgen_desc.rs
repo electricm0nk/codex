@@ -41,7 +41,26 @@
 //!   `ingest_race_traits_arg::substitute_placeholders` already ships (its
 //!   `Halfling ~ Adaptable Luck` record reads "they only gain a bonus" for
 //!   exactly this reason);
-//! * removes the `|`-delimited argument tail in all cases.
+//! * removes the `|`-delimited argument tail in all cases;
+//! * removes a trailing `|`-delimited **PCGen qualifier** (`PREABILITY:…`,
+//!   `!PRERULE:1,DisplayFullSpell`, …). A `DESC:` token may end in one or
+//!   more `PRE`-family clauses that gate *whether the description applies*,
+//!   and they are not arguments — the prose references no `%N` for them, so
+//!   the argument-tail rule above never reached them. ACG's `Twinned Feint`
+//!   shipped to the Add Feat picker reading *"…as a move action
+//!   instead.|!PREABILITY:1,CATEGORY=FEAT,Improved Feint"* for exactly this
+//!   reason. Stripping them is the same treatment `acg::spell_list`'s own
+//!   ingest already applied to `|(!)PRERULE:1,DisplayFullSpell` ("a
+//!   display-rule directive, not spell text"), applied here so it holds for
+//!   every content kind rather than one book's spells;
+//! * decodes the PCGen entity escape `&nl;` to a real newline. The other
+//!   four entities PCGen writes (`&lbracket;`, `&rbracket;`, `&pipe;`,
+//!   `&comma;`) are decoded at ingest and appear in **zero** served table
+//!   rows today (`grep -rhoE '&[a-zA-Z]+;' src/rules_core/rules_tables/`
+//!   returns them only from two doc comments); `&nl;` is the one that
+//!   survived, in 3 ACG feat descriptions. [`leaked_pcgen_syntax`] flags any
+//!   of the five, so an undecoded entity fails loudly instead of reaching a
+//!   player as a literal `&nl;`.
 //!
 //! ## The `|` rule differs from the race-trait binary's, deliberately
 //!
@@ -114,6 +133,70 @@ fn collapse_whitespace(text: &str) -> String {
     out.trim().to_string()
 }
 
+/// The PCGen entity escapes that can appear inside a `DESC:` token, paired
+/// with the character each stands for.
+///
+/// Only `&nl;` survives ingest into a served table today (3 ACG feat rows);
+/// the other four are decoded upstream. All five are listed so
+/// [`leaked_pcgen_syntax`] can name any that turns up, and so a future book
+/// whose ingest forgets one is caught here rather than on a screen.
+const PCGEN_ENTITIES: [(&str, &str); 5] = [
+    ("&nl;", "\n"),
+    ("&lbracket;", "["),
+    ("&rbracket;", "]"),
+    ("&pipe;", "|"),
+    ("&comma;", ","),
+];
+
+/// Whether one `|`-delimited segment is a PCGen `PRE`-family qualifier
+/// (`PREABILITY:1,CATEGORY=FEAT,Improved Feint`,
+/// `!PRERULE:1,DisplayFullSpell`) rather than prose or a `%N` argument.
+///
+/// Deliberately narrow: an optional leading `!`, then `PRE`, then at least
+/// one more uppercase letter, then a `:`. Rulebook prose does not produce
+/// that shape, so this cannot eat real text.
+fn is_pcgen_qualifier(segment: &str) -> bool {
+    let body = segment.strip_prefix('!').unwrap_or(segment);
+    let Some(rest) = body.strip_prefix("PRE") else {
+        return false;
+    };
+    let Some(token) = rest.split(':').next() else {
+        return false;
+    };
+    !token.is_empty()
+        && token.len() < rest.len()
+        && token.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit())
+}
+
+/// Drops any run of trailing PCGen `PRE`-family qualifier segments, returning
+/// what remains of the token.
+///
+/// Applied before the argument split so a qualifier can never be mistaken for
+/// argument N, and unconditionally so it is removed even from a token whose
+/// prose references no `%N` at all — the case that put
+/// `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint` in front of a player.
+fn strip_trailing_qualifiers(raw: &str) -> String {
+    let mut segments: Vec<&str> = raw.split('|').collect();
+    while segments.len() > 1 && is_pcgen_qualifier(segments[segments.len() - 1]) {
+        segments.pop();
+    }
+    segments.join("|")
+}
+
+/// Replaces every PCGen entity escape with the character it stands for.
+///
+/// Runs last, after whitespace collapsing, so a decoded `&nl;` newline is not
+/// immediately squashed back into a space.
+fn decode_pcgen_entities(text: &str) -> String {
+    let mut out = text.to_string();
+    for (entity, replacement) in PCGEN_ENTITIES {
+        if out.contains(entity) {
+            out = out.replace(entity, replacement);
+        }
+    }
+    out
+}
+
 /// Splits a raw `DESC:` token into its prose and its argument tail.
 ///
 /// The tail is taken from the **right**, exactly as many segments as the prose
@@ -121,6 +204,8 @@ fn collapse_whitespace(text: &str) -> String {
 /// separator) is rejoined rather than mistaken for an argument boundary. A
 /// token whose prose references no argument is returned whole and untouched.
 fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
+    let raw = strip_trailing_qualifiers(raw);
+    let raw = raw.as_str();
     let max = max_arg_reference(raw);
     if max == 0 {
         return (raw.to_string(), Vec::new());
@@ -187,19 +272,24 @@ pub fn render_pcgen_desc(raw: &str) -> RenderedPcgenDesc {
     }
 
     let text = if dropped_any { collapse_whitespace(&out) } else { out };
-    RenderedPcgenDesc { text, dropped_args }
+    RenderedPcgenDesc { text: decode_pcgen_entities(&text), dropped_args }
 }
 
 /// The PCGen syntax that must never reach a player: an unsubstituted `%N`
-/// argument reference, an unresolved `%%` literal-percent escape, or a *tight*
-/// `|` argument tail (see the module doc for why tightness, not the bare
-/// character, is the test).
+/// argument reference, an unresolved `%%` literal-percent escape, an undecoded
+/// entity escape such as `&nl;`, or a *tight* `|` argument tail (see the module
+/// doc for why tightness, not the bare character, is the test).
 ///
 /// Returns the name of the leak so a caller can fail loudly with a reason
 /// rather than a bare boolean.
 pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     if text.contains("%%") {
         return Some("unescaped '%%' literal-percent escape");
+    }
+    for (entity, _) in PCGEN_ENTITIES {
+        if text.contains(entity) {
+            return Some("undecoded PCGen entity escape");
+        }
     }
     let chars: Vec<char> = text.chars().collect();
     for (i, c) in chars.iter().enumerate() {
@@ -302,6 +392,64 @@ mod tests {
         assert_eq!(leaked_pcgen_syntax("the cloud's effects|CASTERLEVEL"), Some("raw '|' argument tail"));
         assert_eq!(leaked_pcgen_syntax("Hardness and Rarity | Examples"), None);
         assert_eq!(leaked_pcgen_syntax("trailing pipe |"), None);
+    }
+
+    /// The exact ACG `Twinned Feint` token that shipped to the Add Feat
+    /// picker. Its prose references no `%N`, so the argument-tail rule never
+    /// fired and the `PRE` clause went straight to the player.
+    #[test]
+    fn a_trailing_pre_qualifier_is_stripped_even_with_no_percent_n_in_the_prose() {
+        let rendered = render_pcgen_desc(
+            "If you have the Improved Feint feat, you can use this feat as a move action \
+             instead.|!PREABILITY:1,CATEGORY=FEAT,Improved Feint",
+        );
+        assert_eq!(
+            rendered.text,
+            "If you have the Improved Feint feat, you can use this feat as a move action instead."
+        );
+        assert!(rendered.dropped_args.is_empty(), "a qualifier is not a dropped argument");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// A qualifier sitting behind a real argument tail must not be counted as
+    /// argument N — that would shift every `%N` onto the wrong value.
+    #[test]
+    fn a_qualifier_behind_an_argument_tail_is_stripped_before_the_arguments_are_numbered() {
+        let rendered = render_pcgen_desc("a +%1 luck bonus|2|PRERULE:1,DisplayFullSpell");
+        assert_eq!(rendered.text, "a +2 luck bonus");
+        assert!(rendered.dropped_args.is_empty());
+    }
+
+    /// `PRE` is not a magic prefix on ordinary words: prose must survive.
+    #[test]
+    fn a_segment_that_merely_starts_with_pre_is_not_a_qualifier() {
+        let raw = "Roll | Effect \nPRESENT | Nothing happens";
+        assert_eq!(render_pcgen_desc(raw).text, raw);
+        assert!(!is_pcgen_qualifier("PRESENT | Nothing happens"));
+        assert!(is_pcgen_qualifier("PREABILITY:1,CATEGORY=FEAT,Improved Feint"));
+        assert!(is_pcgen_qualifier("!PRERULE:1,DisplayFullSpell"));
+    }
+
+    /// `&nl;` is PCGen's newline escape. Three ACG feat descriptions carried
+    /// it to the picker verbatim.
+    #[test]
+    fn the_pcgen_newline_entity_is_decoded_rather_than_shown() {
+        let rendered = render_pcgen_desc("This effect lasts for 1 minute.&nl; If an ally is under it");
+        assert_eq!(rendered.text, "This effect lasts for 1 minute.\n If an ally is under it");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+        assert_eq!(
+            leaked_pcgen_syntax("lasts for 1 minute.&nl; If an ally"),
+            Some("undecoded PCGen entity escape")
+        );
+    }
+
+    /// The decode runs *after* the whitespace collapse a dropped argument
+    /// triggers, so the newline is not squashed straight back into a space.
+    #[test]
+    fn a_decoded_newline_survives_the_dropped_argument_whitespace_collapse() {
+        let rendered = render_pcgen_desc("%1 times per day.&nl; Then this.|BattleCryTimes");
+        assert_eq!(rendered.text, "times per day.\n Then this.");
+        assert_eq!(rendered.dropped_args, vec!["BattleCryTimes".to_string()]);
     }
 
     /// A `%N` with no argument at all is still never shown.

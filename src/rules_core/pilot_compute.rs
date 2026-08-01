@@ -42140,6 +42140,142 @@ fn ground_arg_and_pu_feat_facts(
         });
     }
 
+    // 2026-08-01, second pass over SD-27's deferral list. ARG's three
+    // `BONUS:SITUATION` tokens (2 feats) were deferred as "the corpus itself
+    // classifies these as situational". True -- and not a reason to withhold
+    // them: this very file already grounds `BONUS:SITUATION|Perception=to
+    // notice unusual stonework|2|TYPE=Racial` and
+    // `BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2`
+    // for the Core Rulebook dwarf, as flat situational-bonus-magnitude records
+    // carrying their circumstance in their own text. Being situational was
+    // never the bar; having nowhere to land was, and these land where the
+    // dwarf's do.
+    for fact in feat_effects::arg_situational_skill_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let skill_slug = slugify_id_segment(fact.skill_name);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_situational_skill_bonus.{feat_slug}.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "{} (ARG) grants a {:+} bonus on {} checks {} \
+                 (BONUS:SITUATION|{}=...|{}), transcribed from its corpus token and confirmed \
+                 against its own BENEFIT prose. This is a SITUATIONAL bonus and is deliberately \
+                 NOT added to any skill total: it applies only in the circumstance named here, \
+                 and folding it into a general modifier would report a specific, checkable, \
+                 wrong number on every ordinary {} check. Same treatment the Dwarf Stonecunning \
+                 and Greed situational records already receive",
+                fact.feat_key,
+                fact.bonus,
+                fact.skill_name,
+                fact.circumstance,
+                fact.skill_name,
+                fact.bonus,
+                fact.skill_name
+            ),
+        });
+    }
+
+    // Improvisation / Improved Improvisation. Deferred in the first pass under
+    // "BONUS:VAR increments a bookkeeping variable with a base this engine does
+    // not model" -- which is false here: `DEFINE:ImprovisationBonus|0` is on the
+    // Improvisation feat record itself, so the running total is wholly
+    // feat-determined.
+    let improvisation = feat_effects::improvisation_untrained_skill_bonus_from_feats(feats);
+    if improvisation != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.improvisation_untrained_skill_bonus".to_owned(),
+            value: improvisation,
+            detail: format!(
+                "Skill checks for skills this character has NO ranks in are \
+                 +{improvisation}. Improvisation and Improved Improvisation both write the one \
+                 corpus variable ImprovisationBonus (BONUS:VAR|ImprovisationBonus|2 each), \
+                 PCGen's own way of saying they add, and neither record states a literal -- both \
+                 print the running total through a %1 substitution token -- so +2 alone and +4 \
+                 together are read from the pair. The scope is the corpus's own: Improvisation \
+                 carries 26 companion BONUS:SKILL|<skill>|ImprovisationBonus|!PRESKILL:1,<skill>=1 \
+                 tokens, one per skill, each gated on having no rank in it. Deliberately NOT \
+                 added to skill.selected_modifier.climb/intimidate/swim: this engine's \
+                 deterministic posture pins all three at rank 1, and this bonus applies only \
+                 where there are no ranks. Improvisation's BONUS:VAR|UseUntrainedSkills|1 (use \
+                 trained-only skills untrained) is a capability with no magnitude, and Improved \
+                 Improvisation's BONUS:VAR|ACCHECK|ArmorCheckPenalty/2 halves a NONPROFICIENCY \
+                 penalty this engine models no proficiency state to incur"
+            ),
+        });
+    }
+
+    // Stretched Wings. Deferred in the first pass as a fly-manoeuvrability feat
+    // -- but that is only its `BONUS:VAR|Maneuverability|1` half. Its other
+    // token is a plain `BONUS:MOVEADD|TYPE.Fly|40`, the identical movement shape
+    // Aquatic Ancestry is already grounded on.
+    let fly_speed = feat_effects::stretched_wings_fly_speed_bonus_from_feats(feats);
+    if fly_speed != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.stretched_wings_fly_speed".to_owned(),
+            value: fly_speed,
+            detail: format!(
+                "Stretched Wings (ARG) increases fly speed by {fly_speed} feet \
+                 (BONUS:MOVEADD|TYPE.Fly|40), to 60 feet. Its BENEFIT prose states the resulting \
+                 total rather than the increment (\"Your strix racial fly speed increases to 60 \
+                 feet (average)\"), and the two reconcile exactly because the feat's own \
+                 PREABILITY:1,CATEGORY=Special Ability,Strix ~ Wing-Clipped fixes the base: \
+                 arg_abilities_race.lst's Wing-Clipped ~ Strix ~ Flight carries MOVE:Fly,20. This \
+                 engine computes no movement total of any kind, so this grounds standalone \
+                 exactly as Aquatic Ancestry's swim speed does. The feat's companion \
+                 BONUS:VAR|Maneuverability|1 is NOT grounded: it moves a manoeuvrability tier on \
+                 PCGen's own integer scale (the wing-clipped flight record sets \
+                 BONUS:VAR|Maneuverability|2|TYPE=Base for \"poor\"), and this engine has no \
+                 manoeuvrability dimension for a tier index to mean anything in"
+            ),
+        });
+    }
+
+    // Defiant Luck / Bestow Luck. The one ARG per-day budget whose DEFINE: sits
+    // on the feat record itself, so unlike the halfling, suli and fetchling
+    // budgets there is no unmodelled racial base underneath it.
+    if let Some(uses) = feat_effects::defiant_luck_uses_per_day_from_feats(feats) {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.defiant_luck_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Defiant Luck (ARG) is usable {uses} time(s) per day -- after a natural 1 on a \
+                 saving throw, or a confirmed critical hit against this character, that roll may \
+                 be rerolled. Defiant Luck and Bestow Luck both write the one corpus variable \
+                 DefiantLuckTimes (BONUS:VAR|DefiantLuckTimes|1 each) and neither states a \
+                 literal, printing the total through a %1 substitution token instead. Unlike \
+                 ARG's other per-day variables, DEFINE:DefiantLuckTimes|0 sits on the Defiant \
+                 Luck record itself, so this budget is wholly feat-determined rather than an \
+                 increment to a racial pool this engine does not model. No per-use consumption \
+                 is tracked -- this is the size of a daily pool, the same way Stunning Fist's \
+                 uses per day grounds"
+            ),
+        });
+    }
+
+    // Fiend Sight. Its `BONUS:VAR|FiendSightTier|1` is a pick counter, not the
+    // magnitude; the magnitude is on the record's own VISION token and prose.
+    let fiend_sight_darkvision = feat_effects::fiend_sight_darkvision_feet_from_feats(feats);
+    if fiend_sight_darkvision != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.fiend_sight_darkvision_feet".to_owned(),
+            value: fiend_sight_darkvision,
+            detail: format!(
+                "Fiend Sight (ARG) improves darkvision to {fiend_sight_darkvision} feet and \
+                 grants low-light vision. The record states the range absolutely and twice -- \
+                 VISION:Darkvision (120') and its BENEFIT prose -- over the 60-foot base its own \
+                 PREVISION:1,Darkvision=60 prerequisite fixes, so this is a doubling of a known \
+                 base rather than a free-floating claim; the same reconciliation the Deepsight \
+                 record performs, which reports its own 60-to-120 step as the increment its \
+                 BONUS:VISION token actually is. This engine models no vision numerically \
+                 anywhere, so the range grounds standalone. The feat's BONUS:VAR|FiendSightTier|1 \
+                 is a pick counter (STACK:YES MULT:YES, capped at two by \
+                 PREVARLT:FiendSightTier,2) whose only consumer is the record's own second pick, \
+                 granting the see-in-darkness universal monster ability -- a capability with no \
+                 magnitude, and no further range"
+            ),
+        });
+    }
+
     let gnome_weapon_attack = feat_effects::gnome_weapon_focus_attack_bonus_from_feats(feats);
     if gnome_weapon_attack != 0 {
         explanations.push(ComputationExplanation {

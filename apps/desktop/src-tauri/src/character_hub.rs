@@ -719,8 +719,9 @@ pub(crate) use crate::pf1_adapter::{
 // `use super::*` resolving them inside `mod tests` unchanged.
 #[cfg(test)]
 pub(crate) use crate::pf1_adapter::{
-    apply_add_equipment_selection, apply_add_feat_selection, apply_add_spell_selection,
-    apply_level_up, apply_record_and_prepare_spell_selection, apply_set_skill_allocations,
+    apply_add_equipment_selection, apply_add_feat_selection, apply_add_feat_selection_with_target,
+    apply_add_spell_selection, apply_level_up, apply_record_and_prepare_spell_selection,
+    apply_set_skill_allocations, resolve_feat_target_choice,
 };
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -2363,6 +2364,410 @@ pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
         }
     }
     add_feat_selection_at_root(root, feat_id, target, saved_at)
+}
+
+// ---------------------------------------------------------------------------
+// Selection removal (the inverse of the three add paths above)
+// ---------------------------------------------------------------------------
+//
+// Every selection command in this module was append-only: a character sheet
+// could take a feat, learn a spell or buy a weapon and then had no way to
+// undo any of it short of hand-editing the saved JSON. The three functions
+// below are the missing inverses, each built on the SAME
+// `mutate_saved_character_at_root` load -> mutate -> recompute -> re-save
+// spine its add-path twin uses, so a removal that leaves the build unable to
+// compute is discarded exactly like an add that does — the on-disk character
+// is never left holding a stale computed value.
+//
+// Deliberately NOT built here: post-creation alternate racial trait removal.
+// Alternate racial traits have no post-creation *add* path either
+// (`selected_alternate_trait_keys` is a `create_character` field, resolved
+// once by `resolve_alternate_trait_choices`); adding only the remove half
+// would give the sheet a one-way door in the other direction. See this
+// module's `read_alternate_trait_keys`.
+
+/// Removes one held copy of `feat_id` from `chosen.selected_feats`, plus the
+/// chooser target that copy recorded.
+///
+/// Returns `false` without mutating when the character does not hold the
+/// feat — the caller turns that into an honest error rather than a
+/// `Saved` response for a removal that removed nothing.
+///
+/// Three details that are not arbitrary:
+///
+/// * **Matching is by [`feat_identity::same`], not string equality.**
+///   `selected_feats` really carries both shapes (`"Toughness"` from the
+///   picker, `"feat:toughness"` from creation seeding), and the same
+///   function `add_feat_selection_enforcing_prerequisites_at_root` matches
+///   with must be the one that unmatches, or a feat becomes unremovable
+///   purely because of which path added it.
+/// * **One copy, not all copies.** `selected_feats` is an append-only list
+///   that legitimately holds a chooser feat more than once (Weapon Focus in
+///   two weapons). Removing every copy on a request to remove one would
+///   silently discard a pick the player did not name.
+/// * **The last copy takes its orphaned targets with it.** Each chooser
+///   feat owns a distinct `choice_set_id`
+///   ([`feat_effects::CHOOSER_FEAT_CONTRACTS`]), so once no copy of the
+///   feat remains, every choice under that set belongs to nothing. Leaving
+///   them behind would show a target for a feat the character no longer
+///   has. When `target` names a specific one, only that choice goes and any
+///   remaining copies keep theirs.
+pub(crate) fn apply_remove_feat_selection(
+    character_input: &mut CharacterInput,
+    feat_id: &str,
+    target: Option<&str>,
+) -> bool {
+    use codex::rules_core::feat_identity;
+
+    let Some(index) = character_input
+        .chosen
+        .selected_feats
+        .iter()
+        .position(|held| feat_identity::same(held, feat_id))
+    else {
+        return false;
+    };
+    character_input.chosen.selected_feats.remove(index);
+
+    let Some(contract) = feat_effects::chooser_contract_for_feat(feat_id) else {
+        // Not a chooser feat: it never recorded a target, so there is
+        // nothing else to take with it.
+        return true;
+    };
+
+    let still_held = character_input
+        .chosen
+        .selected_feats
+        .iter()
+        .any(|held| feat_identity::same(held, feat_id));
+
+    if let Some(named) = target {
+        let selection_id = format!("{}{}", contract.selection_prefix, named.trim());
+        if let Some(choice_index) = character_input
+            .chosen
+            .selected_choices
+            .iter()
+            .position(|choice| {
+                choice.choice_set_id == contract.choice_set_id
+                    && choice.selection_id.eq_ignore_ascii_case(&selection_id)
+            })
+        {
+            character_input.chosen.selected_choices.remove(choice_index);
+        }
+    }
+
+    if !still_held {
+        character_input
+            .chosen
+            .selected_choices
+            .retain(|choice| choice.choice_set_id != contract.choice_set_id);
+    }
+
+    true
+}
+
+/// The feat whose own prerequisites this removal would break, and why.
+///
+/// Reuses `rules_core::feat_prereqs` rather than restating any rule: it
+/// evaluates every OTHER feat the character holds twice — once against the
+/// facts as they stand, once against the facts as they would stand after
+/// the removal — and reports the first feat that was eligible before and is
+/// definitively ineligible after.
+///
+/// The before/after comparison is the whole point. Evaluating only the
+/// "after" state would refuse removals for feats that were already failing
+/// their prerequisites before anyone touched anything (a character seeded
+/// with engine tokens outside the five ingested books, or one built before
+/// `add_feat_selection` enforced prerequisites at all), which would tell the
+/// player that removing feat A broke feat B when A had nothing to do with
+/// it. Only a regression caused *by this removal* refuses.
+///
+/// A feat with no catalog record is skipped in both passes, matching
+/// `add_feat_selection_enforcing_prerequisites_at_root`'s own decision that
+/// a lookup miss is not a rules verdict.
+pub(crate) fn feat_removal_dependency_refusal(
+    before: &CharacterInput,
+    after: &CharacterInput,
+) -> Option<String> {
+    use codex::rules_core::feat_prereqs::{
+        character_prereq_facts, evaluate_feat_key_prerequisites,
+    };
+
+    let facts_before = character_prereq_facts(
+        before,
+        compute_pilot_with_corpus(before, corpus_fixture_bundle())
+            .base
+            .base_attack_bonus,
+    );
+    let facts_after = character_prereq_facts(
+        after,
+        compute_pilot_with_corpus(after, corpus_fixture_bundle())
+            .base
+            .base_attack_bonus,
+    );
+
+    for dependent in &after.chosen.selected_feats {
+        let Some(report_after) = evaluate_feat_key_prerequisites(dependent, &facts_after) else {
+            continue;
+        };
+        if report_after.is_eligible {
+            continue;
+        }
+        let was_eligible = evaluate_feat_key_prerequisites(dependent, &facts_before)
+            .map(|report| report.is_eligible)
+            .unwrap_or(false);
+        if !was_eligible {
+            // Already failing before this removal — not this removal's doing.
+            continue;
+        }
+        let reason = report_after
+            .unavailable_reason()
+            .unwrap_or_else(|| "its prerequisites would no longer be met".to_owned());
+        return Some(format!(
+            "'{}' still depends on it: {reason}",
+            report_after.feat_key
+        ));
+    }
+
+    None
+}
+
+/// `remove_feat_selection`'s real implementation.
+///
+/// Order matters and is the mirror image of
+/// `add_feat_selection_enforcing_prerequisites_at_root`: the refusals happen
+/// *before* `mutate_saved_character_at_root` is entered, because that
+/// function takes an infallible closure — a rejected removal must surface as
+/// an `Err` here rather than as a silently-unchanged `Saved` envelope that
+/// tells the player the feat is gone when it is not.
+///
+/// Two refusals, both naming their reason:
+///
+/// * the character does not hold the feat at all, and
+/// * removing it would break another held feat's prerequisites
+///   (`feat_removal_dependency_refusal`).
+///
+/// Past those, `mutate_saved_character_at_root` supplies the same
+/// recompute-before-persist gate every add path has, so a removal that left
+/// the build unable to compute returns `Blocked` with the engine's own
+/// diagnostics and leaves the saved character untouched.
+pub(crate) fn remove_feat_selection_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let before = envelope.character_input.clone();
+
+    let mut after = before.clone();
+    if !apply_remove_feat_selection(&mut after, feat_id, target) {
+        return Err(format!(
+            "'{feat_id}' cannot be removed: this character does not hold it"
+        ));
+    }
+
+    if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
+        return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_feat_selection(character_input, feat_id, target);
+    })
+}
+
+/// Removes every `chosen.spells_selected` entry for `spell_id` under
+/// `source_class_id`, in every acquisition mode.
+///
+/// Returns `false` without mutating when no entry matched.
+///
+/// **Every mode, not one.** `record_and_prepare_spell_selection` writes a
+/// `Known` and a `Prepared` entry for the same spell in one atomic
+/// mutation (see its doc comment), so removing only the `Known` half would
+/// leave the character with a spell prepared that they no longer know —
+/// a state the engine's own spellbook conditions treat as broken. "Forget
+/// this spell" is the honest inverse of the pair.
+pub(crate) fn apply_remove_spell_selection(
+    character_input: &mut CharacterInput,
+    spell_id: &str,
+    source_class_id: &str,
+) -> bool {
+    let before = character_input.chosen.spells_selected.len();
+    character_input.chosen.spells_selected.retain(|selection| {
+        !(selection.spell_id.eq_ignore_ascii_case(spell_id)
+            && selection.source_class_id.eq_ignore_ascii_case(source_class_id))
+    });
+    character_input.chosen.spells_selected.len() != before
+}
+
+/// `remove_spell_selection`'s real implementation — the same
+/// load -> mutate -> recompute -> re-save spine
+/// `add_spell_selection_at_root` uses.
+///
+/// A prepared caster whose last spell this would remove gets a `Blocked`
+/// response carrying the engine's own spellbook diagnostics, and the saved
+/// character is left exactly as it was. That is `mutate_saved_character_at_root`'s
+/// standing invariant, not a special case here: a Wizard with an empty
+/// spellbook does not compute, so it does not persist.
+pub(crate) fn remove_spell_selection_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut probe = envelope.character_input.clone();
+    if !apply_remove_spell_selection(&mut probe, spell_id, source_class_id) {
+        return Err(format!(
+            "'{spell_id}' cannot be removed: this character has no {spell_id} recorded for \
+             {source_class_id}"
+        ));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_spell_selection(character_input, spell_id, source_class_id);
+    })
+}
+
+/// Removes one `chosen.equipment_selections` entry for `item_id`, together
+/// with the equipmods applied to that entry.
+///
+/// Returns `false` without mutating when the character holds no such item.
+///
+/// **One entry, not all.** A character can legitimately carry two of the
+/// same item (two daggers, one of them with a `+1` equipmod attached);
+/// removing both on a request to remove one would discard a purchase the
+/// player did not name. The applied modifiers go with the entry they live
+/// on because that is where PCGen's `CUSTOMIZATION:EQMOD=` convention puts
+/// them — they have no independent selection of their own (see
+/// `apply_attach_equipment_modifier`).
+///
+/// **No refund.** Removal does not touch the persisted money balance.
+/// Selling equipment back is a real PF1 rule with a real rate (half price
+/// for most items) that nothing in this codebase models; crediting full
+/// price here would invent a rule, and crediting half would invent the
+/// half-price table's coverage. Dropping an item you already paid for is
+/// the truthful subset. The UI states this rather than leaving the player
+/// to discover it.
+pub(crate) fn apply_remove_equipment_selection(
+    character_input: &mut CharacterInput,
+    item_id: &str,
+) -> bool {
+    let Some(index) = character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .position(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
+    else {
+        return false;
+    };
+    character_input.chosen.equipment_selections.remove(index);
+    true
+}
+
+/// `remove_equipment_selection`'s real implementation — the same
+/// load -> mutate -> recompute -> re-save spine
+/// `add_equipment_selection_at_root` uses.
+pub(crate) fn remove_equipment_selection_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut probe = envelope.character_input.clone();
+    if !apply_remove_equipment_selection(&mut probe, item_id) {
+        return Err(format!(
+            "'{item_id}' cannot be removed: this character does not carry it"
+        ));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_equipment_selection(character_input, item_id);
+    })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveFeatSelectionRequest {
+    pub character_id: String,
+    pub feat_id: String,
+    /// Which recorded target this removal takes with the feat, without its
+    /// prefix — the same un-prefixed shape `AddFeatSelectionRequest.target`
+    /// takes, so a caller that added Weapon Focus (Longsword) removes it by
+    /// naming `"Longsword"` again.
+    ///
+    /// `None` removes one held copy and, if it was the last, every target
+    /// that copy's chooser set still held.
+    #[serde(default)]
+    pub target: Option<String>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, removes one held copy of the requested feat,
+/// recomputes via the real engine, and re-saves — the inverse of
+/// `add_feat_selection`. See `remove_feat_selection_at_root` for the
+/// refusals and `feat_removal_dependency_refusal` for the prerequisite-chain
+/// guard.
+#[tauri::command]
+pub fn remove_feat_selection(
+    app: tauri::AppHandle,
+    request: RemoveFeatSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_feat_selection_at_root(
+        &root,
+        &request.feat_id,
+        request.target.as_deref(),
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveSpellSelectionRequest {
+    pub character_id: String,
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, forgets the requested spell in every
+/// acquisition mode, recomputes via the real engine, and re-saves — the
+/// inverse of `add_spell_selection` / `record_and_prepare_spell_selection`.
+/// See `remove_spell_selection_at_root`.
+#[tauri::command]
+pub fn remove_spell_selection(
+    app: tauri::AppHandle,
+    request: RemoveSpellSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_spell_selection_at_root(
+        &root,
+        &request.spell_id,
+        &request.source_class_id,
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveEquipmentSelectionRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, drops one carried copy of the requested item
+/// (with its applied equipmods), recomputes via the real engine, and
+/// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
+/// Does **not** refund the purchase; see `apply_remove_equipment_selection`.
+#[tauri::command]
+pub fn remove_equipment_selection(
+    app: tauri::AppHandle,
+    request: RemoveEquipmentSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_equipment_selection_at_root(&root, &request.item_id, &request.saved_at)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -6049,6 +6454,356 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- Selection removal -----
+
+    /// The reported defect, end to end: a feat that moves a real number is
+    /// added, the number moves, the feat is removed, and the number goes
+    /// back — **read from a fresh load off disk**, not from the mutation's
+    /// own response, so a removal that left a stale computed value on disk
+    /// would fail here.
+    ///
+    /// Toughness is the probe because its effect is a plain arithmetic
+    /// change to max HP (`+1` per character level, minimum 3), so "the
+    /// number moved" is checkable rather than a matter of interpretation.
+    #[test]
+    fn removing_a_feat_returns_the_number_it_moved_and_survives_reload() {
+        let root = tempdir("remove-feat-round-trip");
+        let envelope = level_up_test_envelope("race:human", 3);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        // Read through the exact command the Defense tab reads through, off
+        // a fresh load, so this asserts the number a player actually sees.
+        let max_hp_now = |root: &Path| -> i16 {
+            load_character_durability_at_root(root)
+                .expect("durability should compute for a single-class Fighter")
+                .max_hp
+        };
+
+        let baseline = max_hp_now(&root);
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Toughness",
+            None,
+            "2026-08-01T00:00:00Z",
+        )
+        .expect("Toughness has no prerequisites");
+        let with_feat = max_hp_now(&root);
+        assert!(
+            with_feat > baseline,
+            "Toughness must move max HP for the removal test to mean anything: \
+             baseline {baseline}, with feat {with_feat}"
+        );
+
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:01:00Z")
+            .expect("removing a held feat with no dependents must succeed");
+
+        let after_removal = max_hp_now(&root);
+        assert_eq!(
+            after_removal, baseline,
+            "removing Toughness must return max HP to its pre-feat value"
+        );
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            !reloaded
+                .character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| feat == "Toughness"),
+            "the removed feat must be gone from the persisted character"
+        );
+        assert_eq!(reloaded.saved_at, "2026-08-01T00:01:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The dependency guard, on a real corpus chain: Great Cleave's own
+    /// `PRE` tokens name Cleave, so removing Cleave out from under it must
+    /// be refused with both feats named — and must leave the saved
+    /// character untouched.
+    #[test]
+    fn removing_a_feat_another_held_feat_depends_on_is_refused_with_the_reason() {
+        let root = tempdir("remove-feat-dependency-refused");
+        let envelope = level_up_test_envelope("race:human", 6);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Cleave",
+            None,
+            "2026-08-01T00:00:00Z",
+        )
+        .expect("a Fighter 6 qualifies for Cleave");
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Great Cleave",
+            None,
+            "2026-08-01T00:01:00Z",
+        )
+        .expect("Cleave is now held, so Great Cleave qualifies");
+
+        let before = SavedCharacterStore::load(&root).unwrap().character_input;
+
+        let error = remove_feat_selection_at_root(&root, "Cleave", None, "2026-08-01T00:02:00Z")
+            .expect_err("Great Cleave depends on Cleave, so removing Cleave must be refused");
+
+        assert!(error.contains("Cleave"), "{error}");
+        assert!(error.contains("Great Cleave"), "{error}");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert_eq!(
+            before.chosen.selected_feats, after.chosen.selected_feats,
+            "a refused removal must not touch the saved character"
+        );
+
+        // ...and the guard is a dependency guard, not a blanket refusal:
+        // remove the dependent first and the prerequisite comes out fine.
+        remove_feat_selection_at_root(&root, "Great Cleave", None, "2026-08-01T00:03:00Z")
+            .expect("the leaf of the chain has no dependents");
+        remove_feat_selection_at_root(&root, "Cleave", None, "2026-08-01T00:04:00Z")
+            .expect("with Great Cleave gone, Cleave is removable");
+
+        let reloaded = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(!reloaded.chosen.selected_feats.iter().any(|f| f == "Cleave"));
+        assert!(!reloaded
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|f| f == "Great Cleave"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A feat the character never took cannot be "removed" successfully.
+    /// A `Saved` response for a removal that removed nothing is exactly
+    /// the `success: true` lie `no-stub-mvp-doctrine.md` forbids.
+    #[test]
+    fn removing_a_feat_the_character_does_not_hold_fails_honestly() {
+        let root = tempdir("remove-feat-not-held");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let before = SavedCharacterStore::load(&root).unwrap().saved_at;
+
+        let error =
+            remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:00:00Z")
+                .expect_err("a feat that is not held cannot be removed");
+
+        assert!(error.contains("does not hold it"), "{error}");
+        assert_eq!(
+            SavedCharacterStore::load(&root).unwrap().saved_at,
+            before,
+            "a failed removal must not re-save the character"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Matching is by feat identity, not string equality: a feat seeded as
+    /// the engine token `feat:toughness` is removable by the catalog key
+    /// `Toughness` the picker uses, and vice versa. Otherwise a feat would
+    /// be unremovable purely because of which path added it.
+    #[test]
+    fn a_feat_is_removable_in_either_id_shape() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.selected_feats = vec!["feat:toughness".to_owned()];
+
+        assert!(apply_remove_feat_selection(&mut input, "Toughness", None));
+        assert!(input.chosen.selected_feats.is_empty());
+
+        input.chosen.selected_feats = vec!["Toughness".to_owned()];
+        assert!(apply_remove_feat_selection(&mut input, "feat:toughness", None));
+        assert!(input.chosen.selected_feats.is_empty());
+    }
+
+    /// One copy comes out, not every copy — `selected_feats` legitimately
+    /// holds a chooser feat twice — and the last copy takes its now-orphaned
+    /// recorded target with it.
+    #[test]
+    fn removing_a_chooser_feat_removes_one_copy_and_finally_its_orphaned_target() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.selected_feats.clear();
+        input.chosen.selected_choices.clear();
+        apply_add_feat_selection_with_target(
+            &mut input,
+            "Weapon Focus",
+            resolve_feat_target_choice("Weapon Focus", Some("Longsword")).unwrap(),
+        );
+        apply_add_feat_selection_with_target(
+            &mut input,
+            "Weapon Focus",
+            resolve_feat_target_choice("Weapon Focus", Some("Dagger")).unwrap(),
+        );
+        assert_eq!(input.chosen.selected_feats.len(), 2);
+        assert_eq!(input.chosen.selected_choices.len(), 2);
+
+        // Naming a target takes exactly that target, and one copy.
+        assert!(apply_remove_feat_selection(&mut input, "Weapon Focus", Some("Longsword")));
+        assert_eq!(input.chosen.selected_feats.len(), 1);
+        assert_eq!(input.chosen.selected_choices.len(), 1);
+        assert!(input.chosen.selected_choices[0]
+            .selection_id
+            .to_lowercase()
+            .contains("dagger"));
+
+        // The last copy leaves no orphaned target behind.
+        assert!(apply_remove_feat_selection(&mut input, "Weapon Focus", None));
+        assert!(input.chosen.selected_feats.is_empty());
+        assert!(
+            input.chosen.selected_choices.is_empty(),
+            "a target for a feat the character no longer holds must not survive: {:?}",
+            input.chosen.selected_choices
+        );
+    }
+
+    /// Forgetting a spell removes every acquisition mode it was recorded
+    /// in. `record_and_prepare_spell_selection` writes a `Known` and a
+    /// `Prepared` entry together, so removing only one half would leave a
+    /// spell prepared that the character no longer knows.
+    #[test]
+    fn removing_a_spell_forgets_every_acquisition_mode_of_it() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.spells_selected.clear();
+        apply_record_and_prepare_spell_selection(&mut input, "Magic Missile", "class:wizard");
+        apply_add_spell_selection(
+            &mut input,
+            "Shield",
+            "class:wizard",
+            AcquisitionMode::Known,
+        );
+        assert_eq!(input.chosen.spells_selected.len(), 3);
+
+        assert!(apply_remove_spell_selection(
+            &mut input,
+            "Magic Missile",
+            "class:wizard"
+        ));
+
+        assert_eq!(input.chosen.spells_selected.len(), 1);
+        assert_eq!(input.chosen.spells_selected[0].spell_id, "Shield");
+        assert!(
+            !apply_remove_spell_selection(&mut input, "Magic Missile", "class:wizard"),
+            "removing an already-forgotten spell must report that it removed nothing"
+        );
+    }
+
+    /// A spell the character never learned cannot be "removed" successfully.
+    #[test]
+    fn removing_a_spell_the_character_never_learned_fails_honestly() {
+        let root = tempdir("remove-spell-not-known");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let error = remove_spell_selection_at_root(
+            &root,
+            "Magic Missile",
+            "class:wizard",
+            "2026-08-01T00:00:00Z",
+        )
+        .expect_err("a spell that was never learned cannot be forgotten");
+
+        assert!(error.contains("Magic Missile"), "{error}");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Dropping a carried item takes one entry with its applied equipmods,
+    /// leaves the second copy alone, and survives a reload.
+    #[test]
+    fn removing_equipment_drops_one_entry_with_its_modifiers() {
+        let root = tempdir("remove-equipment-round-trip");
+        // Uses the ids `compose_character_input` really seeds
+        // (`item:longsword`), not invented catalog keys — an id the corpus
+        // cannot resolve would be discarded by the recompute gate and the
+        // test would be measuring the gate, not the removal.
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        apply_add_equipment_selection(
+            &mut envelope.character_input,
+            "item:longsword",
+            ActiveState::EquippedActive,
+        );
+        let before = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            remove_equipment_selection_at_root(&root, "item:longsword", "2026-08-01T00:00:00Z")
+                .expect("a carried item must be removable");
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("dropping one of two longswords must still compute: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let after = &reloaded.character_input.chosen.equipment_selections;
+        assert_eq!(after.len(), before - 1, "exactly one entry comes out");
+        assert_eq!(
+            after
+                .iter()
+                .filter(|selection| selection.item_id == "item:longsword")
+                .count(),
+            1,
+            "only the named copy comes out — the second longsword stays"
+        );
+        assert_eq!(reloaded.saved_at, "2026-08-01T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The equipmods attached to a selection leave with the selection they
+    /// live on — PCGen's `CUSTOMIZATION:EQMOD=` convention gives them no
+    /// independent entry of their own, so leaving them behind would orphan
+    /// a `+1` onto a weapon the character no longer carries.
+    ///
+    /// Asserted on the pure function rather than through the store because
+    /// `SavedCharacterStore`'s `equipment_modifier` line is colon-delimited
+    /// and cannot round-trip a colon-bearing modifier id — a real
+    /// pre-existing persistence limit, unrelated to removal, that this test
+    /// deliberately does not paper over.
+    #[test]
+    fn removing_equipment_takes_its_applied_modifiers_with_it() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.equipment_selections.clear();
+        apply_add_equipment_selection(&mut input, "item:longsword", ActiveState::EquippedActive);
+        apply_add_equipment_selection(&mut input, "item:longsword", ActiveState::EquippedActive);
+        assert!(apply_attach_equipment_modifier(
+            &mut input,
+            "item:longsword",
+            "item:masterwork_component"
+        ));
+        assert_eq!(input.chosen.equipment_selections[0].applied_modifiers.len(), 1);
+
+        assert!(apply_remove_equipment_selection(&mut input, "item:longsword"));
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert!(
+            input.chosen.equipment_selections[0]
+                .applied_modifiers
+                .is_empty(),
+            "the modifier went out with the entry it was attached to"
+        );
+        assert!(apply_remove_equipment_selection(&mut input, "item:longsword"));
+        assert!(!apply_remove_equipment_selection(&mut input, "item:longsword"));
+    }
+
+    /// An item the character does not carry cannot be "removed" successfully.
+    #[test]
+    fn removing_equipment_the_character_does_not_carry_fails_honestly() {
+        let root = tempdir("remove-equipment-not-carried");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.equipment_selections.clear();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let error =
+            remove_equipment_selection_at_root(&root, "Longsword", "2026-08-01T00:00:00Z")
+                .expect_err("an item that is not carried cannot be dropped");
+
+        assert!(error.contains("does not carry it"), "{error}");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// The picker's data source: all 690 records come back, ineligible ones
     /// included and marked with a reason. Removing them would hide the
     /// rules from the player instead of explaining them.
@@ -7866,3 +8621,4 @@ mod tests {
         assert_eq!(preview.character_level, 4);
     }
 }
+

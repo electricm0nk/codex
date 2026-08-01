@@ -42,7 +42,8 @@ use character_hub::{
     load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
     list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
-    record_and_prepare_spell_selection,
+    record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
@@ -161,6 +162,9 @@ fn main() {
             add_spell_selection,
             record_and_prepare_spell_selection,
             add_feat_selection,
+            remove_feat_selection,
+            remove_spell_selection,
+            remove_equipment_selection,
             set_skill_allocations,
             append_to_character,
             re_save_character,

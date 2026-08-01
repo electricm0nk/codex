@@ -25,6 +25,11 @@ import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
 import { addFeatSelection } from '../boundary/addFeatSelection';
+import {
+  removeEquipmentSelection,
+  removeFeatSelection,
+  removeSpellSelection,
+} from '../boundary/removeSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
 import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
@@ -159,6 +164,24 @@ const addItemButtonStyle: CSSProperties = {
   color: 'var(--color-text)',
   cursor: 'pointer',
   padding: '0.5rem 1.5rem',
+};
+
+/**
+ * The per-row undo control on a feat / spell / equipment selection.
+ *
+ * Deliberately quiet (muted, small, no fill) rather than a destructive red:
+ * every one of these removals is reversible by re-adding the selection, and
+ * each is refused with a stated reason when it is not safe — a shouting
+ * button would imply a danger the guard already handles.
+ */
+const removeItemButtonStyle: CSSProperties = {
+  backgroundColor: 'transparent',
+  border: '1px solid var(--color-border)',
+  borderRadius: 6,
+  color: 'var(--color-text-muted)',
+  cursor: 'pointer',
+  fontSize: '0.7rem',
+  padding: '0.15rem 0.55rem',
 };
 
 /**
@@ -714,6 +737,14 @@ function WeaponsTab(props: {
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onAddWeapon: () => void;
+  /**
+   * Drops one carried copy of the item, with any equipmods attached to it.
+   * Does **not** refund the purchase — see
+   * `apply_remove_equipment_selection` in `character_hub.rs` for why
+   * sell-back is not modelled; the caption below states it so the player
+   * does not discover it by losing gold.
+   */
+  onRemoveWeapon: (itemId: string) => void;
 }) {
   const categories: ReadonlyArray<{ label: string; proficient: boolean }> = [
     { label: 'Simple', proficient: props.proficiency.simple },
@@ -794,9 +825,24 @@ function WeaponsTab(props: {
                 Feat damage: {row.featEffects.join(', ')}
               </p>
             ) : null}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
+              <button
+                type="button"
+                aria-label={`Drop ${row.name}`}
+                onClick={() => props.onRemoveWeapon(row.itemId)}
+                style={removeItemButtonStyle}
+              >
+                Drop
+              </button>
+            </div>
           </div>
         ))
       )}
+      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
+        Dropping an item removes it from the loadout but does not refund what it cost — selling
+        equipment back is a real Pathfinder rule (usually half price) that this build does not model,
+        and crediting a made-up amount would be worse than crediting none.
+      </p>
 
       {/*
         The one thing this table deliberately does not show. Stating it is
@@ -870,6 +916,13 @@ function SpellsTab(props: {
   /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
   explanations: readonly ExplanationDto[];
   onAddSpell: () => void;
+  /**
+   * Forgets the spell for that row's own source class, in every
+   * acquisition mode it was recorded in — a spell known and prepared is
+   * one spell, and leaving the prepared half behind would prepare a spell
+   * the character no longer knows.
+   */
+  onRemoveSpell: (spellId: string, sourceClassId: string) => void;
 }) {
   const [catalog, setCatalog] = useState<SpellCatalogEntryDto[] | null>(null);
   useEffect(() => {
@@ -1000,12 +1053,24 @@ function SpellsTab(props: {
       ) : (
         rows.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{row.name}</span>
-            {describeSpellSchoolAndLevel(row) === null ? null : (
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                {describeSpellSchoolAndLevel(row)}
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+              <span>
+                <span style={{ fontWeight: 700 }}>{row.name}</span>
+                {describeSpellSchoolAndLevel(row) === null ? null : (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
+                    {describeSpellSchoolAndLevel(row)}
+                  </span>
+                )}
               </span>
-            )}
+              <button
+                type="button"
+                aria-label={`Forget ${row.name}`}
+                onClick={() => props.onRemoveSpell(row.raw, row.sourceClassId)}
+                style={removeItemButtonStyle}
+              >
+                Forget
+              </button>
+            </div>
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
               {describeSpellAcquisition(row)}
             </p>
@@ -1427,6 +1492,8 @@ function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onAddArmor: () => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
+  /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
+  onRemoveItem: (itemId: string) => void;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1480,13 +1547,23 @@ function GearTab(props: {
                   </span>
                 ) : null}
               </div>
-              <button
-                type="button"
-                onClick={() => props.onAttachModifier(item)}
-                style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-              >
-                Attach Modifier
-              </button>
+              <span style={{ display: 'flex', gap: '0.4rem' }}>
+                <button
+                  type="button"
+                  onClick={() => props.onAttachModifier(item)}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Attach Modifier
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Drop ${item.equipmentRecordName}`}
+                  onClick={() => props.onRemoveItem(item.itemId)}
+                  style={removeItemButtonStyle}
+                >
+                  Drop
+                </button>
+              </span>
             </div>
             {item.appliedModifiers.length > 0 ? (
               <ul style={{ margin: '0.35rem 0 0', paddingLeft: '1.25rem' }}>
@@ -1656,6 +1733,13 @@ function FeatsTab(props: {
   selectedFeats: string[];
   chosenFeatTargets: ChosenFeatTargetsDto[];
   onAddFeat: () => void;
+  /**
+   * Removes one held copy of the feat, optionally taking the one recorded
+   * target named. `featId` is the row's `raw` string verbatim — the backend
+   * matches by feat identity, so whichever of the two id shapes this
+   * character recorded is the one that unmatches.
+   */
+  onRemoveFeat: (featId: string, target: string | null) => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
   // Derived from the same response the picker rows come from, so the caption
@@ -1706,8 +1790,50 @@ function FeatsTab(props: {
       ) : (
         resolvedFeats.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
-            {describeFeatTarget(row) === null ? null : (
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+              <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+              {/*
+                A chooser feat's targets are removed one at a time (below,
+                beside each target), because one row can stand for two
+                separate picks — Weapon Focus in a longsword and in a
+                dagger. Everything else removes as a whole.
+              */}
+              {row.targets.length > 0 ? null : (
+                <button
+                  type="button"
+                  aria-label={`Remove ${row.entry ? row.entry.name : row.raw}`}
+                  onClick={() => props.onRemoveFeat(row.raw, null)}
+                  style={removeItemButtonStyle}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            {row.targets.length === 0
+              ? null
+              : row.targets.map((target) => (
+                  <div
+                    key={target}
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      gap: '0.6rem',
+                      justifyContent: 'space-between',
+                      padding: '0.15rem 0',
+                    }}
+                  >
+                    <span style={{ color: 'var(--color-text)', fontSize: '0.78rem' }}>{target}</span>
+                    <button
+                      type="button"
+                      aria-label={`Remove ${row.entry ? row.entry.name : row.raw} (${target})`}
+                      onClick={() => props.onRemoveFeat(row.raw, target)}
+                      style={removeItemButtonStyle}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+            {describeFeatTarget(row) === null || row.targets.length > 0 ? null : (
               <p
                 style={{
                   color: row.targets.length === 0 ? 'var(--color-text-faint)' : 'var(--color-text)',
@@ -2450,6 +2576,104 @@ export function CharacterSheet(props: {
   }
 
   /**
+   * The shared tail of all three removals: re-read the character straight
+   * off disk and publish that.
+   *
+   * Deliberately NOT the optimistic list-patching the add paths use. An add
+   * knows exactly what it appended, so mirroring it locally is faithful; a
+   * removal's consequences are not local — dropping a weapon changes the
+   * Weapons table, the encumbrance totals and the AC-by-source rows, and
+   * removing a feat can move max HP, weapon damage and class-feature
+   * records at once. Re-reading is the only way to be sure the sheet shows
+   * what was actually persisted rather than a hand-maintained guess at it,
+   * and it is the same read a reload of the app would do — which is exactly
+   * the property a removal has to survive.
+   */
+  async function republishFromDisk() {
+    const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
+    props.onDetailRefreshed(loaded);
+    setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+    await refreshDurability();
+  }
+
+  /**
+   * Removes one held copy of a feat.
+   *
+   * A refusal — the character does not hold the feat, or another held feat
+   * still depends on it (`feat_removal_dependency_refusal` in
+   * `character_hub.rs`, which reuses `rules_core::feat_prereqs` rather than
+   * restating any rule) — arrives as a thrown error carrying the backend's
+   * own reason, and is shown verbatim. A `Blocked` outcome means the
+   * removal computed to an invalid build, so nothing was written; that
+   * message is the engine's own diagnostics.
+   */
+  async function handleRemoveFeat(featId: string, target: string | null) {
+    setMutationError(null);
+    try {
+      const outcome = await removeFeatSelection({
+        characterId: props.row.characterId,
+        featId,
+        target,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** Forgets a spell for its own source class, in every acquisition mode. */
+  async function handleRemoveSpell(spellId: string, sourceClassId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeSpellSelection({
+        characterId: props.row.characterId,
+        spellId,
+        sourceClassId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * Drops one carried copy of an item, with its equipmods. The money
+   * balance is deliberately left alone (see
+   * `apply_remove_equipment_selection`), so unlike `handleAddEquipment`
+   * this does not call `setMoney` — there is no new balance to show.
+   */
+  async function handleRemoveEquipment(itemId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeEquipmentSelection({
+        characterId: props.row.characterId,
+        itemId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
    * SD-25 Criterion 3.5 register A3: the real UI affordance wired to one of
    * `append_to_character` / `recompute_character` / `re_save_character`
    * (matching SD-24 Criterion 7.4's Add-Weapon/Add-Armor/Add-Spell
@@ -3105,6 +3329,7 @@ export function CharacterSheet(props: {
                   weaponDamage={engineRecords.weaponDamage}
                   corpusDerived={props.detail?.corpusDerived ?? null}
                   onAddWeapon={() => setItemPickerOpen('weapon')}
+                  onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
                 />
               ) : tab === 'Defense' ? (
                 <DefenseTab
@@ -3122,12 +3347,16 @@ export function CharacterSheet(props: {
                   corpusDerived={props.detail?.corpusDerived}
                   explanations={engineRecords.explanations}
                   onAddSpell={() => setItemPickerOpen('spell')}
+                  onRemoveSpell={(spellId, sourceClassId) =>
+                    void handleRemoveSpell(spellId, sourceClassId)
+                  }
                 />
               ) : tab === 'Gear' ? (
                 <GearTab
                   corpusDerived={props.detail?.corpusDerived}
                   onAddArmor={() => setItemPickerOpen('armor')}
                   onAttachModifier={handleAttachModifier}
+                  onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
                   money={money}
                   moneyBusy={moneyBusy}
                   moneyError={moneyError}
@@ -3138,6 +3367,7 @@ export function CharacterSheet(props: {
             selectedFeats={props.detail?.selectedFeats ?? []}
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
+            onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
           />
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />

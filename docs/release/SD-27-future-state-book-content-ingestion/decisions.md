@@ -524,3 +524,146 @@ concern entirely, and nothing in the reachability work needs them.
 **Standing guard, unchanged:** `pilot_compute.rs` is the engine's most load-bearing file. Every change to
 it lands with a test pinning the before/after per affected race or class, so drift is a caught failure
 rather than a silent recomputation — the same discipline §25.5 imposed on the CRB race swap.
+
+## 29. Architectural findings from the reachability tranche (2026-08-01)
+
+Four findings that outlived the cycles that produced them. Each is recorded because it is a *shape*
+that will recur on the next book, not a bug that was fixed and is done. Every number below was
+re-derived by command at closure; none is carried over from a cycle report.
+
+### 29.1 — The two-compute-twins trap, and the seam that closes it
+
+**The trap.** This engine derives the same pillars twice, in two files:
+
+| twin | pillar functions | what it is |
+|---|---|---|
+| `src/rules_core/pilot_compute.rs` | `compute_combat_baseline`, `compute_selected_skill_modifiers` | hardcoded Chain-Shirt arithmetic; **most of the test suite exercises this one** |
+| `src/rules_core/pilot_compute_corpus.rs` | `compute_combat_baseline_from_corpus`, `compute_selected_skill_modifiers_from_corpus` | real corpus-resolved equipment; the pair `pf1_adapter::resolve_unified_pilot_snapshot` gates on, so **the one whose numbers reach a player's sheet** |
+
+Measured before the fix, and recorded verbatim in
+`tests/sd27_feat_effects_reach_both_compute_paths.rs`:
+
+```text
+grep -o 'feat_effects::[a-z_]*' src/rules_core/pilot_compute.rs        | sort -u | wc -l  -> 34
+grep -o 'feat_effects::[a-z_]*' src/rules_core/pilot_compute_corpus.rs | sort -u | wc -l  ->  0
+```
+
+The corpus twin consumed **zero** feat effects and hand-inlined Dodge as its only feat awareness.
+
+**Why this is worse than an ordinary bug: it is a false-green generator.** A feat wired into
+`pilot_compute.rs` gets a passing test and changes nothing on screen. The work looks done, the gate
+agrees, and the player sees the old number. Five feats were live in exactly that state:
+
+| feat | book | cell | hardcoded twin said | the sheet said |
+|---|---|---|---|---|
+| Athletic | CRB | Climb / Swim | 7 / 7 | 5 / 5 |
+| Persuasive | CRB | Intimidate | 5 | 3 |
+| Intimidating Prowess | CRB | Intimidate | 6 | 3 |
+| Armor of the Pit | ARG | Armor Class | 19 | 17 |
+| Sure and Fleet | ARG | Climb | 7 | 5 |
+
+Three of the five are Core Rulebook feats. This pre-dated SD-27 and was found by it.
+
+**The seam.** `pilot_compute::feat_derived_pillar_contributions` is now the *sole* `feat_effects`
+reader for every pillar the two twins derive independently, and both twins consume it. Two guards,
+deliberately different in kind:
+
+* **structural** — `tests/sd27_feat_effects_reach_both_compute_paths.rs` reads the two source files
+  and fails if either twin's pillar functions name `feat_effects::` at all. This catches the *shape*
+  that produces divergence, including for a producer no catalog feat reaches yet.
+* **behavioural** — `pilot_compute_corpus::every_catalog_feat_moves_both_compute_paths_identically`
+  sweeps the live 690-record catalog (CRB + APG + ACG + ARG + PU) and pins all nine shared cells
+  equal across the two paths, feat by feat.
+
+**The rule for the next book: a magnitude is not wired until it moves on the twin the player reads.**
+A test against `pilot_compute.rs` alone is evidence of nothing.
+
+### 29.2 — There is a third twin, and it is in TypeScript
+
+Closing the Rust seam does not close the class of defect, because `CharacterSheet.tsx` computes
+sheet cells of its own. Three were moved into the engine this tranche — `defense.touch_armor_class`,
+`combat.combat_maneuver_bonus`, `defense.combat_maneuver_defense` — precisely because a React-local
+formula could not see the size modifier. **One remains, and it is measured, not suspected:**
+
+* `CharacterSheet.tsx:2945` computes the headline HIT POINTS panel as
+  `maxHitPoints(heldClasses, abilities.constitution)`
+  (`apps/desktop/src/characterHub/characterProgression.ts:287`) — a frontend-local formula that
+  never reads `feat_effects::hp_bonus_from_feats`.
+* The Defense tab's MAX HP comes from `character_hub.rs:3254`, which *does* add it.
+
+So a character holding Toughness reads **two different maximum hit point values on the same sheet**.
+Observed live during the removal cycle: headline 13/13 while the Defense tab moved 13 → 16 → 13
+across an add and a remove. Pre-existing, out of that cycle's scope, and logged rather than glossed.
+
+**The generalisation, which is the actual finding:** the twin problem is not "two Rust functions."
+It is *any* surface that re-derives a rules number instead of rendering an engine explanation. The
+engine has a name for the correct shape — an `explanations` row with an id, a value and a detail —
+and every cell that does not read one is a candidate twin. `flat_footed_armor_class` was moved into
+the engine this tranche for exactly this reason and is now read from
+`defense.flat_footed_armor_class`.
+
+### 29.3 — The reach gate has two blind spots, and both are shaped like "the scan cannot see it"
+
+`reach_gate::full_inventory()` unions three independent discovery sources: the shipped ingest
+diagnostic, a source scan of `src/rules_core/rules_tables/`, and the `data/corpus/` directory tree.
+The source scan is the weak one, twice over.
+
+**Blind spot 1 — function-wrapped tables.** `scanned_inventory()` originally matched column-zero
+`pub const NAME: &[Type]` declarations only. Pathfinder Unchained emits its records inside accessor
+function bodies instead:
+
+```
+src/rules_core/rules_tables/pathfinder_unchained/equipment_tables.rs:70:pub fn equipment_tables() -> &'static [EquipmentTableEntry]
+src/rules_core/rules_tables/pathfinder_unchained/feat_tables.rs:107:pub fn feat_tables()      -> &'static [FeatTableEntry]
+```
+
+PU was therefore invisible to the source scan — and, at the same moment, absent from the ingest
+diagnostic's four-book list. **The gate asserted nothing about the book in either direction while its
+17 feats and 42 equipmods were already reaching live catalog commands.** A gate that is silent about a
+book is indistinguishable from a gate that has cleared it. Closed by teaching `slice_element_type`
+the `pub fn name() -> &'static [Type]` shape *and* by adding the book to the diagnostic, so PU no
+longer rests on one source.
+
+**Blind spot 2 — hand-modelled tables emit no slice at all.** `decisions.md §24` directs formula
+content to be hand-written pure functions. A pure function is not a record slice, so it is invisible
+to the scan **by construction, permanently**. Within one book:
+
+| PU class-feature module | shape | seen by the source scan? |
+|---|---|---|
+| `barbarian_features.rs` | `pub fn features() -> &'static [UnchainedBarbarianFeature]` | yes |
+| `monk_features.rs` | `pub fn features() -> &'static [UnchainedMonkFeature]` | yes |
+| `rogue_features.rs` | pure functions; only `pub fn class_skills() -> &'static [&'static str]` | **no** |
+| `summoner_features.rs` | pure functions; `class_skills()`, `eidolon_subtypes()` | **no** |
+
+Half of `pathfinder_unchained/class_features` reaches the inventory *only* through
+`data/corpus/pathfinder_unchained/class_feature/`. **§24 and the source scan are in permanent
+tension: the more faithfully a book follows the hand-modelling ruling, the less of it the scanner can
+see.** The corpus directory is the load-bearing discovery source for §24-shaped content, and any
+future cycle that changes what gets written to `data/corpus/` must treat that as a change to the
+gate's coverage.
+
+**Consequence for the union:** discovery must stay plural. The rule is not "fix the scanner" — it is
+that no family may depend on a single source, and a family that appears in only one is a finding.
+
+### 29.4 — `SOURCEPAGE:p.xx` is a placeholder, and provenance must be checked per row
+
+**The rule.** PCGen writes `SOURCEPAGE:p.xx` where a page number is unknown. Transcribing it verbatim
+manufactures a citation. Every ingest binary therefore maps `p.xx` → `None` for `source_page`, while
+preserving the raw token in `raw_tokens`, so a populated `source_page` always means a real page and
+nothing is lost. Implemented in `src/bin/ingest_races.rs` (`PLACEHOLDER_SOURCE_PAGE`, line 78) and
+`src/bin/ingest_pu_classes.rs` (line 101), and pinned — `ingest_races.rs:1567`: *"the p.xx placeholder
+must never be stored as a citation."*
+
+**Why it needed a ruling rather than a fix.** §26 asserted that trait rows "carry real citations."
+§27.2 corrected it: across the 18 in-scope races' 175 standard trait rows, **143 carry `p.xx` and only
+32 carry a real page** — Dwarf `p.21` (12), Half-Orc (9), Aasimar (9), Duergar (2). Four races out of
+eighteen. Transcribing verbatim would have manufactured **143 false citations**.
+
+**The generalised rule, which is the part worth keeping:** *placeholder pages are pervasive across
+both chassis and trait rows; a page is trustworthy only when it is not `p.xx`, and that must be
+checked per row rather than assumed per content-kind.* §26's error was not arithmetic — it was
+inferring a general rule from Dwarf, the single exemplar that happened to be open. That failure mode
+recurred often enough this tranche (85 `correction` events in `docs/retro/events/`) that it is the
+tranche's most reproducible finding, and the countermeasure that worked was mechanical: **every brief
+instructed agents to derive counts by command rather than trust the brief, and the briefs were wrong
+repeatedly.**
