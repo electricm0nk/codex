@@ -111,6 +111,58 @@ When you catch an error, hit an incident, defer work, or redo something, emit a 
 - **Incident, deferral, rework:** use the corresponding type (`incident`, `deferral`, `rework`) — run `python3 scripts/retro.py help <type>` for required fields.
 - **Reference:** `docs/retro/schema.json` (the contract); `docs/governance/book-ingestion-playbook.md` (per-book cycle procedure).
 
+## Concurrency and Measurement
+
+Derived from the tranche/7 retrospective (`docs/retro/tranche-7-retrospective.md` §6.1). Every rule
+below is backed by recorded incidents, not by preference. Shared-tree collisions were the single
+largest incident class of that tranche — 10 of 34 — and nothing caught any of them prospectively.
+
+- **One writer per tree.** Two agents must never hold uncommitted work in the same working tree.
+  Before your first write, run `git status --porcelain`; **if it lists a file you did not modify, stop
+  and report** rather than proceeding. Concurrent agents get `git worktree add` *and* their own
+  `CARGO_TARGET_DIR`.
+- **Never `git stash` in a shared tree.** It is tree-wide and takes everyone's work. To read a HEAD
+  baseline, use `git show HEAD:<file>` into a temp path, or a separate worktree.
+- **`CARGO_TARGET_DIR` is one directory per agent *per source tree*, never per agent.** Sharing one
+  between a worktree and the working tree makes cargo serve the wrong tree's artifacts — it produces a
+  plausible wrong number rather than an error, and the one recorded instance was caught by luck.
+- **Delete your `CARGO_TARGET_DIR` when you finish, and check disk before a full sweep.** A full sweep
+  needs ~24 G. Never place one under `/tmp`. `ld terminated with signal 7 [Bus error]` and "couldn't
+  create a temp dir" are disk exhaustion wearing a compiler bug's clothes.
+- **A verification stage red for more than one run is a blocker, not a background condition.** Before
+  excusing a failure as environmental, attribute **every** `test result: FAILED` line back to its
+  `Running` line and name each suite. "The N known environmental failures" is a bucket, not an
+  attribution — one such bucket concealed two never-executed parity gates for 36 hours.
+- **Derive counts with `awk`, not `grep -o`.** Some harnesses shim `grep` to ugrep, whose `-o`
+  silently drops matches on large files while `-c` and `-n` stay correct. Any number that moves a
+  baseline needs two independent implementations agreeing.
+- **Verify at the widest build scope the repo has.** `cargo build --lib` green is not a completed
+  phase: `cargo test` builds bin targets, and one broken bin meant **0 of 502 suites ran** while the
+  phase reported COMPLETE.
+- **A magnitude is not wired until it moves on the twin the player reads** (`docs/release/SD-27-future-state-book-content-ingestion/decisions.md §29.1`).
+  Any surface that re-derives a rules number instead of rendering an engine `explanations` row is a
+  candidate twin (`§29.2`).
+
+### If you are dispatching work to other agents
+
+- **A number in a brief ships with the command that produced it, or it does not ship** — not the value,
+  the invocation. Dispatching briefs were the largest single source of corrected claims in tranche/7:
+  41 of 115, and only 6 were caught before implementation began.
+- **A ratio ships with its predicate.** "N of M carry X" is meaningless without the definition of X;
+  one property on one unchanged tree read 23 → 32 → 46 → 49 → 51 → 52 in a single session, every step
+  correctly verified.
+- **`FILES YOU OWN` must be closed under the change it mandates.** Ask of each named fix: what else
+  must change for this to reach a user? Command registration, DTO producers, second call sites.
+- **Carry every environment rule, or none.** A guard that exists but is not named in the dispatch is a
+  guard that does not exist.
+- **Partition on observed concurrency, not on a stated premise.** Verify with `git status` and
+  `git worktree list` before ruling that a tree has one writer.
+- **Challenge the category, not just the count.** When a correction makes a number more precise without
+  changing the frame, that is the moment to test the frame — two correct corrections once reinforced a
+  false category for 25 more hours.
+- **Re-read the brief against the repo before dispatching on it**, deriving each stated figure by the
+  command that would produce it. This was the single missing occasion in tranche/7's shape.
+
 ## Practical Default
 
 Be conservative, exact, and auditable.
