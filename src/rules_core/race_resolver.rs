@@ -38,7 +38,7 @@
 //! |---|---|---|
 //! | [`TraitRole::Default`] | `is_racial_default` (`TYPE:...<Race> Racial Default...`) | always, unless its `suppressed_by_flag` fired |
 //! | [`TraitRole::Alternate`] | `sets_replace_flags` non-empty | only when the caller selects it |
-//! | [`TraitRole::FlagGranted`] | a *positive* `PREFACT:1,ABILITIES,X=True` token | when `X` fired (and its own suppressor did not) |
+//! | [`TraitRole::FlagGranted`] | a *positive* `PREFACT:1,ABILITIES,X=True` token, **or** another trait's `ABILITY:<cat>\|AUTOMATIC\|<key>` naming it | when `X` fired, or when the naming trait applied (and its own suppressor did not) |
 //! | [`TraitRole::Unclassified`] | none of the above | **never** — surfaced via [`RaceCorpus::unclassified_traits`] |
 //!
 //! `FlagGranted` is not a category anyone invented either: ARG's
@@ -49,10 +49,25 @@
 //! CRB `Greed` and grants the seagoing one, in one motion, with no bespoke
 //! wiring.
 //!
+//! PCGen states the same "you get this because you took that" fact a second
+//! way, and this module reads both. Instead of a flag round-trip, the granting
+//! alternate can name the replacement outright on its own row:
+//!
+//! ```text
+//! Feral  KEY:Orc ~ Feral  ABILITY:Orc Racial Trait|AUTOMATIC|Feral ~ Languages
+//!        FACT:Orc_ReplaceLanguages|True
+//! ```
+//!
+//! `Feral ~ Languages` carries no `PREFACT` of its own, so nothing but that
+//! token connects the two. [`link_automatic_grants`] resolves it after load —
+//! it is a fact about a *pair* of records, which per-record classification
+//! cannot see. Exactly two ARG rows depend on this shape and would otherwise
+//! never reach a player, which is what it shipped as until 2026-07-31.
+//!
 //! `Unclassified` exists so that a row with no readable gate is *visible*
 //! rather than silently included (which would double a bonus) or silently
-//! dropped (which would lose content). Two real records land there today —
-//! see [`RaceCorpus::unclassified_traits`].
+//! dropped (which would lose content). No record lands there today — see
+//! [`RaceCorpus::unclassified_traits`].
 //!
 //! # Book attribution
 //!
@@ -89,7 +104,19 @@ pub enum TraitRole {
     /// An ARG alternate: applies only when the caller selects it, and fires
     /// the flags in `sets_replace_flags` when it does.
     Alternate,
-    /// Replacement content granted *by* a flag rather than chosen directly.
+    /// Replacement content granted *by another trait* rather than chosen
+    /// directly. Two corpus shapes land here, and they are the same fact
+    /// stated two ways:
+    ///
+    /// * a *positive* `PREFACT:1,ABILITIES,X=True` gate on the replacement
+    ///   row, where some alternate sets `X` (`Saltbeard ~ Dwarf ~ Greed`);
+    /// * a direct `ABILITY:<category>|AUTOMATIC|<key>` token on the granting
+    ///   alternate's own row, naming the replacement outright
+    ///   (`Orc ~ Feral` -> `Feral ~ Languages`). See
+    ///   [`RaceTraitRecord::granted_by_trait_key`].
+    ///
+    /// Both mean "you get this because you took that", both are resolved by
+    /// [`RaceCorpus::resolve`], and neither is ever offered as a menu choice.
     FlagGranted,
     /// No readable gate. Never auto-applied; see the module docs.
     Unclassified,
@@ -118,6 +145,15 @@ pub struct RaceTraitRecord {
     /// From a *positive* `PREFACT:1,ABILITIES,X=True` token: this trait is
     /// granted only when flag `X` has fired.
     pub requires_flag: Option<String>,
+    /// The key of the trait record whose `ABILITY:<category>|AUTOMATIC|<key>`
+    /// token names *this* record — PCGen's third grant shape. Set by
+    /// [`load_race_corpus`]'s post-load pass, which is where it can be known:
+    /// it is a fact about a *pair* of records and cannot be read off one.
+    ///
+    /// `None` for every record no other trait grants outright, including the
+    /// [`TraitRole::FlagGranted`] rows that arrive through the positive
+    /// `PREFACT` gate instead.
+    pub granted_by_trait_key: Option<String>,
     pub data: RaceTraitCacheData,
     pub source_path: String,
     pub source_line: u32,
@@ -127,6 +163,26 @@ pub struct RaceTraitRecord {
 impl RaceTraitRecord {
     fn key(&self) -> &str {
         &self.data.key
+    }
+
+    /// Every ability key this record grants outright through PCGen's
+    /// `ABILITY:<category>|AUTOMATIC|<key>[|<key>...]` token.
+    ///
+    /// Returned verbatim and **unfiltered** — most of these name things that
+    /// are not racial traits at all (`ABILITY:FEAT|AUTOMATIC|Endurance`,
+    /// `ABILITY:Class Skill|AUTOMATIC|Survival`,
+    /// `ABILITY:Spell-Like Ability|AUTOMATIC|Racial SLA ~ Invisibility`), and
+    /// deciding which of them resolve to a loaded race-trait record is the
+    /// caller's job, not this accessor's. Returning only the resolvable ones
+    /// would hide the rest, and "we found content we cannot place" is a fact
+    /// this module deliberately keeps visible.
+    pub fn automatic_trait_grants(&self) -> Vec<String> {
+        self.data
+            .raw_tokens
+            .iter()
+            .filter(|token| token.key == "ABILITY")
+            .flat_map(|token| automatic_grant_targets(&token.value))
+            .collect()
     }
 }
 
@@ -315,8 +371,45 @@ pub fn load_race_corpus(roots: &[BookCorpusRoot<'_>]) -> RaceCorpus {
     }
     for records in corpus.traits.values_mut() {
         records.sort_by(|a, b| a.data.key.cmp(&b.data.key));
+        link_automatic_grants(records);
     }
     corpus
+}
+
+/// Resolves PCGen's third grant shape within one race's record set: an
+/// `ABILITY:<category>|AUTOMATIC|<key>` token on one trait naming another.
+///
+/// Runs after load because it is a fact about a *pair* of records —
+/// [`classify`] sees one record at a time and cannot know that something else
+/// grants it. A record named this way, and gated no other way, would otherwise
+/// stay [`TraitRole::Unclassified`] and never apply: exactly the state
+/// `Feral ~ Languages` and `Scion of Humanity ~ Languages` shipped in.
+///
+/// Only grants that name a record loaded **for the same race** are linked. The
+/// overwhelming majority of `AUTOMATIC` grants in the corpus name feats, class
+/// skills, spell-like abilities or internal trackers, none of which live in
+/// `race_trait/`; those simply find no target and are left alone.
+///
+/// A record that already has a readable gate is not re-roled — `Dwarf ~
+/// Saltbeard` names `Saltbeard ~ Dwarf ~ Greed` *both* ways (direct grant and
+/// positive `PREFACT`), and the flag reading is the more specific one.
+fn link_automatic_grants(records: &mut [RaceTraitRecord]) {
+    let known: BTreeSet<String> = records.iter().map(|r| r.data.key.clone()).collect();
+    let mut granted_by: BTreeMap<String, String> = BTreeMap::new();
+    for record in records.iter() {
+        for target in record.automatic_trait_grants() {
+            if target != record.data.key && known.contains(&target) {
+                granted_by.entry(target).or_insert_with(|| record.data.key.clone());
+            }
+        }
+    }
+    for record in records.iter_mut() {
+        let Some(granter) = granted_by.get(&record.data.key) else { continue };
+        record.granted_by_trait_key = Some(granter.clone());
+        if record.role == TraitRole::Unclassified {
+            record.role = TraitRole::FlagGranted;
+        }
+    }
 }
 
 impl RaceCorpus {
@@ -363,6 +456,9 @@ impl RaceCorpus {
                 book_id: root.book_id.to_string(),
                 role,
                 requires_flag,
+                // Cross-record, so not knowable here; filled by
+                // `load_race_corpus`'s post-load pass.
+                granted_by_trait_key: None,
                 source_path,
                 source_line,
                 data: record.data,
@@ -513,6 +609,39 @@ impl RaceCorpus {
                 applied.push(record);
             }
         }
+
+        // 2b. The third grant shape. A record named by an *applied* trait's
+        //     `ABILITY:...|AUTOMATIC|<key>` token comes in with it.
+        //
+        //     Deliberately a single extra pass rather than a fixed point:
+        //     nothing in the corpus grants transitively (the two granted rows
+        //     carry no `ABILITY:` token of their own, which
+        //     `the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide`
+        //     re-derives), and a recursive resolver would be machinery built
+        //     for content that does not exist.
+        let granted_now: BTreeSet<String> =
+            applied.iter().flat_map(|record| record.automatic_trait_grants()).collect();
+        let already: BTreeSet<&str> = applied.iter().map(|record| record.key()).collect();
+        let newly_granted: Vec<&RaceTraitRecord> = records
+            .iter()
+            .filter(|record| {
+                record.role == TraitRole::FlagGranted
+                    && !already.contains(record.key())
+                    && granted_now.contains(record.key())
+                    // A granted row is still suppressible: a flag that fired
+                    // and names it wins over the grant.
+                    && !record
+                        .data
+                        .suppressed_by_flag
+                        .as_ref()
+                        .is_some_and(|flag| fired.contains_key(flag))
+            })
+            .copied()
+            .collect();
+        applied.extend(newly_granted);
+        // `records` arrives key-sorted, so this is a no-op for everything the
+        // first pass appended and only places the newly granted rows.
+        applied.sort_by(|a, b| a.key().cmp(b.key()));
 
         let inert_flags: Vec<String> = fired.keys().filter(|f| !used_flags.contains(*f)).cloned().collect();
 
@@ -675,11 +804,11 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
 /// all 153 records [`RaceCorpus::alternate_traits`] classifies as
 /// [`TraitRole::Alternate`] across the 18 in-scope races. The three records
-/// that are *not* standalone choices — `Feral ~ Languages` and
-/// `Scion of Humanity ~ Languages` (both [`TraitRole::Unclassified`]) and
-/// `Saltbeard ~ Dwarf ~ Greed` ([`TraitRole::FlagGranted`]) — are deliberately
-/// absent: a player never selects them, they are granted or dropped by the
-/// resolver, and putting them here would offer them as menu items.
+/// that are *not* standalone choices — `Feral ~ Languages`,
+/// `Scion of Humanity ~ Languages` and `Saltbeard ~ Dwarf ~ Greed`, all three
+/// [`TraitRole::FlagGranted`] — are deliberately absent: a player never selects
+/// them, they are granted by the alternate that names them, and putting them
+/// here would offer them as menu items.
 const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     // ---- Aasimar ----
     ("Aasimar ~ Celestial Crusader", &["Aasimar_ReplaceCelestialResistance", "Aasimar_ReplaceSkilled"]),
@@ -954,6 +1083,40 @@ fn lst_citation(source: &CorpusSource) -> (String, u32) {
 /// distinct `!PREFACT` key by the ingest tools and is deliberately not matched
 /// here; its payload already lives in
 /// [`RaceTraitCacheData::suppressed_by_flag`].
+/// `Orc Racial Trait|AUTOMATIC|Feral ~ Languages` -> `["Feral ~ Languages"]`;
+/// `Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Weapon Familiarity|Dwarf ~ Languages`
+/// -> both keys.
+///
+/// The token's first field is the ability CATEGORY and the second is the
+/// *nature* (`AUTOMATIC`, `VIRTUAL`, `NORMAL`); only `AUTOMATIC` grants
+/// unconditionally, so any other nature yields nothing. Everything after that
+/// is a `|`-separated key list terminated by PCGen's prerequisite qualifiers
+/// (`PRESTAT:`, `PREABILITY:`, `PRELEVEL:`, `PREVAREQ:` and their negations),
+/// which are dropped along with the rest of the list — a key list is a run,
+/// not a set, and a qualifier applies to what follows it.
+///
+/// `%LIST` is skipped: it is PCGen's "whatever the player chose" placeholder
+/// and names no concrete record.
+fn automatic_grant_targets(value: &str) -> Vec<String> {
+    let mut parts = value.split('|');
+    let _category = parts.next();
+    if !parts.next().is_some_and(|nature| nature.eq_ignore_ascii_case("AUTOMATIC")) {
+        return Vec::new();
+    }
+    let mut out = Vec::new();
+    for part in parts {
+        let part = part.trim();
+        if part.starts_with("PRE") || part.starts_with("!PRE") {
+            break;
+        }
+        if part.is_empty() || part == "%LIST" {
+            continue;
+        }
+        out.push(part.to_string());
+    }
+    out
+}
+
 fn positive_prefact_flag(raw_tokens: &[RawToken]) -> Option<String> {
     raw_tokens
         .iter()
@@ -1218,25 +1381,39 @@ mod tests {
         assert_eq!(dwarf.speed_source, SpeedSource::Trait("Dwarf ~ Speed".to_string()));
     }
 
-    /// The two records the corpus carries that have no readable gate. Pinned
-    /// by name so that "2 unplaceable rows" stays a reviewed number: if the
-    /// ingest ever produces a third, this fails and someone looks at it.
+    /// **This used to assert two.** `Feral ~ Languages` and
+    /// `Scion of Humanity ~ Languages` were the corpus's only ungated rows
+    /// until the `ABILITY:<category>|AUTOMATIC|<key>` grant shape was read
+    /// (see [`link_automatic_grants`]); both are now
+    /// [`TraitRole::FlagGranted`], granted by the alternate that names them.
+    ///
+    /// The test is kept, and kept asserting emptiness in both directions,
+    /// because its job never was the number 2: it is the residue check. A row
+    /// the ingest produces that no gate in this module can read must show up
+    /// here rather than be silently dropped.
     #[test]
-    fn exactly_two_corpus_traits_carry_no_readable_gate_and_are_never_auto_applied() {
+    fn no_corpus_trait_is_left_without_a_readable_gate() {
         let corpus = all_books();
         let unclassified: Vec<(&str, &str)> = corpus
             .unclassified_traits()
             .iter()
             .map(|t| (t.data.race_key.as_str(), t.data.key.as_str()))
             .collect();
-        assert_eq!(
-            unclassified,
-            vec![("Orc", "Feral ~ Languages"), ("Aasimar", "Scion of Humanity ~ Languages")]
-        );
-        // Neither appears in an unmodified resolution.
-        for (race, key) in &unclassified {
-            let resolved = corpus.resolve(race, &[]).expect("resolves");
-            assert!(!resolved.traits.iter().any(|t| &t.key == key), "{key} must not auto-apply");
+        assert_eq!(unclassified, Vec::<(&str, &str)>::new());
+
+        // And the two that used to live here still do not auto-apply: they
+        // arrive only through the alternate that grants them.
+        for (race, key, granter) in [
+            ("Orc", "Feral ~ Languages", "Orc ~ Feral"),
+            ("Aasimar", "Scion of Humanity ~ Languages", "Aasimar ~ Scion of Humanity"),
+        ] {
+            let plain = corpus.resolve(race, &[]).expect("resolves");
+            assert!(!plain.traits.iter().any(|t| t.key == key), "{key} must not auto-apply");
+            let chosen = corpus.resolve(race, &[granter]).expect("resolves");
+            assert!(
+                chosen.traits.iter().any(|t| t.key == key),
+                "{key} must arrive with {granter}"
+            );
         }
     }
 
@@ -1249,8 +1426,8 @@ mod tests {
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         assert_eq!(count(TraitRole::Default), 173);
         assert_eq!(count(TraitRole::Alternate), 153);
-        assert_eq!(count(TraitRole::FlagGranted), 3);
-        assert_eq!(count(TraitRole::Unclassified), 2);
+        assert_eq!(count(TraitRole::FlagGranted), 5);
+        assert_eq!(count(TraitRole::Unclassified), 0);
         assert_eq!(corpus.traits.values().flatten().count(), 331, "175 standard + 156 ARG alternates");
     }
 

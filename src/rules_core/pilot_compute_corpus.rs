@@ -35,7 +35,7 @@ use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
-    fighter_level_in_mix, touch_armor_class,
+    fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
@@ -368,6 +368,13 @@ pub struct CorpusAwareCombatBaseline {
     /// that is the whole resolved armor+shield delta, since the corpus-aware
     /// formula grounds no natural-armor term.
     pub touch_armor_class: i16,
+    /// SD-27, `decisions.md §28` flat-footed defect: PF1 flat-footed Armor
+    /// Class -- `armor_class` above with the Dexterity bonus and every
+    /// dodge-typed bonus removed. On this path the denied set is the
+    /// (MAXDEX-capped) Dexterity contribution plus the shared feat seam's own
+    /// dodge total; this formula grounds no class-derived dodge bonus and no
+    /// Dexterity-substituting ability, so there is nothing else to deny.
+    pub flat_footed_armor_class: i16,
     /// PF1 Combat Maneuver Bonus. See `pilot_compute::combat_maneuver_bonus`,
     /// which is the single owner of the formula both paths call.
     pub combat_maneuver_bonus: i16,
@@ -588,6 +595,34 @@ pub fn compute_combat_baseline_from_corpus(
         armor_class,
         effects.armor_class_delta + feat_contributions.excluded_from_touch_armor_class(),
     );
+    // SD-27, decisions.md §28 (flat-footed defect, 2026-07-31): flat-footed AC
+    // on the path the shipped sheet reads. It was the LAST of the four defense
+    // cells still computed in React (`CharacterSheet.tsx`'s
+    // `ac - Math.max(0, dexMod)`, live since `f5117103`), and it was the one
+    // that was also arithmetically wrong: it subtracted the Dexterity bonus and
+    // stopped, so a character holding Dodge read a flat-footed AC one point
+    // higher than PF1 allows.
+    //
+    // Applied HERE TOO, not only in `pilot_compute::compute_combat_baseline`,
+    // for the reason every other cell on this path states: this is the path
+    // `resolve_unified_pilot_snapshot` / `create_character` gate on, so it is
+    // the number a player's sheet reads, while
+    // `every_catalog_feat_moves_both_compute_paths_identically` pins the two
+    // paths equal.
+    //
+    // The denied set, per term of the `armor_class` sum above:
+    //   DENIED -- `dexterity_contribution` (bonus only; see
+    //     `pilot_compute::flat_footed_armor_class` on why a Dexterity penalty
+    //     is kept) and the shared seam's dodge-typed feat total, taken from its
+    //     own accessor rather than by re-listing its fields.
+    //   KEPT -- `effects.armor_class_delta` (the resolved armor + shield
+    //     bonus), `size_armor_class_modifier`, and the seam's natural-armor
+    //     half. None of the three is a dodge bonus or a Dexterity bonus.
+    let flat_footed = flat_footed_armor_class(
+        armor_class,
+        dexterity_contribution,
+        feat_contributions.denied_to_flat_footed_armor_class(),
+    );
     // Shared formulas, deliberately not re-derived: `pilot_compute` owns both,
     // so the two engine paths cannot drift into two different CMB/CMD rules the
     // way they nearly did on the nonproficiency penalty. `dexterity_modifier`
@@ -612,6 +647,7 @@ pub fn compute_combat_baseline_from_corpus(
         melee_attack_bonus,
         armor_class,
         touch_armor_class: touch,
+        flat_footed_armor_class: flat_footed,
         combat_maneuver_bonus: cmb,
         combat_maneuver_defense: cmd,
     })
@@ -1010,6 +1046,11 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
         // every race, Small and Medium alike, before this cycle:
         const MELEE_BEFORE_SIZE: i16 = 5; // BAB +1 + STR +3 + Weapon Focus +1
         const TOUCH_BEFORE_SIZE: i16 = 13; // 10 + DEX +2 + Dodge +1, armor removed
+        // SD-27 `decisions.md §28`, flat-footed defect: 10 + Chain Shirt +4,
+        // with the DEX +2 and Dodge's +1 both denied. React's old
+        // `ac - Math.max(0, dexMod)` produced 15 for these builds -- one point
+        // high, because it dropped the Dexterity bonus and kept the dodge one.
+        const FLAT_FOOTED_BEFORE_SIZE: i16 = 14;
         const CMB_BEFORE_SIZE: i16 = 4; // BAB +1 + STR +3
         const CMD_BEFORE_SIZE: i16 = 16; // 10 + BAB +1 + STR +3 + DEX +2
 
@@ -1038,6 +1079,12 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
                 "{race} is {size:?}: touch AC takes Table 8-1's size modifier"
             );
             assert_eq!(
+                combat.flat_footed_armor_class,
+                FLAT_FOOTED_BEFORE_SIZE + attack_column,
+                "{race} is {size:?}: flat-footed AC is the same Armor Class with the Dexterity \
+                 and dodge bonuses denied, so it keeps Table 8-1's size modifier"
+            );
+            assert_eq!(
                 combat.combat_maneuver_bonus,
                 CMB_BEFORE_SIZE + special_column,
                 "{race} is {size:?}: CMB takes the special size modifier, which runs opposite"
@@ -1059,6 +1106,17 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
                  real resolved +4, not an independently computed number"
             );
 
+            // The same closure applied to flat-footed AC. This posture carries
+            // DEX +2 and Dodge's +1, so exactly 3 points are denied -- stated
+            // against this path's own Armor Class so the two cannot contradict
+            // each other the way `AC 20 / flat-footed 17` did on screen.
+            assert_eq!(
+                combat.flat_footed_armor_class,
+                combat.armor_class - 3,
+                "{race}: flat-footed AC must be this path's own Armor Class minus the denied \
+                 Dexterity bonus (+2) and Dodge's dodge bonus (+1)"
+            );
+
             // And the two engine paths must agree, per race, on every cell.
             assert_eq!(
                 combat.melee_attack_bonus, headless.computation.baseline_melee_attack_bonus,
@@ -1066,6 +1124,10 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
             );
             for (id, corpus_value) in [
                 ("defense.touch_armor_class", combat.touch_armor_class),
+                (
+                    "defense.flat_footed_armor_class",
+                    combat.flat_footed_armor_class,
+                ),
                 ("combat.combat_maneuver_bonus", combat.combat_maneuver_bonus),
                 ("defense.combat_maneuver_defense", combat.combat_maneuver_defense),
             ] {
@@ -1340,12 +1402,17 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
                         .unwrap_or_else(|| panic!("feat {:?} must produce {id}", record.key))
                         .value
                 };
-                let cells: [(&str, i16, i16); 8] = [
+                let cells: [(&str, i16, i16); 9] = [
                     ("armor_class", combat.armor_class, hardcoded.baseline_armor_class),
                     (
                         "touch_armor_class",
                         combat.touch_armor_class,
                         explanation("defense.touch_armor_class"),
+                    ),
+                    (
+                        "flat_footed_armor_class",
+                        combat.flat_footed_armor_class,
+                        explanation("defense.flat_footed_armor_class"),
                     ),
                     (
                         "combat_maneuver_bonus",
@@ -1412,7 +1479,7 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
     /// the real delta rather than an opaque total.
     #[test]
     fn the_feats_the_seam_defect_hid_now_move_both_paths_by_their_real_magnitudes() {
-        /// Which of the eight shared cells a row pins.
+        /// Which of the nine shared cells a row pins.
         #[derive(Clone, Copy)]
         enum Cell {
             ArmorClass,

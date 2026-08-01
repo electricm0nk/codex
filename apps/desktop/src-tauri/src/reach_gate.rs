@@ -596,13 +596,31 @@ fn json_files_under(dir: &Path) -> Vec<PathBuf> {
 /// files themselves so it is never a remembered count and never the same data
 /// the serving path returns.
 fn corpus_record_keys(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
+    corpus_record_field(book_dir, kind_dir, "key")
+}
+
+/// The same denominator for the record families whose Shape B v1 `data` object
+/// carries its identity as `id` rather than `key`.
+///
+/// Bestiary 1's monster records are the one such family today: they were
+/// written by the SD-22 monster ingest, which predates the `key` convention and
+/// writes the canonical `beastiary1:monster:<slug>` identity as `data.id`. That
+/// is not a defect to paper over here — reading the wrong field would silently
+/// return an empty denominator and make the monsters' claim pass while checking
+/// nothing, which is why `corpus_record_field` is asserted non-empty at every
+/// call site below.
+fn corpus_record_ids(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
+    corpus_record_field(book_dir, kind_dir, "id")
+}
+
+fn corpus_record_field(book_dir: &str, kind_dir: &str, field: &str) -> BTreeSet<String> {
     let dir = repo_root().join("data/corpus").join(book_dir).join(kind_dir);
     json_files_under(&dir)
         .into_iter()
         .filter_map(|path| {
             let text = fs::read_to_string(&path).ok()?;
             let value: serde_json::Value = serde_json::from_str(&text).ok()?;
-            value.get("data")?.get("key")?.as_str().map(str::to_owned)
+            value.get("data")?.get(field)?.as_str().map(str::to_owned)
         })
         .collect()
 }
@@ -809,9 +827,37 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .collect(),
         )),
 
-        // `pathfinder_unchained/class_features` is deliberately absent: no
-        // claim can be executed for it today, and a claim nobody executes is
-        // the thing this gate exists to refuse. See its OPEN_FINDINGS entry.
+        // Monsters: `list_monster_catalog` serves every Bestiary 1 stat block
+        // with its challenge rating, size, creature type, land speed, source
+        // page and natural attacks, rendered by apps/desktop/src/monsterCatalog/
+        // MonsterCatalogScreen.tsx — reachable from the landing screen's
+        // "Browse Monster Catalog" link, alongside the other catalogs.
+        //
+        // This claim replaces the OPEN_FINDINGS entry that recorded the gap.
+        // The Pets tab still does not count and never did: its companion stat
+        // block is computed by `pilot_compute`'s own
+        // `ground_*_companion_stat_block`, not read from these tables.
+        ("beastiary1", "monsters") => Some(monsters_reach()),
+
+        // PU class features: each of the four Unchained classes emits one
+        // roster row per ingested `class_feature` record the character holds,
+        // carrying that record's own corpus `KEY:` token, and the character
+        // sheet's "Class Features & Special Abilities" section renders them
+        // (CharacterSheet.tsx via classFeaturesModel.ts).
+        //
+        // **This is the claim the OPEN_FINDINGS entry said could not be
+        // written.** Its blocker was identity, not a missing screen: the
+        // receipt rows were named semantically
+        // (`class_feature.pu.unchained_rogue.sneak_attack_dice`) while the
+        // corpus record is keyed `Unchained Rogue ~ Sneak Attack`, and joining
+        // the two here would have been a hand-written mapping this file
+        // forbids. `pilot_compute::pu_class_feature_citation` now puts the key
+        // on the receipt at the point of emission, and
+        // `pu_class_feature_cited_key` reads it back off the live response —
+        // so the join is the engine's own statement, executed, not this
+        // module's guess.
+        ("pathfinder_unchained", "class_features") => Some(pu_class_features_reach()),
+
         _ => None,
     }
 }
@@ -961,7 +1007,10 @@ fn races_reach(book_code: &str, ingested: BTreeSet<String>) -> Reach {
 ///    `Saltbeard ~ Dwarf ~ Greed` is never in the menu — it arrives only
 ///    because a chosen alternate fired its flag — so it is reachable only
 ///    through a *selection*, and the claim makes that selection rather than
-///    assuming the row is fine.
+///    assuming the row is fine. `flagGranted` covers both of the resolver's
+///    grant shapes: the positive `PREFACT` flag round-trip above, and an
+///    alternate naming its replacement directly with
+///    `ABILITY:<cat>|AUTOMATIC|<key>` (`Orc ~ Feral` -> `Feral ~ Languages`).
 ///
 /// (3) resolves each alternate **on its own**, once per alternate, rather than
 /// selecting the whole menu at once. Selecting everything looks like the
@@ -1023,6 +1072,130 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
 
     assess(
         "list_alternate_racial_traits + resolve_race_alternate_selection",
+        &ingested,
+        &with_payload,
+        &identity_only,
+    )
+}
+
+/// Bestiary 1's monster stat blocks, judged against the real
+/// `list_monster_catalog` response.
+///
+/// The denominator is read from `data/corpus/beastiary/monster/` rather than
+/// from `MonsterId::ALL`, so the two sides of the claim come from genuinely
+/// different places — the ingested record files on disk versus the IPC response
+/// the screen renders. (Those records carry their identity as `data.id`; see
+/// [`corpus_record_ids`].)
+fn monsters_reach() -> Reach {
+    let ingested = corpus_record_ids("beastiary", "monster");
+
+    let response = crate::monster_catalog::build_monster_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for entry in response.entries.iter().filter(|entry| entry.book == "B1") {
+        // The catalog row prints the monster's name, its size and creature
+        // type, its challenge rating, its land speed and source page, and its
+        // natural attacks. `key` is the `beastiary1:monster:<slug>` identity
+        // and the name is derived from it, so neither counts as payload: a row
+        // reaches the player when it carries something about the creature.
+        let has_payload = !entry.race_type.trim().is_empty()
+            || !entry.size.trim().is_empty()
+            || !entry.source_page.trim().is_empty()
+            || !entry.natural_attacks.is_empty();
+        if has_payload {
+            with_payload.insert(entry.key.clone());
+        } else {
+            identity_only.insert(entry.key.clone());
+        }
+    }
+
+    assess(
+        "list_monster_catalog",
+        &ingested,
+        &with_payload,
+        &identity_only,
+    )
+}
+
+/// Pathfinder Unchained's ingested `class_feature` records, judged per record
+/// against the real explanation channel the character sheet reads.
+///
+/// # Why this executes the *whole* IPC path rather than the compute function
+///
+/// The sheet renders `LoadSavedCharacterResponse.explanations`. The two lines
+/// below are verbatim what `character_hub::load_saved_character_at_root` runs to
+/// produce that field, so a change that dropped class-feature rows anywhere
+/// between the engine and the wire fails here. That distinction is not
+/// hypothetical in this file's history: the per-class deferral notice was
+/// pushed on the *diagnostic* channel for a whole cycle, and a diagnostic never
+/// reaches the frontend at all unless the build comes back `Blocked`.
+///
+/// # Why level 20
+///
+/// `MAX_SUPPORTED_LEVEL` is 20 for all four Unchained classes, so a level-20
+/// character holds every feature the class's progression ever grants. Probing
+/// lower would report features the character genuinely does not have yet as
+/// unreached, which is a fact about the character rather than about the wiring.
+fn pu_class_features_reach() -> Reach {
+    use codex::rules_core::character_input::{
+        load_character_input_fixture, CharacterClassLevel,
+    };
+    use codex::rules_core::pilot_compute::pu_class_feature_cited_key;
+    use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
+
+    let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+
+    let fixture_path = repo_root()
+        .join("tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
+    let Ok(fixture_text) = fs::read_to_string(&fixture_path) else {
+        return Reach::NotSurfaced {
+            why: format!(
+                "cannot read the shared deterministic character fixture at {}",
+                fixture_path.display()
+            ),
+            missing: BTreeSet::new(),
+        };
+    };
+    let Some(base_input) = load_character_input_fixture(&fixture_text).character_input else {
+        return Reach::NotSurfaced {
+            why: "the shared deterministic character fixture no longer loads".to_owned(),
+            missing: BTreeSet::new(),
+        };
+    };
+
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for class_id in PuClassId::ALL {
+        let mut input = base_input.clone();
+        input.case_id = Some(format!("reach_gate.pu_class_features.{}", class_id.name()));
+        input.chosen.class_levels = vec![CharacterClassLevel {
+            class_id: format!("class:{}", class_id.name()),
+            level: 20,
+        }];
+
+        // Exactly what `load_saved_character_at_root` does to build
+        // `LoadSavedCharacterResponse.explanations`.
+        let receipt = compute_pilot_with_corpus(&input, crate::corpus_fixtures::corpus_fixture_bundle());
+        let wire = crate::character_hub::map_explanations_dto(&receipt.base.explanations);
+
+        for row in &wire {
+            let Some(key) = pu_class_feature_cited_key(&row.detail) else {
+                continue;
+            };
+            // The sheet renders `detail` verbatim and nothing else. A row whose
+            // whole text is the citation would put a corpus key on screen and
+            // call it a class feature — the Feats-tab defect in a new place.
+            let without_citation = row.detail.replace(key, "");
+            if without_citation.trim().len() > 60 {
+                with_payload.insert(key.to_owned());
+            } else {
+                identity_only.insert(key.to_owned());
+            }
+        }
+    }
+
+    assess(
+        "load_saved_character -> explanations (class_feature.pu.*)",
         &ingested,
         &with_payload,
         &identity_only,
@@ -1130,13 +1303,27 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 
 /// Ingested families this gate cannot certify as reaching the player.
 ///
-/// Usually that means the family reaches nothing at all (Bestiary 1's
-/// monsters). It can also mean the records reach a surface but no automated
-/// check can prove *which* of them do — `pathfinder_unchained/class_features`
-/// is that case, and its entry says so in its first sentence. Both belong
-/// here because the gate's rule is all-or-nothing by design: it refuses
-/// partial credit, so anything short of a fully executed claim is a written
-/// finding. Read the entry, never the label alone.
+/// It can mean the family reaches nothing at all. It can also mean almost every
+/// record reaches a player and one does not — the single entry left here is
+/// that case, and it says so in its first sentence. Both belong here because
+/// the gate's rule is all-or-nothing by design: it refuses partial credit, so
+/// anything short of a fully executed claim is a written finding. Read the
+/// entry, never the label alone.
+///
+/// **Two entries were deleted on 2026-07-31, because both were fixed rather
+/// than reclassified**, and what each needed is worth recording since the next
+/// book will hit the same two shapes:
+///
+/// * `beastiary1/monsters` — 41 stat blocks reaching nothing at all. It needed
+///   a surface: `monster_catalog.rs` + `monsterCatalog/MonsterCatalogScreen.tsx`,
+///   the remedy the entry itself named.
+/// * `pathfinder_unchained/class_features` — 64 records that demonstrably
+///   influenced the sheet, where *which* of them could not be claimed. It
+///   needed an **identity**, not a screen: the receipt rows were named
+///   semantically while the corpus records are keyed
+///   `Unchained Rogue ~ Sneak Attack`. `pilot_compute` now emits one roster row
+///   per record carrying that key verbatim, so the join is the engine's own
+///   statement and the claim executes against it.
 ///
 /// **This list is pinned in both directions and is not a suppression list.**
 /// `unsurfaced_families_are_exactly_the_recorded_findings` computes the
@@ -1153,27 +1340,6 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
-        "advanced_race_guide",
-        "race_traits",
-        "Read the numbers before the label: 154 of ARG's 156 ingested race-trait records reach a \
-         player, and this gate refuses partial credit, so the family is a written finding rather \
-         than a pass. The 153 alternates are the checkable menu in AlternateTraitPicker.tsx and \
-         `Saltbeard ~ Dwarf ~ Greed` arrives through a real selection. TWO do not reach anything: \
-         `Scion of Humanity ~ Languages` and `Feral ~ Languages`. Both are replacement rows their \
-         parent alternate names with a direct `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` token \
-         on its own row — a THIRD grant shape, distinct from the positive `PREFACT` gate that \
-         brings in Saltbeard's Greed and from the negated `!PREFACT` that suppresses a standard \
-         row. `ingest_race_traits_arg.rs` does not record that grant and `race_resolver::classify` \
-         does not read it, so both rows land as `TraitRole::Unclassified` and are never applied: a \
-         player who takes `Aasimar ~ Scion of Humanity` or `Orc ~ Feral` loses the race's standard \
-         Languages row and gets no replacement text in its place. The Orc half has shipped this \
-         way since the ARG ingest; the Aasimar half started reaching it on 2026-07-31, when the \
-         globalvar gate landed and made Scion of Humanity selectable at all. Remedy: carry the \
-         alternate's `ABILITY:...|AUTOMATIC|<key>` grant into the ingested record, teach \
-         `race_resolver` to apply a row named by a selected alternate's grant list, then declare a \
-         real claim here and delete this entry — one edge, two rows.",
-    ),
-    (
         "beastiary1",
         "race_traits",
         "Read the numbers before the label: 107 of Bestiary 1's 108 ingested race-trait records \
@@ -1183,94 +1349,39 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          `Duergar_ReplaceSLAEnlargePerson`. Derived, not assumed: no record in `data/corpus/` sets \
          that flag, and `arg_abilities_race.lst` never mentions it (`grep -c \
          'Duergar_ReplaceSLAEnlargePerson|True'` -> 0). Its only setter anywhere in the PCGen \
-         checkout is `Duergar ~ Ironskinned` in `monster_codex/mc_abilities_race.lst` — a book \
-         this project has not registered, audited or ingested. So this is not a wiring gap and \
-         there is nothing to wire: the row is upstream-unreachable until Monster Codex is in \
-         scope. Remedy: it closes when Monster Codex is ingested, and until then the honest state \
-         is this entry. Do NOT close it by hiding the record — a record on disk that no selection \
-         can reach is exactly what this gate is for.",
-    ),
-    (
-        "beastiary1",
-        "monsters",
-        "Bestiary 1's 41 ingested monster stat blocks reach no surface. The only consumers are \
-         `corpus_ingest_diagnostic` (a count) and `cache_gen::beastiary1` (a build-time JSON \
-         generator); the React app contains no monster reference at all. The Pets tab does NOT \
-         count — its companion stat block is computed by `pilot_compute`'s own \
-         `ground_*_companion_stat_block`, not read from these tables. Remedy: a monster catalog \
-         command and browser, mirroring `spell_catalog.rs` + SpellCatalogScreen.tsx.",
-    ),
-    (
-        "pathfinder_unchained",
-        "class_features",
-        "Read the reach state precisely, because a one-line label overstates it: PU's 64 ingested \
-         class-feature records DO influence a real player surface — the character sheet's \"Class \
-         Features & Special Abilities\" section (CharacterSheet.tsx, via classFeaturesModel.ts) \
-         renders the engine's `class_feature.pu.*` receipt rows, and pf1_adapter's \
-         `every_unchained_class_reaches_computed_through_the_real_creation_path` proves each of \
-         the four classes grounds at least one of its own. What cannot be claimed is WHICH of the \
-         64 that covers, and the gate refuses partial credit. The blocker is an identity mismatch, \
-         not a missing screen: `pilot_compute` names its receipt rows semantically \
-         (`class_feature.pu.unchained_rogue.sneak_attack_dice`) while the corpus record is keyed \
-         `Unchained Rogue ~ Sneak Attack`, so nothing can join the two without a hand-written \
-         mapping — which would be exactly the unexecuted claim this file forbids. Each class does \
-         emit a non-claim-blocking `class_feature.pu.<class>.other_features_deferred.unsupported` \
-         row naming its own remainder, which the character sheet's \"Not computed\" lane renders. \
-         CORRECTION (2026-07-31): that last sentence used to read \"so the deferred set is visible \
-         to a player\", and it was false when written. The record was pushed on the DIAGNOSTIC \
-         channel only; the sheet reads `LoadSavedCharacterResponse.explanations`, and a \
-         non-claim-blocking diagnostic never reaches the frontend at all, because diagnostics \
-         travel only on a Blocked outcome. Driven on screen by the SD-27 verify agent: an \
-         Unchained Monk 10 Actions tab jumped straight from its grounded rows to UNIVERSAL LEVEL \
-         BENEFITS with no \"Not computed\" section. `pilot_compute::push_deferred_class_features` \
-         now emits the record on BOTH channels with one shared text, and \
-         `tests/sd27_pu_deferred_features_reach_the_character_sheet.rs` pins it per class, so the \
-         sentence above is now true and stays checkable. Remedy for the finding itself is \
-         unchanged: carry the corpus feature key on the receipt explanation (or a `feature_key` \
-         field beside `id`), then declare a real per-record claim here and delete this entry.",
+         checkout is `Duergar ~ Ironskinned` in `monster_codex/mc_abilities_race.lst:16` — a book \
+         this project has not registered, audited or ingested, Tier-1 but deferred by \
+         `decisions.md §9` and assigned to SD-29's Bestiary bundle by `epic-breakdown.md:150`. So \
+         this is not a wiring gap and there is nothing to wire: the row is upstream-unreachable \
+         until Monster Codex is in scope. RE-VERIFIED 2026-07-31 rather than inherited: the claim \
+         is now executable, not prose. `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` \
+         derives the empty setter set from the on-disk corpus, proves no Duergar selection (one \
+         at a time or all at once) reaches the row, and proves the MIRROR row does — \
+         `Duergar ~ Blood Enmity` sets `Duergar_ReplaceSLAInvisibility` and really does grant \
+         `Duergar ~ Spell-Like Ability ~ Enlarge Person` — which is what makes 'blocked' the right \
+         word instead of 'broken'. That test goes RED the day Monster Codex is ingested, which is \
+         how this entry closes. Do NOT close it by hiding the record — a record on disk that no \
+         selection can reach is exactly what this gate is for.",
     ),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
 ///
 /// Pinned by exact key, in both directions, for the same reason
-/// [`OPEN_FINDINGS`] is: a thirteenth bare record fails the gate, and fixing
-/// one of these fails it too until the key is deleted. A bare *count* would
-/// let one record silently swap for another.
-const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[(
-    "apg",
-    "spells",
-    // These are `.COPY=`-style archetype/variant delta rows in
-    // `apg_spells.lst`: they name a parent spell plus a qualifier and carry no
-    // `SCHOOL:`, `CLASSES:` or `DESC:` token of their own, so they arrive at
-    // `list_spell_catalog` with a key and three nulls and render as a row of
-    // empty columns. The other 285 APG spells render completely.
-    //
-    // Remedy: resolve `.COPY=` inheritance at ingest so a delta row carries
-    // its parent's school/level/text, or stop emitting delta rows into
-    // `SPELL_LIST` as standalone records. `spell_catalog.rs`'s own module doc
-    // already flags the underlying `.COPY=` handling as an open
-    // ingest-fidelity question; this is what it costs a player.
-    &[
-        "Beast Shape I (Animals Only)",
-        "Blindness/Deafness (Only Cause Blindness)",
-        "Meteor Swarm (Dealing Cold Damage)",
-        "Planar Ally (Agathions Only)",
-        "Planar Ally (Archon Only)",
-        "Planar Ally (Azata Only)",
-        "Planar Binding (Daemons Only)",
-        "Planar Binding (Demons Only)",
-        "Planar Binding (Devils Only)",
-        "Planar Binding (Inevitables Only)",
-        "Planar Binding (Proteans Only)",
-        // Not a variant row like the other eleven: `Wall of Thorms` is a
-        // misspelling of `Wall of Thorns` carried verbatim from the corpus.
-        // It lands here for the same reason — nothing resolves it, so it has
-        // no school, level or text — and it is worth its own look, since a
-        // key nothing can match is a different bug from an unresolved delta.
-        "Wall of Thorms",
-    ],
-)];
+/// [`OPEN_FINDINGS`] is: a bare record that is not listed fails the gate, and
+/// fixing a listed one fails it too until the key is deleted. A bare *count*
+/// would let one record silently swap for another.
+///
+/// **Empty as of 2026-07-31.** Its only entry was `apg`/`spells`, holding the
+/// twelve records that arrived at `list_spell_catalog` with a key and three
+/// nulls: eleven PCGen `.COPY=` delta rows whose base spell lives in CRB
+/// rather than APG, plus `Wall of Thorms` — an upstream misspelling of
+/// `Wall of Thorns.MOD` at `apg_spells.lst:1555`. `apg::spell_list` now
+/// resolves all of them against their base record (the typo'd key is
+/// preserved verbatim; only the content is filled), so the entry was deleted
+/// rather than relaxed. See
+/// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
+const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
 
 /// Ingested records that appear in **no** response at all, for a family whose
 /// other records do reach a player.
@@ -1282,32 +1393,27 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[(
 ///
 /// # Why a claim may be declared for a family that is also a written finding
 ///
-/// [`OPEN_FINDINGS`]' older entries (`beastiary1/monsters`,
-/// `pathfinder_unchained/class_features`) have no `reach_of` claim: nothing
-/// executable could be written for them, which is the whole reason they are
-/// findings. `advanced_race_guide/race_traits` is a different case. 154 of its
-/// 156 records demonstrably reach a live surface, and a claim that executes
-/// against that surface is exactly what stops the other 154 from silently
-/// falling off — which is the defect this whole module exists for, and which
-/// the gate could not have caught at all until this family became visible to
-/// it. Declaring no claim would trade a caught regression for a tidier table.
+/// A family whose records reach nothing at all has no `reach_of` claim to
+/// declare — there is no response to execute against, which is the whole reason
+/// it is a finding. `beastiary1/race_traits` is a different case. 107 of its 108
+/// records demonstrably reach a live surface, and a claim that executes
+/// against that surface is exactly what stops those 107 from silently falling
+/// off — which is the defect this whole module exists for. Declaring no claim
+/// would trade a caught regression for a tidier table.
 ///
 /// So the claim is declared, it returns [`Reach::NotSurfaced`], the family
 /// stays a written finding, and the exact shortfall is pinned here. The
 /// property that matters is preserved in both directions:
 ///
-/// * a 3rd ARG record that stops reaching changes this set and fails;
+/// * a 2nd B1 record that stops reaching changes this set and fails;
 /// * fixing one of these fails too, until its key is deleted.
+///
+/// `advanced_race_guide/race_traits` used to be listed here for exactly this
+/// reason, at 154 of 156. Its two stragglers — `Feral ~ Languages` and
+/// `Scion of Humanity ~ Languages` — now arrive through
+/// `race_resolver`'s reading of the `ABILITY:<cat>|AUTOMATIC|<key>` grant
+/// shape, so the family is a plain claim and both entries are gone.
 const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
-    (
-        "advanced_race_guide",
-        "race_traits",
-        // Replacement rows named by a direct `ABILITY:...|AUTOMATIC|<key>`
-        // grant on their parent alternate — a grant shape neither the ARG
-        // ingest nor `race_resolver::classify` reads. See the OPEN_FINDINGS
-        // entry for the remedy.
-        &["Feral ~ Languages", "Scion of Humanity ~ Languages"],
-    ),
     (
         "beastiary1",
         "race_traits",
@@ -1449,15 +1555,17 @@ mod tests {
 
         // And the family is genuinely asked about: a claim exists, it executes
         // against the real IPC builders, and it accounts for every record.
+        //
+        // This used to expect `Reach::NotSurfaced` with a pinned two-key
+        // shortfall — `Feral ~ Languages` and `Scion of Humanity ~ Languages`,
+        // the rows whose only gate is their parent alternate's
+        // `ABILITY:<cat>|AUTOMATIC|<key>` token. `race_resolver` reads that
+        // grant shape now, so all 156 reach and the expectation is `Surfaced`.
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(ingested.len(), 156, "ARG's 156 ingested race-trait records, counted on disk");
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::NotSurfaced { missing, .. } => assert_eq!(
-                missing,
-                recorded_unreached(&arg_traits),
-                "154 of the 156 reach a player; the shortfall is pinned by exact key"
-            ),
-            other => panic!("expected the pinned partial-reach verdict, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 156),
+            other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
 
@@ -1700,11 +1808,18 @@ mod tests {
     /// **The honesty rule, against the real live example.**
     ///
     /// `corpus_ingest_diagnostic` carries every book's record COUNT to the
-    /// player, including Bestiary 1's 49 monsters. If a count satisfied this
-    /// gate, every family would trivially pass and all six historical defects
-    /// would have gone undetected. It does not: the diagnostic is not a
-    /// consumer, and this pins that the monsters are still judged unreached
-    /// even though the app demonstrably tells the player how many there are.
+    /// player, Bestiary 1's monsters included. If a count satisfied this gate,
+    /// every family would trivially pass and all six historical defects would
+    /// have gone undetected.
+    ///
+    /// This test used to say so by pinning `beastiary1/monsters` as an
+    /// unreached finding *while* the diagnostic reported its count. Those 41
+    /// records now reach a real screen, so that phrasing is spent — and
+    /// rewriting it to pin some other family would only move the same argument
+    /// somewhere less load-bearing. The rule itself is what matters and is what
+    /// this now asserts directly: **no claim in this file may name the
+    /// diagnostic as its surface**, and the family that most recently escaped
+    /// the finding list did so by naming a command that returns records.
     #[test]
     fn a_count_does_not_satisfy_the_gate() {
         let monsters = Family::new("beastiary1", "monsters");
@@ -1719,16 +1834,97 @@ mod tests {
             "precondition: the app must actually be reporting a non-zero monster count"
         );
 
-        assert!(
-            reach_of(&monsters).is_none(),
-            "the ingest diagnostic must never be accepted as a reach claim — it renders a \
-             number, not the records"
+        // Not one claim, anywhere in the inventory, rests on the panel that
+        // renders those counts.
+        for family in full_inventory() {
+            let surface = match reach_of(&family) {
+                Some(Reach::Surfaced { surface, .. })
+                | Some(Reach::BareRecords { surface, .. }) => surface,
+                _ => continue,
+            };
+            assert!(
+                !surface.contains("corpus_ingest_diagnostic")
+                    && !surface.contains("ingest_diagnostic"),
+                "{}'s claim names the ingest diagnostic as its surface — that renders a number, \
+                 not the records, and would have passed on every one of the six historical \
+                 defects",
+                family.label()
+            );
+        }
+
+        // And the monsters specifically: they are reached because a command
+        // returns all 41 stat blocks, not because a panel counts them.
+        match reach_of(&monsters).expect("Bestiary 1's monsters have a declared claim") {
+            Reach::Surfaced { surface, records } => {
+                assert_eq!(surface, "list_monster_catalog");
+                assert_eq!(
+                    records as u64,
+                    u64::from(counted),
+                    "the claim must account for every record the diagnostic counts"
+                );
+            }
+            other => panic!("Bestiary 1's monsters reach the monster catalog, got {other:?}"),
+        }
+    }
+
+    /// The monster claim, per record.
+    ///
+    /// The denominator is the record files on disk; the numerator is the live
+    /// `list_monster_catalog` response. Neither is `MonsterId::ALL`, so a
+    /// roster and a corpus that drifted apart fail here rather than agreeing
+    /// with each other.
+    #[test]
+    fn bestiary_1_monsters_reach_the_monster_catalog_record_by_record() {
+        let ingested = corpus_record_ids("beastiary", "monster");
+        assert_eq!(
+            ingested.len(),
+            41,
+            "Bestiary 1's 41 ingested monster records, counted on disk"
+        );
+
+        let served: BTreeSet<String> = crate::monster_catalog::build_monster_catalog()
+            .entries
+            .into_iter()
+            .map(|entry| entry.key)
+            .collect();
+        assert_eq!(
+            served, ingested,
+            "every record on disk must be served, and nothing may be served that is not on disk"
+        );
+
+        match reach_of(&Family::new("beastiary1", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 41),
+            other => panic!("expected all 41 to reach, got {other:?}"),
+        }
+    }
+
+    /// The class-feature claim, per record — the thing the deleted
+    /// `pathfinder_unchained/class_features` finding said could not be written.
+    ///
+    /// The premise is checked rather than assumed: the corpus keys and the
+    /// receipt ids really are different vocabularies, so this passing means the
+    /// engine is carrying the key across, not that the two happened to match.
+    #[test]
+    fn pathfinder_unchaineds_class_features_are_claimed_per_corpus_record() {
+        let family = Family::new("pathfinder_unchained", "class_features");
+        let ingested = corpus_record_keys("pathfinder_unchained", "class_feature");
+        assert_eq!(
+            ingested.len(),
+            64,
+            "PU's 64 ingested class_feature records, counted on disk"
         );
         assert!(
-            recorded_findings().contains(&monsters),
-            "{counted} monsters are counted at the player and rendered nowhere; that is a gap, \
-             not reach"
+            ingested.contains("Unchained Rogue ~ Sneak Attack"),
+            "the finding's own worked example must still be one of the records"
         );
+
+        match reach_of(&family).expect("PU class features have a declared claim") {
+            Reach::Surfaced { surface, records } => {
+                assert_eq!(surface, "load_saved_character -> explanations (class_feature.pu.*)");
+                assert_eq!(records, 64);
+            }
+            other => panic!("expected all 64 to reach, got {other:?}"),
+        }
     }
 
     /// **The payload rule, proven against a failing case.**

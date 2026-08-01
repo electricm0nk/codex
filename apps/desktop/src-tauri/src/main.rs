@@ -13,6 +13,7 @@ mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;
 mod ge08_workbench;
+mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
 mod race_trait_picker;
@@ -52,6 +53,7 @@ use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
+use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
@@ -186,6 +188,9 @@ fn main() {
             list_equipment_catalog,
             list_spell_catalog,
             list_feat_catalog,
+            // SD-27: Bestiary 1's 41 ingested monster stat blocks, which
+            // reached no surface at all until this catalog landed.
+            list_monster_catalog,
             list_equipment,
             list_spells,
             list_feats,

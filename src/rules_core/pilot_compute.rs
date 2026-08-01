@@ -7030,6 +7030,46 @@ pub(crate) fn touch_armor_class(armor_class: i16, excluded: i16) -> i16 {
     armor_class - excluded
 }
 
+/// PF1 flat-footed Armor Class: the character's **own** Armor Class total with
+/// the contributors a flat-footed creature is denied removed.
+///
+/// Same subtract-from-the-real-total shape as [`touch_armor_class`], and for
+/// the same reason. Until SD-27 (`decisions.md §28`) this statistic did not
+/// exist in this engine at all — it was a THIRD compute twin living in
+/// `apps/desktop/src/characterHub/CharacterSheet.tsx` as
+/// `ac - Math.max(0, dexMod)` (introduced by `f5117103`, 2026-07-11). That
+/// formula is missing half the rule, so a Tiefling who took Dodge read
+/// `AC 20 / flat-footed 17` on screen where PF1's answer is 16.
+///
+/// # The two quantities, each named rather than inferred
+///
+/// * `dexterity_contribution_to_armor_class` — the caller's whole
+///   Dexterity-derived contribution, **after** any armor `MAXDEX` cap, and
+///   including any ability that substitutes another score *for* Dexterity
+///   (Oracle Nature's Whispers). Only a positive contribution is removed: a
+///   Dexterity *penalty* is not a bonus, and PF1 denies the bonus, so a
+///   clumsy character keeps their penalty while flat-footed. That `max(0)` is
+///   the one piece of the old React line that was already right, and it is
+///   kept here so both compute twins share one copy of it.
+/// * `dodge_typed_bonuses` — every dodge-typed term the caller summed into
+///   `armor_class`. PF1, *Bonus Types*: "A dodge bonus improves Armor Class
+///   resulting from physical skill at avoiding blows. Any situation that
+///   denies you your Dexterity bonus to Armor Class also denies you dodge
+///   bonuses." Each call site knows which of its own terms are dodge-typed;
+///   this function deliberately does not try to re-derive that from a total it
+///   cannot see inside.
+///
+/// Every other modifier type stays: armor, shield, natural armor, deflection,
+/// the size modifier, sacred/profane bonuses, and every penalty (a penalty is
+/// never dropped by being caught unprepared).
+pub(crate) fn flat_footed_armor_class(
+    armor_class: i16,
+    dexterity_contribution_to_armor_class: i16,
+    dodge_typed_bonuses: i16,
+) -> i16 {
+    armor_class - dexterity_contribution_to_armor_class.max(0) - dodge_typed_bonuses
+}
+
 /// SD-27 `decisions.md §28` defect 1: the three formulas above, pinned against
 /// the published PF1 arithmetic on their own, independent of any fixture.
 ///
@@ -7117,6 +7157,42 @@ mod combat_maneuver_and_touch_formula_tests {
         assert_eq!(touch_armor_class(17, 4), 13);
         assert_eq!(touch_armor_class(10, 0), 10);
         assert_eq!(touch_armor_class(8, 0), 8);
+    }
+
+    /// The measured screen defect (SD-27 `decisions.md §28`): a Tiefling read
+    /// `AC 19 / flat-footed 16`, took Dodge, and read `AC 20 / flat-footed 17`.
+    /// PF1 forbids the second number moving at all.
+    #[test]
+    fn a_dodge_bonus_raises_armor_class_and_leaves_flat_footed_ac_where_it_was() {
+        // Before Dodge: AC 19, Dexterity contribution +3, no dodge-typed term.
+        assert_eq!(flat_footed_armor_class(19, 3, 0), 16);
+        // After Dodge: AC 20, same Dexterity contribution, +1 dodge-typed.
+        assert_eq!(flat_footed_armor_class(20, 3, 1), 16);
+        // What the shipped sheet displayed instead, reproduced so the
+        // regression is stated as an equation rather than as prose: it dropped
+        // the dodge term entirely.
+        assert_eq!(20 - 3, 17);
+    }
+
+    /// A Dexterity *penalty* is not a Dexterity *bonus*. PF1 denies the bonus,
+    /// so a flat-footed character with DEX 8 keeps their -1 rather than having
+    /// it forgiven — the `max(0)` branch, pinned in both directions.
+    #[test]
+    fn a_dexterity_penalty_is_kept_while_a_dexterity_bonus_is_denied() {
+        assert_eq!(flat_footed_armor_class(13, -1, 0), 13);
+        assert_eq!(flat_footed_armor_class(13, 0, 0), 13);
+        assert_eq!(flat_footed_armor_class(13, 1, 0), 12);
+    }
+
+    /// Dodge-typed bonuses stack with each other in PF1 (the one bonus type
+    /// that does), so the caller passes a sum and every point of it is denied.
+    /// Like touch AC, the result is not clamped: penalties can legitimately
+    /// carry it below 10.
+    #[test]
+    fn every_point_of_dodge_typed_bonus_is_denied_and_the_result_is_not_clamped() {
+        assert_eq!(flat_footed_armor_class(22, 4, 3), 15);
+        assert_eq!(flat_footed_armor_class(10, 0, 0), 10);
+        assert_eq!(flat_footed_armor_class(9, 2, 1), 6);
     }
 }
 
@@ -24087,6 +24163,11 @@ fn compute_pu_class_chassis(
         ),
     });
 
+    // The corpus-record roster, emitted before the magnitude groundings so a
+    // reader of the sheet meets the class's own feature list first and the
+    // derived numbers second. See `push_pu_class_feature_records`.
+    push_pu_class_feature_records(class_id, level, explanations, diagnostics);
+
     match class_id {
         PuClassId::UnchainedBarbarian => {
             ground_unchained_barbarian_class_features(level, ability_modifiers, explanations, diagnostics);
@@ -24117,6 +24198,231 @@ fn compute_pu_class_chassis(
     debug_assert_eq!(input.chosen.class_levels.len(), 1);
 
     Some((base_attack_bonus, base_saves))
+}
+
+// ---------------------------------------------------------------------------
+// Pathfinder Unchained class-feature records, carried by corpus key
+// ---------------------------------------------------------------------------
+
+/// The citation this engine appends to every Pathfinder Unchained
+/// class-feature receipt row, naming the ingested corpus record the row is
+/// about.
+///
+/// # Why this exists
+///
+/// `reach_gate.rs` recorded the gap verbatim: PU's 64 ingested `class_feature`
+/// records demonstrably influence the character sheet, but *which* of them
+/// could not be claimed, "because `pilot_compute` names its receipt rows
+/// semantically (`class_feature.pu.unchained_rogue.sneak_attack_dice`) while
+/// the corpus record is keyed `Unchained Rogue ~ Sneak Attack`, so nothing can
+/// join the two without a hand-written mapping". A mapping written in the gate
+/// would be an unexecuted claim — the thing that file exists to refuse. So the
+/// key travels **on the receipt**, authored where the row is emitted, and the
+/// gate reads it back off the live response.
+///
+/// Deliberately a function rather than a format string at each call site: the
+/// same wording is what [`pu_class_feature_cited_key`] parses, and a citation
+/// only one of the two knows how to spell would silently stop being findable.
+pub fn pu_class_feature_citation(key: &str, corpus_line: u32) -> String {
+    format!(" Corpus record `{key}` (pu_abilities_class.lst:{corpus_line}).")
+}
+
+/// Reads the corpus `KEY:` token back out of a receipt row's `detail`, or
+/// `None` when the row carries no citation.
+///
+/// The backtick delimiters are load-bearing rather than decorative: without
+/// them `Unchained Barbarian ~ Rage` is a prefix of
+/// `Unchained Barbarian ~ Rage Powers`, and a substring match would report the
+/// wrong record as reached.
+pub fn pu_class_feature_cited_key(detail: &str) -> Option<&str> {
+    let rest = detail.split_once("Corpus record `")?.1;
+    rest.split_once("` (pu_abilities_class.lst:")
+        .map(|(key, _)| key)
+}
+
+/// One ingested Pathfinder Unchained `class_feature` record, normalised across
+/// the four per-class table shapes.
+///
+/// The four tables are genuinely different shapes — Barbarian and Monk expose a
+/// `pub struct` roster, Rogue and Summoner a `pub enum` with accessor methods,
+/// and `min_level` is `Option<u8>` on two of them and `u8` on the other two.
+/// Normalising here rather than reshaping four corpus-pinned tables keeps this
+/// change inside the seam it belongs in.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct PuClassFeatureRecord {
+    /// The corpus `KEY:` token, verbatim.
+    key: &'static str,
+    /// The corpus row's display name (its first column).
+    name: &'static str,
+    /// The class level a progression row first grants this record at. `None`
+    /// means the row states no `PREVARGTEQ:` level gate — for a granted record
+    /// that means "from level 1", and for an ungranted one there is no level to
+    /// state.
+    min_level: Option<u8>,
+    /// Whether any progression row grants this record at all. Five of the 64
+    /// are declared and never granted; that is a real corpus fact, not an
+    /// ingest gap.
+    is_granted: bool,
+    /// 1-based line in `pu_abilities_class.lst`.
+    corpus_line: u32,
+}
+
+/// Every ingested `class_feature` record for one Unchained class, read live off
+/// that class's own corpus-pinned table.
+fn pu_class_feature_records(class_id: PuClassId) -> Vec<PuClassFeatureRecord> {
+    match class_id {
+        PuClassId::UnchainedBarbarian => barbarian_features::features()
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key,
+                name: feature.name,
+                min_level: feature.min_level,
+                is_granted: feature.is_granted,
+                corpus_line: feature.corpus_line,
+            })
+            .collect(),
+        // Every one of the Monk's 18 records is granted by the single
+        // `Monk ~ Unchained Class.MOD` progression block, so the table carries
+        // no `is_granted` flag to read — there is no ungranted case to model.
+        PuClassId::UnchainedMonk => monk_features::features()
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key,
+                name: feature.name,
+                min_level: Some(feature.min_level),
+                is_granted: true,
+                corpus_line: feature.corpus_line,
+            })
+            .collect(),
+        PuClassId::UnchainedRogue => rogue_features::UnchainedRogueFeature::ALL
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key(),
+                name: feature.name(),
+                min_level: feature.min_level(),
+                // The Rogue table states the same fact as the Barbarian's
+                // `is_granted` flag through `min_level`: `None` there is
+                // documented as "no progression row grants either one".
+                is_granted: feature.min_level().is_some(),
+                corpus_line: feature.declaring_line(),
+            })
+            .collect(),
+        PuClassId::UnchainedSummoner => summoner_features::UnchainedSummonerFeature::ALL
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key(),
+                name: feature.name(),
+                min_level: Some(feature.min_level()),
+                is_granted: true,
+                corpus_line: feature.declaring_line(),
+            })
+            .collect(),
+    }
+}
+
+/// The receipt-id segment for one record: its corpus key with the
+/// `<Class> ~ ` prefix dropped and the rest slugged.
+///
+/// Dropping the prefix is what keeps the id readable — the id already names the
+/// class two segments earlier, and `classFeaturesModel.ts` humanises the
+/// remaining segments into the row's on-screen label. Uniqueness within a class
+/// is not assumed: `pu_class_feature_receipt_ids_are_unique_within_each_class`
+/// asserts it over all four live rosters.
+fn pu_feature_slug(key: &str) -> String {
+    let tail = key.rsplit(" ~ ").next().unwrap_or(key);
+    let mut slug = String::with_capacity(tail.len());
+    let mut last_was_separator = false;
+    for character in tail.chars() {
+        if character.is_ascii_alphanumeric() {
+            slug.extend(character.to_lowercase());
+            last_was_separator = false;
+        } else if !last_was_separator && !slug.is_empty() {
+            slug.push('_');
+            last_was_separator = true;
+        }
+    }
+    slug.trim_end_matches('_').to_owned()
+}
+
+/// Emits one receipt row per ingested Pathfinder Unchained `class_feature`
+/// record this character actually holds, each carrying the record's own corpus
+/// key.
+///
+/// # What a player gets that they did not have before
+///
+/// The magnitude groundings below this function each explain one *number* —
+/// Rage's rounds per day, the Rogue's sneak-attack dice. Several of them derive
+/// from a single corpus record (four rows come out of
+/// `Unchained Barbarian ~ Rage` alone), and many corpus records state no number
+/// at all and so produced no row whatsoever. The sheet's Class Features section
+/// was therefore a list of derived magnitudes rather than a list of the
+/// character's class features: an Unchained Monk 20 saw nothing named
+/// "Timeless Body" or "Tongue of the Sun and Moon" anywhere.
+///
+/// These rows are that roster, one per record, with the grant level the corpus
+/// states and a citation of the record itself.
+///
+/// # Which rows are emitted, and which deliberately are not
+///
+/// * **Granted, and this character has reached its level** — a roster row.
+/// * **Granted, but above this character's level** — no row. A level-1 Rogue
+///   does not have Master Strike, and listing a feature the character has not
+///   got would be the same overstatement the rest of this file avoids.
+/// * **Never granted by any progression row** (5 of the 64) — an
+///   `.unsupported` row, which `classFeaturesModel.ts` routes to the sheet's
+///   "Not computed" lane. These are declared machinery records whose effect the
+///   book reaches through a sibling record the class *does* grant (the Uncanny
+///   Dodge Tracker drives both Uncanny Dodge rows;
+///   `Unchained Barbarian ~ Rage`'s own
+///   `ABILITY:Special Ability|AUTOMATIC|Unchained Rage` reaches
+///   `Unchained Rage`). Saying that on the sheet is honest; silently dropping
+///   them would leave five ingested records reaching nothing.
+fn push_pu_class_feature_records(
+    class_id: PuClassId,
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let class_name = class_id.name();
+    let display_name = class_id.display_name();
+
+    for record in pu_class_feature_records(class_id) {
+        let citation = pu_class_feature_citation(record.key, record.corpus_line);
+        let slug = pu_feature_slug(record.key);
+
+        if !record.is_granted {
+            push_deferred_class_features(
+                &format!("class_feature.pu.{class_name}.corpus_record.{slug}.unsupported"),
+                format!(
+                    "{display_name}: `{}` is declared by Pathfinder Unchained but no progression \
+                     row grants it a level of its own, so nothing is computed for the record \
+                     directly. The book reaches its effect through a sibling record this class \
+                     does grant, whose own rows carry the magnitude.{citation}",
+                    record.name
+                ),
+                explanations,
+                diagnostics,
+            );
+            continue;
+        }
+
+        // `None` on a granted record means the progression row states no level
+        // gate, which PCGen applies from the class's first level.
+        let granted_at = record.min_level.unwrap_or(1);
+        if level < granted_at {
+            continue;
+        }
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.pu.{class_name}.corpus_record.{slug}"),
+            value: i16::from(granted_at),
+            detail: format!(
+                "{display_name} level {level}: `{}` is a class feature of this character, granted \
+                 from class level {granted_at}.{citation}",
+                record.name
+            ),
+        });
+    }
 }
 
 /// Grounds the Unchained Barbarian's named features
@@ -41099,6 +41405,22 @@ impl FeatDerivedPillarContributions {
         self.natural_armor_bonus
     }
 
+    /// The part of [`Self::armor_class_bonus`] a **flat-footed** character is
+    /// denied — the exact complement of [`Self::excluded_from_touch_armor_class`]
+    /// on the two fields this struct carries today, and deliberately written as
+    /// its own accessor rather than as "whatever touch keeps".
+    ///
+    /// PF1, *Bonus Types*: "Any situation that denies you your Dexterity bonus
+    /// to Armor Class also denies you dodge bonuses." Natural armor is not
+    /// denied (it is part of the creature's hide, not its reflexes), so a feat
+    /// added to [`Self::natural_armor_bonus`] must move flat-footed AC exactly
+    /// as much as it moves Armor Class, and one added to
+    /// [`Self::dodge_armor_class_bonus`] must move it not at all. Reading this
+    /// accessor from both twins is what makes that true on both at once.
+    pub fn denied_to_flat_footed_armor_class(self) -> i16 {
+        self.dodge_armor_class_bonus
+    }
+
     /// Everything feats add to the Climb total.
     pub fn climb_skill_bonus(self) -> i16 {
         self.skill_bonuses.climb + self.arg_climb_bonus
@@ -42877,6 +43199,79 @@ fn compute_combat_baseline(
              shield is absent (-0). The Dexterity contribution (+{dexterity_contribution}), the \
              {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) and every \
              dodge/sacred/ability bonus and penalty are all retained = {touch_armor_class_total}"
+        ),
+    });
+
+    // SD-27, decisions.md §28 (flat-footed defect, 2026-07-31): flat-footed
+    // Armor Class, which -- exactly like touch AC one cycle earlier -- did not
+    // exist in this engine at all. It was a THIRD compute twin, living in
+    // `apps/desktop/src/characterHub/CharacterSheet.tsx` as
+    // `ac - Math.max(0, dexMod)` since `f5117103` (2026-07-11): half of PF1's
+    // rule, in a view, with no engine record to contradict it.
+    //
+    // Which of this function's terms a flat-footed creature loses, stated per
+    // term by walking the `armor_class` sum above rather than inferred:
+    //   DENIED -- the Dexterity contribution (the Dexterity BONUS only; see
+    //     `flat_footed_armor_class` on why a Dexterity penalty is kept), the
+    //     Oracle Nature's Whispers Charisma-for-Dexterity substitution (it
+    //     stands in FOR the Dexterity bonus, so it is denied with it), and
+    //     Dodge's dodge bonus.
+    //   KEPT -- the Chain Shirt's armor bonus, the size modifier, all three
+    //     natural-armor terms (Alchemist Mutagen, Sorcerer Draconic Dragon
+    //     Resistances, ARG Armor of the Pit), Inquisitor Protection judgment's
+    //     sacred/profane bonus, every Rage / Inspired Rage / Bloodrage /
+    //     Challenge PENALTY (a penalty is never forgiven by being caught
+    //     unprepared), and Brawler's AC Bonus.
+    //
+    // Brawler's AC Bonus is the one term whose reason has to be written down.
+    // It IS a dodge bonus (`ground_brawler_ac_bonus_and_defer_the_rest` says so
+    // from the corpus formula), but its own rule text carves itself out of the
+    // general dodge rule: "These bonuses to AC apply even against touch attacks
+    // or when the [character] is flat-footed." The ACG Brawler record in this
+    // repo is `completeness: chassis_only` and carries no DESC, but that exact
+    // sentence is in-corpus verbatim for the identical mechanic at
+    // `data/corpus/pathfinder_unchained/class_feature/monk_unchained_class/`
+    // `unchained_monk_ac_bonus.json` -- and this engine ALREADY implements its
+    // first clause, by leaving `brawler_ac_bonus_value` out of
+    // `excluded_from_touch` above. Denying it here would obey one half of one
+    // sentence and not the other.
+    //
+    // The six other dodge-typed magnitudes this file grounds -- Dwarf
+    // Defensive Training, Slayer/Investigator Trap Sense, Swashbuckler Nimble,
+    // Dodging Panache and Dizzying Defense, and Bard Inspire Heroics -- are
+    // deliberately NOT subtracted, because none of them is ADDED. Each is an
+    // explanation-only recognition record and none appears in the `armor_class`
+    // sum above; verified by grepping each symbol's every reference rather than
+    // by reading the file. Subtracting a term that was never summed is how a
+    // thorough-looking fix produces a flat-footed AC below what PF1 allows.
+    let dexterity_bonus_denied_when_flat_footed = dexterity_contribution + natures_whispers_ac_bonus;
+    // Read through the shared feat seam's own accessor, not from the local
+    // `dodge_armor_class_bonus`: a future feat-derived dodge bonus must leave
+    // flat-footed AC on both twins at once, and re-listing is how one twin
+    // drifts -- the same reason `excluded_from_touch` reads its accessor.
+    let dodge_typed_armor_class_bonuses = feat_contributions.denied_to_flat_footed_armor_class();
+    let flat_footed_armor_class_total = flat_footed_armor_class(
+        armor_class,
+        dexterity_bonus_denied_when_flat_footed,
+        dodge_typed_armor_class_bonuses,
+    );
+    explanations.push(ComputationExplanation {
+        id: "defense.flat_footed_armor_class".to_owned(),
+        value: flat_footed_armor_class_total,
+        detail: format!(
+            "Flat-footed armor class: the armor class above ({armor_class}) with the \
+             contributors a flat-footed character is denied removed -- the Dexterity \
+             contribution (-{dexterity_contribution}, bonus only; a Dexterity penalty is kept) \
+             including the Oracle Nature's Whispers Charisma-for-Dexterity substitution \
+             (-{natures_whispers_ac_bonus}, which stands in for that bonus), and every \
+             dodge-typed bonus (-{dodge_typed_armor_class_bonuses}: Dodge's \
+             {DODGE_AC_BONUS:+}, per PF1 \"any situation that denies you your Dexterity bonus \
+             to Armor Class also denies you dodge bonuses\"). The Chain Shirt armor bonus \
+             (+{CHAIN_SHIRT_ARMOR_BONUS}), the {size_label} size modifier \
+             ({size_armor_class_modifier:+}), every natural armor and sacred/profane bonus, \
+             every penalty, and Brawler's AC Bonus (+{brawler_ac_bonus_value}, whose own rule \
+             text applies it even when flat-footed) are all retained = \
+             {flat_footed_armor_class_total}"
         ),
     });
 

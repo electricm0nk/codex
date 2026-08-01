@@ -180,11 +180,26 @@ fn every_unchained_class_grounds_its_pinned_number_of_real_class_features() {
         .map(|(class_token, _)| {
             let receipt = receipt_for(class_token);
             let prefix = format!("class_feature.pu.{class_token}.");
+            // The corpus-record roster rows are excluded, and the exclusion is
+            // what keeps this pin meaning what it says. It counts **grounded
+            // magnitudes** — rows whose `value` is a number this engine
+            // derived. `class_feature.pu.<class>.corpus_record.*` rows are the
+            // separate per-record roster
+            // `pilot_compute::push_pu_class_feature_records` added on
+            // 2026-07-31 (so PU's 64 ingested `class_feature` records could be
+            // claimed by key rather than in aggregate); their value is the
+            // corpus grant level, not a derivation. Folding them in here would
+            // silently redefine the number this pin protects and would have
+            // moved it from 10/10/9/6 to 17/17/15/13 without any grounding
+            // branch changing. Their own counts are pinned by
+            // `tests/sd27_pu_class_features_reach_by_corpus_key.rs`.
+            let roster_prefix = format!("class_feature.pu.{class_token}.corpus_record.");
             let grounded: Vec<String> = receipt
                 .computation
                 .explanations
                 .iter()
                 .filter(|explanation| explanation.id.starts_with(&prefix))
+                .filter(|explanation| !explanation.id.starts_with(&roster_prefix))
                 .filter(|explanation| !explanation.id.ends_with(".unsupported"))
                 .map(|explanation| explanation.id.clone())
                 .collect();

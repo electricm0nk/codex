@@ -254,9 +254,16 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
 /// 7 from a `d20pfsrd.com`/`legacy.aonprd.com` web second-source pass
 /// (see `rules_tables::apg::spell_list`'s module doc comment for the
 /// full per-record sourcing and the rejected edition-cousin false match).
-/// The remaining 13/297 gap is the documented cross-book `.COPY=`
-/// variant scope boundary plus the corpus-typo `Wall of Thorms` -- not a
-/// "just look harder" gap.
+/// The remaining 13/297 gap WAS the documented cross-book `.COPY=`
+/// variant scope boundary plus the corpus-typo `Wall of Thorms`. **That
+/// boundary is resolved (SD-27, 2026-07-31)**: every `.COPY=` variant
+/// whose base spell lives in CRB's `cr_spells.lst` now inherits that
+/// base's school, level and description, so coverage is 297/297
+/// descriptions and 296/297 full text. The one holdout is
+/// `Threefold Aspect`, whose text is a same-book `PRESPELL` fallback
+/// rather than sourced SRD prose. Twelve of the thirteen were reaching
+/// `list_spell_catalog` as a key and three nulls; see
+/// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
 #[test]
 fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
     let apg_report = apg::spell_list::spell_coverage_report();
@@ -269,16 +276,17 @@ fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
         "APG spell list record coverage should be 100% (fully ingested as of criterion 6.2)"
     );
     assert_eq!(
-        apg_report.has_description, 285,
-        "285/297 records have a sourced description (raised from 281 by SD-25 criterion \
-         7.N's apg-spell-text pass)"
+        apg_report.has_description, 297,
+        "297/297 records have a sourced description (was 285 until SD-27's cross-book \
+         `.COPY=` resolution; 281 before SD-25 criterion 7.N's apg-spell-text pass)"
     );
     assert_eq!(
-        apg_report.full_text_verified, 284,
-        "284/297 records carry full SRD/PRD text (raised from 261 by SD-25 criterion 7.N's \
-         apg-spell-text pass -- if this now regresses, that pass's ingest-bug fixes and web \
-         second-source sourcing were lost; if it exceeds 284 without a matching receipt \
-         update, verify the new value is genuinely sourced, not fabricated)"
+        apg_report.full_text_verified, 296,
+        "296/297 records carry full SRD/PRD text (284 until SD-27's cross-book `.COPY=` \
+         resolution; 261 before SD-25 criterion 7.N's apg-spell-text pass -- if this now \
+         regresses, that pass's ingest-bug fixes and web second-source sourcing were lost; \
+         if it exceeds 296 without a matching receipt update, verify the new value is \
+         genuinely sourced, not fabricated)"
     );
 }
 

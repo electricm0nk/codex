@@ -171,19 +171,16 @@ fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
     // `Languages` row and names its replacement with a direct
     // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` token on its own row —
     // a *third* grant shape, distinct from the positive `PREFACT` gate that
-    // brings in `Saltbeard ~ Dwarf ~ Greed`. `race_resolver` reads the positive
-    // `PREFACT` shape and not this one, so both replacement rows classify
-    // `TraitRole::Unclassified` and never arrive.
+    // brings in `Saltbeard ~ Dwarf ~ Greed`.
     //
-    // **That gap is pre-existing, is already pinned** (see
-    // `sd27_alternate_racial_trait_reachability.rs`'s
-    // `the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_153`),
-    // **and is not what this cycle closed.** It is stated here because closing
-    // the Aasimar gate is what made Scion of Humanity reach it: before, the
-    // trait could not be taken at all. Remedy: teach the ARG ingest to record
-    // the alternate's `ABILITY:...|AUTOMATIC|<key>` grant and `race_resolver`
-    // to apply it — one edge, two rows, both races, in a cycle that owns
-    // `race_resolver.rs`.
+    // **When this file was written, `race_resolver` read the positive `PREFACT`
+    // shape and not this one, so both replacement rows classified
+    // `TraitRole::Unclassified` and never arrived. That gap is now closed** —
+    // `race_resolver::link_automatic_grants` resolves the grant and
+    // `tests/sd27_ability_automatic_granted_race_traits.rs` pins both rows in
+    // both directions. The loop below is unchanged and still passes, because
+    // what it asserts is the *symmetry* of the two races, not the state of the
+    // replacement row.
     for (race, alternate, standard, replacement) in [
         ("Aasimar", "Aasimar ~ Scion of Humanity", "Aasimar ~ Languages", "Scion of Humanity ~ Languages"),
         ("Orc", "Orc ~ Feral", "Orc ~ Languages", "Feral ~ Languages"),
@@ -193,10 +190,12 @@ fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
         assert!(resolved.inert_flags.is_empty(), "{alternate} fires no inert flag: {:?}", resolved.inert_flags);
         assert!(keys.contains(alternate), "{alternate} itself applies");
         assert!(!keys.contains(standard), "{alternate} replaces {standard}");
+        // Was `assert!(!keys.contains(replacement), ...)` with a note to flip
+        // it once the direct-`ABILITY` grant edge was implemented. It is
+        // implemented; this is the flip.
         assert!(
-            !keys.contains(replacement),
-            "{replacement} now arrives — the direct-ABILITY grant edge was implemented; delete this \
-             assertion and assert the replacement instead"
+            keys.contains(replacement),
+            "{alternate} suppresses {standard}, so {replacement} must arrive in its place"
         );
     }
 }

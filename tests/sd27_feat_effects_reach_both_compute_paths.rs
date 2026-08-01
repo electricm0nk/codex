@@ -46,7 +46,7 @@
 //! Its behavioural counterpart lives beside the code it guards, in
 //! `pilot_compute_corpus.rs`:
 //! `every_catalog_feat_moves_both_compute_paths_identically` sweeps the live
-//! 690-record feat catalog (CRB + APG + ACG + ARG + PU) and pins all eight
+//! 690-record feat catalog (CRB + APG + ACG + ARG + PU) and pins all nine
 //! shared cells equal across the two paths, feat by feat. The two guards are
 //! deliberately different in kind: the behavioural one catches a divergence in
 //! any feat that exists today, the structural one catches the *shape* that

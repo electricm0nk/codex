@@ -194,9 +194,12 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_all_153_alternat
 /// the corpus rather than by accepting the claim.
 ///
 /// * `Feral ~ Languages` (Orc) and `Scion of Humanity ~ Languages` (Aasimar)
-///   are [`TraitRole::Unclassified`]: no racial-default type token, no
-///   replace-flag, no positive `PREFACT`. They are never auto-applied and are
-///   not selectable.
+///   are granted by the `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` token on
+///   `Orc ~ Feral` / `Aasimar ~ Scion of Humanity`. **They used to be
+///   `TraitRole::Unclassified` and reach nothing**; since that grant shape is
+///   read they are `TraitRole::FlagGranted` and arrive with their granter.
+///   Either way they are never auto-applied and never selectable, which is
+///   what this test asserts and why its number did not move.
 /// * `Saltbeard ~ Dwarf ~ Greed` is [`TraitRole::FlagGranted`]: it carries a
 ///   *positive* `PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True`, so choosing
 ///   `Dwarf ~ Saltbeard` brings it in. A player never picks it directly.
@@ -225,13 +228,20 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_1
     // ...and the flag-granted one still arrives, un-selected, with its parent.
     let saltbeard = corpus.resolve("Dwarf", &["Dwarf ~ Saltbeard"]).expect("Dwarf resolves");
     assert!(saltbeard.traits.iter().any(|t| t.key == "Saltbeard ~ Dwarf ~ Greed"));
-    // The two unclassified ones never arrive at all.
-    for (race, key) in [("Orc", "Feral ~ Languages"), ("Aasimar", "Scion of Humanity ~ Languages")] {
-        let keys: Vec<String> =
-            corpus.alternate_traits(race).iter().map(|record| record.data.key.clone()).collect();
-        let refs: Vec<&str> = keys.iter().map(String::as_str).collect();
-        let resolved = corpus.resolve(race, &refs).expect("resolves");
-        assert!(!resolved.traits.iter().any(|t| t.key == key), "{key} must never auto-apply");
+    // ...and so do the two granted by an `ABILITY:<cat>|AUTOMATIC|<key>`
+    // token. **This used to assert they "never auto-apply" even with every
+    // alternate selected, and that was the defect, not the guarantee**: the
+    // guarantee is that they are never *menu items* (asserted above), which
+    // is unchanged. Selecting their granter must bring them in, and not
+    // selecting it must not.
+    for (race, granter, key) in [
+        ("Orc", "Orc ~ Feral", "Feral ~ Languages"),
+        ("Aasimar", "Aasimar ~ Scion of Humanity", "Scion of Humanity ~ Languages"),
+    ] {
+        let plain = corpus.resolve(race, &[]).expect("resolves");
+        assert!(!plain.traits.iter().any(|t| t.key == key), "{key} must not auto-apply unchosen");
+        let chosen = corpus.resolve(race, &[granter]).expect("resolves");
+        assert!(chosen.traits.iter().any(|t| t.key == key), "{granter} must grant {key}");
     }
 }
 

@@ -25,25 +25,27 @@
 //!
 //! **Optional fields are absences, never placeholders.** CRB's and ACG's
 //! tables carry a school, level and description on every record. APG's
-//! table types those three as `Option`, and as ingested, 16 of its records
-//! carry no school, 41 no level and 12 no description. Those arrive here
-//! as `null` rather than an invented value, and the UI must render the
-//! absence rather than a plausible-looking default.
+//! table types those three as `Option`, and as ingested, 3 of its records
+//! carry no school, 25 no level and none lack a description. Those arrive
+//! here as `null` rather than an invented value, and the UI must render
+//! the absence rather than a plausible-looking default.
 //!
-//! Those three counts are properties of `apg::spell_list` as ingested, and
-//! are asserted below as such — they are deliberately NOT presented as
-//! counts of gaps in `apg_spells.lst` itself, because they do not match
-//! it. Re-derived from the raw file, the APG rows genuinely lacking a
-//! `SCHOOL:` token number ~4-6 (plain records) or 21 (counting the 17
-//! `.COPY=` delta records, which carry no fields of their own and inherit
-//! from their base); neither is 16. The same mismatch holds for the level
-//! and description counts. So the ingest is doing something in between —
-//! partially resolving `.COPY=` inheritance, and/or folding `.MOD` rows
-//! into the tally — and until that is traced, the honest statement is what
-//! this adapter can actually verify: how many records it serves without
-//! each field. Tracking as an open ingest-fidelity question; it does not
-//! affect this adapter's correctness, which is to pass absences through
-//! rather than invent values.
+//! **Those counts were 16 / 41 / 12 until 2026-07-31**, and this doc used
+//! to record the difference between them and the raw file as an untraced
+//! "open ingest-fidelity question". It is traced, and the answer was
+//! `.COPY=`: fifteen delta rows in `apg_spells.lst` name a base spell that
+//! lives in CRB's `cr_spells.lst`, and the APG ingest deliberately stopped
+//! at the book boundary rather than reaching across for the base's fields.
+//! Twelve of them therefore reached this adapter as a key and three nulls
+//! and rendered as a row of empty columns. `apg::spell_list` now resolves
+//! every one against its CRB base, pinned record-by-record against the
+//! live CRB table by
+//! `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
+//!
+//! The remainder are real corpus absences, not unresolved deltas: mostly
+//! Summoner eidolon-only spells that PF1 grants automatically and so never
+//! places on a leveled spell list. The counts below are still properties
+//! of `apg::spell_list` as ingested and are asserted as such.
 
 use serde::{Deserialize, Serialize};
 
@@ -309,14 +311,22 @@ mod tests {
     #[test]
     fn apg_records_missing_a_field_are_served_with_that_field_null() {
         // Transcribed from `apg::spell_list` as ingested — a pin on what
-        // this adapter serves, NOT a claim about how many rows
-        // `apg_spells.lst` omits each field on (see this module's doc
-        // comment: the raw-file figures differ and the gap is untraced).
+        // this adapter serves. Was 16 / 41 / 12 before the `.COPY=`
+        // cross-book resolution landed (see this module's doc comment).
         // If the ingest changes, re-derive these; do not relax them.
         let apg = book_entries(BOOK_APG);
-        assert_eq!(apg.iter().filter(|e| e.school.is_none()).count(), 16);
-        assert_eq!(apg.iter().filter(|e| e.level.is_none()).count(), 41);
-        assert_eq!(apg.iter().filter(|e| e.description.is_none()).count(), 12);
+        assert_eq!(apg.iter().filter(|e| e.school.is_none()).count(), 3);
+        assert_eq!(apg.iter().filter(|e| e.level.is_none()).count(), 25);
+        assert_eq!(apg.iter().filter(|e| e.description.is_none()).count(), 0);
+        // The defect this closed, asserted as the property rather than as
+        // three numbers: no APG record reaches the catalog carrying nothing
+        // but its key.
+        assert_eq!(
+            apg.iter()
+                .filter(|e| e.school.is_none() && e.level.is_none() && e.description.is_none())
+                .count(),
+            0
+        );
     }
 
     #[test]

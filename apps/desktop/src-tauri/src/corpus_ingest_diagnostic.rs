@@ -66,14 +66,17 @@
 //! ARG's 153 *alternate* traits reaches the player through
 //! `list_alternate_racial_traits`.
 //!
-//! **Open finding, found while widening this file and not repaired here:** of
-//! those 156 records, 3 reach no player surface at all —
-//! `Feral ~ Languages` and `Scion of Humanity ~ Languages`
-//! (`TraitRole::Unclassified`: no gate the resolver can read) and
-//! `Saltbeard ~ Dwarf ~ Greed` (`TraitRole::FlagGranted`). All three are
-//! dropped by `race_trait_picker::build_menu`, which filters to
-//! `Default | Alternate`. Repairing that belongs to the picker, not to this
-//! diagnostic.
+//! **That open finding is closed.** It read: of those 156 records, 3 reach no
+//! player surface at all — `Feral ~ Languages` and
+//! `Scion of Humanity ~ Languages` (`TraitRole::Unclassified`: no gate the
+//! resolver can read) and `Saltbeard ~ Dwarf ~ Greed`
+//! (`TraitRole::FlagGranted`), all three dropped by
+//! `race_trait_picker::build_menu`, which filters to `Default | Alternate`.
+//! All three are now `TraitRole::FlagGranted` and reach the player through
+//! `resolve_race_alternate_selection`'s applied rows, which
+//! AlternateTraitPicker.tsx renders — the menu is still `Default | Alternate`,
+//! and it was never the only surface. See `reach_gate::race_traits_reach` and
+//! `tests/sd27_ability_automatic_granted_race_traits.rs`.
 //!
 //! **Sketch-only boundary (per `cycles/5_1.md`):** exactly four fields —
 //! `book_id`, `status`, `last_ingested_at`, `content_kind_counts`. SD-26

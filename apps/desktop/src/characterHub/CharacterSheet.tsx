@@ -110,11 +110,12 @@ function fmt(value: number): string {
  * fabricated number — the convention `deriveRaceTraits` already established for
  * an unknown race's size and vision.
  *
- * SD-27 `decisions.md §28` defect 1: touch AC, CMB and CMD used to be computed
- * *here*, in the view, so there was no such thing as "the engine did not
- * compute it" — this file always produced a number, and for every Small
- * character it produced the wrong one. They are engine values now, so their
- * absence is a real state and must read as absent.
+ * SD-27 `decisions.md §28`: touch AC, flat-footed AC, CMB and CMD used to be
+ * computed *here*, in the view, so there was no such thing as "the engine did
+ * not compute it" — this file always produced a number, and for every Small
+ * character (touch/CMB/CMD) or every character holding a dodge bonus
+ * (flat-footed) it produced the wrong one. They are engine values now, so
+ * their absence is a real state and must read as absent.
  */
 function fmtOrAbsent(value: number | null, signed: boolean): string {
   if (value === null) {
@@ -368,18 +369,21 @@ function AbilitiesPanel(props: { abilities: AbilityScoresDto }) {
 }
 
 /**
- * `touch` is the engine's `defense.touch_armor_class`, not a value derived
- * here. This panel used to compute it as `10 + dexMod`, which is why it could
- * display `AC 19` beside `TOUCH 14` with a 4-point armor bonus — two numbers
- * that cannot both be true. See SD-27 `decisions.md §28`.
+ * `touch` is the engine's `defense.touch_armor_class` and `flatFooted` is its
+ * `defense.flat_footed_armor_class` — neither is derived here. This panel used
+ * to compute both: touch as `10 + dexMod`, which is why it could display
+ * `AC 19` beside `TOUCH 14` with a 4-point armor bonus, and flat-footed as
+ * `ac - Math.max(0, dexMod)`, which ignored PF1's rule that a flat-footed
+ * character loses dodge bonuses along with the Dexterity bonus. See SD-27
+ * `decisions.md §28`.
  */
-function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number }) {
+function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number | null }) {
   return (
     <StatBox title="Armor Class">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="AC" value={props.ac} emphasize />
         <StatTile label="Touch" value={fmtOrAbsent(props.touch, false)} />
-        <StatTile label="Flat-Footed" value={props.flatFooted} />
+        <StatTile label="Flat-Footed" value={fmtOrAbsent(props.flatFooted, false)} />
       </div>
     </StatBox>
   );
@@ -2670,7 +2674,19 @@ export function CharacterSheet(props: {
   // it. It used to be `10 + dexMod` right here — size-blind, and free to
   // contradict `ac` on the same panel.
   const touch = engineValue(engineRecords.explanations, 'defense.touch_armor_class');
-  const flatFooted = ac - Math.max(0, dexMod);
+  // SD-27 `decisions.md §28`, flat-footed defect: this was the last defense
+  // cell still computed here, and the one that was also *wrong*. It read
+  // `ac - Math.max(0, dexMod)` — the Dexterity half of PF1's rule and nothing
+  // else — so every character holding a dodge-typed bonus displayed a
+  // flat-footed AC too high by that bonus. Measured on screen: a Tiefling took
+  // Dodge and went AC 19 → 20, touch 13 → 14 (both correct) and flat-footed
+  // 16 → 17, which PF1 forbids: "any situation that denies you your Dexterity
+  // bonus to Armor Class also denies you dodge bonuses."
+  //
+  // It is `defense.flat_footed_armor_class` now — derived by both compute
+  // paths from the very Armor Class shown beside it, with the real inventory
+  // of dodge-typed terms subtracted. See `pilot_compute::flat_footed_armor_class`.
+  const flatFooted = engineValue(engineRecords.explanations, 'defense.flat_footed_armor_class');
 
   const heldClasses = parseHeldClasses(props.row.classSummary);
   const classLabel = formatHeldClasses(props.row.classSummary); // e.g. "Fighter 3 / Wizard 1"

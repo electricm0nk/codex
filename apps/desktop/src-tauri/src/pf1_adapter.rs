@@ -1188,20 +1188,30 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     }
 }
 
-/// The three explanation ids `resolve_unified_pilot_snapshot` re-points at the
+/// The four explanation ids `resolve_unified_pilot_snapshot` re-points at the
 /// corpus-aware combat baseline, paired with the value to substitute.
 ///
 /// They are ids, not a struct field, because that is the channel that actually
 /// reaches the sheet: `PilotSnapshot` (owned by `rules_core::pilot_view_model`)
-/// has no touch/CMB/CMD field, while `LoadSavedCharacterResponse.explanations`
-/// already carries every `ComputationExplanation` the engine emits and
-/// `CharacterSheet.tsx` already reads it.
+/// has no touch/flat-footed/CMB/CMD field, while
+/// `LoadSavedCharacterResponse.explanations` already carries every
+/// `ComputationExplanation` the engine emits and `CharacterSheet.tsx` already
+/// reads it.
+///
+/// SD-27 `decisions.md §28` (flat-footed defect, 2026-07-31) added the fourth,
+/// `defense.flat_footed_armor_class`. Adding it here is not optional plumbing:
+/// the engine could compute a flawless flat-footed AC and the sheet would still
+/// render React's own wrong one unless the record travels on this channel.
 fn upsert_corpus_aware_combat_explanations(
     corpus_receipt: &mut CorpusPilotReceipt,
     combat: &CorpusAwareCombatBaseline,
 ) {
-    let substitutions: [(&str, i16); 3] = [
+    let substitutions: [(&str, i16); 4] = [
         ("defense.touch_armor_class", combat.touch_armor_class),
+        (
+            "defense.flat_footed_armor_class",
+            combat.flat_footed_armor_class,
+        ),
         ("combat.combat_maneuver_bonus", combat.combat_maneuver_bonus),
         (
             "defense.combat_maneuver_defense",
@@ -1771,12 +1781,24 @@ mod tests {
         }
     }
 
-    /// The five cells, read the way the desktop sheet reads them: Armor Class
-    /// and the melee attack bonus off the `PilotSnapshot`, and touch AC / CMB /
-    /// CMD off the explanation records that travel to the UI on
-    /// `LoadSavedCharacterResponse.explanations`.
-    fn measured_cells(request: &CreateCharacterRequest) -> (i16, i16, i16, i16, i16) {
-        let input = compose_character_input(request);
+    /// The six cells, read the way the desktop sheet reads them: Armor Class
+    /// and the melee attack bonus off the `PilotSnapshot`, and touch AC /
+    /// flat-footed AC / CMB / CMD off the explanation records that travel to
+    /// the UI on `LoadSavedCharacterResponse.explanations`.
+    ///
+    /// `extra_feats` are pushed onto the composed input's `selected_feats`
+    /// exactly as a feat-picker grant would land there. `create_character`
+    /// seeds no dodge-typed feat (the creation-seed honesty fix removed the
+    /// Dodge it used to claim), so a dodge bonus can only be observed here by
+    /// adding one — and the flat-footed defect is invisible without one.
+    fn measured_cells_with_feats(
+        request: &CreateCharacterRequest,
+        extra_feats: &[&str],
+    ) -> (i16, i16, i16, i16, i16, i16) {
+        let mut input = compose_character_input(request);
+        for feat in extra_feats {
+            input.chosen.selected_feats.push((*feat).to_owned());
+        }
         let (snapshot, corpus_receipt) =
             resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle())
                 .unwrap_or_else(|diagnostics| {
@@ -1796,10 +1818,17 @@ mod tests {
         (
             snapshot.defense.baseline_armor_class,
             explanation("defense.touch_armor_class"),
+            explanation("defense.flat_footed_armor_class"),
             explanation("combat.combat_maneuver_bonus"),
             explanation("defense.combat_maneuver_defense"),
             snapshot.combat.baseline_melee_attack_bonus,
         )
+    }
+
+    /// The no-extra-feats case, which is what `create_character` actually
+    /// produces.
+    fn measured_cells(request: &CreateCharacterRequest) -> (i16, i16, i16, i16, i16, i16) {
+        measured_cells_with_feats(request, &[])
     }
 
     /// The defect, closed end to end. Measured on screen for a Goblin Fighter 1
@@ -1821,11 +1850,16 @@ mod tests {
     /// green and the shipped sheet unchanged.
     #[test]
     fn the_measured_small_goblin_fighter_reaches_the_sheet_with_pf1s_own_numbers() {
-        let (armor_class, touch, cmb, cmd, melee) =
+        let (armor_class, touch, flat_footed, cmb, cmd, melee) =
             measured_cells(&measured_screen_build("goblin-size-cells", "race:goblin"));
 
         assert_eq!(armor_class, 19, "AC was already correct and must not regress");
         assert_eq!(touch, 15, "touch AC: 19 - the Chain Shirt's 4, not an independent 10 + DEX");
+        assert_eq!(
+            flat_footed, 15,
+            "flat-footed AC: 19 - the denied DEX +4. This build holds no dodge-typed bonus, so \
+             the engine must reproduce the view's old `ac - Math.max(0, dexMod)` exactly"
+        );
         assert_eq!(cmb, 2, "CMB: BAB +1 + STR +2 + special size -1");
         assert_eq!(cmd, 16, "CMD: 10 + BAB +1 + STR +2 + DEX +4 + special size -1");
         assert_eq!(melee, 5, "melee: BAB +1 + STR +2 + Weapon Focus +1 + size +1");
@@ -1838,14 +1872,58 @@ mod tests {
     /// change Strength and stop size from being the only variable.
     #[test]
     fn the_same_build_at_medium_size_is_byte_identical_to_the_pre_fix_values() {
-        let (armor_class, touch, cmb, cmd, melee) =
+        let (armor_class, touch, flat_footed, cmb, cmd, melee) =
             measured_cells(&measured_screen_build("hobgoblin-size-cells", "race:hobgoblin"));
 
         assert_eq!(armor_class, 18);
         assert_eq!(touch, 14);
+        assert_eq!(flat_footed, 14);
         assert_eq!(cmb, 3);
         assert_eq!(cmd, 17);
         assert_eq!(melee, 4);
+    }
+
+    /// SD-27 `decisions.md §28`, the flat-footed defect, closed end to end on
+    /// the channel the sheet actually reads.
+    ///
+    /// The defect was measured on screen on a Tiefling whose sheet went
+    /// `AC 19 → 20`, `TOUCH 13 → 14` (both correct) and
+    /// `FLAT-FOOTED 16 → 17` (PF1's answer is 16) when Dodge was added. That
+    /// character's ability spread is not this fixture's, so the numbers pinned
+    /// below are **this** build's own, measured the same way:
+    ///
+    /// ```text
+    /// Tiefling Fighter 1, STR 14 / DEX 18, Chain Shirt, Weapon Focus
+    /// cell          without Dodge   with Dodge   pre-fix sheet, with Dodge
+    /// AC                 18             19               19   <- correct already
+    /// TOUCH              14             15               15   <- correct already
+    /// FLAT-FOOTED        14             14               15   <- the defect
+    /// ```
+    ///
+    /// The sheet computed flat-footed as `ac - Math.max(0, dexMod)`, which
+    /// tracked the +1 Dodge added to `ac` and never subtracted it back out.
+    /// PF1: "any situation that denies you your Dexterity bonus to Armor Class
+    /// also denies you dodge bonuses", so the correct answer does not move at
+    /// all.
+    ///
+    /// Asserted through `resolve_unified_pilot_snapshot` rather than against
+    /// the engine, because the adapter is where the corpus-aware numbers are
+    /// substituted onto `LoadSavedCharacterResponse.explanations` — a fix that
+    /// stopped at the engine would leave the shipped sheet unchanged.
+    #[test]
+    fn a_dodge_bonus_moves_armor_class_and_touch_ac_on_the_sheet_and_never_flat_footed_ac() {
+        let build = measured_screen_build("tiefling-flat-footed", "race:tiefling");
+        let (ac_without, touch_without, ff_without, _, _, _) = measured_cells(&build);
+        let (ac_with, touch_with, ff_with, _, _, _) =
+            measured_cells_with_feats(&build, &["feat:dodge"]);
+
+        assert_eq!((ac_without, touch_without, ff_without), (18, 14, 14));
+        assert_eq!(
+            (ac_with, touch_with, ff_with),
+            (19, 15, 14),
+            "Dodge raises AC and touch AC by 1 each and must leave flat-footed AC alone; the \
+             shipped sheet raised it to 15"
+        );
     }
 
     /// Touch AC must never contradict the Armor Class shown beside it. The
@@ -1856,12 +1934,43 @@ mod tests {
     fn touch_armor_class_never_contradicts_the_armor_class_on_the_same_panel() {
         const CHAIN_SHIRT_ARMOR_BONUS: i16 = 4;
         for race in ["race:goblin", "race:hobgoblin", "race:halfling", "race:dwarf"] {
-            let (armor_class, touch, _, _, _) =
+            let (armor_class, touch, _, _, _, _) =
                 measured_cells(&measured_screen_build("touch-consistency", race));
             assert_eq!(
                 touch,
                 armor_class - CHAIN_SHIRT_ARMOR_BONUS,
                 "{race}: touch AC is the same Armor Class with the armor bonus removed"
+            );
+        }
+    }
+
+    /// The same non-contradiction guard for flat-footed AC, which the shipped
+    /// sheet broke in the other direction: it displayed a flat-footed value one
+    /// point HIGHER than PF1's, by tracking a dodge bonus into the total and
+    /// never removing it. Stated as a difference against the Armor Class on the
+    /// same panel, with and without a dodge bonus, so neither number can drift
+    /// away from the other.
+    #[test]
+    fn flat_footed_armor_class_never_contradicts_the_armor_class_on_the_same_panel() {
+        const DEXTERITY_BONUS: i16 = 4; // DEX 18 in `measured_screen_build`
+        const DODGE_BONUS: i16 = 1;
+        for race in ["race:goblin", "race:hobgoblin", "race:halfling", "race:dwarf"] {
+            let build = measured_screen_build("flat-footed-consistency", race);
+
+            let (armor_class, _, flat_footed, _, _, _) = measured_cells(&build);
+            assert_eq!(
+                flat_footed,
+                armor_class - DEXTERITY_BONUS,
+                "{race}: with no dodge-typed bonus, only the Dexterity bonus is denied"
+            );
+
+            let (armor_class, _, flat_footed, _, _, _) =
+                measured_cells_with_feats(&build, &["feat:dodge"]);
+            assert_eq!(
+                flat_footed,
+                armor_class - DEXTERITY_BONUS - DODGE_BONUS,
+                "{race}: holding Dodge, the dodge bonus is denied too -- so flat-footed AC is \
+                 the same number it was without the feat"
             );
         }
     }
