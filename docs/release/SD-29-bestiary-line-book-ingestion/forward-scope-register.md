@@ -474,3 +474,190 @@ Bind points the operator must resolve before any cycle dispatches:
   shape from the `.lst` files first — this is the third recorded instance.
 - **Don't close the Duergar finding by hiding the record.** The test going red **is** the
   deliverable. A record on disk that no selection can reach is exactly what the reach gate is for.
+
+---
+
+# §7. AMENDMENT — 2026-08-01, tranche/8 retrospective reconciliation
+
+> **Read this before acting on §4.3 or §5.** This amendment is additive. Nothing above is deleted:
+> the register is a signed-off surface and the corrections belong beside it, not on top of it. Where
+> §7 and an earlier section disagree, §7 is the later measurement and says so per row.
+>
+> Authored by the tranche/7 retrospective (`docs/retro/tranche-7-retrospective.md`) after the
+> deferral corpus was re-derived at `tranche/8` HEAD. Every row was verified by command; the
+> commands are given.
+
+## 7.1 The corpus this register routes has grown, and nine deferrals are unrouted
+
+The register's actor multiset matches the first **74** deferral events exactly — it is not in
+disagreement with the log, it predates part of it. The tranche/7 log now holds **83**.
+
+```bash
+python3 scripts/retro.py query --type deferral --json | python3 -c "
+import json,sys
+print(len([e for e in json.load(sys.stdin) if e['actor'] not in
+  {'retro-corrections-analyst','deferral-mining','tranche8-incident-retro','tranche7-retro-synthesis'}]))"
+# -> 83
+```
+
+| # | shard | what | disposition |
+|---:|---|---|---|
+| 75 | `sd29-scope-and-debt` | APG + ACG `LICENSE.json` state no `records_processed` at all (641 and 423 records on disk) | **SD-29 — folds into §2.1.** Confirmed absent by command; ARG 635 ✓, beastiary 164 ✓, CRB 3400 ✓, PU 127 ✓ |
+| 76 | `verify-reach-reissue` | ARG racial-trait display-value renderer has zero callers | ELSEWHERE — a frontend-surface cycle |
+| 77 | `pu-description-resolution` | Extra Rage / Extra Ki move PU display variables, applied to neither the sentence nor the magnitude row | ELSEWHERE — the cycle that owns `feat_effects.rs` |
+| 78 | `traitreach` | Create form renders alternate-trait numbers at racial base, never feat-moved | ELSEWHERE — creation-form cycle |
+| 79 | `monkslug` | `classFeaturesModel.test.ts:189` enshrines the `maker_s_call` defect's output | ELSEWHERE — **same root cause as 80; fix 80 first** |
+| 80 | `sd27verify` | `ingest_pu_classes::slugify` promotes `'` → `_` into corpus filenames | ELSEWHERE — a corpus re-ingest with `sha256` re-pinning, scheduled alone |
+| 81 | `sd27verify` | No stable predicate for "carries a computed magnitude"; four variants give 48/49/51/52 on one tree | **SD-29-adjacent, and see §7.5 — resolve before publishing any coverage ratio** |
+| 82 | `vendor-ge05-fixtures` | `DEFAULT_PCGEN_REPO_DIR` hardcoded | **CLOSED** — `pcgen_runner.rs` now joins `DEFAULT_PCGEN_REPO_DIR_REL` to `$HOME` |
+| 83 | `home-paths` | 6 remaining `/home/ubuntu` literals outside `SCANNED_DIRS` | ELSEWHERE — **and see §7.4** |
+
+## 7.2 §4.3 closed one row on another row's evidence — ledger row 03 is OPEN
+
+§4.3 groups **rows 03 and 64** as *"raw `%%`/`%N` in ARG alternate-trait descriptions … 0 shipped
+`race_trait` descriptions carry either."*
+
+**Row 64 is genuinely closed. Row 03 is a different deferral and it is open.** Its `--what` is:
+
+> *"Halfling ~ Adaptable Luck's reduced-bonus magnitude (DESC arg 2 =
+> `Halfling_AdaptableLuck_Bonus-1`) is dropped from the served description, so the row reads 'they
+> only gain a bonus' with no number."*
+
+```bash
+python3 -c "import json;print(json.load(open(
+ 'data/corpus/advanced_race_guide/race_trait/halfling/halfling_adaptable_luck.json'
+))['data']['description'][-120:])"
+# -> "...if they choose to do so afterward, they only gain a bonus. Using adaptive luck in this
+#     way is not an action. This racial trait replaces halfling luck."
+```
+
+**Still no number.** Row 03 is blocked on one operator ruling and nothing else: does
+`<SameRowVar> ± <int literal>` count as *transcription* (allowed) or *interpretation* (forbidden by
+`decisions.md §24.1`)? Its own `--revisit` names both exits — a §24.1 hand-modelled pure function, or
+that ruling. It is one row of 156, and the deferral calls it *"the only unresolvable DESC arg in the
+whole ARG in-scope set."* **Cheap, and currently recorded as done when it is not.**
+
+This is the same failure shape `decisions.md §27.2` already recorded: a general disposition inferred
+from one sample. Logged as a correction in `docs/retro/events/deferral-mining.jsonl`.
+
+## 7.3 Seven ledger rows understate progress — they are CLOSED at `tranche/8` HEAD
+
+§4.3's CLOSED column was verified by command. These seven were not, and they are exactly the rows a
+successor would waste a cycle re-scoping.
+
+| ledger row | register says | actual | verification |
+|---|---|---|---|
+| 39, 65 — widen creation from 7 to 18 races | `C3` | **CLOSED** | `raceRoster.ts` is corpus-driven via `list_race_creation_roster` (`:148`); `RACE_OPTIONS` is gone; the module doc names the 18-race roster |
+| 47 — direct-`ABILITY` grant edge | `ELSEWHERE` | **CLOSED** | `race_resolver.rs:41` documents `ABILITY:<cat>\|AUTOMATIC\|<key>` as a `FlagGranted` edge; `:57` names `Orc ~ Feral` |
+| 48 — Wizard spell-level gate is CRB-only | `ELSEWHERE` | **CLOSED** | commit `f4dcb522`; `class_spell_levels.rs` chains `acg`, `advanced_race_guide`, `apg`, `crb`; `crb/wizard_spell_list.rs:610` = `("Tsunami", 9)` |
+| 51 — alternates cannot be applied to a character | `C3` | **CLOSED** | `character_hub.rs:385` `pub selected_alternate_trait_keys: Vec<String>` |
+| 10 — 3 ARG records reach no surface | `ELSEWHERE` | **CLOSED** | `reach_gate.rs:1416` `UNREACHED_RECORD_FINDINGS` now holds exactly one entry: `("beastiary1","race_traits",["Duergar ~ Spell-Like Ability ~ Invisibility"])` |
+| 11 — reach gate blind to PU | `C2` (§2.2) | **CLOSED** | `slice_element_type` matches `pub fn name() -> &'static [Type]` (tested at `reach_gate.rs:2031–2047`); `corpus_ingest_diagnostic` now lists `advanced_race_guide` and `pathfinder_unchained` |
+
+**Net disposition: 39 of 83 verified closed at `tranche/8` HEAD** (the register's 22, minus row 03,
+plus these seven and events 8, 31-partial, 82). **44 open**, deduplicating to **51 survivors**.
+
+**Row 10's closure is also the confirmation of this bundle's headline.** `UNREACHED_RECORD_FINDINGS`
+holding exactly one entry, and that entry being Duergar's Invisibility SLA, is the executable form of
+`README.md §1`: Monster Codex closes the project's last reach NO. It is now a one-element set, so a
+future reader can check the claim in one command instead of trusting the prose.
+
+## 7.4 §2.3 is one third of a defect — F-group re-route
+
+§2.3 records that `src/bin/ingest_races.rs` has no `%%` handling and that `leaked_pcgen_syntax` does
+not flag it. Two further deferrals record the **same finding about two other binaries**, and §4.2
+routes both `ELSEWHERE`:
+
+- 3 APG spell records on disk carry unescaped `%%` (`chameleon_stride`, `fiery_body`,
+  `ghostbane_dirge`), written by `cache_gen/apg.rs`, which has *its own* desc treatment.
+- `src/bin/ingest_pu_classes.rs` has *its own copy* of the desc treatment rather than using
+  `render_pcgen_desc`, and leaks `&nl;` into one PU record.
+
+**The register currently has three private copies of one description treatment classified into two
+different buckets.** Fixing only the `C2` third means SD-29 ships one third of a defect.
+
+> **The readiness statement, and it is the thing SD-27 wished it had known on day one: there is no
+> single ingestion pipeline. There are four binaries with four partial copies of the description
+> treatment, and only `codex::rules_core::pcgen_desc::render_pcgen_desc` is the sanctioned one.**
+
+**Collapse §2.3 and both `ELSEWHERE` siblings into one readiness task**: route every ingest binary's
+description path through `render_pcgen_desc`, and give each a `leaked_pcgen_syntax` production guard.
+Done once before book #1, it never recurs. Done per book, it is paid seven more times here, in four
+places, by seven different agents — **and six more times in SD-28 and four in SD-30**.
+
+Related, same paragraph of ownership: **`src/bin/sd27_gen_book_cache.rs:73` still `#[path]`-includes
+`rules_core/rules_tables/advanced_race_guide/mod.rs` a second time into its own crate**, which is the
+sole reason several ARG items report dead code. Confirmed present at line 73. Deleting it should drop
+several warnings off the 75-warning root clippy baseline — a §2.6 item that is still live.
+
+## 7.5 Resolve the magnitude predicate before publishing any coverage ratio
+
+Unrouted deferral 81 (§7.1) is a methodological blocker, not a task:
+
+> *"Every ratio published for PU class features so far (23, 32, 46, 49, 51) is a different predicate,
+> not a different tree."*
+
+Magnitude rows carry no corpus key, only prose that *usually* repeats the record's name. Four
+reasonable variants of the name-substring test return 48/49/51/52 on one tree. The fix is small — an
+optional `source_record` on `ComputationExplanation` — and its absence is expensive:
+
+**SD-28, SD-29 and SD-30 will each want to publish a "% of records that reach a player" figure. Without
+this, they will publish figures that are not comparable with each other or with SD-27's, and every one
+of them will be defensible.** This is `decisions.md §27.1`'s finding — *"625 mentions vs 271 settings;
+the arithmetic was never the defect, the label was"* — recurring one layer up.
+
+**Whichever book bundle dispatches first should land it. It is cheaper than any of the three will
+spend arguing about their own numbers.**
+
+## 7.6 Shared ownership with SD-28 and SD-30 — pay §2 once
+
+`docs/release/SD-28-ultimate-book-content-ingestion/` and
+`docs/release/SD-30-occult-and-companion-content-ingestion/` are the operator's canonical sibling packages,
+landed on `tranche/8` (`6452ef0d`, `26b5155c`, `721c2949`). This amendment defers to their slugs and
+scope. Both **claim** §2.1–§2.7 rather than restating it, and both defer to
+this register as the canonical statement.
+
+**The ownership rule, agreed across all three registers: whichever bundle dispatches first pays
+§2.1–§2.7; the others re-verify rather than re-implement.** Neither of the other two schedules it.
+
+Two genuinely cross-bundle items, named so neither side assumes the other did it:
+
+- **§2.7 (`SpellCatalogScreen`'s `BOOK_ORDER` literal pinned against a literal)** fires hardest for
+  SD-28 — Ultimate Magic alone carries 827 spell rows — and again for SD-30's Occult Adventures
+  (472 spell keys not in any ingested book). The one-line criterion for all three: **derive the book
+  list from the loaded data, the way `EquipmentCatalogScreen` already does.**
+- **§4.1's Ultimate-blocked pair is now derived, not asserted.** SD-28's register publishes the exact
+  46-spell gap by level and defining book. Its finding for SD-29: *every one of the 46 comes from
+  `ultimate_combat` or `ultimate_magic`* — **none requires a Bestiary-line book**, so §4.1's
+  "do not absorb" ruling is confirmed by measurement rather than by routing.
+
+## 7.7 Traps SD-29 inherits — name them before cycle 1
+
+`README.md §2` correctly rules out engine work and cites `decisions.md §24`. It does not yet name the
+four architectural traps `decisions.md §29` records, and each will bite SD-29 the way it bit SD-27.
+Cited, not restated:
+
+| trap | § | shape in this bundle |
+|---|---|---|
+| **Two compute twins** | §29.1 | `pilot_compute.rs` vs `pilot_compute_corpus.rs`. **A magnitude is not wired until it moves on the twin the player reads.** 15 of SD-27's 115 corrections were this class. |
+| **A third twin, in TypeScript** | §29.2 | Any surface re-deriving a rules number instead of rendering an engine `explanations` row. One live instance remains: `CharacterSheet.tsx:2945`. |
+| **Reach-gate blind spots, one permanent** | §29.3 | §24-shaped hand-modelled functions emit no slice and are invisible to the source scan by construction. **No family may rest on a single discovery source** — the corpus directory is load-bearing. |
+| **`p.xx` is a placeholder** | §29.4 | Checked per row, never per content-kind. Verbatim transcription would have manufactured 143 false citations in SD-27. **Seven books × this decision is where SD-29 fabricates provenance if it inherits nothing else from this table.** |
+
+And the process half, from `docs/retro/tranche-7-retrospective.md §6`: every figure in a dispatching
+brief ships with the command that produced it; every ratio ships with its predicate; `FILES YOU OWN`
+must be closed under the change it mandates; one writer per tree with its own `CARGO_TARGET_DIR`,
+deleted at the end; and a verification stage red for more than one run is a blocker, not a background
+condition.
+
+## 7.8 Amendment cross-reference
+
+- `docs/retro/tranche-7-retrospective.md` — the evidence base for §7, including §7 of that document
+  on why the ~39 unrouted engine/UI deferrals must not be distributed across book bundles.
+- `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md` §1.2 — the derived 46-spell gap
+  confirming §4.1.
+- `../SD-30-occult-and-companion-content-ingestion/forward-scope-register.md` §1.2 — three shipped-code
+  citations found by grepping source for book names; **SD-29 should run the same grep for its own
+  seven books before concluding §3 is complete.**
+- `docs/retro/events/deferral-mining.jsonl`, `docs/retro/events/tranche7-retro-synthesis.jsonl` —
+  the corrections behind §7.1–§7.4, each with its `verified_by` command.
