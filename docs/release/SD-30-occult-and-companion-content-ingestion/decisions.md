@@ -1,0 +1,320 @@
+# SD-30 Decisions
+
+**Status:** Planning-ready (operator directives 2026-08-01; canonical chassis landing this cycle). Refined 2026-08-01 (book list confirmed; tranche/10 + no-Hermes-board + 0.10.<build> + reach-gate DoD doctrine applied per the 2026-08-01 amendments shared with SD-28/SD-29).
+
+## Decision 1 — Book list CONFIRMED 2026-08-01
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.**
+
+**Decision:** SD-30 ships content-source ingest for the following sixteen books, with NPC Codex + Planar Adventures + Occult Origins + Haunted Heroes deferred to `forward-scope-register.md C2.x` per the 2026-08-01 absent-book rule:
+
+1. **Occult Adventures** — per-class cycles + per-monster-block cycles + per-psychic-discipline cycles. Corpus dir: `roleplaying_game/occult_adventures/`.
+2. **Horror Adventures** — per-monster-block cycles + per-haunt-block cycles + per-corruption-mechanic cycles. Corpus dir: `roleplaying_game/horror_adventures/`.
+3. **Mythic Adventures** — per-mythic-path cycles + per-monster-block cycles. Corpus dir: `roleplaying_game/mythic_adventures/`.
+4. **Monster Codex** — per-monster-block cycles. Corpus dir: `roleplaying_game/monster_codex/`.
+5. **Book of the Damned Vol. 1** — per-archetype cycles + per-monster-block cycles + per-tactic cycles. Corpus dir: `campaign_setting/book_of_the_damned_volume_1/`.
+6. **Book of the Damned Vol. 2** — same as vol. 1. Corpus dir: `campaign_setting/book_of_the_damned_volume_2/`.
+7. **Inner Sea World Guide** — per-trait cycles + per-feat cycles + per-region cycles. Corpus dir: `campaign_setting/inner_sea_world_guide/`.
+8. **Inner Sea Combat** — per-trait cycles + per-option cycles. Corpus dir: `campaign_setting/inner_sea_combat/`.
+9. **Inner Sea Faiths** — per-deity cycles + per-trait cycles + per-option cycles. Corpus dir: `campaign_setting/inner_sea_faiths/`.
+10. **Inner Sea Gods** — per-deity cycles + per-domain cycles. Corpus dir: `campaign_setting/inner_sea_gods/`.
+11. **Inner Sea Magic** — per-spell cycles + per-magic-trait cycles. Corpus dir: `campaign_setting/inner_sea_magic/`.
+12. **Inner Sea Races** — per-race cycles + per-archetype cycles. Corpus dir: `campaign_setting/inner_sea_races/`.
+13. **Inner Sea Temples** — per-temple cycles + per-trait cycles. Corpus dir: `campaign_setting/inner_sea_temples/`.
+14. **Inner Sea Taverns** — per-tavern cycles + per-event cycles. Corpus dir: `campaign_setting/inner_sea_taverns/`.
+15. **Inner Sea Bestiary** — per-monster-block cycles. Corpus dir: `campaign_setting/inner_sea_bestiary/`.
+16. **Inner Sea Intrigue** — per-trait cycles + per-faction cycles + per-rule cycles. Corpus dir: `campaign_setting/inner_sea_intrigue/`.
+
+**Deferred (NOT in scope):** NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes Handbook. Recorded in `forward-scope-register.md C2.x` as future-acquisition candidates. Per the 2026-08-01 absent-book rule, these drop from scope when the corpus directory does not exist.
+
+**Per-book path locations under `src/rules_core/rules_tables/<book>/`** are in the §"Book list" table in `scope-draft.md`.
+
+## Decision 2 — Branch and board [SUPERSEDED — see §14]
+
+**Status:** Doctrine-of-record (per SD-22 doctrine); **superseded 2026-08-01** by Decision §14, which tightens the rule.
+
+**Original text:** SD-30 launches on `tranche/6-2` branch + `codex-tranche-6-2` board.
+
+**Why superseded.** SD-28 broke the `tranche/6` family on 2026-08-01 (`tranche/8`). SD-29 followed at `tranche/9`. SD-30 takes `tranche/10`. The `codex-tranche-<N>` slug is reserved-as-form, not as-instance (the Hermes board is retired).
+
+## Decision 3 — Build version target [SUPERSEDED — see §15]
+
+**Status:** Doctrine-of-record (per SD-22 doctrine); **superseded 2026-08-01** by Decision §15, which applies the 2026-07-17 build-version amendment.
+
+**Original text:** `0.6.<build>` first concrete value. tranche-base = 6 per `<major>.<tranche-base>.<build>` scheme.
+
+**Why superseded.** SD-30's tranche-base is 10, not 6. First concrete value is `0.10.<build>` per Decision §15.
+
+## Decision 2 — Branch and board
+
+**Status:** Pending operator confirmation.
+
+**Candidate:** `tranche/6-2` branch + `codex-tranche-6-2` board.
+
+**Rationale:** SD-28 proposes `tranche/6`, SD-29 proposes `tranche/6-1`. SD-30 follows the dash-1 sub-release pattern at `tranche/6-2`. Operator-pinned pending.
+
+**Alternative:** SD-30 could split per-book across sub-tranches (e.g., `tranche/6-2-oa`, `tranche/6-2-oo`, `tranche/6-2-ha`). Operator preference.
+
+## Decision 3 — Build version target
+
+**Status:** Pending operator confirmation.
+
+**Candidate:** `0.6.<build>` first concrete value.
+
+**Rationale:** Same base digit as SD-28 and SD-29 because all three packages land on the `tranche/6` family. Per the `<major>.<tranche-base>.<build>` scheme, tranche-base = 6 for `tranche/6`, `tranche/6-1`, `tranche/6-2`. Major stays `0` until first main-publish.
+
+**Operator-pinned values needed:**
+
+- Confirm the current build counter value (read from the version-bump contract in the repo's release workflow).
+
+## Decision 4 — Epic structure
+
+**Status:** Doctrine-of-record (per SD-22 doctrine).
+
+8 epics / 30 criteria. Epic 1 = Code-Side Identifier Cleanup. Epic 2 = Operator Pre-Launch. Epic N = Closure Epilogue. Optional Epic 6 (Haunted Heroes Handbook) per operator-pinned in-scope decision.
+
+## Decision 5 — Cross-bundle class overlap with SD-28
+
+**Status:** Doctrine-of-record (per SD-22 doctrine).
+
+For classes that appear in both Ultimate Intrigue and Occult Adventures (Occultist, Spiritualist, Medium, Mesmerist), the canonical class definition lives in SD-30 (Occult Adventures is the primary hardcover defining those classes). SD-28 references the canonical class id from SD-30's progress file but does not redefine.
+
+## Decision 6 — Cross-bundle monster overlap with SD-29
+
+**Status:** Doctrine-of-record (per SD-22 doctrine).
+
+For monsters that appear in both Horror Adventures and Bestiary 2-5, the canonical monster definition lives in whichever book first introduces the monster. SD-29 references the canonical monster id from SD-30's progress file but does not redefine.
+
+## Decision 7 — Identifier discipline
+
+**Status:** Doctrine-of-record (per SD-22 doctrine).
+
+- Source-code identifiers describe WHAT the artifact does, NOT which release / spec domain it came from.
+- PascalCase for functions / methods / constants / properties / Tauri commands.
+- lowercase camelCase for variables.
+- Forbidden patterns: `sd30_*`, `SD30_*`, `Sd30*`, `sd30-*`, `t_<hex>`, `SD-30-Ex...`, `AV-PAY-N`.
+- Doctrine-of-record at `~/workspace/governance/identifier-discipline.md`.
+
+## Decision 8 — Operating form
+
+**Status:** Doctrine-of-record (per SD-22 doctrine).
+
+`/loop 60m /batch /goal <loop-instruction-file>`. Not ad-hoc single-task invocations.
+
+## Decision 9 — Verification is `./scripts/verify.sh`, not a hand-composed run
+
+**Status:** Doctrine-of-record (repo tooling, landed 2026-07-30 on `tranche/6`).
+
+**Decision:** Every cycle verifies with `./scripts/verify.sh` (full, not `--quick`)
+and captures its exit code directly. No cycle composes its own verification
+command set.
+
+**This supersedes `cargo test --workspace --locked` as a bundle-level check.**
+The repo root has no `[workspace]` table, so `--workspace` from the root does
+**not** reach `apps/desktop/src-tauri` — a separate, bin-only cargo crate that
+shipped un-compilable twice under exactly that command. Three further
+structural false-greens are documented in `scripts/verify.sh --help`:
+`cargo test` fail-fasts (a "green" run had executed 124 of 488 suites); piping
+a command to `grep`/`tail` returns the pipe's exit status, not the command's;
+and the frontend runner reports `0/0 test files passed.` and exits `0` when
+`node_modules` is absent.
+
+`scripts/verify-baselines.env` holds the recorded green-tree numbers. Test
+counts are floors, clippy warnings a ceiling. A baseline that has to move moves
+in its own reviewable commit with `--show-actuals` output in the message. A
+floor that dropped means tests were deleted — that is the finding, not the fix.
+
+**Authority:** `scripts/verify.sh` (its `--help` is the rationale of record),
+`scripts/verify-baselines.env`, `docs/governance/book-ingestion-playbook.md` §4.
+
+## Decision 10 — The pre-ingest trap report is mandatory
+
+**Status:** Doctrine-of-record (repo tooling).
+
+**Decision:** Before any ingest code is written for a book, the cycle runs
+
+```sh
+cargo run --locked --bin v06_corpus_trap_report -- <book_dir>
+```
+
+and records the output in the cycle receipt. It runs against a book that has
+never been ingested, which is the point.
+
+**Why this is a decision and not a suggestion.** Every ingestion cycle so far
+hit the *same* corpus traps — `.MOD` rows counted as declarations, `#`-disabled
+rows read as live, archetype-qualified `KEY:`s merged with the base record they
+share only a display name with — rediscovered by hand, by a different agent,
+every time, and nearly every resulting count was wrong on the first pass (396
+missing feats where 301 was real; 207 bonus-bearing where 166 was real; 180
+`BONUS:VAR` records where 86 was real, one record having carried 66 tokens).
+
+Two traps are especially load-bearing for this bundle. **Trap 4
+(`ArchetypeScoped`)** — archetype records pose as base-class content, and
+SD-30's ingest subtypes are heavy on archetypes and class options; the recorded
+worked example is a Bloodrager `DEFINE:RagePowersLVL|0` that sits on
+`KEY:Bloodrager Archetype ~ Primalist`, not on the base class. **Trap 5
+(`SharedNameDistinctRecords`)** — `KEY:Bard ~ Lore Master` and
+`KEY:Skald ~ Lore Master` are different records; Decision 6's cross-bundle
+class-overlap rule must join on `KEY:`, never on display name.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` is additionally a
+definition-of-done condition: it exits `2` when an already-ingested record cites
+a corpus line that does not resolve.
+
+**Authority:** `src/pcgen_import/corpus_traps.rs` (the trap catalogue and the
+corpus evidence for each), `src/bin/v06_corpus_trap_report.rs`.
+
+## Decision 11 — The reach gate is a definition-of-done condition
+
+**Status:** Doctrine-of-record (repo tooling). **Carries an open operator question — see below.**
+
+**Decision:** A book's ingest cycle is not done until every one of that book's
+record families reaches a player surface, proven by a claim in
+`apps/desktop/src-tauri/src/reach_gate.rs` that executes the real IPC builder.
+Ingestion and surfacing are one unit of work, not two.
+
+A count does not satisfy the gate (`corpus_ingest_diagnostic` already carries
+every book's record count and renders nothing), and an identifier alone does
+not (that is the Feats-tab defect, where the player saw `feat:deflect_arrows`
+in place of a name and description).
+
+**Open operator question this bundle cannot decide for itself.** SD-30's epic
+structure contains no surface-building epic, and two of its declared ingest
+subtypes hit known gaps: no monster record reaches a player today (Bestiary 1's
+41 stat blocks are pinned in `OPEN_FINDINGS`), and haunts / corruptions /
+psychic disciplines are record kinds the gate does not yet know — an
+unrecognized record type is a **hard failure by design**, because a genuinely
+new kind of content needs a decision about where it reaches, not a default.
+**The operator decides whether those surfaces land inside SD-30 or as named
+prerequisites outside it; this package does not add an epic on its own
+authority.** Skipping them is not available.
+
+**Authority:** `apps/desktop/src-tauri/src/reach_gate.rs` (`OPEN_FINDINGS`,
+`RECORD_TYPE_KINDS`), `docs/governance/book-ingestion-playbook.md` §3.
+
+## Decision 12 — Per-entity counts are generated, never hand-maintained
+
+**Status:** Doctrine-of-record (repo tooling).
+
+**Decision:** This package records no per-entity count. `scope-draft.md`
+§"Book shape" points at `cargo run --locked --bin v06_work_inventory` and the
+`docs/work-inventory.json` it generates. Cycle receipts cite the command that
+produced any figure they publish.
+
+**Why.** Every hand-maintained artifact in this project has drifted and then
+actively misled — a dashboard claimed 12 finished classes when 5 was true; a
+coverage matrix read 1 wired feature where the code had 6; shipped deferral
+strings still claim engines do not exist that do. The generator's own contract
+is that it never invents a unit and never invents a status: a record it cannot
+classify is emitted as `unknown` with the reason attached, because an honest
+unknown beats a confident wrong entry.
+
+**Authority:** `src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`,
+`docs/governance/book-ingestion-playbook.md` §6.
+
+## Decision 13 — Branch and board (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.**
+
+**Decision:** SD-30 launches on `tranche/10` branch with `kanban.md` + `progress.md` local-file dispatch (no Hermes board).
+
+The prior candidate (per the 2026-07-28 stub) was `tranche/6-2` + `codex-tranche-6-2`; SD-30 takes its own tranche (`tranche/10`) parallel to SD-28's `tranche/8` and SD-29's `tranche/9`. The Hermes board is retired per operator directive 2026-08-01, applied uniformly to SD-28, SD-29, and SD-30.
+
+**Why this differs from SD-22/SD-28's `tranche/8` / SD-29's `tranche/9`.** SD-30 handles a wider scope of content sources (occult + mythic + Inner Sea series + Monster Codex + Book of the Damned), making it the largest `forward-scope-relative-to-tranche-base` bundle of the post-2026-08-01 trio. The `tranche/10` slot is operator-pinned on 2026-08-01; it is not an increment of any prior tranche.
+
+## Decision 14a — Hermes board retired (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.** Cross-cutting — affects Decision §7 (operating form), §13 above, and the loop-instruction pre-launch checklist.
+
+**Decision:** SD-30 has no Hermes kanban board. The work-queue artifact is a local-file `kanban.md` paired with `progress.md`. Cycle dispatch reads `kanban.md` at top of each tick; supervisor's file-touch partition enforces 1-cycle-per-file.
+
+## Decision 15 — Build version target (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.**
+
+**Decision:** SD-30's first concrete build value is `0.10.<build>`, where `<build>` is the current build-counter state at the time of cycle close.
+
+Per the 2026-07-17 build-version amendment:
+- **major** = 0 (no main-publish yet).
+- **tranche-base** = 10 (the base digit of `tranche/10`).
+- **build** = monotonic counter, never resets.
+
+Tranche-promotion increments only on `tranche/10 → develop` PR. The closure Epic (last in order) value is `0.10.<last_build>`.
+
+## Decision 16 — Cross-book conflict rule (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.** (same doctrine as SD-28 §16 and SD-29 §16.)
+
+**Decision:** When SD-30's books conflict with another book (cross-bundle or cross-SD-N) on a record, **the newer book is doctrine and the older book is errata.**
+
+This supersedes any prior cross-book conflict handling in the bundle.
+
+**Operator-confirmed precedence (operator 2026-08-01).** "Those recently published take precident." SD-30's most-recently-published reference points are SD-28 (tranche/8, 0.8.x) and SD-29 (tranche/9, 0.9.x). When SD-30's books (occult + mythic + Inner Sea) conflict with records those bundles publish, SD-28/SD-29's records are doctrine; SD-30 references the canonical id only.
+
+This is the cross-bundle application of §16: in addition to record-level overlaps (reprints, errata), SD-30's cross-bundle conflicts with the already-published SD-28 + SD-29 surface resolve in favor of those surfaces, because those surfaces were published more recently.
+
+The class-grant overlap rule (canonical class definition lives in the bundle that owns the book's primary class definition; the other bundle references the canonical id only) is the only exception. SD-30 owns canonical class definitions for the four shared classes that appear in both Ultimate Intrigue (SD-28's territory) and Occult Adventures (SD-30's territory): Occultist, Spiritualist, Medium, Mesmerist. SD-28 references the canonical class id from SD-30's progress; SD-30 does not redefine.
+
+## Decision 17 — Bulk modifications deferred (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **forward-leaning acknowledgement.**
+
+**Decision:** The per-cycle mode of operation (one record-at-a-time, file-touch partition, individual cycle receipts) is preserved for SD-30. Bulk-modification tooling is not in scope; a future retrofit (e.g., wiring a Mythic Adventures mythic-path catalog of 30+ entries in one cycle-batch) is reserved outside this bundle.
+
+## Decision 18 — Reach gate is the definition of done; engines only when strictly necessary (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01** as the **prime rule** for SD-30. **Supersedes Decision §12 (the prior "Build no execution engines" rule).** Cross-cutting — affects every per-book cycle.
+
+**Decision:** A record's ingest cycle is **not done** until it satisfies `apps/desktop/src-tauri/src/reach_gate.rs`. Reach is the operator-visible definition of done.
+
+**Engine policy.**
+
+- **Real-time engines are out of scope.** No cycle in this bundle builds an RNG, opponent-state, or turn-sequencing engine.
+- **Rules-data engines are in scope and often unnecessary.** When a numerical effect can be pre-computed as data (e.g., a Mythic tier's `+5` damage bonus posted as `15` total damage at the documented CL), post the calculated value in the description; the player rolls physical dice.
+- **Engine construction is permitted only when strictly necessary to satisfy reach.** If a record's effect cannot be represented as data without an unjustifiable loss of fidelity, the cycle may build a small rules engine to model it. The engine must be enumerable, testable, and observable from `reach_gate.rs`.
+
+**What this changes.** §12's blanket "no engines" rule was too coarse. §18 narrows it to real-time engines. Reach remains the gate; pre-computed values are preferred.
+
+**Mythic Adventures reach prerequisite.** Mythic Adventures' reach surfaces are existential (the mythic path mechanics + tier features + monster stat blocks all require consumer integration). Per reach-gate = DoD doctrine, Mythic Adventures' ingest cycles pause on `decision-blocked` if no consumer surface reaches the gate; if `reach_gate.rs OPEN_FINDINGS` lists missing surfaces for Mythic Adventures, cycles either record the gap or build the missing surface (the latter is a runtime-engine or surface-extension decision, operator-pinned per cycle).
+
+**Authority:** operator verbatim 2026-08-01: "reach gate is the definition of done, if an engine is required to get there, then we generate the engine — that said, often an engine isn't strictly necessary."
+
+## Decision 19 — Operator ack-chain recorded (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01** as a forward-leaning ack chain.
+
+**Ack ledger.** SD-30's twelve-item directive (operator 2026-08-01) confirmed: book list (sixteen books, four deferred) confirmed with cycle-0 trap-report + work-inventory gating (Item 1); `tranche/10` and no-Hermes-board confirmed (Items 2-3); "correct" and "correct for now" items acked without specific directives (Items 4, 8-10); cross-book conflict rule (Item 5); "recently published takes precident" rule (Item 6); bulk-modifications deferred (Item 7); reach-gate doctrine + the "prime rule" framing (Items 11, 13).
+
+"Correct for now" items 8-10 are forward-leaning acks: per-record decisions remain operator-pinned at cycle dispatch. The "prime rule" framing (Item 11) is captured verbatim in §18.
+
+## Decision 20 — Cross-reference
+
+- `./scope-draft.md` — committed scope shape, sixteen books confirmed.
+- `./loop-instruction.md` — per-cycle procedure; updated for `tranche/10`, no-Hermes-board, local-file dispatch.
+- `./forward-scope-register.md` — successor work depending on SD-30's output.
+- `./kanban.md` — local-file work queue (replaces Hermes board).
+- `./epic-breakdown.md` — 9+ epics × ~3-4 criteria each.
+- `~/workspace/programs/codex/requirements/SD-22-.../decisions.md` — predecessor doctrine for the per-book ingest pipeline.
+- `~/workspace/programs/codex/requirements/SD-28-.../decisions.md` — sister bundle (cross-bundle class-grant doctrine).
+- `~/workspace/programs/codex/requirements/SD-29-.../decisions.md` — sister bundle (bestiary 2-5 ingest pipeline).
+- `apps/desktop/src-tauri/src/reach_gate.rs` — definition-of-done surface for §18.
+- `docs/governance/book-ingestion-playbook.md` — playbook of record.
+- `~/workspace/programs/codex/requirements/SD-30-.../artifacts/tranche-2-7-legacy/` (note: this directory is hosted by SD-22 at `docs/release/SD-22/artifacts/tranche-2-7-legacy/`) — historical receipts from the original PCGen corpus-ingestion tranche; SD-30 references when cycle-0 trap-report runs against the same `data/corpus/<book>/` paths.
+
+## Decision 21 — Unattended mode authorization (operator directive 2026-08-01)
+
+**Status:** Operator-pinned, **confirmed 2026-08-01.** Load-bearing for the bundle's cycle dispatch.
+
+**Decision:** This bundle operates in **unattended mode**. The operator is out of town and may not see the harness's output for days. Cycles MUST NOT pause to ask the operator questions; the operator's review happens after return.
+
+**Operating protocol during unattended mode (codified in `loop-instruction.md` §"OPERATING METHOD" sub-callout).**
+
+1. **Default-and-flag, not ask.** When a cycle needs a decision, pick the safer default, capture it in `progress.md`, and continue.
+2. **No `clarify` tool calls.** The operator clarification tool is hard-banned under unattended mode.
+3. **Blockers are recorded, not raised.** Hard-blocks (auth failure, branch creation conflict, identity conflict on disk) go in `progress.md` with the command and exit code. The bundle does not halt; the supervisor picks up the next ready card.
+4. **`decision-blocked` IS allowed.** Operator-decision points (Mythic Adventures consumer surface in-scope-vs-separate; psychic-discipline consumer surface; Inner Sea campaign-tool surface; closure operator-on-call) record `decision-blocked` in `progress.md` and proceed on the safe default per `forward-scope-register.md C3.x` retrofit.
+5. **Closure is a goal, not a stop signal.** The bundle runs to closure per `/loop` cadence.
+
+**Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
+
+**Cross-reference:** the doctrine is mirrored in `loop-instruction.md` (cycle supervisor reads it first) and `progress.md` (per-cycle receipt confirms the operator-on-record). The receipt chain is the operator's after-return review surface.
