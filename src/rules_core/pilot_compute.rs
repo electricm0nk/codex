@@ -123,7 +123,9 @@ use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, reso
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::acg::shaman_spell_list;
 use super::rules_tables::acg::hunter_spell_list;
+use super::rules_tables::advanced_race_guide;
 use super::rules_tables::apg::{self, ApgClassId};
+use super::rules_tables::class_spell_levels;
 use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::apg::inquisitor_spell_list;
 use super::rules_tables::apg::witch_spell_list;
@@ -7528,8 +7530,15 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
     );
 
-    let (base_attack_bonus, base_saves) =
-        compute_class_chassis(input, &ability_modifiers, &mut explanations, &mut diagnostics)
+    let computed_chassis =
+        compute_class_chassis(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): whether the chassis really
+    // produced a base attack bonus, kept separately from the `0` the fallback
+    // below substitutes. PU's Combat Stamina pool is `BAB + CON`, and a `0`
+    // that means "not computed" would silently ship a stamina pool short by the
+    // character's whole base attack bonus.
+    let chassis_supported = computed_chassis.is_some();
+    let (base_attack_bonus, base_saves) = computed_chassis
             .unwrap_or_else(|| {
             diagnostics.push(ComputationDiagnostic {
                 id: "class_chassis.unsupported".to_owned(),
@@ -7587,7 +7596,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // effects, not class-specific, so they ground for every character
     // regardless of chassis support.
     ground_standalone_feat_skill_facts(input, &mut explanations);
-    ground_orphan_feat_facts(input, &mut explanations);
+    ground_orphan_feat_facts(
+        input,
+        base_attack_bonus,
+        chassis_supported,
+        &ability_modifiers,
+        &mut explanations,
+    );
 
     explain_fighter_class_features(input, &mut explanations);
 
@@ -9648,6 +9663,31 @@ pub(crate) fn selected_alternate_trait_keys(input: &CharacterInput) -> Vec<Strin
         }
     }
     out
+}
+
+/// The alternate racial trait key ARG's Armor of the Pit feat tests for, as
+/// the shipped 153-record table spells it
+/// (`race_resolver.rs`: `("Tiefling ~ Scaled Skin", &["Tiefling_ReplaceFiendishResistance"])`,
+/// matching `data/corpus/advanced_race_guide/race_trait/tiefling/tiefling_scaled_skin.json`'s
+/// own `key`).
+///
+/// The feat's own corpus token names PCGen's three per-energy sub-abilities
+/// (`Scaled Skin C ~ Tiefling`, `... E ...`, `... F ...`) rather than the
+/// parent trait. Those three are the cold/electricity/fire variants a Scaled
+/// Skin holder ends up with, and this engine's alternate-trait picker offers
+/// only the parent — so the parent is the exact, and only, decidable form of
+/// the same question here. Naming the three sub-keys instead would test for
+/// strings no character in this codebase can ever carry, which is how a gate
+/// silently never fires.
+const TIEFLING_SCALED_SKIN_TRAIT_KEY: &str = "Tiefling ~ Scaled Skin";
+
+/// Whether this character took the Scaled Skin alternate racial trait — the
+/// single fact ARG's Armor of the Pit needs in order to decide which of its two
+/// mutually exclusive halves applies.
+fn character_has_tiefling_scaled_skin(input: &CharacterInput) -> bool {
+    selected_alternate_trait_keys(input)
+        .iter()
+        .any(|key| key == TIEFLING_SCALED_SKIN_TRAIT_KEY)
 }
 
 /// Whether one of this character's chosen alternate racial traits fires the
@@ -15543,15 +15583,22 @@ fn unmet_arcanist_spellbook_conditions(
         }
     }
 
+    // Same up-front per-class resolution as `unmet_wizard_spellbook_conditions`
+    // — see `resolve_prepared_spell_level`. Arcanist's corpus-stated
+    // `SPELLLIST:1|Wizard` means it resolves against Wizard's list.
+    let mut prepared_levels: Vec<u8> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(ARCANIST_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push(spell_level),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = arcanist_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.contains(&spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      arcanist level {level}"
@@ -15562,11 +15609,7 @@ fn unmet_arcanist_spellbook_conditions(
         let int_bonus =
             ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
         let total_slots = base_count + int_bonus;
-        let consumed: i16 = prepared
-            .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-            .filter(|(_, l)| *l == spell_level)
-            .count() as i16;
+        let consumed: i16 = prepared_levels.iter().filter(|l| **l == spell_level).count() as i16;
         if consumed > total_slots {
             unmet.push(format!(
                 "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
@@ -15970,15 +16013,22 @@ fn unmet_warpriest_spellbook_conditions(
         }
     }
 
+    // Same up-front per-class resolution as `unmet_wizard_spellbook_conditions`
+    // — see `resolve_prepared_spell_level`. Warpriest's corpus-stated
+    // `SPELLLIST:1|Cleric` means it resolves against Cleric's list.
+    let mut prepared_levels: Vec<u8> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(WARPRIEST_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push(spell_level),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = warpriest_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.contains(&spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      warpriest level {level}"
@@ -15989,11 +16039,7 @@ fn unmet_warpriest_spellbook_conditions(
         let wisdom_bonus =
             ability_bonus_spells(ability_modifiers.wisdom, i16::from(spell_level));
         let total_slots = base_count + wisdom_bonus;
-        let consumed: i16 = prepared
-            .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-            .filter(|(_, l)| *l == spell_level)
-            .count() as i16;
+        let consumed: i16 = prepared_levels.iter().filter(|l| **l == spell_level).count() as i16;
         if consumed > total_slots {
             unmet.push(format!(
                 "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
@@ -36648,7 +36694,15 @@ fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> 
     if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == spell_id) {
         return Some((entry.school, entry.level));
     }
+    parse_synthetic_spell_id(spell_id)
+}
 
+/// This slice's corpus-free `<school>.<level>.<name>` fixture convention,
+/// on its own — no `SPELL_LIST` lookup. Split out of
+/// [`parse_wizard_spellbook_spell_id`] so [`resolve_prepared_spell_level`]
+/// can consult the synthetic form WITHOUT also inheriting a real record's
+/// minimum-across-classes `level`.
+fn parse_synthetic_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> {
     let mut parts = spell_id.splitn(3, '.');
     let school_token = parts.next()?;
     let level_token = parts.next()?;
@@ -36659,6 +36713,107 @@ fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> 
     let capitalized: String = first.to_uppercase().chain(chars).collect();
     let school = Pf1SchoolId::from_corpus_str(&capitalized)?;
     Some((school, level))
+}
+
+/// How a prepared spell's level resolved for one specific class.
+///
+/// The distinction is the whole point: a spell whose level is unknown must
+/// be **refused**, not skipped. See [`resolve_prepared_spell_level`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum PreparedSpellLevel {
+    /// The corpus states this spell's level for this class.
+    Known(u8),
+    /// No level can be stated without inventing one. Carries the honest
+    /// reason, ready to push onto an `unmet` list verbatim.
+    Unknown(String),
+}
+
+/// A prepared spell's level **for `class_id` specifically**, across every
+/// ingested book.
+///
+/// **The defect this closes (SD-27).** The three prepared-caster gates
+/// (Wizard, Arcanist, Warpriest) previously resolved a prepared spell's
+/// level through [`parse_wizard_spellbook_spell_id`], which knows only
+/// `crb::spell_list::SPELL_LIST`. An APG, ACG or ARG key is absent from
+/// that table and carries no dots, so the synthetic fallback failed too and
+/// the resolver returned `None` — and both consuming loops were
+/// `filter_map`s, so the spell vanished from the accessibility check AND
+/// from the slot-consumption count. Measured on the shipped catalog: a
+/// Wizard 1 correctly refused 508 of CRB's 652 records and accepted **all**
+/// 297 APG, 144 ACG and 92 ARG records at every caster level. A Dwarf
+/// Wizard 1 could add `Tsunami` — a 9th-level Wizard spell — and the sheet
+/// saved it. An affordance that succeeds where it must refuse is worse than
+/// one that refuses wrongly: the player gets an illegal character silently.
+///
+/// **It also fixes the level itself, not just the coverage.** The old CRB
+/// path used the record's own `level`, which is the MINIMUM across every
+/// class in its `CLASSES:` token — so a Wizard 1 could prepare
+/// `Hideous Laughter` (`CLASSES:Bard=1|Sorcerer,Wizard=2`, record level 1)
+/// although a Wizard learns it at 2. This resolves through
+/// `rules_tables::class_spell_levels`, which holds the per-class answer for
+/// all four books.
+///
+/// **Unknown is a refusal, never a default.** A spell with no stated level
+/// for this class comes back [`PreparedSpellLevel::Unknown`] carrying why;
+/// callers push that onto their unmet list. Falling back to the record's
+/// minimum level is precisely the wrong number
+/// `rules_tables::class_spell_levels` exists to remove, and inventing one
+/// would violate `docs/governance/no-stub-mvp-doctrine.md`.
+fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> PreparedSpellLevel {
+    if let Some(level) = class_spell_levels::class_spell_level(class_id, spell_id) {
+        return PreparedSpellLevel::Known(level);
+    }
+    // The bounded synthetic `<school>.<level>.<name>` convention this
+    // file's own fixtures are written in states its level outright. Read
+    // via the dotted parse specifically, never via a real `SPELL_LIST`
+    // record's own `level` — that field is the minimum-across-classes
+    // value this function exists to stop trusting.
+    if let Some((_, level)) = parse_synthetic_spell_id(spell_id) {
+        return PreparedSpellLevel::Known(level);
+    }
+    if !class_spell_levels::class_has_spell_list(class_id) {
+        return PreparedSpellLevel::Unknown(format!(
+            "prepared spell '{spell_id}' cannot be checked: no spell list for '{class_id}' has \
+             been ingested, so no spell level is known for that class"
+        ));
+    }
+    PreparedSpellLevel::Unknown(format!(
+        "prepared spell '{spell_id}' has no '{class_id}' spell level in any ingested book, so \
+         the spell level it would occupy is unknown"
+    ))
+}
+
+/// The school a prepared spell belongs to, across every ingested book.
+///
+/// Only Wizard needs this (its opposed-school slots cost 2 each); Arcanist
+/// and Warpriest have no school mechanic. `None` when no ingested record
+/// names a school — APG has 16 such records, and the caller charges the
+/// ordinary 1-slot cost rather than inventing an opposed school.
+fn resolve_prepared_spell_school(spell_id: &str) -> Option<Pf1SchoolId> {
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == spell_id) {
+        return Some(entry.school);
+    }
+    if let Some(entry) = apg::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return entry
+            .school
+            .and_then(|school| Pf1SchoolId::from_corpus_str(&format!("{school:?}")));
+    }
+    if let Some(entry) = acg::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return Pf1SchoolId::from_corpus_str(&format!("{:?}", entry.school));
+    }
+    if let Some(entry) = advanced_race_guide::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return Pf1SchoolId::from_corpus_str(&format!("{:?}", entry.school));
+    }
+    parse_wizard_spellbook_spell_id(spell_id).map(|(school, _)| school)
 }
 
 /// The PF1 slot cost of preparing one spell of the given school for this
@@ -36747,15 +36902,24 @@ fn unmet_wizard_spellbook_conditions(
         }
     }
 
+    // Resolve every prepared spell's WIZARD-specific level up front, and
+    // refuse outright any the corpus states no wizard level for — see
+    // `resolve_prepared_spell_level`. Resolving here rather than inside the
+    // per-spell-level loop is what makes an unresolvable spell a blocker
+    // instead of a `filter_map` casualty.
+    let mut prepared_levels: Vec<(&str, u8)> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(WIZARD_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push((spell_id, spell_level)),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = wizard_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.iter().any(|(_, l)| *l == spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      wizard level {level}"
@@ -36767,11 +36931,14 @@ fn unmet_wizard_spellbook_conditions(
         let int_bonus =
             ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
         let total_slots = base_count + specialist_bonus + int_bonus;
-        let consumed: i16 = prepared
+        let consumed: i16 = prepared_levels
             .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
             .filter(|(_, l)| *l == spell_level)
-            .map(|(school, _)| wizard_opposed_school_slot_cost(school))
+            .map(|(spell_id, _)| {
+                resolve_prepared_spell_school(spell_id)
+                    .map(wizard_opposed_school_slot_cost)
+                    .unwrap_or(1)
+            })
             .sum();
         if consumed > total_slots {
             unmet.push(format!(
@@ -40943,6 +41110,24 @@ fn compute_selected_skill_modifiers(
         String::new()
     };
 
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is the
+    // only one of the Advanced Race Guide's 187 feats whose unconditional
+    // `BONUS:SKILL` token names a skill this engine computes a total for.
+    // Its `+2` is `TYPE=Racial` and does NOT stack with the halfling
+    // Sure-Footed racial bonus — but it cannot collide with it either: the
+    // feat requires `Halfling ~ Fleet Of Foot`, which is precisely the
+    // alternate racial trait that replaces Sure-Footed. See
+    // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
+    let arg_feat_climb_bonus =
+        crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
+            &effective_character_feats(input),
+        );
+    let arg_feat_climb_detail = if arg_feat_climb_bonus > 0 {
+        format!(" + ARG Sure and Fleet racial bonus ({arg_feat_climb_bonus:+})")
+    } else {
+        String::new()
+    };
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
     let climb = rank
         + ability_modifiers.strength
@@ -40950,6 +41135,7 @@ fn compute_selected_skill_modifiers(
         + armor_check_penalty
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.climb
+        + arg_feat_climb_bonus
         + raging_climber_swimmer_bonus
         + alternate_trait_skill_bonuses.climb;
     explanations.push(ComputationExplanation {
@@ -40958,7 +41144,8 @@ fn compute_selected_skill_modifiers(
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
-             + feat bonus (+{}, Athletic if selected){raging_climber_swimmer_detail}{} = {climb}",
+             + feat bonus (+{}, Athletic if selected){arg_feat_climb_detail}\
+             {raging_climber_swimmer_detail}{} = {climb}",
             ability_modifiers.strength, feat_skill_bonuses.climb,
             alternate_trait_skill_detail(alternate_trait_skill_bonuses.climb)
         ),
@@ -41053,6 +41240,9 @@ fn compute_selected_skill_modifiers(
 /// though neither ever appears in `selected_feats`.
 fn ground_orphan_feat_facts(
     input: &CharacterInput,
+    base_attack_bonus: i16,
+    chassis_supported: bool,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::feat_effects;
@@ -41296,6 +41486,231 @@ fn ground_orphan_feat_facts(
             ),
         });
     }
+
+    ground_arg_and_pu_feat_facts(
+        input,
+        &feats,
+        base_attack_bonus,
+        chassis_supported,
+        ability_modifiers,
+        explanations,
+    );
+}
+
+/// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and
+/// Pathfinder Unchained's feats whose unconditional corpus `BONUS:` token
+/// carries a real standing magnitude on a dimension this engine has no total
+/// for.
+///
+/// Split out of [`ground_orphan_feat_facts`] rather than appended to it because
+/// these are two whole books' worth of records with their own classification
+/// story (see `feat_effects`' own SD-27 section header for the derivation that
+/// chose this set), and because two of them -- Armor of the Pit's natural armor
+/// and Sure and Fleet's Climb -- deliberately do NOT ground here: they reach
+/// real computed totals instead, in `compute_combat_baseline` and
+/// `compute_selected_skill_modifiers`.
+///
+/// Every producer is keyed on the EFFECTIVE feat set, so a class-granted copy
+/// of any of these reaches its record exactly as a chosen one does.
+fn ground_arg_and_pu_feat_facts(
+    input: &CharacterInput,
+    feats: &[String],
+    base_attack_bonus: i16,
+    chassis_supported: bool,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::feat_effects;
+
+    for fact in feat_effects::arg_maneuver_defense_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let maneuver_slug = slugify_id_segment(fact.maneuver);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_maneuver_defense.{feat_slug}.{maneuver_slug}"),
+            value: fact.cmd_bonus,
+            detail: format!(
+                "{} (ARG) grants a +{} bonus to Combat Maneuver Defense against {}. \
+                 Deliberately NOT added to defense.combat_maneuver_defense: that total is the \
+                 general CMD, applying to every maneuver, and folding in a bonus that covers \
+                 only some of them would report a specific, checkable, wrong number against a \
+                 disarm or a sunder. The condition is the opponent's ACTION TYPE, a static \
+                 defensive property of the character, which is why it grounds at all",
+                fact.feat_key, fact.cmd_bonus, fact.maneuver
+            ),
+        });
+    }
+
+    for fact in feat_effects::arg_energy_resistance_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_energy_resistance.{feat_slug}.{}", fact.energy_type),
+            value: fact.amount,
+            detail: format!(
+                "{} (ARG) grants resistance {} to {}. No energy-resistance total exists anywhere \
+                 in this codebase -- the same absence the Inquisitor Resistance judgment and the \
+                 Sorcerer Draconic Dragon Resistances records already name -- so this grounds \
+                 standalone. Two feats naming one energy type ground two records rather than a \
+                 sum: PF1 energy resistance from two sources does not add, the larger applies, \
+                 and both of these are 5",
+                fact.feat_key, fact.amount, fact.energy_type
+            ),
+        });
+    }
+
+    let flame_heart_caster_level = feat_effects::flame_heart_fire_caster_level_bonus_from_feats(feats);
+    if flame_heart_caster_level != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.flame_heart_fire_caster_level".to_owned(),
+            value: flame_heart_caster_level,
+            detail: format!(
+                "Flame Heart (ARG) treats the caster level of fire-descriptor spells (and the \
+                 alchemist level of fire bombs) as {flame_heart_caster_level} higher \
+                 (BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1). Deliberately NOT added to any \
+                 effective_caster_level record: those are the character's general caster level \
+                 for every spell, while this applies only to spells carrying the fire \
+                 descriptor, and this engine's spell records carry no descriptor to test"
+            ),
+        });
+    }
+
+    let emotion_save = feat_effects::emotion_save_bonus_from_feats(feats);
+    if emotion_save != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.emotion_descriptor_save_bonus".to_owned(),
+            value: emotion_save,
+            detail: format!(
+                "Saving throws against effects with the EMOTION descriptor are \
+                 +{emotion_save} for this character. Fearless Curiosity and Intimidating \
+                 Confidence both write the same corpus variable (BONUS:VAR|FearlessCuriosityBonus|1 \
+                 each), PCGen's own way of saying they add -- and neither record states a literal \
+                 magnitude at all, printing the running total through a %1 substitution token instead, \
+                 so +1 alone and +2 together are read from the pair rather than off one row. \
+                 Deliberately NOT added to defense.total_save.will: that total is the general \
+                 Will save, and this applies only against emotion-descriptor effects"
+            ),
+        });
+    }
+
+    let swim_speed = feat_effects::aquatic_ancestry_swim_speed_bonus_from_feats(feats);
+    if swim_speed != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.aquatic_ancestry_swim_speed".to_owned(),
+            value: swim_speed,
+            detail: format!(
+                "Aquatic Ancestry (ARG) increases swim speed by {swim_speed} feet \
+                 (BONUS:MOVEADD|TYPE.Swim|10). This engine computes no movement total of any \
+                 kind, so this grounds standalone exactly as Fleet's base-speed bonus does. The \
+                 feat's amphibious special quality is a capability with no magnitude and is not \
+                 grounded as a number"
+            ),
+        });
+    }
+
+    let gnome_weapon_attack = feat_effects::gnome_weapon_focus_attack_bonus_from_feats(feats);
+    if gnome_weapon_attack != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.gnome_weapon_focus_attack_bonus".to_owned(),
+            value: gnome_weapon_attack,
+            detail: format!(
+                "Gnome Weapon Focus (ARG) grants a +{gnome_weapon_attack} bonus on attack rolls \
+                 with gnome weapons -- weapons with \"gnome\" in the title \
+                 (BONUS:WEAPONPROF=TYPE.Gnome|TOHIT|1). Deliberately NOT added to any attack \
+                 total: the bonus is scoped to a weapon TYPE and this engine's per-weapon attack \
+                 totals carry no gnome facet to test, unlike Weapon Focus whose target is a \
+                 specific weapon the player records"
+            ),
+        });
+    }
+
+    // Pathfinder Unchained's stamina pools. Gated on a real computed chassis:
+    // Combat Stamina's pool is BAB + CON, and the `0` the chassis fallback
+    // substitutes for an unsupported posture is not a base attack bonus.
+    let constitution = ability_modifiers.constitution;
+    if let Some(facts) = chassis_supported
+        .then(|| feat_effects::stamina_pool_facts_from_feats(feats, base_attack_bonus, constitution))
+        .flatten()
+    {
+        let extra = facts.extra_stamina_picks;
+        explanations.push(ComputationExplanation {
+            id: "feat.pu_standalone.stamina_pool".to_owned(),
+            value: facts.primary,
+            detail: format!(
+                "Combat Stamina (Pathfinder Unchained) grants a stamina pool of \
+                 {} points: base attack bonus (+{base_attack_bonus}) + Constitution \
+                 modifier ({constitution:+}), transcribed from BONUS:VAR|StaminaPool|BAB+CON, \
+                 plus {extra} Extra Stamina pick(s) at +3 each (STACK:YES MULT:YES, capped at \
+                 three by the feat's own !PREABILITY:3 token). No stamina expenditure, combat \
+                 trick or per-round state is modelled here, so the pool grounds standalone as \
+                 a size rather than as a running resource",
+                facts.primary
+            ),
+        });
+        if let Some(secondary) = facts.secondary {
+            explanations.push(ComputationExplanation {
+                id: "feat.pu_standalone.secondary_stamina_pool".to_owned(),
+                value: secondary,
+                detail: format!(
+                    "Push the Limits (Pathfinder Unchained) grants a SECOND stamina pool of \
+                     {secondary} points, equal to the Constitution modifier \
+                     (BONUS:VAR|SecondaryStaminaPool|CON). Reported separately rather than \
+                     added into the primary pool above: its points are spendable only at 0 \
+                     primary stamina or while fatigued, conditions this engine does not \
+                     model, so summing the two would overstate what the character can spend"
+                ),
+            });
+        }
+    }
+
+    // Armor of the Pit's OTHER half, named rather than silently dropped.
+    // Its `BONUS:VAR|Cold/Electricity/FireResistanceBonus|5|TYPE=Resistance`
+    // token names three energy types unconditionally; the rule grants two of
+    // three, chosen by the player from the ones they do not already resist.
+    // Grounding three would overstate it and grounding a guessed two would
+    // fabricate the choice, so this states the gap instead of inventing a
+    // number -- and only for the character the branch actually applies to.
+    if feat_identity::holds(feats, "Armor of the Pit") && character_has_tiefling_scaled_skin(input) {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.armor_of_the_pit_scaled_skin_branch".to_owned(),
+            value: 0,
+            detail: "Armor of the Pit (ARG) on a character who took the Scaled Skin alternate \
+                     racial trait grants resistance 5 to TWO of cold, electricity and fire -- \
+                     the two they do not already resist -- INSTEAD of its +2 natural armor \
+                     bonus, which is therefore withheld from this character's Armor Class. \
+                     Which two is a player choice this engine records nowhere, so no resistance \
+                     value is claimed here (+0) rather than guessing a pair or asserting all \
+                     three, which is what the feat's corpus token literally says"
+                .to_owned(),
+        });
+    }
+}
+
+/// Turns a human-readable name into a stable explanation-id segment:
+/// lowercase, ASCII alphanumerics kept, every other run of characters collapsed
+/// to a single `_`, with no leading or trailing separator.
+///
+/// The existing records here build their slugs with
+/// `.to_lowercase().replace(' ', "_")`, which is fine for the plain skill names
+/// they carry but produces `craft_(alchemy)` and `scavenger's_eye` for ARG's,
+/// putting punctuation into an id other code matches on. This collapses those
+/// to `craft_alchemy` and `scavengers_eye`. Deliberately a new helper rather
+/// than a rewrite of the shipped call sites: changing an id already asserted by
+/// tests and read by the desktop layer is a separate, larger change than this
+/// one is scoped for.
+fn slugify_id_segment(name: &str) -> String {
+    let mut out = String::with_capacity(name.len());
+    let mut pending_separator = false;
+    for character in name.chars() {
+        if character.is_ascii_alphanumeric() {
+            if pending_separator && !out.is_empty() {
+                out.push('_');
+            }
+            pending_separator = false;
+            out.push(character.to_ascii_lowercase());
+        } else {
+            pending_separator = true;
+        }
+    }
+    out
 }
 
 /// `selected_choices` is scanned regardless of chassis support.
@@ -41316,6 +41731,41 @@ fn ground_standalone_feat_skill_facts(
                  grounds as a standalone flat record, not wired into any skill total this \
                  codebase computes",
                 fact.feat_key, fact.bonus, fact.skill_name, fact.skill_name
+            ),
+        });
+    }
+
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's
+    // five `BONUS:SKILL` feats. Their ids carry the FEAT as well as the skill,
+    // unlike the CRB/APG records above, because ARG genuinely puts three
+    // different feats on one skill -- Seen and Unseen's +2 Stealth, Angelic
+    // Flesh's -2 Stealth, and CRB Stealthy's +2, which already owns
+    // `feat.standalone_skill_bonus.stealth`. A skill-only id would collapse
+    // them.
+    for fact in crate::rules_core::feat_effects::arg_skill_facts_from_feats(
+        &effective_character_feats(input),
+    ) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let skill_slug = slugify_id_segment(fact.skill_name);
+        let integrated = fact.skill_name == "Climb";
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_skill_bonus.{feat_slug}.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "{} (ARG) grants a {:+} bonus on {} checks, transcribed from its corpus \
+                 BONUS:SKILL token and confirmed against its own BENEFIT prose. {}",
+                fact.feat_key,
+                fact.bonus,
+                fact.skill_name,
+                if integrated {
+                    "Climb IS one of the three skills compute_selected_skill_modifiers computes, \
+                     so this value is already summed into skill.selected_modifier.climb -- this \
+                     record names the contributor, it is not a second, separate bonus"
+                } else {
+                    "This skill is not among the three compute_selected_skill_modifiers tracks \
+                     (Climb/Intimidate/Swim), so it grounds as a standalone flat record and is \
+                     not wired into any skill total this codebase computes"
+                }
             ),
         });
     }
@@ -42060,6 +42510,30 @@ fn compute_combat_baseline(
     // Draconic bloodline choice are both met, since it is a permanent (Ex) quality.
     let draconic_dragon_resistances_natural_armor_bonus =
         apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline(input);
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Armor of the Pit is the
+    // only one of the Advanced Race Guide's 187 feats whose unconditional
+    // corpus magnitude lands on a total this engine computes -- a `+2` natural
+    // armor bonus, and therefore a real, visible change to a tiefling's Armor
+    // Class and (by exclusion) to their touch AC.
+    //
+    // Its corpus token carries `!PREABILITY:1,CATEGORY=Special Ability,Scaled
+    // Skin C ~ Tiefling,...`, which a mechanical "an inline PRE means
+    // situational" reading would classify as conditional. It is not a
+    // situation: it asks whether this character took the Scaled Skin alternate
+    // racial trait, a persisted creation-time decision this engine already
+    // reads through `selected_alternate_trait_keys`. So the branch is fully
+    // decided here rather than deferred, matching the `BENEFIT:` prose exactly
+    // ("+2 natural armor bonus. If you have the scaled skin racial trait, you
+    // *instead* gain resistance 5 to two of ...").
+    //
+    // Deliberately NOT race-gated on `PREFACT:1,TEMPLATES,IsTiefling=true`:
+    // asserting a feat's selection prerequisites is `feat_prereqs`' job, the
+    // same split `master_craftsman_facts_from_choices` already documents.
+    let armor_of_the_pit_natural_armor_bonus =
+        crate::rules_core::feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats(
+            &effective_character_feats(input),
+            character_has_tiefling_scaled_skin(input),
+        );
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is a conditional
     // CONTRIBUTION, not a precondition. `unmet_combat_posture_conditions`
     // used to *require* `feat:dodge` before this baseline would compute
@@ -42113,7 +42587,8 @@ fn compute_combat_baseline(
         + protection_judgment_ac_bonus
         + natures_whispers_ac_bonus
         + challenge_armor_class_penalty
-        + draconic_dragon_resistances_natural_armor_bonus;
+        + draconic_dragon_resistances_natural_armor_bonus
+        + armor_of_the_pit_natural_armor_bonus;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -42136,7 +42611,9 @@ fn compute_combat_baseline(
              ({challenge_armor_class_penalty}, only while actively challenging) + Sorcerer \
              Draconic Bloodline Dragon Resistances natural armor bonus \
              (+{draconic_dragon_resistances_natural_armor_bonus}, only for a Draconic-bloodline \
-             Sorcerer at 3rd level or higher); shield \
+             Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus \
+             (+{armor_of_the_pit_natural_armor_bonus}, only for a character holding that feat \
+             who did NOT take the Scaled Skin alternate racial trait); shield \
              is absent (+0) = {armor_class}"
         ),
     });
@@ -42155,7 +42632,8 @@ fn compute_combat_baseline(
     // rather than inferred:
     //   EXCLUDED -- armor bonus (Chain Shirt), Alchemist Mutagen's natural
     //     armor bonus, Sorcerer Draconic Dragon Resistances' natural armor
-    //     bonus. PF1 touch AC ignores armor, shield and natural armor.
+    //     bonus, ARG Armor of the Pit's natural armor bonus. PF1 touch AC
+    //     ignores armor, shield and natural armor.
     //   INCLUDED -- the Dexterity contribution (still subject to the armor's
     //     MAXDEX, which limits the Dexterity bonus to Armor Class generally),
     //     the size modifier, Dodge's dodge bonus, Brawler's AC Bonus (also a
@@ -42167,7 +42645,8 @@ fn compute_combat_baseline(
     // absent, contributing 0.
     let excluded_from_touch = CHAIN_SHIRT_ARMOR_BONUS
         + alchemist_mutagen_ac_bonus_value
-        + draconic_dragon_resistances_natural_armor_bonus;
+        + draconic_dragon_resistances_natural_armor_bonus
+        + armor_of_the_pit_natural_armor_bonus;
     let touch_armor_class_total = touch_armor_class(armor_class, excluded_from_touch);
     explanations.push(ComputationExplanation {
         id: "defense.touch_armor_class".to_owned(),
@@ -42176,7 +42655,8 @@ fn compute_combat_baseline(
             "Touch armor class: the armor class above ({armor_class}) with the contributors a \
              touch attack ignores removed -- Chain Shirt armor bonus (-{CHAIN_SHIRT_ARMOR_BONUS}), \
              Alchemist Mutagen natural armor (-{alchemist_mutagen_ac_bonus_value}), Sorcerer \
-             Draconic Bloodline natural armor (-{draconic_dragon_resistances_natural_armor_bonus}); \
+             Draconic Bloodline natural armor (-{draconic_dragon_resistances_natural_armor_bonus}), \
+             ARG Armor of the Pit natural armor (-{armor_of_the_pit_natural_armor_bonus}); \
              shield is absent (-0). The Dexterity contribution (+{dexterity_contribution}), the \
              {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) and every \
              dodge/sacred/ability bonus and penalty are all retained = {touch_armor_class_total}"

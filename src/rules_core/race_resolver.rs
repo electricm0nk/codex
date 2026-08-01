@@ -1254,49 +1254,48 @@ mod tests {
         assert_eq!(corpus.traits.values().flatten().count(), 331, "175 standard + 156 ARG alternates");
     }
 
-    /// **A real corpus gap, pinned rather than asserted away.**
+    /// **The corpus gap that was here is closed. This is what replaced it.**
     ///
-    /// Every replace-flag an alternate fires should be claimed by some trait
-    /// in the loaded books — otherwise the alternate applies, the standard
-    /// trait it is supposed to replace stays, and the character silently gets
-    /// both. Six flags are unclaimed today, and the reason is not a bug in
-    /// this resolver or in the ingest tools' logic: those six standard traits
-    /// declare their gate in a *different file and a different token* than the
-    /// two the ingest reads.
+    /// Every replace-flag an alternate fires must be claimed by some trait in
+    /// the loaded books — otherwise the alternate applies, the standard trait
+    /// it is supposed to replace stays, and the character silently gets both.
+    /// Six flags were unclaimed until 2026-07-31, and the reason was never a
+    /// bug in this resolver: those standard traits declare their gate in a
+    /// *different file and a different token* than the ingest read.
     ///
-    /// PCGen has two spellings of the same protocol. The common one, which the
-    /// corpus captures, puts the gate on the standard trait row itself in
-    /// `<race>_abilities_race.lst`:
+    /// PCGen has two spellings of the same protocol. The common one puts the
+    /// gate on the standard trait row itself in `<race>_abilities_race.lst`:
     ///
     /// ```text
     /// Greed  KEY:Dwarf ~ Greed  !PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True
     /// ```
     ///
-    /// The rarer one inverts it, in `<race>_abilities_globalvar*.lst` — a file
-    /// the chassis ingest does not read — where a `.MOD` row *grants* the
-    /// standard trait only while the variable is still `0`
-    /// (verified 2026-07-31 in the PCGen checkout,
-    /// `core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst:8`
-    /// and `core_essentials/races/duergar/duergar_abilities_globalvar.lst:19`):
+    /// The other inverts it, in `<race>_abilities_globalvar.lst`, where a
+    /// `.MOD` row *grants* the standard trait only while the variable is `0`:
     ///
     /// ```text
-    /// CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+    /// CATEGORY=Special Ability|Aasimar ~ Default.MOD
     ///     ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Vision|PREVAREQ:Aasimar_ReplaceVision,0
     /// ```
     ///
-    /// Aasimar's 9 standard trait rows carry no `!PREFACT` at all, which is
-    /// why all five Aasimar flags land here; `Duergar_ReplaceSLAInvisibility`
-    /// is the sixth. Closing the gap means ingesting the `globalvar` files —
-    /// a change to the ingest tools, which this cycle does not own.
+    /// Aasimar's 9 standard trait rows carry no `!PREFACT` at all, so all five
+    /// Aasimar flags were unclaimed and its 9 ARG alternates were an
+    /// affordance a player could tick and never use — `create_character`
+    /// refused every one of them on `inert_flags`. `src/bin/ingest_races.rs`
+    /// now reads the globalvar gate wherever the trait row declares none, and
+    /// cross-checks the two sources on the 166 rows where both speak
+    /// (`tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs`).
     ///
-    /// The consequence is bounded and stated: **no Core Rulebook race is
-    /// affected** (asserted below), so the mandatory CRB pin is unaffected;
-    /// the exposure is 9 Aasimar alternates and 1 Duergar alternate in
-    /// Bestiary 1. At runtime the resolver reports each occurrence in
-    /// [`ResolvedRace::inert_flags`] rather than quietly doubling a bonus —
-    /// see the test below.
+    /// **One flag remains, and it is a different defect.**
+    /// `Duergar_ReplaceSLAInvisibility` is declared by the corpus — its row's
+    /// gate names three flags and the single-valued
+    /// `RaceTraitCacheData::suppressed_by_flag` holds only the first. That is a
+    /// schema limit, not a missing file; it is reported by
+    /// `race_trait_picker::multi_flag_gate_findings`; and the alternate that
+    /// fires it is not dead, because the flag grants
+    /// `Duergar ~ Spell-Like Ability ~ Enlarge Person`.
     #[test]
-    fn the_six_flags_whose_suppression_edge_lives_in_an_un_ingested_file_are_pinned() {
+    fn the_one_remaining_unclaimed_flag_is_a_schema_limit_not_a_missing_file() {
         let corpus = all_books();
         let claimed: BTreeSet<&str> = corpus
             .traits
@@ -1318,23 +1317,19 @@ mod tests {
         }
         assert_eq!(
             orphan_flags.iter().copied().collect::<Vec<_>>(),
-            vec![
-                "Aasimar_ReplaceCelestialResistance",
-                "Aasimar_ReplaceLanguages",
-                "Aasimar_ReplaceSkilled",
-                "Aasimar_ReplaceSpellLikeAbility",
-                "Aasimar_ReplaceVision",
-                "Duergar_ReplaceSLAInvisibility",
-            ],
-            "the known gap must not grow; a new orphan flag is a new defect"
+            vec!["Duergar_ReplaceSLAInvisibility"],
+            "the Aasimar five are closed; a new orphan flag is a new defect"
         );
-        assert_eq!(affected_races.iter().copied().collect::<Vec<_>>(), vec!["Aasimar", "Duergar"]);
-        assert_eq!(affected_alternates.len(), 10, "9 Aasimar alternates + 1 Duergar alternate");
+        assert_eq!(affected_races.iter().copied().collect::<Vec<_>>(), vec!["Duergar"]);
+        assert_eq!(affected_alternates.iter().copied().collect::<Vec<_>>(), vec!["Duergar ~ Blood Enmity"]);
+        // ...and it is not a dead affordance, because the flag grants.
+        let blood_enmity = corpus.resolve("Duergar", &["Duergar ~ Blood Enmity"]).expect("resolves");
+        assert!(blood_enmity.inert_flags.is_empty(), "{:?}", blood_enmity.inert_flags);
         // The bound that matters for the SD-27 mandatory guard.
         for race in ["Human", "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling"] {
             assert!(!affected_races.contains(race), "no CRB race may be affected, but {race} is");
         }
-        // Total flags in play, derived: 74 distinct, 6 of them unclaimed.
+        // Total flags in play, derived: 74 distinct, 1 of them unclaimed.
         let all_flags: BTreeSet<&str> = corpus
             .traits
             .values()
@@ -1344,30 +1339,97 @@ mod tests {
         assert_eq!(all_flags.len(), 74);
     }
 
-    /// The runtime half of the gap above: when a swap has no counterpart in
-    /// the loaded corpus, the resolver *says so* via `inert_flags` instead of
-    /// silently leaving the standard trait in place. A caller can refuse to
-    /// build such a character; it cannot be misled into thinking the swap
-    /// happened.
+    /// **No alternate in the loaded corpus fires an inert flag any more.**
+    ///
+    /// This is the property that makes the picker's menu honest, because
+    /// `character_hub::resolve_alternate_trait_choices` refuses to save a
+    /// character on exactly this condition. Asserted over all 153 alternates,
+    /// not over the nine that happened to be broken.
+    #[test]
+    fn no_alternate_the_picker_offers_fires_a_flag_that_suppresses_and_grants_nothing() {
+        let corpus = all_books();
+        let mut checked = 0usize;
+        for race_key in corpus.race_keys() {
+            for record in corpus.alternate_traits(race_key) {
+                let key = record.data.key.clone();
+                let resolved = corpus.resolve(race_key, &[key.as_str()]).expect("resolves");
+                assert!(resolved.inert_flags.is_empty(), "{key}: {:?}", resolved.inert_flags);
+                checked += 1;
+            }
+        }
+        assert_eq!(checked, 153);
+    }
+
+    /// The runtime machinery that reports an unmatched swap is still under
+    /// test even though the real corpus no longer contains one.
+    ///
+    /// Driven against a synthetic two-record corpus written to a temp dir —
+    /// the same technique
+    /// [`a_malformed_record_produces_a_diagnostic_instead_of_taking_down_the_load`]
+    /// uses — because the alternative is deleting the test along with the
+    /// defect, and then nothing proves the resolver still *says so* the next
+    /// time a book arrives with a gate nobody ingested.
     #[test]
     fn a_swap_with_no_counterpart_is_reported_as_an_inert_flag_not_silently_dropped() {
-        let corpus = all_books();
-        let halo = corpus.resolve("Aasimar", &["Aasimar ~ Halo"]).expect("Aasimar resolves");
-        assert!(halo.traits.iter().any(|t| t.key == "Aasimar ~ Halo"), "the alternate applies");
-        assert_eq!(halo.fired_flags, vec!["Aasimar_ReplaceVision".to_string()]);
+        let dir = std::env::temp_dir().join(format!("codex_inert_flag_{}", std::process::id()));
+        fs::remove_dir_all(&dir).ok();
+        fs::create_dir_all(dir.join("race")).expect("temp dir");
+        fs::create_dir_all(dir.join("race_trait")).expect("temp dir");
+
+        let source = r#""source":{"kind":"lst_token","path":"synthetic.lst","sha256":"0","line":1,"record_key":"x"}"#;
+        fs::write(
+            dir.join("race/testrace.json"),
+            format!(
+                r#"{{"population":"in_scope","completeness":"chassis_only","ingested_at":"t","data":{{"key":"Testrace","name":"Testrace","base_size":null,"base_move_walk":30,"race_type":null,"type_tokens":[],"legs":2,"hands":2}},{source},"license":"OGL"}}"#
+            ),
+        )
+        .expect("write");
+        // A standard trait with NO gate, and an alternate that fires a flag
+        // naming it. This is precisely the Aasimar shape as it was on disk
+        // before the globalvar file was ingested.
+        for (slug, body) in [
+            (
+                "standard",
+                r#""key":"Testrace ~ Vision","name":"Vision","race_key":"Testrace","type_tokens":["Testrace Racial Default"],"is_racial_default":true,"suppressed_by_flag":null,"sets_replace_flags":[]"#,
+            ),
+            (
+                "alternate",
+                r#""key":"Testrace ~ Halo","name":"Halo","race_key":"Testrace","type_tokens":["Testrace Racial Trait"],"is_racial_default":false,"suppressed_by_flag":null,"sets_replace_flags":["Testrace_ReplaceVision"]"#,
+            ),
+        ] {
+            fs::write(
+                dir.join(format!("race_trait/{slug}.json")),
+                format!(
+                    r#"{{"population":"in_scope","completeness":"full","ingested_at":"t","data":{{{body}}},{source},"license":"OGL"}}"#
+                ),
+            )
+            .expect("write");
+        }
+
+        let roots = [BookCorpusRoot { book_id: "synthetic", dir: &dir }];
+        let corpus = load_race_corpus(&roots);
+        assert!(corpus.diagnostics().is_empty(), "{:?}", corpus.diagnostics());
+
+        let halo = corpus.resolve("Testrace", &["Testrace ~ Halo"]).expect("Testrace resolves");
+        assert!(halo.traits.iter().any(|t| t.key == "Testrace ~ Halo"), "the alternate applies");
+        assert_eq!(halo.fired_flags, vec!["Testrace_ReplaceVision".to_string()]);
         assert_eq!(
             halo.inert_flags,
-            vec!["Aasimar_ReplaceVision".to_string()],
+            vec!["Testrace_ReplaceVision".to_string()],
             "the flag fired but suppressed nothing — reported, not hidden"
         );
         assert!(halo.suppressions.is_empty());
         // The un-suppressed standard trait is still there, which is exactly
         // what `inert_flags` is warning about.
-        assert!(halo.traits.iter().any(|t| t.key == "Aasimar ~ Vision"));
+        assert!(halo.traits.iter().any(|t| t.key == "Testrace ~ Vision"));
+        fs::remove_dir_all(&dir).ok();
 
-        // Contrast: a CRB swap with a real counterpart reports no inert flag.
-        let dwarf = corpus.resolve("Dwarf", &["Dwarf ~ Ancient Enmity"]).expect("resolves");
-        assert!(dwarf.inert_flags.is_empty());
+        // Contrast, against the real corpus: a swap with a real counterpart
+        // reports no inert flag — including Aasimar's, which is what this
+        // cycle changed.
+        let corpus = all_books();
+        assert!(corpus.resolve("Dwarf", &["Dwarf ~ Ancient Enmity"]).expect("resolves").inert_flags.is_empty());
+        assert!(corpus.resolve("Aasimar", &["Aasimar ~ Halo"]).expect("resolves").inert_flags.is_empty());
     }
 
     /// Selecting every alternate a race offers at once is not a realistic

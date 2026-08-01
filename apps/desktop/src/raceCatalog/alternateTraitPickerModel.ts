@@ -40,6 +40,12 @@ export function describePicker(response: AlternateRacialTraitsResponse): string 
  * The empty case is *not* silently blank: an alternate whose replace-flag
  * matches no standard trait is a corpus finding, and the reader is told which
  * flag and that nothing in the loaded books declares it.
+ *
+ * No shipped record reaches that branch today — ARG's nine Aasimar alternates
+ * did until `ingest_races` learned to read PCGen's `globalvar` gate, and
+ * `race_trait_picker` now pins the live menu as carrying no unmatched flag.
+ * The branch stays because the next book can reintroduce the shape, and a row
+ * that reads "Replaces —" is how a dead affordance goes unnoticed.
  */
 export function describeReplacement(alternate: AlternateTraitDto): string {
   const parts: string[] = [];

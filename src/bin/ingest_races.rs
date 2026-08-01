@@ -565,6 +565,82 @@ fn is_racial_default(type_tokens: &[String], race_key: &str) -> bool {
     type_tokens.iter().any(|t| t.eq_ignore_ascii_case(&marker))
 }
 
+/// The `PREVAREQ:<Flag>,0` gate a race's `_abilities_globalvar.lst`
+/// declares for each of its standard traits, keyed by trait key.
+///
+/// # Why a second source exists at all
+///
+/// `decisions.md §26` describes the swap protocol as a negated fact-check
+/// on the standard trait's own row (`!PREFACT:1,ABILITIES,<Flag>=True`).
+/// That is true, and it is not the whole protocol. PCGen states every
+/// gate a **second** time, per race, as a `.MOD` in
+/// `core_essentials/races/<race>/<race>_abilities_globalvar.lst`:
+///
+/// ```text
+/// CATEGORY=Special Ability|Aasimar ~ Default.MOD
+///     ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0
+/// ```
+///
+/// Read: *grant `Aasimar ~ Skilled` while `Aasimar_ReplaceSkilled` is 0* —
+/// the same statement `!PREFACT` makes, inverted. Some races' `.MOD` rows
+/// address `CATEGORY=Internal|Racial Traits ~ <Race>.MOD` instead of
+/// `CATEGORY=Special Ability|<Race> ~ Default.MOD`; both are read, because
+/// the operative token is the `ABILITY:` grant either way.
+///
+/// # Why reading it is transcription, not invention
+///
+/// It is checkable against the first source and is checked, per row, by
+/// the caller: where a trait row carries its own `!PREFACT`, the globalvar
+/// gate must name every flag that row names, and a contradiction fails the
+/// run. Across the 18 in-scope races the two agree on all 166 rows that
+/// carry a `!PREFACT`, and the globalvar speaks for 9 more — Aasimar's,
+/// whose `_abilities_race.lst` carries no `!PREFACT` token at all. Those 9
+/// are why ARG's 9 Aasimar alternate racial traits could be offered to a
+/// player and never work.
+///
+/// Only `PREVAREQ:<Flag>,0` clauses are read. A `PREVAREQ:<Flag>,1` is the
+/// opposite statement — a *positive* requirement, used by Duergar's two
+/// mutually-exclusive spell-like-ability rows — and treating it as a
+/// suppressor would invert the rule.
+fn globalvar_gates(text: &str, race_key: &str) -> BTreeMap<String, Vec<String>> {
+    let mut out: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for row in parse_rows(text) {
+        for (key, value) in row.tokens() {
+            if key != "ABILITY" {
+                continue;
+            }
+            let parts: Vec<&str> = value.split('|').collect();
+            // `<Race> Racial Trait|AUTOMATIC|<TraitKey>[|PREVAREQ:...]`
+            if parts.len() < 3 || parts[0] != format!("{race_key} Racial Trait") || parts[1] != "AUTOMATIC" {
+                continue;
+            }
+            let trait_key = parts[2].trim();
+            let mut flags: Vec<String> = Vec::new();
+            for clause in &parts[3..] {
+                let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
+                let Some((flag, target)) = rest.rsplit_once(',') else { continue };
+                if target.trim() != "0" {
+                    continue;
+                }
+                let flag = flag.trim().to_string();
+                if !flags.contains(&flag) {
+                    flags.push(flag);
+                }
+            }
+            if flags.is_empty() {
+                continue;
+            }
+            let entry = out.entry(trait_key.to_string()).or_default();
+            for flag in flags {
+                if !entry.contains(&flag) {
+                    entry.push(flag);
+                }
+            }
+        }
+    }
+    out
+}
+
 /// Extracts the replace-flag names from a `!PREFACT:1,ABILITIES,<Flag>=True`
 /// token (`decisions.md §26`'s swap protocol: the trait applies *unless*
 /// the named flag is set).
@@ -610,10 +686,41 @@ fn race_key_from_trait_key(key: &str) -> Option<&str> {
 /// empty: a *standard* trait declares the flag that suppresses it, it
 /// never sets one. ARG's alternate racial traits are what set flags, and
 /// they are a separate ingest.
-fn parse_trait(row: &LstRow, race_key: &str) -> Result<RaceTraitCacheData, String> {
+///
+/// `gates` is [`globalvar_gates`]' reading of the race's second gate
+/// source. It is used **only where the row itself declares no
+/// `!PREFACT`** — a globalvar read can never overwrite a gate the trait
+/// row states, so the 166 rows that already carried one are byte-identical
+/// after this change. Where both speak, the caller cross-checks them and
+/// fails the run on a contradiction; the check lives there rather than
+/// here because it is a per-race reconciliation, not a per-row parse.
+///
+/// When the gate comes from the globalvar file, the grant token that
+/// declared it is appended verbatim to `raw_tokens` under the key
+/// `GLOBALVAR:ABILITY`. That key is not an LST token name, so nothing can
+/// mistake it for something the trait row said, and the record carries its
+/// own evidence rather than an unfalsifiable conclusion.
+fn parse_trait(
+    row: &LstRow,
+    race_key: &str,
+    gates: &BTreeMap<String, Vec<String>>,
+) -> Result<RaceTraitCacheData, String> {
     let key = row.first("KEY").ok_or_else(|| format!("line {}: standard trait row has no KEY: token", row.line_no))?;
     let types = type_tokens(row);
-    let flags = replace_flags(row);
+    let mut flags = replace_flags(row);
+    let mut raw_tokens = raw_tokens_excluding_bonus(row);
+    if flags.is_empty()
+        && let Some(from_globalvar) = gates.get(key)
+    {
+        flags = from_globalvar.clone();
+        raw_tokens.push(RawToken {
+            key: "GLOBALVAR:ABILITY".to_string(),
+            value: format!(
+                "{race_key} Racial Trait|AUTOMATIC|{key}|{}",
+                from_globalvar.iter().map(|flag| format!("PREVAREQ:{flag},0")).collect::<Vec<_>>().join("|")
+            ),
+        });
+    }
     let rendered = render_description(row).map_err(|e| format!("line {}: {e}", row.line_no))?;
     Ok(RaceTraitCacheData {
         key: key.to_string(),
@@ -632,7 +739,7 @@ fn parse_trait(row: &LstRow, race_key: &str) -> Result<RaceTraitCacheData, Strin
         // from the row's own literals and any argument tail is stripped.
         description: rendered.text,
         source_page: source_page(row),
-        raw_tokens: raw_tokens_excluding_bonus(row),
+        raw_tokens,
         raw_bonus_chains: raw_bonus_chains(row),
     })
 }
@@ -753,11 +860,28 @@ fn main() {
     let mut non_default_traits: Vec<String> = Vec::new();
     let mut unresolved_desc_args: Vec<String> = Vec::new();
     let mut rewritten_descriptions: Vec<String> = Vec::new();
+    // The two gate sources, tallied so the reconciliation is a printed
+    // measurement rather than a claim in a doc comment.
+    let mut gates_agreeing = 0usize;
+    let mut gates_from_globalvar: Vec<String> = Vec::new();
+    let mut gate_supersets: Vec<String> = Vec::new();
+    let mut ungated_traits: Vec<String> = Vec::new();
 
     for spec in IN_SCOPE_RACES {
         let dir = races_root.join(spec.dir);
         let chassis_path = find_single(&dir, "_races.lst").unwrap_or_else(|e| panic!("{e}"));
         let abilities_path = find_single(&dir, "_abilities_race.lst").unwrap_or_else(|e| panic!("{e}"));
+        // The second gate source. `find_single` matches by suffix, so the
+        // per-subrace file (`*_abilities_globalvar_subrace.lst`) does not
+        // collide with it. Subrace content is out of scope for the 18.
+        let globalvar_path = find_single(&dir, "_abilities_globalvar.lst").unwrap_or_else(|e| panic!("{e}"));
+        let globalvar_bytes =
+            fs::read(&globalvar_path).unwrap_or_else(|e| panic!("cannot read {globalvar_path:?}: {e}"));
+        let globalvar_rel = format!(
+            "{RACES_RELATIVE}/{}/{}",
+            spec.dir,
+            globalvar_path.file_name().unwrap().to_string_lossy()
+        );
 
         let chassis_bytes = fs::read(&chassis_path).unwrap_or_else(|e| panic!("cannot read {chassis_path:?}: {e}"));
         let abilities_bytes = fs::read(&abilities_path).unwrap_or_else(|e| panic!("cannot read {abilities_path:?}: {e}"));
@@ -812,6 +936,10 @@ fn main() {
         tallies.entry(spec.book).or_insert(BookTally { races: 0, traits: 0 }).races += 1;
 
         // --- standard racial traits ---
+        let gates = globalvar_gates(&String::from_utf8_lossy(&globalvar_bytes), &race_key);
+        if gates.is_empty() {
+            errors.push(format!("{globalvar_rel}: declares no PREVAREQ gate for any {race_key} trait"));
+        }
         let trait_dir = out_root.join(spec.book).join("race_trait").join(&race_slug);
         let mut seen_slugs: BTreeMap<String, String> = BTreeMap::new();
         let mut trait_count = 0usize;
@@ -824,13 +952,55 @@ fn main() {
                 errors.push(format!("{abilities_rel}:{}: .MOD row matched the standard-trait selector", row.line_no));
                 continue;
             }
-            let data = match parse_trait(&row, &race_key) {
+            let data = match parse_trait(&row, &race_key, &gates) {
                 Ok(d) => d,
                 Err(e) => {
                     errors.push(format!("{abilities_rel}: {e}"));
                     continue;
                 }
             };
+
+            // The two gate sources, reconciled per row. A `!PREFACT` flag
+            // the globalvar file does not also name is a contradiction
+            // between two statements of the same protocol, and there is no
+            // honest way to pick a winner — so it fails the run rather
+            // than being resolved by preference. Today there are none:
+            // 166 rows agree exactly, 2 of them (Duergar's `Spell-Like
+            // Abilities`, Tengu's `Languages`) have a globalvar gate that
+            // names strictly more flags, and 9 (Aasimar's) have no
+            // `!PREFACT` at all.
+            let row_flags = replace_flags(&row);
+            match gates.get(&data.key) {
+                Some(gate_flags) => {
+                    let missing: Vec<&String> =
+                        row_flags.iter().filter(|flag| !gate_flags.contains(flag)).collect();
+                    if !missing.is_empty() {
+                        errors.push(format!(
+                            "{abilities_rel}:{}: {}'s own !PREFACT names {missing:?}, which {globalvar_rel} \
+                             does not gate on ({gate_flags:?}); the two statements of the swap protocol \
+                             contradict each other",
+                            row.line_no, data.key
+                        ));
+                    }
+                    if row_flags.is_empty() {
+                        gates_from_globalvar.push(format!("{} -> {gate_flags:?} ({globalvar_rel})", data.key));
+                    } else {
+                        gates_agreeing += 1;
+                        let extra: Vec<&String> =
+                            gate_flags.iter().filter(|flag| !row_flags.contains(flag)).collect();
+                        if !extra.is_empty() {
+                            gate_supersets.push(format!("{} -> globalvar also gates on {extra:?}", data.key));
+                        }
+                    }
+                }
+                None if !row_flags.is_empty() => {
+                    errors.push(format!(
+                        "{globalvar_rel}: no PREVAREQ gate for {}, whose own row declares {row_flags:?}",
+                        data.key
+                    ));
+                }
+                None => ungated_traits.push(format!("{} ({abilities_rel}:{})", data.key, row.line_no)),
+            }
 
             // The trait's own KEY must agree with the chassis on which
             // race owns it; a mismatch would silently file a trait under
@@ -953,6 +1123,20 @@ fn main() {
     for t in &unresolved_desc_args {
         println!("  {t}");
     }
+    println!("\n--- replace-flag gates: the two sources reconciled ---");
+    println!("rows where the trait's own !PREFACT and the globalvar PREVAREQ agree: {gates_agreeing}");
+    println!("rows gated ONLY by the globalvar file (no !PREFACT on the row): {}", gates_from_globalvar.len());
+    for t in &gates_from_globalvar {
+        println!("  {t}");
+    }
+    println!("rows where the globalvar file gates on strictly more flags: {}", gate_supersets.len());
+    for t in &gate_supersets {
+        println!("  {t}");
+    }
+    println!("rows with no gate in either source: {}", ungated_traits.len());
+    for t in &ungated_traits {
+        println!("  {t}");
+    }
 
     if !errors.is_empty() {
         eprintln!("\n{} ERROR(S):", errors.len());
@@ -1012,6 +1196,12 @@ mod tests {
         let rows = parse_rows(line);
         assert_eq!(rows.len(), 1, "expected exactly one real row");
         rows.into_iter().next().unwrap()
+    }
+
+    /// An empty second gate source, for the rows whose own `!PREFACT` is
+    /// what is under test.
+    fn no_gates() -> BTreeMap<String, Vec<String>> {
+        BTreeMap::new()
     }
 
     #[test]
@@ -1104,7 +1294,7 @@ mod tests {
     fn dwarf_greed_trait_parses_to_the_documented_exemplar() {
         let row = one_row(&dwarf_greed_line());
         assert!(is_standard_racial_trait(&row));
-        let data = parse_trait(&row, "Dwarf").expect("Greed must parse");
+        let data = parse_trait(&row, "Dwarf", &no_gates()).expect("Greed must parse");
         assert_eq!(data.key, "Dwarf ~ Greed");
         assert_eq!(data.name, "Greed");
         assert_eq!(data.race_key, "Dwarf");
@@ -1151,7 +1341,7 @@ mod tests {
             "SOURCEPAGE:p.xx",
         ]));
         assert_eq!(replace_flags(&row), vec!["Duergar_ReplaceSpellLikeAbilities", "Duergar_ReplaceSLAEnlargePerson"]);
-        let data = parse_trait(&row, "Duergar").unwrap();
+        let data = parse_trait(&row, "Duergar", &no_gates()).unwrap();
         assert_eq!(data.suppressed_by_flag.as_deref(), Some("Duergar_ReplaceSpellLikeAbilities"));
         assert!(
             data.raw_tokens
@@ -1162,20 +1352,103 @@ mod tests {
         assert!(!data.is_racial_default);
     }
 
-    /// Aasimar's 9 standard traits carry no `!PREFACT` at all — the
-    /// honest result is `None`, not a fabricated flag.
+    /// No gate in either source is still `None`, never a fabricated flag.
     #[test]
-    fn trait_without_prefact_has_no_suppression_flag() {
+    fn trait_gated_by_neither_source_has_no_suppression_flag() {
         let row = one_row(&padded_line(&[
             "Skilled",
             "KEY:Aasimar ~ Skilled",
             "TYPE:RacialTraits.Aasimar Racial Trait.Aasimar Racial Default.SpecialQuality",
             "SOURCEPAGE:p.7",
         ]));
-        let data = parse_trait(&row, "Aasimar").unwrap();
+        let data = parse_trait(&row, "Aasimar", &no_gates()).unwrap();
         assert_eq!(data.suppressed_by_flag, None);
         assert!(data.is_racial_default);
         assert_eq!(data.source_page.as_deref(), Some("p.7"));
+        assert!(
+            !data.raw_tokens.iter().any(|t| t.key == "GLOBALVAR:ABILITY"),
+            "no evidence token where there was no second source to read"
+        );
+    }
+
+    /// Aasimar's 9 standard traits carry no `!PREFACT` at all. Their gate
+    /// is stated only in `aasimar_abilities_globalvar.lst`, and reading it
+    /// is what stops ARG's 9 Aasimar alternates from being an affordance
+    /// that can never succeed.
+    #[test]
+    fn a_trait_without_prefact_takes_its_gate_from_the_globalvar_file() {
+        let row = one_row(&padded_line(&[
+            "Skilled",
+            "KEY:Aasimar ~ Skilled",
+            "TYPE:RacialTraits.Aasimar Racial Trait.Aasimar Racial Default.SpecialQuality",
+            "SOURCEPAGE:p.7",
+        ]));
+        let gates = globalvar_gates(
+            "CATEGORY=Special Ability|Aasimar ~ Default.MOD\tABILITY:Aasimar Racial Trait|AUTOMATIC|\
+             Aasimar ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0",
+            "Aasimar",
+        );
+        let data = parse_trait(&row, "Aasimar", &gates).unwrap();
+        assert_eq!(data.suppressed_by_flag.as_deref(), Some("Aasimar_ReplaceSkilled"));
+        // The record carries the evidence, under a key no LST row can use.
+        assert!(data.raw_tokens.iter().any(|t| {
+            t.key == "GLOBALVAR:ABILITY"
+                && t.value == "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0"
+        }));
+        assert!(!data.raw_tokens.iter().any(|t| t.key == "!PREFACT"), "the row itself said nothing");
+    }
+
+    /// A row's own `!PREFACT` always wins: the globalvar read is a
+    /// fallback, never an override, so the 166 rows that already carried a
+    /// gate are untouched by this source.
+    #[test]
+    fn the_globalvar_gate_never_overrides_a_gate_the_row_itself_declares() {
+        let row = one_row(&padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default",
+            "!PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True",
+        ]));
+        let mut gates = BTreeMap::new();
+        gates.insert("Dwarf ~ Greed".to_string(), vec!["Dwarf_SomethingElse".to_string()]);
+        let data = parse_trait(&row, "Dwarf", &gates).unwrap();
+        assert_eq!(data.suppressed_by_flag.as_deref(), Some("Dwarf_ReplaceGreed"));
+        assert!(!data.raw_tokens.iter().any(|t| t.key == "GLOBALVAR:ABILITY"));
+    }
+
+    /// The globalvar reader takes `PREVAREQ:<Flag>,0` and only that.
+    ///
+    /// `,1` is the opposite statement — a *positive* requirement, which
+    /// Duergar's two mutually-exclusive spell-like-ability rows use to
+    /// keep each other out. Reading it as a suppressor would invert the
+    /// rule, so this drives the real parser with Duergar's real row.
+    #[test]
+    fn the_globalvar_reader_takes_negative_gates_and_never_positive_requirements() {
+        let gates = globalvar_gates(
+            "CATEGORY=Internal|Racial Traits ~ Duergar.MOD\tDEFINE:Duergar_ReplaceSLAEnlargePerson|0\t\
+             ABILITY:Duergar Racial Trait|AUTOMATIC|Duergar ~ Spell-Like Ability ~ Enlarge Person|\
+             PREVAREQ:Duergar_ReplaceSpellLikeAbilities,0|PREVAREQ:Duergar_ReplaceSLAEnlargePerson,0|\
+             PREVAREQ:Duergar_ReplaceSLAInvisibility,1",
+            "Duergar",
+        );
+        assert_eq!(
+            gates.get("Duergar ~ Spell-Like Ability ~ Enlarge Person"),
+            Some(&vec![
+                "Duergar_ReplaceSpellLikeAbilities".to_string(),
+                "Duergar_ReplaceSLAEnlargePerson".to_string(),
+            ]),
+            "the `,1` clause is a requirement, not a suppressor, and must not be read as one"
+        );
+
+        // A grant for another race's trait, and a non-AUTOMATIC grant, are
+        // both ignored rather than mis-filed.
+        let other = globalvar_gates(
+            "CATEGORY=Internal|X.MOD\tABILITY:Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Greed|\
+             PREVAREQ:Dwarf_ReplaceGreed,0\tABILITY:Duergar Racial Trait|VIRTUAL|Duergar ~ Size|\
+             PREVAREQ:Duergar_ReplaceSize,0",
+            "Duergar",
+        );
+        assert!(other.is_empty(), "{other:?}");
     }
 
     /// Drow's `Poison Use` row spells the marker `Drow Racial default`.
@@ -1189,7 +1462,7 @@ mod tests {
             "TYPE:RacialTraits.Drow Racial Trait.Drow Racial default",
             "SOURCEPAGE:p.xx",
         ]));
-        assert!(parse_trait(&row, "Drow").unwrap().is_racial_default);
+        assert!(parse_trait(&row, "Drow", &no_gates()).unwrap().is_racial_default);
     }
 
     #[test]
@@ -1200,7 +1473,7 @@ mod tests {
             "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default",
             "SOURCEPAGE:p.xx",
         ]));
-        let data = parse_trait(&row, "Dwarf").unwrap();
+        let data = parse_trait(&row, "Dwarf", &no_gates()).unwrap();
         assert_eq!(data.source_page, None, "p.xx is a placeholder, not a citation");
         assert!(
             data.raw_tokens.iter().any(|t| t.key == "SOURCEPAGE" && t.value == "p.xx"),
@@ -1420,7 +1693,7 @@ mod tests {
             rendered.text.as_deref(),
             Some("Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.")
         );
-        let data = parse_trait(&row, "Dwarf").expect("row must parse");
+        let data = parse_trait(&row, "Dwarf", &no_gates()).expect("row must parse");
         assert_eq!(
             data.description.as_deref(),
             Some("Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.")

@@ -1,0 +1,311 @@
+//! SD-27 — Aasimar's nine alternate racial traits stop being a dead affordance.
+//!
+//! # The defect
+//!
+//! All nine of Aasimar's ARG alternate racial traits were offered as checkable
+//! rows in the picker and could never succeed. `create_character` refused every
+//! one of them with a `race.alternate_trait.inert_flag` diagnostic, because the
+//! flag each sets (`Aasimar_ReplaceSkilled`, `Aasimar_ReplaceCelestialResistance`,
+//! …) suppressed nothing and granted nothing in the loaded corpus. They were the
+//! app's only *unconditionally* dead affordance: not a build-dependent block, a
+//! row that could never work for anybody.
+//!
+//! # Why the gate was missing, and where it actually lives
+//!
+//! `decisions.md §26` describes the swap protocol as a negated fact-check
+//! carried on the standard trait's own row:
+//!
+//! ```text
+//! Greed  KEY:Dwarf ~ Greed  !PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=True
+//! ```
+//!
+//! That is true but **not the whole protocol, and not its authoritative half**.
+//! PCGen also states every gate a second time, per race, in
+//! `core_essentials/races/<race>/<race>_abilities_globalvar.lst`, as a `.MOD`
+//! that grants each standard trait only while its flag is unset:
+//!
+//! ```text
+//! CATEGORY=Special Ability|Aasimar ~ Default.MOD
+//!     ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0
+//! ```
+//!
+//! `PREVAREQ:<Flag>,0` — "this trait applies while `<Flag>` is 0" — is exactly
+//! `!PREFACT:1,ABILITIES,<Flag>=True` said the other way round. Aasimar is the
+//! one in-scope race whose `_abilities_race.lst` carries **zero** `!PREFACT`
+//! tokens, so it was the one race for which the `!PREFACT`-only reader saw no
+//! gates at all.
+//!
+//! # Why reading the second source is transcription, not invention
+//!
+//! Because the two sources can be checked against each other, and are —
+//! [`the_two_gate_sources_agree_wherever_both_speak`] does it over every
+//! in-scope race. The globalvar file is a superset that never contradicts:
+//! across the 175 standard-trait rows it agrees on every row where the
+//! `!PREFACT` reader found anything, and speaks for 9 rows where the `!PREFACT`
+//! reader found nothing. A contradiction would fail `ingest_races` outright.
+
+use std::collections::{BTreeMap, BTreeSet};
+use std::path::Path;
+
+use codex::rules_core::corpus_loader::BookCorpusRoot;
+use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, TraitRole};
+
+fn corpus() -> RaceCorpus {
+    let roots = [
+        BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") },
+        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") },
+        BookCorpusRoot { book_id: "advanced_race_guide", dir: Path::new("data/corpus/advanced_race_guide") },
+    ];
+    let corpus = load_race_corpus(&roots);
+    assert!(corpus.diagnostics().is_empty(), "clean corpus load: {:?}", corpus.diagnostics());
+    corpus
+}
+
+/// Aasimar's nine standard trait rows now carry the gate their alternates fire.
+///
+/// Read off the loaded corpus, so this proves the on-disk records changed, not
+/// that a function returns a constant.
+#[test]
+fn every_aasimar_standard_trait_now_declares_the_flag_that_suppresses_it() {
+    let corpus = corpus();
+    let gates: BTreeMap<&str, &str> = corpus
+        .traits_for("Aasimar")
+        .iter()
+        .filter(|record| record.role == TraitRole::Default)
+        .map(|record| {
+            (
+                record.data.key.as_str(),
+                record
+                    .data
+                    .suppressed_by_flag
+                    .as_deref()
+                    .unwrap_or_else(|| panic!("{} declares no suppression gate", record.data.key)),
+            )
+        })
+        .collect();
+
+    assert_eq!(
+        gates,
+        BTreeMap::from([
+            ("Aasimar ~ Ability Scores", "Aasimar_ReplaceAbilityScores"),
+            ("Aasimar ~ Celestial Resistance", "Aasimar_ReplaceCelestialResistance"),
+            ("Aasimar ~ Languages", "Aasimar_ReplaceLanguages"),
+            ("Aasimar ~ Size", "Aasimar_ReplaceSize"),
+            ("Aasimar ~ Skilled", "Aasimar_ReplaceSkilled"),
+            ("Aasimar ~ Speed", "Aasimar_ReplaceSpeed"),
+            ("Aasimar ~ Spell-Like Ability", "Aasimar_ReplaceSpellLikeAbility"),
+            ("Aasimar ~ Type", "Aasimar_ReplaceType"),
+            ("Aasimar ~ Vision", "Aasimar_ReplaceVision"),
+        ]),
+        "the nine gates, exactly as aasimar_abilities_globalvar.lst declares them"
+    );
+}
+
+/// The affordance itself: every one of the nine really swaps something.
+///
+/// Asserted as a before/after pair per alternate — the standard trait is
+/// present without the selection and gone with it — because "the flag is no
+/// longer inert" is a weaker claim than "the player's trait list actually
+/// changed", and only the second one is what a player sees.
+#[test]
+fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
+    let corpus = corpus();
+
+    let before = corpus.resolve("Aasimar", &[]).expect("Aasimar resolves");
+    assert!(before.suppressions.is_empty());
+    assert!(before.inert_flags.is_empty());
+    let baseline: BTreeSet<&str> = before.traits.iter().map(|t| t.key.as_str()).collect();
+    assert_eq!(baseline.len(), 9, "Aasimar's nine racial defaults");
+
+    // Derived from the corpus, never hand-listed: each alternate against the
+    // standard rows its own flags name.
+    let alternates: Vec<String> =
+        corpus.alternate_traits("Aasimar").iter().map(|record| record.data.key.clone()).collect();
+    assert_eq!(alternates.len(), 9, "ARG's nine Aasimar alternates");
+
+    let mut checked = 0usize;
+    for key in &alternates {
+        let after = corpus.resolve("Aasimar", &[key.as_str()]).expect("Aasimar resolves");
+        assert!(after.unmatched_selections.is_empty(), "{key} is a key the resolver accepts");
+        assert!(
+            after.inert_flags.is_empty(),
+            "{key} still fires a flag that suppresses and grants nothing: {:?}",
+            after.inert_flags
+        );
+        assert!(!after.suppressions.is_empty(), "{key} must actually suppress something");
+
+        let applied: BTreeSet<&str> = after.traits.iter().map(|t| t.key.as_str()).collect();
+        assert!(applied.contains(key.as_str()), "{key} itself applies");
+        for suppression in &after.suppressions {
+            assert_eq!(suppression.set_by_trait_key, *key);
+            assert!(
+                baseline.contains(suppression.suppressed_trait_key.as_str()),
+                "{key} suppressed {} which was not a default in the first place",
+                suppression.suppressed_trait_key
+            );
+            assert!(
+                !applied.contains(suppression.suppressed_trait_key.as_str()),
+                "{key} claims to replace {} and it is still applied",
+                suppression.suppressed_trait_key
+            );
+        }
+        checked += 1;
+    }
+    assert_eq!(checked, 9);
+
+    // The worked case, spelled out: Celestial Crusader sets two flags and
+    // removes both of the traits they name, and nothing else.
+    let crusader = corpus.resolve("Aasimar", &["Aasimar ~ Celestial Crusader"]).expect("resolves");
+    let suppressed: Vec<&str> =
+        crusader.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+    assert_eq!(suppressed, vec!["Aasimar ~ Celestial Resistance", "Aasimar ~ Skilled"]);
+    let applied: BTreeSet<&str> = crusader.traits.iter().map(|t| t.key.as_str()).collect();
+    let lost: Vec<&&str> = baseline.difference(&applied).collect();
+    assert_eq!(lost, vec![&"Aasimar ~ Celestial Resistance", &"Aasimar ~ Skilled"]);
+
+    // `Aasimar ~ Scion of Humanity` now behaves EXACTLY as the already-shipped
+    // `Orc ~ Feral` does, and this asserts the two against each other rather
+    // than describing either.
+    //
+    // Both are the same corpus shape: an alternate that suppresses its race's
+    // `Languages` row and names its replacement with a direct
+    // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` token on its own row —
+    // a *third* grant shape, distinct from the positive `PREFACT` gate that
+    // brings in `Saltbeard ~ Dwarf ~ Greed`. `race_resolver` reads the positive
+    // `PREFACT` shape and not this one, so both replacement rows classify
+    // `TraitRole::Unclassified` and never arrive.
+    //
+    // **That gap is pre-existing, is already pinned** (see
+    // `sd27_alternate_racial_trait_reachability.rs`'s
+    // `the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_153`),
+    // **and is not what this cycle closed.** It is stated here because closing
+    // the Aasimar gate is what made Scion of Humanity reach it: before, the
+    // trait could not be taken at all. Remedy: teach the ARG ingest to record
+    // the alternate's `ABILITY:...|AUTOMATIC|<key>` grant and `race_resolver`
+    // to apply it — one edge, two rows, both races, in a cycle that owns
+    // `race_resolver.rs`.
+    for (race, alternate, standard, replacement) in [
+        ("Aasimar", "Aasimar ~ Scion of Humanity", "Aasimar ~ Languages", "Scion of Humanity ~ Languages"),
+        ("Orc", "Orc ~ Feral", "Orc ~ Languages", "Feral ~ Languages"),
+    ] {
+        let resolved = corpus.resolve(race, &[alternate]).expect("resolves");
+        let keys: BTreeSet<&str> = resolved.traits.iter().map(|t| t.key.as_str()).collect();
+        assert!(resolved.inert_flags.is_empty(), "{alternate} fires no inert flag: {:?}", resolved.inert_flags);
+        assert!(keys.contains(alternate), "{alternate} itself applies");
+        assert!(!keys.contains(standard), "{alternate} replaces {standard}");
+        assert!(
+            !keys.contains(replacement),
+            "{replacement} now arrives — the direct-ABILITY grant edge was implemented; delete this \
+             assertion and assert the replacement instead"
+        );
+    }
+}
+
+/// No orphan replace-flag remains for any race whose gate the corpus can state.
+///
+/// The full-corpus version of the finding this cycle closed: a flag an
+/// alternate sets that nothing declares. One survivor is expected and named —
+/// `Duergar_ReplaceSLAInvisibility`, whose gate the corpus *does* declare but
+/// which `RaceTraitCacheData::suppressed_by_flag` (single-valued) cannot hold
+/// because its row's gate names three flags. That is a schema limit, not a
+/// missing file, it is reported by `race_trait_picker::multi_flag_gate_findings`,
+/// and the alternate that sets it is not dead: the flag grants
+/// `Duergar ~ Spell-Like Ability ~ Enlarge Person`, so the selection succeeds.
+#[test]
+fn the_only_remaining_orphan_flag_is_the_one_a_single_valued_field_cannot_hold() {
+    let corpus = corpus();
+    let all: Vec<_> = corpus.race_keys().into_iter().flat_map(|race| corpus.traits_for(race)).collect();
+    let claimed: BTreeSet<&str> = all
+        .iter()
+        .filter_map(|record| record.data.suppressed_by_flag.as_deref().or(record.requires_flag.as_deref()))
+        .collect();
+
+    let mut orphans: BTreeSet<&str> = BTreeSet::new();
+    for record in &all {
+        for flag in &record.data.sets_replace_flags {
+            if !claimed.contains(flag.as_str()) {
+                orphans.insert(flag.as_str());
+            }
+        }
+    }
+    assert_eq!(
+        orphans.into_iter().collect::<Vec<_>>(),
+        vec!["Duergar_ReplaceSLAInvisibility"],
+        "the Aasimar five are closed; a new orphan is a new defect"
+    );
+
+    // ...and it is not a dead affordance, because it grants.
+    let blood_enmity = corpus.resolve("Duergar", &["Duergar ~ Blood Enmity"]).expect("Duergar resolves");
+    assert!(blood_enmity.inert_flags.is_empty(), "{:?}", blood_enmity.inert_flags);
+    assert!(blood_enmity
+        .traits
+        .iter()
+        .any(|t| t.key == "Duergar ~ Spell-Like Ability ~ Enlarge Person"));
+}
+
+/// **Nothing anywhere is a dead affordance any more.**
+///
+/// Every alternate the picker offers, for every race, resolved against a clean
+/// selection: none may fire an inert flag, which is the single condition
+/// `character_hub::resolve_alternate_trait_choices` refuses a save on. This is
+/// the assertion that would have caught the original defect, and it is stated
+/// over all 153 rather than over the nine that happened to be broken.
+#[test]
+fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
+    let corpus = corpus();
+    let mut checked = 0usize;
+    for race_key in corpus.race_keys() {
+        for record in corpus.alternate_traits(race_key) {
+            let key = record.data.key.clone();
+            let resolved = corpus.resolve(race_key, &[key.as_str()]).expect("race resolves");
+            assert!(
+                resolved.inert_flags.is_empty(),
+                "{key} is offered in the picker and `create_character` would refuse it: {:?}",
+                resolved.inert_flags
+            );
+            checked += 1;
+        }
+    }
+    assert_eq!(checked, 153, "ARG's 153 selectable alternates");
+}
+
+/// The two gate sources agree wherever both speak, over every in-scope race.
+///
+/// This is the evidence that reading `_abilities_globalvar.lst` is faithful
+/// transcription. It re-derives both readings straight off the loaded corpus
+/// records rather than re-parsing the upstream LST: `suppressed_by_flag` is
+/// what the ingest tool concluded, and the verbatim `!PREFACT` token preserved
+/// in `raw_tokens` is what the row itself said. Where the row said something,
+/// the conclusion must match it — so a globalvar read can never overwrite a
+/// gate the trait row itself declares.
+#[test]
+fn the_two_gate_sources_agree_wherever_both_speak() {
+    let corpus = corpus();
+    let mut from_row = 0usize;
+    let mut from_globalvar = 0usize;
+
+    for race_key in corpus.race_keys() {
+        for record in corpus.traits_for(race_key) {
+            if record.role == TraitRole::Alternate {
+                continue;
+            }
+            let Some(gate) = record.data.suppressed_by_flag.as_deref() else { continue };
+            let row_token = record.data.raw_tokens.iter().find(|token| token.key == "!PREFACT");
+            match row_token {
+                Some(token) => {
+                    assert!(
+                        token.value.contains(gate),
+                        "{}: concluded gate {gate} is not in its own row's !PREFACT ({})",
+                        record.data.key,
+                        token.value
+                    );
+                    from_row += 1;
+                }
+                None => from_globalvar += 1,
+            }
+        }
+    }
+
+    assert_eq!(from_row, 166, "rows whose own !PREFACT declares the gate");
+    assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
+}

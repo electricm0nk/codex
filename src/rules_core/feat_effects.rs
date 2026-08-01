@@ -1714,6 +1714,496 @@ pub fn chosen_feat_targets(
     resolved
 }
 
+// ---------------------------------------------------------------------------
+// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and
+// Pathfinder Unchained's feats that carry a real, unconditional standing
+// magnitude.
+//
+// **The classification that decided this set, derived by command, not by
+// taste.** Parsing `arg_feats.lst`'s 187 `CATEGORY:FEAT` records and
+// `pu_feats.lst`'s 17 for `BONUS:` tokens and for the inline `PRE*`/`!PRE*`
+// qualifiers a PCGen `BONUS:` may carry splits them three ways:
+//
+// | | ARG | PU |
+// |---|---|---|
+// | no `BONUS:` token at all -- prose-only, situational or action-granting | 133 | 12 |
+// | every `BONUS:` token carries its own inline `PRE*` condition | 5 | 0 |
+// | at least one unconditional `BONUS:` token | **49** | **5** |
+//
+// A record's row-level `PRE*` tokens are deliberately NOT counted as a
+// condition on the bonus: those gate *taking* the feat (`feat_prereqs`' job,
+// the split this module already documents for Master Craftsman), whereas a
+// `PRE*` appended to a `BONUS:` token gates the bonus itself.
+//
+// **That 49/5 is an upper bound on "should be wired", and the tables below are
+// deliberately smaller.** An unconditional `BONUS:` token is not automatically
+// a standing number a sheet should show:
+//
+// * `BONUS:ABILITYPOOL|<pool>|1` (11 ARG feats, 2 PU feats) grants a *further
+//   choice*, not a magnitude -- Angelic Flesh's metal, Catfolk Exemplar's
+//   aspect, PU's Signature Skill. The number `1` counts choices, not anything
+//   on a character sheet.
+// * `BONUS:SITUATION|<skill>=<circumstance>|N` (3 ARG feats) is PCGen's own
+//   token for a bonus that applies only in a named circumstance -- Echoes of
+//   Stone's Perception bonus *underground*. The corpus itself classifies these
+//   as situational; the absence of a `PRE*` on them says nothing to the
+//   contrary.
+// * `BONUS:VAR|<internal>|N` (38 ARG tokens) mostly increments a PCGen
+//   bookkeeping variable that only means something to another PCGen record --
+//   spell-like-ability uses per day (`RacialSLA_*_Times`), racial luck
+//   budgets (`DefiantLuckTimes`), fly-maneuverability tiers
+//   (`Maneuverability`). This engine models no spell-like abilities, no
+//   per-day racial budgets and no maneuverability, so those numbers have
+//   nothing to land on and grounding them would state a magnitude out of the
+//   only context that gives it meaning.
+// * Opponent-dependent bonuses are excluded by this module's own standing bar:
+//   Great Hatred's extra +1 applies only against "targets of your hatred
+//   racial trait", which is a fact about the creature being attacked, not
+//   about the character. See [`STEEL_SOUL_SAVE_VS_SPELLS_BONUS`]'s doc comment
+//   for the category-of-effect / particular-opponent line this follows.
+//
+// What is left -- and what the tables below ground -- is every ARG and PU feat
+// whose unconditional token names a dimension this engine either computes a
+// total for (Armor Class) or already grounds standalone facts for (skills,
+// combat maneuvers, energy resistance, movement, attack rolls, save
+// categories, resource pools). Each is hand-modelled per §24: no interpreter,
+// one corpus-verified formula per feat, each pinned by its own test.
+// ---------------------------------------------------------------------------
+
+/// One ARG feat's real, corpus-verified flat bonus to a named skill.
+///
+/// Kept as its own record type rather than reusing [`StandaloneSkillFeatFact`]
+/// for one decisive reason: that type's consumer derives its explanation id
+/// from the *skill name alone*, which is why its own doc comment requires that
+/// no two facts across its tables name the same skill. ARG breaks that
+/// property immediately and unavoidably -- Seen and Unseen grants `+2` Stealth
+/// while Angelic Flesh imposes `-2` Stealth, and CRB's Stealthy already owns
+/// `feat.standalone_skill_bonus.stealth`. Three different feats, one skill.
+/// This record therefore carries the feat key into the id, so any number of
+/// feats may touch one skill without colliding.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ArgSkillFeatFact {
+    /// The real ARG catalog `key` string
+    /// (`rules_tables::advanced_race_guide::feats`), matched through
+    /// [`crate::rules_core::feat_identity`]'s fold.
+    pub feat_key: &'static str,
+    /// The skill named by the corpus `BONUS:SKILL|<skill>` token, verbatim.
+    pub skill_name: &'static str,
+    /// The flat magnitude. Signed: Angelic Flesh's is a real `-2` penalty, and
+    /// dropping it because it is unwelcome would misreport the character just
+    /// as surely as inventing a bonus would.
+    pub bonus: i16,
+}
+
+/// Every ARG feat whose corpus `BONUS:SKILL` token carries a plain integer and
+/// no inline `PRE*`, in `arg_feats.lst` source order.
+///
+/// Per-feat corpus evidence, each verified against both the `BONUS:` token and
+/// the record's own `BENEFIT:` prose:
+///
+/// * **Brewmaster** -- `BONUS:SKILL|Craft (Alchemy),Profession (Brewer)|1`.
+///   **The token and the prose disagree, and the prose is followed here.** The
+///   record's own `BENEFIT:` reads "You gain a +2 bonus on Craft (alchemy) and
+///   Profession (brewer) checks", which is also the published ARG text. Unlike
+///   Sharp Senses, no racial base makes up the difference: the feat's only
+///   prerequisites are `PREFACT:1,TEMPLATES,IsDwarf=true` and
+///   `PRESKILL:2,Craft (Alchemy)=1,Profession (Brewer)=1`, neither of which
+///   grants a skill bonus, so `1` is a PCGen transcription defect rather than
+///   an increment. Recorded as `2` with the disagreement stated rather than
+///   silently taking either number.
+/// * **Sure and Fleet** -- `BONUS:SKILL|Acrobatics,Climb|2|TYPE=Racial`;
+///   `BENEFIT:` "You gain a +2 racial bonus on Acrobatics and Climb checks."
+///   Token and prose agree exactly. **It does not stack with the halfling
+///   Sure-Footed racial trait, and cannot collide with it**: the feat requires
+///   `PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Fleet Of Foot`, and
+///   Fleet of Foot is precisely the alternate racial trait that *replaces*
+///   Sure-Footed. The feat gives back what the alternate trait took away, so a
+///   legal holder never has both.
+/// * **Seen and Unseen** -- `BONUS:SKILL|Stealth|2`; prose agrees. Its other
+///   two clauses (+2 on saves against scrying/divination, and a -4 penalty on
+///   others' Survival checks to track the holder) carry no `BONUS:` token at
+///   all and are not grounded as numbers here.
+/// * **Angelic Flesh** -- `BONUS:SKILL|Disguise,Stealth|-2`; prose "You take a
+///   -2 penalty on Disguise and Stealth checks". Its companion
+///   `BONUS:ABILITYPOOL|Angelic Flesh Option|1` grants the metal sub-choice and
+///   is a chooser, not a magnitude.
+/// * **Scavenger's Eye** -- `BONUS:SKILL|Appraise|2`; prose agrees. Its further
+///   "+2 on the Appraise check to find the most valuable item in a hoard" is a
+///   situational second bonus with no token of its own and is not grounded.
+///
+/// None of the five carries `MULT:YES`/`STACK:YES` (checked against the corpus
+/// records, not assumed), so each grounds once however many times it appears.
+const ARG_SKILL_FEAT_FACTS: &[ArgSkillFeatFact] = &[
+    ArgSkillFeatFact { feat_key: "Brewmaster", skill_name: "Craft (Alchemy)", bonus: 2 },
+    ArgSkillFeatFact { feat_key: "Brewmaster", skill_name: "Profession (Brewer)", bonus: 2 },
+    ArgSkillFeatFact { feat_key: "Sure and Fleet", skill_name: "Acrobatics", bonus: 2 },
+    ArgSkillFeatFact { feat_key: "Sure and Fleet", skill_name: "Climb", bonus: 2 },
+    ArgSkillFeatFact { feat_key: "Seen and Unseen", skill_name: "Stealth", bonus: 2 },
+    ArgSkillFeatFact { feat_key: "Angelic Flesh", skill_name: "Disguise", bonus: -2 },
+    ArgSkillFeatFact { feat_key: "Angelic Flesh", skill_name: "Stealth", bonus: -2 },
+    ArgSkillFeatFact { feat_key: "Scavenger's Eye", skill_name: "Appraise", bonus: 2 },
+];
+
+/// Every grounded ARG skill fact for the feats actually present, in the stable
+/// corpus order of [`ARG_SKILL_FEAT_FACTS`]. Empty (never fabricated facts)
+/// when none is held.
+pub fn arg_skill_facts_from_feats(selected_feats: &[String]) -> Vec<ArgSkillFeatFact> {
+    ARG_SKILL_FEAT_FACTS
+        .iter()
+        .filter(|fact| feat_identity::holds(selected_feats, fact.feat_key))
+        .copied()
+        .collect()
+}
+
+/// Sure and Fleet's real `+2` racial Climb bonus, for the one computed skill
+/// total this engine keeps that any ARG feat touches.
+///
+/// Returned separately from [`arg_skill_facts_from_feats`] because Climb is
+/// genuinely different from the other seven facts: `compute_selected_skill_modifiers`
+/// computes a Climb total, so this value is *added to a number a player reads*
+/// rather than grounded as a standalone remark. The fact table still lists
+/// Climb so the feat's full corpus content stays auditable in one place; the
+/// consumer labels that record as integrated rather than standalone.
+pub fn arg_computed_climb_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, "Sure and Fleet") {
+        2
+    } else {
+        0
+    }
+}
+
+/// One ARG feat's real bonus to Combat Maneuver Defense against a named
+/// maneuver.
+///
+/// Separate from [`CombatManeuverFeatBonus`] rather than folded into it: that
+/// type pairs a CMB half with a CMD half and its consumer keys ids on the
+/// maneuver name alone, so Feline Grace's CMD-vs-trip bonus would collide with
+/// Improved Trip's on any character holding both. These two ARG feats grant a
+/// CMD bonus and no CMB bonus at all, so there is no CMB half to carry.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ArgManeuverDefenseFact {
+    pub feat_key: &'static str,
+    /// The maneuver as it appears in the corpus variable name (`CMD_BullRush`
+    /// -> "Bull Rush").
+    pub maneuver: &'static str,
+    pub cmd_bonus: i16,
+}
+
+/// The flat CMD magnitude both ARG maneuver-defense feats share, verified
+/// against each record's `BONUS:VAR|CMD_*|2` token and its `BENEFIT:` prose.
+const ARG_MANEUVER_DEFENSE_BONUS: i16 = 2;
+
+/// ARG's two Combat-Maneuver-Defense feats, in `arg_feats.lst` source order.
+///
+/// * **Feline Grace** -- `BONUS:VAR|CMD_BullRush,CMD_Grapple,CMD_Overrun,CMD_Reposition,CMD_Trip|2`;
+///   `BENEFIT:` "You gain a +2 bonus to your CMD against bull rush, grapple,
+///   overrun, repositioning, and trip combat maneuvers." Five maneuvers, one
+///   token, prose and token in exact agreement.
+/// * **Tree Hanger** -- `BONUS:VAR|CMD_Trip|2`; `BENEFIT:` "You gain a +2 bonus
+///   to your CMD against all trip attacks."
+///
+/// **These pass the opponent-dependency bar**, for exactly the reason
+/// [`COMBAT_MANEUVER_FEAT_BONUSES`] already records for the CRB `Improved`
+/// feats: the condition is the opponent's *action type* ("against trip
+/// attacks"), a static defensive property of the character, not a fact about a
+/// particular opponent.
+///
+/// **Deliberately NOT added to the `defense.combat_maneuver_defense` total.**
+/// That total is the general CMD, applying to every maneuver; folding in a
+/// bonus that only applies to five of them would report a specific, checkable,
+/// wrong number against a disarm or a sunder. Same reasoning
+/// [`STEEL_SOUL_SAVE_VS_SPELLS_BONUS`] applies to the save totals.
+const ARG_MANEUVER_DEFENSE_FACTS: &[ArgManeuverDefenseFact] = &[
+    ArgManeuverDefenseFact { feat_key: "Feline Grace", maneuver: "Bull Rush", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+    ArgManeuverDefenseFact { feat_key: "Feline Grace", maneuver: "Grapple", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+    ArgManeuverDefenseFact { feat_key: "Feline Grace", maneuver: "Overrun", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+    ArgManeuverDefenseFact { feat_key: "Feline Grace", maneuver: "Reposition", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+    ArgManeuverDefenseFact { feat_key: "Feline Grace", maneuver: "Trip", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+    ArgManeuverDefenseFact { feat_key: "Tree Hanger", maneuver: "Trip", cmd_bonus: ARG_MANEUVER_DEFENSE_BONUS },
+];
+
+/// Every grounded ARG maneuver-defense fact for the feats actually present, in
+/// the stable corpus order of [`ARG_MANEUVER_DEFENSE_FACTS`].
+pub fn arg_maneuver_defense_facts_from_feats(
+    selected_feats: &[String],
+) -> Vec<ArgManeuverDefenseFact> {
+    ARG_MANEUVER_DEFENSE_FACTS
+        .iter()
+        .filter(|fact| feat_identity::holds(selected_feats, fact.feat_key))
+        .copied()
+        .collect()
+}
+
+/// One ARG feat's real energy resistance grant.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ArgEnergyResistanceFact {
+    pub feat_key: &'static str,
+    /// The energy type named by the corpus `BONUS:VAR|<Energy>ResistanceBonus`
+    /// variable, spelled as the `BENEFIT:` prose spells it.
+    pub energy_type: &'static str,
+    pub amount: i16,
+}
+
+/// The flat resistance magnitude every ARG resistance feat shares.
+const ARG_ENERGY_RESISTANCE_AMOUNT: i16 = 5;
+
+/// ARG's five unconditional energy-resistance grants, in `arg_feats.lst`
+/// source order.
+///
+/// The four `Expanded Fiendish Resistance (<Energy>)` records are the cleanest
+/// cases in the whole book: one token each
+/// (`BONUS:VAR|<Energy>ResistanceBonus|5|TYPE=Resistance`), one prose sentence
+/// each ("You gain resistance 5 to <Energy>."), token and prose identical, no
+/// prerequisite touching the magnitude, no `MULT:YES`.
+///
+/// **Flame Heart's `5` is not a `10`.** Its record carries the fire-resistance
+/// token *twice* -- `BONUS:VAR|FireResistanceBonus|5|TYPE=Resistance` and a
+/// bare `BONUS:VAR|FireResistanceBonus|5` -- which naively summed would read as
+/// resistance 10. Its `BENEFIT:` prose says "You gain fire resistance 5", so
+/// the duplicate is PCGen expressing one typed and one untyped copy of the same
+/// grant, not two grants. The prose value is grounded.
+///
+/// **Armor of the Pit is deliberately absent from this table** even though it
+/// carries `BONUS:VAR|ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus|5|TYPE=Resistance`
+/// with no inline `PRE*`. Its prose reads "You gain a +2 natural armor bonus.
+/// If you have the scaled skin racial trait, you instead gain resistance 5 to
+/// **two of** the following energy types **that you don't have resistance to
+/// already**: cold, electricity, and fire." The token names all three
+/// unconditionally, the rule grants two of three chosen by the player, and
+/// which two is a choice this engine records nowhere. Grounding three would
+/// overstate it, grounding a guessed two would fabricate the choice. Its
+/// natural-armor half -- the branch that applies to the character who has *not*
+/// taken Scaled Skin, which is what its token's own
+/// `!PREABILITY:...Scaled Skin...` says -- is real, unambiguous, and is wired
+/// into Armor Class instead; see
+/// [`armor_of_the_pit_natural_armor_bonus_from_feats`].
+const ARG_ENERGY_RESISTANCE_FACTS: &[ArgEnergyResistanceFact] = &[
+    ArgEnergyResistanceFact { feat_key: "Flame Heart", energy_type: "fire", amount: ARG_ENERGY_RESISTANCE_AMOUNT },
+    ArgEnergyResistanceFact { feat_key: "Expanded Fiendish Resistance (Acid)", energy_type: "acid", amount: ARG_ENERGY_RESISTANCE_AMOUNT },
+    ArgEnergyResistanceFact { feat_key: "Expanded Fiendish Resistance (Cold)", energy_type: "cold", amount: ARG_ENERGY_RESISTANCE_AMOUNT },
+    ArgEnergyResistanceFact { feat_key: "Expanded Fiendish Resistance (Electricity)", energy_type: "electricity", amount: ARG_ENERGY_RESISTANCE_AMOUNT },
+    ArgEnergyResistanceFact { feat_key: "Expanded Fiendish Resistance (Fire)", energy_type: "fire", amount: ARG_ENERGY_RESISTANCE_AMOUNT },
+];
+
+/// Every grounded ARG energy-resistance fact for the feats actually present, in
+/// the stable corpus order of [`ARG_ENERGY_RESISTANCE_FACTS`].
+///
+/// Two feats naming the same energy type (Flame Heart and Expanded Fiendish
+/// Resistance (Fire)) return two facts, not a sum: PF1 energy resistance from
+/// two sources does not add, the larger applies, and both are `5`. The consumer
+/// keys its ids on the feat as well as the energy type so both remain visible
+/// and neither is silently dropped.
+pub fn arg_energy_resistance_facts_from_feats(
+    selected_feats: &[String],
+) -> Vec<ArgEnergyResistanceFact> {
+    ARG_ENERGY_RESISTANCE_FACTS
+        .iter()
+        .filter(|fact| feat_identity::holds(selected_feats, fact.feat_key))
+        .copied()
+        .collect()
+}
+
+/// Armor of the Pit's real `+2` natural armor bonus to Armor Class.
+///
+/// Token: `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base|!PREABILITY:1,CATEGORY=Special Ability,Scaled Skin C ~ Tiefling,Scaled Skin E ~ Tiefling,Scaled Skin F ~ Tiefling`.
+/// `BENEFIT:` "You gain a +2 natural armor bonus. If you have the scaled skin
+/// racial trait, you instead gain resistance 5 to two of the following energy
+/// types..."
+///
+/// **The inline `!PRE*` here is a static character property, not a situation.**
+/// This is the one place the "an inline `PRE*` means situational" heuristic
+/// gets the wrong answer: the negated prerequisite asks whether this character
+/// took the Scaled Skin alternate racial trait -- a persisted creation-time
+/// decision this engine already reads -- so the branch is fully decidable, and
+/// the `+2` is unconditional for every character on the other side of it.
+/// `has_scaled_skin` is threaded in as a plain bool so this module stays the
+/// dependency-free leaf the rest of the file is; the caller owns the
+/// alternate-racial-trait lookup.
+const ARMOR_OF_THE_PIT_NATURAL_ARMOR_BONUS: i16 = 2;
+
+/// Armor of the Pit's real, computed natural armor bonus. `0` (not a
+/// fabricated value) when the feat is absent, and `0` when the character took
+/// Scaled Skin -- for whom the corpus token's own negated prerequisite, and the
+/// prose's "you *instead* gain", both withhold it.
+///
+/// Not repeatable (no `MULT:YES`/`STACK:YES` in the record), so a duplicated
+/// string still yields `+2`.
+pub fn armor_of_the_pit_natural_armor_bonus_from_feats(
+    selected_feats: &[String],
+    has_scaled_skin: bool,
+) -> i16 {
+    if has_scaled_skin || !feat_identity::holds(selected_feats, "Armor of the Pit") {
+        return 0;
+    }
+    ARMOR_OF_THE_PIT_NATURAL_ARMOR_BONUS
+}
+
+/// Flame Heart's real `+1` caster level for fire-descriptor spells.
+///
+/// Token: `BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1`. `BENEFIT:` "When casting
+/// spells with the fire descriptor or throwing alchemist bombs that deal fire
+/// damage, treat your caster level or alchemist level as if you were 1 level
+/// higher." Token and prose agree.
+///
+/// **Deliberately NOT added to any `*.effective_caster_level` record.** Those
+/// are the character's general caster level, applying to every spell; this
+/// applies only to spells carrying the fire descriptor, and this engine's spell
+/// records carry no descriptor. Grounding it standalone states the real bonus
+/// without overstating any computed caster level -- the same scope-condition
+/// treatment [`STEEL_SOUL_SAVE_VS_SPELLS_BONUS`] receives.
+pub fn flame_heart_fire_caster_level_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, "Flame Heart") {
+        1
+    } else {
+        0
+    }
+}
+
+/// The two ARG human feats that raise saves against effects with the *emotion*
+/// descriptor, and the `+1` each contributes.
+///
+/// Both write the same corpus variable -- Fearless Curiosity's
+/// `BONUS:VAR|FearlessCuriosityBonus|1` and Intimidating Confidence's identical
+/// token -- which is PCGen's own way of saying they add together, exactly the
+/// shape [`NIMBLE_MOVES_DIFFICULT_TERRAIN_FEET`] already documents for Nimble
+/// Moves and Acrobatic Steps. Each record's `BENEFIT:` prose prints the running
+/// total through a `%1` substitution token bound to that variable ("You gain a +%1
+/// bonus on saving throws against effects with the emotion descriptor" /
+/// "Your bonus ... increases to +%1"), so the corpus itself never states a
+/// literal: `+1` alone, `+2` together. Intimidating Confidence's own
+/// `PREABILITY:1,CATEGORY=FEAT,Fearless Curiosity` prerequisite means the `+2`
+/// case is the only way the second feat can appear.
+const EMOTION_SAVE_FEAT_KEYS: &[&str] = &["Fearless Curiosity", "Intimidating Confidence"];
+
+/// One feat's contribution to the emotion-descriptor save bonus.
+const EMOTION_SAVE_BONUS_PER_FEAT: i16 = 1;
+
+/// The character's real, computed bonus on saving throws against effects with
+/// the emotion descriptor. `0` when neither feat is held.
+///
+/// **Deliberately NOT added to `defense.total_save.will` or any other save
+/// total**: it applies only against emotion-descriptor effects, while those
+/// totals are the general saves. Same line [`steel_soul_save_vs_spells_bonus_from_feats`]
+/// draws, and drawn for the same reason.
+///
+/// Neither feat is repeatable, so a duplicated string does not inflate the sum.
+pub fn emotion_save_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    EMOTION_SAVE_FEAT_KEYS
+        .iter()
+        .filter(|key| feat_identity::holds(selected_feats, key))
+        .count() as i16
+        * EMOTION_SAVE_BONUS_PER_FEAT
+}
+
+/// Aquatic Ancestry's real `+10`-foot swim speed increase.
+///
+/// Token: `BONUS:MOVEADD|TYPE.Swim|10`. `BENEFIT:` "You gain the amphibious
+/// special quality. Your swim speed increases by +10 feet." Token and prose
+/// agree exactly.
+///
+/// Grounds standalone for the same reason [`FLEET_BASE_SPEED_FEET`] does: this
+/// engine computes no movement total of any kind, so there is nothing to layer
+/// onto. The amphibious quality is a capability with no magnitude and is not
+/// grounded as a number.
+pub fn aquatic_ancestry_swim_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, "Aquatic Ancestry") {
+        10
+    } else {
+        0
+    }
+}
+
+/// Gnome Weapon Focus's real `+1` attack bonus with gnome weapons.
+///
+/// Token: `BONUS:WEAPONPROF=TYPE.Gnome|TOHIT|1`. `BENEFIT:` "You gain a +1
+/// bonus on attack rolls with gnome weapons (weapons with "gnome" in the
+/// title)." Token and prose agree.
+///
+/// **Deliberately NOT added to any attack total.** The bonus is scoped to a
+/// weapon *type*, and this engine's per-weapon attack totals carry no gnome
+/// facet to test -- unlike Weapon Focus, whose target is a specific weapon the
+/// player records through `choice:weapon_focus_target`. Adding it to the
+/// baseline melee attack bonus would overstate every swing with a longsword.
+/// Grounds standalone with its scope stated.
+pub fn gnome_weapon_focus_attack_bonus_from_feats(selected_feats: &[String]) -> i16 {
+    if feat_identity::holds(selected_feats, "Gnome Weapon Focus") {
+        1
+    } else {
+        0
+    }
+}
+
+/// Pathfinder Unchained's stamina pools, the book's one genuinely numeric feat
+/// mechanic.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct StaminaPoolFacts {
+    /// `base attack bonus + Constitution modifier`, plus `3` per Extra Stamina
+    /// pick.
+    pub primary: i16,
+    /// The Constitution modifier, when Push the Limits is held; `None` when it
+    /// is not.
+    pub secondary: Option<i16>,
+    /// How many times Extra Stamina was taken, after the corpus's own cap.
+    pub extra_stamina_picks: u8,
+}
+
+/// Extra Stamina's per-pick magnitude (`BONUS:VAR|StaminaPool|3`).
+const EXTRA_STAMINA_POINTS_PER_PICK: i16 = 3;
+
+/// The corpus's own cap on Extra Stamina, transcribed from the record's
+/// `!PREABILITY:3,CATEGORY=FEAT,Extra Stamina` token -- PCGen's way of writing
+/// "you may not already hold three of these" -- and confirmed by its
+/// `BENEFIT:` "Special: You can select this feat up to three times."
+///
+/// The cap is applied rather than trusted: a saved character carrying four
+/// copies (a legal-looking string list this engine does not validate) would
+/// otherwise be handed a pool three points too large.
+const EXTRA_STAMINA_MAX_PICKS: usize = 3;
+
+/// The character's real, computed stamina pools. `None` (never a fabricated
+/// zero-pool) when Combat Stamina is absent -- without it there is no stamina
+/// pool at all, and both other feats require it
+/// (`PREABILITY:1,CATEGORY=FEAT,Combat Stamina`).
+///
+/// Formulas, transcribed verbatim from the three corpus records:
+/// * **Combat Stamina** -- `BONUS:VAR|StaminaPool|BAB+CON`; `BENEFIT:` "You
+///   gain a stamina pool." The published PU rule and the token agree that the
+///   pool is base attack bonus plus Constitution modifier.
+/// * **Extra Stamina** -- `BONUS:VAR|StaminaPool|3`, `STACK:YES MULT:YES`;
+///   "Your stamina pool increases by 3 points ... up to three times." Counted
+///   by occurrence through [`crate::rules_core::feat_identity::count`], the
+///   same way [`base_speed_bonus_from_feats`] counts Fleet, and capped at
+///   [`EXTRA_STAMINA_MAX_PICKS`].
+/// * **Push the Limits** -- `BONUS:VAR|SecondaryStaminaPool|CON`; "You gain a
+///   secondary stamina pool with a number of stamina points equal to your
+///   Constitution modifier." A separate pool, spendable only under conditions
+///   this engine does not model, so it is reported separately rather than added
+///   into the primary total.
+///
+/// `base_attack_bonus` and `constitution_modifier` are threaded as plain
+/// scalars, keeping this module the dependency-free leaf it is, and neither is
+/// clamped: a negative Constitution modifier genuinely shrinks the pool, and
+/// the corpus specifies no floor.
+pub fn stamina_pool_facts_from_feats(
+    selected_feats: &[String],
+    base_attack_bonus: i16,
+    constitution_modifier: i16,
+) -> Option<StaminaPoolFacts> {
+    if !feat_identity::holds(selected_feats, "Combat Stamina") {
+        return None;
+    }
+    let extra_picks =
+        feat_identity::count(selected_feats, "Extra Stamina").min(EXTRA_STAMINA_MAX_PICKS);
+    Some(StaminaPoolFacts {
+        primary: base_attack_bonus
+            + constitution_modifier
+            + extra_picks as i16 * EXTRA_STAMINA_POINTS_PER_PICK,
+        secondary: feat_identity::holds(selected_feats, "Push the Limits")
+            .then_some(constitution_modifier),
+        extra_stamina_picks: extra_picks as u8,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -3688,5 +4178,278 @@ mod apg_acg_passive_bonus_tests {
         // does not specify.
         let selected = feats(&["Steadfast Personality"]);
         assert_eq!(steadfast_personality_will_bonus_from_feats(&selected, -1, 3), Some(-4));
+    }
+}
+
+/// SD-27 (`decisions.md` §24/§28, 2026-07-31): the ARG and PU feats whose
+/// unconditional corpus `BONUS:` token carries a real standing magnitude.
+///
+/// One test per grounded feat, each asserting the exact corpus-verified
+/// formula and its absence baseline, per §24's "hand-modelled, corpus-verified,
+/// one test each" ruling.
+#[cfg(test)]
+mod arg_and_pu_feat_effect_tests {
+    use super::*;
+
+    fn feats(keys: &[&str]) -> Vec<String> {
+        keys.iter().map(|k| (*k).to_owned()).collect()
+    }
+
+    fn skill_pairs(selected: &[String]) -> Vec<(&'static str, &'static str, i16)> {
+        arg_skill_facts_from_feats(selected)
+            .iter()
+            .map(|f| (f.feat_key, f.skill_name, f.bonus))
+            .collect()
+    }
+
+    #[test]
+    fn no_arg_or_pu_fact_grounds_for_a_character_holding_none_of_them() {
+        let none = feats(&["Toughness", "Power Attack", "Dodge"]);
+        assert!(arg_skill_facts_from_feats(&none).is_empty());
+        assert!(arg_maneuver_defense_facts_from_feats(&none).is_empty());
+        assert!(arg_energy_resistance_facts_from_feats(&none).is_empty());
+        assert_eq!(arg_computed_climb_bonus_from_feats(&none), 0);
+        assert_eq!(armor_of_the_pit_natural_armor_bonus_from_feats(&none, false), 0);
+        assert_eq!(flame_heart_fire_caster_level_bonus_from_feats(&none), 0);
+        assert_eq!(emotion_save_bonus_from_feats(&none), 0);
+        assert_eq!(aquatic_ancestry_swim_speed_bonus_from_feats(&none), 0);
+        assert_eq!(gnome_weapon_focus_attack_bonus_from_feats(&none), 0);
+        assert_eq!(stamina_pool_facts_from_feats(&none, 5, 3), None);
+    }
+
+    /// Brewmaster: token says `1`, `BENEFIT:` prose says `+2`, and no
+    /// prerequisite supplies the difference. The prose value is grounded and
+    /// the disagreement is recorded in the table's doc comment, not hidden.
+    #[test]
+    fn brewmaster_grounds_the_prose_plus_two_on_both_of_its_named_skills() {
+        assert_eq!(
+            skill_pairs(&feats(&["Brewmaster"])),
+            vec![
+                ("Brewmaster", "Craft (Alchemy)", 2),
+                ("Brewmaster", "Profession (Brewer)", 2),
+            ]
+        );
+    }
+
+    /// Sure and Fleet: `BONUS:SKILL|Acrobatics,Climb|2|TYPE=Racial`. Climb is
+    /// the one computed total any ARG feat reaches, so it is returned twice --
+    /// once as an auditable fact and once as the integrated value.
+    #[test]
+    fn sure_and_fleet_grounds_two_racial_skill_facts_and_the_computed_climb_bonus() {
+        let held = feats(&["Sure and Fleet"]);
+        assert_eq!(
+            skill_pairs(&held),
+            vec![("Sure and Fleet", "Acrobatics", 2), ("Sure and Fleet", "Climb", 2)]
+        );
+        assert_eq!(arg_computed_climb_bonus_from_feats(&held), 2);
+    }
+
+    /// Seen and Unseen (+2) and Angelic Flesh (-2) both name Stealth, and CRB's
+    /// Stealthy already owns `feat.standalone_skill_bonus.stealth`. Three feats,
+    /// one skill: exactly the collision that made this a separate record type.
+    #[test]
+    fn two_arg_feats_may_name_one_skill_with_opposite_signs() {
+        assert_eq!(
+            skill_pairs(&feats(&["Seen and Unseen", "Angelic Flesh"])),
+            vec![
+                ("Seen and Unseen", "Stealth", 2),
+                ("Angelic Flesh", "Disguise", -2),
+                ("Angelic Flesh", "Stealth", -2),
+            ]
+        );
+    }
+
+    #[test]
+    fn scavengers_eye_grounds_its_flat_appraise_bonus() {
+        assert_eq!(
+            skill_pairs(&feats(&["Scavenger's Eye"])),
+            vec![("Scavenger's Eye", "Appraise", 2)]
+        );
+    }
+
+    /// Feline Grace's single token names five maneuvers; Tree Hanger's names
+    /// one. Both are `+2` and both are CMD-only -- neither corpus token carries
+    /// a `CMB_` term.
+    #[test]
+    fn feline_grace_and_tree_hanger_ground_cmd_only_maneuver_bonuses() {
+        let feline: Vec<_> = arg_maneuver_defense_facts_from_feats(&feats(&["Feline Grace"]))
+            .iter()
+            .map(|f| (f.maneuver, f.cmd_bonus))
+            .collect();
+        assert_eq!(
+            feline,
+            vec![("Bull Rush", 2), ("Grapple", 2), ("Overrun", 2), ("Reposition", 2), ("Trip", 2)]
+        );
+
+        let tree = arg_maneuver_defense_facts_from_feats(&feats(&["Tree Hanger"]));
+        assert_eq!(tree.len(), 1);
+        assert_eq!((tree[0].maneuver, tree[0].cmd_bonus), ("Trip", 2));
+    }
+
+    /// The four `Expanded Fiendish Resistance` feats are independent: holding
+    /// one must not ground another's energy type.
+    #[test]
+    fn each_expanded_fiendish_resistance_grounds_only_its_own_energy_type() {
+        for (key, energy) in [
+            ("Expanded Fiendish Resistance (Acid)", "acid"),
+            ("Expanded Fiendish Resistance (Cold)", "cold"),
+            ("Expanded Fiendish Resistance (Electricity)", "electricity"),
+            ("Expanded Fiendish Resistance (Fire)", "fire"),
+        ] {
+            let grounded = arg_energy_resistance_facts_from_feats(&feats(&[key]));
+            assert_eq!(grounded.len(), 1, "{key} must ground exactly one energy type");
+            assert_eq!((grounded[0].energy_type, grounded[0].amount), (energy, 5), "{key}");
+        }
+    }
+
+    /// Flame Heart's record carries the fire-resistance token twice. Summing
+    /// them would read as resistance 10; its `BENEFIT:` prose says 5.
+    #[test]
+    fn flame_hearts_duplicated_corpus_token_still_grounds_resistance_five_not_ten() {
+        let held = feats(&["Flame Heart"]);
+        let grounded = arg_energy_resistance_facts_from_feats(&held);
+        assert_eq!(grounded.len(), 1);
+        assert_eq!((grounded[0].energy_type, grounded[0].amount), ("fire", 5));
+        assert_eq!(flame_heart_fire_caster_level_bonus_from_feats(&held), 1);
+    }
+
+    /// Armor of the Pit's `!PREABILITY:...Scaled Skin...` is a decidable
+    /// property of the character, not a situation: the `+2` applies to a
+    /// tiefling who did not take Scaled Skin and is withheld from one who did,
+    /// exactly as the prose's "you *instead* gain" says.
+    #[test]
+    fn armor_of_the_pit_grants_natural_armor_only_without_the_scaled_skin_trait() {
+        let held = feats(&["Armor of the Pit"]);
+        assert_eq!(armor_of_the_pit_natural_armor_bonus_from_feats(&held, false), 2);
+        assert_eq!(armor_of_the_pit_natural_armor_bonus_from_feats(&held, true), 0);
+    }
+
+    /// Both emotion-save feats write the same corpus variable, so they add;
+    /// the prose prints the running total through a `%1` substitution token rather
+    /// than a literal, which is why neither number is read off a single record.
+    #[test]
+    fn the_two_emotion_save_feats_add_to_plus_two_together() {
+        assert_eq!(emotion_save_bonus_from_feats(&feats(&["Fearless Curiosity"])), 1);
+        assert_eq!(emotion_save_bonus_from_feats(&feats(&["Intimidating Confidence"])), 1);
+        assert_eq!(
+            emotion_save_bonus_from_feats(&feats(&["Fearless Curiosity", "Intimidating Confidence"])),
+            2
+        );
+    }
+
+    /// Neither emotion-save feat is repeatable, so a duplicated string must not
+    /// inflate the sum the way a genuinely repeatable feat's would.
+    #[test]
+    fn a_duplicated_emotion_save_feat_does_not_stack() {
+        assert_eq!(
+            emotion_save_bonus_from_feats(&feats(&["Fearless Curiosity", "Fearless Curiosity"])),
+            1
+        );
+    }
+
+    #[test]
+    fn aquatic_ancestry_and_gnome_weapon_focus_ground_their_flat_magnitudes() {
+        assert_eq!(
+            aquatic_ancestry_swim_speed_bonus_from_feats(&feats(&["Aquatic Ancestry"])),
+            10
+        );
+        assert_eq!(
+            gnome_weapon_focus_attack_bonus_from_feats(&feats(&["Gnome Weapon Focus"])),
+            1
+        );
+    }
+
+    /// Combat Stamina's pool is `BAB + CON`, verified against
+    /// `BONUS:VAR|StaminaPool|BAB+CON`.
+    #[test]
+    fn combat_stamina_pool_is_base_attack_bonus_plus_constitution_modifier() {
+        let facts = stamina_pool_facts_from_feats(&feats(&["Combat Stamina"]), 6, 2)
+            .expect("Combat Stamina must ground a pool");
+        assert_eq!(facts.primary, 8, "BAB +6 + CON +2");
+        assert_eq!(facts.secondary, None, "no Push the Limits, no secondary pool");
+        assert_eq!(facts.extra_stamina_picks, 0);
+    }
+
+    /// A negative Constitution modifier genuinely shrinks the pool; the corpus
+    /// specifies no floor, so none is invented.
+    #[test]
+    fn a_negative_constitution_modifier_is_applied_verbatim_not_clamped() {
+        let facts = stamina_pool_facts_from_feats(&feats(&["Combat Stamina"]), 1, -2)
+            .expect("Combat Stamina must ground a pool");
+        assert_eq!(facts.primary, -1, "BAB +1 + CON -2");
+    }
+
+    /// Extra Stamina is `STACK:YES MULT:YES` and its own
+    /// `!PREABILITY:3,CATEGORY=FEAT,Extra Stamina` caps it at three picks.
+    #[test]
+    fn extra_stamina_adds_three_per_pick_and_stops_at_the_corpus_cap_of_three() {
+        for (picks, expected_primary, expected_counted) in
+            [(1usize, 9i16, 1u8), (2, 12, 2), (3, 15, 3), (4, 15, 3)]
+        {
+            let mut held = feats(&["Combat Stamina"]);
+            held.extend(std::iter::repeat_n("Extra Stamina".to_owned(), picks));
+            let facts = stamina_pool_facts_from_feats(&held, 4, 2)
+                .expect("Combat Stamina must ground a pool");
+            assert_eq!(
+                facts.primary, expected_primary,
+                "BAB +4 + CON +2 + 3*min({picks},3)"
+            );
+            assert_eq!(facts.extra_stamina_picks, expected_counted, "{picks} picks");
+        }
+    }
+
+    /// Push the Limits' secondary pool equals the Constitution modifier and is
+    /// reported separately: it is spendable only under conditions this engine
+    /// does not model, so folding it into the primary total would overstate
+    /// what the character can spend.
+    #[test]
+    fn push_the_limits_grounds_a_separate_secondary_pool_equal_to_constitution() {
+        let facts =
+            stamina_pool_facts_from_feats(&feats(&["Combat Stamina", "Push the Limits"]), 4, 3)
+                .expect("Combat Stamina must ground a pool");
+        assert_eq!(facts.primary, 7, "BAB +4 + CON +3, unchanged by the secondary pool");
+        assert_eq!(facts.secondary, Some(3), "secondary pool = CON modifier");
+    }
+
+    /// Every stamina feat requires Combat Stamina
+    /// (`PREABILITY:1,CATEGORY=FEAT,Combat Stamina`), so without it there is no
+    /// pool at all -- `None`, never a fabricated zero.
+    #[test]
+    fn no_stamina_pool_grounds_without_combat_stamina() {
+        assert_eq!(
+            stamina_pool_facts_from_feats(&feats(&["Extra Stamina", "Push the Limits"]), 9, 4),
+            None
+        );
+    }
+
+    /// Every key these producers match must exist verbatim in the shipped
+    /// catalog, or the wiring is keyed on a string no player can ever send.
+    #[test]
+    fn every_grounded_key_is_a_real_shipped_catalog_key() {
+        use crate::rules_core::rules_tables::feats_all::all_feat_tables;
+        let catalog: Vec<&str> = all_feat_tables()
+            .iter()
+            .flat_map(|t| t.entries.iter().map(|e| e.key))
+            .collect();
+        let grounded: Vec<&str> = ARG_SKILL_FEAT_FACTS
+            .iter()
+            .map(|f| f.feat_key)
+            .chain(ARG_MANEUVER_DEFENSE_FACTS.iter().map(|f| f.feat_key))
+            .chain(ARG_ENERGY_RESISTANCE_FACTS.iter().map(|f| f.feat_key))
+            .chain(EMOTION_SAVE_FEAT_KEYS.iter().copied())
+            .chain([
+                "Sure and Fleet",
+                "Armor of the Pit",
+                "Flame Heart",
+                "Aquatic Ancestry",
+                "Gnome Weapon Focus",
+                "Combat Stamina",
+                "Extra Stamina",
+                "Push the Limits",
+            ])
+            .collect();
+        for key in grounded {
+            assert!(catalog.contains(&key), "{key} is not a shipped catalog key");
+        }
     }
 }

@@ -26,8 +26,8 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * The shapes below are copied from real payloads produced by
  * `race_trait_picker.rs` against the on-disk corpus (`Dwarf ~ Saltbeard` sets
  * four flags, replaces four standard traits and grants ARG's own Greed;
- * `Aasimar ~ Halo`'s flag matches no standard trait because Aasimar's upstream
- * file declares no gates at all). They are test inputs for pure view functions,
+ * the orphan-flag case below is the shape ARG's nine Aasimar alternates had
+ * on disk until 2026-07-31). They are test inputs for pure view functions,
  * never data any screen renders.
  */
 
@@ -119,14 +119,22 @@ assert(
 assert(saltbeardLine.includes('Grants Greed'), `names what it grants: ${saltbeardLine}`);
 
 /**
- * The case that must never render blank. Nine of ARG's 153 alternates (all
- * Aasimar's) set a flag no standard trait declares, because Aasimar's upstream
- * file carries no gates. Showing "Replaces —" would read as a display bug;
+ * The case that must never render blank: an alternate whose replace-flag no
+ * standard trait declares. Showing "Replaces —" would read as a display bug;
  * the line has to say what is actually true.
+ *
+ * **No shipped record is in this state today.** ARG's nine Aasimar alternates
+ * were, until `src/bin/ingest_races.rs` learned to read the gate PCGen states
+ * in `aasimar_abilities_globalvar.lst` rather than on the trait row, and
+ * `race_trait_picker`'s
+ * `no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag` now pins
+ * that the live menu carries no unmatched flag at all. The rendering stays
+ * because the next book can reintroduce the shape, and a synthetic input is
+ * the honest way to keep testing it once the real one is gone.
  */
 const orphan = describeReplacement(
   alternate({
-    key: 'Aasimar ~ Halo',
+    key: 'Aasimar ~ Halo (synthetic: the pre-2026-07-31 payload)',
     name: 'Halo',
     setsFlags: ['Aasimar_ReplaceSkilled'],
     replaces: [],

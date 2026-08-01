@@ -14,7 +14,7 @@
       "SpecialQuality"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceSkilled",
     "sets_replace_flags": [],
     "description": "Aasimars have a +2 racial bonus on Diplomacy and Perception checks.",
     "source_page": "p.7",
@@ -42,6 +42,10 @@
       {
         "key": "ASPECT",
         "value": "RacialSkillModifier|+2 Diplomacy, +2 Perception"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0"
       }
     ],
     "raw_bonus_chains": [

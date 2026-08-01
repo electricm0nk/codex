@@ -15,7 +15,7 @@
       "Racial Language"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceLanguages",
     "sets_replace_flags": [],
     "description": "Aasimars begin play speaking Common and Celestial. Aasimars with high Intelligence scores can choose from the following languages: Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan.",
     "source_page": "p.7",
@@ -51,6 +51,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Languages|PREVAREQ:Aasimar_ReplaceLanguages,0"
       }
     ],
     "raw_bonus_chains": []

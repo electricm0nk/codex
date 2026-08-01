@@ -15,7 +15,7 @@
       "Racial Ability Scores"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceAbilityScores",
     "sets_replace_flags": [],
     "description": "Aasimars are insightful, confident, and personable.",
     "source_page": "p.7",
@@ -43,6 +43,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0"
       }
     ],
     "raw_bonus_chains": [

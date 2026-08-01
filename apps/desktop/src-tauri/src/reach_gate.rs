@@ -35,20 +35,49 @@
 //! ## How it stays honest as books are added
 //!
 //! The inventory of ingested content is never hand-listed here. It is the
-//! union of two independent live sources, so a new book has to defeat both to
-//! slip through:
+//! union of three independent live sources, so a new book has to defeat all
+//! three to slip through:
 //!
 //! 1. **The app's own ingest diagnostic.** `build_corpus_ingest_diagnostic()`
 //!    counts every book's real tables and is already shipped to the player.
 //!    Every `(book, kind)` pair it reports with a non-zero count must have a
 //!    reach claim here.
-//! 2. **The record slices in the source tree.** Every book ingest generates
-//!    `pub const <NAME>: &[<RecordType>]` slices under
-//!    `src/rules_core/rules_tables/`. Those are scanned directly off disk, so
+//! 2. **The record slices and table accessors in the source tree.** Every book
+//!    ingest generates either `pub const <NAME>: &[<RecordType>]` or
+//!    `pub fn <name>() -> &'static [<RecordType>]` under
+//!    `src/rules_core/rules_tables/`. Both are scanned directly off disk, so
 //!    a family that was ingested but never wired into the diagnostic still
 //!    shows up. A record type this module does not recognize is itself a
 //!    failure — a genuinely new kind of content needs a decision about where
 //!    it reaches, not a default.
+//! 3. **The record files in `data/corpus/`.** Every ingest tool writes Shape B
+//!    v1 JSON records to `data/corpus/<book>/<kind>/`, and the count of those
+//!    files is the most direct statement of "this content was ingested" the
+//!    repo makes. It is the only source that sees content the compiled tables
+//!    never carry.
+//!
+//! ## Why source 3 exists — two blind spots, both of which had already hidden a book
+//!
+//! Source 2 originally read `pub const` declarations only, which made
+//! `pathfinder_unchained` invisible to it: PU's records sit inside
+//! `pub fn equipment_tables()` and `pub fn feat_tables()` accessor bodies. That
+//! half is now closed by teaching the scanner the accessor shape.
+//!
+//! The second blind spot was worse, because it hid *the headline content of a
+//! whole book*. ARG's 153 alternate racial traits are not a compiled table at
+//! all — `decisions.md §24` rules out a formula interpreter, so they are read
+//! from `data/corpus/advanced_race_guide/race_trait/` at runtime by
+//! `codex::rules_core::race_resolver`, which lives outside `rules_tables/`
+//! entirely. Neither discovery source could name them:
+//! `corpus_ingest_diagnostic` reports ARG's feats, spells and equipment and not
+//! its traits, and the source scan reads a directory they were never in. Every
+//! reach test passed without the gate ever asking about the Advanced Race
+//! Guide's reason to exist.
+//!
+//! Scanning `data/corpus/` closes it, and closes it for the general case: any
+//! future book whose content is corpus-backed rather than compiled is visible
+//! the moment its records land on disk, whether or not anyone remembers to
+//! wire up a diagnostic.
 //!
 //! ## Why a mere reference does not satisfy it
 //!
@@ -151,6 +180,13 @@ enum Reach {
     },
     NotSurfaced {
         why: String,
+        /// The ingested keys that appear in no response at all, when the
+        /// verdict has that shape. Carried rather than only counted so
+        /// [`UNREACHED_RECORD_FINDINGS`] can pin them by exact key, both ways
+        /// — the same reason [`BARE_RECORD_FINDINGS`] exists. Empty when the
+        /// family failed for a reason that is not about particular records
+        /// (nothing ingested, a surface that could not be read at all).
+        missing: BTreeSet<String>,
     },
 }
 
@@ -196,13 +232,14 @@ fn assess(
         return Reach::NotSurfaced {
             why: "nothing is ingested for this family, so the inventory that named it is wrong"
                 .to_owned(),
+            missing: BTreeSet::new(),
         };
     }
 
     // Absent entirely is the more severe finding, and is checked first: a
     // family nothing serves has no surface to speak of.
     let seen: BTreeSet<String> = with_payload.union(identity_only).cloned().collect();
-    let missing: Vec<String> = ingested.difference(&seen).cloned().collect();
+    let missing: BTreeSet<String> = ingested.difference(&seen).cloned().collect();
     if !missing.is_empty() {
         return Reach::NotSurfaced {
             why: format!(
@@ -210,8 +247,9 @@ fn assess(
                 missing.len(),
                 ingested.len(),
                 surface,
-                sample(missing.into_iter())
+                sample(missing.iter().cloned())
             ),
+            missing,
         };
     }
 
@@ -275,6 +313,13 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
+    // PU's per-class feature tables. Visible to this scanner only since it
+    // learned the accessor-function shape: both sit inside
+    // `pub fn features() -> &'static [..]`. The other two Unchained classes
+    // expose theirs as an indented `impl` const, which is deliberately not a
+    // record slice — the family is discovered anyway, three ways over.
+    ("UnchainedBarbarianFeature", "class_features"),
+    ("UnchainedMonkFeature", "class_features"),
 ];
 
 /// Element types that are real ingested data but are **not** an independent
@@ -293,6 +338,16 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
         "provenance for beastiary1/monsters' natural attacks — a citation attached to a monster \
          record, not a record a player selects or browses independently",
     ),
+    (
+        "RaceTraitEntry",
+        "the pre-corpus hand-modelled CRB racial-trait index in \
+         rules_tables/crb/race_tables.rs. The player-facing family it once served is now \
+         `crb/race_traits`, read from data/corpus/core_rulebook/race_trait/ and served by \
+         list_alternate_racial_traits; race_catalog.rs stopped importing it when that landed. \
+         What is left is an engine-internal lookup (pilot_compute reads a CRB race's base walk \
+         speed out of it) plus provenance rows in support_state_matrix — no identity a player \
+         selects or browses",
+    ),
 ];
 
 /// Scan `src/rules_core/rules_tables/` for generated record slices.
@@ -302,28 +357,15 @@ const SUPPORTING_RECORD_TYPES: &[(&str, &str)] = &[
 /// content is precisely the event this gate exists for, and defaulting it to
 /// "probably fine" would reintroduce the whole defect class on book 5.
 ///
-/// **Known blind spot, stated rather than papered over.** This reads
-/// column-zero `pub const NAME: &[Type]` declarations only, so a book whose
-/// records live inline inside an accessor function body is invisible to it.
-/// `pathfinder_unchained` is exactly that shape — its records sit inside
-/// `pub fn equipment_tables()` and `pub fn feat_tables()` — so this scanner
-/// still does not see PU.
-///
-/// **The second half of that blind spot is closed (SD-27, 2026-07-31.)** PU
-/// used to be absent from `corpus_ingest_diagnostic` as well, leaving
-/// *neither* discovery source able to see it and this gate asserting nothing
-/// about the book in either direction. The diagnostic now reports it (and
-/// `advanced_race_guide`), so PU's families reach `full_inventory` through
-/// source 1, and the remedy this comment used to name — "add PU to the ingest
-/// diagnostic, then declare PU's claims so they are actually executed" — has
-/// been carried out for `classes`, `feats` and `equipment`, whose claims are
-/// declared in `reach_of` and executed against live IPC responses.
-/// `class_features` is the one family with no executable claim; it has an
-/// OPEN_FINDINGS entry stating exactly why.
-///
-/// Teaching this scanner the accessor-function shape is still worth doing:
-/// two independent sources is the property that makes the inventory hard to
-/// fool, and PU currently rests on one.
+/// **The `pub const`-only blind spot is closed (SD-27, 2026-07-31).** This
+/// used to read column-zero `pub const NAME: &[Type]` declarations only, which
+/// made a book whose records live inside an accessor function body invisible
+/// to it — `pathfinder_unchained` is exactly that shape, its records sitting
+/// inside `pub fn equipment_tables()` and `pub fn feat_tables()`. PU was for a
+/// time invisible to *both* discovery sources at once, and this gate asserted
+/// nothing about the book in either direction. The diagnostic was taught to
+/// report it first; [`slice_element_type`] now also reads
+/// `pub fn name() -> &'static [Type]`, so PU no longer rests on one source.
 fn scanned_inventory() -> (BTreeSet<Family>, Vec<String>) {
     let root = repo_root().join("src/rules_core/rules_tables");
     let mut families = BTreeSet::new();
@@ -392,7 +434,17 @@ fn book_of(root: &Path, path: &Path) -> Option<String> {
     Some(first.as_os_str().to_string_lossy().into_owned())
 }
 
-/// Extracts `Foo` from a line declaring `pub const NAME: &[Foo] = ...`.
+/// Extracts `Foo` from a line declaring a record table, in either of the two
+/// shapes the ingest tools generate:
+///
+/// ```text
+/// pub const SPELL_LIST: &[SpellListEntry] = &[
+/// pub fn equipment_tables() -> &'static [EquipmentTableEntry] {
+/// ```
+///
+/// The second shape is why `pathfinder_unchained` was invisible to this
+/// scanner: every one of PU's tables is behind an accessor, so a `pub const`
+/// reader saw an ingested book as an empty directory.
 ///
 /// Only top-level (column-zero) declarations count — an indented `pub const
 /// ALL: &[ClassId]` inside an `impl` block is an enum roster, not an ingested
@@ -400,8 +452,16 @@ fn book_of(root: &Path, path: &Path) -> Option<String> {
 /// `&[&str]`) are per-class index tables over records that already exist
 /// elsewhere, not record families.
 fn slice_element_type(line: &str) -> Option<&str> {
-    let rest = line.strip_prefix("pub const ")?;
-    let (_name, rest) = rest.split_once(": &[")?;
+    let rest = if let Some(rest) = line.strip_prefix("pub const ") {
+        rest.split_once(": &[")?.1
+    } else if let Some(rest) = line.strip_prefix("pub fn ") {
+        // `name() -> &'static [Type] {`. The lifetime is always spelled out in
+        // a returned static slice, so requiring it costs nothing and keeps
+        // this from matching an unrelated `-> &[u8]` helper.
+        rest.split_once("-> &'static [")?.1
+    } else {
+        return None;
+    };
     let (element, _) = rest.split_once(']')?;
     let element = element.trim();
     if element.is_empty()
@@ -413,6 +473,138 @@ fn slice_element_type(line: &str) -> Option<&str> {
         return None;
     }
     Some(element)
+}
+
+// ---------------------------------------------------------------------------
+// Inventory source 3 — the record files in `data/corpus/`
+// ---------------------------------------------------------------------------
+
+/// Corpus book directory -> the `book_id` the ingest diagnostic uses, so all
+/// three inventories join on one identity.
+///
+/// A translation table is not free, and this one is deliberately small and
+/// fails closed: [`corpus_inventory`] reports an unmapped directory as an
+/// error rather than skipping it, so adding a book without deciding what it is
+/// called breaks the build instead of silently exempting the book.
+const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
+    ("core_rulebook", "crb"),
+    ("advanced_players_guide", "apg"),
+    ("advanced_class_guide", "acg"),
+    // Pre-existing spelling of the Bestiary 1 directory; `beastiary1` is what
+    // the diagnostic and every existing claim call the book.
+    ("beastiary", "beastiary1"),
+    ("advanced_race_guide", "advanced_race_guide"),
+    ("pathfinder_unchained", "pathfinder_unchained"),
+];
+
+/// Corpus content-kind directory (singular, as the ingest tools write it) ->
+/// the plural kind name the diagnostic and every claim use. Fails closed for
+/// the same reason [`CORPUS_BOOK_IDS`] does.
+const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
+    ("class", "classes"),
+    ("class_feature", "class_features"),
+    ("equipment", "equipment"),
+    ("feat", "feats"),
+    ("monster", "monsters"),
+    ("race", "races"),
+    ("race_trait", "race_traits"),
+    ("spell", "spells"),
+];
+
+/// Directories under a corpus book that hold no player-facing records. Listed
+/// with the reason, for the same reason [`SUPPORTING_RECORD_TYPES`] is: an
+/// unexplained exclusion is how a gate quietly stops covering something.
+const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[(
+    "_parity",
+    "an ingest-verification artifact (a book's parity report against its \
+     upstream LST), not game content: nothing in it describes a rule, and a \
+     player is not meant to read it",
+)];
+
+/// Every `(book, kind)` with at least one Shape B v1 record on disk, plus any
+/// directory this module cannot name.
+fn corpus_inventory() -> (BTreeSet<Family>, Vec<String>) {
+    let root = repo_root().join("data/corpus");
+    let mut families = BTreeSet::new();
+    let mut unknown = Vec::new();
+
+    let Ok(books) = fs::read_dir(&root) else {
+        unknown.push(format!("cannot read the corpus root {}", root.display()));
+        return (families, unknown);
+    };
+    for book_entry in books.flatten() {
+        let book_dir = book_entry.path();
+        if !book_dir.is_dir() {
+            continue;
+        }
+        let book_name = book_entry.file_name().to_string_lossy().into_owned();
+        let Some((_, book_id)) = CORPUS_BOOK_IDS.iter().find(|(dir, _)| *dir == book_name) else {
+            unknown.push(format!(
+                "data/corpus/{book_name}/ is an ingested book this gate cannot name. Add it to \
+                 CORPUS_BOOK_IDS with the `book_id` the ingest diagnostic uses."
+            ));
+            continue;
+        };
+
+        let Ok(kinds) = fs::read_dir(&book_dir) else { continue };
+        for kind_entry in kinds.flatten() {
+            let kind_dir = kind_entry.path();
+            if !kind_dir.is_dir() {
+                continue;
+            }
+            let kind_name = kind_entry.file_name().to_string_lossy().into_owned();
+            if NON_CONTENT_CORPUS_DIRS.iter().any(|(dir, _)| *dir == kind_name) {
+                continue;
+            }
+            let Some((_, kind)) = CORPUS_KIND_NAMES.iter().find(|(dir, _)| *dir == kind_name) else {
+                unknown.push(format!(
+                    "data/corpus/{book_name}/{kind_name}/ is an ingested content kind this gate \
+                     cannot name. Add it to CORPUS_KIND_NAMES with the kind name the ingest \
+                     diagnostic uses, or to NON_CONTENT_CORPUS_DIRS with why it holds no records."
+                ));
+                continue;
+            };
+            if json_files_under(&kind_dir).is_empty() {
+                continue;
+            }
+            families.insert(Family::new(book_id, kind));
+        }
+    }
+
+    (families, unknown)
+}
+
+fn json_files_under(dir: &Path) -> Vec<PathBuf> {
+    let mut found = Vec::new();
+    let Ok(entries) = fs::read_dir(dir) else {
+        return found;
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            found.extend(json_files_under(&path));
+        } else if path.extension().is_some_and(|ext| ext == "json") {
+            found.push(path);
+        }
+    }
+    found
+}
+
+/// Every record key on disk for one `(book directory, kind directory)`.
+///
+/// The denominator for a corpus-backed family's claim, read from the record
+/// files themselves so it is never a remembered count and never the same data
+/// the serving path returns.
+fn corpus_record_keys(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
+    let dir = repo_root().join("data/corpus").join(book_dir).join(kind_dir);
+    json_files_under(&dir)
+        .into_iter()
+        .filter_map(|path| {
+            let text = fs::read_to_string(&path).ok()?;
+            let value: serde_json::Value = serde_json::from_str(&text).ok()?;
+            value.get("data")?.get("key")?.as_str().map(str::to_owned)
+        })
+        .collect()
 }
 
 // ---------------------------------------------------------------------------
@@ -551,6 +743,29 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "B1",
             crate::race_catalog::ingested_race_ids_for_book("beastiary"),
         )),
+
+        // Racial traits: `list_alternate_racial_traits` serves every race's
+        // standard rows and every ARG alternate, and
+        // `resolve_race_alternate_selection` serves the rows a selection
+        // grants. All three are rendered by apps/desktop/src/raceCatalog/
+        // AlternateTraitPicker.tsx — standard rows in the left column (name +
+        // book, struck through and captioned when a selection replaced them),
+        // alternates in the right column as checkable rows carrying name,
+        // book and the record's own corpus prose, and flag-granted rows
+        // appended to the left column captioned "Granted by your selection".
+        //
+        // **This family is the reason source 3 exists.** ARG's 153 alternate
+        // racial traits are the book's headline content and were invisible to
+        // both other discovery sources: they are not a compiled table
+        // (`decisions.md §24` rules out an interpreter, so `race_resolver`
+        // reads them off disk at runtime) and `corpus_ingest_diagnostic`
+        // reports ARG's feats, spells and equipment but not its traits. Every
+        // reach test passed without ever asking about them.
+        ("crb", "race_traits") => Some(race_traits_reach("CRB", "core_rulebook")),
+        ("beastiary1", "race_traits") => Some(race_traits_reach("B1", "beastiary")),
+        ("advanced_race_guide", "race_traits") => {
+            Some(race_traits_reach("ARG", "advanced_race_guide"))
+        }
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -728,6 +943,92 @@ fn races_reach(book_code: &str, ingested: BTreeSet<String>) -> Reach {
     )
 }
 
+/// One book's racial-trait claim, executed against both live picker commands.
+///
+/// `wire_book` narrows the served rows to this book's own (`"ARG"`);
+/// `book_dir` is the `data/corpus/` directory the denominator is read from, so
+/// the two sides of the claim come from genuinely different places — the
+/// record files on disk versus the IPC responses the screen renders.
+///
+/// Three surfaces are read, because a racial trait reaches a player by three
+/// different routes and counting only the first would report the other two as
+/// unreached:
+///
+/// 1. `list_alternate_racial_traits` -> `standardTraits[]`, the left column.
+/// 2. the same response's `alternates[]`, the checkable right column.
+/// 3. `resolve_race_alternate_selection` -> `appliedTraits[]` with role
+///    `flagGranted`, which the left column appends. A replacement row like
+///    `Saltbeard ~ Dwarf ~ Greed` is never in the menu — it arrives only
+///    because a chosen alternate fired its flag — so it is reachable only
+///    through a *selection*, and the claim makes that selection rather than
+///    assuming the row is fine.
+///
+/// (3) resolves each alternate **on its own**, once per alternate, rather than
+/// selecting the whole menu at once. Selecting everything looks like the
+/// stronger probe and is actually weaker: with all five Duergar alternates
+/// chosen, `Duergar ~ Deep Magic` fires `Duergar_ReplaceSpellLikeAbilities`,
+/// which suppresses the two spell-like-ability rows that other selections
+/// grant — so a row genuinely reachable by a real character reads as
+/// unreachable. One-at-a-time answers the question that matters: is there a
+/// choice a player can make that brings this row in.
+fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
+    let ingested = corpus_record_keys(book_dir, "race_trait");
+
+    let menu = crate::race_trait_picker::build_alternate_racial_traits();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+
+    for race in &menu.races {
+        // The left column prints a standard row's name (and its book), never
+        // its description — so the name is the payload, and it is genuinely
+        // more than identity here: the key is `Aasimar ~ Skilled` and the name
+        // is `Skilled`.
+        for standard in race.standard_traits.iter().filter(|row| row.book == wire_book) {
+            if standard.name.trim().is_empty() {
+                identity_only.insert(standard.key.clone());
+            } else {
+                with_payload.insert(standard.key.clone());
+            }
+        }
+        // An alternate is a checkable row carrying its name and its corpus
+        // prose. A row with neither would be an unlabelled checkbox.
+        for alternate in race.alternates.iter().filter(|row| row.book == wire_book) {
+            if alternate.name.trim().is_empty() && alternate.description.trim().is_empty() {
+                identity_only.insert(alternate.key.clone());
+            } else {
+                with_payload.insert(alternate.key.clone());
+            }
+        }
+
+        for alternate in &race.alternates {
+            let selection = crate::race_trait_picker::build_race_selection(
+                &crate::race_trait_picker::RaceSelectionRequest {
+                    race_key: race.race_key.clone(),
+                    selected_alternate_keys: vec![alternate.key.clone()],
+                },
+            );
+            for applied in selection
+                .applied_traits
+                .iter()
+                .filter(|applied| applied.role == "flagGranted" && applied.book == wire_book)
+            {
+                if applied.name.trim().is_empty() {
+                    identity_only.insert(applied.key.clone());
+                } else {
+                    with_payload.insert(applied.key.clone());
+                }
+            }
+        }
+    }
+
+    assess(
+        "list_alternate_racial_traits + resolve_race_alternate_selection",
+        &ingested,
+        &with_payload,
+        &identity_only,
+    )
+}
+
 fn weapons_reach() -> Reach {
     let ingested: BTreeSet<String> = crb::weapon_tables::WEAPON_TABLE
         .iter()
@@ -761,7 +1062,7 @@ fn weapons_reach() -> Reach {
 fn classes_reach(ingested: BTreeSet<String>) -> Reach {
     let options = match class_options() {
         Ok(options) => options,
-        Err(why) => return Reach::NotSurfaced { why },
+        Err(why) => return Reach::NotSurfaced { why, missing: BTreeSet::new() },
     };
 
     let mut with_payload = BTreeSet::new();
@@ -852,6 +1153,44 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
+        "advanced_race_guide",
+        "race_traits",
+        "Read the numbers before the label: 154 of ARG's 156 ingested race-trait records reach a \
+         player, and this gate refuses partial credit, so the family is a written finding rather \
+         than a pass. The 153 alternates are the checkable menu in AlternateTraitPicker.tsx and \
+         `Saltbeard ~ Dwarf ~ Greed` arrives through a real selection. TWO do not reach anything: \
+         `Scion of Humanity ~ Languages` and `Feral ~ Languages`. Both are replacement rows their \
+         parent alternate names with a direct `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` token \
+         on its own row — a THIRD grant shape, distinct from the positive `PREFACT` gate that \
+         brings in Saltbeard's Greed and from the negated `!PREFACT` that suppresses a standard \
+         row. `ingest_race_traits_arg.rs` does not record that grant and `race_resolver::classify` \
+         does not read it, so both rows land as `TraitRole::Unclassified` and are never applied: a \
+         player who takes `Aasimar ~ Scion of Humanity` or `Orc ~ Feral` loses the race's standard \
+         Languages row and gets no replacement text in its place. The Orc half has shipped this \
+         way since the ARG ingest; the Aasimar half started reaching it on 2026-07-31, when the \
+         globalvar gate landed and made Scion of Humanity selectable at all. Remedy: carry the \
+         alternate's `ABILITY:...|AUTOMATIC|<key>` grant into the ingested record, teach \
+         `race_resolver` to apply a row named by a selected alternate's grant list, then declare a \
+         real claim here and delete this entry — one edge, two rows.",
+    ),
+    (
+        "beastiary1",
+        "race_traits",
+        "Read the numbers before the label: 107 of Bestiary 1's 108 ingested race-trait records \
+         reach a player through `list_alternate_racial_traits`' standard-trait column and \
+         `resolve_race_alternate_selection`'s granted rows, and this gate refuses partial credit. \
+         ONE does not: `Duergar ~ Spell-Like Ability ~ Invisibility`, whose positive gate is \
+         `Duergar_ReplaceSLAEnlargePerson`. Derived, not assumed: no record in `data/corpus/` sets \
+         that flag, and `arg_abilities_race.lst` never mentions it (`grep -c \
+         'Duergar_ReplaceSLAEnlargePerson|True'` -> 0). Its only setter anywhere in the PCGen \
+         checkout is `Duergar ~ Ironskinned` in `monster_codex/mc_abilities_race.lst` — a book \
+         this project has not registered, audited or ingested. So this is not a wiring gap and \
+         there is nothing to wire: the row is upstream-unreachable until Monster Codex is in \
+         scope. Remedy: it closes when Monster Codex is ingested, and until then the honest state \
+         is this entry. Do NOT close it by hiding the record — a record on disk that no selection \
+         can reach is exactly what this gate is for.",
+    ),
+    (
         "beastiary1",
         "monsters",
         "Bestiary 1's 41 ingested monster stat blocks reach no surface. The only consumers are \
@@ -933,6 +1272,59 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[(
     ],
 )];
 
+/// Ingested records that appear in **no** response at all, for a family whose
+/// other records do reach a player.
+///
+/// Pinned by exact key, in both directions, for the same reason
+/// [`BARE_RECORD_FINDINGS`] is — and the two are deliberately different
+/// findings: a bare record arrives and renders as empty columns, one of these
+/// never arrives at all.
+///
+/// # Why a claim may be declared for a family that is also a written finding
+///
+/// [`OPEN_FINDINGS`]' older entries (`beastiary1/monsters`,
+/// `pathfinder_unchained/class_features`) have no `reach_of` claim: nothing
+/// executable could be written for them, which is the whole reason they are
+/// findings. `advanced_race_guide/race_traits` is a different case. 154 of its
+/// 156 records demonstrably reach a live surface, and a claim that executes
+/// against that surface is exactly what stops the other 154 from silently
+/// falling off — which is the defect this whole module exists for, and which
+/// the gate could not have caught at all until this family became visible to
+/// it. Declaring no claim would trade a caught regression for a tidier table.
+///
+/// So the claim is declared, it returns [`Reach::NotSurfaced`], the family
+/// stays a written finding, and the exact shortfall is pinned here. The
+/// property that matters is preserved in both directions:
+///
+/// * a 3rd ARG record that stops reaching changes this set and fails;
+/// * fixing one of these fails too, until its key is deleted.
+const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
+    (
+        "advanced_race_guide",
+        "race_traits",
+        // Replacement rows named by a direct `ABILITY:...|AUTOMATIC|<key>`
+        // grant on their parent alternate — a grant shape neither the ARG
+        // ingest nor `race_resolver::classify` reads. See the OPEN_FINDINGS
+        // entry for the remedy.
+        &["Feral ~ Languages", "Scion of Humanity ~ Languages"],
+    ),
+    (
+        "beastiary1",
+        "race_traits",
+        // Gated on `Duergar_ReplaceSLAEnlargePerson`, which nothing in any
+        // ingested book sets; its only setter is in Monster Codex.
+        &["Duergar ~ Spell-Like Ability ~ Invisibility"],
+    ),
+];
+
+fn recorded_unreached(family: &Family) -> BTreeSet<String> {
+    UNREACHED_RECORD_FINDINGS
+        .iter()
+        .find(|(book, kind, _)| *book == family.book && *kind == family.kind)
+        .map(|(_, _, keys)| keys.iter().map(|key| (*key).to_owned()).collect())
+        .unwrap_or_default()
+}
+
 fn recorded_bare(family: &Family) -> Option<BTreeSet<String>> {
     BARE_RECORD_FINDINGS
         .iter()
@@ -954,10 +1346,11 @@ fn finding_text(family: &Family) -> Option<&'static str> {
         .map(|(_, _, text)| *text)
 }
 
-/// The whole ingested inventory, from both independent sources.
+/// The whole ingested inventory, from all three independent sources.
 fn full_inventory() -> BTreeSet<Family> {
     let mut inventory = diagnostic_inventory();
     inventory.extend(scanned_inventory().0);
+    inventory.extend(corpus_inventory().0);
     inventory
 }
 
@@ -974,7 +1367,7 @@ mod tests {
     /// all — the exact "test that passes while asserting nothing" failure this
     /// gate was written in response to.
     #[test]
-    fn the_inventory_is_populated_from_both_live_sources() {
+    fn the_inventory_is_populated_from_all_three_live_sources() {
         let from_diagnostic = diagnostic_inventory();
         assert!(
             from_diagnostic.len() >= 10,
@@ -992,9 +1385,19 @@ mod tests {
             repo_root().join("src/rules_core/rules_tables").display()
         );
 
-        // The two sources genuinely differ — the scan sees families the
-        // diagnostic never counted. If they ever became identical the second
-        // source would be adding nothing, and this asserts they have not.
+        let (from_corpus, unnamed) = corpus_inventory();
+        assert!(unnamed.is_empty(), "unnamed corpus directories:\n  {}", unnamed.join("\n  "));
+        assert!(
+            from_corpus.len() >= 10,
+            "the data/corpus scan found only {} record families; it reads {} and cannot be \
+             near-empty",
+            from_corpus.len(),
+            repo_root().join("data/corpus").display()
+        );
+
+        // The sources genuinely differ. If any of them became a subset of the
+        // others it would be adding nothing, and the inventory would rest on
+        // fewer independent legs than it claims to.
         let scan_only: Vec<String> = from_scan
             .difference(&from_diagnostic)
             .map(Family::label)
@@ -1004,6 +1407,80 @@ mod tests {
             "the source scan added no family the diagnostic missed; verify it is still parsing \
              record slices"
         );
+
+        let mut compiled: BTreeSet<Family> = from_diagnostic.clone();
+        compiled.extend(from_scan.clone());
+        let corpus_only: Vec<String> = from_corpus.difference(&compiled).map(Family::label).collect();
+        assert!(
+            !corpus_only.is_empty(),
+            "the data/corpus scan added no family the other two missed; it is the only source \
+             that can see corpus-backed content, and a version of it that adds nothing is a \
+             version that would not have caught ARG's alternate racial traits"
+        );
+    }
+
+    /// **The blind spot this gate had, named and pinned.**
+    ///
+    /// ARG's alternate racial traits are the Advanced Race Guide's headline
+    /// content and were invisible to both original discovery sources at once,
+    /// so all eleven reach tests passed while the gate asserted nothing about
+    /// them. This proves the third source is what sees them — not by
+    /// describing the gap, but by asking the other two sources directly and
+    /// requiring them still not to know.
+    #[test]
+    fn args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned() {
+        let arg_traits = Family::new("advanced_race_guide", "race_traits");
+
+        assert!(
+            !diagnostic_inventory().contains(&arg_traits),
+            "corpus_ingest_diagnostic now reports ARG's race traits; that is an improvement, but \
+             this test's premise changed — update it rather than deleting it"
+        );
+        assert!(
+            !scanned_inventory().0.contains(&arg_traits),
+            "ARG's race traits became a compiled rules_tables slice; decisions.md §24 says they \
+             are hand-modelled/corpus-read, so verify what changed"
+        );
+        assert!(
+            corpus_inventory().0.contains(&arg_traits),
+            "the data/corpus scan must see data/corpus/advanced_race_guide/race_trait/"
+        );
+        assert!(full_inventory().contains(&arg_traits), "and it must reach the gate's inventory");
+
+        // And the family is genuinely asked about: a claim exists, it executes
+        // against the real IPC builders, and it accounts for every record.
+        let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
+        assert_eq!(ingested.len(), 156, "ARG's 156 ingested race-trait records, counted on disk");
+        match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
+            Reach::NotSurfaced { missing, .. } => assert_eq!(
+                missing,
+                recorded_unreached(&arg_traits),
+                "154 of the 156 reach a player; the shortfall is pinned by exact key"
+            ),
+            other => panic!("expected the pinned partial-reach verdict, got {other:?}"),
+        }
+    }
+
+    /// The other half of the same blind spot: `pathfinder_unchained` hid
+    /// behind accessor functions, so a `pub const`-only scanner reported an
+    /// ingested book as an empty directory.
+    #[test]
+    fn pathfinder_unchaineds_tables_are_visible_to_the_source_scan_not_only_the_diagnostic() {
+        let (from_scan, _) = scanned_inventory();
+        for kind in ["feats", "equipment", "class_features"] {
+            let family = Family::new("pathfinder_unchained", kind);
+            assert!(
+                from_scan.contains(&family),
+                "the source scan must see pathfinder_unchained/{kind}; every PU table is behind a \
+                 `pub fn ... -> &'static [..]` accessor, which is exactly what used to hide it"
+            );
+        }
+        // PU's classes are an enum roster rather than a record slice, so the
+        // scan does not see them and is not expected to — the diagnostic and
+        // the corpus both do, which is why three sources rather than one.
+        let classes = Family::new("pathfinder_unchained", "classes");
+        assert!(diagnostic_inventory().contains(&classes));
+        assert!(corpus_inventory().0.contains(&classes));
     }
 
     /// Every ingested record type must be one this gate has classified. A book
@@ -1047,6 +1524,11 @@ mod tests {
     /// Claims are executed, not trusted. A surface that stops carrying a
     /// book's records fails here even though its doc comment still says it
     /// does.
+    ///
+    /// A claim that comes back `NotSurfaced` is broken **unless every record it
+    /// names is already pinned in [`UNREACHED_RECORD_FINDINGS`]** — one extra
+    /// record failing to reach is a new defect and fails here, by key, with
+    /// that key named.
     #[test]
     fn every_declared_claim_actually_carries_the_records() {
         let mut broken = Vec::new();
@@ -1061,7 +1543,18 @@ mod tests {
                 // Checked, by exact key, in
                 // `bare_records_are_exactly_the_recorded_findings`.
                 Reach::BareRecords { .. } => proven += 1,
-                Reach::NotSurfaced { why } => broken.push(format!("{}: {why}", family.label())),
+                Reach::NotSurfaced { why, missing } => {
+                    let recorded = recorded_unreached(&family);
+                    let unrecorded: Vec<&String> = missing.difference(&recorded).collect();
+                    if unrecorded.is_empty() && !recorded.is_empty() {
+                        // Every shortfall is a written finding; the rest of the
+                        // family is proven to reach, which is the regression
+                        // this claim is here to catch.
+                        proven += 1;
+                    } else {
+                        broken.push(format!("{}: {why} [unrecorded: {unrecorded:?}]", family.label()));
+                    }
+                }
             }
         }
 
@@ -1073,6 +1566,52 @@ mod tests {
         assert!(
             proven >= 10,
             "only {proven} claims were executed; the gate is barely checking anything"
+        );
+    }
+
+    /// Records that reach no surface at all, pinned by exact key both ways: a
+    /// new one fails, and a fixed one fails until its key is removed.
+    ///
+    /// The other half of
+    /// [`every_declared_claim_actually_carries_the_records`], and the reason a
+    /// partially-reaching family can carry an executed claim without the
+    /// finding becoming a suppression.
+    #[test]
+    fn unreached_records_are_exactly_the_recorded_findings() {
+        let mut families_with_a_pin = 0usize;
+        for family in full_inventory() {
+            let recorded = recorded_unreached(&family);
+            let live = match reach_of(&family) {
+                Some(Reach::NotSurfaced { missing, .. }) => missing,
+                _ => BTreeSet::new(),
+            };
+            if !recorded.is_empty() {
+                families_with_a_pin += 1;
+            }
+
+            let unrecorded: Vec<&String> = live.difference(&recorded).collect();
+            assert!(
+                unrecorded.is_empty(),
+                "{}: {} ingested record(s) now reach no surface at all, with no recorded finding: \
+                 {:?}",
+                family.label(),
+                unrecorded.len(),
+                unrecorded
+            );
+
+            let fixed: Vec<&String> = recorded.difference(&live).collect();
+            assert!(
+                fixed.is_empty(),
+                "{}: these records now reach a player — delete them from \
+                 UNREACHED_RECORD_FINDINGS: {:?}",
+                family.label(),
+                fixed
+            );
+        }
+        assert_eq!(
+            families_with_a_pin,
+            UNREACHED_RECORD_FINDINGS.len(),
+            "every UNREACHED_RECORD_FINDINGS entry must name a family the inventory really has"
         );
     }
 
@@ -1250,7 +1789,7 @@ mod tests {
         let served: BTreeSet<String> = ["Bless"].iter().map(|k| k.to_string()).collect();
 
         match assess("list_spell_catalog", &ingested, &served, &BTreeSet::new()) {
-            Reach::NotSurfaced { why } => {
+            Reach::NotSurfaced { why, .. } => {
                 assert!(why.contains("2 of 3"), "the reason must quantify: {why}");
                 assert!(
                     why.contains("Acid Splash") || why.contains("Cure Light Wounds"),
@@ -1289,6 +1828,30 @@ mod tests {
             slice_element_type("    pub const ALL: &'static [ClassId] = &["),
             None
         );
+
+        // The accessor shape every `pathfinder_unchained` table uses, and the
+        // reason the book was invisible to this scanner.
+        assert_eq!(
+            slice_element_type("pub fn equipment_tables() -> &'static [EquipmentTableEntry] {"),
+            Some("EquipmentTableEntry")
+        );
+        assert_eq!(
+            slice_element_type("pub fn features() -> &'static [UnchainedMonkFeature] {"),
+            Some("UnchainedMonkFeature")
+        );
+        // A primitive index accessor is not a record family, same as its
+        // `pub const` counterpart.
+        assert_eq!(
+            slice_element_type("pub fn class_skills() -> &'static [&'static str] {"),
+            None
+        );
+        // An indented accessor is inside an `impl`, and a borrowed-not-static
+        // return is a helper over data that lives elsewhere.
+        assert_eq!(
+            slice_element_type("    pub fn features() -> &'static [UnchainedMonkFeature] {"),
+            None
+        );
+        assert_eq!(slice_element_type("pub fn digest(&self) -> &[u8] {"), None);
     }
 
     /// A spot check that the gate is reading live data and not a constant: the

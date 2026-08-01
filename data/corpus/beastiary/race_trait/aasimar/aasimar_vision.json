@@ -15,7 +15,7 @@
       "Racial Vision"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceVision",
     "sets_replace_flags": [],
     "description": "Aasimars can see in the dark up to 60 feet.",
     "source_page": "p.7",
@@ -47,6 +47,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Vision|PREVAREQ:Aasimar_ReplaceVision,0"
       }
     ],
     "raw_bonus_chains": [

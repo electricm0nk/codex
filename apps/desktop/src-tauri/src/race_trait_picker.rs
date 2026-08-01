@@ -43,10 +43,20 @@
 //! An alternate whose replace-flag matches no standard trait is a real data
 //! fact, and [`AlternateTraitDto::unmatched_flags`] carries it to the screen
 //! where a player can see it. It is not filtered out and the alternate is not
-//! suppressed from the menu: 9 of the 153 alternates are in that position today
-//! and they are genuine, selectable ARG content whose *swap target* is missing
-//! upstream. See [`AlternateTraitDto::unmatched_flags`] for the verified
-//! breakdown.
+//! suppressed from the menu.
+//!
+//! **That list is empty today (2026-07-31), and closing it is what made this
+//! screen's menu honest.** Nine of the 153 alternates — every Aasimar one —
+//! used to sit in that position: offered as checkable rows that
+//! `create_character` then refused, because no standard Aasimar row declared
+//! the gate their flags fire. The gate was never missing from PCGen, only from
+//! the ingest: Aasimar states it in
+//! `core_essentials/races/aasimar/aasimar_abilities_globalvar.lst` as
+//! `PREVAREQ:<Flag>,0` rather than on the trait row as `!PREFACT`.
+//! `src/bin/ingest_races.rs` now reads that second source wherever the row
+//! declares nothing, and cross-checks it against the row on the 166 rows where
+//! both speak. See [`AlternateTraitDto::unmatched_flags`] for the state this
+//! module now pins in both directions.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::PathBuf;
@@ -123,12 +133,23 @@ pub struct AlternateTraitDto {
     /// `Saltbeard ~ Dwarf ~ Greed`, the seagoing Greed.
     pub grants: Vec<LinkedTraitDto>,
     /// Set flags that match **no** standard trait and grant nothing — a data
-    /// finding, surfaced rather than hidden. Verified 2026-07-31 over the loaded
-    /// corpus: **5 distinct flags across 9 alternates, every one of them
-    /// Aasimar's.** The cause is upstream and checkable —
+    /// finding, surfaced rather than hidden.
+    ///
+    /// **Empty for all 153 alternates as of 2026-07-31**, and pinned that way
+    /// by `no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag`.
+    /// It used to hold 5 distinct flags across 9 alternates, every one of them
+    /// Aasimar's:
     /// `core_essentials/races/aasimar/aasimar_abilities_race.lst` contains zero
-    /// `PREFACT` tokens, so none of Aasimar's 9 standard rows declares a gate
-    /// for ARG's alternates to fire.
+    /// `PREFACT` tokens, so none of Aasimar's 9 standard rows declared a gate
+    /// for ARG's alternates to fire, and `create_character` refused all nine.
+    /// Aasimar's gate lives in its sibling
+    /// `aasimar_abilities_globalvar.lst` instead, as
+    /// `ABILITY:Aasimar Racial Trait|AUTOMATIC|<trait>|PREVAREQ:<Flag>,0` —
+    /// the same protocol inverted. `ingest_races` now reads it.
+    ///
+    /// The field and its rendering stay: a book ingested tomorrow can
+    /// reintroduce the shape, and the menu must say so rather than offer a row
+    /// that cannot work.
     ///
     /// Deliberately *not* in this list: `Duergar_ReplaceSLAInvisibility`. The
     /// corpus does name it — as the positive `PREFACT` gate on `Duergar ~
@@ -851,38 +872,62 @@ mod tests {
         assert!(menu.findings.iter().any(|finding| finding.contains("Half-Elf ~ Wary")));
     }
 
-    /// A flag matching no standard trait is a data finding, surfaced on the
-    /// alternate itself rather than dropped. Aasimar's nine standard rows carry
-    /// no `!PREFACT` gate at all upstream, so every Aasimar alternate's flags
-    /// land here — and only Aasimar's.
+    /// **No row in this menu can be ticked and then refused.**
+    ///
+    /// `character_hub::resolve_alternate_trait_choices` blocks a save on
+    /// exactly one picker-visible condition: a chosen alternate firing a flag
+    /// that suppresses and grants nothing. Nine rows — every Aasimar
+    /// alternate — used to be in that state unconditionally, for every build,
+    /// forever. This asserts the menu and the resolver agree for all 153.
     #[test]
-    fn alternates_whose_replace_flag_matches_nothing_are_reported_not_hidden() {
+    fn no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag() {
         let menu = menu();
+        let corpus = race_corpus().as_ref().expect("corpus");
+
         let mut unmatched: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        let mut checked = 0usize;
         for race in &menu.races {
             for alternate in &race.alternates {
                 for flag in &alternate.unmatched_flags {
                     unmatched.entry(flag.clone()).or_default().push(alternate.key.clone());
                 }
+                // The menu's own claim, and the resolver's answer to it.
+                let resolved =
+                    resolve_selection(corpus, &race.race_key, std::slice::from_ref(&alternate.key));
+                assert!(
+                    resolved.inert_flags.is_empty(),
+                    "{} is offered and `create_character` would refuse it: {:?}",
+                    alternate.key,
+                    resolved.inert_flags
+                );
+                assert!(
+                    !alternate.replaces.is_empty() || !alternate.grants.is_empty(),
+                    "{} replaces and grants nothing — a row that changes no sheet",
+                    alternate.key
+                );
+                checked += 1;
             }
         }
-        let flags: Vec<&str> = unmatched.keys().map(String::as_str).collect();
-        assert_eq!(
-            flags,
-            vec![
-                "Aasimar_ReplaceCelestialResistance",
-                "Aasimar_ReplaceLanguages",
-                "Aasimar_ReplaceSkilled",
-                "Aasimar_ReplaceSpellLikeAbility",
-                "Aasimar_ReplaceVision",
-            ]
-        );
-        let affected: BTreeSet<&String> = unmatched.values().flatten().collect();
-        assert_eq!(affected.len(), 9, "all 9 Aasimar alternates, and no others");
-        assert!(affected.iter().all(|key| key.starts_with("Aasimar ~ ")));
+        assert_eq!(checked, 153);
+        assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
-        // `Duergar_ReplaceSLAInvisibility` deliberately does *not* appear here.
-        // The corpus does name it — as the positive `PREFACT` gate on
+        // Aasimar is the worked case: its nine standard rows now declare the
+        // gate its nine alternates fire, read from `aasimar_abilities_globalvar
+        // .lst`. Asserted off the payload, so this is the shipped DTO, not a
+        // corpus-only fact.
+        let aasimar = race(&menu, "Aasimar");
+        assert_eq!(aasimar.standard_traits.len(), 9);
+        assert!(
+            aasimar.standard_traits.iter().all(|row| row.suppressed_by_flag.is_some()),
+            "every Aasimar standard row carries its gate"
+        );
+        assert_eq!(aasimar.alternates.len(), 9);
+        for alternate in &aasimar.alternates {
+            assert!(!alternate.replaces.is_empty(), "{} really replaces something", alternate.key);
+        }
+
+        // `Duergar_ReplaceSLAInvisibility` was never one of the nine and is
+        // still not: the corpus names it — as the positive `PREFACT` gate on
         // `Duergar ~ Spell-Like Ability ~ Enlarge Person`, which the flag
         // therefore grants — so calling it unmatched would be false. Its real
         // defect (the *suppression* half is lost to a single-valued field) is
@@ -896,16 +941,6 @@ mod tests {
             .map(|link| link.key.as_str())
             .collect();
         assert_eq!(grants, vec!["Duergar ~ Spell-Like Ability ~ Enlarge Person"]);
-
-        // Aasimar's standard rows genuinely declare no gate — that is the
-        // upstream cause, and it is visible in the payload rather than inferred.
-        let aasimar = race(&menu, "Aasimar");
-        assert_eq!(aasimar.standard_traits.len(), 9);
-        assert!(aasimar.standard_traits.iter().all(|trait_row| trait_row.suppressed_by_flag.is_none()));
-
-        // ...and the alternate is still offered. Hiding real ARG content
-        // because its swap target is missing upstream would be the worse bug.
-        assert_eq!(aasimar.alternates.len(), 9);
     }
 
     /// `Duergar_ReplaceSLAInvisibility` is *not* the same case: the corpus does

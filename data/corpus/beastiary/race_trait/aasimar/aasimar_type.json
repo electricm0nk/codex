@@ -15,7 +15,7 @@
       "Racial Type"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceType",
     "sets_replace_flags": [],
     "description": "Aasimars are outsiders with the native subtype.",
     "source_page": "p.7",
@@ -47,6 +47,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Type|PREVAREQ:Aasimar_ReplaceType,0"
       }
     ],
     "raw_bonus_chains": []

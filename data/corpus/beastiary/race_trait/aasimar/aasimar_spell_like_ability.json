@@ -14,7 +14,7 @@
       "SpecialQuality"
     ],
     "is_racial_default": true,
-    "suppressed_by_flag": null,
+    "suppressed_by_flag": "Aasimar_ReplaceSpellLikeAbility",
     "sets_replace_flags": [],
     "description": "Aasimars can use daylight once per day as a spell-like ability (with a caster level equal to the aasimar's character level).",
     "source_page": "p.7",
@@ -42,6 +42,10 @@
       {
         "key": "SOURCEPAGE",
         "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Spell-Like Ability|PREVAREQ:Aasimar_ReplaceSpellLikeAbility,0"
       }
     ],
     "raw_bonus_chains": []
